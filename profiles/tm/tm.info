@@ -1,0 +1,49 @@
+name = Travel Massive
+description = The Travel Massive community and event registration site.
+core = 7.x
+
+; TM - core
+dependencies[] = block
+dependencies[] = contextual
+dependencies[] = dblog
+dependencies[] = field_ui
+dependencies[] = file
+dependencies[] = image
+dependencies[] = list
+dependencies[] = menu
+dependencies[] = number
+dependencies[] = options
+dependencies[] = path
+
+; TM - general
+dependencies[] = addressfield
+dependencies[] = backup_migrate
+dependencies[] = context
+dependencies[] = context_ui
+dependencies[] = ctools
+dependencies[] = date
+dependencies[] = diff
+dependencies[] = ds
+dependencies[] = ds_extras
+dependencies[] = ds_ui
+dependencies[] = email
+dependencies[] = entity
+dependencies[] = entityreference
+dependencies[] = file
+dependencies[] = flag
+dependencies[] = jquery_update
+dependencies[] = libraries
+dependencies[] = link
+dependencies[] = pathauto
+dependencies[] = token
+dependencies[] = views
+dependencies[] = views_ui
+
+; TM - development	
+dependencies[] = admin_menu
+dependencies[] = admin_menu_toolbar
+dependencies[] = devel
+dependencies[] = features
+dependencies[] = strongarm
+
+; TM - features

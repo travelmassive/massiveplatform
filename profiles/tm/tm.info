@@ -16,7 +16,6 @@ dependencies[] = options
 dependencies[] = path
 
 ; TM - general
-dependencies[] = addressfield
 dependencies[] = backup_migrate
 dependencies[] = context
 dependencies[] = context_ui

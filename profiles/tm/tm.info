@@ -44,6 +44,7 @@ dependencies[] = admin_menu
 dependencies[] = admin_menu_toolbar
 dependencies[] = devel
 dependencies[] = features
+dependencies[] = masquerade
 dependencies[] = strongarm
 
 ; TM - features

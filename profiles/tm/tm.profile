@@ -10,7 +10,7 @@ function tm_form_install_configure_form_alter(&$form, $form_state) {
  	$form['server_settings']['site_default_country']['#default_value'] = 'US';
   
  	// Set default time-zone to LA. Source: https://drupal.org/comment/6897960#comment-6897960
-  $form['server_settings']['date_default_timezone']['#default_value'] = 'America/Los Angeles';
+  $form['server_settings']['date_default_timezone']['#default_value'] = 'America/Los_Angeles';
   unset($form['server_settings']['date_default_timezone']['#attributes']);
 }
 ?>

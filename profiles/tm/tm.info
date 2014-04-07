@@ -45,6 +45,9 @@ dependencies[] = admin_menu_toolbar
 dependencies[] = devel
 dependencies[] = features
 dependencies[] = masquerade
+dependencies[] = migrate
 dependencies[] = strongarm
+dependencies[] = tm_sample_content
 
 ; TM - features
+dependencies[] = tm_base

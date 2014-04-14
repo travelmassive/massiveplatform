@@ -9,6 +9,7 @@ function tm_sample_content_migrate_api() {
     'migrations' => array(
       'Chapters' => array('class_name' => 'TMChaptersMigration'),
       'Events' => array('class_name' => 'TMEventsMigration'),
+      'PartnerEvents' => array('class_name' => 'TMPartnerEventsMigration'),
     ),
   );
   return $api;

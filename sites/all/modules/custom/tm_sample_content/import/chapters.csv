@@ -1,3 +1,3 @@
-id,title,body
-1,London,"This is a description for the London chapter"
-2,Munich,"The Munich chapter is the most German of them all"
+id,title,body,leaders
+1,London,"This is a description for the London chapter",2 3
+2,Munich,"The Munich chapter is the most German of them all",4

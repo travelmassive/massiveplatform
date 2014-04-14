@@ -10,3 +10,4 @@ files[] = base.inc
 files[] = chapters.inc
 files[] = events.inc
 files[] = partner_events.inc
+files[] = users.inc

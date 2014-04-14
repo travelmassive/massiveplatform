@@ -9,3 +9,4 @@ files[] = tm_sample_content.migrate.inc
 files[] = base.inc
 files[] = chapters.inc
 files[] = events.inc
+files[] = partner_events.inc

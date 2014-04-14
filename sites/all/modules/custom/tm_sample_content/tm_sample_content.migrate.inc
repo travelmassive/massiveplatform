@@ -7,6 +7,7 @@ function tm_sample_content_migrate_api() {
   $api = array(
     'api' => 2,
     'migrations' => array(
+      'Users' => array('class_name' => 'TMUserMigration'),
       'Chapters' => array('class_name' => 'TMChaptersMigration'),
       'Events' => array('class_name' => 'TMEventsMigration'),
       'PartnerEvents' => array('class_name' => 'TMPartnerEventsMigration'),

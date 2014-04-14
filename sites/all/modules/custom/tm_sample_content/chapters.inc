@@ -7,6 +7,9 @@ class TMChaptersMigration extends TMBaseMigration {
 
     $this->description = t('Import chapters.');
 
+    // Dependencies, so we migrate in order.
+    $this->dependencies = array('Users');
+
     // Create a map object for tracking the relationships between source rows
     $this->map = new MigrateSQLMap($this->machineName,
       array(
@@ -37,6 +40,11 @@ class TMChaptersMigration extends TMBaseMigration {
     // Body
     $this->addFieldMapping('body', 'body');
     $this->addFieldMapping('body:format')->defaultValue('filtered_html');
+
+    // Chapter leaders
+    $this->addFieldMapping('field_chapter_leaders', 'leaders')
+      ->separator(' ')
+      ->sourceMigration('Users');
 
     // Author, default to admin
     $this->addFieldMapping('uid')->defaultValue(1);

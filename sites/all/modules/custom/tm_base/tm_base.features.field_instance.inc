@@ -1091,10 +1091,10 @@ function tm_base_field_default_field_instances() {
   t('RSVP link');
   t('Select the Travel Massive member that manages this account.');
   t('Select the date and start time of the event.');
-  t('The chapter leader that acts as main organizer of the event.');
   t('This image will used as the main banner for the event.');
   t('This image will used as the main banner for your profile and should be a good reflection of your company.');
   t('Upload your company logo.');
+  t('You can appoint any other chapter leader of this city as organizer of the event.');
 
   return $field_instances;
 }

@@ -398,55 +398,6 @@ function tm_base_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-event-field_external_rsvp'
-  $field_instances['node-event-field_external_rsvp'] = array(
-    'bundle' => 'event',
-    'default_value' => array(
-      0 => array(
-        'value' => 0,
-      ),
-    ),
-    'deleted' => 0,
-    'description' => 'Though we encourage you to use the Travel Massive platform for the RSVP, you can include a link to an external service like meetup.com.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'list',
-        'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 8,
-      ),
-      'grid' => array(
-        'label' => 'above',
-        'module' => 'list',
-        'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 8,
-      ),
-      'list' => array(
-        'label' => 'above',
-        'module' => 'list',
-        'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 8,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_external_rsvp',
-    'label' => 'External RSVP',
-    'required' => 1,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_buttons',
-      'weight' => 8,
-    ),
-  );
-
   // Exported field_instance: 'node-event-field_image'
   $field_instances['node-event-field_image'] = array(
     'bundle' => 'event',
@@ -644,7 +595,7 @@ function tm_base_field_default_field_instances() {
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The chapter leader that acts as main organizer of the event.',
+    'description' => 'You can appoint any other chapter leader of this city as organizer of the event.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -743,76 +694,6 @@ function tm_base_field_default_field_instances() {
       'settings' => array(),
       'type' => 'link_field',
       'weight' => 9,
-    ),
-  );
-
-  // Exported field_instance: 'node-event-field_signup_limit'
-  $field_instances['node-event-field_signup_limit'] = array(
-    'bundle' => 'event',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Add the amount of available spots for the event. Leave empty for unlimited signup.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'number',
-        'settings' => array(
-          'decimal_separator' => '.',
-          'prefix_suffix' => TRUE,
-          'scale' => 0,
-          'thousand_separator' => ' ',
-        ),
-        'type' => 'number_integer',
-        'weight' => 4,
-      ),
-      'grid' => array(
-        'label' => 'above',
-        'module' => 'number',
-        'settings' => array(
-          'decimal_separator' => '.',
-          'prefix_suffix' => TRUE,
-          'scale' => 0,
-          'thousand_separator' => ' ',
-        ),
-        'type' => 'number_integer',
-        'weight' => 4,
-      ),
-      'list' => array(
-        'label' => 'above',
-        'module' => 'number',
-        'settings' => array(
-          'decimal_separator' => '.',
-          'prefix_suffix' => TRUE,
-          'scale' => 0,
-          'thousand_separator' => ' ',
-        ),
-        'type' => 'number_integer',
-        'weight' => 4,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_signup_limit',
-    'label' => 'Signup limit',
-    'required' => 0,
-    'settings' => array(
-      'max' => '',
-      'min' => 0,
-      'prefix' => '',
-      'suffix' => '',
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 0,
-      'module' => 'number',
-      'settings' => array(),
-      'type' => 'number',
-      'weight' => 10,
     ),
   );
 
@@ -1191,13 +1072,11 @@ function tm_base_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('Add the amount of available spots for the event. Leave empty for unlimited signup.');
   t('By picking a custom URL for your company, you make sure that your profile is accesible through a friendly URL. For example: http://travelmassive.com/your-url');
   t('Chapter leaders');
   t('City');
   t('Date and time');
   t('Description');
-  t('External RSVP');
   t('Friendly URL');
   t('Help the attendees find the right location by providing a link to a map, for example <a href="http://maps.google.com/">Google Maps</a>.');
   t('Image');
@@ -1212,11 +1091,9 @@ function tm_base_field_default_field_instances() {
   t('RSVP link');
   t('Select the Travel Massive member that manages this account.');
   t('Select the date and start time of the event.');
-  t('Signup limit');
   t('The chapter leader that acts as main organizer of the event.');
   t('This image will used as the main banner for the event.');
   t('This image will used as the main banner for your profile and should be a good reflection of your company.');
-  t('Though we encourage you to use the Travel Massive platform for the RSVP, you can include a link to an external service like meetup.com.');
   t('Upload your company logo.');
 
   return $field_instances;

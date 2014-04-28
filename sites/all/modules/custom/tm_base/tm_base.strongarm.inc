@@ -331,5 +331,12 @@ function tm_base_strongarm() {
   $strongarm->value = 0;
   $export['node_submitted_partner_event'] = $strongarm;
 
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'theme_default';
+  $strongarm->value = 'tm';
+  $export['theme_default'] = $strongarm;
+
   return $export;
 }

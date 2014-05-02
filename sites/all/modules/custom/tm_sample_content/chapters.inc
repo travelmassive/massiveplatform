@@ -1,6 +1,6 @@
 <?php
 
-class TMChaptersMigration extends TMBaseMigration {
+class TMChapterMigration extends TMBaseMigration {
 
   public function __construct() {
     parent::__construct();
@@ -8,7 +8,7 @@ class TMChaptersMigration extends TMBaseMigration {
     $this->description = t('Import chapters.');
 
     // Dependencies, so we migrate in order.
-    $this->dependencies = array('Users');
+    $this->dependencies = array('TMUser');
 
     // Create a map object for tracking the relationships between source rows
     $this->map = new MigrateSQLMap($this->machineName,
@@ -44,7 +44,7 @@ class TMChaptersMigration extends TMBaseMigration {
     // Chapter leaders
     $this->addFieldMapping('field_chapter_leaders', 'leaders')
       ->separator(' ')
-      ->sourceMigration('Users');
+      ->sourceMigration('TMUser');
 
     // Author, default to admin
     $this->addFieldMapping('uid')->defaultValue(1);

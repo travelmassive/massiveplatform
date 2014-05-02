@@ -26,7 +26,7 @@ class TMUserMigration extends TMBaseMigration {
     );
 
     // Destination
-    $this->destination = new MigrateDestinationUser('user');
+    $this->destination = new MigrateDestinationUser();
 
 
     // Field Mappings
@@ -45,7 +45,7 @@ class TMUserMigration extends TMBaseMigration {
 
     // Status
     $this->addFieldMapping('status','status');
-    
+
   }
 
   public function prepareRow($row) {

@@ -54,6 +54,26 @@ class TMEventMigration extends TMBaseMigration {
     $this->addFieldMapping('field_organizer', 'organizer')
       ->sourceMigration('TMUser');
 
+    // Temporary field mapping to use on flags
+    $this->addFieldMapping('signed_up', 'signed_up')
+      ->separator('|')
+      ->sourceMigration('TMUser');
+
+  }
+
+  public function complete($entity, $row) {
+    // simulate "signed up" flag activation
+    if ($entity->signed_up) {
+      // prepare variables
+      $sign_ups = explode('|', $row->signed_up);
+      $flag = flag_get_flag('signup');
+
+      // perform flagging
+      foreach ($entity->signed_up as $uid) {
+        $participant = user_load($uid);
+        $flag->flag('flag', $entity->nid, $participant, TRUE);
+      }
+    }
   }
 
 }

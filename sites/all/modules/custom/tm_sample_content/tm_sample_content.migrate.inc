@@ -9,7 +9,7 @@ function tm_sample_content_migrate_api() {
     'migrations' => array(
       'TMUser' => array('class_name' => 'TMUserMigration'),
       'TMChapter' => array('class_name' => 'TMChapterMigration'),
-      'TMCompanie' => array('class_name' => 'TMCompanyMigration'),
+      'TMCompany' => array('class_name' => 'TMCompanyMigration'),
       'TMEvent' => array('class_name' => 'TMEventMigration'),
       'TMPartnerEvent' => array('class_name' => 'TMPartnerEventMigration'),
     ),

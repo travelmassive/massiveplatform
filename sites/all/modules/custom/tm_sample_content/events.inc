@@ -1,6 +1,6 @@
 <?php
 
-class TMEventsMigration extends TMBaseMigration {
+class TMEventMigration extends TMBaseMigration {
 
   public function __construct() {
     parent::__construct();
@@ -8,7 +8,7 @@ class TMEventsMigration extends TMBaseMigration {
     $this->description = t('Import events.');
 
     // Dependencies, so we migrate in order.
-    $this->dependencies = array('Users');
+    $this->dependencies = array('TMUser', 'TMChapter');
 
     // Create a map object for tracking the relationships between source rows
     $this->map = new MigrateSQLMap($this->machineName,
@@ -39,21 +39,21 @@ class TMEventsMigration extends TMBaseMigration {
 
     // Body
     $this->addFieldMapping('body', 'body');
-    $this->addFieldMapping('body:format')->defaultValue('filtered_html');
+    $this->addFieldMapping('body:format')
+      ->defaultValue('filtered_html');
 
     // Author, default to admin
-    $this->addFieldMapping('uid')->defaultValue(1);
+    $this->addFieldMapping('uid')
+      ->defaultValue(1);
 
     // Link with chapters, based on the ID
     $this->addFieldMapping('field_chapter', 'chapter')
-      ->sourceMigration('Chapters');
+      ->sourceMigration('TMChapter');
 
     // Event organizer, only one user ref
     $this->addFieldMapping('field_organizer', 'organizer')
-      ->sourceMigration('Users');
-  }
+      ->sourceMigration('TMUser');
 
-  public function prepareRow($row) {
   }
 
 }

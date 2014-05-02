@@ -1,6 +1,6 @@
 <?php
 
-class TMCompaniesMigration extends TMBaseMigration {
+class TMCompanyMigration extends TMBaseMigration {
 
   public function __construct() {
     parent::__construct();
@@ -8,7 +8,7 @@ class TMCompaniesMigration extends TMBaseMigration {
     $this->description = t('Import companies.');
 
     // Dependencies, so we migrate in order.
-    $this->dependencies = array('Users');
+    $this->dependencies = array('TMUser');
 
     // Create a map object for tracking the relationships between source rows
     $this->map = new MigrateSQLMap($this->machineName,
@@ -44,10 +44,11 @@ class TMCompaniesMigration extends TMBaseMigration {
     // Owner (user manager by)
     $this->addFieldMapping('field_owner', 'owner')
       ->separator(' ')
-      ->sourceMigration('Users');
+      ->sourceMigration('TMUser');
 
     // Author, default to admin
-    $this->addFieldMapping('uid')->defaultValue(1);
+    $this->addFieldMapping('uid')
+      ->defaultValue(1);
 
   }
 

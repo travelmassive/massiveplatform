@@ -1,6 +1,6 @@
 <?php
 
-class TMPartnerEventsMigration extends TMBaseMigration {
+class TMPartnerEventMigration extends TMBaseMigration {
 
   public function __construct() {
     parent::__construct();
@@ -36,10 +36,12 @@ class TMPartnerEventsMigration extends TMBaseMigration {
 
     // Body
     $this->addFieldMapping('body', 'body');
-    $this->addFieldMapping('body:format')->defaultValue('filtered_html');
+    $this->addFieldMapping('body:format')
+      ->defaultValue('filtered_html');
 
     // Author, default to admin
-    $this->addFieldMapping('uid')->defaultValue(1);
+    $this->addFieldMapping('uid')
+      ->defaultValue(1);
 
   }
 

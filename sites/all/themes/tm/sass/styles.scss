@@ -25,6 +25,66 @@
 @import "foundation_5.0.3/components/grid";
 
 
-/* SMACSS theme rules */
-/* @import "theme-A"; */
-/* @import "theme-B"; */
+/* ==========================================================================
+   Helpers
+   ========================================================================== */
+
+.visually-hidden {
+  border: 0 none;
+  clip: rect(0px, 0px, 0px, 0px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/* ==========================================================================
+   Main structure
+   ========================================================================== */
+
+#page {
+  background-color: #d3d6d9;
+}
+
+#header .inner,
+#main #content,
+#footer .inner {
+  @include grid-row;
+}
+
+#header {
+  background-color: #fff;
+  #site-title {
+    @include grid-column(10);
+  }
+  nav#primary {
+    @include grid-column(2); 
+  }
+  @media #{$medium-up} {
+    #site-title {
+      @include grid-column(4);
+    }
+    nav#primary {
+      @include grid-column(8); 
+    }    
+  }
+}
+
+#main {
+  background-color: #e9eace;
+  .banner,
+  .column {
+    @include grid-column(12);
+  }
+  @media #{$medium-up} {
+    .column {
+      @include grid-column(6);
+    }
+  }
+}
+
+#footer {
+  background-color: #d3d6d9;
+}

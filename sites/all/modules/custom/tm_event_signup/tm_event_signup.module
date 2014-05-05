@@ -1,0 +1,11 @@
+<?php
+/**
+ * @file
+ * Code for the TM Event signup feature.
+ */
+
+include_once 'tm_event_signup.features.inc';
+/**
+ * @file
+ * Code for the TM Event signup module.
+ */

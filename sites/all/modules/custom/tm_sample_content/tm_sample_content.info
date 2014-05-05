@@ -8,6 +8,7 @@ dependencies[] = tm_base
 files[] = tm_sample_content.migrate.inc
 files[] = base.inc
 files[] = chapters.inc
+files[] = companies.inc
 files[] = events.inc
 files[] = partner_events.inc
 files[] = users.inc

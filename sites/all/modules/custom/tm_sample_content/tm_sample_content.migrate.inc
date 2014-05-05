@@ -7,10 +7,11 @@ function tm_sample_content_migrate_api() {
   $api = array(
     'api' => 2,
     'migrations' => array(
-      'Users' => array('class_name' => 'TMUserMigration'),
-      'Chapters' => array('class_name' => 'TMChaptersMigration'),
-      'Events' => array('class_name' => 'TMEventsMigration'),
-      'PartnerEvents' => array('class_name' => 'TMPartnerEventsMigration'),
+      'TMUser' => array('class_name' => 'TMUserMigration'),
+      'TMChapter' => array('class_name' => 'TMChapterMigration'),
+      'TMCompany' => array('class_name' => 'TMCompanyMigration'),
+      'TMEvent' => array('class_name' => 'TMEventMigration'),
+      'TMPartnerEvent' => array('class_name' => 'TMPartnerEventMigration'),
     ),
   );
   return $api;

@@ -13,12 +13,17 @@
 @import "normalize";
 
 /* Layout rules */
-@import "layouts/responsive";
+//@import "layouts/responsive";
 
 /* Component (SMACSS module) rules */
 @import "components/misc";
 // Optionally, add your own components here.
 @import "print";
+
+// Foundation grid
+@import "foundation_5.0.3/settings";
+@import "foundation_5.0.3/components/grid";
+
 
 /* SMACSS theme rules */
 /* @import "theme-A"; */

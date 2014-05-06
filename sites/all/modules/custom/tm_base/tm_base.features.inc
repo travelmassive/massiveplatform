@@ -19,20 +19,3 @@ function tm_base_ctools_plugin_api($module = NULL, $api = NULL) {
 function tm_base_views_api($module = NULL, $api = NULL) {
   return array("api" => "3.0");
 }
-
-/**
- * Implements hook_node_info().
- */
-function tm_base_node_info() {
-  $items = array(
-    'chapter' => array(
-      'name' => t('City'),
-      'base' => 'node_content',
-      'description' => t('A Travel Massive city'),
-      'has_title' => '1',
-      'title_label' => t('City'),
-      'help' => '',
-    ),
-  );
-  return $items;
-}

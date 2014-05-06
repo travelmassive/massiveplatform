@@ -57,54 +57,9 @@ function tm_base_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: 'create chapter content'.
-  $permissions['create chapter content'] = array(
-    'name' => 'create chapter content',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'node',
-  );
-
-  // Exported permission: 'delete any chapter content'.
-  $permissions['delete any chapter content'] = array(
-    'name' => 'delete any chapter content',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'node',
-  );
-
-  // Exported permission: 'delete own chapter content'.
-  $permissions['delete own chapter content'] = array(
-    'name' => 'delete own chapter content',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'node',
-  );
-
   // Exported permission: 'delete revisions'.
   $permissions['delete revisions'] = array(
     'name' => 'delete revisions',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'node',
-  );
-
-  // Exported permission: 'edit any chapter content'.
-  $permissions['edit any chapter content'] = array(
-    'name' => 'edit any chapter content',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'node',
-  );
-
-  // Exported permission: 'edit own chapter content'.
-  $permissions['edit own chapter content'] = array(
-    'name' => 'edit own chapter content',
     'roles' => array(
       'administrator' => 'administrator',
     ),

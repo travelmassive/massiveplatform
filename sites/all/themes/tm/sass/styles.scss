@@ -41,23 +41,13 @@
 }
 
 /* ==========================================================================
-   Main structure
+   Main structure - grid, margins and things alike
    ========================================================================== */
 
-#page {
-  background-color: #d3d6d9;
-}
-
-#header .inner,
-#main #content,
-#footer .inner {
-  @include grid-row;
-}
-
 #header {
-  background-color: #fff;
   #site-title {
     @include grid-column(10);
+    margin: 0;
   }
   nav#primary {
     @include grid-column(2); 
@@ -72,17 +62,51 @@
   }
 }
 
+// #content spans 12 cols to make sure anything that ends up there abides to
+// the grid. Make sure to include a nested row around layouts that implement
+// more columns inside of content.
+
+#main {
+  #content {
+    @include grid-column(12);
+    
+    article.trilithon {
+      @include grid-row($behavior: nest);
+      .banner,
+      .column {
+        @include grid-column(12);
+      }
+      @media #{$medium-up} {
+        .column {
+          @include grid-column(6);
+        }
+      }
+    }
+
+  }
+}
+
+#footer {
+}
+
+/* ==========================================================================
+   Styles
+   ========================================================================== */
+
+#page {
+  background-color: #d3d6d9;
+}
+
+#header {
+  background-color: #fff;
+  #site-title {
+  }
+  nav#primary {
+  }
+}
+
 #main {
   background-color: #e9eace;
-  .banner,
-  .column {
-    @include grid-column(12);
-  }
-  @media #{$medium-up} {
-    .column {
-      @include grid-column(6);
-    }
-  }
 }
 
 #footer {

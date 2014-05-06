@@ -11,7 +11,7 @@
 <div id="page">
 
   <header class="header" id="header" role="banner">
-    <div class="inner">
+    <div class="row">
       <?php if ($logo): ?>
         <h1 id="site-title">
           <a title="<?php print t('Home'); ?>" rel="home" href="<?php print $front_page; ?>">
@@ -44,24 +44,25 @@
   </header>
 
   <div id="main">
+    <div class="row">
+      <div id="content" role="main">
+        <a id="main-content"></a>
+        <?php print render($title_prefix); ?>
+        <?php if ($title): ?>
+          <h1 class="page__title title" id="page-title"><?php print $title; ?></h1>
+        <?php endif; ?>
+        <?php print render($title_suffix); ?>
+        <?php print $messages; ?>
+        <?php print render($tabs); ?>
+        <?php print render($page['help']); ?>
+        <?php if ($action_links): ?>
+          <ul class="action-links"><?php print render($action_links); ?></ul>
+        <?php endif; ?>
+        <?php print render($page['content']); ?>
+        <?php print $feed_icons; ?>
+      </div>
 
-    <div id="content" role="main">
-      <a id="main-content"></a>
-      <?php print render($title_prefix); ?>
-      <?php if ($title): ?>
-        <h1 class="page__title title" id="page-title"><?php print $title; ?></h1>
-      <?php endif; ?>
-      <?php print render($title_suffix); ?>
-      <?php print $messages; ?>
-      <?php print render($tabs); ?>
-      <?php print render($page['help']); ?>
-      <?php if ($action_links): ?>
-        <ul class="action-links"><?php print render($action_links); ?></ul>
-      <?php endif; ?>
-      <?php print render($page['content']); ?>
-      <?php print $feed_icons; ?>
     </div>
-
   </div>
 
   <?php print render($page['footer']); ?>

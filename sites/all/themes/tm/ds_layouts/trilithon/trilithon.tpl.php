@@ -22,7 +22,7 @@
  * - $second_column_classes: String of classes that can be used to style the "Second column" region.
  */
 ?>
-<<?php print $layout_wrapper; print $layout_attributes; ?> class="<?php print $classes;?> clearfix">
+<<?php print $layout_wrapper; print $layout_attributes; ?> class="trilithon <?php print $classes;?> clearfix">
 
   <!-- Needed to activate contextual links -->
   <?php if (isset($title_suffix['contextual_links'])): ?>

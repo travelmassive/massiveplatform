@@ -33,14 +33,6 @@ function tm_base_node_info() {
       'title_label' => t('City'),
       'help' => '',
     ),
-    'organization' => array(
-      'name' => t('Company'),
-      'base' => 'node_content',
-      'description' => t('Companies can have a presence on Travel Massive and are managed by members.'),
-      'has_title' => '1',
-      'title_label' => t('Name'),
-      'help' => '',
-    ),
   );
   return $items;
 }

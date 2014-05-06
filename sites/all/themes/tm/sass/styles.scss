@@ -15,15 +15,27 @@
 /* Layout rules */
 //@import "layouts/responsive";
 
+// Foundation grid
+// @import "foundation_5.0.3/settings";
+@import "foundation_5.0.3/components/grid";
+
 /* Component (SMACSS module) rules */
 @import "components/misc";
 // Optionally, add your own components here.
 @import "print";
 
-// Foundation grid
-// @import "foundation_5.0.3/settings";
-@import "foundation_5.0.3/components/grid";
 
+
+
+// Set box-sizing globally to handle padding and border widths
+// Originally included in the html-classes of Foundation, but we're not loading
+// those.
+
+*,
+*:before,
+*:after {
+  @include box-sizing(border-box);
+}
 
 /* ==========================================================================
    Helpers

@@ -85,9 +85,11 @@ $arial:           Arial, Helvetica, "Nimbus Sans L", sans-serif;
 // http://meyerweb.com/eric/thoughts/2010/02/12/fixed-monospace-sizing/
 $courier:         "Courier New", "DejaVu Sans Mono", monospace, sans-serif;
 
+$raleway:         "Raleway", sans-serif;
+
 // Now create some variables for the font stacks we want to use on this site.
-$base-font-family: $verdana; // The font family set on the html element.
-$font-body:        $verdana;
+$base-font-family: $raleway; // The font family set on the html element.
+$font-body:        $raleway;
 $font-monospace:   $courier;
 
 
@@ -155,10 +157,9 @@ $tabs-border: #bbb;
 // We use this to control whether or not CSS classes come through in the gem files.
 // $include-html-classes: true;
 // $include-print-styles: true;
-// $include-html-global-classes: $include-html-classes;
+$include-html-global-classes: false; // Otherwise too much conflicts with Zen
 
 // Grid
-
 // $include-html-grid-classes: $include-html-classes;
 
 $row-width: rem-calc(1180);

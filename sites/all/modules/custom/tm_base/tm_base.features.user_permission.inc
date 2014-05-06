@@ -66,15 +66,6 @@ function tm_base_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: 'create event content'.
-  $permissions['create event content'] = array(
-    'name' => 'create event content',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'node',
-  );
-
   // Exported permission: 'create organization content'.
   $permissions['create organization content'] = array(
     'name' => 'create organization content',
@@ -94,15 +85,6 @@ function tm_base_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: 'delete any event content'.
-  $permissions['delete any event content'] = array(
-    'name' => 'delete any event content',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'node',
-  );
-
   // Exported permission: 'delete any organization content'.
   $permissions['delete any organization content'] = array(
     'name' => 'delete any organization content',
@@ -115,15 +97,6 @@ function tm_base_user_default_permissions() {
   // Exported permission: 'delete own chapter content'.
   $permissions['delete own chapter content'] = array(
     'name' => 'delete own chapter content',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'node',
-  );
-
-  // Exported permission: 'delete own event content'.
-  $permissions['delete own event content'] = array(
-    'name' => 'delete own event content',
     'roles' => array(
       'administrator' => 'administrator',
     ),
@@ -157,15 +130,6 @@ function tm_base_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: 'edit any event content'.
-  $permissions['edit any event content'] = array(
-    'name' => 'edit any event content',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'node',
-  );
-
   // Exported permission: 'edit any organization content'.
   $permissions['edit any organization content'] = array(
     'name' => 'edit any organization content',
@@ -178,15 +142,6 @@ function tm_base_user_default_permissions() {
   // Exported permission: 'edit own chapter content'.
   $permissions['edit own chapter content'] = array(
     'name' => 'edit own chapter content',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'node',
-  );
-
-  // Exported permission: 'edit own event content'.
-  $permissions['edit own event content'] = array(
-    'name' => 'edit own event content',
     'roles' => array(
       'administrator' => 'administrator',
     ),

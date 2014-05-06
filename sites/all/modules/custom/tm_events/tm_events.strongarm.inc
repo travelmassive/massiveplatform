@@ -1,19 +1,19 @@
 <?php
 /**
  * @file
- * tm_base.strongarm.inc
+ * tm_events.strongarm.inc
  */
 
 /**
  * Implements hook_strongarm().
  */
-function tm_base_strongarm() {
+function tm_events_strongarm() {
   $export = array();
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'field_bundle_settings_node__chapter';
+  $strongarm->name = 'field_bundle_settings_node__event';
   $strongarm->value = array(
     'view_modes' => array(
       'grid' => array(
@@ -44,21 +44,21 @@ function tm_base_strongarm() {
     'extra_fields' => array(
       'form' => array(
         'title' => array(
-          'weight' => '-5',
+          'weight' => '0',
         ),
         'path' => array(
-          'weight' => '30',
+          'weight' => '1',
         ),
       ),
       'display' => array(),
     ),
   );
-  $export['field_bundle_settings_node__chapter'] = $strongarm;
+  $export['field_bundle_settings_node__event'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'field_bundle_settings_node__organization';
+  $strongarm->name = 'field_bundle_settings_node__partner_event';
   $strongarm->value = array(
     'view_modes' => array(
       'grid' => array(
@@ -68,7 +68,7 @@ function tm_base_strongarm() {
         'custom_settings' => TRUE,
       ),
       'full' => array(
-        'custom_settings' => TRUE,
+        'custom_settings' => FALSE,
       ),
       'teaser' => array(
         'custom_settings' => FALSE,
@@ -87,99 +87,85 @@ function tm_base_strongarm() {
       ),
     ),
     'extra_fields' => array(
-      'form' => array(
-        'title' => array(
-          'weight' => '-5',
-        ),
-        'path' => array(
-          'weight' => '30',
-        ),
-      ),
+      'form' => array(),
       'display' => array(),
     ),
   );
-  $export['field_bundle_settings_node__organization'] = $strongarm;
+  $export['field_bundle_settings_node__partner_event'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'menu_options_chapter';
+  $strongarm->name = 'menu_options_event';
   $strongarm->value = array();
-  $export['menu_options_chapter'] = $strongarm;
+  $export['menu_options_event'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'menu_options_organization';
+  $strongarm->name = 'menu_options_partner_event';
   $strongarm->value = array();
-  $export['menu_options_organization'] = $strongarm;
+  $export['menu_options_partner_event'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'menu_parent_chapter';
+  $strongarm->name = 'menu_parent_event';
   $strongarm->value = 'main-menu:0';
-  $export['menu_parent_chapter'] = $strongarm;
+  $export['menu_parent_event'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'menu_parent_organization';
+  $strongarm->name = 'menu_parent_partner_event';
   $strongarm->value = 'main-menu:0';
-  $export['menu_parent_organization'] = $strongarm;
+  $export['menu_parent_partner_event'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'node_options_chapter';
+  $strongarm->name = 'node_options_event';
   $strongarm->value = array(
     0 => 'status',
   );
-  $export['node_options_chapter'] = $strongarm;
+  $export['node_options_event'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'node_options_organization';
+  $strongarm->name = 'node_options_partner_event';
   $strongarm->value = array(
     0 => 'status',
   );
-  $export['node_options_organization'] = $strongarm;
+  $export['node_options_partner_event'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'node_preview_chapter';
+  $strongarm->name = 'node_preview_event';
   $strongarm->value = '1';
-  $export['node_preview_chapter'] = $strongarm;
+  $export['node_preview_event'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'node_preview_organization';
+  $strongarm->name = 'node_preview_partner_event';
   $strongarm->value = '1';
-  $export['node_preview_organization'] = $strongarm;
+  $export['node_preview_partner_event'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'node_submitted_chapter';
+  $strongarm->name = 'node_submitted_event';
   $strongarm->value = 0;
-  $export['node_submitted_chapter'] = $strongarm;
+  $export['node_submitted_event'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'node_submitted_organization';
+  $strongarm->name = 'node_submitted_partner_event';
   $strongarm->value = 0;
-  $export['node_submitted_organization'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'theme_default';
-  $strongarm->value = 'tm';
-  $export['theme_default'] = $strongarm;
+  $export['node_submitted_partner_event'] = $strongarm;
 
   return $export;
 }

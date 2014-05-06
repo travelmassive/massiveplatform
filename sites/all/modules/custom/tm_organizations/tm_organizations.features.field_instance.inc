@@ -33,10 +33,9 @@ function tm_organizations_field_default_field_instances() {
       ),
       'grid' => array(
         'label' => 'hidden',
-        'module' => 'text',
         'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 0,
+        'type' => 'hidden',
+        'weight' => 1,
       ),
       'list' => array(
         'label' => 'hidden',
@@ -106,7 +105,7 @@ function tm_organizations_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 11,
       ),
       'list' => array(
         'label' => 'above',
@@ -165,10 +164,9 @@ function tm_organizations_field_default_field_instances() {
       ),
       'grid' => array(
         'label' => 'above',
-        'module' => 'text',
         'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 1,
+        'type' => 'hidden',
+        'weight' => 2,
       ),
       'list' => array(
         'label' => 'above',
@@ -230,14 +228,14 @@ function tm_organizations_field_default_field_instances() {
         'weight' => 2,
       ),
       'grid' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'image',
         'settings' => array(
-          'image_link' => '',
-          'image_style' => '',
+          'image_link' => 'content',
+          'image_style' => 'banner',
         ),
         'type' => 'image',
-        'weight' => 2,
+        'weight' => 3,
       ),
       'list' => array(
         'label' => 'above',
@@ -310,11 +308,8 @@ function tm_organizations_field_default_field_instances() {
       ),
       'grid' => array(
         'label' => 'above',
-        'module' => 'entityreference',
-        'settings' => array(
-          'link' => FALSE,
-        ),
-        'type' => 'entityreference_label',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 4,
       ),
       'list' => array(

@@ -23,6 +23,7 @@ function tm_base_views_default_views() {
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Community';
+  $handler->display->display_options['css_class'] = 'grid';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'access user profiles';
@@ -32,24 +33,8 @@ function tm_base_views_default_views() {
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '10';
   $handler->display->display_options['style_plugin'] = 'default';
-  $handler->display->display_options['row_plugin'] = 'ds';
+  $handler->display->display_options['row_plugin'] = 'user';
   $handler->display->display_options['row_options']['view_mode'] = 'grid';
-  $handler->display->display_options['row_options']['alternating'] = 0;
-  $handler->display->display_options['row_options']['grouping'] = 0;
-  $handler->display->display_options['row_options']['advanced'] = 0;
-  $handler->display->display_options['row_options']['delta_fieldset']['delta_fields'] = array();
-  $handler->display->display_options['row_options']['grouping_fieldset']['group_field'] = 'users|created';
-  $handler->display->display_options['row_options']['default_fieldset']['view_mode'] = 'grid';
-  $handler->display->display_options['row_options']['alternating_fieldset']['item_0'] = 'full';
-  $handler->display->display_options['row_options']['alternating_fieldset']['item_1'] = 'full';
-  $handler->display->display_options['row_options']['alternating_fieldset']['item_2'] = 'full';
-  $handler->display->display_options['row_options']['alternating_fieldset']['item_3'] = 'full';
-  $handler->display->display_options['row_options']['alternating_fieldset']['item_4'] = 'full';
-  $handler->display->display_options['row_options']['alternating_fieldset']['item_5'] = 'full';
-  $handler->display->display_options['row_options']['alternating_fieldset']['item_6'] = 'full';
-  $handler->display->display_options['row_options']['alternating_fieldset']['item_7'] = 'full';
-  $handler->display->display_options['row_options']['alternating_fieldset']['item_8'] = 'full';
-  $handler->display->display_options['row_options']['alternating_fieldset']['item_9'] = 'full';
   /* Field: User: Name */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'users';

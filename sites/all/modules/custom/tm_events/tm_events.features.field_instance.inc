@@ -33,10 +33,9 @@ function tm_events_field_default_field_instances() {
       ),
       'grid' => array(
         'label' => 'hidden',
-        'module' => 'text',
         'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 0,
+        'type' => 'hidden',
+        'weight' => 13,
       ),
       'list' => array(
         'label' => 'hidden',
@@ -102,13 +101,13 @@ function tm_events_field_default_field_instances() {
         'weight' => 5,
       ),
       'grid' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'entityreference',
         'settings' => array(
           'link' => FALSE,
         ),
         'type' => 'entityreference_label',
-        'weight' => 5,
+        'weight' => 4,
       ),
       'list' => array(
         'label' => 'above',
@@ -178,7 +177,7 @@ function tm_events_field_default_field_instances() {
         'weight' => 1,
       ),
       'grid' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'date',
         'settings' => array(
           'format_type' => 'long',
@@ -188,7 +187,7 @@ function tm_events_field_default_field_instances() {
           'multiple_to' => '',
         ),
         'type' => 'date_default',
-        'weight' => 1,
+        'weight' => 2,
       ),
       'list' => array(
         'label' => 'above',
@@ -264,14 +263,14 @@ function tm_events_field_default_field_instances() {
         'weight' => 6,
       ),
       'grid' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'image',
         'settings' => array(
           'image_link' => '',
-          'image_style' => '',
+          'image_style' => 'banner',
         ),
         'type' => 'image',
-        'weight' => 6,
+        'weight' => 1,
       ),
       'list' => array(
         'label' => 'above',
@@ -340,10 +339,9 @@ function tm_events_field_default_field_instances() {
       ),
       'grid' => array(
         'label' => 'above',
-        'module' => 'text',
         'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 7,
+        'type' => 'hidden',
+        'weight' => 15,
       ),
       'list' => array(
         'label' => 'above',
@@ -401,10 +399,9 @@ function tm_events_field_default_field_instances() {
       ),
       'grid' => array(
         'label' => 'above',
-        'module' => 'link',
         'settings' => array(),
-        'type' => 'link_default',
-        'weight' => 3,
+        'type' => 'hidden',
+        'weight' => 14,
       ),
       'list' => array(
         'label' => 'above',
@@ -482,7 +479,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 12,
       ),
       'list' => array(
         'label' => 'above',
@@ -530,10 +527,9 @@ function tm_events_field_default_field_instances() {
       ),
       'grid' => array(
         'label' => 'above',
-        'module' => 'link',
         'settings' => array(),
-        'type' => 'link_default',
-        'weight' => 9,
+        'type' => 'hidden',
+        'weight' => 17,
       ),
       'list' => array(
         'label' => 'above',

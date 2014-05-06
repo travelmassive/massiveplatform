@@ -3135,9 +3135,12 @@ select {
 }
 
 /* ==========================================================================
+   Type
+   ========================================================================== */
+/* ==========================================================================
    Main structure - grid, margins and things alike
    ========================================================================== */
-/* line 48, ../sass/styles.scss */
+/* line 54, ../sass/styles.scss */
 #header #site-title {
   position: relative;
   padding-left: 1rem;
@@ -3146,7 +3149,7 @@ select {
   float: left;
   margin: 0;
 }
-/* line 52, ../sass/styles.scss */
+/* line 58, ../sass/styles.scss */
 #header nav#primary {
   position: relative;
   padding-left: 1rem;
@@ -3155,7 +3158,7 @@ select {
   float: left;
 }
 @media only screen and (min-width: 48.063rem) {
-  /* line 56, ../sass/styles.scss */
+  /* line 62, ../sass/styles.scss */
   #header #site-title {
     position: relative;
     padding-left: 1rem;
@@ -3163,7 +3166,7 @@ select {
     width: 33.33333%;
     float: left;
   }
-  /* line 59, ../sass/styles.scss */
+  /* line 65, ../sass/styles.scss */
   #header nav#primary {
     position: relative;
     padding-left: 1rem;
@@ -3173,7 +3176,7 @@ select {
   }
 }
 
-/* line 70, ../sass/styles.scss */
+/* line 76, ../sass/styles.scss */
 #main #content {
   position: relative;
   padding-left: 1rem;
@@ -3181,7 +3184,7 @@ select {
   width: 100%;
   float: left;
 }
-/* line 73, ../sass/styles.scss */
+/* line 79, ../sass/styles.scss */
 #main #content article.trilithon {
   width: auto;
   margin-left: -1rem;
@@ -3200,7 +3203,7 @@ select {
 #main #content article.trilithon:after {
   clear: both;
 }
-/* line 76, ../sass/styles.scss */
+/* line 82, ../sass/styles.scss */
 #main #content article.trilithon .banner,
 #main #content article.trilithon .column {
   position: relative;
@@ -3210,7 +3213,7 @@ select {
   float: left;
 }
 @media only screen and (min-width: 48.063rem) {
-  /* line 80, ../sass/styles.scss */
+  /* line 86, ../sass/styles.scss */
   #main #content article.trilithon .column {
     position: relative;
     padding-left: 1rem;
@@ -3223,22 +3226,22 @@ select {
 /* ==========================================================================
    Styles
    ========================================================================== */
-/* line 96, ../sass/styles.scss */
+/* line 102, ../sass/styles.scss */
 #page {
   background-color: #d3d6d9;
 }
 
-/* line 100, ../sass/styles.scss */
+/* line 106, ../sass/styles.scss */
 #header {
   background-color: #fff;
 }
 
-/* line 108, ../sass/styles.scss */
+/* line 114, ../sass/styles.scss */
 #main {
   background-color: #e9eace;
 }
 
-/* line 112, ../sass/styles.scss */
+/* line 118, ../sass/styles.scss */
 #footer {
   background-color: #d3d6d9;
 }

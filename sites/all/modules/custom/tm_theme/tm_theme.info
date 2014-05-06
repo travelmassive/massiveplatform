@@ -1,0 +1,11 @@
+name = TM Theme
+description = Theme settings and config that can not be stored in the base theme
+core = 7.x
+package = TM Features
+version = 7.x-1.0-dev
+project = tm_theme
+dependencies[] = image
+dependencies[] = tm_base
+features[features_api][] = api:2
+features[image][] = avatar
+features[image][] = banner

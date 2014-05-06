@@ -24,6 +24,13 @@ function tm_base_field_default_field_instances() {
         'type' => 'text_default',
         'weight' => 0,
       ),
+      'full' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
       'grid' => array(
         'label' => 'hidden',
         'module' => 'text',
@@ -85,6 +92,15 @@ function tm_base_field_default_field_instances() {
         'type' => 'entityreference_label',
         'weight' => 1,
       ),
+      'full' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 1,
+      ),
       'grid' => array(
         'label' => 'above',
         'module' => 'entityreference',
@@ -137,6 +153,16 @@ function tm_base_field_default_field_instances() {
     'description' => 'Provide a banner image that is a good reflection of your city.',
     'display' => array(
       'default' => array(
+        'label' => 'above',
+        'module' => 'image',
+        'settings' => array(
+          'image_link' => '',
+          'image_style' => '',
+        ),
+        'type' => 'image',
+        'weight' => 2,
+      ),
+      'full' => array(
         'label' => 'above',
         'module' => 'image',
         'settings' => array(
@@ -214,6 +240,13 @@ function tm_base_field_default_field_instances() {
         'type' => 'text_default',
         'weight' => 0,
       ),
+      'full' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
       'grid' => array(
         'label' => 'hidden',
         'module' => 'text',
@@ -275,6 +308,15 @@ function tm_base_field_default_field_instances() {
         'type' => 'entityreference_label',
         'weight' => 5,
       ),
+      'full' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 5,
+      ),
       'grid' => array(
         'label' => 'above',
         'module' => 'entityreference',
@@ -326,6 +368,19 @@ function tm_base_field_default_field_instances() {
     'description' => 'Select the date and start time of the event.',
     'display' => array(
       'default' => array(
+        'label' => 'above',
+        'module' => 'date',
+        'settings' => array(
+          'format_type' => 'long',
+          'fromto' => 'both',
+          'multiple_from' => '',
+          'multiple_number' => '',
+          'multiple_to' => '',
+        ),
+        'type' => 'date_default',
+        'weight' => 1,
+      ),
+      'full' => array(
         'label' => 'above',
         'module' => 'date',
         'settings' => array(
@@ -414,6 +469,16 @@ function tm_base_field_default_field_instances() {
         'type' => 'image',
         'weight' => 6,
       ),
+      'full' => array(
+        'label' => 'above',
+        'module' => 'image',
+        'settings' => array(
+          'image_link' => '',
+          'image_style' => '',
+        ),
+        'type' => 'image',
+        'weight' => 6,
+      ),
       'grid' => array(
         'label' => 'above',
         'module' => 'image',
@@ -482,6 +547,13 @@ function tm_base_field_default_field_instances() {
         'type' => 'text_default',
         'weight' => 7,
       ),
+      'full' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 7,
+      ),
       'grid' => array(
         'label' => 'above',
         'module' => 'text',
@@ -530,6 +602,13 @@ function tm_base_field_default_field_instances() {
     'description' => 'Help the attendees find the right location by providing a link to a map, for example <a href="http://maps.google.com/">Google Maps</a>.',
     'display' => array(
       'default' => array(
+        'label' => 'above',
+        'module' => 'link',
+        'settings' => array(),
+        'type' => 'link_default',
+        'weight' => 3,
+      ),
+      'full' => array(
         'label' => 'above',
         'module' => 'link',
         'settings' => array(),
@@ -606,6 +685,15 @@ function tm_base_field_default_field_instances() {
         'type' => 'entityreference_label',
         'weight' => 10,
       ),
+      'full' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 10,
+      ),
       'grid' => array(
         'label' => 'above',
         'settings' => array(),
@@ -643,6 +731,13 @@ function tm_base_field_default_field_instances() {
     'description' => 'Provide a link to the page with the RSVP.',
     'display' => array(
       'default' => array(
+        'label' => 'above',
+        'module' => 'link',
+        'settings' => array(),
+        'type' => 'link_default',
+        'weight' => 9,
+      ),
+      'full' => array(
         'label' => 'above',
         'module' => 'link',
         'settings' => array(),
@@ -711,6 +806,13 @@ function tm_base_field_default_field_instances() {
         'type' => 'text_default',
         'weight' => 0,
       ),
+      'full' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
       'grid' => array(
         'label' => 'hidden',
         'module' => 'text',
@@ -756,6 +858,69 @@ function tm_base_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-organization-field_avatar'
+  $field_instances['node-organization-field_avatar'] = array(
+    'bundle' => 'organization',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'image',
+        'settings' => array(
+          'image_link' => '',
+          'image_style' => '',
+        ),
+        'type' => 'image',
+        'weight' => 5,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_avatar',
+    'label' => 'Logo',
+    'required' => 0,
+    'settings' => array(
+      'alt_field' => 0,
+      'default_image' => 0,
+      'file_directory' => 'avatar/companies',
+      'file_extensions' => 'png gif jpg jpeg',
+      'max_filesize' => '',
+      'max_resolution' => '',
+      'min_resolution' => '',
+      'title_field' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'image',
+      'settings' => array(
+        'preview_image_style' => 'thumbnail',
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'image_image',
+      'weight' => 38,
+    ),
+  );
+
   // Exported field_instance: 'node-organization-field_friendly_url'
   $field_instances['node-organization-field_friendly_url'] = array(
     'bundle' => 'organization',
@@ -768,6 +933,12 @@ function tm_base_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
+        'weight' => 1,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 1,
       ),
       'grid' => array(
@@ -817,6 +988,16 @@ function tm_base_field_default_field_instances() {
     'description' => 'This image will used as the main banner for your profile and should be a good reflection of your company.',
     'display' => array(
       'default' => array(
+        'label' => 'above',
+        'module' => 'image',
+        'settings' => array(
+          'image_link' => '',
+          'image_style' => '',
+        ),
+        'type' => 'image',
+        'weight' => 2,
+      ),
+      'full' => array(
         'label' => 'above',
         'module' => 'image',
         'settings' => array(
@@ -880,76 +1061,6 @@ function tm_base_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-organization-field_logo'
-  $field_instances['node-organization-field_logo'] = array(
-    'bundle' => 'organization',
-    'deleted' => 0,
-    'description' => 'Upload your company logo.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'image',
-        'settings' => array(
-          'image_link' => '',
-          'image_style' => '',
-        ),
-        'type' => 'image',
-        'weight' => 3,
-      ),
-      'grid' => array(
-        'label' => 'above',
-        'module' => 'image',
-        'settings' => array(
-          'image_link' => '',
-          'image_style' => '',
-        ),
-        'type' => 'image',
-        'weight' => 3,
-      ),
-      'list' => array(
-        'label' => 'above',
-        'module' => 'image',
-        'settings' => array(
-          'image_link' => '',
-          'image_style' => '',
-        ),
-        'type' => 'image',
-        'weight' => 3,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_logo',
-    'label' => 'Logo',
-    'required' => 0,
-    'settings' => array(
-      'alt_field' => 0,
-      'default_image' => 0,
-      'file_directory' => 'images/company-logos',
-      'file_extensions' => 'png gif jpg jpeg',
-      'max_filesize' => '',
-      'max_resolution' => '',
-      'min_resolution' => '',
-      'title_field' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'image',
-      'settings' => array(
-        'preview_image_style' => 'thumbnail',
-        'progress_indicator' => 'throbber',
-      ),
-      'type' => 'image_image',
-      'weight' => 35,
-    ),
-  );
-
   // Exported field_instance: 'node-organization-field_owner'
   $field_instances['node-organization-field_owner'] = array(
     'bundle' => 'organization',
@@ -958,6 +1069,15 @@ function tm_base_field_default_field_instances() {
     'description' => 'Select the Travel Massive member that manages this account.',
     'display' => array(
       'default' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 4,
+      ),
+      'full' => array(
         'label' => 'above',
         'module' => 'entityreference',
         'settings' => array(
@@ -1093,7 +1213,6 @@ function tm_base_field_default_field_instances() {
   t('Select the date and start time of the event.');
   t('This image will used as the main banner for the event.');
   t('This image will used as the main banner for your profile and should be a good reflection of your company.');
-  t('Upload your company logo.');
   t('You can appoint any other chapter leader of this city as organizer of the event.');
 
   return $field_instances;

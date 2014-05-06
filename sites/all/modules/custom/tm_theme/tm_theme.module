@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the TM Theme feature.
+ */
+
+include_once 'tm_theme.features.inc';

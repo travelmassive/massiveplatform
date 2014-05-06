@@ -43,7 +43,7 @@
     </div>
   </header>
 
-  <div id="main">
+  <main id="main">
     <div class="row">
       <div id="content" role="main">
         <a id="main-content"></a>
@@ -63,7 +63,7 @@
       </div>
 
     </div>
-  </div>
+  </main>
 
   <?php print render($page['footer']); ?>
 

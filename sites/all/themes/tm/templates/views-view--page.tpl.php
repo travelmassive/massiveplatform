@@ -29,12 +29,16 @@
 ?>
 <section class="<?php print $classes; ?>">
   <header>
+    <?php // This title is printed in the preview area of the view. Default Views ?>
     <?php print render($title_prefix); ?>
     <?php if ($title): ?>
       <?php print $title; ?>
     <?php endif; ?>
     <?php print render($title_suffix); ?>
-    <h1><?php print $view->get_title(); ?></h1>
+    <?php // Printing the View title and omitting it from the page template ?>
+    <?php if ($view->get_title()): ?>
+      <h1><?php print $view->get_title(); ?></h1>
+    <?php endif; ?>
     <?php if ($exposed): ?>
       <div class="view-filters">
         <?php print $exposed; ?>

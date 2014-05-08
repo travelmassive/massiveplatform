@@ -338,9 +338,10 @@ function tm_events_field_default_field_instances() {
         'weight' => 7,
       ),
       'grid' => array(
-        'label' => 'above',
+        'label' => 'hidden',
+        'module' => 'text',
         'settings' => array(),
-        'type' => 'hidden',
+        'type' => 'text_default',
         'weight' => 15,
       ),
       'list' => array(

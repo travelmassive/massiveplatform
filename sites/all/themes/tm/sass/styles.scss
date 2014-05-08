@@ -62,45 +62,83 @@
    Main structure - grid, margins and things alike
    ========================================================================== */
 
-#header {
+#site-title {
+  @include grid-column(10);
+  margin: 0;
+}
+#primary {
+  @include grid-column(2); 
+}
+@media #{$medium-up} {
   #site-title {
-    @include grid-column(10);
-    margin: 0;
+    @include grid-column(4);
   }
-  nav#primary {
-    @include grid-column(2); 
-  }
-  @media #{$medium-up} {
-    #site-title {
-      @include grid-column(4);
-    }
-    nav#primary {
-      @include grid-column(8); 
-    }    
-  }
+  #primary {
+    @include grid-column(8); 
+  }    
 }
 
 // #content spans 12 cols to make sure anything that ends up there abides to
 // the grid. Make sure to include a nested row around layouts that implement
 // more columns inside of content.
 
-#main {
-  #content {
-    @include grid-column(12);
-    
-    article.trilithon {
-      @include grid-row($behavior: nest);
-      .banner,
+#content {
+  @include grid-column(12); 
+  
+  // Display Suite layout Trilithon
+  .trilithon {
+    @include grid-row($behavior: nest);
+    .banner,
+    .column {
+      @include grid-column(12);
+    }
+    @media #{$medium-up} {
       .column {
-        @include grid-column(12);
+        @include grid-column(6);
       }
-      @media #{$medium-up} {
-        .column {
-          @include grid-column(6);
+    }
+  }
+
+  // Mostly used by hubs (implemented with Views)
+  .grid {
+    ul {
+      @include grid-row($behavior: nest);
+      padding: 0;
+    }
+    li {
+      @include grid-column(12);
+      list-style: none;
+    }
+    @media #{$small-up} {
+      li {
+        @include grid-column(6);
+        &:nth-child(2n+1) {
+          clear: left;
         }
       }
     }
-
+    @media #{$medium-up} {
+      li {
+        @include grid-column(4);
+        &:nth-child(2n+1) {
+          clear: none;
+        }
+        &:nth-child(3n+1) {
+          clear: left;
+        }
+      }
+    }
+    @media #{$large-up} {
+      li {
+        @include grid-column(3);
+        &:nth-child(3n+1) {
+          clear: none;
+        }
+        &:nth-child(4n+1) {
+          clear: left;
+        }
+      }
+    }
   }
 }
 
@@ -119,12 +157,12 @@
   background-color: #fff;
   #site-title {
   }
-  nav#primary {
+  #primary {
   }
 }
 
 #main {
-  background-color: #e9eace;
+  background-color: #e9eaec;
 }
 
 #footer {

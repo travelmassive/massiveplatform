@@ -172,7 +172,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'hidden',
         'module' => 'image',
         'settings' => array(
-          'image_link' => 'content',
+          'image_link' => '',
           'image_style' => 'banner',
         ),
         'type' => 'image',

@@ -102,9 +102,13 @@ function tm_organizations_field_default_field_instances() {
         'weight' => 0,
       ),
       'grid' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
+        'label' => 'hidden',
+        'module' => 'image',
+        'settings' => array(
+          'image_link' => '',
+          'image_style' => 'avatar',
+        ),
+        'type' => 'image',
         'weight' => 11,
       ),
       'list' => array(
@@ -231,7 +235,7 @@ function tm_organizations_field_default_field_instances() {
         'label' => 'hidden',
         'module' => 'image',
         'settings' => array(
-          'image_link' => 'content',
+          'image_link' => '',
           'image_style' => 'banner',
         ),
         'type' => 'image',

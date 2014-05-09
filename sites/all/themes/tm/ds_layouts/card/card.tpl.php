@@ -27,8 +27,12 @@
     <?php if (isset($title_suffix['contextual_links'])): ?>
       <?php print render($title_suffix['contextual_links']); ?>
     <?php endif; ?>
-
-  <a href="<?php print url('node/' . $nid); ?>">
+    <?php if (isset($nid)): ?>
+      <a href="<?php print url('node/' . $nid); ?>">
+    <?php else: ?>
+      <?php $uid = $elements['#account']->uid; ?>
+      <a href="<?php print url('user/' . $uid); ?>">
+    <?php endif; ?>
     <<?php print $media_wrapper; ?> class="media<?php print $media_classes; ?>">
       <?php print $media; ?>
     </<?php print $media_wrapper; ?>>

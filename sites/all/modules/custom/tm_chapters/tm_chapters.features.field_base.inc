@@ -8,7 +8,9 @@
  * Implements hook_field_default_field_bases().
  */
 function tm_chapters_field_default_field_bases() {
-// Exported field_base: 'field_chapter_leaders'
+  $field_bases = array();
+
+  // Exported field_base: 'field_chapter_leaders'
   $field_bases['field_chapter_leaders'] = array(
     'active' => 1,
     'cardinality' => -1,

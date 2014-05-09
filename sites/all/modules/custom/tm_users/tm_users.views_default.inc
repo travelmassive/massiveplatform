@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * tm_base.views_default.inc
+ * tm_users.views_default.inc
  */
 
 /**
  * Implements hook_views_default_views().
  */
-function tm_base_views_default_views() {
+function tm_users_views_default_views() {
   $export = array();
 
   $view = new view();

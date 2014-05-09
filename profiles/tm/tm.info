@@ -38,7 +38,7 @@ dependencies[] = token
 dependencies[] = views
 dependencies[] = views_ui
 
-; TM - development	
+; TM - development
 dependencies[] = admin_menu
 dependencies[] = admin_menu_toolbar
 dependencies[] = devel
@@ -50,3 +50,10 @@ dependencies[] = tm_sample_content
 
 ; TM - features
 dependencies[] = tm_base
+dependencies[] = tm_fields
+dependencies[] = tm_chapters
+dependencies[] = tm_events
+dependencies[] = tm_event_signup
+dependencies[] = tm_organizations
+dependencies[] = tm_sample_content
+dependencies[] = tm_theme

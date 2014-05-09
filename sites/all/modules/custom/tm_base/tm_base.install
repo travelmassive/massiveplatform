@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the tm_base module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function tm_base_install() {
+}
+
+/**
+ * Enable inline_registration module.
+ */
+function tm_base_update_7001() {
+  module_enable(array('tm_fields'));
+}

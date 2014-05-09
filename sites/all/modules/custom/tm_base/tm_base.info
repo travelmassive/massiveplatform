@@ -22,7 +22,6 @@ features[features_api][] = api:2
 features[field_base][] = body
 features[field_base][] = field_avatar
 features[field_base][] = field_chapter
-features[field_base][] = field_chapter_leaders
 features[field_base][] = field_date
 features[field_base][] = field_friendly_url
 features[field_base][] = field_image

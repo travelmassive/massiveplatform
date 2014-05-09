@@ -16,6 +16,7 @@ features[ds_layout_settings][] = node|chapter|default
 features[ds_layout_settings][] = node|chapter|full
 features[ds_layout_settings][] = node|chapter|grid
 features[features_api][] = api:2
+features[field_base][] = field_chapter_leaders
 features[field_instance][] = node-chapter-body
 features[field_instance][] = node-chapter-field_chapter_leaders
 features[field_instance][] = node-chapter-field_image

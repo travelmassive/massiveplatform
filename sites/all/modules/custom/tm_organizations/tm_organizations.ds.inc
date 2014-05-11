@@ -48,6 +48,12 @@ function tm_organizations_ds_field_settings_info() {
     'field_image' => array(
       'formatter_settings' => array(
         'ft' => array(
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'cover',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
           'fi' => TRUE,
           'fi-el' => 'div',
           'fi-cl' => 'cover',

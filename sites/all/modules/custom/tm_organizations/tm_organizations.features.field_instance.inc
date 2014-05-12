@@ -309,12 +309,8 @@ function tm_organizations_field_default_field_instances() {
       ),
       'grid' => array(
         'label' => 'above',
-        'module' => 'image',
-        'settings' => array(
-          'image_link' => '',
-          'image_style' => '',
-        ),
-        'type' => 'image',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 3,
       ),
       'list' => array(

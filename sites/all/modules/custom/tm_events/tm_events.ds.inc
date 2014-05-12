@@ -45,7 +45,14 @@ function tm_events_ds_field_settings_info() {
     ),
     'field_image' => array(
       'formatter_settings' => array(
-        'ft' => array(),
+        'ft' => array(
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'cover',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
       ),
     ),
     'field_location' => array(

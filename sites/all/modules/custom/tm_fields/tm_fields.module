@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the TM Fields feature.
+ */
+
+include_once 'tm_fields.features.inc';

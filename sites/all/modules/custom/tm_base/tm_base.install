@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the tm_base module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function tm_base_install() {
+}
+
+/**
+ * Enable the tm_fields module.
+ */
+function tm_base_update_7001() {
+  module_enable(array('tm_fields'));
+}
+/**
+ * Enable the tm_users module.
+ */
+function tm_base_update_7002() {
+  module_enable(array('tm_users'));
+}

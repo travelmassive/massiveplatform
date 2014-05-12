@@ -49,6 +49,13 @@ class TMChapterMigration extends TMBaseMigration {
     // Author, default to admin
     $this->addFieldMapping('uid')->defaultValue(1);
 
+    // Banner image
+    $this->addFieldMapping('field_image', 'banner');
+    $this->addFieldMapping('field_image:file_replace')
+      ->defaultValue(FILE_EXISTS_REPLACE);
+    $this->addFieldMapping('field_image:source_dir')
+      ->defaultValue(drupal_get_path('module', 'tm_sample_content') . '/import/files');
+
   }
 
   public function prepareRow($row) {

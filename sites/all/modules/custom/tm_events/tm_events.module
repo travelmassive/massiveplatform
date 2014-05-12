@@ -1,0 +1,33 @@
+<?php
+/**
+ * @file
+ * Code for the TM Events feature.
+ */
+
+include_once 'tm_events.features.inc';
+
+/**
+ * Implement hook_form_FORM_ID_alter()
+ */
+function tm_base_form_event_node_form_alter(&$form, &$form_state) {
+  
+  // Field visibilty based on whether the RSVP is handled through the TM  
+  
+  // Visible when RSVP is handled on TM
+  $form['field_signup_limit']['#states'] = array(
+    'visible' => array(
+     ':input[name="field_external_rsvp[und]"]' => array('value' => 0),
+    ),
+  );
+
+  // Visible when using external RSVP
+  $form['field_rsvp_link']['#states'] = array(
+    // Only show RSVP link when event is a TM event
+    'visible' => array(
+     ':input[name="field_external_rsvp[und]"]' => array('value' => 1),
+    ),
+  );
+
+  // /end field visibility based on RSVP
+
+}

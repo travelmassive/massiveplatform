@@ -13,13 +13,158 @@
 @import "normalize";
 
 /* Layout rules */
-@import "layouts/responsive";
+//@import "layouts/responsive";
+
+// Foundation grid
+// @import "foundation_5.0.3/settings";
+@import "foundation_5.0.3/components/grid";
 
 /* Component (SMACSS module) rules */
 @import "components/misc";
 // Optionally, add your own components here.
 @import "print";
 
-/* SMACSS theme rules */
-/* @import "theme-A"; */
-/* @import "theme-B"; */
+
+
+
+// Set box-sizing globally to handle padding and border widths
+// Originally included in the html-classes of Foundation, but we're not loading
+// those.
+
+*,
+*:before,
+*:after {
+  @include box-sizing(border-box);
+}
+
+/* ==========================================================================
+   Helpers
+   ========================================================================== */
+
+.visually-hidden {
+  border: 0 none;
+  clip: rect(0px, 0px, 0px, 0px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/* ==========================================================================
+   Type
+   ========================================================================== */
+
+
+
+/* ==========================================================================
+   Main structure - grid, margins and things alike
+   ========================================================================== */
+
+#site-title {
+  @include grid-column(10);
+  margin: 0;
+}
+#primary {
+  @include grid-column(2); 
+}
+@media #{$medium-up} {
+  #site-title {
+    @include grid-column(4);
+  }
+  #primary {
+    @include grid-column(8); 
+  }    
+}
+
+// #content spans 12 cols to make sure anything that ends up there abides to
+// the grid. Make sure to include a nested row around layouts that implement
+// more columns inside of content.
+
+#content {
+  @include grid-column(12); 
+  
+  // Display Suite layout Trilithon
+  .trilithon {
+    @include grid-row($behavior: nest);
+    .banner,
+    .column {
+      @include grid-column(12);
+    }
+    @media #{$medium-up} {
+      .column {
+        @include grid-column(6);
+      }
+    }
+  }
+
+  // Mostly used by hubs (implemented with Views)
+  .grid {
+    ul {
+      @include grid-row($behavior: nest);
+      padding: 0;
+    }
+    li {
+      @include grid-column(12);
+      list-style: none;
+    }
+    @media #{$small-up} {
+      li {
+        @include grid-column(6);
+        &:nth-child(2n+1) {
+          clear: left;
+        }
+      }
+    }
+    @media #{$medium-up} {
+      li {
+        @include grid-column(4);
+        &:nth-child(2n+1) {
+          clear: none;
+        }
+        &:nth-child(3n+1) {
+          clear: left;
+        }
+      }
+    }
+    @media #{$large-up} {
+      li {
+        @include grid-column(3);
+        &:nth-child(3n+1) {
+          clear: none;
+        }
+        &:nth-child(4n+1) {
+          clear: left;
+        }
+      }
+    }
+  }
+}
+
+#footer {
+}
+
+/* ==========================================================================
+   Styles
+   ========================================================================== */
+
+#page {
+  background-color: #d3d6d9;
+}
+
+#header {
+  background-color: #fff;
+  #site-title {
+  }
+  #primary {
+  }
+}
+
+#main {
+  background-color: #e9eaec;
+}
+
+#footer {
+  background-color: #d3d6d9;
+}

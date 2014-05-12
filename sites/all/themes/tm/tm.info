@@ -7,21 +7,15 @@
 ; Appearance page at admin/appearance.
 
 
-
-; The name, description and screenshot used for this theme on the Appearance
-; page at admin/appearance.
-
 screenshot  = screenshot.png
 name        = Travel Massive
-description = Read the <a href="https://drupal.org/node/873778">online docs</a> or the included README.txt on how to create a theme with Zen.
-
+description = A responsive theme for Travel Massive - a global travel community.
 
 
 ; This theme is compatible with Drupal 7 core. And it is a sub-theme of Zen.
 
 core        = 7.x
 base theme  = zen
-
 
 
 ; This section controls the CSS files for your theme. There are 3 different
@@ -85,15 +79,15 @@ stylesheets[all][] = css/styles.css
 ; And you'll use this variable in maintenance-page.tpl.php:
 ;   <?php print $header_top; ?>
 
-regions[header]         = Header
-regions[navigation]     = Navigation bar
-regions[highlighted]    = Highlighted
+;regions[header]         = Header
+;regions[navigation]     = Navigation bar
+;regions[highlighted]    = Highlighted
 regions[help]           = Help
 regions[content]        = Content
-regions[sidebar_first]  = First sidebar
-regions[sidebar_second] = Second sidebar
+;regions[sidebar_first]  = First sidebar
+;regions[sidebar_second] = Second sidebar
 regions[footer]         = Footer
-regions[bottom]         = Page bottom
+;regions[bottom]         = Page bottom
 
 ; The page_top and page_bottom regions are hidden, which means they will not
 ; show up on the blocks administration page. But they are required in order for
@@ -113,18 +107,18 @@ regions[page_bottom]    = Page bottom
 
 features[] = logo
 features[] = name
-features[] = slogan
-features[] = node_user_picture
-features[] = comment_user_picture
+;features[] = slogan
+;features[] = node_user_picture
+;features[] = comment_user_picture
 features[] = favicon
 features[] = main_menu
-features[] = secondary_menu
+;features[] = secondary_menu
 
 
 
 ; Set the default values of settings on the theme-settings.php form.
 
-settings[zen_breadcrumb]           = yes
+settings[zen_breadcrumb]           = no
 settings[zen_breadcrumb_separator] = ' › '
 settings[zen_breadcrumb_home]      = 1
 settings[zen_breadcrumb_trailing]  = 0

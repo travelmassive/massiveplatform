@@ -12,8 +12,14 @@ function tm_base_install() {
 }
 
 /**
- * Enable inline_registration module.
+ * Enable the tm_fields module.
  */
 function tm_base_update_7001() {
   module_enable(array('tm_fields'));
+}
+/**
+ * Enable the tm_users module.
+ */
+function tm_base_update_7002() {
+  module_enable(array('tm_users'));
 }

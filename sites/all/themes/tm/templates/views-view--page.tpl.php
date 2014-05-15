@@ -25,6 +25,11 @@
  * - $more: A link to view more, if any
  *
  * @ingroup views_templates
+ * 
+ * Customizations:
+ * - print the page title in the header (being hidden from page.tpl.php)
+ * - markup changes
+ * 
  */
 ?>
 <section class="<?php print $classes; ?>">

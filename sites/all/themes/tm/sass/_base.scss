@@ -23,6 +23,47 @@ body {
   @include box-sizing(border-box);
 }
 
+.row {
+  @media #{$small-up} {	
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+a:link,
+a:visited,
+button {
+  @include transform(translate3d(0, 0, 0));
+  @include transition-property(opacity, top, left, right);
+  @include transition-duration(0.2s, 0.1s, 0.2s, 0.2s);
+  @include transition-timing-function(ease, ease, ease, ease);
+  @include transition-delay(0, 0, 0, 0);
+  cursor: pointer;
+  color: $secondary-color;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus,
+button:hover {
+  outline: none;
+  opacity: 0.7;
+}
+
+a:active,
+button:active {
+  position: relative;
+  top: 2px;
+}
+
+a.disabled, .bttn.disabled {
+  opacity: 0.4;
+  cursor: default;
+  &:hover, &:focus {
+    opacity: 0.4;
+  }
+}
+
 /* ==========================================================================
    Helpers
    ========================================================================== */
@@ -49,7 +90,10 @@ body {
    ========================================================================== */
 
 #header {
+  position: relative;
+  z-index: 10;
   background: #FFF;
+  box-shadow: 0 2px 0 0 rgba($primary-color, 0.1);
   .row {
     padding-top: 1rem;
     padding-bottom: 1rem;

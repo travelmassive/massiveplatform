@@ -1,32 +1,3 @@
-/**
- * @file
- * Styles are organized using the SMACSS technique. @see http://smacss.com/book/
- *
- * When you turn on CSS aggregation at admin/config/development/performance, all
- * of these @include files will be combined into a single file.
- */
-
-/* Import Sass mixins, variables, Compass modules, etc. */
-@import "init";
-
-/* HTML element (SMACSS base) rules */
-@import "normalize";
-
-/* Layout rules */
-//@import "layouts/responsive";
-
-// Foundation grid
-// @import "foundation_5.0.3/settings";
-@import "foundation_5.0.3/components/grid";
-
-/* Component (SMACSS module) rules */
-@import "components/misc";
-// Optionally, add your own components here.
-@import "print";
-
-
-
-
 // Set box-sizing globally to handle padding and border widths
 // Originally included in the html-classes of Foundation, but we're not loading
 // those.

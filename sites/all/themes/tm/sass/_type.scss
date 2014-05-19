@@ -1,0 +1,64 @@
+/* ==========================================================================
+   Headings
+   ========================================================================== */
+h1, .hd-xl {
+  $ft-size: 28;
+  font-size: rem-calc($ft-size);
+  line-height: ($ft-size + 8) / $ft-size;
+  font-weight: $body-font-bold;
+  margin: 0 0 1rem 0;
+  padding: 0;
+  @media #{$small-up} {
+    $ft-size: 32;
+    font-size: rem-calc($ft-size);
+    line-height: ($ft-size + 8) / $ft-size;
+    letter-spacing: -0.5px;
+  }
+}
+h2, .hd-l {
+  $ft-size: 24;
+  font-size: rem-calc($ft-size);
+  line-height: ($ft-size + 8) / $ft-size;
+  font-weight: $body-font-bold;
+  letter-spacing: -0.2px;
+  margin: 0 0 1rem 0;
+  padding: 0;
+  @media #{$small-up} {
+    $ft-size: 28;
+    font-size: rem-calc($ft-size);
+    line-height: ($ft-size + 8) / $ft-size;
+    letter-spacing: -0.5px;
+  }
+}
+h3, .hd-m {
+  $ft-size: 20;
+  font-size: rem-calc($ft-size);
+  line-height: ($ft-size + 8) / $ft-size;
+  font-weight: $body-font-bold;
+  margin: 0 0 1rem 0;
+  padding: 0;
+  @media #{$small-up} {
+    $ft-size: 24;
+    font-size: rem-calc($ft-size);
+    line-height: ($ft-size + 8) / $ft-size;
+    letter-spacing: -0.2px;
+  }
+}
+h4, .hd-s {
+  $ft-size: 20;
+  font-size: rem-calc($ft-size);
+  line-height: ($ft-size + 8) / $ft-size;
+  font-weight: $body-font-bold;
+  margin: 0 0 1rem 0;
+  padding: 0;
+  letter-spacing: normal;
+}
+h5, h6, .hd-xs {
+  $ft-size: 16;
+  font-size: rem-calc($ft-size);
+  line-height: ($ft-size + 8) / $ft-size;
+  font-weight: $body-font-bold;
+  margin: 0 0 1rem 0;
+  padding: 0;
+  letter-spacing: normal;
+}

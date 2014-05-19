@@ -22,5 +22,8 @@
 /* Component (SMACSS module) rules */
 @import "components/misc";
 // Optionally, add your own components here.
+@import "helpers";
+@import "type";
+@import "buttons";
 @import "base";
 @import "print";

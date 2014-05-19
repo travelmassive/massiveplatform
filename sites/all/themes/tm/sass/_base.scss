@@ -2,6 +2,10 @@
 // Originally included in the html-classes of Foundation, but we're not loading
 // those.
 
+html, body {
+  height: 100%;
+}
+
 *,
 *:before,
 *:after {

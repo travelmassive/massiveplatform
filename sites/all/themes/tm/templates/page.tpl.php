@@ -16,7 +16,7 @@
         <h1 id="site-title">
           <a title="<?php print t('Home'); ?>" rel="home" href="<?php print $front_page; ?>">
             <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
-            <span class="visually-hidden"><?php print $site_name; ?></span>
+            <span><?php print $site_name; ?></span>
           </a>
         </h1>
       <?php endif; ?>

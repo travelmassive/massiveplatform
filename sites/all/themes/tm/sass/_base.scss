@@ -37,10 +37,29 @@ html, body {
    Main structure - grid, margins and things alike
    ========================================================================== */
 
+#header {
+  background: #FFF;
+  .row {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}
+
 #site-title {
   @include grid-column(10);
   margin: 0;
+  a {
+    float: left;
+  }
+  span {
+    @extend .visually-hidden;
+  }
+  img {
+    display: block;
+    height: 3rem;
+  }
 }
+
 #primary {
   @include grid-column(2); 
 }

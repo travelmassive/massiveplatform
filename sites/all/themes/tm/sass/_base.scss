@@ -4,6 +4,17 @@
 
 html, body {
   height: 100%;
+  font-size: $base-font-size;
+}
+
+body {
+  background: $body-bg;
+  color: $body-font-color;
+  font-family: $body-font-family;
+  font-weight: $body-font-weight;
+  font-style: $body-font-style;
+  position: relative;
+  cursor: $cursor-default-value;
 }
 
 *,

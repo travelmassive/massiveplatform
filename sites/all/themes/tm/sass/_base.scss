@@ -1,40 +1,67 @@
-/**
- * @file
- * Styles are organized using the SMACSS technique. @see http://smacss.com/book/
- *
- * When you turn on CSS aggregation at admin/config/development/performance, all
- * of these @include files will be combined into a single file.
- */
-
-/* Import Sass mixins, variables, Compass modules, etc. */
-@import "init";
-
-/* HTML element (SMACSS base) rules */
-@import "normalize";
-
-/* Layout rules */
-//@import "layouts/responsive";
-
-// Foundation grid
-// @import "foundation_5.0.3/settings";
-@import "foundation_5.0.3/components/grid";
-
-/* Component (SMACSS module) rules */
-@import "components/misc";
-// Optionally, add your own components here.
-@import "print";
-
-
-
-
 // Set box-sizing globally to handle padding and border widths
 // Originally included in the html-classes of Foundation, but we're not loading
 // those.
+
+html, body {
+  height: 100%;
+  font-size: $base-font-size;
+}
+
+body {
+  background: $body-bg;
+  color: $body-font-color;
+  font-family: $body-font-family;
+  font-weight: $body-font-weight;
+  font-style: $body-font-style;
+  position: relative;
+  cursor: $cursor-default-value;
+}
 
 *,
 *:before,
 *:after {
   @include box-sizing(border-box);
+}
+
+.row {
+  @media #{$small-up} {	
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+a:link,
+a:visited,
+button {
+  @include transform(translate3d(0, 0, 0));
+  @include transition-property(opacity, top, left, right);
+  @include transition-duration(0.2s, 0.1s, 0.2s, 0.2s);
+  @include transition-timing-function(ease, ease, ease, ease);
+  @include transition-delay(0, 0, 0, 0);
+  cursor: pointer;
+  color: $secondary-color;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus,
+button:hover {
+  outline: none;
+  opacity: 0.7;
+}
+
+a:active,
+button:active {
+  position: relative;
+  top: 2px;
+}
+
+a.disabled, .bttn.disabled {
+  opacity: 0.4;
+  cursor: default;
+  &:hover, &:focus {
+    opacity: 0.4;
+  }
 }
 
 /* ==========================================================================
@@ -62,10 +89,32 @@
    Main structure - grid, margins and things alike
    ========================================================================== */
 
+#header {
+  position: relative;
+  z-index: 10;
+  background: #FFF;
+  box-shadow: 0 0.25rem 0 0 rgba($primary-color, 0.1);
+  .row {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}
+
 #site-title {
   @include grid-column(10);
   margin: 0;
+  a {
+    float: left;
+  }
+  span {
+    @extend .visually-hidden;
+  }
+  img {
+    display: block;
+    height: 3rem;
+  }
 }
+
 #primary {
   @include grid-column(2); 
 }

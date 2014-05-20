@@ -1,0 +1,26 @@
+---
+layout: none
+---
+/* TEAM */
+
+Developer: Daniel da Silva
+Site: http://flipside.org
+Twitter: @danielfdsilva
+Location: Lisbon, Portugal
+
+Developer: Olaf Veerman
+Site: http://flipside.org
+Twitter: @oBirdman
+Location: Lisbon, Portugal
+
+UI Designer: Ricardo Mestre
+Site: http://flipside.org
+Twitter: @ricardoduplos
+Location: Lisbon, Portugal
+
+/* SITE */
+
+Last update: {{ site.time | date: "%Y/%m/%d"}}
+Standards: HTML5, CSS3, RWD
+Software: Adobe Illustrator, Aptana Studio 3, Sublime Text 3, Chocolat, Git, Grunt
+Frameworks & Extensions: Sass, Compass, Foundation, Drupal

@@ -12,14 +12,12 @@
 
   <header class="header" id="header" role="banner">
     <div class="row">
-      <?php if ($logo): ?>
-        <h1 id="site-title">
-          <a title="<?php print t('Home'); ?>" rel="home" href="<?php print $front_page; ?>">
-            <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
-            <span><?php print $site_name; ?></span>
-          </a>
-        </h1>
-      <?php endif; ?>
+      <h1 id="site-title">
+        <a title="<?php print t('Home'); ?>" rel="home" href="<?php print $front_page; ?>">
+          <img src="<?php print $base_path . path_to_theme(); ?>/images/layout/tm-logo.svg" alt="<?php print t('Home'); ?>" width="104" height="48" />
+          <span><?php print $site_name; ?></span>
+        </a>
+      </h1>
       
       <?php if ($main_menu): ?>
         <nav id="primary" role="navigation" tabindex="-1">

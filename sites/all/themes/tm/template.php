@@ -130,3 +130,14 @@ function tm_preprocess_block(&$variables, $hook) {
   //}
 }
 // */
+
+/**
+ * Prevent the page title from being printed on the page.tpl.php whenever we
+ * deal with a Page View. Instead, it's being printed in the 
+ * views-view--page.tpl.php.
+ */
+function tm_preprocess_page ($variables) {
+  if (isset($variables['page']['#views_contextual_links_info']) && $variables['page']['#views_contextual_links_info']['views_ui']['view_display_id'] == "page") {
+    drupal_set_title('');
+  }
+}

@@ -5,6 +5,10 @@
  * Default simple view template to display a list of rows.
  *
  * @ingroup views_templates
+ * 
+ * Customizations:
+ * - add a UL with LI
+ * 
  */
 ?>
 <?php if (!empty($title)): ?>

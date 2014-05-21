@@ -25,8 +25,8 @@ body {
 
 .row {
   @media #{$small-up} {	
-    padding-left: 3rem;
-    padding-right: 3rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 }
 
@@ -101,7 +101,7 @@ a.disabled, .bttn.disabled {
 }
 
 #site-title {
-  @include grid-column(10);
+  @include grid-column(5);
   margin: 0;
   a {
     float: left;
@@ -111,20 +111,108 @@ a.disabled, .bttn.disabled {
   }
   img {
     display: block;
-    height: 3rem;
+    height: 2rem;
+  }
+  @media #{$medium-up} {
+    @include grid-column(2);
+    img {
+      height: 3rem;
+    }
   }
 }
 
-#primary {
-  @include grid-column(2); 
-}
-@media #{$medium-up} {
-  #site-title {
-    @include grid-column(4);
+#prime-nav {
+  @include grid-column(7);
+  h1, h2 span { @extend .visually-hidden; }
+  h2 {
+    float: left;
+    margin: 0;
   }
-  #primary {
-    @include grid-column(8); 
-  }    
+  > ul {
+    float: right;
+    @include reset-list();
+    li {
+      position: relative;
+      float: left;
+      margin-left: 1rem;
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+  .toggle {
+    display: block;
+    color: $primary-color;
+    text-align: center;
+    line-height: 2rem;
+    &:before {
+      display: block;
+      font-size: 1.5rem;
+      height: 2rem;
+      width: 2rem;
+    } 
+  }
+  .inner {
+    position: absolute;
+    top: 3rem;
+    right: 0;
+    background: red;
+  }
+  .browse-wrapper {
+    .toggle:before {
+      @extend .icon-menu;
+    }
+    ul {
+      float: left;
+      @include reset-list();
+      li {
+        margin-left: 1.5rem;
+      }
+      a {
+        display: block;
+        color: $primary-color;
+        text-transform: uppercase;
+        font-weight: $body-font-bold;
+        font-size: 1rem;
+        line-height: 2rem;
+      }
+    }
+  }
+  .search-wrapper {
+    .toggle:before {
+      @extend .icon-search-r;
+    }
+  }
+  .account-wrapper {
+    .toggle:before {
+      @extend .icon-user;
+    }
+  }
+  .search-wrapper, .account-wrapper {
+    .inner {
+      display: none;
+    }
+  }
+  @media #{$medium-up} {
+    @include grid-column(10);
+    > ul {
+      padding: 0.5rem 0;
+    }
+    .browse-wrapper {
+      .toggle:before {
+        display: none;
+      }
+      .inner {
+        position: static;
+        top: auto;
+        left: auto;
+        background: none;
+      }
+    }
+    .search-wrapper {
+      margin-left: 2rem;
+    }
+  }
 }
 
 // #content spans 12 cols to make sure anything that ends up there abides to

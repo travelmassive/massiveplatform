@@ -62,7 +62,7 @@
     </div>
   </main>
 
-  <footer>
+  <footer id="footer">
     <div class="row">
       <nav id="foot-nav" role="navigation" tabindex="-1">
       <?php if ($foot_menu['links']): ?>
@@ -92,6 +92,13 @@
         </section>
       <?php endif ?>
       </nav>
+      <div class="logo">
+        <img src="<?php print $base_path . path_to_theme(); ?>/images/layout/tm-logo.svg" alt="<?php print t('Home'); ?>" width="104" height="48" />
+      </div>
+      <div id="copyright">
+        <?php print variable_get_value('tm_base_copright'); ?><br/>
+        2011 - <?php print date('Y'); ?>
+      </div>
     </div>
   </footer>
 </div>

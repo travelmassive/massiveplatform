@@ -2,6 +2,8 @@ name = Color Field
 description = Color Field using a hexadecimal notation (HEX)
 package = Fields
 core = 7.x
+; Migrate field handler
+files[] = migrate/color_field_rgb.inc
 
 dependencies[] = libraries
 

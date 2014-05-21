@@ -4,6 +4,8 @@
  * An color field with a custom color picker using the Field Types API.
  */
 
+include_once 'migrate/color_field_rgb.inc';
+
 /**
  * Implements hook_library().
  */
@@ -679,3 +681,16 @@ function color_field_widget_error($element, $error, $form, &$form_state) {
   }
 }
 
+/**
+ * Implements hook_migrate_api().
+ */
+function color_field_migrate_api() {
+  $api = array(
+    'api' => 2,
+    'field handlers' => array(
+      'ColorFieldRgbHandler',
+    ),
+  );
+
+  return $api;
+}

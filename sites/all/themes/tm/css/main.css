@@ -174,56 +174,6 @@ blockquote {
  * Address variable `h1` font-size and margin within `section` and `article`
  * contexts in Firefox 4+, Safari 5, and Chrome.
  */
-/* line 182, ../sass/_normalize.scss */
-h1 {
-  /* Set the font-size and line-height while keeping a proper vertical rhythm. */
-  font-size: 2em;
-  line-height: 1.5em;
-  /* Set 1 unit of vertical rhythm on the top and bottom margins. */
-  margin-top: 0.75em;
-  margin-bottom: 0.75em;
-}
-
-/* line 190, ../sass/_normalize.scss */
-h2 {
-  font-size: 1.5em;
-  line-height: 2em;
-  margin-top: 1em;
-  margin-bottom: 1em;
-}
-
-/* line 195, ../sass/_normalize.scss */
-h3 {
-  font-size: 1.17em;
-  line-height: 1.28205em;
-  margin-top: 1.28205em;
-  margin-bottom: 1.28205em;
-}
-
-/* line 200, ../sass/_normalize.scss */
-h4 {
-  font-size: 1em;
-  line-height: 1.5em;
-  margin-top: 1.5em;
-  margin-bottom: 1.5em;
-}
-
-/* line 205, ../sass/_normalize.scss */
-h5 {
-  font-size: 0.83em;
-  line-height: 1.80723em;
-  margin-top: 1.80723em;
-  margin-bottom: 1.80723em;
-}
-
-/* line 210, ../sass/_normalize.scss */
-h6 {
-  font-size: 0.67em;
-  line-height: 2.23881em;
-  margin-top: 2.23881em;
-  margin-bottom: 2.23881em;
-}
-
 /* Address styling not present in IE 8/9, Safari 5, and Chrome. */
 /* line 217, ../sass/_normalize.scss */
 abbr[title] {
@@ -614,7 +564,7 @@ meta.foundation-mq-xxlarge {
   margin-right: auto;
   margin-top: 0;
   margin-bottom: 0;
-  max-width: 73.75rem;
+  max-width: 80rem;
   *zoom: 1;
 }
 /* line 159, ../sass/foundation_5.0.3/components/_global.scss */
@@ -2125,8 +2075,6 @@ meta.foundation-mq-xxlarge {
 /* line 98, ../sass/components/_misc.scss */
 .header__site-name {
   margin: 0;
-  font-size: 2em;
-  line-height: 1.5em;
 }
 
 /* The link around the name of the website. */
@@ -2884,10 +2832,122 @@ tr.selected td {
 /* line 803, ../sass/components/_misc.scss */
 .progress .filled {
   background-color: #0072b9;
-  background-image: url('../images/progress.gif?1399368355');
+  background-image: url('../images/progress.gif?1399304368');
 }
 
-/* line 7, ../sass/_base.scss */
+/* ==========================================================================
+   Helpers - extends + custom vars
+   ========================================================================== */
+/* line 9, ../sass/_helpers.scss */
+.visually-hidden, #site-title span {
+  border: 0 none;
+  clip: rect(0px, 0px, 0px, 0px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/* ==========================================================================
+   Headings
+   ========================================================================== */
+/* line 4, ../sass/_type.scss */
+h1, .hd-xl {
+  font-size: 1.75rem;
+  line-height: 1.28571;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  padding: 0;
+}
+@media only screen and (min-width: 34.063rem) {
+  /* line 4, ../sass/_type.scss */
+  h1, .hd-xl {
+    font-size: 2rem;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+  }
+}
+
+/* line 18, ../sass/_type.scss */
+h2, .hd-l {
+  font-size: 1.5rem;
+  line-height: 1.33333;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  margin: 0 0 1rem 0;
+  padding: 0;
+}
+@media only screen and (min-width: 34.063rem) {
+  /* line 18, ../sass/_type.scss */
+  h2, .hd-l {
+    font-size: 1.75rem;
+    line-height: 1.28571;
+    letter-spacing: -0.5px;
+  }
+}
+
+/* line 33, ../sass/_type.scss */
+h3, .hd-m {
+  font-size: 1.25rem;
+  line-height: 1.4;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  padding: 0;
+}
+@media only screen and (min-width: 34.063rem) {
+  /* line 33, ../sass/_type.scss */
+  h3, .hd-m {
+    font-size: 1.5rem;
+    line-height: 1.33333;
+    letter-spacing: -0.2px;
+  }
+}
+
+/* line 47, ../sass/_type.scss */
+h4, .hd-s {
+  font-size: 1.25rem;
+  line-height: 1.4;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  padding: 0;
+  letter-spacing: normal;
+}
+
+/* line 56, ../sass/_type.scss */
+h5, h6, .hd-xs {
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  padding: 0;
+  letter-spacing: normal;
+}
+
+/* line 3, ../sass/_buttons.scss */
+button:hover, button:focus {
+  outline: none;
+}
+
+/* line 5, ../sass/_base.scss */
+html, body {
+  height: 100%;
+  font-size: 16px;
+}
+
+/* line 10, ../sass/_base.scss */
+body {
+  background: #e8eaeb;
+  color: #213040;
+  font-family: "Raleway", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  position: relative;
+  cursor: default;
+}
+
+/* line 22, ../sass/_base.scss */
 *,
 *:before,
 *:after {
@@ -2896,11 +2956,74 @@ tr.selected td {
   box-sizing: border-box;
 }
 
+@media only screen and (min-width: 34.063rem) {
+  /* line 26, ../sass/_base.scss */
+  .row {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* line 35, ../sass/_base.scss */
+a:link,
+a:visited,
+button {
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-transition-property: opacity, top, left, right;
+  -moz-transition-property: opacity, top, left, right;
+  -o-transition-property: opacity, top, left, right;
+  transition-property: opacity, top, left, right;
+  -webkit-transition-duration: 0.2s, 0.1s, 0.2s, 0.2s;
+  -moz-transition-duration: 0.2s, 0.1s, 0.2s, 0.2s;
+  -o-transition-duration: 0.2s, 0.1s, 0.2s, 0.2s;
+  transition-duration: 0.2s, 0.1s, 0.2s, 0.2s;
+  -webkit-transition-timing-function: ease, ease, ease, ease;
+  -moz-transition-timing-function: ease, ease, ease, ease;
+  -o-transition-timing-function: ease, ease, ease, ease;
+  transition-timing-function: ease, ease, ease, ease;
+  -webkit-transition-delay: 0, 0, 0, 0;
+  -moz-transition-delay: 0, 0, 0, 0;
+  -o-transition-delay: 0, 0, 0, 0;
+  transition-delay: 0, 0, 0, 0;
+  cursor: pointer;
+  color: #007eb5;
+  text-decoration: none;
+}
+
+/* line 48, ../sass/_base.scss */
+a:hover,
+a:focus,
+button:hover {
+  outline: none;
+  opacity: 0.7;
+}
+
+/* line 54, ../sass/_base.scss */
+a:active,
+button:active {
+  position: relative;
+  top: 2px;
+}
+
+/* line 59, ../sass/_base.scss */
+a.disabled, .bttn.disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+/* line 62, ../sass/_base.scss */
+a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn.disabled:focus {
+  opacity: 0.4;
+}
+
 /* ==========================================================================
    Helpers
    ========================================================================== */
-/* line 15, ../sass/_base.scss */
-.visually-hidden {
+/* line 71, ../sass/_base.scss */
+.visually-hidden, #site-title span {
   border: 0 none;
   clip: rect(0px, 0px, 0px, 0px);
   height: 1px;
@@ -2917,7 +3040,20 @@ tr.selected td {
 /* ==========================================================================
    Main structure - grid, margins and things alike
    ========================================================================== */
-/* line 36, ../sass/_base.scss */
+/* line 92, ../sass/_base.scss */
+#header {
+  position: relative;
+  z-index: 10;
+  background: #FFF;
+  box-shadow: 0 0.25rem 0 0 rgba(33, 48, 64, 0.1);
+}
+/* line 97, ../sass/_base.scss */
+#header .row {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+/* line 103, ../sass/_base.scss */
 #site-title {
   position: relative;
   padding-left: 1rem;
@@ -2926,8 +3062,17 @@ tr.selected td {
   float: left;
   margin: 0;
 }
+/* line 106, ../sass/_base.scss */
+#site-title a {
+  float: left;
+}
+/* line 112, ../sass/_base.scss */
+#site-title img {
+  display: block;
+  height: 3rem;
+}
 
-/* line 40, ../sass/_base.scss */
+/* line 118, ../sass/_base.scss */
 #primary {
   position: relative;
   padding-left: 1rem;
@@ -2937,7 +3082,7 @@ tr.selected td {
 }
 
 @media only screen and (min-width: 48.063rem) {
-  /* line 44, ../sass/_base.scss */
+  /* line 122, ../sass/_base.scss */
   #site-title {
     position: relative;
     padding-left: 1rem;
@@ -2946,7 +3091,7 @@ tr.selected td {
     float: left;
   }
 
-  /* line 47, ../sass/_base.scss */
+  /* line 125, ../sass/_base.scss */
   #primary {
     position: relative;
     padding-left: 1rem;
@@ -2955,7 +3100,7 @@ tr.selected td {
     float: left;
   }
 }
-/* line 56, ../sass/_base.scss */
+/* line 134, ../sass/_base.scss */
 #content {
   position: relative;
   padding-left: 1rem;
@@ -2963,7 +3108,7 @@ tr.selected td {
   width: 100%;
   float: left;
 }
-/* line 60, ../sass/_base.scss */
+/* line 138, ../sass/_base.scss */
 #content .trilithon {
   width: auto;
   margin-left: -1rem;
@@ -2982,7 +3127,7 @@ tr.selected td {
 #content .trilithon:after {
   clear: both;
 }
-/* line 63, ../sass/_base.scss */
+/* line 141, ../sass/_base.scss */
 #content .trilithon .banner,
 #content .trilithon .column {
   position: relative;
@@ -2992,7 +3137,7 @@ tr.selected td {
   float: left;
 }
 @media only screen and (min-width: 48.063rem) {
-  /* line 67, ../sass/_base.scss */
+  /* line 145, ../sass/_base.scss */
   #content .trilithon .column {
     position: relative;
     padding-left: 1rem;
@@ -3001,7 +3146,7 @@ tr.selected td {
     float: left;
   }
 }
-/* line 75, ../sass/_base.scss */
+/* line 153, ../sass/_base.scss */
 #content .grid ul {
   width: auto;
   margin-left: -1rem;
@@ -3021,7 +3166,7 @@ tr.selected td {
 #content .grid ul:after {
   clear: both;
 }
-/* line 79, ../sass/_base.scss */
+/* line 157, ../sass/_base.scss */
 #content .grid li {
   position: relative;
   padding-left: 1rem;
@@ -3031,7 +3176,7 @@ tr.selected td {
   list-style: none;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 84, ../sass/_base.scss */
+  /* line 162, ../sass/_base.scss */
   #content .grid li {
     position: relative;
     padding-left: 1rem;
@@ -3039,13 +3184,13 @@ tr.selected td {
     width: 50%;
     float: left;
   }
-  /* line 86, ../sass/_base.scss */
+  /* line 164, ../sass/_base.scss */
   #content .grid li:nth-child(2n+1) {
     clear: left;
   }
 }
 @media only screen and (min-width: 48.063rem) {
-  /* line 92, ../sass/_base.scss */
+  /* line 170, ../sass/_base.scss */
   #content .grid li {
     position: relative;
     padding-left: 1rem;
@@ -3053,17 +3198,17 @@ tr.selected td {
     width: 33.33333%;
     float: left;
   }
-  /* line 94, ../sass/_base.scss */
+  /* line 172, ../sass/_base.scss */
   #content .grid li:nth-child(2n+1) {
     clear: none;
   }
-  /* line 97, ../sass/_base.scss */
+  /* line 175, ../sass/_base.scss */
   #content .grid li:nth-child(3n+1) {
     clear: left;
   }
 }
 @media only screen and (min-width: 62.063rem) {
-  /* line 103, ../sass/_base.scss */
+  /* line 181, ../sass/_base.scss */
   #content .grid li {
     position: relative;
     padding-left: 1rem;
@@ -3071,11 +3216,11 @@ tr.selected td {
     width: 25%;
     float: left;
   }
-  /* line 105, ../sass/_base.scss */
+  /* line 183, ../sass/_base.scss */
   #content .grid li:nth-child(3n+1) {
     clear: none;
   }
-  /* line 108, ../sass/_base.scss */
+  /* line 186, ../sass/_base.scss */
   #content .grid li:nth-child(4n+1) {
     clear: left;
   }
@@ -3084,22 +3229,22 @@ tr.selected td {
 /* ==========================================================================
    Styles
    ========================================================================== */
-/* line 123, ../sass/_base.scss */
+/* line 201, ../sass/_base.scss */
 #page {
   background-color: #d3d6d9;
 }
 
-/* line 127, ../sass/_base.scss */
+/* line 205, ../sass/_base.scss */
 #header {
   background-color: #fff;
 }
 
-/* line 135, ../sass/_base.scss */
+/* line 213, ../sass/_base.scss */
 #main {
   background-color: #e9eaec;
 }
 
-/* line 139, ../sass/_base.scss */
+/* line 217, ../sass/_base.scss */
 #footer {
   background-color: #d3d6d9;
 }

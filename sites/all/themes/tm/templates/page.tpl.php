@@ -18,7 +18,6 @@
           <span><?php print $site_name; ?></span>
         </a>
       </h1>
-      
       <?php if ($main_menu): ?>
         <nav id="primary" role="navigation" tabindex="-1">
           <a class="toggle" href="#nav-links"></a>
@@ -63,6 +62,36 @@
     </div>
   </main>
 
-  <?php print render($page['footer']); ?>
-
+  <footer>
+    <div class="row">
+      <nav id="foot-nav" role="navigation" tabindex="-1">
+      <?php if ($foot_menu['links']): ?>
+        <section class="foot">
+        <?php
+          print theme('links', array(
+            'links' => $foot_menu['links'],
+            'heading' => array(
+              'text' => $foot_menu['title'],
+              'level' => 'h2',
+            ),
+          )); 
+        ?>
+        </section>
+      <?php endif; ?>
+      <?php if ($social_menu['links']): ?>
+        <section class="social">
+        <?php
+          print theme('links', array(
+            'links' => $social_menu['links'],
+            'heading' => array(
+              'text' => $social_menu['title'],
+              'level' => 'h2',
+            ),
+          )); 
+        ?>
+        </section>
+      <?php endif ?>
+      </nav>
+    </div>
+  </footer>
 </div>

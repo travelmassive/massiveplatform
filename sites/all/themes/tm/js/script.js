@@ -14,11 +14,39 @@
 
 
 // To understand behaviors, see https://drupal.org/node/756722#behaviors
-Drupal.behaviors.my_custom_behavior = {
+Drupal.behaviors.base_scripts = {
   attach: function(context, settings) {
 
-    // Place your code here.
-
+    $('[data-dropdown-toggle]').click(function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      var _self = $(this);
+      var $drop = _self.closest('[data-dropdown-wrapper]').find('[data-dropdown]');
+      
+      // Hide others.
+      $('[data-dropdown-toggle]').not(_self).removeClass('on');
+      $('[data-dropdown]').not($drop).removeClass('on');
+      
+      // Set top value.
+      $drop.css('top', _self.height());
+      
+      if (_self.hasClass('on')) {
+        _self.removeClass('on');
+        $drop.removeClass('on');
+      }
+      else {
+        _self.addClass('on');
+        $drop.addClass('on');
+      }
+      
+    });
+    
+    $(document).click(function(e){
+      if($(e.target).closest('[data-dropdown]').length === 0) {
+        $('[data-dropdown-toggle], [data-dropdown]').removeClass('on');
+      }
+    });
+    
   }
 };
 

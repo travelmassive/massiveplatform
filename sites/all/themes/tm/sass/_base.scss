@@ -131,7 +131,7 @@ a.disabled, .bttn.disabled {
   > ul {
     float: right;
     @include reset-list();
-    li {
+    > li {
       position: relative;
       float: left;
       margin-left: 1rem;
@@ -150,24 +150,29 @@ a.disabled, .bttn.disabled {
       font-size: 1.5rem;
       height: 2rem;
       width: 2rem;
-    } 
+    }
+    &.on {
+      color: $secondary-color;
+    }
   }
   .inner {
-    position: absolute;
-    top: 3rem;
-    right: 0;
-    background: red;
+    min-width: 19rem;
+    padding: 1rem;
   }
   .browse-wrapper {
     .toggle:before {
       @extend .icon-menu;
     }
-    ul {
-      float: left;
-      @include reset-list();
-      li {
-        margin-left: 1.5rem;
+    .inner {
+      right: -6.5rem;
+      &:before {
+        right: 7rem;
       }
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
       a {
         display: block;
         color: $primary-color;
@@ -182,15 +187,16 @@ a.disabled, .bttn.disabled {
     .toggle:before {
       @extend .icon-search-r;
     }
+    .inner {
+      right: -3.5rem;
+      &:before {
+        right: 4rem;
+      }
+    }
   }
   .account-wrapper {
     .toggle:before {
       @extend .icon-user;
-    }
-  }
-  .search-wrapper, .account-wrapper {
-    .inner {
-      display: none;
     }
   }
   @media #{$medium-up} {
@@ -206,7 +212,19 @@ a.disabled, .bttn.disabled {
         position: static;
         top: auto;
         left: auto;
-        background: none;
+        margin-top: 0;
+        padding: 0;
+        
+        opacity: 1;
+        visibility: visible;
+        box-shadow: none;
+        &:before {
+          display: none;
+        }
+      }
+      li {
+        float: left;
+        margin-left: 1.5rem;
       }
     }
     .search-wrapper {

@@ -21,6 +21,7 @@ features[ctools][] = strongarm:strongarm:1
 features[ctools][] = views:views_default:3.0
 features[ds_field_settings][] = node|chapter|full
 features[ds_field_settings][] = node|chapter|grid
+features[ds_fields][] = chapter_avatar
 features[ds_layout_settings][] = node|chapter|default
 features[ds_layout_settings][] = node|chapter|full
 features[ds_layout_settings][] = node|chapter|grid

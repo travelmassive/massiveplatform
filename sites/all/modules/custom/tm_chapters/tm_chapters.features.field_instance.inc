@@ -35,7 +35,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 9,
+        'weight' => 12,
       ),
       'list' => array(
         'label' => 'hidden',
@@ -84,9 +84,8 @@ function tm_chapters_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'color_field',
         'settings' => array(),
-        'type' => 'color_field_default_formatter',
+        'type' => 'hidden',
         'weight' => 4,
       ),
       'full' => array(
@@ -99,7 +98,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 10,
       ),
       'list' => array(
         'label' => 'above',
@@ -154,7 +153,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 8,
+        'weight' => 11,
       ),
       'list' => array(
         'label' => 'above',
@@ -201,9 +200,8 @@ function tm_chapters_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'text',
         'settings' => array(),
-        'type' => 'text_default',
+        'type' => 'hidden',
         'weight' => 3,
       ),
       'full' => array(
@@ -216,7 +214,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 9,
       ),
       'list' => array(
         'label' => 'above',
@@ -279,7 +277,7 @@ function tm_chapters_field_default_field_instances() {
           'image_style' => 'banner',
         ),
         'type' => 'image',
-        'weight' => 1,
+        'weight' => 0,
       ),
       'list' => array(
         'label' => 'above',

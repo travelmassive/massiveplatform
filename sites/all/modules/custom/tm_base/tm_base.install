@@ -30,8 +30,8 @@ function tm_base_update_7003() {
   module_enable(array('tm_chapters', 'tm_events', 'tm_organizations', 'tm_theme'));
 }
 /**
- * Enable the field_validation and field_validation_ui.
+ * Enable the field_validation, field_validation_ui and color_field.
  */
 function tm_base_update_7005() {
-  module_enable(array('field_validation', 'field_validation_ui'));
+  module_enable(array('field_validation', 'field_validation_ui', 'color_field'));
 }

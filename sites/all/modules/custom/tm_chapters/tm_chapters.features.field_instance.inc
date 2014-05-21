@@ -75,6 +75,56 @@ function tm_chapters_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-chapter-field_chapter_color'
+  $field_instances['node-chapter-field_chapter_color'] = array(
+    'bundle' => 'chapter',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Select a color that sets this city apart from the others. This color should have enough contrast with a white text layered on top.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'color_field',
+        'settings' => array(),
+        'type' => 'color_field_default_formatter',
+        'weight' => 4,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_chapter_color',
+    'label' => 'City color',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'color_field',
+      'settings' => array(),
+      'type' => 'color_field_spectrum_widget',
+      'weight' => 35,
+    ),
+  );
+
   // Exported field_instance: 'node-chapter-field_chapter_leaders'
   $field_instances['node-chapter-field_chapter_leaders'] = array(
     'bundle' => 'chapter',
@@ -278,11 +328,13 @@ function tm_chapters_field_default_field_instances() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Chapter leaders');
+  t('City color');
   t('City shortcode');
   t('Description');
   t('Image');
   t('Please enter a unique 3 letter shortcode for this city.');
   t('Provide a banner image that is a good reflection of your city.');
+  t('Select a color that sets this city apart from the others. This color should have enough contrast with a white text layered on top.');
 
   return $field_instances;
 }

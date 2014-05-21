@@ -58,6 +58,9 @@ class TMChapterMigration extends TMBaseMigration {
     
     // City shortcode
     $this->addFieldMapping('field_chapter_shortcode', 'code');
+
+    // City color
+    $this->addFieldMapping('field_chapter_color', 'color');
   }
 
   public function prepareRow($row) {

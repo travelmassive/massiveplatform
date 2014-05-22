@@ -286,6 +286,7 @@ a.disabled, .bttn.disabled {
 #footer {
   background: tint($primary-color, 80%);
   padding: 2rem 0;
+  color: tint($primary-color, 20%);
   .logo,
   #copyright {
     @include grid-column(6);

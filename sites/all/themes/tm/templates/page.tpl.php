@@ -18,24 +18,39 @@
           <span><?php print $site_name; ?></span>
         </a>
       </h1>
-      <?php if ($main_menu): ?>
-        <nav id="primary" role="navigation" tabindex="-1">
-          <a class="toggle" href="#nav-links"></a>
-          <?php
-          print theme('links__system_main_menu', array(
-            'links' => $main_menu,
-            'attributes' => array(
-              'class' => array('links', 'inline', 'clearfix'),
-            ),
-            'heading' => array(
-              'text' => t('Main menu'),
-              'level' => 'h2',
-              'class' => array('element-invisible'),
-            ),
-          )); ?>
-        </nav>
-      <?php endif; ?>
-
+      <nav id="prime-nav" role="navigation">
+        <h1><?= t('Primary navigation'); ?></h1>
+        <ul>
+          <?php if ($main_menu): ?>
+          <li class="browse-wrapper" data-dropdown-wrapper>
+            <h2><a class="toggle" href="#" data-dropdown-toggle><span><?= t('Browse'); ?></span></a></h2>
+            <div class="inner dropdown dropdown-right" data-dropdown>
+              <?php
+              print theme('links__system_main_menu', array(
+                'links' => $main_menu,
+                'attributes' => array(
+                  'class' => array('links'),
+                ),)); ?>
+            </div>
+          </li>
+          <?php endif; ?>
+          <li class="search-wrapper" data-dropdown-wrapper>
+            <h2><a class="toggle" href="#" data-dropdown-toggle><span><?= t('Search'); ?></span></a></h2>
+            <div class="inner dropdown dropdown-right" data-dropdown>
+              <form>
+                <input name="" type="search" />
+                <input name="" value="submit" type="submit">
+              </form>
+            </div>
+          </li>
+          <li class="account-wrapper" data-dropdown-wrapper>
+            <h2><a class="toggle" href="#" data-dropdown-toggle><span><?= t('Account'); ?></span></a></h2>
+            <div class="inner dropdown dropdown-right" data-dropdown>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </li>
+        </ul>
+      </nav>
       <?php print render($page['header']); ?>
     </div>
   </header>

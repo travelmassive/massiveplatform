@@ -5,3 +5,34 @@
  */
 
 include_once 'tm_fields.features.inc';
+
+/**
+ * Implement hook_preprocess_node()
+ */
+function tm_fields_preprocess_node(&$vars) {
+  if (isset($vars['field_chapter']['und'][0]['target_id'])) {
+    $chapter_id = $vars['field_chapter']['und'][0]['target_id'];
+    $related_chapter = node_load($chapter_id);
+    $vars['tm_chapter_sticker'] = theme('tm_chapter_sticker', array(
+      'chapter_id' => $chapter_id,
+      'shortcode' => $related_chapter->field_chapter_shortcode['und'][0]['value'],
+      'color' => $related_chapter->field_chapter_color['und'][0]['rgb']
+    ));
+  }
+}
+/**
+ * Implement hook_theme()
+ */
+function tm_fields_theme() {
+  return array(
+    'tm_chapter_sticker' => array(
+      'variables' => array(
+        'chapter_id' => NULL,
+        'shortcode' => NULL,
+        'color' => NULL
+      ),
+      'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
+      'template' => 'tm_chapter_sticker'
+    )
+  );
+}

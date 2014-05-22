@@ -64,7 +64,7 @@ a.disabled, .bttn.disabled {
   }
 }
 
-#page {
+#page, #site-canvas {
   background: tint($primary-color, 90%);
 }
 
@@ -274,24 +274,135 @@ a.disabled, .bttn.disabled {
   }
 }
 
-#foot-nav {
-  section {
-    @include grid-column(12);
-    @media #{$medium-up} {
-      @include grid-column(4);
-    }
-  }
-}
-
 #footer {
   background: tint($primary-color, 80%);
   padding: 2rem 0;
   color: tint($primary-color, 20%);
-  .logo,
-  #copyright {
+  a {
+    color: tint($primary-color, 20%);
+  }
+}
+
+#foot-nav {
+  @include grid-column(12);
+  .inner {
+    @include grid-row($behavior: nest);
+  }
+  h2 {
+    @extend .hd-xs;
+    text-transform: uppercase;
+  }
+  section {
     @include grid-column(6);
-    @media #{$medium-up} {
-      @include grid-column(2);
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    li {
+      overflow: hidden;
+      margin-bottom: 0.25rem;
+    }
+  }
+  a {
+    float: left;
+    position: relative;
+    padding-left: 1.375rem;
+    &:before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 1rem;
+      color: tint($primary-color, 40%);
+      @extend .icon-s-arr-right;
+    }
+  }
+  .facebook a:before { @extend .icon-facebook; }
+  .linkedin a:before { @extend .icon-linkedin; }
+  .twitter a:before { @extend .icon-twitter; }
+  .instagram a:before { @extend .icon-instagram; }
+  
+  @media #{$small-up} {
+    @include grid-column(8);
+  }
+  @media #{$medium-up} {
+    section {
+      @include grid-column(4);
+    }
+    
+  }
+}
+
+#foot-credits {
+  @include grid-column(12);
+  border-top: 1px solid tint($primary-color, 70%);
+  padding-top: 2rem;
+  p {
+    overflow: hidden;
+    margin: 0 0 0.75rem 0;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  .logo {
+    img {
+      opacity: 0.8;
+      height: 2rem;
+    }
+    a {
+      padding: 0.25rem 0;
+      float: left;
+      margin: 0 1rem 0.5rem 0;
+    }
+    span {
+      @extend .visually-hidden;
+    }
+  }
+  small {
+    float: left;
+    font-size: inherit;
+  }
+  time {
+    display: block;
+  }
+  @media #{$small-up} {
+    @include grid-column(4);
+    border-top: none;
+    padding-top: 0;
+  }
+  @media #{$medium-up} {
+    .logo {
+      a {
+        display: block;
+        float: none;
+      }
+    }
+    small {
+      float: none;
+      display: block;
+    }
+  }
+}
+
+
+/* IE<9 */
+
+.lt-ie9 {
+  body {
+    background: tint($primary-color, 90%);
+  }
+  #page, #site-canvas {
+    display: none;
+  }
+  #nocando {
+    margin: 200px auto;
+    padding: 0 20px;
+    width: 440px;
+    h1 {
+      color: inherit;
+      line-height: 1.1;
+      margin-bottom: 40px;
     }
   }
 }

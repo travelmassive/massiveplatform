@@ -55,7 +55,7 @@
     </div>
   </header>
 
-  <main id="main">
+  <main id="main" role="main">
     <div class="row">
       <div id="content" role="main">
         <a id="main-content"></a>
@@ -77,42 +77,49 @@
     </div>
   </main>
 
-  <footer id="footer">
+  <footer id="footer" role="contentinfo">
     <div class="row">
-      <nav id="foot-nav" role="navigation" tabindex="-1">
-      <?php if ($foot_menu['links']): ?>
-        <section class="foot">
-        <?php
-          print theme('links', array(
-            'links' => $foot_menu['links'],
-            'heading' => array(
-              'text' => $foot_menu['title'],
-              'level' => 'h2',
-            ),
-          )); 
-        ?>
-        </section>
-      <?php endif; ?>
-      <?php if ($social_menu['links']): ?>
-        <section class="social">
-        <?php
-          print theme('links', array(
-            'links' => $social_menu['links'],
-            'heading' => array(
-              'text' => $social_menu['title'],
-              'level' => 'h2',
-            ),
-          )); 
-        ?>
-        </section>
-      <?php endif ?>
+      <nav id="foot-nav" role="navigation">
+        <div class="inner">
+        <?php if ($foot_menu['links']): ?>
+          <section class="foot">
+          <?php
+            print theme('links', array(
+              'links' => $foot_menu['links'],
+              'heading' => array(
+                'text' => $foot_menu['title'],
+                'level' => 'h2',
+              ),
+            )); 
+          ?>
+          </section>
+        <?php endif; ?>
+        <?php if ($social_menu['links']): ?>
+          <section class="social">
+          <?php
+            print theme('links', array(
+              'links' => $social_menu['links'],
+              'heading' => array(
+                'text' => $social_menu['title'],
+                'level' => 'h2',
+              ),
+            )); 
+          ?>
+          </section>
+        <?php endif ?>
+        </div>
       </nav>
-      <div class="logo">
-        <img src="<?php print $base_path . path_to_theme(); ?>/images/layout/tm-logo.svg" alt="<?php print t('Home'); ?>" width="104" height="48" />
-      </div>
-      <div id="copyright">
-        <?php print variable_get_value('tm_base_copright'); ?><br/>
-        2011 - <?php print date('Y'); ?>
+      <div id="foot-credits">
+        <p>
+          <strong class="logo">
+            <a title="<?php print t('Home'); ?>" rel="home" href="<?php print $front_page; ?>">
+              <img src="<?php print $base_path . path_to_theme(); ?>/images/layout/tm-logo.svg" alt="<?php print t('Home'); ?>" width="104" height="48" />
+              <span><?php print $site_name; ?></span>
+            </a>
+          </strong>
+          <small><?php print variable_get_value('tm_base_copright'); ?> <time datetime="2011/<?= date('Y'); ?>">2011-<?= date('Y'); ?></time></small>
+        </p>
+        <p>Design & built by <strong><a href="http://flipside.org/" title="Visit Flipside">Flipside</a></strong></p>
       </div>
     </div>
   </footer>

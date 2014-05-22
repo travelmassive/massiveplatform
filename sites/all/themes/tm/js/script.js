@@ -17,15 +17,15 @@
 Drupal.behaviors.base_scripts = {
   attach: function(context, settings) {
 
-    $('[data-dropdown-toggle]').click(function(e){
+    $('[data-dropd-toggle]').click(function(e){
       e.preventDefault();
       e.stopPropagation();
       var _self = $(this);
-      var $drop = _self.closest('[data-dropdown-wrapper]').find('[data-dropdown]');
+      var $drop = _self.closest('[data-dropd-wrapper]').find('[data-dropd]');
       
       // Hide others.
-      $('[data-dropdown-toggle]').not(_self).removeClass('on');
-      $('[data-dropdown]').not($drop).removeClass('on');
+      $('[data-dropd-toggle]').not(_self).removeClass('on');
+      $('[data-dropd]').not($drop).removeClass('on');
       
       // Set top value.
       $drop.css('top', _self.height());
@@ -42,8 +42,8 @@ Drupal.behaviors.base_scripts = {
     });
     
     $(document).click(function(e){
-      if($(e.target).closest('[data-dropdown]').length === 0) {
-        $('[data-dropdown-toggle], [data-dropdown]').removeClass('on');
+      if($(e.target).closest('[data-dropd]').length === 0) {
+        $('[data-dropd-toggle], [data-dropd]').removeClass('on');
       }
     });
     

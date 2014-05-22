@@ -29,3 +29,8 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
+%antialiased {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

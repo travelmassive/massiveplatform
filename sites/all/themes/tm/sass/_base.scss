@@ -64,40 +64,23 @@ a.disabled, .bttn.disabled {
   }
 }
 
-/* ==========================================================================
-   Helpers
-   ========================================================================== */
-
-.visually-hidden {
-  border: 0 none;
-  clip: rect(0px, 0px, 0px, 0px);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
+#page, #site-canvas {
+  background: tint($primary-color, 90%);
 }
 
-/* ==========================================================================
-   Type
-   ========================================================================== */
-
-
-
-/* ==========================================================================
-   Main structure - grid, margins and things alike
-   ========================================================================== */
+#main {
+  padding: 2rem 0;
+  @media #{$medium-up} {
+    padding: 4rem 0;
+  }
+}
 
 #header {
   position: relative;
   z-index: 10;
+  padding: 1rem 0;
   background: #FFF;
   box-shadow: 0 0.25rem 0 0 rgba($primary-color, 0.1);
-  .row {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
 }
 
 #site-title {
@@ -108,6 +91,7 @@ a.disabled, .bttn.disabled {
   }
   span {
     @extend .visually-hidden;
+    background-color: red;
   }
   img {
     display: block;
@@ -297,44 +281,135 @@ a.disabled, .bttn.disabled {
   }
 }
 
+#footer {
+  background: tint($primary-color, 80%);
+  padding: 2rem 0;
+  color: tint($primary-color, 20%);
+  a {
+    color: tint($primary-color, 20%);
+  }
+}
+
 #foot-nav {
+  @include grid-column(12);
+  .inner {
+    @include grid-row($behavior: nest);
+  }
+  h2 {
+    @extend .hd-xs;
+    text-transform: uppercase;
+  }
   section {
-    @include grid-column(12);
-    @media #{$medium-up} {
+    @include grid-column(6);
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    li {
+      overflow: hidden;
+      margin-bottom: 0.25rem;
+    }
+  }
+  a {
+    float: left;
+    position: relative;
+    padding-left: 1.375rem;
+    &:before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 1rem;
+      color: tint($primary-color, 40%);
+      @extend .icon-s-arr-right;
+    }
+  }
+  .facebook:before { @extend .icon-facebook; }
+  .linkedin:before { @extend .icon-linkedin; }
+  .twitter:before { @extend .icon-twitter; }
+  .instagram:before { @extend .icon-instagram; }
+  
+  @media #{$small-up} {
+    @include grid-column(8);
+  }
+  @media #{$medium-up} {
+    section {
       @include grid-column(4);
     }
+    
   }
 }
-#footer {
-  .logo,
-  #copyright {
-    @include grid-column(6);
-    @media #{$medium-up} {
-      @include grid-column(2);
+
+#foot-credits {
+  @include grid-column(12);
+  border-top: 1px solid tint($primary-color, 70%);
+  padding-top: 2rem;
+  p {
+    overflow: hidden;
+    margin: 0 0 0.75rem 0;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  .logo {
+    img {
+      opacity: 0.8;
+      height: 2rem;
+    }
+    a {
+      padding: 0.25rem 0;
+      float: left;
+      margin: 0 1rem 0.5rem 0;
+    }
+    span {
+      @extend .visually-hidden;
+    }
+  }
+  small {
+    float: left;
+    font-size: inherit;
+  }
+  time {
+    display: block;
+  }
+  @media #{$small-up} {
+    @include grid-column(4);
+    border-top: none;
+    padding-top: 0;
+  }
+  @media #{$medium-up} {
+    .logo {
+      a {
+        display: block;
+        float: none;
+      }
+    }
+    small {
+      float: none;
+      display: block;
     }
   }
 }
 
-/* ==========================================================================
-   Styles
-   ========================================================================== */
 
-#page {
-  background-color: #d3d6d9;
-}
+/* IE<9 */
 
-#header {
-  background-color: #fff;
-  #site-title {
+.lt-ie9 {
+  body {
+    background: tint($primary-color, 90%);
   }
-  #primary {
+  #page, #site-canvas {
+    display: none;
   }
-}
-
-#main {
-  background-color: #e9eaec;
-}
-
-#footer {
-  background-color: #d3d6d9;
+  #nocando {
+    margin: 200px auto;
+    padding: 0 20px;
+    width: 440px;
+    h1 {
+      color: inherit;
+      line-height: 1.1;
+      margin-bottom: 40px;
+    }
+  }
 }

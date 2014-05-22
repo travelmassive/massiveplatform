@@ -41,3 +41,9 @@ function tm_base_update_7004() {
 function tm_base_update_7005() {
   module_enable(array('field_validation', 'field_validation_ui', 'color_field'));
 }
+/**
+ * Enable the menu_attributes module.
+ */
+function tm_base_update_7006() {
+  module_enable(array('menu_attributes'));
+}

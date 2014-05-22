@@ -153,7 +153,7 @@ $primary-color: #213040;                            // very dark desaturated blu
 $secondary-color: #007EB5;                          // strong blue
 
 // We use these to control various global styles
-$body-bg: tint($primary-color, 90%);
+$body-bg: tint($primary-color, 80%);
 $body-font-color: $primary-color;
 $body-font-family: $base-font-family;
 $body-font-weight: normal;

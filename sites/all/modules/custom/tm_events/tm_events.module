@@ -9,7 +9,7 @@ include_once 'tm_events.features.inc';
 /**
  * Implement hook_form_FORM_ID_alter()
  */
-function tm_base_form_event_node_form_alter(&$form, &$form_state) {
+function tm_events_form_event_node_form_alter(&$form, &$form_state) {
   
   // Field visibilty based on whether the RSVP is handled through the TM  
   
@@ -30,4 +30,27 @@ function tm_base_form_event_node_form_alter(&$form, &$form_state) {
 
   // /end field visibility based on RSVP
 
+}
+/**
+ * Implement hook_preprocess_node()
+ */
+function tm_events_preprocess_node(&$vars) {
+  if (isset($vars['field_date']['und'][0]['value'])) {
+    $date = new DateTime($vars['field_date']['und'][0]['value']);
+    $vars['tm_date_avatar'] = theme('tm_date_avatar', array('date' => $date));
+  }
+}
+/**
+ * Implement hook_theme()
+ */
+function tm_events_theme() {
+  return array(
+    'tm_date_avatar' => array(
+      'variables' => array(
+        'date' => NULL
+      ),
+      'path' => drupal_get_path('module','tm_events') . '/templates/fields',
+      'template' => 'date_avatar'
+    )
+  );
 }

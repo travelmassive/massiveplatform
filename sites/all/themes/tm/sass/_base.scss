@@ -68,6 +68,13 @@ a.disabled, .bttn.disabled {
   background: tint($primary-color, 90%);
 }
 
+#main {
+  padding: 2rem 0;
+  @media #{$medium-up} {
+    padding: 4rem 0;
+  }
+}
+
 #header {
   position: relative;
   z-index: 10;

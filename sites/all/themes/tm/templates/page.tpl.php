@@ -22,9 +22,9 @@
         <h1><?= t('Primary navigation'); ?></h1>
         <ul>
           <?php if ($main_menu): ?>
-          <li class="browse-wrapper" data-dropdown-wrapper>
-            <h2><a class="toggle" href="#" data-dropdown-toggle><span><?= t('Browse'); ?></span></a></h2>
-            <div class="inner dropdown dropdown-right" data-dropdown>
+          <li class="browse-wrapper" data-dropd-wrapper>
+            <h2><a class="toggle" href="#" data-dropd-toggle><span><?= t('Browse'); ?></span></a></h2>
+            <div class="inner dropd dropd-right" data-dropd>
               <?php
               print theme('links__system_main_menu', array(
                 'links' => $main_menu,
@@ -34,18 +34,18 @@
             </div>
           </li>
           <?php endif; ?>
-          <li class="search-wrapper" data-dropdown-wrapper>
-            <h2><a class="toggle" href="#" data-dropdown-toggle><span><?= t('Search'); ?></span></a></h2>
-            <div class="inner dropdown dropdown-right" data-dropdown>
+          <li class="search-wrapper" data-dropd-wrapper>
+            <h2><a class="toggle" href="#" data-dropd-toggle><span><?= t('Search'); ?></span></a></h2>
+            <div class="inner dropd dropd-right" data-dropd>
               <form>
                 <input name="" type="search" />
                 <input name="" value="submit" type="submit">
               </form>
             </div>
           </li>
-          <li class="account-wrapper" data-dropdown-wrapper>
-            <h2><a class="toggle" href="#" data-dropdown-toggle><span><?= t('Account'); ?></span></a></h2>
-            <div class="inner dropdown dropdown-right" data-dropdown>
+          <li class="account-wrapper" data-dropd-wrapper>
+            <h2><a class="toggle" href="#" data-dropd-toggle><span><?= t('Account'); ?></span></a></h2>
+            <div class="inner dropd dropd-right" data-dropd>
               <p>Lorem ipsum dolor sit amet.</p>
             </div>
           </li>

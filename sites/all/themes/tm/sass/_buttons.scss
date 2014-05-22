@@ -6,7 +6,7 @@ button {
 }
 
 /* Dropdown */
-.dropdown {
+.dropd {
   min-width: 16rem;
   position: absolute;
   left: 0;
@@ -37,7 +37,7 @@ button {
     width: 1rem;
   }
 
-  &.dropdown-right {
+  &.dropd-right {
     left: auto;
     right: -0.5rem;
     &:before {

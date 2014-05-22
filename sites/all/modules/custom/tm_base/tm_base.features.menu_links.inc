@@ -90,17 +90,21 @@ function tm_base_menu_default_menu_links() {
     'weight' => 0,
     'customized' => 1,
   );
-  // Exported menu link: menu-social-links_facebook:<front>
-  $menu_links['menu-social-links_facebook:<front>'] = array(
+  // Exported menu link: menu-social-links_facebook:https://www.facebook.com/travelmassive
+  $menu_links['menu-social-links_facebook:https://www.facebook.com/travelmassive'] = array(
     'menu_name' => 'menu-social-links',
-    'link_path' => '<front>',
+    'link_path' => 'https://www.facebook.com/travelmassive',
     'router_path' => '',
     'link_title' => 'Facebook',
     'options' => array(
+      'identifier' => 'menu-social-links_facebook:https://www.facebook.com/travelmassive',
       'attributes' => array(
         'title' => 'Travel Massive on Facebook',
+        'class' => array(
+          0 => 'facebook',
+        ),
+        'target' => '_blank',
       ),
-      'identifier' => 'menu-social-links_facebook:<front>',
     ),
     'module' => 'menu',
     'hidden' => 0,
@@ -110,17 +114,21 @@ function tm_base_menu_default_menu_links() {
     'weight' => -49,
     'customized' => 1,
   );
-  // Exported menu link: menu-social-links_instagram:<front>
-  $menu_links['menu-social-links_instagram:<front>'] = array(
+  // Exported menu link: menu-social-links_instagram:http://instagram.com/travelmassive
+  $menu_links['menu-social-links_instagram:http://instagram.com/travelmassive'] = array(
     'menu_name' => 'menu-social-links',
-    'link_path' => '<front>',
+    'link_path' => 'http://instagram.com/travelmassive',
     'router_path' => '',
     'link_title' => 'Instagram',
     'options' => array(
+      'identifier' => 'menu-social-links_instagram:http://instagram.com/travelmassive',
       'attributes' => array(
         'title' => 'See Travel Massive on Instagram',
+        'class' => array(
+          0 => 'instagram',
+        ),
+        'target' => '_blank',
       ),
-      'identifier' => 'menu-social-links_instagram:<front>',
     ),
     'module' => 'menu',
     'hidden' => 0,
@@ -130,17 +138,21 @@ function tm_base_menu_default_menu_links() {
     'weight' => -48,
     'customized' => 1,
   );
-  // Exported menu link: menu-social-links_linkedin:<front>
-  $menu_links['menu-social-links_linkedin:<front>'] = array(
+  // Exported menu link: menu-social-links_linkedin:http://www.linkedin.com/company/travel-massive
+  $menu_links['menu-social-links_linkedin:http://www.linkedin.com/company/travel-massive'] = array(
     'menu_name' => 'menu-social-links',
-    'link_path' => '<front>',
+    'link_path' => 'http://www.linkedin.com/company/travel-massive',
     'router_path' => '',
     'link_title' => 'Linkedin',
     'options' => array(
+      'identifier' => 'menu-social-links_linkedin:http://www.linkedin.com/company/travel-massive',
       'attributes' => array(
         'title' => 'Travel Massive on Linkedin',
+        'class' => array(
+          0 => 'linkedin',
+        ),
+        'target' => '_blank',
       ),
-      'identifier' => 'menu-social-links_linkedin:<front>',
     ),
     'module' => 'menu',
     'hidden' => 0,
@@ -150,17 +162,21 @@ function tm_base_menu_default_menu_links() {
     'weight' => -47,
     'customized' => 1,
   );
-  // Exported menu link: menu-social-links_twitter:<front>
-  $menu_links['menu-social-links_twitter:<front>'] = array(
+  // Exported menu link: menu-social-links_twitter:http://twitter.com/travelmassive
+  $menu_links['menu-social-links_twitter:http://twitter.com/travelmassive'] = array(
     'menu_name' => 'menu-social-links',
-    'link_path' => '<front>',
+    'link_path' => 'http://twitter.com/travelmassive',
     'router_path' => '',
     'link_title' => 'Twitter',
     'options' => array(
+      'identifier' => 'menu-social-links_twitter:http://twitter.com/travelmassive',
       'attributes' => array(
         'title' => 'Travel Massive on Twitter',
+        'class' => array(
+          0 => 'twitter',
+        ),
+        'target' => '_blank',
       ),
-      'identifier' => 'menu-social-links_twitter:<front>',
     ),
     'module' => 'menu',
     'hidden' => 0,

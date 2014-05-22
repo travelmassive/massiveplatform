@@ -326,10 +326,10 @@ a.disabled, .bttn.disabled {
       @extend .icon-s-arr-right;
     }
   }
-  .facebook a:before { @extend .icon-facebook; }
-  .linkedin a:before { @extend .icon-linkedin; }
-  .twitter a:before { @extend .icon-twitter; }
-  .instagram a:before { @extend .icon-instagram; }
+  .facebook:before { @extend .icon-facebook; }
+  .linkedin:before { @extend .icon-linkedin; }
+  .twitter:before { @extend .icon-twitter; }
+  .instagram:before { @extend .icon-instagram; }
   
   @media #{$small-up} {
     @include grid-column(8);

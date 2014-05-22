@@ -32,8 +32,13 @@ function tm_chapters_ds_field_settings_info() {
   $ds_fieldsetting->bundle = 'chapter';
   $ds_fieldsetting->view_mode = 'grid';
   $ds_fieldsetting->settings = array(
+    'chapter_avatar' => array(
+      'weight' => '1',
+      'label' => 'hidden',
+      'format' => 'default',
+    ),
     'title' => array(
-      'weight' => '0',
+      'weight' => '2',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -59,6 +64,35 @@ function tm_chapters_ds_field_settings_info() {
     ),
   );
   $export['node|chapter|grid'] = $ds_fieldsetting;
+
+  return $export;
+}
+
+/**
+ * Implements hook_ds_custom_fields_info().
+ */
+function tm_chapters_ds_custom_fields_info() {
+  $export = array();
+
+  $ds_field = new stdClass();
+  $ds_field->api_version = 1;
+  $ds_field->field = 'chapter_avatar';
+  $ds_field->label = 'City avatar';
+  $ds_field->field_type = 5;
+  $ds_field->entities = array(
+    'node' => 'node',
+  );
+  $ds_field->ui_limit = 'chapter|*';
+  $ds_field->properties = array(
+    'code' => array(
+      'value' => '<div class="avatar" style="background-color:[node:field_chapter_color];">
+[node:field_chapter_shortcode]
+</div>',
+      'format' => 'full_html',
+    ),
+    'use_token' => 1,
+  );
+  $export['chapter_avatar'] = $ds_field;
 
   return $export;
 }
@@ -156,16 +190,18 @@ function tm_chapters_ds_layout_settings_info() {
   $ds_layout->layout = 'card';
   $ds_layout->settings = array(
     'regions' => array(
-      'teaser' => array(
-        0 => 'title',
-      ),
       'media' => array(
-        1 => 'field_image',
+        0 => 'field_image',
+        1 => 'chapter_avatar',
+      ),
+      'teaser' => array(
+        2 => 'title',
       ),
     ),
     'fields' => array(
-      'title' => 'teaser',
       'field_image' => 'media',
+      'chapter_avatar' => 'media',
+      'title' => 'teaser',
     ),
     'classes' => array(),
     'wrappers' => array(

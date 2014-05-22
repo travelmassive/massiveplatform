@@ -17,6 +17,7 @@ dependencies[] = path
 
 ; TM - general
 dependencies[] = backup_migrate
+dependencies[] = color_field
 dependencies[] = context
 dependencies[] = context_ui
 dependencies[] = ctools
@@ -28,6 +29,8 @@ dependencies[] = ds_ui
 dependencies[] = email
 dependencies[] = entity
 dependencies[] = entityreference
+dependencies[] = field_validation
+dependencies[] = field_validation_ui
 dependencies[] = file
 dependencies[] = flag
 dependencies[] = jquery_update
@@ -35,8 +38,11 @@ dependencies[] = libraries
 dependencies[] = link
 dependencies[] = pathauto
 dependencies[] = token
+dependencies[] = variable
+dependencies[] = variable_admin
 dependencies[] = views
 dependencies[] = views_ui
+
 
 ; TM - development
 dependencies[] = admin_menu

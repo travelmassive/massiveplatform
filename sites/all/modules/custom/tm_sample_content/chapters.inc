@@ -55,7 +55,12 @@ class TMChapterMigration extends TMBaseMigration {
       ->defaultValue(FILE_EXISTS_REPLACE);
     $this->addFieldMapping('field_image:source_dir')
       ->defaultValue(drupal_get_path('module', 'tm_sample_content') . '/import/files');
+    
+    // City shortcode
+    $this->addFieldMapping('field_chapter_shortcode', 'code');
 
+    // City color
+    $this->addFieldMapping('field_chapter_color', 'color');
   }
 
   public function prepareRow($row) {

@@ -35,7 +35,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 9,
+        'weight' => 12,
       ),
       'list' => array(
         'label' => 'hidden',
@@ -75,6 +75,55 @@ function tm_chapters_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-chapter-field_chapter_color'
+  $field_instances['node-chapter-field_chapter_color'] = array(
+    'bundle' => 'chapter',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Select a color that sets this city apart from the others. This color should have enough contrast with a white text layered on top.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 4,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 10,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_chapter_color',
+    'label' => 'City color',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'color_field',
+      'settings' => array(),
+      'type' => 'color_field_spectrum_widget',
+      'weight' => 35,
+    ),
+  );
+
   // Exported field_instance: 'node-chapter-field_chapter_leaders'
   $field_instances['node-chapter-field_chapter_leaders'] = array(
     'bundle' => 'chapter',
@@ -104,7 +153,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 8,
+        'weight' => 11,
       ),
       'list' => array(
         'label' => 'above',
@@ -142,6 +191,58 @@ function tm_chapters_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-chapter-field_chapter_shortcode'
+  $field_instances['node-chapter-field_chapter_shortcode'] = array(
+    'bundle' => 'chapter',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Please enter a unique 3 letter shortcode for this city.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 3,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 9,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => 'theme_ds_field_reset',
+    'entity_type' => 'node',
+    'field_name' => 'field_chapter_shortcode',
+    'label' => 'City shortcode',
+    'required' => 1,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 10,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 34,
+    ),
+  );
+
   // Exported field_instance: 'node-chapter-field_image'
   $field_instances['node-chapter-field_image'] = array(
     'bundle' => 'chapter',
@@ -176,7 +277,7 @@ function tm_chapters_field_default_field_instances() {
           'image_style' => 'banner',
         ),
         'type' => 'image',
-        'weight' => 1,
+        'weight' => 0,
       ),
       'list' => array(
         'label' => 'above',
@@ -225,9 +326,13 @@ function tm_chapters_field_default_field_instances() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Chapter leaders');
+  t('City color');
+  t('City shortcode');
   t('Description');
   t('Image');
+  t('Please enter a unique 3 letter shortcode for this city.');
   t('Provide a banner image that is a good reflection of your city.');
+  t('Select a color that sets this city apart from the others. This color should have enough contrast with a white text layered on top.');
 
   return $field_instances;
 }

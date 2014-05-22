@@ -297,7 +297,22 @@ a.disabled, .bttn.disabled {
   }
 }
 
+#foot-nav {
+  section {
+    @include grid-column(12);
+    @media #{$medium-up} {
+      @include grid-column(4);
+    }
+  }
+}
 #footer {
+  .logo,
+  #copyright {
+    @include grid-column(6);
+    @media #{$medium-up} {
+      @include grid-column(2);
+    }
+  }
 }
 
 /* ==========================================================================

@@ -52,11 +52,22 @@ function tm_preprocess_html(&$variables, $hook) {
  * @param $hook
  *   The name of the template being rendered ("page" in this case.)
  */
-/* -- Delete this line if you want to use this function
+
 function tm_preprocess_page(&$variables, $hook) {
-  $variables['sample_variable'] = t('Lorem ipsum.');
+ 
+  // Prevent the page title from being printed on the page.tpl.php whenever we
+  // deal with a Page View. Instead, it's being printed in the 
+  // views-view--page.tpl.php.
+  if (isset($variables['page']['#views_contextual_links_info']) && $variables['page']['#views_contextual_links_info']['views_ui']['view_display_id'] == "page") {
+    drupal_set_title('');
+  }
+
+  // Pass the footer and social menu to the page template
+  $variables['foot_menu'] = menu_load('menu-footer-menu');
+  $variables['foot_menu']['links'] = menu_navigation_links('menu-footer-menu');
+  $variables['social_menu'] = menu_load('menu-social-links');
+  $variables['social_menu']['links'] = menu_navigation_links('menu-social-links');
 }
-// */
 
 /**
  * Override or insert variables into the node templates.
@@ -131,13 +142,3 @@ function tm_preprocess_block(&$variables, $hook) {
 }
 // */
 
-/**
- * Prevent the page title from being printed on the page.tpl.php whenever we
- * deal with a Page View. Instead, it's being printed in the 
- * views-view--page.tpl.php.
- */
-function tm_preprocess_page ($variables) {
-  if (isset($variables['page']['#views_contextual_links_info']) && $variables['page']['#views_contextual_links_info']['views_ui']['view_display_id'] == "page") {
-    drupal_set_title('');
-  }
-}

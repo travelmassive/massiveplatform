@@ -32,8 +32,13 @@ function tm_events_ds_field_settings_info() {
   $ds_fieldsetting->bundle = 'event';
   $ds_fieldsetting->view_mode = 'grid';
   $ds_fieldsetting->settings = array(
+    'tm_date_avatar' => array(
+      'weight' => '1',
+      'label' => 'hidden',
+      'format' => 'default',
+    ),
     'title' => array(
-      'weight' => '0',
+      'weight' => '2',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -69,6 +74,66 @@ function tm_events_ds_field_settings_info() {
     ),
   );
   $export['node|event|grid'] = $ds_fieldsetting;
+
+  $ds_fieldsetting = new stdClass();
+  $ds_fieldsetting->api_version = 1;
+  $ds_fieldsetting->id = 'node|partner_event|grid';
+  $ds_fieldsetting->entity_type = 'node';
+  $ds_fieldsetting->bundle = 'partner_event';
+  $ds_fieldsetting->view_mode = 'grid';
+  $ds_fieldsetting->settings = array(
+    'tm_date_avatar' => array(
+      'weight' => '0',
+      'label' => 'hidden',
+      'format' => 'default',
+    ),
+    'title' => array(
+      'weight' => '1',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'link' => '0',
+        'wrapper' => 'h1',
+        'class' => 'prime-title',
+        'ft' => array(),
+      ),
+    ),
+    'body' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'ow' => TRUE,
+          'ow-el' => 'p',
+          'ow-cl' => 'meta',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+  );
+  $export['node|partner_event|grid'] = $ds_fieldsetting;
+
+  return $export;
+}
+
+/**
+ * Implements hook_ds_custom_fields_info().
+ */
+function tm_events_ds_custom_fields_info() {
+  $export = array();
+
+  $ds_field = new stdClass();
+  $ds_field->api_version = 1;
+  $ds_field->field = 'tm_date_avatar';
+  $ds_field->label = 'Date avatar';
+  $ds_field->field_type = 3;
+  $ds_field->entities = array(
+    'node' => 'node',
+  );
+  $ds_field->ui_limit = 'event|*
+partner_event|*';
+  $ds_field->properties = array();
+  $export['tm_date_avatar'] = $ds_field;
 
   return $export;
 }
@@ -138,24 +203,24 @@ function tm_events_ds_layout_settings_info() {
   $ds_layout->layout = 'card';
   $ds_layout->settings = array(
     'regions' => array(
-      'teaser' => array(
-        0 => 'title',
-        4 => 'field_location',
-      ),
       'media' => array(
-        1 => 'field_image',
-        2 => 'field_date',
+        0 => 'field_image',
+        1 => 'tm_date_avatar',
+      ),
+      'teaser' => array(
+        2 => 'title',
+        3 => 'field_location',
       ),
       'extra' => array(
-        3 => 'field_chapter',
+        4 => 'field_chapter',
       ),
     ),
     'fields' => array(
-      'title' => 'teaser',
       'field_image' => 'media',
-      'field_date' => 'media',
-      'field_chapter' => 'extra',
+      'tm_date_avatar' => 'media',
+      'title' => 'teaser',
       'field_location' => 'teaser',
+      'field_chapter' => 'extra',
     ),
     'classes' => array(),
     'wrappers' => array(
@@ -170,6 +235,42 @@ function tm_events_ds_layout_settings_info() {
     'layout_link_custom' => '',
   );
   $export['node|event|grid'] = $ds_layout;
+
+  $ds_layout = new stdClass();
+  $ds_layout->api_version = 1;
+  $ds_layout->id = 'node|partner_event|grid';
+  $ds_layout->entity_type = 'node';
+  $ds_layout->bundle = 'partner_event';
+  $ds_layout->view_mode = 'grid';
+  $ds_layout->layout = 'card';
+  $ds_layout->settings = array(
+    'regions' => array(
+      'media' => array(
+        0 => 'tm_date_avatar',
+      ),
+      'teaser' => array(
+        1 => 'title',
+        2 => 'body',
+      ),
+    ),
+    'fields' => array(
+      'tm_date_avatar' => 'media',
+      'title' => 'teaser',
+      'body' => 'teaser',
+    ),
+    'classes' => array(),
+    'wrappers' => array(
+      'media' => 'div',
+      'teaser' => 'div',
+      'extra' => 'div',
+    ),
+    'layout_wrapper' => 'div',
+    'layout_attributes' => '',
+    'layout_attributes_merge' => 1,
+    'layout_link_attribute' => '',
+    'layout_link_custom' => '',
+  );
+  $export['node|partner_event|grid'] = $ds_layout;
 
   return $export;
 }

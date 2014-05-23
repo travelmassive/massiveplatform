@@ -25,8 +25,9 @@ This is the default build target.
   <target name="refresh"
           description="Install the site and migrate content"
           depends="run-migrate,
-                   cc-all,
-                   check-features" />
+                   update-db,
+                   check-features,
+                   cache-clear-all" />
 
 <!-- ### Load properties
 
@@ -255,6 +256,9 @@ part of make target.-->
       <istrue value="${drupal.migrate}"/>
       <then>
         <!-- Register automatically again. Sometimes migrate tasks are not properly registered on a fresh install. -->
+        <drush command="cc" assume="yes">
+          <param>drush</param>
+        </drush>
         <drush command="migrate-auto-register" assume="yes">
         </drush>
         <!-- Revert features before running migrations so all configuration is guaranteed to be in place -->
@@ -286,10 +290,18 @@ part of make target.-->
     </drush>
   </target>
 
-  <!-- ### Check features state -->
-  <target name="cc-all">
+  <!-- ### Clear all caches -->
+  <target name="cache-clear-all"
+          depends="setup-phing-drush">
     <drush command="cc" assume="yes">
       <param>all</param>
+    </drush>
+  </target>
+
+  <!-- ### Update DB -->
+  <target name="update-db"
+          depends="setup-phing-drush">
+    <drush command="updb" assume="yes">
     </drush>
   </target>
 

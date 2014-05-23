@@ -22,7 +22,7 @@
  * - $extra_classes: String of classes that can be used to style the "Extra" region.
  */
 ?>
-<<?php print $layout_wrapper; print $layout_attributes; ?> class="card contained<?php print $classes;?> clearfix">
+<<?php print $layout_wrapper; print $layout_attributes; ?> class="card contained <?php print $classes;?> clearfix">
     <!-- Needed to activate contextual links -->
     <?php if (isset($title_suffix['contextual_links'])): ?>
       <?php print render($title_suffix['contextual_links']); ?>

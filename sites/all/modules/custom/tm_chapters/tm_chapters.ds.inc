@@ -85,8 +85,8 @@ function tm_chapters_ds_custom_fields_info() {
   $ds_field->ui_limit = 'chapter|*';
   $ds_field->properties = array(
     'code' => array(
-      'value' => '<div class="avatar" style="background-color:[node:field_chapter_color];">
-[node:field_chapter_shortcode]
+      'value' => '<div class="avatar">
+<span class="badge-chapter" style="background-color:[node:field_chapter_color];">[node:field_chapter_shortcode]</span>
 </div>',
       'format' => 'full_html',
     ),
@@ -209,7 +209,7 @@ function tm_chapters_ds_layout_settings_info() {
       'teaser' => 'div',
       'extra' => 'div',
     ),
-    'layout_wrapper' => 'div',
+    'layout_wrapper' => 'article',
     'layout_attributes' => '',
     'layout_attributes_merge' => 1,
     'layout_link_attribute' => '',

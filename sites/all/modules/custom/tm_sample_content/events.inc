@@ -65,6 +65,9 @@ class TMEventMigration extends TMBaseMigration {
       ->defaultValue(FILE_EXISTS_REPLACE);
     $this->addFieldMapping('field_image:source_dir')
       ->defaultValue(drupal_get_path('module', 'tm_sample_content') . '/import/files');
+
+    // Date field
+    $this->addFieldMapping('field_date', 'date');
   }
 
   public function complete($entity, $row) {

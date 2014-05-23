@@ -98,13 +98,12 @@
     height: 4rem;
     border-radius: $global-radius;
     display: inline-block;
-    vertical-align: bottom;
     padding-bottom: 0.5rem;
     &:before {
       content: '';
       display: inline-block;
       height: 100%;
-      vertical-align: middle;
+      vertical-align: bottom;
       width: 0;
     }
     &:after {
@@ -148,6 +147,7 @@
       padding: 0 0 2rem 0;
     }
     .media {
+      float: none;
       margin: 0 0 1rem 0;
     }
     .cover {

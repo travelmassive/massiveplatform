@@ -86,9 +86,7 @@ function tm_chapters_ds_custom_fields_info() {
   $ds_field->properties = array(
     'code' => array(
       'value' => '<div class="avatar">
-<span class="badge-chapter" style="background-color:[node:field_chapter_color];">
-[node:field_chapter_shortcode]
-</span>
+<span class="badge-chapter" style="background-color:[node:field_chapter_color];">[node:field_chapter_shortcode]</span>
 </div>',
       'format' => 'full_html',
     ),

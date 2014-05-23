@@ -1,0 +1,188 @@
+.contained, .containednode {
+  background-color: #FFF;
+  box-shadow: 0 2px 0 0 rgba($primary-color, 0.1);
+  border-radius: $global-radius;
+  margin: 0 0 $column-gutter/2 0;
+  
+  .contained-row {
+    border-bottom: 1px solid tint($primary-color, 85%);
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    
+    &>*:last-child {
+      margin-bottom: 0;
+    }
+    
+    &:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+  }
+  
+  h2, h3 {
+    @extend .hd-xs;
+    margin-top: 0;
+  }
+  
+  .prime-title a {
+    color: inherit;
+  }
+  
+  &.block, &.modal {
+    .prime-title {
+      @extend .hd-m;
+      margin: 0;
+    }
+  }
+  
+  @media #{$small-up} {
+    margin-bottom: 2rem;
+  }
+  
+  @media #{$large-up} {
+    &.block, &.modal {
+      .contained-head {
+        padding: 1.5rem 4rem 1.5rem 1.5rem;
+      }
+      .contained-body {
+        padding: 1.5rem;
+      }
+      .contained-foot {
+        .go-link {
+          padding: 0.5rem 1.5rem;
+        }
+      }
+    }
+  }
+
+}
+
+.card.contained {
+  > a {
+    overflow: hidden;
+    display: table;
+    color: $primary-color;
+    padding: 0.5rem;
+  }
+  .media {
+    float: left;
+    margin: 0 0.75rem 0 0;
+  }
+  .cover {
+    display: none;
+    position: relative;
+    z-index: 1;
+    img {
+      display: block;
+      border-radius: $global-radius $global-radius 0 0;
+    }
+  }
+  .avatar {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    display: block;
+    background-color: #FFF;
+    border-radius: $global-radius;
+  }
+  .badge-chapter {
+    @extend %antialiased;
+    position: relative;
+    display: block;
+    text-transform: uppercase;
+    font-weight: $body-font-bold;
+    font-size: 0.875rem;
+    color: #FFF;
+    width: 4rem;
+    height: 4rem;
+    border-radius: $global-radius;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    &:before {
+      content: '';
+      display: inline-block;
+      height: 100%;
+      vertical-align: bottom;
+      width: 0;
+    }
+    &:after {
+      position: absolute;
+      display: block;
+      bottom: 0;
+      right: 0;
+      content: '';
+      height: 0.5rem;
+      width: 0.5rem;
+      background: transparent url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20opacity%3D%22.3%22%20fill%3D%22%23223141%22%20d%3D%22M0%2016v-16h16z%22%2F%3E%3Cpath%20fill%3D%22%23fff%22%20d%3D%22M16%200v16h-16z%22%2F%3E%3C%2Fsvg%3E') center top no-repeat;
+      background-size: cover;
+      border-radius: $global-radius/2 0 0 0;
+    }
+  }
+  .teaser {
+    display: table-cell;
+    width: 64rem;
+    vertical-align: middle;
+    p { margin: 0; }
+  }
+  .prime-title {
+    $ft-size: 14;
+    font-size: rem-calc($ft-size);
+    line-height: ($ft-size + 6) / $ft-size;
+    font-weight: $body-font-bold;
+    margin: 0;
+    padding: 0;
+    letter-spacing: normal;
+  }
+  .meta {
+    color: tint($primary-color, 40%);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    display: block;
+  }
+  @media #{$small-up} {
+    text-align: center;
+    > a {
+      display: block;
+      padding: 0 0 2rem 0;
+    }
+    .media {
+      float: none;
+      margin: 0 0 1rem 0;
+    }
+    .cover {
+      display: block;
+    }
+    .avatar {
+      display: table;
+      box-shadow: 0 0 0 1px rgba($primary-color, 0.1);
+      padding: 0.25rem;
+      background-color: #FFF;
+      margin: -4rem auto 0 auto;
+    }
+    .badge-chapter {
+      width: 6rem;
+      height: 6rem;
+      font-size: 1.25rem;
+      padding-bottom: 1rem;
+      &:after {
+        height: 1rem;
+        width: 1rem;
+        border-radius: $global-radius 0 0 0;
+      }
+    }
+    .teaser {
+      display: block;
+      width: auto;
+    }
+    .prime-title {
+      $ft-size: 24;
+      font-size: rem-calc($ft-size);
+      line-height: ($ft-size + 8) / $ft-size;
+    }
+    .meta {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+  }
+}

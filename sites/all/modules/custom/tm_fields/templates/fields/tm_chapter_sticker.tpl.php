@@ -5,6 +5,6 @@
  */
 ?>
 
-<a class="chapter-sticker" href="/node/<?php print $chapter_id; ?>" style="background-color: <?php print $color; ?>">
+<a class="chapter-sticker" href="<?php print url('node/' . $chapter_id); ?>" style="background-color: <?php print $color; ?>">
   <?php print $shortcode; ?>
 </a>

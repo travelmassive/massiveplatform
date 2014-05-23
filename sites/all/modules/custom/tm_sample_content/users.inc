@@ -59,7 +59,6 @@ class TMUserMigration extends TMBaseMigration {
 
     // Status
     $this->addFieldMapping('status','status');
-
   }
 
   public function prepareRow($row) {

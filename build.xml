@@ -21,8 +21,14 @@ This is the default build target.
                    config-masquerade,
                    check-features" />
 
-
   <target name="refresh"
+          description="Install the site and migrate content"
+          depends="update-db,
+                   features-revert-all,
+                   check-features,
+                   cache-clear-all" />
+
+  <target name="reload"
           description="Install the site and migrate content"
           depends="run-migrate,
                    update-db,
@@ -302,6 +308,16 @@ part of make target.-->
   <target name="update-db"
           depends="setup-phing-drush">
     <drush command="updb" assume="yes">
+    </drush>
+  </target>
+
+  <!-- ### Update DB -->
+  <target name="features-revert-all"
+          depends="setup-phing-drush">
+    <drush command="cc" assume="yes">
+      <param>drush</param>
+    </drush>
+    <drush command="fra" assume="yes">
     </drush>
   </target>
 

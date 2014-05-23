@@ -264,7 +264,7 @@ function tm_events_ds_layout_settings_info() {
       'teaser' => 'div',
       'extra' => 'div',
     ),
-    'layout_wrapper' => 'div',
+    'layout_wrapper' => 'article',
     'layout_attributes' => '',
     'layout_attributes_merge' => 1,
     'layout_link_attribute' => '',

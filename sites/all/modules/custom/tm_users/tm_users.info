@@ -15,5 +15,5 @@ features[ctools][] = views:views_default:3.0
 features[ds_field_settings][] = user|user|grid
 features[ds_layout_settings][] = user|user|grid
 features[features_api][] = api:2
-features[views_view][] = community
 features[user_permission][] = access user profiles
+features[views_view][] = community

@@ -35,7 +35,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 15,
+        'weight' => 13,
       ),
       'list' => array(
         'label' => 'hidden',
@@ -102,11 +102,8 @@ function tm_events_field_default_field_instances() {
       ),
       'grid' => array(
         'label' => 'hidden',
-        'module' => 'entityreference',
-        'settings' => array(
-          'link' => FALSE,
-        ),
-        'type' => 'entityreference_label',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 4,
       ),
       'list' => array(
@@ -180,7 +177,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 12,
+        'weight' => 2,
       ),
       'list' => array(
         'label' => 'above',
@@ -263,7 +260,7 @@ function tm_events_field_default_field_instances() {
           'image_style' => 'banner',
         ),
         'type' => 'image',
-        'weight' => 0,
+        'weight' => 1,
       ),
       'list' => array(
         'label' => 'above',
@@ -335,7 +332,7 @@ function tm_events_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 3,
+        'weight' => 15,
       ),
       'list' => array(
         'label' => 'above',
@@ -395,7 +392,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 16,
+        'weight' => 14,
       ),
       'list' => array(
         'label' => 'above',
@@ -473,7 +470,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 14,
+        'weight' => 12,
       ),
       'list' => array(
         'label' => 'above',
@@ -523,7 +520,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 18,
+        'weight' => 17,
       ),
       'list' => array(
         'label' => 'above',
@@ -585,7 +582,7 @@ function tm_events_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 2,
+        'weight' => 0,
       ),
       'list' => array(
         'label' => 'hidden',

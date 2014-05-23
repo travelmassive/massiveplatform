@@ -21,6 +21,13 @@ This is the default build target.
                    config-masquerade,
                    check-features" />
 
+
+  <target name="refresh"
+          description="Install the site and migrate content"
+          depends="run-migrate,
+                   cc-all,
+                   check-features" />
+
 <!-- ### Load properties
 
 Loads a set of project specific properties from a `.properties` file.
@@ -276,6 +283,13 @@ part of make target.-->
   <target name="check-features"
           depends="setup-phing-drush">
     <drush command="features" assume="yes">
+    </drush>
+  </target>
+
+  <!-- ### Check features state -->
+  <target name="cc-all">
+    <drush command="cc" assume="yes">
+      <param>all</param>
     </drush>
   </target>
 

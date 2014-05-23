@@ -74,7 +74,6 @@ class TMEventMigration extends TMBaseMigration {
     // simulate "signed up" flag activation
     if ($entity->signed_up) {
       // prepare variables
-      $sign_ups = explode('|', $row->signed_up);
       $flag = flag_get_flag('signup');
 
       // perform flagging

@@ -61,9 +61,23 @@ class TMChapterMigration extends TMBaseMigration {
 
     // City color
     $this->addFieldMapping('field_chapter_color', 'color');
+
+    // Temporary field mapping to use on chapters
+    $this->addFieldMapping('member', 'member')
+      ->separator('|')
+      ->sourceMigration('TMUser');
   }
 
-  public function prepareRow($row) {
+  public function complete($entity, $row) {
+    // simulate "member"
+    if ($entity->member) {
+      // set the chapter on the user
+      foreach ($entity->member as $uid) {
+        $participant = user_load($uid);
+        $participant->field_chapter[LANGUAGE_NONE][0]['target_id'] = $entity->nid;
+        user_save($participant);
+      }
+    }
   }
 
 }

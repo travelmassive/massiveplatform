@@ -5,3 +5,49 @@
  */
 
 include_once 'tm_fields.features.inc';
+
+/**
+ * Implement hook_ds_field_info
+ */
+function tm_fields_ds_fields_info($entity_type) {
+  $fields = array();
+
+  $fields['ds_tm_chapter_sticker'] = array(
+    'title' => t('Chapter sticker'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('event|*', 'user|*'),
+    'function' => '_tm_chapter_sticker_process'
+  );
+
+  return array($entity_type => $fields);
+}
+/**
+ * Custom function to build the chapter sticker
+ */
+function _tm_chapter_sticker_process($field, $title = NULL) {
+  if (isset($field['entity']->field_chapter['und'][0]['target_id'])) {
+    $chapter_id = $field['entity']->field_chapter['und'][0]['target_id'];
+    $related_chapter = node_load($chapter_id);
+    return theme('tm_chapter_sticker', array(
+      'chapter_id' => $chapter_id,
+      'shortcode' => $related_chapter->field_chapter_shortcode['und'][0]['value'],
+      'color' => $related_chapter->field_chapter_color['und'][0]['rgb']
+    ));
+  }
+}
+/**
+ * Implement hook_theme()
+ */
+function tm_fields_theme() {
+  return array(
+    'tm_chapter_sticker' => array(
+      'variables' => array(
+        'chapter_id' => NULL,
+        'shortcode' => NULL,
+        'color' => NULL
+      ),
+      'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
+      'template' => 'tm_chapter_sticker'
+    )
+  );
+}

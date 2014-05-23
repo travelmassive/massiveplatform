@@ -48,6 +48,16 @@ function tm_events_ds_field_settings_info() {
         'ft' => array(),
       ),
     ),
+    'ds_tm_chapter_sticker' => array(
+      'weight' => '0',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
     'field_image' => array(
       'formatter_settings' => array(
         'ft' => array(
@@ -203,24 +213,24 @@ function tm_events_ds_layout_settings_info() {
   $ds_layout->layout = 'card';
   $ds_layout->settings = array(
     'regions' => array(
+      'extra' => array(
+        0 => 'ds_tm_chapter_sticker',
+      ),
       'media' => array(
-        0 => 'field_image',
-        1 => 'tm_date_avatar',
+        1 => 'field_image',
+        2 => 'tm_date_avatar',
       ),
       'teaser' => array(
-        2 => 'title',
-        3 => 'field_location',
-      ),
-      'extra' => array(
-        4 => 'field_chapter',
+        3 => 'title',
+        4 => 'field_location',
       ),
     ),
     'fields' => array(
+      'ds_tm_chapter_sticker' => 'extra',
       'field_image' => 'media',
       'tm_date_avatar' => 'media',
       'title' => 'teaser',
       'field_location' => 'teaser',
-      'field_chapter' => 'extra',
     ),
     'classes' => array(),
     'wrappers' => array(

@@ -14,7 +14,7 @@ This is the default build target.
 -->
 
   <target name="build"
-          description="Install the site and migrate content"
+          description="Install the site from scratch and migrate content"
           depends="site-install,
                    enable-dev-mode,
                    run-migrate,
@@ -22,14 +22,14 @@ This is the default build target.
                    check-features" />
 
   <target name="refresh"
-          description="Install the site and migrate content"
+          description="Revert features and run update hooks"
           depends="update-db,
                    features-revert-all,
                    check-features,
                    cache-clear-all" />
 
   <target name="reload"
-          description="Install the site and migrate content"
+          description="Refreshes and reloads the migrate content"
           depends="run-migrate,
                    update-db,
                    check-features,

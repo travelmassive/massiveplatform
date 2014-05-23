@@ -1,0 +1,3 @@
+# Your local properties file, to be adapted and renamed to `build.properties`
+
+drupal.db.url = mysql://USER:PASS@localhost/DATABASE

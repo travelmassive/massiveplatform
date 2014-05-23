@@ -256,7 +256,7 @@ a.disabled, .bttn.disabled {
         }
       }
     }
-    @media #{$medium-up} {
+    @media #{$large-up} {
       li {
         @include grid-column(4);
         &:nth-child(2n+1) {
@@ -267,17 +267,17 @@ a.disabled, .bttn.disabled {
         }
       }
     }
-    @media #{$large-up} {
-      li {
-        @include grid-column(3);
-        &:nth-child(3n+1) {
-          clear: none;
-        }
-        &:nth-child(4n+1) {
-          clear: left;
-        }
-      }
-    }
+    // @media #{$large-up} {
+    //   li {
+    //     @include grid-column(3);
+    //     &:nth-child(3n+1) {
+    //       clear: none;
+    //     }
+    //     &:nth-child(4n+1) {
+    //       clear: left;
+    //     }
+    //   }
+    // }
   }
 }
 

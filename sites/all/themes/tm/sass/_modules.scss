@@ -1,0 +1,250 @@
+.contained, .containednode {
+  background-color: #FFF;
+  box-shadow: 0 2px 0 0 rgba($primary-color, 0.1);
+  border-radius: $global-radius;
+  margin: 0 0 $column-gutter/2 0;
+  
+  
+  
+  .contained-row {
+    border-bottom: 1px solid tint($primary-color, 85%);
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    
+    &>*:last-child {
+      margin-bottom: 0;
+    }
+    
+    &:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+  }
+  
+  h2, h3 {
+    @extend .hd-xs;
+    margin-top: 0;
+  }
+  
+  .prime-title a {
+    color: inherit;
+  }
+  
+  &.card {
+    .prime-title {
+      @extend .hd-m;
+      margin: 0;
+    }
+  }
+  
+  &.block, &.modal {
+    .prime-title {
+      @extend .hd-m;
+      margin: 0;
+    }
+  }
+  
+  .tick-list,
+  .contact-list {
+    padding: 0;
+    margin-left: 0;
+    list-style: none;
+    dt {
+      @extend .visually-hidden;
+    }
+    dd {
+      @extend .contained-row;
+      &.person:before { @extend .icon-user; }
+      &.phone:before { @extend .icon-phone; }
+      &.fax:before { @extend .icon-fax; }
+      &.email:before { @extend .icon-email; }
+      &.bio:before { @extend .icon-description; }
+      &.address {
+        border-bottom: none;
+        &:before { @extend .icon-map-marker; }
+      }
+      &.site:before { @extend .icon-globe; }
+    }
+    li {
+      margin-bottom: 0.5rem;
+      &:before { @extend .icon-s-tick; }
+    }
+    dd, li {
+      position: relative;
+      padding-left: 1.5rem;
+      &:before {
+        color: tint($primary-color, 60%);
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-size: 1rem;
+      }
+    }
+    .role {
+      display: block;
+      font-size: inherit;
+      color: tint($primary-color, 40%);
+    }
+  }
+  
+  .tag-list {
+    margin-left: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+    li {
+      float: left;
+      margin: 0 0.5rem 0.5rem 0;
+      padding: 0.25rem 0.75rem;
+      background: tint($primary-color, 90%);
+      border-radius: $global-rounded;
+    }  
+  }
+  
+  .meta {
+    margin: 0;
+    padding: 0;
+    dt {
+      @extend .visually-hidden;
+    }
+    dd {
+      margin: 0;
+    }
+    .location {
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      &:before { 
+        @extend .icon-map-marker;
+        vertical-align: bottom;
+        opacity: 0.5;
+        margin-right: 0.25rem;
+        font-size: 1rem;
+      }
+    }
+    .impact-area {
+      @extend %impact-area-badge;
+      span {
+        @extend .visually-hidden;
+      }
+      &:before {
+        position: absolute;
+        right: 0.75rem;
+        top: 0.75rem;
+        z-index: 1;
+        width: 2rem;
+        line-height: 2;
+        font-size: 1rem;
+      }
+    }
+  }
+  
+  .contained-head {
+    position: relative;
+    background: tint($primary-color, 95%);
+    padding: 1rem 4rem 1rem 1rem;
+    border-radius: $global-radius $global-radius 0 0;
+    border-bottom: 1px solid tint($primary-color, 85%);
+    
+    &>*:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .contained-foot {
+    border-radius: 0 0 $global-radius $global-radius;
+    .go-link {
+      display: block;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      font-weight: $body-font-bold;
+      padding: 0.5rem 1rem;
+      background: tint($secondary-color, 90%);
+      border-top: 1px solid tint($secondary-color, 80%);
+      border-radius: 0 0 $global-radius $global-radius;
+      color: $secondary-color;
+      &:after {
+        font-size: 1rem;
+        @extend .icon-s-arr-right;
+        vertical-align: bottom;
+        opacity: 0.5;
+        margin-left: 0.125rem;
+      }
+    }
+  }
+  
+  .contained-body {
+    padding: 1rem;
+    
+    p, ul, ol, dl {
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    &>*:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  @media #{$small-up} {
+    margin-bottom: 2rem;
+  }
+  
+  @media #{$large-up} {
+    &.block, &.modal {
+      .contained-head {
+        padding: 1.5rem 4rem 1.5rem 1.5rem;
+      }
+      .contained-body {
+        padding: 1.5rem;
+      }
+      .contained-foot {
+        .go-link {
+          padding: 0.5rem 1.5rem;
+        }
+      }
+    }
+  }
+
+}
+
+.card.containednode {
+  text-align: center;
+  > a {
+    display: block;
+    color: $primary-color;
+  }
+  .media {
+    img {
+      display: block;
+      border-radius: $global-radius $global-radius 0 0;
+    }
+  }
+  .cover {
+    position: relative;
+    z-index: 1;
+  }
+  .avatar {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    display: table;
+    box-shadow: 0 1px 0 1px rgba($primary-color, 0.1);
+    padding: 0.25rem;
+    background-color: #FFF;
+    border-radius: $global-radius;
+    margin: -4rem auto 1rem auto;
+  }
+  .badge-chapter {
+    display: block;
+    text-transform: uppercase;
+    color: #FFF;
+    width: 6rem;
+    height: 6rem;
+    border-radius: $global-radius;
+  }
+  .prime-title {
+    margin-bottom: 1rem;
+  }
+}

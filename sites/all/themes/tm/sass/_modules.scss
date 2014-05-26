@@ -1,4 +1,4 @@
-.contained, .containednode {
+.contained {
   background-color: #FFF;
   box-shadow: 0 2px 0 0 rgba($primary-color, 0.1);
   border-radius: $global-radius;
@@ -59,12 +59,23 @@
 }
 
 .card.contained {
+  box-shadow: none;
+  background: transparent;
   position: relative;
   > a {
+    background-color: #FFF;
+    box-shadow: 0 2px 0 0 rgba($primary-color, 0.1);
+    border-radius: $global-radius;
     overflow: hidden;
     display: table;
     color: $primary-color;
     padding: 0.5rem;
+    @include transition(transform .1s ease-in-out);
+    
+    &:hover {
+      @include opacity(1);
+      @include transform(scale(1.05));
+    }
   }
   &.node-event > a {
     padding-right: 2.25rem;

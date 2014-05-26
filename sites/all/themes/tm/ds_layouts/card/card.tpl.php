@@ -40,11 +40,10 @@
     <<?php print $teaser_wrapper; ?> class="teaser<?php print $teaser_classes; ?>">
       <?php print $teaser; ?>
     </<?php print $teaser_wrapper; ?>>
-
+      </a>
     <<?php print $extra_wrapper; ?> class="extra<?php print $extra_classes; ?>">
       <?php print $extra; ?>
     </<?php print $extra_wrapper; ?>>
-  </a>
 </<?php print $layout_wrapper ?>>
 
 <!-- Needed to activate display suite support on forms -->

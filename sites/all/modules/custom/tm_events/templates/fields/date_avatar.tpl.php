@@ -7,7 +7,7 @@
  
 <div class="avatar">
   <time datetime="<?php print $date->format('c'); ?>" class="badge-cal">
-    <span class="month"><?php print $date->format('m'); ?></span> 
+    <span class="month"><?php print $date->format('M'); ?></span> 
     <span class="day"><?php print $date->format('d'); ?></span> 
     <span class="year"><?php print $date->format('Y'); ?></span>
   </time>

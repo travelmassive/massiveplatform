@@ -148,6 +148,16 @@
       @extend .visually-hidden;
     }
   }
+  .badge-organization {
+    width: 4rem;
+    height: 4rem;
+    display: block;
+    img {
+      display: block;
+      max-width: 100%;
+      border-radius: $global-radius;
+    }
+  }
   .teaser {
     display: table-cell;
     width: 64rem;
@@ -235,6 +245,10 @@
         padding-bottom: 0.5rem;
         letter-spacing: -0.125rem;
       }
+    }
+    .badge-organization {
+      width: 6rem;
+      height: 6rem;
     }
     .teaser {
       display: block;

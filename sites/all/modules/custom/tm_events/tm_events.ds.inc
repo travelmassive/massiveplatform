@@ -32,13 +32,8 @@ function tm_events_ds_field_settings_info() {
   $ds_fieldsetting->bundle = 'event';
   $ds_fieldsetting->view_mode = 'grid';
   $ds_fieldsetting->settings = array(
-    'tm_date_avatar' => array(
-      'weight' => '0',
-      'label' => 'hidden',
-      'format' => 'default',
-    ),
     'title' => array(
-      'weight' => '2',
+      'weight' => '3',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -58,8 +53,8 @@ function tm_events_ds_field_settings_info() {
         ),
       ),
     ),
-    'tm_ds_next_event' => array(
-      'weight' => '4',
+    'tm_ds_date_avatar' => array(
+      'weight' => '2',
       'label' => 'hidden',
       'format' => 'default',
     ),
@@ -97,11 +92,6 @@ function tm_events_ds_field_settings_info() {
   $ds_fieldsetting->bundle = 'partner_event';
   $ds_fieldsetting->view_mode = 'grid';
   $ds_fieldsetting->settings = array(
-    'tm_date_avatar' => array(
-      'weight' => '0',
-      'label' => 'hidden',
-      'format' => 'default',
-    ),
     'title' => array(
       'weight' => '1',
       'label' => 'hidden',
@@ -112,6 +102,11 @@ function tm_events_ds_field_settings_info() {
         'class' => 'prime-title',
         'ft' => array(),
       ),
+    ),
+    'tm_ds_date_avatar' => array(
+      'weight' => '0',
+      'label' => 'hidden',
+      'format' => 'default',
     ),
     'body' => array(
       'formatter_settings' => array(
@@ -127,28 +122,6 @@ function tm_events_ds_field_settings_info() {
     ),
   );
   $export['node|partner_event|grid'] = $ds_fieldsetting;
-
-  return $export;
-}
-
-/**
- * Implements hook_ds_custom_fields_info().
- */
-function tm_events_ds_custom_fields_info() {
-  $export = array();
-
-  $ds_field = new stdClass();
-  $ds_field->api_version = 1;
-  $ds_field->field = 'tm_date_avatar';
-  $ds_field->label = 'Date avatar';
-  $ds_field->field_type = 3;
-  $ds_field->entities = array(
-    'node' => 'node',
-  );
-  $ds_field->ui_limit = 'event|*
-partner_event|*';
-  $ds_field->properties = array();
-  $export['tm_date_avatar'] = $ds_field;
 
   return $export;
 }
@@ -219,24 +192,22 @@ function tm_events_ds_layout_settings_info() {
   $ds_layout->settings = array(
     'regions' => array(
       'media' => array(
-        0 => 'tm_date_avatar',
-        1 => 'field_image',
+        0 => 'field_image',
+        1 => 'tm_ds_date_avatar',
       ),
       'teaser' => array(
         2 => 'title',
         3 => 'field_location',
-        4 => 'tm_ds_next_event',
       ),
       'extra' => array(
-        5 => 'tm_ds_chapter_sticker',
+        4 => 'tm_ds_chapter_sticker',
       ),
     ),
     'fields' => array(
-      'tm_date_avatar' => 'media',
       'field_image' => 'media',
+      'tm_ds_date_avatar' => 'media',
       'title' => 'teaser',
       'field_location' => 'teaser',
-      'tm_ds_next_event' => 'teaser',
       'tm_ds_chapter_sticker' => 'extra',
     ),
     'classes' => array(),
@@ -263,17 +234,17 @@ function tm_events_ds_layout_settings_info() {
   $ds_layout->settings = array(
     'regions' => array(
       'media' => array(
-        0 => 'tm_date_avatar',
+        0 => 'tm_ds_date_avatar',
       ),
       'teaser' => array(
-        1 => 'title',
-        2 => 'body',
+        1 => 'body',
+        2 => 'title',
       ),
     ),
     'fields' => array(
-      'tm_date_avatar' => 'media',
-      'title' => 'teaser',
+      'tm_ds_date_avatar' => 'media',
       'body' => 'teaser',
+      'title' => 'teaser',
     ),
     'classes' => array(),
     'wrappers' => array(

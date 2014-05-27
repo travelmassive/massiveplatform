@@ -32,18 +32,12 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
 
 }
 /**
- * Implement hook_preprocess_node()
- */
-function tm_events_preprocess_node(&$vars) {
-  if (isset($vars['field_date']['und'][0]['value'])) {
-    $date = new DateTime($vars['field_date']['und'][0]['value']);
-    $vars['tm_date_avatar'] = theme('tm_date_avatar', array('date' => $date));
-  }
-}
-/**
  * Implement hook_ds_field_info
  */
 function tm_events_ds_fields_info($entity_type) {
+  if ($entity_type != 'node') {
+    return;
+  }
   $fields = array();
 
   $fields['tm_ds_next_event'] = array(
@@ -51,6 +45,13 @@ function tm_events_ds_fields_info($entity_type) {
     'field_type' => DS_FIELD_TYPE_FUNCTION,
     'ui_limit' => array('chapter|*'),
     'function' => '_tm_next_event'
+  );
+
+  $fields['tm_ds_date_avatar'] = array(
+    'title' => t('Date avatar'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('event|*', 'partner_event|*'),
+    'function' => '_tm_date_avatar'
   );
 
   return array($entity_type => $fields);
@@ -93,6 +94,17 @@ function _tm_next_event($field, $title = NULL) {
   return $time_until ? t('Event in @time.', array('@time' => $time_until)) : t('No event scheduled yet.');
 }
 /**
+ * Implement hook_preprocess_node()
+ */
+function _tm_date_avatar($field, $title = NULL) {
+  if (isset($field['entity']->field_event_date['und'][0]['value'])) {
+    $event_date = new DateTime($field['entity']->field_event_date['und'][0]['value']);
+    return theme('tm_date_avatar', array(
+      'date' => $event_date,
+    ));
+  }
+}
+/**
  * Implement hook_theme()
  */
 function tm_events_theme() {
@@ -102,7 +114,7 @@ function tm_events_theme() {
         'date' => NULL
       ),
       'path' => drupal_get_path('module','tm_events') . '/templates/fields',
-      'template' => 'date_avatar'
+      'template' => 'tm_date_avatar'
     )
   );
 }

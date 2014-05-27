@@ -19,7 +19,6 @@ features[ctools][] = views:views_default:3.0
 features[ds_field_settings][] = node|event|full
 features[ds_field_settings][] = node|event|grid
 features[ds_field_settings][] = node|partner_event|grid
-features[ds_fields][] = tm_date_avatar
 features[ds_layout_settings][] = node|event|full
 features[ds_layout_settings][] = node|event|grid
 features[ds_layout_settings][] = node|partner_event|grid

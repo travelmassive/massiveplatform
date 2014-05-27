@@ -1,4 +1,4 @@
-.contained, .containednode {
+.contained {
   background-color: #FFF;
   box-shadow: 0 2px 0 0 rgba($primary-color, 0.1);
   border-radius: $global-radius;
@@ -59,11 +59,26 @@
 }
 
 .card.contained {
+  box-shadow: none;
+  background: transparent;
+  position: relative;
   > a {
+    background-color: #FFF;
+    box-shadow: 0 2px 0 0 rgba($primary-color, 0.1);
+    border-radius: $global-radius;
     overflow: hidden;
     display: table;
     color: $primary-color;
     padding: 0.5rem;
+    @include transition(transform .1s ease-in-out);
+    
+    &:hover {
+      @include opacity(1);
+      @include transform(scale(1.05));
+    }
+  }
+  &.node-event > a {
+    padding-right: 2.25rem;
   }
   .media {
     float: left;
@@ -85,13 +100,13 @@
     display: block;
     background-color: #FFF;
     border-radius: $global-radius;
-  }
-  .badge-chapter {
     @extend %antialiased;
-    position: relative;
-    display: block;
     text-transform: uppercase;
     font-weight: $body-font-bold;
+  }
+  .badge-chapter {
+    position: relative;
+    display: block;
     font-size: 0.875rem;
     color: #FFF;
     width: 4rem;
@@ -119,6 +134,41 @@
       border-radius: $global-radius/2 0 0 0;
     }
   }
+  .badge-cal {
+    display: block;
+    width: 4rem;
+    height: 4rem;
+    .month {
+      display: block;
+      border-radius: $global-radius $global-radius 0 0;
+      background: $primary-color;
+      color: #FFF;
+      font-size: 0.875rem;
+      line-height: 1.5rem;
+    }
+    .day {
+      display: block;
+      border-radius: 0 0 $global-radius $global-radius;
+      background: tint($primary-color, 90%);
+      line-height: 2.25rem;
+      font-size: 1.75rem;
+      padding-bottom: 0.25rem;
+      letter-spacing: -0.0625rem;
+    }
+    .year {
+      @extend .visually-hidden;
+    }
+  }
+  .badge-organization {
+    width: 4rem;
+    height: 4rem;
+    display: block;
+    img {
+      display: block;
+      max-width: 100%;
+      border-radius: $global-radius;
+    }
+  }
   .teaser {
     display: table-cell;
     width: 64rem;
@@ -140,11 +190,33 @@
     line-height: 1.25rem;
     display: block;
   }
+  .extra {
+    position: absolute;
+    top: 0.5rem;
+    right: 1.75rem;
+  }
+  .chapter-sticker {
+    border-radius: $global-radius;
+    @extend %antialiased;
+    display: block;
+    text-align: center;
+    color: #FFF;
+    font-weight: $body-font-bold;
+    text-transform: uppercase;
+    line-height: 1.25rem;
+    font-size: 0.75rem;
+    width: 4rem;
+    @include transform(rotate(-90deg));
+    @include transform-origin(top right 0);
+  }
   @media #{$small-up} {
     text-align: center;
     > a {
       display: block;
       padding: 0 0 2rem 0;
+    }
+    &.node-event > a {
+      padding-right: 0;
     }
     .media {
       float: none;
@@ -171,18 +243,49 @@
         border-radius: $global-radius 0 0 0;
       }
     }
+    .badge-cal {
+      width: 6rem;
+      height: 6rem;
+      .month {
+        font-size: 1.25rem;
+        line-height: 2rem;
+      }
+      .day {
+        line-height: 3.5rem;
+        font-size: 2.5rem;
+        padding-bottom: 0.5rem;
+        letter-spacing: -0.125rem;
+      }
+    }
+    .badge-organization {
+      width: 6rem;
+      height: 6rem;
+    }
     .teaser {
       display: block;
       width: auto;
+      padding: 0 1rem;
     }
     .prime-title {
       $ft-size: 24;
       font-size: rem-calc($ft-size);
-      line-height: ($ft-size + 8) / $ft-size;
+      line-height: ($ft-size + 4) / $ft-size;
     }
     .meta {
       font-size: 1rem;
       line-height: 1.5;
+    }
+    .extra {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      right: auto;
+    }
+    .chapter-sticker {
+      line-height: 2rem;
+      font-size: 0.875rem;
+      width: 4rem;
+      @include transform(rotate(0));
     }
   }
 }

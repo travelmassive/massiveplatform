@@ -35,7 +35,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 13,
+        'weight' => 18,
       ),
       'list' => array(
         'label' => 'hidden',
@@ -104,7 +104,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 4,
+        'weight' => 14,
       ),
       'list' => array(
         'label' => 'above',
@@ -141,8 +141,8 @@ function tm_events_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-event-field_date'
-  $field_instances['node-event-field_date'] = array(
+  // Exported field_instance: 'node-event-field_event_date'
+  $field_instances['node-event-field_event_date'] = array(
     'bundle' => 'event',
     'deleted' => 0,
     'description' => 'Select the date and start time of the event.',
@@ -158,55 +158,36 @@ function tm_events_field_default_field_instances() {
           'multiple_to' => '',
         ),
         'type' => 'date_default',
-        'weight' => 1,
+        'weight' => 11,
       ),
       'full' => array(
         'label' => 'above',
-        'module' => 'date',
-        'settings' => array(
-          'format_type' => 'long',
-          'fromto' => 'both',
-          'multiple_from' => '',
-          'multiple_number' => '',
-          'multiple_to' => '',
-        ),
-        'type' => 'date_default',
-        'weight' => 1,
-      ),
-      'grid' => array(
-        'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 2,
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
       'list' => array(
-        'label' => 'above',
-        'module' => 'date',
-        'settings' => array(
-          'format_type' => 'long',
-          'fromto' => 'both',
-          'multiple_from' => '',
-          'multiple_number' => '',
-          'multiple_to' => '',
-        ),
-        'type' => 'date_default',
-        'weight' => 1,
-      ),
-      'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
         'weight' => 0,
       ),
     ),
+    'ds_extras_field_template' => 'theme_ds_field_reset',
     'entity_type' => 'node',
-    'field_name' => 'field_date',
-    'label' => 'Date and time',
+    'field_name' => 'field_event_date',
+    'label' => 'Event date',
     'required' => 0,
     'settings' => array(
-      'default_value' => 'now',
+      'default_value' => 'strtotime',
       'default_value2' => 'same',
-      'default_value_code' => '',
+      'default_value_code' => '+14 days',
       'default_value_code2' => '',
       'user_register_form' => FALSE,
     ),
@@ -219,10 +200,10 @@ function tm_events_field_default_field_instances() {
         'input_format_custom' => '',
         'label_position' => 'above',
         'text_parts' => array(),
-        'year_range' => '-3:+3',
+        'year_range' => '-0:+3',
       ),
       'type' => 'date_select',
-      'weight' => 4,
+      'weight' => 5,
     ),
   );
 
@@ -302,7 +283,7 @@ function tm_events_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 7,
+      'weight' => 8,
     ),
   );
 
@@ -332,7 +313,7 @@ function tm_events_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 15,
+        'weight' => 3,
       ),
       'list' => array(
         'label' => 'above',
@@ -363,7 +344,7 @@ function tm_events_field_default_field_instances() {
         'rows' => 4,
       ),
       'type' => 'text_textarea',
-      'weight' => 5,
+      'weight' => 6,
     ),
   );
 
@@ -392,7 +373,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 14,
+        'weight' => 19,
       ),
       'list' => array(
         'label' => 'above',
@@ -437,7 +418,7 @@ function tm_events_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 6,
+      'weight' => 7,
     ),
   );
 
@@ -470,7 +451,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 12,
+        'weight' => 17,
       ),
       'list' => array(
         'label' => 'above',
@@ -491,7 +472,7 @@ function tm_events_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 11,
+      'weight' => 12,
     ),
   );
 
@@ -520,7 +501,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 17,
+        'weight' => 20,
       ),
       'list' => array(
         'label' => 'above',
@@ -559,7 +540,7 @@ function tm_events_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 9,
+      'weight' => 10,
     ),
   );
 
@@ -622,8 +603,8 @@ function tm_events_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-partner_event-field_date'
-  $field_instances['node-partner_event-field_date'] = array(
+  // Exported field_instance: 'node-partner_event-field_event_date'
+  $field_instances['node-partner_event-field_event_date'] = array(
     'bundle' => 'partner_event',
     'deleted' => 0,
     'description' => '',
@@ -639,7 +620,7 @@ function tm_events_field_default_field_instances() {
           'multiple_to' => '',
         ),
         'type' => 'date_default',
-        'weight' => 1,
+        'weight' => 2,
       ),
       'grid' => array(
         'label' => 'above',
@@ -654,15 +635,15 @@ function tm_events_field_default_field_instances() {
         'weight' => 0,
       ),
     ),
-    'ds_extras_field_template' => '',
+    'ds_extras_field_template' => 'theme_ds_field_reset',
     'entity_type' => 'node',
-    'field_name' => 'field_date',
-    'label' => 'Date',
+    'field_name' => 'field_event_date',
+    'label' => 'Event date',
     'required' => 1,
     'settings' => array(
-      'default_value' => 'now',
+      'default_value' => 'strtotime',
       'default_value2' => 'same',
-      'default_value_code' => '',
+      'default_value_code' => '+14 days',
       'default_value_code2' => '',
       'user_register_form' => FALSE,
     ),
@@ -675,19 +656,18 @@ function tm_events_field_default_field_instances() {
         'input_format_custom' => '',
         'label_position' => 'above',
         'text_parts' => array(),
-        'year_range' => '-3:+3',
+        'year_range' => '-0:+3',
       ),
       'type' => 'date_select',
-      'weight' => 33,
+      'weight' => 35,
     ),
   );
 
   // Translatables
   // Included for use with string extractors like potx.
   t('City');
-  t('Date');
-  t('Date and time');
   t('Description');
+  t('Event date');
   t('Help the attendees find the right location by providing a link to a map, for example <a href="http://maps.google.com/">Google Maps</a>.');
   t('Image');
   t('Location');

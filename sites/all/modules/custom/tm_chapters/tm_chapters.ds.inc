@@ -50,6 +50,21 @@ function tm_chapters_ds_field_settings_info() {
         ),
       ),
     ),
+    'tm_ds_next_event' => array(
+      'weight' => '3',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'ow' => TRUE,
+          'ow-el' => 'span',
+          'ow-cl' => 'meta event',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
     'field_image' => array(
       'formatter_settings' => array(
         'ft' => array(
@@ -196,12 +211,14 @@ function tm_chapters_ds_layout_settings_info() {
       ),
       'teaser' => array(
         2 => 'title',
+        3 => 'tm_ds_next_event',
       ),
     ),
     'fields' => array(
       'field_image' => 'media',
       'chapter_avatar' => 'media',
       'title' => 'teaser',
+      'tm_ds_next_event' => 'teaser',
     ),
     'classes' => array(),
     'wrappers' => array(

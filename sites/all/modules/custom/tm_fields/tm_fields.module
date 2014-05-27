@@ -1,10 +1,8 @@
 <?php
 /**
  * @file
- * Code for the TM Fields feature.
+ * Drupal needs this blank file.
  */
-
-include_once 'tm_fields.features.inc';
 
 /**
  * Implement hook_ds_field_info
@@ -12,7 +10,7 @@ include_once 'tm_fields.features.inc';
 function tm_fields_ds_fields_info($entity_type) {
   $fields = array();
 
-  $fields['ds_tm_chapter_sticker'] = array(
+  $fields['tm_ds_chapter_sticker'] = array(
     'title' => t('Chapter sticker'),
     'field_type' => DS_FIELD_TYPE_FUNCTION,
     'ui_limit' => array('event|*', 'user|*'),
@@ -26,10 +24,9 @@ function tm_fields_ds_fields_info($entity_type) {
  */
 function _tm_chapter_sticker_process($field, $title = NULL) {
   if (isset($field['entity']->field_chapter['und'][0]['target_id'])) {
-    $chapter_id = $field['entity']->field_chapter['und'][0]['target_id'];
-    $related_chapter = node_load($chapter_id);
+    $related_chapter = node_load($field['entity']->field_chapter['und'][0]['target_id']);
     return theme('tm_chapter_sticker', array(
-      'chapter_id' => $chapter_id,
+      'chapter_id' => $related_chapter->nid,
       'shortcode' => $related_chapter->field_chapter_shortcode['und'][0]['value'],
       'color' => $related_chapter->field_chapter_color['und'][0]['rgb']
     ));

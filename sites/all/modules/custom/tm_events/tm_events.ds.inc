@@ -33,7 +33,7 @@ function tm_events_ds_field_settings_info() {
   $ds_fieldsetting->view_mode = 'grid';
   $ds_fieldsetting->settings = array(
     'tm_date_avatar' => array(
-      'weight' => '1',
+      'weight' => '0',
       'label' => 'hidden',
       'format' => 'default',
     ),
@@ -48,8 +48,8 @@ function tm_events_ds_field_settings_info() {
         'ft' => array(),
       ),
     ),
-    'ds_tm_chapter_sticker' => array(
-      'weight' => '0',
+    'tm_ds_chapter_sticker' => array(
+      'weight' => '5',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -57,6 +57,11 @@ function tm_events_ds_field_settings_info() {
           'func' => 'theme_ds_field_reset',
         ),
       ),
+    ),
+    'tm_ds_next_event' => array(
+      'weight' => '4',
+      'label' => 'hidden',
+      'format' => 'default',
     ),
     'field_image' => array(
       'formatter_settings' => array(
@@ -213,24 +218,26 @@ function tm_events_ds_layout_settings_info() {
   $ds_layout->layout = 'card';
   $ds_layout->settings = array(
     'regions' => array(
-      'extra' => array(
-        0 => 'ds_tm_chapter_sticker',
-      ),
       'media' => array(
+        0 => 'tm_date_avatar',
         1 => 'field_image',
-        2 => 'tm_date_avatar',
       ),
       'teaser' => array(
-        3 => 'title',
-        4 => 'field_location',
+        2 => 'title',
+        3 => 'field_location',
+        4 => 'tm_ds_next_event',
+      ),
+      'extra' => array(
+        5 => 'tm_ds_chapter_sticker',
       ),
     ),
     'fields' => array(
-      'ds_tm_chapter_sticker' => 'extra',
-      'field_image' => 'media',
       'tm_date_avatar' => 'media',
+      'field_image' => 'media',
       'title' => 'teaser',
       'field_location' => 'teaser',
+      'tm_ds_next_event' => 'teaser',
+      'tm_ds_chapter_sticker' => 'extra',
     ),
     'classes' => array(),
     'wrappers' => array(

@@ -48,7 +48,7 @@ function tm_events_ds_field_settings_info() {
         'ft' => array(),
       ),
     ),
-    'ds_tm_chapter_sticker' => array(
+    'tm_ds_chapter_sticker' => array(
       'weight' => '5',
       'label' => 'hidden',
       'format' => 'default',
@@ -58,7 +58,7 @@ function tm_events_ds_field_settings_info() {
         ),
       ),
     ),
-    'ds_tm_next_event' => array(
+    'tm_ds_next_event' => array(
       'weight' => '4',
       'label' => 'hidden',
       'format' => 'default',
@@ -225,10 +225,10 @@ function tm_events_ds_layout_settings_info() {
       'teaser' => array(
         2 => 'title',
         3 => 'field_location',
-        4 => 'ds_tm_next_event',
+        4 => 'tm_ds_next_event',
       ),
       'extra' => array(
-        5 => 'ds_tm_chapter_sticker',
+        5 => 'tm_ds_chapter_sticker',
       ),
     ),
     'fields' => array(
@@ -236,8 +236,8 @@ function tm_events_ds_layout_settings_info() {
       'field_image' => 'media',
       'title' => 'teaser',
       'field_location' => 'teaser',
-      'ds_tm_next_event' => 'teaser',
-      'ds_tm_chapter_sticker' => 'extra',
+      'tm_ds_next_event' => 'teaser',
+      'tm_ds_chapter_sticker' => 'extra',
     ),
     'classes' => array(),
     'wrappers' => array(

@@ -10,7 +10,7 @@
 function tm_fields_ds_fields_info($entity_type) {
   $fields = array();
 
-  $fields['ds_tm_chapter_sticker'] = array(
+  $fields['tm_ds_chapter_sticker'] = array(
     'title' => t('Chapter sticker'),
     'field_type' => DS_FIELD_TYPE_FUNCTION,
     'ui_limit' => array('event|*', 'user|*'),

@@ -46,7 +46,7 @@ function tm_events_preprocess_node(&$vars) {
 function tm_events_ds_fields_info($entity_type) {
   $fields = array();
 
-  $fields['ds_tm_next_event'] = array(
+  $fields['tm_ds_next_event'] = array(
     'title' => t('Next event'),
     'field_type' => DS_FIELD_TYPE_FUNCTION,
     'ui_limit' => array('chapter|*'),

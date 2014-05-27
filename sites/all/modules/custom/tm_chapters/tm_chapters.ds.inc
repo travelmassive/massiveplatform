@@ -50,7 +50,7 @@ function tm_chapters_ds_field_settings_info() {
         ),
       ),
     ),
-    'ds_tm_next_event' => array(
+    'tm_ds_next_event' => array(
       'weight' => '3',
       'label' => 'hidden',
       'format' => 'default',
@@ -201,14 +201,14 @@ function tm_chapters_ds_layout_settings_info() {
       ),
       'teaser' => array(
         2 => 'title',
-        3 => 'ds_tm_next_event',
+        3 => 'tm_ds_next_event',
       ),
     ),
     'fields' => array(
       'field_image' => 'media',
       'chapter_avatar' => 'media',
       'title' => 'teaser',
-      'ds_tm_next_event' => 'teaser',
+      'tm_ds_next_event' => 'teaser',
     ),
     'classes' => array(),
     'wrappers' => array(

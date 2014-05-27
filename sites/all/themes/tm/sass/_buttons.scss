@@ -12,7 +12,7 @@ button {
   left: 0;
   z-index: 10;
   border-radius: $global-radius;
-  box-shadow: 0 0 0 0.25rem rgba($primary-color, 0.1);
+  box-shadow: 0 0 0 0.125rem rgba($primary-color, 0.1);
   background: rgba(#FFF, 0.9);
 
   opacity: 0;
@@ -31,7 +31,7 @@ button {
     left: 1rem;
     color: rgba(#FFF, 0.95);
     font-size: 1rem;
-    text-shadow: 0 -0.25rem rgba($primary-color, 0.1);
+    text-shadow: 0 -0.125rem rgba($primary-color, 0.1);
     line-height: 1;
     height: 1rem;
     width: 1rem;

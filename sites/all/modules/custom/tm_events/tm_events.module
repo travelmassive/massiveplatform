@@ -90,9 +90,7 @@ function _tm_next_event($field, $title = NULL) {
       $time_until = format_interval($event_datetime->format('U') - $current_date->format('U'), 1);
     }
   }
-  return theme('tm_next_event', array(
-    'time_until' => $time_until,
-  ));
+  return $time_until ? t('Event in @time.', array('@time' => $time_until)) : t('No event scheduled yet.');
 }
 /**
  * Implement hook_theme()
@@ -105,12 +103,6 @@ function tm_events_theme() {
       ),
       'path' => drupal_get_path('module','tm_events') . '/templates/fields',
       'template' => 'date_avatar'
-    ),
-    'tm_next_event' => array(
-      'variables' => array(
-      ),
-      'path' => drupal_get_path('module','tm_events') . '/templates/fields',
-      'template' => 'tm_next_event'
     )
   );
 }

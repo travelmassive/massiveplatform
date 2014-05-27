@@ -30,7 +30,7 @@ function tm_users_ds_field_settings_info() {
         ),
       ),
     ),
-    'ds_tm_chapter_sticker' => array(
+    'tm_ds_chapter_sticker' => array(
       'weight' => '3',
       'label' => 'hidden',
       'format' => 'default',
@@ -93,14 +93,14 @@ function tm_users_ds_layout_settings_info() {
         2 => 'name',
       ),
       'extra' => array(
-        3 => 'ds_tm_chapter_sticker',
+        3 => 'tm_ds_chapter_sticker',
       ),
     ),
     'fields' => array(
       'field_image' => 'media',
       'field_avatar' => 'media',
       'name' => 'teaser',
-      'ds_tm_chapter_sticker' => 'extra',
+      'tm_ds_chapter_sticker' => 'extra',
     ),
     'classes' => array(),
     'wrappers' => array(

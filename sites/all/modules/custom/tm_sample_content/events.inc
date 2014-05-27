@@ -67,7 +67,7 @@ class TMEventMigration extends TMBaseMigration {
       ->defaultValue(drupal_get_path('module', 'tm_sample_content') . '/import/files');
 
     // Date field
-    $this->addFieldMapping('field_date', 'date');
+    $this->addFieldMapping('field_event_date', 'date');
   }
 
   public function complete($entity, $row) {

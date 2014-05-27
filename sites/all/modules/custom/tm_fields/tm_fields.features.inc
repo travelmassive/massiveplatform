@@ -1,6 +1,3 @@
 <?php
-/**
- * @file
- * tm_fields.features.inc
- */
 
+// This file is deprecated and can be removed.

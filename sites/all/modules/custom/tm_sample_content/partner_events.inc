@@ -44,7 +44,7 @@ class TMPartnerEventMigration extends TMBaseMigration {
       ->defaultValue(1);
 
     // Date field
-    $this->addFieldMapping('field_date', 'date');
+    $this->addFieldMapping('field_event_date', 'date');
   }
 
   public function prepareRow($row) {

@@ -41,6 +41,60 @@ function tm_events_preprocess_node(&$vars) {
   }
 }
 /**
+ * Implement hook_ds_field_info
+ */
+function tm_events_ds_fields_info($entity_type) {
+  $fields = array();
+
+  $fields['ds_tm_next_event'] = array(
+    'title' => t('Next event'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('chapter|*'),
+    'function' => '_tm_next_event'
+  );
+
+  return array($entity_type => $fields);
+}
+/**
+ * Custom function to fetch the next event, used on chapters. Returns interval
+ * between the current date and the event's date.
+ */
+function _tm_next_event($field, $title = NULL) {
+  if ($field['entity']->type = 'chapter') {
+    $chapter_id = $field['entity']->nid;
+
+    // Fetch the current and make sure it's UTC and user-defined timezone
+    $current_date = new DateTime('now', new DateTimeZone('UTC'));
+
+    // Fetch the nearest upcoming event that references a particular chapter
+    // Only returns one event, the one with the closest starting date
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+      ->entityCondition('bundle', 'event')
+      ->propertyCondition('status', 1)
+      ->fieldCondition('field_chapter', 'target_id', $chapter_id)
+      ->fieldCondition('field_event_date', 'value', $current_date->format('Y-m-d H:i:s'), '>=')
+      ->fieldOrderBy('field_event_date', 'value', 'ASC')
+      ->range(0,1);
+    $result = $query->execute();
+
+    // Initialize time_until
+    $time_until = NULL;
+    if (isset($result['node'])) {
+      $next_event_array = array_keys($result['node']);
+      $next_event = node_load($next_event_array[0]);
+      $event_date = field_get_items('node',$next_event,'field_event_date');
+      
+      // Create datetime object and ensure UTC timezone, instead of user-defined timezone
+      $event_datetime = new DateTime($event_date[0]['value'], new DateTimeZone('UTC'));
+      $time_until = format_interval($event_datetime->format('U') - $current_date->format('U'), 1);
+    }
+  }
+  return theme('tm_next_event', array(
+    'time_until' => $time_until,
+  ));
+}
+/**
  * Implement hook_theme()
  */
 function tm_events_theme() {
@@ -51,6 +105,12 @@ function tm_events_theme() {
       ),
       'path' => drupal_get_path('module','tm_events') . '/templates/fields',
       'template' => 'date_avatar'
+    ),
+    'tm_next_event' => array(
+      'variables' => array(
+      ),
+      'path' => drupal_get_path('module','tm_events') . '/templates/fields',
+      'template' => 'tm_next_event'
     )
   );
 }

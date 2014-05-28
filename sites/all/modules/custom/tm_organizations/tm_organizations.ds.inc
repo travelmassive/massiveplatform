@@ -213,18 +213,21 @@ function tm_organizations_ds_layout_settings_info() {
     'regions' => array(
       'header_body' => array(
         0 => 'tm_ds_date_avatar',
-        1 => 'title',
         2 => 'body',
+        3 => 'title',
+      ),
+      'header_media' => array(
+        1 => 'field_image',
       ),
     ),
     'fields' => array(
       'tm_ds_date_avatar' => 'header_body',
-      'title' => 'header_body',
+      'field_image' => 'header_media',
       'body' => 'header_body',
+      'title' => 'header_body',
     ),
     'classes' => array(),
     'wrappers' => array(
-      'banner' => 'div',
       'header_media' => 'div',
       'header_body' => 'div',
       'header_extra' => 'div',

@@ -569,7 +569,7 @@ function tm_events_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => 2,
       ),
       'list' => array(
         'label' => 'hidden',
@@ -638,7 +638,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 10,
       ),
       'list' => array(
         'label' => 'above',
@@ -675,8 +675,81 @@ function tm_events_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-partner_event-field_image'
+  $field_instances['node-partner_event-field_image'] = array(
+    'bundle' => 'partner_event',
+    'deleted' => 0,
+    'description' => 'Add a banner that represents this partner event.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'image',
+        'settings' => array(
+          'image_link' => '',
+          'image_style' => '',
+        ),
+        'type' => 'image',
+        'weight' => 3,
+      ),
+      'full' => array(
+        'label' => 'hidden',
+        'module' => 'image',
+        'settings' => array(
+          'image_link' => '',
+          'image_style' => 'banner',
+        ),
+        'type' => 'image',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'hidden',
+        'module' => 'image',
+        'settings' => array(
+          'image_link' => '',
+          'image_style' => 'banner',
+        ),
+        'type' => 'image',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_image',
+    'label' => 'Banner',
+    'required' => 0,
+    'settings' => array(
+      'alt_field' => 0,
+      'default_image' => 0,
+      'file_directory' => 'images/partner-events',
+      'file_extensions' => 'png gif jpg jpeg',
+      'max_filesize' => '',
+      'max_resolution' => '',
+      'min_resolution' => '',
+      'title_field' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'image',
+      'settings' => array(
+        'preview_image_style' => 'thumbnail',
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'image_image',
+      'weight' => 37,
+    ),
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
+  t('Add a banner that represents this partner event.');
+  t('Banner');
   t('City');
   t('Description');
   t('Event date');

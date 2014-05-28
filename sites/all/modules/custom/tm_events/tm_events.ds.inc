@@ -162,6 +162,18 @@ function tm_events_ds_field_settings_info() {
         ),
       ),
     ),
+    'field_image' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'cover',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
   );
   $export['node|partner_event|full'] = $ds_fieldsetting;
 
@@ -173,7 +185,7 @@ function tm_events_ds_field_settings_info() {
   $ds_fieldsetting->view_mode = 'grid';
   $ds_fieldsetting->settings = array(
     'title' => array(
-      'weight' => '1',
+      'weight' => '3',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -184,7 +196,7 @@ function tm_events_ds_field_settings_info() {
       ),
     ),
     'tm_ds_date_avatar' => array(
-      'weight' => '0',
+      'weight' => '1',
       'label' => 'hidden',
       'format' => 'default',
     ),
@@ -194,6 +206,18 @@ function tm_events_ds_field_settings_info() {
           'ow' => TRUE,
           'ow-el' => 'p',
           'ow-cl' => 'meta',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'field_image' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'cover',
           'ow-def-cl' => FALSE,
           'ow-at' => '',
           'ow-def-at' => FALSE,
@@ -323,14 +347,16 @@ function tm_events_ds_layout_settings_info() {
   $ds_layout->settings = array(
     'regions' => array(
       'media' => array(
-        0 => 'tm_ds_date_avatar',
+        0 => 'field_image',
+        1 => 'tm_ds_date_avatar',
       ),
       'teaser' => array(
-        1 => 'body',
-        2 => 'title',
+        2 => 'body',
+        3 => 'title',
       ),
     ),
     'fields' => array(
+      'field_image' => 'media',
       'tm_ds_date_avatar' => 'media',
       'body' => 'teaser',
       'title' => 'teaser',

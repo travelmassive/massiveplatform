@@ -83,10 +83,12 @@ function tm_install() {
     ->fields(array('uid' => 1, 'rid' => $admin_role->rid))
     ->execute();
 
-  // Enable the admin theme.
+  // Enable themes.
   $admin_theme = 'seven';
-  theme_enable(array($admin_theme));
+  $tm_theme = 'tm';
+  theme_enable(array($admin_theme, $tm_theme));
   variable_set('admin_theme', $admin_theme);
+  variable_set('theme_default', $tm_theme);
   variable_set('node_admin_theme', '1');
 
   // Configure Views in developer mode

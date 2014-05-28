@@ -34,6 +34,8 @@ ehthumbs.db
 Icon?
 Thumbs.db
 ._*
+.project
+build.properties
 
 # Vim generated files #
 ######################

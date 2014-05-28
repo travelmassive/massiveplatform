@@ -63,3 +63,4 @@ dependencies[] = tm_event_signup
 dependencies[] = tm_organizations
 dependencies[] = tm_sample_content
 dependencies[] = tm_theme
+dependencies[] = tm_users

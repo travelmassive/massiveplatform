@@ -29,9 +29,19 @@
     <?php print render($title_suffix['contextual_links']); ?>
   <?php endif; ?>
 
-    <<?php print $banner_wrapper; ?> class="banner<?php print $banner_classes; ?>">
-      <?php print $banner; ?>
-    </<?php print $banner_wrapper; ?>>
+    <header class="contained trilithon-header">
+      <<?php print $header_media_wrapper; ?> class="<?php print $header_media_classes; ?>">
+        <?php print $header_media; ?>
+      </<?php print $header_media_wrapper; ?>>
+
+      <<?php print $header_body_wrapper; ?> class="<?php print $header_body_classes; ?>">
+        <?php print $header_body; ?>
+      </<?php print $header_body_wrapper; ?>>
+
+      <<?php print $header_extra_wrapper; ?> class="<?php print $header_extra_classes; ?>">
+        <?php print $header_extra; ?>
+      </<?php print $header_extra_wrapper; ?>>
+    </header>
 
     <<?php print $first_column_wrapper; ?> class="column first<?php print $first_column_classes; ?>">
       <?php print $first_column; ?>

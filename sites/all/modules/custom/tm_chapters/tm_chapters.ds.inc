@@ -17,9 +17,39 @@ function tm_chapters_ds_field_settings_info() {
   $ds_fieldsetting->bundle = 'chapter';
   $ds_fieldsetting->view_mode = 'full';
   $ds_fieldsetting->settings = array(
+    'chapter_avatar' => array(
+      'weight' => '1',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'title' => array(
+      'weight' => '2',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'link' => '0',
+        'wrapper' => 'h1',
+        'class' => 'prime-title',
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
     'field_image' => array(
       'formatter_settings' => array(
-        'ft' => array(),
+        'ft' => array(
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'cover',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
       ),
     ),
   );
@@ -165,24 +195,33 @@ function tm_chapters_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
+      'header_media' => array(
+        0 => 'field_image',
+      ),
+      'header_body' => array(
+        1 => 'chapter_avatar',
+        2 => 'title',
+      ),
       'first_column' => array(
-        0 => 'body',
+        3 => 'body',
       ),
       'second_column' => array(
-        1 => 'field_chapter_leaders',
-      ),
-      'banner' => array(
-        2 => 'field_image',
+        4 => 'field_chapter_leaders',
       ),
     ),
     'fields' => array(
+      'field_image' => 'header_media',
+      'chapter_avatar' => 'header_body',
+      'title' => 'header_body',
       'body' => 'first_column',
       'field_chapter_leaders' => 'second_column',
-      'field_image' => 'banner',
     ),
     'classes' => array(),
     'wrappers' => array(
       'banner' => 'header',
+      'header_media' => 'div',
+      'header_body' => 'div',
+      'header_extra' => 'div',
       'first_column' => 'div',
       'second_column' => 'div',
     ),
@@ -191,7 +230,7 @@ function tm_chapters_ds_layout_settings_info() {
     'layout_attributes_merge' => 1,
     'layout_link_attribute' => '',
     'layout_link_custom' => '',
-    'hide_page_title' => '0',
+    'hide_page_title' => '1',
     'page_option_title' => '',
   );
   $export['node|chapter|full'] = $ds_layout;

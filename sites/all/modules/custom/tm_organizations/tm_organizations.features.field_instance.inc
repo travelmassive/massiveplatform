@@ -27,9 +27,11 @@ function tm_organizations_field_default_field_instances() {
       'full' => array(
         'label' => 'hidden',
         'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 0,
+        'settings' => array(
+          'trim_length' => 200,
+        ),
+        'type' => 'text_trimmed',
+        'weight' => 3,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -92,14 +94,14 @@ function tm_organizations_field_default_field_instances() {
         'weight' => 5,
       ),
       'full' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'image',
         'settings' => array(
           'image_link' => '',
           'image_style' => 'avatar',
         ),
         'type' => 'image',
-        'weight' => 0,
+        'weight' => 1,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -164,7 +166,7 @@ function tm_organizations_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 1,
+        'weight' => 12,
       ),
       'grid' => array(
         'label' => 'above',
@@ -222,14 +224,14 @@ function tm_organizations_field_default_field_instances() {
         'weight' => 2,
       ),
       'full' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'image',
         'settings' => array(
           'image_link' => '',
           'image_style' => 'banner',
         ),
         'type' => 'image',
-        'weight' => 2,
+        'weight' => 0,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -302,10 +304,10 @@ function tm_organizations_field_default_field_instances() {
         'weight' => 3,
       ),
       'full' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 11,
       ),
       'grid' => array(
         'label' => 'above',

@@ -9,7 +9,9 @@ function ds_trilithon() {
   return array(
     'label' => t('Trilithon'),
     'regions' => array(
-      'banner' => t('Banner'),
+      'header_media' => t('Header media'),
+      'header_body' => t('Header body'),
+      'header_extra' => t('Header extra'),
       'first_column' => t('First column'),
       'second_column' => t('Second column'),
     ),

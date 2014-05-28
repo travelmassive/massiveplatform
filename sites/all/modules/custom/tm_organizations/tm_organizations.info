@@ -22,6 +22,7 @@ features[ds_field_settings][] = node|organization|full
 features[ds_field_settings][] = node|organization|grid
 features[ds_layout_settings][] = node|organization|full
 features[ds_layout_settings][] = node|organization|grid
+features[ds_layout_settings][] = node|partner_event|full
 features[features_api][] = api:2
 features[field_base][] = field_logo
 features[field_instance][] = node-organization-body

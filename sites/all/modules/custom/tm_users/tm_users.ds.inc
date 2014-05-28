@@ -12,6 +12,58 @@ function tm_users_ds_field_settings_info() {
 
   $ds_fieldsetting = new stdClass();
   $ds_fieldsetting->api_version = 1;
+  $ds_fieldsetting->id = 'user|user|default';
+  $ds_fieldsetting->entity_type = 'user';
+  $ds_fieldsetting->bundle = 'user';
+  $ds_fieldsetting->view_mode = 'default';
+  $ds_fieldsetting->settings = array(
+    'name' => array(
+      'weight' => '2',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'link' => '0',
+        'wrapper' => 'h1',
+        'class' => '',
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'tm_ds_chapter_sticker' => array(
+      'weight' => '3',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'field_image' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'cover',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'field_avatar' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+  );
+  $export['user|user|default'] = $ds_fieldsetting;
+
+  $ds_fieldsetting = new stdClass();
+  $ds_fieldsetting->api_version = 1;
   $ds_fieldsetting->id = 'user|user|grid';
   $ds_fieldsetting->entity_type = 'user';
   $ds_fieldsetting->bundle = 'user';
@@ -81,6 +133,49 @@ function tm_users_ds_field_settings_info() {
  */
 function tm_users_ds_layout_settings_info() {
   $export = array();
+
+  $ds_layout = new stdClass();
+  $ds_layout->api_version = 1;
+  $ds_layout->id = 'user|user|default';
+  $ds_layout->entity_type = 'user';
+  $ds_layout->bundle = 'user';
+  $ds_layout->view_mode = 'default';
+  $ds_layout->layout = 'trilithon';
+  $ds_layout->settings = array(
+    'regions' => array(
+      'header_media' => array(
+        0 => 'field_image',
+      ),
+      'header_body' => array(
+        1 => 'field_avatar',
+        2 => 'name',
+      ),
+      'header_extra' => array(
+        3 => 'tm_ds_chapter_sticker',
+      ),
+    ),
+    'fields' => array(
+      'field_image' => 'header_media',
+      'field_avatar' => 'header_body',
+      'name' => 'header_body',
+      'tm_ds_chapter_sticker' => 'header_extra',
+    ),
+    'classes' => array(),
+    'wrappers' => array(
+      'banner' => 'div',
+      'header_media' => 'div',
+      'header_body' => 'div',
+      'header_extra' => 'div',
+      'first_column' => 'div',
+      'second_column' => 'div',
+    ),
+    'layout_wrapper' => 'article',
+    'layout_attributes' => '',
+    'layout_attributes_merge' => 1,
+    'layout_link_attribute' => '',
+    'layout_link_custom' => '',
+  );
+  $export['user|user|default'] = $ds_layout;
 
   $ds_layout = new stdClass();
   $ds_layout->api_version = 1;

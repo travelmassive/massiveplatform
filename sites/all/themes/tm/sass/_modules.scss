@@ -159,7 +159,8 @@
       @extend .visually-hidden;
     }
   }
-  .badge-organization {
+  .badge-organization,
+  .badge-user {
     width: 4rem;
     height: 4rem;
     display: block;
@@ -257,7 +258,8 @@
         letter-spacing: -0.125rem;
       }
     }
-    .badge-organization {
+    .badge-organization,
+    .badge-user {
       width: 6rem;
       height: 6rem;
     }

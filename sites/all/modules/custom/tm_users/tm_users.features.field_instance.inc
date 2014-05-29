@@ -37,9 +37,13 @@ function tm_users_field_default_field_instances() {
         'weight' => 1,
       ),
       'list' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
+        'label' => 'hidden',
+        'module' => 'image',
+        'settings' => array(
+          'image_link' => '',
+          'image_style' => 'avatar',
+        ),
+        'type' => 'image',
         'weight' => 0,
       ),
     ),
@@ -139,9 +143,8 @@ function tm_users_field_default_field_instances() {
       ),
       'list' => array(
         'label' => 'above',
-        'module' => 'text',
         'settings' => array(),
-        'type' => 'text_default',
+        'type' => 'hidden',
         'weight' => 0,
       ),
     ),

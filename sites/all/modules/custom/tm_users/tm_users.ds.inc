@@ -40,18 +40,6 @@ function tm_users_ds_field_settings_info() {
         ),
       ),
     ),
-    'field_image' => array(
-      'formatter_settings' => array(
-        'ft' => array(
-          'ow' => TRUE,
-          'ow-el' => 'div',
-          'ow-cl' => 'cover',
-          'ow-def-cl' => FALSE,
-          'ow-at' => '',
-          'ow-def-at' => FALSE,
-        ),
-      ),
-    ),
     'field_avatar' => array(
       'formatter_settings' => array(
         'ft' => array(
@@ -67,6 +55,18 @@ function tm_users_ds_field_settings_info() {
           'fi-at' => '',
           'fi-def-at' => FALSE,
           'fi-odd-even' => FALSE,
+        ),
+      ),
+    ),
+    'field_image' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'cover',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
         ),
       ),
     ),
@@ -135,6 +135,57 @@ function tm_users_ds_field_settings_info() {
     ),
   );
   $export['user|user|grid'] = $ds_fieldsetting;
+
+  $ds_fieldsetting = new stdClass();
+  $ds_fieldsetting->api_version = 1;
+  $ds_fieldsetting->id = 'user|user|list';
+  $ds_fieldsetting->entity_type = 'user';
+  $ds_fieldsetting->bundle = 'user';
+  $ds_fieldsetting->view_mode = 'list';
+  $ds_fieldsetting->settings = array(
+    'name' => array(
+      'weight' => '0',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'link' => '0',
+        'wrapper' => 'h1',
+        'class' => 'prime-title',
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'tm_ds_chapter_sticker' => array(
+      'weight' => '0',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'field_avatar' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'avatar',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+          'fi' => TRUE,
+          'fi-el' => 'span',
+          'fi-cl' => 'badge-user',
+          'fi-at' => '',
+          'fi-def-at' => FALSE,
+          'fi-odd-even' => FALSE,
+        ),
+      ),
+    ),
+  );
+  $export['user|user|list'] = $ds_fieldsetting;
 
   return $export;
 }
@@ -226,6 +277,44 @@ function tm_users_ds_layout_settings_info() {
     'layout_link_custom' => '',
   );
   $export['user|user|grid'] = $ds_layout;
+
+  $ds_layout = new stdClass();
+  $ds_layout->api_version = 1;
+  $ds_layout->id = 'user|user|list';
+  $ds_layout->entity_type = 'user';
+  $ds_layout->bundle = 'user';
+  $ds_layout->view_mode = 'list';
+  $ds_layout->layout = 'card';
+  $ds_layout->settings = array(
+    'regions' => array(
+      'teaser' => array(
+        0 => 'name',
+      ),
+      'extra' => array(
+        1 => 'tm_ds_chapter_sticker',
+      ),
+      'media' => array(
+        2 => 'field_avatar',
+      ),
+    ),
+    'fields' => array(
+      'name' => 'teaser',
+      'tm_ds_chapter_sticker' => 'extra',
+      'field_avatar' => 'media',
+    ),
+    'classes' => array(),
+    'wrappers' => array(
+      'media' => 'div',
+      'teaser' => 'div',
+      'extra' => 'div',
+    ),
+    'layout_wrapper' => 'article',
+    'layout_attributes' => '',
+    'layout_attributes_merge' => 1,
+    'layout_link_attribute' => '',
+    'layout_link_custom' => '',
+  );
+  $export['user|user|list'] = $ds_layout;
 
   return $export;
 }

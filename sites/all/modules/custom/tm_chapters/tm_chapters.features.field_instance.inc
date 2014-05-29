@@ -29,7 +29,7 @@ function tm_chapters_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => 3,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -92,7 +92,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 12,
       ),
       'grid' => array(
         'label' => 'above',
@@ -147,7 +147,7 @@ function tm_chapters_field_default_field_instances() {
           'link' => FALSE,
         ),
         'type' => 'entityreference_label',
-        'weight' => 1,
+        'weight' => 4,
       ),
       'grid' => array(
         'label' => 'above',
@@ -208,7 +208,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 13,
       ),
       'grid' => array(
         'label' => 'above',
@@ -260,14 +260,14 @@ function tm_chapters_field_default_field_instances() {
         'weight' => 2,
       ),
       'full' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'image',
         'settings' => array(
           'image_link' => '',
           'image_style' => 'banner',
         ),
         'type' => 'image',
-        'weight' => 2,
+        'weight' => 0,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -296,6 +296,7 @@ function tm_chapters_field_default_field_instances() {
         'weight' => 0,
       ),
     ),
+    'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_image',
     'label' => 'Image',

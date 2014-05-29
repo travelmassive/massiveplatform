@@ -43,6 +43,51 @@ function tm_events_ds_field_settings_info() {
         ),
       ),
     ),
+    'title' => array(
+      'weight' => '17',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'link' => '0',
+        'wrapper' => 'h1',
+        'class' => 'prime-title',
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'tm_ds_chapter_sticker' => array(
+      'weight' => '11',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'tm_ds_date_avatar' => array(
+      'weight' => '12',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'field_image' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'cover',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
   );
   $export['node|event|full'] = $ds_fieldsetting;
 
@@ -108,13 +153,65 @@ function tm_events_ds_field_settings_info() {
 
   $ds_fieldsetting = new stdClass();
   $ds_fieldsetting->api_version = 1;
+  $ds_fieldsetting->id = 'node|partner_event|full';
+  $ds_fieldsetting->entity_type = 'node';
+  $ds_fieldsetting->bundle = 'partner_event';
+  $ds_fieldsetting->view_mode = 'full';
+  $ds_fieldsetting->settings = array(
+    'title' => array(
+      'weight' => '0',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'link' => '0',
+        'wrapper' => 'h1',
+        'class' => 'prime-title',
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'tm_ds_date_avatar' => array(
+      'weight' => '0',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'body' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'field_image' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'cover',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+  );
+  $export['node|partner_event|full'] = $ds_fieldsetting;
+
+  $ds_fieldsetting = new stdClass();
+  $ds_fieldsetting->api_version = 1;
   $ds_fieldsetting->id = 'node|partner_event|grid';
   $ds_fieldsetting->entity_type = 'node';
   $ds_fieldsetting->bundle = 'partner_event';
   $ds_fieldsetting->view_mode = 'grid';
   $ds_fieldsetting->settings = array(
     'title' => array(
-      'weight' => '1',
+      'weight' => '3',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -125,7 +222,7 @@ function tm_events_ds_field_settings_info() {
       ),
     ),
     'tm_ds_date_avatar' => array(
-      'weight' => '0',
+      'weight' => '1',
       'label' => 'hidden',
       'format' => 'default',
     ),
@@ -135,6 +232,18 @@ function tm_events_ds_field_settings_info() {
           'ow' => TRUE,
           'ow-el' => 'p',
           'ow-cl' => 'meta',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'field_image' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'cover',
           'ow-def-cl' => FALSE,
           'ow-at' => '',
           'ow-def-at' => FALSE,
@@ -162,38 +271,49 @@ function tm_events_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
-      'first_column' => array(
-        0 => 'field_signup_limit',
-        1 => 'body',
-        2 => 'field_map_link',
-        5 => 'field_location',
-        7 => 'field_rsvp_link',
-        9 => 'field_organizer',
+      'header_media' => array(
+        0 => 'field_image',
       ),
-      'banner' => array(
-        3 => 'field_chapter',
-        4 => 'field_image',
+      'first_column' => array(
+        1 => 'body',
+        2 => 'field_signup_limit',
+        3 => 'field_map_link',
+        4 => 'field_location',
+        5 => 'field_rsvp_link',
+        6 => 'field_organizer',
+      ),
+      'header_extra' => array(
+        7 => 'tm_ds_chapter_sticker',
+      ),
+      'header_body' => array(
+        8 => 'tm_ds_date_avatar',
+        9 => 'title',
       ),
       'second_column' => array(
-        6 => 'ds_flag_signup',
-        8 => 'tm_ds_event_seats_count',
+        10 => 'ds_flag_signup',
+        11 => 'tm_ds_event_seats_count',
       ),
     ),
     'fields' => array(
-      'field_signup_limit' => 'first_column',
+      'field_image' => 'header_media',
       'body' => 'first_column',
+      'field_signup_limit' => 'first_column',
       'field_map_link' => 'first_column',
-      'field_chapter' => 'banner',
-      'field_image' => 'banner',
       'field_location' => 'first_column',
       'ds_flag_signup' => 'second_column',
       'field_rsvp_link' => 'first_column',
       'tm_ds_event_seats_count' => 'second_column',
       'field_organizer' => 'first_column',
+      'tm_ds_chapter_sticker' => 'header_extra',
+      'tm_ds_date_avatar' => 'header_body',
+      'title' => 'header_body',
     ),
     'classes' => array(),
     'wrappers' => array(
       'banner' => 'header',
+      'header_media' => 'div',
+      'header_body' => 'div',
+      'header_extra' => 'div',
       'first_column' => 'div',
       'second_column' => 'div',
     ),
@@ -202,7 +322,7 @@ function tm_events_ds_layout_settings_info() {
     'layout_attributes_merge' => 1,
     'layout_link_attribute' => '',
     'layout_link_custom' => '',
-    'hide_page_title' => '0',
+    'hide_page_title' => '1',
     'page_option_title' => '',
   );
   $export['node|event|full'] = $ds_layout;
@@ -259,14 +379,16 @@ function tm_events_ds_layout_settings_info() {
   $ds_layout->settings = array(
     'regions' => array(
       'media' => array(
-        0 => 'tm_ds_date_avatar',
+        0 => 'field_image',
+        1 => 'tm_ds_date_avatar',
       ),
       'teaser' => array(
-        1 => 'body',
-        2 => 'title',
+        2 => 'body',
+        3 => 'title',
       ),
     ),
     'fields' => array(
+      'field_image' => 'media',
       'tm_ds_date_avatar' => 'media',
       'body' => 'teaser',
       'title' => 'teaser',

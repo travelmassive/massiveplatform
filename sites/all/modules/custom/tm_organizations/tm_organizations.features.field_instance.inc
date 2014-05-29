@@ -27,9 +27,11 @@ function tm_organizations_field_default_field_instances() {
       'full' => array(
         'label' => 'hidden',
         'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 0,
+        'settings' => array(
+          'trim_length' => 200,
+        ),
+        'type' => 'text_trimmed',
+        'weight' => 3,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -92,14 +94,14 @@ function tm_organizations_field_default_field_instances() {
         'weight' => 5,
       ),
       'full' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'image',
         'settings' => array(
           'image_link' => '',
           'image_style' => 'avatar',
         ),
         'type' => 'image',
-        'weight' => 0,
+        'weight' => 1,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -164,7 +166,7 @@ function tm_organizations_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 1,
+        'weight' => 12,
       ),
       'grid' => array(
         'label' => 'above',
@@ -222,14 +224,14 @@ function tm_organizations_field_default_field_instances() {
         'weight' => 2,
       ),
       'full' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'image',
         'settings' => array(
           'image_link' => '',
           'image_style' => 'banner',
         ),
         'type' => 'image',
-        'weight' => 2,
+        'weight' => 0,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -282,78 +284,6 @@ function tm_organizations_field_default_field_instances() {
       ),
       'type' => 'image_image',
       'weight' => 34,
-    ),
-  );
-
-  // Exported field_instance: 'node-organization-field_logo'
-  $field_instances['node-organization-field_logo'] = array(
-    'bundle' => 'organization',
-    'deleted' => 0,
-    'description' => 'Upload your company logo.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'image',
-        'settings' => array(
-          'image_link' => '',
-          'image_style' => '',
-        ),
-        'type' => 'image',
-        'weight' => 3,
-      ),
-      'full' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-      'grid' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 3,
-      ),
-      'list' => array(
-        'label' => 'above',
-        'module' => 'image',
-        'settings' => array(
-          'image_link' => '',
-          'image_style' => '',
-        ),
-        'type' => 'image',
-        'weight' => 3,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_logo',
-    'label' => 'Logo',
-    'required' => 0,
-    'settings' => array(
-      'alt_field' => 0,
-      'default_image' => 0,
-      'file_directory' => 'images/company-logos',
-      'file_extensions' => 'png gif jpg jpeg',
-      'max_filesize' => '',
-      'max_resolution' => '',
-      'min_resolution' => '',
-      'title_field' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'image',
-      'settings' => array(
-        'preview_image_style' => 'thumbnail',
-        'progress_indicator' => 'throbber',
-      ),
-      'type' => 'image_image',
-      'weight' => 35,
     ),
   );
 
@@ -434,7 +364,6 @@ function tm_organizations_field_default_field_instances() {
   t('Managed by');
   t('Select the Travel Massive member that manages this account.');
   t('This image will used as the main banner for your profile and should be a good reflection of your company.');
-  t('Upload your company logo.');
 
   return $field_instances;
 }

@@ -55,7 +55,18 @@ function tm_users_ds_field_settings_info() {
     'field_avatar' => array(
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_reset',
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'avatar',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+          'fi' => TRUE,
+          'fi-el' => 'span',
+          'fi-cl' => 'badge-user',
+          'fi-at' => '',
+          'fi-def-at' => FALSE,
+          'fi-odd-even' => FALSE,
         ),
       ),
     ),
@@ -162,7 +173,6 @@ function tm_users_ds_layout_settings_info() {
     ),
     'classes' => array(),
     'wrappers' => array(
-      'banner' => 'div',
       'header_media' => 'div',
       'header_body' => 'div',
       'header_extra' => 'div',

@@ -1,0 +1,99 @@
+.trilithon-header {
+  @include grid-column(12);
+ 
+  .inner {
+    @include clearfix();
+  }
+  .media {
+    @include grid-column(12);
+    padding: 0 !important;
+    margin-bottom: -3rem;
+  }
+  .cover {
+    img {
+      display: block;
+      border-radius: $global-radius $global-radius 0 0;
+    }
+  }
+  .avatar {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    background-color: #FFF;
+    border-radius: $global-radius;
+    @extend %antialiased;
+    text-transform: uppercase;
+    font-weight: $body-font-bold;
+    display: table;
+    box-shadow: 0 0 0 1px rgba($primary-color, 0.1);
+    padding: 0.25rem;
+    background-color: #FFF;
+    margin: 0 auto 1rem auto;
+  }
+  .badge-organization,
+  .badge-user {
+    width: 4rem;
+    height: 4rem;
+    display: block;
+    img {
+      display: block;
+      max-width: 100%;
+      border-radius: $global-radius;
+    }
+  }
+  .bd {
+    padding: 0 1rem;
+    display: table-cell;
+    width: 128rem;
+    text-align: center;
+    vertical-align: middle;
+  }
+  .prime-title {
+    $ft-size: 24;
+    font-size: rem-calc($ft-size);
+    line-height: ($ft-size + 4) / $ft-size;
+    margin: 0;
+  }
+  
+  @media #{$medium-up} {
+    .inner {
+      margin: 0 (-$column-gutter/2);
+    }
+    .media {
+      @include grid-column(7);
+      margin: 0 0 0 $column-gutter/2;
+      overflow: hidden;
+    }
+    .cover {
+      min-width: 180%;
+      img {
+        display: block;
+        border-radius: $global-radius 0 0 $global-radius;
+      }
+    }
+    .bd {
+      padding: 0 2rem 0 1rem;
+      * {
+        display: inline-block;
+      }
+    }
+    // .meta {
+    //   position: absolute;
+    //   bottom: 0;
+    //   right: 1rem;
+    //   background: red;
+    // }
+  }
+  @media #{$large-up} {
+    .media {
+      @include grid-column(8);
+    }
+    .cover {
+      min-width: 100%;
+      margin-left: 0;
+    }
+    .bd {
+      padding: 0 3rem 0 2rem;
+    }
+  }
+}

@@ -165,6 +165,9 @@ $font-smoothing: antialiased;
 
 $global-radius: 0.25rem;
 
+// Ammount of extra spacing used on the main rows, so the website doesn't stick to edges
+$xspace: 2rem;
+
 // We use these to control text direction settings
 // $text-direction: ltr;
 // $opposite-direction: right;

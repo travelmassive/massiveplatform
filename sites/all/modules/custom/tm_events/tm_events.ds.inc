@@ -17,9 +17,30 @@ function tm_events_ds_field_settings_info() {
   $ds_fieldsetting->bundle = 'event';
   $ds_fieldsetting->view_mode = 'full';
   $ds_fieldsetting->settings = array(
-    'field_image' => array(
+    'ds_flag_signup' => array(
+      'weight' => '8',
+      'label' => 'hidden',
+      'format' => 'default',
       'formatter_settings' => array(
-        'ft' => array(),
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+        ),
+      ),
+    ),
+    'tm_ds_event_seats_count' => array(
+      'weight' => '9',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'fi' => TRUE,
+          'fi-el' => 'div',
+          'fi-cl' => 'js-tm-seats-count',
+          'fi-at' => '',
+          'fi-def-at' => FALSE,
+          'fi-odd-even' => FALSE,
+        ),
       ),
     ),
   );
@@ -142,28 +163,32 @@ function tm_events_ds_layout_settings_info() {
   $ds_layout->settings = array(
     'regions' => array(
       'first_column' => array(
-        0 => 'body',
-        1 => 'field_date',
+        0 => 'field_signup_limit',
+        1 => 'body',
         2 => 'field_map_link',
-        3 => 'field_signup_limit',
-        6 => 'field_location',
+        5 => 'field_location',
         7 => 'field_rsvp_link',
-        8 => 'field_organizer',
+        9 => 'field_organizer',
       ),
       'banner' => array(
-        4 => 'field_chapter',
-        5 => 'field_image',
+        3 => 'field_chapter',
+        4 => 'field_image',
+      ),
+      'second_column' => array(
+        6 => 'ds_flag_signup',
+        8 => 'tm_ds_event_seats_count',
       ),
     ),
     'fields' => array(
-      'body' => 'first_column',
-      'field_date' => 'first_column',
-      'field_map_link' => 'first_column',
       'field_signup_limit' => 'first_column',
+      'body' => 'first_column',
+      'field_map_link' => 'first_column',
       'field_chapter' => 'banner',
       'field_image' => 'banner',
       'field_location' => 'first_column',
+      'ds_flag_signup' => 'second_column',
       'field_rsvp_link' => 'first_column',
+      'tm_ds_event_seats_count' => 'second_column',
       'field_organizer' => 'first_column',
     ),
     'classes' => array(),

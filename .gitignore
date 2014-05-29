@@ -4,6 +4,7 @@
 /files/*
 /cache
 /sites/default/settings.php
+build.properties
 
 # ** Only works in OSs that support newer versions of fnmatch (Bash 4+)
 /sites/default/**/files

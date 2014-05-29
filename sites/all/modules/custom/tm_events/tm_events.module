@@ -2,6 +2,9 @@
 /**
  * @file
  * Code for the TM Events feature.
+ * 
+ * @author Olaf Veerman (olaf.veerman@flipside.org)
+ * @author Daniel da Silva (daniel.silva@flipside.org)
  */
 
 include_once 'tm_events.features.inc';
@@ -11,28 +14,28 @@ include_once 'tm_events.features.inc';
  */
 function tm_events_form_event_node_form_alter(&$form, &$form_state) {
   
-  // Field visibilty based on whether the RSVP is handled through the TM  
+  // Field visibilty based on whether the RSVP is handled through the TM.
   
-  // Visible when RSVP is handled on TM
+  // Visible when RSVP is handled on TM.
   $form['field_signup_limit']['#states'] = array(
     'visible' => array(
      ':input[name="field_external_rsvp[und]"]' => array('value' => 0),
     ),
   );
 
-  // Visible when using external RSVP
+  // Visible when using external RSVP.
   $form['field_rsvp_link']['#states'] = array(
-    // Only show RSVP link when event is a TM event
+    // Only show RSVP link when event is a TM event.
     'visible' => array(
      ':input[name="field_external_rsvp[und]"]' => array('value' => 1),
     ),
   );
 
-  // /end field visibility based on RSVP
-
+  // /end field visibility based on RSVP.
 }
+
 /**
- * Implement hook_ds_field_info
+ * Implement hook_ds_field_info()
  */
 function tm_events_ds_fields_info($entity_type) {
   if ($entity_type != 'node') {
@@ -54,56 +57,16 @@ function tm_events_ds_fields_info($entity_type) {
     'function' => '_tm_date_avatar'
   );
 
+  $fields['tm_ds_event_seats_count'] = array(
+    'title' => t('Seats Available'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('event|*'),
+    'function' => '_tm_event_seats_count'
+  );
+
   return array($entity_type => $fields);
 }
-/**
- * Custom function to fetch the next event, used on chapters. Returns interval
- * between the current date and the event's date.
- */
-function _tm_next_event($field, $title = NULL) {
-  if ($field['entity']->type = 'chapter') {
-    $chapter_id = $field['entity']->nid;
 
-    // Fetch the current and make sure it's UTC and user-defined timezone
-    $current_date = new DateTime('now', new DateTimeZone('UTC'));
-
-    // Fetch the nearest upcoming event that references a particular chapter
-    // Only returns one event, the one with the closest starting date
-    $query = new EntityFieldQuery();
-    $query->entityCondition('entity_type', 'node')
-      ->entityCondition('bundle', 'event')
-      ->propertyCondition('status', 1)
-      ->fieldCondition('field_chapter', 'target_id', $chapter_id)
-      ->fieldCondition('field_event_date', 'value', $current_date->format('Y-m-d H:i:s'), '>=')
-      ->fieldOrderBy('field_event_date', 'value', 'ASC')
-      ->range(0,1);
-    $result = $query->execute();
-
-    // Initialize time_until
-    $time_until = NULL;
-    if (isset($result['node'])) {
-      $next_event_array = array_keys($result['node']);
-      $next_event = node_load($next_event_array[0]);
-      $event_date = field_get_items('node',$next_event,'field_event_date');
-      
-      // Create datetime object and ensure UTC timezone, instead of user-defined timezone
-      $event_datetime = new DateTime($event_date[0]['value'], new DateTimeZone('UTC'));
-      $time_until = format_interval($event_datetime->format('U') - $current_date->format('U'), 1);
-    }
-  }
-  return $time_until ? t('Event in @time.', array('@time' => $time_until)) : t('No event scheduled yet.');
-}
-/**
- * Implement hook_preprocess_node()
- */
-function _tm_date_avatar($field, $title = NULL) {
-  if (isset($field['entity']->field_event_date['und'][0]['value'])) {
-    $event_date = new DateTime($field['entity']->field_event_date['und'][0]['value']);
-    return theme('tm_date_avatar', array(
-      'date' => $event_date,
-    ));
-  }
-}
 /**
  * Implement hook_theme()
  */
@@ -117,4 +80,193 @@ function tm_events_theme() {
       'template' => 'tm_date_avatar'
     )
   );
+}
+
+/**
+ * Custom function to fetch the next event, used on chapters. Returns interval
+ * between the current date and the event's date.
+ */
+function _tm_next_event($field, $title = NULL) {
+  if ($field['entity']->type = 'chapter') {
+    $chapter_id = $field['entity']->nid;
+
+    // Fetch the current and make sure it's UTC and user-defined timezone.
+    $current_date = new DateTime('now', new DateTimeZone('UTC'));
+
+    // Fetch the nearest upcoming event that references a particular chapter.
+    // Only returns one event, the one with the closest starting date.
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+      ->entityCondition('bundle', 'event')
+      ->propertyCondition('status', 1)
+      ->fieldCondition('field_chapter', 'target_id', $chapter_id)
+      ->fieldCondition('field_event_date', 'value', $current_date->format('Y-m-d H:i:s'), '>=')
+      ->fieldOrderBy('field_event_date', 'value', 'ASC')
+      ->range(0,1);
+    $result = $query->execute();
+
+    // Initialize time_until.
+    $time_until = NULL;
+    if (isset($result['node'])) {
+      $next_event_array = array_keys($result['node']);
+      $next_event = node_load($next_event_array[0]);
+      $event_date = field_get_items('node',$next_event,'field_event_date');
+      
+      // Create datetime object and ensure UTC timezone, instead of user-defined timezone.
+      $event_datetime = new DateTime($event_date[0]['value'], new DateTimeZone('UTC'));
+      $time_until = format_interval($event_datetime->format('U') - $current_date->format('U'), 1);
+    }
+  }
+  return $time_until ? t('Event in @time.', array('@time' => $time_until)) : t('No event scheduled yet.');
+}
+
+/**
+ * Custom function to prepare date for a date badge.
+ */
+function _tm_date_avatar($field, $title = NULL) {
+  if (isset($field['entity']->field_event_date['und'][0]['value'])) {
+    $event_date = new DateTime($field['entity']->field_event_date['und'][0]['value']);
+    return theme('tm_date_avatar', array(
+      'date' => $event_date,
+    ));
+  }
+}
+
+/**
+ * Custom function to get the seats count.
+ * Since the join process is done through AJAX there needs to
+ * be an equivalent theming function on the javascript side.
+ * It can be found in this module's event_signup_flag.js file.
+ */
+function _tm_event_seats_count($field, $title = NULL) {
+  $event = $field['entity'];
+  $flag = flag_get_flag('signup');
+  
+  $count = $flag->get_count($event->nid);
+  
+  if (isset($event->field_signup_limit[LANGUAGE_NONE][0]['value'])) {
+    $limit = $event->field_signup_limit[LANGUAGE_NONE][0]['value'];
+    
+    // Seats left.
+    $left = $limit - $count;
+    $left = $left < 0 ? 0 : $left;
+    
+    return t('@left of @total seats left', array(
+      '@left' => $left,
+      '@total' => $limit
+    ));
+  }
+  
+  // Do not return anything when there's no signup limit.
+  // This will make the field not show up.
+}
+
+/**
+ * Implements hook_flag_validate()
+ * When flagging an entity with the signup flag, check if the
+ * signup imit was reached.
+ */
+function tm_events_flag_validate($action, $flag, $entity_id, $account, $skip_permission_check, $flagging) {
+  // We're only operating on the "signup" flag, and users may always unflag.
+  if ($flag->name == 'signup' && $action == 'flag') {
+    if (!_tm_events_can_join($entity_id)) {
+      return(array('access-denied' => t('Signup limit reached.')));
+    }
+  }
+}
+
+/**
+ * Implements hook_flag_javascript_info_alter()
+ * Used to add fields to the javascript response, like the errors and
+ * an updated flag count.
+ */
+function tm_events_flag_javascript_info_alter(&$info, $flag) {
+  if ($flag->name === 'signup') {
+    $info['errors'] = $flag->get_errors();
+    
+    // Shortcut.
+    $nid = $info['contentId'];
+    $event = node_load($nid);
+    
+    if (isset($event->field_signup_limit[LANGUAGE_NONE][0]['value'])) {
+      $limit = $event->field_signup_limit[LANGUAGE_NONE][0]['value'];
+      $count = $flag->get_count($nid);
+      
+      // Seats left.
+      $left = $limit - $count;
+      $left = $left < 0 ? 0 : $left;
+      
+      // Variables needed to theme the seats count.
+      $info['updatedSeatsLeft'] = $left;
+      $info['totalSeats'] = $limit;
+    }
+    
+    // Re-render the links without the error messages.
+    // The messages are stored in the "errors" key and should be handled
+    // on the javascript side.
+    //$info['newLink'] = $flag->theme($flag->is_flagged($nid) ? 'unflag' : 'flag', $nid);
+  }
+}
+
+/**
+ * Implements hook_preprocess_flag()
+ * Preprocess the field to add the disabled class.
+ */
+function tm_events_preprocess_flag(&$variables) {
+  // Shortcuts.
+  $flag = $variables['flag'];
+  $status = $variables['status'];
+  $event_id = $variables['entity_id'];
+  
+  // We're only operating on the "signup" flag, and users may always unflag.
+  if ($flag->name == 'signup' && $status == 'unflagged') {
+    if (!_tm_events_can_join($event_id)) {
+      $variables['flag_classes_array'][] = 'disabled';
+    }
+  }
+}
+
+/**
+ * Checks if the current user can join the event with the given nid.
+ * In order to signup, the signup limit cant be reached and the event
+ * can't be in the past.
+ * 
+ * @param $nid
+ *   The event id
+ */
+function _tm_events_can_join($nid) {
+  $flag = flag_get_flag('signup');
+
+  $limit = 0;
+  $event = node_load($nid);
+  
+  if (!$event || $event->type != 'event') {
+    throw new Exception("Invalid event node. Nid: " . $nid);
+  }
+  
+  if (isset($event->field_event_date[LANGUAGE_NONE][0]['value'])) {
+    $event_date = new DateTime($event->field_event_date[LANGUAGE_NONE][0]['value'], new DateTimeZone('UTC'));
+    $now = new DateTime('now', new DateTimeZone('UTC'));
+
+    if ($event_date < $now) {
+      // The event already happened.
+      return FALSE;
+    }
+  }
+  
+  if (isset($event->field_signup_limit[LANGUAGE_NONE][0]['value'])) {
+    $limit = $event->field_signup_limit[LANGUAGE_NONE][0]['value'];
+  }
+  
+  if ($limit === 0) {
+    // No limit set.
+    return TRUE;
+  }
+  
+  if ($flag->get_count($nid) >= $limit) {
+    return FALSE;
+  }
+  else {
+    return TRUE;
+  }
 }

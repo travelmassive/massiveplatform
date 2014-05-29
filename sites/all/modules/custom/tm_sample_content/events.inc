@@ -68,6 +68,9 @@ class TMEventMigration extends TMBaseMigration {
 
     // Date field
     $this->addFieldMapping('field_event_date', 'date');
+
+    // Signup limit
+    $this->addFieldMapping('field_signup_limit', 'limit');
   }
 
   public function complete($entity, $row) {

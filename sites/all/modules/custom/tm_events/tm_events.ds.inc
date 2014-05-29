@@ -17,6 +17,32 @@ function tm_events_ds_field_settings_info() {
   $ds_fieldsetting->bundle = 'event';
   $ds_fieldsetting->view_mode = 'full';
   $ds_fieldsetting->settings = array(
+    'ds_flag_signup' => array(
+      'weight' => '8',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+        ),
+      ),
+    ),
+    'tm_ds_event_seats_count' => array(
+      'weight' => '9',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'fi' => TRUE,
+          'fi-el' => 'div',
+          'fi-cl' => 'js-tm-seats-count',
+          'fi-at' => '',
+          'fi-def-at' => FALSE,
+          'fi-odd-even' => FALSE,
+        ),
+      ),
+    ),
     'title' => array(
       'weight' => '17',
       'label' => 'hidden',
@@ -263,6 +289,10 @@ function tm_events_ds_layout_settings_info() {
         8 => 'tm_ds_date_avatar',
         9 => 'title',
       ),
+      'second_column' => array(
+        10 => 'ds_flag_signup',
+        11 => 'tm_ds_event_seats_count',
+      ),
     ),
     'fields' => array(
       'field_image' => 'header_media',
@@ -270,7 +300,9 @@ function tm_events_ds_layout_settings_info() {
       'field_signup_limit' => 'first_column',
       'field_map_link' => 'first_column',
       'field_location' => 'first_column',
+      'ds_flag_signup' => 'second_column',
       'field_rsvp_link' => 'first_column',
+      'tm_ds_event_seats_count' => 'second_column',
       'field_organizer' => 'first_column',
       'tm_ds_chapter_sticker' => 'header_extra',
       'tm_ds_date_avatar' => 'header_body',

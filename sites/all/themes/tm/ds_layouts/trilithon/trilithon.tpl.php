@@ -30,15 +30,15 @@
   <?php endif; ?>
 
     <header class="contained trilithon-header">
-      <<?php print $header_media_wrapper; ?> class="<?php print $header_media_classes; ?>">
+      <<?php print $header_media_wrapper; ?> class="media <?php print $header_media_classes; ?>">
         <?php print $header_media; ?>
       </<?php print $header_media_wrapper; ?>>
 
-      <<?php print $header_body_wrapper; ?> class="<?php print $header_body_classes; ?>">
+      <<?php print $header_body_wrapper; ?> class="bd <?php print $header_body_classes; ?>">
         <?php print $header_body; ?>
       </<?php print $header_body_wrapper; ?>>
 
-      <<?php print $header_extra_wrapper; ?> class="<?php print $header_extra_classes; ?>">
+      <<?php print $header_extra_wrapper; ?> class="extra <?php print $header_extra_classes; ?>">
         <?php print $header_extra; ?>
       </<?php print $header_extra_wrapper; ?>>
     </header>

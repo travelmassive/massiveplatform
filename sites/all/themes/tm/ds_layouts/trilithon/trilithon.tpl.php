@@ -29,7 +29,7 @@
     <?php print render($title_suffix['contextual_links']); ?>
   <?php endif; ?>
 
-    <header class="contained trilithon-header">
+    <header class="trilithon-header contained">
       <<?php print $header_media_wrapper; ?> class="media <?php print $header_media_classes; ?>">
         <?php print $header_media; ?>
       </<?php print $header_media_wrapper; ?>>

@@ -206,7 +206,11 @@
     font-size: 0.75rem;
     width: 4rem;
     @include transform(rotate(-90deg));
-    @include transform-origin(top right 0);
+    -webkit-transform-origin: top right;
+    -moz-transform-origin: top right;
+    -ms-transform-origin: top right;
+    -o-transform-origin: top right;
+    transform-origin: top right;
   }
   @media #{$small-up} {
     text-align: center;

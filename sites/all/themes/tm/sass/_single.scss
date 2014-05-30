@@ -1,18 +1,17 @@
 .trilithon-header {
   @include grid-column(12);
- 
-  .inner {
-    @include clearfix();
-  }
+  
   .media {
-    @include grid-column(12);
     padding: 0 !important;
     margin-bottom: -3rem;
+    display: table-cell;
+    float: none !important;
   }
   .cover {
     img {
       display: block;
       border-radius: $global-radius $global-radius 0 0;
+      width: 100%;
     }
   }
   .avatar {
@@ -44,9 +43,10 @@
   .bd {
     padding: 0 1rem;
     display: table-cell;
-    width: 128rem;
     text-align: center;
     vertical-align: middle;
+    overflow-x: hidden;
+    float: none !important;
   }
   .prime-title {
     $ft-size: 24;
@@ -65,24 +65,19 @@
       overflow: hidden;
     }
     .cover {
-      min-width: 180%;
+      min-width: 140%;
       img {
         display: block;
         border-radius: $global-radius 0 0 $global-radius;
       }
     }
     .bd {
-      padding: 0 2rem 0 1rem;
+      @include grid-column(5);
+      padding: 0 2rem 0 1rem !important;
       * {
         display: inline-block;
       }
     }
-    // .meta {
-    //   position: absolute;
-    //   bottom: 0;
-    //   right: 1rem;
-    //   background: red;
-    // }
   }
   @media #{$large-up} {
     .media {
@@ -93,7 +88,8 @@
       margin-left: 0;
     }
     .bd {
-      padding: 0 3rem 0 2rem;
+      @include grid-column(4);
+      padding: 0 3rem 0 2rem !important;
     }
   }
 }

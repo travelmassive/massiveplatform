@@ -124,3 +124,13 @@ function _tm_date_avatar($field, $title = NULL) {
     ));
   }
 }
+
+/**
+ * Implement hook_node_presave()
+ */
+function tm_events_node_presave($node) {
+  // If is not a Travel Massive RSVP remove the signup limit.
+  if (isset($node->field_external_rsvp[LANGUAGE_NONE][0]['value']) && $node->field_external_rsvp[LANGUAGE_NONE][0]['value'] !== '0') {
+    $node->field_signup_limit[LANGUAGE_NONE] = array();
+  }
+}

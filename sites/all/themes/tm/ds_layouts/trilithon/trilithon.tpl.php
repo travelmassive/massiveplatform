@@ -29,22 +29,18 @@
     <?php print render($title_suffix['contextual_links']); ?>
   <?php endif; ?>
 
-    <header class="trilithon-header">
-      <div class="contained">
-        <div class="inner">
-          <<?php print $header_media_wrapper; ?> class="media <?php print $header_media_classes; ?>">
-            <?php print $header_media; ?>
-          </<?php print $header_media_wrapper; ?>>
-    
-          <<?php print $header_body_wrapper; ?> class="bd <?php print $header_body_classes; ?>">
-            <?php print $header_body; ?>
-          </<?php print $header_body_wrapper; ?>>
-    
-          <<?php print $header_extra_wrapper; ?> class="extra <?php print $header_extra_classes; ?>">
-            <?php print $header_extra; ?>
-          </<?php print $header_extra_wrapper; ?>>
-        </div>
-      </div>
+    <header class="trilithon-header contained">
+      <<?php print $header_media_wrapper; ?> class="media <?php print $header_media_classes; ?>">
+        <?php print $header_media; ?>
+      </<?php print $header_media_wrapper; ?>>
+
+      <<?php print $header_body_wrapper; ?> class="bd <?php print $header_body_classes; ?>">
+        <?php print $header_body; ?>
+      </<?php print $header_body_wrapper; ?>>
+
+      <<?php print $header_extra_wrapper; ?> class="extra <?php print $header_extra_classes; ?>">
+        <?php print $header_extra; ?>
+      </<?php print $header_extra_wrapper; ?>>
     </header>
 
     <<?php print $first_column_wrapper; ?> class="column first<?php print $first_column_classes; ?>">

@@ -1,16 +1,17 @@
 .trilithon-header {
-  @include grid-column(12);
+  margin: 0 $column-gutter/2 $column-gutter $column-gutter/2;
+  overflow-x: hidden;
+  position: relative;
   
   .media {
-    padding: 0 !important;
     margin-bottom: -3rem;
-    display: table-cell;
-    float: none !important;
+    overflow: hidden;
+    border-radius: $global-radius $global-radius 0 0;
   }
   .cover {
+    max-height: 16rem;
     img {
       display: block;
-      border-radius: $global-radius $global-radius 0 0;
       width: 100%;
     }
   }
@@ -29,6 +30,61 @@
     background-color: #FFF;
     margin: 0 auto 1rem auto;
   }
+  .badge-chapter {
+    position: relative;
+    display: block;
+    font-size: 0.875rem;
+    color: #FFF;
+    width: 4rem;
+    height: 4rem;
+    border-radius: $global-radius;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    &:before {
+      content: '';
+      display: inline-block;
+      height: 100%;
+      vertical-align: bottom;
+      width: 0;
+    }
+    &:after {
+      position: absolute;
+      display: block;
+      bottom: 0;
+      right: 0;
+      content: '';
+      height: 0.5rem;
+      width: 0.5rem;
+      background: transparent url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20opacity%3D%22.3%22%20fill%3D%22%23223141%22%20d%3D%22M0%2016v-16h16z%22%2F%3E%3Cpath%20fill%3D%22%23fff%22%20d%3D%22M16%200v16h-16z%22%2F%3E%3C%2Fsvg%3E') center top no-repeat;
+      background-size: cover;
+      border-radius: $global-radius/2 0 0 0;
+    }
+  }
+  .badge-cal {
+    display: block;
+    width: 4rem;
+    height: 4rem;
+    .month {
+      display: block;
+      border-radius: $global-radius $global-radius 0 0;
+      background: $primary-color;
+      color: #FFF;
+      font-size: 0.875rem;
+      line-height: 1.5rem;
+    }
+    .day {
+      display: block;
+      border-radius: 0 0 $global-radius $global-radius;
+      background: tint($primary-color, 90%);
+      line-height: 2.25rem;
+      font-size: 1.75rem;
+      padding-bottom: 0.25rem;
+      letter-spacing: -0.0625rem;
+    }
+    .year {
+      @extend .visually-hidden;
+    }
+  }
   .badge-organization,
   .badge-user {
     width: 4rem;
@@ -37,16 +93,11 @@
     img {
       display: block;
       max-width: 100%;
-      border-radius: $global-radius;
     }
   }
   .bd {
-    padding: 0 1rem;
-    display: table-cell;
+    padding: 0 1rem 2rem 1rem;
     text-align: center;
-    vertical-align: middle;
-    overflow-x: hidden;
-    float: none !important;
   }
   .prime-title {
     $ft-size: 24;
@@ -54,42 +105,119 @@
     line-height: ($ft-size + 4) / $ft-size;
     margin: 0;
   }
-  
-  @media #{$medium-up} {
-    .inner {
-      margin: 0 (-$column-gutter/2);
-    }
-    .media {
-      @include grid-column(7);
-      margin: 0 0 0 $column-gutter/2;
-      overflow: hidden;
-    }
-    .cover {
-      min-width: 140%;
-      img {
-        display: block;
-        border-radius: $global-radius 0 0 $global-radius;
-      }
-    }
-    .bd {
-      @include grid-column(5);
-      padding: 0 2rem 0 1rem !important;
-      * {
-        display: inline-block;
-      }
+  .meta {
+    margin: 0;
+    color: tint($primary-color, 40%);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    * {
+      display: block;
     }
   }
-  @media #{$large-up} {
+  .extra {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+  }
+  .chapter-sticker {
+    border-radius: $global-radius;
+    @extend %antialiased;
+    display: block;
+    text-align: center;
+    color: #FFF;
+    font-weight: $body-font-bold;
+    text-transform: uppercase;
+    line-height: 2rem;
+    font-size: 0.875rem;
+    width: 4rem;
+  }
+  
+  @media #{$small-up} {
     .media {
-      @include grid-column(8);
+      margin-bottom: -4rem;
+    }
+    .badge-chapter {
+      width: 6rem;
+      height: 6rem;
+      font-size: 1.25rem;
+      padding-bottom: 1rem;
+      &:after {
+        height: 1rem;
+        width: 1rem;
+        border-radius: $global-radius 0 0 0;
+      }
+    }
+    .badge-cal {
+      width: 6rem;
+      height: 6rem;
+      .month {
+        font-size: 1.25rem;
+        line-height: 2rem;
+      }
+      .day {
+        line-height: 3.5rem;
+        font-size: 2.5rem;
+        padding-bottom: 0.5rem;
+        letter-spacing: -0.125rem;
+      }
+    }
+    .badge-organization,
+    .badge-user {
+      width: 6rem;
+      height: 6rem;
+    }
+    .prime-title {
+      $ft-size: 28;
+      font-size: rem-calc($ft-size);
+      line-height: ($ft-size + 4) / $ft-size;
+    }
+    .meta {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+  }
+  
+  @media #{$medium-up} {
+    .media {
+      display: table-cell;
+      width: 58%;
+      margin-bottom: 0;
+      border-radius: $global-radius 0 0 $global-radius;
     }
     .cover {
-      min-width: 100%;
-      margin-left: 0;
+      position: relative;
+      width: 140%;
+      left: 50%;
+      margin-left: -70%;
+      max-height: none;
     }
     .bd {
-      @include grid-column(4);
-      padding: 0 3rem 0 2rem !important;
+      vertical-align: middle;
+      display: table-cell;
+      padding: 1rem;
+    }
+    .extra {
+      top: 1rem;
+      left: 1rem;
+    }
+  }
+  
+  @media #{$large-up} {
+    .media {
+      width: 68%;
+    }
+    .cover {
+      width: 100%;
+      margin-left: 0;
+      left: 0;
+    }
+    .bd {
+      padding: 2rem;
+    }
+    .chapter-sticker {
+      line-height: 3rem;
+      font-size: 1.5rem;
+      width: 7rem;
     }
   }
 }

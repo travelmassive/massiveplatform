@@ -13,7 +13,6 @@ dependencies[] = link
 dependencies[] = tm_base
 dependencies[] = tm_event_signup
 dependencies[] = tm_fields
-scripts[] = js/tm_event_signup_flag.js
 features[ctools][] = ds:ds:1
 features[ctools][] = strongarm:strongarm:1
 features[ctools][] = views:views_default:3.0

@@ -107,7 +107,9 @@ function tm_events_ds_field_settings_info() {
         'link' => '0',
         'wrapper' => 'h1',
         'class' => 'prime-title',
-        'ft' => array(),
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
       ),
     ),
     'tm_ds_chapter_sticker' => array(
@@ -124,10 +126,16 @@ function tm_events_ds_field_settings_info() {
       'weight' => '2',
       'label' => 'hidden',
       'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
     ),
     'field_image' => array(
       'formatter_settings' => array(
         'ft' => array(
+          'func' => 'theme_ds_field_expert',
           'ow' => TRUE,
           'ow-el' => 'div',
           'ow-cl' => 'cover',
@@ -140,6 +148,7 @@ function tm_events_ds_field_settings_info() {
     'field_location' => array(
       'formatter_settings' => array(
         'ft' => array(
+          'func' => 'theme_ds_field_expert',
           'ow' => TRUE,
           'ow-el' => 'p',
           'ow-cl' => 'meta',
@@ -220,17 +229,25 @@ function tm_events_ds_field_settings_info() {
         'link' => '0',
         'wrapper' => 'h1',
         'class' => 'prime-title',
-        'ft' => array(),
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
       ),
     ),
     'tm_ds_date_avatar' => array(
       'weight' => '1',
       'label' => 'hidden',
       'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
     ),
     'body' => array(
       'formatter_settings' => array(
         'ft' => array(
+          'func' => 'theme_ds_field_expert',
           'ow' => TRUE,
           'ow-el' => 'p',
           'ow-cl' => 'meta',
@@ -243,6 +260,7 @@ function tm_events_ds_field_settings_info() {
     'field_image' => array(
       'formatter_settings' => array(
         'ft' => array(
+          'func' => 'theme_ds_field_expert',
           'ow' => TRUE,
           'ow-el' => 'div',
           'ow-cl' => 'cover',

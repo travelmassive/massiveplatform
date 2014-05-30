@@ -2839,7 +2839,7 @@ tr.selected td {
    Helpers - extends + custom vars
    ========================================================================== */
 /* line 9, ../sass/_helpers.scss */
-.visually-hidden, #site-title span, #prime-nav h1, #prime-nav h2 span, #foot-credits .logo span, .card.contained .badge-cal .year {
+.visually-hidden, #site-title span, #prime-nav h1, #prime-nav h2 span, #foot-credits .logo span, .card.contained .badge-cal .year, .trilithon-header .badge-cal .year {
   border: 0 none;
   clip: rect(0px, 0px, 0px, 0px);
   height: 1px;
@@ -2851,7 +2851,7 @@ tr.selected td {
 }
 
 /* line 33, ../sass/_helpers.scss */
-.card.contained .avatar, .card.contained .chapter-sticker {
+.card.contained .avatar, .card.contained .chapter-sticker, .trilithon-header .avatar, .trilithon-header .chapter-sticker {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -4207,36 +4207,36 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn.disabled:focus {
   -ms-transform: rotate(-90deg);
   -o-transform: rotate(-90deg);
   transform: rotate(-90deg);
-  -webkit-transform-origin: top right 0 50%;
-  -moz-transform-origin: top right 0 50%;
-  -ms-transform-origin: top right 0 50%;
-  -o-transform-origin: top right 0 50%;
-  transform-origin: top right 0 50%;
+  -webkit-transform-origin: top right;
+  -moz-transform-origin: top right;
+  -ms-transform-origin: top right;
+  -o-transform-origin: top right;
+  transform-origin: top right;
 }
 @media only screen and (min-width: 34.063rem) {
   /* line 60, ../sass/_modules.scss */
   .card.contained {
     text-align: center;
   }
-  /* line 213, ../sass/_modules.scss */
+  /* line 217, ../sass/_modules.scss */
   .card.contained > a {
     display: block;
     padding: 0 0 2rem 0;
   }
-  /* line 217, ../sass/_modules.scss */
+  /* line 221, ../sass/_modules.scss */
   .card.contained.node-event > a {
     padding-right: 0;
   }
-  /* line 220, ../sass/_modules.scss */
+  /* line 224, ../sass/_modules.scss */
   .card.contained .media {
     float: none;
     margin: 0 0 1rem 0;
   }
-  /* line 224, ../sass/_modules.scss */
+  /* line 228, ../sass/_modules.scss */
   .card.contained .cover {
     display: block;
   }
-  /* line 227, ../sass/_modules.scss */
+  /* line 231, ../sass/_modules.scss */
   .card.contained .avatar {
     display: table;
     box-shadow: 0 0 0 1px rgba(33, 48, 64, 0.1);
@@ -4244,66 +4244,66 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn.disabled:focus {
     background-color: #FFF;
     margin: -4rem auto 0 auto;
   }
-  /* line 234, ../sass/_modules.scss */
+  /* line 238, ../sass/_modules.scss */
   .card.contained .badge-chapter {
     width: 6rem;
     height: 6rem;
     font-size: 1.25rem;
     padding-bottom: 1rem;
   }
-  /* line 239, ../sass/_modules.scss */
+  /* line 243, ../sass/_modules.scss */
   .card.contained .badge-chapter:after {
     height: 1rem;
     width: 1rem;
     border-radius: 0.25rem 0 0 0;
   }
-  /* line 245, ../sass/_modules.scss */
+  /* line 249, ../sass/_modules.scss */
   .card.contained .badge-cal {
     width: 6rem;
     height: 6rem;
   }
-  /* line 248, ../sass/_modules.scss */
+  /* line 252, ../sass/_modules.scss */
   .card.contained .badge-cal .month {
     font-size: 1.25rem;
     line-height: 2rem;
   }
-  /* line 252, ../sass/_modules.scss */
+  /* line 256, ../sass/_modules.scss */
   .card.contained .badge-cal .day {
     line-height: 3.5rem;
     font-size: 2.5rem;
     padding-bottom: 0.5rem;
     letter-spacing: -0.125rem;
   }
-  /* line 260, ../sass/_modules.scss */
+  /* line 264, ../sass/_modules.scss */
   .card.contained .badge-organization,
   .card.contained .badge-user {
     width: 6rem;
     height: 6rem;
   }
-  /* line 264, ../sass/_modules.scss */
+  /* line 268, ../sass/_modules.scss */
   .card.contained .teaser {
     display: block;
     width: auto;
     padding: 0 1rem;
   }
-  /* line 269, ../sass/_modules.scss */
+  /* line 273, ../sass/_modules.scss */
   .card.contained .prime-title {
     font-size: 1.5rem;
     line-height: 1.16667;
   }
-  /* line 274, ../sass/_modules.scss */
+  /* line 278, ../sass/_modules.scss */
   .card.contained .meta {
     font-size: 1rem;
     line-height: 1.5;
   }
-  /* line 278, ../sass/_modules.scss */
+  /* line 282, ../sass/_modules.scss */
   .card.contained .extra {
     position: absolute;
     top: 0.5rem;
     left: 0.5rem;
     right: auto;
   }
-  /* line 284, ../sass/_modules.scss */
+  /* line 288, ../sass/_modules.scss */
   .card.contained .chapter-sticker {
     line-height: 2rem;
     font-size: 0.875rem;
@@ -4313,6 +4313,256 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn.disabled:focus {
     -ms-transform: rotate(0);
     -o-transform: rotate(0);
     transform: rotate(0);
+  }
+}
+
+/* line 1, ../sass/_single.scss */
+.trilithon-header {
+  margin: 0 1rem 2rem 1rem;
+  overflow-x: hidden;
+  position: relative;
+}
+/* line 6, ../sass/_single.scss */
+.trilithon-header .media {
+  margin-bottom: -3rem;
+  overflow: hidden;
+  border-radius: 0.25rem 0.25rem 0 0;
+}
+/* line 11, ../sass/_single.scss */
+.trilithon-header .cover {
+  max-height: 16rem;
+}
+/* line 13, ../sass/_single.scss */
+.trilithon-header .cover img {
+  display: block;
+  width: 100%;
+}
+/* line 18, ../sass/_single.scss */
+.trilithon-header .avatar {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  background-color: #FFF;
+  border-radius: 0.25rem;
+  text-transform: uppercase;
+  font-weight: 800;
+  display: table;
+  box-shadow: 0 0 0 1px rgba(33, 48, 64, 0.1);
+  padding: 0.25rem;
+  background-color: #FFF;
+  margin: 0 auto 1rem auto;
+}
+/* line 33, ../sass/_single.scss */
+.trilithon-header .badge-chapter {
+  position: relative;
+  display: block;
+  font-size: 0.875rem;
+  color: #FFF;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 0.25rem;
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+/* line 43, ../sass/_single.scss */
+.trilithon-header .badge-chapter:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: bottom;
+  width: 0;
+}
+/* line 50, ../sass/_single.scss */
+.trilithon-header .badge-chapter:after {
+  position: absolute;
+  display: block;
+  bottom: 0;
+  right: 0;
+  content: '';
+  height: 0.5rem;
+  width: 0.5rem;
+  background: transparent url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20opacity%3D%22.3%22%20fill%3D%22%23223141%22%20d%3D%22M0%2016v-16h16z%22%2F%3E%3Cpath%20fill%3D%22%23fff%22%20d%3D%22M16%200v16h-16z%22%2F%3E%3C%2Fsvg%3E") center top no-repeat;
+  background-size: cover;
+  border-radius: 0.125rem 0 0 0;
+}
+/* line 63, ../sass/_single.scss */
+.trilithon-header .badge-cal {
+  display: block;
+  width: 4rem;
+  height: 4rem;
+}
+/* line 67, ../sass/_single.scss */
+.trilithon-header .badge-cal .month {
+  display: block;
+  border-radius: 0.25rem 0.25rem 0 0;
+  background: #213040;
+  color: #FFF;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+}
+/* line 75, ../sass/_single.scss */
+.trilithon-header .badge-cal .day {
+  display: block;
+  border-radius: 0 0 0.25rem 0.25rem;
+  background: #e8eaeb;
+  line-height: 2.25rem;
+  font-size: 1.75rem;
+  padding-bottom: 0.25rem;
+  letter-spacing: -0.0625rem;
+}
+/* line 89, ../sass/_single.scss */
+.trilithon-header .badge-organization,
+.trilithon-header .badge-user {
+  width: 4rem;
+  height: 4rem;
+  display: block;
+}
+/* line 93, ../sass/_single.scss */
+.trilithon-header .badge-organization img,
+.trilithon-header .badge-user img {
+  display: block;
+  max-width: 100%;
+}
+/* line 98, ../sass/_single.scss */
+.trilithon-header .bd {
+  padding: 0 1rem 2rem 1rem;
+  text-align: center;
+}
+/* line 102, ../sass/_single.scss */
+.trilithon-header .prime-title {
+  font-size: 1.5rem;
+  line-height: 1.16667;
+  margin: 0;
+}
+/* line 108, ../sass/_single.scss */
+.trilithon-header .meta {
+  margin: 0;
+  color: #79828c;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+/* line 113, ../sass/_single.scss */
+.trilithon-header .meta * {
+  display: block;
+}
+/* line 117, ../sass/_single.scss */
+.trilithon-header .extra {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+}
+/* line 122, ../sass/_single.scss */
+.trilithon-header .chapter-sticker {
+  border-radius: 0.25rem;
+  display: block;
+  text-align: center;
+  color: #FFF;
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 2rem;
+  font-size: 0.875rem;
+  width: 4rem;
+}
+@media only screen and (min-width: 34.063rem) {
+  /* line 136, ../sass/_single.scss */
+  .trilithon-header .media {
+    margin-bottom: -4rem;
+  }
+  /* line 139, ../sass/_single.scss */
+  .trilithon-header .badge-chapter {
+    width: 6rem;
+    height: 6rem;
+    font-size: 1.25rem;
+    padding-bottom: 1rem;
+  }
+  /* line 144, ../sass/_single.scss */
+  .trilithon-header .badge-chapter:after {
+    height: 1rem;
+    width: 1rem;
+    border-radius: 0.25rem 0 0 0;
+  }
+  /* line 150, ../sass/_single.scss */
+  .trilithon-header .badge-cal {
+    width: 6rem;
+    height: 6rem;
+  }
+  /* line 153, ../sass/_single.scss */
+  .trilithon-header .badge-cal .month {
+    font-size: 1.25rem;
+    line-height: 2rem;
+  }
+  /* line 157, ../sass/_single.scss */
+  .trilithon-header .badge-cal .day {
+    line-height: 3.5rem;
+    font-size: 2.5rem;
+    padding-bottom: 0.5rem;
+    letter-spacing: -0.125rem;
+  }
+  /* line 165, ../sass/_single.scss */
+  .trilithon-header .badge-organization,
+  .trilithon-header .badge-user {
+    width: 6rem;
+    height: 6rem;
+  }
+  /* line 169, ../sass/_single.scss */
+  .trilithon-header .prime-title {
+    font-size: 1.75rem;
+    line-height: 1.14286;
+  }
+  /* line 174, ../sass/_single.scss */
+  .trilithon-header .meta {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+}
+@media only screen and (min-width: 48.063rem) {
+  /* line 181, ../sass/_single.scss */
+  .trilithon-header .media {
+    display: table-cell;
+    width: 58%;
+    margin-bottom: 0;
+    border-radius: 0.25rem 0 0 0.25rem;
+  }
+  /* line 187, ../sass/_single.scss */
+  .trilithon-header .cover {
+    position: relative;
+    width: 140%;
+    left: 50%;
+    margin-left: -70%;
+    max-height: none;
+  }
+  /* line 194, ../sass/_single.scss */
+  .trilithon-header .bd {
+    vertical-align: middle;
+    display: table-cell;
+    padding: 1rem;
+  }
+  /* line 199, ../sass/_single.scss */
+  .trilithon-header .extra {
+    top: 1rem;
+    left: 1rem;
+  }
+}
+@media only screen and (min-width: 62.063rem) {
+  /* line 206, ../sass/_single.scss */
+  .trilithon-header .media {
+    width: 68%;
+  }
+  /* line 209, ../sass/_single.scss */
+  .trilithon-header .cover {
+    width: 100%;
+    margin-left: 0;
+    left: 0;
+  }
+  /* line 214, ../sass/_single.scss */
+  .trilithon-header .bd {
+    padding: 2rem;
+  }
+  /* line 217, ../sass/_single.scss */
+  .trilithon-header .chapter-sticker {
+    line-height: 3rem;
+    font-size: 1.5rem;
+    width: 7rem;
   }
 }
 

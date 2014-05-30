@@ -33,6 +33,7 @@ function tm_organizations_ds_field_settings_info() {
     'body' => array(
       'formatter_settings' => array(
         'ft' => array(
+          'func' => 'theme_ds_field_expert',
           'ow' => TRUE,
           'ow-el' => 'p',
           'ow-cl' => 'meta',
@@ -45,6 +46,7 @@ function tm_organizations_ds_field_settings_info() {
     'field_image' => array(
       'formatter_settings' => array(
         'ft' => array(
+          'func' => 'theme_ds_field_expert',
           'ow' => TRUE,
           'ow-el' => 'div',
           'ow-cl' => 'cover',
@@ -57,6 +59,7 @@ function tm_organizations_ds_field_settings_info() {
     'field_avatar' => array(
       'formatter_settings' => array(
         'ft' => array(
+          'func' => 'theme_ds_field_expert',
           'ow' => TRUE,
           'ow-el' => 'div',
           'ow-cl' => 'avatar',

@@ -1,0 +1,178 @@
+<?php
+/**
+ * @file
+ * Tests for the Flag module.
+ *
+ * @author Daniel da Silva (daniel.silva@flipside.org)
+ */
+
+/**
+ * Test the signup flag behaviour.
+ */
+class TmEventSignupFlagTestCase extends DrupalWebTestCase {
+  
+  /**
+   * @override drupalLogin()
+   * The login function checks for a "log out" text which is not yet
+   * present on the page. This override removes that check.
+   */
+  public function drupalLogin(stdClass $account) {
+    if ($this->loggedInUser) {
+      $this->drupalLogout();
+    }
+
+    $edit = array(
+      'name' => $account->name,
+      'pass' => $account->pass_raw
+    );
+    $this->drupalPost('user', $edit, t('Log in'));
+    
+    // TODO: For now assume the login succeeded. 
+    // If a "log out" link appears on the page, it is almost certainly because
+    // the login was successful.
+    //$pass = $this->assertLink(t('Log out'), 0, t('User %name successfully logged in.', array('%name' => $account->name)), t('User login'));
+
+    //if ($pass) {
+      $this->loggedInUser = $account;
+    //}
+
+  }
+  
+  /**
+   * Implements getInfo().
+   */
+  public static function getInfo() {
+    return array(
+      'name' => t('Signup Flag'),
+      'description' => t('Test for the signup flag.'),
+      'group' => t('Travelmassive'),
+    );
+  }
+
+  /**
+   * Implements setUp().
+   */
+  function setUp() {
+    $this->profile = 'tm';
+    parent::setUp();
+  }
+  
+  /**
+   * Testcase.
+   */
+  public function testSignupFlag() {
+    $user1 = $this->drupalCreateUser(array('flag signup', 'unflag signup'));
+    $this->drupalLogin($user1);
+    
+    // Dates for the node.
+    // Future date.
+    $future_date = new DateTime('now', new DateTimeZone('UTC'));
+    $future_date->modify('+ 10 days');
+
+
+    // Create an event:
+    // Signup date in the future.
+    // Signup limit set.
+    $values['type'] = 'event';
+    $values['field_event_date'][LANGUAGE_NONE][0] = array(
+      'value' => $future_date->format('Y-m-d H:i:s'),
+      'value2' => $future_date->format('Y-m-d H:i:s'),
+      'timezone' => 'America/Los_Angeles',
+      'offset' => NULL,
+      'offset2' => NULL,
+      'timezone_db' => 'UTC',
+      'date_type' => 'datetime'
+    );
+    $values['field_signup_limit'][LANGUAGE_NONE][0]['value'] = 10;
+    
+    // Post values.
+    $event_node1 = $this->drupalCreateNode($values);
+    $this->drupalGet('node/' . $event_node1->nid);
+    $this->assertText(t('@left of @total seats left', array('@left' => 10, '@total' => 10)), 'Seats left text correct.');
+    $this->assertText(t('Join'), 'Join button found.');
+    
+    
+    // Create an event:
+    // Signup date in the future.
+    // Signup limit NOT set.
+    $values['type'] = 'event';
+    $values['field_event_date'][LANGUAGE_NONE][0] = array(
+      'value' => $future_date->format('Y-m-d H:i:s'),
+      'value2' => $future_date->format('Y-m-d H:i:s'),
+      'timezone' => 'America/Los_Angeles',
+      'offset' => NULL,
+      'offset2' => NULL,
+      'timezone_db' => 'UTC',
+      'date_type' => 'datetime'
+    );
+    
+    // Post values.
+    $event_node2 = $this->drupalCreateNode($values);
+    $this->drupalGet('node/' . $event_node2->nid);
+    $this->assertNoText(t('@left of @total seats left', array('@left' => 0, '@total' => 0)), 'Seats left text not present.');
+    $this->assertText(t('Join'), 'Join button found.');
+    
+    
+    // Create an event:
+    // Signup date in the past.
+    // Signup limit set to 20.
+    $values['type'] = 'event';
+    $values['field_event_date'][LANGUAGE_NONE][0] = array(
+      'value' => '2013-01-01 11:11:11',
+      'value2' => '2013-01-01 11:11:11',
+      'timezone' => 'America/Los_Angeles',
+      'offset' => NULL,
+      'offset2' => NULL,
+      'timezone_db' => 'UTC',
+      'date_type' => 'datetime'
+    );
+    $values['field_signup_limit'][LANGUAGE_NONE][0]['value'] = 20;
+    
+    // Post values.
+    $event_node3 = $this->drupalCreateNode($values);
+    $this->drupalGet('node/' . $event_node3->nid);
+    $this->assertText(t('@left of @total seats left', array('@left' => 20, '@total' => 20)), 'Seats left text present.');
+    // Despite not being able to join, the button is still there.
+    $this->assertText(t('Join'), 'Despite not being able to join, the button should still be there.');
+    
+    $this->clickLink(t('Join'));
+    $this->assertText(t('You are not authorized to access this page'), 'Not allowed to joing because the date is in the past.'); 
+    
+    
+    
+    // Create an event:
+    // Signup date in the future.
+    // Signup limit set to 1.
+    $values['type'] = 'event';
+    $values['field_event_date'][LANGUAGE_NONE][0] = array(
+      'value' => $future_date->format('Y-m-d H:i:s'),
+      'value2' => $future_date->format('Y-m-d H:i:s'),
+      'timezone' => 'America/Los_Angeles',
+      'offset' => NULL,
+      'offset2' => NULL,
+      'timezone_db' => 'UTC',
+      'date_type' => 'datetime'
+    );
+    $values['field_signup_limit'][LANGUAGE_NONE][0]['value'] = 1;
+    
+    // Post values.
+    $event_node4 = $this->drupalCreateNode($values);
+    $this->drupalGet('node/' . $event_node4->nid);
+    $this->assertText(t('@left of @total seats left', array('@left' => 1, '@total' => 1)), 'Seats left text found.');
+    $this->assertText(t('Join'), 'Join button found.');
+    
+    $this->clickLink(t('Join'));
+    $this->assertText(t('@left of @total seats left', array('@left' => 0, '@total' => 1)), 'Seats left text found.');
+    $this->assertText(t('Joined'), 'Joined button found.');
+    
+    // Create another user.
+    $user2 = $this->drupalCreateUser(array('flag signup', 'unflag signup'));
+    $this->drupalLogin($user2);
+    
+    // Go back to node page and click link.
+    $this->drupalGet('node/' . $event_node4->nid);
+    $this->assertText(t('Join'), 'Join button found.');
+    $this->clickLink(t('Join'));
+    $this->assertText(t('Signup limit reached'), 'Signup limit reached.');    
+  }
+}

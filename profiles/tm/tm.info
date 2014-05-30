@@ -22,6 +22,7 @@ dependencies[] = context
 dependencies[] = context_ui
 dependencies[] = ctools
 dependencies[] = date
+dependencies[] = date_api
 dependencies[] = diff
 dependencies[] = ds
 dependencies[] = ds_extras
@@ -53,6 +54,7 @@ dependencies[] = masquerade
 dependencies[] = migrate
 dependencies[] = strongarm
 dependencies[] = tm_sample_content
+dependencies[] = simpletest
 
 ; TM - features
 dependencies[] = tm_base

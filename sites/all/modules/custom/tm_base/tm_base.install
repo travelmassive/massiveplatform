@@ -47,3 +47,9 @@ function tm_base_update_7005() {
 function tm_base_update_7006() {
   module_enable(array('menu_attributes'));
 }
+/**
+ * Enable the simpletest module.
+ */
+function tm_base_update_7007() {
+  module_enable(array('simpletest'));
+}

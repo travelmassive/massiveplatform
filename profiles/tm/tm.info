@@ -22,6 +22,7 @@ dependencies[] = context
 dependencies[] = context_ui
 dependencies[] = ctools
 dependencies[] = date
+dependencies[] = date_api
 dependencies[] = diff
 dependencies[] = ds
 dependencies[] = ds_extras

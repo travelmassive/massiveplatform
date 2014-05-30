@@ -54,6 +54,7 @@ dependencies[] = masquerade
 dependencies[] = migrate
 dependencies[] = strongarm
 dependencies[] = tm_sample_content
+dependencies[] = simpletest
 
 ; TM - features
 dependencies[] = tm_base

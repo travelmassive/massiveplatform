@@ -24,7 +24,7 @@ function tm_users_ds_field_settings_info() {
       'formatter_settings' => array(
         'link' => '0',
         'wrapper' => 'h1',
-        'class' => '',
+        'class' => 'prime-title',
         'ft' => array(
           'func' => 'theme_ds_field_reset',
         ),
@@ -43,6 +43,7 @@ function tm_users_ds_field_settings_info() {
     'field_image' => array(
       'formatter_settings' => array(
         'ft' => array(
+          'func' => 'theme_ds_field_expert',
           'ow' => TRUE,
           'ow-el' => 'div',
           'ow-cl' => 'cover',
@@ -55,6 +56,7 @@ function tm_users_ds_field_settings_info() {
     'field_avatar' => array(
       'formatter_settings' => array(
         'ft' => array(
+          'func' => 'theme_ds_field_expert',
           'ow' => TRUE,
           'ow-el' => 'div',
           'ow-cl' => 'avatar',

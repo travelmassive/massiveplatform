@@ -27,22 +27,6 @@ function tm_events_ds_field_settings_info() {
         ),
       ),
     ),
-    'tm_ds_event_seats_count' => array(
-      'weight' => '9',
-      'label' => 'hidden',
-      'format' => 'default',
-      'formatter_settings' => array(
-        'ft' => array(
-          'func' => 'theme_ds_field_expert',
-          'fi' => TRUE,
-          'fi-el' => 'div',
-          'fi-cl' => 'js-tm-seats-count',
-          'fi-at' => '',
-          'fi-def-at' => FALSE,
-          'fi-odd-even' => FALSE,
-        ),
-      ),
-    ),
     'title' => array(
       'weight' => '17',
       'label' => 'hidden',
@@ -76,9 +60,26 @@ function tm_events_ds_field_settings_info() {
         ),
       ),
     ),
+    'tm_ds_event_seats_count' => array(
+      'weight' => '9',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'fi' => TRUE,
+          'fi-el' => 'div',
+          'fi-cl' => 'js-tm-seats-count',
+          'fi-at' => '',
+          'fi-def-at' => FALSE,
+          'fi-odd-even' => FALSE,
+        ),
+      ),
+    ),
     'field_image' => array(
       'formatter_settings' => array(
         'ft' => array(
+          'func' => 'theme_ds_field_expert',
           'ow' => TRUE,
           'ow-el' => 'div',
           'ow-cl' => 'cover',
@@ -191,6 +192,7 @@ function tm_events_ds_field_settings_info() {
     'field_image' => array(
       'formatter_settings' => array(
         'ft' => array(
+          'func' => 'theme_ds_field_expert',
           'ow' => TRUE,
           'ow-el' => 'div',
           'ow-cl' => 'cover',
@@ -271,46 +273,45 @@ function tm_events_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
-      'header_media' => array(
-        0 => 'field_image',
-      ),
       'first_column' => array(
-        1 => 'body',
-        2 => 'field_signup_limit',
+        0 => 'field_signup_limit',
+        2 => 'body',
         3 => 'field_map_link',
         4 => 'field_location',
         5 => 'field_rsvp_link',
         6 => 'field_organizer',
       ),
-      'header_extra' => array(
-        7 => 'tm_ds_chapter_sticker',
-      ),
-      'header_body' => array(
-        8 => 'tm_ds_date_avatar',
-        9 => 'title',
+      'header_media' => array(
+        1 => 'field_image',
       ),
       'second_column' => array(
-        10 => 'ds_flag_signup',
-        11 => 'tm_ds_event_seats_count',
+        7 => 'ds_flag_signup',
+        8 => 'tm_ds_event_seats_count',
+      ),
+      'header_extra' => array(
+        9 => 'tm_ds_chapter_sticker',
+      ),
+      'header_body' => array(
+        10 => 'tm_ds_date_avatar',
+        11 => 'title',
       ),
     ),
     'fields' => array(
+      'field_signup_limit' => 'first_column',
       'field_image' => 'header_media',
       'body' => 'first_column',
-      'field_signup_limit' => 'first_column',
       'field_map_link' => 'first_column',
       'field_location' => 'first_column',
-      'ds_flag_signup' => 'second_column',
       'field_rsvp_link' => 'first_column',
-      'tm_ds_event_seats_count' => 'second_column',
       'field_organizer' => 'first_column',
+      'ds_flag_signup' => 'second_column',
+      'tm_ds_event_seats_count' => 'second_column',
       'tm_ds_chapter_sticker' => 'header_extra',
       'tm_ds_date_avatar' => 'header_body',
       'title' => 'header_body',
     ),
     'classes' => array(),
     'wrappers' => array(
-      'banner' => 'header',
       'header_media' => 'div',
       'header_body' => 'div',
       'header_extra' => 'div',

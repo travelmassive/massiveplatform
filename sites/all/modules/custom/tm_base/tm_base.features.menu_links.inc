@@ -57,9 +57,7 @@ function tm_base_menu_default_menu_links() {
     'router_path' => '',
     'link_title' => 'Help',
     'options' => array(
-      'attributes' => array(
-        'title' => '',
-      ),
+      'attributes' => array(),
       'identifier' => 'menu-footer-menu_help:<front>',
     ),
     'module' => 'menu',
@@ -77,9 +75,7 @@ function tm_base_menu_default_menu_links() {
     'router_path' => '',
     'link_title' => 'Press kit',
     'options' => array(
-      'attributes' => array(
-        'title' => '',
-      ),
+      'attributes' => array(),
       'identifier' => 'menu-footer-menu_press-kit:<front>',
     ),
     'module' => 'menu',

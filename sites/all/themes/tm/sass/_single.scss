@@ -1,6 +1,5 @@
 .trilithon-header {
   margin: 0 $column-gutter/2 $column-gutter $column-gutter/2;
-  overflow-x: hidden;
   position: relative;
   
   .media {
@@ -96,8 +95,9 @@
     }
   }
   .bd {
-    padding: 0 1rem 2rem 1rem;
+    padding: 0 1rem 6rem 1rem;
     text-align: center;
+    position: relative;
   }
   .prime-title {
     $ft-size: 24;
@@ -130,6 +130,30 @@
     line-height: 2rem;
     font-size: 0.875rem;
     width: 4rem;
+  }
+  
+  .actions {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 10;
+    width: 100%;
+    padding: 1rem;
+    border-top: 1px tint($primary-color, 90%) solid;
+  }
+  
+  .actions-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    vertical-align: bottom;
+    text-align: left;
+    > li {
+      float: left;
+      position: relative;
+      margin: 0 0.25rem;
+    }
   }
   
   @media #{$small-up} {
@@ -186,7 +210,7 @@
     }
     .cover {
       position: relative;
-      width: 140%;
+      width: 150%;
       left: 50%;
       margin-left: -70%;
       max-height: none;
@@ -194,7 +218,7 @@
     .bd {
       vertical-align: middle;
       display: table-cell;
-      padding: 1rem;
+      padding: 1rem 1rem 5rem 1rem;
     }
     .extra {
       top: 1rem;
@@ -212,12 +236,15 @@
       left: 0;
     }
     .bd {
-      padding: 2rem;
+      padding: 2rem 2rem 5rem 2rem;
     }
     .chapter-sticker {
       line-height: 3rem;
       font-size: 1.5rem;
       width: 7rem;
+    }
+    .actions {
+      padding: 1rem 2rem;
     }
   }
 }

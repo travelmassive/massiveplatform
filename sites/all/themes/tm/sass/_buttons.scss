@@ -5,9 +5,177 @@ button {
   }
 }
 
+/* Base button style */
+.bttn {
+  display: inline-block;
+  padding: 0 0.75rem;
+  border-radius: $global-radius;
+  font-weight: $body-font-bold;
+  text-align: center;
+  @include user-select(none);
+  cursor: pointer;
+  white-space: nowrap;
+  background: #FFF;
+
+  &:link,
+  &:active,
+  &:visited {
+    position: static;
+    top: 0;
+  }
+  &:active {
+    opacity: 1;
+  }
+  &:hover,
+  &:focus {
+    outline: none;
+  }
+  &:before, &:after {
+    font-weight: normal;
+    font-size: rem-calc(16);
+    vertical-align: bottom !important;
+  }
+  &:before {
+    margin-right: 0.375rem;
+  }
+  &:after {
+    margin-left: 0.375rem;
+    opacity: 0.4;
+  }
+  &.settings {
+    width: 3rem;
+    &:before {
+      @extend .icon-cog;
+    }
+  }
+  &.follow {
+    width: 9rem;
+    &:before {
+      margin-left: -1rem;
+      @extend .icon-s-add;
+    }
+  }
+  &.follow.flagged {
+    &:before {
+      @extend .icon-s-tick;
+    }
+  }
+  &.hide-txt {
+    &:before {
+      margin-right: 0;
+    }
+    span {
+      @extend .visually-hidden;
+    }
+  }
+}
+
+.bttn-dropdown {
+  &:after {
+    @extend .icon-s-arr-down;
+    margin-left: rem-calc(4);
+    opacity: 0.6;
+  }
+}
+
+/* Button sizes */
+.bttn-s {
+  line-height: rem-calc(24);
+  font-size: 0.875rem;
+}
+.bttn-m {
+  line-height: rem-calc(32);
+  font-size: 0.875rem;
+}
+.bttn-l {
+  line-height: rem-calc(40);
+  font-size: 1.25rem;
+}
+
+/* Button colors */
+
+// White
+.bttn-default {
+  color: $primary-color;
+  background: #FFF;
+  border-color: tint($primary-color, 75%);
+  &:before {
+    color: $secondary-color;
+  }
+  &:hover, &:focus {
+    color: $primary-color;
+  }
+  &:active, &.on, &.flagged {
+    color: $primary-color;
+    box-shadow: 0 1px 0 0 rgba(#FFF, 0.5), inset 0 2px 0 0 rgba($primary-color, 0.1);
+  }
+}
+
+// Dark grey
+.bttn-primary {
+  color: #FFF !important;
+  background: $primary-color;
+  border-color: shade($primary-color, 15%);
+  @extend %antialiased;
+  &:hover, &:focus {
+    color: #FFF !important;
+  }
+  &:active, &.on, &.flagged {
+    border-color: shade($primary-color, 25%);
+    background: shade($primary-color, 10%);
+    box-shadow: 0 1px 0 0 rgba(#FFF, 0.5), inset 0 2px 0 0 shade($primary-color, 20%);
+    color: #FFF !important;
+  }
+}
+
+// Blue
+.bttn-secondary {
+  color: #FFF !important;
+  background: $secondary-color;
+  @extend %antialiased;
+  box-shadow: inset 0 -2px 0 0 shade($secondary-color, 30%);
+  &:hover, &:focus {
+    color: #FFF !important;
+  }
+  &:active, &.on, &.flagged {
+    background: shade($secondary-color, 30%);
+    box-shadow: inset 0 2px 0 0 shade($secondary-color, 50%);
+    color: #FFF !important;
+  }
+}
+
+// Light grey
+.bttn-tertiary {
+  color: tint($primary-color, 20%) !important;
+  background: tint($primary-color, 90%);
+  @extend %antialiased;
+  box-shadow: inset 0 -2px 0 0 tint($primary-color, 80%);
+  &:hover, &:focus {
+    color: tint($primary-color, 20%) !important;
+  }
+  &:active, &.on, &.flagged {
+    background: tint($primary-color, 80%);
+    box-shadow: inset 0 2px 0 0 tint($primary-color, 70%);
+    color: tint($primary-color, 20%) !important;
+  }
+}
+
+.bttn, button {
+  &.disabled {
+    opacity: 0.4;
+    cursor: default;
+
+    &:active {
+      position: static;
+      top: 0;
+      opacity: 0.4;
+    }
+  }
+}
+
 /* Dropdown */
 .dropd {
-  min-width: 16rem;
+  min-width: 12.5rem;
   position: absolute;
   left: 0;
   z-index: 10;
@@ -39,10 +207,19 @@ button {
 
   &.dropd-right {
     left: auto;
-    right: -0.5rem;
+    right: 0;
     &:before {
       left: auto;
       right: 1rem;
+    }
+  }
+  
+  &.dropd-center {
+    left: 50%;
+    margin-left: -6.25rem;
+    &:before {
+      left: 50%;
+      margin-left: -0.5rem;
     }
   }
 
@@ -51,40 +228,47 @@ button {
     margin-top: 0.75rem;
     visibility: visible;
   }
-
-  // li {
-  //   position: relative;
-  //   z-index: 20;
-  //   padding: rem-calc(4 0);
-  //   border-bottom: 1px solid tint($primary-color, 85%);
-  // 
-  //   a {
-  //     display: block;
-  //     padding: 0.5rem 1rem;
-  //     color: $primary-color;
-  //     background-color: transparent;
-  // 
-  //     @include transition-property(background-color, top, left, right);
-  //     @include transition-duration(0.2s, 0.1s, 0.2s, 0.2s);
-  //     @include transition-timing-function(ease, ease, ease, ease);
-  //     @include transition-delay(0, 0, 0, 0);
-  // 
-  //     &:hover {
-  //       opacity: 1;
-  //       background-color: rgba(tint($secondary-color, 50%), 0.2);
-  //     }
-  // 
-  //     &:before {
-  //       vertical-align: bottom !important;
-  //       font-weight: normal;
-  //       color: $secondary-color;
-  //       margin-right: 0.5rem;
-  //     }
-  //   }
-  // 
-  //   &:last-child {
-  //     border: none;
-  //   }
-  // }
+  
+  .dropd-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.25rem;
+    li {
+      position: relative;
+      z-index: 20;
+      padding: rem-calc(4 0);
+      border-bottom: 1px solid tint($primary-color, 90%);
+      margin: 0;
+      a {
+        display: block;
+        padding: 0.25rem 1rem;
+        color: $primary-color;
+        background-color: transparent;
+    
+        @include transition-property(background-color, top, left, right);
+        @include transition-duration(0.2s, 0.1s, 0.2s, 0.2s);
+        @include transition-timing-function(ease, ease, ease, ease);
+        @include transition-delay(0, 0, 0, 0);
+    
+        &:hover {
+          opacity: 1;
+          background-color: rgba(tint($secondary-color, 50%), 0.2);
+          color: $secondary-color;
+        }
+    
+        &:before {
+          vertical-align: bottom !important;
+          font-weight: normal;
+          color: $secondary-color;
+          margin-right: 0.5rem;
+        }
+      }
+    
+      &:last-child {
+        border: none;
+      }
+    }
+  }
 }
-

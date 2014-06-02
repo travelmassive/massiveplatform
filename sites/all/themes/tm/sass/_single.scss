@@ -97,7 +97,6 @@
   .bd {
     padding: 0 1rem 6rem 1rem;
     text-align: center;
-    position: relative;
   }
   .prime-title {
     $ft-size: 24;
@@ -134,7 +133,7 @@
   
   .actions {
     position: absolute;
-    left: 0;
+    right: 0;
     bottom: 0;
     z-index: 10;
     width: 100%;
@@ -224,6 +223,9 @@
       top: 1rem;
       left: 1rem;
     }
+    .actions {
+      width: 42%;
+    }
   }
   
   @media #{$large-up} {
@@ -244,6 +246,7 @@
       width: 7rem;
     }
     .actions {
+      width: 32%;
       padding: 1rem 2rem;
     }
   }

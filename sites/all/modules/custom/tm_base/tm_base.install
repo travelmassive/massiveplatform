@@ -53,3 +53,9 @@ function tm_base_update_7006() {
 function tm_base_update_7007() {
   module_enable(array('simpletest'));
 }
+/**
+ * Enable the logintoboggan module.
+ */
+function tm_base_update_7008() {
+  module_enable(array('logintoboggan'));
+}

@@ -43,6 +43,7 @@ dependencies[] = variable
 dependencies[] = variable_admin
 dependencies[] = views
 dependencies[] = views_ui
+dependencies[] = logintoboggan
 
 
 ; TM - development

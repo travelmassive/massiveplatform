@@ -1,0 +1,72 @@
+<?php
+/**
+ * @file tm_twitter_signin.install
+ * Implementation of login with twitter.
+ * This is heavily based on the twitter_signin module (http://drupal.org/project/twitter)
+ * 
+ * @author Daniel da Silva (daniel.silva@flipside.org)
+ */
+ 
+ 
+/**
+ * Implements hook_schema().
+ */
+function tm_twitter_signin_schema() {
+  $schema['tm_twitter_account'] = array(
+    'description' => "Stores information on specific Twitter user accounts.",
+    'fields' => array(
+      'twitter_uid' => array(
+        'description' => "The unique identifier of the {tm_twitter_account}.",
+        'type' => 'numeric',
+        'unsigned' => TRUE,
+        'precision' => 20,
+        'scale' => 0,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'screen_name' => array(
+        'description' => "The unique login name of the {tm_twitter_account} user.",
+        'type' => 'varchar',
+        'length' => 255,
+      ),
+      'oauth_token' => array(
+        'description' => 'The token_key for oauth-based access.',
+        'type' => 'varchar',
+        'length' => 64,
+      ),
+      'oauth_token_secret' => array(
+        'description' => 'The token_secret for oauth-based access.',
+        'type' => 'varchar',
+        'length' => 64,
+      ),
+      'name' => array(
+        'description' => "The full name of the {tm_twitter_account} user.",
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'description' => array(
+        'description' => "The description/biography associated with the {tm_twitter_account}.",
+        'type' => 'varchar',
+        'length' => 255,
+      ),
+      'location' => array(
+        'description' => "The location of the {tm_twitter_account}'s owner.",
+        'type' => 'varchar',
+        'length' => 255,
+      ),
+      'uid' => array(
+        'description' => "The uid of the user who added this Twitter account.",
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'indexes' => array('screen_name' => array('screen_name'), 'uid' => array('uid')),
+    'primary key' => array('twitter_uid'),
+  );
+
+  return $schema;
+}

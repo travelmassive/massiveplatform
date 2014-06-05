@@ -18,123 +18,107 @@ module_load_include('lib.php', 'tm_twitter_signin', 'twitter');
  * Implements hook_menu().
  */
 function tm_twitter_signin_menu() {
-  $items['twitter/oauth'] = array(
+  // Signin with twitter entry point.
+  $items['tm_twitter/oauth'] = array(
     'title' => 'Twitter Redirect',
     'page callback' => 'tm_twitter_signin_oauth',
     'access callback' => TRUE,
+    'file' => 'tm_twitter_signin.pages.inc',
     'type' => MENU_CALLBACK,
   );
   
-  $items['twitter/oauth/callback'] = array(
+  // Twitter callback after acceptance.
+  $items['tm_twitter/oauth/callback'] = array(
     'title' => 'Twitter Redirect',
     'page callback' => 'tm_twitter_signin_oauth_callback',
     'access callback' => TRUE,
+    'file' => 'tm_twitter_signin.pages.inc',
     'type' => MENU_CALLBACK,
   );
+  
+  // Register page prompting data not provided by twitter.
+  $items['tm_twitter/register'] = array(
+    'title' => 'Twitter Register',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('tm_twitter_signin_register_form'),
+    'access callback' => TRUE,
+    'file' => 'tm_twitter_signin.pages.inc',
+    'type' => MENU_CALLBACK,
+  );
+  
+  // Admin pages.
+  // Settings for twitter like API keys
+  $items['admin/config/services/tm_twitter'] = array(
+    'title' => 'Twitter',
+    'description' => 'Twitter settings.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('tm_twitter_signin_admin_form'),
+    'access arguments' => array('manage tm twitter settings'),
+    'file' => 'tm_twitter_signin.admin.pages.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+  
   return $items;
 }
 
 /**
- * Submit handler for Twitter signin.
+ * Implements hook_permission().
  */
-function tm_twitter_signin_oauth() {
-  //$key = variable_get('twitter_consumer_key', '');
-  //$secret = variable_get('twitter_consumer_secret', '');
-  $key = 'uTP1UEXW7VvyvdCiWPrSpkhG3';
-  $secret = 'yqaF4fxC7XWcAkVKrqQDJ7NKF26Bhz2hyDJvhFCO9Ui6YwKpBW';
-  $twitter = new Twitter($key, $secret);
-  $token = $twitter->get_request_token();
-
-  $_SESSION['twitter_oauth']['token'] = $token;
-  $_SESSION['twitter_oauth']['destination'] = $_SERVER['HTTP_REFERER'];
-  $_SESSION['twitter_oauth']['signin'] = TRUE;  
-  
-  $url = $twitter->get_authenticate_url($token);
-  drupal_goto($url);
+function tm_twitter_signin_permission() {
+  return array(
+    'manage tm twitter settings' => array(
+      'title' => t('Manage tm twitter settings'),
+    )
+  );
 }
 
 /**
- * Submit handler for Twitter signin.
+ * Implements hook_user_delete()
+ * Deletes twitter entries when the user is deleted.
  */
-function tm_twitter_signin_oauth_callback() {
-  //$key = variable_get('twitter_consumer_key', '');
-  //$secret = variable_get('twitter_consumer_secret', '');
-  $key = 'uTP1UEXW7VvyvdCiWPrSpkhG3';
-  $secret = 'yqaF4fxC7XWcAkVKrqQDJ7NKF26Bhz2hyDJvhFCO9Ui6YwKpBW';
+function tm_twitter_signin_user_delete($account) {
+  db_delete('tm_twitter_account')->condition('uid', $account->uid)->execute();
+}
+
+/**
+ * Implements hook_theme().
+ */
+function tm_twitter_signin_theme() {
+  return array(
+    'tm_twitter_link_signin' => array(
+      'variables' => array('url' => NULL),
+      'template' => 'tm_twitter_link_signin',
+      'path' => drupal_get_path('module', 'tm_twitter_signin') . '/templates',
+    )
+  );
+}
+
+function tm_twitter_signin_form_user_login_alter(&$form, &$form_state) {
+  $form['tm_twitter_signin'] = array(
+    '#markup' => theme('tm_twitter_link_signin', array('url' => url('tm_twitter/oauth')))
+  );
+}
+
+/**
+ * Creates a new twitter account in the database.
+ *
+ * @param $account_data
+ *   The account data as returned by twitter.
+ * @param $auth
+ *  An array with the oauth_token and oauth_token_secret.
+ */
+function tm_twitter_account_create($account_data, $auth) {
+  $result = db_insert('tm_twitter_account')
+    ->fields(array(
+      'twitter_uid' => $account_data['id'],
+      'screen_name' => $account_data['screen_name'],
+      'oauth_token' => $auth['oauth_token'],
+      'oauth_token_secret' => $auth['oauth_token_secret'],
+      'name' => $account_data['name'],
+      'description' => $account_data['description'],
+      'uid' => $account_data['drupal_uid'],
+    ))
+    ->execute();
   
-  if (isset($_SESSION['twitter_oauth'])) {
-    $twitter_oauth = $_SESSION['twitter_oauth'];
-    unset($_SESSION['twitter_oauth']);
-  }
-  else {
-    dsm('oauth_token', t('234234234'));
-    //form_set_error('oauth_token', 'Invalid Twitter OAuth request');
-  }
-  
-  if (isset($twitter_oauth['token'])) {
-    $token = $twitter_oauth['token'];
-    $response_oauth_token = $_GET['oauth_token'];
-    $response_oauth_verifier = $_GET['oauth_verifier'];
-    
-    if (!is_array($token) || !$key || !$secret) {
-      dsm('oauth_token', t('Invalid Twitter OAuth request'));
-      //form_set_error('oauth_token', t('Invalid Twitter OAuth request'));
-    }
-    if ($token['oauth_token'] != $response_oauth_token) {
-      dsm('oauth_token', t('asdadasd'));
-      //form_set_error('oauth_token', t('Invalid OAuth token.'));
-    }
-  }
-  else {
-    dsm('oauth_token', t('asdaadasdasddasd'));
-    //form_set_error('oauth_token', t('Invalid Twitter OAuth request'));
-  }
-  
-  
-  if ($twitter = new Twitter($key, $secret, $token['oauth_token'], $token['oauth_token_secret'])) {
-    //Collect oauth_verifier from url
-    if ($access_token = $twitter->get_access_token($response_oauth_verifier)) {
-    }
-    else {
-      //form_set_error('oauth_token', t('Invalid Twitter OAuth request'));
-      dsm('oauth_token', t('Invalid Twitter OAuth request'));
-    }
-  }
-  else {
-    //form_set_error('oauth_token', t('Invalid Twitter OAuth request'));
-    dsm('oauth_token', t('Invalid Twitter OAuth request2'));
-  }
-  
-  
-  
-  // Check if the user is in the database.
-  $uid = db_query("SELECT uid
-    FROM {tm_twitter_account}
-    WHERE twitter_uid = :twitter_uid",
-    array(':twitter_uid' => $access_token['user_id']))->fetchField();
-    
-  if ($uid) {
-    global $user;
-    $account = user_load($uid);
-    if ($account) {
-      $user = $account;
-      user_login_finalize();
-    }
-    
-    return 'The user was found in the database.';
-  }
-  else {
-    $twitter_account = $twitter->get('users/show', array('user_id' => $access_token['user_id']));
-    dsm($twitter_account);
-    return 'The user is not in the DB. Here is everything twitter gives us.';
-  }
-  
-  
-  $twitter = new Twitter($key, $secret, $access_token['oauth_token'], $access_token['oauth_token_secret']);
-  $twitter_account = $twitter->users_show('oBirdman');
-  
-  dsm($token);
-  dsm($access_token);
-  dsm($twitter_account);
-  return 'callback';
+  return $result;
 }

@@ -2,3 +2,5 @@ name = Travelmassive Twitter Signin
 description = Adds support for "Sign in with Twitter"
 core = 7.x
 version = "7.x-1.0"
+
+dependencies[] = logintoboggan

@@ -78,5 +78,12 @@ function tm_users_strongarm() {
   );
   $export['field_bundle_settings_user__user'] = $strongarm;
 
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_user_pattern';
+  $strongarm->value = '[user:friendly_url_user]';
+  $export['pathauto_user_pattern'] = $strongarm;
+
   return $export;
 }

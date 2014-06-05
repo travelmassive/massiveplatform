@@ -42,5 +42,7 @@ features[user_permission][] = delete revisions
 features[user_permission][] = revert revisions
 features[user_permission][] = view own unpublished content
 features[user_permission][] = view revisions
+features[variable][] = pathauto_node_pattern
+features[variable][] = pathauto_punctuation_slash
 features[variable][] = tm_base_copright
 project path = sites/all/modules/custom

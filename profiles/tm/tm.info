@@ -44,6 +44,7 @@ dependencies[] = variable_admin
 dependencies[] = views
 dependencies[] = views_ui
 dependencies[] = logintoboggan
+dependencies[] = tm_twitter_signin
 
 
 ; TM - development

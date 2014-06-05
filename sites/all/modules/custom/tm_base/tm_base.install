@@ -59,3 +59,9 @@ function tm_base_update_7007() {
 function tm_base_update_7008() {
   module_enable(array('logintoboggan'));
 }
+/**
+ * Enable the tm_twitter_signin module.
+ */
+function tm_base_update_7009() {
+  module_enable(array('tm_twitter_signin'));
+}

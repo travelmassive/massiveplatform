@@ -58,6 +58,17 @@ function tm_twitter_signin_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
   
+  // User settings form : used by submodules.
+  $items['user/%user/edit/tm_twitter'] = array(
+    'title' => 'Twitter',
+    'type' => MENU_LOCAL_TASK,
+    'page callback' => 'tm_twitter_signin_manage_account',
+    'file' => 'tm_twitter_signin.pages.inc',
+    'page arguments' => array(1),
+    'access callback' => 'tm_twitter_signin_manage_account_access_callback',
+    'access arguments' => array(1),
+  );
+  
   return $items;
 }
 
@@ -71,6 +82,16 @@ function tm_twitter_signin_permission() {
     )
   );
 }
+
+/**
+ * Custom access callback for user/%user/edit/tm_twitter
+ * Only the owner of the account can link/unlink the account.
+ */
+function tm_twitter_signin_manage_account_access_callback($account) {
+  global $user;
+  return $user->uid == $account->uid;
+}
+
 
 /**
  * Implements hook_user_delete()
@@ -121,4 +142,27 @@ function tm_twitter_account_create($account_data, $auth) {
     ->execute();
   
   return $result;
+}
+
+/**
+ * Load an account from the database using the uid
+ *
+ * @param $uid
+ *   The user id
+ * @return array
+ */
+function tm_twitter_account_load($uid) {
+  $result = db_query('SELECT * FROM {tm_twitter_account} WHERE uid = :uid', array(':uid' => $uid))->fetchAssoc();
+  return $result;
+}
+
+/**
+ * Delete an account from the database using the uid
+ *
+ * @param $uid
+ *   The user id
+ * @return bool
+ */
+function tm_twitter_account_delete($uid) {
+  return db_delete('tm_twitter_account')->condition('uid', $uid)->execute();
 }

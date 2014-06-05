@@ -226,3 +226,54 @@ function tm_twitter_signin_register_form_submit($form, &$form_state) {
     $form_state['redirect'] = $form_state_user['redirect'];
   }
 }
+
+/**
+ * Callback for user/%user/edit/tm_twitter
+ */
+function tm_twitter_signin_manage_account($account) {
+  $twitter_data = tm_twitter_account_load($account->uid);
+  $output = '';
+  
+  if ($twitter_data) {
+    $form = drupal_get_form('tm_twitter_signin_manage_account_unlink_form', $account, $twitter_data);
+    $output .= drupal_render($form);
+  }
+  else {
+    $output .= 'Your account is not linked with twitter. This functionality is on the list.';
+  }
+
+  return $output;
+}
+
+/**
+ * Unlink account form.
+ */
+function tm_twitter_signin_manage_account_unlink_form($form, &$form_state, $user_account, $twitter_account) {
+  $form['user_uid'] = array(
+    '#type' => 'hidden',
+    '#value' => $user_account->uid,
+  );
+  // Temp.
+  $form['description'] = array(
+    '#markup' => 'This account is linked with twitter user <em>@' . $twitter_account['screen_name'] . '</em><br/>
+    Explanation of what\'s happening goes here. Basically you\'re unlinking your account.'
+  );
+  
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Unlink account')
+  );
+  return $form;
+}
+
+/**
+ * Unlink account form submit handler.
+ */
+function tm_twitter_signin_manage_account_unlink_form_submit($form, &$form_state) {
+  if (tm_twitter_account_delete($form_state['values']['user_uid'])) {
+    drupal_set_message(t('Twitter account successfully unlinked.'));
+  }
+  else {
+    drupal_set_message(t('Error unlinking twitter account.'), 'error');
+  }
+}

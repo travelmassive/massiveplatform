@@ -6,7 +6,35 @@
  * 
  * @author Daniel da Silva (daniel.silva@flipside.org)
  */
- 
+
+ /**
+ * Implements hook_requirements()
+  * Directly from the twitter module.
+ */
+function tm_twitter_signin_requirements($phase) {
+  $requirements = array();
+  $t = get_t();
+  if ($phase == 'runtime') {
+    // Verify that the Twitter Application keys are set.
+    $requirements['tm_twitter_keys'] = array('title' => $t('Twitter Application keys'));
+    $consumer_key = variable_get('tm_twitter_consumer_key', NULL);
+    $consumer_secret = variable_get('tm_twitter_consumer_secret', NULL);
+    if (empty($consumer_key) || empty($consumer_secret)) {
+      $requirements['tm_twitter_keys']['value'] = $t('Missing');
+      $requirements['tm_twitter_keys']['description'] =
+        $t('In order to interact with Twitter, you need to create an application at ' .
+           '<a href="http://dev.twitter.com" target="_blank">http://dev.twitter.com</a> ' .
+           'and set the generated Application keys at the ' .
+           '<a href="/admin/config/services/twitter">Twitter settings page</a>');
+      $requirements['tm_twitter_keys']['severity'] = REQUIREMENT_ERROR;
+    }
+    else {
+      $requirements['tm_twitter_keys']['value'] = $t('Configured');
+      $requirements['tm_twitter_keys']['severity'] = REQUIREMENT_OK;
+    }
+  }
+  return $requirements;
+}
  
 /**
  * Implements hook_schema().
@@ -69,4 +97,22 @@ function tm_twitter_signin_schema() {
   );
 
   return $schema;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function twitter_uninstall() {
+  // Remove variables
+  variable_del('tm_twitter_import');
+  variable_del('tm_twitter_expire');
+  variable_del('tm_twitter_consumer_key');
+  variable_del('tm_twitter_consumer_secret');
+  variable_del('tm_twitter_host');
+  variable_del('tm_twitter_signin_button');
+  variable_del('tm_twitter_signin_register');
+  variable_del('tm_twitter_host');
+  variable_del('tm_twitter_api');
+  variable_del('tm_twitter_search');
+  variable_del('tm_twitter_tinyurl');
 }

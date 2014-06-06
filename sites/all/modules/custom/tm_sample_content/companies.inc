@@ -64,6 +64,8 @@ class TMCompanyMigration extends TMBaseMigration {
     $this->addFieldMapping('field_image:source_dir')
       ->defaultValue(drupal_get_path('module', 'tm_sample_content') . '/import/files');
 
+    // Friendly URL
+    $this->addFieldMapping('field_friendly_url','url');
   }
 
   public function prepareRow($row) {

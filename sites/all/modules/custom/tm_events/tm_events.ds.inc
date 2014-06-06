@@ -23,7 +23,7 @@ function tm_events_ds_field_settings_info() {
       'format' => 'default',
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_expert',
+          'func' => 'theme_ds_field_reset',
         ),
       ),
     ),
@@ -50,16 +50,6 @@ function tm_events_ds_field_settings_info() {
         ),
       ),
     ),
-    'tm_ds_date_avatar' => array(
-      'weight' => '12',
-      'label' => 'hidden',
-      'format' => 'default',
-      'formatter_settings' => array(
-        'ft' => array(
-          'func' => 'theme_ds_field_reset',
-        ),
-      ),
-    ),
     'tm_ds_event_seats_count' => array(
       'weight' => '9',
       'label' => 'hidden',
@@ -73,6 +63,16 @@ function tm_events_ds_field_settings_info() {
           'fi-at' => '',
           'fi-def-at' => FALSE,
           'fi-odd-even' => FALSE,
+        ),
+      ),
+    ),
+    'tm_ds_date_avatar' => array(
+      'weight' => '12',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
         ),
       ),
     ),
@@ -302,16 +302,18 @@ function tm_events_ds_layout_settings_info() {
       'header_media' => array(
         1 => 'field_image',
       ),
-      'second_column' => array(
+      'header_body' => array(
         7 => 'ds_flag_signup',
+        10 => 'tm_ds_date_avatar',
+        11 => 'title',
+        12 => 'group_action_menu_wrapper',
+        13 => 'group_action_menu',
+      ),
+      'second_column' => array(
         8 => 'tm_ds_event_seats_count',
       ),
       'header_extra' => array(
         9 => 'tm_ds_chapter_sticker',
-      ),
-      'header_body' => array(
-        10 => 'tm_ds_date_avatar',
-        11 => 'title',
       ),
     ),
     'fields' => array(
@@ -322,11 +324,13 @@ function tm_events_ds_layout_settings_info() {
       'field_location' => 'first_column',
       'field_rsvp_link' => 'first_column',
       'field_organizer' => 'first_column',
-      'ds_flag_signup' => 'second_column',
+      'ds_flag_signup' => 'header_body',
       'tm_ds_event_seats_count' => 'second_column',
       'tm_ds_chapter_sticker' => 'header_extra',
       'tm_ds_date_avatar' => 'header_body',
       'title' => 'header_body',
+      'group_action_menu_wrapper' => 'header_body',
+      'group_action_menu' => 'header_body',
     ),
     'classes' => array(),
     'wrappers' => array(

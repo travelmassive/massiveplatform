@@ -158,6 +158,8 @@ function tm_organizations_ds_layout_settings_info() {
         1 => 'field_avatar',
         2 => 'title',
         3 => 'body',
+        5 => 'group_action_menu',
+        6 => 'group_action_menu_wrapper',
       ),
       'first_column' => array(
         4 => 'field_owner',
@@ -169,6 +171,8 @@ function tm_organizations_ds_layout_settings_info() {
       'title' => 'header_body',
       'body' => 'header_body',
       'field_owner' => 'first_column',
+      'group_action_menu' => 'header_body',
+      'group_action_menu_wrapper' => 'header_body',
     ),
     'classes' => array(),
     'wrappers' => array(
@@ -235,18 +239,22 @@ function tm_organizations_ds_layout_settings_info() {
     'regions' => array(
       'header_body' => array(
         0 => 'tm_ds_date_avatar',
-        2 => 'body',
-        3 => 'title',
+        1 => 'body',
+        2 => 'title',
+        4 => 'group_action_menu_wrapper',
+        5 => 'group_action_menu',
       ),
       'header_media' => array(
-        1 => 'field_image',
+        3 => 'field_image',
       ),
     ),
     'fields' => array(
       'tm_ds_date_avatar' => 'header_body',
-      'field_image' => 'header_media',
       'body' => 'header_body',
       'title' => 'header_body',
+      'field_image' => 'header_media',
+      'group_action_menu_wrapper' => 'header_body',
+      'group_action_menu' => 'header_body',
     ),
     'classes' => array(),
     'wrappers' => array(

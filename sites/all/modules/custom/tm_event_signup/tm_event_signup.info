@@ -14,7 +14,6 @@ dependencies[] = options
 dependencies[] = strongarm
 dependencies[] = tm_base
 dependencies[] = views
-scripts[] = js/tm_event_signup_signup_flag.js
 features[context][] = signup_event_page
 features[ctools][] = context:context:3
 features[ctools][] = strongarm:strongarm:1

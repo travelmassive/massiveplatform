@@ -209,6 +209,8 @@ function tm_chapters_ds_layout_settings_info() {
       'header_body' => array(
         1 => 'chapter_avatar',
         2 => 'title',
+        5 => 'group_action_menu',
+        6 => 'group_action_menu_wrapper',
       ),
       'first_column' => array(
         3 => 'body',
@@ -223,6 +225,8 @@ function tm_chapters_ds_layout_settings_info() {
       'title' => 'header_body',
       'body' => 'first_column',
       'field_chapter_leaders' => 'second_column',
+      'group_action_menu' => 'header_body',
+      'group_action_menu_wrapper' => 'header_body',
     ),
     'classes' => array(),
     'wrappers' => array(

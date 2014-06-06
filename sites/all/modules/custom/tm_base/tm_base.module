@@ -20,3 +20,68 @@ function tm_base_variable_info($options) {
   );
   return $variable;
 }
+/**
+* Implements hook_token_info().
+*/
+function tm_base_token_info() {
+  $info['tokens']['node']['friendly_url_org'] = array(
+    'name' => t('Friendly URL'),
+    'description' => t('This will return a properly formatted friendly url for an organization'),
+  );
+  $info['tokens']['user']['friendly_url_user'] = array(
+    'name' => t('Friendly URL'),
+    'description' => t('This will return a properly formatted friendly url for a user'),
+  );
+  return $info;
+}
+/**
+* Implements hook_tokens(). This hook will operate the token and replace it with it's value.
+*/
+function tm_base_tokens($type, $tokens, array $data = array(), array $options = array()) {
+  $replacements = array();
+
+  if ($type == 'node') {
+    $node = $data['node'];
+    // Loop through each of the available tokens.
+    foreach ($tokens as $name => $original) {
+      // Find the desired token by name
+      switch ($name) {
+        // Token that can be used to build the friendly url for organizations. If the field 
+        // is not set, it defaults to the title.
+        case 'friendly_url_org':
+          $new = '';
+          if ($node->type == 'organization') {
+            if (isset($node->field_friendly_url['und'][0]['value']) && $node->field_friendly_url['und'][0]['value']) {
+              $new = $node->field_friendly_url['und'][0]['value'];
+            } else {
+              $new = 'companies/' . $node->title;
+            }
+          }
+          $replacements[$original] = $new;
+          break;
+      }
+    }
+  }
+  if ($type == 'user') {
+    $user = $data['user'];
+    dpm($data);
+    // Loop through each of the available tokens.
+    foreach ($tokens as $name => $original) {
+      // Find the desired token by name
+      switch ($name) {
+        // Token that can be used to build the friendly url for users. If the field 
+        // is not set, it defaults to the title.
+        case 'friendly_url_user':
+          $new = '';
+          if (isset($user->field_friendly_url['und'][0]['value']) && $user->field_friendly_url['und'][0]['value']) {
+            $new = $user->field_friendly_url['und'][0]['value'];
+          } else {
+            $new = 'community/' . $user->name;
+          }
+          $replacements[$original] = $new;
+          break;
+      }
+    }
+  }
+  return $replacements;
+}

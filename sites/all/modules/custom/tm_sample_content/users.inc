@@ -59,6 +59,9 @@ class TMUserMigration extends TMBaseMigration {
 
     // Status
     $this->addFieldMapping('status','status');
+
+    // Friendly URL
+    $this->addFieldMapping('field_friendly_url','url');
   }
 
   public function prepareRow($row) {

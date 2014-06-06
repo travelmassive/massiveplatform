@@ -49,5 +49,6 @@ features[variable][] = menu_parent_chapter
 features[variable][] = node_options_chapter
 features[variable][] = node_preview_chapter
 features[variable][] = node_submitted_chapter
+features[variable][] = pathauto_node_chapter_pattern
 features[views_view][] = chapters
 project path = sites/all/modules/custom

@@ -83,7 +83,8 @@ function tm_events_field_group_info() {
     'label' => 'Action menu',
     'weight' => '18',
     'children' => array(
-      0 => 'ds_flag_signup',
+      0 => 'field_rsvp_link',
+      1 => 'ds_flag_signup',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(
@@ -112,7 +113,9 @@ function tm_events_field_group_info() {
   $field_group->data = array(
     'label' => 'Action menu',
     'weight' => '5',
-    'children' => array(),
+    'children' => array(
+      0 => 'field_rsvp_link',
+    ),
     'format_type' => 'html-element',
     'format_settings' => array(
       'label' => 'Action menu',

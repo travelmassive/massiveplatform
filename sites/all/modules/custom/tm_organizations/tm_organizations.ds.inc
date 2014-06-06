@@ -228,51 +228,5 @@ function tm_organizations_ds_layout_settings_info() {
   );
   $export['node|organization|grid'] = $ds_layout;
 
-  $ds_layout = new stdClass();
-  $ds_layout->api_version = 1;
-  $ds_layout->id = 'node|partner_event|full';
-  $ds_layout->entity_type = 'node';
-  $ds_layout->bundle = 'partner_event';
-  $ds_layout->view_mode = 'full';
-  $ds_layout->layout = 'trilithon';
-  $ds_layout->settings = array(
-    'regions' => array(
-      'header_body' => array(
-        0 => 'tm_ds_date_avatar',
-        1 => 'body',
-        2 => 'title',
-        4 => 'group_action_menu_wrapper',
-        5 => 'group_action_menu',
-      ),
-      'header_media' => array(
-        3 => 'field_image',
-      ),
-    ),
-    'fields' => array(
-      'tm_ds_date_avatar' => 'header_body',
-      'body' => 'header_body',
-      'title' => 'header_body',
-      'field_image' => 'header_media',
-      'group_action_menu_wrapper' => 'header_body',
-      'group_action_menu' => 'header_body',
-    ),
-    'classes' => array(),
-    'wrappers' => array(
-      'header_media' => 'div',
-      'header_body' => 'div',
-      'header_extra' => 'div',
-      'first_column' => 'div',
-      'second_column' => 'div',
-    ),
-    'layout_wrapper' => 'div',
-    'layout_attributes' => '',
-    'layout_attributes_merge' => 1,
-    'layout_link_attribute' => '',
-    'layout_link_custom' => '',
-    'hide_page_title' => '1',
-    'page_option_title' => '',
-  );
-  $export['node|partner_event|full'] = $ds_layout;
-
   return $export;
 }

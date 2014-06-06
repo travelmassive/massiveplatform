@@ -71,6 +71,18 @@ class TMEventMigration extends TMBaseMigration {
 
     // Signup limit
     $this->addFieldMapping('field_signup_limit', 'limit');
+
+    // External RSVP
+    $this->addFieldMapping('field_external_rsvp', 'external');
+    
+    // RSVP link
+    $this->addFieldMapping('field_rsvp_link', 'rsvp_link');
+  }
+
+  public function prepareRow($row) {
+    if (empty($row->limit)) {
+      $row->limit = array();
+    }
   }
 
   public function complete($entity, $row) {

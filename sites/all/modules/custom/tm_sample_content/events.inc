@@ -80,6 +80,7 @@ class TMEventMigration extends TMBaseMigration {
   }
 
   public function prepareRow($row) {
+    // Make sure that any 'empty' signup limits, are imported as null and not empty strings.
     if (empty($row->limit)) {
       $row->limit = array();
     }

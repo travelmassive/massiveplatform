@@ -83,7 +83,9 @@ function tm_twitter_signin_oauth_callback() {
     FROM {tm_twitter_account}
     WHERE twitter_uid = :twitter_uid",
     array(':twitter_uid' => $user_token['user_id']))->fetchField();
-    
+
+  global $user;
+
   if ($uid) {
     // The user is already registered. Login the user.
     $account = user_load($uid);
@@ -94,7 +96,6 @@ function tm_twitter_signin_oauth_callback() {
         drupal_goto('user');
       }
       
-      global $user;
       $user = $account;
       user_login_finalize();
       // TODO: Better redirection.
@@ -107,14 +108,41 @@ function tm_twitter_signin_oauth_callback() {
     }
   }
   else {
-    // The user needs to be registered.
+    // A twitter account was not found.
     // Get all the data from twitter.
     $twitter_account = $twitter->get('users/show', array('user_id' => $user_token['user_id']));
-    $_SESSION['twitter_account']['account'] = $twitter_account;
-    $_SESSION['twitter_account']['token'] = $user_token;
     
-    // Redirect to finish registration.
-    drupal_goto('tm_twitter/register');
+    if ($user->uid) {
+      // There is a logged user.
+      // He's trying to link his account.
+      
+      // Be sure that this user doesn't have a linked account already.
+      $twitter_uid = db_query("SELECT twitter_uid
+        FROM {tm_twitter_account}
+        WHERE uid = :uid",
+        array(':uid' => $user->uid))->fetchField();
+      
+      if ($twitter_uid) {
+        drupal_set_message(t('There\'s already a linked twitter account'), 'error');
+      }
+      else {
+        $twitter_account['drupal_uid'] = $user->uid;
+        tm_twitter_account_create($twitter_account, $user_token);
+        drupal_set_message(t('Account successfully linked.'));
+      }
+      
+      drupal_goto('user/' . $user->uid . '/edit/tm_twitter');
+      
+    }
+    else {
+      // No user logged in.
+      // The user needs to be registered.
+      $_SESSION['twitter_account']['account'] = $twitter_account;
+      $_SESSION['twitter_account']['token'] = $user_token;
+      
+      // Redirect to finish registration.
+      drupal_goto('tm_twitter/register');
+    }
   }
 }
 
@@ -239,7 +267,8 @@ function tm_twitter_signin_manage_account($account) {
     $output .= drupal_render($form);
   }
   else {
-    $output .= 'Your account is not linked with twitter. This functionality is on the list.';
+    $output .= 'Your account is not linked with twitter.</br>';
+    $output .= 'Click here to ' . l('link your account', 'tm_twitter/oauth');
   }
 
   return $output;

@@ -164,6 +164,8 @@ function tm_users_ds_layout_settings_info() {
       'header_body' => array(
         1 => 'field_avatar',
         2 => 'name',
+        4 => 'group_action_menu_wrapper',
+        5 => 'group_action_menu',
       ),
       'header_extra' => array(
         3 => 'tm_ds_chapter_sticker',
@@ -174,6 +176,8 @@ function tm_users_ds_layout_settings_info() {
       'field_avatar' => 'header_body',
       'name' => 'header_body',
       'tm_ds_chapter_sticker' => 'header_extra',
+      'group_action_menu_wrapper' => 'header_body',
+      'group_action_menu' => 'header_body',
     ),
     'classes' => array(),
     'wrappers' => array(

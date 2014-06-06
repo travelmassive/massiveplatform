@@ -30,6 +30,7 @@ dependencies[] = ds_ui
 dependencies[] = email
 dependencies[] = entity
 dependencies[] = entityreference
+dependencies[] = field_group
 dependencies[] = field_validation
 dependencies[] = field_validation_ui
 dependencies[] = file

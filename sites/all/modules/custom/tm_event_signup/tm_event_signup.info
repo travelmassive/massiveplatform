@@ -14,10 +14,6 @@ dependencies[] = options
 dependencies[] = strongarm
 dependencies[] = tm_base
 dependencies[] = views
-scripts[] = js/tm_event_signup_signup_flag.js
-
-files[] = tests/tm_event_signup.test
-
 features[context][] = signup_event_page
 features[ctools][] = context:context:3
 features[ctools][] = strongarm:strongarm:1
@@ -28,5 +24,8 @@ features[field_base][] = field_signup_limit
 features[field_instance][] = node-event-field_external_rsvp
 features[field_instance][] = node-event-field_signup_limit
 features[flag][] = signup
+features[user_permission][] = flag signup
+features[user_permission][] = unflag signup
 features[views_view][] = attendees
+files[] = tests/tm_event_signup.test
 project path = sites/all/modules/custom

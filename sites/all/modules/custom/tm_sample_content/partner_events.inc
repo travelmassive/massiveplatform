@@ -45,9 +45,11 @@ class TMPartnerEventMigration extends TMBaseMigration {
 
     // Date field
     $this->addFieldMapping('field_event_date', 'date');
+    
+    // RSVP link
+    $this->addFieldMapping('field_rsvp_link', 'rsvp_link');
   }
 
   public function prepareRow($row) {
   }
-
 }

@@ -21,6 +21,11 @@ function tm_chapters_ds_field_settings_info() {
       'weight' => '0',
       'label' => 'hidden',
       'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
     ),
     'chapter_avatar' => array(
       'weight' => '1',

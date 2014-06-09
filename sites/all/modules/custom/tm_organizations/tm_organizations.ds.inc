@@ -17,6 +17,11 @@ function tm_organizations_ds_field_settings_info() {
   $ds_fieldsetting->bundle = 'organization';
   $ds_fieldsetting->view_mode = 'full';
   $ds_fieldsetting->settings = array(
+    'ds_flag_follow_organizations' => array(
+      'weight' => '0',
+      'label' => 'hidden',
+      'format' => 'default',
+    ),
     'title' => array(
       'weight' => '2',
       'label' => 'hidden',
@@ -155,18 +160,20 @@ function tm_organizations_ds_layout_settings_info() {
         0 => 'field_image',
       ),
       'header_body' => array(
-        1 => 'field_avatar',
-        2 => 'title',
-        3 => 'body',
-        5 => 'group_action_menu',
-        6 => 'group_action_menu_wrapper',
+        1 => 'ds_flag_follow_organizations',
+        2 => 'field_avatar',
+        3 => 'title',
+        4 => 'body',
+        6 => 'group_action_menu',
+        7 => 'group_action_menu_wrapper',
       ),
       'first_column' => array(
-        4 => 'field_owner',
+        5 => 'field_owner',
       ),
     ),
     'fields' => array(
       'field_image' => 'header_media',
+      'ds_flag_follow_organizations' => 'header_body',
       'field_avatar' => 'header_body',
       'title' => 'header_body',
       'body' => 'header_body',

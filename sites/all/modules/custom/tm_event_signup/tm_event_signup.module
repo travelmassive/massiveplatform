@@ -62,8 +62,10 @@ function _tm_event_seats_count($field, $title = NULL) {
  * signup imit was reached.
  */
 function tm_event_signup_flag_validate($action, $flag, $entity_id, $account, $skip_permission_check, $flagging) {
-  // We're only operating on the "signup" flag, and users may always unflag.
-  if ($flag->name == 'signup' && $action == 'flag') {
+  $flagged_entity = node_load($entity_id);
+
+  // Only validate the 'signup' flag whenever an 'event' is flagged. Users may always unflag.
+  if ($flag->name == 'signup' && $action == 'flag' && $flagged_entity->type == 'event') {
     $result = _tm_event_signup_can_join($entity_id);
     if (!$result['allowed']) {
       return(array('access-denied' => t('Signup limit reached.')));
@@ -113,9 +115,10 @@ function tm_event_signup_preprocess_flag(&$variables) {
   $flag = $variables['flag'];
   $status = $variables['status'];
   $event_id = $variables['entity_id'];
-  
-  // We're only operating on the "signup" flag, and users may always unflag.
-  if ($flag->name == 'signup' && $status == 'unflagged') {
+  $flagged_entity = node_load($event_id);
+
+  // Only validate the 'signup' flag whenever an 'event' is flagged. Users may always unflag.
+  if ($flag->name == 'signup' && $status == 'unflagged' && $flagged_entity->type == 'event') {
     $result = _tm_event_signup_can_join($event_id);
     if (!$result['allowed']) {
       $variables['flag_classes_array'][] = 'disabled';
@@ -139,7 +142,7 @@ function _tm_event_signup_can_join($nid) {
 
   $limit = 0;
   $event = node_load($nid);
-  
+
   if (!$event || $event->type != 'event') {
     throw new Exception("Invalid event node. Nid: " . $nid);
   }

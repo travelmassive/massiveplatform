@@ -63,6 +63,7 @@ dependencies[] = tm_fields
 dependencies[] = tm_chapters
 dependencies[] = tm_events
 dependencies[] = tm_event_signup
+dependencies[] = tm_flags
 dependencies[] = tm_organizations
 dependencies[] = tm_sample_content
 dependencies[] = tm_theme

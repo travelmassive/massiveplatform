@@ -1,0 +1,12 @@
+<?php
+/**
+ * @file
+ * Code for the TM Flags feature.
+ */
+
+include_once 'tm_flags.features.inc';
+/**
+ * @file
+ * Code for the TM Flags feature.
+ * 
+ */

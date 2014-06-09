@@ -84,3 +84,69 @@ function tm_base_tokens($type, $tokens, array $data = array(), array $options = 
   }
   return $replacements;
 }
+/**
+ * Implements hook_field_group_formatter_info().
+ */
+function tm_base_field_group_formatter_info() {
+  return array(
+    'display' => array(
+      'dl' => array(
+        'label' => t('Definition List'),
+        'description' => t('This fieldgroup renders the inner content in a definition list, inside a section with header.'),
+        'format_types' => array('open', 'collapsed'),
+        'default_formatter' => 'open',
+      ),
+    ),
+  );
+}
+/**
+ * Implements hook_field_group_pre_render().
+ *
+ * @param Array $elements by address.
+ * @param Object $group The Field group info.
+ */
+function tm_base_field_group_pre_render(&$element, $group, &$form) {
+  switch ($group->format_type) {
+    // Normal or collapsible div.
+    case 'dl':
+      $add = array(
+        '#type' => 'markup',
+        '#weight' => $group->weight,
+      );
+    
+      $add['#prefix'] = '<section class="contained contained-block">
+        <header class="contained-head">
+          <h1 class="prime-title">' . check_plain(t($group->label)) . '</h1>
+        </header>
+        <div class="contained-body">
+          <dl class="details-list">';
+      $add['#suffix'] = '</dl></div></section>';
+
+      $element += $add;
+      
+      break;
+  }
+}
+/**
+ * Implements hook_ds_field_theme_functions_info().
+ */
+function tm_base_ds_field_theme_functions_info() {
+  return array('theme_ds_field_dl' => t('Definition list item'));
+}
+/**
+* Field theming function.
+*/
+function theme_ds_field_dl($variables) {
+  $output = '';
+
+  // @Todo Add custom class to form
+  // $config = $variables['ds-config'];
+
+  // Since a dd can't exist without a dt, we just print the title without checking if the label's hidden.
+  $output .= '<dt>' . $variables['label'] . '</dt>';
+  foreach ($variables['items'] as $delta => $item) {
+    $output .= '<dd class="' . $variables['field_name_css'] . '"">' . drupal_render($item) . '</dd>';
+  }
+
+  return $output;
+}

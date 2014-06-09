@@ -64,7 +64,6 @@ function tm_base_tokens($type, $tokens, array $data = array(), array $options = 
   }
   if ($type == 'user') {
     $user = $data['user'];
-    dpm($data);
     // Loop through each of the available tokens.
     foreach ($tokens as $name => $original) {
       // Find the desired token by name

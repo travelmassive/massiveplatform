@@ -1,7 +1,17 @@
 name = Travelmassive Twitter Signin
 description = Adds support for "Sign in with Twitter"
 core = 7.x
-version = "7.x-1.0"
+version = "7.x-1.0-dev"
 
 dependencies[] = logintoboggan
 dependencies[] = oauth_common
+dependencies[] = ctools
+dependencies[] = features
+dependencies[] = strongarm
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:2
+features[user_permission][] = manage tm twitter settings
+features[variable][] = tm_twitter_api
+features[variable][] = tm_twitter_host
+features[variable][] = tm_twitter_search
+features[variable][] = tm_twitter_tinyurl

@@ -6,6 +6,7 @@
  * 
  * @author Daniel da Silva (daniel.silva@flipside.org)
  */
+include_once 'tm_twitter_signin.features.inc';
 
 define ('TWITTER_HOST',         'http://twitter.com');
 define ('TWITTER_API',          'https://api.twitter.com');

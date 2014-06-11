@@ -50,7 +50,7 @@ function tm_users_field_default_field_instances() {
     'required' => 0,
     'settings' => array(
       'alt_field' => 0,
-      'default_image' => 0,
+      'default_image' => 25,
       'file_directory' => 'avatar/users',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',

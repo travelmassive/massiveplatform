@@ -60,8 +60,8 @@ function tm_base_update_7008() {
   module_enable(array('logintoboggan'));
 }
 /**
- * Enable the tm_twitter_signin module.
+ * Enable the tm_twitter_signin and module_filter module.
  */
 function tm_base_update_7009() {
-  module_enable(array('tm_twitter_signin'));
+  module_enable(array('tm_twitter_signin', 'module_filter'));
 }

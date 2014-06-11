@@ -5,6 +5,22 @@
  */
 
 /**
+ * Implements hook_ctools_plugin_api().
+ */
+function tm_flags_ctools_plugin_api($module = NULL, $api = NULL) {
+  if ($module == "ds" && $api == "ds") {
+    return array("version" => "1");
+  }
+}
+
+/**
+ * Implements hook_views_api().
+ */
+function tm_flags_views_api($module = NULL, $api = NULL) {
+  return array("api" => "3.0");
+}
+
+/**
  * Implements hook_flag_default_flags().
  */
 function tm_flags_flag_default_flags() {

@@ -48,17 +48,21 @@ button {
       @extend .icon-cog;
     }
   }
-  &.follow {
+  &.follow,
+  &.external {
     width: 9rem;
     &:before {
       margin-left: -1rem;
-      @extend .icon-s-add;
     }
   }
-  &.follow.flagged {
-    &:before {
-      @extend .icon-s-tick;
-    }
+  &.follow:before {
+    @extend .icon-s-add;
+  }
+  &.external:before {
+    @extend .icon-s-new-window;
+  }
+  &.follow.flagged:before {
+    @extend .icon-s-tick;
   }
   &.hide-txt {
     &:before {

@@ -73,6 +73,12 @@ function tm_users_strongarm() {
             'visible' => TRUE,
           ),
         ),
+        'flag_follow_members' => array(
+          'default' => array(
+            'weight' => '10',
+            'visible' => TRUE,
+          ),
+        ),
       ),
     ),
   );

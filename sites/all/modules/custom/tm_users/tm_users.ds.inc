@@ -166,6 +166,7 @@ function tm_users_ds_layout_settings_info() {
         2 => 'name',
         4 => 'group_action_menu_wrapper',
         5 => 'group_action_menu',
+        6 => 'flag_follow_members',
       ),
       'header_extra' => array(
         3 => 'tm_ds_chapter_sticker',
@@ -178,6 +179,7 @@ function tm_users_ds_layout_settings_info() {
       'tm_ds_chapter_sticker' => 'header_extra',
       'group_action_menu_wrapper' => 'header_body',
       'group_action_menu' => 'header_body',
+      'flag_follow_members' => 'header_body',
     ),
     'classes' => array(),
     'wrappers' => array(

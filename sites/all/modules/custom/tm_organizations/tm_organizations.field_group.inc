@@ -52,7 +52,9 @@ function tm_organizations_field_group_info() {
   $field_group->data = array(
     'label' => 'Action menu',
     'weight' => '15',
-    'children' => array(),
+    'children' => array(
+      0 => 'ds_flag_follow_organizations',
+    ),
     'format_type' => 'html-element',
     'format_settings' => array(
       'label' => 'Action menu',

@@ -17,6 +17,16 @@ function tm_chapters_ds_field_settings_info() {
   $ds_fieldsetting->bundle = 'chapter';
   $ds_fieldsetting->view_mode = 'full';
   $ds_fieldsetting->settings = array(
+    'ds_flag_signup' => array(
+      'weight' => '0',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
     'chapter_avatar' => array(
       'weight' => '1',
       'label' => 'hidden',
@@ -207,26 +217,28 @@ function tm_chapters_ds_layout_settings_info() {
         0 => 'field_image',
       ),
       'header_body' => array(
-        1 => 'chapter_avatar',
-        2 => 'title',
-        5 => 'group_action_menu',
+        1 => 'ds_flag_signup',
+        2 => 'chapter_avatar',
+        3 => 'title',
         6 => 'group_action_menu_wrapper',
+        7 => 'group_action_menu',
       ),
       'first_column' => array(
-        3 => 'body',
+        4 => 'body',
       ),
       'second_column' => array(
-        4 => 'field_chapter_leaders',
+        5 => 'field_chapter_leaders',
       ),
     ),
     'fields' => array(
       'field_image' => 'header_media',
+      'ds_flag_signup' => 'header_body',
       'chapter_avatar' => 'header_body',
       'title' => 'header_body',
       'body' => 'first_column',
       'field_chapter_leaders' => 'second_column',
-      'group_action_menu' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
+      'group_action_menu' => 'header_body',
     ),
     'classes' => array(),
     'wrappers' => array(

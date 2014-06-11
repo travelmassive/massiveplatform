@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * tm_event_signup.features.user_permission.inc
+ * tm_flags.features.user_permission.inc
  */
 
 /**
  * Implements hook_user_default_permissions().
  */
-function tm_event_signup_user_default_permissions() {
+function tm_flags_user_default_permissions() {
   $permissions = array();
 
   // Exported permission: 'flag signup'.

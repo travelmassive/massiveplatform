@@ -284,8 +284,7 @@ function tm_twitter_signin_manage_account_unlink_form($form, &$form_state, $user
   );
   // Temp.
   $form['description'] = array(
-    '#markup' => 'This account is linked with twitter user <em>@' . $twitter_account['screen_name'] . '</em><br/>
-    Explanation of what\'s happening goes here. Basically you\'re unlinking your account.'
+    '#markup' => t('This account is linked with twitter user %uname<br/>', array('%uname' => '@' . $twitter_account['screen_name']))
   );
   
   $form['submit'] = array(

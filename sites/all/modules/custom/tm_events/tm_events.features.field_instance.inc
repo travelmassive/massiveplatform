@@ -515,7 +515,7 @@ function tm_events_field_default_field_instances() {
     'required' => 0,
     'settings' => array(
       'attributes' => array(
-        'class' => 'follow bttn bttn-secondary bttn-m',
+        'class' => 'external bttn bttn-secondary bttn-m',
         'configurable_title' => 0,
         'rel' => 'nofollow',
         'target' => '_blank',
@@ -788,7 +788,7 @@ function tm_events_field_default_field_instances() {
     'required' => 0,
     'settings' => array(
       'attributes' => array(
-        'class' => 'follow bttn bttn-secondary bttn-m',
+        'class' => 'external bttn bttn-secondary bttn-m',
         'configurable_title' => 0,
         'rel' => 'nofollow',
         'target' => '_blank',

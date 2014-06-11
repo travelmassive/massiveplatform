@@ -82,7 +82,7 @@ function tm_users_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 5,
+        'weight' => 7,
       ),
       'grid' => array(
         'label' => 'above',
@@ -129,7 +129,7 @@ function tm_users_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 4,
+        'weight' => 6,
       ),
       'grid' => array(
         'label' => 'above',

@@ -28,7 +28,7 @@ function tm_events_ds_field_settings_info() {
       ),
     ),
     'title' => array(
-      'weight' => '17',
+      'weight' => '2',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -41,7 +41,7 @@ function tm_events_ds_field_settings_info() {
       ),
     ),
     'tm_ds_chapter_sticker' => array(
-      'weight' => '11',
+      'weight' => '5',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -51,15 +51,15 @@ function tm_events_ds_field_settings_info() {
       ),
     ),
     'tm_ds_event_seats_count' => array(
-      'weight' => '9',
+      'weight' => '3',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
         'ft' => array(
           'func' => 'theme_ds_field_expert',
           'fi' => TRUE,
-          'fi-el' => 'div',
-          'fi-cl' => 'js-tm-seats-count',
+          'fi-el' => 'p',
+          'fi-cl' => 'js-tm-seats-count meta',
           'fi-at' => '',
           'fi-def-at' => FALSE,
           'fi-odd-even' => FALSE,
@@ -67,12 +67,26 @@ function tm_events_ds_field_settings_info() {
       ),
     ),
     'tm_ds_date_avatar' => array(
-      'weight' => '12',
+      'weight' => '1',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
         'ft' => array(
           'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'body' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_dl',
+        ),
+      ),
+    ),
+    'field_map_link' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_dl',
         ),
       ),
     ),
@@ -86,6 +100,13 @@ function tm_events_ds_field_settings_info() {
           'ow-def-cl' => FALSE,
           'ow-at' => '',
           'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'field_location' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_dl',
         ),
       ),
     ),
@@ -182,7 +203,7 @@ function tm_events_ds_field_settings_info() {
   $ds_fieldsetting->view_mode = 'full';
   $ds_fieldsetting->settings = array(
     'title' => array(
-      'weight' => '0',
+      'weight' => '2',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -195,7 +216,7 @@ function tm_events_ds_field_settings_info() {
       ),
     ),
     'tm_ds_date_avatar' => array(
-      'weight' => '0',
+      'weight' => '1',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -207,7 +228,14 @@ function tm_events_ds_field_settings_info() {
     'body' => array(
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_reset',
+          'func' => 'theme_ds_field_dl',
+        ),
+      ),
+    ),
+    'field_event_date' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_dl',
         ),
       ),
     ),
@@ -248,7 +276,7 @@ function tm_events_ds_field_settings_info() {
   $ds_fieldsetting->view_mode = 'grid';
   $ds_fieldsetting->settings = array(
     'title' => array(
-      'weight' => '3',
+      'weight' => '2',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -267,19 +295,6 @@ function tm_events_ds_field_settings_info() {
       'formatter_settings' => array(
         'ft' => array(
           'func' => 'theme_ds_field_reset',
-        ),
-      ),
-    ),
-    'body' => array(
-      'formatter_settings' => array(
-        'ft' => array(
-          'func' => 'theme_ds_field_expert',
-          'ow' => TRUE,
-          'ow-el' => 'p',
-          'ow-cl' => 'meta',
-          'ow-def-cl' => FALSE,
-          'ow-at' => '',
-          'ow-def-at' => FALSE,
         ),
       ),
     ),
@@ -317,46 +332,42 @@ function tm_events_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
-      'first_column' => array(
-        0 => 'field_signup_limit',
-        2 => 'body',
-        3 => 'field_map_link',
-        4 => 'field_location',
-        6 => 'field_organizer',
-      ),
       'header_media' => array(
-        1 => 'field_image',
+        0 => 'field_image',
       ),
       'header_body' => array(
-        5 => 'field_rsvp_link',
-        7 => 'ds_flag_signup',
-        10 => 'tm_ds_date_avatar',
-        11 => 'title',
+        1 => 'tm_ds_date_avatar',
+        2 => 'title',
+        3 => 'tm_ds_event_seats_count',
+        4 => 'group_action_menu_wrapper',
+        8 => 'field_rsvp_link',
+        10 => 'ds_flag_signup',
         12 => 'group_action_menu',
-        13 => 'group_action_menu_wrapper',
       ),
-      'second_column' => array(
-        8 => 'tm_ds_event_seats_count',
+      'first_column' => array(
+        5 => 'field_location',
+        7 => 'group_details',
+        9 => 'body',
+        11 => 'field_map_link',
       ),
       'header_extra' => array(
-        9 => 'tm_ds_chapter_sticker',
+        6 => 'tm_ds_chapter_sticker',
       ),
     ),
     'fields' => array(
-      'field_signup_limit' => 'first_column',
       'field_image' => 'header_media',
-      'body' => 'first_column',
-      'field_map_link' => 'first_column',
-      'field_location' => 'first_column',
-      'field_rsvp_link' => 'header_body',
-      'field_organizer' => 'first_column',
-      'ds_flag_signup' => 'header_body',
-      'tm_ds_event_seats_count' => 'second_column',
-      'tm_ds_chapter_sticker' => 'header_extra',
       'tm_ds_date_avatar' => 'header_body',
       'title' => 'header_body',
-      'group_action_menu' => 'header_body',
+      'tm_ds_event_seats_count' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
+      'field_location' => 'first_column',
+      'tm_ds_chapter_sticker' => 'header_extra',
+      'group_details' => 'first_column',
+      'field_rsvp_link' => 'header_body',
+      'body' => 'first_column',
+      'ds_flag_signup' => 'header_body',
+      'field_map_link' => 'first_column',
+      'group_action_menu' => 'header_body',
     ),
     'classes' => array(),
     'wrappers' => array(
@@ -427,25 +438,31 @@ function tm_events_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
-      'header_body' => array(
-        0 => 'body',
-        1 => 'tm_ds_date_avatar',
-        2 => 'field_rsvp_link',
-        4 => 'title',
-        5 => 'group_action_menu_wrapper',
-        6 => 'group_action_menu',
-      ),
       'header_media' => array(
-        3 => 'field_image',
+        0 => 'field_image',
+      ),
+      'header_body' => array(
+        1 => 'field_rsvp_link',
+        2 => 'tm_ds_date_avatar',
+        3 => 'title',
+        5 => 'group_action_menu_wrapper',
+        8 => 'group_action_menu',
+      ),
+      'first_column' => array(
+        4 => 'body',
+        6 => 'field_event_date',
+        7 => 'group_details',
       ),
     ),
     'fields' => array(
-      'body' => 'header_body',
-      'tm_ds_date_avatar' => 'header_body',
-      'field_rsvp_link' => 'header_body',
       'field_image' => 'header_media',
+      'field_rsvp_link' => 'header_body',
+      'tm_ds_date_avatar' => 'header_body',
       'title' => 'header_body',
+      'body' => 'first_column',
       'group_action_menu_wrapper' => 'header_body',
+      'field_event_date' => 'first_column',
+      'group_details' => 'first_column',
       'group_action_menu' => 'header_body',
     ),
     'classes' => array(),
@@ -480,14 +497,12 @@ function tm_events_ds_layout_settings_info() {
         1 => 'tm_ds_date_avatar',
       ),
       'teaser' => array(
-        2 => 'body',
-        3 => 'title',
+        2 => 'title',
       ),
     ),
     'fields' => array(
       'field_image' => 'media',
       'tm_ds_date_avatar' => 'media',
-      'body' => 'teaser',
       'title' => 'teaser',
     ),
     'classes' => array(),

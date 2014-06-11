@@ -141,7 +141,7 @@ function theme_ds_field_dl($variables) {
 
   // @Todo Add custom class to form
   // $config = $variables['ds-config'];
-
+  
   // Since a dd can't exist without a dt, we just print the title without checking if the label's hidden.
   $output .= '<dt>' . $variables['label'] . '</dt>';
   foreach ($variables['items'] as $delta => $item) {

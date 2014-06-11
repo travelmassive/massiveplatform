@@ -21,7 +21,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Action menu wrapper',
-    'weight' => '18',
+    'weight' => '4',
     'children' => array(
       0 => 'group_action_menu',
     ),
@@ -51,7 +51,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Action menu wrapper',
-    'weight' => '5',
+    'weight' => '4',
     'children' => array(
       0 => 'group_action_menu',
     ),
@@ -130,6 +130,59 @@ function tm_events_field_group_info() {
     ),
   );
   $export['group_action_menu|node|partner_event|full'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_details|node|event|full';
+  $field_group->group_name = 'group_details';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'event';
+  $field_group->mode = 'full';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Details',
+    'weight' => '6',
+    'children' => array(
+      0 => 'body',
+      1 => 'field_map_link',
+      2 => 'field_location',
+    ),
+    'format_type' => 'dl',
+    'format_settings' => array(
+      'label' => 'Details',
+      'instance_settings' => array(
+        'classes' => '',
+      ),
+    ),
+  );
+  $export['group_details|node|event|full'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_details|node|partner_event|full';
+  $field_group->group_name = 'group_details';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'partner_event';
+  $field_group->mode = 'full';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Details',
+    'weight' => '5',
+    'children' => array(
+      0 => 'body',
+      1 => 'field_event_date',
+    ),
+    'format_type' => 'dl',
+    'format_settings' => array(
+      'formatter' => 'open',
+      'instance_settings' => array(
+        'classes' => 'group-details field-group-dl',
+      ),
+    ),
+  );
+  $export['group_details|node|partner_event|full'] = $field_group;
 
   return $export;
 }

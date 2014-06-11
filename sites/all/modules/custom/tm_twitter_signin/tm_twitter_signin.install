@@ -12,6 +12,7 @@
   * Directly from the twitter module.
  */
 function tm_twitter_signin_requirements($phase) {
+  global $base_path;
   $requirements = array();
   $t = get_t();
   if ($phase == 'runtime') {
@@ -25,7 +26,7 @@ function tm_twitter_signin_requirements($phase) {
         $t('In order to interact with Twitter, you need to create an application at ' .
            '<a href="http://dev.twitter.com" target="_blank">http://dev.twitter.com</a> ' .
            'and set the generated Application keys at the ' .
-           '<a href="/admin/config/services/twitter">Twitter settings page</a>');
+           '<a href="' . $base_path . 'admin/config/services/tm_twitter">Twitter settings page</a>');
       $requirements['tm_twitter_keys']['severity'] = REQUIREMENT_ERROR;
     }
     else {

@@ -5,6 +5,22 @@
  */
 
 /**
+ * Implements hook_ctools_plugin_api().
+ */
+function tm_flags_ctools_plugin_api($module = NULL, $api = NULL) {
+  if ($module == "ds" && $api == "ds") {
+    return array("version" => "1");
+  }
+}
+
+/**
+ * Implements hook_views_api().
+ */
+function tm_flags_views_api($module = NULL, $api = NULL) {
+  return array("api" => "3.0");
+}
+
+/**
  * Implements hook_flag_default_flags().
  */
 function tm_flags_flag_default_flags() {
@@ -37,11 +53,11 @@ function tm_flags_flag_default_flags() {
     'show_contextual_link' => 0,
     'show_on_profile' => 0,
     'access_uid' => 'others',
-    'api_version' => 3,
     'module' => 'tm_flags',
     'locked' => array(
       0 => 'name',
     ),
+    'api_version' => 3,
   );
   // Exported flag: "Follow organizations".
   $flags['follow_organizations'] = array(
@@ -75,11 +91,11 @@ function tm_flags_flag_default_flags() {
     'access_author' => '',
     'show_contextual_link' => 0,
     'i18n' => 0,
-    'api_version' => 3,
     'module' => 'tm_flags',
     'locked' => array(
       0 => 'name',
     ),
+    'api_version' => 3,
   );
   // Exported flag: "Signup".
   $flags['signup'] = array(

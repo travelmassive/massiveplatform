@@ -70,5 +70,31 @@ function tm_organizations_field_group_info() {
   );
   $export['group_action_menu|node|organization|full'] = $field_group;
 
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_details|node|organization|full';
+  $field_group->group_name = 'group_details';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'organization';
+  $field_group->mode = 'full';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Details',
+    'weight' => '15',
+    'children' => array(
+      0 => 'body',
+      1 => 'field_owner',
+    ),
+    'format_type' => 'dl',
+    'format_settings' => array(
+      'formatter' => 'open',
+      'instance_settings' => array(
+        'classes' => 'group-details field-group-dl',
+      ),
+    ),
+  );
+  $export['group_details|node|organization|full'] = $field_group;
+
   return $export;
 }

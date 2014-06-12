@@ -47,7 +47,7 @@ function tm_users_strongarm() {
       'display' => array(
         'masquerade' => array(
           'default' => array(
-            'weight' => '7',
+            'weight' => '9',
             'visible' => FALSE,
           ),
           'grid' => array(
@@ -55,13 +55,13 @@ function tm_users_strongarm() {
             'visible' => FALSE,
           ),
           'list' => array(
-            'weight' => '50',
-            'visible' => TRUE,
+            'weight' => '7',
+            'visible' => FALSE,
           ),
         ),
         'summary' => array(
           'default' => array(
-            'weight' => '6',
+            'weight' => '8',
             'visible' => FALSE,
           ),
           'grid' => array(
@@ -70,13 +70,17 @@ function tm_users_strongarm() {
           ),
           'list' => array(
             'weight' => '5',
-            'visible' => TRUE,
+            'visible' => FALSE,
           ),
         ),
         'flag_follow_members' => array(
           'default' => array(
             'weight' => '10',
             'visible' => TRUE,
+          ),
+          'list' => array(
+            'weight' => '6',
+            'visible' => FALSE,
           ),
         ),
       ),

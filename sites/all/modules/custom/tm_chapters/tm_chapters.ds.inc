@@ -37,6 +37,26 @@ function tm_chapters_ds_field_settings_info() {
         ),
       ),
     ),
+    'members_signed_up' => array(
+      'weight' => '5',
+      'label' => 'above',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'lb' => 'Community',
+          'lb-el' => 'h1',
+          'lb-cl' => 'prime-title',
+          'lb-col' => TRUE,
+          'ow' => TRUE,
+          'ow-el' => 'section',
+          'ow-cl' => 'contained contained-block',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
     'title' => array(
       'weight' => '2',
       'label' => 'hidden',
@@ -47,6 +67,13 @@ function tm_chapters_ds_field_settings_info() {
         'class' => 'prime-title',
         'ft' => array(
           'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'body' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_dl',
         ),
       ),
     ),
@@ -220,14 +247,15 @@ function tm_chapters_ds_layout_settings_info() {
         1 => 'ds_flag_signup',
         2 => 'chapter_avatar',
         3 => 'title',
-        6 => 'group_action_menu_wrapper',
-        7 => 'group_action_menu',
+        4 => 'group_action_menu_wrapper',
+        8 => 'group_action_menu',
       ),
       'first_column' => array(
-        4 => 'body',
+        5 => 'group_details',
+        6 => 'body',
       ),
       'second_column' => array(
-        5 => 'field_chapter_leaders',
+        7 => 'members_signed_up',
       ),
     ),
     'fields' => array(
@@ -235,9 +263,10 @@ function tm_chapters_ds_layout_settings_info() {
       'ds_flag_signup' => 'header_body',
       'chapter_avatar' => 'header_body',
       'title' => 'header_body',
-      'body' => 'first_column',
-      'field_chapter_leaders' => 'second_column',
       'group_action_menu_wrapper' => 'header_body',
+      'group_details' => 'first_column',
+      'body' => 'first_column',
+      'members_signed_up' => 'second_column',
       'group_action_menu' => 'header_body',
     ),
     'classes' => array(),

@@ -21,7 +21,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Action menu wrapper',
-    'weight' => '8',
+    'weight' => '3',
     'children' => array(
       0 => 'group_action_menu',
     ),

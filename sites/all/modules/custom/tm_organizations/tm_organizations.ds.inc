@@ -22,6 +22,26 @@ function tm_organizations_ds_field_settings_info() {
       'label' => 'hidden',
       'format' => 'default',
     ),
+    'members_following' => array(
+      'weight' => '0',
+      'label' => 'above',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'lb' => 'Followed by',
+          'lb-el' => 'h1',
+          'lb-cl' => 'prime-title',
+          'lb-col' => TRUE,
+          'ow' => TRUE,
+          'ow-el' => 'section',
+          'ow-cl' => 'contained contained-block',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
     'title' => array(
       'weight' => '2',
       'label' => 'hidden',
@@ -38,13 +58,7 @@ function tm_organizations_ds_field_settings_info() {
     'body' => array(
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_expert',
-          'ow' => TRUE,
-          'ow-el' => 'p',
-          'ow-cl' => 'meta',
-          'ow-def-cl' => FALSE,
-          'ow-at' => '',
-          'ow-def-at' => FALSE,
+          'func' => 'theme_ds_field_dl',
         ),
       ),
     ),
@@ -58,6 +72,13 @@ function tm_organizations_ds_field_settings_info() {
           'ow-def-cl' => FALSE,
           'ow-at' => '',
           'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'field_owner' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_dl',
         ),
       ),
     ),
@@ -156,30 +177,36 @@ function tm_organizations_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
-      'header_media' => array(
-        0 => 'field_image',
+      'second_column' => array(
+        0 => 'members_following',
       ),
       'header_body' => array(
         1 => 'ds_flag_follow_organizations',
-        2 => 'field_avatar',
-        3 => 'title',
-        4 => 'body',
-        6 => 'group_action_menu',
-        7 => 'group_action_menu_wrapper',
+        3 => 'field_avatar',
+        4 => 'title',
+        7 => 'group_action_menu',
+        8 => 'group_action_menu_wrapper',
+      ),
+      'header_media' => array(
+        2 => 'field_image',
       ),
       'first_column' => array(
         5 => 'field_owner',
+        6 => 'body',
+        9 => 'group_details',
       ),
     ),
     'fields' => array(
-      'field_image' => 'header_media',
+      'members_following' => 'second_column',
       'ds_flag_follow_organizations' => 'header_body',
+      'field_image' => 'header_media',
       'field_avatar' => 'header_body',
       'title' => 'header_body',
-      'body' => 'header_body',
       'field_owner' => 'first_column',
+      'body' => 'first_column',
       'group_action_menu' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
+      'group_details' => 'first_column',
     ),
     'classes' => array(),
     'wrappers' => array(

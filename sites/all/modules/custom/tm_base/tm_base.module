@@ -93,7 +93,7 @@ function tm_base_field_group_formatter_info() {
       'dl' => array(
         'label' => t('Definition List'),
         'description' => t('This fieldgroup renders the inner content in a definition list, inside a section with header.'),
-        'format_types' => array('open', 'collapsed'),
+        'format_types' => array('open'),
         'default_formatter' => 'open',
       ),
     ),
@@ -141,7 +141,7 @@ function theme_ds_field_dl($variables) {
 
   // @Todo Add custom class to form
   // $config = $variables['ds-config'];
-
+  
   // Since a dd can't exist without a dt, we just print the title without checking if the label's hidden.
   $output .= '<dt>' . $variables['label'] . '</dt>';
   foreach ($variables['items'] as $delta => $item) {

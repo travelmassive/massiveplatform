@@ -61,6 +61,7 @@ button {
   &.external:before {
     @extend .icon-s-new-window;
   }
+  &.follow.on:before,
   &.follow.flagged:before {
     @extend .icon-s-tick;
   }

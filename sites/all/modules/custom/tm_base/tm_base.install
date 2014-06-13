@@ -54,14 +54,26 @@ function tm_base_update_7007() {
   module_enable(array('simpletest'));
 }
 /**
- * Enable the field_group module.
+ * Enable the logintoboggan module.
  */
 function tm_base_update_7008() {
+  module_enable(array('logintoboggan'));
+}
+/**
+ * Enable the tm_twitter_signin and module_filter module.
+ */
+function tm_base_update_7009() {
+  module_enable(array('tm_twitter_signin', 'module_filter'));
+}
+/**
+ * Enable the field_group module.
+ */
+function tm_base_update_7010() {
   module_enable(array('field_group'));
 }
 /**
  * Enable the tm_flags module.
  */
-function tm_base_update_7009() {
+function tm_base_update_7011() {
   module_enable(array('tm_flags'));
 }

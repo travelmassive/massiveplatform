@@ -32,7 +32,7 @@ function tm_event_signup_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 15,
       ),
       'grid' => array(
         'label' => 'above',
@@ -86,14 +86,8 @@ function tm_event_signup_field_default_field_instances() {
       ),
       'full' => array(
         'label' => 'above',
-        'module' => 'number',
-        'settings' => array(
-          'decimal_separator' => '.',
-          'prefix_suffix' => TRUE,
-          'scale' => 0,
-          'thousand_separator' => ' ',
-        ),
-        'type' => 'number_integer',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 0,
       ),
       'grid' => array(

@@ -65,3 +65,15 @@ function tm_base_update_7008() {
 function tm_base_update_7009() {
   module_enable(array('tm_twitter_signin', 'module_filter'));
 }
+/**
+ * Enable the field_group module.
+ */
+function tm_base_update_7010() {
+  module_enable(array('field_group'));
+}
+/**
+ * Enable the tm_flags module.
+ */
+function tm_base_update_7011() {
+  module_enable(array('tm_flags'));
+}

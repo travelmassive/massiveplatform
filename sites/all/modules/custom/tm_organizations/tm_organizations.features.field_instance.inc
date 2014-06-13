@@ -25,13 +25,13 @@ function tm_organizations_field_default_field_instances() {
         'weight' => 0,
       ),
       'full' => array(
-        'label' => 'hidden',
+        'label' => 'above',
         'module' => 'text',
         'settings' => array(
-          'trim_length' => 200,
+          'trim_length' => 600,
         ),
         'type' => 'text_trimmed',
-        'weight' => 3,
+        'weight' => 5,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -307,7 +307,7 @@ function tm_organizations_field_default_field_instances() {
         'label' => 'above',
         'module' => 'entityreference',
         'settings' => array(
-          'link' => 0,
+          'link' => 1,
         ),
         'type' => 'entityreference_label',
         'weight' => 4,

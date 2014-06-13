@@ -45,11 +45,10 @@ function tm_events_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  /* Sort criterion: Content: Post date */
-  $handler->display->display_options['sorts']['created']['id'] = 'created';
-  $handler->display->display_options['sorts']['created']['table'] = 'node';
-  $handler->display->display_options['sorts']['created']['field'] = 'created';
-  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Sort criterion: Content: Event date (field_event_date) */
+  $handler->display->display_options['sorts']['field_event_date_value']['id'] = 'field_event_date_value';
+  $handler->display->display_options['sorts']['field_event_date_value']['table'] = 'field_data_field_event_date';
+  $handler->display->display_options['sorts']['field_event_date_value']['field'] = 'field_event_date_value';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -75,6 +74,14 @@ function tm_events_views_default_views() {
     3 => 0,
   );
   $handler->display->display_options['filters']['type']['expose']['reduce'] = TRUE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type_1']['id'] = 'type_1';
+  $handler->display->display_options['filters']['type_1']['table'] = 'node';
+  $handler->display->display_options['filters']['type_1']['field'] = 'type';
+  $handler->display->display_options['filters']['type_1']['value'] = array(
+    'event' => 'event',
+    'partner_event' => 'partner_event',
+  );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');

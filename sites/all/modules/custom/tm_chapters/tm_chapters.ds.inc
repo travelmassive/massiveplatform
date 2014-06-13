@@ -17,6 +17,16 @@ function tm_chapters_ds_field_settings_info() {
   $ds_fieldsetting->bundle = 'chapter';
   $ds_fieldsetting->view_mode = 'full';
   $ds_fieldsetting->settings = array(
+    'ds_flag_signup' => array(
+      'weight' => '0',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
     'chapter_avatar' => array(
       'weight' => '1',
       'label' => 'hidden',
@@ -24,6 +34,26 @@ function tm_chapters_ds_field_settings_info() {
       'formatter_settings' => array(
         'ft' => array(
           'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'members_signed_up' => array(
+      'weight' => '5',
+      'label' => 'above',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'lb' => 'Community',
+          'lb-el' => 'h1',
+          'lb-cl' => 'prime-title',
+          'lb-col' => TRUE,
+          'ow' => TRUE,
+          'ow-el' => 'section',
+          'ow-cl' => 'contained contained-block',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
         ),
       ),
     ),
@@ -37,6 +67,13 @@ function tm_chapters_ds_field_settings_info() {
         'class' => 'prime-title',
         'ft' => array(
           'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'body' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_dl',
         ),
       ),
     ),
@@ -207,22 +244,30 @@ function tm_chapters_ds_layout_settings_info() {
         0 => 'field_image',
       ),
       'header_body' => array(
-        1 => 'chapter_avatar',
-        2 => 'title',
+        1 => 'ds_flag_signup',
+        2 => 'chapter_avatar',
+        3 => 'title',
+        4 => 'group_action_menu_wrapper',
+        8 => 'group_action_menu',
       ),
       'first_column' => array(
-        3 => 'body',
+        5 => 'group_details',
+        6 => 'body',
       ),
       'second_column' => array(
-        4 => 'field_chapter_leaders',
+        7 => 'members_signed_up',
       ),
     ),
     'fields' => array(
       'field_image' => 'header_media',
+      'ds_flag_signup' => 'header_body',
       'chapter_avatar' => 'header_body',
       'title' => 'header_body',
+      'group_action_menu_wrapper' => 'header_body',
+      'group_details' => 'first_column',
       'body' => 'first_column',
-      'field_chapter_leaders' => 'second_column',
+      'members_signed_up' => 'second_column',
+      'group_action_menu' => 'header_body',
     ),
     'classes' => array(),
     'wrappers' => array(

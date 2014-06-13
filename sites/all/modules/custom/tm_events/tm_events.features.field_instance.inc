@@ -25,11 +25,11 @@ function tm_events_field_default_field_instances() {
         'weight' => 0,
       ),
       'full' => array(
-        'label' => 'hidden',
+        'label' => 'above',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 2,
+        'weight' => 6,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -95,7 +95,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 11,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -161,7 +161,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 15,
+        'weight' => 16,
       ),
       'grid' => array(
         'label' => 'above',
@@ -228,7 +228,7 @@ function tm_events_field_default_field_instances() {
           'image_style' => 'banner',
         ),
         'type' => 'image',
-        'weight' => 1,
+        'weight' => 0,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -364,7 +364,7 @@ function tm_events_field_default_field_instances() {
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 4,
+        'weight' => 7,
       ),
       'grid' => array(
         'label' => 'above',
@@ -437,12 +437,9 @@ function tm_events_field_default_field_instances() {
       ),
       'full' => array(
         'label' => 'above',
-        'module' => 'entityreference',
-        'settings' => array(
-          'link' => FALSE,
-        ),
-        'type' => 'entityreference_label',
-        'weight' => 7,
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 8,
       ),
       'grid' => array(
         'label' => 'above',
@@ -488,7 +485,7 @@ function tm_events_field_default_field_instances() {
         'weight' => 9,
       ),
       'full' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
@@ -508,24 +505,25 @@ function tm_events_field_default_field_instances() {
         'weight' => 9,
       ),
     ),
+    'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_rsvp_link',
     'label' => 'RSVP link',
     'required' => 0,
     'settings' => array(
       'attributes' => array(
-        'class' => '',
+        'class' => 'external bttn bttn-secondary bttn-m',
         'configurable_title' => 0,
-        'rel' => '',
-        'target' => 'default',
-        'title' => '',
+        'rel' => 'nofollow',
+        'target' => '_blank',
+        'title' => 'External RSVP',
       ),
       'display' => array(
         'url_cutoff' => 80,
       ),
       'enable_tokens' => 1,
-      'rel_remove' => 'default',
-      'title' => 'optional',
+      'rel_remove' => 'rel_remove_internal',
+      'title' => 'value',
       'title_maxlength' => 128,
       'title_value' => 'RSVP',
       'url' => 0,
@@ -556,20 +554,17 @@ function tm_events_field_default_field_instances() {
         'weight' => 0,
       ),
       'full' => array(
-        'label' => 'hidden',
-        'module' => 'text',
-        'settings' => array(
-          'trim_length' => 200,
-        ),
-        'type' => 'text_trimmed',
-        'weight' => 0,
-      ),
-      'grid' => array(
-        'label' => 'hidden',
+        'label' => 'above',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 2,
+        'weight' => 3,
+      ),
+      'grid' => array(
+        'label' => 'hidden',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 3,
       ),
       'list' => array(
         'label' => 'hidden',
@@ -630,15 +625,22 @@ function tm_events_field_default_field_instances() {
       ),
       'full' => array(
         'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 2,
+        'module' => 'date',
+        'settings' => array(
+          'format_type' => 'long',
+          'fromto' => 'both',
+          'multiple_from' => '',
+          'multiple_number' => '',
+          'multiple_to' => '',
+        ),
+        'type' => 'date_default',
+        'weight' => 4,
       ),
       'grid' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 10,
+        'weight' => 11,
       ),
       'list' => array(
         'label' => 'above',
@@ -746,6 +748,74 @@ function tm_events_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-partner_event-field_rsvp_link'
+  $field_instances['node-partner_event-field_rsvp_link'] = array(
+    'bundle' => 'partner_event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Provide a link to a page with more information or the RSVP.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'link',
+        'settings' => array(),
+        'type' => 'link_default',
+        'weight' => 4,
+      ),
+      'full' => array(
+        'label' => 'hidden',
+        'module' => 'link',
+        'settings' => array(),
+        'type' => 'link_default',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 8,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_rsvp_link',
+    'label' => 'RSVP link',
+    'required' => 0,
+    'settings' => array(
+      'attributes' => array(
+        'class' => 'external bttn bttn-secondary bttn-m',
+        'configurable_title' => 0,
+        'rel' => 'nofollow',
+        'target' => '_blank',
+        'title' => 'External RSVP',
+      ),
+      'display' => array(
+        'url_cutoff' => 80,
+      ),
+      'enable_tokens' => 0,
+      'rel_remove' => 'rel_remove_internal',
+      'title' => 'value',
+      'title_maxlength' => 128,
+      'title_value' => 'RSVP',
+      'url' => 0,
+      'user_register_form' => FALSE,
+      'validate_url' => 1,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'link',
+      'settings' => array(),
+      'type' => 'link_field',
+      'weight' => 39,
+    ),
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
   t('Add a banner that represents this partner event.');
@@ -758,6 +828,7 @@ function tm_events_field_default_field_instances() {
   t('Location');
   t('Map link');
   t('Organizer');
+  t('Provide a link to a page with more information or the RSVP.');
   t('Provide a link to the page with the RSVP.');
   t('Provide the street address for this event.');
   t('RSVP link');

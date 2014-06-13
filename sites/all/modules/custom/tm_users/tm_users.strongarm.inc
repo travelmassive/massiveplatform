@@ -47,7 +47,7 @@ function tm_users_strongarm() {
       'display' => array(
         'masquerade' => array(
           'default' => array(
-            'weight' => '7',
+            'weight' => '9',
             'visible' => FALSE,
           ),
           'grid' => array(
@@ -55,13 +55,13 @@ function tm_users_strongarm() {
             'visible' => FALSE,
           ),
           'list' => array(
-            'weight' => '50',
-            'visible' => TRUE,
+            'weight' => '7',
+            'visible' => FALSE,
           ),
         ),
         'summary' => array(
           'default' => array(
-            'weight' => '6',
+            'weight' => '8',
             'visible' => FALSE,
           ),
           'grid' => array(
@@ -70,7 +70,17 @@ function tm_users_strongarm() {
           ),
           'list' => array(
             'weight' => '5',
+            'visible' => FALSE,
+          ),
+        ),
+        'flag_follow_members' => array(
+          'default' => array(
+            'weight' => '10',
             'visible' => TRUE,
+          ),
+          'list' => array(
+            'weight' => '6',
+            'visible' => FALSE,
           ),
         ),
       ),
@@ -412,6 +422,13 @@ Your account on [site:name] has been canceled.
   $strongarm->name = 'user_signatures';
   $strongarm->value = 0;
   $export['user_signatures'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_user_pattern';
+  $strongarm->value = '[user:friendly_url_user]';
+  $export['pathauto_user_pattern'] = $strongarm;
 
   return $export;
 }

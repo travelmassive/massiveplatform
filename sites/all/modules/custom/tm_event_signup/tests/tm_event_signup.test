@@ -39,6 +39,39 @@ class TmEventSignupFlagTestCase extends DrupalWebTestCase {
   }
   
   /**
+   * Follows a link by name.
+   * Used for links that that have wrappers around the text.
+   *
+   * Will click the first link found with this link text by default, or a later
+   * one if an index is given. Match is case sensitive with normalized space.
+   * The label is translated label. There is an assert for successful click.
+   *
+   * @param $xpath
+   *   Custom xpath to use. :label is the placeholder for the link text.
+   * @param $label
+   *   Text between the anchor tags.
+   * @param $index
+   *   Link position counting from zero.
+   * @return
+   *   Page on success, or FALSE on failure.
+   */
+  public function clickLinkXPath($xpath, $label, $index = 0) {
+    $url_before = $this->getUrl();
+    $urls = $this->xpath($xpath, array(':label' => $label));
+
+    if (isset($urls[$index])) {
+      $url_target = $this->getAbsoluteUrl($urls[$index]['href']);
+    }
+
+    $this->assertTrue(isset($urls[$index]), t('Clicked link %label (@url_target) from @url_before', array('%label' => $label, '@url_target' => $url_target, '@url_before' => $url_before)), t('Browser'));
+
+    if (isset($url_target)) {
+      return $this->drupalGet($url_target);
+    }
+    return FALSE;
+  }
+  
+  /**
    * Implements getInfo().
    */
   public static function getInfo() {
@@ -135,7 +168,7 @@ class TmEventSignupFlagTestCase extends DrupalWebTestCase {
     // Despite not being able to join, the button is still there.
     $this->assertText(t('Join'), 'Despite not being able to join, the button should still be there.');
     
-    $this->clickLink(t('Join'));
+    $this->clickLinkXPath('//a/span[normalize-space(text())=:label]/..', t('Join'));
     $this->assertText(t('You are not authorized to access this page'), 'Not allowed to joing because the date is in the past.'); 
     
     
@@ -161,7 +194,7 @@ class TmEventSignupFlagTestCase extends DrupalWebTestCase {
     $this->assertText(t('@left of @total seats left', array('@left' => 1, '@total' => 1)), 'Seats left text found.');
     $this->assertText(t('Join'), 'Join button found.');
     
-    $this->clickLink(t('Join'));
+    $this->clickLinkXPath('//a/span[normalize-space(text())=:label]/..', t('Join'));
     $this->assertText(t('@left of @total seats left', array('@left' => 0, '@total' => 1)), 'Seats left text found.');
     $this->assertText(t('Joined'), 'Joined button found.');
     
@@ -172,7 +205,7 @@ class TmEventSignupFlagTestCase extends DrupalWebTestCase {
     // Go back to node page and click link.
     $this->drupalGet('node/' . $event_node4->nid);
     $this->assertText(t('Join'), 'Join button found.');
-    $this->clickLink(t('Join'));
+    $this->clickLinkXPath('//a/span[normalize-space(text())=:label]/..', t('Join'));
     $this->assertText(t('Signup limit reached'), 'Signup limit reached.');    
   }
 }

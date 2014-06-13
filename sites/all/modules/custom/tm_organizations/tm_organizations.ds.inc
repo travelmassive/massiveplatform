@@ -17,6 +17,31 @@ function tm_organizations_ds_field_settings_info() {
   $ds_fieldsetting->bundle = 'organization';
   $ds_fieldsetting->view_mode = 'full';
   $ds_fieldsetting->settings = array(
+    'ds_flag_follow_organizations' => array(
+      'weight' => '0',
+      'label' => 'hidden',
+      'format' => 'default',
+    ),
+    'members_following' => array(
+      'weight' => '0',
+      'label' => 'above',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'lb' => 'Followed by',
+          'lb-el' => 'h1',
+          'lb-cl' => 'prime-title',
+          'lb-col' => TRUE,
+          'ow' => TRUE,
+          'ow-el' => 'section',
+          'ow-cl' => 'contained contained-block',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
     'title' => array(
       'weight' => '2',
       'label' => 'hidden',
@@ -33,13 +58,7 @@ function tm_organizations_ds_field_settings_info() {
     'body' => array(
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_expert',
-          'ow' => TRUE,
-          'ow-el' => 'p',
-          'ow-cl' => 'meta',
-          'ow-def-cl' => FALSE,
-          'ow-at' => '',
-          'ow-def-at' => FALSE,
+          'func' => 'theme_ds_field_dl',
         ),
       ),
     ),
@@ -53,6 +72,13 @@ function tm_organizations_ds_field_settings_info() {
           'ow-def-cl' => FALSE,
           'ow-at' => '',
           'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'field_owner' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_dl',
         ),
       ),
     ),
@@ -151,24 +177,36 @@ function tm_organizations_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
-      'header_media' => array(
-        0 => 'field_image',
+      'second_column' => array(
+        0 => 'members_following',
       ),
       'header_body' => array(
-        1 => 'field_avatar',
-        2 => 'title',
-        3 => 'body',
+        1 => 'ds_flag_follow_organizations',
+        3 => 'field_avatar',
+        4 => 'title',
+        7 => 'group_action_menu',
+        8 => 'group_action_menu_wrapper',
+      ),
+      'header_media' => array(
+        2 => 'field_image',
       ),
       'first_column' => array(
-        4 => 'field_owner',
+        5 => 'field_owner',
+        6 => 'body',
+        9 => 'group_details',
       ),
     ),
     'fields' => array(
+      'members_following' => 'second_column',
+      'ds_flag_follow_organizations' => 'header_body',
       'field_image' => 'header_media',
       'field_avatar' => 'header_body',
       'title' => 'header_body',
-      'body' => 'header_body',
       'field_owner' => 'first_column',
+      'body' => 'first_column',
+      'group_action_menu' => 'header_body',
+      'group_action_menu_wrapper' => 'header_body',
+      'group_details' => 'first_column',
     ),
     'classes' => array(),
     'wrappers' => array(
@@ -223,48 +261,6 @@ function tm_organizations_ds_layout_settings_info() {
     'layout_link_custom' => '',
   );
   $export['node|organization|grid'] = $ds_layout;
-
-  $ds_layout = new stdClass();
-  $ds_layout->api_version = 1;
-  $ds_layout->id = 'node|partner_event|full';
-  $ds_layout->entity_type = 'node';
-  $ds_layout->bundle = 'partner_event';
-  $ds_layout->view_mode = 'full';
-  $ds_layout->layout = 'trilithon';
-  $ds_layout->settings = array(
-    'regions' => array(
-      'header_body' => array(
-        0 => 'tm_ds_date_avatar',
-        2 => 'body',
-        3 => 'title',
-      ),
-      'header_media' => array(
-        1 => 'field_image',
-      ),
-    ),
-    'fields' => array(
-      'tm_ds_date_avatar' => 'header_body',
-      'field_image' => 'header_media',
-      'body' => 'header_body',
-      'title' => 'header_body',
-    ),
-    'classes' => array(),
-    'wrappers' => array(
-      'header_media' => 'div',
-      'header_body' => 'div',
-      'header_extra' => 'div',
-      'first_column' => 'div',
-      'second_column' => 'div',
-    ),
-    'layout_wrapper' => 'div',
-    'layout_attributes' => '',
-    'layout_attributes_merge' => 1,
-    'layout_link_attribute' => '',
-    'layout_link_custom' => '',
-    'hide_page_title' => '1',
-    'page_option_title' => '',
-  );
-  $export['node|partner_event|full'] = $ds_layout;
 
   return $export;
 }

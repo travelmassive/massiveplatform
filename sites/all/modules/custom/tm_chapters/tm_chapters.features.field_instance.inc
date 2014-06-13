@@ -25,11 +25,11 @@ function tm_chapters_field_default_field_instances() {
         'weight' => 0,
       ),
       'full' => array(
-        'label' => 'hidden',
+        'label' => 'inline',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 3,
+        'weight' => 5,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -89,10 +89,10 @@ function tm_chapters_field_default_field_instances() {
         'weight' => 4,
       ),
       'full' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 12,
+        'weight' => 14,
       ),
       'grid' => array(
         'label' => 'above',
@@ -142,12 +142,9 @@ function tm_chapters_field_default_field_instances() {
       ),
       'full' => array(
         'label' => 'above',
-        'module' => 'entityreference',
-        'settings' => array(
-          'link' => FALSE,
-        ),
-        'type' => 'entityreference_label',
-        'weight' => 4,
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 6,
       ),
       'grid' => array(
         'label' => 'above',
@@ -208,7 +205,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 13,
+        'weight' => 15,
       ),
       'grid' => array(
         'label' => 'above',

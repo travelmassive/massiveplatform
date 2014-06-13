@@ -182,6 +182,9 @@ a.disabled, .bttn.disabled {
     .toggle:before {
       @extend .icon-user;
     }
+    .inner {
+      right: -0.5rem;
+    }
   }
   @media #{$medium-up} {
     @include grid-column(10);

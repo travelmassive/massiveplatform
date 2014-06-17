@@ -63,7 +63,7 @@ function tm_base_update_7008() {
  * Enable the tm_twitter_signin and module_filter module.
  */
 function tm_base_update_7009() {
-  module_enable(array('tm_twitter_signin', 'module_filter'));
+  module_enable(array('tm_users_external_signin', 'module_filter'));
 }
 /**
  * Enable the field_group module.

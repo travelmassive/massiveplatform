@@ -1,39 +1,39 @@
 <?php
 /**
- * @file tm_twitter_signin.module
+ * @file tm_users_external_signin.module
  * Implementation of login with twitter.
  * This is heavily based on the twitter_signin module (http://drupal.org/project/twitter)
  * 
  * @author Daniel da Silva (daniel.silva@flipside.org)
  */
-include_once 'tm_twitter_signin.features.inc';
+include_once 'tm_users_external_signin.features.inc';
 
 define ('TWITTER_HOST',         'http://twitter.com');
 define ('TWITTER_API',          'https://api.twitter.com');
 define ('TWITTER_SEARCH',       'http://search.twitter.com');
 define ('TWITTER_TINYURL',      'http://tinyurl.com');
 
-module_load_include('lib.php', 'tm_twitter_signin', 'twitter');
+module_load_include('lib.php', 'tm_users_external_signin', 'twitter');
 
 /**
  * Implements hook_menu().
  */
-function tm_twitter_signin_menu() {
+function tm_users_external_signin_menu() {
   // Signin with twitter entry point.
   $items['tm_twitter/oauth'] = array(
     'title' => 'Twitter Redirect',
-    'page callback' => 'tm_twitter_signin_oauth',
+    'page callback' => 'tm_users_external_signin_oauth',
     'access callback' => TRUE,
-    'file' => 'tm_twitter_signin.pages.inc',
+    'file' => 'tm_users_external_signin.pages.inc',
     'type' => MENU_CALLBACK,
   );
   
   // Twitter callback after acceptance.
   $items['tm_twitter/oauth/callback'] = array(
     'title' => 'Twitter Redirect',
-    'page callback' => 'tm_twitter_signin_oauth_callback',
+    'page callback' => 'tm_users_external_signin_oauth_callback',
     'access callback' => TRUE,
-    'file' => 'tm_twitter_signin.pages.inc',
+    'file' => 'tm_users_external_signin.pages.inc',
     'type' => MENU_CALLBACK,
   );
   
@@ -41,9 +41,9 @@ function tm_twitter_signin_menu() {
   $items['tm_twitter/register'] = array(
     'title' => 'Twitter Register',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('tm_twitter_signin_register_form'),
+    'page arguments' => array('tm_users_external_signin_register_form'),
     'access callback' => TRUE,
-    'file' => 'tm_twitter_signin.pages.inc',
+    'file' => 'tm_users_external_signin.pages.inc',
     'type' => MENU_CALLBACK,
   );
   
@@ -53,9 +53,9 @@ function tm_twitter_signin_menu() {
     'title' => 'Twitter',
     'description' => 'Twitter settings.',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('tm_twitter_signin_admin_form'),
+    'page arguments' => array('tm_users_external_signin_admin_form'),
     'access arguments' => array('manage tm twitter settings'),
-    'file' => 'tm_twitter_signin.admin.pages.inc',
+    'file' => 'tm_users_external_signin.admin.pages.inc',
     'type' => MENU_NORMAL_ITEM,
   );
   
@@ -63,10 +63,10 @@ function tm_twitter_signin_menu() {
   $items['user/%user/edit/tm_twitter'] = array(
     'title' => 'Twitter',
     'type' => MENU_LOCAL_TASK,
-    'page callback' => 'tm_twitter_signin_manage_account',
-    'file' => 'tm_twitter_signin.pages.inc',
+    'page callback' => 'tm_users_external_signin_manage_account',
+    'file' => 'tm_users_external_signin.pages.inc',
     'page arguments' => array(1),
-    'access callback' => 'tm_twitter_signin_manage_account_access_callback',
+    'access callback' => 'tm_users_external_signin_manage_account_access_callback',
     'access arguments' => array(1),
   );
   
@@ -76,7 +76,7 @@ function tm_twitter_signin_menu() {
 /**
  * Implements hook_permission().
  */
-function tm_twitter_signin_permission() {
+function tm_users_external_signin_permission() {
   return array(
     'manage tm twitter settings' => array(
       'title' => t('Manage tm twitter settings'),
@@ -88,7 +88,7 @@ function tm_twitter_signin_permission() {
  * Custom access callback for user/%user/edit/tm_twitter
  * Only the owner of the account can link/unlink the account.
  */
-function tm_twitter_signin_manage_account_access_callback($account) {
+function tm_users_external_signin_manage_account_access_callback($account) {
   global $user;
   return $user->uid == $account->uid;
 }
@@ -98,26 +98,26 @@ function tm_twitter_signin_manage_account_access_callback($account) {
  * Implements hook_user_delete()
  * Deletes twitter entries when the user is deleted.
  */
-function tm_twitter_signin_user_delete($account) {
+function tm_users_external_signin_user_delete($account) {
   db_delete('tm_twitter_account')->condition('uid', $account->uid)->execute();
 }
 
 /**
  * Implements hook_theme().
  */
-function tm_twitter_signin_theme() {
+function tm_users_external_signin_theme() {
   return array(
-    'tm_twitter_link_signin' => array(
+    'tm_users_external_signin_link_signin' => array(
       'variables' => array('url' => NULL),
-      'template' => 'tm_twitter_link_signin',
-      'path' => drupal_get_path('module', 'tm_twitter_signin') . '/templates',
+      'template' => 'tm_users_external_signin_link_signin',
+      'path' => drupal_get_path('module', 'tm_users_external_signin') . '/templates',
     )
   );
 }
 
-function tm_twitter_signin_form_user_login_alter(&$form, &$form_state) {
-  $form['tm_twitter_signin'] = array(
-    '#markup' => theme('tm_twitter_link_signin', array('url' => url('tm_twitter/oauth')))
+function tm_users_external_signin_form_user_login_alter(&$form, &$form_state) {
+  $form['tm_users_external_signin'] = array(
+    '#markup' => theme('tm_users_external_signin_link_signin', array('url' => url('tm_twitter/oauth')))
   );
 }
 

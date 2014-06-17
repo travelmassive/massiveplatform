@@ -21,41 +21,5 @@ function tm_users_user_default_permissions() {
     'module' => 'user',
   );
 
-  // Exported permission: 'administer consumers'.
-  $permissions['administer consumers'] = array(
-    'name' => 'administer consumers',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'oauth_common',
-  );
-
-  // Exported permission: 'administer oauth'.
-  $permissions['administer oauth'] = array(
-    'name' => 'administer oauth',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'oauth_common',
-  );
-
-  // Exported permission: 'oauth authorize any consumers'.
-  $permissions['oauth authorize any consumers'] = array(
-    'name' => 'oauth authorize any consumers',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'oauth_common',
-  );
-
-  // Exported permission: 'oauth register any consumers'.
-  $permissions['oauth register any consumers'] = array(
-    'name' => 'oauth register any consumers',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'oauth_common',
-  );
-
   return $permissions;
 }

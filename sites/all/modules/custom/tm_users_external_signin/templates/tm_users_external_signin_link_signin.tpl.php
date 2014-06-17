@@ -1,6 +1,6 @@
 <?php
 /**
- * @file tm_twitter_link_signin.tpl.php
+ * @file tm_users_external_signin_link_signin.tpl.php
  * 
  * @author Daniel da Silva (daniel.silva@flipside.org)
  * 

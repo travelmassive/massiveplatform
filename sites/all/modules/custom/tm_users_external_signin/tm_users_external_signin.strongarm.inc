@@ -1,14 +1,35 @@
 <?php
 /**
  * @file
- * tm_twitter_signin.strongarm.inc
+ * tm_users_external_signin.strongarm.inc
  */
 
 /**
  * Implements hook_strongarm().
  */
-function tm_twitter_signin_strongarm() {
+function tm_users_external_signin_strongarm() {
   $export = array();
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'oauth_common_enable_provider';
+  $strongarm->value = 0;
+  $export['oauth_common_enable_provider'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'oauth_common_login_path';
+  $strongarm->value = 'user/login';
+  $export['oauth_common_login_path'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'oauth_common_request_token_lifetime';
+  $strongarm->value = '7200';
+  $export['oauth_common_request_token_lifetime'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */

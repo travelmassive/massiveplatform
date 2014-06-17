@@ -1,7 +1,7 @@
 <?php
 /**
- * @file tm_twitter_signin.pages
- * Page callbacks for tm_twitter_signin module.
+ * @file tm_users_external_signin.pages
+ * Page callbacks for tm_users_external_signin module.
  * This is heavily based on the twitter_signin module (http://drupal.org/project/twitter)
  * 
  * @author Daniel da Silva (daniel.silva@flipside.org)
@@ -10,7 +10,7 @@
 /**
  * Twitter settings form.
  */
-function tm_twitter_signin_admin_form($form, &$form_state) {
+function tm_users_external_signin_admin_form($form, &$form_state) {
 
   $form['oauth'] = array(
     '#type' => 'fieldset',

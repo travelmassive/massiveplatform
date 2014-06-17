@@ -6,6 +6,7 @@ version = 7.x-1.0-dev
 project = tm_fields
 dependencies[] = entityreference
 dependencies[] = features
+dependencies[] = field_validation
 dependencies[] = image
 dependencies[] = link
 features[features_api][] = api:2

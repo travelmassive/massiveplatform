@@ -1,6 +1,6 @@
 <?php
 /**
- * @file tm_twitter_signin.install
+ * @file tm_users_external_signin.install
  * Implementation of login with twitter.
  * This is heavily based on the twitter_signin module (http://drupal.org/project/twitter)
  * 
@@ -11,7 +11,7 @@
  * Implements hook_requirements()
   * Directly from the twitter module.
  */
-function tm_twitter_signin_requirements($phase) {
+function tm_users_external_signin_requirements($phase) {
   global $base_path;
   $requirements = array();
   $t = get_t();
@@ -40,7 +40,7 @@ function tm_twitter_signin_requirements($phase) {
 /**
  * Implements hook_schema().
  */
-function tm_twitter_signin_schema() {
+function tm_users_external_signin_schema() {
   $schema['tm_twitter_account'] = array(
     'description' => "Stores information on specific Twitter user accounts.",
     'fields' => array(
@@ -110,8 +110,8 @@ function twitter_uninstall() {
   variable_del('tm_twitter_consumer_key');
   variable_del('tm_twitter_consumer_secret');
   variable_del('tm_twitter_host');
-  variable_del('tm_twitter_signin_button');
-  variable_del('tm_twitter_signin_register');
+  variable_del('tm_users_external_signin_button');
+  variable_del('tm_users_external_signin_register');
   variable_del('tm_twitter_host');
   variable_del('tm_twitter_api');
   variable_del('tm_twitter_search');

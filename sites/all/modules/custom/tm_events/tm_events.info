@@ -16,6 +16,7 @@ dependencies[] = strongarm
 dependencies[] = tm_base
 dependencies[] = tm_event_signup
 dependencies[] = tm_fields
+dependencies[] = views
 features[ctools][] = ds:ds:1
 features[ctools][] = field_group:field_group:1
 features[ctools][] = strongarm:strongarm:1

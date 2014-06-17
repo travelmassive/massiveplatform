@@ -1,7 +1,7 @@
 <?php
 /**
- * @file tm_twitter_signin.pages
- * Page callbacks for tm_twitter_signin module.
+ * @file tm_users_external_signin.pages
+ * Page callbacks for tm_users_external_signin module.
  * This is heavily based on the twitter_signin module (http://drupal.org/project/twitter)
  * 
  * @author Daniel da Silva (daniel.silva@flipside.org)
@@ -12,7 +12,7 @@
  * Submit handler for Twitter signin.
  * The users go to this url to signin with twitter.
  */
-function tm_twitter_signin_oauth() {
+function tm_users_external_signin_oauth() {
   $key = variable_get('tm_twitter_consumer_key', '');
   $secret = variable_get('tm_twitter_consumer_secret', '');
   $twitter = new Twitter($key, $secret);
@@ -30,7 +30,7 @@ function tm_twitter_signin_oauth() {
  * Callback handler for Twitter signin.
  * Either logs in the user or redirects to complete registration.
  */
-function tm_twitter_signin_oauth_callback() {
+function tm_users_external_signin_oauth_callback() {
   $key = variable_get('tm_twitter_consumer_key', '');
   $secret = variable_get('tm_twitter_consumer_secret', '');
 
@@ -40,7 +40,7 @@ function tm_twitter_signin_oauth_callback() {
     unset($_SESSION['twitter_oauth']);
   }
   else {
-    watchdog('tm_twitter_signin', 'Access to twitter callback without twitter_oauth', array(), WATCHDOG_ERROR);
+    watchdog('tm_users_external_signin', 'Access to twitter callback without twitter_oauth', array(), WATCHDOG_ERROR);
     drupal_goto('<front>');
   }
   
@@ -51,18 +51,18 @@ function tm_twitter_signin_oauth_callback() {
     $response_oauth_verifier = $_GET['oauth_verifier'];
     
     if (!is_array($token) || !$key || !$secret) {
-      watchdog('tm_twitter_signin', 'Invalid Twitter OAuth request.', array(), WATCHDOG_ERROR);
+      watchdog('tm_users_external_signin', 'Invalid Twitter OAuth request.', array(), WATCHDOG_ERROR);
       drupal_set_message(t('An error occurred. Please try again.'), 'error');
       drupal_goto('user/register');
     }
     if ($token['oauth_token'] != $response_oauth_token) {
-      watchdog('tm_twitter_signin', 'Invalid Twitter OAuth request.', array(), WATCHDOG_ERROR);
+      watchdog('tm_users_external_signin', 'Invalid Twitter OAuth request.', array(), WATCHDOG_ERROR);
       drupal_set_message(t('An error occurred. Please try again.'), 'error');
       drupal_goto('user/register');
     }
   }
   else {
-    watchdog('tm_twitter_signin', 'Invalid Twitter OAuth request.', array(), WATCHDOG_ERROR);
+    watchdog('tm_users_external_signin', 'Invalid Twitter OAuth request.', array(), WATCHDOG_ERROR);
     drupal_set_message(t('An error occurred. Please try again.'), 'error');
     drupal_goto('user/register');
   }
@@ -102,7 +102,7 @@ function tm_twitter_signin_oauth_callback() {
       drupal_goto('user');
     }
     else {
-      watchdog('tm_twitter_signin', 'User with uid !uid found in the tm_twitter_account table does not correspond to a valid drupal user', array(':uid' => $uid ), WATCHDOG_ERROR);
+      watchdog('tm_users_external_signin', 'User with uid !uid found in the tm_twitter_account table does not correspond to a valid drupal user', array(':uid' => $uid ), WATCHDOG_ERROR);
       drupal_set_message(t('An error occurred. Please try again.'), 'error');
       drupal_goto('user');
     }
@@ -149,14 +149,14 @@ function tm_twitter_signin_oauth_callback() {
 /**
  * Form handler for tm_twitter/register.
  */
-function tm_twitter_signin_register_form($form, &$form_state) {
+function tm_users_external_signin_register_form($form, &$form_state) {
   // If the user didn't come from the twitter callback redirect.
   if (!isset($_SESSION['twitter_account'])) {
     drupal_goto('<front>');
   }
   
   if (empty($_SESSION['twitter_account']['account']) || empty($_SESSION['twitter_account']['token'])) {
-    watchdog('tm_twitter_signin', 'Twitter did not return proper values.', array(), WATCHDOG_ERROR);
+    watchdog('tm_users_external_signin', 'Twitter did not return proper values.', array(), WATCHDOG_ERROR);
     drupal_set_message(t('An error occurred. Please try again.'), 'error');
     drupal_goto('user/register');
   }
@@ -189,7 +189,7 @@ function tm_twitter_signin_register_form($form, &$form_state) {
     '#value' => 'Finish Registration',
   );
   
-  $form['#submit'][] = 'tm_twitter_signin_register_form_submit';
+  $form['#submit'][] = 'tm_users_external_signin_register_form_submit';
   
   return $form;
 }
@@ -197,7 +197,7 @@ function tm_twitter_signin_register_form($form, &$form_state) {
 /**
  * Form validation callback.
  */
-function tm_twitter_signin_register_form_validate($form, &$form_state) {
+function tm_users_external_signin_register_form_validate($form, &$form_state) {
   $valid_email = $form_state['values']['mail'];
   if (!valid_email_address($valid_email)) {
     form_set_error('mail', 'Sorry. Your email address,' . $valid_email . ', is not valid. Please submit a valid E-mail address.');
@@ -209,7 +209,7 @@ function tm_twitter_signin_register_form_validate($form, &$form_state) {
  * Simulate call the system register form and let logintoboggan do its
  * magic.
  */
-function tm_twitter_signin_register_form_submit($form, &$form_state) {
+function tm_users_external_signin_register_form_submit($form, &$form_state) {
   // User name:
   $name = $form_state['values']['name'];
   // User email:
@@ -258,12 +258,12 @@ function tm_twitter_signin_register_form_submit($form, &$form_state) {
 /**
  * Callback for user/%user/edit/tm_twitter
  */
-function tm_twitter_signin_manage_account($account) {
+function tm_users_external_signin_manage_account($account) {
   $twitter_data = tm_twitter_account_load($account->uid);
   $output = '';
   
   if ($twitter_data) {
-    $form = drupal_get_form('tm_twitter_signin_manage_account_unlink_form', $account, $twitter_data);
+    $form = drupal_get_form('tm_users_external_signin_manage_account_unlink_form', $account, $twitter_data);
     $output .= drupal_render($form);
   }
   else {
@@ -277,7 +277,7 @@ function tm_twitter_signin_manage_account($account) {
 /**
  * Unlink account form.
  */
-function tm_twitter_signin_manage_account_unlink_form($form, &$form_state, $user_account, $twitter_account) {
+function tm_users_external_signin_manage_account_unlink_form($form, &$form_state, $user_account, $twitter_account) {
   $form['user_uid'] = array(
     '#type' => 'hidden',
     '#value' => $user_account->uid,
@@ -297,7 +297,7 @@ function tm_twitter_signin_manage_account_unlink_form($form, &$form_state, $user
 /**
  * Unlink account form submit handler.
  */
-function tm_twitter_signin_manage_account_unlink_form_submit($form, &$form_state) {
+function tm_users_external_signin_manage_account_unlink_form_submit($form, &$form_state) {
   if (tm_twitter_account_delete($form_state['values']['user_uid'])) {
     drupal_set_message(t('Twitter account successfully unlinked.'));
   }

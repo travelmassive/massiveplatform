@@ -42,19 +42,21 @@ function tm_users_default_field_validation_rule() {
   $rule->col = 'value';
   $rule->entity_type = 'user';
   $rule->bundle = 'user';
-  $rule->validator = 'field_validation_unique_validator';
+  $rule->validator = 'tm_fields_unique_validator';
   $rule->settings = array(
     'data' => 'global',
     'per_user' => 0,
+    'skip_empty' => 1,
     'bypass' => 0,
     'roles' => array(
       1 => 0,
       2 => 0,
       3 => 0,
+      4 => 0,
     ),
     'errors' => 0,
   );
-  $rule->error_message = 'This friendly URL is already taken by [existing-entity-link].';
+  $rule->error_message = 'This friendly url is already taken by [existing-entity-link].';
   $export['friendly_url_user_unique'] = $rule;
 
   return $export;

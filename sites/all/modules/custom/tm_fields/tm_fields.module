@@ -48,3 +48,12 @@ function tm_fields_theme() {
     )
   );
 }
+
+/**
+ * Implementation of hook_ctools_plugin_directory().
+ */
+function tm_fields_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'field_validation' && $plugin == 'validator') {
+    return 'plugins/' . $plugin;
+  }
+}

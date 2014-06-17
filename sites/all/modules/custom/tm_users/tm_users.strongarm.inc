@@ -134,7 +134,7 @@ function tm_users_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'logintoboggan_pre_auth_role';
-  $strongarm->value = '4';
+  $strongarm->value = '3';
   $export['logintoboggan_pre_auth_role'] = $strongarm;
 
   $strongarm = new stdClass();

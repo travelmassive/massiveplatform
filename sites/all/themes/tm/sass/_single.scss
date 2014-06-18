@@ -1,5 +1,5 @@
 .trilithon-header {
-  margin: 0 $column-gutter/2 $column-gutter $column-gutter/2;
+  margin: 0 $column-gutter/2 $column-gutter/2 $column-gutter/2;
   position: relative;
   
   .media {
@@ -156,6 +156,7 @@
   }
   
   @media #{$small-up} {
+    margin-bottom: $column-gutter;
     .media {
       margin-bottom: -4rem;
     }

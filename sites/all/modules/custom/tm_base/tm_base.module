@@ -145,7 +145,7 @@ function theme_ds_field_dl($variables) {
   // Since a dd can't exist without a dt, we just print the title without checking if the label's hidden.
   $output .= '<dt>' . $variables['label'] . '</dt>';
   foreach ($variables['items'] as $delta => $item) {
-    $output .= '<dd class="' . $variables['field_name_css'] . '"">' . drupal_render($item) . '</dd>';
+    $output .= '<dd class="' . $variables['field_name_css'] . '">' . drupal_render($item) . '</dd>';
   }
 
   return $output;

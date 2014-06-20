@@ -46,7 +46,9 @@
           <li class="account-wrapper" data-dropd-wrapper>
             <h2><a class="toggle" href="#account-menu-blk" data-dropd-toggle><span><?= t('Account'); ?></span></a></h2>
             <div id="account-menu-blk" class="inner dropd dropd-right" data-dropd>
-              <p>Lorem ipsum dolor sit amet.</p>
+              
+              <?php print($page['account_menu']); ?>
+              
             </div>
           </li>
         </ul>

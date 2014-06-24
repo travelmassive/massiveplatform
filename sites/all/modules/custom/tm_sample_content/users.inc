@@ -62,9 +62,21 @@ class TMUserMigration extends TMBaseMigration {
 
     // Friendly URL
     $this->addFieldMapping('field_friendly_url','url');
+
+    // The profile questions
+    $this->addFieldMapping('field_user_question_destination','q1');
+    $this->addFieldMapping('field_user_question_dream_travel','q2');
+    $this->addFieldMapping('field_user_question_learn','q3');
+    $this->addFieldMapping('field_user_question_job','q4');
+    $this->addFieldMapping('field_user_question_why_travel','q5');
+
   }
 
   public function prepareRow($row) {
+    // Make sure that any empty fields, are imported as null and not empty strings.
+    if (empty($row->limit)) {
+      $row->limit = array();
+    }
   }
 
 }

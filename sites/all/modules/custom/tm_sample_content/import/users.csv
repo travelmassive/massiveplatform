@@ -1,9 +1,9 @@
-id,name,pass,mail,avatar,banner,role,status,url
-2,kate,321321,kate@flipside.org,user2.jpeg,user-banner2.jpg,2,1,wonderful-katy
-3,elizabeth,321321,elizabeth@flipside.org,user3.png,user-banner3.jpg,2,1,liza
-4,heinz,321321,heinz@flipside.org,user4.jpg,user-banner4.jpg,2,1,ketchup
-5,charles,321321,charles@flipside.org,user5.jpg,user-banner5.jpg,2,1,
-6,sophie,321321,sophie@flipside.org,user6.jpg,user-banner6.jpg,2,1,
-7,ludwig,321321,ludwig@flipside.org,user7.jpg,user-banner7.jpg,2,1,
-8,manel,321321,manel@flipside.org,user8.jpg,user-banner8.jpg,2,1,
-9,caramelo,321321,caramelo@flipside.org,user9.jpeg,user-banner9.jpg,2,1,
+id,name,pass,mail,avatar,banner,role,status,url,q1,q2,q3,q4,q5
+2,kate,321321,kate@flipside.org,user2.jpeg,user-banner2.jpg,2,1,wonderful-katy,Lisbon,Porto,Braga,,
+3,elizabeth,321321,elizabeth@flipside.org,user3.png,user-banner3.jpg,2,1,liza,Timbuktu,,,,
+4,heinz,321321,heinz@flipside.org,user4.jpg,user-banner4.jpg,2,1,ketchup,Germany,Germany,Tomatoes,Tomato farmer,Beer Lederhosen and Fast cars
+5,charles,321321,charles@flipside.org,user5.jpg,user-banner5.jpg,2,1,,,,,,Floop floop
+6,sophie,321321,sophie@flipside.org,user6.jpg,user-banner6.jpg,2,1,,Los Roques,,,,IT'S THE BEST THING IN THA WORLD
+7,ludwig,321321,ludwig@flipside.org,user7.jpg,user-banner7.jpg,2,1,,,,,,
+8,manel,321321,manel@flipside.org,user8.jpg,user-banner8.jpg,2,1,,Lusitania,,,,-
+9,caramelo,321321,caramelo@flipside.org,user9.jpeg,user-banner9.jpg,2,1,,Praça das Flores,,,,Because

@@ -84,6 +84,46 @@ function tm_users_ds_field_settings_info() {
         ),
       ),
     ),
+    'field_user_question_destination' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_minimal',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'field_user_question_dream_travel' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_minimal',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'field_user_question_learn' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_minimal',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'field_user_question_job' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_minimal',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'field_user_question_why_travel' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_minimal',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
   );
   $export['user|user|default'] = $ds_fieldsetting;
 
@@ -187,36 +227,46 @@ function tm_users_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
-      'header_media' => array(
-        0 => 'field_image',
-      ),
       'second_column' => array(
-        1 => 'members_following_members',
+        0 => 'members_following_members',
+      ),
+      'header_media' => array(
+        1 => 'field_image',
       ),
       'header_body' => array(
         2 => 'field_avatar',
         3 => 'name',
         4 => 'group_action_menu_wrapper',
         7 => 'group_action_menu',
-        8 => 'flag_follow_members',
+        10 => 'flag_follow_members',
       ),
       'header_extra' => array(
         5 => 'tm_ds_chapter_sticker',
       ),
       'first_column' => array(
         6 => 'group_details',
+        8 => 'field_user_question_destination',
+        9 => 'field_user_question_dream_travel',
+        11 => 'field_user_question_learn',
+        12 => 'field_user_question_job',
+        13 => 'field_user_question_why_travel',
       ),
     ),
     'fields' => array(
-      'field_image' => 'header_media',
       'members_following_members' => 'second_column',
+      'field_image' => 'header_media',
       'field_avatar' => 'header_body',
       'name' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
       'tm_ds_chapter_sticker' => 'header_extra',
       'group_details' => 'first_column',
       'group_action_menu' => 'header_body',
+      'field_user_question_destination' => 'first_column',
+      'field_user_question_dream_travel' => 'first_column',
       'flag_follow_members' => 'header_body',
+      'field_user_question_learn' => 'first_column',
+      'field_user_question_job' => 'first_column',
+      'field_user_question_why_travel' => 'first_column',
     ),
     'classes' => array(),
     'wrappers' => array(

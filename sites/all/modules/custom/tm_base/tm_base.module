@@ -131,10 +131,13 @@ function tm_base_field_group_pre_render(&$element, $group, &$form) {
  * Implements hook_ds_field_theme_functions_info().
  */
 function tm_base_ds_field_theme_functions_info() {
-  return array('theme_ds_field_dl' => t('Definition list item'));
+  return array(
+    'theme_ds_field_contained_block' => t('TM Contained block'),
+    'theme_ds_field_dl' => t('TM Definition list item')
+  );
 }
 /**
-* Field theming function.
+* Field theming function. Output a definition list item
 */
 function theme_ds_field_dl($variables) {
   $output = '';
@@ -147,6 +150,25 @@ function theme_ds_field_dl($variables) {
   foreach ($variables['items'] as $delta => $item) {
     $output .= '<dd class="' . $variables['field_name_css'] . '">' . drupal_render($item) . '</dd>';
   }
+
+  return $output;
+}
+/**
+* Field theming function. Produces markup for a contained block
+*/
+function theme_ds_field_contained_block($variables) {
+  $output = '';
+
+  // @Todo Add custom class to form
+  // $config = $variables['ds-config'];
+  
+  $output .= '<section class="contained contained-block">';
+  $output .= '<header class="contained-head"><h1 class="prime-title">' . $variables['label'] . '</h1></header>';
+  $output .= '<div class="contained-body">';
+  foreach ($variables['items'] as $delta => $item) {
+    $output .= drupal_render($item);
+  }
+  $output .= '</div></section>';
 
   return $output;
 }

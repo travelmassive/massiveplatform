@@ -33,17 +33,9 @@ function tm_events_ds_field_settings_info() {
       'format' => 'default',
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_expert',
+          'func' => 'theme_ds_field_contained_block',
           'lb' => 'Community',
-          'lb-el' => 'h1',
-          'lb-cl' => 'prime-title',
           'lb-col' => TRUE,
-          'ow' => TRUE,
-          'ow-el' => 'section',
-          'ow-cl' => 'contained contained-block',
-          'ow-def-cl' => FALSE,
-          'ow-at' => '',
-          'ow-def-at' => FALSE,
         ),
       ),
     ),

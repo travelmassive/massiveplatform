@@ -54,6 +54,7 @@ function tm_organizations_field_group_info() {
     'weight' => '15',
     'children' => array(
       0 => 'ds_flag_follow_organizations',
+      1 => 'tm_ds_more_actions',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(

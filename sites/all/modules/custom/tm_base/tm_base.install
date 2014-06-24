@@ -8,7 +8,13 @@
 /**
  * Implements hook_install().
  */
-function tm_base_install() {
+function tm_base_install() {  
+  $new_vocab = (object) array(
+    'name' => 'Industry segment',
+    'description' => 'A list with industry segments',
+    'machine_name' => 'tm_segments',
+  );
+  taxonomy_vocabulary_save($new_vocab);
 }
 
 /**

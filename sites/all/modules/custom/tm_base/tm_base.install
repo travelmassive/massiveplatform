@@ -77,3 +77,9 @@ function tm_base_update_7010() {
 function tm_base_update_7011() {
   module_enable(array('tm_flags'));
 }
+/**
+ * Enable the taxonomy module.
+ */
+function tm_base_update_7012() {
+  module_enable(array('taxonomy'));
+}

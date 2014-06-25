@@ -92,7 +92,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'inline',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 14,
+        'weight' => 15,
       ),
       'grid' => array(
         'label' => 'above',
@@ -144,7 +144,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 6,
+        'weight' => 14,
       ),
       'grid' => array(
         'label' => 'above',
@@ -205,7 +205,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 15,
+        'weight' => 16,
       ),
       'grid' => array(
         'label' => 'above',

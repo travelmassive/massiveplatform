@@ -1,4 +1,9 @@
-<?php 
+<?php
+/**
+ * @file
+ * Industry segments taxonomy terms to import on installation.
+ * @author Olaf Veerman (olaf.veerman@flipside.org)
+ */
 $tm_segments_terms = array(
   'Online Travel Industry' => array(
     'Online Travel Agent (OTA)',

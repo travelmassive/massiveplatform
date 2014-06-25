@@ -36,6 +36,8 @@ dependencies[] = field_validation
 dependencies[] = field_validation_ui
 dependencies[] = file
 dependencies[] = flag
+dependencies[] = hierarchical_select
+dependencies[] = hs_taxonomy
 dependencies[] = jquery_update
 dependencies[] = libraries
 dependencies[] = link
@@ -50,6 +52,7 @@ dependencies[] = views_ui
 dependencies[] = logintoboggan
 dependencies[] = oauth_common
 dependencies[] = module_filter
+dependencies[] = entityreference_prepopulate
 
 
 ; TM - development

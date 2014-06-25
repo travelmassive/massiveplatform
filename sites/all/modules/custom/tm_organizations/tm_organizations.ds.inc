@@ -112,6 +112,13 @@ function tm_organizations_ds_field_settings_info() {
         ),
       ),
     ),
+    'field_segment' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_dl',
+        ),
+      ),
+    ),
   );
   $export['node|organization|full'] = $ds_fieldsetting;
 
@@ -200,10 +207,11 @@ function tm_organizations_ds_layout_settings_info() {
         12 => 'group_action_menu',
       ),
       'first_column' => array(
-        6 => 'group_details_wrapper',
-        7 => 'field_owner',
-        9 => 'body',
-        10 => 'group_details',
+        5 => 'group_details_wrapper',
+        6 => 'field_owner',
+        7 => 'body',
+        8 => 'field_segment',
+        9 => 'group_details',
       ),
       'second_column' => array(
         8 => 'group_community_wrapper',
@@ -213,14 +221,15 @@ function tm_organizations_ds_layout_settings_info() {
     'fields' => array(
       'field_image' => 'header_media',
       'ds_flag_follow_organizations' => 'header_body',
-      'tm_ds_more_actions' => 'header_body',
       'field_avatar' => 'header_body',
+      'tm_ds_more_actions' => 'header_body',
       'title' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
       'group_details_wrapper' => 'first_column',
       'field_owner' => 'first_column',
       'group_community_wrapper' => 'second_column',
       'body' => 'first_column',
+      'field_segment' => 'first_column',
       'group_details' => 'first_column',
       'members_following' => 'second_column',
       'group_action_menu' => 'header_body',

@@ -132,6 +132,7 @@ function tm_organizations_field_group_info() {
     'children' => array(
       0 => 'body',
       1 => 'field_owner',
+      2 => 'field_segment',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(

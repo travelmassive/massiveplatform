@@ -228,6 +228,50 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'user-user-field_segment'
+  $field_instances['user-user-field_segment'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Please select the industry segment that best applies to you.',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'hs_taxonomy',
+        'settings' => array(),
+        'type' => 'hs_taxonomy_term_reference_hierarchical_text',
+        'weight' => 13,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'user',
+    'field_name' => 'field_segment',
+    'label' => 'Segment',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'hs_taxonomy',
+      'settings' => array(),
+      'type' => 'taxonomy_hs',
+      'weight' => 64,
+    ),
+  );
+
   // Exported field_instance: 'user-user-field_user_question_destination'
   $field_instances['user-user-field_user_question_destination'] = array(
     'bundle' => 'user',
@@ -240,7 +284,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 8,
+        'weight' => 14,
       ),
       'grid' => array(
         'label' => 'above',
@@ -287,7 +331,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 9,
+        'weight' => 15,
       ),
       'grid' => array(
         'label' => 'above',
@@ -334,7 +378,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 11,
+        'weight' => 17,
       ),
       'grid' => array(
         'label' => 'above',
@@ -381,7 +425,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 10,
+        'weight' => 16,
       ),
       'grid' => array(
         'label' => 'above',
@@ -428,7 +472,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 12,
+        'weight' => 18,
       ),
       'grid' => array(
         'label' => 'above',
@@ -470,6 +514,8 @@ function tm_users_field_default_field_instances() {
   t('By picking a custom URL, you make sure that your profile is accesible through a friendly URL. For example: http://travelmassive.com/your-url');
   t('City');
   t('Friendly URL');
+  t('Please select the industry segment that best applies to you.');
+  t('Segment');
   t('Three words that describe why we should travel?');
   t('What do you want to learn more about?');
   t('What is your favorite travel destination?');

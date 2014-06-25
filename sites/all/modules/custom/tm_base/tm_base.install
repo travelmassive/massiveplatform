@@ -8,13 +8,44 @@
 /**
  * Implements hook_install().
  */
-function tm_base_install() {  
-  $new_vocab = (object) array(
+function tm_base_install() {
+  _tm_base_segments_terms_import();
+}
+
+/**
+ * Imports the industry segments taxonomy vocabulary.
+ */
+function _tm_base_segments_terms_import() {
+  if (taxonomy_vocabulary_machine_name_load('tm_segments')) {
+    return;
+  }
+  
+  
+  require drupal_get_path('module', 'tm_base') . '/import/taxonomy/tm_segments_terms.php';
+  
+  // Create vocabulary.
+  $tm_segments = (object) array(
     'name' => 'Industry segment',
     'description' => 'A list with industry segments',
     'machine_name' => 'tm_segments',
   );
-  taxonomy_vocabulary_save($new_vocab);
+  taxonomy_vocabulary_save($tm_segments);
+  
+  // Create terms.
+  foreach ($tm_segments_terms as $parent_name => $children) {
+    $parent_term = new stdClass();
+    $parent_term->name = $parent_name;
+    $parent_term->vid = $tm_segments->vid;
+    taxonomy_term_save($parent_term);
+
+    foreach ($children as $child_name) {
+      $child_term = new stdClass();
+      $child_term->name = $child_name;
+      $child_term->vid = $tm_segments->vid;
+      $child_term->parent = $parent_term->tid;
+      taxonomy_term_save($child_term);
+    }
+  }
 }
 
 /**
@@ -90,8 +121,16 @@ function tm_base_update_7012() {
   module_enable(array('taxonomy'));
 }
 /**
- * Enable the date_views module.
+ * Imports the industry segments taxonomy vocabulary.
  */
 function tm_base_update_7013() {
-  module_enable(array('date_views'));
+  _tm_base_segments_terms_import();
+}
+/**
+ * Enable the Hierarchical Select + HS Taxonomy modules
+ * Enable the entityreference_prepopulate module.
+ * Enable the date_views module.
+ */
+function tm_base_update_7014() {
+  module_enable(array('entityreference_prepopulate', 'hierarchical_select', 'hs_taxonomy', 'date_views'));
 }

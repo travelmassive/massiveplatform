@@ -139,6 +139,7 @@ function tm_users_field_group_info() {
       2 => 'field_user_question_job',
       3 => 'field_user_question_learn',
       4 => 'field_user_question_why_travel',
+      5 => 'field_segment',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(

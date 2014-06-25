@@ -40,6 +40,7 @@ features[field_group][] = group_details_wrapper|node|event|full
 features[field_group][] = group_details_wrapper|node|partner_event|full
 features[field_group][] = group_details|node|event|full
 features[field_group][] = group_details|node|partner_event|full
+features[field_group][] = group_organizers_wrapper|node|event|full
 features[field_instance][] = node-event-body
 features[field_instance][] = node-event-field_chapter
 features[field_instance][] = node-event-field_event_date

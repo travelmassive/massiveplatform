@@ -89,3 +89,9 @@ function tm_base_update_7011() {
 function tm_base_update_7012() {
   module_enable(array('taxonomy'));
 }
+/**
+ * Enable the entityreference_prepopulate module.
+ */
+function tm_base_update_7013() {
+  module_enable(array('entityreference_prepopulate'));
+}

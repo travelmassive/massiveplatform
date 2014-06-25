@@ -49,6 +49,7 @@ dependencies[] = views_ui
 dependencies[] = logintoboggan
 dependencies[] = oauth_common
 dependencies[] = module_filter
+dependencies[] = entityreference_prepopulate
 
 
 ; TM - development

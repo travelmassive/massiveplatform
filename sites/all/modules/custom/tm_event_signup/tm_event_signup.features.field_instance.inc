@@ -32,7 +32,7 @@ function tm_event_signup_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 15,
+        'weight' => 18,
       ),
       'grid' => array(
         'label' => 'above',
@@ -88,7 +88,7 @@ function tm_event_signup_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 15,
       ),
       'grid' => array(
         'label' => 'above',

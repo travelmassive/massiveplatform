@@ -74,8 +74,31 @@ function tm_chapters_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
-  $field_group->identifier = 'group_details|node|chapter|full';
-  $field_group->group_name = 'group_details';
+  $field_group->identifier = 'group_community_wrapper|node|chapter|full';
+  $field_group->group_name = 'group_community_wrapper';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'chapter';
+  $field_group->mode = 'full';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Community',
+    'weight' => '5',
+    'children' => array(
+      0 => 'members_signed_up',
+    ),
+    'format_type' => 'contained_block',
+    'format_settings' => array(
+      'label' => 'Community',
+      'formatter' => 'open',
+    ),
+  );
+  $export['group_community_wrapper|node|chapter|full'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_details_wrapper|node|chapter|full';
+  $field_group->group_name = 'group_details_wrapper';
   $field_group->entity_type = 'node';
   $field_group->bundle = 'chapter';
   $field_group->mode = 'full';
@@ -84,13 +107,40 @@ function tm_chapters_field_group_info() {
     'label' => 'Details',
     'weight' => '4',
     'children' => array(
+      0 => 'group_details',
+    ),
+    'format_type' => 'contained_block',
+    'format_settings' => array(
+      'label' => 'Details',
+      'formatter' => 'open',
+    ),
+  );
+  $export['group_details_wrapper|node|chapter|full'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_details|node|chapter|full';
+  $field_group->group_name = 'group_details';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'chapter';
+  $field_group->mode = 'full';
+  $field_group->parent_name = 'group_details_wrapper';
+  $field_group->data = array(
+    'label' => 'Details',
+    'weight' => '5',
+    'children' => array(
       0 => 'body',
     ),
-    'format_type' => 'dl',
+    'format_type' => 'html-element',
     'format_settings' => array(
-      'formatter' => 'open',
+      'label' => 'Details',
       'instance_settings' => array(
-        'classes' => 'group-details field-group-dl',
+        'classes' => 'details-list',
+        'element' => 'dl',
+        'show_label' => '0',
+        'label_element' => '',
+        'attributes' => '',
       ),
     ),
   );

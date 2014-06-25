@@ -28,14 +28,12 @@ function tm_organizations_ds_field_settings_info() {
       ),
     ),
     'members_following' => array(
-      'weight' => '0',
-      'label' => 'above',
+      'weight' => '6',
+      'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_contained_block',
-          'lb' => 'Followed by',
-          'lb-col' => TRUE,
+          'func' => 'theme_ds_field_reset',
         ),
       ),
     ),
@@ -190,38 +188,42 @@ function tm_organizations_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
-      'second_column' => array(
-        0 => 'members_following',
-      ),
       'header_media' => array(
-        1 => 'field_image',
+        0 => 'field_image',
       ),
       'header_body' => array(
-        2 => 'ds_flag_follow_organizations',
-        3 => 'tm_ds_more_actions',
-        4 => 'field_avatar',
-        5 => 'title',
-        9 => 'group_action_menu',
-        10 => 'group_action_menu_wrapper',
+        1 => 'ds_flag_follow_organizations',
+        2 => 'tm_ds_more_actions',
+        3 => 'field_avatar',
+        4 => 'title',
+        5 => 'group_action_menu_wrapper',
+        12 => 'group_action_menu',
       ),
       'first_column' => array(
-        6 => 'field_owner',
-        7 => 'body',
-        8 => 'group_details',
+        6 => 'group_details_wrapper',
+        7 => 'field_owner',
+        9 => 'body',
+        10 => 'group_details',
+      ),
+      'second_column' => array(
+        8 => 'group_community_wrapper',
+        11 => 'members_following',
       ),
     ),
     'fields' => array(
-      'members_following' => 'second_column',
       'field_image' => 'header_media',
       'ds_flag_follow_organizations' => 'header_body',
       'tm_ds_more_actions' => 'header_body',
       'field_avatar' => 'header_body',
       'title' => 'header_body',
+      'group_action_menu_wrapper' => 'header_body',
+      'group_details_wrapper' => 'first_column',
       'field_owner' => 'first_column',
+      'group_community_wrapper' => 'second_column',
       'body' => 'first_column',
       'group_details' => 'first_column',
+      'members_following' => 'second_column',
       'group_action_menu' => 'header_body',
-      'group_action_menu_wrapper' => 'header_body',
     ),
     'classes' => array(),
     'wrappers' => array(

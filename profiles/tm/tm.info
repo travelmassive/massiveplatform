@@ -45,6 +45,7 @@ dependencies[] = token
 dependencies[] = variable
 dependencies[] = variable_admin
 dependencies[] = views
+dependencies[] = date_views
 dependencies[] = views_ui
 dependencies[] = logintoboggan
 dependencies[] = oauth_common

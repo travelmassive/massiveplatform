@@ -27,6 +27,16 @@ function tm_chapters_ds_field_settings_info() {
         ),
       ),
     ),
+    'event_list' => array(
+      'weight' => '6',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
     'chapter_avatar' => array(
       'weight' => '1',
       'label' => 'hidden',
@@ -264,44 +274,48 @@ function tm_chapters_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
-      'header_media' => array(
-        0 => 'field_image',
-      ),
       'header_body' => array(
-        1 => 'ds_flag_signup',
-        2 => 'tm_ds_more_actions',
-        3 => 'chapter_avatar',
+        0 => 'ds_flag_signup',
+        2 => 'chapter_avatar',
+        3 => 'tm_ds_more_actions',
         4 => 'title',
         5 => 'group_action_menu_wrapper',
-        13 => 'group_action_menu',
+        14 => 'group_action_menu',
+      ),
+      'header_media' => array(
+        1 => 'field_image',
       ),
       'first_column' => array(
         6 => 'group_details_wrapper',
-        7 => 'group_details',
-        8 => 'body',
+        8 => 'group_details',
+        9 => 'body',
+        12 => 'event_list',
+        15 => 'group_events_wrapper',
       ),
       'second_column' => array(
-        9 => 'group_team_wrapper',
+        7 => 'group_team_wrapper',
         10 => 'group_community_wrapper',
         11 => 'members_signed_up',
-        12 => 'field_chapter_leaders',
+        13 => 'field_chapter_leaders',
       ),
     ),
     'fields' => array(
-      'field_image' => 'header_media',
       'ds_flag_signup' => 'header_body',
-      'tm_ds_more_actions' => 'header_body',
+      'field_image' => 'header_media',
       'chapter_avatar' => 'header_body',
+      'tm_ds_more_actions' => 'header_body',
       'title' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
       'group_details_wrapper' => 'first_column',
+      'group_team_wrapper' => 'second_column',
       'group_details' => 'first_column',
       'body' => 'first_column',
-      'group_team_wrapper' => 'second_column',
       'group_community_wrapper' => 'second_column',
       'members_signed_up' => 'second_column',
+      'event_list' => 'first_column',
       'field_chapter_leaders' => 'second_column',
       'group_action_menu' => 'header_body',
+      'group_events_wrapper' => 'first_column',
     ),
     'classes' => array(),
     'wrappers' => array(

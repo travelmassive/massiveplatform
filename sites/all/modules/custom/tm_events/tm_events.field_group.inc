@@ -266,6 +266,29 @@ function tm_events_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_events_wrapper|node|chapter|full';
+  $field_group->group_name = 'group_events_wrapper';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'chapter';
+  $field_group->mode = 'full';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Events',
+    'weight' => '20',
+    'children' => array(
+      0 => 'event_list',
+    ),
+    'format_type' => 'contained_block',
+    'format_settings' => array(
+      'label' => 'Events',
+      'formatter' => 'open',
+    ),
+  );
+  $export['group_events_wrapper|node|chapter|full'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_organizers_wrapper|node|event|full';
   $field_group->group_name = 'group_organizers_wrapper';
   $field_group->entity_type = 'node';

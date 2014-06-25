@@ -10,6 +10,20 @@
  */
 function tm_base_install() {
   _tm_base_segments_terms_import();
+  
+  // Assign the correct user admin role.
+  if ($admin_role = user_role_load_by_name('administrator')) {
+    variable_set('user_admin_role', $admin_role->rid);
+  }
+  
+  // Create and assign the non-validated role.
+  $non_validated_role = user_role_load_by_name('non-validated');
+  if (!$non_validated_role) {
+    $non_validated_role = new stdClass();
+    $non_validated_role->name = 'non-validated';
+    user_role_save($non_validated_role);
+  }
+  variable_set('logintoboggan_pre_auth_role', $non_validated_role->rid);
 }
 
 /**

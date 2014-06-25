@@ -140,6 +140,13 @@ function tm_users_ds_field_settings_info() {
         ),
       ),
     ),
+    'field_segment' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_dl',
+        ),
+      ),
+    ),
   );
   $export['user|user|default'] = $ds_fieldsetting;
 
@@ -243,46 +250,48 @@ function tm_users_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
-      'second_column' => array(
-        0 => 'members_following_members',
-      ),
       'header_media' => array(
-        1 => 'field_image',
+        0 => 'field_image',
+      ),
+      'second_column' => array(
+        1 => 'members_following_members',
       ),
       'header_body' => array(
         2 => 'field_avatar',
         3 => 'name',
         4 => 'group_action_menu_wrapper',
         7 => 'group_action_menu',
-        10 => 'flag_follow_members',
-        12 => 'tm_ds_more_actions',
+        8 => 'flag_follow_members',
+        9 => 'tm_ds_more_actions',
       ),
       'header_extra' => array(
         5 => 'tm_ds_chapter_sticker',
       ),
       'first_column' => array(
         6 => 'group_details',
-        8 => 'field_user_question_destination',
-        9 => 'field_user_question_dream_travel',
-        11 => 'field_user_question_learn',
-        13 => 'field_user_question_job',
-        14 => 'field_user_question_why_travel',
+        10 => 'field_segment',
+        11 => 'field_user_question_destination',
+        12 => 'field_user_question_dream_travel',
+        13 => 'field_user_question_learn',
+        14 => 'field_user_question_job',
+        15 => 'field_user_question_why_travel',
       ),
     ),
     'fields' => array(
-      'members_following_members' => 'second_column',
       'field_image' => 'header_media',
+      'members_following_members' => 'second_column',
       'field_avatar' => 'header_body',
       'name' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
       'tm_ds_chapter_sticker' => 'header_extra',
       'group_details' => 'first_column',
       'group_action_menu' => 'header_body',
+      'flag_follow_members' => 'header_body',
+      'tm_ds_more_actions' => 'header_body',
+      'field_segment' => 'first_column',
       'field_user_question_destination' => 'first_column',
       'field_user_question_dream_travel' => 'first_column',
-      'flag_follow_members' => 'header_body',
       'field_user_question_learn' => 'first_column',
-      'tm_ds_more_actions' => 'header_body',
       'field_user_question_job' => 'first_column',
       'field_user_question_why_travel' => 'first_column',
     ),

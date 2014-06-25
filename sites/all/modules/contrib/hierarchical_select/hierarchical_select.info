@@ -1,0 +1,14 @@
+name = Hierarchical Select
+description = Simplifies the selection of one or multiple items in a hierarchical tree.
+package = Form Elements
+
+core = 7.x
+
+files[] = tests/internals.test
+
+; Information added by drupal.org packaging script on 2013-09-02
+version = "7.x-3.0-alpha6"
+core = "7.x"
+project = "hierarchical_select"
+datestamp = "1378129321"
+

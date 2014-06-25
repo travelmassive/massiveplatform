@@ -126,3 +126,10 @@ function tm_base_update_7012() {
 function tm_base_update_7013() {
   _tm_base_segments_terms_import();
 }
+/**
+ * Enable the Hierarchical Select + HS Taxonomy modules
+ */
+function tm_base_update_7014() {
+  module_enable(array('hierarchical_select', 'hs_taxonomy'));
+  ;
+}

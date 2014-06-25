@@ -54,6 +54,7 @@ function tm_users_field_group_info() {
     'weight' => '8',
     'children' => array(
       0 => 'flag_follow_members',
+      1 => 'tm_ds_more_actions',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(
@@ -85,8 +86,8 @@ function tm_users_field_group_info() {
     'children' => array(
       0 => 'field_user_question_destination',
       1 => 'field_user_question_dream_travel',
-      2 => 'field_user_question_learn',
-      3 => 'field_user_question_job',
+      2 => 'field_user_question_job',
+      3 => 'field_user_question_learn',
       4 => 'field_user_question_why_travel',
     ),
     'format_type' => 'dl',

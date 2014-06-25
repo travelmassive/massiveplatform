@@ -16,6 +16,13 @@ function tm_fields_ds_fields_info($entity_type) {
     'ui_limit' => array('event|*', 'user|*'),
     'function' => '_tm_chapter_sticker_process'
   );
+  
+  $fields['tm_ds_more_actions'] = array(
+    'title' => t('More actions'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('*|*'),
+    'function' => '_tm_more_actions_process'
+  );
 
   return array($entity_type => $fields);
 }
@@ -33,6 +40,55 @@ function _tm_chapter_sticker_process($field, $title = NULL) {
   }
 }
 /**
+ * Custom function to build the more_actions menu
+ */
+function _tm_more_actions_process($field, $title = NULL) {
+  global $base_root;
+  $base = $base_root . request_uri();
+  
+  $links = array(
+    array(
+      'wrapper_class' => array('facebook'),
+      'content' => l(t('Share on Facebook'), 'https://www.facebook.com/sharer/sharer.php', array(
+        'absolute' => TRUE,
+        'query' => array('u' => $base),
+        'attributes' => array(
+          'target' => '_blank',
+          'class' => array('facebook'),
+          'title' => t('Share this on Facebook')
+        )
+      ))
+    ),
+
+    array(
+      'wrapper_class' => array('twitter'),
+      'content' => l(t('Share on Twitter'), 'https://twitter.com/share', array(
+        'absolute' => TRUE,
+        'query' => array('url' => $base),
+        'attributes' => array(
+          'target' => '_blank',
+          'class' => array('twitter'),
+          'title' => t('Share this on Twitter')
+        )
+      ))
+    ),
+
+    array(
+      'wrapper_class' => array('google-plus'),
+      'content' => l(t('Share on Google+'), 'https://plus.google.com/share', array(
+        'absolute' => TRUE,
+        'query' => array('url' => $base),
+        'attributes' => array(
+          'onclick' => "javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600'); return false;",
+          'class' => array('google-plus'),
+          'title' => t('Share this on Google+')
+        )
+      ))
+    ),
+  );
+  return theme('more_actions', array('links' => $links));
+}
+/**
  * Implement hook_theme()
  */
 function tm_fields_theme() {
@@ -45,6 +101,13 @@ function tm_fields_theme() {
       ),
       'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
       'template' => 'tm_chapter_sticker'
+    ),
+    'more_actions' => array(
+      'variables' => array(
+        'links' => array()
+      ),
+      'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
+      'template' => 'tm_more_actions'
     )
   );
 }

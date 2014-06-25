@@ -62,6 +62,22 @@ function tm_chapters_ds_field_settings_info() {
         ),
       ),
     ),
+    'tm_ds_more_actions' => array(
+      'weight' => '1',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'li',
+          'ow-cl' => '',
+          'ow-def-cl' => FALSE,
+          'ow-at' => 'data-dropd-wrapper',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
     'body' => array(
       'formatter_settings' => array(
         'ft' => array(
@@ -232,33 +248,35 @@ function tm_chapters_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
-      'header_media' => array(
-        0 => 'field_image',
-      ),
       'header_body' => array(
-        1 => 'ds_flag_signup',
+        0 => 'ds_flag_signup',
         2 => 'chapter_avatar',
-        3 => 'title',
-        4 => 'group_action_menu_wrapper',
-        8 => 'group_action_menu',
+        3 => 'tm_ds_more_actions',
+        4 => 'title',
+        5 => 'group_action_menu_wrapper',
+        9 => 'group_action_menu',
+      ),
+      'header_media' => array(
+        1 => 'field_image',
       ),
       'first_column' => array(
-        5 => 'group_details',
-        6 => 'body',
+        6 => 'group_details',
+        8 => 'body',
       ),
       'second_column' => array(
         7 => 'members_signed_up',
       ),
     ),
     'fields' => array(
-      'field_image' => 'header_media',
       'ds_flag_signup' => 'header_body',
+      'field_image' => 'header_media',
       'chapter_avatar' => 'header_body',
+      'tm_ds_more_actions' => 'header_body',
       'title' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
       'group_details' => 'first_column',
-      'body' => 'first_column',
       'members_signed_up' => 'second_column',
+      'body' => 'first_column',
       'group_action_menu' => 'header_body',
     ),
     'classes' => array(),

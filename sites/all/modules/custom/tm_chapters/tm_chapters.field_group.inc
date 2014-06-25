@@ -82,7 +82,7 @@ function tm_chapters_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Details',
-    'weight' => '4',
+    'weight' => '5',
     'children' => array(
       0 => 'body',
     ),

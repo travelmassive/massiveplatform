@@ -38,7 +38,7 @@ function tm_chapters_ds_field_settings_info() {
       ),
     ),
     'members_signed_up' => array(
-      'weight' => '5',
+      'weight' => '6',
       'label' => 'above',
       'format' => 'default',
       'formatter_settings' => array(
@@ -76,6 +76,15 @@ function tm_chapters_ds_field_settings_info() {
           'ow-at' => 'data-dropd-wrapper',
           'ow-def-at' => FALSE,
         ),
+      ),
+    ),
+    'tm_ds_add_event' => array(
+      'weight' => '4',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'Extra classes' => '',
+        'ft' => array(),
       ),
     ),
     'body' => array(
@@ -248,35 +257,37 @@ function tm_chapters_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
+      'header_media' => array(
+        0 => 'field_image',
+      ),
       'header_body' => array(
-        0 => 'ds_flag_signup',
-        2 => 'chapter_avatar',
-        3 => 'tm_ds_more_actions',
+        1 => 'ds_flag_signup',
+        2 => 'tm_ds_more_actions',
+        3 => 'chapter_avatar',
         4 => 'title',
         5 => 'group_action_menu_wrapper',
-        9 => 'group_action_menu',
-      ),
-      'header_media' => array(
-        1 => 'field_image',
+        10 => 'group_action_menu',
       ),
       'first_column' => array(
-        6 => 'group_details',
-        8 => 'body',
+        6 => 'tm_ds_add_event',
+        7 => 'body',
+        8 => 'group_details',
       ),
       'second_column' => array(
-        7 => 'members_signed_up',
+        9 => 'members_signed_up',
       ),
     ),
     'fields' => array(
-      'ds_flag_signup' => 'header_body',
       'field_image' => 'header_media',
-      'chapter_avatar' => 'header_body',
+      'ds_flag_signup' => 'header_body',
       'tm_ds_more_actions' => 'header_body',
+      'chapter_avatar' => 'header_body',
       'title' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
+      'tm_ds_add_event' => 'first_column',
+      'body' => 'first_column',
       'group_details' => 'first_column',
       'members_signed_up' => 'second_column',
-      'body' => 'first_column',
       'group_action_menu' => 'header_body',
     ),
     'classes' => array(),

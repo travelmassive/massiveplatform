@@ -43,6 +43,7 @@ dependencies[] = libraries
 dependencies[] = link
 dependencies[] = logintoboggan
 dependencies[] = pathauto
+dependencies[] = realname
 dependencies[] = token
 dependencies[] = variable
 dependencies[] = variable_admin

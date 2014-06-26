@@ -41,7 +41,7 @@ function tm_users_ds_field_settings_info() {
       ),
     ),
     'tm_ds_chapter_sticker' => array(
-      'weight' => '4',
+      'weight' => '5',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -98,6 +98,13 @@ function tm_users_ds_field_settings_info() {
         ),
       ),
     ),
+    'field_segment' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_dl',
+        ),
+      ),
+    ),
     'field_user_question_destination' => array(
       'formatter_settings' => array(
         'ft' => array(
@@ -138,7 +145,7 @@ function tm_users_ds_field_settings_info() {
         ),
       ),
     ),
-    'field_segment' => array(
+    'field_about_me' => array(
       'formatter_settings' => array(
         'ft' => array(
           'func' => 'theme_ds_field_dl',
@@ -156,7 +163,7 @@ function tm_users_ds_field_settings_info() {
   $ds_fieldsetting->view_mode = 'grid';
   $ds_fieldsetting->settings = array(
     'name' => array(
-      'weight' => '2',
+      'weight' => '0',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -178,19 +185,6 @@ function tm_users_ds_field_settings_info() {
         ),
       ),
     ),
-    'field_image' => array(
-      'formatter_settings' => array(
-        'ft' => array(
-          'func' => 'theme_ds_field_expert',
-          'ow' => TRUE,
-          'ow-el' => 'div',
-          'ow-cl' => 'cover',
-          'ow-def-cl' => FALSE,
-          'ow-at' => '',
-          'ow-def-at' => FALSE,
-        ),
-      ),
-    ),
     'field_avatar' => array(
       'formatter_settings' => array(
         'ft' => array(
@@ -207,6 +201,19 @@ function tm_users_ds_field_settings_info() {
           'fi-at' => '',
           'fi-def-at' => FALSE,
           'fi-odd-even' => FALSE,
+        ),
+      ),
+    ),
+    'field_image' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'cover',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
         ),
       ),
     ),
@@ -255,48 +262,48 @@ function tm_users_ds_layout_settings_info() {
         1 => 'field_avatar',
         2 => 'name',
         3 => 'group_action_menu_wrapper',
-        10 => 'group_action_menu',
-        12 => 'flag_follow_members',
-        15 => 'tm_ds_more_actions',
-      ),
-      'second_column' => array(
-        1 => 'group_community_wrapper',
-        7 => 'members_following_members',
+        9 => 'group_action_menu',
+        10 => 'flag_follow_members',
+        11 => 'tm_ds_more_actions',
       ),
       'header_extra' => array(
         4 => 'tm_ds_chapter_sticker',
       ),
       'first_column' => array(
-        5 => 'group_details_wrapper',
-        6 => 'group_details',
-        9 => 'field_segment',
-        10 => 'field_user_question_destination',
-        11 => 'field_user_question_dream_travel',
-        13 => 'field_user_question_learn',
-        14 => 'field_user_question_job',
-        16 => 'field_user_question_why_travel',
+        5 => 'group_details',
+        6 => 'group_details_wrapper',
+        12 => 'field_about_me',
+        13 => 'field_segment',
+        14 => 'field_user_question_destination',
+        15 => 'field_user_question_dream_travel',
+        16 => 'field_user_question_learn',
+        17 => 'field_user_question_job',
+        18 => 'field_user_question_why_travel',
+      ),
+      'second_column' => array(
+        7 => 'members_following_members',
+        8 => 'group_community_wrapper',
       ),
     ),
     'fields' => array(
       'field_image' => 'header_media',
-      'group_community_wrapper' => 'second_column',
-      'members_following_members' => 'second_column',
       'field_avatar' => 'header_body',
       'name' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
       'tm_ds_chapter_sticker' => 'header_extra',
-      'group_details_wrapper' => 'first_column',
       'group_details' => 'first_column',
+      'group_details_wrapper' => 'first_column',
+      'members_following_members' => 'second_column',
+      'group_community_wrapper' => 'second_column',
       'group_action_menu' => 'header_body',
       'flag_follow_members' => 'header_body',
       'tm_ds_more_actions' => 'header_body',
+      'field_about_me' => 'first_column',
       'field_segment' => 'first_column',
       'field_user_question_destination' => 'first_column',
-      'group_action_menu' => 'header_body',
       'field_user_question_dream_travel' => 'first_column',
       'field_user_question_learn' => 'first_column',
       'field_user_question_job' => 'first_column',
-      'tm_ds_more_actions' => 'header_body',
       'field_user_question_why_travel' => 'first_column',
     ),
     'classes' => array(),
@@ -324,21 +331,21 @@ function tm_users_ds_layout_settings_info() {
   $ds_layout->layout = 'card';
   $ds_layout->settings = array(
     'regions' => array(
-      'media' => array(
-        0 => 'field_image',
-        1 => 'field_avatar',
-      ),
       'teaser' => array(
-        2 => 'name',
+        0 => 'name',
+      ),
+      'media' => array(
+        1 => 'field_image',
+        2 => 'field_avatar',
       ),
       'extra' => array(
         3 => 'tm_ds_chapter_sticker',
       ),
     ),
     'fields' => array(
+      'name' => 'teaser',
       'field_image' => 'media',
       'field_avatar' => 'media',
-      'name' => 'teaser',
       'tm_ds_chapter_sticker' => 'extra',
     ),
     'classes' => array(),

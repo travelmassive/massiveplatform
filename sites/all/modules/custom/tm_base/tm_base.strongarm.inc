@@ -13,6 +13,69 @@ function tm_base_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'nodeaccess_nodereference';
+  $strongarm->value = array(
+    'event' => array(
+      'field_chapter' => array(
+        'referenced' => array(
+          'view' => array(
+            'view' => 'view',
+          ),
+          'update' => array(
+            'update' => 'update',
+          ),
+        ),
+        'field_type' => 'entityreference',
+      ),
+    ),
+  );
+  $export['nodeaccess_nodereference'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'nodeaccess_nodereference_cache_needs_clear';
+  $strongarm->value = TRUE;
+  $export['nodeaccess_nodereference_cache_needs_clear'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'nodeaccess_nodereference_cross_access';
+  $strongarm->value = array(
+    'view' => FALSE,
+    'update' => FALSE,
+    'delete' => FALSE,
+  );
+  $export['nodeaccess_nodereference_cross_access'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'nodeaccess_userreference';
+  $strongarm->value = array(
+    'chapter' => array(
+      'field_chapter_leaders' => array(
+        'referenced' => array(
+          'update' => 'update',
+        ),
+        'create' => array(
+          'event' => 'event',
+        ),
+        'author' => array(
+          'update' => 'update',
+        ),
+        'all' => array(
+          'view' => 'view',
+        ),
+      ),
+    ),
+  );
+  $export['nodeaccess_userreference'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'pathauto_node_pattern';
   $strongarm->value = 'content/[node:title]';
   $export['pathauto_node_pattern'] = $strongarm;

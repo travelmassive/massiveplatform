@@ -120,7 +120,7 @@ function tm_events_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_chapter',
     'label' => 'City',
-    'required' => 0,
+    'required' => 1,
     'settings' => array(
       'behaviors' => array(
         'prepopulate' => array(
@@ -134,6 +134,38 @@ function tm_events_field_default_field_instances() {
           'skip_perm' => 0,
           'status' => 1,
         ),
+      ),
+      'nodeaccess_nodereference' => array(
+        'all' => array(
+          'view' => 0,
+        ),
+        'all_published' => 0,
+        'author' => array(
+          'delete' => 0,
+          'update' => 0,
+          'view' => 0,
+        ),
+        'author_published' => 0,
+        'priority' => 0,
+        'referenced' => array(
+          'delete' => array(
+            'delete' => 0,
+            'update' => 0,
+            'view' => 0,
+          ),
+          'published' => 0,
+          'update' => array(
+            'delete' => 0,
+            'update' => 'update',
+            'view' => 0,
+          ),
+          'view' => array(
+            'delete' => 0,
+            'update' => 0,
+            'view' => 'view',
+          ),
+        ),
+        'unused' => 0,
       ),
       'user_register_form' => FALSE,
     ),

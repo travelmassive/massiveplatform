@@ -166,7 +166,7 @@ function tm_organizations_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 12,
+        'weight' => 13,
       ),
       'grid' => array(
         'label' => 'above',

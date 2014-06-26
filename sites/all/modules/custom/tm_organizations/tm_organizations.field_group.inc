@@ -21,7 +21,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Action menu wrapper',
-    'weight' => '15',
+    'weight' => '3',
     'children' => array(
       0 => 'group_action_menu',
     ),
@@ -74,25 +74,75 @@ function tm_organizations_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
-  $field_group->identifier = 'group_details|node|organization|full';
-  $field_group->group_name = 'group_details';
+  $field_group->identifier = 'group_community_wrapper|node|organization|full';
+  $field_group->group_name = 'group_community_wrapper';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'organization';
+  $field_group->mode = 'full';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Followed by',
+    'weight' => '5',
+    'children' => array(
+      0 => 'members_following',
+    ),
+    'format_type' => 'contained_block',
+    'format_settings' => array(
+      'label' => 'Followed by',
+      'formatter' => 'open',
+    ),
+  );
+  $export['group_community_wrapper|node|organization|full'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_details_wrapper|node|organization|full';
+  $field_group->group_name = 'group_details_wrapper';
   $field_group->entity_type = 'node';
   $field_group->bundle = 'organization';
   $field_group->mode = 'full';
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Details',
-    'weight' => '15',
+    'weight' => '4',
+    'children' => array(
+      0 => 'group_details',
+    ),
+    'format_type' => 'contained_block',
+    'format_settings' => array(
+      'label' => 'Details',
+      'formatter' => 'open',
+    ),
+  );
+  $export['group_details_wrapper|node|organization|full'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_details|node|organization|full';
+  $field_group->group_name = 'group_details';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'organization';
+  $field_group->mode = 'full';
+  $field_group->parent_name = 'group_details_wrapper';
+  $field_group->data = array(
+    'label' => 'Details',
+    'weight' => '5',
     'children' => array(
       0 => 'body',
       1 => 'field_owner',
       2 => 'field_segment',
     ),
-    'format_type' => 'dl',
+    'format_type' => 'html-element',
     'format_settings' => array(
-      'formatter' => 'open',
+      'label' => 'Details',
       'instance_settings' => array(
-        'classes' => 'group-details field-group-dl',
+        'classes' => 'details-list',
+        'element' => 'dl',
+        'show_label' => '0',
+        'label_element' => '',
+        'attributes' => '',
       ),
     ),
   );

@@ -129,7 +129,8 @@ function tm_base_update_7013() {
 /**
  * Enable the Hierarchical Select + HS Taxonomy modules
  * Enable the entityreference_prepopulate module.
+ * Enable the date_views module.
  */
 function tm_base_update_7014() {
-  module_enable(array('entityreference_prepopulate', 'hierarchical_select', 'hs_taxonomy'));
+  module_enable(array('entityreference_prepopulate', 'hierarchical_select', 'hs_taxonomy', 'date_views'));
 }

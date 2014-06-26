@@ -89,9 +89,9 @@ function tm_base_tokens($type, $tokens, array $data = array(), array $options = 
 function tm_base_field_group_formatter_info() {
   return array(
     'display' => array(
-      'dl' => array(
-        'label' => t('Definition List'),
-        'description' => t('This fieldgroup renders the inner content in a definition list, inside a section with header.'),
+      'contained_block' => array(
+        'label' => t('TM Contained block '),
+        'description' => t('This fieldgroup renders the content in a section with a header.'),
         'format_types' => array('open'),
         'default_formatter' => 'open',
       ),
@@ -106,8 +106,7 @@ function tm_base_field_group_formatter_info() {
  */
 function tm_base_field_group_pre_render(&$element, $group, &$form) {
   switch ($group->format_type) {
-    // Normal or collapsible div.
-    case 'dl':
+    case 'contained_block':
       $add = array(
         '#type' => 'markup',
         '#weight' => $group->weight,
@@ -117,21 +116,19 @@ function tm_base_field_group_pre_render(&$element, $group, &$form) {
         <header class="contained-head">
           <h1 class="prime-title">' . check_plain(t($group->label)) . '</h1>
         </header>
-        <div class="contained-body">
-          <dl class="details-list">';
-      $add['#suffix'] = '</dl></div></section>';
+        <div class="contained-body">';
+      $add['#suffix'] = '</div></section>';
 
       $element += $add;
       
-      break;
-  }
+      break
+;  }
 }
 /**
  * Implements hook_ds_field_theme_functions_info().
  */
 function tm_base_ds_field_theme_functions_info() {
   return array(
-    'theme_ds_field_contained_block' => t('TM Contained block'),
     'theme_ds_field_dl' => t('TM Definition list item')
   );
 }
@@ -149,25 +146,6 @@ function theme_ds_field_dl($variables) {
   foreach ($variables['items'] as $delta => $item) {
     $output .= '<dd class="' . $variables['field_name_css'] . '">' . drupal_render($item) . '</dd>';
   }
-
-  return $output;
-}
-/**
-* Field theming function. Produces markup for a contained block
-*/
-function theme_ds_field_contained_block($variables) {
-  $output = '';
-
-  // @Todo Add custom class to form
-  // $config = $variables['ds-config'];
-  
-  $output .= '<section class="contained contained-block">';
-  $output .= '<header class="contained-head"><h1 class="prime-title">' . $variables['label'] . '</h1></header>';
-  $output .= '<div class="contained-body">';
-  foreach ($variables['items'] as $delta => $item) {
-    $output .= drupal_render($item);
-  }
-  $output .= '</div></section>';
 
   return $output;
 }

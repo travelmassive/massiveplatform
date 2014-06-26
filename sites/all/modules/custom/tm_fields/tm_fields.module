@@ -133,11 +133,19 @@ function _tm_add_event_process($field, $title = NULL) {
   // Extra classes for the link.
   $classes = $field['formatter_settings']['Extra classes'];
   
+  $path = 'node/add/event';
+  // Does the user have access.
+  if ($router_item = menu_get_item($path)) {
+    if (!$router_item['access']) {
+      return;
+    }
+  }
+
   if (isset($field['entity']->field_chapter_leaders[LANGUAGE_NONE]) && !empty($field['entity']->field_chapter_leaders[LANGUAGE_NONE])) {
     // Check if the current user is a chapter leader.
     foreach ($field['entity']->field_chapter_leaders[LANGUAGE_NONE] as $chapter_leader) {
       if ($chapter_leader['target_id'] == $user->uid) {
-        return l(t('Add event'), 'node/add/event', array('query' => array('field_chapter' => $field['entity']->nid), 'attributes' => array('class' => $classes)));
+        return l(t('Add event'), $path, array('query' => array('field_chapter' => $field['entity']->nid), 'attributes' => array('class' => $classes)));
       }
     }
   }

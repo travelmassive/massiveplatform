@@ -235,3 +235,47 @@ function tm_events_node_presave($node) {
     }
   }
 }
+
+/**
+ * Implements hook_node_access()
+ * 
+ * Note: Admins bypass this check.
+ */
+function tm_events_node_access($node, $op) {
+  if ($op == 'create' && $node == 'event') {
+    global $user;
+    
+    // An admin will bypass the checks.
+    if (in_array('administrator', $user->roles)) {
+      return NODE_ACCESS_ALLOW;
+    }
+    $query_params = drupal_get_query_parameters();
+    
+    // The field_chapter is mandatory.
+    if (!isset($query_params['field_chapter'])) {
+      return NODE_ACCESS_DENY;
+    }
+    
+    $chapter = node_load($query_params['field_chapter']);
+    // Sanity check.
+    if (!$chapter || $chapter->type != 'chapter') {
+      return NODE_ACCESS_DENY;
+    }
+    
+    // Check if the user is a chapter leader.
+    if (!isset($chapter->field_chapter_leaders[LANGUAGE_NONE])) {
+      return NODE_ACCESS_DENY;
+    }
+    
+    foreach ($chapter->field_chapter_leaders[LANGUAGE_NONE] as $value) {
+      if ($value['target_id'] == $user->uid) {
+        return NODE_ACCESS_ALLOW;
+      }
+    }
+    
+    // If everything fails, deny.
+    return NODE_ACCESS_DENY;
+  }
+  
+  return NODE_ACCESS_IGNORE;
+}

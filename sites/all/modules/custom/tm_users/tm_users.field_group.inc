@@ -55,6 +55,7 @@ function tm_users_field_group_info() {
     'children' => array(
       0 => 'flag_follow_members',
       1 => 'tm_ds_more_actions',
+      2 => 'tm_ds_edit_own_profile',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(
@@ -134,12 +135,12 @@ function tm_users_field_group_info() {
     'label' => 'Details',
     'weight' => '6',
     'children' => array(
-      0 => 'field_user_question_destination',
-      1 => 'field_user_question_dream_travel',
-      2 => 'field_user_question_job',
-      3 => 'field_user_question_learn',
-      4 => 'field_user_question_why_travel',
-      5 => 'field_segment',
+      0 => 'field_segment',
+      1 => 'field_user_question_destination',
+      2 => 'field_user_question_dream_travel',
+      3 => 'field_user_question_job',
+      4 => 'field_user_question_learn',
+      5 => 'field_user_question_why_travel',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(

@@ -35,13 +35,13 @@ function tm_users_strongarm() {
     'extra_fields' => array(
       'form' => array(
         'masquerade' => array(
-          'weight' => '50',
+          'weight' => '2',
         ),
         'account' => array(
-          'weight' => '-10',
+          'weight' => '0',
         ),
         'timezone' => array(
-          'weight' => '6',
+          'weight' => '1',
         ),
       ),
       'display' => array(
@@ -75,11 +75,15 @@ function tm_users_strongarm() {
         ),
         'flag_follow_members' => array(
           'default' => array(
-            'weight' => '10',
+            'weight' => '1',
             'visible' => TRUE,
           ),
           'list' => array(
             'weight' => '6',
+            'visible' => FALSE,
+          ),
+          'grid' => array(
+            'weight' => '10',
             'visible' => FALSE,
           ),
         ),

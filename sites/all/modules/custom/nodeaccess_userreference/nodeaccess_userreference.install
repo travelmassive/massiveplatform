@@ -23,9 +23,9 @@ function nodeaccess_userreference_uninstall() {
 /**
  * Implements hook_requirements().
  */
-function nodeaccess_userreference_requirements() {
+function nodeaccess_userreference_requirements($phase) {
   $requirements = array();
-  if (!module_exists('user_reference') && !module_exists('entityreference')) {
+  if (!module_exists('user_reference') && !module_exists('entityreference') && $phase == 'runtime') {
     $t = get_t();
     $requirements['user_reference'] = array(
       'title' => $t('User reference module'),

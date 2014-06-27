@@ -62,7 +62,7 @@ function tm_fields_field_default_field_bases() {
     'locked' => 0,
     'module' => 'image',
     'settings' => array(
-      'default_image' => 552,
+      'default_image' => 2,
       'uri_scheme' => 'public',
     ),
     'translatable' => 0,
@@ -163,7 +163,7 @@ function tm_fields_field_default_field_bases() {
     'locked' => 0,
     'module' => 'image',
     'settings' => array(
-      'default_image' => 551,
+      'default_image' => 1,
       'uri_scheme' => 'public',
     ),
     'translatable' => 0,

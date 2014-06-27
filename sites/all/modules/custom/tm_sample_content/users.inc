@@ -40,6 +40,13 @@ class TMUserMigration extends TMBaseMigration {
     // Mail
     $this->addFieldMapping('mail', 'mail');
 
+    // First and last name
+    $this->addFieldMapping('field_user_first_name', 'first');
+    $this->addFieldMapping('field_user_last_name', 'last');
+
+    // About me
+    $this->addFieldMapping('field_about_me', 'about');
+
     // Avatar
     $this->addFieldMapping('field_avatar', 'avatar');
     $this->addFieldMapping('field_avatar:file_replace')

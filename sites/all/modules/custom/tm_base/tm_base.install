@@ -24,6 +24,14 @@ function tm_base_install() {
     user_role_save($non_validated_role);
   }
   variable_set('logintoboggan_pre_auth_role', $non_validated_role->rid);
+  
+  // Upload default images.
+  $imgs = array(
+    'cover-default.png' => drupal_get_path('module', 'tm_base') . '/import/default_images/',
+    'avatar-default.png' => drupal_get_path('module', 'tm_base') . '/import/default_images/',
+  );
+  
+  _tm_base_upload_default_images($imgs);
 }
 
 /**
@@ -60,6 +68,25 @@ function _tm_base_segments_terms_import() {
       taxonomy_term_save($child_term);
     }
   }
+}
+
+/**
+ * Upload images to default_images directory.
+ */
+function _tm_base_upload_default_images($imgs) {
+  foreach ($imgs as $filename => $source_dir) {
+    $source = $source_dir . $filename;
+    
+    $file = new stdClass();
+    $file->filename = $filename;
+    $file->timestamp = REQUEST_TIME;
+    $file->uri = $source;
+    $file->filemime = file_get_mimetype($source);
+    $file->uid = 1;
+    $file->status = 1;
+    $file = file_copy($file, 'public://default_images', FILE_EXISTS_REPLACE);
+  }
+  
 }
 
 /**
@@ -150,7 +177,8 @@ function tm_base_update_7014() {
 }
 /**
  * Enable the nodeaccess_nodereference, nodeaccess_userreference modules
+ * Enable the realname module.
  */
 function tm_base_update_7015() {
-  module_enable(array('nodeaccess_nodereference', 'nodeaccess_userreference'));
+  module_enable(array('nodeaccess_nodereference', 'nodeaccess_userreference','realname'));
 }

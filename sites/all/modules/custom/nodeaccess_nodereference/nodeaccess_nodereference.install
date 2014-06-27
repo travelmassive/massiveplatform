@@ -24,9 +24,9 @@ function nodeaccess_nodereference_uninstall() {
 /**
  * Implements hook_requirements().
  */
-function nodeaccess_nodereference_requirements() {
+function nodeaccess_nodereference_requirements($phase) {
   $requirements = array();
-  if (!module_exists('node_reference') && !module_exists('entityreference')) {
+  if (!module_exists('node_reference') && !module_exists('entityreference') && $phase == 'runtime') {
     $t = get_t();
     $requirements['node_reference'] = array(
       'title' => $t('Node reference module'),

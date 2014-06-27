@@ -75,7 +75,7 @@ function tm_users_strongarm() {
         ),
         'flag_follow_members' => array(
           'default' => array(
-            'weight' => '10',
+            'weight' => '1',
             'visible' => TRUE,
           ),
           'list' => array(

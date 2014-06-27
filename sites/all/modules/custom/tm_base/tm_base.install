@@ -176,8 +176,9 @@ function tm_base_update_7014() {
   module_enable(array('entityreference_prepopulate', 'hierarchical_select', 'hs_taxonomy', 'date_views'));
 }
 /**
+ * Enable the nodeaccess_nodereference, nodeaccess_userreference modules
  * Enable the realname module.
  */
 function tm_base_update_7015() {
-  module_enable(array('realname'));
+  module_enable(array('nodeaccess_nodereference', 'nodeaccess_userreference','realname'));
 }

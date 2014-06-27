@@ -284,7 +284,7 @@ function tm_chapters_ds_layout_settings_info() {
   $ds_layout->settings = array(
     'regions' => array(
       'header_media' => array(
-        0 => 'field_image',
+        1 => 'field_image',
       ),
       'header_body' => array(
         1 => 'ds_flag_signup',
@@ -293,9 +293,6 @@ function tm_chapters_ds_layout_settings_info() {
         4 => 'title',
         5 => 'group_action_menu_wrapper',
         14 => 'group_action_menu',
-      ),
-      'header_media' => array(
-        1 => 'field_image',
       ),
       'first_column' => array(
         5 => 'tm_ds_add_event',

@@ -22,7 +22,9 @@ function tm_events_user_default_permissions() {
   // Exported permission: 'create partner_event content'.
   $permissions['create partner_event content'] = array(
     'name' => 'create partner_event content',
-    'roles' => array(),
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
     'module' => 'node',
   );
 
@@ -38,7 +40,9 @@ function tm_events_user_default_permissions() {
   // Exported permission: 'delete any partner_event content'.
   $permissions['delete any partner_event content'] = array(
     'name' => 'delete any partner_event content',
-    'roles' => array(),
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
     'module' => 'node',
   );
 
@@ -54,7 +58,9 @@ function tm_events_user_default_permissions() {
   // Exported permission: 'delete own partner_event content'.
   $permissions['delete own partner_event content'] = array(
     'name' => 'delete own partner_event content',
-    'roles' => array(),
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
     'module' => 'node',
   );
 
@@ -70,7 +76,9 @@ function tm_events_user_default_permissions() {
   // Exported permission: 'edit any partner_event content'.
   $permissions['edit any partner_event content'] = array(
     'name' => 'edit any partner_event content',
-    'roles' => array(),
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
     'module' => 'node',
   );
 
@@ -79,6 +87,7 @@ function tm_events_user_default_permissions() {
     'name' => 'edit own event content',
     'roles' => array(
       'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
     ),
     'module' => 'node',
   );
@@ -86,7 +95,9 @@ function tm_events_user_default_permissions() {
   // Exported permission: 'edit own partner_event content'.
   $permissions['edit own partner_event content'] = array(
     'name' => 'edit own partner_event content',
-    'roles' => array(),
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
     'module' => 'node',
   );
 

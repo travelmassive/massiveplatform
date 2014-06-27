@@ -110,7 +110,7 @@ function _tm_more_actions_process($field, $title = NULL) {
       'wrapper_class' => array('edit'),
       'content' => l(t('Edit'), 'node/' . $nid . '/edit', array(
         'attributes' => array(
-          'title' => t('Edit user profile')
+          'title' => t('Edit')
         )
       ))
     );
@@ -173,7 +173,7 @@ function _tm_more_actions_process($field, $title = NULL) {
  * Custom function to build the more_actions menu
  */
 function _tm_edit_own_profile_process($field, $title = NULL) {
-  $menu_item = menu_get_item();dsm($menu_item);
+  $menu_item = menu_get_item();
   // Is it a user?
   if (!isset($menu_item['page_arguments'][0]->nid) && isset($menu_item['page_arguments'][0]->uid)) {
     global $user;
@@ -186,7 +186,7 @@ function _tm_edit_own_profile_process($field, $title = NULL) {
       return l(t('Edit'), 'user/' . $uid . '/edit', array(
         'attributes' => array(
           'class' => $classes,
-          'title' => t('Edit user profile')
+          'title' => t('Edit your profile')
         )
       ));
     }

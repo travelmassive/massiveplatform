@@ -319,7 +319,6 @@ function tm_users_ds_layout_settings_info() {
       'members_following_members' => 'second_column',
       'group_action_menu' => 'header_body',
       'field_about_me' => 'first_column',
-      'tm_ds_more_actions' => 'header_body',
       'field_segment' => 'first_column',
       'field_user_question_destination' => 'first_column',
       'field_user_question_dream_travel' => 'first_column',

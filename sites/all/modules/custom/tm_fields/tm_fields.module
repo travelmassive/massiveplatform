@@ -100,32 +100,38 @@ function _tm_more_actions_process($field, $title = NULL) {
   global $base_root;
   $base = $base_root . request_uri();
   $links = array();
-  
+
   // Edit link.
   $menu_item = menu_get_item();
   // Is it a node?
   if (isset($menu_item['page_arguments'][0]->nid)) {
     $nid = $menu_item['page_arguments'][0]->nid;
-    $links[] = array(
-      'wrapper_class' => array('edit'),
-      'content' => l(t('Edit'), 'node/' . $nid . '/edit', array(
-        'attributes' => array(
-          'title' => t('Edit')
-        )
-      ))
-    );
+    $edit_menu = menu_get_item('node/' . $nid . '/edit');
+    if ($edit_menu['access']) {
+      $links[] = array(
+        'wrapper_class' => array('edit'),
+        'content' => l(t('Edit'), 'node/' . $nid . '/edit', array(
+          'attributes' => array(
+            'title' => t('Edit')
+          )
+        ))
+      );
+    }
   }
   // Is it a user?
   else if (isset($menu_item['page_arguments'][0]->uid)) {
     $uid = $menu_item['page_arguments'][0]->uid;
-    $links[] = array(
-      'wrapper_class' => array('edit'),
-      'content' => l(t('Edit'), 'user/' . $uid . '/edit', array(
-        'attributes' => array(
-          'title' => t('Edit user profile')
-        )
-      ))
-    );
+    $edit_menu = menu_get_item('user/' . $uid . '/edit');
+    if ($edit_menu['access']) {
+      $links[] = array(
+        'wrapper_class' => array('edit'),
+        'content' => l(t('Edit'), 'user/' . $uid . '/edit', array(
+          'attributes' => array(
+            'title' => t('Edit user profile')
+          )
+        ))
+      );
+    }
   }
   
   $links[] = array(

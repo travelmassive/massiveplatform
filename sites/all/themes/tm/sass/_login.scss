@@ -48,6 +48,9 @@
   .form-item {
     margin-bottom: 0.5rem;
   }
+  .form-submit {
+    @extend .bttn-tertiary, .bttn-blk;
+  }
 }
 
 .twitter-login {

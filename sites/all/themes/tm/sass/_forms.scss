@@ -23,5 +23,5 @@ input[type="search"] {
 }
 
 .form-submit {
-  @extend .bttn-tertiary, .bttn-m, .bttn-blk;
+  @extend .bttn-secondary, .bttn-m;
 }

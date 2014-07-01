@@ -19,7 +19,7 @@ $image = theme('image_style', array(
   'title' => 'The user image',
 ));
 ?>
-<?php if (!$user->uid) : ?>
+<?php if ($user->uid) : ?>
   
   <ul>
     <li>
@@ -39,7 +39,7 @@ $image = theme('image_style', array(
     <li><?php print l(t('Link'), ''); ?></li>
     <li><?php print l(t('Link'), ''); ?></li>
   </ul>
-  <ul><li><?php print l(t('Sign out'), 'logout'); ?></li></ul>
+  <ul><li><?php print l(t('Sign out'), 'user/logout'); ?></li></ul>
   
 <?php else : ?>
   

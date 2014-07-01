@@ -10,11 +10,16 @@ include_once 'tm_users.features.inc';
  * Implements hook_form_FORM_ID_alter()
  */
 function tm_users_form_user_login_block_alter(&$form, &$form_state) {
+  // Replace labels for placeholder on the input element
+  $form['name']['#attributes'] = array('placeholder' => t('Username'));
+  $form['pass']['#attributes'] = array('placeholder' => t('Password'));
+
   // Remove links and keep only the one to reset the password.
   $form['links'] = array();
   $form['links']['reset_pass'] = array(
     '#markup' => l(t('Forgot your password?'), 'user/password', array('title' => t('Request new password via email.')))
   );
+  $form['links']['#weight'] = 100;
 }
 
 /**

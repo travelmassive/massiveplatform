@@ -6,7 +6,8 @@ button {
 }
 
 /* Base button style */
-.bttn {
+.bttn,
+.form-submit {
   display: inline-block;
   padding: 0 0.75rem;
   border-radius: $global-radius;
@@ -16,6 +17,7 @@ button {
   cursor: pointer;
   white-space: nowrap;
   background: #FFF;
+  border: 0;
 
   &:link,
   &:active,
@@ -81,6 +83,11 @@ button {
     margin-left: rem-calc(4);
     opacity: 0.6;
   }
+}
+
+.bttn-blk {
+  display: block;
+  width: 100%;
 }
 
 /* Button sizes */

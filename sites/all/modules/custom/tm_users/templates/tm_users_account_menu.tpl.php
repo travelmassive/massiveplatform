@@ -43,16 +43,16 @@ $image = theme('image_style', array(
   
 <?php else : ?>
   
-  <h3>Sign in</h3>
+  <h3 class="menu-blk-title">Sign in</h3>
   <p><?php print l(t('Twitter'), 'tm_twitter/oauth', array('attributes' => array('class' => 'twitter-login'))); ?></p>
-  <span class="or">or</span>
+  <i class="or">or</i>
   
   <?php $login_form = drupal_get_form('user_login_block'); ?>
   <?php print render($login_form); ?>
   
   <?php if (variable_get('user_register', 1)) : ?>
-    <h3>New to Travel Massive?</h3>
-    <p><?php print l(t('Sign up now »'), 'user/register'); ?></p>
+    <h3 class="menu-blk-title">New to Travel Massive?</h3>
+    <p><?php print l(t('Sign up now'), 'user/register', array('attributes' => array('title' => 'Create account', 'class' => 'cta-inline'))); ?></p>
   <?php endif; ?>
   
 <?php endif; ?>

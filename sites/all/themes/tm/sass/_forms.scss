@@ -25,3 +25,12 @@ input[type="search"] {
 .form-submit {
   @extend .bttn-secondary, .bttn-m;
 }
+
+label {
+  font-size: 0.85rem;
+  line-height: 1.25rem;
+  font-weight: $body-font-bold;
+  margin-bottom: 0.5rem;
+  color: tint($primary-color, 20%);
+  text-transform: uppercase;
+}

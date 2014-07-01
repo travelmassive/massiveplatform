@@ -107,6 +107,7 @@ function tm_events_views_default_views() {
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Events';
+  $handler->display->display_options['css_class'] = 'event-list related-list';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -118,13 +119,13 @@ function tm_events_views_default_views() {
   $handler->display->display_options['style_options']['default_row_class'] = FALSE;
   $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'ds';
-  $handler->display->display_options['row_options']['view_mode'] = 'list';
+  $handler->display->display_options['row_options']['view_mode'] = 'grid';
   $handler->display->display_options['row_options']['alternating'] = 0;
   $handler->display->display_options['row_options']['grouping'] = 0;
   $handler->display->display_options['row_options']['advanced'] = 0;
   $handler->display->display_options['row_options']['delta_fieldset']['delta_fields'] = array();
   $handler->display->display_options['row_options']['grouping_fieldset']['group_field'] = 'field_data_field_event_date|field_event_date_value';
-  $handler->display->display_options['row_options']['default_fieldset']['view_mode'] = 'list';
+  $handler->display->display_options['row_options']['default_fieldset']['view_mode'] = 'grid';
   /* No results behavior: Global: Text area */
   $handler->display->display_options['empty']['area']['id'] = 'area';
   $handler->display->display_options['empty']['area']['table'] = 'views';

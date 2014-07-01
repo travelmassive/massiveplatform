@@ -57,5 +57,25 @@ function tm_organizations_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'flag follow_organizations'.
+  $permissions['flag follow_organizations'] = array(
+    'name' => 'flag follow_organizations',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag follow_organizations'.
+  $permissions['unflag follow_organizations'] = array(
+    'name' => 'unflag follow_organizations',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'flag',
+  );
+
   return $permissions;
 }

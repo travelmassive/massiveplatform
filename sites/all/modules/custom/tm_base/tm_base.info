@@ -45,7 +45,6 @@ features[user_permission][] = revert revisions
 features[user_permission][] = view own unpublished content
 features[user_permission][] = view revisions
 features[variable][] = nodeaccess_nodereference
-features[variable][] = nodeaccess_nodereference_cache_needs_clear
 features[variable][] = nodeaccess_nodereference_cross_access
 features[variable][] = nodeaccess_userreference
 features[variable][] = pathauto_node_pattern

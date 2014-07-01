@@ -17,6 +17,16 @@ function tm_users_ds_field_settings_info() {
   $ds_fieldsetting->bundle = 'user';
   $ds_fieldsetting->view_mode = 'default';
   $ds_fieldsetting->settings = array(
+    'joined_event_list' => array(
+      'weight' => '8',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
     'members_following_members' => array(
       'weight' => '7',
       'label' => 'hidden',
@@ -41,7 +51,7 @@ function tm_users_ds_field_settings_info() {
       ),
     ),
     'tm_ds_chapter_sticker' => array(
-      'weight' => '5',
+      'weight' => '4',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -272,18 +282,17 @@ function tm_users_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
+      'header_media' => array(
+        0 => 'field_image',
+      ),
       'header_body' => array(
-        0 => 'tm_ds_edit_own_profile',
+        1 => 'tm_ds_edit_own_profile',
         2 => 'field_avatar',
         3 => 'flag_follow_members',
-        4 => 'name',
-        5 => 'tm_ds_more_actions',
+        4 => 'tm_ds_more_actions',
+        5 => 'name',
         6 => 'group_action_menu_wrapper',
-        12 => 'group_action_menu',
-        13 => 'tm_ds_more_actions',
-      ),
-      'header_media' => array(
-        1 => 'field_image',
+        13 => 'group_action_menu',
       ),
       'header_extra' => array(
         7 => 'tm_ds_chapter_sticker',
@@ -291,35 +300,38 @@ function tm_users_ds_layout_settings_info() {
       'first_column' => array(
         8 => 'group_details_wrapper',
         10 => 'group_details',
-        12 => 'field_about_me',
-        13 => 'field_segment',
-        14 => 'field_user_question_destination',
-        15 => 'field_user_question_dream_travel',
-        16 => 'field_user_question_learn',
-        17 => 'field_user_question_job',
-        18 => 'field_user_question_why_travel',
+        15 => 'field_about_me',
+        16 => 'field_segment',
+        17 => 'field_user_question_destination',
+        18 => 'field_user_question_dream_travel',
+        19 => 'field_user_question_learn',
+        20 => 'field_user_question_job',
+        21 => 'field_user_question_why_travel',
       ),
       'second_column' => array(
         9 => 'group_community_wrapper',
         11 => 'members_following_members',
+        12 => 'group_events_joined_wrapper',
+        14 => 'joined_event_list',
       ),
     ),
     'fields' => array(
-      'tm_ds_edit_own_profile' => 'header_body',
       'field_image' => 'header_media',
+      'tm_ds_edit_own_profile' => 'header_body',
       'field_avatar' => 'header_body',
       'flag_follow_members' => 'header_body',
-      'name' => 'header_body',
       'tm_ds_more_actions' => 'header_body',
+      'name' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
       'tm_ds_chapter_sticker' => 'header_extra',
       'group_details_wrapper' => 'first_column',
       'group_community_wrapper' => 'second_column',
       'group_details' => 'first_column',
       'members_following_members' => 'second_column',
+      'group_events_joined_wrapper' => 'second_column',
       'group_action_menu' => 'header_body',
+      'joined_event_list' => 'second_column',
       'field_about_me' => 'first_column',
-      'tm_ds_more_actions' => 'header_body',
       'field_segment' => 'first_column',
       'field_user_question_destination' => 'first_column',
       'field_user_question_dream_travel' => 'first_column',
@@ -375,7 +387,7 @@ function tm_users_ds_layout_settings_info() {
       'teaser' => 'div',
       'extra' => 'div',
     ),
-    'layout_wrapper' => 'div',
+    'layout_wrapper' => 'article',
     'layout_attributes' => '',
     'layout_attributes_merge' => 1,
     'layout_link_attribute' => '',

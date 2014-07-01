@@ -18,11 +18,11 @@ function tm_base_strongarm() {
     'event' => array(
       'field_chapter' => array(
         'referenced' => array(
-          'view' => array(
-            'view' => 'view',
-          ),
           'update' => array(
             'update' => 'update',
+          ),
+          'view' => array(
+            'view' => 'view',
           ),
         ),
         'field_type' => 'entityreference',
@@ -30,13 +30,6 @@ function tm_base_strongarm() {
     ),
   );
   $export['nodeaccess_nodereference'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'nodeaccess_nodereference_cache_needs_clear';
-  $strongarm->value = TRUE;
-  $export['nodeaccess_nodereference_cache_needs_clear'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */

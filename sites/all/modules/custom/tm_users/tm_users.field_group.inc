@@ -21,7 +21,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Action menu wrapper',
-    'weight' => '3',
+    'weight' => '4',
     'children' => array(
       0 => 'group_action_menu',
     ),
@@ -54,6 +54,8 @@ function tm_users_field_group_info() {
     'weight' => '8',
     'children' => array(
       0 => 'flag_follow_members',
+      1 => 'tm_ds_more_actions',
+      2 => 'tm_ds_edit_own_profile',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(
@@ -69,6 +71,91 @@ function tm_users_field_group_info() {
     ),
   );
   $export['group_action_menu|user|user|default'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_community_wrapper|user|user|default';
+  $field_group->group_name = 'group_community_wrapper';
+  $field_group->entity_type = 'user';
+  $field_group->bundle = 'user';
+  $field_group->mode = 'default';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Followed by',
+    'weight' => '7',
+    'children' => array(
+      0 => 'members_following_members',
+    ),
+    'format_type' => 'contained_block',
+    'format_settings' => array(
+      'formatter' => 'open',
+      'instance_settings' => array(
+        'classes' => 'group-community-wrapper field-group-contained_block',
+      ),
+    ),
+  );
+  $export['group_community_wrapper|user|user|default'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_details_wrapper|user|user|default';
+  $field_group->group_name = 'group_details_wrapper';
+  $field_group->entity_type = 'user';
+  $field_group->bundle = 'user';
+  $field_group->mode = 'default';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Details',
+    'weight' => '6',
+    'children' => array(
+      0 => 'group_details',
+    ),
+    'format_type' => 'contained_block',
+    'format_settings' => array(
+      'formatter' => 'open',
+      'instance_settings' => array(
+        'classes' => 'group-details-wrapper field-group-contained_block',
+      ),
+    ),
+  );
+  $export['group_details_wrapper|user|user|default'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_details|user|user|default';
+  $field_group->group_name = 'group_details';
+  $field_group->entity_type = 'user';
+  $field_group->bundle = 'user';
+  $field_group->mode = 'default';
+  $field_group->parent_name = 'group_details_wrapper';
+  $field_group->data = array(
+    'label' => 'Details',
+    'weight' => '6',
+    'children' => array(
+      0 => 'field_segment',
+      1 => 'field_user_question_destination',
+      2 => 'field_user_question_dream_travel',
+      3 => 'field_user_question_job',
+      4 => 'field_user_question_learn',
+      5 => 'field_user_question_why_travel',
+      6 => 'field_about_me',
+    ),
+    'format_type' => 'html-element',
+    'format_settings' => array(
+      'label' => 'Details',
+      'instance_settings' => array(
+        'classes' => 'details-list',
+        'element' => 'dl',
+        'show_label' => '0',
+        'label_element' => '',
+        'attributes' => '',
+      ),
+    ),
+  );
+  $export['group_details|user|user|default'] = $field_group;
 
   return $export;
 }

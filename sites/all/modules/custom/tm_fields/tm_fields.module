@@ -16,9 +16,70 @@ function tm_fields_ds_fields_info($entity_type) {
     'ui_limit' => array('event|*', 'user|*'),
     'function' => '_tm_chapter_sticker_process'
   );
+  
+  $fields['tm_ds_more_actions'] = array(
+    'title' => t('More actions'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('*|*'),
+    'function' => '_tm_more_actions_process'
+  );
+  
+  $fields['tm_ds_add_event'] = array(
+    'title' => t('Add event'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('chapter|*'),
+    'function' => '_tm_add_event_process',
+    'properties' => array(
+      'settings' => array(
+        'Extra classes' => array(
+          'type' => 'textfield',
+          'description' => t('Classes for the link')
+        )
+      ),
+      'default' => array(
+        'Extra classes' => ''
+      )
+    ),
+  );
 
+  $fields['tm_ds_edit_own_profile'] = array(
+    'title' => t('Edit own profile button'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('user|*'),
+    'function' => '_tm_edit_own_profile_process',
+    'properties' => array(
+      'settings' => array(
+        'Extra classes' => array(
+          'type' => 'textfield',
+          'description' => t('Classes for the link')
+        )
+      ),
+      'default' => array(
+        'Extra classes' => ''
+      )
+    ),
+  );
+  
   return array($entity_type => $fields);
 }
+
+/**
+ * Implements hook_ds_field_settings_form().
+ * http://www.elevatedthird.com/blog/advanced-custom-fields-display-suite
+ */
+function tm_fields_ds_field_settings_form($field) {
+  return ds_ds_field_settings_form($field);
+}
+
+/**
+ * Implements hook_ds_field_format_summary().
+ * http://www.elevatedthird.com/blog/advanced-custom-fields-display-suite
+ */
+function tm_fields_ds_field_format_summary($field) {
+  return ds_ds_field_format_summary($field);
+}
+
+
 /**
  * Custom function to build the chapter sticker
  */
@@ -33,6 +94,138 @@ function _tm_chapter_sticker_process($field, $title = NULL) {
   }
 }
 /**
+ * Custom function to build the more_actions menu
+ */
+function _tm_more_actions_process($field, $title = NULL) {
+  global $base_root;
+  $base = $base_root . request_uri();
+  $links = array();
+
+  // Edit link.
+  $menu_item = menu_get_item();
+  // Is it a node?
+  if (isset($menu_item['page_arguments'][0]->nid)) {
+    $nid = $menu_item['page_arguments'][0]->nid;
+    $edit_menu = menu_get_item('node/' . $nid . '/edit');
+    if ($edit_menu['access']) {
+      $links[] = array(
+        'wrapper_class' => array('edit'),
+        'content' => l(t('Edit'), 'node/' . $nid . '/edit', array(
+          'attributes' => array(
+            'title' => t('Edit')
+          )
+        ))
+      );
+    }
+  }
+  // Is it a user?
+  else if (isset($menu_item['page_arguments'][0]->uid)) {
+    $uid = $menu_item['page_arguments'][0]->uid;
+    $edit_menu = menu_get_item('user/' . $uid . '/edit');
+    if ($edit_menu['access']) {
+      $links[] = array(
+        'wrapper_class' => array('edit'),
+        'content' => l(t('Edit'), 'user/' . $uid . '/edit', array(
+          'attributes' => array(
+            'title' => t('Edit user profile')
+          )
+        ))
+      );
+    }
+  }
+  
+  $links[] = array(
+    'wrapper_class' => array('facebook'),
+    'content' => l(t('Share on Facebook'), 'https://www.facebook.com/sharer/sharer.php', array(
+      'absolute' => TRUE,
+      'query' => array('u' => $base),
+      'attributes' => array(
+        'target' => '_blank',
+        'class' => array('facebook'),
+        'title' => t('Share this on Facebook')
+      )
+    ))
+  );
+  
+  $links[] = array(
+    'wrapper_class' => array('twitter'),
+    'content' => l(t('Share on Twitter'), 'https://twitter.com/share', array(
+      'absolute' => TRUE,
+      'query' => array('url' => $base),
+      'attributes' => array(
+        'target' => '_blank',
+        'class' => array('twitter'),
+        'title' => t('Share this on Twitter')
+      )
+    ))
+  );
+  
+  $links[] = array(
+    'wrapper_class' => array('google-plus'),
+    'content' => l(t('Share on Google+'), 'https://plus.google.com/share', array(
+      'absolute' => TRUE,
+      'query' => array('url' => $base),
+      'attributes' => array(
+        'onclick' => "javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600'); return false;",
+        'class' => array('google-plus'),
+        'title' => t('Share this on Google+')
+      )
+    ))
+  );
+  
+  return theme('more_actions', array('links' => $links));
+}
+/**
+ * Custom function to build the more_actions menu
+ */
+function _tm_edit_own_profile_process($field, $title = NULL) {
+  $menu_item = menu_get_item();
+  // Is it a user?
+  if (!isset($menu_item['page_arguments'][0]->nid) && isset($menu_item['page_arguments'][0]->uid)) {
+    global $user;
+    // Extra classes for the link.
+    $classes = $field['formatter_settings']['Extra classes'];
+    $uid = $menu_item['page_arguments'][0]->uid;
+    
+    if ($user->uid == $uid) {
+      $classes = $field['formatter_settings']['Extra classes'];
+      return l(t('Edit'), 'user/' . $uid . '/edit', array(
+        'attributes' => array(
+          'class' => $classes,
+          'title' => t('Edit your profile')
+        )
+      ));
+    }
+  }
+}
+
+/**
+ * Custom function to build the more_actions menu
+ */
+function _tm_add_event_process($field, $title = NULL) {
+  global $user;
+  // Extra classes for the link.
+  $classes = $field['formatter_settings']['Extra classes'];
+  
+  $path = 'node/add/event';
+  // Does the user have access.
+  if ($router_item = menu_get_item($path)) {
+    if (!$router_item['access']) {
+      return;
+    }
+  }
+
+  if (isset($field['entity']->field_chapter_leaders[LANGUAGE_NONE]) && !empty($field['entity']->field_chapter_leaders[LANGUAGE_NONE])) {
+    // Check if the current user is a chapter leader.
+    foreach ($field['entity']->field_chapter_leaders[LANGUAGE_NONE] as $chapter_leader) {
+      if ($chapter_leader['target_id'] == $user->uid) {
+        return l(t('Add event'), $path, array('query' => array('field_chapter' => $field['entity']->nid), 'attributes' => array('class' => $classes)));
+      }
+    }
+  }
+}
+
+/**
  * Implement hook_theme()
  */
 function tm_fields_theme() {
@@ -45,6 +238,13 @@ function tm_fields_theme() {
       ),
       'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
       'template' => 'tm_chapter_sticker'
+    ),
+    'more_actions' => array(
+      'variables' => array(
+        'links' => array()
+      ),
+      'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
+      'template' => 'tm_more_actions'
     )
   );
 }

@@ -30,8 +30,102 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
      ':input[name="field_external_rsvp[und]"]' => array('value' => 1),
     ),
   );
-
   // /end field visibility based on RSVP.
+  
+  $form['field_chapter'][LANGUAGE_NONE][0]['target_id']['#ajax'] = array(
+    'callback' => '_tm_events_field_organizer_ajax_cb',
+    'wrapper' => 'organizer-wrapper',
+    'method' => 'replace',
+    'effect' => 'fade',
+  );
+
+  // Put a wrapper around the field_organizer.
+  // This container will be printer and populated after the AJAX request.
+  $form['field_organizer_container'] = array(
+    '#type' => 'container',
+    '#prefix' => '<div id="organizer-wrapper">',
+    '#suffix' => '</div>',
+    '#weight' => $form['field_organizer']['#weight']
+  );
+  
+  // Put inside container and delete original.
+  $form['field_organizer_container']['field_organizer'] = $form['field_organizer'];
+  unset($form['field_organizer']);
+  global $user;
+  
+  // There was an ajax request. Provide correct values.
+  if (isset($form_state['values']['field_chapter'][LANGUAGE_NONE][0]['target_id'])) {
+    $chapter_id = $form_state['values']['field_chapter'][LANGUAGE_NONE][0]['target_id'];
+    
+    // Get possible options.
+    $opts = array('_none' => t('- None -'))  + _load_organizers_per_chapter($chapter_id);
+    $form['field_organizer_container']['field_organizer'][LANGUAGE_NONE]['#options'] = $opts;
+    // By default the value of the organizer is the author.
+    $form['field_organizer_container']['field_organizer'][LANGUAGE_NONE]['#default_value'] = $user->uid;
+  }
+  
+  // There's a value for the field_chapter. This means:
+  // - the node is being edited; or
+  // - the field_chapter was prepopulated.
+  else if (!empty($form['field_chapter'][LANGUAGE_NONE][0]['target_id']['#default_value'])) {
+    // Get id from default value.
+    preg_match("/.* \(([0-9]+)\)/", $form['field_chapter'][LANGUAGE_NONE][0]['target_id']['#default_value'], $chapter_id);
+    $chapter_id = $chapter_id[1];
+    
+    // Get possible options.
+    $opts = array('_none' => t('- None -'))  + _load_organizers_per_chapter($chapter_id);
+    $form['field_organizer_container']['field_organizer'][LANGUAGE_NONE]['#options'] = $opts;
+    
+    // If there's a default value but we're not editing a node, means that
+    // the value was prepopulated from the url.
+    // If so, set the default user.
+    if (!isset($form['#node']->nid)) {
+      $form['field_organizer_container']['field_organizer'][LANGUAGE_NONE]['#default_value'] = $user->uid;
+    }
+  }
+  else {
+    // Disable access if we're editing a node for the first time.
+    $form['field_organizer_container']['field_organizer']['#access'] = FALSE;
+  }
+}
+
+/**
+ * AJAX callback for field organizer.
+ * Triggered by field chapter.
+ */
+function _tm_events_field_organizer_ajax_cb($form, $form_state) {
+  return $form['field_organizer_container'];
+}
+
+/**
+ * Loads all the available organizers for a given city/chapter.
+ * Basically all the chapter leaders of that city/chapter.
+ * 
+ * @param int $chapter_id
+ * 
+ * @return Array [stdClass]
+ */
+function _load_organizers_per_chapter($chapter_id) {
+  $result = db_query('
+    SELECT users.name AS name, users.uid AS uid, n.nid AS chapter_nid
+    FROM
+      {users} users
+    INNER JOIN {field_data_field_chapter_leaders} f_c_l ON users.uid = f_c_l.field_chapter_leaders_target_id AND f_c_l.entity_type = :entity_type AND f_c_l.deleted = :deleted
+    INNER JOIN {node} n ON f_c_l.entity_id = n.nid
+    WHERE users.status <> :user_status AND n.nid = :chapter_id
+    ORDER BY name', array(
+      ':entity_type' => 'node',
+      ':deleted' => 0,
+      ':user_status' => 0,
+      ':chapter_id' => $chapter_id
+  ))->fetchAll();
+    
+  $data = array();
+  foreach ($result as $value) {
+    $data[$value->uid] = $value->name;
+  }
+  
+  return $data;
 }
 
 /**

@@ -21,24 +21,19 @@ function tm_organizations_ds_field_settings_info() {
       'weight' => '0',
       'label' => 'hidden',
       'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
     ),
     'members_following' => array(
-      'weight' => '0',
-      'label' => 'above',
+      'weight' => '6',
+      'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_expert',
-          'lb' => 'Followed by',
-          'lb-el' => 'h1',
-          'lb-cl' => 'prime-title',
-          'lb-col' => TRUE,
-          'ow' => TRUE,
-          'ow-el' => 'section',
-          'ow-cl' => 'contained contained-block',
-          'ow-def-cl' => FALSE,
-          'ow-at' => '',
-          'ow-def-at' => FALSE,
+          'func' => 'theme_ds_field_reset',
         ),
       ),
     ),
@@ -55,10 +50,45 @@ function tm_organizations_ds_field_settings_info() {
         ),
       ),
     ),
+    'tm_ds_more_actions' => array(
+      'weight' => '1',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'li',
+          'ow-cl' => '',
+          'ow-def-cl' => FALSE,
+          'ow-at' => 'data-dropd-wrapper',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
     'body' => array(
       'formatter_settings' => array(
         'ft' => array(
           'func' => 'theme_ds_field_dl',
+        ),
+      ),
+    ),
+    'field_avatar' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'avatar',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+          'fi' => TRUE,
+          'fi-el' => 'span',
+          'fi-cl' => 'badge-organization',
+          'fi-at' => '',
+          'fi-def-at' => FALSE,
+          'fi-odd-even' => FALSE,
         ),
       ),
     ),
@@ -82,22 +112,10 @@ function tm_organizations_ds_field_settings_info() {
         ),
       ),
     ),
-    'field_avatar' => array(
+    'field_segment' => array(
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_expert',
-          'ow' => TRUE,
-          'ow-el' => 'div',
-          'ow-cl' => 'avatar',
-          'ow-def-cl' => FALSE,
-          'ow-at' => '',
-          'ow-def-at' => FALSE,
-          'fi' => TRUE,
-          'fi-el' => 'span',
-          'fi-cl' => 'badge-organization',
-          'fi-at' => '',
-          'fi-def-at' => FALSE,
-          'fi-odd-even' => FALSE,
+          'func' => 'theme_ds_field_dl',
         ),
       ),
     ),
@@ -177,36 +195,44 @@ function tm_organizations_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
-      'second_column' => array(
-        0 => 'members_following',
+      'header_media' => array(
+        0 => 'field_image',
       ),
       'header_body' => array(
         1 => 'ds_flag_follow_organizations',
+        2 => 'tm_ds_more_actions',
         3 => 'field_avatar',
         4 => 'title',
-        7 => 'group_action_menu',
-        8 => 'group_action_menu_wrapper',
-      ),
-      'header_media' => array(
-        2 => 'field_image',
+        5 => 'group_action_menu_wrapper',
+        12 => 'group_action_menu',
       ),
       'first_column' => array(
-        5 => 'field_owner',
-        6 => 'body',
+        5 => 'group_details_wrapper',
+        6 => 'field_owner',
+        7 => 'body',
+        8 => 'field_segment',
         9 => 'group_details',
+      ),
+      'second_column' => array(
+        8 => 'group_community_wrapper',
+        11 => 'members_following',
       ),
     ),
     'fields' => array(
-      'members_following' => 'second_column',
-      'ds_flag_follow_organizations' => 'header_body',
       'field_image' => 'header_media',
+      'ds_flag_follow_organizations' => 'header_body',
       'field_avatar' => 'header_body',
+      'tm_ds_more_actions' => 'header_body',
       'title' => 'header_body',
-      'field_owner' => 'first_column',
-      'body' => 'first_column',
-      'group_action_menu' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
+      'group_details_wrapper' => 'first_column',
+      'field_owner' => 'first_column',
+      'group_community_wrapper' => 'second_column',
+      'body' => 'first_column',
+      'field_segment' => 'first_column',
       'group_details' => 'first_column',
+      'members_following' => 'second_column',
+      'group_action_menu' => 'header_body',
     ),
     'classes' => array(),
     'wrappers' => array(

@@ -18,22 +18,12 @@ function tm_users_ds_field_settings_info() {
   $ds_fieldsetting->view_mode = 'default';
   $ds_fieldsetting->settings = array(
     'members_following_members' => array(
-      'weight' => '0',
-      'label' => 'above',
+      'weight' => '7',
+      'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_expert',
-          'lb' => 'Followed by',
-          'lb-el' => 'h1',
-          'lb-cl' => 'prime-title',
-          'lb-col' => TRUE,
-          'ow' => TRUE,
-          'ow-el' => 'section',
-          'ow-cl' => 'contained contained-block',
-          'ow-def-cl' => FALSE,
-          'ow-at' => '',
-          'ow-def-at' => FALSE,
+          'func' => 'theme_ds_field_reset',
         ),
       ),
     ),
@@ -51,7 +41,7 @@ function tm_users_ds_field_settings_info() {
       ),
     ),
     'tm_ds_chapter_sticker' => array(
-      'weight' => '4',
+      'weight' => '5',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -60,13 +50,33 @@ function tm_users_ds_field_settings_info() {
         ),
       ),
     ),
-    'field_image' => array(
+    'tm_ds_more_actions' => array(
+      'weight' => '2',
+      'label' => 'hidden',
+      'format' => 'default',
       'formatter_settings' => array(
         'ft' => array(
           'func' => 'theme_ds_field_expert',
           'ow' => TRUE,
-          'ow-el' => 'div',
-          'ow-cl' => 'cover',
+          'ow-el' => 'li',
+          'ow-cl' => '',
+          'ow-def-cl' => FALSE,
+          'ow-at' => 'data-dropd-wrapper',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'tm_ds_edit_own_profile' => array(
+      'weight' => '0',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'Extra classes' => 'bttn bttn-secondary bttn-m',
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'li',
+          'ow-cl' => '',
           'ow-def-cl' => FALSE,
           'ow-at' => '',
           'ow-def-at' => FALSE,
@@ -92,6 +102,73 @@ function tm_users_ds_field_settings_info() {
         ),
       ),
     ),
+    'field_image' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'cover',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'field_segment' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_dl',
+        ),
+      ),
+    ),
+    'field_user_question_destination' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_minimal',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'field_user_question_dream_travel' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_minimal',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'field_user_question_job' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_minimal',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'field_user_question_learn' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_minimal',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'field_user_question_why_travel' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_minimal',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'field_about_me' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_dl',
+        ),
+      ),
+    ),
   );
   $export['user|user|default'] = $ds_fieldsetting;
 
@@ -103,7 +180,7 @@ function tm_users_ds_field_settings_info() {
   $ds_fieldsetting->view_mode = 'grid';
   $ds_fieldsetting->settings = array(
     'name' => array(
-      'weight' => '2',
+      'weight' => '0',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -125,19 +202,6 @@ function tm_users_ds_field_settings_info() {
         ),
       ),
     ),
-    'field_image' => array(
-      'formatter_settings' => array(
-        'ft' => array(
-          'func' => 'theme_ds_field_expert',
-          'ow' => TRUE,
-          'ow-el' => 'div',
-          'ow-cl' => 'cover',
-          'ow-def-cl' => FALSE,
-          'ow-at' => '',
-          'ow-def-at' => FALSE,
-        ),
-      ),
-    ),
     'field_avatar' => array(
       'formatter_settings' => array(
         'ft' => array(
@@ -154,6 +218,19 @@ function tm_users_ds_field_settings_info() {
           'fi-at' => '',
           'fi-def-at' => FALSE,
           'fi-odd-even' => FALSE,
+        ),
+      ),
+    ),
+    'field_image' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'cover',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
         ),
       ),
     ),
@@ -195,36 +272,60 @@ function tm_users_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
-      'header_media' => array(
-        0 => 'field_image',
-      ),
-      'second_column' => array(
-        1 => 'members_following_members',
-      ),
       'header_body' => array(
+        0 => 'tm_ds_edit_own_profile',
         2 => 'field_avatar',
-        3 => 'name',
-        4 => 'group_action_menu_wrapper',
-        7 => 'group_action_menu',
-        8 => 'flag_follow_members',
+        3 => 'flag_follow_members',
+        4 => 'name',
+        5 => 'tm_ds_more_actions',
+        6 => 'group_action_menu_wrapper',
+        12 => 'group_action_menu',
+        13 => 'tm_ds_more_actions',
+      ),
+      'header_media' => array(
+        1 => 'field_image',
       ),
       'header_extra' => array(
-        5 => 'tm_ds_chapter_sticker',
+        7 => 'tm_ds_chapter_sticker',
       ),
       'first_column' => array(
-        6 => 'group_details',
+        8 => 'group_details_wrapper',
+        10 => 'group_details',
+        12 => 'field_about_me',
+        13 => 'field_segment',
+        14 => 'field_user_question_destination',
+        15 => 'field_user_question_dream_travel',
+        16 => 'field_user_question_learn',
+        17 => 'field_user_question_job',
+        18 => 'field_user_question_why_travel',
+      ),
+      'second_column' => array(
+        9 => 'group_community_wrapper',
+        11 => 'members_following_members',
       ),
     ),
     'fields' => array(
+      'tm_ds_edit_own_profile' => 'header_body',
       'field_image' => 'header_media',
-      'members_following_members' => 'second_column',
       'field_avatar' => 'header_body',
+      'flag_follow_members' => 'header_body',
       'name' => 'header_body',
+      'tm_ds_more_actions' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
       'tm_ds_chapter_sticker' => 'header_extra',
+      'group_details_wrapper' => 'first_column',
+      'group_community_wrapper' => 'second_column',
       'group_details' => 'first_column',
+      'members_following_members' => 'second_column',
       'group_action_menu' => 'header_body',
-      'flag_follow_members' => 'header_body',
+      'field_about_me' => 'first_column',
+      'tm_ds_more_actions' => 'header_body',
+      'field_segment' => 'first_column',
+      'field_user_question_destination' => 'first_column',
+      'field_user_question_dream_travel' => 'first_column',
+      'field_user_question_learn' => 'first_column',
+      'field_user_question_job' => 'first_column',
+      'field_user_question_why_travel' => 'first_column',
     ),
     'classes' => array(),
     'wrappers' => array(
@@ -251,21 +352,21 @@ function tm_users_ds_layout_settings_info() {
   $ds_layout->layout = 'card';
   $ds_layout->settings = array(
     'regions' => array(
-      'media' => array(
-        0 => 'field_image',
-        1 => 'field_avatar',
-      ),
       'teaser' => array(
-        2 => 'name',
+        0 => 'name',
+      ),
+      'media' => array(
+        1 => 'field_image',
+        2 => 'field_avatar',
       ),
       'extra' => array(
         3 => 'tm_ds_chapter_sticker',
       ),
     ),
     'fields' => array(
+      'name' => 'teaser',
       'field_image' => 'media',
       'field_avatar' => 'media',
-      'name' => 'teaser',
       'tm_ds_chapter_sticker' => 'extra',
     ),
     'classes' => array(),

@@ -35,19 +35,19 @@ function tm_users_strongarm() {
     'extra_fields' => array(
       'form' => array(
         'masquerade' => array(
-          'weight' => '50',
+          'weight' => '2',
         ),
         'account' => array(
-          'weight' => '-10',
+          'weight' => '0',
         ),
         'timezone' => array(
-          'weight' => '6',
+          'weight' => '1',
         ),
       ),
       'display' => array(
         'masquerade' => array(
           'default' => array(
-            'weight' => '9',
+            'weight' => '11',
             'visible' => FALSE,
           ),
           'grid' => array(
@@ -61,7 +61,7 @@ function tm_users_strongarm() {
         ),
         'summary' => array(
           'default' => array(
-            'weight' => '8',
+            'weight' => '10',
             'visible' => FALSE,
           ),
           'grid' => array(
@@ -75,11 +75,15 @@ function tm_users_strongarm() {
         ),
         'flag_follow_members' => array(
           'default' => array(
-            'weight' => '10',
+            'weight' => '1',
             'visible' => TRUE,
           ),
           'list' => array(
             'weight' => '6',
+            'visible' => FALSE,
+          ),
+          'grid' => array(
+            'weight' => '10',
             'visible' => FALSE,
           ),
         ),
@@ -133,13 +137,6 @@ function tm_users_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'logintoboggan_pre_auth_role';
-  $strongarm->value = '3';
-  $export['logintoboggan_pre_auth_role'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
   $strongarm->name = 'logintoboggan_purge_unvalidated_user_interval';
   $strongarm->value = '604800';
   $export['logintoboggan_purge_unvalidated_user_interval'] = $strongarm;
@@ -175,9 +172,9 @@ function tm_users_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'user_admin_role';
-  $strongarm->value = '3';
-  $export['user_admin_role'] = $strongarm;
+  $strongarm->name = 'realname_pattern';
+  $strongarm->value = '[user:field_user_first_name] [user:field_user_last_name]';
+  $export['realname_pattern'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */

@@ -2839,7 +2839,7 @@ tr.selected td {
    Helpers - extends + custom vars
    ========================================================================== */
 /* line 9, ../sass/_helpers.scss */
-.visually-hidden, .bttn.hide-txt span, #site-title span, #prime-nav h1, #prime-nav h2 span, #foot-credits .logo span, .card.contained .badge-cal .year, .trilithon-header .badge-cal .year {
+.visually-hidden, .bttn.hide-txt span, #site-title span, #prime-nav h1, #prime-nav h2 span, #foot-credits .logo span, .contained-block .details-list dt, .card.contained .badge-cal .year, .trilithon-header .badge-cal .year {
   border: 0 none;
   clip: rect(0px, 0px, 0px, 0px);
   height: 1px;
@@ -2881,7 +2881,7 @@ Icons
 }
 
 /* line 25, ../sass/_type.scss */
-.icon, .icon-s-new-window, .bttn.external:before, .icon-instagram, #foot-nav .instagram:before, .icon-users, .icon-user, #prime-nav .account-wrapper .toggle:before, .icon-twitter, #foot-nav .twitter:before, .icon-triangle-up, .dropd:before, .icon-triangle-right, .icon-triangle-left, .icon-triangle-down, .icon-trash-bin, .icon-tick, .icon-subtract, .icon-star, .icon-spinner, .icon-share, .icon-share-reg, .icon-search-r, #prime-nav .search-wrapper .toggle:before, .icon-search-l, .icon-s-triangle-up, .icon-s-triangle-right, .icon-s-triangle-left, .icon-s-triangle-down, .icon-s-tick, .bttn.follow.on:before, .bttn.follow.flagged:before, .icon-s-subtract, .icon-s-cancel, .icon-s-arr-up, .icon-s-arr-right, #foot-nav a:before, .icon-s-arr-left, .icon-s-arr-down, .bttn-dropdown:after, .icon-s-add, .bttn.follow:before, .icon-refresh, .icon-phone, .icon-pencil, .icon-my-location, .icon-mobile, .icon-menu, #prime-nav .browse-wrapper .toggle:before, .icon-map, .icon-map-marker, .icon-list, .icon-linkedin, #foot-nav .linkedin:before, .icon-image, .icon-home, .icon-history, .icon-grid, .icon-google-plus, .icon-globe, .icon-github, .icon-flickr, .icon-feed, .icon-facebook, #foot-nav .facebook:before, .icon-expand, .icon-email, .icon-download, .icon-disc-cancel, .icon-description, .icon-cog, .bttn.settings:before, .icon-clock, .icon-circle-warning, .icon-circle-success, .icon-circle-question, .icon-circle-play, .icon-circle-info, .icon-circle-error, .icon-cancel, .icon-arr-up, .icon-arr-tail-up, .icon-arr-tail-right, .icon-arr-tail-left, .icon-arr-tail-down, .icon-arr-right, .icon-arr-right-last, .icon-arr-left, .icon-arr-left-first, .icon-arr-down, .icon-add, [class^="icon-"], [class*=" icon-"] {
+.icon, .icon-s-new-window, .bttn.external:before, .icon-instagram, #foot-nav .instagram:before, .contained-block .details-list .instagram:before, .icon-users, .icon-user, #prime-nav .account-wrapper .toggle:before, .contained-block .details-list .people:before, .contained-block .details-list .field-owner:before, .icon-twitter, #foot-nav .twitter:before, .contained-block .details-list .twitter:before, .icon-triangle-up, .dropd:before, .icon-triangle-right, .icon-triangle-left, .icon-triangle-down, .icon-trash-bin, .icon-tick, .icon-subtract, .icon-star, .icon-spinner, .icon-share, .icon-share-reg, .icon-search-r, #prime-nav .search-wrapper .toggle:before, .icon-search-l, .icon-s-triangle-up, .icon-s-triangle-right, .icon-s-triangle-left, .icon-s-triangle-down, .icon-s-tick, .bttn.follow.on:before, .bttn.follow.flagged:before, .icon-s-subtract, .icon-s-cancel, .icon-s-arr-up, .icon-s-arr-right, #foot-nav a:before, .icon-s-arr-left, .icon-s-arr-down, .bttn-dropdown:after, .icon-s-add, .bttn.follow:before, .icon-refresh, .icon-phone, .icon-pencil, .icon-my-location, .icon-mobile, .icon-menu, #prime-nav .browse-wrapper .toggle:before, .icon-map, .icon-map-marker, .contained-block .details-list .location:before, .contained-block .details-list .field-location:before, .icon-list, .icon-linkedin, #foot-nav .linkedin:before, .contained-block .details-list .linkedin:before, .icon-image, .icon-home, .icon-history, .icon-grid, .icon-google-plus, .icon-globe, .icon-github, .icon-flickr, .icon-feed, .icon-facebook, #foot-nav .facebook:before, .contained-block .details-list .facebook:before, .icon-expand, .icon-email, .icon-download, .icon-disc-cancel, .icon-description, .contained-block .details-list .description:before, .contained-block .details-list .body:before, .icon-cog, .bttn.settings:before, .icon-clock, .icon-circle-warning, .icon-circle-success, .icon-circle-question, .icon-circle-play, .icon-circle-info, .icon-circle-error, .icon-cancel, .icon-arr-up, .icon-arr-tail-up, .icon-arr-tail-right, .icon-arr-tail-left, .icon-arr-tail-down, .icon-arr-right, .icon-arr-right-last, .icon-arr-left, .icon-arr-left-first, .icon-arr-down, .icon-add, [class^="icon-"], [class*=" icon-"] {
   font-family: 'tm-icons';
   speak: none;
   font-style: normal;
@@ -2899,7 +2899,7 @@ Icons
 }
 
 /* line 41, ../sass/_type.scss */
-.icon-instagram, #foot-nav .instagram:before {
+.icon-instagram, #foot-nav .instagram:before, .contained-block .details-list .instagram:before {
   content: "\e649";
 }
 
@@ -2909,12 +2909,12 @@ Icons
 }
 
 /* line 49, ../sass/_type.scss */
-.icon-user, #prime-nav .account-wrapper .toggle:before {
+.icon-user, #prime-nav .account-wrapper .toggle:before, .contained-block .details-list .people:before, .contained-block .details-list .field-owner:before {
   content: "\e601";
 }
 
 /* line 53, ../sass/_type.scss */
-.icon-twitter, #foot-nav .twitter:before {
+.icon-twitter, #foot-nav .twitter:before, .contained-block .details-list .twitter:before {
   content: "\e602";
 }
 
@@ -3079,7 +3079,7 @@ Icons
 }
 
 /* line 185, ../sass/_type.scss */
-.icon-map-marker {
+.icon-map-marker, .contained-block .details-list .location:before, .contained-block .details-list .field-location:before {
   content: "\e623";
 }
 
@@ -3089,7 +3089,7 @@ Icons
 }
 
 /* line 193, ../sass/_type.scss */
-.icon-linkedin, #foot-nav .linkedin:before {
+.icon-linkedin, #foot-nav .linkedin:before, .contained-block .details-list .linkedin:before {
   content: "\e625";
 }
 
@@ -3139,7 +3139,7 @@ Icons
 }
 
 /* line 233, ../sass/_type.scss */
-.icon-facebook, #foot-nav .facebook:before {
+.icon-facebook, #foot-nav .facebook:before, .contained-block .details-list .facebook:before {
   content: "\e62f";
 }
 
@@ -3164,7 +3164,7 @@ Icons
 }
 
 /* line 253, ../sass/_type.scss */
-.icon-description {
+.icon-description, .contained-block .details-list .description:before, .contained-block .details-list .body:before {
   content: "\e634";
 }
 
@@ -3334,7 +3334,7 @@ h4, .hd-s {
 }
 
 /* line 396, ../sass/_type.scss */
-h5, h6, .hd-xs, #foot-nav h2, .contained h2, .contained h3 {
+h5, h6, .hd-xs, #foot-nav h2, .contained h2, .contained h3, .contained-block .prime-title {
   font-size: 1rem;
   line-height: 1.5;
   font-weight: 800;
@@ -4273,12 +4273,71 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn.disabled:focus {
 }
 
 /* line 60, ../sass/_modules.scss */
+.contained-block {
+  overflow: hidden;
+}
+/* line 62, ../sass/_modules.scss */
+.contained-block .contained-head {
+  padding: 1rem;
+}
+/* line 65, ../sass/_modules.scss */
+.contained-block .prime-title {
+  text-transform: uppercase;
+  margin: 0;
+}
+/* line 70, ../sass/_modules.scss */
+.contained-block .contained-body {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+/* line 74, ../sass/_modules.scss */
+.contained-block .details-list {
+  margin: 0 0 2rem 0;
+}
+/* line 77, ../sass/_modules.scss */
+.contained-block .details-list dd {
+  position: relative;
+  border-bottom: 1px #e8eaeb solid;
+  padding: 0 1rem 1rem 2.5rem;
+  margin: 0 0 1rem 0;
+}
+/* line 82, ../sass/_modules.scss */
+.contained-block .details-list dd:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+/* line 87, ../sass/_modules.scss */
+.contained-block .details-list dd:before {
+  position: absolute;
+  top: 0;
+  left: 1rem;
+  font-size: 1rem;
+  color: #a6acb2;
+}
+@media only screen and (min-width: 62.063rem) {
+  /* line 105, ../sass/_modules.scss */
+  .contained-block .contained-head {
+    padding: 2rem;
+  }
+  /* line 109, ../sass/_modules.scss */
+  .contained-block .details-list dd {
+    padding: 0 2rem 1rem 3.5rem;
+    margin: 0 0 1rem 0;
+  }
+  /* line 112, ../sass/_modules.scss */
+  .contained-block .details-list dd:before {
+    left: 2rem;
+  }
+}
+
+/* line 120, ../sass/_modules.scss */
 .card.contained {
   box-shadow: none;
   background: transparent;
   position: relative;
 }
-/* line 64, ../sass/_modules.scss */
+/* line 124, ../sass/_modules.scss */
 .card.contained > a {
   background-color: #FFF;
   box-shadow: 0 0.125rem 0 0 rgba(33, 48, 64, 0.1);
@@ -4291,7 +4350,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn.disabled:focus {
   -o-transition: -o-transform 0.1s ease-in-out;
   transition: transform 0.1s ease-in-out;
 }
-/* line 73, ../sass/_modules.scss */
+/* line 133, ../sass/_modules.scss */
 .card.contained > a:hover {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
@@ -4301,27 +4360,27 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn.disabled:focus {
   -o-transform: scale(1.05);
   transform: scale(1.05);
 }
-/* line 78, ../sass/_modules.scss */
+/* line 138, ../sass/_modules.scss */
 .card.contained.node-event > a {
   padding-right: 2.25rem;
 }
-/* line 81, ../sass/_modules.scss */
+/* line 141, ../sass/_modules.scss */
 .card.contained .media {
   float: left;
   margin: 0 0.75rem 0 0;
 }
-/* line 85, ../sass/_modules.scss */
+/* line 145, ../sass/_modules.scss */
 .card.contained .cover {
   display: none;
   position: relative;
   z-index: 1;
 }
-/* line 89, ../sass/_modules.scss */
+/* line 149, ../sass/_modules.scss */
 .card.contained .cover img {
   display: block;
   border-radius: 0.25rem 0.25rem 0 0;
 }
-/* line 94, ../sass/_modules.scss */
+/* line 154, ../sass/_modules.scss */
 .card.contained .avatar {
   text-align: center;
   position: relative;
@@ -4332,7 +4391,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn.disabled:focus {
   text-transform: uppercase;
   font-weight: 800;
 }
-/* line 105, ../sass/_modules.scss */
+/* line 165, ../sass/_modules.scss */
 .card.contained .badge-chapter {
   position: relative;
   display: block;
@@ -4344,7 +4403,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn.disabled:focus {
   display: inline-block;
   padding-bottom: 0.5rem;
 }
-/* line 115, ../sass/_modules.scss */
+/* line 175, ../sass/_modules.scss */
 .card.contained .badge-chapter:before {
   content: '';
   display: inline-block;
@@ -4352,7 +4411,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn.disabled:focus {
   vertical-align: bottom;
   width: 0;
 }
-/* line 122, ../sass/_modules.scss */
+/* line 182, ../sass/_modules.scss */
 .card.contained .badge-chapter:after {
   position: absolute;
   display: block;
@@ -4365,13 +4424,13 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn.disabled:focus {
   background-size: cover;
   border-radius: 0.125rem 0 0 0;
 }
-/* line 135, ../sass/_modules.scss */
+/* line 195, ../sass/_modules.scss */
 .card.contained .badge-cal {
   display: block;
   width: 4rem;
   height: 4rem;
 }
-/* line 139, ../sass/_modules.scss */
+/* line 199, ../sass/_modules.scss */
 .card.contained .badge-cal .month {
   display: block;
   border-radius: 0.25rem 0.25rem 0 0;
@@ -4380,7 +4439,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn.disabled:focus {
   font-size: 0.875rem;
   line-height: 1.5rem;
 }
-/* line 147, ../sass/_modules.scss */
+/* line 207, ../sass/_modules.scss */
 .card.contained .badge-cal .day {
   display: block;
   border-radius: 0 0 0.25rem 0.25rem;
@@ -4390,31 +4449,31 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn.disabled:focus {
   padding-bottom: 0.25rem;
   letter-spacing: -0.0625rem;
 }
-/* line 161, ../sass/_modules.scss */
+/* line 221, ../sass/_modules.scss */
 .card.contained .badge-organization,
 .card.contained .badge-user {
   width: 4rem;
   height: 4rem;
   display: block;
 }
-/* line 165, ../sass/_modules.scss */
+/* line 225, ../sass/_modules.scss */
 .card.contained .badge-organization img,
 .card.contained .badge-user img {
   display: block;
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 171, ../sass/_modules.scss */
+/* line 231, ../sass/_modules.scss */
 .card.contained .teaser {
   display: table-cell;
   width: 64rem;
   vertical-align: middle;
 }
-/* line 175, ../sass/_modules.scss */
+/* line 235, ../sass/_modules.scss */
 .card.contained .teaser p {
   margin: 0;
 }
-/* line 177, ../sass/_modules.scss */
+/* line 237, ../sass/_modules.scss */
 .card.contained .prime-title {
   font-size: 0.875rem;
   line-height: 1.42857;
@@ -4423,20 +4482,20 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn.disabled:focus {
   padding: 0;
   letter-spacing: normal;
 }
-/* line 186, ../sass/_modules.scss */
+/* line 246, ../sass/_modules.scss */
 .card.contained .meta {
   color: #79828c;
   font-size: 0.875rem;
   line-height: 1.25rem;
   display: block;
 }
-/* line 192, ../sass/_modules.scss */
+/* line 252, ../sass/_modules.scss */
 .card.contained .extra {
   position: absolute;
   top: 0.5rem;
   right: 1.75rem;
 }
-/* line 197, ../sass/_modules.scss */
+/* line 257, ../sass/_modules.scss */
 .card.contained .chapter-sticker {
   border-radius: 0.25rem;
   display: block;
@@ -4459,29 +4518,29 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn.disabled:focus {
   transform-origin: top right;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 60, ../sass/_modules.scss */
+  /* line 120, ../sass/_modules.scss */
   .card.contained {
     text-align: center;
   }
-  /* line 217, ../sass/_modules.scss */
+  /* line 277, ../sass/_modules.scss */
   .card.contained > a {
     display: block;
     padding: 0 0 2rem 0;
   }
-  /* line 221, ../sass/_modules.scss */
+  /* line 281, ../sass/_modules.scss */
   .card.contained.node-event > a {
     padding-right: 0;
   }
-  /* line 224, ../sass/_modules.scss */
+  /* line 284, ../sass/_modules.scss */
   .card.contained .media {
     float: none;
     margin: 0 0 1rem 0;
   }
-  /* line 228, ../sass/_modules.scss */
+  /* line 288, ../sass/_modules.scss */
   .card.contained .cover {
     display: block;
   }
-  /* line 231, ../sass/_modules.scss */
+  /* line 291, ../sass/_modules.scss */
   .card.contained .avatar {
     display: table;
     box-shadow: 0 0 0 1px rgba(33, 48, 64, 0.1);
@@ -4489,66 +4548,66 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn.disabled:focus {
     background-color: #FFF;
     margin: -4rem auto 0 auto;
   }
-  /* line 238, ../sass/_modules.scss */
+  /* line 298, ../sass/_modules.scss */
   .card.contained .badge-chapter {
     width: 6rem;
     height: 6rem;
     font-size: 1.25rem;
     padding-bottom: 1rem;
   }
-  /* line 243, ../sass/_modules.scss */
+  /* line 303, ../sass/_modules.scss */
   .card.contained .badge-chapter:after {
     height: 1rem;
     width: 1rem;
     border-radius: 0.25rem 0 0 0;
   }
-  /* line 249, ../sass/_modules.scss */
+  /* line 309, ../sass/_modules.scss */
   .card.contained .badge-cal {
     width: 6rem;
     height: 6rem;
   }
-  /* line 252, ../sass/_modules.scss */
+  /* line 312, ../sass/_modules.scss */
   .card.contained .badge-cal .month {
     font-size: 1.25rem;
     line-height: 2rem;
   }
-  /* line 256, ../sass/_modules.scss */
+  /* line 316, ../sass/_modules.scss */
   .card.contained .badge-cal .day {
     line-height: 3.5rem;
     font-size: 2.5rem;
     padding-bottom: 0.5rem;
     letter-spacing: -0.125rem;
   }
-  /* line 264, ../sass/_modules.scss */
+  /* line 324, ../sass/_modules.scss */
   .card.contained .badge-organization,
   .card.contained .badge-user {
     width: 6rem;
     height: 6rem;
   }
-  /* line 268, ../sass/_modules.scss */
+  /* line 328, ../sass/_modules.scss */
   .card.contained .teaser {
     display: block;
     width: auto;
     padding: 0 1rem;
   }
-  /* line 273, ../sass/_modules.scss */
+  /* line 333, ../sass/_modules.scss */
   .card.contained .prime-title {
     font-size: 1.5rem;
     line-height: 1.16667;
   }
-  /* line 278, ../sass/_modules.scss */
+  /* line 338, ../sass/_modules.scss */
   .card.contained .meta {
     font-size: 1rem;
     line-height: 1.5;
   }
-  /* line 282, ../sass/_modules.scss */
+  /* line 342, ../sass/_modules.scss */
   .card.contained .extra {
     position: absolute;
     top: 0.5rem;
     left: 0.5rem;
     right: auto;
   }
-  /* line 288, ../sass/_modules.scss */
+  /* line 348, ../sass/_modules.scss */
   .card.contained .chapter-sticker {
     line-height: 2rem;
     font-size: 0.875rem;
@@ -4563,7 +4622,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn.disabled:focus {
 
 /* line 1, ../sass/_single.scss */
 .trilithon-header {
-  margin: 0 1rem 2rem 1rem;
+  margin: 0 1rem 1rem 1rem;
   position: relative;
 }
 /* line 5, ../sass/_single.scss */
@@ -4733,66 +4792,70 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn.disabled:focus {
   margin: 0 0.25rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 159, ../sass/_single.scss */
+  /* line 1, ../sass/_single.scss */
+  .trilithon-header {
+    margin-bottom: 2rem;
+  }
+  /* line 160, ../sass/_single.scss */
   .trilithon-header .media {
     margin-bottom: -4rem;
   }
-  /* line 162, ../sass/_single.scss */
+  /* line 163, ../sass/_single.scss */
   .trilithon-header .badge-chapter {
     width: 6rem;
     height: 6rem;
     font-size: 1.25rem;
     padding-bottom: 1rem;
   }
-  /* line 167, ../sass/_single.scss */
+  /* line 168, ../sass/_single.scss */
   .trilithon-header .badge-chapter:after {
     height: 1rem;
     width: 1rem;
     border-radius: 0.25rem 0 0 0;
   }
-  /* line 173, ../sass/_single.scss */
+  /* line 174, ../sass/_single.scss */
   .trilithon-header .badge-cal {
     width: 6rem;
     height: 6rem;
   }
-  /* line 176, ../sass/_single.scss */
+  /* line 177, ../sass/_single.scss */
   .trilithon-header .badge-cal .month {
     font-size: 1.25rem;
     line-height: 2rem;
   }
-  /* line 180, ../sass/_single.scss */
+  /* line 181, ../sass/_single.scss */
   .trilithon-header .badge-cal .day {
     line-height: 3.5rem;
     font-size: 2.5rem;
     padding-bottom: 0.5rem;
     letter-spacing: -0.125rem;
   }
-  /* line 188, ../sass/_single.scss */
+  /* line 189, ../sass/_single.scss */
   .trilithon-header .badge-organization,
   .trilithon-header .badge-user {
     width: 6rem;
     height: 6rem;
   }
-  /* line 192, ../sass/_single.scss */
+  /* line 193, ../sass/_single.scss */
   .trilithon-header .prime-title {
     font-size: 1.75rem;
     line-height: 1.14286;
   }
-  /* line 197, ../sass/_single.scss */
+  /* line 198, ../sass/_single.scss */
   .trilithon-header .meta {
     font-size: 1rem;
     line-height: 1.5;
   }
 }
 @media only screen and (min-width: 48.063rem) {
-  /* line 204, ../sass/_single.scss */
+  /* line 205, ../sass/_single.scss */
   .trilithon-header .media {
     display: table-cell;
     width: 58%;
     margin-bottom: 0;
     border-radius: 0.25rem 0 0 0.25rem;
   }
-  /* line 210, ../sass/_single.scss */
+  /* line 211, ../sass/_single.scss */
   .trilithon-header .cover {
     position: relative;
     width: 150%;
@@ -4800,44 +4863,44 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn.disabled:focus {
     margin-left: -70%;
     max-height: none;
   }
-  /* line 217, ../sass/_single.scss */
+  /* line 218, ../sass/_single.scss */
   .trilithon-header .bd {
     vertical-align: middle;
     display: table-cell;
     padding: 1rem 1rem 5rem 1rem;
   }
-  /* line 222, ../sass/_single.scss */
+  /* line 223, ../sass/_single.scss */
   .trilithon-header .extra {
     top: 1rem;
     left: 1rem;
   }
-  /* line 226, ../sass/_single.scss */
+  /* line 227, ../sass/_single.scss */
   .trilithon-header .actions {
     width: 42%;
   }
 }
 @media only screen and (min-width: 62.063rem) {
-  /* line 232, ../sass/_single.scss */
+  /* line 233, ../sass/_single.scss */
   .trilithon-header .media {
     width: 68%;
   }
-  /* line 235, ../sass/_single.scss */
+  /* line 236, ../sass/_single.scss */
   .trilithon-header .cover {
     width: 100%;
     margin-left: 0;
     left: 0;
   }
-  /* line 240, ../sass/_single.scss */
+  /* line 241, ../sass/_single.scss */
   .trilithon-header .bd {
     padding: 2rem 2rem 5rem 2rem;
   }
-  /* line 243, ../sass/_single.scss */
+  /* line 244, ../sass/_single.scss */
   .trilithon-header .chapter-sticker {
     line-height: 3rem;
     font-size: 1.5rem;
     width: 7rem;
   }
-  /* line 248, ../sass/_single.scss */
+  /* line 249, ../sass/_single.scss */
   .trilithon-header .actions {
     width: 32%;
     padding: 1rem 2rem;

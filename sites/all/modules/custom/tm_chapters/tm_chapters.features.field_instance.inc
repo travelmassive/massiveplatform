@@ -92,7 +92,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'inline',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 14,
+        'weight' => 16,
       ),
       'grid' => array(
         'label' => 'above',
@@ -128,6 +128,7 @@ function tm_chapters_field_default_field_instances() {
   $field_instances['node-chapter-field_chapter_leaders'] = array(
     'bundle' => 'chapter',
     'default_value' => NULL,
+    'default_value_function' => '',
     'deleted' => 0,
     'description' => '',
     'display' => array(
@@ -141,10 +142,14 @@ function tm_chapters_field_default_field_instances() {
         'weight' => 1,
       ),
       'full' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 6,
+        'label' => 'hidden',
+        'module' => 'entityreference',
+        'settings' => array(
+          'links' => 0,
+          'view_mode' => 'list',
+        ),
+        'type' => 'entityreference_entity_view',
+        'weight' => 14,
       ),
       'grid' => array(
         'label' => 'above',
@@ -168,11 +173,50 @@ function tm_chapters_field_default_field_instances() {
         'weight' => 0,
       ),
     ),
+    'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_chapter_leaders',
     'label' => 'Chapter leaders',
     'required' => 0,
     'settings' => array(
+      'behaviors' => array(
+        'prepopulate' => array(
+          'status' => 0,
+        ),
+      ),
+      'nodeaccess_userreference' => array(
+        'all' => array(
+          'view' => 'view',
+        ),
+        'all_published' => 0,
+        'author' => array(
+          'delete' => 0,
+          'update' => 'update',
+          'view' => 0,
+        ),
+        'author_published' => 0,
+        'create' => array(
+          'chapter' => 0,
+          'event' => 'event',
+          'organization' => 0,
+          'partner_event' => 0,
+        ),
+        'priority' => 0,
+        'referenced' => array(
+          'delete' => 0,
+          'deny_delete' => 0,
+          'deny_update' => 0,
+          'deny_view' => 0,
+          'update' => 'update',
+          'view' => 0,
+        ),
+        'referenced_published' => 0,
+        'unused' => 0,
+        'views' => array(
+          'view' => '',
+          'view_args' => '',
+        ),
+      ),
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -205,7 +249,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 15,
+        'weight' => 17,
       ),
       'grid' => array(
         'label' => 'above',

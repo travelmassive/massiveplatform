@@ -14,6 +14,7 @@ dependencies[] = menu
 dependencies[] = number
 dependencies[] = options
 dependencies[] = path
+dependencies[] = taxonomy
 
 ; TM - general
 dependencies[] = backup_migrate
@@ -35,19 +36,26 @@ dependencies[] = field_validation
 dependencies[] = field_validation_ui
 dependencies[] = file
 dependencies[] = flag
+dependencies[] = hierarchical_select
+dependencies[] = hs_taxonomy
 dependencies[] = jquery_update
 dependencies[] = libraries
 dependencies[] = link
 dependencies[] = logintoboggan
 dependencies[] = pathauto
+dependencies[] = realname
 dependencies[] = token
 dependencies[] = variable
 dependencies[] = variable_admin
 dependencies[] = views
+dependencies[] = date_views
 dependencies[] = views_ui
 dependencies[] = logintoboggan
 dependencies[] = oauth_common
 dependencies[] = module_filter
+dependencies[] = entityreference_prepopulate
+dependencies[] = nodeaccess_nodereference
+dependencies[] = nodeaccess_userreference
 
 
 ; TM - development

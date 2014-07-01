@@ -166,7 +166,7 @@ function tm_organizations_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 12,
+        'weight' => 13,
       ),
       'grid' => array(
         'label' => 'above',
@@ -354,6 +354,60 @@ function tm_organizations_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-organization-field_segment'
+  $field_instances['node-organization-field_segment'] = array(
+    'bundle' => 'organization',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Please provide the segment which identifies the company the best.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'taxonomy',
+        'settings' => array(),
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 6,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'module' => 'hs_taxonomy',
+        'settings' => array(),
+        'type' => 'hs_taxonomy_term_reference_hierarchical_text',
+        'weight' => 6,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_segment',
+    'label' => 'Segment',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'hs_taxonomy',
+      'settings' => array(
+        'autocomplete_path' => 'term_ref_autocomplete/autocomplete',
+        'size' => 60,
+      ),
+      'type' => 'taxonomy_hs',
+      'weight' => 39,
+    ),
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
   t('By picking a custom URL for your company, you make sure that your profile is accesible through a friendly URL. For example: http://travelmassive.com/your-url');
@@ -362,6 +416,8 @@ function tm_organizations_field_default_field_instances() {
   t('Image');
   t('Logo');
   t('Managed by');
+  t('Please provide the segment which identifies the company the best.');
+  t('Segment');
   t('Select the Travel Massive member that manages this account.');
   t('This image will used as the main banner for your profile and should be a good reflection of your company.');
 

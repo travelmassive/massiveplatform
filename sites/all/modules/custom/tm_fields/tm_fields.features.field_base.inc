@@ -62,7 +62,7 @@ function tm_fields_field_default_field_bases() {
     'locked' => 0,
     'module' => 'image',
     'settings' => array(
-      'default_image' => 552,
+      'default_image' => 2,
       'uri_scheme' => 'public',
     ),
     'translatable' => 0,
@@ -92,18 +92,17 @@ function tm_fields_field_default_field_bases() {
     'locked' => 0,
     'module' => 'entityreference',
     'settings' => array(
-      'handler' => 'base',
+      'handler' => 'views',
       'handler_settings' => array(
         'behaviors' => array(
           'views-select-list' => array(
             'status' => 0,
           ),
         ),
-        'sort' => array(
-          'type' => 'none',
-        ),
-        'target_bundles' => array(
-          'chapter' => 'chapter',
+        'view' => array(
+          'args' => array(),
+          'display_name' => 'entityreference_chapter_leaders_chapter',
+          'view_name' => 'chapter_leaders_chapter',
         ),
       ),
       'target_type' => 'node',
@@ -164,7 +163,7 @@ function tm_fields_field_default_field_bases() {
     'locked' => 0,
     'module' => 'image',
     'settings' => array(
-      'default_image' => 551,
+      'default_image' => 1,
       'uri_scheme' => 'public',
     ),
     'translatable' => 0,
@@ -338,6 +337,40 @@ function tm_fields_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'link_field',
+  );
+
+  // Exported field_base: 'field_segment'
+  $field_bases['field_segment'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_segment',
+    'foreign keys' => array(
+      'tid' => array(
+        'columns' => array(
+          'tid' => 'tid',
+        ),
+        'table' => 'taxonomy_term_data',
+      ),
+    ),
+    'indexes' => array(
+      'tid' => array(
+        0 => 'tid',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'taxonomy',
+    'settings' => array(
+      'allowed_values' => array(
+        0 => array(
+          'vocabulary' => 'tm_segments',
+          'parent' => 0,
+        ),
+      ),
+    ),
+    'translatable' => 0,
+    'type' => 'taxonomy_term_reference',
   );
 
   return $field_bases;

@@ -10,15 +10,6 @@
 function tm_users_external_signin_user_default_permissions() {
   $permissions = array();
 
-  // Exported permission: 'manage tm twitter settings'.
-  $permissions['manage tm twitter settings'] = array(
-    'name' => 'manage tm twitter settings',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'tm_users_external_signin',
-  );
-
   // Exported permission: 'administer consumers'.
   $permissions['administer consumers'] = array(
     'name' => 'administer consumers',
@@ -35,6 +26,15 @@ function tm_users_external_signin_user_default_permissions() {
       'administrator' => 'administrator',
     ),
     'module' => 'oauth_common',
+  );
+
+  // Exported permission: 'manage tm twitter settings'.
+  $permissions['manage tm twitter settings'] = array(
+    'name' => 'manage tm twitter settings',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'tm_users_external_signin',
   );
 
   // Exported permission: 'oauth authorize any consumers'.
@@ -54,6 +54,6 @@ function tm_users_external_signin_user_default_permissions() {
     ),
     'module' => 'oauth_common',
   );
-  
+
   return $permissions;
 }

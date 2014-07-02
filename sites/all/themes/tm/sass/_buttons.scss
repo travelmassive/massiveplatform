@@ -194,6 +194,7 @@ button {
   border-radius: $global-radius;
   box-shadow: 0 0 0 0.125rem rgba($primary-color, 0.1);
   background: rgba(#FFF, 0.95);
+  padding: 1rem;
 
   opacity: 0;
   margin-top: -0.5rem;
@@ -243,15 +244,23 @@ button {
   
   .dropd-menu {
     list-style: none;
-    padding: 0;
-    margin: 0;
+    padding: 0.25rem 0;
+    margin: 0 -1rem;
     font-size: 0.85rem;
     line-height: 1.25rem;
+    border-bottom: 1px solid tint($primary-color, 90%);
+    
+    &:first-child {
+      margin-top: -0.5rem;
+    }
+    
+    &:last-child {
+      margin-bottom: -0.5rem;
+      border: none;
+    }
     li {
       position: relative;
       z-index: 20;
-      padding: rem-calc(4 0);
-      border-bottom: 1px solid tint($primary-color, 90%);
       margin: 0;
       a {
         display: block;
@@ -276,10 +285,6 @@ button {
           color: $secondary-color;
           margin-right: 0.5rem;
         }
-      }
-    
-      &:last-child {
-        border: none;
       }
     }
   }

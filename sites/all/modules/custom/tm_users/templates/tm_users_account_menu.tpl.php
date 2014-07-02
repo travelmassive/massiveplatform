@@ -21,25 +21,29 @@ $image = theme('image_style', array(
 ?>
 <?php if ($user->uid) : ?>
   
-  <ul>
+  <ul class="dropd-menu">
     <li>
       <a href="<?php print url('user/' . $loaded->uid . '/edit'); ?>">
         <div class="media"><?php print $image; ?></div>
         <div class="body"><strong><?php print check_plain($loaded->name); ?></strong><span><?php t('Edit profile'); ?></span></div>
       </a>
     </li>
+  </ul>
+  <ul class="dropd-menu">
     <li><?php print l(t('Public profile'), ''); ?></li>
     <li><?php print l(t('Account settings'), ''); ?></li>
   </ul>
-  <ul>
+  <ul class="dropd-menu">
     <li><?php print l(t('Link'), ''); ?></li>
     <li><?php print l(t('Link'), ''); ?></li>
   </ul>
-  <ul>
+  <ul class="dropd-menu">
     <li><?php print l(t('Link'), ''); ?></li>
     <li><?php print l(t('Link'), ''); ?></li>
   </ul>
-  <ul><li><?php print l(t('Sign out'), 'user/logout'); ?></li></ul>
+  <ul class="dropd-menu">
+    <li><?php print l(t('Sign out'), 'user/logout'); ?></li>
+  </ul>
   
 <?php else : ?>
   

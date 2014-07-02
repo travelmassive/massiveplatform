@@ -19,44 +19,57 @@ $image = theme('image_style', array(
   'title' => 'The user image',
 ));
 ?>
-<?php if ($user->uid) : ?>
-  
-  <ul class="dropd-menu">
-    <li>
-      <a href="<?php print url('user/' . $loaded->uid . '/edit'); ?>">
-        <div class="media"><?php print $image; ?></div>
-        <div class="body"><strong><?php print check_plain($loaded->name); ?></strong><span><?php t('Edit profile'); ?></span></div>
-      </a>
-    </li>
-  </ul>
-  <ul class="dropd-menu">
-    <li><?php print l(t('Public profile'), ''); ?></li>
-    <li><?php print l(t('Account settings'), ''); ?></li>
-  </ul>
-  <ul class="dropd-menu">
-    <li><?php print l(t('Link'), ''); ?></li>
-    <li><?php print l(t('Link'), ''); ?></li>
-  </ul>
-  <ul class="dropd-menu">
-    <li><?php print l(t('Link'), ''); ?></li>
-    <li><?php print l(t('Link'), ''); ?></li>
-  </ul>
-  <ul class="dropd-menu">
-    <li><?php print l(t('Sign out'), 'user/logout'); ?></li>
-  </ul>
-  
-<?php else : ?>
-  
-  <h3 class="menu-blk-title">Sign in</h3>
-  <p><?php print l(t('Twitter'), 'tm_twitter/oauth', array('attributes' => array('class' => 'twitter-login'))); ?></p>
-  <i class="or">or</i>
-  
-  <?php $login_form = drupal_get_form('user_login_block'); ?>
-  <?php print render($login_form); ?>
-  
-  <?php if (variable_get('user_register', 1)) : ?>
-    <h3 class="menu-blk-title">New to Travel Massive?</h3>
-    <p><?php print l(t('Sign up now'), 'user/register', array('attributes' => array('title' => 'Create account', 'class' => 'cta-inline'))); ?></p>
+
+<h2>
+  <a class="toggle" href="#account-menu-blk" data-dropd-toggle>
+    <span class="hide"><?= t('Account'); ?></span>
+    <?php if ($user->uid) : ?>
+    <span class="avatar"><?php print $image; ?></span>
+    <?php endif; ?>
+  </a>
+</h2>
+<div id="account-menu-blk" class="inner dropd dropd-right" data-dropd>
+
+  <?php if ($user->uid) : ?>
+    
+    <ul class="dropd-menu">
+      <li>
+        <a href="<?php print url('user/' . $loaded->uid . '/edit'); ?>">
+          <div class="media"><?php print $image; ?></div>
+          <div class="body"><strong><?php print check_plain($loaded->name); ?></strong><span><?php t('Edit profile'); ?></span></div>
+        </a>
+      </li>
+    </ul>
+    <ul class="dropd-menu">
+      <li><?php print l(t('Public profile'), ''); ?></li>
+      <li><?php print l(t('Account settings'), ''); ?></li>
+    </ul>
+    <ul class="dropd-menu">
+      <li><?php print l(t('Link'), ''); ?></li>
+      <li><?php print l(t('Link'), ''); ?></li>
+    </ul>
+    <ul class="dropd-menu">
+      <li><?php print l(t('Link'), ''); ?></li>
+      <li><?php print l(t('Link'), ''); ?></li>
+    </ul>
+    <ul class="dropd-menu">
+      <li><?php print l(t('Sign out'), 'user/logout'); ?></li>
+    </ul>
+    
+  <?php else : ?>
+    
+    <h3 class="menu-blk-title">Sign in</h3>
+    <p><?php print l(t('Twitter'), 'tm_twitter/oauth', array('attributes' => array('class' => 'twitter-login'))); ?></p>
+    <i class="or">or</i>
+    
+    <?php $login_form = drupal_get_form('user_login_block'); ?>
+    <?php print render($login_form); ?>
+    
+    <?php if (variable_get('user_register', 1)) : ?>
+      <h3 class="menu-blk-title">New to Travel Massive?</h3>
+      <p><?php print l(t('Sign up now'), 'user/register', array('attributes' => array('title' => 'Create account', 'class' => 'cta-inline'))); ?></p>
+    <?php endif; ?>
+    
   <?php endif; ?>
-  
-<?php endif; ?>
+
+</div>

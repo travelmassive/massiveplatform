@@ -423,6 +423,44 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
   }
 }
 
+.media-obj,
+.media-obj > a {
+  display: table;
+  width: 100%;
+}
+
+.media-obj {
+  .media-fig,
+  .media-bd {
+    display: table-cell;
+    vertical-align: middle;
+    
+    .media-top & {
+      vertical-align: top;
+    }
+    .media-bottom & {
+      vertical-align: bottom;
+    }
+  }
+  
+  .media-fig {
+    padding-right: 1rem;
+    
+    img {
+      display: block;
+      max-width: none;
+    }
+    .media-rev & {
+      padding-right: 0;
+      padding-left: 1rem;
+    }
+  }
+  
+  .media-bd {
+    width: 100%;
+  }
+}
+
 
 /* IE<9 */
 

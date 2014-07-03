@@ -53,6 +53,27 @@
   .form-submit {
     @extend .bttn-tertiary, .bttn-blk;
   }
+  
+  .media-obj {
+    .media-fig img {
+      border-radius: $global-radius;
+      max-width: 100%;
+    }
+    .media-fig {
+      padding-right: 0.75rem;
+    }
+    .avatar {
+      display: block;
+      width: 4rem;
+      border-radius: $global-radius;
+      box-shadow: 0 0 0 1px rgba($primary-color, 0.1);
+      padding: 0.25rem;
+      background-color: #FFF;
+    }
+    strong {
+      display: block;
+    }
+  }
 }
 
 .twitter-login {

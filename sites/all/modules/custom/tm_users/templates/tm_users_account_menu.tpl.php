@@ -31,13 +31,19 @@ $image = theme('image_style', array(
 <div id="account-menu-blk" class="inner dropd dropd-right" data-dropd>
 
   <?php if ($user->uid) : ?>
-    
     <ul class="dropd-menu">
       <li>
-        <a href="<?php print url('user/' . $loaded->uid . '/edit'); ?>">
-          <div class="media"><?php print $image; ?></div>
-          <div class="body"><strong><?php print check_plain($loaded->name); ?></strong><span><?php t('Edit profile'); ?></span></div>
-        </a>
+        <div class="media-obj">
+          <a href="<?php print url('user/' . $loaded->uid . '/edit'); ?>">
+            <div class="media-fig">
+              <span class="avatar"><?php print $image; ?></span>
+            </div>
+            <div class="media-bd">
+              <strong><?php print check_plain($loaded->realname); ?></strong>
+              <?php print t('Edit profile'); ?>
+            </div>
+          </a>
+        </div>
       </li>
     </ul>
     <ul class="dropd-menu">

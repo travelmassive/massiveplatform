@@ -51,18 +51,16 @@ button {
     }
   }
   &.follow,
-  &.external {
+  &.external,
+  &.edit {
     width: 9rem;
     &:before {
-      margin-left: -1rem;
+      margin-left: -0.5rem;
     }
   }
-  &.follow:before {
-    @extend .icon-s-add;
-  }
-  &.external:before {
-    @extend .icon-s-new-window;
-  }
+  &.follow:before { @extend .icon-s-add; }
+  &.external:before { @extend .icon-s-new-window; }
+  &.edit:before { @extend .icon-pencil; }
   &.follow.on:before,
   &.follow.flagged:before {
     @extend .icon-s-tick;

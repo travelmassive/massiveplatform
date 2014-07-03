@@ -9,7 +9,6 @@ button {
 .bttn,
 .form-submit {
   display: inline-block;
-  padding: 0 0.75rem;
   border-radius: $global-radius;
   font-weight: $body-font-bold;
   text-align: center;
@@ -89,17 +88,29 @@ button {
 }
 
 /* Button sizes */
+
+/* 24px */
 .bttn-s {
-  line-height: rem-calc(24);
+  line-height: 1.25rem;
   font-size: 0.875rem;
+  padding: 0.125rem 0.5rem;
+  min-height: 1.25rem;
 }
+
+/* 32px */
 .bttn-m {
-  line-height: rem-calc(32);
-  font-size: 0.875rem;
+  line-height: 1.5rem;
+  font-size: 1rem;
+  padding: 0.25rem 0.75rem;
+  min-height: 2rem;
 }
+
+/* 40px */
 .bttn-l {
-  line-height: rem-calc(40);
+  line-height: 1.75rem;
   font-size: 1.25rem;
+  padding: 0.375rem 1rem;
+  min-height: 2.5rem;
 }
 
 /* Button colors */

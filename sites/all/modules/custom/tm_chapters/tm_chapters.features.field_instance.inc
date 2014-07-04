@@ -146,7 +146,7 @@ function tm_chapters_field_default_field_instances() {
         'module' => 'entityreference',
         'settings' => array(
           'links' => 0,
-          'view_mode' => 'list',
+          'view_mode' => 'grid',
         ),
         'type' => 'entityreference_entity_view',
         'weight' => 14,

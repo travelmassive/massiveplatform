@@ -61,7 +61,11 @@ function tm_preprocess_page(&$variables, $hook) {
   if (isset($variables['page']['#views_contextual_links_info']) && $variables['page']['#views_contextual_links_info']['views_ui']['view_display_id'] == "page") {
     drupal_set_title('');
   }
-
+  // Hide the page title from the user profiles
+  if (isset($variables['page']['content']['system_main']['#entity_type']) && $variables['page']['content']['system_main']['#entity_type'] == 'user' && isset($variables['page']['content']['system_main']['#view_mode']) && $variables['page']['content']['system_main']['#view_mode'] == 'full') {
+    drupal_set_title('');
+  }
+  
   // Pass the footer and social menu to the page template
   $variables['foot_menu'] = menu_load('menu-footer-menu');
   $variables['foot_menu']['links'] = menu_navigation_links('menu-footer-menu');

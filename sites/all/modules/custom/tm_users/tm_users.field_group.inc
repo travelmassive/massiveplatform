@@ -21,7 +21,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Action menu wrapper',
-    'weight' => '4',
+    'weight' => '3',
     'children' => array(
       0 => 'group_action_menu',
     ),
@@ -83,16 +83,14 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Followed by',
-    'weight' => '7',
+    'weight' => '6',
     'children' => array(
       0 => 'members_following_members',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
+      'label' => 'Followed by',
       'formatter' => 'open',
-      'instance_settings' => array(
-        'classes' => 'group-community-wrapper field-group-contained_block',
-      ),
     ),
   );
   $export['group_community_wrapper|user|user|default'] = $field_group;
@@ -108,7 +106,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Details',
-    'weight' => '6',
+    'weight' => '5',
     'children' => array(
       0 => 'group_details',
     ),

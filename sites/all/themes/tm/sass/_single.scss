@@ -253,3 +253,24 @@
     }
   }
 }
+
+.team-list,
+.related-list,
+.related-list ul {
+  list-style: none;
+  padding: 0;
+  margin: -0.5rem 0 1rem 0;
+  li {
+    padding: 0.5rem 0;
+    box-shadow: 0 1px 0 0 rgba($primary-color, 0.1);
+    &:first-child {
+      padding-top: 0;
+    }
+    &:last-child {
+      box-shadow: none;
+      padding-bottom: 0;
+    }
+  }
+  @media #{$large-up} {
+  }
+}

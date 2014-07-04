@@ -23,6 +23,7 @@ function tm_flags_views_default_views() {
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Community';
+  $handler->display->display_options['css_class'] = 'user-list related-list';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'access user profiles';
@@ -35,11 +36,13 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['style_options']['default_row_class'] = FALSE;
   $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'ds';
-  $handler->display->display_options['row_options']['view_mode'] = 'list';
+  $handler->display->display_options['row_options']['view_mode'] = 'grid';
   $handler->display->display_options['row_options']['alternating'] = 0;
+  $handler->display->display_options['row_options']['grouping'] = 0;
   $handler->display->display_options['row_options']['advanced'] = 0;
   $handler->display->display_options['row_options']['delta_fieldset']['delta_fields'] = array();
-  $handler->display->display_options['row_options']['default_fieldset']['view_mode'] = 'list';
+  $handler->display->display_options['row_options']['grouping_fieldset']['group_field'] = 'flagging|timestamp';
+  $handler->display->display_options['row_options']['default_fieldset']['view_mode'] = 'grid';
   $handler->display->display_options['row_options']['alternating_fieldset']['item_0'] = 'full';
   $handler->display->display_options['row_options']['alternating_fieldset']['item_1'] = 'full';
   $handler->display->display_options['row_options']['alternating_fieldset']['item_2'] = 'full';

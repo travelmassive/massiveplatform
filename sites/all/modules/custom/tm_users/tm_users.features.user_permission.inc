@@ -21,5 +21,25 @@ function tm_users_user_default_permissions() {
     'module' => 'user',
   );
 
+  // Exported permission: 'flag follow_members'.
+  $permissions['flag follow_members'] = array(
+    'name' => 'flag follow_members',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag follow_members'.
+  $permissions['unflag follow_members'] = array(
+    'name' => 'unflag follow_members',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'flag',
+  );
+
   return $permissions;
 }

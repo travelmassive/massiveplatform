@@ -23,7 +23,7 @@
         <ul>
           <?php if ($main_menu): ?>
           <li class="browse-wrapper" data-dropd-wrapper>
-            <h2><a class="toggle" href="#browse-menu-blk" data-dropd-toggle><span><?= t('Browse'); ?></span></a></h2>
+            <h2><a class="toggle" href="#browse-menu-blk" data-dropd-toggle><span class="hide"><?= t('Browse'); ?></span></a></h2>
             <div id="browse-menu-blk" class="inner dropd dropd-right" data-dropd>
               <?php
               print theme('links__system_main_menu', array(
@@ -35,7 +35,7 @@
           </li>
           <?php endif; ?>
           <li class="search-wrapper" data-dropd-wrapper>
-            <h2><a class="toggle" href="#search-menu-blk" data-dropd-toggle><span><?= t('Search'); ?></span></a></h2>
+            <h2><a class="toggle" href="#search-menu-blk" data-dropd-toggle><span class="hide"><?= t('Search'); ?></span></a></h2>
             <div id="search-menu-blk" class="inner dropd dropd-right" data-dropd>
               <form>
                 <input name="" type="search" />
@@ -44,10 +44,7 @@
             </div>
           </li>
           <li class="account-wrapper" data-dropd-wrapper>
-            <h2><a class="toggle" href="#account-menu-blk" data-dropd-toggle><span><?= t('Account'); ?></span></a></h2>
-            <div id="account-menu-blk" class="inner dropd dropd-right" data-dropd>
-              <p>Lorem ipsum dolor sit amet.</p>
-            </div>
+            <?php print($page['account_menu']); ?>
           </li>
         </ul>
       </nav>

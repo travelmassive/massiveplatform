@@ -1,0 +1,84 @@
+#account-menu-blk {
+  .menu-blk-title {
+    @extend .hd-xxs;
+    text-transform: uppercase;
+    margin: 0 0 0.5rem 0;
+  }
+  p {
+    margin: 0;
+  }
+  .or {
+    display: block;
+    position: relative;
+    text-align: center;
+    font-style: normal;
+    color: tint($primary-color, 40%);
+    margin: 0.5rem 0;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    &:before,
+    &:after {
+      position: absolute;
+      top: 50%;
+      z-index: 1;
+      height: 1px;
+      width: 40%;
+      content: '';
+      background: tint($primary-color, 90%);
+    }
+    &:before {
+      left: 0;
+    }
+    &:after {
+      right: 0;
+    }
+  }
+  form {
+    margin: 0 -1rem 1rem -1rem;
+    padding: 0 1rem 1rem 1rem;
+    border-bottom: 1px tint($primary-color, 90%) solid;
+    label {
+      @extend .visually-hidden;
+    }
+    a {
+      font-size: 0.85rem;
+      line-height: 1.25rem;
+      margin: 1rem 0 0 0;
+      display: block;
+    }
+  }
+  .form-item {
+    margin-bottom: 0.5rem;
+  }
+  .form-submit {
+    @extend .bttn-tertiary, .bttn-blk;
+  }
+  
+  .media-obj {
+    .media-fig img {
+      border-radius: $global-radius;
+      max-width: 100%;
+    }
+    .media-fig {
+      padding-right: 0.75rem;
+    }
+    .avatar {
+      display: block;
+      width: 4rem;
+      border-radius: $global-radius;
+      box-shadow: 0 0 0 1px rgba($primary-color, 0.1);
+      padding: 0.25rem;
+      background-color: #FFF;
+    }
+    strong {
+      display: block;
+    }
+  }
+}
+
+.twitter-login {
+  @extend .bttn, .bttn-secondary, .bttn-m, .bttn-blk;
+  &:before {
+    @extend .icon-twitter;
+  }
+}

@@ -393,10 +393,20 @@ h4, .hd-s {
   padding: 0;
   letter-spacing: normal;
 }
-h5, h6, .hd-xs {
+h5, .hd-xs {
   $ft-size: 16;
   font-size: rem-calc($ft-size);
   line-height: ($ft-size + 8) / $ft-size;
+  font-weight: $body-font-bold;
+  margin: 0 0 1rem 0;
+  padding: 0;
+  letter-spacing: normal;
+}
+
+h6, .hd-xxs {
+  $ft-size: 14;
+  font-size: rem-calc($ft-size);
+  line-height: ($ft-size + 6) / $ft-size;
   font-weight: $body-font-bold;
   margin: 0 0 1rem 0;
   padding: 0;

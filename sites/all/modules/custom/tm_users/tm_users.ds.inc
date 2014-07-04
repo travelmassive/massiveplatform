@@ -81,7 +81,7 @@ function tm_users_ds_field_settings_info() {
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
-        'Extra classes' => 'bttn bttn-secondary bttn-m',
+        'Extra classes' => 'bttn bttn-secondary bttn-m edit',
         'ft' => array(
           'func' => 'theme_ds_field_expert',
           'ow' => TRUE,
@@ -90,6 +90,13 @@ function tm_users_ds_field_settings_info() {
           'ow-def-cl' => FALSE,
           'ow-at' => '',
           'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'field_about_me' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_dl',
         ),
       ),
     ),
@@ -169,13 +176,6 @@ function tm_users_ds_field_settings_info() {
         'ft' => array(
           'func' => 'theme_ds_field_minimal',
           'lb-col' => TRUE,
-        ),
-      ),
-    ),
-    'field_about_me' => array(
-      'formatter_settings' => array(
-        'ft' => array(
-          'func' => 'theme_ds_field_dl',
         ),
       ),
     ),
@@ -286,13 +286,16 @@ function tm_users_ds_layout_settings_info() {
         0 => 'field_image',
       ),
       'header_body' => array(
-        1 => 'tm_ds_edit_own_profile',
-        2 => 'field_avatar',
-        3 => 'flag_follow_members',
+        0 => 'tm_ds_edit_own_profile',
+        2 => 'flag_follow_members',
+        3 => 'field_avatar',
         4 => 'tm_ds_more_actions',
         5 => 'name',
         6 => 'group_action_menu_wrapper',
-        13 => 'group_action_menu',
+        12 => 'group_action_menu',
+      ),
+      'header_media' => array(
+        0 => 'field_image',
       ),
       'header_extra' => array(
         7 => 'tm_ds_chapter_sticker',
@@ -309,7 +312,7 @@ function tm_users_ds_layout_settings_info() {
         21 => 'field_user_question_why_travel',
       ),
       'second_column' => array(
-        9 => 'group_community_wrapper',
+        10 => 'group_community_wrapper',
         11 => 'members_following_members',
         12 => 'group_events_joined_wrapper',
         14 => 'joined_event_list',
@@ -324,9 +327,9 @@ function tm_users_ds_layout_settings_info() {
       'name' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
       'tm_ds_chapter_sticker' => 'header_extra',
+      'group_details' => 'first_column',
       'group_details_wrapper' => 'first_column',
       'group_community_wrapper' => 'second_column',
-      'group_details' => 'first_column',
       'members_following_members' => 'second_column',
       'group_events_joined_wrapper' => 'second_column',
       'group_action_menu' => 'header_body',

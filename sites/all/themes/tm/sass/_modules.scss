@@ -265,6 +265,11 @@
     -o-transform-origin: top right;
     transform-origin: top right;
   }
+  .node-chapter & {
+    .extra {
+      display: none;
+    }
+  }
   .team-list &,
   .related-list & {
 

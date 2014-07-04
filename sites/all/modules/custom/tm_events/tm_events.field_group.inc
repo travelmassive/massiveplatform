@@ -143,14 +143,14 @@ function tm_events_field_group_info() {
   $field_group->mode = 'full';
   $field_group->parent_name = '';
   $field_group->data = array(
-    'label' => 'Community',
+    'label' => 'Attendees',
     'weight' => '8',
     'children' => array(
       0 => 'members_signed_up',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
-      'label' => 'Community',
+      'label' => 'Attendees',
       'formatter' => 'open',
     ),
   );

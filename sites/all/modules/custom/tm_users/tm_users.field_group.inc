@@ -82,14 +82,14 @@ function tm_users_field_group_info() {
   $field_group->mode = 'default';
   $field_group->parent_name = '';
   $field_group->data = array(
-    'label' => 'Followed by',
+    'label' => 'Followers',
     'weight' => '6',
     'children' => array(
       0 => 'members_following_members',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
-      'label' => 'Followed by',
+      'label' => 'Followers',
       'formatter' => 'open',
     ),
   );
@@ -133,13 +133,13 @@ function tm_users_field_group_info() {
     'label' => 'Details',
     'weight' => '6',
     'children' => array(
-      0 => 'field_about_me',
-      1 => 'field_segment',
-      2 => 'field_user_question_destination',
-      3 => 'field_user_question_dream_travel',
-      4 => 'field_user_question_job',
-      5 => 'field_user_question_learn',
-      6 => 'field_user_question_why_travel',
+      0 => 'field_segment',
+      1 => 'field_user_question_destination',
+      2 => 'field_user_question_dream_travel',
+      3 => 'field_user_question_job',
+      4 => 'field_user_question_learn',
+      5 => 'field_user_question_why_travel',
+      6 => 'field_about_me',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(

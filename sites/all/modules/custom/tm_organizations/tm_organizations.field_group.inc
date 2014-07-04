@@ -81,14 +81,14 @@ function tm_organizations_field_group_info() {
   $field_group->mode = 'full';
   $field_group->parent_name = '';
   $field_group->data = array(
-    'label' => 'Followed by',
+    'label' => 'Followers',
     'weight' => '5',
     'children' => array(
       0 => 'members_following',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
-      'label' => 'Followed by',
+      'label' => 'Followers',
       'formatter' => 'open',
     ),
   );

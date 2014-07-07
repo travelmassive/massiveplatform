@@ -110,7 +110,7 @@ function tm_users_field_group_info() {
     'children' => array(
       0 => 'field_about_me',
       1 => 'field_segment',
-      2 => 'group_user_qa',
+      2 => 'group_user_qa_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -158,8 +158,8 @@ function tm_users_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
-  $field_group->identifier = 'group_user_qa|user|user|default';
-  $field_group->group_name = 'group_user_qa';
+  $field_group->identifier = 'group_user_qa_wrapper|user|user|default';
+  $field_group->group_name = 'group_user_qa_wrapper';
   $field_group->entity_type = 'user';
   $field_group->bundle = 'user';
   $field_group->mode = 'default';
@@ -167,6 +167,35 @@ function tm_users_field_group_info() {
   $field_group->data = array(
     'label' => 'QA',
     'weight' => '16',
+    'children' => array(
+      0 => 'group_user_qa',
+    ),
+    'format_type' => 'html-element',
+    'format_settings' => array(
+      'label' => 'QA',
+      'instance_settings' => array(
+        'classes' => 'detail-item qa',
+        'element' => 'div',
+        'show_label' => '1',
+        'label_element' => 'h2',
+        'attributes' => '',
+      ),
+    ),
+  );
+  $export['group_user_qa_wrapper|user|user|default'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_user_qa|user|user|default';
+  $field_group->group_name = 'group_user_qa';
+  $field_group->entity_type = 'user';
+  $field_group->bundle = 'user';
+  $field_group->mode = 'default';
+  $field_group->parent_name = 'group_user_qa_wrapper';
+  $field_group->data = array(
+    'label' => 'QA',
+    'weight' => '17',
     'children' => array(
       0 => 'field_user_question_destination',
       1 => 'field_user_question_dream_travel',
@@ -176,14 +205,13 @@ function tm_users_field_group_info() {
     ),
     'format_type' => 'html-element',
     'format_settings' => array(
-      'formatter' => '',
+      'label' => 'QA',
       'instance_settings' => array(
-        'element' => 'div',
-        'show_label' => 0,
-        'label_element' => 'div',
-        'classes' => 'group-user-qa field-group-html-element',
+        'classes' => '',
+        'element' => 'dl',
+        'show_label' => '0',
+        'label_element' => '',
         'attributes' => '',
-        'required_fields' => 1,
       ),
     ),
   );

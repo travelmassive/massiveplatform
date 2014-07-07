@@ -45,6 +45,7 @@ features[field_group][] = group_action_menu|user|user|default
 features[field_group][] = group_community_wrapper|user|user|default
 features[field_group][] = group_details_wrapper|user|user|default
 features[field_group][] = group_details|user|user|default
+features[field_group][] = group_user_qa_wrapper|user|user|default
 features[field_group][] = group_user_qa|user|user|default
 features[field_instance][] = user-user-field_about_me
 features[field_instance][] = user-user-field_avatar

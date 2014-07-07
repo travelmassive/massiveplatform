@@ -5,3 +5,39 @@
  */
 
 include_once 'tm_users.features.inc';
+
+/**
+ * Implements hook_form_FORM_ID_alter()
+ */
+function tm_users_form_user_login_block_alter(&$form, &$form_state) {
+  // Replace labels for placeholder on the input element
+  $form['name']['#attributes'] = array('placeholder' => t('Username'));
+  $form['pass']['#attributes'] = array('placeholder' => t('Password'));
+
+  // Remove links and keep only the one to reset the password.
+  $form['links'] = array();
+  $form['links']['reset_pass'] = array(
+    '#markup' => l(t('Forgot your password?'), 'user/password', array('title' => t('Request new password via email.')))
+  );
+  $form['links']['#weight'] = 100;
+}
+
+/**
+ * Implements hook_theme()
+ */
+function tm_users_theme() {
+  return array(
+    'account_menu' => array(
+      'template' => 'tm_users_account_menu',
+      'path' => drupal_get_path('module', 'tm_users') . '/templates/'
+    )
+  );
+}
+
+/**
+ * Implements template_preprocess_page()
+ */
+function tm_users_preprocess_page(&$variables) {
+  // Add account menu to page.
+  $variables['page']['account_menu'] = theme('account_menu');
+}

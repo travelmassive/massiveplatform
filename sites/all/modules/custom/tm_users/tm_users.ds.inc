@@ -81,7 +81,7 @@ function tm_users_ds_field_settings_info() {
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
-        'Extra classes' => 'bttn bttn-secondary bttn-m',
+        'Extra classes' => 'bttn bttn-secondary bttn-m edit',
         'ft' => array(
           'func' => 'theme_ds_field_expert',
           'ow' => TRUE,

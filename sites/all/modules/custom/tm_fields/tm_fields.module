@@ -99,7 +99,10 @@ function _tm_chapter_sticker_process($field, $title = NULL) {
 function _tm_more_actions_process($field, $title = NULL) {
   global $base_root;
   $base = $base_root . request_uri();
-  $links = array();
+  $links = array(
+    'edition' => array(),
+    'share' => array()
+  );
 
   // Edit link.
   $menu_item = menu_get_item();
@@ -108,7 +111,7 @@ function _tm_more_actions_process($field, $title = NULL) {
     $nid = $menu_item['page_arguments'][0]->nid;
     $edit_menu = menu_get_item('node/' . $nid . '/edit');
     if ($edit_menu['access']) {
-      $links[] = array(
+      $links['edition'][] = array(
         'wrapper_class' => array('edit'),
         'content' => l(t('Edit'), 'node/' . $nid . '/edit', array(
           'attributes' => array(
@@ -123,7 +126,7 @@ function _tm_more_actions_process($field, $title = NULL) {
     $uid = $menu_item['page_arguments'][0]->uid;
     $edit_menu = menu_get_item('user/' . $uid . '/edit');
     if ($edit_menu['access']) {
-      $links[] = array(
+      $links['edition'][] = array(
         'wrapper_class' => array('edit'),
         'content' => l(t('Edit'), 'user/' . $uid . '/edit', array(
           'attributes' => array(
@@ -134,7 +137,7 @@ function _tm_more_actions_process($field, $title = NULL) {
     }
   }
   
-  $links[] = array(
+  $links['share'][] = array(
     'wrapper_class' => array('facebook'),
     'content' => l(t('Share on Facebook'), 'https://www.facebook.com/sharer/sharer.php', array(
       'absolute' => TRUE,
@@ -147,7 +150,7 @@ function _tm_more_actions_process($field, $title = NULL) {
     ))
   );
   
-  $links[] = array(
+  $links['share'][] = array(
     'wrapper_class' => array('twitter'),
     'content' => l(t('Share on Twitter'), 'https://twitter.com/share', array(
       'absolute' => TRUE,
@@ -160,7 +163,7 @@ function _tm_more_actions_process($field, $title = NULL) {
     ))
   );
   
-  $links[] = array(
+  $links['share'][] = array(
     'wrapper_class' => array('google-plus'),
     'content' => l(t('Share on Google+'), 'https://plus.google.com/share', array(
       'absolute' => TRUE,

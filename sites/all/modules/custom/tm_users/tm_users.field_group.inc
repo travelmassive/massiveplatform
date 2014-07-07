@@ -82,14 +82,14 @@ function tm_users_field_group_info() {
   $field_group->mode = 'default';
   $field_group->parent_name = '';
   $field_group->data = array(
-    'label' => 'Followed by',
+    'label' => 'Followers',
     'weight' => '6',
     'children' => array(
       0 => 'members_following_members',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
-      'label' => 'Followed by',
+      'label' => 'Followers',
       'formatter' => 'open',
     ),
   );

@@ -6,9 +6,9 @@ button {
 }
 
 /* Base button style */
-.bttn {
+.bttn,
+.form-submit {
   display: inline-block;
-  padding: 0 0.75rem;
   border-radius: $global-radius;
   font-weight: $body-font-bold;
   text-align: center;
@@ -16,6 +16,7 @@ button {
   cursor: pointer;
   white-space: nowrap;
   background: #FFF;
+  border: 0;
 
   &:link,
   &:active,
@@ -49,18 +50,16 @@ button {
     }
   }
   &.follow,
-  &.external {
+  &.external,
+  &.edit {
     width: 9rem;
     &:before {
-      margin-left: -1rem;
+      margin-left: -0.5rem;
     }
   }
-  &.follow:before {
-    @extend .icon-s-add;
-  }
-  &.external:before {
-    @extend .icon-s-new-window;
-  }
+  &.follow:before { @extend .icon-s-add; }
+  &.external:before { @extend .icon-s-new-window; }
+  &.edit:before { @extend .icon-pencil; }
   &.follow.on:before,
   &.follow.flagged:before {
     @extend .icon-s-tick;
@@ -83,18 +82,35 @@ button {
   }
 }
 
+.bttn-blk {
+  display: block;
+  width: 100%;
+}
+
 /* Button sizes */
+
+/* 24px */
 .bttn-s {
-  line-height: rem-calc(24);
+  line-height: 1.25rem;
   font-size: 0.875rem;
+  padding: 0.125rem 0.5rem;
+  min-height: 1.25rem;
 }
+
+/* 32px */
 .bttn-m {
-  line-height: rem-calc(32);
-  font-size: 0.875rem;
+  line-height: 1.5rem;
+  font-size: 1rem;
+  padding: 0.25rem 0.75rem;
+  min-height: 2rem;
 }
+
+/* 40px */
 .bttn-l {
-  line-height: rem-calc(40);
+  line-height: 1.75rem;
   font-size: 1.25rem;
+  padding: 0.375rem 1rem;
+  min-height: 2.5rem;
 }
 
 /* Button colors */
@@ -186,7 +202,8 @@ button {
   z-index: 10;
   border-radius: $global-radius;
   box-shadow: 0 0 0 0.125rem rgba($primary-color, 0.1);
-  background: rgba(#FFF, 0.9);
+  background: rgba(#FFF, 0.95);
+  padding: 1rem;
 
   opacity: 0;
   margin-top: -0.5rem;
@@ -204,7 +221,7 @@ button {
     left: 1rem;
     color: rgba(#FFF, 0.95);
     font-size: 1rem;
-    text-shadow: 0 -0.125rem rgba($primary-color, 0.1);
+    text-shadow: 0 -0.135rem rgba($primary-color, 0.1);
     line-height: 1;
     height: 1rem;
     width: 1rem;
@@ -236,15 +253,23 @@ button {
   
   .dropd-menu {
     list-style: none;
-    padding: 0;
-    margin: 0;
+    padding: 0.5rem 0;
+    margin: 0 -1rem;
     font-size: 0.85rem;
     line-height: 1.25rem;
+    border-bottom: 1px solid tint($primary-color, 90%);
+    
+    &:first-child {
+      margin-top: -0.75rem;
+    }
+    
+    &:last-child {
+      margin-bottom: -0.75rem;
+      border: none;
+    }
     li {
       position: relative;
       z-index: 20;
-      padding: rem-calc(4 0);
-      border-bottom: 1px solid tint($primary-color, 90%);
       margin: 0;
       a {
         display: block;
@@ -269,10 +294,6 @@ button {
           color: $secondary-color;
           margin-right: 0.5rem;
         }
-      }
-    
-      &:last-child {
-        border: none;
       }
     }
   }

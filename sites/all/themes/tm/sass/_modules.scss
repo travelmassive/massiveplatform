@@ -59,14 +59,17 @@
 
 .contained-block {
   overflow: hidden;
+  
   .contained-head {
     padding: 1rem;
+    
+    .prime-title {
+      @extend .hd-xs;
+      text-transform: uppercase;
+      margin: 0;
+    }
   }
-  .prime-title {
-    @extend .hd-xs;
-    text-transform: uppercase;
-    margin: 0;
-  }
+  
   .contained-body {
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -103,7 +106,7 @@
   
   @media #{$large-up} {
     .contained-head {
-      padding: 2rem;
+      padding: 2rem 2rem 1.5rem 2rem;
     }
     .details-list {
       dd {
@@ -123,17 +126,8 @@
   position: relative;
   > a {
     background-color: #FFF;
-    box-shadow: 0 0.125rem 0 0 rgba($primary-color, 0.1);
-    border-radius: $global-radius;
     display: table;
     color: $primary-color;
-    padding: 0.5rem;
-    @include transition(transform .1s ease-in-out);
-    
-    &:hover {
-      @include opacity(1);
-      @include transform(scale(1.05));
-    }
   }
   &.node-event > a {
     padding-right: 2.25rem;
@@ -252,7 +246,6 @@
   .extra {
     position: absolute;
     top: 0.5rem;
-    right: 1.75rem;
   }
   .chapter-sticker {
     border-radius: $global-radius;
@@ -272,84 +265,150 @@
     -o-transform-origin: top right;
     transform-origin: top right;
   }
-  @media #{$small-up} {
-    text-align: center;
-    > a {
-      display: block;
-      padding: 0 0 2rem 0;
-    }
-    &.node-event > a {
-      padding-right: 0;
-    }
-    .media {
-      float: none;
-      margin: 0 0 1rem 0;
-    }
-    .cover {
-      display: block;
-    }
-    .avatar {
-      display: table;
-      box-shadow: 0 0 0 1px rgba($primary-color, 0.1);
-      padding: 0.25rem;
-      background-color: #FFF;
-      margin: -4rem auto 0 auto;
-    }
-    .badge-chapter {
-      width: 6rem;
-      height: 6rem;
-      font-size: 1.25rem;
-      padding-bottom: 1rem;
-      &:after {
-        height: 1rem;
-        width: 1rem;
-        border-radius: $global-radius 0 0 0;
-      }
-    }
-    .badge-cal {
-      width: 6rem;
-      height: 6rem;
-      .month {
-        font-size: 1.25rem;
-        line-height: 2rem;
-      }
-      .day {
-        line-height: 3.5rem;
-        font-size: 2.5rem;
-        padding-bottom: 0.5rem;
-        letter-spacing: -0.125rem;
-      }
-    }
-    .badge-organization,
-    .badge-user {
-      width: 6rem;
-      height: 6rem;
-    }
-    .teaser {
-      display: block;
-      width: auto;
-      padding: 0 1rem;
-    }
-    .prime-title {
-      $ft-size: 24;
-      font-size: rem-calc($ft-size);
-      line-height: ($ft-size + 4) / $ft-size;
-    }
-    .meta {
-      font-size: 1rem;
-      line-height: 1.5;
-    }
+  .node-chapter & {
     .extra {
-      position: absolute;
-      top: 0.5rem;
-      left: 0.5rem;
-      right: auto;
-    }
-    .chapter-sticker {
-      line-height: 2rem;
-      font-size: 0.875rem;
-      width: 4rem;
-      @include transform(rotate(0));
+      display: none;
     }
   }
+  .team-list &,
+  .related-list & {
+
+    margin-bottom: 0;
+    border-radius: 0;
+    
+    > a {
+      padding: 0.5rem 3rem 0.5rem 1rem;
+      @include transition-property(background-color, top, left, right);
+      @include transition-duration(0.2s, 0.1s, 0.2s, 0.2s);
+      @include transition-timing-function(ease, ease, ease, ease);
+      @include transition-delay(0, 0, 0, 0);
+      
+      &:hover {
+        opacity: 1;
+        background-color: rgba(tint($secondary-color, 50%), 0.2);
+        color: $secondary-color;
+      }
+    }
+    
+    .extra {
+      right: 2.25rem;
+    }
+    
+    @media #{$small-up} {
+      margin-bottom: 0;
+    }
+    
+    @media #{$large-up} {
+      > a {
+        padding-left: 2rem;
+        padding-right: 4rem;
+      }
+      .extra {
+        right: 3.25rem;
+      }
+    }
+    
+  }
+  
+  .grid & {
+    
+    > a {
+      box-shadow: 0 0.125rem 0 0 rgba($primary-color, 0.1);
+      border-radius: $global-radius;
+      padding: 0.5rem;
+      @include transition(transform .1s ease-in-out);
+      
+      &:hover {
+        @include opacity(1);
+        @include transform(scale(1.05));
+      }
+    }
+    
+    .extra {
+      right: 1.75rem;
+    }
+
+    @media #{$small-up} {
+      text-align: center;
+      > a {
+        display: block;
+        padding: 0 0 2rem 0;
+      }
+      &.node-event > a {
+        padding-right: 0;
+      }
+      .media {
+        float: none;
+        margin: 0 0 1rem 0;
+      }
+      .cover {
+        display: block;
+      }
+      .avatar {
+        display: table;
+        box-shadow: 0 0 0 1px rgba($primary-color, 0.1);
+        padding: 0.25rem;
+        background-color: #FFF;
+        margin: -4rem auto 0 auto;
+      }
+      .badge-chapter {
+        width: 6rem;
+        height: 6rem;
+        font-size: 1.25rem;
+        padding-bottom: 1rem;
+        &:after {
+          height: 1rem;
+          width: 1rem;
+          border-radius: $global-radius 0 0 0;
+        }
+      }
+      .badge-cal {
+        width: 6rem;
+        height: 6rem;
+        .month {
+          font-size: 1.25rem;
+          line-height: 2rem;
+        }
+        .day {
+          line-height: 3.5rem;
+          font-size: 2.5rem;
+          padding-bottom: 0.5rem;
+          letter-spacing: -0.125rem;
+        }
+      }
+      .badge-organization,
+      .badge-user {
+        width: 6rem;
+        height: 6rem;
+      }
+      .teaser {
+        display: block;
+        width: auto;
+        padding: 0 1rem;
+      }
+      .prime-title {
+        $ft-size: 24;
+        font-size: rem-calc($ft-size);
+        line-height: ($ft-size + 4) / $ft-size;
+      }
+      .meta {
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+      .extra {
+        position: absolute;
+        top: 0.5rem;
+        left: 0.5rem;
+        right: auto;
+      }
+      .chapter-sticker {
+        line-height: 2rem;
+        font-size: 0.875rem;
+        width: 4rem;
+        @include transform(rotate(0));
+      }
+    }
+    
+  }
+
 }

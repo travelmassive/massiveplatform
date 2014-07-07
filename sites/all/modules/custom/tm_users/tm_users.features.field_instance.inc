@@ -18,7 +18,7 @@ function tm_users_field_default_field_instances() {
     'description' => 'Provide the other members with some more information about yourself. This information will be <strong>public</strong>.',
     'display' => array(
       'default' => array(
-        'label' => 'hidden',
+        'label' => 'above',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
@@ -289,7 +289,7 @@ function tm_users_field_default_field_instances() {
     'description' => 'Please select the industry segment that best applies to you.',
     'display' => array(
       'default' => array(
-        'label' => 'hidden',
+        'label' => 'above',
         'module' => 'hs_taxonomy',
         'settings' => array(),
         'type' => 'hs_taxonomy_term_reference_hierarchical_text',

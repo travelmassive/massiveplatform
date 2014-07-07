@@ -306,19 +306,16 @@ function tm_events_field_group_info() {
       1 => 'field_map_link',
       2 => 'field_event_venue_name',
     ),
-    'format_type' => 'div',
+    'format_type' => 'html-element',
     'format_settings' => array(
       'label' => 'Location',
       'instance_settings' => array(
-        'id' => '',
-        'classes' => 'location-wrapper',
-        'description' => '',
+        'classes' => 'detail-item location',
+        'element' => 'div',
         'show_label' => '1',
         'label_element' => 'h2',
-        'effect' => 'none',
-        'speed' => 'fast',
+        'attributes' => '',
       ),
-      'formatter' => 'open',
     ),
   );
   $export['group_location_wrapper|node|event|full'] = $field_group;
@@ -340,19 +337,16 @@ function tm_events_field_group_info() {
       1 => 'field_event_venue_name',
       2 => 'field_location',
     ),
-    'format_type' => 'div',
+    'format_type' => 'html-element',
     'format_settings' => array(
       'label' => 'Location',
       'instance_settings' => array(
-        'id' => '',
-        'classes' => 'location-wrapper',
-        'description' => '',
+        'classes' => 'detail-item location',
+        'element' => 'div',
         'show_label' => '1',
         'label_element' => 'h2',
-        'effect' => 'none',
-        'speed' => 'fast',
+        'attributes' => '',
       ),
-      'formatter' => 'open',
     ),
   );
   $export['group_location_wrapper|node|partner_event|full'] = $field_group;

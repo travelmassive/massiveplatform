@@ -47,16 +47,8 @@ $image = theme('image_style', array(
       </li>
     </ul>
     <ul class="dropd-menu">
-      <li><?php print l(t('Public profile'), ''); ?></li>
-      <li><?php print l(t('Account settings'), ''); ?></li>
-    </ul>
-    <ul class="dropd-menu">
-      <li><?php print l(t('Link'), ''); ?></li>
-      <li><?php print l(t('Link'), ''); ?></li>
-    </ul>
-    <ul class="dropd-menu">
-      <li><?php print l(t('Link'), ''); ?></li>
-      <li><?php print l(t('Link'), ''); ?></li>
+      <li><?php print l(t('Public profile'), 'user/' . $loaded->uid); ?></li>
+      <li><?php print l(t('Account settings'), 'user/' . $loaded->uid . '/edit'); ?></li>
     </ul>
     <ul class="dropd-menu">
       <li><?php print l(t('Sign out'), 'user/logout'); ?></li>

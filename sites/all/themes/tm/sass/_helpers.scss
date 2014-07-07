@@ -34,3 +34,20 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+@mixin button-skin($bgcolor, $status: 'normal') {
+  @if $status == 'active' {
+    background-color: shade($bgcolor, 15%);
+  }
+  @else {
+    background-color: $bgcolor;
+  }
+  
+  @if $status == 'hover' {
+    background-color: shade($bgcolor, 20%);
+  }
+  
+  @if $status == 'disabled' {
+    opacity: .5;
+  }
+}

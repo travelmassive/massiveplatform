@@ -107,7 +107,7 @@ function tm_chapters_field_group_info() {
     'label' => 'Details',
     'weight' => '5',
     'children' => array(
-      0 => 'group_details',
+      0 => 'body',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(

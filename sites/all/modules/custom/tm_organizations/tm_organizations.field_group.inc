@@ -107,7 +107,9 @@ function tm_organizations_field_group_info() {
     'label' => 'Details',
     'weight' => '4',
     'children' => array(
-      0 => 'group_details',
+      0 => 'body',
+      1 => 'field_owner',
+      2 => 'field_segment',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(

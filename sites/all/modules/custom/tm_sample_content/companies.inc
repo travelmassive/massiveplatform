@@ -77,6 +77,10 @@ class TMCompanyMigration extends TMBaseMigration {
     $this->addFieldMapping('field_link_website', 'web_link');
     $this->addFieldMapping('field_link_website:title', 'web_link_title');
 
+    // City + country fields
+    $this->addFieldMapping('field_location_city', 'city');
+    $this->addFieldMapping('field_location_country', 'country');
+
   }
 
   public function prepareRow($row) {

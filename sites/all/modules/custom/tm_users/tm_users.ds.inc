@@ -213,6 +213,32 @@ function tm_users_ds_field_settings_info() {
         ),
       ),
     ),
+    'field_location_city' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'span',
+          'ow-cl' => 'city',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'field_location_country' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'span',
+          'ow-cl' => 'country',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
   );
   $export['user|user|default'] = $ds_fieldsetting;
 
@@ -321,8 +347,8 @@ function tm_users_ds_layout_settings_info() {
       ),
       'header_body' => array(
         1 => 'tm_ds_edit_own_profile',
-        2 => 'field_avatar',
-        3 => 'flag_follow_members',
+        2 => 'flag_follow_members',
+        3 => 'field_avatar',
         4 => 'name',
         5 => 'tm_ds_more_actions',
         6 => 'group_action_menu_wrapper',
@@ -345,7 +371,10 @@ function tm_users_ds_layout_settings_info() {
         22 => 'field_link_website',
         23 => 'field_user_question_job',
         24 => 'field_user_question_why_travel',
-        25 => 'group_user_qa_wrapper',
+        25 => 'group_location_wrapper',
+        26 => 'group_user_qa_wrapper',
+        27 => 'field_location_city',
+        28 => 'field_location_country',
       ),
       'second_column' => array(
         9 => 'group_community_wrapper',
@@ -356,8 +385,8 @@ function tm_users_ds_layout_settings_info() {
     'fields' => array(
       'field_image' => 'header_media',
       'tm_ds_edit_own_profile' => 'header_body',
-      'field_avatar' => 'header_body',
       'flag_follow_members' => 'header_body',
+      'field_avatar' => 'header_body',
       'name' => 'header_body',
       'tm_ds_more_actions' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
@@ -379,7 +408,10 @@ function tm_users_ds_layout_settings_info() {
       'field_link_website' => 'first_column',
       'field_user_question_job' => 'first_column',
       'field_user_question_why_travel' => 'first_column',
+      'group_location_wrapper' => 'first_column',
       'group_user_qa_wrapper' => 'first_column',
+      'field_location_city' => 'first_column',
+      'field_location_country' => 'first_column',
     ),
     'classes' => array(),
     'wrappers' => array(

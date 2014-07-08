@@ -115,6 +115,7 @@ function tm_users_field_group_info() {
       4 => 'field_link_twitter',
       5 => 'field_link_website',
       6 => 'group_user_qa_wrapper',
+      7 => 'group_location_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -162,6 +163,36 @@ function tm_users_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_location_wrapper|user|user|default';
+  $field_group->group_name = 'group_location_wrapper';
+  $field_group->entity_type = 'user';
+  $field_group->bundle = 'user';
+  $field_group->mode = 'default';
+  $field_group->parent_name = 'group_details_wrapper';
+  $field_group->data = array(
+    'label' => 'Location',
+    'weight' => '20',
+    'children' => array(
+      0 => 'field_location_city',
+      1 => 'field_location_country',
+    ),
+    'format_type' => 'html-element',
+    'format_settings' => array(
+      'label' => 'Location',
+      'instance_settings' => array(
+        'classes' => 'detail-item field-location',
+        'element' => 'div',
+        'show_label' => '1',
+        'label_element' => 'h2',
+        'attributes' => '',
+      ),
+    ),
+  );
+  $export['group_location_wrapper|user|user|default'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_user_qa_wrapper|user|user|default';
   $field_group->group_name = 'group_user_qa_wrapper';
   $field_group->entity_type = 'user';
@@ -170,7 +201,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'QA',
-    'weight' => '20',
+    'weight' => '21',
     'children' => array(
       0 => 'group_user_qa',
     ),

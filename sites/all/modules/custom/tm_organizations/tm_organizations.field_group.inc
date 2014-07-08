@@ -108,12 +108,12 @@ function tm_organizations_field_group_info() {
     'weight' => '4',
     'children' => array(
       0 => 'body',
-      1 => 'field_owner',
-      2 => 'field_segment',
-      3 => 'field_link_linkedin',
-      4 => 'field_link_facebook',
-      5 => 'field_link_twitter',
-      6 => 'field_link_website',
+      1 => 'field_segment',
+      2 => 'field_link_linkedin',
+      3 => 'field_link_facebook',
+      4 => 'field_link_twitter',
+      5 => 'field_link_website',
+      6 => 'group_location_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -153,6 +153,36 @@ function tm_organizations_field_group_info() {
     ),
   );
   $export['group_details|node|organization|full'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_location_wrapper|node|organization|full';
+  $field_group->group_name = 'group_location_wrapper';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'organization';
+  $field_group->mode = 'full';
+  $field_group->parent_name = 'group_details_wrapper';
+  $field_group->data = array(
+    'label' => 'Location',
+    'weight' => '11',
+    'children' => array(
+      0 => 'field_location_city',
+      1 => 'field_location_country',
+    ),
+    'format_type' => 'html-element',
+    'format_settings' => array(
+      'label' => 'Location',
+      'instance_settings' => array(
+        'classes' => 'detail-item field-location',
+        'element' => 'div',
+        'show_label' => '1',
+        'label_element' => 'h2',
+        'attributes' => '',
+      ),
+    ),
+  );
+  $export['group_location_wrapper|node|organization|full'] = $field_group;
 
   return $export;
 }

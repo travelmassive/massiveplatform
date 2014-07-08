@@ -92,13 +92,14 @@
       color: tint($primary-color, 60%);
     }
     
-    &.people:before, .field-owner:before { @extend .icon-user; }
+    &.people:before, &.field-owner:before { @extend .icon-user; }
     &.location:before, .field-location:before { @extend .icon-map-marker; }
-    &.description:before, &.about-me:before, &.qa:before, .body:before { @extend .icon-description; }
-    &.facebook:before { @extend .icon-facebook; }
-    &.linkedin:before { @extend .icon-linkedin; }
-    &.twitter:before { @extend .icon-twitter; }
-    &.instagram:before { @extend .icon-instagram; }
+    &.field-about-me:before, &.about-me:before, &.qa:before, &.body:before { @extend .icon-description; }
+    &.field-link-facebook:before { @extend .icon-facebook; }
+    &.field-link-linkedin:before { @extend .icon-linkedin; }
+    &.field-link-twitter:before { @extend .icon-twitter; }
+    &.field-link-instagram:before { @extend .icon-instagram; }
+    &.field-link-website:before { @extend .icon-globe; }
     
     .detail-venue-name {
       font-weight: $body-font-bold;

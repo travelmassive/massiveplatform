@@ -33,7 +33,7 @@ function tm_events_field_default_field_bases() {
         'year' => 'year',
       ),
       'timezone_db' => 'UTC',
-      'todate' => 'optional',
+      'todate' => '',
       'tz_handling' => 'date',
     ),
     'translatable' => 0,

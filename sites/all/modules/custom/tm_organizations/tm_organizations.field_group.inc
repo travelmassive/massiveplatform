@@ -110,6 +110,10 @@ function tm_organizations_field_group_info() {
       0 => 'body',
       1 => 'field_owner',
       2 => 'field_segment',
+      3 => 'field_link_linkedin',
+      4 => 'field_link_facebook',
+      5 => 'field_link_twitter',
+      6 => 'field_link_website',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(

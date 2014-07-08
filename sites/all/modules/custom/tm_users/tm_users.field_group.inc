@@ -110,7 +110,11 @@ function tm_users_field_group_info() {
     'children' => array(
       0 => 'field_about_me',
       1 => 'field_segment',
-      2 => 'group_user_qa_wrapper',
+      2 => 'field_link_facebook',
+      3 => 'field_link_linkedin',
+      4 => 'field_link_twitter',
+      5 => 'field_link_website',
+      6 => 'group_user_qa_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -166,7 +170,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'QA',
-    'weight' => '16',
+    'weight' => '20',
     'children' => array(
       0 => 'group_user_qa',
     ),

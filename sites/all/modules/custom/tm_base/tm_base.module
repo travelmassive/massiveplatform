@@ -129,7 +129,8 @@ function tm_base_field_group_pre_render(&$element, $group, &$form) {
  */
 function tm_base_ds_field_theme_functions_info() {
   return array(
-    'theme_ds_field_dl' => t('TM Definition list item')
+    'theme_ds_field_dl' => t('TM Definition list item'),
+    'theme_ds_field_tm_default' => t('TM default field')
   );
 }
 /**
@@ -137,15 +138,26 @@ function tm_base_ds_field_theme_functions_info() {
 */
 function theme_ds_field_dl($variables) {
   $output = '';
-
-  // @Todo Add custom class to form
-  // $config = $variables['ds-config'];
   
   // Since a dd can't exist without a dt, we just print the title without checking if the label's hidden.
   $output .= '<dt>' . $variables['label'] . '</dt>';
   foreach ($variables['items'] as $delta => $item) {
     $output .= '<dd class="' . $variables['field_name_css'] . '">' . drupal_render($item) . '</dd>';
   }
+
+  return $output;
+}
+/**
+* Field theming function. Output the default TM field
+*/
+function theme_ds_field_tm_default($variables) {
+  $output = '';
+  
+  $output .= '<div class="detail-item ' . $variables['field_name_css'] . '"><h2>' . $variables['label'] . '</h2>';
+  foreach ($variables['items'] as $delta => $item) {
+    $output .= drupal_render($item);
+  }
+  $output .= '</div>';
 
   return $output;
 }

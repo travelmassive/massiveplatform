@@ -69,15 +69,8 @@ function tm_organizations_ds_field_settings_info() {
     'body' => array(
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_expert',
-          'lb-el' => 'h2',
+          'func' => 'theme_ds_field_tm_default',
           'lb-col' => TRUE,
-          'ow' => TRUE,
-          'ow-el' => 'div',
-          'ow-cl' => 'detail-item description',
-          'ow-def-cl' => FALSE,
-          'ow-at' => '',
-          'ow-def-at' => FALSE,
         ),
       ),
     ),
@@ -116,30 +109,48 @@ function tm_organizations_ds_field_settings_info() {
     'field_owner' => array(
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_expert',
-          'lb-el' => 'h2',
+          'func' => 'theme_ds_field_tm_default',
           'lb-col' => TRUE,
-          'ow' => TRUE,
-          'ow-el' => 'div',
-          'ow-cl' => 'detail-item managed-by',
-          'ow-def-cl' => FALSE,
-          'ow-at' => '',
-          'ow-def-at' => FALSE,
         ),
       ),
     ),
     'field_segment' => array(
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_expert',
-          'lb-el' => 'h2',
+          'func' => 'theme_ds_field_tm_default',
           'lb-col' => TRUE,
-          'ow' => TRUE,
-          'ow-el' => 'div',
-          'ow-cl' => 'detail-item segment',
-          'ow-def-cl' => FALSE,
-          'ow-at' => '',
-          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'field_link_linkedin' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_tm_default',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'field_link_facebook' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_tm_default',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'field_link_twitter' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_tm_default',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'field_link_website' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_tm_default',
+          'lb-col' => TRUE,
         ),
       ),
     ),
@@ -225,20 +236,24 @@ function tm_organizations_ds_layout_settings_info() {
         3 => 'tm_ds_more_actions',
         4 => 'title',
         5 => 'group_action_menu_wrapper',
-        12 => 'group_action_menu',
+        16 => 'group_action_menu',
       ),
       'header_media' => array(
         1 => 'field_image',
       ),
       'first_column' => array(
-        6 => 'group_details_wrapper',
-        7 => 'field_owner',
+        6 => 'field_owner',
+        7 => 'group_details_wrapper',
         9 => 'body',
-        10 => 'field_segment',
+        11 => 'field_segment',
+        12 => 'field_link_twitter',
+        13 => 'field_link_facebook',
+        14 => 'field_link_linkedin',
+        15 => 'field_link_website',
       ),
       'second_column' => array(
         8 => 'group_community_wrapper',
-        11 => 'members_following',
+        10 => 'members_following',
       ),
     ),
     'fields' => array(
@@ -248,12 +263,16 @@ function tm_organizations_ds_layout_settings_info() {
       'tm_ds_more_actions' => 'header_body',
       'title' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
-      'group_details_wrapper' => 'first_column',
       'field_owner' => 'first_column',
+      'group_details_wrapper' => 'first_column',
       'group_community_wrapper' => 'second_column',
       'body' => 'first_column',
-      'field_segment' => 'first_column',
       'members_following' => 'second_column',
+      'field_segment' => 'first_column',
+      'field_link_twitter' => 'first_column',
+      'field_link_facebook' => 'first_column',
+      'field_link_linkedin' => 'first_column',
+      'field_link_website' => 'first_column',
       'group_action_menu' => 'header_body',
     ),
     'classes' => array(),

@@ -105,15 +105,8 @@ function tm_events_ds_field_settings_info() {
     'body' => array(
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_expert',
-          'lb-el' => 'h2',
+          'func' => 'theme_ds_field_tm_default',
           'lb-col' => TRUE,
-          'ow' => TRUE,
-          'ow-el' => 'div',
-          'ow-cl' => 'detail-item description',
-          'ow-def-cl' => FALSE,
-          'ow-at' => '',
-          'ow-def-at' => FALSE,
         ),
       ),
     ),
@@ -354,29 +347,16 @@ function tm_events_ds_field_settings_info() {
     'body' => array(
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_expert',
-          'lb-el' => 'h2',
+          'func' => 'theme_ds_field_tm_default',
           'lb-col' => TRUE,
-          'ow' => TRUE,
-          'ow-el' => 'div',
-          'ow-cl' => 'detail-item description',
-          'ow-def-cl' => FALSE,
-          'ow-at' => '',
-          'ow-def-at' => FALSE,
         ),
       ),
     ),
     'field_event_date' => array(
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_expert',
-          'lb-el' => 'h2',
-          'ow' => TRUE,
-          'ow-el' => 'div',
-          'ow-cl' => 'detail-item date',
-          'ow-def-cl' => FALSE,
-          'ow-at' => '',
-          'ow-def-at' => FALSE,
+          'func' => 'theme_ds_field_tm_default',
+          'lb-col' => TRUE,
         ),
       ),
     ),
@@ -556,7 +536,7 @@ function tm_events_ds_layout_settings_info() {
         2 => 'field_location',
         4 => 'field_map_link',
         10 => 'group_details_wrapper',
-        13 => 'group_location_wrapper',
+        12 => 'group_location_wrapper',
         15 => 'body',
       ),
       'header_media' => array(
@@ -568,7 +548,7 @@ function tm_events_ds_layout_settings_info() {
         6 => 'tm_ds_event_seats_count',
         7 => 'group_action_menu_wrapper',
         9 => 'field_rsvp_link',
-        12 => 'ds_flag_signup',
+        13 => 'ds_flag_signup',
         16 => 'tm_ds_more_actions',
         19 => 'group_action_menu',
       ),
@@ -595,8 +575,8 @@ function tm_events_ds_layout_settings_info() {
       'field_rsvp_link' => 'header_body',
       'group_details_wrapper' => 'first_column',
       'group_organizers_wrapper' => 'second_column',
-      'ds_flag_signup' => 'header_body',
       'group_location_wrapper' => 'first_column',
+      'ds_flag_signup' => 'header_body',
       'group_community_wrapper' => 'second_column',
       'body' => 'first_column',
       'tm_ds_more_actions' => 'header_body',

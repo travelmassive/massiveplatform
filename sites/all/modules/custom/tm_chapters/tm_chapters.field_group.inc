@@ -82,7 +82,7 @@ function tm_chapters_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Community',
-    'weight' => '6',
+    'weight' => '8',
     'children' => array(
       0 => 'members_signed_up',
     ),
@@ -108,6 +108,10 @@ function tm_chapters_field_group_info() {
     'weight' => '5',
     'children' => array(
       0 => 'body',
+      1 => 'field_link_twitter',
+      2 => 'field_link_facebook',
+      3 => 'field_link_linkedin',
+      4 => 'field_link_website',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -157,7 +161,7 @@ function tm_chapters_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Team',
-    'weight' => '5',
+    'weight' => '7',
     'children' => array(
       0 => 'field_chapter_leaders',
     ),

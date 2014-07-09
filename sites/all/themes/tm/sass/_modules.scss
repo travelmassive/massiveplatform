@@ -94,12 +94,14 @@
     
     &.people:before, &.field-owner:before { @extend .icon-user; }
     &.location:before, .field-location:before { @extend .icon-map-marker; }
-    &.field-about-me:before, &.about-me:before, &.qa:before, &.body:before { @extend .icon-description; }
+    &.field-about-me:before, &.about-me:before, &.body:before { @extend .icon-description; }
     &.field-link-facebook:before { @extend .icon-facebook; }
     &.field-link-linkedin:before { @extend .icon-linkedin; }
     &.field-link-twitter:before { @extend .icon-twitter; }
     &.field-link-instagram:before { @extend .icon-instagram; }
     &.field-link-website:before { @extend .icon-globe; }
+    &.field-segment:before { @extend .icon-briefcase; }
+    &.field-qa:before, &.qa:before { @extend .icon-bubble; }
     
     .detail-venue-name {
       font-weight: $body-font-bold;

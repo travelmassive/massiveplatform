@@ -7,6 +7,30 @@
 include_once 'tm_base.features.inc';
 
 /**
+ * Implements hook_menu().
+ */
+function tm_base_menu() {
+  $items = array();
+
+  $items['frontpage'] = array(
+    'page callback' => '_tm_base_frontpage',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Custom function to build the frontpage
+ */
+function _tm_base_frontpage() {
+  return array(
+    '#markup' => '<p>Hello world</p>'
+  );
+}
+
+/**
 * Implements hook_variable_info().
 */
 function tm_base_variable_info($options) {

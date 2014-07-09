@@ -98,6 +98,13 @@
       } 
       &:before { @extend .icon-map-marker; }
     }
+    &.field-date-event {
+      .date {
+        font-weight: $body-font-bold;
+        display: block;
+      } 
+      &:before { @extend .icon-clock; }
+    }
     &.field-about-me:before, &.about-me:before, &.body:before { @extend .icon-description; }
     &.field-link-facebook:before { @extend .icon-facebook; }
     &.field-link-linkedin:before { @extend .icon-linkedin; }

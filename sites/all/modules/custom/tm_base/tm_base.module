@@ -46,18 +46,23 @@ function tm_base_block_view($delta) {
       
       $block['content'] = '<ul>';
       if ($user->uid) {
-        $block['content'] .= '<li><strong class="key">Followers<small>: </small></strong><span class="value">999</span></li>';
-        $block['content'] .= '<li><strong class="key">Following<small>: </small></strong><span class="value">999</span></li>';
-        // n followers
-        // following
+        $follow_members_flag = flag_get_flag('follow_members');
+        // Number of followers and following.
+        $followers = $follow_members_flag->get_count($user->uid);
+        $following = flag_get_user_flag_counts($follow_members_flag, $user);
+        
+        $block['content'] .= '<li><strong class="key">' . t('Followers') . '<small>: </small></strong><span class="value">' . $followers . '</span></li>';
+        $block['content'] .= '<li><strong class="key">' . t('Following') . '<small>: </small></strong><span class="value">' . $following . '</span></li>';
       }
       else {
-        $block['content'] .= '<li><strong class="key">Community<small>: </small></strong><span class="value">999</span></li>';
-        $block['content'] .= '<li><strong class="key">Cities<small>: </small></strong><span class="value">999</span></li>';
-        $block['content'] .= '<li><strong class="key">Companies<small>: </small></strong><span class="value">999</span></li>';
-        // n users
-        // n cities
-        // n companies
+        // Number of communities, cities, companies.
+        $no_community = db_query('SELECT count(uid) AS no FROM {users} WHERE status = :status', array(':status' => 1))->fetchField();
+        $no_city = db_query('SELECT count(nid) AS no FROM {node} WHERE status = :status AND type = :type', array(':status' => 1, ':type' => 'chapter'))->fetchField();
+        $no_company = db_query('SELECT count(nid) AS no FROM {node} WHERE status = :status AND type = :type', array(':status' => 1, ':type' => 'organization'))->fetchField();
+        
+        $block['content'] .= '<li><strong class="key">' . t('Community') . '<small>: </small></strong><span class="value">' . $no_community . '</span></li>';
+        $block['content'] .= '<li><strong class="key">' . t('Cities') . '<small>: </small></strong><span class="value">' . $no_city . '</span></li>';
+        $block['content'] .= '<li><strong class="key">' . t('Companies') . '<small>: </small></strong><span class="value">' . $no_company . '</span></li>';
       }
       $block['content'] .= '</ul>';
       break;
@@ -102,10 +107,10 @@ function _tm_base_frontpage() {
   }
   
   if (!$homepage_title) {
-    $homepage_title = 'No title. Set it through ' . l('configuration', 'admin/config/system/site-information');
+    drupal_set_message('No homepage title. Set it through ' . l('configuration', 'admin/config/system/site-information'), 'error');
   }
   if (!$homepage_description) {
-    $homepage_description = 'No description. Set it through ' . l('configuration', 'admin/config/system/site-information');
+    drupal_set_message('No homepage description. Set it through ' . l('configuration', 'admin/config/system/site-information'), 'error');
   }
 
   // Stats block

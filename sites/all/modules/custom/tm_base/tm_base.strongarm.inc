@@ -90,9 +90,9 @@ function tm_base_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'tm_base_copright';
+  $strongarm->name = 'tm_base_copyright';
   $strongarm->value = '&copy; All rights reserved.';
-  $export['tm_base_copright'] = $strongarm;
+  $export['tm_base_copyright'] = $strongarm;
 
   return $export;
 }

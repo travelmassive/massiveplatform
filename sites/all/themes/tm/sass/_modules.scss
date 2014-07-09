@@ -92,7 +92,12 @@
       color: tint($primary-color, 60%);
     }
     
-    &.location:before, .field-location:before { @extend .icon-map-marker; }
+    &.field-location {
+      .city:after {
+        content: ', ';
+      } 
+      &:before { @extend .icon-map-marker; }
+    }
     &.field-about-me:before, &.about-me:before, &.body:before { @extend .icon-description; }
     &.field-link-facebook:before { @extend .icon-facebook; }
     &.field-link-linkedin:before { @extend .icon-linkedin; }

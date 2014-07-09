@@ -104,20 +104,20 @@ function tm_organizations_field_group_info() {
   $field_group->mode = 'full';
   $field_group->parent_name = '';
   $field_group->data = array(
-    'label' => 'Details',
+    'label' => 'About',
     'weight' => '4',
     'children' => array(
       0 => 'body',
-      1 => 'field_segment',
+      1 => 'field_link_facebook',
       2 => 'field_link_linkedin',
-      3 => 'field_link_facebook',
-      4 => 'field_link_twitter',
-      5 => 'field_link_website',
+      3 => 'field_link_twitter',
+      4 => 'field_link_website',
+      5 => 'field_segment',
       6 => 'group_location_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
-      'label' => 'Details',
+      'label' => 'About',
       'formatter' => 'open',
     ),
   );

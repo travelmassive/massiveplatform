@@ -134,14 +134,6 @@ function tm_chapters_ds_field_settings_info() {
         ),
       ),
     ),
-    'field_link_twitter' => array(
-      'formatter_settings' => array(
-        'ft' => array(
-          'func' => 'theme_ds_field_tm_default',
-          'lb-col' => TRUE,
-        ),
-      ),
-    ),
     'field_link_facebook' => array(
       'formatter_settings' => array(
         'ft' => array(
@@ -151,6 +143,14 @@ function tm_chapters_ds_field_settings_info() {
       ),
     ),
     'field_link_linkedin' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_tm_default',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'field_link_twitter' => array(
       'formatter_settings' => array(
         'ft' => array(
           'func' => 'theme_ds_field_tm_default',
@@ -318,8 +318,8 @@ function tm_chapters_ds_layout_settings_info() {
     'regions' => array(
       'header_body' => array(
         0 => 'ds_flag_signup',
-        2 => 'chapter_avatar',
-        3 => 'tm_ds_more_actions',
+        2 => 'tm_ds_more_actions',
+        3 => 'chapter_avatar',
         4 => 'title',
         5 => 'group_action_menu_wrapper',
         19 => 'group_action_menu',
@@ -331,38 +331,38 @@ function tm_chapters_ds_layout_settings_info() {
         6 => 'tm_ds_add_event',
         7 => 'group_details_wrapper',
         8 => 'body',
-        9 => 'event_list',
-        11 => 'field_link_website',
-        12 => 'group_events_wrapper',
-        13 => 'field_link_twitter',
-        15 => 'field_link_facebook',
+        9 => 'group_events_wrapper',
+        10 => 'field_link_website',
+        12 => 'event_list',
+        14 => 'field_link_twitter',
+        16 => 'field_link_facebook',
         17 => 'field_link_linkedin',
       ),
       'second_column' => array(
-        10 => 'members_signed_up',
-        14 => 'group_team_wrapper',
-        16 => 'group_community_wrapper',
+        11 => 'members_signed_up',
+        13 => 'group_team_wrapper',
+        15 => 'group_community_wrapper',
         18 => 'field_chapter_leaders',
       ),
     ),
     'fields' => array(
       'ds_flag_signup' => 'header_body',
       'field_image' => 'header_media',
-      'chapter_avatar' => 'header_body',
       'tm_ds_more_actions' => 'header_body',
+      'chapter_avatar' => 'header_body',
       'title' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
       'tm_ds_add_event' => 'first_column',
       'group_details_wrapper' => 'first_column',
       'body' => 'first_column',
-      'event_list' => 'first_column',
-      'members_signed_up' => 'second_column',
-      'field_link_website' => 'first_column',
       'group_events_wrapper' => 'first_column',
-      'field_link_twitter' => 'first_column',
+      'field_link_website' => 'first_column',
+      'members_signed_up' => 'second_column',
+      'event_list' => 'first_column',
       'group_team_wrapper' => 'second_column',
-      'field_link_facebook' => 'first_column',
+      'field_link_twitter' => 'first_column',
       'group_community_wrapper' => 'second_column',
+      'field_link_facebook' => 'first_column',
       'field_link_linkedin' => 'first_column',
       'field_chapter_leaders' => 'second_column',
       'group_action_menu' => 'header_body',

@@ -106,25 +106,7 @@ function tm_organizations_ds_field_settings_info() {
         ),
       ),
     ),
-    'field_owner' => array(
-      'formatter_settings' => array(
-        'ft' => array(
-          'func' => 'theme_ds_field_expert',
-          'fis' => TRUE,
-          'fis-el' => 'ul',
-          'fis-cl' => 'team-list',
-          'fis-at' => '',
-          'fis-def-at' => FALSE,
-          'fi' => TRUE,
-          'fi-el' => 'li',
-          'fi-cl' => '',
-          'fi-at' => '',
-          'fi-def-at' => FALSE,
-          'fi-odd-even' => FALSE,
-        ),
-      ),
-    ),
-    'field_segment' => array(
+    'field_link_facebook' => array(
       'formatter_settings' => array(
         'ft' => array(
           'func' => 'theme_ds_field_tm_default',
@@ -133,14 +115,6 @@ function tm_organizations_ds_field_settings_info() {
       ),
     ),
     'field_link_linkedin' => array(
-      'formatter_settings' => array(
-        'ft' => array(
-          'func' => 'theme_ds_field_tm_default',
-          'lb-col' => TRUE,
-        ),
-      ),
-    ),
-    'field_link_facebook' => array(
       'formatter_settings' => array(
         'ft' => array(
           'func' => 'theme_ds_field_tm_default',
@@ -187,6 +161,32 @@ function tm_organizations_ds_field_settings_info() {
           'ow-def-cl' => FALSE,
           'ow-at' => '',
           'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'field_owner' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'fis' => TRUE,
+          'fis-el' => 'ul',
+          'fis-cl' => 'team-list',
+          'fis-at' => '',
+          'fis-def-at' => FALSE,
+          'fi' => TRUE,
+          'fi-el' => 'li',
+          'fi-cl' => '',
+          'fi-at' => '',
+          'fi-def-at' => FALSE,
+          'fi-odd-even' => FALSE,
+        ),
+      ),
+    ),
+    'field_segment' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_tm_default',
+          'lb-col' => TRUE,
         ),
       ),
     ),
@@ -268,10 +268,10 @@ function tm_organizations_ds_layout_settings_info() {
     'regions' => array(
       'first_column' => array(
         0 => 'field_location_city',
-        3 => 'field_location_country',
+        4 => 'field_location_country',
         8 => 'group_details_wrapper',
-        9 => 'body',
-        13 => 'field_segment',
+        10 => 'body',
+        12 => 'field_segment',
         14 => 'field_link_twitter',
         15 => 'field_link_facebook',
         16 => 'field_link_linkedin',
@@ -280,8 +280,8 @@ function tm_organizations_ds_layout_settings_info() {
       ),
       'header_body' => array(
         1 => 'ds_flag_follow_organizations',
-        4 => 'tm_ds_more_actions',
-        5 => 'field_avatar',
+        3 => 'field_avatar',
+        5 => 'tm_ds_more_actions',
         6 => 'title',
         7 => 'group_action_menu_wrapper',
         20 => 'group_action_menu',
@@ -290,9 +290,9 @@ function tm_organizations_ds_layout_settings_info() {
         2 => 'field_image',
       ),
       'second_column' => array(
-        10 => 'group_managed_by_wrapper',
+        9 => 'group_managed_by_wrapper',
         11 => 'group_community_wrapper',
-        12 => 'members_following',
+        13 => 'members_following',
         19 => 'field_owner',
       ),
     ),
@@ -300,17 +300,17 @@ function tm_organizations_ds_layout_settings_info() {
       'field_location_city' => 'first_column',
       'ds_flag_follow_organizations' => 'header_body',
       'field_image' => 'header_media',
+      'field_avatar' => 'header_body',
       'field_location_country' => 'first_column',
       'tm_ds_more_actions' => 'header_body',
-      'field_avatar' => 'header_body',
       'title' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
       'group_details_wrapper' => 'first_column',
-      'body' => 'first_column',
       'group_managed_by_wrapper' => 'second_column',
+      'body' => 'first_column',
       'group_community_wrapper' => 'second_column',
-      'members_following' => 'second_column',
       'field_segment' => 'first_column',
+      'members_following' => 'second_column',
       'field_link_twitter' => 'first_column',
       'field_link_facebook' => 'first_column',
       'field_link_linkedin' => 'first_column',

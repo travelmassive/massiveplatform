@@ -105,7 +105,7 @@ function tm_users_field_group_info() {
   $field_group->mode = 'default';
   $field_group->parent_name = '';
   $field_group->data = array(
-    'label' => 'Details',
+    'label' => 'About',
     'weight' => '5',
     'children' => array(
       0 => 'field_about_me',
@@ -119,7 +119,7 @@ function tm_users_field_group_info() {
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
-      'label' => 'Details',
+      'label' => 'About',
       'formatter' => 'open',
     ),
   );

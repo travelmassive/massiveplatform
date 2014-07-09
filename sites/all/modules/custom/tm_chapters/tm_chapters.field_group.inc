@@ -104,18 +104,18 @@ function tm_chapters_field_group_info() {
   $field_group->mode = 'full';
   $field_group->parent_name = '';
   $field_group->data = array(
-    'label' => 'Details',
+    'label' => 'About',
     'weight' => '5',
     'children' => array(
       0 => 'body',
-      1 => 'field_link_twitter',
-      2 => 'field_link_facebook',
-      3 => 'field_link_linkedin',
+      1 => 'field_link_facebook',
+      2 => 'field_link_linkedin',
+      3 => 'field_link_twitter',
       4 => 'field_link_website',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
-      'label' => 'Details',
+      'label' => 'About',
       'formatter' => 'open',
     ),
   );

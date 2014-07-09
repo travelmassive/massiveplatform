@@ -5,20 +5,8 @@
  */
 
 include_once 'tm_base.features.inc';
+include_once 'tm_base.admin.inc';
 
-/**
-* Implements hook_variable_info().
-*/
-function tm_base_variable_info($options) {
-  // This is the very minimum we need, some descriptive name.
-  $variable['tm_base_copright'] = array(
-    'title' => t('Copright notice'),
-    'description' => t('The copright notice for the site.'),
-    'type' => 'string',
-    'access' => 'administer content',
-  );
-  return $variable;
-}
 /**
 * Implements hook_token_info().
 */

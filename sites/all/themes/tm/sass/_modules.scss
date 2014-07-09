@@ -136,6 +136,18 @@
     }
   }
   
+  .view-empty {
+    padding: 0 1rem 1rem 2.5rem;
+    margin: 0 0 1rem 0;
+    color: tint($primary-color, 40%);
+    p {
+      margin: 0 0 1rem 0;
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+  
   @media #{$large-up} {
     .contained-head {
       padding: 2rem 2rem 1.5rem 2rem;
@@ -157,6 +169,10 @@
         right: 2rem;
         margin: 0;
       }
+    }
+    .view-empty {
+      padding: 0 2rem;
+      margin: 0 0 2rem 0;
     }
   }
 }

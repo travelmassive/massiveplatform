@@ -1,6 +1,7 @@
 <?php global $user;
 // Only a loaded user has values for the fields.
 $loaded = user_load($user->uid);
+dsm($loaded);
 if (empty($loaded->field_avatar)) {
   // It is not possible to get an imagefield default value
   // using the standard default function. Load the file instead. 
@@ -13,7 +14,7 @@ else {
 }
 
 $image = theme('image_style', array(
-  'style_name' => 'thumbnail',
+  'style_name' => 'avatar',
   'path' => $img_uri,
   'alt' => 'user image',
   'title' => 'The user image',

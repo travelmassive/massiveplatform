@@ -219,7 +219,9 @@ function _tm_next_event($field, $title = NULL) {
  */
 function _tm_date_avatar($field, $title = NULL) {
   if (isset($field['entity']->field_event_date['und'][0]['value'])) {
-    $event_date = new DateTime($field['entity']->field_event_date['und'][0]['value']);
+    $event_date = new DateTime($field['entity']->field_event_date['und'][0]['value'], new DateTimeZone('UTC'));
+    // Date is stored in the db as UTC. We have to convert it back to the event's timezone
+    $event_date->setTimezone(new DateTimeZone($field['entity']->field_event_date['und'][0]['timezone']));
     return theme('tm_date_avatar', array(
       'date' => $event_date,
     ));
@@ -231,11 +233,12 @@ function _tm_date_avatar($field, $title = NULL) {
  */
 function _tm_fulldate_event($field, $title = NULL) {
   if (isset($field['entity']->field_event_date['und'][0]['value'])) {
-    $event_date = new DateTime($field['entity']->field_event_date['und'][0]['value']);
+    $event_date = new DateTime($field['entity']->field_event_date['und'][0]['value'], new DateTimeZone('UTC'));
+    // Date is stored in the db as UTC. We have to convert it back to the event's timezone
+    $event_date->setTimezone(new DateTimeZone($field['entity']->field_event_date['und'][0]['timezone']));
     return '<span class="date">' . $event_date->format('l, F j, Y') . '</span><span class="time">' . $event_date->format('g:i a') . '</span>';
   }
 }
-  
 
 /**
  * Implement hook_node_presave()

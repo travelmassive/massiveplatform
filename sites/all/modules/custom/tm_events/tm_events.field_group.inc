@@ -195,9 +195,8 @@ function tm_events_field_group_info() {
     'weight' => '5',
     'children' => array(
       0 => 'body',
-      1 => 'field_event_date',
-      2 => 'tm_ds_fulldate_event',
-      3 => 'group_location_wrapper',
+      1 => 'tm_ds_fulldate_event',
+      2 => 'group_location_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(

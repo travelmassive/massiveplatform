@@ -387,14 +387,6 @@ function tm_events_ds_field_settings_info() {
         ),
       ),
     ),
-    'field_event_date' => array(
-      'formatter_settings' => array(
-        'ft' => array(
-          'func' => 'theme_ds_field_tm_default',
-          'lb-col' => TRUE,
-        ),
-      ),
-    ),
     'field_event_venue_name' => array(
       'formatter_settings' => array(
         'ft' => array(
@@ -723,12 +715,11 @@ function tm_events_ds_layout_settings_info() {
       'first_column' => array(
         0 => 'tm_ds_fulldate_event',
         5 => 'body',
-        7 => 'field_event_date',
-        8 => 'group_location_wrapper',
-        10 => 'group_details_wrapper',
-        12 => 'field_event_venue_name',
-        13 => 'field_location',
-        14 => 'field_map_link',
+        7 => 'group_location_wrapper',
+        9 => 'group_details_wrapper',
+        11 => 'field_event_venue_name',
+        12 => 'field_location',
+        13 => 'field_map_link',
       ),
       'header_media' => array(
         1 => 'field_image',
@@ -738,8 +729,8 @@ function tm_events_ds_layout_settings_info() {
         3 => 'tm_ds_date_avatar',
         4 => 'tm_ds_more_actions',
         6 => 'title',
-        9 => 'group_action_menu_wrapper',
-        11 => 'group_action_menu',
+        8 => 'group_action_menu_wrapper',
+        10 => 'group_action_menu',
       ),
     ),
     'fields' => array(
@@ -750,7 +741,6 @@ function tm_events_ds_layout_settings_info() {
       'tm_ds_more_actions' => 'header_body',
       'body' => 'first_column',
       'title' => 'header_body',
-      'field_event_date' => 'first_column',
       'group_location_wrapper' => 'first_column',
       'group_action_menu_wrapper' => 'header_body',
       'group_details_wrapper' => 'first_column',

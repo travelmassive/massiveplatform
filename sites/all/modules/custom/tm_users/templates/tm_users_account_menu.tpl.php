@@ -13,7 +13,7 @@ else {
 }
 
 $image = theme('image_style', array(
-  'style_name' => 'thumbnail',
+  'style_name' => 'avatar',
   'path' => $img_uri,
   'alt' => 'user image',
   'title' => 'The user image',

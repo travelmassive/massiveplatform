@@ -182,3 +182,9 @@ function tm_base_update_7014() {
 function tm_base_update_7015() {
   module_enable(array('nodeaccess_nodereference', 'nodeaccess_userreference','realname'));
 }
+/**
+ * Enable the date_popup
+ */
+function tm_base_update_7016() {
+  module_enable(array('date_popup'));
+}

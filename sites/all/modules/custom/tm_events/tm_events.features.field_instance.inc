@@ -29,7 +29,7 @@ function tm_events_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',
-        'weight' => 8,
+        'weight' => 2,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -193,7 +193,7 @@ function tm_events_field_default_field_instances() {
         'module' => 'date',
         'settings' => array(
           'format_type' => 'long',
-          'fromto' => 'both',
+          'fromto' => '',
           'multiple_from' => '',
           'multiple_number' => '',
           'multiple_to' => '',
@@ -243,7 +243,7 @@ function tm_events_field_default_field_instances() {
         'text_parts' => array(),
         'year_range' => '-0:+3',
       ),
-      'type' => 'date_select',
+      'type' => 'date_popup',
       'weight' => 4,
     ),
   );
@@ -657,7 +657,7 @@ function tm_events_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 9,
+        'weight' => 1,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -714,7 +714,7 @@ function tm_events_field_default_field_instances() {
         'module' => 'date',
         'settings' => array(
           'format_type' => 'long',
-          'fromto' => 'both',
+          'fromto' => '',
           'multiple_from' => '',
           'multiple_number' => '',
           'multiple_to' => '',
@@ -724,16 +724,9 @@ function tm_events_field_default_field_instances() {
       ),
       'full' => array(
         'label' => 'above',
-        'module' => 'date',
-        'settings' => array(
-          'format_type' => 'long',
-          'fromto' => 'both',
-          'multiple_from' => '',
-          'multiple_number' => '',
-          'multiple_to' => '',
-        ),
-        'type' => 'date_default',
-        'weight' => 10,
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 2,
       ),
       'grid' => array(
         'label' => 'above',
@@ -755,7 +748,7 @@ function tm_events_field_default_field_instances() {
     'required' => 1,
     'settings' => array(
       'default_value' => 'strtotime',
-      'default_value2' => 'same',
+      'default_value2' => '',
       'default_value_code' => '+14 days',
       'default_value_code2' => '',
       'user_register_form' => FALSE,
@@ -771,7 +764,7 @@ function tm_events_field_default_field_instances() {
         'text_parts' => array(),
         'year_range' => '-0:+3',
       ),
-      'type' => 'date_select',
+      'type' => 'date_popup',
       'weight' => 3,
     ),
   );

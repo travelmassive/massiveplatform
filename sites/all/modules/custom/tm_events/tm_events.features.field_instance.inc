@@ -29,7 +29,7 @@ function tm_events_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',
-        'weight' => 8,
+        'weight' => 2,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -657,7 +657,7 @@ function tm_events_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 9,
+        'weight' => 1,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -733,7 +733,7 @@ function tm_events_field_default_field_instances() {
           'multiple_to' => '',
         ),
         'type' => 'date_default',
-        'weight' => 10,
+        'weight' => 2,
       ),
       'grid' => array(
         'label' => 'above',

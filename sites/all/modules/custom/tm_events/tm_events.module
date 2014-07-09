@@ -151,6 +151,13 @@ function tm_events_ds_fields_info($entity_type) {
     'function' => '_tm_date_avatar'
   );
 
+  $fields['tm_ds_fulldate_event'] = array(
+    'title' => t('Full datetime event'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('event|full', 'partner_event|full'),
+    'function' => '_tm_fulldate_event'
+  );
+
   return array($entity_type => $fields);
 }
 
@@ -218,6 +225,17 @@ function _tm_date_avatar($field, $title = NULL) {
     ));
   }
 }
+
+/**
+ * Custom function to return the full date and time of an event
+ */
+function _tm_fulldate_event($field, $title = NULL) {
+  if (isset($field['entity']->field_event_date['und'][0]['value'])) {
+    $event_date = new DateTime($field['entity']->field_event_date['und'][0]['value']);
+    return '<span class="date">' . $event_date->format('l, F j, Y') . '</span><span class="time">' . $event_date->format('g:i a') . '</span>';
+  }
+}
+  
 
 /**
  * Implement hook_node_presave()

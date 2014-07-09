@@ -170,7 +170,8 @@ function tm_events_field_group_info() {
     'weight' => '6',
     'children' => array(
       0 => 'body',
-      1 => 'group_location_wrapper',
+      1 => 'tm_ds_fulldate_event',
+      2 => 'group_location_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -195,7 +196,8 @@ function tm_events_field_group_info() {
     'children' => array(
       0 => 'body',
       1 => 'field_event_date',
-      2 => 'group_location_wrapper',
+      2 => 'tm_ds_fulldate_event',
+      3 => 'group_location_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -239,11 +241,11 @@ function tm_events_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '7',
+    'weight' => '1',
     'children' => array(
-      0 => 'field_location',
-      1 => 'field_map_link',
-      2 => 'field_event_venue_name',
+      0 => 'field_event_venue_name',
+      1 => 'field_location',
+      2 => 'field_map_link',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(
@@ -270,11 +272,11 @@ function tm_events_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '11',
+    'weight' => '3',
     'children' => array(
-      0 => 'field_map_link',
-      1 => 'field_event_venue_name',
-      2 => 'field_location',
+      0 => 'field_event_venue_name',
+      1 => 'field_location',
+      2 => 'field_map_link',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(

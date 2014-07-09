@@ -33,7 +33,6 @@ features[field_group][] = group_action_menu_wrapper|node|chapter|full
 features[field_group][] = group_action_menu|node|chapter|full
 features[field_group][] = group_community_wrapper|node|chapter|full
 features[field_group][] = group_details_wrapper|node|chapter|full
-features[field_group][] = group_details|node|chapter|full
 features[field_group][] = group_team_wrapper|node|chapter|full
 features[field_instance][] = node-chapter-body
 features[field_instance][] = node-chapter-field_chapter_color

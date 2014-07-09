@@ -35,7 +35,6 @@ features[field_group][] = group_action_menu_wrapper|node|organization|full
 features[field_group][] = group_action_menu|node|organization|full
 features[field_group][] = group_community_wrapper|node|organization|full
 features[field_group][] = group_details_wrapper|node|organization|full
-features[field_group][] = group_details|node|organization|full
 features[field_group][] = group_location_wrapper|node|organization|full
 features[field_group][] = group_managed_by_wrapper|node|organization|full
 features[field_instance][] = node-organization-body

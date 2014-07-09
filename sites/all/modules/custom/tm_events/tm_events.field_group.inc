@@ -208,67 +208,6 @@ function tm_events_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
-  $field_group->identifier = 'group_details|node|event|full';
-  $field_group->group_name = 'group_details';
-  $field_group->entity_type = 'node';
-  $field_group->bundle = 'event';
-  $field_group->mode = 'full';
-  $field_group->parent_name = 'group_details_wrapper';
-  $field_group->data = array(
-    'label' => 'Details',
-    'weight' => '7',
-    'children' => array(
-      0 => 'body',
-      1 => 'field_location',
-      2 => 'field_map_link',
-    ),
-    'format_type' => 'html-element',
-    'format_settings' => array(
-      'label' => 'Details',
-      'instance_settings' => array(
-        'classes' => 'details-list',
-        'element' => 'dl',
-        'show_label' => '0',
-        'label_element' => '',
-        'attributes' => '',
-      ),
-    ),
-  );
-  $export['group_details|node|event|full'] = $field_group;
-
-  $field_group = new stdClass();
-  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
-  $field_group->api_version = 1;
-  $field_group->identifier = 'group_details|node|partner_event|full';
-  $field_group->group_name = 'group_details';
-  $field_group->entity_type = 'node';
-  $field_group->bundle = 'partner_event';
-  $field_group->mode = 'full';
-  $field_group->parent_name = 'group_details_wrapper';
-  $field_group->data = array(
-    'label' => 'Details',
-    'weight' => '5',
-    'children' => array(
-      0 => 'body',
-      1 => 'field_event_date',
-    ),
-    'format_type' => 'html-element',
-    'format_settings' => array(
-      'label' => 'Details',
-      'instance_settings' => array(
-        'classes' => 'details-list',
-        'element' => 'dl',
-        'show_label' => '0',
-        'label_element' => '',
-        'attributes' => '',
-      ),
-    ),
-  );
-  $export['group_details|node|partner_event|full'] = $field_group;
-
-  $field_group = new stdClass();
-  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
-  $field_group->api_version = 1;
   $field_group->identifier = 'group_events_wrapper|node|chapter|full';
   $field_group->group_name = 'group_events_wrapper';
   $field_group->entity_type = 'node';

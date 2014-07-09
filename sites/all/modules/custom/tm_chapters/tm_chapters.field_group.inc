@@ -124,35 +124,6 @@ function tm_chapters_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
-  $field_group->identifier = 'group_details|node|chapter|full';
-  $field_group->group_name = 'group_details';
-  $field_group->entity_type = 'node';
-  $field_group->bundle = 'chapter';
-  $field_group->mode = 'full';
-  $field_group->parent_name = 'group_details_wrapper';
-  $field_group->data = array(
-    'label' => 'Details',
-    'weight' => '5',
-    'children' => array(
-      0 => 'body',
-    ),
-    'format_type' => 'html-element',
-    'format_settings' => array(
-      'label' => 'Details',
-      'instance_settings' => array(
-        'classes' => 'details-list',
-        'element' => 'dl',
-        'show_label' => '0',
-        'label_element' => '',
-        'attributes' => '',
-      ),
-    ),
-  );
-  $export['group_details|node|chapter|full'] = $field_group;
-
-  $field_group = new stdClass();
-  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
-  $field_group->api_version = 1;
   $field_group->identifier = 'group_team_wrapper|node|chapter|full';
   $field_group->group_name = 'group_team_wrapper';
   $field_group->entity_type = 'node';

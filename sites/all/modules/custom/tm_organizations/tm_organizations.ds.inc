@@ -185,8 +185,13 @@ function tm_organizations_ds_field_settings_info() {
     'field_segment' => array(
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_tm_default',
-          'lb-col' => TRUE,
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'p',
+          'ow-cl' => 'meta',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
         ),
       ),
     ),
@@ -213,19 +218,6 @@ function tm_organizations_ds_field_settings_info() {
         ),
       ),
     ),
-    'field_image' => array(
-      'formatter_settings' => array(
-        'ft' => array(
-          'func' => 'theme_ds_field_expert',
-          'ow' => TRUE,
-          'ow-el' => 'div',
-          'ow-cl' => 'cover',
-          'ow-def-cl' => FALSE,
-          'ow-at' => '',
-          'ow-def-at' => FALSE,
-        ),
-      ),
-    ),
     'field_avatar' => array(
       'formatter_settings' => array(
         'ft' => array(
@@ -242,6 +234,32 @@ function tm_organizations_ds_field_settings_info() {
           'fi-at' => '',
           'fi-def-at' => FALSE,
           'fi-odd-even' => FALSE,
+        ),
+      ),
+    ),
+    'field_image' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'cover',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'field_segment' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'p',
+          'ow-cl' => 'meta',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
         ),
       ),
     ),
@@ -270,8 +288,7 @@ function tm_organizations_ds_layout_settings_info() {
         0 => 'field_location_city',
         4 => 'field_location_country',
         8 => 'group_details_wrapper',
-        10 => 'body',
-        12 => 'field_segment',
+        11 => 'body',
         14 => 'field_link_twitter',
         15 => 'field_link_facebook',
         16 => 'field_link_linkedin',
@@ -283,15 +300,16 @@ function tm_organizations_ds_layout_settings_info() {
         3 => 'field_avatar',
         5 => 'tm_ds_more_actions',
         6 => 'title',
-        7 => 'group_action_menu_wrapper',
+        7 => 'field_segment',
+        9 => 'group_action_menu_wrapper',
         20 => 'group_action_menu',
       ),
       'header_media' => array(
         2 => 'field_image',
       ),
       'second_column' => array(
-        9 => 'group_managed_by_wrapper',
-        11 => 'group_community_wrapper',
+        10 => 'group_managed_by_wrapper',
+        12 => 'group_community_wrapper',
         13 => 'members_following',
         19 => 'field_owner',
       ),
@@ -304,12 +322,12 @@ function tm_organizations_ds_layout_settings_info() {
       'field_location_country' => 'first_column',
       'tm_ds_more_actions' => 'header_body',
       'title' => 'header_body',
-      'group_action_menu_wrapper' => 'header_body',
+      'field_segment' => 'header_body',
       'group_details_wrapper' => 'first_column',
+      'group_action_menu_wrapper' => 'header_body',
       'group_managed_by_wrapper' => 'second_column',
       'body' => 'first_column',
       'group_community_wrapper' => 'second_column',
-      'field_segment' => 'first_column',
       'members_following' => 'second_column',
       'field_link_twitter' => 'first_column',
       'field_link_facebook' => 'first_column',
@@ -348,14 +366,16 @@ function tm_organizations_ds_layout_settings_info() {
     'regions' => array(
       'teaser' => array(
         0 => 'title',
+        1 => 'field_segment',
       ),
       'media' => array(
-        1 => 'field_image',
-        2 => 'field_avatar',
+        2 => 'field_image',
+        3 => 'field_avatar',
       ),
     ),
     'fields' => array(
       'title' => 'teaser',
+      'field_segment' => 'teaser',
       'field_image' => 'media',
       'field_avatar' => 'media',
     ),

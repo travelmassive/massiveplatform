@@ -21,7 +21,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Action menu wrapper',
-    'weight' => '3',
+    'weight' => '4',
     'children' => array(
       0 => 'group_action_menu',
     ),
@@ -124,6 +124,66 @@ function tm_users_field_group_info() {
     ),
   );
   $export['group_details_wrapper|user|user|default'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_job_wrapper|user|user|default';
+  $field_group->group_name = 'group_job_wrapper';
+  $field_group->entity_type = 'user';
+  $field_group->bundle = 'user';
+  $field_group->mode = 'default';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Job wrapper',
+    'weight' => '3',
+    'children' => array(
+      0 => 'field_job_role',
+      1 => 'field_job_organization',
+    ),
+    'format_type' => 'html-element',
+    'format_settings' => array(
+      'label' => 'Job wrapper',
+      'instance_settings' => array(
+        'classes' => 'meta',
+        'element' => 'p',
+        'show_label' => '0',
+        'label_element' => '',
+        'attributes' => '',
+      ),
+    ),
+  );
+  $export['group_job_wrapper|user|user|default'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_job_wrapper|user|user|grid';
+  $field_group->group_name = 'group_job_wrapper';
+  $field_group->entity_type = 'user';
+  $field_group->bundle = 'user';
+  $field_group->mode = 'grid';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Job wrapper',
+    'weight' => '1',
+    'children' => array(
+      0 => 'field_job_role',
+      1 => 'field_job_organization',
+    ),
+    'format_type' => 'html-element',
+    'format_settings' => array(
+      'label' => 'Job wrapper',
+      'instance_settings' => array(
+        'classes' => 'meta',
+        'element' => 'p',
+        'show_label' => '0',
+        'label_element' => '',
+        'attributes' => '',
+      ),
+    ),
+  );
+  $export['group_job_wrapper|user|user|grid'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */

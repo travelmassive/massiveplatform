@@ -17,11 +17,11 @@ function tm_fields_ds_fields_info($entity_type) {
     'function' => '_tm_chapter_sticker_process'
   );
   
-  $fields['tm_ds_more_actions'] = array(
-    'title' => t('More actions'),
+  $fields['tm_ds_anon_flag_placeholder'] = array(
+    'title' => t('Anonymous flag placeholder'),
     'field_type' => DS_FIELD_TYPE_FUNCTION,
     'ui_limit' => array('*|*'),
-    'function' => '_tm_more_actions_process'
+    'function' => '_tm_anon_flag_placeholder'
   );
 
   $fields['tm_ds_edit_own_profile'] = array(
@@ -211,6 +211,76 @@ function _tm_edit_own_profile_process($field, $title = NULL) {
           'title' => t('Edit your profile')
         )
       ));
+    }
+  }
+}
+
+/**
+ * Custom function to build the flag placeholder for anonymous users.
+ *
+ * When not logged in, the users should still see the follow / join buttons.
+ * This can't be achieved with flags since flags, normally, don't show up for
+ * anonymous users.
+ * To solve this problem a faux field is created. This filed will be used
+ * throughout the website with a flag like appearence. Upon click will redirect
+ * the users to the login page.
+ * This is a very specific field and will differ according with the content
+ * type being viewed.
+ */
+function _tm_anon_flag_placeholder($field, $title = NULL) {
+  global $user;
+  if (!$user->uid) {
+    $entity = $field['entity'];
+    $css_classes = 'follow bttn bttn-secondary bttn-m';
+    
+    if (isset($entity->pass)) {
+      // Password set, it's a user;
+      return l(t('Follow'), 'user',array(
+        'attributes' => array(
+          'title' => t('Follow :user', array(':user' => $entity->realname)),
+          'class' => array($css_classes)
+        )
+      ));
+    }
+    
+    // Behaviour based on content type.
+    switch ($entity->type) {
+      case 'chapter':
+        return l(t('Join'), 'user',array(
+          'attributes' => array(
+            'title' => t('Join :chapter', array(':chapter' => $entity->title)),
+            'class' => array($css_classes)
+          )
+        ));
+        break;
+      case 'organization':
+        return l(t('Follow'), 'user',array(
+          'attributes' => array(
+            'title' => t('Follow :organization', array(':organization' => $entity->title)),
+            'class' => array($css_classes)
+          )
+        ));
+        break;
+      case 'event':
+        $result = _tm_event_signup_can_join($entity->nid);
+        
+        // Only show the button for travel massive events.
+        // The other events will have an external RSVP link.
+        if ($result['error'] == 'Not a Travel Massive Event.') {
+          return;
+        }
+        
+        if (!$result['allowed']) {
+          $css_classes .= ' disabled';
+        }
+        
+        return l(t('Join'), 'user',array(
+          'attributes' => array(
+            'title' => t('Join :event', array(':event' => $entity->title)),
+            'class' => array($css_classes)
+          )
+        ));
+        break;
     }
   }
 }

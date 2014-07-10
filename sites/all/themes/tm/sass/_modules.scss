@@ -318,6 +318,16 @@
     font-size: 0.875rem;
     line-height: 1.25rem;
     display: block;
+    span {
+      &:after {
+        content: ', ';
+      }
+    }
+    span:last-of-type {
+      &:after {
+        content: '';
+      }
+    }
   }
   .extra {
     position: absolute;

@@ -313,8 +313,9 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
 }
 
 #footer {
+  position: relative;
   background: tint($primary-color, 80%);
-  padding: 2rem 0;
+  padding: 2rem 0 1rem 0;
   color: tint($primary-color, 20%);
   a {
     color: tint($primary-color, 20%);
@@ -384,6 +385,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
     line-height: 1.25rem;
   }
   .logo {
+    float: left;
     img {
       opacity: 0.8;
       height: 2rem;
@@ -411,9 +413,11 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
   }
   @media #{$medium-up} {
     .logo {
+      float: none;
+      display: block;
+      overflow: hidden;
       a {
-        display: block;
-        float: none;
+        clear: both;
       }
     }
     small {

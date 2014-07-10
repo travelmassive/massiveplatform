@@ -481,7 +481,6 @@ function tm_users_ds_layout_settings_info() {
       'field_link_linkedin' => 'first_column',
       'field_user_question_learn' => 'first_column',
       'field_link_twitter' => 'first_column',
-      'field_user_question_learn' => 'first_column',
       'field_user_question_job' => 'first_column',
       'field_link_website' => 'first_column',
       'group_user_qa_wrapper' => 'first_column',

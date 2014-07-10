@@ -281,6 +281,102 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'user-user-field_job_organization'
+  $field_instances['user-user-field_job_organization'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 2,
+      ),
+      'grid' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 2,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'user',
+    'field_name' => 'field_job_organization',
+    'label' => 'Organization',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 29,
+    ),
+  );
+
+  // Exported field_instance: 'user-user-field_job_role'
+  $field_instances['user-user-field_job_role'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 1,
+      ),
+      'grid' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 1,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'user',
+    'field_name' => 'field_job_role',
+    'label' => 'Role',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 28,
+    ),
+  );
+
   // Exported field_instance: 'user-user-field_link_facebook'
   $field_instances['user-user-field_link_facebook'] = array(
     'bundle' => 'user',
@@ -1003,11 +1099,13 @@ function tm_users_field_default_field_instances() {
   t('Friendly URL');
   t('Last name');
   t('Linkedin');
+  t('Organization');
   t('Please provide your given name. This field will be <strong>public</strong>.');
   t('Please provide your last name. This field will be <strong>public</strong>.');
   t('Please select the industry segment that best applies to you.');
   t('Please select what you consider to be your home chapter.');
   t('Provide the other members with some more information about yourself. This information will be <strong>public</strong>.');
+  t('Role');
   t('Segment');
   t('Three words that describe why we should travel?');
   t('Twitter');

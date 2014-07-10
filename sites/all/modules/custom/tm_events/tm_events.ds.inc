@@ -253,6 +253,21 @@ function tm_events_ds_field_settings_info() {
         ),
       ),
     ),
+    'field_event_date' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'lb' => 'Starts at',
+          'lb-el' => 'span',
+          'ow' => TRUE,
+          'ow-el' => 'p',
+          'ow-cl' => 'meta',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
     'field_image' => array(
       'formatter_settings' => array(
         'ft' => array(
@@ -260,19 +275,6 @@ function tm_events_ds_field_settings_info() {
           'ow' => TRUE,
           'ow-el' => 'div',
           'ow-cl' => 'cover',
-          'ow-def-cl' => FALSE,
-          'ow-at' => '',
-          'ow-def-at' => FALSE,
-        ),
-      ),
-    ),
-    'field_location' => array(
-      'formatter_settings' => array(
-        'ft' => array(
-          'func' => 'theme_ds_field_expert',
-          'ow' => TRUE,
-          'ow-el' => 'p',
-          'ow-cl' => 'meta',
           'ow-def-cl' => FALSE,
           'ow-at' => '',
           'ow-def-at' => FALSE,
@@ -646,18 +648,18 @@ function tm_events_ds_layout_settings_info() {
       ),
       'teaser' => array(
         2 => 'title',
-        3 => 'field_location',
+        4 => 'field_event_date',
       ),
       'extra' => array(
-        4 => 'tm_ds_chapter_sticker',
+        3 => 'tm_ds_chapter_sticker',
       ),
     ),
     'fields' => array(
       'field_image' => 'media',
       'tm_ds_date_avatar' => 'media',
       'title' => 'teaser',
-      'field_location' => 'teaser',
       'tm_ds_chapter_sticker' => 'extra',
+      'field_event_date' => 'teaser',
     ),
     'classes' => array(),
     'wrappers' => array(

@@ -211,7 +211,7 @@ function _tm_next_event($field, $title = NULL) {
       $time_until = format_interval($event_datetime->format('U') - $current_date->format('U'), 1);
     }
   }
-  return $time_until ? t('Event in @time.', array('@time' => $time_until)) : t('No event scheduled yet.');
+  return $time_until ? t('Event in @time.', array('@time' => $time_until)) : t('No upcoming events.');
 }
 
 /**

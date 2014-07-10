@@ -16,7 +16,7 @@ global $user;
   	  <?php print render($homepage_stats_block); ?>
   	<?php endif; ?>
   	<?php if (!$user->uid): ?>
-  	<p class="cta-wrapper"><?php print l(t('Join'), 'user/register', array('attributes' => array('class' => 'bttn bttn-secondary bttn-xl'))) ?></p>
+  	<p class="cta-wrapper"><?php print l(t('Join now!'), 'user/register', array('attributes' => array('class' => 'bttn bttn-secondary bttn-xl'))) ?></p>
   	<?php endif; ?>
 	</div>
 </section>

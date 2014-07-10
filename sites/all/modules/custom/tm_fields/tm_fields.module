@@ -24,22 +24,11 @@ function tm_fields_ds_fields_info($entity_type) {
     'function' => '_tm_more_actions_process'
   );
   
-  $fields['tm_ds_add_event'] = array(
-    'title' => t('Add event'),
+  $fields['tm_ds_anon_flag_placeholder'] = array(
+    'title' => t('Anonymous flag placeholder'),
     'field_type' => DS_FIELD_TYPE_FUNCTION,
-    'ui_limit' => array('chapter|*'),
-    'function' => '_tm_add_event_process',
-    'properties' => array(
-      'settings' => array(
-        'Extra classes' => array(
-          'type' => 'textfield',
-          'description' => t('Classes for the link')
-        )
-      ),
-      'default' => array(
-        'Extra classes' => ''
-      )
-    ),
+    'ui_limit' => array('*|*'),
+    'function' => '_tm_anon_flag_placeholder'
   );
 
   $fields['tm_ds_edit_own_profile'] = array(
@@ -97,14 +86,14 @@ function _tm_chapter_sticker_process($field, $title = NULL) {
  * Custom function to build the more_actions menu
  */
 function _tm_more_actions_process($field, $title = NULL) {
-  global $base_root;
+  global $base_root, $user;
   $base = $base_root . request_uri();
   $links = array(
     'edition' => array(),
     'share' => array()
   );
 
-  // Edit link.
+  // START Edit link.
   $menu_item = menu_get_item();
   // Is it a node?
   if (isset($menu_item['page_arguments'][0]->nid)) {
@@ -136,6 +125,37 @@ function _tm_more_actions_process($field, $title = NULL) {
       );
     }
   }
+  // END Edit link.
+ 
+  // START Add event Link
+  if (isset($field['entity']->type) && $field['entity']->type == 'chapter') {
+    $path = 'node/add/event';
+    // Does the user have access.
+    $router_item = menu_get_item($path);
+    if ($router_item['access']) {
+      if (isset($field['entity']->field_chapter_leaders[LANGUAGE_NONE]) && !empty($field['entity']->field_chapter_leaders[LANGUAGE_NONE])) {
+        // Check if the current user is a chapter leader.
+        foreach ($field['entity']->field_chapter_leaders[LANGUAGE_NONE] as $chapter_leader) {
+          if ($chapter_leader['target_id'] == $user->uid) {
+            $links['edition'][] = array(
+              'wrapper_class' => array('add'),
+              'content' => l(t('Add event'), $path, array(
+                'query' => array(
+                  'field_chapter' => $field['entity']->nid
+                ),
+                'attributes' => array(
+                  'title' => t('Add event for @chapter', array('@chapter' => $field['entity']->title))
+                )
+              ))
+            );
+            // Found chapter leader.
+            break;
+          }
+        }
+      }
+    }
+  }
+  // END Add event Link
   
   $links['share'][] = array(
     'wrapper_class' => array('facebook'),
@@ -203,27 +223,71 @@ function _tm_edit_own_profile_process($field, $title = NULL) {
 }
 
 /**
- * Custom function to build the more_actions menu
+ * Custom function to build the flag placeholder for anonymous users.
+ *
+ * When not logged in, the users should still see the follow / join buttons.
+ * This can't be achieved with flags since flags, normally, don't show up for
+ * anonymous users.
+ * To solve this problem a faux field is created. This filed will be used
+ * throughout the website with a flag like appearence. Upon click will redirect
+ * the users to the login page.
+ * This is a very specific field and will differ according with the content
+ * type being viewed.
  */
-function _tm_add_event_process($field, $title = NULL) {
+function _tm_anon_flag_placeholder($field, $title = NULL) {
   global $user;
-  // Extra classes for the link.
-  $classes = $field['formatter_settings']['Extra classes'];
-  
-  $path = 'node/add/event';
-  // Does the user have access.
-  if ($router_item = menu_get_item($path)) {
-    if (!$router_item['access']) {
-      return;
+  if (!$user->uid) {
+    $entity = $field['entity'];
+    $css_classes = 'follow bttn bttn-secondary bttn-m';
+    
+    if (isset($entity->pass)) {
+      // Password set, it's a user;
+      return l(t('Follow'), 'user',array(
+        'attributes' => array(
+          'title' => t('Follow :user', array(':user' => $entity->realname)),
+          'class' => array($css_classes)
+        )
+      ));
     }
-  }
-
-  if (isset($field['entity']->field_chapter_leaders[LANGUAGE_NONE]) && !empty($field['entity']->field_chapter_leaders[LANGUAGE_NONE])) {
-    // Check if the current user is a chapter leader.
-    foreach ($field['entity']->field_chapter_leaders[LANGUAGE_NONE] as $chapter_leader) {
-      if ($chapter_leader['target_id'] == $user->uid) {
-        return l(t('Add event'), $path, array('query' => array('field_chapter' => $field['entity']->nid), 'attributes' => array('class' => $classes)));
-      }
+    
+    // Behaviour based on content type.
+    switch ($entity->type) {
+      case 'chapter':
+        return l(t('Join'), 'user',array(
+          'attributes' => array(
+            'title' => t('Join :chapter', array(':chapter' => $entity->title)),
+            'class' => array($css_classes)
+          )
+        ));
+        break;
+      case 'organization':
+        return l(t('Follow'), 'user',array(
+          'attributes' => array(
+            'title' => t('Follow :organization', array(':organization' => $entity->title)),
+            'class' => array($css_classes)
+          )
+        ));
+        break;
+      case 'event':
+        $result = _tm_event_signup_can_join($entity->nid);
+        
+        // Only show the button for travel massive events.
+        // The other events will have an external RSVP link.
+        if ($result['error'] == 'Not a Travel Massive Event.') {
+          return;
+        }
+        
+        if (!$result['allowed']) {
+          $css_classes .= ' disabled';
+        }
+        
+        return l(t('Join'), 'user',array(
+          'attributes' => array(
+            'title' => t('Join :event', array(':event' => $entity->title)),
+            'class' => array($css_classes)
+          )
+        ));
+        break;
     }
   }
 }

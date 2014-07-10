@@ -110,7 +110,11 @@
         <p>
           <strong class="logo">
             <a title="<?php print t('Home'); ?>" rel="home" href="<?php print $front_page; ?>">
+              <?php if($is_front) : ?>
+              <img src="<?php print $base_path . path_to_theme(); ?>/images/layout/tm-logo-w.svg" alt="<?php print t('Home'); ?>" width="104" height="48" />
+              <?php else : ?>
               <img src="<?php print $base_path . path_to_theme(); ?>/images/layout/tm-logo.svg" alt="<?php print t('Home'); ?>" width="104" height="48" />
+              <?php endif; ?>
               <span><?php print $site_name; ?></span>
             </a>
           </strong>

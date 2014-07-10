@@ -55,6 +55,7 @@ function tm_chapters_field_group_info() {
     'children' => array(
       0 => 'ds_flag_signup',
       1 => 'tm_ds_more_actions',
+      2 => 'tm_ds_anon_flag_placeholder',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(

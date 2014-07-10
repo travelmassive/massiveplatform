@@ -25,11 +25,11 @@ function tm_base_strongarm() {
     'event' => array(
       'field_chapter' => array(
         'referenced' => array(
-          'update' => array(
-            'update' => 'update',
-          ),
           'view' => array(
             'view' => 'view',
+          ),
+          'update' => array(
+            'update' => 'update',
           ),
         ),
         'field_type' => 'entityreference',
@@ -90,9 +90,44 @@ function tm_base_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'tm_base_copright';
+  $strongarm->name = 'site_frontpage';
+  $strongarm->value = 'frontpage';
+  $export['site_frontpage'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'tm_base_copyright';
   $strongarm->value = '&copy; All rights reserved.';
-  $export['tm_base_copright'] = $strongarm;
+  $export['tm_base_copyright'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'tm_base_homepage_description_anon';
+  $strongarm->value = 'Travel Massive connects thousands of people around the world to meet, learn, and collaborate in the online travel industry. We are a world-wide community of locally organised meet ups for travel & tourism companies, travel bloggers, startups, and travel media to connect and share globally.';
+  $export['tm_base_homepage_description_anon'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'tm_base_homepage_description_members';
+  $strongarm->value = 'Logged. Travel Massive connects thousands of people around the world to meet, learn, and collaborate in the online travel industry. We are a world-wide community of locally organised meet ups for travel & tourism companies, travel bloggers, startups, and travel media to connect and share globally.';
+  $export['tm_base_homepage_description_members'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'tm_base_homepage_title_anon';
+  $strongarm->value = 'Be part of something Massive.';
+  $export['tm_base_homepage_title_anon'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'tm_base_homepage_title_members';
+  $strongarm->value = 'Welcome back, Firstname Lastname.';
+  $export['tm_base_homepage_title_members'] = $strongarm;
 
   return $export;
 }

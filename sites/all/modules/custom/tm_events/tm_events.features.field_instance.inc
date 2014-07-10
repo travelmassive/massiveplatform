@@ -126,12 +126,12 @@ function tm_events_field_default_field_instances() {
         'prepopulate' => array(
           'action' => 'disable',
           'action_on_edit' => 1,
-          'fallback' => 'none',
+          'fallback' => 'redirect',
           'providers' => array(
             'og_context' => FALSE,
             'url' => 1,
           ),
-          'skip_perm' => 0,
+          'skip_perm' => 'administer nodes',
           'status' => 1,
         ),
       ),
@@ -589,7 +589,7 @@ function tm_events_field_default_field_instances() {
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 6,
+        'weight' => 1,
       ),
       'grid' => array(
         'label' => 'above',

@@ -9,6 +9,7 @@
   <a class="toggle settings bttn bttn-tertiary bttn-m hide-txt" href="#more-actions" data-dropd-toggle><span>More actions</span></a>
   <div id="more-actions" class="inner dropd dropd-s dropd-right" data-dropd>
     <?php foreach ($links as $section) : ?>
+      <?php if (empty($section)) continue; ?>
       <ul class="dropd-menu">
         <?php foreach ($section as $link) : ?>
         <li class="<?php print implode(' ', $link['wrapper_class']); ?>">

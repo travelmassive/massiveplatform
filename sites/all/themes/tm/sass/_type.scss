@@ -350,6 +350,34 @@ Icons
 /* ==========================================================================
    Headings
    ========================================================================== */
+
+.sh-std {
+  $ft-size: 16;
+  font-size: rem-calc($ft-size);
+  line-height: ($ft-size + 8) / $ft-size;
+  margin: 0 0 1rem 0;
+  padding: 0;
+  @media #{$small-up} {
+    $ft-size: 20;
+    font-size: rem-calc($ft-size);
+    line-height: ($ft-size + 8) / $ft-size;
+  }
+}
+
+.hd-xxl {
+  $ft-size: 28;
+  font-size: rem-calc($ft-size);
+  line-height: ($ft-size + 8) / $ft-size;
+  font-weight: $body-font-bold;
+  margin: 0 0 1rem 0;
+  padding: 0;
+  @media #{$small-up} {
+    $ft-size: 36;
+    font-size: rem-calc($ft-size);
+    line-height: ($ft-size + 8) / $ft-size;
+    letter-spacing: -0.5px;
+  }
+}
 h1, .hd-xl {
   $ft-size: 28;
   font-size: rem-calc($ft-size);
@@ -420,4 +448,18 @@ h6, .hd-xxs {
   margin: 0 0 1rem 0;
   padding: 0;
   letter-spacing: normal;
+}
+.hd-xxxs {
+  $ft-size: 12;
+  font-size: rem-calc($ft-size);
+  line-height: ($ft-size + 4) / $ft-size;
+  font-weight: $body-font-bold;
+  margin: 0 0 1rem 0;
+  padding: 0;
+  letter-spacing: normal;
+  @media #{$small-up} {
+    $ft-size: 14;
+    font-size: rem-calc($ft-size);
+    line-height: ($ft-size + 6) / $ft-size;
+  }
 }

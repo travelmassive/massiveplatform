@@ -8,6 +8,123 @@ include_once 'tm_base.features.inc';
 include_once 'tm_base.admin.inc';
 
 /**
+ * Implements hook_menu().
+ */
+function tm_base_menu() {
+  $items = array();
+
+  $items['frontpage'] = array(
+    'page callback' => '_tm_base_frontpage',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_block_info()
+ */
+function tm_base_block_info() {
+  $blocks['tm_homepage_stats'] = array(
+    'info' => t('Homepage stats'),
+    'cache' => DRUPAL_CACHE_PER_USER
+  );
+  
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view()
+ */
+function tm_base_block_view($delta) {
+  global $user;
+  
+  $block = array();
+  switch ($delta) {
+    case 'tm_homepage_stats':
+      
+      $block['content'] = '<ul>';
+      if ($user->uid) {
+        $follow_members_flag = flag_get_flag('follow_members');
+        // Number of followers and following.
+        $followers = $follow_members_flag->get_count($user->uid);
+        $following = flag_get_user_flag_counts($follow_members_flag, $user);
+        
+        $block['content'] .= '<li><strong class="key">' . t('Followers') . '<small>: </small></strong><span class="value">' . $followers . '</span></li>';
+        $block['content'] .= '<li><strong class="key">' . t('Following') . '<small>: </small></strong><span class="value">' . $following . '</span></li>';
+      }
+      else {
+        // Number of communities, cities, companies.
+        $no_community = db_query('SELECT count(uid) AS no FROM {users} WHERE status = :status', array(':status' => 1))->fetchField();
+        $no_city = db_query('SELECT count(nid) AS no FROM {node} WHERE status = :status AND type = :type', array(':status' => 1, ':type' => 'chapter'))->fetchField();
+        $no_company = db_query('SELECT count(nid) AS no FROM {node} WHERE status = :status AND type = :type', array(':status' => 1, ':type' => 'organization'))->fetchField();
+        
+        $block['content'] .= '<li><strong class="key">' . t('Community') . '<small>: </small></strong><span class="value">' . $no_community . '</span></li>';
+        $block['content'] .= '<li><strong class="key">' . t('Cities') . '<small>: </small></strong><span class="value">' . $no_city . '</span></li>';
+        $block['content'] .= '<li><strong class="key">' . t('Companies') . '<small>: </small></strong><span class="value">' . $no_company . '</span></li>';
+      }
+      $block['content'] .= '</ul>';
+      break;
+  }
+  
+  return $block;
+}
+
+/**
+ * Implements hook_theme()
+ */
+function tm_base_theme() {
+  return array(
+    '_tm_homepage' => array(
+      'variables' => array(
+        'homepage_title' => NULL,
+        'homepage_description' => NULL,
+        'homepage_stats_block' => NULL
+      ),
+      'template' => 'tm_base_homepage',
+      'path' => drupal_get_path('module', 'tm_base') . '/templates/'
+    ),
+  );
+}
+
+/**
+ * Custom function to build the frontpage
+ */
+function _tm_base_frontpage() {
+  global $user;
+  
+  // Remove the title.
+  drupal_set_title('');
+  
+  if ($user->uid) {
+    $homepage_title = variable_get('tm_base_homepage_title_members', NULL);
+    $homepage_description = variable_get('tm_base_homepage_description_members', NULL);
+  }
+  else {
+    $homepage_title = variable_get('tm_base_homepage_title_anon', NULL);
+    $homepage_description = variable_get('tm_base_homepage_description_anon', NULL);
+  }
+  
+  if (!$homepage_title) {
+    drupal_set_message('No homepage title. Set it through ' . l('configuration', 'admin/config/system/site-information'), 'error');
+  }
+  if (!$homepage_description) {
+    drupal_set_message('No homepage description. Set it through ' . l('configuration', 'admin/config/system/site-information'), 'error');
+  }
+
+  // Stats block
+  $stats_block = block_load('tm_base', 'tm_homepage_stats');
+  $homepage_stats_block = _block_get_renderable_array(_block_render_blocks(array($stats_block)));
+  
+  return theme('_tm_homepage', array(
+    'homepage_title' => $homepage_title,
+    'homepage_description' => $homepage_description,
+    'homepage_stats_block' => $homepage_stats_block,
+  ));
+}
+
+/**
 * Implements hook_token_info().
 */
 function tm_base_token_info() {

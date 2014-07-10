@@ -55,7 +55,8 @@ function tm_users_field_group_info() {
     'children' => array(
       0 => 'flag_follow_members',
       1 => 'tm_ds_more_actions',
-      2 => 'tm_ds_edit_own_profile',
+      2 => 'tm_ds_anon_flag_placeholder',
+      3 => 'tm_ds_edit_own_profile',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(

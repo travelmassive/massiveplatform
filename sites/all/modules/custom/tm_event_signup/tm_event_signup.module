@@ -147,6 +147,11 @@ function _tm_event_signup_can_join($nid) {
     throw new Exception("Invalid event node. Nid: " . $nid);
   }
   
+  // Check if is external RSVP.
+  if (isset($event->field_external_rsvp[LANGUAGE_NONE][0]['value']) && $event->field_external_rsvp[LANGUAGE_NONE][0]['value'] !== '0') {
+    return array('allowed' => FALSE, 'error' => 'Not a Travel Massive Event.');
+  }
+  
   // Check if the event has already happened.
   if (isset($event->field_event_date[LANGUAGE_NONE][0]['value'])) {
     $event_date = new DateTime($event->field_event_date[LANGUAGE_NONE][0]['value'], new DateTimeZone('UTC'));
@@ -156,11 +161,6 @@ function _tm_event_signup_can_join($nid) {
       // The event already happened.
       return array('allowed' => FALSE, 'error' => 'Event already happened.');
     }
-  }
-  
-  // Check if is external RSVP.
-  if (isset($event->field_external_rsvp[LANGUAGE_NONE][0]['value']) && $event->field_external_rsvp[LANGUAGE_NONE][0]['value'] !== '0') {
-    return array('allowed' => FALSE, 'error' => 'Not a Travel Massive Event.');
   }
   
   // Check signup limit.

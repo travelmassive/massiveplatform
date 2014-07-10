@@ -465,7 +465,7 @@ function tm_events_ds_field_settings_info() {
   $ds_fieldsetting->view_mode = 'grid';
   $ds_fieldsetting->settings = array(
     'title' => array(
-      'weight' => '2',
+      'weight' => '0',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -484,6 +484,19 @@ function tm_events_ds_field_settings_info() {
       'formatter_settings' => array(
         'ft' => array(
           'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'field_event_venue_name' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'p',
+          'ow-cl' => 'meta',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
         ),
       ),
     ),
@@ -778,18 +791,20 @@ function tm_events_ds_layout_settings_info() {
   $ds_layout->layout = 'card';
   $ds_layout->settings = array(
     'regions' => array(
-      'media' => array(
-        0 => 'field_image',
-        1 => 'tm_ds_date_avatar',
-      ),
       'teaser' => array(
-        2 => 'title',
+        0 => 'title',
+        3 => 'field_event_venue_name',
+      ),
+      'media' => array(
+        1 => 'field_image',
+        2 => 'tm_ds_date_avatar',
       ),
     ),
     'fields' => array(
+      'title' => 'teaser',
       'field_image' => 'media',
       'tm_ds_date_avatar' => 'media',
-      'title' => 'teaser',
+      'field_event_venue_name' => 'teaser',
     ),
     'classes' => array(),
     'wrappers' => array(

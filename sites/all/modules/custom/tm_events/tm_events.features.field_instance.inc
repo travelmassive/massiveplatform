@@ -126,12 +126,12 @@ function tm_events_field_default_field_instances() {
         'prepopulate' => array(
           'action' => 'disable',
           'action_on_edit' => 1,
-          'fallback' => 'none',
+          'fallback' => 'redirect',
           'providers' => array(
             'og_context' => FALSE,
             'url' => 1,
           ),
-          'skip_perm' => 0,
+          'skip_perm' => 'administer nodes',
           'status' => 1,
         ),
       ),

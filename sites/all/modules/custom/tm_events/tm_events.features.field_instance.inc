@@ -208,7 +208,7 @@ function tm_events_field_default_field_instances() {
         'weight' => 20,
       ),
       'grid' => array(
-        'label' => 'inline',
+        'label' => 'hidden',
         'module' => 'date',
         'settings' => array(
           'format_type' => 'time_24h',

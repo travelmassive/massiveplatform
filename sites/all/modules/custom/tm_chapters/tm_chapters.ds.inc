@@ -18,7 +18,7 @@ function tm_chapters_ds_field_settings_info() {
   $ds_fieldsetting->view_mode = 'full';
   $ds_fieldsetting->settings = array(
     'ds_flag_signup' => array(
-      'weight' => '0',
+      'weight' => '1',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -71,7 +71,7 @@ function tm_chapters_ds_field_settings_info() {
       ),
     ),
     'tm_ds_more_actions' => array(
-      'weight' => '1',
+      'weight' => '3',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -86,13 +86,20 @@ function tm_chapters_ds_field_settings_info() {
         ),
       ),
     ),
-    'tm_ds_add_event' => array(
-      'weight' => '4',
+    'tm_ds_anon_flag_placeholder' => array(
+      'weight' => '2',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
-        'Extra classes' => '',
-        'ft' => array(),
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'li',
+          'ow-cl' => '',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
       ),
     ),
     'body' => array(
@@ -316,23 +323,23 @@ function tm_chapters_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
+      'header_media' => array(
+        0 => 'field_image',
+      ),
       'header_body' => array(
-        0 => 'ds_flag_signup',
-        2 => 'tm_ds_more_actions',
-        3 => 'chapter_avatar',
-        4 => 'title',
-        5 => 'group_action_menu_wrapper',
+        1 => 'ds_flag_signup',
+        2 => 'chapter_avatar',
+        3 => 'title',
+        4 => 'tm_ds_anon_flag_placeholder',
+        5 => 'tm_ds_more_actions',
+        6 => 'group_action_menu_wrapper',
         19 => 'group_action_menu',
       ),
-      'header_media' => array(
-        1 => 'field_image',
-      ),
       'first_column' => array(
-        6 => 'tm_ds_add_event',
-        7 => 'group_details_wrapper',
-        8 => 'body',
-        9 => 'group_events_wrapper',
-        10 => 'field_link_website',
+        7 => 'body',
+        8 => 'group_details_wrapper',
+        9 => 'field_link_website',
+        10 => 'group_events_wrapper',
         12 => 'event_list',
         14 => 'field_link_twitter',
         16 => 'field_link_facebook',
@@ -346,17 +353,17 @@ function tm_chapters_ds_layout_settings_info() {
       ),
     ),
     'fields' => array(
-      'ds_flag_signup' => 'header_body',
       'field_image' => 'header_media',
-      'tm_ds_more_actions' => 'header_body',
+      'ds_flag_signup' => 'header_body',
       'chapter_avatar' => 'header_body',
       'title' => 'header_body',
+      'tm_ds_anon_flag_placeholder' => 'header_body',
+      'tm_ds_more_actions' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
-      'tm_ds_add_event' => 'first_column',
-      'group_details_wrapper' => 'first_column',
       'body' => 'first_column',
-      'group_events_wrapper' => 'first_column',
+      'group_details_wrapper' => 'first_column',
       'field_link_website' => 'first_column',
+      'group_events_wrapper' => 'first_column',
       'members_signed_up' => 'second_column',
       'event_list' => 'first_column',
       'group_team_wrapper' => 'second_column',

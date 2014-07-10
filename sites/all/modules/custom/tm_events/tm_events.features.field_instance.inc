@@ -589,7 +589,7 @@ function tm_events_field_default_field_instances() {
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 6,
+        'weight' => 1,
       ),
       'grid' => array(
         'label' => 'above',

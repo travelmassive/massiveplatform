@@ -17,6 +17,13 @@ function tm_fields_ds_fields_info($entity_type) {
     'function' => '_tm_chapter_sticker_process'
   );
   
+  $fields['tm_ds_more_actions'] = array(
+    'title' => t('More actions'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('*|*'),
+    'function' => '_tm_more_actions_process'
+  );
+  
   $fields['tm_ds_anon_flag_placeholder'] = array(
     'title' => t('Anonymous flag placeholder'),
     'field_type' => DS_FIELD_TYPE_FUNCTION,
@@ -121,7 +128,7 @@ function _tm_more_actions_process($field, $title = NULL) {
   // END Edit link.
  
   // START Add event Link
-  if ($field['entity']->type == 'chapter') {
+  if (isset($field['entity']->type) && $field['entity']->type == 'chapter') {
     $path = 'node/add/event';
     // Does the user have access.
     $router_item = menu_get_item($path);

@@ -93,9 +93,16 @@
     }
     
     &.field-location {
-      .city:after {
-        content: ', ';
-      } 
+      span {
+        &:after {
+          content: ', ';
+        }
+      }
+      span:last-of-type {
+        &:after {
+          content: '';
+        }
+      }
       &:before { @extend .icon-map-marker; }
     }
     &.field-date-event {

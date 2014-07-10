@@ -13,6 +13,13 @@ function tm_base_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'date_format_time_24h';
+  $strongarm->value = 'H:i';
+  $export['date_format_time_24h'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'nodeaccess_nodereference';
   $strongarm->value = array(
     'event' => array(

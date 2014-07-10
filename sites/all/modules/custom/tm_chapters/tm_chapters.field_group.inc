@@ -21,7 +21,7 @@ function tm_chapters_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Action menu wrapper',
-    'weight' => '3',
+    'weight' => '4',
     'children' => array(
       0 => 'group_action_menu',
     ),

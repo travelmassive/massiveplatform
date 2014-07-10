@@ -90,6 +90,11 @@ class TMUserMigration extends TMBaseMigration {
     // City + country fields
     $this->addFieldMapping('field_location_city', 'city');
     $this->addFieldMapping('field_location_country', 'country');
+
+    // Job role + organization
+    $this->addFieldMapping('field_job_role', 'job');
+    $this->addFieldMapping('field_job_organization', 'org');
+
   }
 
   public function prepareRow($row) {

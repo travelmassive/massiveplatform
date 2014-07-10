@@ -15,16 +15,6 @@
     a {
       color: #FFF;
     }
-    // &:after {
-    //   position: absolute;
-    //   bottom: -64rem;
-    //   left: 0;
-    //   z-index: 1;
-    //   height: 64rem;
-    //   width: 100%;
-    //   content: '';
-    //   background: rgba(#FFF, 0.1);
-    // }
   }
   #foot-nav {
     opacity: 0.5;
@@ -258,8 +248,15 @@
     color: tint($primary-color, 40%);
     font-size: 0.875rem;
     line-height: 1.25rem;
-    * {
-      display: block;
+    span {
+      &:after {
+        content: ', ';
+      }
+    }
+    span:last-of-type {
+      &:after {
+        content: '';
+      }
     }
   }
   .extra {

@@ -93,9 +93,16 @@
     }
     
     &.field-location {
-      .city:after {
-        content: ', ';
-      } 
+      span {
+        &:after {
+          content: ', ';
+        }
+      }
+      span:last-of-type {
+        &:after {
+          content: '';
+        }
+      }
       &:before { @extend .icon-map-marker; }
     }
     &.field-date-event {
@@ -311,6 +318,16 @@
     font-size: 0.875rem;
     line-height: 1.25rem;
     display: block;
+    span {
+      &:after {
+        content: ', ';
+      }
+    }
+    span:last-of-type {
+      &:after {
+        content: '';
+      }
+    }
   }
   .extra {
     position: absolute;

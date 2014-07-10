@@ -282,7 +282,7 @@ function tm_events_field_group_info() {
     'format_settings' => array(
       'label' => 'Location',
       'instance_settings' => array(
-        'classes' => 'detail-item location',
+        'classes' => 'detail-item field-location',
         'element' => 'div',
         'show_label' => '1',
         'label_element' => 'h2',

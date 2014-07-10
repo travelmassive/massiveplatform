@@ -21,7 +21,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Action menu wrapper',
-    'weight' => '3',
+    'weight' => '4',
     'children' => array(
       0 => 'group_action_menu',
     ),
@@ -113,8 +113,7 @@ function tm_organizations_field_group_info() {
       2 => 'field_link_linkedin',
       3 => 'field_link_twitter',
       4 => 'field_link_website',
-      5 => 'field_segment',
-      6 => 'group_location_wrapper',
+      5 => 'group_location_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(

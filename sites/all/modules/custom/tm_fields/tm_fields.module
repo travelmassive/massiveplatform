@@ -23,24 +23,6 @@ function tm_fields_ds_fields_info($entity_type) {
     'ui_limit' => array('*|*'),
     'function' => '_tm_more_actions_process'
   );
-  
-  $fields['tm_ds_add_event'] = array(
-    'title' => t('Add event'),
-    'field_type' => DS_FIELD_TYPE_FUNCTION,
-    'ui_limit' => array('chapter|*'),
-    'function' => '_tm_add_event_process',
-    'properties' => array(
-      'settings' => array(
-        'Extra classes' => array(
-          'type' => 'textfield',
-          'description' => t('Classes for the link')
-        )
-      ),
-      'default' => array(
-        'Extra classes' => ''
-      )
-    ),
-  );
 
   $fields['tm_ds_edit_own_profile'] = array(
     'title' => t('Edit own profile button'),
@@ -97,14 +79,14 @@ function _tm_chapter_sticker_process($field, $title = NULL) {
  * Custom function to build the more_actions menu
  */
 function _tm_more_actions_process($field, $title = NULL) {
-  global $base_root;
+  global $base_root, $user;
   $base = $base_root . request_uri();
   $links = array(
     'edition' => array(),
     'share' => array()
   );
 
-  // Edit link.
+  // START Edit link.
   $menu_item = menu_get_item();
   // Is it a node?
   if (isset($menu_item['page_arguments'][0]->nid)) {
@@ -136,6 +118,37 @@ function _tm_more_actions_process($field, $title = NULL) {
       );
     }
   }
+  // END Edit link.
+ 
+  // START Add event Link
+  if ($field['entity']->type == 'chapter') {
+    $path = 'node/add/event';
+    // Does the user have access.
+    $router_item = menu_get_item($path);
+    if ($router_item['access']) {
+      if (isset($field['entity']->field_chapter_leaders[LANGUAGE_NONE]) && !empty($field['entity']->field_chapter_leaders[LANGUAGE_NONE])) {
+        // Check if the current user is a chapter leader.
+        foreach ($field['entity']->field_chapter_leaders[LANGUAGE_NONE] as $chapter_leader) {
+          if ($chapter_leader['target_id'] == $user->uid) {
+            $links['edition'][] = array(
+              'wrapper_class' => array('add'),
+              'content' => l(t('Add event'), $path, array(
+                'query' => array(
+                  'field_chapter' => $field['entity']->nid
+                ),
+                'attributes' => array(
+                  'title' => t('Add event for @chapter', array('@chapter' => $field['entity']->title))
+                )
+              ))
+            );
+            // Found chapter leader.
+            break;
+          }
+        }
+      }
+    }
+  }
+  // END Add event Link
   
   $links['share'][] = array(
     'wrapper_class' => array('facebook'),
@@ -198,32 +211,6 @@ function _tm_edit_own_profile_process($field, $title = NULL) {
           'title' => t('Edit your profile')
         )
       ));
-    }
-  }
-}
-
-/**
- * Custom function to build the more_actions menu
- */
-function _tm_add_event_process($field, $title = NULL) {
-  global $user;
-  // Extra classes for the link.
-  $classes = $field['formatter_settings']['Extra classes'];
-  
-  $path = 'node/add/event';
-  // Does the user have access.
-  if ($router_item = menu_get_item($path)) {
-    if (!$router_item['access']) {
-      return;
-    }
-  }
-
-  if (isset($field['entity']->field_chapter_leaders[LANGUAGE_NONE]) && !empty($field['entity']->field_chapter_leaders[LANGUAGE_NONE])) {
-    // Check if the current user is a chapter leader.
-    foreach ($field['entity']->field_chapter_leaders[LANGUAGE_NONE] as $chapter_leader) {
-      if ($chapter_leader['target_id'] == $user->uid) {
-        return l(t('Add event'), $path, array('query' => array('field_chapter' => $field['entity']->nid), 'attributes' => array('class' => $classes)));
-      }
     }
   }
 }

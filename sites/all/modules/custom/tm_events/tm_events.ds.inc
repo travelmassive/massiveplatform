@@ -18,7 +18,7 @@ function tm_events_ds_field_settings_info() {
   $ds_fieldsetting->view_mode = 'full';
   $ds_fieldsetting->settings = array(
     'ds_flag_signup' => array(
-      'weight' => '7',
+      'weight' => '2',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -61,7 +61,7 @@ function tm_events_ds_field_settings_info() {
       ),
     ),
     'tm_ds_more_actions' => array(
-      'weight' => '8',
+      'weight' => '4',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -72,6 +72,22 @@ function tm_events_ds_field_settings_info() {
           'ow-cl' => '',
           'ow-def-cl' => FALSE,
           'ow-at' => 'data-dropd-wrapper',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'tm_ds_anon_flag_placeholder' => array(
+      'weight' => '3',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'li',
+          'ow-cl' => '',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
           'ow-def-at' => FALSE,
         ),
       ),
@@ -102,10 +118,41 @@ function tm_events_ds_field_settings_info() {
         ),
       ),
     ),
+    'tm_ds_fulldate_event' => array(
+      'weight' => '0',
+      'label' => 'above',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'lb-el' => 'h2',
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'detail-item field-date-event',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
     'body' => array(
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_dl',
+          'func' => 'theme_ds_field_tm_default',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'field_event_venue_name' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'detail-venue-name',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
         ),
       ),
     ),
@@ -125,14 +172,26 @@ function tm_events_ds_field_settings_info() {
     'field_location' => array(
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_dl',
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'detail-venue-address',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
         ),
       ),
     ),
     'field_map_link' => array(
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_dl',
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'detail-venue-link',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
         ),
       ),
     ),
@@ -210,6 +269,19 @@ function tm_events_ds_field_settings_info() {
         ),
       ),
     ),
+    'field_event_date' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'p',
+          'ow-cl' => 'meta',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
     'field_image' => array(
       'formatter_settings' => array(
         'ft' => array(
@@ -217,19 +289,6 @@ function tm_events_ds_field_settings_info() {
           'ow' => TRUE,
           'ow-el' => 'div',
           'ow-cl' => 'cover',
-          'ow-def-cl' => FALSE,
-          'ow-at' => '',
-          'ow-def-at' => FALSE,
-        ),
-      ),
-    ),
-    'field_location' => array(
-      'formatter_settings' => array(
-        'ft' => array(
-          'func' => 'theme_ds_field_expert',
-          'ow' => TRUE,
-          'ow-el' => 'p',
-          'ow-cl' => 'meta',
           'ow-def-cl' => FALSE,
           'ow-at' => '',
           'ow-def-at' => FALSE,
@@ -318,17 +377,42 @@ function tm_events_ds_field_settings_info() {
         ),
       ),
     ),
-    'body' => array(
+    'tm_ds_fulldate_event' => array(
+      'weight' => '0',
+      'label' => 'above',
+      'format' => 'default',
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_dl',
+          'func' => 'theme_ds_field_expert',
+          'lb-el' => 'h2',
+          'lb-col' => TRUE,
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'detail-item field-date-event',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
         ),
       ),
     ),
-    'field_event_date' => array(
+    'body' => array(
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_dl',
+          'func' => 'theme_ds_field_tm_default',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'field_event_venue_name' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'detail-venue-name',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
         ),
       ),
     ),
@@ -339,6 +423,32 @@ function tm_events_ds_field_settings_info() {
           'ow' => TRUE,
           'ow-el' => 'div',
           'ow-cl' => 'cover',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'field_location' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'detail-venue-address',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'field_map_link' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'div',
+          'ow-cl' => 'detail-venue-link',
           'ow-def-cl' => FALSE,
           'ow-at' => '',
           'ow-def-at' => FALSE,
@@ -369,7 +479,7 @@ function tm_events_ds_field_settings_info() {
   $ds_fieldsetting->view_mode = 'grid';
   $ds_fieldsetting->settings = array(
     'title' => array(
-      'weight' => '2',
+      'weight' => '0',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -388,6 +498,19 @@ function tm_events_ds_field_settings_info() {
       'formatter_settings' => array(
         'ft' => array(
           'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'field_event_venue_name' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'p',
+          'ow-cl' => 'meta',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
         ),
       ),
     ),
@@ -464,54 +587,60 @@ function tm_events_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
+      'first_column' => array(
+        0 => 'tm_ds_fulldate_event',
+        2 => 'field_event_venue_name',
+        3 => 'field_location',
+        5 => 'group_location_wrapper',
+        7 => 'body',
+        9 => 'field_map_link',
+        16 => 'group_details_wrapper',
+      ),
       'header_media' => array(
-        0 => 'field_image',
+        1 => 'field_image',
       ),
       'header_body' => array(
-        1 => 'tm_ds_date_avatar',
-        2 => 'title',
-        3 => 'tm_ds_event_seats_count',
-        4 => 'group_action_menu_wrapper',
-        9 => 'field_rsvp_link',
-        13 => 'ds_flag_signup',
+        4 => 'tm_ds_date_avatar',
+        6 => 'field_rsvp_link',
+        8 => 'title',
+        10 => 'ds_flag_signup',
+        11 => 'tm_ds_anon_flag_placeholder',
+        12 => 'tm_ds_event_seats_count',
+        13 => 'group_action_menu_wrapper',
         14 => 'tm_ds_more_actions',
-        18 => 'group_action_menu',
-      ),
-      'first_column' => array(
-        5 => 'field_location',
-        7 => 'group_details_wrapper',
-        8 => 'body',
-        10 => 'field_map_link',
-        11 => 'group_details',
+        21 => 'group_action_menu',
       ),
       'header_extra' => array(
-        6 => 'tm_ds_chapter_sticker',
+        15 => 'tm_ds_chapter_sticker',
       ),
       'second_column' => array(
-        12 => 'group_organizers_wrapper',
-        15 => 'members_signed_up',
-        16 => 'group_community_wrapper',
-        17 => 'field_organizer',
+        17 => 'group_organizers_wrapper',
+        18 => 'group_community_wrapper',
+        19 => 'members_signed_up',
+        20 => 'field_organizer',
       ),
     ),
     'fields' => array(
+      'tm_ds_fulldate_event' => 'first_column',
       'field_image' => 'header_media',
+      'field_event_venue_name' => 'first_column',
+      'field_location' => 'first_column',
       'tm_ds_date_avatar' => 'header_body',
+      'group_location_wrapper' => 'first_column',
+      'field_rsvp_link' => 'header_body',
+      'body' => 'first_column',
       'title' => 'header_body',
+      'field_map_link' => 'first_column',
+      'ds_flag_signup' => 'header_body',
+      'tm_ds_anon_flag_placeholder' => 'header_body',
       'tm_ds_event_seats_count' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
-      'field_location' => 'first_column',
+      'tm_ds_more_actions' => 'header_body',
       'tm_ds_chapter_sticker' => 'header_extra',
       'group_details_wrapper' => 'first_column',
-      'body' => 'first_column',
-      'field_rsvp_link' => 'header_body',
-      'field_map_link' => 'first_column',
-      'group_details' => 'first_column',
       'group_organizers_wrapper' => 'second_column',
-      'ds_flag_signup' => 'header_body',
-      'tm_ds_more_actions' => 'header_body',
-      'members_signed_up' => 'second_column',
       'group_community_wrapper' => 'second_column',
+      'members_signed_up' => 'second_column',
       'field_organizer' => 'second_column',
       'group_action_menu' => 'header_body',
     ),
@@ -548,18 +677,18 @@ function tm_events_ds_layout_settings_info() {
       ),
       'teaser' => array(
         2 => 'title',
-        3 => 'field_location',
+        4 => 'field_event_date',
       ),
       'extra' => array(
-        4 => 'tm_ds_chapter_sticker',
+        3 => 'tm_ds_chapter_sticker',
       ),
     ),
     'fields' => array(
       'field_image' => 'media',
       'tm_ds_date_avatar' => 'media',
       'title' => 'teaser',
-      'field_location' => 'teaser',
       'tm_ds_chapter_sticker' => 'extra',
+      'field_event_date' => 'teaser',
     ),
     'classes' => array(),
     'wrappers' => array(
@@ -614,36 +743,42 @@ function tm_events_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
-      'header_media' => array(
-        0 => 'field_image',
+      'first_column' => array(
+        0 => 'tm_ds_fulldate_event',
+        5 => 'body',
+        8 => 'group_location_wrapper',
+        9 => 'group_details_wrapper',
+        11 => 'field_event_venue_name',
+        12 => 'field_location',
+        13 => 'field_map_link',
       ),
       'header_body' => array(
         1 => 'field_rsvp_link',
-        2 => 'tm_ds_date_avatar',
-        3 => 'tm_ds_more_actions',
-        4 => 'title',
-        6 => 'group_action_menu_wrapper',
+        3 => 'tm_ds_date_avatar',
+        4 => 'tm_ds_more_actions',
+        6 => 'title',
+        7 => 'group_action_menu_wrapper',
         10 => 'group_action_menu',
       ),
-      'first_column' => array(
-        5 => 'body',
-        7 => 'group_details_wrapper',
-        8 => 'field_event_date',
-        9 => 'group_details',
+      'header_media' => array(
+        2 => 'field_image',
       ),
     ),
     'fields' => array(
-      'field_image' => 'header_media',
+      'tm_ds_fulldate_event' => 'first_column',
       'field_rsvp_link' => 'header_body',
+      'field_image' => 'header_media',
       'tm_ds_date_avatar' => 'header_body',
       'tm_ds_more_actions' => 'header_body',
-      'title' => 'header_body',
       'body' => 'first_column',
+      'title' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
+      'group_location_wrapper' => 'first_column',
       'group_details_wrapper' => 'first_column',
-      'field_event_date' => 'first_column',
-      'group_details' => 'first_column',
       'group_action_menu' => 'header_body',
+      'field_event_venue_name' => 'first_column',
+      'field_location' => 'first_column',
+      'field_map_link' => 'first_column',
     ),
     'classes' => array(),
     'wrappers' => array(
@@ -672,18 +807,20 @@ function tm_events_ds_layout_settings_info() {
   $ds_layout->layout = 'card';
   $ds_layout->settings = array(
     'regions' => array(
-      'media' => array(
-        0 => 'field_image',
-        1 => 'tm_ds_date_avatar',
-      ),
       'teaser' => array(
-        2 => 'title',
+        0 => 'title',
+        3 => 'field_event_venue_name',
+      ),
+      'media' => array(
+        1 => 'field_image',
+        2 => 'tm_ds_date_avatar',
       ),
     ),
     'fields' => array(
+      'title' => 'teaser',
       'field_image' => 'media',
       'tm_ds_date_avatar' => 'media',
-      'title' => 'teaser',
+      'field_event_venue_name' => 'teaser',
     ),
     'classes' => array(),
     'wrappers' => array(

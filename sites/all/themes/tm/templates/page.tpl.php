@@ -115,11 +115,15 @@
         <p>
           <strong class="logo">
             <a title="<?php print t('Home'); ?>" rel="home" href="<?php print $front_page; ?>">
+              <?php if($is_front) : ?>
+              <img src="<?php print $base_path . path_to_theme(); ?>/images/layout/tm-logo-w.svg" alt="<?php print t('Home'); ?>" width="104" height="48" />
+              <?php else : ?>
               <img src="<?php print $base_path . path_to_theme(); ?>/images/layout/tm-logo.svg" alt="<?php print t('Home'); ?>" width="104" height="48" />
+              <?php endif; ?>
               <span><?php print $site_name; ?></span>
             </a>
           </strong>
-          <small><?php print variable_get_value('tm_base_copright'); ?> <time datetime="2011/<?= date('Y'); ?>">2011-<?= date('Y'); ?></time></small>
+          <small><?php print variable_get_value('tm_base_copyright'); ?> <time datetime="2011/<?= date('Y'); ?>">2011-<?= date('Y'); ?></time></small>
         </p>
         <p>Design & built by <strong><a href="http://flipside.org/" title="Visit Flipside">Flipside</a></strong></p>
       </div>

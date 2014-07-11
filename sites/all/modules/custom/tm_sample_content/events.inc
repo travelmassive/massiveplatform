@@ -77,6 +77,12 @@ class TMEventMigration extends TMBaseMigration {
     
     // RSVP link
     $this->addFieldMapping('field_rsvp_link', 'rsvp_link');
+  
+    // Venue name, street address and map link
+    $this->addFieldMapping('field_event_venue_name', 'venue');
+    $this->addFieldMapping('field_location', 'address');
+    $this->addFieldMapping('field_map_link', 'map_link');
+
   }
 
   public function prepareRow($row) {

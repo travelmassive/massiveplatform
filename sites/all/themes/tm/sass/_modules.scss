@@ -74,48 +74,124 @@
     font-size: 0.875rem;
     line-height: 1.25rem;
   }
-  .details-list {
-    margin: 0 0 2rem 0;
-    dt { @extend .visually-hidden; }
-    dd {
-      position: relative;
-      border-bottom: 1px tint($primary-color, 90%) solid;
-      padding: 0 1rem 1rem 2.5rem;
-      margin: 0 0 1rem 0;
-      &:last-child {
-        border-bottom: 0;
-        padding-bottom: 0;
-        margin-bottom: 0;
+  .detail-item {
+    position: relative;
+    border-bottom: 1px tint($primary-color, 90%) solid;
+    padding: 0 1rem 1rem 2.5rem;
+    margin: 0 0 1rem 0;
+    &:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+      margin-bottom: 1rem;
+    }
+    &:before {
+      position: absolute;
+      top: 0;
+      left: 1rem;
+      font-size: 1rem;
+      color: tint($primary-color, 60%);
+    }
+    
+    &.field-location {
+      span {
+        &:after {
+          content: ', ';
+        }
       }
-      &:before {
-        position: absolute;
-        top: 0;
-        left: 1rem;
-        font-size: 1rem;
-        color: tint($primary-color, 60%);
+      span:last-of-type {
+        &:after {
+          content: '';
+        }
+      }
+      &:before { @extend .icon-map-marker; }
+    }
+    &.field-date-event {
+      .date {
+        font-weight: $body-font-bold;
+        display: block;
+      } 
+      &:before { @extend .icon-clock; }
+    }
+    &.field-about-me:before, &.about-me:before, &.body:before { @extend .icon-description; }
+    &.field-link-facebook:before { @extend .icon-facebook; }
+    &.field-link-linkedin:before { @extend .icon-linkedin; }
+    &.field-link-twitter:before { @extend .icon-twitter; }
+    &.field-link-instagram:before { @extend .icon-instagram; }
+    &.field-link-website:before { @extend .icon-globe; }
+    &.field-segment:before { @extend .icon-briefcase; }
+    &.field-qa:before, &.qa:before { @extend .icon-bubble; }
+    
+    .detail-venue-name {
+      font-weight: $body-font-bold;
+    }
+    
+    .detail-venue-link {
+      margin: 1rem 0 0 0;
+      a {
+        @extend .cta-inline;
       }
     }
-    .people:before, .field-owner:before { @extend .icon-user; }
-    .location:before, .field-location:before { @extend .icon-map-marker; }
-    .description:before, .body:before { @extend .icon-description; }
-    .facebook:before { @extend .icon-facebook; }
-    .linkedin:before { @extend .icon-linkedin; }
-    .twitter:before { @extend .icon-twitter; }
-    .instagram:before { @extend .icon-instagram; }
+    
+    h2 { @extend .visually-hidden; }
+    p {
+      margin: 0 0 1rem 0;
+      &:last-child {
+        margin: 0;
+      }
+    }
+    dl {
+      margin: 0;
+      padding: 0;
+      dt {
+        font-weight: $body-font-bold;
+        margin: 0;
+      }
+      dd {
+        margin: 0 0 1rem 0;
+        &:last-child {
+          margin: 0;
+        }
+      }
+    }
+  }
+  
+  .view-empty {
+    padding: 0 1rem 1rem 2.5rem;
+    margin: 0 0 1rem 0;
+    color: tint($primary-color, 40%);
+    p {
+      margin: 0 0 1rem 0;
+      &:last-child {
+        margin: 0;
+      }
+    }
   }
   
   @media #{$large-up} {
     .contained-head {
       padding: 2rem 2rem 1.5rem 2rem;
     }
-    .details-list {
-      dd {
-        padding: 0 2rem 1rem 3.5rem;
-        margin: 0 0 1rem 0;
-        &:before {
-          left: 2rem;
-        }
+    .detail-item {
+      padding: 0 2rem 1rem 3.5rem;
+      &:before {
+        left: 2rem;
       }
+      &:last-child {
+        margin-bottom: 2rem;
+      }
+      .detail-venue-name {
+        padding-right: 7rem;
+      }
+      .detail-venue-link {
+        position: absolute;
+        top: 0;
+        right: 2rem;
+        margin: 0;
+      }
+    }
+    .view-empty {
+      padding: 0 2rem;
+      margin: 0 0 2rem 0;
     }
   }
 }
@@ -242,6 +318,16 @@
     font-size: 0.875rem;
     line-height: 1.25rem;
     display: block;
+    span {
+      &:after {
+        content: ', ';
+      }
+    }
+    span:last-of-type {
+      &:after {
+        content: '';
+      }
+    }
   }
   .extra {
     position: absolute;

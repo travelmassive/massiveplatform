@@ -18,7 +18,7 @@ function tm_chapters_ds_field_settings_info() {
   $ds_fieldsetting->view_mode = 'full';
   $ds_fieldsetting->settings = array(
     'ds_flag_signup' => array(
-      'weight' => '0',
+      'weight' => '1',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -71,7 +71,7 @@ function tm_chapters_ds_field_settings_info() {
       ),
     ),
     'tm_ds_more_actions' => array(
-      'weight' => '1',
+      'weight' => '3',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -86,19 +86,43 @@ function tm_chapters_ds_field_settings_info() {
         ),
       ),
     ),
-    'tm_ds_add_event' => array(
-      'weight' => '4',
+    'tm_ds_anon_flag_placeholder' => array(
+      'weight' => '2',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
-        'Extra classes' => '',
-        'ft' => array(),
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'li',
+          'ow-cl' => '',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'tm_ds_members_chapter' => array(
+      'weight' => '3',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'p',
+          'ow-cl' => 'meta',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
       ),
     ),
     'body' => array(
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_dl',
+          'func' => 'theme_ds_field_tm_default',
+          'lb-col' => TRUE,
         ),
       ),
     ),
@@ -130,6 +154,38 @@ function tm_chapters_ds_field_settings_info() {
           'ow-def-cl' => FALSE,
           'ow-at' => '',
           'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'field_link_facebook' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_tm_default',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'field_link_linkedin' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_tm_default',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'field_link_twitter' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_tm_default',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'field_link_website' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_tm_default',
+          'lb-col' => TRUE,
         ),
       ),
     ),
@@ -283,50 +339,58 @@ function tm_chapters_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
-      'header_body' => array(
-        0 => 'ds_flag_signup',
-        2 => 'chapter_avatar',
-        3 => 'tm_ds_more_actions',
-        4 => 'title',
-        5 => 'group_action_menu_wrapper',
-        15 => 'group_action_menu',
-      ),
       'header_media' => array(
-        1 => 'field_image',
+        0 => 'field_image',
+      ),
+      'header_body' => array(
+        1 => 'ds_flag_signup',
+        2 => 'chapter_avatar',
+        3 => 'title',
+        4 => 'tm_ds_anon_flag_placeholder',
+        5 => 'tm_ds_more_actions',
+        6 => 'tm_ds_members_chapter',
+        7 => 'group_action_menu_wrapper',
+        20 => 'group_action_menu',
       ),
       'first_column' => array(
-        6 => 'tm_ds_add_event',
-        7 => 'group_details_wrapper',
-        9 => 'group_details',
-        10 => 'body',
-        12 => 'event_list',
-        16 => 'group_events_wrapper',
+        8 => 'group_details_wrapper',
+        9 => 'body',
+        10 => 'event_list',
+        11 => 'group_events_wrapper',
+        13 => 'field_link_website',
+        15 => 'field_link_twitter',
+        17 => 'field_link_facebook',
+        18 => 'field_link_linkedin',
       ),
       'second_column' => array(
-        8 => 'group_team_wrapper',
-        11 => 'group_community_wrapper',
-        13 => 'members_signed_up',
-        14 => 'field_chapter_leaders',
+        12 => 'members_signed_up',
+        14 => 'group_team_wrapper',
+        16 => 'group_community_wrapper',
+        19 => 'field_chapter_leaders',
       ),
     ),
     'fields' => array(
-      'ds_flag_signup' => 'header_body',
       'field_image' => 'header_media',
+      'ds_flag_signup' => 'header_body',
       'chapter_avatar' => 'header_body',
-      'tm_ds_more_actions' => 'header_body',
       'title' => 'header_body',
+      'tm_ds_anon_flag_placeholder' => 'header_body',
+      'tm_ds_more_actions' => 'header_body',
+      'tm_ds_members_chapter' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
-      'tm_ds_add_event' => 'first_column',
       'group_details_wrapper' => 'first_column',
-      'group_team_wrapper' => 'second_column',
-      'group_details' => 'first_column',
       'body' => 'first_column',
-      'group_community_wrapper' => 'second_column',
       'event_list' => 'first_column',
+      'group_events_wrapper' => 'first_column',
       'members_signed_up' => 'second_column',
+      'field_link_website' => 'first_column',
+      'group_team_wrapper' => 'second_column',
+      'field_link_twitter' => 'first_column',
+      'group_community_wrapper' => 'second_column',
+      'field_link_facebook' => 'first_column',
+      'field_link_linkedin' => 'first_column',
       'field_chapter_leaders' => 'second_column',
       'group_action_menu' => 'header_body',
-      'group_events_wrapper' => 'first_column',
     ),
     'classes' => array(),
     'wrappers' => array(

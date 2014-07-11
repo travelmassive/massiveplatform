@@ -63,8 +63,6 @@
         overflow: hidden;
         @include grid-column(4);
         display: inline-block;
-        position: relative;
-        padding-bottom: 1.5rem;
         float: none !important;
         &:after {
           position: absolute;
@@ -79,6 +77,12 @@
         &:last-child:after {
           display: none;
         }
+      }
+      a {
+        position: relative;
+        display: block;
+        color: #FFF;
+        padding-bottom: 1.5rem;
       }
       .key {
         position: absolute;

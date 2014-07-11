@@ -106,6 +106,10 @@ function _tm_base_frontpage() {
     $homepage_description = variable_get('tm_base_homepage_description_anon', NULL);
   }
   
+  // Replace tokens.
+  $homepage_title = token_replace($homepage_title);
+  $homepage_description = token_replace($homepage_description);
+  
   if (!$homepage_title) {
     drupal_set_message('No homepage title. Set it through ' . l('configuration', 'admin/config/system/site-information'), 'error');
   }

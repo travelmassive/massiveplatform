@@ -54,21 +54,42 @@ function tm_base_form_system_site_information_settings_alter(&$form, &$form_stat
   $form['front_page']['tm_base_homepage_title_anon'] = array(
     '#type' => 'textfield',
     '#title' => 'Homepage title - anonmyous users',
-    '#default_value' => variable_get('tm_base_homepage_title_anon', '')
+    '#default_value' => variable_get('tm_base_homepage_title_anon', ''),
+    '#description' => t('This field supports tokens. See available tokens below.'),
+    '#element_validate' => array('token_element_validate'),
+    '#token_types' => array(),
   );
   $form['front_page']['tm_base_homepage_description_anon'] = array(
     '#type' => 'textarea',
     '#title' => 'Homepage description - anonmyous users',
-    '#default_value' => variable_get('tm_base_homepage_description_anon', '')
+    '#default_value' => variable_get('tm_base_homepage_description_anon', ''),
+    '#description' => t('This field supports tokens. See available tokens below.'),
+    '#element_validate' => array('token_element_validate'),
+    '#token_types' => array(),
   );
   $form['front_page']['tm_base_homepage_title_members'] = array(
     '#type' => 'textfield',
     '#title' => 'Homepage title - members',
-    '#default_value' => variable_get('tm_base_homepage_title_members', '')
+    '#default_value' => variable_get('tm_base_homepage_title_members', ''),
+    '#description' => t('This field supports tokens. See available tokens below.'),
+    '#element_validate' => array('token_element_validate'),
+    '#token_types' => array(),
   );
   $form['front_page']['tm_base_homepage_description_members'] = array(
     '#type' => 'textarea',
     '#title' => 'Homepage description - members',
-    '#default_value' => variable_get('tm_base_homepage_description_members', '')
+    '#default_value' => variable_get('tm_base_homepage_description_members', ''),
+    '#description' => t('This field supports tokens. See available tokens below.'),
+    '#element_validate' => array('token_element_validate'),
+    '#token_types' => array(),
+  );
+  $form['front_page']['tokens'] = array(
+    '#theme' => 'token_tree_link',
+    // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+    '#token_types' => array(),
+    // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+    '#global_types' => TRUE,
+    // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+    '#click_insert' => TRUE,
   );
 }

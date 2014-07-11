@@ -126,7 +126,7 @@ function tm_base_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'tm_base_homepage_title_members';
-  $strongarm->value = 'Welcome back, Firstname Lastname.';
+  $strongarm->value = 'Welcome back, [current-user:name].';
   $export['tm_base_homepage_title_members'] = $strongarm;
 
   return $export;

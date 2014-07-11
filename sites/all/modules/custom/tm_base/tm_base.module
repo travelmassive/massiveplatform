@@ -80,7 +80,8 @@ function tm_base_theme() {
       'variables' => array(
         'homepage_title' => NULL,
         'homepage_description' => NULL,
-        'homepage_stats_block' => NULL
+        'homepage_stats_block' => NULL,
+        'homepage_upcoming_events' => NULL
       ),
       'template' => 'tm_base_homepage',
       'path' => drupal_get_path('module', 'tm_base') . '/templates/'
@@ -117,10 +118,21 @@ function _tm_base_frontpage() {
   $stats_block = block_load('tm_base', 'tm_homepage_stats');
   $homepage_stats_block = _block_get_renderable_array(_block_render_blocks(array($stats_block)));
   
+  // Upcoming events view.
+  $homepage_upcoming_events = array();
+  $view_display = 'front_block';
+  $view = views_get_view('events');
+  $view->set_display($view_display);
+  if ($view && $view->access($view_display)) {
+    $homepage_upcoming_events['title'] = $view->get_title();
+    $homepage_upcoming_events['content'] = $view->preview($view_display);
+  }
+  
   return theme('_tm_homepage', array(
     'homepage_title' => $homepage_title,
     'homepage_description' => $homepage_description,
     'homepage_stats_block' => $homepage_stats_block,
+    'homepage_upcoming_events' => $homepage_upcoming_events
   ));
 }
 

@@ -20,3 +20,12 @@ global $user;
   	<?php endif; ?>
 	</div>
 </section>
+
+<?php if (!empty($homepage_upcoming_events)): ?>
+<section id="upcoming-events">
+  <header class="hd">
+    <h1 class="prime-title"><?php print check_plain($homepage_upcoming_events['title']) ?></h1>
+  </header>
+  <?php print $homepage_upcoming_events['content']; ?>
+</section>
+<?php endif; ?>

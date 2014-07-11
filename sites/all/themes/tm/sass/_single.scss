@@ -32,6 +32,27 @@
   margin: 0;
 }
 
+#upcoming-events {
+  .hd {
+    margin-bottom: 2rem;
+    
+    .prime-title {
+      color: #FFF;
+      text-align: center;
+      @extend .hd-l;
+      margin-bottom: 0;
+    }
+  }
+  .more-link {
+    text-align: center;
+    margin: 1rem 0 0 0;
+    
+    .bttn {
+      width: 14rem;
+    }
+  }
+}
+
 #welcome {
   @include grid-row($behavior: nest);
   color: #FFF;

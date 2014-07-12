@@ -2840,7 +2840,7 @@ tr.selected td {
    ========================================================================== */
 /* line 9, ../sass/_helpers.scss */
 .visually-hidden, #site-title span, #prime-nav h1, #prime-nav h2 .hide, #foot-credits .logo span, .bttn.hide-txt span, .hide-txt.twitter-login span,
-.form-submit.hide-txt span, .contained-block .detail-item h2, .card.contained .badge-cal .year, .trilithon-header .badge-cal .year, #account-menu-blk form label {
+.form-submit.hide-txt span, .contained-block .detail-item h2, .card.contained .badge-cal .year, #welcome .bd ul small, .trilithon-header .badge-cal .year, #account-menu-blk form label {
   border: 0 none;
   clip: rect(0px, 0px, 0px, 0px);
   height: 1px;
@@ -2852,7 +2852,7 @@ tr.selected td {
 }
 
 /* line 33, ../sass/_helpers.scss */
-.bttn-primary, .bttn-secondary, .form-submit, .twitter-login, .bttn-tertiary, #account-menu-blk .form-submit, .card.contained .avatar, .card.contained .chapter-sticker, .trilithon-header .avatar, .trilithon-header .chapter-sticker {
+.bttn-primary, .bttn-secondary, .form-submit, .twitter-login, .bttn-tertiary, #account-menu-blk .form-submit, .card.contained .avatar, .card.contained .chapter-sticker, #welcome, .trilithon-header .avatar, .trilithon-header .chapter-sticker {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -2887,8 +2887,8 @@ Icons
 .form-submit.follow.on:before,
 .form-submit.follow.flagged:before, .icon-s-subtract, .icon-s-cancel, .icon-s-arr-up, .icon-s-arr-right, .cta-inline:after, .contained-block .detail-item .detail-venue-link a:after, #foot-nav a:before, .icon-s-arr-left, .icon-s-arr-down, .bttn-dropdown:after, .icon-s-add, .bttn.follow:before, .follow.twitter-login:before,
 .form-submit.follow:before, .icon-refresh, .icon-phone, .icon-pencil, .bttn.edit:before, .edit.twitter-login:before,
-.form-submit.edit:before, .icon-my-location, .icon-mobile, .icon-menu, #prime-nav .browse-wrapper .toggle:before, .icon-map, .icon-map-marker, .contained-block .detail-item.location:before, .contained-block .detail-item .field-location:before, .icon-list, .icon-linkedin, #foot-nav .linkedin:before, .contained-block .detail-item.field-link-linkedin:before, .icon-image, .icon-home, .icon-history, .icon-grid, .icon-google-plus, .icon-globe, .contained-block .detail-item.field-link-website:before, .icon-github, .icon-flickr, .icon-feed, .icon-facebook, #foot-nav .facebook:before, .contained-block .detail-item.field-link-facebook:before, .icon-expand, .icon-email, .icon-download, .icon-disc-cancel, .icon-description, .contained-block .detail-item.field-about-me:before, .contained-block .detail-item.about-me:before, .contained-block .detail-item.body:before, .icon-cog, .bttn.settings:before, .settings.twitter-login:before,
-.form-submit.settings:before, .icon-clock, .icon-circle-warning, .icon-circle-success, .icon-circle-question, .icon-circle-play, .icon-circle-info, .icon-circle-error, .icon-cancel, .icon-arr-up, .icon-arr-tail-up, .icon-arr-tail-right, .icon-arr-tail-left, .icon-arr-tail-down, .icon-arr-right, .icon-arr-right-last, .icon-arr-left, .icon-arr-left-first, .icon-arr-down, .icon-add, [class^="icon-"], [class*=" icon-"] {
+.form-submit.edit:before, .icon-my-location, .icon-mobile, .icon-menu, #prime-nav .browse-wrapper .toggle:before, .icon-map, .icon-map-marker, .contained-block .detail-item.field-location:before, .icon-list, .icon-linkedin, #foot-nav .linkedin:before, .contained-block .detail-item.field-link-linkedin:before, .icon-image, .icon-home, .icon-history, .icon-grid, .icon-google-plus, .icon-globe, .contained-block .detail-item.field-link-website:before, .icon-github, .icon-flickr, .icon-feed, .icon-facebook, #foot-nav .facebook:before, .contained-block .detail-item.field-link-facebook:before, .icon-expand, .icon-email, .icon-download, .icon-disc-cancel, .icon-description, .contained-block .detail-item.field-about-me:before, .contained-block .detail-item.about-me:before, .contained-block .detail-item.body:before, .icon-cog, .bttn.settings:before, .settings.twitter-login:before,
+.form-submit.settings:before, .icon-clock, .contained-block .detail-item.field-date-event:before, .icon-circle-warning, .icon-circle-success, .icon-circle-question, .icon-circle-play, .icon-circle-info, .icon-circle-error, .icon-cancel, .icon-arr-up, .icon-arr-tail-up, .icon-arr-tail-right, .icon-arr-tail-left, .icon-arr-tail-down, .icon-arr-right, .icon-arr-right-last, .icon-arr-left, .icon-arr-left-first, .icon-arr-down, .icon-add, [class^="icon-"], [class*=" icon-"] {
   font-family: 'tm-icons';
   speak: none;
   font-style: normal;
@@ -3101,7 +3101,7 @@ Icons
 }
 
 /* line 194, ../sass/_type.scss */
-.icon-map-marker, .contained-block .detail-item.location:before, .contained-block .detail-item .field-location:before {
+.icon-map-marker, .contained-block .detail-item.field-location:before {
   content: "\e623";
 }
 
@@ -3197,7 +3197,7 @@ Icons
 }
 
 /* line 270, ../sass/_type.scss */
-.icon-clock {
+.icon-clock, .contained-block .detail-item.field-date-event:before {
   content: "\e636";
 }
 
@@ -3294,7 +3294,39 @@ Icons
 /* ==========================================================================
    Headings
    ========================================================================== */
-/* line 353, ../sass/_type.scss */
+/* line 354, ../sass/_type.scss */
+.sh-std, #welcome .hd .subtitle {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0 0 1rem 0;
+  padding: 0;
+}
+@media only screen and (min-width: 34.063rem) {
+  /* line 354, ../sass/_type.scss */
+  .sh-std, #welcome .hd .subtitle {
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+}
+
+/* line 367, ../sass/_type.scss */
+.hd-xxl, #welcome .hd .prime-title {
+  font-size: 1.75rem;
+  line-height: 1.28571;
+  font-weight: 800;
+  margin: 0 0 1rem 0;
+  padding: 0;
+}
+@media only screen and (min-width: 34.063rem) {
+  /* line 367, ../sass/_type.scss */
+  .hd-xxl, #welcome .hd .prime-title {
+    font-size: 2.25rem;
+    line-height: 1.22222;
+    letter-spacing: -0.5px;
+  }
+}
+
+/* line 381, ../sass/_type.scss */
 h1, .hd-xl {
   font-size: 1.75rem;
   line-height: 1.28571;
@@ -3303,7 +3335,7 @@ h1, .hd-xl {
   padding: 0;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 353, ../sass/_type.scss */
+  /* line 381, ../sass/_type.scss */
   h1, .hd-xl {
     font-size: 2rem;
     line-height: 1.25;
@@ -3311,7 +3343,7 @@ h1, .hd-xl {
   }
 }
 
-/* line 367, ../sass/_type.scss */
+/* line 395, ../sass/_type.scss */
 h2, .hd-l {
   font-size: 1.5rem;
   line-height: 1.33333;
@@ -3321,7 +3353,7 @@ h2, .hd-l {
   padding: 0;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 367, ../sass/_type.scss */
+  /* line 395, ../sass/_type.scss */
   h2, .hd-l {
     font-size: 1.75rem;
     line-height: 1.28571;
@@ -3329,7 +3361,7 @@ h2, .hd-l {
   }
 }
 
-/* line 382, ../sass/_type.scss */
+/* line 410, ../sass/_type.scss */
 h3, .hd-m, .contained.block .prime-title, .contained.modal .prime-title {
   font-size: 1.25rem;
   line-height: 1.4;
@@ -3338,7 +3370,7 @@ h3, .hd-m, .contained.block .prime-title, .contained.modal .prime-title {
   padding: 0;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 382, ../sass/_type.scss */
+  /* line 410, ../sass/_type.scss */
   h3, .hd-m, .contained.block .prime-title, .contained.modal .prime-title {
     font-size: 1.5rem;
     line-height: 1.33333;
@@ -3346,7 +3378,7 @@ h3, .hd-m, .contained.block .prime-title, .contained.modal .prime-title {
   }
 }
 
-/* line 396, ../sass/_type.scss */
+/* line 424, ../sass/_type.scss */
 h4, .hd-s {
   font-size: 1.25rem;
   line-height: 1.4;
@@ -3356,7 +3388,7 @@ h4, .hd-s {
   letter-spacing: normal;
 }
 
-/* line 405, ../sass/_type.scss */
+/* line 433, ../sass/_type.scss */
 h5, .hd-xs, #foot-nav h2, .contained h2, .contained h3, .contained-block .contained-head .prime-title {
   font-size: 1rem;
   line-height: 1.5;
@@ -3366,7 +3398,7 @@ h5, .hd-xs, #foot-nav h2, .contained h2, .contained h3, .contained-block .contai
   letter-spacing: normal;
 }
 
-/* line 415, ../sass/_type.scss */
+/* line 443, ../sass/_type.scss */
 h6, .hd-xxs, #account-menu-blk .menu-blk-title {
   font-size: 0.875rem;
   line-height: 1.42857;
@@ -3374,6 +3406,23 @@ h6, .hd-xxs, #account-menu-blk .menu-blk-title {
   margin: 0 0 1rem 0;
   padding: 0;
   letter-spacing: normal;
+}
+
+/* line 452, ../sass/_type.scss */
+.hd-xxxs, #welcome .bd ul .key {
+  font-size: 0.75rem;
+  line-height: 1.33333;
+  font-weight: 800;
+  margin: 0 0 1rem 0;
+  padding: 0;
+  letter-spacing: normal;
+}
+@media only screen and (min-width: 34.063rem) {
+  /* line 452, ../sass/_type.scss */
+  .hd-xxxs, #welcome .bd ul .key {
+    font-size: 0.875rem;
+    line-height: 1.42857;
+  }
 }
 
 /* line 5, ../sass/_base.scss */
@@ -3799,16 +3848,17 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .disabled.twitter-logi
 
 /* line 315, ../sass/_base.scss */
 #footer {
+  position: relative;
   background: #d2d5d8;
-  padding: 2rem 0;
+  padding: 2rem 0 1rem 0;
   color: #4d5966;
 }
-/* line 319, ../sass/_base.scss */
+/* line 320, ../sass/_base.scss */
 #footer a {
   color: #4d5966;
 }
 
-/* line 324, ../sass/_base.scss */
+/* line 325, ../sass/_base.scss */
 #foot-nav {
   position: relative;
   padding-left: 1rem;
@@ -3816,7 +3866,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .disabled.twitter-logi
   width: 100%;
   float: left;
 }
-/* line 326, ../sass/_base.scss */
+/* line 327, ../sass/_base.scss */
 #foot-nav .inner {
   width: auto;
   margin-left: -1rem;
@@ -3835,11 +3885,11 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .disabled.twitter-logi
 #foot-nav .inner:after {
   clear: both;
 }
-/* line 329, ../sass/_base.scss */
+/* line 330, ../sass/_base.scss */
 #foot-nav h2 {
   text-transform: uppercase;
 }
-/* line 333, ../sass/_base.scss */
+/* line 334, ../sass/_base.scss */
 #foot-nav section {
   position: relative;
   padding-left: 1rem;
@@ -3847,7 +3897,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .disabled.twitter-logi
   width: 50%;
   float: left;
 }
-/* line 336, ../sass/_base.scss */
+/* line 337, ../sass/_base.scss */
 #foot-nav ul {
   list-style: none;
   padding: 0;
@@ -3855,18 +3905,18 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .disabled.twitter-logi
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
-/* line 342, ../sass/_base.scss */
+/* line 343, ../sass/_base.scss */
 #foot-nav ul li {
   overflow: hidden;
   margin-bottom: 0.25rem;
 }
-/* line 347, ../sass/_base.scss */
+/* line 348, ../sass/_base.scss */
 #foot-nav a {
   float: left;
   position: relative;
   padding-left: 1.375rem;
 }
-/* line 351, ../sass/_base.scss */
+/* line 352, ../sass/_base.scss */
 #foot-nav a:before {
   position: absolute;
   top: 0;
@@ -3875,7 +3925,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .disabled.twitter-logi
   color: #79828c;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 324, ../sass/_base.scss */
+  /* line 325, ../sass/_base.scss */
   #foot-nav {
     position: relative;
     padding-left: 1rem;
@@ -3885,7 +3935,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .disabled.twitter-logi
   }
 }
 @media only screen and (min-width: 48.063rem) {
-  /* line 369, ../sass/_base.scss */
+  /* line 370, ../sass/_base.scss */
   #foot-nav section {
     position: relative;
     padding-left: 1rem;
@@ -3895,7 +3945,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .disabled.twitter-logi
   }
 }
 
-/* line 376, ../sass/_base.scss */
+/* line 377, ../sass/_base.scss */
 #foot-credits {
   position: relative;
   padding-left: 1rem;
@@ -3905,7 +3955,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .disabled.twitter-logi
   border-top: 1px solid #bcc0c5;
   padding-top: 2rem;
 }
-/* line 380, ../sass/_base.scss */
+/* line 381, ../sass/_base.scss */
 #foot-credits p {
   overflow: hidden;
   margin: 0 0 0.75rem 0;
@@ -3913,27 +3963,31 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .disabled.twitter-logi
   line-height: 1.25rem;
 }
 /* line 387, ../sass/_base.scss */
+#foot-credits .logo {
+  float: left;
+}
+/* line 389, ../sass/_base.scss */
 #foot-credits .logo img {
   opacity: 0.8;
   height: 2rem;
 }
-/* line 391, ../sass/_base.scss */
+/* line 393, ../sass/_base.scss */
 #foot-credits .logo a {
   padding: 0.25rem 0;
   float: left;
   margin: 0 1rem 0.5rem 0;
 }
-/* line 400, ../sass/_base.scss */
+/* line 402, ../sass/_base.scss */
 #foot-credits small {
   float: left;
   font-size: inherit;
 }
-/* line 404, ../sass/_base.scss */
+/* line 406, ../sass/_base.scss */
 #foot-credits time {
   display: block;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 376, ../sass/_base.scss */
+  /* line 377, ../sass/_base.scss */
   #foot-credits {
     position: relative;
     padding-left: 1rem;
@@ -3945,76 +3999,81 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .disabled.twitter-logi
   }
 }
 @media only screen and (min-width: 48.063rem) {
-  /* line 414, ../sass/_base.scss */
-  #foot-credits .logo a {
-    display: block;
+  /* line 415, ../sass/_base.scss */
+  #foot-credits .logo {
     float: none;
+    display: block;
+    overflow: hidden;
   }
   /* line 419, ../sass/_base.scss */
+  #foot-credits .logo a {
+    clear: both;
+  }
+  /* line 423, ../sass/_base.scss */
   #foot-credits small {
     float: none;
     display: block;
   }
 }
 
-/* line 427, ../sass/_base.scss */
+/* line 431, ../sass/_base.scss */
 .media-obj,
 .media-obj > a {
   display: table;
   width: 100%;
 }
 
-/* line 434, ../sass/_base.scss */
+/* line 438, ../sass/_base.scss */
 .media-obj .media-fig,
 .media-obj .media-bd {
   display: table-cell;
   vertical-align: middle;
 }
-/* line 438, ../sass/_base.scss */
+/* line 442, ../sass/_base.scss */
 .media-top .media-obj .media-fig, .media-top
 .media-obj .media-bd {
   vertical-align: top;
 }
-/* line 441, ../sass/_base.scss */
+/* line 445, ../sass/_base.scss */
 .media-bottom .media-obj .media-fig, .media-bottom
 .media-obj .media-bd {
   vertical-align: bottom;
 }
-/* line 446, ../sass/_base.scss */
+/* line 450, ../sass/_base.scss */
 .media-obj .media-fig {
   padding-right: 1rem;
 }
-/* line 449, ../sass/_base.scss */
+/* line 453, ../sass/_base.scss */
 .media-obj .media-fig img {
   display: block;
   max-width: none;
 }
-/* line 453, ../sass/_base.scss */
+/* line 457, ../sass/_base.scss */
 .media-rev .media-obj .media-fig {
   padding-right: 0;
   padding-left: 1rem;
 }
-/* line 459, ../sass/_base.scss */
+/* line 463, ../sass/_base.scss */
 .media-obj .media-bd {
   width: 100%;
 }
 
 /* IE<9 */
-/* line 468, ../sass/_base.scss */
+/* line 472, ../sass/_base.scss */
 .lt-ie9 body {
   background: #e8eaeb;
 }
-/* line 471, ../sass/_base.scss */
+/* line 475, ../sass/_base.scss */
 .lt-ie9 #page, .lt-ie9 #site-canvas {
   display: none;
 }
-/* line 474, ../sass/_base.scss */
+/* line 478, ../sass/_base.scss */
 .lt-ie9 #nocando {
   margin: 200px auto;
   padding: 0 20px;
   width: 440px;
 }
-/* line 478, ../sass/_base.scss */
+/* line 482, ../sass/_base.scss */
 .lt-ie9 #nocando h1 {
   color: inherit;
   line-height: 1.1;
@@ -4145,38 +4204,47 @@ button:hover, button:focus {
   min-height: 2.5rem;
 }
 
+/* 44px */
+/* line 117, ../sass/_buttons.scss */
+.bttn-xl {
+  line-height: 1.75rem;
+  font-size: 1.25rem;
+  padding: 0.5rem 1.25rem;
+  min-height: 2.75rem;
+}
+
 /* Button colors */
-/* line 119, ../sass/_buttons.scss */
+/* line 127, ../sass/_buttons.scss */
 .bttn-default {
   color: #213040;
   background: #FFF;
   border-color: #c7cbcf;
 }
-/* line 123, ../sass/_buttons.scss */
+/* line 131, ../sass/_buttons.scss */
 .bttn-default:before {
   color: #007eb5;
 }
-/* line 126, ../sass/_buttons.scss */
+/* line 134, ../sass/_buttons.scss */
 .bttn-default:hover, .bttn-default:focus {
   color: #213040;
 }
-/* line 129, ../sass/_buttons.scss */
+/* line 137, ../sass/_buttons.scss */
 .bttn-default:active, .bttn-default.on, .bttn-default.flagged {
   color: #213040;
   box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.5), inset 0 2px 0 0 rgba(33, 48, 64, 0.1);
 }
 
-/* line 136, ../sass/_buttons.scss */
+/* line 144, ../sass/_buttons.scss */
 .bttn-primary {
   color: #FFF !important;
   background: #213040;
   border-color: #1c2836;
 }
-/* line 141, ../sass/_buttons.scss */
+/* line 149, ../sass/_buttons.scss */
 .bttn-primary:hover, .bttn-primary:focus {
   color: #FFF !important;
 }
-/* line 144, ../sass/_buttons.scss */
+/* line 152, ../sass/_buttons.scss */
 .bttn-primary:active, .bttn-primary.on, .bttn-primary.flagged {
   border-color: #182430;
   background: #1d2b39;
@@ -4184,46 +4252,46 @@ button:hover, button:focus {
   color: #FFF !important;
 }
 
-/* line 153, ../sass/_buttons.scss */
+/* line 161, ../sass/_buttons.scss */
 .bttn-secondary, .form-submit, .twitter-login {
   color: #FFF !important;
   background: #007eb5;
   box-shadow: inset 0 -2px 0 0 #00587e;
 }
-/* line 158, ../sass/_buttons.scss */
+/* line 166, ../sass/_buttons.scss */
 .bttn-secondary:hover, .form-submit:hover, .twitter-login:hover, .bttn-secondary:focus, .form-submit:focus, .twitter-login:focus {
   color: #FFF !important;
 }
-/* line 161, ../sass/_buttons.scss */
+/* line 169, ../sass/_buttons.scss */
 .bttn-secondary:active, .form-submit:active, .twitter-login:active, .bttn-secondary.on, .on.form-submit, .on.twitter-login, .bttn-secondary.flagged, .flagged.form-submit, .flagged.twitter-login {
   background: #00587e;
   box-shadow: inset 0 2px 0 0 #003f5a;
   color: #FFF !important;
 }
 
-/* line 169, ../sass/_buttons.scss */
+/* line 177, ../sass/_buttons.scss */
 .bttn-tertiary, #account-menu-blk .form-submit {
   color: #4d5966 !important;
   background: #e8eaeb;
   box-shadow: inset 0 -2px 0 0 #d2d5d8;
 }
-/* line 174, ../sass/_buttons.scss */
+/* line 182, ../sass/_buttons.scss */
 .bttn-tertiary:hover, #account-menu-blk .form-submit:hover, .bttn-tertiary:focus, #account-menu-blk .form-submit:focus {
   color: #4d5966 !important;
 }
-/* line 177, ../sass/_buttons.scss */
+/* line 185, ../sass/_buttons.scss */
 .bttn-tertiary:active, #account-menu-blk .form-submit:active, .bttn-tertiary.on, #account-menu-blk .on.form-submit, .bttn-tertiary.flagged, #account-menu-blk .flagged.form-submit {
   background: #d2d5d8;
   box-shadow: inset 0 2px 0 0 #bcc0c5;
   color: #4d5966 !important;
 }
 
-/* line 185, ../sass/_buttons.scss */
+/* line 193, ../sass/_buttons.scss */
 .bttn.disabled, .disabled.twitter-login, button.disabled {
   opacity: 0.4;
   cursor: default;
 }
-/* line 189, ../sass/_buttons.scss */
+/* line 197, ../sass/_buttons.scss */
 .bttn.disabled:active, .disabled.twitter-login:active, button.disabled:active {
   position: static;
   top: 0;
@@ -4231,7 +4299,7 @@ button:hover, button:focus {
 }
 
 /* Dropdown */
-/* line 198, ../sass/_buttons.scss */
+/* line 206, ../sass/_buttons.scss */
 .dropd {
   min-width: 12.5rem;
   position: absolute;
@@ -4261,7 +4329,7 @@ button:hover, button:focus {
   -o-transition-delay: 0, 0, 0;
   transition-delay: 0, 0, 0;
 }
-/* line 216, ../sass/_buttons.scss */
+/* line 224, ../sass/_buttons.scss */
 .dropd:before {
   position: absolute;
   z-index: 15;
@@ -4274,33 +4342,33 @@ button:hover, button:focus {
   height: 1rem;
   width: 1rem;
 }
-/* line 230, ../sass/_buttons.scss */
+/* line 238, ../sass/_buttons.scss */
 .dropd.dropd-right {
   left: auto;
   right: 0;
 }
-/* line 233, ../sass/_buttons.scss */
+/* line 241, ../sass/_buttons.scss */
 .dropd.dropd-right:before {
   left: auto;
   right: 1rem;
 }
-/* line 239, ../sass/_buttons.scss */
+/* line 247, ../sass/_buttons.scss */
 .dropd.dropd-center {
   left: 50%;
   margin-left: -6.25rem;
 }
-/* line 242, ../sass/_buttons.scss */
+/* line 250, ../sass/_buttons.scss */
 .dropd.dropd-center:before {
   left: 50%;
   margin-left: -0.5rem;
 }
-/* line 248, ../sass/_buttons.scss */
+/* line 256, ../sass/_buttons.scss */
 .dropd.on {
   opacity: 1;
   margin-top: 0.75rem;
   visibility: visible;
 }
-/* line 254, ../sass/_buttons.scss */
+/* line 262, ../sass/_buttons.scss */
 .dropd .dropd-menu {
   list-style: none;
   padding: 0.5rem 0;
@@ -4309,22 +4377,22 @@ button:hover, button:focus {
   line-height: 1.25rem;
   border-bottom: 1px solid #e8eaeb;
 }
-/* line 262, ../sass/_buttons.scss */
+/* line 270, ../sass/_buttons.scss */
 .dropd .dropd-menu:first-child {
   margin-top: -0.75rem;
 }
-/* line 266, ../sass/_buttons.scss */
+/* line 274, ../sass/_buttons.scss */
 .dropd .dropd-menu:last-child {
   margin-bottom: -0.75rem;
   border: none;
 }
-/* line 270, ../sass/_buttons.scss */
+/* line 278, ../sass/_buttons.scss */
 .dropd .dropd-menu li {
   position: relative;
   z-index: 20;
   margin: 0;
 }
-/* line 274, ../sass/_buttons.scss */
+/* line 282, ../sass/_buttons.scss */
 .dropd .dropd-menu li a {
   display: block;
   padding: 0.25rem 1rem;
@@ -4347,13 +4415,13 @@ button:hover, button:focus {
   -o-transition-delay: 0, 0, 0, 0;
   transition-delay: 0, 0, 0, 0;
 }
-/* line 285, ../sass/_buttons.scss */
+/* line 293, ../sass/_buttons.scss */
 .dropd .dropd-menu li a:hover {
   opacity: 1;
   background-color: rgba(127, 190, 218, 0.2);
   color: #007eb5;
 }
-/* line 291, ../sass/_buttons.scss */
+/* line 299, ../sass/_buttons.scss */
 .dropd .dropd-menu li a:before {
   vertical-align: bottom !important;
   font-weight: normal;
@@ -4507,122 +4575,135 @@ label {
   font-size: 1rem;
   color: #a6acb2;
 }
-/* line 105, ../sass/_modules.scss */
+/* line 97, ../sass/_modules.scss */
+.contained-block .detail-item.field-location span:after {
+  content: ', ';
+}
+/* line 102, ../sass/_modules.scss */
+.contained-block .detail-item.field-location span:last-of-type:after {
+  content: '';
+}
+/* line 109, ../sass/_modules.scss */
+.contained-block .detail-item.field-date-event .date {
+  font-weight: 800;
+  display: block;
+}
+/* line 124, ../sass/_modules.scss */
 .contained-block .detail-item .detail-venue-name {
   font-weight: 800;
 }
-/* line 109, ../sass/_modules.scss */
+/* line 128, ../sass/_modules.scss */
 .contained-block .detail-item .detail-venue-link {
   margin: 1rem 0 0 0;
 }
-/* line 117, ../sass/_modules.scss */
+/* line 136, ../sass/_modules.scss */
 .contained-block .detail-item p {
   margin: 0 0 1rem 0;
 }
-/* line 119, ../sass/_modules.scss */
+/* line 138, ../sass/_modules.scss */
 .contained-block .detail-item p:last-child {
   margin: 0;
 }
-/* line 123, ../sass/_modules.scss */
+/* line 142, ../sass/_modules.scss */
 .contained-block .detail-item dl {
   margin: 0;
   padding: 0;
 }
-/* line 126, ../sass/_modules.scss */
+/* line 145, ../sass/_modules.scss */
 .contained-block .detail-item dl dt {
   font-weight: 800;
   margin: 0;
 }
-/* line 130, ../sass/_modules.scss */
+/* line 149, ../sass/_modules.scss */
 .contained-block .detail-item dl dd {
   margin: 0 0 1rem 0;
 }
-/* line 132, ../sass/_modules.scss */
+/* line 151, ../sass/_modules.scss */
 .contained-block .detail-item dl dd:last-child {
   margin: 0;
 }
-/* line 139, ../sass/_modules.scss */
+/* line 158, ../sass/_modules.scss */
 .contained-block .view-empty {
   padding: 0 1rem 1rem 2.5rem;
   margin: 0 0 1rem 0;
   color: #79828c;
 }
-/* line 143, ../sass/_modules.scss */
+/* line 162, ../sass/_modules.scss */
 .contained-block .view-empty p {
   margin: 0 0 1rem 0;
 }
-/* line 145, ../sass/_modules.scss */
+/* line 164, ../sass/_modules.scss */
 .contained-block .view-empty p:last-child {
   margin: 0;
 }
 @media only screen and (min-width: 62.063rem) {
-  /* line 152, ../sass/_modules.scss */
+  /* line 171, ../sass/_modules.scss */
   .contained-block .contained-head {
     padding: 2rem 2rem 1.5rem 2rem;
   }
-  /* line 155, ../sass/_modules.scss */
+  /* line 174, ../sass/_modules.scss */
   .contained-block .detail-item {
     padding: 0 2rem 1rem 3.5rem;
   }
-  /* line 157, ../sass/_modules.scss */
+  /* line 176, ../sass/_modules.scss */
   .contained-block .detail-item:before {
     left: 2rem;
   }
-  /* line 160, ../sass/_modules.scss */
+  /* line 179, ../sass/_modules.scss */
   .contained-block .detail-item:last-child {
     margin-bottom: 2rem;
   }
-  /* line 163, ../sass/_modules.scss */
+  /* line 182, ../sass/_modules.scss */
   .contained-block .detail-item .detail-venue-name {
     padding-right: 7rem;
   }
-  /* line 166, ../sass/_modules.scss */
+  /* line 185, ../sass/_modules.scss */
   .contained-block .detail-item .detail-venue-link {
     position: absolute;
     top: 0;
     right: 2rem;
     margin: 0;
   }
-  /* line 173, ../sass/_modules.scss */
+  /* line 192, ../sass/_modules.scss */
   .contained-block .view-empty {
     padding: 0 2rem;
     margin: 0 0 2rem 0;
   }
 }
 
-/* line 180, ../sass/_modules.scss */
+/* line 199, ../sass/_modules.scss */
 .card.contained {
   box-shadow: none;
   background: transparent;
   position: relative;
 }
-/* line 184, ../sass/_modules.scss */
+/* line 203, ../sass/_modules.scss */
 .card.contained > a {
   background-color: #FFF;
   display: table;
   color: #213040;
 }
-/* line 189, ../sass/_modules.scss */
+/* line 208, ../sass/_modules.scss */
 .card.contained.node-event > a {
   padding-right: 2.25rem;
 }
-/* line 192, ../sass/_modules.scss */
+/* line 211, ../sass/_modules.scss */
 .card.contained .media {
   float: left;
   margin: 0 0.75rem 0 0;
 }
-/* line 196, ../sass/_modules.scss */
+/* line 215, ../sass/_modules.scss */
 .card.contained .cover {
   display: none;
   position: relative;
   z-index: 1;
 }
-/* line 200, ../sass/_modules.scss */
+/* line 219, ../sass/_modules.scss */
 .card.contained .cover img {
   display: block;
   border-radius: 0.25rem 0.25rem 0 0;
 }
-/* line 205, ../sass/_modules.scss */
+/* line 224, ../sass/_modules.scss */
 .card.contained .avatar {
   text-align: center;
   position: relative;
@@ -4633,7 +4714,7 @@ label {
   text-transform: uppercase;
   font-weight: 800;
 }
-/* line 216, ../sass/_modules.scss */
+/* line 235, ../sass/_modules.scss */
 .card.contained .badge-chapter {
   position: relative;
   display: block;
@@ -4645,7 +4726,7 @@ label {
   display: inline-block;
   padding-bottom: 0.5rem;
 }
-/* line 226, ../sass/_modules.scss */
+/* line 245, ../sass/_modules.scss */
 .card.contained .badge-chapter:before {
   content: '';
   display: inline-block;
@@ -4653,7 +4734,7 @@ label {
   vertical-align: bottom;
   width: 0;
 }
-/* line 233, ../sass/_modules.scss */
+/* line 252, ../sass/_modules.scss */
 .card.contained .badge-chapter:after {
   position: absolute;
   display: block;
@@ -4666,13 +4747,13 @@ label {
   background-size: cover;
   border-radius: 0.125rem 0 0 0;
 }
-/* line 246, ../sass/_modules.scss */
+/* line 265, ../sass/_modules.scss */
 .card.contained .badge-cal {
   display: block;
   width: 4rem;
   height: 4rem;
 }
-/* line 250, ../sass/_modules.scss */
+/* line 269, ../sass/_modules.scss */
 .card.contained .badge-cal .month {
   display: block;
   border-radius: 0.25rem 0.25rem 0 0;
@@ -4681,7 +4762,7 @@ label {
   font-size: 0.875rem;
   line-height: 1.5rem;
 }
-/* line 258, ../sass/_modules.scss */
+/* line 277, ../sass/_modules.scss */
 .card.contained .badge-cal .day {
   display: block;
   border-radius: 0 0 0.25rem 0.25rem;
@@ -4691,31 +4772,31 @@ label {
   padding-bottom: 0.25rem;
   letter-spacing: -0.0625rem;
 }
-/* line 272, ../sass/_modules.scss */
+/* line 291, ../sass/_modules.scss */
 .card.contained .badge-organization,
 .card.contained .badge-user {
   width: 4rem;
   height: 4rem;
   display: block;
 }
-/* line 276, ../sass/_modules.scss */
+/* line 295, ../sass/_modules.scss */
 .card.contained .badge-organization img,
 .card.contained .badge-user img {
   display: block;
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 282, ../sass/_modules.scss */
+/* line 301, ../sass/_modules.scss */
 .card.contained .teaser {
   display: table-cell;
   width: 64rem;
   vertical-align: middle;
 }
-/* line 286, ../sass/_modules.scss */
+/* line 305, ../sass/_modules.scss */
 .card.contained .teaser p {
   margin: 0;
 }
-/* line 288, ../sass/_modules.scss */
+/* line 307, ../sass/_modules.scss */
 .card.contained .prime-title {
   font-size: 0.875rem;
   line-height: 1.42857;
@@ -4724,19 +4805,27 @@ label {
   padding: 0;
   letter-spacing: normal;
 }
-/* line 297, ../sass/_modules.scss */
+/* line 316, ../sass/_modules.scss */
 .card.contained .meta {
   color: #79828c;
   font-size: 0.875rem;
   line-height: 1.25rem;
   display: block;
 }
-/* line 303, ../sass/_modules.scss */
+/* line 322, ../sass/_modules.scss */
+.card.contained .meta span:after {
+  content: ', ';
+}
+/* line 327, ../sass/_modules.scss */
+.card.contained .meta span:last-of-type:after {
+  content: '';
+}
+/* line 332, ../sass/_modules.scss */
 .card.contained .extra {
   position: absolute;
   top: 0.5rem;
 }
-/* line 307, ../sass/_modules.scss */
+/* line 336, ../sass/_modules.scss */
 .card.contained .chapter-sticker {
   border-radius: 0.25rem;
   display: block;
@@ -4758,16 +4847,16 @@ label {
   -o-transform-origin: top right;
   transform-origin: top right;
 }
-/* line 326, ../sass/_modules.scss */
+/* line 355, ../sass/_modules.scss */
 .node-chapter .card.contained .extra {
   display: none;
 }
-/* line 331, ../sass/_modules.scss */
+/* line 360, ../sass/_modules.scss */
 .team-list .card.contained, .related-list .card.contained {
   margin-bottom: 0;
   border-radius: 0;
 }
-/* line 336, ../sass/_modules.scss */
+/* line 365, ../sass/_modules.scss */
 .team-list .card.contained > a, .related-list .card.contained > a {
   padding: 0.5rem 3rem 0.5rem 1rem;
   -webkit-transition-property: background-color, top, left, right;
@@ -4787,34 +4876,34 @@ label {
   -o-transition-delay: 0, 0, 0, 0;
   transition-delay: 0, 0, 0, 0;
 }
-/* line 343, ../sass/_modules.scss */
+/* line 372, ../sass/_modules.scss */
 .team-list .card.contained > a:hover, .related-list .card.contained > a:hover {
   opacity: 1;
   background-color: rgba(127, 190, 218, 0.2);
   color: #007eb5;
 }
-/* line 350, ../sass/_modules.scss */
+/* line 379, ../sass/_modules.scss */
 .team-list .card.contained .extra, .related-list .card.contained .extra {
   right: 2.25rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 331, ../sass/_modules.scss */
+  /* line 360, ../sass/_modules.scss */
   .team-list .card.contained, .related-list .card.contained {
     margin-bottom: 0;
   }
 }
 @media only screen and (min-width: 62.063rem) {
-  /* line 359, ../sass/_modules.scss */
+  /* line 388, ../sass/_modules.scss */
   .team-list .card.contained > a, .related-list .card.contained > a {
     padding-left: 2rem;
     padding-right: 4rem;
   }
-  /* line 363, ../sass/_modules.scss */
+  /* line 392, ../sass/_modules.scss */
   .team-list .card.contained .extra, .related-list .card.contained .extra {
     right: 3.25rem;
   }
 }
-/* line 372, ../sass/_modules.scss */
+/* line 401, ../sass/_modules.scss */
 .grid .card.contained > a {
   box-shadow: 0 0.125rem 0 0 rgba(33, 48, 64, 0.1);
   border-radius: 0.25rem;
@@ -4824,7 +4913,7 @@ label {
   -o-transition: -o-transform 0.1s ease-in-out;
   transition: transform 0.1s ease-in-out;
 }
-/* line 378, ../sass/_modules.scss */
+/* line 407, ../sass/_modules.scss */
 .grid .card.contained > a:hover {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
@@ -4834,34 +4923,34 @@ label {
   -o-transform: scale(1.05);
   transform: scale(1.05);
 }
-/* line 384, ../sass/_modules.scss */
+/* line 413, ../sass/_modules.scss */
 .grid .card.contained .extra {
   right: 1.75rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 370, ../sass/_modules.scss */
+  /* line 399, ../sass/_modules.scss */
   .grid .card.contained {
     text-align: center;
   }
-  /* line 390, ../sass/_modules.scss */
+  /* line 419, ../sass/_modules.scss */
   .grid .card.contained > a {
     display: block;
     padding: 0 0 2rem 0;
   }
-  /* line 394, ../sass/_modules.scss */
+  /* line 423, ../sass/_modules.scss */
   .grid .card.contained.node-event > a {
     padding-right: 0;
   }
-  /* line 397, ../sass/_modules.scss */
+  /* line 426, ../sass/_modules.scss */
   .grid .card.contained .media {
     float: none;
     margin: 0 0 1rem 0;
   }
-  /* line 401, ../sass/_modules.scss */
+  /* line 430, ../sass/_modules.scss */
   .grid .card.contained .cover {
     display: block;
   }
-  /* line 404, ../sass/_modules.scss */
+  /* line 433, ../sass/_modules.scss */
   .grid .card.contained .avatar {
     display: table;
     box-shadow: 0 0 0 1px rgba(33, 48, 64, 0.1);
@@ -4869,66 +4958,66 @@ label {
     background-color: #FFF;
     margin: -4rem auto 0 auto;
   }
-  /* line 411, ../sass/_modules.scss */
+  /* line 440, ../sass/_modules.scss */
   .grid .card.contained .badge-chapter {
     width: 6rem;
     height: 6rem;
     font-size: 1.25rem;
     padding-bottom: 1rem;
   }
-  /* line 416, ../sass/_modules.scss */
+  /* line 445, ../sass/_modules.scss */
   .grid .card.contained .badge-chapter:after {
     height: 1rem;
     width: 1rem;
     border-radius: 0.25rem 0 0 0;
   }
-  /* line 422, ../sass/_modules.scss */
+  /* line 451, ../sass/_modules.scss */
   .grid .card.contained .badge-cal {
     width: 6rem;
     height: 6rem;
   }
-  /* line 425, ../sass/_modules.scss */
+  /* line 454, ../sass/_modules.scss */
   .grid .card.contained .badge-cal .month {
     font-size: 1.25rem;
     line-height: 2rem;
   }
-  /* line 429, ../sass/_modules.scss */
+  /* line 458, ../sass/_modules.scss */
   .grid .card.contained .badge-cal .day {
     line-height: 3.5rem;
     font-size: 2.5rem;
     padding-bottom: 0.5rem;
     letter-spacing: -0.125rem;
   }
-  /* line 437, ../sass/_modules.scss */
+  /* line 466, ../sass/_modules.scss */
   .grid .card.contained .badge-organization,
   .grid .card.contained .badge-user {
     width: 6rem;
     height: 6rem;
   }
-  /* line 441, ../sass/_modules.scss */
+  /* line 470, ../sass/_modules.scss */
   .grid .card.contained .teaser {
     display: block;
     width: auto;
     padding: 0 1rem;
   }
-  /* line 446, ../sass/_modules.scss */
+  /* line 475, ../sass/_modules.scss */
   .grid .card.contained .prime-title {
     font-size: 1.5rem;
     line-height: 1.16667;
   }
-  /* line 451, ../sass/_modules.scss */
+  /* line 480, ../sass/_modules.scss */
   .grid .card.contained .meta {
     font-size: 1rem;
     line-height: 1.5;
   }
-  /* line 455, ../sass/_modules.scss */
+  /* line 484, ../sass/_modules.scss */
   .grid .card.contained .extra {
     position: absolute;
     top: 0.5rem;
     left: 0.5rem;
     right: auto;
   }
-  /* line 461, ../sass/_modules.scss */
+  /* line 490, ../sass/_modules.scss */
   .grid .card.contained .chapter-sticker {
     line-height: 2rem;
     font-size: 0.875rem;
@@ -4942,26 +5031,240 @@ label {
 }
 
 /* line 1, ../sass/_single.scss */
+.front {
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(33, 48, 64, 0)), color-stop(50%, rgba(33, 48, 64, 0)), color-stop(100%, #213040)), url('../images/../images/layout/home-bg-img-01a.jpg?1405007645');
+  background: -webkit-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1405007645');
+  background: -moz-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1405007645');
+  background: -o-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1405007645');
+  background: linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1405007645');
+  background-repeat: no-repeat, no-repeat;
+  background-position: center center, center center;
+  background-attachment: fixed, fixed;
+  -webkit-background-size: cover, cover;
+  -moz-background-size: cover, cover;
+  -o-background-size: cover, cover;
+  background-size: cover, cover;
+}
+/* line 8, ../sass/_single.scss */
+.front #page, .front #site-canvas {
+  background: none;
+}
+/* line 12, ../sass/_single.scss */
+.front #footer {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFF;
+}
+/* line 15, ../sass/_single.scss */
+.front #footer a {
+  color: #FFF;
+}
+/* line 19, ../sass/_single.scss */
+.front #foot-nav {
+  opacity: 0.5;
+}
+/* line 21, ../sass/_single.scss */
+.front #foot-nav a:before {
+  color: #FFF;
+}
+/* line 25, ../sass/_single.scss */
+.front #foot-credits {
+  opacity: 0.5;
+  border-top-color: rgba(255, 255, 255, 0.2);
+}
+
+/* line 31, ../sass/_single.scss */
+#block-tm-base-tm-homepage-stats {
+  margin: 0;
+}
+
+/* line 35, ../sass/_single.scss */
+#welcome {
+  width: auto;
+  margin-left: -1rem;
+  margin-right: -1rem;
+  margin-top: 0;
+  margin-bottom: 0;
+  max-width: none;
+  *zoom: 1;
+  color: #FFF;
+  text-align: center;
+  text-shadow: 0 2px 0 rgba(33, 48, 64, 0.4);
+  margin-bottom: 2rem;
+}
+/* line 159, ../sass/foundation_5.0.3/components/_global.scss */
+#welcome:before, #welcome:after {
+  content: " ";
+  display: table;
+}
+/* line 160, ../sass/foundation_5.0.3/components/_global.scss */
+#welcome:after {
+  clear: both;
+}
+/* line 42, ../sass/_single.scss */
+#welcome .hd {
+  position: relative;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  width: 100%;
+  float: left;
+  clear: both;
+  margin-bottom: 2rem;
+}
+/* line 49, ../sass/_single.scss */
+#welcome .hd .subtitle {
+  margin-bottom: 0;
+}
+/* line 54, ../sass/_single.scss */
+#welcome .bd {
+  float: left;
+  width: 100%;
+}
+/* line 57, ../sass/_single.scss */
+#welcome .bd ul {
+  width: auto;
+  margin-left: -1rem;
+  margin-right: -1rem;
+  margin-top: 0;
+  margin-bottom: 0;
+  max-width: none;
+  *zoom: 1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* line 159, ../sass/foundation_5.0.3/components/_global.scss */
+#welcome .bd ul:before, #welcome .bd ul:after {
+  content: " ";
+  display: table;
+}
+/* line 160, ../sass/foundation_5.0.3/components/_global.scss */
+#welcome .bd ul:after {
+  clear: both;
+}
+/* line 62, ../sass/_single.scss */
+#welcome .bd ul li {
+  overflow: hidden;
+  position: relative;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  width: 33.33333%;
+  float: left;
+  display: inline-block;
+  float: none !important;
+}
+/* line 67, ../sass/_single.scss */
+#welcome .bd ul li:after {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 8rem;
+  width: 1px;
+  content: '';
+  background: rgba(255, 255, 255, 0.2);
+  text-shadow: none;
+}
+/* line 77, ../sass/_single.scss */
+#welcome .bd ul li:last-child:after {
+  display: none;
+}
+/* line 81, ../sass/_single.scss */
+#welcome .bd ul a {
+  position: relative;
+  display: block;
+  color: #FFF;
+  padding-bottom: 1.5rem;
+}
+/* line 87, ../sass/_single.scss */
+#welcome .bd ul .key {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-transform: uppercase;
+  margin: 0;
+}
+/* line 96, ../sass/_single.scss */
+#welcome .bd ul .value {
+  font-size: 2.75rem;
+  line-height: 1;
+}
+/* line 105, ../sass/_single.scss */
+#welcome .cta-wrapper {
+  margin: 2rem 0 0 0;
+}
+/* line 107, ../sass/_single.scss */
+#welcome .cta-wrapper .bttn, #welcome .cta-wrapper .twitter-login {
+  text-shadow: none;
+  width: 14rem;
+}
+@media only screen and (min-width: 34.063rem) {
+  /* line 35, ../sass/_single.scss */
+  #welcome {
+    margin-bottom: 4rem;
+  }
+}
+@media only screen and (min-width: 48.063rem) {
+  /* line 118, ../sass/_single.scss */
+  #welcome .hd {
+    position: relative;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: 83.33333%;
+    left: 8.33333%;
+    right: auto;
+    float: left;
+  }
+  /* line 123, ../sass/_single.scss */
+  #welcome .bd ul li {
+    position: relative;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: 25%;
+    float: left;
+  }
+}
+@media only screen and (min-width: 62.063rem) {
+  /* line 130, ../sass/_single.scss */
+  #welcome .hd {
+    position: relative;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: 66.66667%;
+    left: 16.66667%;
+    right: auto;
+    float: left;
+  }
+  /* line 135, ../sass/_single.scss */
+  #welcome .bd ul li {
+    position: relative;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: 16.66667%;
+    float: left;
+  }
+}
+
+/* line 143, ../sass/_single.scss */
 .trilithon-header {
   margin: 0 1rem 1rem 1rem;
   position: relative;
 }
-/* line 5, ../sass/_single.scss */
+/* line 147, ../sass/_single.scss */
 .trilithon-header .media {
   margin-bottom: -3rem;
   overflow: hidden;
   border-radius: 0.25rem 0.25rem 0 0;
 }
-/* line 10, ../sass/_single.scss */
+/* line 152, ../sass/_single.scss */
 .trilithon-header .cover {
   max-height: 16rem;
 }
-/* line 12, ../sass/_single.scss */
+/* line 154, ../sass/_single.scss */
 .trilithon-header .cover img {
   display: block;
   width: 100%;
 }
-/* line 17, ../sass/_single.scss */
+/* line 159, ../sass/_single.scss */
 .trilithon-header .avatar {
   text-align: center;
   position: relative;
@@ -4976,7 +5279,7 @@ label {
   background-color: #FFF;
   margin: 0 auto 1rem auto;
 }
-/* line 32, ../sass/_single.scss */
+/* line 174, ../sass/_single.scss */
 .trilithon-header .badge-chapter {
   position: relative;
   display: block;
@@ -4988,7 +5291,7 @@ label {
   display: inline-block;
   padding-bottom: 0.5rem;
 }
-/* line 42, ../sass/_single.scss */
+/* line 184, ../sass/_single.scss */
 .trilithon-header .badge-chapter:before {
   content: '';
   display: inline-block;
@@ -4996,7 +5299,7 @@ label {
   vertical-align: bottom;
   width: 0;
 }
-/* line 49, ../sass/_single.scss */
+/* line 191, ../sass/_single.scss */
 .trilithon-header .badge-chapter:after {
   position: absolute;
   display: block;
@@ -5009,13 +5312,13 @@ label {
   background-size: cover;
   border-radius: 0.125rem 0 0 0;
 }
-/* line 62, ../sass/_single.scss */
+/* line 204, ../sass/_single.scss */
 .trilithon-header .badge-cal {
   display: block;
   width: 4rem;
   height: 4rem;
 }
-/* line 66, ../sass/_single.scss */
+/* line 208, ../sass/_single.scss */
 .trilithon-header .badge-cal .month {
   display: block;
   border-radius: 0.25rem 0.25rem 0 0;
@@ -5024,7 +5327,7 @@ label {
   font-size: 0.875rem;
   line-height: 1.5rem;
 }
-/* line 74, ../sass/_single.scss */
+/* line 216, ../sass/_single.scss */
 .trilithon-header .badge-cal .day {
   display: block;
   border-radius: 0 0 0.25rem 0.25rem;
@@ -5034,49 +5337,53 @@ label {
   padding-bottom: 0.25rem;
   letter-spacing: -0.0625rem;
 }
-/* line 88, ../sass/_single.scss */
+/* line 230, ../sass/_single.scss */
 .trilithon-header .badge-organization,
 .trilithon-header .badge-user {
   width: 4rem;
   height: 4rem;
   display: block;
 }
-/* line 92, ../sass/_single.scss */
+/* line 234, ../sass/_single.scss */
 .trilithon-header .badge-organization img,
 .trilithon-header .badge-user img {
   display: block;
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 98, ../sass/_single.scss */
+/* line 240, ../sass/_single.scss */
 .trilithon-header .bd {
   padding: 0 1rem 6rem 1rem;
   text-align: center;
 }
-/* line 102, ../sass/_single.scss */
+/* line 244, ../sass/_single.scss */
 .trilithon-header .prime-title {
   font-size: 1.5rem;
   line-height: 1.16667;
   margin: 0;
 }
-/* line 108, ../sass/_single.scss */
+/* line 250, ../sass/_single.scss */
 .trilithon-header .meta {
   margin: 0;
   color: #79828c;
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
-/* line 113, ../sass/_single.scss */
-.trilithon-header .meta * {
-  display: block;
+/* line 256, ../sass/_single.scss */
+.trilithon-header .meta span:after {
+  content: ', ';
 }
-/* line 117, ../sass/_single.scss */
+/* line 261, ../sass/_single.scss */
+.trilithon-header .meta span:last-of-type:after {
+  content: '';
+}
+/* line 266, ../sass/_single.scss */
 .trilithon-header .extra {
   position: absolute;
   top: 0.5rem;
   left: 0.5rem;
 }
-/* line 122, ../sass/_single.scss */
+/* line 271, ../sass/_single.scss */
 .trilithon-header .chapter-sticker {
   border-radius: 0.25rem;
   display: block;
@@ -5088,7 +5395,7 @@ label {
   font-size: 0.875rem;
   width: 4rem;
 }
-/* line 135, ../sass/_single.scss */
+/* line 284, ../sass/_single.scss */
 .trilithon-header .actions {
   position: absolute;
   right: 0;
@@ -5098,7 +5405,7 @@ label {
   padding: 1rem;
   border-top: 1px #e8eaeb solid;
 }
-/* line 145, ../sass/_single.scss */
+/* line 294, ../sass/_single.scss */
 .trilithon-header .actions-menu {
   list-style: none;
   margin: 0;
@@ -5107,77 +5414,77 @@ label {
   vertical-align: bottom;
   text-align: left;
 }
-/* line 152, ../sass/_single.scss */
+/* line 301, ../sass/_single.scss */
 .trilithon-header .actions-menu > li {
   float: left;
   position: relative;
   margin: 0 0.25rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 1, ../sass/_single.scss */
+  /* line 143, ../sass/_single.scss */
   .trilithon-header {
     margin-bottom: 2rem;
   }
-  /* line 161, ../sass/_single.scss */
+  /* line 310, ../sass/_single.scss */
   .trilithon-header .media {
     margin-bottom: -4rem;
   }
-  /* line 164, ../sass/_single.scss */
+  /* line 313, ../sass/_single.scss */
   .trilithon-header .badge-chapter {
     width: 6rem;
     height: 6rem;
     font-size: 1.25rem;
     padding-bottom: 1rem;
   }
-  /* line 169, ../sass/_single.scss */
+  /* line 318, ../sass/_single.scss */
   .trilithon-header .badge-chapter:after {
     height: 1rem;
     width: 1rem;
     border-radius: 0.25rem 0 0 0;
   }
-  /* line 175, ../sass/_single.scss */
+  /* line 324, ../sass/_single.scss */
   .trilithon-header .badge-cal {
     width: 6rem;
     height: 6rem;
   }
-  /* line 178, ../sass/_single.scss */
+  /* line 327, ../sass/_single.scss */
   .trilithon-header .badge-cal .month {
     font-size: 1.25rem;
     line-height: 2rem;
   }
-  /* line 182, ../sass/_single.scss */
+  /* line 331, ../sass/_single.scss */
   .trilithon-header .badge-cal .day {
     line-height: 3.5rem;
     font-size: 2.5rem;
     padding-bottom: 0.5rem;
     letter-spacing: -0.125rem;
   }
-  /* line 190, ../sass/_single.scss */
+  /* line 339, ../sass/_single.scss */
   .trilithon-header .badge-organization,
   .trilithon-header .badge-user {
     width: 6rem;
     height: 6rem;
   }
-  /* line 194, ../sass/_single.scss */
+  /* line 343, ../sass/_single.scss */
   .trilithon-header .prime-title {
     font-size: 1.75rem;
     line-height: 1.14286;
   }
-  /* line 199, ../sass/_single.scss */
+  /* line 348, ../sass/_single.scss */
   .trilithon-header .meta {
     font-size: 1rem;
     line-height: 1.5;
   }
 }
 @media only screen and (min-width: 48.063rem) {
-  /* line 206, ../sass/_single.scss */
+  /* line 355, ../sass/_single.scss */
   .trilithon-header .media {
     display: table-cell;
     width: 58%;
     margin-bottom: 0;
     border-radius: 0.25rem 0 0 0.25rem;
   }
-  /* line 212, ../sass/_single.scss */
+  /* line 361, ../sass/_single.scss */
   .trilithon-header .cover {
     position: relative;
     width: 150%;
@@ -5185,51 +5492,51 @@ label {
     margin-left: -70%;
     max-height: none;
   }
-  /* line 219, ../sass/_single.scss */
+  /* line 368, ../sass/_single.scss */
   .trilithon-header .bd {
     vertical-align: middle;
     display: table-cell;
     padding: 1rem 1rem 5rem 1rem;
   }
-  /* line 224, ../sass/_single.scss */
+  /* line 373, ../sass/_single.scss */
   .trilithon-header .extra {
     top: 1rem;
     left: 1rem;
   }
-  /* line 228, ../sass/_single.scss */
+  /* line 377, ../sass/_single.scss */
   .trilithon-header .actions {
     width: 42%;
   }
 }
 @media only screen and (min-width: 62.063rem) {
-  /* line 234, ../sass/_single.scss */
+  /* line 383, ../sass/_single.scss */
   .trilithon-header .media {
     width: 68%;
   }
-  /* line 237, ../sass/_single.scss */
+  /* line 386, ../sass/_single.scss */
   .trilithon-header .cover {
     width: 100%;
     margin-left: 0;
     left: 0;
   }
-  /* line 242, ../sass/_single.scss */
+  /* line 391, ../sass/_single.scss */
   .trilithon-header .bd {
     padding: 2rem 2rem 5rem 2rem;
   }
-  /* line 245, ../sass/_single.scss */
+  /* line 394, ../sass/_single.scss */
   .trilithon-header .chapter-sticker {
     line-height: 3rem;
     font-size: 1.5rem;
     width: 7rem;
   }
-  /* line 250, ../sass/_single.scss */
+  /* line 399, ../sass/_single.scss */
   .trilithon-header .actions {
     width: 32%;
     padding: 1rem 2rem;
   }
 }
 
-/* line 259, ../sass/_single.scss */
+/* line 408, ../sass/_single.scss */
 .team-list,
 .related-list,
 .related-list ul {
@@ -5237,20 +5544,20 @@ label {
   padding: 0;
   margin: -0.5rem 0 1rem 0;
 }
-/* line 263, ../sass/_single.scss */
+/* line 412, ../sass/_single.scss */
 .team-list li,
 .related-list li,
 .related-list ul li {
   padding: 0.5rem 0;
   box-shadow: 0 1px 0 0 rgba(33, 48, 64, 0.1);
 }
-/* line 266, ../sass/_single.scss */
+/* line 415, ../sass/_single.scss */
 .team-list li:first-child,
 .related-list li:first-child,
 .related-list ul li:first-child {
   padding-top: 0;
 }
-/* line 269, ../sass/_single.scss */
+/* line 418, ../sass/_single.scss */
 .team-list li:last-child,
 .related-list li:last-child,
 .related-list ul li:last-child {

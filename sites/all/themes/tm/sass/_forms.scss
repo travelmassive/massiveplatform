@@ -1,17 +1,28 @@
-input::-moz-focus-inner { 
-  border: 0; 
-  padding: 0; 
-  margin-top:-2px; 
-  margin-bottom: -2px; 
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+  margin-top:-2px;
+  margin-bottom: -2px;
 }
 
 .form-item {
   margin: 0 0 1rem 0;
+  .description {
+    color: tint($primary-color, 40%);
+    font-size: 0.85rem;
+    line-height: 1.25rem;
+    margin: 0.5rem 0 0 0;
+  }
+}
+
+input[type="file"] {
+  font-size: 0.85rem;
 }
 
 input[type="text"],
 input[type="password"],
-input[type="search"] {
+input[type="search"],
+textarea {
   border: 1px tint($primary-color, 80%) solid;
   background: #FFF;
   box-shadow: inset 0 2px 0 0 rgba($primary-color, 0.05);
@@ -29,6 +40,13 @@ input[type="search"] {
   }
 }
 
+html.js .form-text.form-autocomplete {
+  background-position: 100% 0.65rem;
+  &.throbbing {
+    background-position: 100% -0.85rem;
+  }
+}
+
 .form-submit {
   @extend .bttn-secondary, .bttn-m;
 }
@@ -39,5 +57,89 @@ label {
   font-weight: $body-font-bold;
   margin-bottom: 0.5rem;
   color: tint($primary-color, 20%);
-  text-transform: uppercase;
+}
+
+.node-form {
+  @extend .contained;
+  .image-preview {
+    border: 1px tint($primary-color, 90%) solid;
+    padding: 0.25rem;
+    border-radius: $global-radius;
+    margin: 0 0.5rem 0 0;
+    img {
+      display: block;
+      border-radius: $global-radius;
+    }
+  }
+  .image-widget-data {
+    padding-top: 0.25rem;
+    .file, .file-size {
+      font-size: 0.85rem;
+      line-height: 1.25rem;
+      img {
+        display: none;
+      }
+    }
+    .file {
+      float: left;
+      max-width: 10rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-right: 0.25rem;
+    }
+    #edit-field-image-und-0-remove-button {
+      display: block;
+      margin-top: 0.25rem !important;
+    }
+  }
+  .form-actions {
+    text-align: center;
+    padding: 1rem;
+    * {
+      margin: 0 0.25rem;
+    }
+  }
+  fieldset {
+    border: 0;
+    border-bottom: 1px tint($primary-color, 90%) solid;
+    padding: 0 1rem 1rem 1rem;
+    margin: 0;
+  }
+  .fieldset-legend {
+    display: block;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: $body-font-bold;
+    padding: 1rem 0;
+    text-transform: uppercase;
+  }
+  .field-multiple-table {
+    width: 100%;
+    td {
+      padding: 1rem;
+    }
+  }
+  @media #{$large-up} {
+    .form-actions {
+      padding: 2rem;
+    }
+    fieldset {
+      padding: 0 2rem 2rem 2rem;
+    }
+    .fieldset-legend {
+      padding: 2rem 0;
+    }
+  }
+}
+
+// Color picker
+.sp-replacer,
+.sp-replacer:hover,
+.sp-replacer.sp-active,
+.sp-container,
+.sp-palette .sp-thumb-el:hover,
+.sp-palette .sp-thumb-el.sp-thumb-active {
+  border: 1px tint($primary-color, 80%) solid;
+  border-radius: $global-radius;
 }

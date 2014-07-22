@@ -1,5 +1,13 @@
+.page-views {
+  .column {
+    padding: 0 !important;
+  }
+  #page-title {
+    @extend .hd-xl;
+    margin-bottom: 2rem;
+  }
+}
 .page-node-edit {
-
   #page-title {
     @extend .hd-l;
     text-align: center;
@@ -13,7 +21,6 @@
       text-transform: uppercase;
     }
   }
-
   .node-form {
     @include grid-column(12);
     padding: 0 !important;

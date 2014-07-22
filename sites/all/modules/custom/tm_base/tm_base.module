@@ -23,6 +23,41 @@ function tm_base_menu() {
 }
 
 /**
+* Implements hook_form_alter().
+*/
+function tm_base_form_alter(&$form, &$form_state, $form_id) {
+  dsm($form);
+  if (isset($form['#node']) || isset($form['#user'])) {
+    if (isset($_GET['destination'])) {
+      $url = $_GET['destination'];
+    }
+    elseif (isset($form['#node']) && isset($form['#node']->nid)) {
+      $url = 'node/' . $form['#node']->nid;
+    }
+    elseif (isset($form['#user']) && $form['#user']->uid != 0) {
+      $url = 'user/' . $form['#user']->uid;
+    }
+    else {
+      $url = '<front>';
+    }
+    dsm($url);
+    // Add a cancel link.
+    $form['actions']['cancel'] = array(
+      '#markup' => l(t('Cancel'), $url),
+      '#weight' => 15
+    );
+  }
+}
+ 
+/**
+* Custom cancel button callback.
+*/
+function _tm_base_form_cancel($form, &$form_state) {
+  $url = $_GET['destination'] ? $_GET['destination'] : '';
+  drupal_goto($url);
+}
+
+/**
  * Implements hook_block_info()
  */
 function tm_base_block_info() {

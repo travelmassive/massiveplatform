@@ -59,7 +59,8 @@ label {
   color: tint($primary-color, 20%);
 }
 
-.node-form {
+.node-form,
+#user-profile-form {
   > div { @extend .contained; }
   .image-preview {
     border: 1px tint($primary-color, 90%) solid;

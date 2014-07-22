@@ -7,7 +7,8 @@
     margin-bottom: 2rem;
   }
 }
-.page-node-edit {
+.page-node-edit,
+.page-user-edit {
   #page-title {
     @extend .hd-l;
     text-align: center;
@@ -21,7 +22,8 @@
       text-transform: uppercase;
     }
   }
-  .node-form {
+  .node-form,
+  #user-profile-form {
     @include grid-column(12);
     padding: 0 !important;
     @media #{$medium-up} {

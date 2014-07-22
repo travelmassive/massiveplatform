@@ -65,7 +65,7 @@
         <?php print render($title_suffix); ?>
         <?php print render($page['header']); ?>
         <?php print $messages; ?>
-        <?php print render($tabs); ?>
+        <?php //print render($tabs); ?>
         <?php print render($page['help']); ?>
         <?php if ($action_links): ?>
           <ul class="action-links"><?php print render($action_links); ?></ul>

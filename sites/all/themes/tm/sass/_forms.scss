@@ -168,6 +168,47 @@ label {
   display: none;
 }
 
+// Messages
+
+.messages, .messages--status, .messages--warning, .messages--error {
+  position: relative;
+  border-radius: $global-radius;
+  border: none;
+  box-shadow: 0 0 0 1px rgba(#FFF, 0.6);
+  font-size: 0.85rem;
+  line-height: 1.25rem;
+  margin: 1rem 0;
+  padding: 1rem 1rem 1rem 3rem;
+  background: none;
+  color: #FFF;
+  &:before {
+    font-size: 1rem;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    height: 1.25rem;
+    line-height: 1.25rem;
+    width: 1.25rem;
+    border-radius: 12rem;
+    text-align: center;
+  }
+}
+
+.messages.status {
+  background: $primary-color;
+  &:before { @extend .icon-circle-info; }
+}
+
+.messages.warning {
+  background: #f39c12;
+  &:before { @extend .icon-circle-warning; }
+}
+
+.messages.error {
+  background: #e74c3c;
+  &:before { @extend .icon-circle-error; }
+}
+
 // Color picker
 .sp-replacer,
 .sp-replacer:hover,

@@ -4,11 +4,11 @@
   background-position: center center, center center;
   background-attachment: fixed, fixed;
   @include background-size(cover, cover);
-  
+
   #page, #site-canvas {
     background: none;
   }
-  
+
   #footer {
     background: rgba(#FFF, 0.1);
     color: #FFF;
@@ -35,7 +35,8 @@
 #upcoming-events {
   .hd {
     margin-bottom: 2rem;
-    
+    @extend %antialiased;
+    text-shadow: 0 2px 0 rgba($primary-color, 0.4);
     .prime-title {
       color: #FFF;
       text-align: center;
@@ -46,7 +47,7 @@
   .more-link {
     text-align: center;
     margin: 1rem 0 0 0;
-    
+
     .bttn {
       width: 14rem;
     }
@@ -130,11 +131,11 @@
       width: 14rem;
     }
   }
-  
+
   @media #{$small-up} {
     margin-bottom: 4rem;
   }
-  
+
   @media #{$medium-up} {
     .hd {
       @include grid-column($columns: 10, $push: 1);
@@ -164,7 +165,7 @@
 .trilithon-header {
   margin: 0 $column-gutter/2 $column-gutter/2 $column-gutter/2;
   position: relative;
-  
+
   .media {
     margin-bottom: -3rem;
     overflow: hidden;
@@ -301,7 +302,7 @@
     font-size: 0.875rem;
     width: 4rem;
   }
-  
+
   .actions {
     position: absolute;
     right: 0;
@@ -311,7 +312,7 @@
     padding: 1rem;
     border-top: 1px tint($primary-color, 90%) solid;
   }
-  
+
   .actions-menu {
     list-style: none;
     margin: 0;
@@ -325,7 +326,7 @@
       margin: 0 0.25rem;
     }
   }
-  
+
   @media #{$small-up} {
     margin-bottom: $column-gutter;
     .media {
@@ -371,7 +372,7 @@
       line-height: 1.5;
     }
   }
-  
+
   @media #{$medium-up} {
     .media {
       display: table-cell;
@@ -399,7 +400,7 @@
       width: 42%;
     }
   }
-  
+
   @media #{$large-up} {
     .media {
       width: 68%;

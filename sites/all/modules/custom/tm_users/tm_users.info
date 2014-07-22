@@ -116,3 +116,4 @@ features[variable][] = user_mail_status_canceled_subject
 features[variable][] = user_register
 features[variable][] = user_signatures
 features[views_view][] = community
+features[views_view][] = signups

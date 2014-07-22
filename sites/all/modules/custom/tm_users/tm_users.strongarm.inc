@@ -47,7 +47,7 @@ function tm_users_strongarm() {
       'display' => array(
         'masquerade' => array(
           'default' => array(
-            'weight' => '12',
+            'weight' => '15',
             'visible' => FALSE,
           ),
           'grid' => array(
@@ -61,7 +61,7 @@ function tm_users_strongarm() {
         ),
         'summary' => array(
           'default' => array(
-            'weight' => '11',
+            'weight' => '14',
             'visible' => FALSE,
           ),
           'grid' => array(

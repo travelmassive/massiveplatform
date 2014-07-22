@@ -564,7 +564,7 @@ function tm_events_ds_custom_fields_info() {
   );
   $ds_field->ui_limit = 'user|default';
   $ds_field->properties = array(
-    'block' => 'views|user_events-joined_event_list',
+    'block' => 'views|signups-block_joined_events',
     'block_render' => '3',
   );
   $export['joined_event_list'] = $ds_field;

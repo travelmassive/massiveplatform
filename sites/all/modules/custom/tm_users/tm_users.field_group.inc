@@ -84,7 +84,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Followers',
-    'weight' => '6',
+    'weight' => '7',
     'children' => array(
       0 => 'members_following_members',
     ),
@@ -107,7 +107,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'About',
-    'weight' => '5',
+    'weight' => '6',
     'children' => array(
       0 => 'field_about_me',
       1 => 'field_link_facebook',

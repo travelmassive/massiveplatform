@@ -71,7 +71,7 @@ function tm_chapters_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 31,
+      'weight' => 2,
     ),
   );
 
@@ -120,7 +120,7 @@ function tm_chapters_field_default_field_instances() {
       'module' => 'color_field',
       'settings' => array(),
       'type' => 'color_field_spectrum_widget',
-      'weight' => 35,
+      'weight' => 4,
     ),
   );
 
@@ -228,7 +228,7 @@ function tm_chapters_field_default_field_instances() {
         'size' => 40,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 32,
+      'weight' => 6,
     ),
   );
 
@@ -280,7 +280,7 @@ function tm_chapters_field_default_field_instances() {
         'size' => 10,
       ),
       'type' => 'text_textfield',
-      'weight' => 34,
+      'weight' => 3,
     ),
   );
 
@@ -361,7 +361,7 @@ function tm_chapters_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 33,
+      'weight' => 5,
     ),
   );
 
@@ -429,7 +429,7 @@ function tm_chapters_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 37,
+      'weight' => 42,
     ),
   );
 
@@ -497,7 +497,7 @@ function tm_chapters_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 38,
+      'weight' => 41,
     ),
   );
 
@@ -565,7 +565,7 @@ function tm_chapters_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 36,
+      'weight' => 40,
     ),
   );
 

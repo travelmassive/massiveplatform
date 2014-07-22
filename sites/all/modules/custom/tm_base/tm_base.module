@@ -26,35 +26,30 @@ function tm_base_menu() {
 * Implements hook_form_alter().
 */
 function tm_base_form_alter(&$form, &$form_state, $form_id) {
-  dsm($form);
+  // Add a cancel link to the node and user forms.
   if (isset($form['#node']) || isset($form['#user'])) {
+    // If destination is set, redirect there
     if (isset($_GET['destination'])) {
       $url = $_GET['destination'];
     }
+    // If edit form of existing node, redirect to node
     elseif (isset($form['#node']) && isset($form['#node']->nid)) {
       $url = 'node/' . $form['#node']->nid;
     }
+    // If edit form of existing user, redirect to user
     elseif (isset($form['#user']) && $form['#user']->uid != 0) {
       $url = 'user/' . $form['#user']->uid;
     }
+    // Everything else, go to frontpage
     else {
       $url = '<front>';
     }
-    dsm($url);
-    // Add a cancel link.
+    // Add the cancel link.
     $form['actions']['cancel'] = array(
-      '#markup' => l(t('Cancel'), $url),
-      '#weight' => 15
+      '#markup' => l(t('Cancel'), $url, array('attributes' => array('class' => array('bttn', 'bttn-tertiary', 'bttn-m', 'cancel')))),
+      '#weight' => 15,
     );
   }
-}
- 
-/**
-* Custom cancel button callback.
-*/
-function _tm_base_form_cancel($form, &$form_state) {
-  $url = $_GET['destination'] ? $_GET['destination'] : '';
-  drupal_goto($url);
 }
 
 /**

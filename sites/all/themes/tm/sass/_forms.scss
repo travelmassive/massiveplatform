@@ -60,7 +60,7 @@ label {
 }
 
 .node-form {
-  @extend .contained;
+  > div { @extend .contained; }
   .image-preview {
     border: 1px tint($primary-color, 90%) solid;
     padding: 0.25rem;

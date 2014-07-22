@@ -1,3 +1,31 @@
+.page-node-edit {
+
+  #page-title {
+    @extend .hd-l;
+    text-align: center;
+    margin-bottom: 2rem;
+    em {
+      font-size: 1rem;
+      line-height: 1.25rem;
+      display: block;
+      font-style: inherit;
+      color: tint($primary-color, 40%);
+      text-transform: uppercase;
+    }
+  }
+
+  .node-form {
+    @include grid-column(12);
+    padding: 0 !important;
+    @media #{$medium-up} {
+      @include grid-column($columns: 10, $offset: 1);
+    }
+    @media #{$large-up} {
+      @include grid-column($columns: 8, $offset: 2);
+    }
+  }
+}
+
 .front {
   @include background(linear-gradient(rgba($primary-color, 0), rgba($primary-color, 0), $primary-color), image-url("../images/layout/home-bg-img-01a.jpg"));
   background-repeat: no-repeat, no-repeat;

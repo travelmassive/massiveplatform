@@ -147,6 +147,51 @@ label {
   }
 }
 
+// Selects
+
+#edit-type-wrapper {
+  padding: 0;
+}
+
+.form-item-type {
+  @extend .bttn, .bttn-m, .bttn-secondary;
+  width: 16rem;
+  // border-radius: 3px;
+  // overflow: hidden;
+  // background: #fafafa url("img/icon-select.png") no-repeat 90% 50%;
+
+  @include transform(translate3d(0, 0, 0));
+  @include transition(opacity 0.2s ease 0);
+
+  &:after {
+    font-size: 1rem;
+    float: right;
+    margin-top: -1.5rem;
+    @extend .icon-s-arr-down;
+  }
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  select {
+    @extend %antialiased;
+    color: #FFF;
+    font-weight: $body-font-bold;
+    cursor: pointer;
+    padding: 0 1.5rem 0 0;
+    width: 200%;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
 // Draggable
 
 .draggable a.tabledrag-handle {

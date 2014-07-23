@@ -73,7 +73,7 @@ function tm_organizations_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 31,
+      'weight' => 2,
     ),
   );
 
@@ -144,7 +144,7 @@ function tm_organizations_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 38,
+      'weight' => 6,
     ),
   );
 
@@ -203,7 +203,7 @@ function tm_organizations_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 32,
+      'weight' => 8,
     ),
   );
 
@@ -283,7 +283,7 @@ function tm_organizations_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 34,
+      'weight' => 7,
     ),
   );
 
@@ -351,7 +351,7 @@ function tm_organizations_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 43,
+      'weight' => 50,
     ),
   );
 
@@ -419,7 +419,7 @@ function tm_organizations_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 41,
+      'weight' => 49,
     ),
   );
 
@@ -487,7 +487,7 @@ function tm_organizations_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 45,
+      'weight' => 48,
     ),
   );
 
@@ -609,7 +609,7 @@ function tm_organizations_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 48,
+      'weight' => 4,
     ),
   );
 
@@ -663,7 +663,7 @@ function tm_organizations_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 49,
+      'weight' => 5,
     ),
   );
 
@@ -771,7 +771,7 @@ function tm_organizations_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 36,
+      'weight' => 9,
     ),
   );
 
@@ -826,7 +826,7 @@ function tm_organizations_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'taxonomy_hs',
-      'weight' => 39,
+      'weight' => 3,
     ),
   );
 

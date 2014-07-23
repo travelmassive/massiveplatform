@@ -70,6 +70,23 @@ function tm_base_strongarm() {
         ),
       ),
     ),
+    'organization' => array(
+      'field_owner' => array(
+        'referenced' => array(
+          'view' => 'view',
+          'update' => 'update',
+          'delete' => 'delete',
+        ),
+        'author' => array(
+          'view' => 'view',
+          'update' => 'update',
+          'delete' => 'delete',
+        ),
+        'all' => array(
+          'view' => 'view',
+        ),
+      ),
+    ),
   );
   $export['nodeaccess_userreference'] = $strongarm;
 

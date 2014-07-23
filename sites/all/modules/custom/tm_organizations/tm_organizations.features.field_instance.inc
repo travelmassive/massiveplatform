@@ -671,6 +671,7 @@ function tm_organizations_field_default_field_instances() {
   $field_instances['node-organization-field_owner'] = array(
     'bundle' => 'organization',
     'default_value' => NULL,
+    'default_value_function' => '',
     'deleted' => 0,
     'description' => 'Select the Travel Massive member that manages this account.',
     'display' => array(
@@ -715,11 +716,50 @@ function tm_organizations_field_default_field_instances() {
         'weight' => 0,
       ),
     ),
+    'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_owner',
     'label' => 'Managed by',
     'required' => 0,
     'settings' => array(
+      'behaviors' => array(
+        'prepopulate' => array(
+          'status' => 0,
+        ),
+      ),
+      'nodeaccess_userreference' => array(
+        'all' => array(
+          'view' => 'view',
+        ),
+        'all_published' => 0,
+        'author' => array(
+          'delete' => 'delete',
+          'update' => 'update',
+          'view' => 'view',
+        ),
+        'author_published' => 0,
+        'create' => array(
+          'chapter' => 0,
+          'event' => 0,
+          'organization' => 0,
+          'partner_event' => 0,
+        ),
+        'priority' => 0,
+        'referenced' => array(
+          'delete' => 'delete',
+          'deny_delete' => 0,
+          'deny_update' => 0,
+          'deny_view' => 0,
+          'update' => 'update',
+          'view' => 'view',
+        ),
+        'referenced_published' => 0,
+        'unused' => 0,
+        'views' => array(
+          'view' => '',
+          'view_args' => '',
+        ),
+      ),
       'user_register_form' => FALSE,
     ),
     'widget' => array(

@@ -155,10 +155,7 @@ label {
 
 .form-item-type {
   @extend .bttn, .bttn-m, .bttn-secondary;
-  width: 16rem;
-  // border-radius: 3px;
-  // overflow: hidden;
-  // background: #fafafa url("img/icon-select.png") no-repeat 90% 50%;
+  width: 12rem;
 
   @include transform(translate3d(0, 0, 0));
   @include transition(opacity 0.2s ease 0);

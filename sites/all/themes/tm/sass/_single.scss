@@ -1,3 +1,44 @@
+.page-views {
+  #content > section > header {
+    @include grid-row($behavior: nest);
+  }
+  #block-views-exp-events-page {
+    float: left;
+  }
+  .views-submit-button {
+    padding: 0;
+  }
+  #page-title {
+    @include grid-column(12);
+  }
+  .region-header {
+    clear: none;
+    @include grid-column(12);
+  }
+
+  @media #{$small-up} {
+    #page-title {
+      @include grid-column(6);
+    }
+    .region-header {
+      @include grid-column(6);
+    }
+    #block-views-exp-events-page {
+      float: right;
+    }
+  }
+
+  @media #{$medium-up} {
+    #page-title {
+      @include grid-column(8);
+    }
+    .region-header {
+      @include grid-column(4);
+    }
+  }
+
+}
+
 .page-views,
 .page-node-edit,
 .page-user-edit {

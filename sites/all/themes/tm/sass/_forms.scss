@@ -5,14 +5,14 @@ input::-moz-focus-inner {
   margin-bottom: -2px;
 }
 
-.form-item {
+.form-item,
+#edit-field-event-date {
+  margin: 0;
+}
+
+.form-wrapper,
+.form-item-title {
   margin: 0 0 1rem 0;
-  .description {
-    color: tint($primary-color, 40%);
-    font-size: 0.85rem;
-    line-height: 1.25rem;
-    margin: 0.5rem 0 0 0;
-  }
 }
 
 input[type="file"] {
@@ -97,6 +97,7 @@ label {
   .form-actions {
     text-align: center;
     padding: 1rem;
+    margin: 0 !important;
     * {
       margin: 0 0.25rem;
     }
@@ -106,6 +107,15 @@ label {
     .form-text {
       width: 100%;
     }
+  }
+  .filter-wrapper {
+    display: none;
+  }
+  .description {
+    color: tint($primary-color, 40%);
+    font-size: 0.85rem;
+    line-height: 1.25rem;
+    margin: 0.5rem 0 0 0;
   }
   fieldset {
     border: 0;
@@ -127,6 +137,11 @@ label {
       padding: 1rem;
     }
   }
+  .container-inline-date .date-padding {
+    padding-left: 0;
+    padding-top: 0;
+  }
+
   @media #{$medium-up} {
     .link-field-column {
       width: 50%;
@@ -142,7 +157,7 @@ label {
       padding: 0 2rem 2rem 2rem;
     }
     .fieldset-legend {
-      padding: 2rem 0;
+      padding: 2rem 0 1.5rem 0;
     }
   }
 }
@@ -234,6 +249,7 @@ label {
   padding: 1rem 1rem 1rem 3rem;
   background: none;
   color: #FFF;
+  clear: both;
   &:before {
     font-size: 1rem;
     position: absolute;

@@ -1,18 +1,13 @@
-.page-views {
+.page-views,
+.page-node-edit,
+.page-user-edit {
   .column {
     padding: 0 !important;
   }
   #page-title {
-    @extend .hd-xl;
-    margin-bottom: 2rem;
-  }
-}
-.page-node-edit,
-.page-user-edit {
-  #page-title {
     @extend .hd-l;
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     em {
       font-size: 1rem;
       line-height: 1.25rem;
@@ -26,12 +21,28 @@
   #user-profile-form {
     @include grid-column(12);
     padding: 0 !important;
-    @media #{$medium-up} {
+  }
+
+  @media #{$medium-up} {
+    #page-title {
+      margin-bottom: 2rem;
+    }
+    .node-form,
+    #user-profile-form {
       @include grid-column($columns: 10, $offset: 1);
     }
-    @media #{$large-up} {
+  }
+  @media #{$large-up} {
+    .node-form,
+    #user-profile-form {
       @include grid-column($columns: 8, $offset: 2);
     }
+  }
+}
+
+.page-views {
+  #page-title {
+    text-align: left;
   }
 }
 

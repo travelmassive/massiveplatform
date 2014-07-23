@@ -15,6 +15,9 @@
     clear: none;
     @include grid-column(12);
   }
+  .messages {
+    margin: $column-gutter/2 $column-gutter/2 $column-gutter $column-gutter/2;
+  }
 
   @media #{$small-up} {
     #page-title {

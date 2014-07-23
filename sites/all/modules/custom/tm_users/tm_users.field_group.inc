@@ -76,6 +76,29 @@ function tm_users_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_city_list_wrapper|user|user|default';
+  $field_group->group_name = 'group_city_list_wrapper';
+  $field_group->entity_type = 'user';
+  $field_group->bundle = 'user';
+  $field_group->mode = 'default';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Cities joined',
+    'weight' => '8',
+    'children' => array(
+      0 => 'joined_city_list',
+    ),
+    'format_type' => 'contained_block',
+    'format_settings' => array(
+      'label' => 'Cities joined',
+      'formatter' => 'open',
+    ),
+  );
+  $export['group_city_list_wrapper|user|user|default'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_community_wrapper|user|user|default';
   $field_group->group_name = 'group_community_wrapper';
   $field_group->entity_type = 'user';
@@ -125,6 +148,29 @@ function tm_users_field_group_info() {
     ),
   );
   $export['group_details_wrapper|user|user|default'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_event_list_wrapper|user|user|default';
+  $field_group->group_name = 'group_event_list_wrapper';
+  $field_group->entity_type = 'user';
+  $field_group->bundle = 'user';
+  $field_group->mode = 'default';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Events joined',
+    'weight' => '10',
+    'children' => array(
+      0 => 'joined_event_list',
+    ),
+    'format_type' => 'contained_block',
+    'format_settings' => array(
+      'label' => 'Events joined',
+      'formatter' => 'open',
+    ),
+  );
+  $export['group_event_list_wrapper|user|user|default'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */

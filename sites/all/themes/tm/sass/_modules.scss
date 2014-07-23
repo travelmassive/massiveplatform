@@ -92,7 +92,8 @@
       color: tint($primary-color, 60%);
     }
 
-    &.field-location {
+    &.field-location,
+    &.location {
       span {
         &:after {
           content: ', ';

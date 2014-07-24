@@ -94,8 +94,8 @@
   @include background(linear-gradient(rgba($primary-color, 0), rgba($primary-color, 0), $primary-color), image-url("../images/layout/home-bg-img-01a.jpg"));
   background-repeat: no-repeat, no-repeat;
   background-position: center center, center center;
-  background-attachment: fixed, fixed;
-  @include background-size(cover, cover);
+  @include background-size(100% 100%, cover);
+  background-color: $primary-color;
 
   #page, #site-canvas {
     background: none;
@@ -117,6 +117,10 @@
   #foot-credits {
     opacity: 0.5;
     border-top-color: rgba(#FFF, 0.2);
+  }
+  @media #{$small-up} {
+    @include background-size(cover, cover);
+    background-attachment: fixed, fixed;
   }
 }
 

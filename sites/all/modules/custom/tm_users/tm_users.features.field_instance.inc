@@ -53,7 +53,7 @@ function tm_users_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 5,
+      'weight' => 36,
     ),
   );
 
@@ -118,7 +118,7 @@ function tm_users_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 7,
+      'weight' => 37,
     ),
   );
 
@@ -152,7 +152,7 @@ function tm_users_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'user',
     'field_name' => 'field_chapter',
-    'label' => 'City',
+    'label' => 'City (Home Chapter)',
     'required' => 0,
     'settings' => array(
       'behaviors' => array(
@@ -171,7 +171,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 9,
+      'weight' => 39,
     ),
   );
 
@@ -216,7 +216,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 27,
     ),
   );
 
@@ -277,7 +277,7 @@ function tm_users_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 8,
+      'weight' => 38,
     ),
   );
 
@@ -325,7 +325,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 29,
+      'weight' => 44,
     ),
   );
 
@@ -373,7 +373,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 28,
+      'weight' => 42,
     ),
   );
 
@@ -434,7 +434,7 @@ function tm_users_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 17,
+      'weight' => 53,
     ),
   );
 
@@ -495,7 +495,7 @@ function tm_users_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 19,
+      'weight' => 52,
     ),
   );
 
@@ -556,7 +556,7 @@ function tm_users_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 21,
+      'weight' => 51,
     ),
   );
 
@@ -617,7 +617,7 @@ function tm_users_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 23,
+      'weight' => 50,
     ),
   );
 
@@ -664,7 +664,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 25,
+      'weight' => 40,
     ),
   );
 
@@ -711,7 +711,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 27,
+      'weight' => 41,
     ),
   );
 
@@ -755,7 +755,7 @@ function tm_users_field_default_field_instances() {
       'module' => 'hs_taxonomy',
       'settings' => array(),
       'type' => 'taxonomy_hs',
-      'weight' => 10,
+      'weight' => 43,
     ),
   );
 
@@ -801,7 +801,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 3,
+      'weight' => 34,
     ),
   );
 
@@ -847,7 +847,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 4,
+      'weight' => 35,
     ),
   );
 
@@ -894,7 +894,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 11,
+      'weight' => 45,
     ),
   );
 
@@ -941,7 +941,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 12,
+      'weight' => 46,
     ),
   );
 
@@ -988,7 +988,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 14,
+      'weight' => 48,
     ),
   );
 
@@ -1035,7 +1035,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 13,
+      'weight' => 47,
     ),
   );
 
@@ -1082,7 +1082,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 15,
+      'weight' => 49,
     ),
   );
 
@@ -1093,6 +1093,7 @@ function tm_users_field_default_field_instances() {
   t('Banner');
   t('By picking a custom URL, you make sure that your profile is accesible through a friendly URL. For example: http://travelmassive.com/your-url');
   t('City');
+  t('City (Home Chapter)');
   t('Country');
   t('Facebook');
   t('First name');

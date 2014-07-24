@@ -115,6 +115,7 @@ label {
     #edit-field-avatar-und-0-remove-button {
       display: block;
       margin-top: 0.25rem !important;
+      @extend .bttn-s;
     }
   }
   .form-actions {
@@ -282,6 +283,20 @@ label {
     }
     .horizontal-tabs-pane {
       padding: 0;
+      max-height: 352rem;
+      opacity: 1;
+      @include transition-property(max-height, opacity);
+      @include transition-duration(0.4s, 0.2s);
+      @include transition-timing-function(linear, linear);
+      @include transition-delay(0, 0);
+      overflow: visible;
+      &.horizontal-tab-hidden {
+        position: static;
+        top: 0;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+      }
     }
   }
   @media #{$large-up} {

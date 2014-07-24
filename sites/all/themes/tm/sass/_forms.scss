@@ -120,7 +120,8 @@ label {
     line-height: 1.25rem;
     margin: 0.5rem 0 0 0;
   }
-  fieldset {
+  .field-group-fieldset,
+  .form-field-type-datetime fieldset {
     border: 0;
     border-bottom: 1px tint($primary-color, 90%) solid;
     padding: 0 1rem 1rem 1rem;
@@ -156,11 +157,62 @@ label {
     .form-actions {
       padding: 2rem;
     }
-    fieldset {
+    .field-group-fieldset,
+    .form-field-type-datetime fieldset {
       padding: 0 2rem 2rem 2rem;
     }
     .fieldset-legend {
       padding: 2rem 0 1.5rem 0;
+    }
+  }
+}
+
+// Tabs
+
+.page-user-edit {
+  .horizontal-tabs {
+    border: none;
+    padding: 0;
+    margin: 0;
+    .horizontal-tabs-list {
+      border: none;
+      background: tint($primary-color, 80%);
+      border-radius: $global-radius $global-radius 0 0;
+      li, li.selected {
+        border: 0;
+        background: none;
+        padding: 0;
+        a {
+          padding: 0.5rem 1rem;
+          color: $primary-color;
+          &:hover {
+            background: inherit;
+          }
+        }
+      }
+      li.selected a {
+        background: #FFF;
+        &:hover {
+          background: #FFF;
+        }
+      }
+      li:first-child a {
+        border-radius: $global-radius 0 0 0;
+      }
+    }
+    .horizontal-tabs-pane {
+      padding: 0;
+    }
+  }
+  @media #{$large-up} {
+    .horizontal-tabs {
+      .horizontal-tabs-list {
+        li, li.selected {
+          a {
+            padding: 1rem 2rem;
+          }
+        }
+      }
     }
   }
 }

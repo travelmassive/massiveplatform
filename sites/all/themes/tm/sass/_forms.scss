@@ -211,10 +211,13 @@ label {
       border-radius: $global-radius;
     }
   }
+  select {
+    width: 100%;
+    font-size: 0.85rem;
+  }
   .selects {
     select {
       margin: 0 0 0.5rem 0;
-      width: 100%;
     }
     .grippie {
       margin: -0.25rem 0 0 0;
@@ -265,6 +268,9 @@ label {
         a {
           padding: 0.5rem 1rem;
           color: $primary-color;
+          &:focus {
+            opacity: 1;
+          }
           &:hover {
             background: inherit;
           }

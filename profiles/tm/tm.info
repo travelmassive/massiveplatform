@@ -29,6 +29,7 @@ dependencies[] = date_popup
 dependencies[] = diff
 dependencies[] = ds
 dependencies[] = ds_extras
+dependencies[] = ds_search
 dependencies[] = ds_ui
 dependencies[] = email
 dependencies[] = entity

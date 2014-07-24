@@ -12,7 +12,8 @@ input::-moz-focus-inner {
 
 .form-wrapper,
 .form-item-title {
-  margin: 0 0 1rem 0;
+  margin: 0;
+  // margin: 0 0 1rem 0;
 }
 
 input[type="file"] {
@@ -44,14 +45,25 @@ textarea {
 }
 
 html.js .form-text.form-autocomplete {
-  background-position: 100% 0.65rem;
+  background-position: 98% 0.65rem;
   &.throbbing {
-    background-position: 100% -0.85rem;
+    background-position: 98% -0.85rem;
   }
 }
 
 .form-submit {
-  @extend .bttn-secondary, .bttn-m;
+  @extend .bttn-tertiary, .bttn-m;
+  &:before {
+    @extend .icon-s-tick;
+  }
+}
+
+#edit-submit {
+  @extend .bttn-success, .bttn-m;
+}
+
+#edit-delete {
+  @extend .bttn-danger, .bttn-m;
 }
 
 label {
@@ -60,6 +72,12 @@ label {
   font-weight: $body-font-bold;
   margin-bottom: 0.5rem;
   color: tint($primary-color, 20%);
+  margin-top: 1.5rem;
+}
+
+.form-type-link-field > label {
+  margin-bottom: -1rem;
+  text-transform: uppercase;
 }
 
 .node-form,
@@ -73,6 +91,7 @@ label {
     img {
       display: block;
       border-radius: $global-radius;
+      width: 6rem;
     }
   }
   .image-widget-data {
@@ -92,7 +111,8 @@ label {
       text-overflow: ellipsis;
       margin-right: 0.25rem;
     }
-    #edit-field-image-und-0-remove-button {
+    #edit-field-image-und-0-remove-button,
+    #edit-field-avatar-und-0-remove-button {
       display: block;
       margin-top: 0.25rem !important;
     }
@@ -121,10 +141,11 @@ label {
     margin: 0.5rem 0 0 0;
   }
   .field-group-fieldset,
-  .form-field-type-datetime fieldset {
+  .form-field-type-datetime fieldset,
+  #edit-timezone {
     border: 0;
     border-bottom: 1px tint($primary-color, 90%) solid;
-    padding: 0 1rem 1rem 1rem;
+    padding: 0 1rem 1.5rem 1rem;
     margin: 0;
   }
   .fieldset-legend {
@@ -132,7 +153,7 @@ label {
     font-size: 1rem;
     line-height: 1.5rem;
     font-weight: $body-font-bold;
-    padding: 1rem 0;
+    padding: 1rem 0 0 0;
     text-transform: uppercase;
   }
   .field-multiple-table {
@@ -144,6 +165,59 @@ label {
   .container-inline-date .date-padding {
     padding-left: 0;
     padding-top: 0;
+  }
+  .password-parent, .confirm-parent {
+    width: auto;
+    position: relative;
+    padding-bottom: 2rem;
+  }
+  .password-strength,
+  div.password-confirm {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    float: none;
+    margin: 0;
+    width: 100%;
+    font-size: 0.85rem;
+    line-height: 1.5rem;
+    visibility: visible !important;
+  }
+  .password-strength-text {
+    font-weight: $body-font-bold;
+    color: tint($primary-color, 40%);
+  }
+  .password-suggestions {
+    border-radius: $global-radius;
+    background: tint($primary-color, 95%);
+    padding: 1rem;
+    color: tint($primary-color, 40%);
+    font-size: 0.85rem;
+    line-height: 1.25rem;
+    width: auto;
+    border: none;
+    ul {
+      padding: 0 0 0 2rem;
+      margin: 0.5rem 0 0 0;
+    }
+  }
+  .password-indicator {
+    height: 0.25rem;
+    background: tint($primary-color, 80%);
+    border-radius: $global-radius;
+    div {
+      background: $success-color;
+      border-radius: $global-radius;
+    }
+  }
+  .selects {
+    select {
+      margin: 0 0 0.5rem 0;
+      width: 100%;
+    }
+    .grippie {
+      margin: -0.25rem 0 0 0;
+    }
   }
 
   @media #{$medium-up} {
@@ -158,13 +232,18 @@ label {
       padding: 2rem;
     }
     .field-group-fieldset,
-    .form-field-type-datetime fieldset {
+    .form-field-type-datetime fieldset,
+    #edit-timezone {
       padding: 0 2rem 2rem 2rem;
     }
     .fieldset-legend {
-      padding: 2rem 0 1.5rem 0;
+      padding: 2rem 0 0 0;
     }
   }
+}
+
+.hierarchical-select-wrapper .nojs .help-text {
+  display: none;
 }
 
 // Tabs
@@ -196,6 +275,7 @@ label {
           background: #FFF;
         }
       }
+      li:first-child,
       li:first-child a {
         border-radius: $global-radius 0 0 0;
       }
@@ -213,6 +293,18 @@ label {
           }
         }
       }
+    }
+  }
+}
+
+// Collapsables
+
+html.js .collapsible .fieldset-legend {
+  background: none;
+  a {
+    &:after {
+      @extend .icon-s-arr-down;
+      margin-left: 0.25rem;
     }
   }
 }
@@ -303,11 +395,11 @@ select {
   position: relative;
   border-radius: $global-radius;
   border: none;
-  box-shadow: 0 0 0 1px rgba(#FFF, 0.6);
+  box-shadow: 0 0 0 4px rgba(#FFF, 0.5);
   font-size: 0.85rem;
   line-height: 1.25rem;
   margin: 1rem 0;
-  padding: 1rem 1rem 1rem 3rem;
+  padding: 1rem 1rem 1rem 2.75rem;
   background: none;
   color: #FFF;
   clear: both;
@@ -322,20 +414,28 @@ select {
     border-radius: 12rem;
     text-align: center;
   }
+  a, a:visited, a:hover {
+    color: #FFF;
+    text-decoration: underline;
+  }
+  .messages__list {
+    margin: 0 0 0 1rem;
+    padding: 0;
+  }
 }
 
 .messages.status {
-  background: $primary-color;
-  &:before { @extend .icon-circle-info; }
+  background: $success-color;
+  &:before { @extend .icon-s-tick; }
 }
 
 .messages.warning {
-  background: #f39c12;
+  background: $warning-color;
   &:before { @extend .icon-circle-warning; }
 }
 
 .messages.error {
-  background: #e74c3c;
+  background: $danger-color;
   &:before { @extend .icon-circle-error; }
 }
 

@@ -736,6 +736,40 @@ function tm_events_ds_layout_settings_info() {
 
   $ds_layout = new stdClass();
   $ds_layout->api_version = 1;
+  $ds_layout->id = 'node|event|search_result';
+  $ds_layout->entity_type = 'node';
+  $ds_layout->bundle = 'event';
+  $ds_layout->view_mode = 'search_result';
+  $ds_layout->layout = 'list_item';
+  $ds_layout->settings = array(
+    'regions' => array(
+      'li_content' => array(
+        0 => 'title',
+        1 => 'tm_ds_content_type',
+        2 => 'body',
+        3 => 'group_summary_wrapper',
+      ),
+    ),
+    'fields' => array(
+      'title' => 'li_content',
+      'tm_ds_content_type' => 'li_content',
+      'body' => 'li_content',
+      'group_summary_wrapper' => 'li_content',
+    ),
+    'classes' => array(),
+    'wrappers' => array(
+      'li_content' => 'div',
+    ),
+    'layout_wrapper' => 'article',
+    'layout_attributes' => '',
+    'layout_attributes_merge' => 1,
+    'layout_link_attribute' => '',
+    'layout_link_custom' => '',
+  );
+  $export['node|event|search_result'] = $ds_layout;
+
+  $ds_layout = new stdClass();
+  $ds_layout->api_version = 1;
   $ds_layout->id = 'node|partner_event|full';
   $ds_layout->entity_type = 'node';
   $ds_layout->bundle = 'partner_event';
@@ -835,6 +869,40 @@ function tm_events_ds_layout_settings_info() {
     'layout_link_custom' => '',
   );
   $export['node|partner_event|grid'] = $ds_layout;
+
+  $ds_layout = new stdClass();
+  $ds_layout->api_version = 1;
+  $ds_layout->id = 'node|partner_event|search_result';
+  $ds_layout->entity_type = 'node';
+  $ds_layout->bundle = 'partner_event';
+  $ds_layout->view_mode = 'search_result';
+  $ds_layout->layout = 'list_item';
+  $ds_layout->settings = array(
+    'regions' => array(
+      'li_content' => array(
+        0 => 'title',
+        1 => 'tm_ds_content_type',
+        2 => 'body',
+        3 => 'group_summary_wrapper',
+      ),
+    ),
+    'fields' => array(
+      'title' => 'li_content',
+      'tm_ds_content_type' => 'li_content',
+      'body' => 'li_content',
+      'group_summary_wrapper' => 'li_content',
+    ),
+    'classes' => array(),
+    'wrappers' => array(
+      'li_content' => 'div',
+    ),
+    'layout_wrapper' => 'article',
+    'layout_attributes' => '',
+    'layout_attributes_merge' => 1,
+    'layout_link_attribute' => '',
+    'layout_link_custom' => '',
+  );
+  $export['node|partner_event|search_result'] = $ds_layout;
 
   return $export;
 }

@@ -61,14 +61,20 @@ function tm_organizations_strongarm() {
       'revision' => array(
         'custom_settings' => FALSE,
       ),
+      'search_result' => array(
+        'custom_settings' => TRUE,
+      ),
+      'search_index' => array(
+        'custom_settings' => FALSE,
+      ),
     ),
     'extra_fields' => array(
       'form' => array(
         'title' => array(
-          'weight' => '1',
+          'weight' => '-5',
         ),
         'path' => array(
-          'weight' => '10',
+          'weight' => '30',
         ),
       ),
       'display' => array(),

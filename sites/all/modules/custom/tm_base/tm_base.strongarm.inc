@@ -25,11 +25,11 @@ function tm_base_strongarm() {
     'event' => array(
       'field_chapter' => array(
         'referenced' => array(
-          'view' => array(
-            'view' => 'view',
-          ),
           'update' => array(
             'update' => 'update',
+          ),
+          'view' => array(
+            'view' => 'view',
           ),
         ),
         'field_type' => 'entityreference',
@@ -72,17 +72,17 @@ function tm_base_strongarm() {
     ),
     'organization' => array(
       'field_owner' => array(
-        'referenced' => array(
+        'all' => array(
           'view' => 'view',
-          'update' => 'update',
-          'delete' => 'delete',
         ),
         'author' => array(
-          'view' => 'view',
-          'update' => 'update',
           'delete' => 'delete',
+          'update' => 'update',
+          'view' => 'view',
         ),
-        'all' => array(
+        'referenced' => array(
+          'delete' => 'delete',
+          'update' => 'update',
           'view' => 'view',
         ),
       ),

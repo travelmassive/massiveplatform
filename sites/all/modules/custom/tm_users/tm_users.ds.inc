@@ -60,6 +60,11 @@ function tm_users_ds_field_settings_info() {
         ),
       ),
     ),
+    'tm_ds_content_type' => array(
+      'weight' => '10',
+      'label' => 'hidden',
+      'format' => 'default',
+    ),
     'tm_ds_chapter_sticker' => array(
       'weight' => '5',
       'label' => 'hidden',
@@ -420,72 +425,74 @@ function tm_users_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
+      'header_media' => array(
+        0 => 'field_image',
+      ),
       'header_body' => array(
-        0 => 'tm_ds_edit_own_profile',
-        2 => 'flag_follow_members',
+        1 => 'tm_ds_edit_own_profile',
+        2 => 'field_job_role',
         3 => 'field_avatar',
-        4 => 'field_job_role',
-        5 => 'tm_ds_anon_flag_placeholder',
+        4 => 'flag_follow_members',
+        5 => 'field_job_organization',
         6 => 'name',
-        7 => 'field_job_organization',
+        7 => 'tm_ds_anon_flag_placeholder',
         8 => 'tm_ds_more_actions',
         9 => 'group_job_wrapper',
         10 => 'group_action_menu_wrapper',
         15 => 'group_action_menu',
-      ),
-      'header_media' => array(
-        1 => 'field_image',
       ),
       'header_extra' => array(
         11 => 'tm_ds_chapter_sticker',
       ),
       'first_column' => array(
         12 => 'group_details_wrapper',
-        20 => 'field_about_me',
-        21 => 'field_segment',
-        22 => 'field_link_facebook',
-        23 => 'field_user_question_destination',
-        24 => 'field_user_question_dream_travel',
-        25 => 'group_user_qa',
-        26 => 'field_link_linkedin',
-        27 => 'field_link_twitter',
-        28 => 'field_user_question_learn',
-        29 => 'field_link_website',
+        21 => 'field_about_me',
+        22 => 'field_segment',
+        23 => 'field_link_facebook',
+        24 => 'field_user_question_destination',
+        25 => 'field_user_question_dream_travel',
+        26 => 'group_user_qa',
+        27 => 'field_link_linkedin',
+        28 => 'field_link_twitter',
+        29 => 'field_user_question_learn',
         30 => 'field_user_question_job',
-        31 => 'group_user_qa_wrapper',
+        31 => 'field_link_website',
         32 => 'field_user_question_why_travel',
-        33 => 'field_location_city',
-        34 => 'group_location_wrapper',
-        35 => 'field_location_country',
+        33 => 'group_user_qa_wrapper',
+        34 => 'field_location_city',
+        35 => 'group_location_wrapper',
+        36 => 'field_location_country',
       ),
       'second_column' => array(
-        13 => 'members_following_members',
-        14 => 'group_community_wrapper',
+        13 => 'group_community_wrapper',
+        14 => 'members_following_members',
         16 => 'group_city_list_wrapper',
         17 => 'group_event_list_wrapper',
-        18 => 'joined_city_list',
-        19 => 'joined_event_list',
+        18 => 'tm_ds_content_type',
+        19 => 'joined_city_list',
+        20 => 'joined_event_list',
       ),
     ),
     'fields' => array(
-      'tm_ds_edit_own_profile' => 'header_body',
       'field_image' => 'header_media',
-      'flag_follow_members' => 'header_body',
-      'field_avatar' => 'header_body',
+      'tm_ds_edit_own_profile' => 'header_body',
       'field_job_role' => 'header_body',
-      'tm_ds_anon_flag_placeholder' => 'header_body',
-      'name' => 'header_body',
+      'field_avatar' => 'header_body',
+      'flag_follow_members' => 'header_body',
       'field_job_organization' => 'header_body',
+      'name' => 'header_body',
+      'tm_ds_anon_flag_placeholder' => 'header_body',
       'tm_ds_more_actions' => 'header_body',
       'group_job_wrapper' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
       'tm_ds_chapter_sticker' => 'header_extra',
       'group_details_wrapper' => 'first_column',
-      'members_following_members' => 'second_column',
       'group_community_wrapper' => 'second_column',
+      'members_following_members' => 'second_column',
       'group_action_menu' => 'header_body',
       'group_city_list_wrapper' => 'second_column',
       'group_event_list_wrapper' => 'second_column',
+      'tm_ds_content_type' => 'second_column',
       'joined_city_list' => 'second_column',
       'joined_event_list' => 'second_column',
       'field_about_me' => 'first_column',
@@ -497,10 +504,10 @@ function tm_users_ds_layout_settings_info() {
       'field_link_linkedin' => 'first_column',
       'field_link_twitter' => 'first_column',
       'field_user_question_learn' => 'first_column',
-      'field_link_website' => 'first_column',
       'field_user_question_job' => 'first_column',
-      'group_user_qa_wrapper' => 'first_column',
+      'field_link_website' => 'first_column',
       'field_user_question_why_travel' => 'first_column',
+      'group_user_qa_wrapper' => 'first_column',
       'field_location_city' => 'first_column',
       'group_location_wrapper' => 'first_column',
       'field_location_country' => 'first_column',
@@ -594,6 +601,40 @@ function tm_users_ds_layout_settings_info() {
     'layout_link_custom' => '',
   );
   $export['user|user|list'] = $ds_layout;
+
+  $ds_layout = new stdClass();
+  $ds_layout->api_version = 1;
+  $ds_layout->id = 'user|user|search_result';
+  $ds_layout->entity_type = 'user';
+  $ds_layout->bundle = 'user';
+  $ds_layout->view_mode = 'search_result';
+  $ds_layout->layout = 'list_item';
+  $ds_layout->settings = array(
+    'regions' => array(
+      'li_content' => array(
+        0 => 'field_about_me',
+        1 => 'name',
+        2 => 'tm_ds_content_type',
+        3 => 'group_summary_wrapper',
+      ),
+    ),
+    'fields' => array(
+      'field_about_me' => 'li_content',
+      'name' => 'li_content',
+      'tm_ds_content_type' => 'li_content',
+      'group_summary_wrapper' => 'li_content',
+    ),
+    'classes' => array(),
+    'wrappers' => array(
+      'li_content' => 'div',
+    ),
+    'layout_wrapper' => 'div',
+    'layout_attributes' => '',
+    'layout_attributes_merge' => 1,
+    'layout_link_attribute' => '',
+    'layout_link_custom' => '',
+  );
+  $export['user|user|search_result'] = $ds_layout;
 
   return $export;
 }

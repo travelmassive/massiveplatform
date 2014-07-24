@@ -188,3 +188,9 @@ function tm_base_update_7015() {
 function tm_base_update_7016() {
   module_enable(array('date_popup'));
 }
+/**
+ * Enable the TM search, the core search and the DS search modules.
+ */
+function tm_base_update_7017() {
+  module_enable(array('tm_search', 'search', 'ds_search'));
+}

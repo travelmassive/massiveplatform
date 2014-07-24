@@ -47,6 +47,12 @@ function tm_event_signup_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 7,
       ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 24,
+      ),
     ),
     'entity_type' => 'node',
     'field_name' => 'field_external_rsvp',
@@ -106,6 +112,12 @@ function tm_event_signup_field_default_field_instances() {
         'settings' => array(),
         'type' => 'hidden',
         'weight' => 3,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 20,
       ),
       'teaser' => array(
         'label' => 'above',

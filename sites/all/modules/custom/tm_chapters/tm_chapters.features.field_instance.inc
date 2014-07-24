@@ -44,6 +44,15 @@ function tm_chapters_field_default_field_instances() {
         'type' => 'text_default',
         'weight' => 0,
       ),
+      'search_result' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(
+          'trim_length' => 200,
+        ),
+        'type' => 'text_trimmed',
+        'weight' => 3,
+      ),
       'teaser' => array(
         'label' => 'hidden',
         'module' => 'text',
@@ -106,6 +115,12 @@ function tm_chapters_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 0,
       ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 21,
+      ),
     ),
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
@@ -165,6 +180,12 @@ function tm_chapters_field_default_field_instances() {
         ),
         'type' => 'entityreference_label',
         'weight' => 1,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 18,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -263,6 +284,12 @@ function tm_chapters_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 0,
       ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 20,
+      ),
     ),
     'ds_extras_field_template' => 'theme_ds_field_reset',
     'entity_type' => 'node',
@@ -292,12 +319,8 @@ function tm_chapters_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'image',
-        'settings' => array(
-          'image_link' => '',
-          'image_style' => '',
-        ),
-        'type' => 'image',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 2,
       ),
       'full' => array(
@@ -329,6 +352,12 @@ function tm_chapters_field_default_field_instances() {
         ),
         'type' => 'image',
         'weight' => 2,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 19,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -374,9 +403,8 @@ function tm_chapters_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'link',
         'settings' => array(),
-        'type' => 'link_default',
+        'type' => 'hidden',
         'weight' => 6,
       ),
       'full' => array(
@@ -397,6 +425,12 @@ function tm_chapters_field_default_field_instances() {
         'settings' => array(),
         'type' => 'hidden',
         'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 23,
       ),
     ),
     'ds_extras_field_template' => '',
@@ -442,9 +476,8 @@ function tm_chapters_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'link',
         'settings' => array(),
-        'type' => 'link_default',
+        'type' => 'hidden',
         'weight' => 7,
       ),
       'full' => array(
@@ -465,6 +498,12 @@ function tm_chapters_field_default_field_instances() {
         'settings' => array(),
         'type' => 'hidden',
         'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 24,
       ),
     ),
     'ds_extras_field_template' => '',
@@ -510,9 +549,8 @@ function tm_chapters_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'link',
         'settings' => array(),
-        'type' => 'link_default',
+        'type' => 'hidden',
         'weight' => 5,
       ),
       'full' => array(
@@ -533,6 +571,12 @@ function tm_chapters_field_default_field_instances() {
         'settings' => array(),
         'type' => 'hidden',
         'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 22,
       ),
     ),
     'ds_extras_field_template' => '',
@@ -578,9 +622,8 @@ function tm_chapters_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'link',
         'settings' => array(),
-        'type' => 'link_default',
+        'type' => 'hidden',
         'weight' => 8,
       ),
       'full' => array(
@@ -601,6 +644,12 @@ function tm_chapters_field_default_field_instances() {
         'settings' => array(),
         'type' => 'hidden',
         'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 25,
       ),
     ),
     'ds_extras_field_template' => '',

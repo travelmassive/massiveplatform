@@ -160,7 +160,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Events joined',
-    'weight' => '10',
+    'weight' => '9',
     'children' => array(
       0 => 'joined_event_list',
     ),
@@ -261,6 +261,35 @@ function tm_users_field_group_info() {
     ),
   );
   $export['group_location_wrapper|user|user|default'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_summary_wrapper|user|user|search_result';
+  $field_group->group_name = 'group_summary_wrapper';
+  $field_group->entity_type = 'user';
+  $field_group->bundle = 'user';
+  $field_group->mode = 'search_result';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Summary',
+    'weight' => '2',
+    'children' => array(
+      0 => 'field_about_me',
+    ),
+    'format_type' => 'html-element',
+    'format_settings' => array(
+      'label' => 'Summary',
+      'instance_settings' => array(
+        'classes' => 'summary',
+        'element' => 'div',
+        'show_label' => '0',
+        'label_element' => '',
+        'attributes' => '',
+      ),
+    ),
+  );
+  $export['group_summary_wrapper|user|user|search_result'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */

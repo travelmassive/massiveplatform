@@ -411,5 +411,39 @@ function tm_organizations_ds_layout_settings_info() {
   );
   $export['node|organization|grid'] = $ds_layout;
 
+  $ds_layout = new stdClass();
+  $ds_layout->api_version = 1;
+  $ds_layout->id = 'node|organization|search_result';
+  $ds_layout->entity_type = 'node';
+  $ds_layout->bundle = 'organization';
+  $ds_layout->view_mode = 'search_result';
+  $ds_layout->layout = 'list_item';
+  $ds_layout->settings = array(
+    'regions' => array(
+      'li_content' => array(
+        0 => 'title',
+        1 => 'body',
+        2 => 'tm_ds_content_type',
+        3 => 'group_summary_wrapper',
+      ),
+    ),
+    'fields' => array(
+      'title' => 'li_content',
+      'body' => 'li_content',
+      'tm_ds_content_type' => 'li_content',
+      'group_summary_wrapper' => 'li_content',
+    ),
+    'classes' => array(),
+    'wrappers' => array(
+      'li_content' => 'div',
+    ),
+    'layout_wrapper' => 'article',
+    'layout_attributes' => '',
+    'layout_attributes_merge' => 1,
+    'layout_link_attribute' => '',
+    'layout_link_custom' => '',
+  );
+  $export['node|organization|search_result'] = $ds_layout;
+
   return $export;
 }

@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the tm_search feature.
+ */
+
+include_once 'tm_search.features.inc';

@@ -76,14 +76,13 @@ label {
   margin-top: 1.5rem;
 }
 
-.form-type-link-field > label {
-  margin-bottom: -1rem;
-  text-transform: uppercase;
-}
+// .form-type-link-field > label {
+//   margin-bottom: -1rem;
+//   text-transform: uppercase;
+// }
 
 .node-form,
 #user-profile-form {
-  > div { @extend .contained; }
   .image-preview {
     border: 1px tint($primary-color, 90%) solid;
     padding: 0.25rem;
@@ -119,16 +118,9 @@ label {
       @extend .bttn-s;
     }
   }
-  .form-actions {
-    text-align: center;
-    padding: 1rem;
-    margin: 0 !important;
-    * {
-      margin: 0 0.25rem;
-    }
-  }
   .link-field-column {
     width: 100%;
+    margin-top: -1rem;
     .form-text {
       width: 100%;
     }
@@ -142,20 +134,12 @@ label {
     line-height: 1.25rem;
     margin: 0.5rem 0 0 0;
   }
-  .field-group-fieldset,
-  .form-field-type-datetime fieldset,
-  #edit-timezone {
-    border: 0;
-    border-bottom: 1px tint($primary-color, 90%) solid;
-    padding: 0 1rem 1.5rem 1rem;
-    margin: 0;
-  }
   .fieldset-legend {
     display: block;
     font-size: 1rem;
     line-height: 1.5rem;
     font-weight: $body-font-bold;
-    padding: 1rem 0 0 0;
+    padding: 0;
     text-transform: uppercase;
   }
   .field-multiple-table {
@@ -224,6 +208,26 @@ label {
       margin: -0.25rem 0 0 0;
     }
   }
+  > div {
+    @extend .contained;
+    padding: 1rem;
+  }
+  .field-group-fieldset,
+  .form-field-type-datetime fieldset,
+  #edit-timezone {
+    border: 0;
+    border-bottom: 1px tint($primary-color, 90%) solid;
+    padding: 0 1rem 1.5rem 1rem;
+    margin: 0 -1rem 1rem -1rem;
+  }
+  .form-actions {
+    text-align: center;
+    padding: 0 1rem;
+    margin: 0 -1rem 0 -1rem !important;
+    * {
+      margin: 0 0.25rem;
+    }
+  }
 
   @media #{$medium-up} {
     .link-field-column {
@@ -233,16 +237,18 @@ label {
     }
   }
   @media #{$large-up} {
-    .form-actions {
+    > div {
       padding: 2rem;
+    }
+    .form-actions {
+      padding: 0 2rem;
+      margin: 0 -2rem 0 -2rem !important;
     }
     .field-group-fieldset,
     .form-field-type-datetime fieldset,
     #edit-timezone {
       padding: 0 2rem 2rem 2rem;
-    }
-    .fieldset-legend {
-      padding: 2rem 0 0 0;
+      margin: 0 -2rem 2rem -2rem;
     }
   }
 }
@@ -257,11 +263,12 @@ label {
   .horizontal-tabs {
     border: none;
     padding: 0;
-    margin: 0;
+    margin: -1rem -1rem 0 -1rem;
     .horizontal-tabs-list {
       border: none;
       background: tint($primary-color, 80%);
       border-radius: $global-radius $global-radius 0 0;
+      margin: 0 0 1rem 0;
       li, li.selected {
         border: 0;
         background: none;
@@ -289,7 +296,7 @@ label {
       }
     }
     .horizontal-tabs-pane {
-      padding: 0;
+      padding: 0 1rem;
       max-height: 352rem;
       opacity: 1;
       @include transition-property(max-height, opacity);
@@ -308,7 +315,12 @@ label {
   }
   @media #{$large-up} {
     .horizontal-tabs {
+      margin: -2rem -2rem 0 -2rem;
+      .horizontal-tabs-pane {
+        padding: 0 2rem;
+      }
       .horizontal-tabs-list {
+        margin: 0 0 2rem 0;
         li, li.selected {
           a {
             padding: 1rem 2rem;

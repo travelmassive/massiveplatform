@@ -1,19 +1,22 @@
-.page-views {
+.page-views,
+.page-search {
   #content > section > header {
     @include grid-row($behavior: nest);
   }
   #block-views-exp-events-page {
-    float: left;
+    float: right;
+    font-size: 0;
   }
   .views-submit-button {
     padding: 0;
   }
   #page-title {
-    @include grid-column(12);
+    @include grid-column(4);
   }
-  .region-header {
+  .region-header,
+  .tabs-primary {
     clear: none;
-    @include grid-column(12);
+    @include grid-column(8);
   }
   .messages {
     margin: $column-gutter/2 $column-gutter/2 $column-gutter $column-gutter/2;
@@ -23,11 +26,9 @@
     #page-title {
       @include grid-column(6);
     }
-    .region-header {
+    .region-header,
+    .tabs-primary {
       @include grid-column(6);
-    }
-    #block-views-exp-events-page {
-      float: right;
     }
   }
 
@@ -35,7 +36,8 @@
     #page-title {
       @include grid-column(8);
     }
-    .region-header {
+    .region-header,
+    .tabs-primary {
       @include grid-column(4);
     }
   }
@@ -44,14 +46,15 @@
 
 .page-views,
 .page-node-edit,
-.page-user-edit {
+.page-user-edit,
+.page-search {
   .column {
     padding: 0 !important;
   }
   #page-title {
     @extend .hd-l;
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     em {
       font-size: 1rem;
       line-height: 1.25rem;
@@ -84,9 +87,29 @@
   }
 }
 
-.page-views {
+.page-views,
+.page-search {
   #page-title {
     text-align: left;
+  }
+}
+
+.page-search {
+  .tabs-primary {
+    margin-bottom: 1rem;
+    @extend .bttn-group;
+    text-align: right;
+    font-size: 0;
+    li,
+    li.is-active {
+      float: none;
+      display: inline-block;
+    }
+  }
+  @media #{$medium-up} {
+    .tabs-primary {
+      margin-bottom: 2rem;
+    }
   }
 }
 

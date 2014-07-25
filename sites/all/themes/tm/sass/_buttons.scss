@@ -99,9 +99,9 @@ button {
 
 /* 32px */
 .bttn-m {
-  line-height: 1.5rem;
+  line-height: 1.5rem !important;
   font-size: 1rem;
-  padding: 0.25rem 0.75rem;
+  padding: 0.25rem 0.75rem !important;
   min-height: 2rem;
 }
 
@@ -160,14 +160,14 @@ button {
 // Blue
 .bttn-secondary {
   color: #FFF !important;
-  background: $secondary-color;
+  background: $secondary-color !important;
   @extend %antialiased;
   box-shadow: inset 0 -2px 0 0 shade($secondary-color, 30%);
   &:hover, &:focus {
     color: #FFF !important;
   }
   &:active, &.on, &.flagged {
-    background: shade($secondary-color, 30%);
+    background: shade($secondary-color, 30%) !important;
     box-shadow: inset 0 2px 0 0 shade($secondary-color, 50%);
     color: #FFF !important;
   }
@@ -205,7 +205,7 @@ button {
   }
 }
 
-// Reddish
+// Turquoise
 .bttn-success {
   color: #FFF !important;
   background: $success-color;
@@ -231,6 +231,51 @@ button {
       top: 0;
       opacity: 0.4;
     }
+  }
+}
+
+/* Button group */
+
+.bttn-group {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  background: none;
+  > *,
+  > .is-active {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    text-shadow: none;
+    border-radius: 0;
+    a {
+      border-radius: 0;
+    }
+    &:first-child {
+      a {
+        border-top-left-radius: $global-radius;
+        border-bottom-left-radius: $global-radius;
+      }
+    }
+    &:last-child {
+      a {
+        border-top-right-radius: $global-radius;
+        border-bottom-right-radius: $global-radius;
+      }
+    }
+  }
+  a {
+    @extend .bttn, .bttn-secondary, .bttn-m;
+    letter-spacing: inherit;
+    &:hover {
+      background-color: inherit;
+    }
+  }
+  a.is-active {
+    @extend .bttn-secondary.on;
+    border: 0;
+    letter-spacing: inherit;
   }
 }
 

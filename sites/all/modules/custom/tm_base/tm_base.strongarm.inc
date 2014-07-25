@@ -72,6 +72,23 @@ function tm_base_strongarm() {
     ),
     'organization' => array(
       'field_owner' => array(
+        'all' => array(
+          'view' => 'view',
+        ),
+        'author' => array(
+          'delete' => 'delete',
+          'update' => 'update',
+          'view' => 'view',
+        ),
+        'referenced' => array(
+          'delete' => 'delete',
+          'update' => 'update',
+          'view' => 'view',
+        ),
+      ),
+    ),
+    'event' => array(
+      'field_organizer' => array(
         'referenced' => array(
           'view' => 'view',
           'update' => 'update',

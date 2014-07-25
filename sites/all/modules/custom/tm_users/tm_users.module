@@ -22,12 +22,21 @@ function tm_users_form_user_login_block_alter(&$form, &$form_state) {
   $form['links']['#weight'] = 100;
 }
 
-function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
-  // We don't want a collapsible fieldset
+function tm_users_form_user_profile_form_alter(&$form, &$form_state) {
+  // Add an indication of the username, in case users are not allowed to edit 
+  // their usernames.
+  if (!user_access('change own username')) {
+    $form['account']['name']['#access'] = TRUE;
+    $form['account']['name']['#disabled'] = TRUE;
+    $form['account']['name']['#required'] = FALSE;
+    unset($form['account']['name']['#description']);
+  }
+
+  // We don't want a collapsible fieldset nor description for the timezone.
   $form['timezone']['#type'] = 'fieldset';
   $form['timezone']['#collapsible'] = FALSE;
-  // The description is removed as well
-  $form['timezone']['#description'] = '';
+  unset($form['timezone']['#description']);
+
 }
 
 /**

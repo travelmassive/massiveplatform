@@ -23,6 +23,36 @@ function tm_base_menu() {
 }
 
 /**
+* Implements hook_form_alter().
+*/
+function tm_base_form_alter(&$form, &$form_state, $form_id) {
+  // Add a cancel link to the node and user forms.
+  if (isset($form['#node']) || isset($form['#user'])) {
+    // If destination is set, redirect there
+    if (isset($_GET['destination'])) {
+      $url = $_GET['destination'];
+    }
+    // If edit form of existing node, redirect to node
+    elseif (isset($form['#node']) && isset($form['#node']->nid)) {
+      $url = 'node/' . $form['#node']->nid;
+    }
+    // If edit form of existing user, redirect to user
+    elseif (isset($form['#user']) && $form['#user']->uid != 0) {
+      $url = 'user/' . $form['#user']->uid;
+    }
+    // Everything else, go to frontpage
+    else {
+      $url = '<front>';
+    }
+    // Add the cancel link.
+    $form['actions']['cancel'] = array(
+      '#markup' => l(t('Cancel'), $url, array('attributes' => array('class' => array('bttn', 'bttn-tertiary', 'bttn-m', 'cancel')))),
+      '#weight' => 15,
+    );
+  }
+}
+
+/**
  * Implements hook_block_info()
  */
 function tm_base_block_info() {
@@ -30,7 +60,7 @@ function tm_base_block_info() {
     'info' => t('Homepage stats'),
     'cache' => DRUPAL_CACHE_PER_USER
   );
-  
+
   return $blocks;
 }
 
@@ -39,18 +69,18 @@ function tm_base_block_info() {
  */
 function tm_base_block_view($delta) {
   global $user;
-  
+
   $block = array();
   switch ($delta) {
     case 'tm_homepage_stats':
-      
+
       $block['content'] = '<ul>';
       if ($user->uid) {
         $follow_members_flag = flag_get_flag('follow_members');
         // Number of followers and following.
         $followers = $follow_members_flag->get_count($user->uid);
         $following = flag_get_user_flag_counts($follow_members_flag, $user);
-        
+
         $block['content'] .= '<li><a href="' . url('user') . '" title="' . t('View followers') . '"><strong class="key">' . t('Followers') . '<small>: </small></strong><span class="value">' . $followers . '</span></a></li>';
         $block['content'] .= '<li><a href="' . url('user') . '" title="' . t('View following') . '"><strong class="key">' . t('Following') . '<small>: </small></strong><span class="value">' . $following . '</span></a></li>';
       }
@@ -59,15 +89,15 @@ function tm_base_block_view($delta) {
         $no_community = db_query('SELECT count(uid) AS no FROM {users} WHERE status = :status', array(':status' => 1))->fetchField();
         $no_city = db_query('SELECT count(nid) AS no FROM {node} WHERE status = :status AND type = :type', array(':status' => 1, ':type' => 'chapter'))->fetchField();
         $no_company = db_query('SELECT count(nid) AS no FROM {node} WHERE status = :status AND type = :type', array(':status' => 1, ':type' => 'organization'))->fetchField();
-        
-        $block['content'] .= '<li><a href="' . url('community') . '" title="' . t('Go to community') . '"><strong class="key">' . t('Community') . '<small>: </small></strong><span class="value">' . $no_community . '</span></a></li>';
+
+        $block['content'] .= '<li><a href="' . url('community') . '" title="' . t('Go to community') . '"><strong class="key">' . t('Users') . '<small>: </small></strong><span class="value">' . $no_community . '</span></a></li>';
         $block['content'] .= '<li><a href="' . url('cities') . '" title="' . t('Go to cities') . '"><strong class="key">' . t('Cities') . '<small>: </small></strong><span class="value">' . $no_city . '</span></a></li>';
         $block['content'] .= '<li><a href="' . url('companies') . '" title="' . t('Go to companies') . '"><strong class="key">' . t('Companies') . '<small>: </small></strong><span class="value">' . $no_company . '</span></a></li>';
       }
       $block['content'] .= '</ul>';
       break;
   }
-  
+
   return $block;
 }
 
@@ -80,7 +110,8 @@ function tm_base_theme() {
       'variables' => array(
         'homepage_title' => NULL,
         'homepage_description' => NULL,
-        'homepage_stats_block' => NULL
+        'homepage_stats_block' => NULL,
+        'homepage_upcoming_events' => NULL
       ),
       'template' => 'tm_base_homepage',
       'path' => drupal_get_path('module', 'tm_base') . '/templates/'
@@ -93,10 +124,10 @@ function tm_base_theme() {
  */
 function _tm_base_frontpage() {
   global $user;
-  
+
   // Remove the title.
   drupal_set_title('');
-  
+
   if ($user->uid) {
     $homepage_title = variable_get('tm_base_homepage_title_members', NULL);
     $homepage_description = variable_get('tm_base_homepage_description_members', NULL);
@@ -105,11 +136,11 @@ function _tm_base_frontpage() {
     $homepage_title = variable_get('tm_base_homepage_title_anon', NULL);
     $homepage_description = variable_get('tm_base_homepage_description_anon', NULL);
   }
-  
+
   // Replace tokens.
   $homepage_title = token_replace($homepage_title);
   $homepage_description = token_replace($homepage_description);
-  
+
   if (!$homepage_title) {
     drupal_set_message('No homepage title. Set it through ' . l('configuration', 'admin/config/system/site-information'), 'error');
   }
@@ -120,11 +151,22 @@ function _tm_base_frontpage() {
   // Stats block
   $stats_block = block_load('tm_base', 'tm_homepage_stats');
   $homepage_stats_block = _block_get_renderable_array(_block_render_blocks(array($stats_block)));
-  
+
+  // Upcoming events view.
+  $homepage_upcoming_events = array();
+  $view_display = 'front_block';
+  $view = views_get_view('events');
+  $view->set_display($view_display);
+  if ($view && $view->access($view_display)) {
+    $homepage_upcoming_events['title'] = $view->get_title();
+    $homepage_upcoming_events['content'] = $view->preview($view_display);
+  }
+
   return theme('_tm_homepage', array(
     'homepage_title' => $homepage_title,
     'homepage_description' => $homepage_description,
     'homepage_stats_block' => $homepage_stats_block,
+    'homepage_upcoming_events' => $homepage_upcoming_events
   ));
 }
 
@@ -154,7 +196,7 @@ function tm_base_tokens($type, $tokens, array $data = array(), array $options = 
     foreach ($tokens as $name => $original) {
       // Find the desired token by name
       switch ($name) {
-        // Token that can be used to build the friendly url for organizations. If the field 
+        // Token that can be used to build the friendly url for organizations. If the field
         // is not set, it defaults to the title.
         case 'friendly_url_org':
           $new = '';
@@ -176,7 +218,7 @@ function tm_base_tokens($type, $tokens, array $data = array(), array $options = 
     foreach ($tokens as $name => $original) {
       // Find the desired token by name
       switch ($name) {
-        // Token that can be used to build the friendly url for users. If the field 
+        // Token that can be used to build the friendly url for users. If the field
         // is not set, it defaults to the title.
         case 'friendly_url_user':
           $new = '';
@@ -220,7 +262,7 @@ function tm_base_field_group_pre_render(&$element, $group, &$form) {
         '#type' => 'markup',
         '#weight' => $group->weight,
       );
-    
+
       $add['#prefix'] = '<section class="contained contained-block">
         <header class="contained-head">
           <h1 class="prime-title">' . check_plain(t($group->label)) . '</h1>
@@ -229,7 +271,7 @@ function tm_base_field_group_pre_render(&$element, $group, &$form) {
       $add['#suffix'] = '</div></section>';
 
       $element += $add;
-      
+
       break
 ;  }
 }
@@ -247,7 +289,7 @@ function tm_base_ds_field_theme_functions_info() {
 */
 function theme_ds_field_dl($variables) {
   $output = '';
-  
+
   // Since a dd can't exist without a dt, we just print the title without checking if the label's hidden.
   $output .= '<dt>' . $variables['label'] . '</dt>';
   foreach ($variables['items'] as $delta => $item) {
@@ -261,7 +303,7 @@ function theme_ds_field_dl($variables) {
 */
 function theme_ds_field_tm_default($variables) {
   $output = '';
-  
+
   $output .= '<div class="detail-item ' . $variables['field_name_css'] . '"><h2>' . $variables['label'] . '</h2>';
   foreach ($variables['items'] as $delta => $item) {
     $output .= drupal_render($item);

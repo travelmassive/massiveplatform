@@ -24,7 +24,7 @@ body {
 }
 
 .row {
-  @media #{$small-up} {	
+  @media #{$small-up} {
     padding-left: $xspace;
     padding-right: $xspace;
   }
@@ -83,7 +83,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
 #main {
   padding: 2rem 0;
   @media #{$medium-up} {
-    padding: 4rem 0;
+    padding: 3rem 0;
   }
 }
 
@@ -240,7 +240,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
         left: auto;
         margin-top: 0;
         padding: 0;
-        
+
         opacity: 1;
         visibility: visible;
         box-shadow: none;
@@ -264,8 +264,8 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
 // more columns inside of content.
 
 #content {
-  @include grid-column(12); 
-  
+  @include grid-column(12);
+
   // Display Suite layout Trilithon
   .trilithon {
     @include grid-row($behavior: nest);
@@ -362,7 +362,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
   .linkedin:before { @extend .icon-linkedin; }
   .twitter:before { @extend .icon-twitter; }
   .instagram:before { @extend .icon-instagram; }
-  
+
   @media #{$small-up} {
     @include grid-column(8);
   }
@@ -370,7 +370,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
     section {
       @include grid-column(4);
     }
-    
+
   }
 }
 
@@ -438,7 +438,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
   .media-bd {
     display: table-cell;
     vertical-align: middle;
-    
+
     .media-top & {
       vertical-align: top;
     }
@@ -446,10 +446,10 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
       vertical-align: bottom;
     }
   }
-  
+
   .media-fig {
     padding-right: 1rem;
-    
+
     img {
       display: block;
       max-width: none;
@@ -459,7 +459,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
       padding-left: 1rem;
     }
   }
-  
+
   .media-bd {
     width: 100%;
   }

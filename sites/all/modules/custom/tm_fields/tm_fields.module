@@ -10,6 +10,13 @@
 function tm_fields_ds_fields_info($entity_type) {
   $fields = array();
 
+  $fields['tm_ds_content_type'] = array(
+    'title' => t('Content type'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('*|search_result', 'user|*'),
+    'function' => '_tm_content_type_process'
+  );
+
   $fields['tm_ds_chapter_sticker'] = array(
     'title' => t('Chapter sticker'),
     'field_type' => DS_FIELD_TYPE_FUNCTION,
@@ -68,6 +75,17 @@ function tm_fields_ds_field_format_summary($field) {
   return ds_ds_field_format_summary($field);
 }
 
+/**
+ * Custom function to return the human readable name of the content type
+ */
+function _tm_content_type_process($field, $title = NULL) {
+  if ($field['entity_type'] == 'node') {
+    return node_type_get_name($field['bundle']);
+  }
+  elseif ($field['entity_type'] == 'user') {
+    return t('Member');
+  }
+}
 
 /**
  * Custom function to build the chapter sticker

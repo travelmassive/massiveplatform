@@ -55,12 +55,6 @@ function tm_preprocess_html(&$variables, $hook) {
 
 function tm_preprocess_page(&$variables, $hook) {
  
-  // Prevent the page title from being printed on the page.tpl.php whenever we
-  // deal with a Page View. Instead, it's being printed in the 
-  // views-view--page.tpl.php.
-  if (isset($variables['page']['#views_contextual_links_info']) && $variables['page']['#views_contextual_links_info']['views_ui']['view_display_id'] == "page") {
-    drupal_set_title('');
-  }
   // Hide the page title from the user profiles
   if (isset($variables['page']['content']['system_main']['#entity_type']) && $variables['page']['content']['system_main']['#entity_type'] == 'user' && isset($variables['page']['content']['system_main']['#view_mode']) && $variables['page']['content']['system_main']['#view_mode'] == 'full') {
     drupal_set_title('');
@@ -146,3 +140,12 @@ function tm_preprocess_block(&$variables, $hook) {
 }
 // */
 
+/**
+ * Add a wrapper around the search results that are being taken care of by DS Search
+ *
+ */
+
+function tm_preprocess_ds_search_page(&$build) {
+  $build['search_results']['#prefix'] = '<ul class="search-list">';
+  $build['search_results']['#suffix'] = '</ul>';
+}

@@ -1,14 +1,108 @@
+.page-views {
+  #content > section > header {
+    @include grid-row($behavior: nest);
+  }
+  #block-views-exp-events-page {
+    float: left;
+  }
+  .views-submit-button {
+    padding: 0;
+  }
+  #page-title {
+    @include grid-column(12);
+  }
+  .region-header {
+    clear: none;
+    @include grid-column(12);
+  }
+  .messages {
+    margin: $column-gutter/2 $column-gutter/2 $column-gutter $column-gutter/2;
+  }
+
+  @media #{$small-up} {
+    #page-title {
+      @include grid-column(6);
+    }
+    .region-header {
+      @include grid-column(6);
+    }
+    #block-views-exp-events-page {
+      float: right;
+    }
+  }
+
+  @media #{$medium-up} {
+    #page-title {
+      @include grid-column(8);
+    }
+    .region-header {
+      @include grid-column(4);
+    }
+  }
+
+}
+
+.page-views,
+.page-node-edit,
+.page-user-edit {
+  .column {
+    padding: 0 !important;
+  }
+  #page-title {
+    @extend .hd-l;
+    text-align: center;
+    margin-bottom: 1rem;
+    em {
+      font-size: 1rem;
+      line-height: 1.25rem;
+      display: block;
+      font-style: inherit;
+      color: tint($primary-color, 40%);
+      text-transform: uppercase;
+    }
+  }
+  .node-form,
+  #user-profile-form {
+    @include grid-column(12);
+    padding: 0 !important;
+  }
+
+  @media #{$medium-up} {
+    #page-title {
+      margin-bottom: 2rem;
+    }
+    .node-form,
+    #user-profile-form {
+      @include grid-column($columns: 10, $offset: 1);
+    }
+  }
+  @media #{$large-up} {
+    .node-form,
+    #user-profile-form {
+      @include grid-column($columns: 8, $offset: 2);
+    }
+  }
+}
+
+.page-views {
+  #page-title {
+    text-align: left;
+  }
+}
+
 .front {
   @include background(linear-gradient(rgba($primary-color, 0), rgba($primary-color, 0), $primary-color), image-url("../images/layout/home-bg-img-01a.jpg"));
   background-repeat: no-repeat, no-repeat;
   background-position: center center, center center;
-  background-attachment: fixed, fixed;
-  @include background-size(cover, cover);
-  
+  @include background-size(100% 100%, cover);
+  background-color: $primary-color;
+
   #page, #site-canvas {
     background: none;
   }
-  
+  .column {
+    padding: 0;
+  }
   #footer {
     background: rgba(#FFF, 0.1);
     color: #FFF;
@@ -26,10 +120,36 @@
     opacity: 0.5;
     border-top-color: rgba(#FFF, 0.2);
   }
+  @media #{$small-up} {
+    @include background-size(cover, cover);
+    background-attachment: fixed, fixed;
+  }
 }
 
 #block-tm-base-tm-homepage-stats {
   margin: 0;
+}
+
+#upcoming-events {
+  .hd {
+    margin-bottom: 2rem;
+    @extend %antialiased;
+    text-shadow: 0 2px 0 rgba($primary-color, 0.4);
+    .prime-title {
+      color: #FFF;
+      text-align: center;
+      @extend .hd-l;
+      margin-bottom: 0;
+    }
+  }
+  .more-link {
+    text-align: center;
+    margin: 1rem 0 0 0;
+
+    .bttn {
+      width: 14rem;
+    }
+  }
 }
 
 #welcome {
@@ -109,11 +229,11 @@
       width: 14rem;
     }
   }
-  
+
   @media #{$small-up} {
     margin-bottom: 4rem;
   }
-  
+
   @media #{$medium-up} {
     .hd {
       @include grid-column($columns: 10, $push: 1);
@@ -143,7 +263,7 @@
 .trilithon-header {
   margin: 0 $column-gutter/2 $column-gutter/2 $column-gutter/2;
   position: relative;
-  
+
   .media {
     margin-bottom: -3rem;
     overflow: hidden;
@@ -280,7 +400,7 @@
     font-size: 0.875rem;
     width: 4rem;
   }
-  
+
   .actions {
     position: absolute;
     right: 0;
@@ -290,7 +410,7 @@
     padding: 1rem;
     border-top: 1px tint($primary-color, 90%) solid;
   }
-  
+
   .actions-menu {
     list-style: none;
     margin: 0;
@@ -304,7 +424,7 @@
       margin: 0 0.25rem;
     }
   }
-  
+
   @media #{$small-up} {
     margin-bottom: $column-gutter;
     .media {
@@ -350,7 +470,7 @@
       line-height: 1.5;
     }
   }
-  
+
   @media #{$medium-up} {
     .media {
       display: table-cell;
@@ -378,7 +498,7 @@
       width: 42%;
     }
   }
-  
+
   @media #{$large-up} {
     .media {
       width: 68%;

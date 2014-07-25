@@ -47,6 +47,12 @@ function tm_event_signup_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 7,
       ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 24,
+      ),
     ),
     'entity_type' => 'node',
     'field_name' => 'field_external_rsvp',
@@ -60,7 +66,7 @@ function tm_event_signup_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 9,
+      'weight' => 5,
     ),
   );
 
@@ -107,6 +113,12 @@ function tm_event_signup_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 3,
       ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 20,
+      ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
@@ -130,7 +142,7 @@ function tm_event_signup_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 10,
+      'weight' => 7,
     ),
   );
 

@@ -3344,7 +3344,7 @@ h1, .hd-xl {
 }
 
 /* line 395, ../sass/_type.scss */
-h2, .hd-l {
+h2, .hd-l, #upcoming-events .hd .prime-title {
   font-size: 1.5rem;
   line-height: 1.33333;
   font-weight: 800;
@@ -3354,7 +3354,7 @@ h2, .hd-l {
 }
 @media only screen and (min-width: 34.063rem) {
   /* line 395, ../sass/_type.scss */
-  h2, .hd-l {
+  h2, .hd-l, #upcoming-events .hd .prime-title {
     font-size: 1.75rem;
     line-height: 1.28571;
     letter-spacing: -0.5px;
@@ -5077,7 +5077,27 @@ label {
   margin: 0;
 }
 
-/* line 35, ../sass/_single.scss */
+/* line 36, ../sass/_single.scss */
+#upcoming-events .hd {
+  margin-bottom: 2rem;
+}
+/* line 39, ../sass/_single.scss */
+#upcoming-events .hd .prime-title {
+  color: #FFF;
+  text-align: center;
+  margin-bottom: 0;
+}
+/* line 46, ../sass/_single.scss */
+#upcoming-events .more-link {
+  text-align: center;
+  margin: 1rem 0 0 0;
+}
+/* line 50, ../sass/_single.scss */
+#upcoming-events .more-link .bttn, #upcoming-events .more-link .twitter-login {
+  width: 14rem;
+}
+
+/* line 56, ../sass/_single.scss */
 #welcome {
   width: auto;
   margin-left: -1rem;
@@ -5100,7 +5120,7 @@ label {
 #welcome:after {
   clear: both;
 }
-/* line 42, ../sass/_single.scss */
+/* line 63, ../sass/_single.scss */
 #welcome .hd {
   position: relative;
   padding-left: 1rem;
@@ -5110,16 +5130,16 @@ label {
   clear: both;
   margin-bottom: 2rem;
 }
-/* line 49, ../sass/_single.scss */
+/* line 70, ../sass/_single.scss */
 #welcome .hd .subtitle {
   margin-bottom: 0;
 }
-/* line 54, ../sass/_single.scss */
+/* line 75, ../sass/_single.scss */
 #welcome .bd {
   float: left;
   width: 100%;
 }
-/* line 57, ../sass/_single.scss */
+/* line 78, ../sass/_single.scss */
 #welcome .bd ul {
   width: auto;
   margin-left: -1rem;
@@ -5141,7 +5161,7 @@ label {
 #welcome .bd ul:after {
   clear: both;
 }
-/* line 62, ../sass/_single.scss */
+/* line 83, ../sass/_single.scss */
 #welcome .bd ul li {
   overflow: hidden;
   position: relative;
@@ -5152,7 +5172,7 @@ label {
   display: inline-block;
   float: none !important;
 }
-/* line 67, ../sass/_single.scss */
+/* line 88, ../sass/_single.scss */
 #welcome .bd ul li:after {
   position: absolute;
   right: 0;
@@ -5163,18 +5183,18 @@ label {
   background: rgba(255, 255, 255, 0.2);
   text-shadow: none;
 }
-/* line 77, ../sass/_single.scss */
+/* line 98, ../sass/_single.scss */
 #welcome .bd ul li:last-child:after {
   display: none;
 }
-/* line 81, ../sass/_single.scss */
+/* line 102, ../sass/_single.scss */
 #welcome .bd ul a {
   position: relative;
   display: block;
   color: #FFF;
   padding-bottom: 1.5rem;
 }
-/* line 87, ../sass/_single.scss */
+/* line 108, ../sass/_single.scss */
 #welcome .bd ul .key {
   position: absolute;
   bottom: 0;
@@ -5183,28 +5203,28 @@ label {
   text-transform: uppercase;
   margin: 0;
 }
-/* line 96, ../sass/_single.scss */
+/* line 117, ../sass/_single.scss */
 #welcome .bd ul .value {
   font-size: 2.75rem;
   line-height: 1;
 }
-/* line 105, ../sass/_single.scss */
+/* line 126, ../sass/_single.scss */
 #welcome .cta-wrapper {
   margin: 2rem 0 0 0;
 }
-/* line 107, ../sass/_single.scss */
+/* line 128, ../sass/_single.scss */
 #welcome .cta-wrapper .bttn, #welcome .cta-wrapper .twitter-login {
   text-shadow: none;
   width: 14rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 35, ../sass/_single.scss */
+  /* line 56, ../sass/_single.scss */
   #welcome {
     margin-bottom: 4rem;
   }
 }
 @media only screen and (min-width: 48.063rem) {
-  /* line 118, ../sass/_single.scss */
+  /* line 139, ../sass/_single.scss */
   #welcome .hd {
     position: relative;
     padding-left: 1rem;
@@ -5214,7 +5234,7 @@ label {
     right: auto;
     float: left;
   }
-  /* line 123, ../sass/_single.scss */
+  /* line 144, ../sass/_single.scss */
   #welcome .bd ul li {
     position: relative;
     padding-left: 1rem;
@@ -5224,7 +5244,7 @@ label {
   }
 }
 @media only screen and (min-width: 62.063rem) {
-  /* line 130, ../sass/_single.scss */
+  /* line 151, ../sass/_single.scss */
   #welcome .hd {
     position: relative;
     padding-left: 1rem;
@@ -5234,7 +5254,7 @@ label {
     right: auto;
     float: left;
   }
-  /* line 135, ../sass/_single.scss */
+  /* line 156, ../sass/_single.scss */
   #welcome .bd ul li {
     position: relative;
     padding-left: 1rem;
@@ -5244,27 +5264,27 @@ label {
   }
 }
 
-/* line 143, ../sass/_single.scss */
+/* line 164, ../sass/_single.scss */
 .trilithon-header {
   margin: 0 1rem 1rem 1rem;
   position: relative;
 }
-/* line 147, ../sass/_single.scss */
+/* line 168, ../sass/_single.scss */
 .trilithon-header .media {
   margin-bottom: -3rem;
   overflow: hidden;
   border-radius: 0.25rem 0.25rem 0 0;
 }
-/* line 152, ../sass/_single.scss */
+/* line 173, ../sass/_single.scss */
 .trilithon-header .cover {
   max-height: 16rem;
 }
-/* line 154, ../sass/_single.scss */
+/* line 175, ../sass/_single.scss */
 .trilithon-header .cover img {
   display: block;
   width: 100%;
 }
-/* line 159, ../sass/_single.scss */
+/* line 180, ../sass/_single.scss */
 .trilithon-header .avatar {
   text-align: center;
   position: relative;
@@ -5279,7 +5299,7 @@ label {
   background-color: #FFF;
   margin: 0 auto 1rem auto;
 }
-/* line 174, ../sass/_single.scss */
+/* line 195, ../sass/_single.scss */
 .trilithon-header .badge-chapter {
   position: relative;
   display: block;
@@ -5291,7 +5311,7 @@ label {
   display: inline-block;
   padding-bottom: 0.5rem;
 }
-/* line 184, ../sass/_single.scss */
+/* line 205, ../sass/_single.scss */
 .trilithon-header .badge-chapter:before {
   content: '';
   display: inline-block;
@@ -5299,7 +5319,7 @@ label {
   vertical-align: bottom;
   width: 0;
 }
-/* line 191, ../sass/_single.scss */
+/* line 212, ../sass/_single.scss */
 .trilithon-header .badge-chapter:after {
   position: absolute;
   display: block;
@@ -5312,13 +5332,13 @@ label {
   background-size: cover;
   border-radius: 0.125rem 0 0 0;
 }
-/* line 204, ../sass/_single.scss */
+/* line 225, ../sass/_single.scss */
 .trilithon-header .badge-cal {
   display: block;
   width: 4rem;
   height: 4rem;
 }
-/* line 208, ../sass/_single.scss */
+/* line 229, ../sass/_single.scss */
 .trilithon-header .badge-cal .month {
   display: block;
   border-radius: 0.25rem 0.25rem 0 0;
@@ -5327,7 +5347,7 @@ label {
   font-size: 0.875rem;
   line-height: 1.5rem;
 }
-/* line 216, ../sass/_single.scss */
+/* line 237, ../sass/_single.scss */
 .trilithon-header .badge-cal .day {
   display: block;
   border-radius: 0 0 0.25rem 0.25rem;
@@ -5337,53 +5357,53 @@ label {
   padding-bottom: 0.25rem;
   letter-spacing: -0.0625rem;
 }
-/* line 230, ../sass/_single.scss */
+/* line 251, ../sass/_single.scss */
 .trilithon-header .badge-organization,
 .trilithon-header .badge-user {
   width: 4rem;
   height: 4rem;
   display: block;
 }
-/* line 234, ../sass/_single.scss */
+/* line 255, ../sass/_single.scss */
 .trilithon-header .badge-organization img,
 .trilithon-header .badge-user img {
   display: block;
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 240, ../sass/_single.scss */
+/* line 261, ../sass/_single.scss */
 .trilithon-header .bd {
   padding: 0 1rem 6rem 1rem;
   text-align: center;
 }
-/* line 244, ../sass/_single.scss */
+/* line 265, ../sass/_single.scss */
 .trilithon-header .prime-title {
   font-size: 1.5rem;
   line-height: 1.16667;
   margin: 0;
 }
-/* line 250, ../sass/_single.scss */
+/* line 271, ../sass/_single.scss */
 .trilithon-header .meta {
   margin: 0;
   color: #79828c;
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
-/* line 256, ../sass/_single.scss */
+/* line 277, ../sass/_single.scss */
 .trilithon-header .meta span:after {
   content: ', ';
 }
-/* line 261, ../sass/_single.scss */
+/* line 282, ../sass/_single.scss */
 .trilithon-header .meta span:last-of-type:after {
   content: '';
 }
-/* line 266, ../sass/_single.scss */
+/* line 287, ../sass/_single.scss */
 .trilithon-header .extra {
   position: absolute;
   top: 0.5rem;
   left: 0.5rem;
 }
-/* line 271, ../sass/_single.scss */
+/* line 292, ../sass/_single.scss */
 .trilithon-header .chapter-sticker {
   border-radius: 0.25rem;
   display: block;
@@ -5395,7 +5415,7 @@ label {
   font-size: 0.875rem;
   width: 4rem;
 }
-/* line 284, ../sass/_single.scss */
+/* line 305, ../sass/_single.scss */
 .trilithon-header .actions {
   position: absolute;
   right: 0;
@@ -5405,7 +5425,7 @@ label {
   padding: 1rem;
   border-top: 1px #e8eaeb solid;
 }
-/* line 294, ../sass/_single.scss */
+/* line 315, ../sass/_single.scss */
 .trilithon-header .actions-menu {
   list-style: none;
   margin: 0;
@@ -5414,77 +5434,77 @@ label {
   vertical-align: bottom;
   text-align: left;
 }
-/* line 301, ../sass/_single.scss */
+/* line 322, ../sass/_single.scss */
 .trilithon-header .actions-menu > li {
   float: left;
   position: relative;
   margin: 0 0.25rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 143, ../sass/_single.scss */
+  /* line 164, ../sass/_single.scss */
   .trilithon-header {
     margin-bottom: 2rem;
   }
-  /* line 310, ../sass/_single.scss */
+  /* line 331, ../sass/_single.scss */
   .trilithon-header .media {
     margin-bottom: -4rem;
   }
-  /* line 313, ../sass/_single.scss */
+  /* line 334, ../sass/_single.scss */
   .trilithon-header .badge-chapter {
     width: 6rem;
     height: 6rem;
     font-size: 1.25rem;
     padding-bottom: 1rem;
   }
-  /* line 318, ../sass/_single.scss */
+  /* line 339, ../sass/_single.scss */
   .trilithon-header .badge-chapter:after {
     height: 1rem;
     width: 1rem;
     border-radius: 0.25rem 0 0 0;
   }
-  /* line 324, ../sass/_single.scss */
+  /* line 345, ../sass/_single.scss */
   .trilithon-header .badge-cal {
     width: 6rem;
     height: 6rem;
   }
-  /* line 327, ../sass/_single.scss */
+  /* line 348, ../sass/_single.scss */
   .trilithon-header .badge-cal .month {
     font-size: 1.25rem;
     line-height: 2rem;
   }
-  /* line 331, ../sass/_single.scss */
+  /* line 352, ../sass/_single.scss */
   .trilithon-header .badge-cal .day {
     line-height: 3.5rem;
     font-size: 2.5rem;
     padding-bottom: 0.5rem;
     letter-spacing: -0.125rem;
   }
-  /* line 339, ../sass/_single.scss */
+  /* line 360, ../sass/_single.scss */
   .trilithon-header .badge-organization,
   .trilithon-header .badge-user {
     width: 6rem;
     height: 6rem;
   }
-  /* line 343, ../sass/_single.scss */
+  /* line 364, ../sass/_single.scss */
   .trilithon-header .prime-title {
     font-size: 1.75rem;
     line-height: 1.14286;
   }
-  /* line 348, ../sass/_single.scss */
+  /* line 369, ../sass/_single.scss */
   .trilithon-header .meta {
     font-size: 1rem;
     line-height: 1.5;
   }
 }
 @media only screen and (min-width: 48.063rem) {
-  /* line 355, ../sass/_single.scss */
+  /* line 376, ../sass/_single.scss */
   .trilithon-header .media {
     display: table-cell;
     width: 58%;
     margin-bottom: 0;
     border-radius: 0.25rem 0 0 0.25rem;
   }
-  /* line 361, ../sass/_single.scss */
+  /* line 382, ../sass/_single.scss */
   .trilithon-header .cover {
     position: relative;
     width: 150%;
@@ -5492,51 +5512,51 @@ label {
     margin-left: -70%;
     max-height: none;
   }
-  /* line 368, ../sass/_single.scss */
+  /* line 389, ../sass/_single.scss */
   .trilithon-header .bd {
     vertical-align: middle;
     display: table-cell;
     padding: 1rem 1rem 5rem 1rem;
   }
-  /* line 373, ../sass/_single.scss */
+  /* line 394, ../sass/_single.scss */
   .trilithon-header .extra {
     top: 1rem;
     left: 1rem;
   }
-  /* line 377, ../sass/_single.scss */
+  /* line 398, ../sass/_single.scss */
   .trilithon-header .actions {
     width: 42%;
   }
 }
 @media only screen and (min-width: 62.063rem) {
-  /* line 383, ../sass/_single.scss */
+  /* line 404, ../sass/_single.scss */
   .trilithon-header .media {
     width: 68%;
   }
-  /* line 386, ../sass/_single.scss */
+  /* line 407, ../sass/_single.scss */
   .trilithon-header .cover {
     width: 100%;
     margin-left: 0;
     left: 0;
   }
-  /* line 391, ../sass/_single.scss */
+  /* line 412, ../sass/_single.scss */
   .trilithon-header .bd {
     padding: 2rem 2rem 5rem 2rem;
   }
-  /* line 394, ../sass/_single.scss */
+  /* line 415, ../sass/_single.scss */
   .trilithon-header .chapter-sticker {
     line-height: 3rem;
     font-size: 1.5rem;
     width: 7rem;
   }
-  /* line 399, ../sass/_single.scss */
+  /* line 420, ../sass/_single.scss */
   .trilithon-header .actions {
     width: 32%;
     padding: 1rem 2rem;
   }
 }
 
-/* line 408, ../sass/_single.scss */
+/* line 429, ../sass/_single.scss */
 .team-list,
 .related-list,
 .related-list ul {
@@ -5544,20 +5564,20 @@ label {
   padding: 0;
   margin: -0.5rem 0 1rem 0;
 }
-/* line 412, ../sass/_single.scss */
+/* line 433, ../sass/_single.scss */
 .team-list li,
 .related-list li,
 .related-list ul li {
   padding: 0.5rem 0;
   box-shadow: 0 1px 0 0 rgba(33, 48, 64, 0.1);
 }
-/* line 415, ../sass/_single.scss */
+/* line 436, ../sass/_single.scss */
 .team-list li:first-child,
 .related-list li:first-child,
 .related-list ul li:first-child {
   padding-top: 0;
 }
-/* line 418, ../sass/_single.scss */
+/* line 439, ../sass/_single.scss */
 .team-list li:last-child,
 .related-list li:last-child,
 .related-list ul li:last-child {

@@ -17,8 +17,18 @@ function tm_users_ds_field_settings_info() {
   $ds_fieldsetting->bundle = 'user';
   $ds_fieldsetting->view_mode = 'default';
   $ds_fieldsetting->settings = array(
+    'joined_city_list' => array(
+      'weight' => '11',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
     'joined_event_list' => array(
-      'weight' => '8',
+      'weight' => '12',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -50,8 +60,13 @@ function tm_users_ds_field_settings_info() {
         ),
       ),
     ),
+    'tm_ds_content_type' => array(
+      'weight' => '10',
+      'label' => 'hidden',
+      'format' => 'default',
+    ),
     'tm_ds_chapter_sticker' => array(
-      'weight' => '4',
+      'weight' => '5',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -392,6 +407,58 @@ function tm_users_ds_field_settings_info() {
   );
   $export['user|user|list'] = $ds_fieldsetting;
 
+  $ds_fieldsetting = new stdClass();
+  $ds_fieldsetting->api_version = 1;
+  $ds_fieldsetting->id = 'user|user|search_result';
+  $ds_fieldsetting->entity_type = 'user';
+  $ds_fieldsetting->bundle = 'user';
+  $ds_fieldsetting->view_mode = 'search_result';
+  $ds_fieldsetting->settings = array(
+    'name' => array(
+      'weight' => '0',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'link' => '0',
+        'wrapper' => 'h1',
+        'class' => 'prime-title',
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'tm_ds_content_type' => array(
+      'weight' => '1',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'p',
+          'ow-cl' => 'meta',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'field_about_me' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'p',
+          'ow-cl' => '',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+  );
+  $export['user|user|search_result'] = $ds_fieldsetting;
+
   return $export;
 }
 
@@ -415,78 +482,86 @@ function tm_users_ds_layout_settings_info() {
       ),
       'header_body' => array(
         1 => 'tm_ds_edit_own_profile',
-        2 => 'flag_follow_members',
-        3 => 'field_job_role',
+        2 => 'field_job_role',
+        3 => 'flag_follow_members',
         4 => 'field_avatar',
-        5 => 'field_job_organization',
-        6 => 'name',
+        5 => 'name',
+        6 => 'field_job_organization',
         7 => 'tm_ds_anon_flag_placeholder',
-        8 => 'tm_ds_more_actions',
-        9 => 'group_job_wrapper',
+        8 => 'group_job_wrapper',
+        9 => 'tm_ds_more_actions',
         10 => 'group_action_menu_wrapper',
         15 => 'group_action_menu',
       ),
       'header_extra' => array(
-        10 => 'tm_ds_chapter_sticker',
+        11 => 'tm_ds_chapter_sticker',
       ),
       'first_column' => array(
-        11 => 'group_details_wrapper',
-        16 => 'field_about_me',
-        17 => 'field_segment',
-        18 => 'field_user_question_destination',
-        19 => 'field_link_facebook',
-        20 => 'group_user_qa',
-        21 => 'field_user_question_dream_travel',
-        22 => 'field_link_linkedin',
-        23 => 'field_user_question_learn',
-        24 => 'field_link_twitter',
-        25 => 'field_link_website',
-        26 => 'field_user_question_job',
-        27 => 'field_user_question_why_travel',
-        28 => 'group_user_qa_wrapper',
-        29 => 'group_location_wrapper',
-        30 => 'field_location_city',
-        31 => 'field_location_country',
+        12 => 'group_details_wrapper',
+        21 => 'field_about_me',
+        22 => 'field_segment',
+        23 => 'field_link_facebook',
+        24 => 'field_user_question_destination',
+        25 => 'field_user_question_dream_travel',
+        26 => 'group_user_qa',
+        27 => 'field_link_linkedin',
+        28 => 'field_link_twitter',
+        29 => 'field_user_question_learn',
+        30 => 'field_user_question_job',
+        31 => 'field_link_website',
+        32 => 'field_user_question_why_travel',
+        33 => 'group_user_qa_wrapper',
+        34 => 'field_location_city',
+        35 => 'group_location_wrapper',
+        36 => 'field_location_country',
       ),
       'second_column' => array(
-        12 => 'group_community_wrapper',
         13 => 'members_following_members',
-        14 => 'joined_event_list',
+        14 => 'group_community_wrapper',
+        16 => 'group_city_list_wrapper',
+        17 => 'group_event_list_wrapper',
+        18 => 'tm_ds_content_type',
+        19 => 'joined_city_list',
+        20 => 'joined_event_list',
       ),
     ),
     'fields' => array(
       'field_image' => 'header_media',
       'tm_ds_edit_own_profile' => 'header_body',
-      'flag_follow_members' => 'header_body',
       'field_job_role' => 'header_body',
+      'flag_follow_members' => 'header_body',
       'field_avatar' => 'header_body',
-      'field_job_organization' => 'header_body',
       'name' => 'header_body',
-      'tm_ds_more_actions' => 'header_body',
-      'group_job_wrapper' => 'header_body',
+      'field_job_organization' => 'header_body',
       'tm_ds_anon_flag_placeholder' => 'header_body',
+      'group_job_wrapper' => 'header_body',
+      'tm_ds_more_actions' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
       'tm_ds_chapter_sticker' => 'header_extra',
       'group_details_wrapper' => 'first_column',
-      'group_community_wrapper' => 'second_column',
       'members_following_members' => 'second_column',
+      'group_community_wrapper' => 'second_column',
       'group_action_menu' => 'header_body',
+      'group_city_list_wrapper' => 'second_column',
+      'group_event_list_wrapper' => 'second_column',
+      'tm_ds_content_type' => 'second_column',
+      'joined_city_list' => 'second_column',
       'joined_event_list' => 'second_column',
       'field_about_me' => 'first_column',
       'field_segment' => 'first_column',
-      'field_user_question_destination' => 'first_column',
       'field_link_facebook' => 'first_column',
-      'group_user_qa' => 'first_column',
+      'field_user_question_destination' => 'first_column',
       'field_user_question_dream_travel' => 'first_column',
+      'group_user_qa' => 'first_column',
       'field_link_linkedin' => 'first_column',
-      'field_user_question_learn' => 'first_column',
       'field_link_twitter' => 'first_column',
+      'field_user_question_learn' => 'first_column',
       'field_user_question_job' => 'first_column',
       'field_link_website' => 'first_column',
-      'group_user_qa_wrapper' => 'first_column',
       'field_user_question_why_travel' => 'first_column',
-      'group_location_wrapper' => 'first_column',
+      'group_user_qa_wrapper' => 'first_column',
       'field_location_city' => 'first_column',
+      'group_location_wrapper' => 'first_column',
       'field_location_country' => 'first_column',
     ),
     'classes' => array(),
@@ -578,6 +653,40 @@ function tm_users_ds_layout_settings_info() {
     'layout_link_custom' => '',
   );
   $export['user|user|list'] = $ds_layout;
+
+  $ds_layout = new stdClass();
+  $ds_layout->api_version = 1;
+  $ds_layout->id = 'user|user|search_result';
+  $ds_layout->entity_type = 'user';
+  $ds_layout->bundle = 'user';
+  $ds_layout->view_mode = 'search_result';
+  $ds_layout->layout = 'list_item';
+  $ds_layout->settings = array(
+    'regions' => array(
+      'li_content' => array(
+        0 => 'field_about_me',
+        1 => 'name',
+        2 => 'tm_ds_content_type',
+        3 => 'group_summary_wrapper',
+      ),
+    ),
+    'fields' => array(
+      'field_about_me' => 'li_content',
+      'name' => 'li_content',
+      'tm_ds_content_type' => 'li_content',
+      'group_summary_wrapper' => 'li_content',
+    ),
+    'classes' => array(),
+    'wrappers' => array(
+      'li_content' => 'div',
+    ),
+    'layout_wrapper' => 'div',
+    'layout_attributes' => '',
+    'layout_attributes_merge' => 1,
+    'layout_link_attribute' => '',
+    'layout_link_custom' => '',
+  );
+  $export['user|user|search_result'] = $ds_layout;
 
   return $export;
 }

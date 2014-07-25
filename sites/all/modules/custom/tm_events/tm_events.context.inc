@@ -1,36 +1,36 @@
 <?php
 /**
  * @file
- * tm_base.context.inc
+ * tm_events.context.inc
  */
 
 /**
  * Implements hook_context_default_contexts().
  */
-function tm_base_context_default_contexts() {
+function tm_events_context_default_contexts() {
   $export = array();
 
   $context = new stdClass();
   $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
   $context->api_version = 3;
-  $context->name = 'frontpage';
-  $context->description = 'The main frontpage context';
-  $context->tag = 'front';
+  $context->name = 'event_page';
+  $context->description = 'Context for the event page';
+  $context->tag = 'event';
   $context->conditions = array(
-    'path' => array(
+    'views' => array(
       'values' => array(
-        '<front>' => '<front>',
+        'events:page' => 'events:page',
       ),
     ),
   );
   $context->reactions = array(
     'block' => array(
       'blocks' => array(
-        'views-events-front_block' => array(
+        'views--exp-events-page' => array(
           'module' => 'views',
-          'delta' => 'events-front_block',
-          'region' => 'content',
-          'weight' => '1',
+          'delta' => '-exp-events-page',
+          'region' => 'header',
+          'weight' => '-10',
         ),
       ),
     ),
@@ -39,9 +39,9 @@ function tm_base_context_default_contexts() {
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('The main frontpage context');
-  t('front');
-  $export['frontpage'] = $context;
+  t('Context for the event page');
+  t('event');
+  $export['event_page'] = $context;
 
   return $export;
 }

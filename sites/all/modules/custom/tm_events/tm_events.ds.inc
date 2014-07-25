@@ -333,6 +333,58 @@ function tm_events_ds_field_settings_info() {
 
   $ds_fieldsetting = new stdClass();
   $ds_fieldsetting->api_version = 1;
+  $ds_fieldsetting->id = 'node|event|search_result';
+  $ds_fieldsetting->entity_type = 'node';
+  $ds_fieldsetting->bundle = 'event';
+  $ds_fieldsetting->view_mode = 'search_result';
+  $ds_fieldsetting->settings = array(
+    'title' => array(
+      'weight' => '0',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'link' => '0',
+        'wrapper' => 'h1',
+        'class' => 'prime-title',
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'tm_ds_content_type' => array(
+      'weight' => '1',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'p',
+          'ow-cl' => 'meta',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'body' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'p',
+          'ow-cl' => '',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+  );
+  $export['node|event|search_result'] = $ds_fieldsetting;
+
+  $ds_fieldsetting = new stdClass();
+  $ds_fieldsetting->api_version = 1;
   $ds_fieldsetting->id = 'node|partner_event|full';
   $ds_fieldsetting->entity_type = 'node';
   $ds_fieldsetting->bundle = 'partner_event';
@@ -530,6 +582,58 @@ function tm_events_ds_field_settings_info() {
   );
   $export['node|partner_event|grid'] = $ds_fieldsetting;
 
+  $ds_fieldsetting = new stdClass();
+  $ds_fieldsetting->api_version = 1;
+  $ds_fieldsetting->id = 'node|partner_event|search_result';
+  $ds_fieldsetting->entity_type = 'node';
+  $ds_fieldsetting->bundle = 'partner_event';
+  $ds_fieldsetting->view_mode = 'search_result';
+  $ds_fieldsetting->settings = array(
+    'title' => array(
+      'weight' => '0',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'link' => '0',
+        'wrapper' => 'h1',
+        'class' => 'prime-title',
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'tm_ds_content_type' => array(
+      'weight' => '1',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'p',
+          'ow-cl' => 'meta',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'body' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'p',
+          'ow-cl' => '',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+  );
+  $export['node|partner_event|search_result'] = $ds_fieldsetting;
+
   return $export;
 }
 
@@ -564,7 +668,7 @@ function tm_events_ds_custom_fields_info() {
   );
   $ds_field->ui_limit = 'user|default';
   $ds_field->properties = array(
-    'block' => 'views|user_events-joined_event_list',
+    'block' => 'views|signups-block_joined_events',
     'block_render' => '3',
   );
   $export['joined_event_list'] = $ds_field;
@@ -736,6 +840,40 @@ function tm_events_ds_layout_settings_info() {
 
   $ds_layout = new stdClass();
   $ds_layout->api_version = 1;
+  $ds_layout->id = 'node|event|search_result';
+  $ds_layout->entity_type = 'node';
+  $ds_layout->bundle = 'event';
+  $ds_layout->view_mode = 'search_result';
+  $ds_layout->layout = 'list_item';
+  $ds_layout->settings = array(
+    'regions' => array(
+      'li_content' => array(
+        0 => 'title',
+        1 => 'tm_ds_content_type',
+        2 => 'body',
+        3 => 'group_summary_wrapper',
+      ),
+    ),
+    'fields' => array(
+      'title' => 'li_content',
+      'tm_ds_content_type' => 'li_content',
+      'body' => 'li_content',
+      'group_summary_wrapper' => 'li_content',
+    ),
+    'classes' => array(),
+    'wrappers' => array(
+      'li_content' => 'div',
+    ),
+    'layout_wrapper' => 'article',
+    'layout_attributes' => '',
+    'layout_attributes_merge' => 1,
+    'layout_link_attribute' => '',
+    'layout_link_custom' => '',
+  );
+  $export['node|event|search_result'] = $ds_layout;
+
+  $ds_layout = new stdClass();
+  $ds_layout->api_version = 1;
   $ds_layout->id = 'node|partner_event|full';
   $ds_layout->entity_type = 'node';
   $ds_layout->bundle = 'partner_event';
@@ -835,6 +973,40 @@ function tm_events_ds_layout_settings_info() {
     'layout_link_custom' => '',
   );
   $export['node|partner_event|grid'] = $ds_layout;
+
+  $ds_layout = new stdClass();
+  $ds_layout->api_version = 1;
+  $ds_layout->id = 'node|partner_event|search_result';
+  $ds_layout->entity_type = 'node';
+  $ds_layout->bundle = 'partner_event';
+  $ds_layout->view_mode = 'search_result';
+  $ds_layout->layout = 'list_item';
+  $ds_layout->settings = array(
+    'regions' => array(
+      'li_content' => array(
+        0 => 'title',
+        1 => 'tm_ds_content_type',
+        2 => 'body',
+        3 => 'group_summary_wrapper',
+      ),
+    ),
+    'fields' => array(
+      'title' => 'li_content',
+      'tm_ds_content_type' => 'li_content',
+      'body' => 'li_content',
+      'group_summary_wrapper' => 'li_content',
+    ),
+    'classes' => array(),
+    'wrappers' => array(
+      'li_content' => 'div',
+    ),
+    'layout_wrapper' => 'article',
+    'layout_attributes' => '',
+    'layout_attributes_merge' => 1,
+    'layout_link_attribute' => '',
+    'layout_link_custom' => '',
+  );
+  $export['node|partner_event|search_result'] = $ds_layout;
 
   return $export;
 }

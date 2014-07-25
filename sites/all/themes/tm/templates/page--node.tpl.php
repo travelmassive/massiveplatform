@@ -5,6 +5,9 @@
  *
  * Complete documentation for this file is available online.
  * @see https://drupal.org/node/1728148
+ * 
+ * CUSTOMIZATIONS:
+ * - removed section, header and column inside the content div, since these will be handled by the DS layout
  */
 ?>
 
@@ -51,26 +54,21 @@
   <main id="main" role="main">
     <div class="row">
       <div id="content" role="main">
-        <section>
-          <header>
-            <a id="main-content"></a>
-            <?php print render($title_prefix); ?>
-            <?php if ($title): ?>
-              <h1 class="page__title title" id="page-title"><?php print $title; ?></h1>
-            <?php endif; ?>
-            <?php print render($title_suffix); ?>
-            <?php print render($page['header']); ?>
-            <?php print $messages; ?>
-            <?php print render($tabs); ?>
-            <?php print render($page['help']); ?>
-            <?php if ($action_links): ?>
-              <ul class="action-links"><?php print render($action_links); ?></ul>
-            <?php endif; ?>
-          </header>
-          <div class="column">
-            <?php print render($page['content']); ?>
-            <?php print $feed_icons; ?>
-          </div>
+        <a id="main-content"></a>
+        <?php print render($title_prefix); ?>
+        <?php if ($title): ?>
+          <h1 class="page__title title" id="page-title"><?php print $title; ?></h1>
+        <?php endif; ?>
+        <?php print render($title_suffix); ?>
+        <?php print render($page['header']); ?>
+        <?php print $messages; ?>
+        <?php //print render($tabs); ?>
+        <?php print render($page['help']); ?>
+        <?php if ($action_links): ?>
+          <ul class="action-links"><?php print render($action_links); ?></ul>
+        <?php endif; ?>
+        <?php print render($page['content']); ?>
+        <?php print $feed_icons; ?>
       </div>
 
     </div>
@@ -112,15 +110,11 @@
         <p>
           <strong class="logo">
             <a title="<?php print t('Home'); ?>" rel="home" href="<?php print $front_page; ?>">
-              <?php if($is_front) : ?>
-              <img src="<?php print $base_path . path_to_theme(); ?>/images/layout/tm-logo-w.svg" alt="<?php print t('Home'); ?>" width="104" height="48" />
-              <?php else : ?>
               <img src="<?php print $base_path . path_to_theme(); ?>/images/layout/tm-logo.svg" alt="<?php print t('Home'); ?>" width="104" height="48" />
-              <?php endif; ?>
               <span><?php print $site_name; ?></span>
             </a>
           </strong>
-          <small><?php print variable_get_value('tm_base_copyright'); ?> <time datetime="2011/<?= date('Y'); ?>">2011-<?= date('Y'); ?></time></small>
+          <small><?php print variable_get_value('tm_base_copright'); ?> <time datetime="2011/<?= date('Y'); ?>">2011-<?= date('Y'); ?></time></small>
         </p>
         <p>Design & built by <strong><a href="http://flipside.org/" title="Visit Flipside">Flipside</a></strong></p>
       </div>

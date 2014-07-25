@@ -43,6 +43,13 @@ function tm_events_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 0,
       ),
+      'search_result' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
       'teaser' => array(
         'label' => 'hidden',
         'module' => 'text',
@@ -108,6 +115,15 @@ function tm_events_field_default_field_instances() {
         'settings' => array(),
         'type' => 'hidden',
         'weight' => 2,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -178,7 +194,7 @@ function tm_events_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 2,
+      'weight' => 6,
     ),
   );
 
@@ -226,11 +242,24 @@ function tm_events_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 14,
       ),
+      'search_result' => array(
+        'label' => 'above',
+        'module' => 'date',
+        'settings' => array(
+          'format_type' => 'long',
+          'fromto' => '',
+          'multiple_from' => '',
+          'multiple_number' => '',
+          'multiple_to' => '',
+        ),
+        'type' => 'date_default',
+        'weight' => 11,
+      ),
     ),
     'ds_extras_field_template' => 'theme_ds_field_reset',
     'entity_type' => 'node',
     'field_name' => 'field_event_date',
-    'label' => 'Event date',
+    'label' => 'When',
     'required' => 0,
     'settings' => array(
       'default_value' => 'strtotime',
@@ -251,7 +280,7 @@ function tm_events_field_default_field_instances() {
         'year_range' => '-0:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 4,
+      'weight' => 3,
     ),
   );
 
@@ -288,6 +317,13 @@ function tm_events_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 0,
       ),
+      'search_result' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 12,
+      ),
     ),
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
@@ -305,7 +341,7 @@ function tm_events_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 5,
+      'weight' => 4,
     ),
   );
 
@@ -351,6 +387,16 @@ function tm_events_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 4,
       ),
+      'search_result' => array(
+        'label' => 'above',
+        'module' => 'image',
+        'settings' => array(
+          'image_link' => '',
+          'image_style' => '',
+        ),
+        'type' => 'image',
+        'weight' => 6,
+      ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
@@ -382,7 +428,7 @@ function tm_events_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 8,
+      'weight' => 4,
     ),
   );
 
@@ -419,6 +465,13 @@ function tm_events_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 6,
       ),
+      'search_result' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 7,
+      ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
@@ -442,7 +495,7 @@ function tm_events_field_default_field_instances() {
         'rows' => 4,
       ),
       'type' => 'text_textarea',
-      'weight' => 6,
+      'weight' => 5,
     ),
   );
 
@@ -478,6 +531,13 @@ function tm_events_field_default_field_instances() {
         'settings' => array(),
         'type' => 'hidden',
         'weight' => 1,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'module' => 'link',
+        'settings' => array(),
+        'type' => 'link_default',
+        'weight' => 3,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -558,6 +618,15 @@ function tm_events_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 17,
       ),
+      'search_result' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 10,
+      ),
     ),
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
@@ -572,7 +641,7 @@ function tm_events_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 12,
+      'weight' => 1,
     ),
   );
 
@@ -609,6 +678,13 @@ function tm_events_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 22,
       ),
+      'search_result' => array(
+        'label' => 'above',
+        'module' => 'link',
+        'settings' => array(),
+        'type' => 'link_default',
+        'weight' => 9,
+      ),
     ),
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
@@ -640,7 +716,7 @@ function tm_events_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 11,
+      'weight' => 6,
     ),
   );
 
@@ -672,6 +748,13 @@ function tm_events_field_default_field_instances() {
         'weight' => 3,
       ),
       'list' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
+      'search_result' => array(
         'label' => 'hidden',
         'module' => 'text',
         'settings' => array(),
@@ -746,6 +829,19 @@ function tm_events_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 0,
       ),
+      'search_result' => array(
+        'label' => 'above',
+        'module' => 'date',
+        'settings' => array(
+          'format_type' => 'long',
+          'fromto' => '',
+          'multiple_from' => '',
+          'multiple_number' => '',
+          'multiple_to' => '',
+        ),
+        'type' => 'date_default',
+        'weight' => 2,
+      ),
     ),
     'ds_extras_field_template' => 'theme_ds_field_reset',
     'entity_type' => 'node',
@@ -771,7 +867,7 @@ function tm_events_field_default_field_instances() {
         'year_range' => '-0:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 3,
+      'weight' => 2,
     ),
   );
 
@@ -809,6 +905,13 @@ function tm_events_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 0,
       ),
+      'search_result' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 6,
+      ),
     ),
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
@@ -826,7 +929,7 @@ function tm_events_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 7,
     ),
   );
 
@@ -872,6 +975,16 @@ function tm_events_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 0,
       ),
+      'search_result' => array(
+        'label' => 'above',
+        'module' => 'image',
+        'settings' => array(
+          'image_link' => '',
+          'image_style' => '',
+        ),
+        'type' => 'image',
+        'weight' => 3,
+      ),
     ),
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
@@ -897,7 +1010,7 @@ function tm_events_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 4,
+      'weight' => 3,
     ),
   );
 
@@ -934,6 +1047,13 @@ function tm_events_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 0,
       ),
+      'search_result' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 7,
+      ),
     ),
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
@@ -951,7 +1071,7 @@ function tm_events_field_default_field_instances() {
         'rows' => 4,
       ),
       'type' => 'text_textarea',
-      'weight' => 7,
+      'weight' => 8,
     ),
   );
 
@@ -988,6 +1108,13 @@ function tm_events_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 0,
       ),
+      'search_result' => array(
+        'label' => 'above',
+        'module' => 'link',
+        'settings' => array(),
+        'type' => 'link_default',
+        'weight' => 5,
+      ),
     ),
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
@@ -1019,7 +1146,7 @@ function tm_events_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 8,
+      'weight' => 9,
     ),
   );
 
@@ -1056,6 +1183,13 @@ function tm_events_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 0,
       ),
+      'search_result' => array(
+        'label' => 'above',
+        'module' => 'link',
+        'settings' => array(),
+        'type' => 'link_default',
+        'weight' => 4,
+      ),
     ),
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
@@ -1087,7 +1221,7 @@ function tm_events_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 5,
+      'weight' => 4,
     ),
   );
 
@@ -1110,6 +1244,7 @@ function tm_events_field_default_field_instances() {
   t('Select the date and start time of the event.');
   t('This image will used as the main banner for the event.');
   t('Venue name');
+  t('When');
   t('You can appoint any other chapter leader of this city as organizer of the event.');
 
   return $field_instances;

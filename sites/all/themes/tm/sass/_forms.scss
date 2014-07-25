@@ -13,7 +13,6 @@ input::-moz-focus-inner {
 .form-wrapper,
 .form-item-title {
   margin: 0;
-  // margin: 0 0 1rem 0;
 }
 
 input[type="file"] {
@@ -356,8 +355,8 @@ select {
 }
 
 .form-item-type {
-  @extend .bttn, .bttn-m, .bttn-secondary;
-  width: 12rem;
+  @extend .bttn, .bttn-m, .bttn-primary;
+  width: 10rem;
   overflow: hidden;
 
   @include transform(translate3d(0, 0, 0));

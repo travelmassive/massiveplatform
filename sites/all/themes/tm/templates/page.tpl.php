@@ -60,8 +60,8 @@
             <?php endif; ?>
             <?php print render($title_suffix); ?>
             <?php print render($page['header']); ?>
-            <?php print $messages; ?>
             <?php print render($tabs); ?>
+            <?php print $messages; ?>
             <?php print render($page['help']); ?>
             <?php if ($action_links): ?>
               <ul class="action-links"><?php print render($action_links); ?></ul>
@@ -89,7 +89,7 @@
                 'text' => $foot_menu['title'],
                 'level' => 'h2',
               ),
-            )); 
+            ));
           ?>
           </section>
         <?php endif; ?>
@@ -102,7 +102,7 @@
                 'text' => $social_menu['title'],
                 'level' => 'h2',
               ),
-            )); 
+            ));
           ?>
           </section>
         <?php endif ?>

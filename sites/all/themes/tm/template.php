@@ -54,12 +54,12 @@ function tm_preprocess_html(&$variables, $hook) {
  */
 
 function tm_preprocess_page(&$variables, $hook) {
- 
+
   // Hide the page title from the user profiles
   if (isset($variables['page']['content']['system_main']['#entity_type']) && $variables['page']['content']['system_main']['#entity_type'] == 'user' && isset($variables['page']['content']['system_main']['#view_mode']) && $variables['page']['content']['system_main']['#view_mode'] == 'full') {
     drupal_set_title('');
   }
-  
+
   // Pass the footer and social menu to the page template
   $variables['foot_menu'] = menu_load('menu-footer-menu');
   $variables['foot_menu']['links'] = menu_navigation_links('menu-footer-menu');
@@ -146,6 +146,8 @@ function tm_preprocess_block(&$variables, $hook) {
  */
 
 function tm_preprocess_ds_search_page(&$build) {
+  $build['#prefix'] = '<section class="contained contained-block">';
+  $build['#suffix'] = '</section>';
   $build['search_results']['#prefix'] = '<ul class="search-list">';
   $build['search_results']['#suffix'] = '</ul>';
 }

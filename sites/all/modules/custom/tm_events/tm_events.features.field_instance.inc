@@ -135,7 +135,7 @@ function tm_events_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_chapter',
-    'label' => 'City',
+    'label' => 'Organizing city',
     'required' => 1,
     'settings' => array(
       'behaviors' => array(
@@ -1229,7 +1229,6 @@ function tm_events_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Add a banner that represents this partner event.');
   t('Banner');
-  t('City');
   t('Description');
   t('Event date');
   t('Help the attendees find the right location by providing a link to a map, for example <a href="http://maps.google.com/">Google Maps</a>.');
@@ -1237,6 +1236,7 @@ function tm_events_field_default_field_instances() {
   t('Location');
   t('Map link');
   t('Organizer');
+  t('Organizing city');
   t('Provide a link to a page with more information or the RSVP.');
   t('Provide a link to the page with the RSVP.');
   t('Provide the street address for this event.');

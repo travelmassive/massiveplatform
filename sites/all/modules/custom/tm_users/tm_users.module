@@ -22,6 +22,14 @@ function tm_users_form_user_login_block_alter(&$form, &$form_state) {
   $form['links']['#weight'] = 100;
 }
 
+function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
+  // We don't want a collapsible fieldset
+  $form['timezone']['#type'] = 'fieldset';
+  $form['timezone']['#collapsible'] = FALSE;
+  // The description is removed as well
+  $form['timezone']['#description'] = '';
+}
+
 /**
  * Implements hook_theme()
  */

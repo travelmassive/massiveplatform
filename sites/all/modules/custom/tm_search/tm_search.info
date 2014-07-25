@@ -32,6 +32,7 @@ features[variable][] = ds_search_show_title
 features[variable][] = ds_search_type
 features[variable][] = ds_search_variables
 features[variable][] = ds_search_view_mode
+features[variable][] = ds_user_override_search_page
 features[variable][] = search_active_modules
 features[variable][] = search_cron_limit
 features[variable][] = search_default_module

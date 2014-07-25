@@ -407,6 +407,58 @@ function tm_users_ds_field_settings_info() {
   );
   $export['user|user|list'] = $ds_fieldsetting;
 
+  $ds_fieldsetting = new stdClass();
+  $ds_fieldsetting->api_version = 1;
+  $ds_fieldsetting->id = 'user|user|search_result';
+  $ds_fieldsetting->entity_type = 'user';
+  $ds_fieldsetting->bundle = 'user';
+  $ds_fieldsetting->view_mode = 'search_result';
+  $ds_fieldsetting->settings = array(
+    'name' => array(
+      'weight' => '0',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'link' => '0',
+        'wrapper' => 'h1',
+        'class' => 'prime-title',
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'tm_ds_content_type' => array(
+      'weight' => '1',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'p',
+          'ow-cl' => 'meta',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'field_about_me' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'p',
+          'ow-cl' => '',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+  );
+  $export['user|user|search_result'] = $ds_fieldsetting;
+
   return $export;
 }
 
@@ -431,13 +483,13 @@ function tm_users_ds_layout_settings_info() {
       'header_body' => array(
         1 => 'tm_ds_edit_own_profile',
         2 => 'field_job_role',
-        3 => 'field_avatar',
-        4 => 'flag_follow_members',
-        5 => 'field_job_organization',
-        6 => 'name',
+        3 => 'flag_follow_members',
+        4 => 'field_avatar',
+        5 => 'name',
+        6 => 'field_job_organization',
         7 => 'tm_ds_anon_flag_placeholder',
-        8 => 'tm_ds_more_actions',
-        9 => 'group_job_wrapper',
+        8 => 'group_job_wrapper',
+        9 => 'tm_ds_more_actions',
         10 => 'group_action_menu_wrapper',
         15 => 'group_action_menu',
       ),
@@ -464,8 +516,8 @@ function tm_users_ds_layout_settings_info() {
         36 => 'field_location_country',
       ),
       'second_column' => array(
-        13 => 'group_community_wrapper',
-        14 => 'members_following_members',
+        13 => 'members_following_members',
+        14 => 'group_community_wrapper',
         16 => 'group_city_list_wrapper',
         17 => 'group_event_list_wrapper',
         18 => 'tm_ds_content_type',
@@ -477,18 +529,18 @@ function tm_users_ds_layout_settings_info() {
       'field_image' => 'header_media',
       'tm_ds_edit_own_profile' => 'header_body',
       'field_job_role' => 'header_body',
-      'field_avatar' => 'header_body',
       'flag_follow_members' => 'header_body',
-      'field_job_organization' => 'header_body',
+      'field_avatar' => 'header_body',
       'name' => 'header_body',
+      'field_job_organization' => 'header_body',
       'tm_ds_anon_flag_placeholder' => 'header_body',
-      'tm_ds_more_actions' => 'header_body',
       'group_job_wrapper' => 'header_body',
+      'tm_ds_more_actions' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
       'tm_ds_chapter_sticker' => 'header_extra',
       'group_details_wrapper' => 'first_column',
-      'group_community_wrapper' => 'second_column',
       'members_following_members' => 'second_column',
+      'group_community_wrapper' => 'second_column',
       'group_action_menu' => 'header_body',
       'group_city_list_wrapper' => 'second_column',
       'group_event_list_wrapper' => 'second_column',

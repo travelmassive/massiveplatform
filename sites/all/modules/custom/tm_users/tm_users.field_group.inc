@@ -424,7 +424,7 @@ function tm_users_field_group_info() {
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
-  $field_group->api_version = 1;  
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_user_account|user|user|form';
   $field_group->group_name = 'group_user_account';
   $field_group->entity_type = 'user';

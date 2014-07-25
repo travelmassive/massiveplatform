@@ -50,7 +50,7 @@ function tm_users_strongarm() {
       'display' => array(
         'masquerade' => array(
           'default' => array(
-            'weight' => '13',
+            'weight' => '12',
             'visible' => FALSE,
           ),
           'grid' => array(
@@ -62,7 +62,7 @@ function tm_users_strongarm() {
             'visible' => FALSE,
           ),
           'search_result' => array(
-            'weight' => '13',
+            'weight' => '12',
             'visible' => FALSE,
           ),
         ),
@@ -99,7 +99,7 @@ function tm_users_strongarm() {
           ),
           'search_result' => array(
             'weight' => '1',
-            'visible' => FALSE,
+            'visible' => TRUE,
           ),
         ),
       ),

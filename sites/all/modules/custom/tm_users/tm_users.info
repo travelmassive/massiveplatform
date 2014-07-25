@@ -30,6 +30,7 @@ features[ctools][] = views:views_default:3.0
 features[ds_field_settings][] = user|user|default
 features[ds_field_settings][] = user|user|grid
 features[ds_field_settings][] = user|user|list
+features[ds_field_settings][] = user|user|search_result
 features[ds_layout_settings][] = user|user|default
 features[ds_layout_settings][] = user|user|grid
 features[ds_layout_settings][] = user|user|list

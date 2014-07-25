@@ -143,16 +143,15 @@ button {
 // Dark grey
 .bttn-primary {
   color: #FFF !important;
-  background: $primary-color;
-  border-color: shade($primary-color, 15%);
+  background: tint($primary-color, 30%) !important;
   @extend %antialiased;
+  box-shadow: inset 0 -2px 0 0 tint($primary-color, 10%);
   &:hover, &:focus {
     color: #FFF !important;
   }
   &:active, &.on, &.flagged {
-    border-color: shade($primary-color, 25%);
-    background: shade($primary-color, 10%);
-    box-shadow: 0 1px 0 0 rgba(#FFF, 0.5), inset 0 2px 0 0 shade($primary-color, 20%);
+    background: tint($primary-color, 10%) !important;
+    box-shadow: inset 0 2px 0 0 shade($primary-color, 20%);
     color: #FFF !important;
   }
 }
@@ -266,14 +265,14 @@ button {
     }
   }
   a {
-    @extend .bttn, .bttn-secondary, .bttn-m;
+    @extend .bttn, .bttn-primary, .bttn-m;
     letter-spacing: inherit;
     &:hover {
       background-color: inherit;
     }
   }
   a.is-active {
-    @extend .bttn-secondary.on;
+    @extend .bttn-primary.on;
     border: 0;
     letter-spacing: inherit;
   }

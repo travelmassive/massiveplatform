@@ -355,7 +355,7 @@ select {
 }
 
 .form-item-type {
-  @extend .bttn, .bttn-m, .bttn-secondary;
+  @extend .bttn, .bttn-m, .bttn-primary;
   width: 10rem;
   overflow: hidden;
 

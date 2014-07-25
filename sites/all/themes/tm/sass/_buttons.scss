@@ -189,6 +189,38 @@ button {
   }
 }
 
+// Reddish
+.bttn-danger {
+  color: #FFF !important;
+  background: $danger-color;
+  @extend %antialiased;
+  box-shadow: inset 0 -2px 0 0 shade($danger-color, 30%);
+  &:hover, &:focus {
+    color: #FFF !important;
+  }
+  &:active, &.on, &.flagged {
+    background: shade($danger-color, 30%);
+    box-shadow: inset 0 2px 0 0 shade($danger-color, 50%);
+    color: #FFF !important;
+  }
+}
+
+// Reddish
+.bttn-success {
+  color: #FFF !important;
+  background: $success-color;
+  @extend %antialiased;
+  box-shadow: inset 0 -2px 0 0 shade($success-color, 30%);
+  &:hover, &:focus {
+    color: #FFF !important;
+  }
+  &:active, &.on, &.flagged {
+    background: shade($success-color, 30%);
+    box-shadow: inset 0 2px 0 0 shade($success-color, 50%);
+    color: #FFF !important;
+  }
+}
+
 .bttn, button {
   &.disabled {
     opacity: 0.4;
@@ -243,7 +275,7 @@ button {
       right: 1rem;
     }
   }
-  
+
   &.dropd-center {
     left: 50%;
     margin-left: -6.25rem;
@@ -258,7 +290,7 @@ button {
     margin-top: 0.75rem;
     visibility: visible;
   }
-  
+
   .dropd-menu {
     list-style: none;
     padding: 0.5rem 0;
@@ -266,11 +298,11 @@ button {
     font-size: 0.85rem;
     line-height: 1.25rem;
     border-bottom: 1px solid tint($primary-color, 90%);
-    
+
     &:first-child {
       margin-top: -0.75rem;
     }
-    
+
     &:last-child {
       margin-bottom: -0.75rem;
       border: none;
@@ -284,18 +316,18 @@ button {
         padding: 0.25rem 1rem;
         color: $primary-color;
         background-color: transparent;
-    
+
         @include transition-property(background-color, top, left, right);
         @include transition-duration(0.2s, 0.1s, 0.2s, 0.2s);
         @include transition-timing-function(ease, ease, ease, ease);
         @include transition-delay(0, 0, 0, 0);
-    
+
         &:hover {
           opacity: 1;
           background-color: rgba(tint($secondary-color, 50%), 0.2);
           color: $secondary-color;
         }
-    
+
         &:before {
           vertical-align: bottom !important;
           font-weight: normal;

@@ -82,6 +82,12 @@ function tm_events_strongarm() {
       'revision' => array(
         'custom_settings' => FALSE,
       ),
+      'search_result' => array(
+        'custom_settings' => TRUE,
+      ),
+      'search_index' => array(
+        'custom_settings' => FALSE,
+      ),
     ),
     'extra_fields' => array(
       'form' => array(
@@ -125,6 +131,12 @@ function tm_events_strongarm() {
         'custom_settings' => FALSE,
       ),
       'revision' => array(
+        'custom_settings' => FALSE,
+      ),
+      'search_result' => array(
+        'custom_settings' => TRUE,
+      ),
+      'search_index' => array(
         'custom_settings' => FALSE,
       ),
     ),

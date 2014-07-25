@@ -140,3 +140,12 @@ function tm_preprocess_block(&$variables, $hook) {
 }
 // */
 
+/**
+ * Add a wrapper around the search results that are being taken care of by DS Search
+ *
+ */
+
+function tm_preprocess_ds_search_page(&$build) {
+  $build['search_results']['#prefix'] = '<ul class="search-list">';
+  $build['search_results']['#suffix'] = '</ul>';
+}

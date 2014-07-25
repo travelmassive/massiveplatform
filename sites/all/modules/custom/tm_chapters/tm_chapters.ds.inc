@@ -254,6 +254,58 @@ function tm_chapters_ds_field_settings_info() {
   );
   $export['node|chapter|grid'] = $ds_fieldsetting;
 
+  $ds_fieldsetting = new stdClass();
+  $ds_fieldsetting->api_version = 1;
+  $ds_fieldsetting->id = 'node|chapter|search_result';
+  $ds_fieldsetting->entity_type = 'node';
+  $ds_fieldsetting->bundle = 'chapter';
+  $ds_fieldsetting->view_mode = 'search_result';
+  $ds_fieldsetting->settings = array(
+    'title' => array(
+      'weight' => '0',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'link' => '0',
+        'wrapper' => 'h1',
+        'class' => 'prime-title',
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
+    'tm_ds_content_type' => array(
+      'weight' => '1',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'p',
+          'ow-cl' => 'meta',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'body' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'p',
+          'ow-cl' => '',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+  );
+  $export['node|chapter|search_result'] = $ds_fieldsetting;
+
   return $export;
 }
 
@@ -322,18 +374,16 @@ function tm_chapters_ds_layout_settings_info() {
       'second_column' => array(
         1 => 'field_chapter_leaders',
       ),
-      'banner' => array(
-        2 => 'field_image',
-      ),
     ),
     'fields' => array(
       'body' => 'first_column',
       'field_chapter_leaders' => 'second_column',
-      'field_image' => 'banner',
     ),
     'classes' => array(),
     'wrappers' => array(
-      'banner' => 'header',
+      'header_media' => 'div',
+      'header_body' => 'div',
+      'header_extra' => 'div',
       'first_column' => 'div',
       'second_column' => 'div',
     ),
@@ -462,6 +512,40 @@ function tm_chapters_ds_layout_settings_info() {
     'layout_link_custom' => '',
   );
   $export['node|chapter|grid'] = $ds_layout;
+
+  $ds_layout = new stdClass();
+  $ds_layout->api_version = 1;
+  $ds_layout->id = 'node|chapter|search_result';
+  $ds_layout->entity_type = 'node';
+  $ds_layout->bundle = 'chapter';
+  $ds_layout->view_mode = 'search_result';
+  $ds_layout->layout = 'list_item';
+  $ds_layout->settings = array(
+    'regions' => array(
+      'li_content' => array(
+        0 => 'title',
+        1 => 'tm_ds_content_type',
+        2 => 'group_summary_wrapper',
+        3 => 'body',
+      ),
+    ),
+    'fields' => array(
+      'title' => 'li_content',
+      'tm_ds_content_type' => 'li_content',
+      'group_summary_wrapper' => 'li_content',
+      'body' => 'li_content',
+    ),
+    'classes' => array(),
+    'wrappers' => array(
+      'li_content' => 'div',
+    ),
+    'layout_wrapper' => 'article',
+    'layout_attributes' => '',
+    'layout_attributes_merge' => 1,
+    'layout_link_attribute' => '',
+    'layout_link_custom' => '',
+  );
+  $export['node|chapter|search_result'] = $ds_layout;
 
   return $export;
 }

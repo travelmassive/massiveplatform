@@ -31,6 +31,9 @@ function tm_users_strongarm() {
       'token' => array(
         'custom_settings' => FALSE,
       ),
+      'search_result' => array(
+        'custom_settings' => TRUE,
+      ),
     ),
     'extra_fields' => array(
       'form' => array(
@@ -58,6 +61,10 @@ function tm_users_strongarm() {
             'weight' => '7',
             'visible' => FALSE,
           ),
+          'search_result' => array(
+            'weight' => '12',
+            'visible' => FALSE,
+          ),
         ),
         'summary' => array(
           'default' => array(
@@ -70,6 +77,10 @@ function tm_users_strongarm() {
           ),
           'list' => array(
             'weight' => '5',
+            'visible' => FALSE,
+          ),
+          'search_result' => array(
+            'weight' => '11',
             'visible' => FALSE,
           ),
         ),
@@ -85,6 +96,10 @@ function tm_users_strongarm() {
           'grid' => array(
             'weight' => '10',
             'visible' => FALSE,
+          ),
+          'search_result' => array(
+            'weight' => '1',
+            'visible' => TRUE,
           ),
         ),
       ),

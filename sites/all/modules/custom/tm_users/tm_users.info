@@ -58,6 +58,7 @@ features[field_group][] = group_job_wrapper|user|user|default
 features[field_group][] = group_job_wrapper|user|user|grid
 features[field_group][] = group_location_wrapper|user|user|default
 features[field_group][] = group_user_account|user|user|form
+features[field_group][] = group_user_edit|user|user|form
 features[field_group][] = group_user_profile|user|user|form
 features[field_group][] = group_user_qa_wrapper|user|user|default
 features[field_group][] = group_user_qa|user|user|default

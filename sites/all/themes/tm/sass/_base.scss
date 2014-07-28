@@ -76,6 +76,11 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
   }
 }
 
+.item-list {
+  text-align: center;
+  font-size: 0;
+}
+
 #page, #site-canvas {
   background: tint($primary-color, 90%);
 }
@@ -298,7 +303,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
   }
 
   // Mostly used by hubs (implemented with Views)
-  .grid {
+  .grid .view-content {
     ul {
       @include grid-row($behavior: nest);
       padding: 0;

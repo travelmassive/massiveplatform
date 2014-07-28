@@ -1,0 +1,7 @@
+name = TM Notifications Event Signup
+description = Travel Massive notification system for event signup
+core = 7.x
+version = 7.x-1.0-dev
+project = tm_notifications
+package = "TM Notifications"
+dependencies[] = tm_notifications

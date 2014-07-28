@@ -1,0 +1,6 @@
+name = TM Notifications
+description = Travel Massive notification system
+core = 7.x
+version = 7.x-1.0-dev
+project = tm_notifications
+package = "TM Notifications"

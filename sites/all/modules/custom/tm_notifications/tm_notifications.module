@@ -1,0 +1,34 @@
+<?php
+
+function tm_notifications_menu() {
+  $items['admin/config/tm/tm_notifications'] = array(
+    'title' => 'Notifications',
+    'description' => 'Settings for Travel Massive notifications.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('tm_notifications_messages_admin_form'),
+    'access arguments' => array('manage tm notification messages'),
+    'file' => 'tm_notifications.admin.pages.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+function tm_notifications_notify($notification_name, $account_to, $tokens = array()) {
+  drupal_mail('tm_notifications', $notification_name, $account_to->mail, user_preferred_language($account_to), array('tokens' => $tokens));
+}
+
+
+function tm_notifications_mail($key, &$message, $params) {
+  $subject = variable_get('tm_notifications-' . $key . '-subject', '');
+  $msg = variable_get('tm_notifications-' . $key . '-message', '');
+  
+  if (!empty($params['tokens'])) {
+    $subject = token_replace($subject, $params['tokens']);
+    $msg = token_replace($msg, $params['tokens']);
+  }
+  
+  
+  $message['subject'] = $subject;
+  $message['body'][] = $msg;
+}

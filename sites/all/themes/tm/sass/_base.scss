@@ -188,6 +188,23 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
         right: 4rem;
       }
     }
+    .search-form {
+      label {
+        @extend .visually-hidden;
+      }
+      #edit-submit,
+      #edit-submit--2 {
+        width: 100%;
+        @extend .bttn-secondary;
+        margin: 0.5rem 0 0 0;
+      }
+    }
+    .helper {
+      font-size: 0.85rem;
+      line-height: 1.25rem;
+      color: tint($primary-color, 30%);
+      margin: 0;
+    }
   }
   .account-wrapper {
     .toggle {

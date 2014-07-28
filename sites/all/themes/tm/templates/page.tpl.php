@@ -38,6 +38,7 @@
             <h2><a class="toggle" href="#search-menu-blk" data-dropd-toggle><span class="hide"><?= t('Search'); ?></span></a></h2>
             <div id="search-menu-blk" class="inner dropd dropd-right" data-dropd>
               <?php $sf = drupal_get_form('search_form'); print render($sf); ?>
+              <p class="helper"><?php print t('Search chapters, events, members or companies.'); ?></p>
             </div>
           </li>
           <li class="account-wrapper" data-dropd-wrapper>

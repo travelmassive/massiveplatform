@@ -65,7 +65,7 @@ $image = theme('image_style', array(
 
     <?php if (variable_get('user_register', 1)) : ?>
       <h3 class="menu-blk-title">New to Travel Massive?</h3>
-      <p><?php print l(t('Sign up now'), 'user/register', array('attributes' => array('title' => 'Create account', 'class' => 'cta-inline'))); ?></p>
+      <p><?php print l(t('Sign up now'), 'user/register', array('attributes' => array('title' => 'Create account', 'class' => array('cta-inline')))); ?></p>
     <?php endif; ?>
 
   <?php endif; ?>

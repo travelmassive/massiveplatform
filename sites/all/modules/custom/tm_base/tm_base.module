@@ -18,6 +18,17 @@ function tm_base_menu() {
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
+  
+  // Base Admin page.
+  $items['admin/config/tm'] = array(
+    'title' => 'Travel Massive',
+    'description' => 'Settings related to the Travel Massive website.',
+    'type' => MENU_NORMAL_ITEM,
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('administer site configuration'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+  );
 
   return $items;
 }

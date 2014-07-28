@@ -66,23 +66,12 @@
   }
   .node-form,
   #user-profile-form {
-    @include grid-column(12);
     padding: 0 !important;
   }
 
   @media #{$medium-up} {
     #page-title {
       margin-bottom: 2rem;
-    }
-    .node-form,
-    #user-profile-form {
-      @include grid-column($columns: 10, $offset: 1);
-    }
-  }
-  @media #{$large-up} {
-    .node-form,
-    #user-profile-form {
-      @include grid-column($columns: 8, $offset: 2);
     }
   }
 }

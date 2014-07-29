@@ -22,14 +22,14 @@ Drupal.behaviors.base_scripts = {
       e.stopPropagation();
       var _self = $(this);
       var $drop = _self.closest('[data-dropd-wrapper]').find('[data-dropd]');
-      
+
       // Hide others.
       $('[data-dropd-toggle]').not(_self).removeClass('on');
       $('[data-dropd]').not($drop).removeClass('on');
-      
+
       // Set top value.
       $drop.css('top', _self.height());
-      
+
       if (_self.hasClass('on')) {
         _self.removeClass('on');
         $drop.removeClass('on');
@@ -38,15 +38,26 @@ Drupal.behaviors.base_scripts = {
         _self.addClass('on');
         $drop.addClass('on');
       }
-      
+
     });
-    
+
     $(document).click(function(e){
       if($(e.target).closest('[data-dropd]').length === 0) {
         $('[data-dropd-toggle], [data-dropd]').removeClass('on');
       }
     });
-    
+
+    $('.search-wrapper .toggle').once('search-menu-blk', function() {
+      $(this).click(function() {
+        // Probably because of the css animation the focus trigger must be
+        // delayed. We guess that is because the element's visibility is
+        // set to hidden and focus doesn't work for hidden elements.
+        setTimeout(function(){
+          $('.search-wrapper .form-text').focus();
+        }, 50);
+      });
+    });
+
   }
 };
 

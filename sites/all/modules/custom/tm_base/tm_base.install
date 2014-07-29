@@ -25,6 +25,7 @@ function tm_base_install() {
   }
   variable_set('logintoboggan_pre_auth_role', $non_validated_role->rid);
   
+  /*
   // Upload default images.
   $imgs = array(
     'cover-default.png' => drupal_get_path('module', 'tm_base') . '/import/default_images/',
@@ -32,6 +33,7 @@ function tm_base_install() {
   );
   
   _tm_base_upload_default_images($imgs);
+  */
 }
 
 /**

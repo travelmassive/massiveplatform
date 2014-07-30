@@ -1,34 +1,182 @@
 <?php
+/**
+ * @file tm_notifications.module
+ * 
+ * @author Daniel Silva (daniel.silva@flipside.org)
+ * 
+ */
+ 
+include_once 'tm_notifications.features.inc';
 
+module_load_include('inc', 'tm_notifications', 'tm_notifications_TMNotification');
+ 
+/**
+ * Implements hook_menu()
+ */
 function tm_notifications_menu() {
   $items['admin/config/tm/tm_notifications'] = array(
     'title' => 'Notifications',
     'description' => 'Settings for Travel Massive notifications.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('tm_notifications_messages_admin_form'),
-    'access arguments' => array('manage tm notification messages'),
+    'access arguments' => array('manage tm notifications'),
     'file' => 'tm_notifications.admin.pages.inc',
     'type' => MENU_NORMAL_ITEM,
   );
-
   return $items;
 }
 
-function tm_notifications_notify($notification_name, $account_to, $tokens = array()) {
-  drupal_mail('tm_notifications', $notification_name, $account_to->mail, user_preferred_language($account_to), array('tokens' => $tokens));
+/**
+ * Implements hook_permission()
+ */
+function tm_notifications_permission() {
+  return array(
+    'manage tm notifications' => array(
+      'title' => t('Manage notifications'),
+      'description' => t('Manage travel massive notifications.'),
+    ),
+  );
 }
 
+/**
+ * Implements hook_form_FORM_ID_alter()
+ */
+function tm_notifications_form_user_profile_form_alter(&$form, &$form_state) {
+  $user = $form['#user'];
+  
+  // Get all the registered notifications.
+  $notifications = module_invoke_all('tm_notif_info');
+  
+  if (!empty($notifications)) {
+    $form['notifications_settings'] = array(
+      '#type' => 'container',
+      '#tree' => TRUE
+    );
+    
+    $form['notifications_settings']['notifications'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Notification settings'),
+      '#attributes' => array(
+        'class' => array('field-group-fieldset')
+      ) 
+    );
+    
+    foreach ($notifications as $name => $value) {
+      $notif = new TMNotification($name);
+      if ($notif->isChangeAllowed()) {
+        $form['notifications_settings']['notifications'][$name] = array(
+          '#type' => 'checkbox',
+          '#title' => $notif->getLabel($value['title']),
+          '#default_value' => $notif->isEnabled($user->uid),
+        );
+      }
+    }
+    
+    // Add to group.
+    // This is needed to show the notifications in a tab of their own.
+    $form['#groups']['group_user_notifications']->children[] = 'notifications_settings';
+    $form['#group_children']['notifications_settings'] = 'group_user_notifications';
+    
+    // Attach submit handler to save the notification state.
+    $form['#submit'][] = 'tm_notifications_user_form_submit';
+  }
+}
 
+/**
+ * Additional submit handler for form user_profile_form.
+ * Used to save the notifications.
+ */
+function tm_notifications_user_form_submit($form, &$form_state) {
+  $user = $form['#user'];
+  foreach ($form_state['values']['notifications_settings']['notifications'] as $key => $value) {
+    $notif = new TMNotification($key);
+    $notif->setForUser($user->uid, (bool) $value);
+  }
+}
+
+/**
+ * Implements hook_mail()
+ * Compose the email to send.
+ */
 function tm_notifications_mail($key, &$message, $params) {
-  $subject = variable_get('tm_notifications-' . $key . '-subject', '');
-  $msg = variable_get('tm_notifications-' . $key . '-message', '');
+  $notif = new TMNotification($key);
+  $subject = $notif->getEmailSubject();
+  $msg = $notif->getEmailMessage();
   
   if (!empty($params['tokens'])) {
     $subject = token_replace($subject, $params['tokens']);
     $msg = token_replace($msg, $params['tokens']);
   }
   
-  
   $message['subject'] = $subject;
   $message['body'][] = $msg;
+}
+
+/**
+ * Notify the user using the data set through the settings form.
+ * 
+ * @param TMNotification $notification
+ *   Notification object to use.
+ * @param StdClass $account
+ *   User account. (destination)
+ * @param array $tokens
+ *   If the message includes tokens they need to be specified here. This uses
+ *   token settings.
+ * 
+ * @return boolean
+ *   TRUE if the notification is enabled for the user and it was scheduled.
+ */
+function tm_notifications_notify(TMNotification $notification, $account, $tokens = array()) {
+  if ($notification->isEnabled($account_to->uid)) {
+    drupal_mail('tm_notifications', $notification->getName(), $account_to->mail, user_preferred_language($account_to), array('tokens' => $tokens));
+    return TRUE;
+  }
+  
+  return FALSE;
+}
+
+/**
+ * Removes all user related notifications from the database.
+ * The settings set through the admin page will not be removed.
+ * 
+ * @param String $notifications_name
+ */
+function tm_notifications_remove($notification_name) {
+  db_delete('tm_notifications')
+  ->condition('bundle', $notification_name)
+  ->execute();
+}
+
+/**
+ * Removes all entries in the database related to the given milestone.
+ * This refers to the user preferences (subscribed/unsubscribed)
+ * All the admin settings are also removed.
+ * 
+ * NOTE: When a module implementing notifications is uninstalled this function
+ * should be called.
+ * 
+ * @param String $notifications_name
+ */
+function tm_notifications_purge($notification_name) {
+  tm_notifications_purge_bulk(array($notification_name));
+}
+
+/**
+ * Removes all entries in the database related to the given milestones.
+ * This refers to the user preferences (subscribed/unsubscribed)
+ * All the admin settings are also removed.
+ * 
+ * NOTE: When a module implementing notifications is uninstalled this function
+ * should be called.
+ * 
+ * @param Array $notifications_name
+ */
+function tm_notifications_purge_bulk($notification_names) {
+  module_load_include('inc', 'tm_notifications', 'tm_notifications_TMNotification');
+  foreach($notification_names as $name) {
+    $notif = new TMNotification($name);
+    
+    tm_notifications_remove($notif->getName());
+    variable_delete($notif->getVarName());
+  }
 }

@@ -1,0 +1,60 @@
+<?php
+/**
+ * @file tm_notifications.install
+ * 
+ * @author Daniel Silva (daniel.silva@flipside.org)
+ * 
+ */
+
+ 
+/**
+ * Implements hook_schema()
+ * 
+ * Schema to keep track wich notification each user has enabled.
+ */
+function tm_notifications_schema() {
+  $schema['tm_notifications'] = array(
+    'description' => 'Notification system for travelmassive.',
+    'fields' => array(
+      'id' => array(
+        'description' => 'Primary identifier.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ),
+      'bundle' => array(
+        'description' => 'Notification key.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE
+      ),
+      'uid' => array(
+        'description' => 'The user {users}.uid for who the notification is set.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ),
+      'value' => array(
+        'description' => 'Whether the notification is active or not.',
+        'type' => 'int',
+        'not null' => TRUE
+      )
+    ),
+    'indexes' => array(
+      'tm_notifications_bundle_uid' => array('bundle', 'uid'),
+      'tm_notifications_uid' => array('uid'),
+    ),
+    'unique keys' => array(
+      'tm_notifications_bundle_uid2' => array('bundle', 'uid')
+    ),
+    'foreign keys' => array(
+      'tm_notifications_users' => array(
+        'table' => 'users',
+        'columns' => array('uid' => 'uid'),
+      )
+    ),
+    'primary key' => array('id')
+  );
+
+  return $schema;
+}

@@ -189,13 +189,13 @@ function tm_users_field_group_info() {
       1 => 'field_avatar',
       2 => 'field_chapter',
       3 => 'field_image',
-      4 => 'field_location_city',
-      5 => 'field_location_country',
-      6 => 'field_segment',
-      7 => 'field_user_first_name',
-      8 => 'field_user_last_name',
-      9 => 'field_job_organization',
-      10 => 'field_job_role',
+      4 => 'field_job_organization',
+      5 => 'field_job_role',
+      6 => 'field_location_city',
+      7 => 'field_location_country',
+      8 => 'field_segment',
+      9 => 'field_user_first_name',
+      10 => 'field_user_last_name',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -463,10 +463,11 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'User edit',
-    'weight' => '32',
+    'weight' => '0',
     'children' => array(
-      0 => 'group_user_profile',
+      0 => 'group_user_notifications',
       1 => 'group_user_account',
+      2 => 'group_user_profile',
     ),
     'format_type' => 'htabs',
     'format_settings' => array(
@@ -491,9 +492,9 @@ function tm_users_field_group_info() {
     'label' => 'Profile',
     'weight' => '33',
     'children' => array(
-      0 => 'group_form_elsewhere',
-      1 => 'group_form_qa',
-      2 => 'group_form_about',
+      0 => 'group_form_about',
+      1 => 'group_form_elsewhere',
+      2 => 'group_form_qa',
     ),
     'format_type' => 'htab',
     'format_settings' => array(

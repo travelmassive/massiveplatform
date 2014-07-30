@@ -1,3 +1,6 @@
+# http://kaioa.com/node/45
+AddType image/svg+xml svg svgz
+AddEncoding gzip svgz
 #
 # Apache/PHP/Drupal settings:
 #

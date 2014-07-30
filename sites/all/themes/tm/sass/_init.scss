@@ -9,7 +9,7 @@
 // - First we set any shared Sass variables.
 // - Next we import Compass plug-ins (Sass mixin libraries).
 // - Last we define our custom mixins for this theme.
-// 
+//
 // - The Foundation grid settings are added on the bottom.
 
 
@@ -151,6 +151,9 @@ $total-columns: 12;
 // We use these as default colors throughout
 $primary-color: #213040;                            // very dark desaturated blue
 $secondary-color: #007EB5;                          // strong blue
+$warning-color: #f39c12;                          	// strong orange
+$success-color: #1abc9c;                          	// strong turquoise
+$danger-color: #e74c3c;                          		// strong blue
 
 // We use these to control various global styles
 $body-bg: tint($primary-color, 80%);

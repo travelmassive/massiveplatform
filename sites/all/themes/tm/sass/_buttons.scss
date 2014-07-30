@@ -99,9 +99,9 @@ button {
 
 /* 32px */
 .bttn-m {
-  line-height: 1.5rem;
+  line-height: 1.5rem !important;
   font-size: 1rem;
-  padding: 0.25rem 0.75rem;
+  padding: 0.25rem 0.75rem !important;
   min-height: 2rem;
 }
 
@@ -143,16 +143,15 @@ button {
 // Dark grey
 .bttn-primary {
   color: #FFF !important;
-  background: $primary-color;
-  border-color: shade($primary-color, 15%);
+  background: tint($primary-color, 30%) !important;
   @extend %antialiased;
+  box-shadow: inset 0 -2px 0 0 tint($primary-color, 10%);
   &:hover, &:focus {
     color: #FFF !important;
   }
   &:active, &.on, &.flagged {
-    border-color: shade($primary-color, 25%);
-    background: shade($primary-color, 10%);
-    box-shadow: 0 1px 0 0 rgba(#FFF, 0.5), inset 0 2px 0 0 shade($primary-color, 20%);
+    background: tint($primary-color, 10%) !important;
+    box-shadow: inset 0 2px 0 0 shade($primary-color, 20%);
     color: #FFF !important;
   }
 }
@@ -160,14 +159,14 @@ button {
 // Blue
 .bttn-secondary {
   color: #FFF !important;
-  background: $secondary-color;
+  background: $secondary-color !important;
   @extend %antialiased;
   box-shadow: inset 0 -2px 0 0 shade($secondary-color, 30%);
   &:hover, &:focus {
     color: #FFF !important;
   }
   &:active, &.on, &.flagged {
-    background: shade($secondary-color, 30%);
+    background: shade($secondary-color, 30%) !important;
     box-shadow: inset 0 2px 0 0 shade($secondary-color, 50%);
     color: #FFF !important;
   }
@@ -189,6 +188,38 @@ button {
   }
 }
 
+// Reddish
+.bttn-danger {
+  color: #FFF !important;
+  background: $danger-color;
+  @extend %antialiased;
+  box-shadow: inset 0 -2px 0 0 shade($danger-color, 30%);
+  &:hover, &:focus {
+    color: #FFF !important;
+  }
+  &:active, &.on, &.flagged {
+    background: shade($danger-color, 30%);
+    box-shadow: inset 0 2px 0 0 shade($danger-color, 50%);
+    color: #FFF !important;
+  }
+}
+
+// Turquoise
+.bttn-success {
+  color: #FFF !important;
+  background: $success-color;
+  @extend %antialiased;
+  box-shadow: inset 0 -2px 0 0 shade($success-color, 30%);
+  &:hover, &:focus {
+    color: #FFF !important;
+  }
+  &:active, &.on, &.flagged {
+    background: shade($success-color, 30%);
+    box-shadow: inset 0 2px 0 0 shade($success-color, 50%);
+    color: #FFF !important;
+  }
+}
+
 .bttn, button {
   &.disabled {
     opacity: 0.4;
@@ -199,6 +230,75 @@ button {
       top: 0;
       opacity: 0.4;
     }
+  }
+}
+
+/* Button group */
+
+.bttn-group {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  background: none;
+  > *,
+  > .is-active {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    text-shadow: none;
+    border-radius: 0;
+    a {
+      border-radius: 0;
+    }
+    &:first-child {
+      a {
+        border-top-left-radius: $global-radius;
+        border-bottom-left-radius: $global-radius;
+      }
+    }
+    &:last-child {
+      a {
+        border-top-right-radius: $global-radius;
+        border-bottom-right-radius: $global-radius;
+      }
+    }
+  }
+  a {
+    @extend .bttn, .bttn-primary, .bttn-m;
+    letter-spacing: inherit;
+    &:hover {
+      background-color: inherit;
+    }
+  }
+  a.is-active {
+    @extend .bttn-primary.on;
+    border: 0;
+    letter-spacing: inherit;
+  }
+}
+
+.pager {
+  display: inline-block;
+  @extend %antialiased;
+  li a {
+    @extend .bttn, .bttn-primary, .bttn-m;
+  }
+  .pager-current {
+    @extend .bttn, .bttn-primary.on, .bttn-m;
+  }
+  li a, .pager-current {
+    border-radius: 0;
+  }
+  li:first-child,
+  li:first-child a {
+    border-top-left-radius: $global-radius;
+    border-bottom-left-radius: $global-radius;
+  }
+  li:last-child,
+  li:last-child a {
+    border-top-right-radius: $global-radius;
+    border-bottom-right-radius: $global-radius;
   }
 }
 
@@ -243,7 +343,7 @@ button {
       right: 1rem;
     }
   }
-  
+
   &.dropd-center {
     left: 50%;
     margin-left: -6.25rem;
@@ -258,7 +358,7 @@ button {
     margin-top: 0.75rem;
     visibility: visible;
   }
-  
+
   .dropd-menu {
     list-style: none;
     padding: 0.5rem 0;
@@ -266,11 +366,11 @@ button {
     font-size: 0.85rem;
     line-height: 1.25rem;
     border-bottom: 1px solid tint($primary-color, 90%);
-    
+
     &:first-child {
       margin-top: -0.75rem;
     }
-    
+
     &:last-child {
       margin-bottom: -0.75rem;
       border: none;
@@ -284,18 +384,18 @@ button {
         padding: 0.25rem 1rem;
         color: $primary-color;
         background-color: transparent;
-    
+
         @include transition-property(background-color, top, left, right);
         @include transition-duration(0.2s, 0.1s, 0.2s, 0.2s);
         @include transition-timing-function(ease, ease, ease, ease);
         @include transition-delay(0, 0, 0, 0);
-    
+
         &:hover {
           opacity: 1;
           background-color: rgba(tint($secondary-color, 50%), 0.2);
           color: $secondary-color;
         }
-    
+
         &:before {
           vertical-align: bottom !important;
           font-weight: normal;

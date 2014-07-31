@@ -13,7 +13,7 @@ function tm_notifications_messages_admin_form($form, &$form_state) {
     '#type' => 'item',
     '#title' => t('Notification Messages'),
     '#description' => t('On this page you can edit the custom Travel Massive notifications and reminders.') . '<br/>' . 
-      t('If you are searching for the standard Drupal messages (email on user creation for example), !link', array('!link' => l(t('click here'), 'admin/config/people/accounts'))),
+      t('If you are searching for the standard Drupal messages (email on user creation for example), !link.', array('!link' => l(t('click here'), 'admin/config/people/accounts'))),
   );
   
   $notifications = module_invoke_all('tm_notif_info');
@@ -45,18 +45,11 @@ function tm_notifications_messages_admin_form($form, &$form_state) {
       
       $form[$key]['user_label'] = array(
         '#type' => 'textfield',
-        '#title' => t('User label'),
-        '#description' => t('The label to show the user for this notification.'),
+        '#title' => t('Notification label'),
+        '#description' => t('This label will be shown to the users on their notification preferences page.'),
         '#default_value' => $notif->getLabel($value['title']),
       );
-      
-      $form[$key]['change_allowed'] = array(
-        '#type' => 'checkbox',
-        '#title' => t('Is change allowed?'),
-        '#description' => t('Whether the users can subscribe/unsubscribe to this notification.'),
-        '#default_value' => $notif->isChangeAllowed(),
-      );
-      
+            
       $form[$key]['default_state'] = array(
         '#type' => 'radios',
         '#title' => t('Default state'),
@@ -68,11 +61,18 @@ function tm_notifications_messages_admin_form($form, &$form_state) {
         '#default_value' => $notif->getDefaultState(),
       );
       
-       $form[$key]['email'] = array(
-         '#type' => 'fieldset',
-         '#collapsible' => FALSE,
-         '#title' => t('Email settings'),
-       );
+      $form[$key]['change_allowed'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Can users change the state?'),
+        '#description' => t('Whether the users can subscribe/unsubscribe to this notification.'),
+        '#default_value' => $notif->isChangeAllowed(),
+      );
+
+      $form[$key]['email'] = array(
+        '#type' => 'fieldset',
+        '#collapsible' => FALSE,
+        '#title' => t('Email settings'),
+      );
       
       $form[$key]['email']['subject'] = array(
         '#type' => 'textfield',

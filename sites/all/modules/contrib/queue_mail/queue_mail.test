@@ -1,0 +1,127 @@
+<?php
+/**
+ * @file
+ * Simpletests for the Queue Mail module.
+ */
+
+/**
+ * Tests queue mail functionality.
+ */
+class QueueMailTestCase extends DrupalWebTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'Queuing mail',
+      'description' => 'Test queuing emails using Queue Mail.',
+      'group' => 'Mail',
+    );
+  }
+
+  function setUp() {
+    $modules = func_get_args();
+    if (isset($modules[0]) && is_array($modules[0])) {
+      $modules = $modules[0];
+    }
+    $modules[] = 'queue_mail';
+    $modules[] = 'queue_mail_test';
+    parent::setUp($modules);
+  }
+
+  /**
+   * Test that if we're not queuing any emails that they get sent as normal.
+   */
+  function testNonQueuedEmail() {
+    // Send an email and ensure it was sent immediately.
+    variable_set('queue_mail_keys', '');
+    $this->sendEmailAndTest('basic', FALSE);
+  }
+
+  /**
+   * Test that if we are queuing emails, that they get queued.
+   */
+  function testQueuedEmail() {
+    // Set all emails to be queued and test.
+    variable_set('queue_mail_keys', '*');
+    $this->sendEmailAndTest();
+  }
+
+  /**
+   * This tests the matching of mailkeys to be queued.
+   *
+   * For example, we test that a specific email from a module is queued, and
+   * that emails from another module are not queued.
+   */
+  function testQueuedEmailKeyMatching() {
+    // Set only some emails to be queued and test.
+    variable_set('queue_mail_keys', 'queue_mail_test_queued');
+    $this->sendEmailAndTest('queued', TRUE);
+    $this->sendEmailAndTest('not_queued', FALSE);
+
+    // And test the wildcard matching.
+    variable_set('queue_mail_keys', 'queue_mail_test_que*');
+    $this->sendEmailAndTest('queued', TRUE);
+    $this->sendEmailAndTest('not_queued', FALSE);
+  }
+
+  /**
+   * Asserts that the most recently sent e-mail message has the given value.
+   *
+   * The field in $name must have the content described in $value.
+   *
+   * @param $name
+   *   Name of field or message property to assert. Examples: subject, body, id, ...
+   * @param $value
+   *   Value of the field to assert.
+   * @param $message
+   *   Message to display.
+   *
+   * @return
+   *   TRUE on pass, FALSE on fail.
+   */
+  protected function assertMail($name, $value = '', $message = '') {
+    $captured_emails = variable_get('drupal_test_email_collector', array());
+    $email = end($captured_emails);
+    return $this->assertTrue($email && isset($email[$name]) && trim($email[$name]) == trim($value), $message, t('E-mail'));
+  }
+
+  /**
+   * Send an email and ensure it is queued or sent immediately.
+   *
+   * @param $mail_key
+   *   The key of the email to send.
+   * @param $should_be_queued
+   *   Pass in TRUE to test if the email was queued, FALSE to test that it
+   *   wasn't queued.
+   */
+  function sendEmailAndTest($mail_key = 'basic', $should_be_queued = TRUE) {
+    $queue = _queue_mail_get_queue();
+    $queue_count_before = $queue->numberOfItems();
+    $email_count_before = count($this->drupalGetMails());
+    $content = $this->randomName(32);
+    drupal_mail('queue_mail_test', $mail_key, 'info@example.com', language_default(), array('content' => $content));
+    $queue_count_after = $queue->numberOfItems();
+    $email_count_after = count($this->drupalGetMails());
+
+    // Now do the desired assertions.
+    if ($should_be_queued === TRUE) {
+      $this->assertTrue($queue_count_after - $queue_count_before == 1, 'Email is queued.');
+      $this->assertTrue($email_count_after - $email_count_before == 0, 'Queued email is not sent immediately.');
+
+      // Now run cron and see if our email gets sent.
+      $queue_count_before = $queue->numberOfItems();
+      $email_count_before = count($this->drupalGetMails());
+      $this->cronRun();
+      $this->assertMail('body', $content, 'Queued email content is sent.');
+      $queue_count_after = $queue->numberOfItems();
+      $email_count_after = count($this->drupalGetMails());
+      $this->assertTrue($queue_count_after - $queue_count_before == -1, 'Email is sent from the queue.');
+      $this->assertTrue($email_count_after - $email_count_before == 1, 'Queued email is sent on cron.');
+    }
+    elseif ($should_be_queued === FALSE) {
+      $this->assertTrue($queue_count_after - $queue_count_before == 0, 'Email is not queued.');
+      $this->assertTrue($email_count_after - $email_count_before == 1, 'Email is sent immediately.');
+      $this->assertMail('body', $content, 'Queued email content is sent.');
+    }
+  }
+
+}

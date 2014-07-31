@@ -6,9 +6,5 @@ project = tm_notifications
 package = "TM Notifications"
 
 dependencies[] = variable
-dependencies[] = ctools
-dependencies[] = field_group
 dependencies[] = tm_users
-features[ctools][] = field_group:field_group:1
-features[features_api][] = api:2
-features[field_group][] = group_user_notifications|user|user|form
+dependencies[] = queue_mail

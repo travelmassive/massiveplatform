@@ -5,8 +5,6 @@
  * @author Daniel Silva (daniel.silva@flipside.org)
  * 
  */
- 
-include_once 'tm_notifications.features.inc';
 
 module_load_include('inc', 'tm_notifications', 'tm_notifications_TMNotification');
  
@@ -39,6 +37,25 @@ function tm_notifications_permission() {
 }
 
 /**
+ * Implements hook_field_extra_fields()
+ * Add a new field to the user form that contain the notifications.
+ * The actual form element will be created in the form_alter hook
+ */
+function tm_notifications_field_extra_fields() {
+  $return['user']['user']  = array(
+    'form' => array(
+      'tm_notifications' => array(
+        'label' => t('Notifications'),
+        'description' => t('User notifications settings.'),
+        'weight' => 50,
+      ),
+    )
+  );
+
+  return $return;
+}
+
+/**
  * Implements hook_form_FORM_ID_alter()
  */
 function tm_notifications_form_user_profile_form_alter(&$form, &$form_state) {
@@ -48,34 +65,26 @@ function tm_notifications_form_user_profile_form_alter(&$form, &$form_state) {
   $notifications = module_invoke_all('tm_notif_info');
   
   if (!empty($notifications)) {
-    $form['notifications_settings'] = array(
-      '#type' => 'container',
-      '#tree' => TRUE
-    );
     
-    $form['notifications_settings']['notifications'] = array(
+    $form['tm_notifications'] = array(
       '#type' => 'fieldset',
       '#title' => t('Notification settings'),
       '#attributes' => array(
         'class' => array('field-group-fieldset')
-      ) 
+      ),
+      '#tree' => TRUE,
     );
     
     foreach ($notifications as $name => $value) {
       $notif = new TMNotification($name);
       if ($notif->isChangeAllowed()) {
-        $form['notifications_settings']['notifications'][$name] = array(
+        $form['tm_notifications'][$name] = array(
           '#type' => 'checkbox',
           '#title' => $notif->getLabel($value['title']),
           '#default_value' => $notif->isEnabled($user->uid),
         );
       }
     }
-    
-    // Add to group.
-    // This is needed to show the notifications in a tab of their own.
-    $form['#groups']['group_user_notifications']->children[] = 'notifications_settings';
-    $form['#group_children']['notifications_settings'] = 'group_user_notifications';
     
     // Attach submit handler to save the notification state.
     $form['#submit'][] = 'tm_notifications_user_form_submit';
@@ -88,7 +97,7 @@ function tm_notifications_form_user_profile_form_alter(&$form, &$form_state) {
  */
 function tm_notifications_user_form_submit($form, &$form_state) {
   $user = $form['#user'];
-  foreach ($form_state['values']['notifications_settings']['notifications'] as $key => $value) {
+  foreach ($form_state['values']['tm_notifications'] as $key => $value) {
     $notif = new TMNotification($key);
     $notif->setForUser($user->uid, (bool) $value);
   }

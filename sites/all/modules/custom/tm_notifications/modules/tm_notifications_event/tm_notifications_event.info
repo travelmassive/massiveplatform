@@ -1,5 +1,5 @@
-name = TM Notifications Event Signup
-description = Travel Massive notification system for event signup
+name = TM Notifications Event
+description = Travel Massive notification system for events.
 core = 7.x
 version = 7.x-1.0-dev
 project = tm_notifications

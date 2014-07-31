@@ -72,6 +72,7 @@ function tm_notifications_form_user_profile_form_alter(&$form, &$form_state) {
       '#attributes' => array(
         'class' => array('field-group-fieldset')
       ),
+      // Tree is needed to keep the array structure when saving the variable.
       '#tree' => TRUE,
     );
     
@@ -140,8 +141,8 @@ function tm_notifications_mail($key, &$message, $params) {
 /**
  * Notify the user using the data set through the settings form.
  * 
- * @param TMNotification $notification
- *   Notification object to use.
+ * @param $notification
+ *   Notification name.
  * @param StdClass $account
  *   User account. (destination)
  * @param array $tokens
@@ -151,7 +152,8 @@ function tm_notifications_mail($key, &$message, $params) {
  * @return boolean
  *   TRUE if the notification is enabled for the user and it was scheduled.
  */
-function tm_notifications_notify(TMNotification $notification, $account, $tokens = array()) {
+function tm_notifications_notify($notification, $account, $tokens = array()) {
+  $notification = new TMNotification($notification);
   if ($notification->isEnabled($account->uid)) {
     drupal_mail('tm_notifications', $notification->getName(), $account->mail, user_preferred_language($account), array('tokens' => $tokens));
     return TRUE;

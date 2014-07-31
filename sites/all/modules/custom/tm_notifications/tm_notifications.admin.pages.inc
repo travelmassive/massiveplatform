@@ -88,13 +88,6 @@ function tm_notifications_messages_admin_form($form, &$form_state) {
         '#default_value' => $notif->getEmailMessage(),
       );
       
-      $form[$key]['email']['use_cron'] = array(
-        '#type' => 'checkbox',
-        '#title' => t('Send through cron'),
-        '#description' => t('If this notification is likely to be sent to multiple users simultaneously thick the checkbox. The emails will be sent during cron run preventing timeouts.'),
-        '#default_value' => $notif->isCronEmail(),
-      );
-      
       if (isset($value['tokens'])) {
         $form[$key]['email']['subject']['#element_validate'] = array('token_element_validate');
         $form[$key]['email']['subject']['#token_types'] = $value['tokens']['token_types'];
@@ -106,46 +99,7 @@ function tm_notifications_messages_admin_form($form, &$form_state) {
         );
       }
     }
-
-    $form['#submit'][] = 'tm_notifications_messages_admin_form_submit';
   }
 
   return system_settings_form($form);
-}
-
-/**
- * Additional submit hook tm_notifications_messages_admin_form.
- * Responsible for updating the queue_mail_keys when the use cron checkbox
- * is checked.
- */
-function tm_notifications_messages_admin_form_submit($form, &$form_state) {
-  form_state_values_clean($form_state);
-  $mail_keys = variable_get('queue_mail_keys', '');
-  
-  // If the wildcard for the module is set, all notifications will
-  // be sent through cron regardless of the checkbox.
-  // Users should not add this to queue_mail but if they do it's covered.
-  if (!preg_match('/tm_notifications_\*/', $mail_keys)) {
-    // Add the the notifications with send through cron to queue_mail
-    foreach ($form_state['values'] as $key => $value) {
-      if (is_array($value)) {
-        // The key used by the module is modulename__mailkey.
-        // this needs to be translated to modulename_mailkey
-        $m_key = preg_replace('/tm_notifications__/', 'tm_notifications_', $key);
-        
-        if ($value['email']['use_cron']) {
-          // Add to queue_mail.
-          // Check if not already there.
-          if (!drupal_match_path($m_key, $mail_keys)) {
-            $mail_keys .= "\n" . $m_key;
-          }
-        }
-        else {
-          // Remove from queue_mail.
-          $mail_keys = preg_replace('/' . $m_key . '(\r\n?|\n)?/', '', $mail_keys);
-        }
-      }
-    }
-    variable_set('queue_mail_keys', $mail_keys);
-  }
 }

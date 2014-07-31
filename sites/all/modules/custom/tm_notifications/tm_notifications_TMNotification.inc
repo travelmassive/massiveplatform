@@ -123,23 +123,7 @@ class TMNotification {
   public function isChangeAllowed($default = TRUE) {
     return $this->getVarField('change_allowed', $default);
   }
-  
-  /**
-   * Returns whether the email is to be sent during cron run or immediately.
-   * This setting should be used for emails that are likely to be sent to
-   * multiple users simultaneously.
-   * It's a field set through the admin interface.
-   * 
-   * @param $default
-   *   The value to return if the variable is not set.
-   * 
-   * @return Boolean
-   */
-  public function isCronEmail($default = FALSE) {
-    $email_data = $this->getVarField('email', FALSE);
-    return $email_data === FALSE ? $default : $email_data['use_cron'];
-  }
-  
+
   /**
    * Returns the default state for this notification.
    * It's a field set through the admin interface.
@@ -193,14 +177,14 @@ class TMNotification {
   
     db_merge('tm_notifications')
     ->insertFields(array(
-      'bundle' => $this->name,
+      'bundle' => $this->getName(),
       'uid' => $uid,
       'value' => $value,
     ))
     ->updateFields(array(
       'value' => $value,
     ))
-    ->key(array('bundle' => $this->name, 'uid' => $uid))
+    ->key(array('bundle' => $this->getName(), 'uid' => $uid))
     ->execute();
   
     return $this;

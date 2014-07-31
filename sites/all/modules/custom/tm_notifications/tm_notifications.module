@@ -119,6 +119,22 @@ function tm_notifications_mail($key, &$message, $params) {
   
   $message['subject'] = $subject;
   $message['body'][] = $msg;
+  
+  // Notifications that are likely to be sent to multiple user at the
+  // same time should be put in a queue and sent through cron.
+  // To achieve this we mimic the behaviour of queue_mail and use
+  // its functions to accomplish this.
+  // Whether or not to use cron is defined by the developer in the hook.
+  $notifications = module_invoke_all('tm_notif_info');
+  $info = $notifications[$key];
+  
+  if (isset($info['use_cron']) && $info['use_cron']) {
+    // Store the message for sending on cron.
+    _queue_mail_get_queue()->createItem($message);
+    // And prevent the message from being sent instantly.
+    $message['send'] = FALSE;
+  }
+  
 }
 
 /**
@@ -136,8 +152,8 @@ function tm_notifications_mail($key, &$message, $params) {
  *   TRUE if the notification is enabled for the user and it was scheduled.
  */
 function tm_notifications_notify(TMNotification $notification, $account, $tokens = array()) {
-  if ($notification->isEnabled($account_to->uid)) {
-    drupal_mail('tm_notifications', $notification->getName(), $account_to->mail, user_preferred_language($account_to), array('tokens' => $tokens));
+  if ($notification->isEnabled($account->uid)) {
+    drupal_mail('tm_notifications', $notification->getName(), $account->mail, user_preferred_language($account), array('tokens' => $tokens));
     return TRUE;
   }
   

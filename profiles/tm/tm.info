@@ -61,6 +61,8 @@ dependencies[] = nodeaccess_nodereference
 dependencies[] = nodeaccess_userreference
 dependencies[] = queue_mail
 dependencies[] = tm_notifications
+dependencies[] = tm_notifications_event
+dependencies[] = tm_notifications_chapter
 
 
 ; TM - development

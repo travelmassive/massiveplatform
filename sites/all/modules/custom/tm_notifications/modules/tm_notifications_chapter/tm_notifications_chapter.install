@@ -1,0 +1,5 @@
+<?php
+
+function tm_notifications_chapter_uninstall() {
+  tm_notifications_purge_bulk(array('user_chapter_join', 'user_chapter_unjoin'));
+}

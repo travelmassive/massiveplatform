@@ -63,6 +63,7 @@ features[variable][] = nodeaccess_userreference
 features[variable][] = pathauto_node_pattern
 features[variable][] = pathauto_punctuation_slash
 features[variable][] = site_frontpage
+features[variable][] = site_mail
 features[variable][] = tm_base_copyright
 features[variable][] = tm_base_homepage_description_anon
 features[variable][] = tm_base_homepage_description_members

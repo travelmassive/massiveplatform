@@ -35,7 +35,7 @@
     <link rel="apple-touch-icon" sizes="152x152" href="<?php print $base_path . path_to_theme(); ?>/images/meta/apple-touch-icon-152x152.png" />
     
     <link type="text/plain" rel="author" href="<?php print $base_path . path_to_theme(); ?>/humans.txt" />
-    <link href="http://fonts.googleapis.com/css?family=Raleway:400,800" rel="stylesheet" type="text/css" />
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,800" rel="stylesheet" type="text/css" />
     <?php print $styles; ?>
     <?php print $scripts; ?>
     <?php if ($add_html5_shim and !$add_respond_js): ?>

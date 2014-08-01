@@ -64,7 +64,7 @@ class TMChapterMigration extends TMBaseMigration {
 
     // Temporary field mapping to use on chapters
     $this->addFieldMapping('member', 'member')
-      ->separator('|')
+      ->separator(' ')
       ->sourceMigration('TMUser');
 
     // The social link fields

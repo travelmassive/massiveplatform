@@ -41,6 +41,20 @@ function tm_users_external_signin_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'tm_twitter_consumer_key';
+  $strongarm->value = '7uSkI5QYRTgx3Rb0O319hZ0vO';
+  $export['tm_twitter_consumer_key'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'tm_twitter_consumer_secret';
+  $strongarm->value = 'bVtNzb00VFOIEBuE2MsyOHVblWOikL7YVkTBXhNBDd1fetBzpR';
+  $export['tm_twitter_consumer_secret'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'tm_twitter_host';
   $strongarm->value = 'http://twitter.com';
   $export['tm_twitter_host'] = $strongarm;

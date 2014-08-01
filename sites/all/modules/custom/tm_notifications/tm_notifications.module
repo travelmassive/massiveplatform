@@ -183,6 +183,7 @@ function tm_notifications_scheduled_worker_run() {
 
 /**
  * Notify the user using the data set through the settings form.
+ * Only active users will be notified.
  * 
  * @param $notification
  *   Notification name.
@@ -197,7 +198,7 @@ function tm_notifications_scheduled_worker_run() {
  */
 function tm_notifications_notify($notification, $account, $tokens = array()) {
   $notification = new TMNotification($notification);
-  if ($notification->isEnabled($account->uid)) {
+  if ($notification->isEnabled($account->uid) && $account->status) {
     drupal_mail('tm_notifications', $notification->getName(), $account->mail, user_preferred_language($account), array('tokens' => $tokens));
     return TRUE;
   }

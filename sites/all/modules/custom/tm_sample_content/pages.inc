@@ -47,4 +47,14 @@ class TMPageMigration extends TMBaseMigration {
   public function prepareRow($row) {
   }
 
+  public function complete($entity, $row) {
+    $item = array(
+      'menu_name' => 'menu-footer-menu',
+      'link_path' => 'node/' . $entity->nid,
+      'link_title' => $entity->title,
+      'customized' => 1
+    );
+    menu_link_save($item);
+  }
+
 }

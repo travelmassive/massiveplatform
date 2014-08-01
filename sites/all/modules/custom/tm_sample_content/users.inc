@@ -97,7 +97,6 @@ class TMUserMigration extends TMBaseMigration {
 
     // Home chapter
     $this->addFieldMapping('field_chapter', 'home_chapter')
-      ->separator(' ')
       ->sourceMigration('TMChapter');
   }
 

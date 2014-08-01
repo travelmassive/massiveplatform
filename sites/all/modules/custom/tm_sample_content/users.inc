@@ -96,8 +96,8 @@ class TMUserMigration extends TMBaseMigration {
     $this->addFieldMapping('field_job_organization', 'org');
 
     // Home chapter
-    $this->addFieldMapping('field_chapter', 'home_chapter')
-      ->sourceMigration('TMChapter');
+    //$this->addFieldMapping('field_chapter', 'home_chapter')
+    //  ->sourceMigration('TMChapter');
   }
 
   public function prepareRow($row) {

@@ -10,82 +10,6 @@
 function tm_base_menu_default_menu_links() {
   $menu_links = array();
 
-  // Exported menu link: menu-footer-menu_about:content/about
-  $menu_links['menu-footer-menu_about:content/about'] = array(
-    'menu_name' => 'menu-footer-menu',
-    'link_path' => 'content/about',
-    'router_path' => '',
-    'link_title' => 'About',
-    'options' => array(
-      'attributes' => array(
-        'title' => 'About Travel Massive',
-      ),
-      'identifier' => 'menu-footer-menu_about:content/about',
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => 0,
-    'customized' => 1,
-  );
-  // Exported menu link: menu-footer-menu_contacts:content/contacts
-  $menu_links['menu-footer-menu_contacts:content/contacts'] = array(
-    'menu_name' => 'menu-footer-menu',
-    'link_path' => 'content/contacts',
-    'router_path' => '',
-    'link_title' => 'Contacts',
-    'options' => array(
-      'attributes' => array(
-        'title' => 'Contact us',
-      ),
-      'identifier' => 'menu-footer-menu_contacts:content/contacts',
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => 0,
-    'customized' => 1,
-  );
-  // Exported menu link: menu-footer-menu_help:content/help
-  $menu_links['menu-footer-menu_help:content/help'] = array(
-    'menu_name' => 'menu-footer-menu',
-    'link_path' => 'content/help',
-    'router_path' => '',
-    'link_title' => 'Help',
-    'options' => array(
-      'attributes' => array(),
-      'identifier' => 'menu-footer-menu_help:content/help',
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => 0,
-    'customized' => 1,
-  );
-  // Exported menu link: menu-footer-menu_press-kit:content/press-kit
-  $menu_links['menu-footer-menu_press-kit:content/press-kit'] = array(
-    'menu_name' => 'menu-footer-menu',
-    'link_path' => 'content/press-kit',
-    'router_path' => '',
-    'link_title' => 'Press kit',
-    'options' => array(
-      'attributes' => array(),
-      'identifier' => 'menu-footer-menu_press-kit:content/press-kit',
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => 0,
-    'customized' => 1,
-  );
   // Exported menu link: menu-social-links_facebook:https://www.facebook.com/travelmassive
   $menu_links['menu-social-links_facebook:https://www.facebook.com/travelmassive'] = array(
     'menu_name' => 'menu-social-links',
@@ -184,13 +108,9 @@ function tm_base_menu_default_menu_links() {
   );
   // Translatables
   // Included for use with string extractors like potx.
-  t('About');
-  t('Contacts');
   t('Facebook');
-  t('Help');
   t('Instagram');
   t('Linkedin');
-  t('Press kit');
   t('Twitter');
 
 

@@ -278,6 +278,30 @@ button {
   }
 }
 
+.pager {
+  display: inline-block;
+  @extend %antialiased;
+  li a {
+    @extend .bttn, .bttn-primary, .bttn-m;
+  }
+  .pager-current {
+    @extend .bttn, .bttn-primary.on, .bttn-m;
+  }
+  li a, .pager-current {
+    border-radius: 0;
+  }
+  li:first-child,
+  li:first-child a {
+    border-top-left-radius: $global-radius;
+    border-bottom-left-radius: $global-radius;
+  }
+  li:last-child,
+  li:last-child a {
+    border-top-right-radius: $global-radius;
+    border-bottom-right-radius: $global-radius;
+  }
+}
+
 /* Dropdown */
 .dropd {
   min-width: 12.5rem;

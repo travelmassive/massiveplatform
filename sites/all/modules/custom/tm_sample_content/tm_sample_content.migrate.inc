@@ -11,6 +11,7 @@ function tm_sample_content_migrate_api() {
       'TMChapter' => array('class_name' => 'TMChapterMigration'),
       'TMCompany' => array('class_name' => 'TMCompanyMigration'),
       'TMEvent' => array('class_name' => 'TMEventMigration'),
+      'TMPage' => array('class_name' => 'TMPageMigration'),
       'TMPartnerEvent' => array('class_name' => 'TMPartnerEventMigration'),
     ),
   );

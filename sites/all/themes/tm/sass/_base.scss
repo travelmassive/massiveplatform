@@ -76,6 +76,11 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
   }
 }
 
+.item-list {
+  text-align: center;
+  font-size: 0;
+}
+
 #page, #site-canvas {
   background: tint($primary-color, 90%);
 }
@@ -188,6 +193,23 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
         right: 4rem;
       }
     }
+    .search-form {
+      label {
+        @extend .visually-hidden;
+      }
+      #edit-submit,
+      #edit-submit--2 {
+        width: 100%;
+        @extend .bttn-secondary;
+        margin: 0.5rem 0 0 0;
+      }
+    }
+    .helper {
+      font-size: 0.85rem;
+      line-height: 1.25rem;
+      color: tint($primary-color, 30%);
+      margin: 0;
+    }
   }
   .account-wrapper {
     .toggle {
@@ -281,7 +303,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
   }
 
   // Mostly used by hubs (implemented with Views)
-  .grid {
+  .grid .view-content {
     ul {
       @include grid-row($behavior: nest);
       padding: 0;

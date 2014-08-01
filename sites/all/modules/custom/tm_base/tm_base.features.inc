@@ -12,3 +12,20 @@ function tm_base_ctools_plugin_api($module = NULL, $api = NULL) {
     return array("version" => "1");
   }
 }
+
+/**
+ * Implements hook_node_info().
+ */
+function tm_base_node_info() {
+  $items = array(
+    'page' => array(
+      'name' => t('Page'),
+      'base' => 'node_content',
+      'description' => t('A static page'),
+      'has_title' => '1',
+      'title_label' => t('Title'),
+      'help' => '',
+    ),
+  );
+  return $items;
+}

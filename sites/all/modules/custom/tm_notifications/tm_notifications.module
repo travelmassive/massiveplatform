@@ -139,6 +139,49 @@ function tm_notifications_mail($key, &$message, $params) {
 }
 
 /**
+ * Implements hook_cronapi()
+ */
+function tm_notifications_cronapi() {
+  $items = array();
+  $items['tm_notifications_scheduled_worker_run'] = array(
+    'title' => t('Run scheduled workers'),
+    'callback' => 'tm_notifications_scheduled_worker_run',
+    'enabled' => TRUE,
+    'scheduler' => array(
+      'name' => 'crontab',
+      'crontab' => array(
+        'rules' => array('*/5 * * * *'),
+      ),
+    ),
+  );
+  return $items;
+}
+
+/**
+ * Cron worker.
+ */
+function tm_notifications_scheduled_worker_run() {
+  $now = new DateTime(null, new DateTimeZone('UTC'));
+  
+  $result = db_query('SELECT * FROM {tm_notifications_worker_schedule} WHERE status = :status AND schedule_date <= :date', array(
+    'status' => 1 ,
+    'date' => $now->format('Y-m-d H:i:s')
+  ))->fetchAll();
+  
+  foreach ($result as $notification) {
+    $data = @unserialize($notification->data);
+    $fn = $notification->worker;
+    
+    if (function_exists($fn)) {
+      $fn($data);
+    }
+    
+    // Clean rows.
+    tm_notifications_schedule_remove($notification->identifier);
+  }
+}
+
+/**
  * Notify the user using the data set through the settings form.
  * 
  * @param $notification
@@ -163,19 +206,87 @@ function tm_notifications_notify($notification, $account, $tokens = array()) {
 }
 
 /**
+ * Schedules a worker to run at a given date.
+ * Note: The worker may not be run exactly at the specified date. +-5min
+ * 
+ * When a worker is scheduled, additional data can be saved in the database.
+ * When a crun runs checks if there are any workers to call and calls them 
+ * with the provided data as parameter.
+ * 
+ * In the worker the function tm_notifications_notify() should be used to
+ * send the notifications.
+ * 
+ * Note: It is HIGHLY advisable to set the use_cron param in the
+ * hook_tm_notif_info() to TRUE to prevent timeouts.
+ * 
+ * @see tm_notifications_notify()
+ * 
+ * @param String $identifier
+ *   A unique identifier for this schedule.
+ *   This can be any string but should contain the name of the module
+ *   that is making the call.
+ *   This is useful when a schedule needs to be removed.
+ * @param DateTime $date
+ *   The date when the notification should be sent.
+ * @param StdClass $worker
+ *   The worker to run. Must be a valid function.
+ * @param array $data
+ *   Additional data that will be passed to the worker.
+ * 
+ * @return boolean
+ *   FALSE if the $worker does not exist, TRUE otherwise.
+ */
+function tm_notifications_schedule($identifier, DateTime $date, $worker, $data = array()) {
+  // Save in UTC format.
+  $date->setTimezone(new DateTimeZone('UTC'));
+  
+  if (!function_exists($worker)) {
+    return FALSE;
+  }
+  
+  db_insert('tm_notifications_worker_schedule')
+    ->fields(array(
+      'schedule_date' => $date->format('Y-m-d H:i:s'),
+      'identifier' => $identifier,
+      'worker' => $worker,
+      'data' => serialize($data),
+  ))->execute();
+  
+  return TRUE;
+}
+
+/**
+ * Removes the schedule with the given identifier.
+ * 
+ * @param String $identifier
+ *   The unique identifier for the schedule.
+ * 
+ * @return boolean
+ *   The result of the operation.
+ */
+function tm_notifications_schedule_remove($identifier) {
+  $res = db_delete('tm_notifications_worker_schedule')
+  ->condition('identifier', $identifier)
+  ->execute();
+  
+  return (bool) $res;
+}
+
+/**
  * Removes all user related notifications from the database.
  * The settings set through the admin page will not be removed.
  * 
- * @param String $notifications_name
+ * @param String $notification_name
+ *   The name of the notification.
  */
-function tm_notifications_remove($notification_name) {
+function tm_notifications_preferences_remove($notification_name) {
   db_delete('tm_notifications')
   ->condition('bundle', $notification_name)
   ->execute();
 }
 
 /**
- * Removes all entries in the database related to the given milestone.
+ * Removes all entries in the database related to the given notification.
  * This refers to the user preferences (subscribed/unsubscribed)
  * All the admin settings are also removed.
  * 
@@ -184,12 +295,12 @@ function tm_notifications_remove($notification_name) {
  * 
  * @param String $notifications_name
  */
-function tm_notifications_purge($notification_name) {
-  tm_notifications_purge_bulk(array($notification_name));
+function tm_notifications_preferences_purge($notification_name) {
+  tm_notifications_preferences_purge_bulk(array($notification_name));
 }
 
 /**
- * Removes all entries in the database related to the given milestones.
+ * Removes all entries in the database related to the given notifications.
  * This refers to the user preferences (subscribed/unsubscribed)
  * All the admin settings are also removed.
  * 
@@ -198,12 +309,12 @@ function tm_notifications_purge($notification_name) {
  * 
  * @param Array $notifications_name
  */
-function tm_notifications_purge_bulk($notification_names) {
+function tm_notifications_preferences_purge_bulk($notification_names) {
   module_load_include('inc', 'tm_notifications', 'tm_notifications_TMNotification');
   foreach($notification_names as $name) {
     $notif = new TMNotification($name);
     
-    tm_notifications_remove($notif->getName());
+    tm_notifications_preferences_remove($notif->getName());
     variable_delete($notif->getVarName());
   }
 }

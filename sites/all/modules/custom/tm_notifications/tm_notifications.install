@@ -10,7 +10,8 @@
 /**
  * Implements hook_schema()
  * 
- * Schema to keep track wich notification each user has enabled.
+ * Schema to keep track which notification each user has enabled
+ * and schema with scheduler.
  */
 function tm_notifications_schema() {
   $schema['tm_notifications'] = array(
@@ -49,6 +50,59 @@ function tm_notifications_schema() {
     ),
     'foreign keys' => array(
       'tm_notifications_users' => array(
+        'table' => 'users',
+        'columns' => array('uid' => 'uid'),
+      )
+    ),
+    'primary key' => array('id')
+  );
+  
+  $schema['tm_notifications_worker_schedule'] = array(
+    'description' => 'Notification system for travelmassive.',
+    'fields' => array(
+      'id' => array(
+        'description' => 'Primary identifier.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ),
+      'schedule_date' => array(
+        'description' => 'Scheduled date',
+        'mysql_type' => 'datetime',
+        'not null' => TRUE
+      ),
+      'identifier' => array(
+        'description' => 'A unique identifier for the worker.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE
+      ),
+      'worker' => array(
+        'description' => 'The worker to call.',
+        'type' => 'varchar',
+        'length' => 255,
+      ),
+      'data' => array(
+        'description' => 'Optional tokens to use.',
+        'type' => 'blob',
+        'serialize' => TRUE,
+      ),
+      'status' => array(
+        'description' => 'Status of the notification.',
+        'type' => 'int',
+        'default' => 1,
+        'not null' => TRUE
+      ),
+    ),
+    'indexes' => array(
+      'tm_notifications_worker_schedule_date' => array('schedule_date'),
+      'tm_notifications_worker_schedule_identifier' => array('identifier'),
+    ),
+    'unique keys' => array(
+      'tm_notifications_worker_schedule_identifier2' => array('identifier'),
+    ),
+    'foreign keys' => array(
+      'tm_notifications_worker_schedule_users' => array(
         'table' => 'users',
         'columns' => array('uid' => 'uid'),
       )

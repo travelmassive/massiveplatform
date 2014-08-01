@@ -25,6 +25,7 @@ function tm_organizations_user_default_permissions() {
     'name' => 'delete any organization content',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -34,6 +35,7 @@ function tm_organizations_user_default_permissions() {
     'name' => 'delete own organization content',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -43,6 +45,7 @@ function tm_organizations_user_default_permissions() {
     'name' => 'edit any organization content',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );

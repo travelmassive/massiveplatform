@@ -15,6 +15,7 @@ function tm_chapters_user_default_permissions() {
     'name' => 'create chapter content',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -24,6 +25,7 @@ function tm_chapters_user_default_permissions() {
     'name' => 'delete any chapter content',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -33,6 +35,7 @@ function tm_chapters_user_default_permissions() {
     'name' => 'delete own chapter content',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -42,6 +45,7 @@ function tm_chapters_user_default_permissions() {
     'name' => 'edit any chapter content',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -51,6 +55,7 @@ function tm_chapters_user_default_permissions() {
     'name' => 'edit own chapter content',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );

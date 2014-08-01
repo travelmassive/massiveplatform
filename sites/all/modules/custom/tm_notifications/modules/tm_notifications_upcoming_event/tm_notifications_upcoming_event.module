@@ -1,0 +1,88 @@
+<?php
+
+/**
+ * Implements hook_tm_notif_info()
+ */
+function tm_notifications_upcoming_event_tm_notif_info() {
+  $notification = array();
+  $notification['event_upcoming_2_days'] = array(
+    'title' => 'Upcoming Event',
+    'description' => 'An event will take place in 2 days.',
+    'use_cron' => TRUE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('node', 'current-user'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+  
+  return $notification;
+}
+
+/**
+ * Implements hook_node_insert()
+ */
+function tm_notifications_upcoming_event_node_insert($node) {
+  if ($node->type == 'event') {
+    if (!empty($node->field_event_date)) {
+      _tm_notifications_upcoming_event_schedule($node);
+    }
+  }
+}
+
+/**
+ * Implements hook_node_update()
+ */
+function tm_notifications_upcoming_event_node_update($node) {
+  if ($node->type == 'event') {
+    if (!empty($node->field_event_date)) {
+      _tm_notifications_upcoming_event_schedule($node, TRUE);
+    }
+  }
+}
+
+/**
+ * Implements hook_node_delete()
+ */
+function tm_notifications_upcoming_event_node_delete($node) {
+  if ($node->type == 'event') {
+    $identifier = 'tm_notifications_upcoming_event-event_upcoming_2_days-' . $node->nid;
+    tm_notifications_schedule_remove($identifier);
+  }
+}
+
+/**
+ * Notification worker.
+ */
+function tm_notifications_upcoming_event_worker($data) {
+  $node = node_load($data['event_nid']);
+  
+  // Get all the users that joined the event.
+  $members = flag_get_entity_flags('node', $node->nid, 'signup');
+  
+  foreach ($members as $member) {
+    $account = user_load($member->uid);
+    tm_notifications_notify('event_upcoming_2_days', $account, array('node' => $node));
+  }
+  
+}
+
+/**
+ * Helper to schedule the worker.
+ */
+function _tm_notifications_upcoming_event_schedule($node, $clear_before = FALSE) {
+  $identifier = 'tm_notifications_upcoming_event-event_upcoming_2_days-' . $node->nid;
+  if ($clear_before) {
+    tm_notifications_schedule_remove($identifier);
+  }
+  
+  $event_date = $node->field_event_date[LANGUAGE_NONE][0];
+  // The value is actually the one straight from the db. And in UTC.
+  $date = new DateTime($event_date['value'], new DateTimeZone($event_date['timezone_db']));
+  $date->modify('-2days');
+  
+  tm_notifications_schedule($identifier, $date, 'tm_notifications_upcoming_event_worker', array('event_nid' => $node->nid));
+}

@@ -63,6 +63,7 @@ dependencies[] = queue_mail
 dependencies[] = tm_notifications
 dependencies[] = tm_notifications_event
 dependencies[] = tm_notifications_chapter
+dependencies[] = tm_notifications_upcoming_event
 
 
 ; TM - development

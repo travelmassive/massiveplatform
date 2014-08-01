@@ -201,5 +201,5 @@ function tm_base_update_7017() {
  * Enable the queue_mail and tm_notifications module
  */
 function tm_base_update_7018() {
-  module_enable(array('queue_mail', 'tm_notifications', 'tm_notifications_event', 'tm_notifications_chapter'));
+  module_enable(array('queue_mail', 'tm_notifications', 'tm_notifications_event', 'tm_notifications_chapter', 'tm_notifications_upcoming_event'));
 }

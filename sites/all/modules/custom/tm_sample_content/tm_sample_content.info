@@ -10,5 +10,6 @@ files[] = base.inc
 files[] = chapters.inc
 files[] = companies.inc
 files[] = events.inc
+files[] = pages.inc
 files[] = partner_events.inc
 files[] = users.inc

@@ -15,6 +15,7 @@ function tm_events_user_default_permissions() {
     'name' => 'create event content',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -24,6 +25,7 @@ function tm_events_user_default_permissions() {
     'name' => 'create partner_event content',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -33,6 +35,7 @@ function tm_events_user_default_permissions() {
     'name' => 'delete any event content',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -42,6 +45,7 @@ function tm_events_user_default_permissions() {
     'name' => 'delete any partner_event content',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -51,6 +55,7 @@ function tm_events_user_default_permissions() {
     'name' => 'delete own event content',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -60,6 +65,7 @@ function tm_events_user_default_permissions() {
     'name' => 'delete own partner_event content',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -69,6 +75,7 @@ function tm_events_user_default_permissions() {
     'name' => 'edit any event content',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -78,6 +85,7 @@ function tm_events_user_default_permissions() {
     'name' => 'edit any partner_event content',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -97,6 +105,7 @@ function tm_events_user_default_permissions() {
     'name' => 'edit own partner_event content',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );

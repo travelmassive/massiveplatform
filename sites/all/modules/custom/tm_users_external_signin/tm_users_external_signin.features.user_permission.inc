@@ -33,6 +33,7 @@ function tm_users_external_signin_user_default_permissions() {
     'name' => 'manage tm twitter settings',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'tm_users_external_signin',
   );

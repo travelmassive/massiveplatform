@@ -1,0 +1,120 @@
+<?php
+
+/**
+ * @file
+ * The Queue Mail module.
+ */
+
+/**
+ * This is the name of our Drupal queue that stores emails waiting to be sent.
+ */
+define('QUEUE_MAIL_QUEUE_NAME', 'queue_mail');
+
+/**
+ * Get an instance of the mail queue.
+ */
+function _queue_mail_get_queue() {
+  return DrupalQueue::get(QUEUE_MAIL_QUEUE_NAME, TRUE);
+}
+
+/**
+ * Implements hook_menu().
+ */
+function queue_mail_menu() {
+  $items = array();
+
+  $items['admin/config/system/queue_mail'] = array(
+    'title' => 'Queue Mail',
+    'description' => 'Configure mails that should be queued for sending on cron instead of immediately.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('queue_mail_settings_form'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'queue_mail.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_cron_queue_info().
+ */
+function queue_mail_cron_queue_info() {
+  $queues[QUEUE_MAIL_QUEUE_NAME] = array(
+    'worker callback' => 'queue_mail_send',
+    'time' => variable_get('queue_mail_queue_time', 15),
+  );
+  return $queues;
+}
+
+/**
+ * Implements hook_mail_alter().
+ */
+function queue_mail_mail_alter(&$message) {
+  $mail_keys = variable_get('queue_mail_keys', '');
+
+  if (drupal_match_path($message['id'], $mail_keys)) {
+    // Store the message for sending on cron.
+    _queue_mail_get_queue()->createItem($message);
+    // And prevent the message from being sent instantly.
+    $message['send'] = FALSE;
+  }
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+function queue_mail_module_implements_alter(&$implementations, $hook) {
+  if ($hook == 'mail_alter') {
+    // Ensure that our hook_mail_alter implementation is always called last.
+    if (isset($implementations['queue_mail'])) {
+      $group = $implementations['queue_mail'];
+      unset($implementations['queue_mail']);
+      // Now add it back, which will ensure we are called last.
+      $implementations['queue_mail'] = $group;
+    }
+  }
+}
+
+/**
+ * Email sending function, called via Drupal's queue processing.
+ *
+ * The body of this function is basically the latter half of drupal_mail(),
+ * after the call to allow other modules to alter the message, at which point
+ * queue_mail_mail_alter() popped the $message into the queue which is being
+ * processed now.
+ *
+ * @param $message
+ *   The message, as built and altered by drupal_mail().
+ *
+ * @see drupal_mail()
+ * @see queue_mail_mail_alter()
+ */
+function queue_mail_send($message = array()) {
+
+  // Invoke hook_queue_mail_send_alter() to allow all modules to alter the
+  // queued e-mail.
+  drupal_alter('queue_mail_send', $message);
+
+  // Retrieve the responsible implementation for this message.
+  $system = drupal_mail_system($message['module'], $message['key']);
+
+  // Format the message body.
+  $message = $system->format($message);
+
+  // The original caller requested sending. Sending was canceled by one or
+  // more hook_mail_alter() implementations. We set 'result' to NULL, because
+  // FALSE indicates an error in sending.
+  if (empty($message['send'])) {
+    $message['result'] = NULL;
+  }
+  // Sending was originally requested and was not canceled.
+  else {
+    $message['result'] = $system->mail($message);
+    // Log errors.
+    if (!$message['result']) {
+      watchdog('mail', 'Error sending e-mail (from %from to %to).', array('%from' => $message['from'], '%to' => $message['to']), WATCHDOG_ERROR);
+    }
+  }
+
+  return $message;
+}

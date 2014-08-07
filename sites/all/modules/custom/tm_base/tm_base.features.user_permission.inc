@@ -50,6 +50,16 @@ function tm_base_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'administer taxonomy'.
+  $permissions['administer taxonomy'] = array(
+    'name' => 'administer taxonomy',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'moderator' => 'moderator',
+    ),
+    'module' => 'taxonomy',
+  );
+
   // Exported permission: 'bypass node access'.
   $permissions['bypass node access'] = array(
     'name' => 'bypass node access',
@@ -99,6 +109,16 @@ function tm_base_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'delete terms in tm_segments'.
+  $permissions['delete terms in tm_segments'] = array(
+    'name' => 'delete terms in tm_segments',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'moderator' => 'moderator',
+    ),
+    'module' => 'taxonomy',
+  );
+
   // Exported permission: 'edit any page content'.
   $permissions['edit any page content'] = array(
     'name' => 'edit any page content',
@@ -117,6 +137,26 @@ function tm_base_user_default_permissions() {
       'moderator' => 'moderator',
     ),
     'module' => 'node',
+  );
+
+  // Exported permission: 'edit terms in tm_segments'.
+  $permissions['edit terms in tm_segments'] = array(
+    'name' => 'edit terms in tm_segments',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'moderator' => 'moderator',
+    ),
+    'module' => 'taxonomy',
+  );
+
+  // Exported permission: 'manage tm settings'.
+  $permissions['manage tm settings'] = array(
+    'name' => 'manage tm settings',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'moderator' => 'moderator',
+    ),
+    'module' => 'tm_base',
   );
 
   // Exported permission: 'revert revisions'.

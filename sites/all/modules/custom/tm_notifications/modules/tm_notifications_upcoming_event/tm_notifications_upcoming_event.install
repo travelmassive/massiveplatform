@@ -1,0 +1,5 @@
+<?php
+
+function tm_notifications_upcoming_event_uninstall() {
+  tm_notifications_preferences_purge_bulk(array('event_upcoming_2_days'));
+}

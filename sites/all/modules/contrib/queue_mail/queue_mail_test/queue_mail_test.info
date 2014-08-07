@@ -1,0 +1,14 @@
+name = "Queue Mail Test"
+description = "Module for use by the queue mail module tests."
+core = "7.x"
+dependencies[] = "queue_mail"
+
+package = Testing
+hidden = TRUE
+
+; Information added by drupal.org packaging script on 2013-06-27
+version = "7.x-1.2"
+core = "7.x"
+project = "queue_mail"
+datestamp = "1372352751"
+

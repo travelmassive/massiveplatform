@@ -37,6 +37,7 @@ Thumbs.db
 ._*
 .project
 build.properties
+resources_local/
 
 # Vim generated files #
 ######################

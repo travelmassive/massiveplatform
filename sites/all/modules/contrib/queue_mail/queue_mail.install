@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Queue Mail module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function queue_mail_install() {
+  _queue_mail_get_queue()->createQueue();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function queue_mail_uninstall() {
+  drupal_load('module', 'queue_mail');
+  _queue_mail_get_queue()->deleteQueue();
+
+  variable_del('queue_mail_keys');
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function queue_mail_requirements($phase) {
+  $requirements = array();
+
+  switch ($phase) {
+    case 'runtime':
+      $queue_length = _queue_mail_get_queue()->numberOfItems();
+      $requirements['queue_mail'] = array(
+        'title' => t('Queue mail'),
+        'value' => format_plural($queue_length, '1 mail currently queued for sending.', '@count mails currently queued for sending.'),
+        'severity' => $queue_length > 0 ? REQUIREMENT_INFO : REQUIREMENT_OK,
+        'description' => t('Sending of queued mails happens on cron. You can <a href="@cron_link">run cron manually</a>.', array('@cron_link' => url('admin/reports/status/run-cron', array('query' => drupal_get_destination())))),
+      );
+      break;
+  }
+
+  return $requirements;
+}
+
+/**
+ *  Implements hook_update_N().
+ */
+function queue_mail_update_7000() {
+  // We changed the 'queue_mail_keys' variable to be newline separated.
+  variable_set('queue_mail_keys', str_replace(',', "\n", variable_get('queue_mail_keys', '')));
+}

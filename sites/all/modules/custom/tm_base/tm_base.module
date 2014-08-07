@@ -18,8 +18,31 @@ function tm_base_menu() {
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
+  
+  // Base Admin page.
+  $items['admin/config/tm'] = array(
+    'title' => 'Travel Massive',
+    'description' => 'Settings related to the Travel Massive website.',
+    'type' => MENU_NORMAL_ITEM,
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('manage tm settings'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+  );
 
   return $items;
+}
+
+/**
+ * Implements hook_permission()
+ */
+function tm_base_permission() {
+  return array(
+    'manage tm settings' => array(
+      'title' => t('Manage TM settings'),
+      'description' => t('Manage Travel Massive settings.'),
+    ),
+  );
 }
 
 /**

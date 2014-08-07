@@ -194,8 +194,8 @@ function tm_users_field_group_info() {
       6 => 'field_segment',
       7 => 'field_user_first_name',
       8 => 'field_user_last_name',
-      9 => 'field_job_organization',
-      10 => 'field_job_role',
+      9 => 'field_job_role',
+      10 => 'field_job_organization',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -463,10 +463,11 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'User edit',
-    'weight' => '32',
+    'weight' => '0',
     'children' => array(
-      0 => 'group_user_profile',
-      1 => 'group_user_account',
+      0 => 'group_user_account',
+      1 => 'group_user_notifications',
+      2 => 'group_user_profile',
     ),
     'format_type' => 'htabs',
     'format_settings' => array(
@@ -481,6 +482,35 @@ function tm_users_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_user_notifications|user|user|form';
+  $field_group->group_name = 'group_user_notifications';
+  $field_group->entity_type = 'user';
+  $field_group->bundle = 'user';
+  $field_group->mode = 'form';
+  $field_group->parent_name = 'group_user_edit';
+  $field_group->data = array(
+    'label' => 'Notifications',
+    'weight' => '36',
+    'children' => array(
+      0 => 'tm_notifications',
+    ),
+    'format_type' => 'htab',
+    'format_settings' => array(
+      'label' => 'Notifications',
+      'instance_settings' => array(
+        'required_fields' => 1,
+        'id' => 'user-notifications-options',
+        'classes' => '',
+        'description' => '',
+      ),
+      'formatter' => 'closed',
+    ),
+  );
+  $export['group_user_notifications|user|user|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_user_profile|user|user|form';
   $field_group->group_name = 'group_user_profile';
   $field_group->entity_type = 'user';
@@ -489,11 +519,11 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_user_edit';
   $field_group->data = array(
     'label' => 'Profile',
-    'weight' => '33',
+    'weight' => '35',
     'children' => array(
-      0 => 'group_form_elsewhere',
-      1 => 'group_form_qa',
-      2 => 'group_form_about',
+      0 => 'group_form_about',
+      1 => 'group_form_elsewhere',
+      2 => 'group_form_qa',
     ),
     'format_type' => 'htab',
     'format_settings' => array(

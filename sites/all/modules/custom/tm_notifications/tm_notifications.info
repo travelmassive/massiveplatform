@@ -1,0 +1,15 @@
+name = TM Notifications
+description = Travel Massive notification system
+core = 7.x
+version = 7.x-1.0-dev
+project = tm_notifications
+package = "TM Notifications"
+
+dependencies[] = features
+dependencies[] = tm_base
+dependencies[] = tm_users
+dependencies[] = queue_mail
+dependencies[] = ultimate_cron
+dependencies[] = variable
+features[features_api][] = api:2
+features[user_permission][] = manage tm notifications

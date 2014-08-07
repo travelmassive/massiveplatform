@@ -59,6 +59,8 @@ dependencies[] = module_filter
 dependencies[] = entityreference_prepopulate
 dependencies[] = nodeaccess_nodereference
 dependencies[] = nodeaccess_userreference
+dependencies[] = queue_mail
+dependencies[] = ultimate_cron
 
 
 ; TM - development
@@ -85,3 +87,9 @@ dependencies[] = tm_search
 dependencies[] = tm_theme
 dependencies[] = tm_users
 dependencies[] = tm_users_external_signin
+
+; TM - notifications
+dependencies[] = tm_notifications
+dependencies[] = tm_notifications_chapter
+dependencies[] = tm_notifications_event
+dependencies[] = tm_notifications_upcoming_event

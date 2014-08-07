@@ -1,0 +1,71 @@
+<?php
+/**
+ * @file
+ * Code for the TM Notifications Chapter feature.
+ */
+
+include_once 'tm_notifications_chapter.features.inc';
+
+/**
+ * Implements hook_tm_notif_info()
+ */
+function tm_notifications_chapter_tm_notif_info() {
+  $notification = array();
+  $notification['user_chapter_join'] = array(
+    'title' => 'Member joined city',
+    'description' => 'Send the member a confirmation when joining a city.',
+    'use_cron' => FALSE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('node', 'current-user'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+  
+  $notification['user_chapter_unjoin'] = array(
+    'title' => 'Member unjoined city',
+    'description' => 'Send the member a confirmation when unjoining a city.',
+    'use_cron' => FALSE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('node', 'current-user'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+  
+  return $notification;
+}
+
+/**
+ * Implement hook_flag_flag()
+ */
+function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flagging) {
+  // We want to target the signup flag on nodes.
+  if ($flag->name == 'signup' && $flag->entity_type == 'node') {
+    $node = node_load($entity_id);
+    // Only for event nodes.
+    if ($node->type == 'chapter') {
+      tm_notifications_notify('user_chapter_join', $account, array('node' => $node));
+    }
+  }
+}
+
+/**
+ * Implement hook_flag_unflag()
+ */
+function tm_notifications_chapter_flag_unflag($flag, $entity_id, $account, $flagging) {
+  // We want to target the signup flag on nodes.
+  if ($flag->name == 'signup' && $flag->entity_type == 'node') {
+    $node = node_load($entity_id);
+    // Only for event nodes.
+    if ($node->type == 'chapter') {
+      tm_notifications_notify('user_chapter_unjoin', $account, array('node' => $node));
+    }
+  }
+}

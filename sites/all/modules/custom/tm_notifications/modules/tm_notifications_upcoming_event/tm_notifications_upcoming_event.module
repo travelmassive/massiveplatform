@@ -6,8 +6,8 @@
 function tm_notifications_upcoming_event_tm_notif_info() {
   $notification = array();
   $notification['event_upcoming_2_days'] = array(
-    'title' => 'Upcoming Event',
-    'description' => 'An event will take place in 2 days.',
+    'title' => 'Event reminder',
+    'description' => 'Send a reminder two days before the event date to all the members that signed up.',
     'use_cron' => TRUE,
     'tokens' => array(
       // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'

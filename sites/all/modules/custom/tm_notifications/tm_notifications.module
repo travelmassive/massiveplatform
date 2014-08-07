@@ -31,7 +31,7 @@ function tm_notifications_permission() {
   return array(
     'manage tm notifications' => array(
       'title' => t('Manage notifications'),
-      'description' => t('Manage travel massive notifications.'),
+      'description' => t('Manage Travel Massive notifications.'),
     ),
   );
 }
@@ -69,6 +69,7 @@ function tm_notifications_form_user_profile_form_alter(&$form, &$form_state) {
     $form['tm_notifications'] = array(
       '#type' => 'fieldset',
       '#title' => t('Notification settings'),
+      '#description' => t('On this page you can edit your notifications and reminder settings.'),
       '#attributes' => array(
         'class' => array('field-group-fieldset')
       ),

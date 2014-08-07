@@ -6,8 +6,8 @@
 function tm_notifications_event_tm_notif_info() {
   $notification = array();
   $notification['user_event_join'] = array(
-    'title' => 'User joined event',
-    'description' => 'User joined an event',
+    'title' => 'Member joined event',    
+    'description' => 'Send the member a confirmation when joining an event.',
     'use_cron' => FALSE,
     'tokens' => array(
       // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
@@ -20,8 +20,8 @@ function tm_notifications_event_tm_notif_info() {
   );
   
   $notification['user_event_unjoin'] = array(
-    'title' => 'User unjoined event',
-    'description' => 'User unjoined an event',
+    'title' => 'Member unjoined event',
+    'description' => 'Send the member a confirmation when unjoining an event.',
     'use_cron' => FALSE,
     'tokens' => array(
       // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
@@ -34,8 +34,8 @@ function tm_notifications_event_tm_notif_info() {
   );
   
   $notification['event_added_member_chapter'] = array(
-    'title' => 'Event in City',
-    'description' => 'Event was added in a city the user belongs to.',
+    'title' => 'Event added to city',
+    'description' => 'Send a notification to all the members of a chapter when an event is added.',
     'use_cron' => TRUE,
     'tokens' => array(
       // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'

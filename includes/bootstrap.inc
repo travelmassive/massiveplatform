@@ -8,7 +8,7 @@
 /**
  * The current system version.
  */
-define('VERSION', '7.26');
+define('VERSION', '7.31');
 
 /**
  * Core API compatibility.
@@ -700,7 +700,14 @@ function drupal_environment_initialize() {
  *  TRUE if only containing valid characters, or FALSE otherwise.
  */
 function drupal_valid_http_host($host) {
-  return preg_match('/^\[?(?:[a-zA-Z0-9-:\]_]+\.?)+$/', $host);
+  // Limit the length of the host name to 1000 bytes to prevent DoS attacks with
+  // long host names.
+  return strlen($host) <= 1000
+    // Limit the number of subdomains and port separators to prevent DoS attacks
+    // in conf_path().
+    && substr_count($host, '.') <= 100
+    && substr_count($host, ':') <= 100
+    && preg_match('/^\[?(?:[a-zA-Z0-9-:\]_]+\.?)+$/', $host);
 }
 
 /**
@@ -717,31 +724,6 @@ function drupal_settings_initialize() {
     include_once DRUPAL_ROOT . '/' . conf_path() . '/settings.php';
   }
   $is_https = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on';
-
-  // Load environmental config, if present.
-  if (isset($_SERVER['PRESSFLOW_SETTINGS'])) {
-    $pressflow_settings = json_decode($_SERVER['PRESSFLOW_SETTINGS'], TRUE);
-    foreach ($pressflow_settings as $key => $value) {
-      // One level of depth should be enough for $conf and $database.
-      if ($key == 'conf') {
-        foreach($value as $conf_key => $conf_value) {
-          $conf[$conf_key] = $conf_value;
-        }
-      }
-      elseif ($key == 'databases') {
-        // Protect default configuration but allow the specification of
-        // additional databases. Also, allows fun things with 'prefix' if they
-        // want to try multisite.
-        if (!isset($databases) || !is_array($databases)) {
-          $databases = array();
-        }
-        $databases = array_replace_recursive($databases, $value);
-      }
-      else {
-        $$key = $value;
-      }
-    }
-  }
 
   if (isset($base_url)) {
     // Parse fixed base URL from settings.php.
@@ -2494,22 +2476,6 @@ function _drupal_bootstrap_database() {
  */
 function _drupal_bootstrap_variables() {
   global $conf;
-
-  // Pressflow Smart Start
-  if (!empty($GLOBALS['databases']) && variable_get('pressflow_smart_start', FALSE)) {
-    try {
-      $result = db_query('SELECT s.name FROM {system} s WHERE s.name = :name', array(':name' => 'system'));
-    } catch (PDOException $e) {
-      if ($e->getCode() == '2003') {
-        header('Status: 550 Database Offline');
-        exit();
-      }
-      elseif ($e->getCode() == '42S02') {
-        include_once DRUPAL_ROOT . '/includes/install.inc';
-        install_goto('install.php');
-      }
-    }
-  }
 
   // Initialize the lock system.
   require_once DRUPAL_ROOT . '/' . variable_get('lock_inc', 'includes/lock.inc');

@@ -5,6 +5,7 @@ version = 7.x-1.0-dev
 project = tm_notifications
 package = "TM Notifications"
 
-dependencies[] = variable
+dependencies[] = tm_base
 dependencies[] = tm_users
 dependencies[] = queue_mail
+dependencies[] = variable

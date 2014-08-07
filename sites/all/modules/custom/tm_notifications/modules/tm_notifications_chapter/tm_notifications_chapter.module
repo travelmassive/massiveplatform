@@ -1,4 +1,10 @@
 <?php
+/**
+ * @file
+ * Code for the TM Notifications Chapter feature.
+ */
+
+include_once 'tm_notifications_chapter.features.inc';
 
 /**
  * Implements hook_tm_notif_info()

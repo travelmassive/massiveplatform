@@ -1,4 +1,10 @@
 <?php
+/**
+ * @file
+ * Code for the TM Notifications Upcoming Event feature.
+ */
+
+include_once 'tm_notifications_upcoming_event.features.inc';
 
 /**
  * Implements hook_tm_notif_info()

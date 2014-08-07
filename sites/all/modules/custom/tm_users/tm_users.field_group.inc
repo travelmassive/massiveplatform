@@ -189,13 +189,13 @@ function tm_users_field_group_info() {
       1 => 'field_avatar',
       2 => 'field_chapter',
       3 => 'field_image',
-      4 => 'field_job_organization',
-      5 => 'field_job_role',
-      6 => 'field_location_city',
-      7 => 'field_location_country',
-      8 => 'field_segment',
-      9 => 'field_user_first_name',
-      10 => 'field_user_last_name',
+      4 => 'field_location_city',
+      5 => 'field_location_country',
+      6 => 'field_segment',
+      7 => 'field_user_first_name',
+      8 => 'field_user_last_name',
+      9 => 'field_job_role',
+      10 => 'field_job_organization',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -465,8 +465,8 @@ function tm_users_field_group_info() {
     'label' => 'User edit',
     'weight' => '0',
     'children' => array(
-      0 => 'group_user_notifications',
-      1 => 'group_user_account',
+      0 => 'group_user_account',
+      1 => 'group_user_notifications',
       2 => 'group_user_profile',
     ),
     'format_type' => 'htabs',
@@ -490,7 +490,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_user_edit';
   $field_group->data = array(
     'label' => 'Notifications',
-    'weight' => '35',
+    'weight' => '36',
     'children' => array(
       0 => 'tm_notifications',
     ),
@@ -519,7 +519,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_user_edit';
   $field_group->data = array(
     'label' => 'Profile',
-    'weight' => '33',
+    'weight' => '35',
     'children' => array(
       0 => 'group_form_about',
       1 => 'group_form_elsewhere',

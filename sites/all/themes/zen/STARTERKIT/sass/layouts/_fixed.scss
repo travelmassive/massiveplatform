@@ -15,7 +15,7 @@ $zen-column-count:  5;
 $zen-gutter-width:  20px;
 $zen-grid-width:    980px;
 
-// If you need IE6/7 support for box-sizing: border-box (default), see _base.scss
+// If you need IE6/7 support for box-sizing: border-box (default), see _init.scss
 // Since the same CSS unit for grid width and gutter width are set here
 // we can use box-sizing: content-box; without worrying about polyfills.
 $zen-box-sizing: content-box;

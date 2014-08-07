@@ -35,9 +35,9 @@ settings[zen_wireframes]           = 0
 
 plugins[panels][layouts] = panels-layouts
 
-; Information added by drupal.org packaging script on 2013-08-21
-version = "7.x-5.4"
+; Information added by Drupal.org packaging script on 2014-04-30
+version = "7.x-5.5"
 core = "7.x"
 project = "zen"
-datestamp = "1377107504"
+datestamp = "1398864829"
 

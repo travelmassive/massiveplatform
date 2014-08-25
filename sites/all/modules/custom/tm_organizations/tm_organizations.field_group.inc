@@ -83,7 +83,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Followers',
-    'weight' => '6',
+    'weight' => '9',
     'children' => array(
       0 => 'members_following',
     ),
@@ -106,14 +106,15 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'About',
-    'weight' => '4',
+    'weight' => '7',
     'children' => array(
       0 => 'body',
       1 => 'field_link_facebook',
       2 => 'field_link_linkedin',
       3 => 'field_link_twitter',
       4 => 'field_link_website',
-      5 => 'group_location_wrapper',
+      5 => 'tm_ds_tm_sponsor',
+      6 => 'group_location_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -202,7 +203,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '11',
+    'weight' => '6',
     'children' => array(
       0 => 'field_location_city',
       1 => 'field_location_country',
@@ -232,7 +233,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Managed by',
-    'weight' => '5',
+    'weight' => '8',
     'children' => array(
       0 => 'field_owner',
     ),

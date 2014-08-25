@@ -31,7 +31,7 @@ function tm_organizations_field_default_field_instances() {
           'trim_length' => 600,
         ),
         'type' => 'text_trimmed',
-        'weight' => 5,
+        'weight' => 1,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -183,7 +183,7 @@ function tm_organizations_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 14,
+        'weight' => 16,
       ),
       'grid' => array(
         'label' => 'above',
@@ -340,7 +340,7 @@ function tm_organizations_field_default_field_instances() {
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 8,
+        'weight' => 3,
       ),
       'grid' => array(
         'label' => 'above',
@@ -415,7 +415,7 @@ function tm_organizations_field_default_field_instances() {
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 9,
+        'weight' => 4,
       ),
       'grid' => array(
         'label' => 'above',
@@ -490,7 +490,7 @@ function tm_organizations_field_default_field_instances() {
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 7,
+        'weight' => 2,
       ),
       'grid' => array(
         'label' => 'above',
@@ -565,7 +565,7 @@ function tm_organizations_field_default_field_instances() {
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 10,
+        'weight' => 5,
       ),
       'grid' => array(
         'label' => 'above',

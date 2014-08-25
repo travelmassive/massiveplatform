@@ -5,3 +5,33 @@
  */
 
 include_once 'tm_organizations.features.inc';
+
+/**
+ * Implement hook_ds_field_info()
+ */
+function tm_organizations_ds_fields_info($entity_type) {
+  if ($entity_type != 'node') {
+    return;
+  }
+  $fields = array();
+
+  $fields['tm_ds_tm_sponsor'] = array(
+    'title' => t('TM Sponsor'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('organization|full'),
+    'function' => '_tm_sponsor'
+  );
+
+  return array($entity_type => $fields);
+}
+
+/**
+ * Print an indication that a company is a TM sponsor
+ */
+function _tm_sponsor($field, $title = NULL) {
+  //$flag = flag_get_flag('tm_sponsor') or die('no "bookmarks" flag defined');
+  $flag = flag_get_flag('tm_sponsor');
+  if ($flag->is_flagged($field['entity']->nid)) {
+    return t('A Travel Massive sponsor');
+  }
+}

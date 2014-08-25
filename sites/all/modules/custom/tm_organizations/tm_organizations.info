@@ -57,6 +57,7 @@ features[field_instance][] = node-organization-field_segment
 features[field_validation_rule][] = friendly_url_org_blacklist
 features[field_validation_rule][] = friendly_url_org_characters
 features[field_validation_rule][] = friendly_url_org_unique
+features[flag][] = tm_sponsor
 features[node][] = organization
 features[user_permission][] = create organization content
 features[user_permission][] = delete any organization content

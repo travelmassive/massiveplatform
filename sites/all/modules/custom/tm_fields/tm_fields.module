@@ -186,6 +186,15 @@ function _tm_more_actions_process($field, $title = NULL) {
   }
   // END Add event Link
   
+  // START Set as sponsor link
+  if ($flag_link = flag_create_link('tm_sponsor', $field['entity']->nid)) {
+    $links['edition'][] = array(
+      'wrapper_class' => array('sponsor'),
+      'content' => $flag_link
+    );
+  }
+  // END Set as sponsor link
+
   $links['share'][] = array(
     'wrapper_class' => array('facebook'),
     'content' => l(t('Share on Facebook'), 'https://www.facebook.com/sharer/sharer.php', array(

@@ -76,6 +76,7 @@ features[field_instance][] = node-partner_event-field_map_link
 features[field_instance][] = node-partner_event-field_rsvp_link
 features[node][] = event
 features[node][] = partner_event
+features[user_permission][] = add event to any chapter
 features[user_permission][] = create event content
 features[user_permission][] = create partner_event content
 features[user_permission][] = delete any event content

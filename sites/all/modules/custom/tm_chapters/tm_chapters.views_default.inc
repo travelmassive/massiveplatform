@@ -51,8 +51,8 @@ function tm_chapters_views_default_views() {
   $handler->display->display_options['arguments']['field_chapter_leaders_target_id']['default_action'] = 'default';
   $handler->display->display_options['arguments']['field_chapter_leaders_target_id']['default_argument_type'] = 'php';
   $handler->display->display_options['arguments']['field_chapter_leaders_target_id']['default_argument_options']['code'] = 'global $user;
-// If admin don\'t filter.
-return in_array(\'administrator\', $user->roles) ? \'all\' : $user->uid;';
+// If admin or moderator don\'t filter.
+return in_array(\'administrator\', $user->roles) || in_array(\'moderator\', $user->roles) ? \'all\' : $user->uid;';
   $handler->display->display_options['arguments']['field_chapter_leaders_target_id']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['field_chapter_leaders_target_id']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_chapter_leaders_target_id']['summary_options']['items_per_page'] = '25';

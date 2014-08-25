@@ -144,34 +144,45 @@ function _tm_more_actions_process($field, $title = NULL) {
     }
   }
   // END Edit link.
- 
+
   // START Add event Link
-  if (isset($field['entity']->type) && $field['entity']->type == 'chapter') {
-    $path = 'node/add/event';
+  // The 'Add event' link should be available to the leaders of the city, moderators and admins.
+  $control = FALSE;
+  $path = 'node/add/event';
+
+  if (user_access('add event to any chapter')) {
+    $control = TRUE;
+  }
+  else if (isset($field['entity']->type) && $field['entity']->type == 'chapter') {
     // Does the user have access.
     $router_item = menu_get_item($path);
     if ($router_item['access']) {
       if (isset($field['entity']->field_chapter_leaders[LANGUAGE_NONE]) && !empty($field['entity']->field_chapter_leaders[LANGUAGE_NONE])) {
         // Check if the current user is a chapter leader.
+        dsm($user);
         foreach ($field['entity']->field_chapter_leaders[LANGUAGE_NONE] as $chapter_leader) {
           if ($chapter_leader['target_id'] == $user->uid) {
-            $links['edition'][] = array(
-              'wrapper_class' => array('add'),
-              'content' => l(t('Add event'), $path, array(
-                'query' => array(
-                  'field_chapter' => $field['entity']->nid
-                ),
-                'attributes' => array(
-                  'title' => t('Add event for @chapter', array('@chapter' => $field['entity']->title))
-                )
-              ))
-            );
             // Found chapter leader.
+            $control = TRUE;
             break;
           }
         }
       }
     }
+  }
+
+  if ($control) {
+    $links['edition'][] = array(
+      'wrapper_class' => array('add'),
+      'content' => l(t('Add event'), $path, array(
+        'query' => array(
+          'field_chapter' => $field['entity']->nid
+        ),
+        'attributes' => array(
+          'title' => t('Add event for @chapter', array('@chapter' => $field['entity']->title))
+        )
+      ))
+    );    
   }
   // END Add event Link
   

@@ -54,6 +54,7 @@ features[field_instance][] = node-organization-field_location_city
 features[field_instance][] = node-organization-field_location_country
 features[field_instance][] = node-organization-field_owner
 features[field_instance][] = node-organization-field_segment
+features[field_validation_rule][] = friendly_url_org_blacklist
 features[field_validation_rule][] = friendly_url_org_characters
 features[field_validation_rule][] = friendly_url_org_unique
 features[node][] = organization

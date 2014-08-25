@@ -13,6 +13,31 @@ function tm_organizations_default_field_validation_rule() {
   $rule = new stdClass();
   $rule->disabled = FALSE; /* Edit this to true to make a default rule disabled initially */
   $rule->api_version = 2;
+  $rule->rulename = 'Friendly URL blacklist';
+  $rule->name = 'friendly_url_org_blacklist';
+  $rule->field_name = 'field_friendly_url';
+  $rule->col = 'value';
+  $rule->entity_type = 'node';
+  $rule->bundle = 'organization';
+  $rule->validator = 'field_validation_blacklist_validator';
+  $rule->settings = array(
+    'data' => 'about, travelmassive, admin',
+    'bypass' => 0,
+    'roles' => array(
+      1 => 0,
+      2 => 0,
+      5 => 0,
+      4 => 0,
+      3 => 0,
+    ),
+    'errors' => 0,
+  );
+  $rule->error_message = 'The friendly url you picked is reserved. Please pick another one.';
+  $export['friendly_url_org_blacklist'] = $rule;
+
+  $rule = new stdClass();
+  $rule->disabled = FALSE; /* Edit this to true to make a default rule disabled initially */
+  $rule->api_version = 2;
   $rule->rulename = 'Friendly URL characters';
   $rule->name = 'friendly_url_org_characters';
   $rule->field_name = 'field_friendly_url';

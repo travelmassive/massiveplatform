@@ -10,6 +10,16 @@
 function tm_events_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: 'add event to any chapter'.
+  $permissions['add event to any chapter'] = array(
+    'name' => 'add event to any chapter',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'moderator' => 'moderator',
+    ),
+    'module' => 'tm_events',
+  );
+
   // Exported permission: 'create event content'.
   $permissions['create event content'] = array(
     'name' => 'create event content',

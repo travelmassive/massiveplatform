@@ -77,7 +77,14 @@ function tm_organizations_strongarm() {
           'weight' => '10',
         ),
       ),
-      'display' => array(),
+      'display' => array(
+        'flag_tm_sponsor' => array(
+          'full' => array(
+            'weight' => '6',
+            'visible' => FALSE,
+          ),
+        ),
+      ),
     ),
   );
   $export['field_bundle_settings_node__organization'] = $strongarm;

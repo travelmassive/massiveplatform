@@ -10,6 +10,18 @@
 include_once 'tm_events.features.inc';
 
 /**
+ * Implements hook_permission()
+ */
+function tm_events_permission() {
+  return array(
+    'add event to any chapter' => array(
+      'title' => t('Add event to any chapter'),
+      'description' => t('Add events to a chapter, even without being a chapter leader.'),
+    ),
+  );
+}
+
+/**
  * Implement hook_form_FORM_ID_alter()
  */
 function tm_events_form_event_node_form_alter(&$form, &$form_state) {

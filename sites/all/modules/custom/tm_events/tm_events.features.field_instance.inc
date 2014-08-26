@@ -147,7 +147,7 @@ function tm_events_field_default_field_instances() {
             'og_context' => FALSE,
             'url' => 1,
           ),
-          'skip_perm' => 'administer nodes',
+          'skip_perm' => 'add event to any chapter',
           'status' => 1,
         ),
       ),

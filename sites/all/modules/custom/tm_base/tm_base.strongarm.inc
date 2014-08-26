@@ -41,11 +41,11 @@ function tm_base_strongarm() {
     'event' => array(
       'field_chapter' => array(
         'referenced' => array(
-          'update' => array(
-            'update' => 'update',
-          ),
           'view' => array(
             'view' => 'view',
+          ),
+          'update' => array(
+            'update' => 'update',
           ),
         ),
         'field_type' => 'entityreference',

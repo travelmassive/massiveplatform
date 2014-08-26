@@ -46,7 +46,7 @@ function _tm_event_seats_count($field, $title = NULL) {
     $left = $limit - $count;
     $left = $left < 0 ? 0 : $left;
     
-    return t('@left of @total seats left', array(
+    return t('@left of @total places left', array(
       '@left' => $left,
       '@total' => $limit
     ));

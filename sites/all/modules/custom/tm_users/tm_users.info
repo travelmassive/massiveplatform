@@ -87,6 +87,7 @@ features[field_instance][] = user-user-field_user_question_dream_travel
 features[field_instance][] = user-user-field_user_question_job
 features[field_instance][] = user-user-field_user_question_learn
 features[field_instance][] = user-user-field_user_question_why_travel
+features[field_validation_rule][] = friendly_url_user_blacklist
 features[field_validation_rule][] = friendly_url_user_characters
 features[field_validation_rule][] = friendly_url_user_unique
 features[user_permission][] = access user profiles

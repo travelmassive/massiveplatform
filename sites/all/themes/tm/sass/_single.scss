@@ -1,6 +1,7 @@
 .page-views,
 .page-search {
-  #content > section > header {
+  #content > section > header,
+  #content > .header-wrapper {
     @include grid-row($behavior: nest);
   }
   #block-views-exp-events-page {

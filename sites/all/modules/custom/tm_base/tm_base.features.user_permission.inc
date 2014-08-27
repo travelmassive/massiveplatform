@@ -17,6 +17,7 @@ function tm_base_user_default_permissions() {
       'administrator' => 'administrator',
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
+      'non-validated' => 'non-validated',
     ),
     'module' => 'node',
   );

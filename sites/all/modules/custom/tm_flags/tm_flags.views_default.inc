@@ -27,7 +27,7 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['use_more'] = TRUE;
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'View more';
-  $handler->display->display_options['link_display'] = 'members_following_org_page';
+  $handler->display->display_options['link_display'] = 'members_signedup_page';
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'access user profiles';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -137,6 +137,8 @@ function tm_flags_views_default_views() {
 
   /* Display: Block - following org */
   $handler = $view->new_display('block', 'Block - following org', 'members_following_org_block');
+  $handler->display->display_options['defaults']['link_display'] = FALSE;
+  $handler->display->display_options['link_display'] = 'members_following_org_page';
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   /* Relationship: Flags: User's flaggings */
   $handler->display->display_options['relationships']['flag_user_content_rel']['id'] = 'flag_user_content_rel';
@@ -146,6 +148,8 @@ function tm_flags_views_default_views() {
 
   /* Display: Block - following members */
   $handler = $view->new_display('block', 'Block - following members', 'members_following_members_block');
+  $handler->display->display_options['defaults']['link_display'] = FALSE;
+  $handler->display->display_options['link_display'] = 'members_following_members_page';
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   /* Relationship: Flags: User's flaggings */
   $handler->display->display_options['relationships']['flag_user_content_rel']['id'] = 'flag_user_content_rel';

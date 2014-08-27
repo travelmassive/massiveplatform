@@ -227,14 +227,14 @@ function tm_chapters_field_group_info() {
   $field_group->mode = 'full';
   $field_group->parent_name = '';
   $field_group->data = array(
-    'label' => 'Team',
+    'label' => 'Chapter leaders',
     'weight' => '7',
     'children' => array(
       0 => 'field_chapter_leaders',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
-      'label' => 'Team',
+      'label' => 'Chapter leaders',
       'formatter' => 'open',
     ),
   );

@@ -336,6 +336,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
 
 // The user and node forms will not span 12 columns on bigger display sizes
 .page-user-edit #content,
+.page-user-register #content,
 .page-node-edit #content {
   @media #{$medium-up} {
     @include grid-column($columns: 10, $offset: 1);

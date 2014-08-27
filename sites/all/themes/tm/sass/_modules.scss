@@ -164,6 +164,14 @@
     }
   }
 
+  .more-link {
+    padding: 0 1rem 1rem 2.5rem;
+    margin: 0 0 1rem 0;
+    a {
+      @extend .cta-inline;      
+    }
+  }
+
   .view-empty {
     padding: 0 1rem;
     margin: 0 0 1rem 0;

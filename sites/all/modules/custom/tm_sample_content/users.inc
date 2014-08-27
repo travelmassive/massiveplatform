@@ -79,13 +79,9 @@ class TMUserMigration extends TMBaseMigration {
 
     // The social link fields
     $this->addFieldMapping('field_link_twitter', 'tw_link');
-    $this->addFieldMapping('field_link_twitter:title', 'tw_link_title');
     $this->addFieldMapping('field_link_facebook', 'fb_link');
-    $this->addFieldMapping('field_link_facebook:title', 'fb_link_title');
     $this->addFieldMapping('field_link_linkedin', 'li_link');
-    $this->addFieldMapping('field_link_linkedin:title', 'li_link_title');
     $this->addFieldMapping('field_link_website', 'web_link');
-    $this->addFieldMapping('field_link_website:title', 'web_link_title');
 
     // City + country fields
     $this->addFieldMapping('field_location_city', 'city');

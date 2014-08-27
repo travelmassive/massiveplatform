@@ -203,3 +203,10 @@ function tm_base_update_7017() {
 function tm_base_update_7018() {
   module_enable(array('queue_mail', 'tm_notifications', 'tm_notifications_event', 'tm_notifications_chapter', 'tm_notifications_upcoming_event', 'ultimate_cron'));
 }
+
+/**
+ * Enable the countries modules.
+ */
+function tm_base_update_7019() {
+  module_enable(array('countries'));
+}

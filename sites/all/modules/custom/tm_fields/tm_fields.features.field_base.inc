@@ -111,6 +111,31 @@ function tm_fields_field_default_field_bases() {
     'type' => 'entityreference',
   );
 
+  // Exported field_base: 'field_country'
+  $field_bases['field_country'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_country',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'iso2' => array(
+        0 => 'iso2',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'countries',
+    'settings' => array(
+      'continents' => array(),
+      'countries' => array(),
+      'enabled' => 1,
+      'size' => 5,
+    ),
+    'translatable' => 0,
+    'type' => 'country',
+  );
+
   // Exported field_base: 'field_event_venue_name'
   $field_bases['field_event_venue_name'] = array(
     'active' => 1,

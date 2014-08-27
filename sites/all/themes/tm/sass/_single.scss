@@ -5,41 +5,39 @@
     @include grid-row($behavior: nest);
   }
   #block-views-exp-events-page {
-    float: right;
+    display: inline-block;
     font-size: 0;
   }
   .views-submit-button {
     padding: 0;
   }
   #page-title {
-    @include grid-column(4);
+    @include grid-column(12);
   }
   .region-header,
   .tabs-primary {
     clear: none;
-    @include grid-column(8);
+    @include grid-column(12);
+    margin-top: -1rem;
+    text-align: center;
   }
   .messages {
     margin: $column-gutter/2 $column-gutter/2 $column-gutter $column-gutter/2;
   }
 
-  @media #{$small-up} {
-    #page-title {
-      @include grid-column(6);
-    }
-    .region-header,
-    .tabs-primary {
-      @include grid-column(6);
-    }
-  }
-
   @media #{$medium-up} {
     #page-title {
       @include grid-column(8);
+      text-align: left;
     }
     .region-header,
     .tabs-primary {
       @include grid-column(4);
+      text-align: right;
+      margin-top: 0;
+    }
+    #block-views-exp-events-page {
+      float: right;
     }
   }
 
@@ -48,6 +46,7 @@
 .page-views,
 .page-node-edit,
 .page-user-edit,
+.page-user-register,
 .page-search {
   .column {
     padding: 0 !important;
@@ -72,15 +71,9 @@
 
   @media #{$medium-up} {
     #page-title {
+      text-align: left;
       margin-bottom: 2rem;
     }
-  }
-}
-
-.page-views,
-.page-search {
-  #page-title {
-    text-align: left;
   }
 }
 
@@ -88,7 +81,6 @@
   .tabs-primary {
     margin-bottom: 1rem;
     @extend .bttn-group;
-    text-align: right;
     font-size: 0;
     li,
     li.is-active {
@@ -169,10 +161,12 @@
     padding: 1rem 1rem 0 1rem;
     box-shadow: 0 -1px 0 0 rgba($primary-color, 0.1);
   }
-  @media #{$medium-up} {
+  @media #{$small-up} {
     .tabs-primary {
       margin-bottom: 2rem;
     }
+  }
+  @media #{$medium-up} {
     .contained-block {
       padding: 2rem;
     }

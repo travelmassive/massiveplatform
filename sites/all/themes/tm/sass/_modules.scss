@@ -113,6 +113,7 @@
       }
       &:before { @extend .icon-clock; }
     }
+    &.tm-ds-tm-sponsor:before { @extend .icon-medal; }
     &.field-about-me:before, &.about-me:before, &.body:before { @extend .icon-description; }
     &.field-link-facebook:before { @extend .icon-facebook; }
     &.field-link-linkedin:before { @extend .icon-linkedin; }
@@ -168,7 +169,7 @@
     padding: 0 1rem 1rem 2.5rem;
     margin: 0 0 1rem 0;
     a {
-      @extend .cta-inline;      
+      @extend .cta-inline;
     }
   }
 

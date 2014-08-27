@@ -85,7 +85,8 @@ label {
 // }
 
 .node-form,
-#user-profile-form {
+#user-profile-form,
+#user-register-form {
   .image-preview {
     border: 1px tint($primary-color, 90%) solid;
     padding: 0.25rem;
@@ -262,7 +263,8 @@ label {
 
 // Tabs
 
-.page-user-edit {
+#user-profile-form,
+#user-register-form {
   .horizontal-tabs {
     border: none;
     padding: 0;

@@ -4,9 +4,10 @@
   #content > .header-wrapper {
     @include grid-row($behavior: nest);
   }
-  #block-views-exp-events-page {
+  .block-views .views-exposed-form {
     display: inline-block;
     font-size: 0;
+    vertical-align: top;
   }
   .views-submit-button {
     padding: 0;
@@ -36,7 +37,7 @@
       text-align: right;
       margin-top: 0;
     }
-    #block-views-exp-events-page {
+    .block-views .views-exposed-form {
       float: right;
     }
   }

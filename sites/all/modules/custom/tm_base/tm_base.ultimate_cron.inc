@@ -32,6 +32,11 @@ function tm_base_default_ultimate_cron_job() {
       'name' => '',
       'database' => array(),
     ),
+    'settings' => array(
+      'queue' => array(),
+      'poorman' => array(),
+      'general' => array(),
+    ),
   );
   $export['update_cron'] = $job;
 

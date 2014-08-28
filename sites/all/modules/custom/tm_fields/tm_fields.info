@@ -28,7 +28,6 @@ features[field_base][] = field_link_twitter
 features[field_base][] = field_link_website
 features[field_base][] = field_location
 features[field_base][] = field_location_city
-features[field_base][] = field_location_country
 features[field_base][] = field_map_link
 features[field_base][] = field_organizer
 features[field_base][] = field_owner

@@ -312,6 +312,62 @@ function tm_chapters_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-chapter-field_country'
+  $field_instances['node-chapter-field_country'] = array(
+    'bundle' => 'chapter',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Please specify the country of the chapter.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'countries',
+        'settings' => array(),
+        'type' => 'country_default',
+        'weight' => 9,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_country',
+    'label' => 'Country',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 7,
+    ),
+  );
+
   // Exported field_instance: 'node-chapter-field_image'
   $field_instances['node-chapter-field_image'] = array(
     'bundle' => 'chapter',
@@ -452,7 +508,7 @@ function tm_chapters_field_default_field_instances() {
       ),
       'enable_tokens' => 0,
       'rel_remove' => 'default',
-      'title' => 'optional',
+      'title' => 'none',
       'title_maxlength' => 44,
       'title_value' => '',
       'url' => 0,
@@ -525,7 +581,7 @@ function tm_chapters_field_default_field_instances() {
       ),
       'enable_tokens' => 0,
       'rel_remove' => 'default',
-      'title' => 'optional',
+      'title' => 'none',
       'title_maxlength' => 44,
       'title_value' => '',
       'url' => 0,
@@ -598,7 +654,7 @@ function tm_chapters_field_default_field_instances() {
       ),
       'enable_tokens' => 0,
       'rel_remove' => 'default',
-      'title' => 'optional',
+      'title' => 'none',
       'title_maxlength' => 44,
       'title_value' => '',
       'url' => 0,
@@ -671,7 +727,7 @@ function tm_chapters_field_default_field_instances() {
       ),
       'enable_tokens' => 0,
       'rel_remove' => 'default',
-      'title' => 'optional',
+      'title' => 'none',
       'title_maxlength' => 44,
       'title_value' => '',
       'url' => 0,
@@ -692,11 +748,13 @@ function tm_chapters_field_default_field_instances() {
   t('Chapter leaders');
   t('City color');
   t('City shortcode');
+  t('Country');
   t('Description');
   t('Facebook');
   t('Image');
   t('Linkedin');
   t('Please enter a unique 3 letter shortcode for this city.');
+  t('Please specify the country of the chapter.');
   t('Provide a banner image that is a good reflection of your city.');
   t('Select a color that sets this city apart from the others. This color should have enough contrast with a white text layered on top.');
   t('Twitter');

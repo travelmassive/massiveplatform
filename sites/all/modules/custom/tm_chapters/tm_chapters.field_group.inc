@@ -140,8 +140,9 @@ function tm_chapters_field_group_info() {
       2 => 'field_chapter_leaders',
       3 => 'field_chapter_shortcode',
       4 => 'field_image',
-      5 => 'title',
-      6 => 'path',
+      5 => 'field_country',
+      6 => 'title',
+      7 => 'path',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -226,14 +227,14 @@ function tm_chapters_field_group_info() {
   $field_group->mode = 'full';
   $field_group->parent_name = '';
   $field_group->data = array(
-    'label' => 'Team',
+    'label' => 'Chapter leaders',
     'weight' => '7',
     'children' => array(
       0 => 'field_chapter_leaders',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
-      'label' => 'Team',
+      'label' => 'Chapter leaders',
       'formatter' => 'open',
     ),
   );

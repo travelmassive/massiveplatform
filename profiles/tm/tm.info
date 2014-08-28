@@ -22,6 +22,7 @@ dependencies[] = backup_migrate
 dependencies[] = color_field
 dependencies[] = context
 dependencies[] = context_ui
+dependencies[] = countries
 dependencies[] = ctools
 dependencies[] = date
 dependencies[] = date_api

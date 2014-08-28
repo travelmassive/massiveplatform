@@ -91,6 +91,24 @@ function tm_organizations_views_default_views() {
     4 => 0,
     3 => 0,
   );
+  /* Filter criterion: Field: Segment (field_segment) */
+  $handler->display->display_options['filters']['field_segment_tid']['id'] = 'field_segment_tid';
+  $handler->display->display_options['filters']['field_segment_tid']['table'] = 'field_data_field_segment';
+  $handler->display->display_options['filters']['field_segment_tid']['field'] = 'field_segment_tid';
+  $handler->display->display_options['filters']['field_segment_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_segment_tid']['expose']['operator_id'] = 'field_segment_tid_op';
+  $handler->display->display_options['filters']['field_segment_tid']['expose']['operator'] = 'field_segment_tid_op';
+  $handler->display->display_options['filters']['field_segment_tid']['expose']['identifier'] = 'segment';
+  $handler->display->display_options['filters']['field_segment_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  $handler->display->display_options['filters']['field_segment_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_segment_tid']['vocabulary'] = 'tm_segments';
+  $handler->display->display_options['filters']['field_segment_tid']['hierarchy'] = 1;
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');

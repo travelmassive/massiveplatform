@@ -79,7 +79,6 @@ features[field_instance][] = user-user-field_link_linkedin
 features[field_instance][] = user-user-field_link_twitter
 features[field_instance][] = user-user-field_link_website
 features[field_instance][] = user-user-field_location_city
-features[field_instance][] = user-user-field_location_country
 features[field_instance][] = user-user-field_segment
 features[field_instance][] = user-user-field_user_first_name
 features[field_instance][] = user-user-field_user_last_name

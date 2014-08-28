@@ -145,8 +145,9 @@ function tm_organizations_field_group_info() {
       5 => 'field_location_country',
       6 => 'field_owner',
       7 => 'field_segment',
-      8 => 'title',
-      9 => 'path',
+      8 => 'field_country',
+      9 => 'title',
+      10 => 'path',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -206,7 +207,7 @@ function tm_organizations_field_group_info() {
     'weight' => '6',
     'children' => array(
       0 => 'field_location_city',
-      1 => 'field_location_country',
+      1 => 'field_country',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(

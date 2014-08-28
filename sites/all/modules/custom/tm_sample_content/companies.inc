@@ -75,7 +75,7 @@ class TMCompanyMigration extends TMBaseMigration {
 
     // City + country fields
     $this->addFieldMapping('field_location_city', 'city');
-    $this->addFieldMapping('field_location_country', 'country');
+    $this->addFieldMapping('field_country', 'country');
 
   }
 

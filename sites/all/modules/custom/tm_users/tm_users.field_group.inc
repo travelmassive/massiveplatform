@@ -191,11 +191,9 @@ function tm_users_field_group_info() {
       3 => 'field_image',
       4 => 'field_location_city',
       5 => 'field_segment',
-      6 => 'field_user_first_name',
-      7 => 'field_user_last_name',
-      8 => 'field_job_role',
-      9 => 'field_job_organization',
-      10 => 'field_country',
+      6 => 'field_job_role',
+      7 => 'field_job_organization',
+      8 => 'field_country',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -224,8 +222,10 @@ function tm_users_field_group_info() {
     'weight' => '25',
     'children' => array(
       0 => 'field_friendly_url',
-      1 => 'masquerade',
-      2 => 'account',
+      1 => 'field_user_first_name',
+      2 => 'field_user_last_name',
+      3 => 'masquerade',
+      4 => 'account',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

@@ -356,55 +356,69 @@ select {
   }
 }
 
-#edit-type-wrapper {
-  padding: 0;
+
+
+.views-exposed-form {
+
+  .views-exposed-widget {
+    padding: 0;
+  }
+
+  .form-type-select {
+    @extend .bttn, .bttn-m, .bttn-primary;
+    width: 10rem;
+    overflow: hidden;
+    margin: 0 0.5rem;
+
+    @include transform(translate3d(0, 0, 0));
+    @include transition(opacity 0.2s ease 0);
+
+    &:after {
+      font-size: 1rem;
+      float: right;
+      margin-top: -1.5rem;
+      @extend .icon-s-arr-down;
+    }
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+    select {
+      @extend %antialiased;
+      color: #FFF;
+      font-weight: $body-font-bold;
+      cursor: pointer;
+      padding: 0 1.5rem 0 0.75rem;
+      margin-left: -0.75rem;
+      width: 130%;
+      max-width: none;
+      border: none;
+      box-shadow: none;
+      background-color: transparent;
+      background-image: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      &:focus {
+        outline: none;
+      }
+      option {
+        background-color: #FFF;
+        color: $primary-color;
+        font-weight: normal;
+      }
+    }
+  }
+  @media #{$medium-up} {
+    .form-type-select {
+      margin-right: 0; // So it sits nicely on the right. Can't use last-child, because of hidden submit with same class
+    }
+  }
 }
 
-.form-type-select {
-  @extend .bttn, .bttn-m, .bttn-primary;
-  width: 10rem;
-  overflow: hidden;
 
-  @include transform(translate3d(0, 0, 0));
-  @include transition(opacity 0.2s ease 0);
 
-  &:after {
-    font-size: 1rem;
-    float: right;
-    margin-top: -1.5rem;
-    @extend .icon-s-arr-down;
-  }
-
-  &:hover {
-    opacity: 0.7;
-  }
-
-  select {
-    @extend %antialiased;
-    color: #FFF;
-    font-weight: $body-font-bold;
-    cursor: pointer;
-    padding: 0 1.5rem 0 0.75rem;
-    margin-left: -0.75rem;
-    width: 130%;
-    max-width: none;
-    border: none;
-    box-shadow: none;
-    background-color: transparent;
-    background-image: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    &:focus {
-      outline: none;
-    }
-    option {
-      background-color: #FFF;
-      color: $primary-color;
-      font-weight: normal;
-    }
-  }
-}
 
 // Draggable
 

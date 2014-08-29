@@ -202,32 +202,13 @@ function tm_events_field_default_field_instances() {
   $field_instances['node-event-field_event_date'] = array(
     'bundle' => 'event',
     'deleted' => 0,
-    'description' => 'Select the date and start time of the event.',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'date',
         'settings' => array(
           'format_type' => 'long',
-          'fromto' => '',
-          'multiple_from' => '',
-          'multiple_number' => '',
-          'multiple_to' => '',
-        ),
-        'type' => 'date_default',
-        'weight' => 11,
-      ),
-      'full' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 20,
-      ),
-      'grid' => array(
-        'label' => 'hidden',
-        'module' => 'date',
-        'settings' => array(
-          'format_type' => 'time_24h',
           'fromto' => 'both',
           'multiple_from' => '',
           'multiple_number' => '',
@@ -236,27 +217,32 @@ function tm_events_field_default_field_instances() {
         'type' => 'date_default',
         'weight' => 13,
       ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
       'list' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 14,
+        'weight' => 0,
       ),
       'search_result' => array(
         'label' => 'above',
-        'module' => 'date',
-        'settings' => array(
-          'format_type' => 'long',
-          'fromto' => '',
-          'multiple_from' => '',
-          'multiple_number' => '',
-          'multiple_to' => '',
-        ),
-        'type' => 'date_default',
-        'weight' => 11,
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
     ),
-    'ds_extras_field_template' => 'theme_ds_field_reset',
+    'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_event_date',
     'label' => 'When',
@@ -273,14 +259,14 @@ function tm_events_field_default_field_instances() {
       'module' => 'date',
       'settings' => array(
         'increment' => 15,
-        'input_format' => 'm/d/Y - H:i:s',
+        'input_format' => 'Y-m-d H:i:s',
         'input_format_custom' => '',
         'label_position' => 'above',
         'text_parts' => array(),
         'year_range' => '-0:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 3,
+      'weight' => 10,
     ),
   );
 
@@ -1241,7 +1227,6 @@ function tm_events_field_default_field_instances() {
   t('Provide a link to the page with the RSVP.');
   t('Provide the street address for this event.');
   t('RSVP link');
-  t('Select the date and start time of the event.');
   t('This image will used as the main banner for the event.');
   t('Venue name');
   t('When');

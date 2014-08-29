@@ -38,10 +38,10 @@ function tm_users_strongarm() {
     'extra_fields' => array(
       'form' => array(
         'masquerade' => array(
-          'weight' => '28',
+          'weight' => '38',
         ),
         'account' => array(
-          'weight' => '26',
+          'weight' => '36',
         ),
         'timezone' => array(
           'weight' => '27',

@@ -205,8 +205,8 @@ function tm_base_update_7018() {
 }
 
 /**
- * Enable the countries modules.
+ * Enable the countries and tzfield modules.
  */
 function tm_base_update_7019() {
-  module_enable(array('countries'));
+  module_enable(array('countries','tzfield'));
 }

@@ -1,0 +1,264 @@
+<?php
+// $Id: tzfield.module,v 1.1.4.10 2010/11/08 22:06:18 mfb Exp $
+
+/**
+ * @file
+ * Defines a time zone field type.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function tzfield_menu() {
+  $items['tzfield/autocomplete'] = array(
+    'title' => 'Time zone field autocomplete',
+    'page callback' => 'tzfield_autocomplete',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_field_info().
+ */
+function tzfield_field_info() {
+  return array(
+    'tzfield' => array(
+      'label' => t('Time zone'),
+      'description' => t('Store a time zone identifier in the database.'),
+      'settings' => array('exclude' => tzfield_excluded_timezones()),
+      'default_widget' => 'options_select',
+      'default_formatter' => 'tzfield_default',
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_settings_form().
+ */
+function tzfield_field_settings_form($field, $instance, $has_data) {
+  $form['exclude'] = array(
+    '#title' => t('Time zones to be excluded from the option list'),
+    '#type' => 'select',
+    '#options' => tzfield_identifiers_list(),
+    '#default_value' => $field['settings']['exclude'],
+    '#multiple' => TRUE,
+    '#required' => FALSE,
+    '#description' => t('Any time zones selected here will be excluded from the allowed values.'),
+  );
+  return $form;
+}
+
+/**
+ * Implements hook_field_validate().
+ */
+function tzfield_field_validate($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {
+  $options = tzfield_options_list($field);
+  foreach ($items as $delta => $item) {
+    if (!empty($item['value']) && !isset($options[$item['value']])) {
+      $errors[$field['field_name']][$langcode][$delta][] = array(
+        'error' => 'tzfield_illegal_value',
+        'message' => t('%name: This time zone is not valid.', array('%name' => t($instance['label']))),
+      );
+    }
+  }
+  return $items;
+}
+
+/**
+ * Implements hook_field_is_empty().
+ */
+function tzfield_field_is_empty($item, $field) {
+  return empty($item['value']);
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function tzfield_field_formatter_info() {
+  return array(
+    'tzfield_default' => array(
+      'label' => 'Time zone name',
+      'field types' => array('tzfield'),
+    ),
+    'tzfield_date' => array(
+      'label' => 'Formatted current date',
+      'field types' => array('tzfield'),
+      'settings' =>  array(
+        'format' => 'T',
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_widget_info().
+ */
+function tzfield_field_widget_info() {
+  return array(
+    'tzfield_autocomplete' => array(
+      'label' => t('Autocomplete time zone widget'),
+      'field types' => array('tzfield'),
+      'settings' => array('size' => 60),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_info_alter().
+ */
+function tzfield_field_widget_info_alter(&$info) {
+  $info['options_select']['field types'][] = 'tzfield';
+}
+
+/**
+ * Implements hook_field_widget_form().
+ */
+function tzfield_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+  $element += array(
+    '#type' => 'textfield',
+    '#default_value' => isset($items[$delta]['value']) ? $items[$delta]['value'] : NULL,
+    '#size' => $instance['widget']['settings']['size'],
+    '#autocomplete_path' => 'tzfield/autocomplete/' . $field['field_name'],
+  );
+  return array('value' => $element);
+}
+
+/**
+ * Retrieve an array of autocomplete suggestions.
+ */
+function tzfield_autocomplete($field_name, $string = '', $arg4 = '', $arg5 = '') {
+  if ($arg4) {
+    $string .= '/' . $arg4;
+  }
+  if ($arg5) {
+    $string .= '/' . $arg5;
+  }
+  $string = preg_replace(';[^a-z0-9/_-];i', '', str_replace(' ', '_', trim($string)));
+  drupal_json_output($string ? preg_grep(';'. $string .';i', tzfield_options_list(field_info_field($field_name))) : array());
+}
+
+/**
+ * Implements hook_options_list().
+ */
+function tzfield_options_list($field) {
+  return empty($field['settings']['exclude']) ? tzfield_identifiers_list() : array_diff(tzfield_identifiers_list(), $field['settings']['exclude']);
+}
+
+/**
+ * Fetch a default array of excluded time zones for use when creating a time zone field.
+ * See http://www.php.net/manual/en/timezones.others.php
+ */
+function tzfield_excluded_timezones() {
+  return preg_grep(';^((Africa|America|Antarctica|Arctic|Asia|Atlantic|Australia|Europe|Indian|Pacific)/.*|UTC)$;', tzfield_identifiers_list(), PREG_GREP_INVERT);
+}
+
+/**
+ * Cache the time zone identifiers list as a static variable.
+ */
+function tzfield_identifiers_list() {
+  static $list;
+  if (empty($list)) {
+    $list = drupal_map_assoc(timezone_identifiers_list());
+  }
+  return $list;
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function tzfield_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+  switch ($display['type']) {
+    case 'tzfield_default':
+      foreach ($items as $delta => $item) {
+        // Time zones should not contain any characters that require HTML
+        // encoding.
+        $element[$delta] = array('#markup' => $item['value']);
+      }
+      break;
+    case 'tzfield_date':
+      foreach ($items as $delta => $item) {
+        // If the date format string contains a character that requires HTML
+        // encoding, then for plain text output from this formatter, you will
+        // need to HTML decode it.
+        $element[$delta] = array('#markup' => $item['value'] ? check_plain(date_create('now', timezone_open($item['value']))->format($display['settings']['format'])) : '');
+      }
+      break;
+  }
+  return $element;
+}
+
+/**
+ * Implements hook_field_formatter_settings_form().
+ */
+function tzfield_field_formatter_settings_form($field, $instance, $view_mode) {
+  $form = array();
+  if ($instance['display'][$view_mode]['type'] == 'tzfield_date') {
+    $form['format'] = array(
+      '#title' => t('Format'),
+      '#type' => 'textfield',
+      '#size' => 20,
+      '#default_value' => $instance['display'][$view_mode]['settings']['format'],
+      '#description' => t('Enter a <a href="http://www.php.net/manual/en/function.date.php">PHP date format string</a>, e.g. <em>T</em> to display the current time zone abbreviation.'),
+    );
+  }
+  return $form;
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary().
+ */
+function tzfield_field_formatter_settings_summary($field, $instance, $view_mode) {
+  $summary = '';
+  if ($instance['display'][$view_mode]['type'] == 'tzfield_date') {
+    $summary = t('Format string: %format<br />Sample date: %date', array(
+      '%format' => $instance['display'][$view_mode]['settings']['format'],
+      '%date' => date_create()->format($instance['display'][$view_mode]['settings']['format']),
+    ));
+  }
+  return $summary;
+}
+
+/**
+ * Implements hook_field_widget_error().
+ */
+function tzfield_field_widget_error($element, $error, $form, &$form_state) {
+  form_error($element, $error['message']);
+}
+
+/**
+ * Implements hook_content_migrate_field_alter().
+ */
+function tzfield_content_migrate_field_alter(&$field) {
+  // Use tzfield namespace for field type.
+  if ($field['type'] == 'timezone') {
+    $field['type'] = 'tzfield';
+    if ($field['cardinality'] == 0) {
+      $field['cardinality'] = 1;
+    }
+  }
+}
+
+/**
+ * Implements hook_content_migrate_instance_alter().
+ */
+function tzfield_content_migrate_instance_alter(&$instance) {
+  // Select widget now provided by options module.
+  if ($instance['widget_type'] == 'tzfield_select') {
+    $instance['widget_type'] = 'options_select';
+    $instance['widget']['type'] = 'options_select';
+    $instance['widget']['module'] = 'options';
+  }
+  // Use new date formatter.
+  if ($instance['module'] == 'tzfield') {
+    $formats = array('abbreviation' => 'T', 'medium' => variable_get('date_format_medium', 'D, m/d/Y - H:i'), 'rfc2822' => 'r');
+    foreach ($instance['display'] as $view_mode => $display) {
+      if (isset($formats[$display['type']])) {
+        $instance['display'][$view_mode]['type'] = 'tzfield_date';
+        $instance['display'][$view_mode]['settings']['format'] = $formats[$display['type']];
+      }
+    }
+  }
+}

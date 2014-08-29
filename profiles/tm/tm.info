@@ -61,6 +61,7 @@ dependencies[] = entityreference_prepopulate
 dependencies[] = nodeaccess_nodereference
 dependencies[] = nodeaccess_userreference
 dependencies[] = queue_mail
+dependencies[] = tzfield
 dependencies[] = ultimate_cron
 
 

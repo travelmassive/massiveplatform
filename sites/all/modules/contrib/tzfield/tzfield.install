@@ -1,0 +1,21 @@
+<?php
+// $Id: tzfield.install,v 1.1.4.2 2010/11/08 22:06:18 mfb Exp $
+
+/**
+ * @file
+ * Time zone field schema.
+ */
+
+/**
+* Implements hook_field_schema().
+*/
+function tzfield_field_schema($field) {
+  return array(
+    'columns' => array(
+      'value' => array('type' => 'varchar', 'length' => 32, 'not null' => FALSE, 'sortable' => TRUE, 'description' => 'Time zone identifier from the tz database.'),
+    ),
+    'indexes' => array(
+      'value' => array('value'),
+    ),
+  );
+}

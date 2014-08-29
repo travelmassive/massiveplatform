@@ -249,7 +249,12 @@ function _tm_fulldate_event($field, $title = NULL) {
   if (isset($field['entity']->field_event_date['und'][0]['value'])) {
     $event_date = new DateTime($field['entity']->field_event_date['und'][0]['value'], new DateTimeZone($field['entity']->field_event_date['und'][0]['timezone']));
     $event_date2 = new DateTime($field['entity']->field_event_date['und'][0]['value2'], new DateTimeZone($field['entity']->field_event_date['und'][0]['timezone']));
-    return '<span class="date">' . $event_date->format('l, F j, Y') . '</span><span class="time">' . t('From') . ' ' . $event_date->format('G:i') . ' ' . t('to') . ' ' . $event_date2->format('G:i') . '</span>';
+    if ($event_date != $event_date2) {
+      return '<span class="date">' . $event_date->format('l, F j, Y') . '</span><span class="time">' . t('From') . ' ' . $event_date->format('G:i') . ' ' . t('to') . ' ' . $event_date2->format('G:i') . '</span>';      
+    }
+    else {
+      return '<span class="date">' . $event_date->format('l, F j, Y') . '</span><span class="time">' . $event_date->format('G:i') . '</span>';
+    }
   } 
 }
 

@@ -58,3 +58,4 @@ function tm_users_preprocess_page(&$variables) {
   // Add account menu to page.
   $variables['page']['account_menu'] = theme('account_menu');
 }
+

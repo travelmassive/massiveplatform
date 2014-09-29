@@ -1,0 +1,23 @@
+Install notes for the Travel Massive (aka "Massive Platform")
+-----------------
+
+Hi Ian,
+For the record, I'm sending over the notes about our dev process:
+
+- we use Phing as a build automation tool. For more information, please see the GH wiki:
+ https://github.com/flipside-org/travelmassive/wiki/Environment#build-automation
+- we use the Features module to store configuration that's in the db into code
+
+In short, our process is:
+- use 'phing reload' or 'phing refresh' to get a clean slate
+- running 'drush fd' to check if all the features are in default state (db and code in sync)
+- make the changes, for example in the fields
+- run 'drush fd', now you should see that one or more features need updating
+- update the particular module, for example: 'drush fu tm_events'. This will sync the code with the state in the db
+- you can push this back to GH
+
+
+Any new module that we install, should be registered in /profiles/tm/tm.info and also in the install hook in /sites/all/modules/custom/tm_base/tm_base.install
+
+best,
+Olaf

@@ -406,3 +406,18 @@ button {
     }
   }
 }
+/* Approval status */
+.approved{
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin: 0 auto;
+  background: url(../images/approved.png) 0 0 no-repeat;
+}
+.notapproved{
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin: 0 auto;
+  background: url(../images/notapproved.png) 0 0 no-repeat;
+}

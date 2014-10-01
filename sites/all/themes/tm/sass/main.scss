@@ -21,6 +21,9 @@
 
 /* Component (SMACSS module) rules */
 @import "components/misc";
+
+@import "compass/css3/user-interface";
+
 // Optionally, add your own components here.
 @import "helpers";
 @import "type";

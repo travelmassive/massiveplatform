@@ -21,7 +21,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Action menu wrapper',
-    'weight' => '4',
+    'weight' => '5',
     'children' => array(
       0 => 'group_action_menu',
     ),
@@ -84,7 +84,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Cities joined',
-    'weight' => '8',
+    'weight' => '9',
     'children' => array(
       0 => 'joined_city_list',
     ),
@@ -107,7 +107,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Followers',
-    'weight' => '7',
+    'weight' => '8',
     'children' => array(
       0 => 'members_following_members',
     ),
@@ -130,7 +130,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'About',
-    'weight' => '6',
+    'weight' => '7',
     'children' => array(
       0 => 'field_about_me',
       1 => 'field_link_facebook',
@@ -160,7 +160,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Events joined',
-    'weight' => '9',
+    'weight' => '10',
     'children' => array(
       0 => 'joined_event_list',
     ),
@@ -316,8 +316,8 @@ function tm_users_field_group_info() {
     'label' => 'Job wrapper',
     'weight' => '3',
     'children' => array(
-      0 => 'field_job_role',
-      1 => 'field_job_organization',
+      0 => 'field_job_organization',
+      1 => 'field_job_role',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(
@@ -377,7 +377,6 @@ function tm_users_field_group_info() {
     'weight' => '21',
     'children' => array(
       0 => 'field_location_city',
-      1 => 'field_country',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(

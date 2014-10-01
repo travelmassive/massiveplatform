@@ -59,3 +59,55 @@ function tm_users_preprocess_page(&$variables) {
   $variables['page']['account_menu'] = theme('account_menu');
 }
 
+/*
+* Implements hook_permission()
+*/
+function tm_users_permission() {
+  return array(
+    'approve users' => array(
+      'title' => t('Approve users'),
+      'description' => t('Approve new users on the website.'),
+    ),
+    'unapprove users' => array(
+      'title' => t('Un-approve users'),
+      'description' => t('Remove approval from users on the website.'),
+    ),
+  );
+}
+/*
+* Implements hook_menu()
+*/
+function tm_users_menu() {
+  $items['user/%user/approve'] = array(
+    'title' => 'Approve user',
+    'page callback' => 'tm_users_approve',
+    'page arguments' => array(1),
+    'access arguments' => array('approve users'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['user/%user/unapprove'] = array(
+    'title' => 'Un-approve user',
+    'page callback' => 'tm_users_unapprove',
+    'page arguments' => array(1),
+    'access arguments' => array('unapprove users'),
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+/* Approval callback */
+function tm_users_approve($user){
+$role_name = 'approved user'; // The name of the role to add.
+  if ($role = user_role_load_by_name($role_name)) {
+    user_multiple_role_edit(array($user->uid), 'add_role', $role->rid);
+  }
+  drupal_goto("user/$user->uid/view");
+}
+/* Un-approval callback */
+function tm_users_unapprove($user){
+  $role_name = 'approved user'; // The name of the role to remove.
+  if ($role = user_role_load_by_name($role_name)) {
+    user_multiple_role_edit(array($user->uid), 'remove_role', $role->rid);
+  }
+  drupal_goto("user/$user->uid/view");
+}

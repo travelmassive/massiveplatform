@@ -112,11 +112,15 @@ function _tm_chapter_sticker_process($field, $title = NULL) {
  */
 function _tm_approved_process($field, $title = NULL) {
   $approval = "notapproved";
+  $approval_text = "Pending Approval";
+  $approval_img = "/sites/all/themes/tm/images/notapproved_icon_16x16.png";
   if (in_array("approved user", $field['entity']->roles)){
     $approval = "approved";
+    $approval_text = "Approved Member";
+    $approval_img = "/sites/all/themes/tm/images/approved_icon_16x16.png";
   }
   // so small it's not really worth a tpl
-  return '<div class="'.$approval.'"></div>';
+  return '<p class="approval"><img src="'.$approval_img.'"><span class="text_'.$approval.'">'.$approval_text.'</span></p>';
 }
 /**
  * Custom function to build the more_actions menu

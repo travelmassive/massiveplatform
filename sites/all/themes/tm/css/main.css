@@ -4637,20 +4637,21 @@ button:hover, button:focus {
   color: #1b2430;
   line-height: 1em;
   margin-top: 0.2em;
+  margin-bottom: 0px;
 }
 
-/* line 416, ../sass/_buttons.scss */
+/* line 417, ../sass/_buttons.scss */
 .approval img {
   margin-bottom: -3px;
   padding-right: 4px;
 }
 
-/* line 420, ../sass/_buttons.scss */
+/* line 421, ../sass/_buttons.scss */
 .text_approved {
   font-size: 0.8em;
 }
 
-/* line 423, ../sass/_buttons.scss */
+/* line 424, ../sass/_buttons.scss */
 .text_notapproved {
   font-size: 0.8em;
 }

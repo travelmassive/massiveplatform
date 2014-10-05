@@ -17,7 +17,7 @@ function tm_users_ds_field_settings_info() {
   $ds_fieldsetting->bundle = 'user';
   $ds_fieldsetting->view_mode = 'default';
   $ds_fieldsetting->settings = array(
-    'joined_city_list' => array(
+    'joined_chapter_list' => array(
       'weight' => '11',
       'label' => 'hidden',
       'format' => 'default',
@@ -513,9 +513,9 @@ function tm_users_ds_layout_settings_info() {
       'second_column' => array(
         13 => 'members_following_members',
         14 => 'group_community_wrapper',
-        16 => 'group_city_list_wrapper',
+        16 => 'group_chapter_list_wrapper',
         17 => 'group_event_list_wrapper',
-        18 => 'joined_city_list',
+        18 => 'joined_chapter_list',
         19 => 'joined_event_list',
       ),
     ),
@@ -536,9 +536,9 @@ function tm_users_ds_layout_settings_info() {
       'members_following_members' => 'second_column',
       'group_community_wrapper' => 'second_column',
       'group_action_menu' => 'header_body',
-      'group_city_list_wrapper' => 'second_column',
+      'group_chapter_list_wrapper' => 'second_column',
       'group_event_list_wrapper' => 'second_column',
-      'joined_city_list' => 'second_column',
+      'joined_chapter_list' => 'second_column',
       'joined_event_list' => 'second_column',
       'field_about_me' => 'first_column',
       'field_segment' => 'first_column',

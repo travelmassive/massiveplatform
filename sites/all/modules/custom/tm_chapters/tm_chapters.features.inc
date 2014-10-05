@@ -35,11 +35,11 @@ function tm_chapters_views_api($module = NULL, $api = NULL) {
 function tm_chapters_node_info() {
   $items = array(
     'chapter' => array(
-      'name' => t('City'),
+      'name' => t('Chapter'),
       'base' => 'node_content',
-      'description' => t('A Travel Massive city'),
+      'description' => t('A Travel Massive chapter'),
       'has_title' => '1',
-      'title_label' => t('City'),
+      'title_label' => t('Chapter'),
       'help' => '',
     ),
   );

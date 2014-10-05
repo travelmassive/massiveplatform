@@ -195,10 +195,10 @@ function tm_users_views_default_views() {
   /* Display: Block - joined events */
   $handler = $view->new_display('block', 'Block - joined events', 'block_joined_events');
 
-  /* Display: Block - joined cities */
-  $handler = $view->new_display('block', 'Block - joined cities', 'block_joined_cities');
+  /* Display: Block - joined chapters */
+  $handler = $view->new_display('block', 'Block - joined chapters', 'block_joined_chapters');
   $handler->display->display_options['defaults']['title'] = FALSE;
-  $handler->display->display_options['title'] = 'Joined cities';
+  $handler->display->display_options['title'] = 'Joined chapters';
   $handler->display->display_options['defaults']['css_class'] = FALSE;
   $handler->display->display_options['css_class'] = 'chapter-list related-list';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;

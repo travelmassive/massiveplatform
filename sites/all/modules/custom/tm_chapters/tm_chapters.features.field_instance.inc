@@ -487,7 +487,7 @@ function tm_chapters_field_default_field_instances() {
     'settings' => array(
       'alt_field' => 0,
       'default_image' => 0,
-      'file_directory' => 'images/cities',
+      'file_directory' => 'images/chapters',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
       'max_resolution' => '',

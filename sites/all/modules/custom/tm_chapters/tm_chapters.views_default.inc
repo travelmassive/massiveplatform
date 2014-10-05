@@ -89,17 +89,17 @@ return in_array(\'administrator\', $user->roles) || in_array(\'moderator\', $use
 
   $view = new view();
   $view->name = 'chapters';
-  $view->description = 'A list with cities';
+  $view->description = 'A list with chapters';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'Cities';
+  $view->human_name = 'Chapters';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'Cities';
+  $handler->display->display_options['title'] = 'Chapters';
   $handler->display->display_options['css_class'] = 'grid';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
@@ -146,9 +146,9 @@ return in_array(\'administrator\', $user->roles) || in_array(\'moderator\', $use
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
-  $handler->display->display_options['path'] = 'cities';
+  $handler->display->display_options['path'] = 'chapters';
   $handler->display->display_options['menu']['type'] = 'normal';
-  $handler->display->display_options['menu']['title'] = 'Cities';
+  $handler->display->display_options['menu']['title'] = 'Chapters';
   $handler->display->display_options['menu']['weight'] = '1';
   $handler->display->display_options['menu']['name'] = 'main-menu';
   $handler->display->display_options['menu']['context'] = 0;

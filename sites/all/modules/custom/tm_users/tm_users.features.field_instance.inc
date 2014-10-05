@@ -175,7 +175,7 @@ function tm_users_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'user',
     'field_name' => 'field_chapter',
-    'label' => 'City (Home Chapter)',
+    'label' => 'Home Chapter',
     'required' => 0,
     'settings' => array(
       'behaviors' => array(
@@ -1188,7 +1188,7 @@ function tm_users_field_default_field_instances() {
   t('Banner');
   t('By picking a custom URL, you make sure that your profile is accesible through a friendly URL. For example: http://travelmassive.com/your-url');
   t('City');
-  t('City (Home Chapter)');
+  t('Home Chapter');
   t('Facebook');
   t('First name');
   t('Friendly URL');

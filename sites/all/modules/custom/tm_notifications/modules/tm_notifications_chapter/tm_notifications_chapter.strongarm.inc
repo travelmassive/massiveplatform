@@ -15,7 +15,7 @@ function tm_notifications_chapter_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'tm_notifications__event_added_member_chapter';
   $strongarm->value = array(
-    'user_label' => 'New event in one of your cities',
+    'user_label' => 'New event in one of your chapters',
     'default_state' => '1',
     'change_allowed' => 1,
     'email' => array(
@@ -35,7 +35,7 @@ The Travel Massive team',
   $strongarm->api_version = 1;
   $strongarm->name = 'tm_notifications__user_chapter_join';
   $strongarm->value = array(
-    'user_label' => 'Confirmation when joining a city',
+    'user_label' => 'Confirmation when joining a chapter',
     'default_state' => '1',
     'change_allowed' => 1,
     'email' => array(
@@ -55,7 +55,7 @@ The Travel Massive team',
   $strongarm->api_version = 1;
   $strongarm->name = 'tm_notifications__user_chapter_unjoin';
   $strongarm->value = array(
-    'user_label' => 'Confirmation when leaving a city',
+    'user_label' => 'Confirmation when leaving a chapter',
     'default_state' => '1',
     'change_allowed' => 1,
     'email' => array(

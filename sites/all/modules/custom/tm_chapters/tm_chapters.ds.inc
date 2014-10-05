@@ -318,7 +318,7 @@ function tm_chapters_ds_custom_fields_info() {
   $ds_field = new stdClass();
   $ds_field->api_version = 1;
   $ds_field->field = 'chapter_avatar';
-  $ds_field->label = 'City avatar';
+  $ds_field->label = 'Chapter avatar';
   $ds_field->field_type = 5;
   $ds_field->entities = array(
     'node' => 'node',
@@ -337,18 +337,18 @@ function tm_chapters_ds_custom_fields_info() {
 
   $ds_field = new stdClass();
   $ds_field->api_version = 1;
-  $ds_field->field = 'joined_city_list';
-  $ds_field->label = 'Joined city list';
+  $ds_field->field = 'joined_chapter_list';
+  $ds_field->label = 'Joined chapter list';
   $ds_field->field_type = 6;
   $ds_field->entities = array(
     'user' => 'user',
   );
   $ds_field->ui_limit = 'user|default';
   $ds_field->properties = array(
-    'block' => 'views|signups-block_joined_cities',
+    'block' => 'views|signups-block_joined_chapters',
     'block_render' => '3',
   );
-  $export['joined_city_list'] = $ds_field;
+  $export['joined_chapter_list'] = $ds_field;
 
   return $export;
 }

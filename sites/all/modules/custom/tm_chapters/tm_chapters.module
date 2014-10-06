@@ -46,16 +46,27 @@ function tm_chapters_node_presave($node){
       user_multiple_role_edit(array($user->uid), 'add_role', $role->rid);
     }
     // should also check $node->original for users being *removed*
-    $original = flatten_chapter_leaders($node->original->field_chapter_leaders[LANGUAGE_NONE]);
-    $new = flatten_chapter_leaders($node->field_chapter_leaders[LANGUAGE_NONE]);
-    $removed = array_diff($original, $new);
-    foreach ($removed as $rem){
-      user_multiple_role_edit(array($rem), 'remove_role', $role->rid);
+    if (isset($node->original->field_chapter_leaders)){
+      $original = flatten_chapter_leaders($node->original->field_chapter_leaders[LANGUAGE_NONE]);
+      $new = flatten_chapter_leaders($node->field_chapter_leaders[LANGUAGE_NONE]);
+      $removed = array_diff($original, $new);
+      foreach ($removed as $rem){
+        // check first that leader is not in other chapters
+          $chapters = db_select('field_data_field_chapter_leaders', 'd')
+          ->fields('d')
+          ->condition('field_chapter_leaders_target_id',$rem,'=')
+          ->condition('deleted',0,'=')
+          ->execute();
+        if ($chapters->rowCount() == 1){
+          user_multiple_role_edit(array($rem), 'remove_role', $role->rid);
+        }
+      }
     }
   }
 }
 // array diff didn't like 2 dimensional arrays
 function flatten_chapter_leaders($array){
+  $newarray = array();
   foreach ($array as $item){
     $newarray[] = $item['target_id'];
   }

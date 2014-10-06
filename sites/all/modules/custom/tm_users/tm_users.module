@@ -111,5 +111,3 @@ function tm_users_unapprove($user){
   }
   drupal_goto("user/$user->uid/view");
 }
-
-/* Bulk operation to approve users */

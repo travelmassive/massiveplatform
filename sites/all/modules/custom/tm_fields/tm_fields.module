@@ -164,38 +164,41 @@ function _tm_more_actions_process($field, $title = NULL) {
   // END Edit link.
 
   // START approve link
-  if (isset($menu_item['page_arguments'][0]->uid)){
-    $uid = $menu_item['page_arguments'][0]->uid;
-    $targetuser = user_load($uid);
-    if (!in_array("approved user", $targetuser->roles)){
-      if (user_access("approve users")){
-        $links['approve'][] = array(
-          'wrapper_class' => array('approve'),
-          'content' => l(t('Approve'), 'user/' . $uid . '/approve', array(
-            'attributes' => array(
-            'title' => t('Approve user')
-            )
-          ))
-        );    
+  //drupal_set_message("<pre>".print_r($menu_item,TRUE)."</pre>");
+  if ($menu_item['path'] == 'user/%'){
+    if (isset($menu_item['page_arguments'][0]->uid)){
+      $uid = $menu_item['page_arguments'][0]->uid;
+      $targetuser = user_load($uid);
+      if (!in_array("approved user", $targetuser->roles)){
+        if (user_access("approve users")){
+          $links['approve'][] = array(
+            'wrapper_class' => array('approve'),
+            'content' => l(t('Approve'), 'user/' . $uid . '/approve', array(
+              'attributes' => array(
+              'title' => t('Approve user')
+              )
+            ))
+          );    
+        }
       }
     }
-  }
-// END approve link
+  // END approve link
 
-// START unapprove link
-  if (isset($menu_item['page_arguments'][0]->uid)){
-    $uid = $menu_item['page_arguments'][0]->uid;
-    $targetuser = user_load($uid);
-    if (in_array("approved user", $targetuser->roles)){
-      if (user_access("unapprove users")){
-        $links['approve'][] = array(
-          'wrapper_class' => array('unapprove'),
-          'content' => l(t('Un-approve'), 'user/' . $uid . '/unapprove', array(
-            'attributes' => array(
-            'title' => t('Un-approve user')
-            )
-          ))
-        );    
+  // START unapprove link
+    if (isset($menu_item['page_arguments'][0]->uid)){
+      $uid = $menu_item['page_arguments'][0]->uid;
+      $targetuser = user_load($uid);
+      if (in_array("approved user", $targetuser->roles)){
+        if (user_access("unapprove users")){
+          $links['approve'][] = array(
+            'wrapper_class' => array('unapprove'),
+            'content' => l(t('Un-approve'), 'user/' . $uid . '/unapprove', array(
+              'attributes' => array(
+              'title' => t('Un-approve user')
+              )
+            ))
+          );    
+        }
       }
     }
   }

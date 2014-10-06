@@ -2832,7 +2832,7 @@ tr.selected td {
 /* line 803, ../sass/components/_misc.scss */
 .progress .filled {
   background-color: #0072b9;
-  background-image: url('../images/progress.gif?1412121636');
+  background-image: url('../images/progress.gif?1406642503');
 }
 
 /* ==========================================================================
@@ -4632,21 +4632,28 @@ button:hover, button:focus {
 
 /* Approval status */
 /* line 410, ../sass/_buttons.scss */
-.approved {
-  display: block;
-  width: 32px;
-  height: 32px;
-  margin: 0 auto;
-  background: url(../images/approved.png) 0 0 no-repeat;
+.approval {
+  text-align: center;
+  color: #1b2430;
+  line-height: 1em;
+  margin-top: 0.2em;
+  margin-bottom: 0px;
 }
 
 /* line 417, ../sass/_buttons.scss */
-.notapproved {
-  display: block;
-  width: 32px;
-  height: 32px;
-  margin: 0 auto;
-  background: url(../images/notapproved.png) 0 0 no-repeat;
+.approval img {
+  margin-bottom: -3px;
+  padding-right: 4px;
+}
+
+/* line 421, ../sass/_buttons.scss */
+.text_approved {
+  font-size: 0.8em;
+}
+
+/* line 424, ../sass/_buttons.scss */
+.text_notapproved {
+  font-size: 0.8em;
 }
 
 /* line 1, ../sass/_forms.scss */
@@ -6363,11 +6370,11 @@ select:disabled {
 
 /* line 231, ../sass/_single.scss */
 .front {
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(33, 48, 64, 0)), color-stop(50%, rgba(33, 48, 64, 0)), color-stop(100%, #213040)), url('../images/../images/layout/home-bg-img-01a.jpg?1412121636');
-  background: -webkit-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1412121636');
-  background: -moz-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1412121636');
-  background: -o-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1412121636');
-  background: linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1412121636');
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(33, 48, 64, 0)), color-stop(50%, rgba(33, 48, 64, 0)), color-stop(100%, #213040)), url('../images/../images/layout/home-bg-img-01a.jpg?1406642503');
+  background: -webkit-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1406642503');
+  background: -moz-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1406642503');
+  background: -o-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1406642503');
+  background: linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1406642503');
   background-repeat: no-repeat, no-repeat;
   background-position: center center, center center;
   -webkit-background-size: 100% 100%, cover;

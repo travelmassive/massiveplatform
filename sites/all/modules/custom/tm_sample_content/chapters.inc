@@ -73,9 +73,13 @@ class TMChapterMigration extends TMBaseMigration {
     $this->addFieldMapping('field_link_linkedin', 'li_link');
     $this->addFieldMapping('field_link_website', 'web_link');
 
+    // Country
+    $this->addFieldMapping('field_country', 'country');
+
     // Geo Field
     //$this->addFieldMapping('field_geomaplocation:lat', 'geolocation_lat');
     //$this->addFieldMapping('field_geomaplocation:lon', 'geolocation_lon');
+
 
    $geo_arguments = array(
     'lat' => array('source_field' => 'lat'),

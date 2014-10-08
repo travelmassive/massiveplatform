@@ -123,7 +123,7 @@ function tm_chapters_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_chapter_color',
-    'label' => 'City color',
+    'label' => 'Chapter color',
     'required' => 1,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -295,7 +295,7 @@ function tm_chapters_field_default_field_instances() {
     'ds_extras_field_template' => 'theme_ds_field_reset',
     'entity_type' => 'node',
     'field_name' => 'field_chapter_shortcode',
-    'label' => 'City shortcode',
+    'label' => 'Chapter shortcode',
     'required' => 1,
     'settings' => array(
       'text_processing' => 0,
@@ -354,7 +354,7 @@ function tm_chapters_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_chapter_timezone',
-    'label' => 'City timezone',
+    'label' => 'Chapter timezone',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -858,9 +858,9 @@ function tm_chapters_field_default_field_instances() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Chapter leaders');
-  t('City color');
-  t('City shortcode');
-  t('City timezone');
+  t('Chapter color');
+  t('Chapter shortcode');
+  t('Chapter timezone');
   t('Country');
   t('Description');
   t('Facebook');

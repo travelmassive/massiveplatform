@@ -7,6 +7,7 @@ project = tm_chapters_map
 dependencies[] = geofield
 dependencies[] = openlayers
 dependencies[] = openlayers_views
+dependencies[] = openlayers_ui
 dependencies[] = views
 dependencies[] = proj4js
 features[ctools][] = openlayers:openlayers_layers:1

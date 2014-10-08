@@ -80,3 +80,4 @@ features[variable][] = tm_base_homepage_description_members
 features[variable][] = tm_base_homepage_title_anon
 features[variable][] = tm_base_homepage_title_members
 project path = sites/all/modules/custom
+scripts[] = tm_base.js

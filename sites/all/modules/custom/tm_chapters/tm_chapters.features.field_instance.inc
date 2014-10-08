@@ -123,7 +123,7 @@ function tm_chapters_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_chapter_color',
-    'label' => 'City color',
+    'label' => 'Chapter color',
     'required' => 1,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -295,7 +295,7 @@ function tm_chapters_field_default_field_instances() {
     'ds_extras_field_template' => 'theme_ds_field_reset',
     'entity_type' => 'node',
     'field_name' => 'field_chapter_shortcode',
-    'label' => 'City shortcode',
+    'label' => 'Chapter shortcode',
     'required' => 1,
     'settings' => array(
       'text_processing' => 0,
@@ -354,7 +354,7 @@ function tm_chapters_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_chapter_timezone',
-    'label' => 'City timezone',
+    'label' => 'Chapter timezone',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -421,6 +421,62 @@ function tm_chapters_field_default_field_instances() {
       'settings' => array(),
       'type' => 'options_select',
       'weight' => 7,
+    ),
+  );
+
+  // Exported field_instance: 'node-chapter-field_geomaplocation'
+  $field_instances['node-chapter-field_geomaplocation'] = array(
+    'bundle' => 'chapter',
+    'default_value' => array(),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'geofield',
+        'settings' => array(
+          'data' => 'full',
+        ),
+        'type' => 'geofield_wkt',
+        'weight' => 11,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_geomaplocation',
+    'label' => 'GeoMapLocation',
+    'required' => FALSE,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'geofield',
+      'settings' => array(),
+      'type' => 'geofield_wkt',
+      'weight' => 10,
     ),
   );
 
@@ -802,12 +858,13 @@ function tm_chapters_field_default_field_instances() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Chapter leaders');
-  t('City color');
-  t('City shortcode');
-  t('City timezone');
+  t('Chapter color');
+  t('Chapter shortcode');
+  t('Chapter timezone');
   t('Country');
   t('Description');
   t('Facebook');
+  t('GeoMapLocation');
   t('Image');
   t('Linkedin');
   t('Please enter a unique 3 letter shortcode for this city.');

@@ -72,6 +72,28 @@ class TMChapterMigration extends TMBaseMigration {
     $this->addFieldMapping('field_link_facebook', 'fb_link');
     $this->addFieldMapping('field_link_linkedin', 'li_link');
     $this->addFieldMapping('field_link_website', 'web_link');
+
+    // Country
+    $this->addFieldMapping('field_country', 'country');
+
+    // Geo Field
+    //$this->addFieldMapping('field_geomaplocation:lat', 'geolocation_lat');
+    //$this->addFieldMapping('field_geomaplocation:lon', 'geolocation_lon');
+
+
+   $geo_arguments = array(
+    'lat' => array('source_field' => 'lat'),
+    'lon' => array('source_field' => 'lon'),
+    'input_format' => array('source_field' => 'geotype_input_format'),
+  );
+
+  $this->addFieldMapping('field_geomaplocation', 'point')->arguments($geo_arguments);
+
+  }
+
+  function prepareRow($row) {
+    $row->geotype_input_format = 'lat/lon';
+    $row->point = 'Point'; //So we can pass the Geometry Type in addFieldMapping
   }
 
   public function complete($entity, $row) {

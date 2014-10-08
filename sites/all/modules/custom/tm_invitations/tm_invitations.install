@@ -1,0 +1,62 @@
+<?php
+
+/*
+ * Implements hook schema
+ */
+
+function tm_invitations_schema(){
+$schema['tm_invitations'] = array(
+    // Example (partial) specification for table "node".
+    'description' => 'Table for invitations.',
+    'fields' => array(
+      'id' => array(
+        'description' => 'The primary identifier for an invitation.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'uid' => array(
+        'description' => 'The user who sent this invitation.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'followed' => array(
+        'description' => 'Have you followed this user.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'email' => array(
+        'description' => 'The email address of the person being invited.',
+        'type' => 'varchar',
+        'length' => 256,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'created' => array(
+        'description' => 'When this invitation was generated.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      // As long as this remains zero then this is an accepted flag
+      'accepted' => array(
+        'description' => 'When this invitation was accepted.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'indexes' => array(
+      'inviter' => array('uid'),
+    ),
+    'unique keys' => array(
+      'id' => array('id'),
+    ),
+    'primary key' => array('id'),
+  );
+  return $schema;
+}

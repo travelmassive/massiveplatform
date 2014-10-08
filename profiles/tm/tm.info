@@ -94,7 +94,11 @@ dependencies[] = tm_search
 dependencies[] = tm_theme
 dependencies[] = tm_users
 dependencies[] = tm_users_external_signin
+<<<<<<< HEAD
 dependencies[] = tm_chapters_map
+=======
+dependencies[] = tm_invitations
+>>>>>>> invitations
 
 
 ; TM - notifications

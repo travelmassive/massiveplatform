@@ -1,0 +1,23 @@
+diff --git a/geofield.inc b/geofield.inc
+index f30ed54..a4090c2 100644
+--- a/geofield.inc
++++ b/geofield.inc
+@@ -31,7 +31,7 @@ class MigrateGeoFieldHandler extends MigrateFieldHandler {
+   public function __construct() {
+     $this->registerTypes(array('geofield'));
+   }
+-
++  
+   public function prepare($entity, array $field_info, array $instance, array $values) {
+     $arguments = array();
+ 
+@@ -44,7 +44,8 @@ class MigrateGeoFieldHandler extends MigrateFieldHandler {
+     // Setup the standard Field API array for saving.
+     $delta = 0;
+     foreach ($values as $value) {
+-      $return[$language][$delta] = array('geo_type' => $value) + array_intersect_key($arguments, $field_info['columns']);
++      $return[$language][$delta]['geom'] = array('geo_type' => $value) + array_intersect_key($arguments, $field_info['columns']);
++      $return[$language][$delta]['input_format'] = $arguments['input_format'];
+       $delta++;
+     }
+ 

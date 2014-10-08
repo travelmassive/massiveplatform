@@ -4630,6 +4630,32 @@ button:hover, button:focus {
   margin-right: 0.5rem;
 }
 
+/* Approval status */
+/* line 410, ../sass/_buttons.scss */
+.approval {
+  text-align: center;
+  color: #1b2430;
+  line-height: 1em;
+  margin-top: 0.2em;
+  margin-bottom: 0px;
+}
+
+/* line 417, ../sass/_buttons.scss */
+.approval img {
+  margin-bottom: -3px;
+  padding-right: 4px;
+}
+
+/* line 421, ../sass/_buttons.scss */
+.text_approved {
+  font-size: 0.8em;
+}
+
+/* line 424, ../sass/_buttons.scss */
+.text_notapproved {
+  font-size: 0.8em;
+}
+
 /* line 1, ../sass/_forms.scss */
 input::-moz-focus-inner {
   border: 0;

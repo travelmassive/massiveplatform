@@ -33,3 +33,42 @@ function _tm_members_chapter($field, $title = NULL) {
   $amount_members = $flag->get_count($field['entity']->nid);
   return $amount_members ? format_plural($amount_members, '1 member.','@members members', array('@members' => $amount_members)) : t('No members yet');
 }
+
+/* 
+ * Alters a node on saving to make sure the leaders have the correct role
+ */
+function tm_chapters_node_presave($node){
+  $role_name = 'chapter leader';
+  if ($role = user_role_load_by_name($role_name)) {
+    foreach ($node->field_chapter_leaders[LANGUAGE_NONE] as $target){
+      $user = user_load($target['target_id']);
+      // make sure all chapter leaders have the right role set
+      user_multiple_role_edit(array($user->uid), 'add_role', $role->rid);
+    }
+    // should also check $node->original for users being *removed*
+    if (isset($node->original->field_chapter_leaders)){
+      $original = flatten_chapter_leaders($node->original->field_chapter_leaders[LANGUAGE_NONE]);
+      $new = flatten_chapter_leaders($node->field_chapter_leaders[LANGUAGE_NONE]);
+      $removed = array_diff($original, $new);
+      foreach ($removed as $rem){
+        // check first that leader is not in other chapters
+          $chapters = db_select('field_data_field_chapter_leaders', 'd')
+          ->fields('d')
+          ->condition('field_chapter_leaders_target_id',$rem,'=')
+          ->condition('deleted',0,'=')
+          ->execute();
+        if ($chapters->rowCount() == 1){
+          user_multiple_role_edit(array($rem), 'remove_role', $role->rid);
+        }
+      }
+    }
+  }
+}
+// array diff didn't like 2 dimensional arrays
+function flatten_chapter_leaders($array){
+  $newarray = array();
+  foreach ($array as $item){
+    $newarray[] = $item['target_id'];
+  }
+  return $newarray;
+}

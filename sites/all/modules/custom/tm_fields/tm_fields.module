@@ -23,7 +23,14 @@ function tm_fields_ds_fields_info($entity_type) {
     'ui_limit' => array('event|*', 'user|*'),
     'function' => '_tm_chapter_sticker_process'
   );
-  
+
+  $fields['tm_ds_approved'] = array(
+    'title' => t('Approval status'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('user|*'),
+    'function' => '_tm_approved_process'
+  );
+
   $fields['tm_ds_more_actions'] = array(
     'title' => t('More actions'),
     'field_type' => DS_FIELD_TYPE_FUNCTION,
@@ -101,6 +108,21 @@ function _tm_chapter_sticker_process($field, $title = NULL) {
   }
 }
 /**
+ * Custom function to build the approved status
+ */
+function _tm_approved_process($field, $title = NULL) {
+  $approval = "notapproved";
+  $approval_text = "Pending Approval";
+  $approval_img = "/sites/all/themes/tm/images/notapproved_icon_16x16.png";
+  if (in_array("approved user", $field['entity']->roles)){
+    $approval = "approved";
+    $approval_text = "Approved Member";
+    $approval_img = "/sites/all/themes/tm/images/approved_icon_16x16.png";
+  }
+  // so small it's not really worth a tpl
+  return '<p class="approval"><img src="'.$approval_img.'"><span class="text_'.$approval.'">'.$approval_text.'</span></p>';
+}
+/**
  * Custom function to build the more_actions menu
  */
 function _tm_more_actions_process($field, $title = NULL) {
@@ -144,6 +166,47 @@ function _tm_more_actions_process($field, $title = NULL) {
     }
   }
   // END Edit link.
+
+  // START approve link
+  //drupal_set_message("<pre>".print_r($menu_item,TRUE)."</pre>");
+  if ($menu_item['path'] == 'user/%'){
+    if (isset($menu_item['page_arguments'][0]->uid)){
+      $uid = $menu_item['page_arguments'][0]->uid;
+      $targetuser = user_load($uid);
+      if (!in_array("approved user", $targetuser->roles)){
+        if (user_access("approve users")){
+          $links['approve'][] = array(
+            'wrapper_class' => array('approve'),
+            'content' => l(t('Approve'), 'user/' . $uid . '/approve', array(
+              'attributes' => array(
+              'title' => t('Approve user')
+              )
+            ))
+          );    
+        }
+      }
+    }
+  // END approve link
+
+  // START unapprove link
+    if (isset($menu_item['page_arguments'][0]->uid)){
+      $uid = $menu_item['page_arguments'][0]->uid;
+      $targetuser = user_load($uid);
+      if (in_array("approved user", $targetuser->roles)){
+        if (user_access("unapprove users")){
+          $links['approve'][] = array(
+            'wrapper_class' => array('unapprove'),
+            'content' => l(t('Un-approve'), 'user/' . $uid . '/unapprove', array(
+              'attributes' => array(
+              'title' => t('Un-approve user')
+              )
+            ))
+          );    
+        }
+      }
+    }
+  }
+  // END unapprove link
 
   // START Add event Link
   // The 'Add event' link should be available to the leaders of the city, moderators and admins.

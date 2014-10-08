@@ -406,3 +406,21 @@ button {
     }
   }
 }
+/* Approval status */
+.approval {
+  text-align: center;
+  color: #1b2430;
+  line-height: 1em; 
+  margin-top: 0.2em;
+  margin-bottom: 0px;
+}
+.approval img {
+  margin-bottom: -3px; 
+  padding-right: 4px;
+}
+.text_approved {
+  font-size: 0.8em;
+}
+.text_notapproved {
+  font-size: 0.8em;
+}

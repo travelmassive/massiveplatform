@@ -63,6 +63,7 @@ dependencies[] = nodeaccess_userreference
 dependencies[] = queue_mail
 dependencies[] = tzfield
 dependencies[] = ultimate_cron
+dependencies[] = role_watchdog
 
 
 ; TM - development

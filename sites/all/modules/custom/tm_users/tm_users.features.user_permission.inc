@@ -22,6 +22,17 @@ function tm_users_user_default_permissions() {
     'module' => 'user',
   );
 
+  // Exported permission: 'approve users'.
+  $permissions['approve users'] = array(
+    'name' => 'approve users',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'chapter leader' => 'chapter leader',
+      'moderator' => 'moderator',
+    ),
+    'module' => 'tm_users',
+  );
+
   // Exported permission: 'flag follow_members'.
   $permissions['flag follow_members'] = array(
     'name' => 'flag follow_members',
@@ -30,6 +41,16 @@ function tm_users_user_default_permissions() {
       'authenticated user' => 'authenticated user',
     ),
     'module' => 'flag',
+  );
+
+  // Exported permission: 'unapprove users'.
+  $permissions['unapprove users'] = array(
+    'name' => 'unapprove users',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'moderator' => 'moderator',
+    ),
+    'module' => 'tm_users',
   );
 
   // Exported permission: 'unflag follow_members'.

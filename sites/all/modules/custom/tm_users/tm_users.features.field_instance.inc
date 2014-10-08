@@ -1188,10 +1188,10 @@ function tm_users_field_default_field_instances() {
   t('Banner');
   t('By picking a custom URL, you make sure that your profile is accesible through a friendly URL. For example: http://travelmassive.com/your-url');
   t('City');
-  t('Home Chapter');
   t('Facebook');
   t('First name');
   t('Friendly URL');
+  t('Home Chapter');
   t('Last name');
   t('Linkedin');
   t('Organization');

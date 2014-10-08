@@ -22,7 +22,6 @@ dependencies[] = text
 dependencies[] = tm_base
 dependencies[] = tm_fields
 dependencies[] = tm_organizations
-dependencies[] = tm_users
 dependencies[] = user
 dependencies[] = views
 features[context][] = community_page

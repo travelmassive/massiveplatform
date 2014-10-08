@@ -8,6 +8,7 @@ dependencies[] = geofield
 dependencies[] = openlayers
 dependencies[] = openlayers_views
 dependencies[] = views
+dependencies[] = proj4js
 features[ctools][] = openlayers:openlayers_layers:1
 features[ctools][] = openlayers:openlayers_maps:1
 features[ctools][] = views:views_default:3.0

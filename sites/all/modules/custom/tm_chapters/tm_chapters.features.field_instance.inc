@@ -424,6 +424,62 @@ function tm_chapters_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-chapter-field_geomaplocation'
+  $field_instances['node-chapter-field_geomaplocation'] = array(
+    'bundle' => 'chapter',
+    'default_value' => array(),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'geofield',
+        'settings' => array(
+          'data' => 'full',
+        ),
+        'type' => 'geofield_wkt',
+        'weight' => 11,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_geomaplocation',
+    'label' => 'GeoMapLocation',
+    'required' => FALSE,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'geofield',
+      'settings' => array(),
+      'type' => 'geofield_wkt',
+      'weight' => 10,
+    ),
+  );
+
   // Exported field_instance: 'node-chapter-field_image'
   $field_instances['node-chapter-field_image'] = array(
     'bundle' => 'chapter',
@@ -808,6 +864,7 @@ function tm_chapters_field_default_field_instances() {
   t('Country');
   t('Description');
   t('Facebook');
+  t('GeoMapLocation');
   t('Image');
   t('Linkedin');
   t('Please enter a unique 3 letter shortcode for this city.');

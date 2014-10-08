@@ -1,0 +1,6 @@
+name = TM Invitations
+description = Travel Massive invitations
+core = 7.x
+package = TM Invitations
+version = 7.x-1.0-dev
+project = tm_invitations

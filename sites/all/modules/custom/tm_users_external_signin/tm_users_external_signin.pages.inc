@@ -166,8 +166,23 @@ function tm_users_external_signin_register_form($form, &$form_state) {
   
   // Temp:
   // TODO: Set a proper message (Maybe description field)
-  drupal_set_message('Twitter doesn\'t provide an email. Please provide one.', 'status', FALSE);
-  
+  //drupal_set_message('Twitter doesn\'t provide an email. Please provide one.', 'status', FALSE);
+  drupal_set_message('We just need a few more details to create your account.', 'status', FALSE);
+
+  $form['field_user_first_name'] = array(
+        '#title' => 'First Name',
+        '#description' => 'Please provide your given name. This field will be public.',
+        '#type' => 'textfield',
+        '#required' => TRUE,
+    );
+
+  $form['field_user_last_name'] = array(
+        '#title' => 'Last Name',
+        '#description' => 'Please provide your last name. This field will be public.',
+        '#type' => 'textfield',
+        '#required' => TRUE,
+    );
+
   $form['name'] = array(
     '#type' => 'textfield',
     '#default_value' => $twitter_account['screen_name'],
@@ -181,7 +196,8 @@ function tm_users_external_signin_register_form($form, &$form_state) {
     '#title' => 'Email address',
     '#size' => '30',
     '#required' => TRUE,
-    '#attributes' =>array('placeholder' => t('E-mail address'))
+    '#attributes' =>array('placeholder' => t('E-mail address')),
+    '#description' => '&nbsp;'
   );
   
   $form['submit'] = array(
@@ -210,15 +226,23 @@ function tm_users_external_signin_register_form_validate($form, &$form_state) {
  * magic.
  */
 function tm_users_external_signin_register_form_submit($form, &$form_state) {
+  // First name:
+  $field_user_first_name = $form_state['values']['field_user_first_name'];
+  // Last name:
+  $field_user_last_name = $form_state['values']['field_user_last_name'];
   // User name:
   $name = $form_state['values']['name'];
   // User email:
   $email = $form_state['values']['mail'];
   // User password (generated):
-  $pwd = user_password(8);
+  $pwd = user_password(50);
   
   // Reset the form_state for the user_reguster form.
   $form_state_user = array();
+  $form_state_user['values']['group_user_account'] = array();
+  // thankyou https://www.drupal.org/node/1514312
+  $form_state_user['values']['field_user_first_name']['und'][0]['value'] = $field_user_first_name;
+  $form_state_user['values']['field_user_last_name']['und'][0]['value'] = $field_user_last_name;
   $form_state_user['values']['name'] = $name;
   $form_state_user['values']['mail'] = $email;
   $form_state_user['values']['pass']['pass1'] = $pwd;

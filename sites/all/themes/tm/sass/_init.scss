@@ -105,6 +105,8 @@ $tabs-border: #bbb;
 @import "compass/utilities/sprites";
 // Use one CSS3 mixin instead of multiple vendor prefixes.
 @import "compass/css3";
+// IC - add this for user-select mixin
+@import "compass/css3/user-interface";
 // Helps set up a vertical rhythm.
 @import "compass/typography/vertical_rhythm";
 // Add the Zen Grids responsive layout mixins.

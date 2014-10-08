@@ -12,6 +12,8 @@ button {
   border-radius: $global-radius;
   font-weight: $body-font-bold;
   text-align: center;
+  @import "compass/css3";
+  @import "compass/css3/user-interface";
   @include user-select(none);
   cursor: pointer;
   white-space: nowrap;

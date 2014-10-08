@@ -89,6 +89,8 @@ dependencies[] = tm_search
 dependencies[] = tm_theme
 dependencies[] = tm_users
 dependencies[] = tm_users_external_signin
+dependencies[] = tm_invitations
+
 
 ; TM - notifications
 dependencies[] = tm_notifications

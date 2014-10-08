@@ -9,10 +9,11 @@
 function tm_invitations_menu(){
 
   $items['invite'] = array(
-    'title' => t('Invite users'),
+    'title' => t('Invite Members'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('tm_invitations_invite_form'),
     'access arguments' => array('access content'),
+    'class' => 'invite-header',
     'type' => MENU_CALLBACK,
   );
   return $items;
@@ -28,12 +29,13 @@ function tm_invitations_invite_form($form, &$form_state) {
 
   $form['invitations'] = array(
     '#type' =>'textarea',
-    '#rows' => 10,
-    '#description' =>t('Enter up to ten email addresses, one per line.'),
+    '#rows' => 5,
+    '#description' =>t('Enter up to ten email addresses, one per line, and we\'ll send them an invitation from you.'),
     );
   $form['submit_button'] = array(
     '#type' => 'submit',
-    '#value' => t('Invite'),
+    '#value' => t('Send Invitations'),
+    '#id' => 'edit-submit'  
   );
   return $form;
 }
@@ -43,7 +45,7 @@ function tm_invitations_invite_form($form, &$form_state) {
  * valid email addresses from users that don't have an account
  */
 function tm_invitations_invite_form_validate($form, &$form_state) {
-  $email_list = trim($form_state['values']['invitations']);
+  $email_list = trim(str_replace(",", "", $form_state['values']['invitations'])); // remove ,
   $emails = explode("\n",$email_list);
   foreach($emails as $email){
     if (!valid_email_address(trim($email))){
@@ -164,7 +166,7 @@ function tm_invitations_send_email($email, $user){
     $message['body'] = array();
     $message['body'][] = "Hi,";
     $message['body'][] = "I want to invite you to be a part of Travel Massive.";
-    $message['body'][] = "Join the community and connect with me by visiting http://www.travelmassive.com/sign-up";
+    $message['body'][] = "Join the community and connect with me by visiting http://" . $_SERVER["SERVER_NAME"] . "/sign-up";
     $message['body'][] = "Regards,";
     $message['body'][] = $name;
 

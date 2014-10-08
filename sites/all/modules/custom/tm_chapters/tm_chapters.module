@@ -39,6 +39,10 @@ function _tm_members_chapter($field, $title = NULL) {
  */
 function tm_chapters_node_presave($node){
   $role_name = 'chapter leader';
+  
+  // make sure we are working on a chapter node
+  if ($node->type != "chapter") { return; }
+
   if ($role = user_role_load_by_name($role_name)) {
     foreach ($node->field_chapter_leaders[LANGUAGE_NONE] as $target){
       $user = user_load($target['target_id']);

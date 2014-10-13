@@ -376,6 +376,7 @@ function tm_users_field_group_info() {
     'weight' => '21',
     'children' => array(
       0 => 'field_location_city',
+      1 => 'field_location_country',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(

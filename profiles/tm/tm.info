@@ -68,7 +68,7 @@ dependencies[] = geophp
 dependencies[] = geofield
 dependencies[] = openlayers
 dependencies[] = migrate_extras
-
+dependencies[] = email_registration
 
 ; TM - development
 dependencies[] = admin_menu

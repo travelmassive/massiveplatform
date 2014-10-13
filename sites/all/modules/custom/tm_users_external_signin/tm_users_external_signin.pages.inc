@@ -183,13 +183,14 @@ function tm_users_external_signin_register_form($form, &$form_state) {
         '#required' => TRUE,
     );
 
-  $form['name'] = array(
+  /* Now using Email Registration module, so hide the username field
+    $form['name'] = array(
     '#type' => 'textfield',
     '#default_value' => $twitter_account['screen_name'],
     '#title' => 'Username',
     '#size' => '30',
     '#required' => TRUE
-  );  
+  );*/
   
   $form['mail'] = array(
     '#type' => 'textfield',
@@ -231,7 +232,7 @@ function tm_users_external_signin_register_form_submit($form, &$form_state) {
   // Last name:
   $field_user_last_name = $form_state['values']['field_user_last_name'];
   // User name:
-  $name = $form_state['values']['name'];
+  // $name = $form_state['values']['name'];
   // User email:
   $email = $form_state['values']['mail'];
   // User password (generated):
@@ -243,7 +244,7 @@ function tm_users_external_signin_register_form_submit($form, &$form_state) {
   // thankyou https://www.drupal.org/node/1514312
   $form_state_user['values']['field_user_first_name']['und'][0]['value'] = $field_user_first_name;
   $form_state_user['values']['field_user_last_name']['und'][0]['value'] = $field_user_last_name;
-  $form_state_user['values']['name'] = $name;
+  //$form_state_user['values']['name'] = $name;
   $form_state_user['values']['mail'] = $email;
   $form_state_user['values']['pass']['pass1'] = $pwd;
   $form_state_user['values']['pass']['pass2'] = $pwd;

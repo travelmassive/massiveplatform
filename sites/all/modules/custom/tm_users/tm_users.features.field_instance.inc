@@ -230,6 +230,7 @@ function tm_users_field_default_field_instances() {
         'weight' => 12,
       ),
     ),
+    'ds_extras_field_template' => '',
     'entity_type' => 'user',
     'field_name' => 'field_friendly_url',
     'label' => 'Friendly URL',
@@ -759,7 +760,7 @@ function tm_users_field_default_field_instances() {
   // Exported field_instance: 'user-user-field_segment'
   $field_instances['user-user-field_segment'] = array(
     'bundle' => 'user',
-    'default_value' => NULL,
+    'default_value' => array(),
     'deleted' => 0,
     'description' => 'Please select the industry segment that best applies to you.',
     'display' => array(
@@ -800,9 +801,9 @@ function tm_users_field_default_field_instances() {
     ),
     'widget' => array(
       'active' => 1,
-      'module' => 'hs_taxonomy',
+      'module' => 'options',
       'settings' => array(),
-      'type' => 'taxonomy_hs',
+      'type' => 'options_select',
       'weight' => 43,
     ),
   );

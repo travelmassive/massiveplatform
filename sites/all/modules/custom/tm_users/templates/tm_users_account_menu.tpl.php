@@ -51,6 +51,15 @@ $image = theme('image_style', array(
       <li><?php print l(t('Account settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-account-options')); ?></li>
       <li><?php print l(t('Notification settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-notifications-options')); ?></li>
       <li><?php print l(t('Invite members'), 'invite'); ?></li>
+<?php
+$twitter_data = tm_twitter_account_load($loaded->uid);
+if (!$twitter_data) { 
+?>
+      <li><?php print l(t('Connect Account With Twitter'), 'tm_twitter/oauth'); ?></li>
+<?php
+} // end if
+?>
+   
     </ul>
     <ul class="dropd-menu">
       <li><?php print l(t('Sign out'), 'user/logout'); ?></li>

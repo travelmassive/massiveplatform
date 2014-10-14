@@ -467,6 +467,7 @@ function tm_users_field_group_info() {
       0 => 'group_user_account',
       1 => 'group_user_notifications',
       2 => 'group_user_profile',
+      3 => 'group_user_twitter_settings',
     ),
     'format_type' => 'htabs',
     'format_settings' => array(
@@ -506,6 +507,7 @@ function tm_users_field_group_info() {
     ),
   );
   $export['group_user_notifications|user|user|form'] = $field_group;
+
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */

@@ -167,3 +167,53 @@ function tm_twitter_account_load($uid) {
 function tm_twitter_account_delete($uid) {
   return db_delete('tm_twitter_account')->condition('uid', $uid)->execute();
 }
+
+/**
+ * Implements hook_field_extra_fields()
+ * Add a new field to the user form that contain the notifications.
+ * The actual form element will be created in the form_alter hook
+ */
+/*function tm_users_external_signin_field_extra_fields() {
+  $return['user']['user']  = array(
+    'form' => array(
+      'tm_twitter_settings' => array(
+        'label' => t('Twitter'),
+        'description' => t('User Twitter settings.'),
+        'weight' => 80,
+      ),
+    )
+  );
+
+  return $return;
+}*/
+
+/**
+ * Implements hook_form_FORM_ID_alter()
+ */
+function tm_users_external_signin_form_user_profile_form_alter(&$form, &$form_state) {
+  $account = $form['#user'];
+
+  $twitter_data = tm_twitter_account_load($account->uid);
+  $output = '';
+  
+  if ($twitter_data) {
+    //$output .= 'Your account is linked with twitter.</br>';
+    $output .= 'Your account is linked with @' .  $twitter_data["screen_name"] . '<br>';
+    $output .= 'Click here to ' . l('unlink your account', 'user/' . $account->uid . '/edit/tm_twitter');
+  }
+  else {
+    //$output .= 'Your account is not linked with twitter.</br>';
+    $output .= 'Click here to ' . l('link your account', 'tm_twitter/oauth');
+  }
+  
+  $form['tm_twitter_settings'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Sign in with Twitter'),
+    '#description' => t('Login with your Twitter account for faster sign in.'),
+    '#attributes' => array(
+      'class' => array('field-group-fieldset')
+    ),
+    '#suffix' => $output . "<br><br>",
+  );
+
+}

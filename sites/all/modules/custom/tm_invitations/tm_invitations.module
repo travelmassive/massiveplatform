@@ -82,7 +82,11 @@ function tm_invitations_invite_form_submit($form, &$form_state) {
     ))
     ->execute();
   } 
-  drupal_set_message(t("You have successfully sent $count invitations!"));
+  if ($count == 1) {
+      drupal_set_message(t("Thanks for spreading the word! Your invitation has been sent."));
+  } else {
+      drupal_set_message(t("Thanks for spreading the word! You've sent $count invitations!"));
+  }
   drupal_goto("user/$user->uid/view");
 }
 
@@ -166,7 +170,7 @@ function tm_invitations_send_email($email, $user){
     $message['body'] = array();
     $message['body'][] = "Hi,";
     $message['body'][] = "I want to invite you to be a part of Travel Massive.";
-    $message['body'][] = "Join the community and connect with me by visiting http://" . $_SERVER["SERVER_NAME"] . "/sign-up";
+    $message['body'][] = "Join the community and connect with me by visiting http://" . $_SERVER["SERVER_NAME"] . "/user/register";
     $message['body'][] = "Regards,";
     $message['body'][] = $name;
 

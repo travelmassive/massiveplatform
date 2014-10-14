@@ -39,7 +39,7 @@ function tm_users_external_signin_menu() {
   
   // Register page prompting data not provided by twitter.
   $items['tm_twitter/register'] = array(
-    'title' => 'Twitter Register',
+    'title' => 'Great, almost there!',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('tm_users_external_signin_register_form'),
     'access callback' => TRUE,
@@ -209,7 +209,7 @@ function tm_users_external_signin_form_user_profile_form_alter(&$form, &$form_st
   $form['tm_twitter_settings'] = array(
     '#type' => 'fieldset',
     '#title' => t('Sign in with Twitter'),
-    '#description' => t('Login with your Twitter account for faster sign in.'),
+    '#description' => t('Login with your Twitter account for easy sign in.<br>'),
     '#attributes' => array(
       'class' => array('field-group-fieldset')
     ),

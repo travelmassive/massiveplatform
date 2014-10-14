@@ -55,7 +55,7 @@ $image = theme('image_style', array(
 $twitter_data = tm_twitter_account_load($loaded->uid);
 if (!$twitter_data) { 
 ?>
-      <li><?php print l(t('Connect Account With Twitter'), 'tm_twitter/oauth'); ?></li>
+      <li><?php print l(t('Connect with Twitter'), 'tm_twitter/oauth'); ?></li>
 <?php
 } // end if
 ?>

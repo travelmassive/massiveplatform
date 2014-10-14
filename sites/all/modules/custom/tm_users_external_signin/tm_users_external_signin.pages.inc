@@ -45,7 +45,7 @@ function tm_users_external_signin_oauth_callback() {
   }
   
   // Check is all the needed variables are present.
-  if (isset($twitter_oauth['token'])) {
+  if (isset($twitter_oauth['token']) && isset($_GET['oauth_token']) && isset($_GET['oauth_verifier'])) {
     $token = $twitter_oauth['token'];
     $response_oauth_token = $_GET['oauth_token'];
     $response_oauth_verifier = $_GET['oauth_verifier'];
@@ -132,10 +132,10 @@ function tm_users_external_signin_oauth_callback() {
         // sync any user data from twitter (profile pic, etc)
         tm_users_save_twitter_data_to_user($user->uid, $twitter_account);
 
-        drupal_set_message(t('Account successfully linked.'));
+        drupal_set_message(t('Account successfully linked. You can now sign in with Twitter.'));
       }
       
-      drupal_goto('user/' . $user->uid . '/edit/tm_twitter');
+      drupal_goto('user/' . $user->uid . '/edit');
       
     }
     else {
@@ -171,7 +171,7 @@ function tm_users_external_signin_register_form($form, &$form_state) {
   // Temp:
   // TODO: Set a proper message (Maybe description field)
   //drupal_set_message('Twitter doesn\'t provide an email. Please provide one.', 'status', FALSE);
-  drupal_set_message('We just need a few more details to create your account.', 'status', FALSE);
+  //drupal_set_message('We just need a few more details to create your account.', 'status', FALSE);
 
   $form['field_user_first_name'] = array(
         '#title' => 'First Name',
@@ -389,7 +389,7 @@ function tm_users_external_signin_manage_account($account) {
     $output .= drupal_render($form);
   }
   else {
-    $output .= 'Your account is not linked with twitter.</br>';
+    $output .= 'Your account is not linked with Twitter.</br>';
     $output .= 'Click here to ' . l('link your account', 'tm_twitter/oauth');
   }
 
@@ -406,7 +406,7 @@ function tm_users_external_signin_manage_account_unlink_form($form, &$form_state
   );
   // Temp.
   $form['description'] = array(
-    '#markup' => t('This account is linked with twitter user %uname<br/>', array('%uname' => '@' . $twitter_account['screen_name']))
+    '#markup' => t('Please confirm you want to unlink your Twitter account %uname<br/>Next time you sign in you\'ll need to use your email address and password.<br><br>', array('%uname' => '@' . $twitter_account['screen_name']))
   );
   
   $form['submit'] = array(

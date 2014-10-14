@@ -135,7 +135,7 @@ function tm_users_external_signin_oauth_callback() {
         drupal_set_message(t('Account successfully linked. You can now sign in with Twitter.'));
       }
       
-      drupal_goto('user/' . $user->uid . '/edit');
+      drupal_goto('user'); // . $user->uid . '/edit');
       
     }
     else {

@@ -139,7 +139,7 @@ function tm_chapters_send_email($email, $subject, $body, $user){
     $key = 'key';
     $language = language_default();
     $params = array();
-    $from = NULL;
+    $from = $user->mail;
     $send = FALSE;
     $message = drupal_mail($module, $key, $email, $language, $params, $from, $send);
     // prepend something to this subject if you want to 

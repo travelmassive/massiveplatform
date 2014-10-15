@@ -49,11 +49,14 @@ function tm_users_strongarm() {
         'tm_notifications' => array(
           'weight' => '50',
         ),
+        'tm_twitter_settings' => array(
+          'weight' => '80',
+        ),
       ),
       'display' => array(
         'masquerade' => array(
           'default' => array(
-            'weight' => '12',
+            'weight' => '14',
             'visible' => FALSE,
           ),
           'grid' => array(
@@ -71,7 +74,7 @@ function tm_users_strongarm() {
         ),
         'summary' => array(
           'default' => array(
-            'weight' => '11',
+            'weight' => '13',
             'visible' => FALSE,
           ),
           'grid' => array(
@@ -170,7 +173,7 @@ function tm_users_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'logintoboggan_redirect_on_register';
-  $strongarm->value = 'user/%uid/edit';
+  $strongarm->value = 'user/%uid/edit#user-profile-options';
   $export['logintoboggan_redirect_on_register'] = $strongarm;
 
   $strongarm = new stdClass();

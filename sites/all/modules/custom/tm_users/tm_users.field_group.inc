@@ -21,7 +21,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Action menu wrapper',
-    'weight' => '4',
+    'weight' => '5',
     'children' => array(
       0 => 'group_action_menu',
     ),
@@ -107,7 +107,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Followers',
-    'weight' => '7',
+    'weight' => '8',
     'children' => array(
       0 => 'members_following_members',
     ),
@@ -130,7 +130,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'About',
-    'weight' => '6',
+    'weight' => '7',
     'children' => array(
       0 => 'field_about_me',
       1 => 'field_link_facebook',
@@ -160,7 +160,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Events joined',
-    'weight' => '9',
+    'weight' => '10',
     'children' => array(
       0 => 'joined_event_list',
     ),
@@ -189,11 +189,10 @@ function tm_users_field_group_info() {
       1 => 'field_avatar',
       2 => 'field_chapter',
       3 => 'field_image',
-      4 => 'field_location_city',
-      5 => 'field_segment',
-      6 => 'field_job_role',
-      7 => 'field_job_organization',
-      8 => 'field_country',
+      4 => 'field_job_organization',
+      5 => 'field_job_role',
+      6 => 'field_location_city',
+      7 => 'field_segment',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -316,8 +315,8 @@ function tm_users_field_group_info() {
     'label' => 'Job wrapper',
     'weight' => '3',
     'children' => array(
-      0 => 'field_job_role',
-      1 => 'field_job_organization',
+      0 => 'field_job_organization',
+      1 => 'field_job_role',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(
@@ -377,7 +376,7 @@ function tm_users_field_group_info() {
     'weight' => '21',
     'children' => array(
       0 => 'field_location_city',
-      1 => 'field_country',
+      1 => 'field_location_country',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(
@@ -468,6 +467,7 @@ function tm_users_field_group_info() {
       0 => 'group_user_account',
       1 => 'group_user_notifications',
       2 => 'group_user_profile',
+      3 => 'group_user_twitter_settings',
     ),
     'format_type' => 'htabs',
     'format_settings' => array(
@@ -507,6 +507,35 @@ function tm_users_field_group_info() {
     ),
   );
   $export['group_user_notifications|user|user|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_user_twitter_settings|user|user|form';
+  $field_group->group_name = 'group_user_twitter_settings';
+  $field_group->entity_type = 'user';
+  $field_group->bundle = 'user';
+  $field_group->mode = 'form';
+  $field_group->parent_name = 'group_user_edit';
+  $field_group->data = array(
+    'label' => 'Twitter',
+    'weight' => '36',
+    'children' => array(
+      0 => 'tm_twitter_settings',
+    ),
+    'format_type' => 'htab',
+    'format_settings' => array(
+      'label' => 'Twitter',
+      'instance_settings' => array(
+        'required_fields' => 1,
+        'id' => 'user-twitter-options',
+        'classes' => '',
+        'description' => '',
+      ),
+      'formatter' => 'closed',
+    ),
+  );
+  $export['group_user_twitter_settings|user|user|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */

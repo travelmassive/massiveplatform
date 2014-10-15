@@ -11,7 +11,7 @@ include_once 'tm_users.features.inc';
  */
 function tm_users_form_user_login_block_alter(&$form, &$form_state) {
   // Replace labels for placeholder on the input element
-  $form['name']['#attributes'] = array('placeholder' => t('Username'));
+  $form['name']['#attributes'] = array('placeholder' => t('Email'));
   $form['pass']['#attributes'] = array('placeholder' => t('Password'));
 
   // Remove links and keep only the one to reset the password.
@@ -26,7 +26,7 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state) {
   // Add an indication of the username, in case users are not allowed to edit 
   // their usernames.
   if (!user_access('change own username')) {
-    $form['account']['name']['#access'] = TRUE;
+    $form['account']['name']['#access'] = FALSE;
     $form['account']['name']['#disabled'] = TRUE;
     $form['account']['name']['#required'] = FALSE;
     unset($form['account']['name']['#description']);
@@ -58,4 +58,93 @@ function tm_users_preprocess_page(&$variables) {
   // Add account menu to page.
   $variables['page']['account_menu'] = theme('account_menu');
 }
+
+/*
+* Implements hook_permission()
+*/
+function tm_users_permission() {
+  return array(
+    'approve users' => array(
+      'title' => t('Approve users'),
+      'description' => t('Approve new users on the website.'),
+    ),
+    'unapprove users' => array(
+      'title' => t('Un-approve users'),
+      'description' => t('Remove approval from users on the website.'),
+    ),
+  );
+}
+/*
+* Implements hook_menu()
+*/
+function tm_users_menu() {
+  $items['user/%user/approve'] = array(
+    'title' => 'Approve user',
+    'page callback' => 'tm_users_approve',
+    'page arguments' => array(1),
+    'access arguments' => array('approve users'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['user/%user/unapprove'] = array(
+    'title' => 'Un-approve user',
+    'page callback' => 'tm_users_unapprove',
+    'page arguments' => array(1),
+    'access arguments' => array('unapprove users'),
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+/* Approval callback */
+function tm_users_approve($user){
+$role_name = 'approved user'; // The name of the role to add.
+  if ($role = user_role_load_by_name($role_name)) {
+    user_multiple_role_edit(array($user->uid), 'add_role', $role->rid);
+  }
+  drupal_goto("user/$user->uid/view");
+}
+
+/* Un-approval callback */
+function tm_users_unapprove($user){
+  $role_name = 'approved user'; // The name of the role to remove.
+  if ($role = user_role_load_by_name($role_name)) {
+    user_multiple_role_edit(array($user->uid), 'remove_role', $role->rid);
+  }
+  drupal_goto("user/$user->uid/view");
+}
+
+/* Using Email Registration Form we automatically set the users email address */
+/* https://www.drupal.org/project/email_registration */
+function tm_users_email_registration_name($edit, $account) {
+  // Your hook implementation should ensure that the resulting string
+  // works as a username. You can use email_registration_cleanup_username($name)
+  // to clean up the name.
+  //return email_registration_cleanup_username('u' . $account->uid);
+
+  // Make username from first and last name and a digit
+  print_r($account);
+  $first_name = $account->field_user_first_name['und'][0]['value'];
+  $last_name = $account->field_user_last_name['und'][0]['value'];
+  $username = email_registration_cleanup_username($first_name . $last_name); 
+
+  // check if username exists
+  if (!db_query("SELECT COUNT(*) FROM {users} WHERE name = :name;", array(':name' => $username))->fetchField()) {
+    return $username;
+  }
+
+  // username exists so lets add some digits
+  for ($i = 2; $i < 100; $i++) {
+    $new_username = $username . $i;
+    if (!db_query("SELECT COUNT(*) FROM {users} WHERE name = :name;", array(':name' => $new_username))->fetchField()) {
+    return $new_username;
+    }
+  }
+
+  // still haven't found a username, generate a really long random number
+  // could still happen but this is enough work
+  return $username . rand(100, 1000000);
+
+}
+
+
 

@@ -1,0 +1,185 @@
+<?php
+
+// before signing up follow all people who invited you
+// stop dupe invites even being added in validation
+
+/*
+ * Implements hook menu
+ */
+function tm_invitations_menu(){
+
+  $items['invite'] = array(
+    'title' => t('Invite Members'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('tm_invitations_invite_form'),
+    'access arguments' => array('access content'),
+    'class' => 'invite-header',
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+/* 
+ * Invitations form
+ */
+function tm_invitations_invite_form($form, &$form_state) {
+//global $user;
+//$account = user_load($user->uid);
+//drupal_set_message("<pre>".print_r($account,TRUE)."</pre>");
+
+  $form['invitations'] = array(
+    '#type' =>'textarea',
+    '#rows' => 5,
+    '#description' =>t('Enter up to ten email addresses, one per line, and we\'ll send them an invitation from you.'),
+    );
+  $form['submit_button'] = array(
+    '#type' => 'submit',
+    '#value' => t('Send Invitations'),
+    '#id' => 'edit-submit'  
+  );
+  return $form;
+}
+/* 
+ * Form validator
+ * Up to ten only
+ * valid email addresses from users that don't have an account
+ */
+function tm_invitations_invite_form_validate($form, &$form_state) {
+  $email_list = trim(str_replace(",", "", $form_state['values']['invitations'])); // remove ,
+  $emails = explode("\n",$email_list);
+  foreach($emails as $email){
+    if (!valid_email_address(trim($email))){
+      form_set_error('invitations', $email.t(' is not a valid email address'));
+    }
+    // if user already exists
+    if (user_load_by_mail(trim($email))){
+      form_set_error('invitations', $email.t(' already has an account'));
+    }
+  }
+  if (count($emails) > 10){
+    form_set_error('invitations', t('You have entered more than ten emails'));
+  }
+}
+/* 
+ * Submit function
+ */
+function tm_invitations_invite_form_submit($form, &$form_state) {
+  global $user;
+  $account = user_load($user->uid);
+  $email_list = trim($form_state['values']['invitations']);
+  $emails = explode("\n",$email_list);
+  $count = count($emails);
+  foreach($emails as $email){
+    // send out an email
+    tm_invitations_send_email($email, $account);
+    // add to table
+    $invite = db_insert('tm_invitations')
+      ->fields(array(
+      'email' => trim($email),
+      'uid' => $user->uid,
+      'followed' => 0,
+      'created' => REQUEST_TIME,
+    ))
+    ->execute();
+  } 
+  if ($count == 1) {
+      drupal_set_message(t("Thanks for spreading the word! Your invitation has been sent."));
+  } else {
+      drupal_set_message(t("Thanks for spreading the word! You've sent $count invitations!"));
+  }
+  drupal_goto("user/$user->uid/view");
+}
+
+/*
+ * Hook user presave
+ * If there are multiple inviters, follow them all 
+ */
+function tm_invitations_user_presave(&$edit, $account, $category){
+  if ($account->is_new){
+    // check email message against incomplete invites
+    $invites = db_select('tm_invitations', 'i')
+        ->fields('i')
+        ->condition('accepted',0,'=')
+        ->condition('email',$account->mail,'=')
+        ->execute();
+    // loop through invites
+    while ($invite = $invites->fetchAssoc()){
+      $inviter = user_load($invite['uid']);
+      // follow the $invite->uid user.
+      // this won't work as there is no uid yet
+      /* $flag = flag_get_flag('follow_members');
+      $flag->flag('flag', $invite['uid'], $account, TRUE);*/
+      // if person who invited is a chapter leader, change to approved
+      if (in_array("chapter leader", $inviter->roles)){
+        if ($role = user_role_load_by_name('approved user')) {
+          $edit['roles'][$role->rid] = $role->rid;
+        }
+      }
+    // update this record as accepted
+    db_update('tm_invitations')
+      ->fields(array(
+        'accepted' => REQUEST_TIME))
+      ->condition('id', $invite['id'], '=')
+      ->execute();
+    }
+  }
+  else{
+    // check email message against unfollowed invites
+    // unfortunately have to come back and do this later
+    // as there is no UID for flag to use to follow
+    $invites = db_select('tm_invitations', 'i')
+        ->fields('i')
+        ->condition('email',$account->mail,'=')
+        ->condition('followed',0,'=')
+        ->execute();
+    // loop through invites
+    while ($invite = $invites->fetchAssoc()){
+      // follow the $invite->uid user.
+      $flag = flag_get_flag('follow_members');
+      $flag->flag('flag', $invite['uid'], $account, TRUE);
+      // set as followed
+      db_update('tm_invitations')
+        ->fields(array(
+          'followed' => 1))
+        ->condition('id', $invite['id'], '=')
+        ->execute();
+    }  
+  }
+}
+/* Email sending function */
+function tm_invitations_send_email($email, $user){
+
+    if (isset($user->language)) $language = LANGUAGE_NONE;
+    else $language = $user->language;
+    $name = $user->name;
+    if (isset($user->field_user_first_name[$language])){
+      $name = $user->field_user_first_name[$language][0]['value'];
+      if (isset($user->field_user_first_name[$language])){
+        $name .= ' '.$user->field_user_last_name[$language][0]['value'];
+      }
+    }
+
+    $module = 'tm_invitations';
+    $key = 'key';
+    $language = language_default();
+    $params = array();
+    $from = NULL;
+    $send = FALSE;
+    $message = drupal_mail($module, $key, $email, $language, $params, $from, $send);
+    $message['subject'] = "Travel Massive Invitation from $name";
+    $message['body'] = array();
+    $message['body'][] = "Hi,";
+    $message['body'][] = "I want to invite you to be a part of Travel Massive.";
+    $message['body'][] = "Join the community and connect with me by visiting http://" . $_SERVER["SERVER_NAME"] . "/user/register";
+    $message['body'][] = "Regards,";
+    $message['body'][] = $name;
+
+    // Retrieve the responsible implementation for this message.
+    $system = drupal_mail_system($module, $key);
+
+    // Format the message body.
+    $message = $system->format($message);
+
+    // Send e-mail.
+    $message['result'] = $system->mail($message);
+}

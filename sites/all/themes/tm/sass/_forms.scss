@@ -502,3 +502,10 @@ select {
   border: 1px tint($primary-color, 80%) solid;
   border-radius: $global-radius;
 }
+
+#edit-revalidate {
+  margin-bottom: 48px;
+}
+
+// Invitation form
+#page-title { margin-left: 16px; }

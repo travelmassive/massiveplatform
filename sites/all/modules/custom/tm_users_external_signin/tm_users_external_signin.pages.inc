@@ -45,7 +45,7 @@ function tm_users_external_signin_oauth_callback() {
   }
   
   // Check is all the needed variables are present.
-  if (isset($twitter_oauth['token'])) {
+  if (isset($twitter_oauth['token']) && isset($_GET['oauth_token']) && isset($_GET['oauth_verifier'])) {
     $token = $twitter_oauth['token'];
     $response_oauth_token = $_GET['oauth_token'];
     $response_oauth_verifier = $_GET['oauth_verifier'];
@@ -128,10 +128,14 @@ function tm_users_external_signin_oauth_callback() {
       else {
         $twitter_account['drupal_uid'] = $user->uid;
         tm_twitter_account_create($twitter_account, $user_token);
-        drupal_set_message(t('Account successfully linked.'));
+
+        // sync any user data from twitter (profile pic, etc)
+        tm_users_save_twitter_data_to_user($user->uid, $twitter_account);
+
+        drupal_set_message(t('Account successfully linked. You can now sign in with Twitter.'));
       }
       
-      drupal_goto('user/' . $user->uid . '/edit/tm_twitter');
+      drupal_goto('user'); // . $user->uid . '/edit');
       
     }
     else {
@@ -166,22 +170,39 @@ function tm_users_external_signin_register_form($form, &$form_state) {
   
   // Temp:
   // TODO: Set a proper message (Maybe description field)
-  drupal_set_message('Twitter doesn\'t provide an email. Please provide one.', 'status', FALSE);
-  
-  $form['name'] = array(
+  //drupal_set_message('Twitter doesn\'t provide an email. Please provide one.', 'status', FALSE);
+  //drupal_set_message('We just need a few more details to create your account.', 'status', FALSE);
+
+  $form['field_user_first_name'] = array(
+        '#title' => 'First Name',
+        '#description' => 'Please provide your given name. This field will be public.',
+        '#type' => 'textfield',
+        '#required' => TRUE,
+    );
+
+  $form['field_user_last_name'] = array(
+        '#title' => 'Last Name',
+        '#description' => 'Please provide your last name. This field will be public.',
+        '#type' => 'textfield',
+        '#required' => TRUE,
+    );
+
+  /* Now using Email Registration module, so hide the username field
+    $form['name'] = array(
     '#type' => 'textfield',
     '#default_value' => $twitter_account['screen_name'],
     '#title' => 'Username',
     '#size' => '30',
     '#required' => TRUE
-  );  
+  );*/
   
   $form['mail'] = array(
     '#type' => 'textfield',
     '#title' => 'Email address',
     '#size' => '30',
     '#required' => TRUE,
-    '#attributes' =>array('placeholder' => t('E-mail address'))
+    '#attributes' =>array('placeholder' => t('E-mail address')),
+    '#description' => '&nbsp;'
   );
   
   $form['submit'] = array(
@@ -210,16 +231,24 @@ function tm_users_external_signin_register_form_validate($form, &$form_state) {
  * magic.
  */
 function tm_users_external_signin_register_form_submit($form, &$form_state) {
+  // First name:
+  $field_user_first_name = $form_state['values']['field_user_first_name'];
+  // Last name:
+  $field_user_last_name = $form_state['values']['field_user_last_name'];
   // User name:
-  $name = $form_state['values']['name'];
+  // $name = $form_state['values']['name'];
   // User email:
   $email = $form_state['values']['mail'];
   // User password (generated):
-  $pwd = user_password(8);
+  $pwd = user_password(50);
   
   // Reset the form_state for the user_reguster form.
   $form_state_user = array();
-  $form_state_user['values']['name'] = $name;
+  $form_state_user['values']['group_user_account'] = array();
+  // thankyou https://www.drupal.org/node/1514312
+  $form_state_user['values']['field_user_first_name']['und'][0]['value'] = $field_user_first_name;
+  $form_state_user['values']['field_user_last_name']['und'][0]['value'] = $field_user_last_name;
+  //$form_state_user['values']['name'] = $name;
   $form_state_user['values']['mail'] = $email;
   $form_state_user['values']['pass']['pass1'] = $pwd;
   $form_state_user['values']['pass']['pass2'] = $pwd;
@@ -243,16 +272,109 @@ function tm_users_external_signin_register_form_submit($form, &$form_state) {
     // Link the twitter account.
     $account = $_SESSION['twitter_account']['account'];
     $token = $_SESSION['twitter_account']['token'];
-    unset($_SESSION['twitter_account']);
     
     $account['drupal_uid'] = $uid;
     tm_twitter_account_create($account, $token);
     
     // The user is logged in by the logintoboggan module.
+    tm_users_save_twitter_data_to_user($uid, $account);
+
+    // is this ok to do this here, what if errors on page and we reload this method?
+    unset($_SESSION['twitter_account']);
     
     // Use the redirect set by the logintoboggan module.
     $form_state['redirect'] = $form_state_user['redirect'];
   }
+}
+
+function tm_users_save_twitter_data_to_user($uid, $twitter_account) {
+
+    // set account
+    $account = $twitter_account;
+
+    // get drupal user fields
+    $user_fields = user_load($uid); 
+
+    // save website, location, description
+    $twitter_screen_name = $account["screen_name"];
+    $twitter_website_url = "";
+    if (array_key_exists("url", $account["entities"])) {
+          $twitter_website_url = $account["entities"]["url"]["urls"][0]["expanded_url"];
+    }
+    $twitter_location = $account["location"];
+    $twitter_description = $account["description"];
+
+    $save_fields = array();
+   
+    // friendly url
+    if (count($user_fields->field_friendly_url) == 0) {
+      $save_fields['field_friendly_url'] = array(LANGUAGE_NONE => array(0 => array('value' => $twitter_screen_name))); 
+    }
+
+    // website
+    if (count($user_fields->field_link_website) == 0) {
+    $save_fields['field_link_website'] = array(LANGUAGE_NONE => array(0 => array('url' => $twitter_website_url)));
+    }
+
+    // twitter link
+    if (count($user_fields->field_link_twitter) == 0) {
+      $save_fields['field_link_twitter'] = array(LANGUAGE_NONE => array(0 => array('url' => 'https://twitter.com/' . $twitter_screen_name)));
+    }
+
+    // about me
+    if (count($user_fields->field_about_me) == 0) {
+      $save_fields['field_about_me'] = array(LANGUAGE_NONE => array(0 => array('value' => $twitter_description)));
+    }
+
+    // city location
+    if (count($user_fields->field_location_city) == 0) {
+      $save_fields['field_location_city'] = array(LANGUAGE_NONE => array(0 => array('value' => $twitter_location)));
+    }
+
+    // download the twitter image url and save it the user's profile
+    // examples
+    // [profile_image_url] => http://pbs.twimg.com/profile_images/378800000139959976/19dc1feaf7dbcfb723a7883829bab0f7_normal.jpeg
+    //if ($user_fields['field_avatar'][LANGUAGE_NONE][0][]
+    if (count($user_fields->field_avatar) == 0) {
+
+      $twitter_profile_image_url = $account["profile_image_url"];
+      $twitter_profile_image_url = str_replace("_normal.", ".", $twitter_profile_image_url); // remove the _normal to get the full size image
+      $url_parts = explode("/", $twitter_profile_image_url);
+      $twitter_profile_image_filename = $url_parts[count($url_parts) - 1]; // ie: 378800000139959976/19dc1feaf7dbcfb723a7883829bab0f7_normal.jpeg
+      $twitter_avatars_path = 'public://twitter_avatars'; 
+      file_prepare_directory($twitter_avatars_path, FILE_CREATE_DIRECTORY);
+      $avatar_file = system_retrieve_file($twitter_profile_image_url, $twitter_avatars_path . "/" . $uid . 
+        "_" . $twitter_profile_image_filename, true);
+      if ($avatar_file->fid) {
+        $save_fields['field_avatar'] = array(LANGUAGE_NONE => array('0' => (array)$avatar_file));
+      } else {
+        // couldn't download image
+        // should do something here maybe
+      }
+    }
+
+    // download twitter banner
+    // [profile_background_image_url_https] => https://pbs.twimg.com/profile_background_images/146083270/travellr_twitter_bg_1900.jpg 
+    if (count($user_fields->field_image) == 0) {
+    if (array_key_exists("profile_banner_url", $account)) {
+            $twitter_background_image_url = $account["profile_banner_url"];
+        $url_parts = explode("/", $twitter_background_image_url);
+        $twitter_background_image_filename = $url_parts[count($url_parts) - 1];
+        $twitter_backgrounds_path = 'public://twitter_backgrounds'; 
+        file_prepare_directory($twitter_backgrounds_path, FILE_CREATE_DIRECTORY);
+        $banner_file = system_retrieve_file($twitter_background_image_url, $twitter_backgrounds_path . "/" . $uid . 
+          "_" . $twitter_background_image_filename, true);
+        if ($banner_file->fid) {
+          $save_fields['field_image'] = array(LANGUAGE_NONE => array('0' => (array)$banner_file));
+        } else {
+          // couldn't download image
+          // should do something here maybe
+        }
+      }
+    }
+
+    // save user fields
+    user_save($user_fields, $save_fields);
 }
 
 /**
@@ -267,7 +389,7 @@ function tm_users_external_signin_manage_account($account) {
     $output .= drupal_render($form);
   }
   else {
-    $output .= 'Your account is not linked with twitter.</br>';
+    $output .= 'Your account is not linked with Twitter.</br>';
     $output .= 'Click here to ' . l('link your account', 'tm_twitter/oauth');
   }
 
@@ -284,7 +406,7 @@ function tm_users_external_signin_manage_account_unlink_form($form, &$form_state
   );
   // Temp.
   $form['description'] = array(
-    '#markup' => t('This account is linked with twitter user %uname<br/>', array('%uname' => '@' . $twitter_account['screen_name']))
+    '#markup' => t('Please confirm you want to unlink your Twitter account %uname<br/>Next time you sign in you\'ll need to use your email address and password.<br><br>', array('%uname' => '@' . $twitter_account['screen_name']))
   );
   
   $form['submit'] = array(

@@ -63,7 +63,12 @@ dependencies[] = nodeaccess_userreference
 dependencies[] = queue_mail
 dependencies[] = tzfield
 dependencies[] = ultimate_cron
-
+dependencies[] = role_watchdog
+dependencies[] = geophp
+dependencies[] = geofield
+dependencies[] = openlayers
+dependencies[] = migrate_extras
+dependencies[] = email_registration
 
 ; TM - development
 dependencies[] = admin_menu
@@ -89,6 +94,12 @@ dependencies[] = tm_search
 dependencies[] = tm_theme
 dependencies[] = tm_users
 dependencies[] = tm_users_external_signin
+<<<<<<< HEAD
+dependencies[] = tm_chapters_map
+=======
+dependencies[] = tm_invitations
+>>>>>>> invitations
+
 
 ; TM - notifications
 dependencies[] = tm_notifications

@@ -50,6 +50,25 @@ $image = theme('image_style', array(
       <li><?php print l(t('Public profile'), 'user/' . $loaded->uid); ?></li>
       <li><?php print l(t('Account settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-account-options')); ?></li>
       <li><?php print l(t('Notification settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-notifications-options')); ?></li>
+      <li><?php print l(t('Invite members'), 'invite'); ?></li>
+<?php
+// Nag user to verify email if there are no other messages
+if (in_array("non-validated", $loaded->roles)) {
+  if (count(drupal_get_messages()) == 0) {
+      drupal_set_message("Please verify your email address with us. We sent a verification email to " . $loaded->mail . ". Didn't get it? " . l(t('Re-send it'), 'toboggan/revalidate/' . $loaded->uid) . ".", "status", FALSE);
+  }
+}
+?>
+
+<?php
+$twitter_data = tm_twitter_account_load($loaded->uid);
+if (!$twitter_data) { 
+?>
+      <li><?php print l(t('Connect with Twitter'), 'tm_twitter/oauth'); ?></li>
+<?php
+} // end if
+?>
+   
     </ul>
     <?php if (in_array("approved user", $loaded->roles)) : ?>
     <ul class="dropd-menu">

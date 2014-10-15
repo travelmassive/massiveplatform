@@ -151,7 +151,7 @@ function tm_users_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 13,
+        'weight' => 16,
       ),
       'grid' => array(
         'label' => 'above',
@@ -203,13 +203,13 @@ function tm_users_field_default_field_instances() {
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'By picking a custom URL, you make sure that your profile is accesible through a friendly URL. For example: http://travelmassive.com/your-url',
+    'description' => 'Claim your own URL on travelmassive.com for your profile. For example: http://travelmassive.com/my-awesome-company',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 12,
+        'weight' => 15,
       ),
       'grid' => array(
         'label' => 'above',
@@ -230,9 +230,10 @@ function tm_users_field_default_field_instances() {
         'weight' => 12,
       ),
     ),
+    'ds_extras_field_template' => '',
     'entity_type' => 'user',
     'field_name' => 'field_friendly_url',
-    'label' => 'Friendly URL',
+    'label' => 'Travel Massive URL (travelmassive.com/your-url)',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -325,7 +326,7 @@ function tm_users_field_default_field_instances() {
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'The name of your business, company, or organization.',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -358,7 +359,7 @@ function tm_users_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'user',
     'field_name' => 'field_job_organization',
-    'label' => 'Organization',
+    'label' => 'Organization Name',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -380,7 +381,7 @@ function tm_users_field_default_field_instances() {
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'examples: Founder, CEO, VP Marketing, Social Media Manager, Chief Explorer',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -413,7 +414,7 @@ function tm_users_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'user',
     'field_name' => 'field_job_role',
-    'label' => 'Role',
+    'label' => 'Job Role',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -707,14 +708,14 @@ function tm_users_field_default_field_instances() {
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Where you spend most of your time',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 21,
+        'weight' => 23,
       ),
       'grid' => array(
         'label' => 'above',
@@ -759,7 +760,7 @@ function tm_users_field_default_field_instances() {
   // Exported field_instance: 'user-user-field_segment'
   $field_instances['user-user-field_segment'] = array(
     'bundle' => 'user',
-    'default_value' => NULL,
+    'default_value' => array(),
     'deleted' => 0,
     'description' => 'Please select the industry segment that best applies to you.',
     'display' => array(
@@ -818,7 +819,7 @@ function tm_users_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 16,
+        'weight' => 17,
       ),
       'grid' => array(
         'label' => 'above',
@@ -870,7 +871,7 @@ function tm_users_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 17,
+        'weight' => 18,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1186,29 +1187,32 @@ function tm_users_field_default_field_instances() {
   t('About me');
   t('Avatar');
   t('Banner');
-  t('By picking a custom URL, you make sure that your profile is accesible through a friendly URL. For example: http://travelmassive.com/your-url');
   t('City');
-  t('Home Chapter');
+  t('Claim your own URL on travelmassive.com for your profile. For example: http://travelmassive.com/my-awesome-company');
   t('Facebook');
   t('First name');
-  t('Friendly URL');
+  t('Home Chapter');
+  t('Job Role');
   t('Last name');
   t('Linkedin');
-  t('Organization');
+  t('Organization Name');
   t('Please provide your given name. This field will be <strong>public</strong>.');
   t('Please provide your last name. This field will be <strong>public</strong>.');
   t('Please select the industry segment that best applies to you.');
   t('Please select what you consider to be your home chapter.');
   t('Provide the other members with some more information about yourself. This information will be <strong>public</strong>.');
-  t('Role');
   t('Segment');
+  t('The name of your business, company, or organization.');
   t('Three words that describe why we should travel?');
+  t('Travel Massive URL (travelmassive.com/your-url)');
   t('Twitter');
   t('Website');
   t('What do you want to learn more about?');
   t('What is your favorite travel destination?');
   t('What was your first travel job?');
   t('Where do you dream of traveling to?');
+  t('Where you spend most of your time');
+  t('examples: Founder, CEO, VP Marketing, Social Media Manager, Chief Explorer');
 
   return $field_instances;
 }

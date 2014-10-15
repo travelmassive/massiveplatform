@@ -12,6 +12,8 @@ button {
   border-radius: $global-radius;
   font-weight: $body-font-bold;
   text-align: center;
+  @import "compass/css3";
+  @import "compass/css3/user-interface";
   @include user-select(none);
   cursor: pointer;
   white-space: nowrap;
@@ -405,4 +407,22 @@ button {
       }
     }
   }
+}
+/* Approval status */
+.approval {
+  text-align: center;
+  color: #1b2430;
+  line-height: 1em; 
+  margin-top: 0.2em;
+  margin-bottom: 0px;
+}
+.approval img {
+  margin-bottom: -3px; 
+  padding-right: 4px;
+}
+.text_approved {
+  font-size: 0.8em;
+}
+.text_notapproved {
+  font-size: 0.8em;
 }

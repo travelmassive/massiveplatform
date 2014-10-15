@@ -60,8 +60,8 @@ function tm_theme_image_default_styles() {
         'module' => 'image',
         'name' => 'image_scale_and_crop',
         'data' => array(
-          'width' => 1536,
-          'height' => 864,
+          'width' => 805,
+          'height' => 453,
         ),
         'weight' => 1,
       ),

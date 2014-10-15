@@ -51,6 +51,12 @@ $image = theme('image_style', array(
       <li><?php print l(t('Account settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-account-options')); ?></li>
       <li><?php print l(t('Notification settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-notifications-options')); ?></li>
     </ul>
+    <?php if (in_array("approved user", $loaded->roles)) : ?>
+    <ul class="dropd-menu">
+      <li><?php print l(t('Add company'), 'node/add/organization'); ?></li>
+      <li><?php print l(t('My companies'), 'user/' . $loaded->uid . '/companies', array('fragment' => 'user-notifications-options')); ?></li>
+    </ul>
+  <?php endif; ?>
     <ul class="dropd-menu">
       <li><?php print l(t('Sign out'), 'user/logout'); ?></li>
     </ul>

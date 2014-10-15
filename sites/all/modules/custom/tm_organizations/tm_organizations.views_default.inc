@@ -45,7 +45,7 @@ function tm_organizations_views_default_views() {
   $handler->display->display_options['empty']['area']['empty'] = TRUE;
   $handler->display->display_options['empty']['area']['content'] = 'We could not find any company. Please try to change your search criteria.';
   $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
-  /* Relationship: Field: Country (field_country) */
+  /* Relationship: Content: Country (field_country) */
   $handler->display->display_options['relationships']['field_country_iso2']['id'] = 'field_country_iso2';
   $handler->display->display_options['relationships']['field_country_iso2']['table'] = 'field_data_field_country';
   $handler->display->display_options['relationships']['field_country_iso2']['field'] = 'field_country_iso2';
@@ -110,8 +110,8 @@ function tm_organizations_views_default_views() {
   $handler->display->display_options['filters']['field_segment_tid']['vocabulary'] = 'tm_segments';
   $handler->display->display_options['filters']['field_segment_tid']['hierarchy'] = 1;
 
-  /* Display: Page */
-  $handler = $view->new_display('page', 'Page', 'page');
+  /* Display: All companies */
+  $handler = $view->new_display('page', 'All companies', 'page');
   $handler->display->display_options['exposed_block'] = TRUE;
   $handler->display->display_options['path'] = 'companies';
   $handler->display->display_options['menu']['type'] = 'normal';
@@ -120,6 +120,53 @@ function tm_organizations_views_default_views() {
   $handler->display->display_options['menu']['name'] = 'main-menu';
   $handler->display->display_options['menu']['context'] = 0;
   $handler->display->display_options['menu']['context_only_inline'] = 0;
+
+  /* Display: Users companies */
+  $handler = $view->new_display('page', 'Users companies', 'page_1');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'My companies';
+  $handler->display->display_options['defaults']['empty'] = FALSE;
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'You do not have any companies yet. You might like to <a href="/node/add/organization">add one</a>.';
+  $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Entity Reference: Referenced Entity */
+  $handler->display->display_options['relationships']['field_owner_target_id']['id'] = 'field_owner_target_id';
+  $handler->display->display_options['relationships']['field_owner_target_id']['table'] = 'field_data_field_owner';
+  $handler->display->display_options['relationships']['field_owner_target_id']['field'] = 'field_owner_target_id';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: User: Uid */
+  $handler->display->display_options['arguments']['uid']['id'] = 'uid';
+  $handler->display->display_options['arguments']['uid']['table'] = 'users';
+  $handler->display->display_options['arguments']['uid']['field'] = 'uid';
+  $handler->display->display_options['arguments']['uid']['relationship'] = 'field_owner_target_id';
+  $handler->display->display_options['arguments']['uid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['uid']['default_argument_type'] = 'user';
+  $handler->display->display_options['arguments']['uid']['default_argument_options']['user'] = FALSE;
+  $handler->display->display_options['arguments']['uid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['uid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['uid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'organization' => 'organization',
+  );
+  $handler->display->display_options['path'] = 'user/%/companies';
   $export['companies'] = $view;
 
   return $export;

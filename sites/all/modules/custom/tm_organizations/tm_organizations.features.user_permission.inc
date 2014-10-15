@@ -15,7 +15,8 @@ function tm_organizations_user_default_permissions() {
     'name' => 'create organization content',
     'roles' => array(
       'administrator' => 'administrator',
-      'authenticated user' => 'authenticated user',
+      'approved user' => 'approved user',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -55,7 +56,8 @@ function tm_organizations_user_default_permissions() {
     'name' => 'edit own organization content',
     'roles' => array(
       'administrator' => 'administrator',
-      'authenticated user' => 'authenticated user',
+      'approved user' => 'approved user',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );

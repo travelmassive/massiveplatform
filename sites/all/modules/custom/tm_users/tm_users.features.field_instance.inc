@@ -1178,7 +1178,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 49,
+      'weight' => 50,
     ),
   );
 

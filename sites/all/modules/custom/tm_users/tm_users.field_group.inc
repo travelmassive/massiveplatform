@@ -602,5 +602,34 @@ function tm_users_field_group_info() {
   );
   $export['group_user_qa|user|user|default'] = $field_group;
 
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_user_twitter_settings|user|user|form';
+  $field_group->group_name = 'group_user_twitter_settings';
+  $field_group->entity_type = 'user';
+  $field_group->bundle = 'user';
+  $field_group->mode = 'form';
+  $field_group->parent_name = 'group_user_edit';
+  $field_group->data = array(
+    'label' => 'Twitter',
+    'weight' => '37',
+    'children' => array(
+      0 => 'tm_twitter_settings',
+    ),
+    'format_type' => 'htab',
+    'format_settings' => array(
+      'label' => 'Twitter',
+      'instance_settings' => array(
+        'required_fields' => 1,
+        'id' => 'user-twitter-options',
+        'classes' => '',
+        'description' => '',
+      ),
+      'formatter' => 'closed',
+    ),
+  );
+  $export['group_user_twitter_settings|user|user|form'] = $field_group;
+
   return $export;
 }

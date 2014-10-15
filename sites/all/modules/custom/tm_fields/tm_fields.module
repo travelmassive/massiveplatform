@@ -100,11 +100,13 @@ function _tm_content_type_process($field, $title = NULL) {
 function _tm_chapter_sticker_process($field, $title = NULL) {
   if (isset($field['entity']->field_chapter['und'][0]['target_id'])) {
     $related_chapter = node_load($field['entity']->field_chapter['und'][0]['target_id']);
-    return theme('tm_chapter_sticker', array(
-      'chapter_id' => $related_chapter->nid,
-      'shortcode' => $related_chapter->field_chapter_shortcode['und'][0]['value'],
-      'color' => $related_chapter->field_chapter_color['und'][0]['rgb']
-    ));
+    if ($related_chapter){
+      return theme('tm_chapter_sticker', array(
+        'chapter_id' => $related_chapter->nid,
+        'shortcode' => $related_chapter->field_chapter_shortcode['und'][0]['value'],
+        'color' => $related_chapter->field_chapter_color['und'][0]['rgb']
+      ));
+    }
   }
 }
 /**

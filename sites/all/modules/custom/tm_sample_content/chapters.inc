@@ -80,7 +80,6 @@ class TMChapterMigration extends TMBaseMigration {
     //$this->addFieldMapping('field_geomaplocation:lat', 'geolocation_lat');
     //$this->addFieldMapping('field_geomaplocation:lon', 'geolocation_lon');
 
-
    $geo_arguments = array(
     'lat' => array('source_field' => 'lat'),
     'lon' => array('source_field' => 'lon'),

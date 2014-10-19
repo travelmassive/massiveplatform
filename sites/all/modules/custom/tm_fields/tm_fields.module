@@ -269,7 +269,7 @@ function _tm_more_actions_process($field, $title = NULL) {
           'wrapper_class' => array('contactleaders'),
           'content' => l(t('Contact leaders'), 'chapters/contact/'.$node->field_chapter[$node->language][0]['target_id'], array(
             'attributes' => array(
-            'title' => t('Contact leaders')
+            'title' => t('Contact Chapter Leaders')
             )
           ))
         );

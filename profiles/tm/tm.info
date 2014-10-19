@@ -69,6 +69,8 @@ dependencies[] = geofield
 dependencies[] = openlayers
 dependencies[] = migrate_extras
 dependencies[] = email_registration
+dependencies[] = redirect
+
 
 ; TM - development
 dependencies[] = admin_menu

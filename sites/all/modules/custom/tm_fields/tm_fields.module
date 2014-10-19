@@ -263,11 +263,11 @@ function _tm_more_actions_process($field, $title = NULL) {
   // START Contact chapter owners.
   if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
     $node = menu_get_object();
-    if ($node->type == 'event'){
+    if ($node->type == 'event') {
       if (isset($node->field_chapter[$node->language])){
         $links['contactleaders'][] = array(
           'wrapper_class' => array('contactleaders'),
-          'content' => l(t('Contact leaders'), 'chapters/contact/'.$node->field_chapter[$node->language][0]['target_id'], array(
+          'content' => l(t('Contact Chapter Leaders'), 'chapters/contact/'.$node->field_chapter[$node->language][0]['target_id'], array(
             'attributes' => array(
             'title' => t('Contact Chapter Leaders')
             )

@@ -84,9 +84,10 @@ function tm_events_field_group_info() {
     'weight' => '18',
     'children' => array(
       0 => 'field_rsvp_link',
-      1 => 'ds_flag_signup',
-      2 => 'tm_ds_more_actions',
-      3 => 'tm_ds_anon_flag_placeholder',
+      1 => 'ds_flag_event_waitlist',
+      2 => 'ds_flag_event_register',
+      3 => 'tm_ds_more_actions',
+      4 => 'tm_ds_anon_flag_placeholder',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(

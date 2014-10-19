@@ -390,7 +390,7 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
         ));
         break;
       case 'event':
-        $result = _tm_event_signup_can_join($entity->nid);
+        $result = _tm_event_display_waitlist_or_register($entity->nid);
         
         // Only show the button for travel massive events.
         // The other events will have an external RSVP link.
@@ -398,16 +398,29 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
           return;
         }
         
-        if (!$result['allowed']) {
+        // Show register
+        if ($result['display_register']) {
           $css_classes .= ' disabled';
-        }
-        
-        return l(t('Join'), 'user',array(
+          return l(t('Register'), 'user',array(
           'attributes' => array(
-            'title' => t('Join :event', array(':event' => $entity->title)),
+            'title' => t('Register for :event', array(':event' => $entity->title)),
             'class' => array($css_classes)
           )
-        ));
+          ));
+        }
+
+        // Show waitlist
+        if ($result['display_waitlist']) {
+          $css_classes .= ' disabled';
+          return l(t('Join Waitlist'), 'user',array(
+          'attributes' => array(
+            'title' => t('Join waitlist for :event', array(':event' => $entity->title)),
+            'class' => array($css_classes)
+          )
+          ));
+        }
+        
+        
         break;
     }
   }

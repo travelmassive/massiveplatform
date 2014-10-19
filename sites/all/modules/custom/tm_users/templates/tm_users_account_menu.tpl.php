@@ -41,6 +41,7 @@ $image = theme('image_style', array(
             <div class="media-bd">
               <strong><?php print check_plain($loaded->realname); ?></strong>
               <?php print t('Edit profile'); ?>
+              <!--<?php if (!in_array("approved user", $user->roles)) { ?><br><i>Pending Approval</i><?php } ?>-->
             </div>
           </a>
         </div>

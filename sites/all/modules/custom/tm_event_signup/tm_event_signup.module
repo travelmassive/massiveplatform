@@ -133,9 +133,22 @@ function tm_event_signup_preprocess_flag(&$variables) {
   $event_id = $variables['entity_id'];
   $flagged_entity = node_load($event_id);
 
+  // Check if we are approved
+  if (node_type_get_name($flagged_entity) == "Event") {
+    global $user;
+    $approved_members_only = $flagged_entity->field_approved_members_only[LANGUAGE_NONE][0]['value'];
+    $approved_member = in_array("approved user", $user->roles);
+
+    if ($approved_members_only and !$approved_member) {
+      $variables['approved_members_only'] = TRUE;
+    }
+  }
+  
   // Register flag
   // Only validate the 'register' flag whenever an 'event' is flagged. Users may always unflag.
   if ($flag->name == 'event_register' && $status == 'unflagged' && $flagged_entity->type == 'event') {
+
+    //$date = $node->field_event_date
 
     // Check if we are already on waitlist 
     // This might happen if you added to waitlist then increased capacity

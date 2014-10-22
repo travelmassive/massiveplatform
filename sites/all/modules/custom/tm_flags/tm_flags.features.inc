@@ -177,14 +177,13 @@ function tm_flags_flag_default_flags() {
     ),
     'api_version' => 3,
   );
-  // Exported flag: "Signup".
+  // Exported flag: "Join Chapter".
   $flags['signup'] = array(
     'entity_type' => 'node',
-    'title' => 'Signup',
+    'title' => 'Join Chapter',
     'global' => 0,
     'types' => array(
       0 => 'chapter',
-      1 => 'event',
     ),
     'flag_short' => 'Join',
     'flag_long' => 'Join [node:title]',
@@ -199,6 +198,8 @@ function tm_flags_flag_default_flags() {
       'full' => 0,
       'teaser' => 0,
       'rss' => 0,
+      'search_index' => 0,
+      'search_result' => 0,
       'diff_standard' => 0,
       'token' => 0,
       'grid' => 0,

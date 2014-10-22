@@ -54,7 +54,8 @@
 <?php else: ?>
 
 <li class="<?php print $flag_wrapper_classes; ?>">
-	<?php if (isset($display_closed) and ($action == "flag")): ?>
+	<?php if ((isset($display_external) and ($display_external == 0)) 
+            and (isset($display_closed) and ($display_closed == TRUE) and ($action == "flag"))): ?>
 	    <span class="follow bttn bttn-secondary bttn-m disabled" rel="nofollow">Past Event </span>
 	<?php endif; ?>
 </li>

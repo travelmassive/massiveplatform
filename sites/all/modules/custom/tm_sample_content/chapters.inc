@@ -43,7 +43,7 @@ class TMChapterMigration extends TMBaseMigration {
 
     // Chapter leaders
     $this->addFieldMapping('field_chapter_leaders', 'leaders')
-      ->separator(' ')
+      ->separator('|')
       ->sourceMigration('TMUser');
 
     // Author, default to admin
@@ -64,7 +64,7 @@ class TMChapterMigration extends TMBaseMigration {
 
     // Temporary field mapping to use on chapters
     $this->addFieldMapping('member', 'member')
-      ->separator(' ')
+      ->separator('|')
       ->sourceMigration('TMUser');
 
     // The social link fields
@@ -97,14 +97,27 @@ class TMChapterMigration extends TMBaseMigration {
 
   public function complete($entity, $row) {
     // simulate "member"
-    if ($entity->member) {
+    /*if ($entity->member) {
       // set the chapter on the user
       foreach ($entity->member as $uid) {
         $participant = user_load($uid);
         $participant->field_chapter[LANGUAGE_NONE][0]['target_id'] = $entity->nid;
         user_save($participant);
       }
+    }*/
+
+    // simulate "join chapter" flag activation
+    if ($entity->member) {
+      // prepare variables
+      $flag = flag_get_flag('signup');
+
+      // perform flagging
+      foreach ($entity->member as $uid) {
+        $participant = user_load($uid);
+        $flag->flag('flag', $entity->nid, $participant, TRUE);
+      }
     }
+
   }
 
 }

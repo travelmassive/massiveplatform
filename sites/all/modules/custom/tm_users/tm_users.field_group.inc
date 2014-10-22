@@ -175,6 +175,56 @@ function tm_users_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_following_organizations|user|user|default';
+  $field_group->group_name = 'group_following_organizations';
+  $field_group->entity_type = 'user';
+  $field_group->bundle = 'user';
+  $field_group->mode = 'default';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Following Organizations',
+    'weight' => '11',
+    'children' => array(
+      0 => 'following_organizations',
+    ),
+    'format_type' => 'contained_block',
+    'format_settings' => array(
+      'formatter' => 'open',
+      'instance_settings' => array(
+        'classes' => 'group-following-organizations field-group-contained_block',
+      ),
+    ),
+  );
+  $export['group_following_organizations|user|user|default'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_following_wrapper|user|user|default';
+  $field_group->group_name = 'group_following_wrapper';
+  $field_group->entity_type = 'user';
+  $field_group->bundle = 'user';
+  $field_group->mode = 'default';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Following',
+    'weight' => '10',
+    'children' => array(
+      0 => 'members_following_members',
+    ),
+    'format_type' => 'contained_block',
+    'format_settings' => array(
+      'formatter' => 'open',
+      'instance_settings' => array(
+        'classes' => 'group-following-wrapper field-group-contained_block',
+      ),
+    ),
+  );
+  $export['group_following_wrapper|user|user|default'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_form_about|user|user|form';
   $field_group->group_name = 'group_form_about';
   $field_group->entity_type = 'user';

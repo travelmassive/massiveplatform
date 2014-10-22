@@ -27,6 +27,16 @@ function tm_chapters_ds_field_settings_info() {
         ),
       ),
     ),
+    'chapter_members' => array(
+      'weight' => '0',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_reset',
+        ),
+      ),
+    ),
     'chapter_avatar' => array(
       'weight' => '1',
       'label' => 'hidden',
@@ -38,16 +48,6 @@ function tm_chapters_ds_field_settings_info() {
       ),
     ),
     'event_list' => array(
-      'weight' => '6',
-      'label' => 'hidden',
-      'format' => 'default',
-      'formatter_settings' => array(
-        'ft' => array(
-          'func' => 'theme_ds_field_reset',
-        ),
-      ),
-    ),
-    'members_signed_up' => array(
       'weight' => '6',
       'label' => 'hidden',
       'format' => 'default',
@@ -337,6 +337,21 @@ function tm_chapters_ds_custom_fields_info() {
 
   $ds_field = new stdClass();
   $ds_field->api_version = 1;
+  $ds_field->field = 'chapter_members';
+  $ds_field->label = 'Chapter Members';
+  $ds_field->field_type = 6;
+  $ds_field->entities = array(
+    'node' => 'node',
+  );
+  $ds_field->ui_limit = 'chapter|*';
+  $ds_field->properties = array(
+    'block' => 'views|eb2abffd502fd01e357ba6b077283241',
+    'block_render' => '3',
+  );
+  $export['chapter_members'] = $ds_field;
+
+  $ds_field = new stdClass();
+  $ds_field->api_version = 1;
   $ds_field->field = 'joined_chapter_list';
   $ds_field->label = 'Joined chapter list';
   $ds_field->field_type = 6;
@@ -404,50 +419,50 @@ function tm_chapters_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
+      'second_column' => array(
+        0 => 'chapter_members',
+        14 => 'group_team_wrapper',
+        17 => 'group_community_wrapper',
+        19 => 'field_chapter_leaders',
+      ),
       'header_media' => array(
-        0 => 'field_image',
+        1 => 'field_image',
       ),
       'header_body' => array(
-        1 => 'ds_flag_signup',
         2 => 'chapter_avatar',
-        3 => 'title',
+        3 => 'ds_flag_signup',
         4 => 'tm_ds_anon_flag_placeholder',
-        5 => 'tm_ds_members_chapter',
+        5 => 'title',
         6 => 'tm_ds_more_actions',
-        7 => 'group_action_menu_wrapper',
+        7 => 'tm_ds_members_chapter',
+        8 => 'group_action_menu_wrapper',
         20 => 'group_action_menu',
       ),
       'first_column' => array(
-        8 => 'group_details_wrapper',
-        9 => 'body',
-        10 => 'field_link_website',
+        9 => 'group_details_wrapper',
+        10 => 'body',
         11 => 'event_list',
+        12 => 'field_link_website',
         13 => 'group_events_wrapper',
         15 => 'field_link_twitter',
         16 => 'field_link_facebook',
         18 => 'field_link_linkedin',
       ),
-      'second_column' => array(
-        12 => 'members_signed_up',
-        14 => 'group_team_wrapper',
-        17 => 'group_community_wrapper',
-        19 => 'field_chapter_leaders',
-      ),
     ),
     'fields' => array(
+      'chapter_members' => 'second_column',
       'field_image' => 'header_media',
-      'ds_flag_signup' => 'header_body',
       'chapter_avatar' => 'header_body',
-      'title' => 'header_body',
+      'ds_flag_signup' => 'header_body',
       'tm_ds_anon_flag_placeholder' => 'header_body',
-      'tm_ds_members_chapter' => 'header_body',
+      'title' => 'header_body',
       'tm_ds_more_actions' => 'header_body',
+      'tm_ds_members_chapter' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
       'group_details_wrapper' => 'first_column',
       'body' => 'first_column',
-      'field_link_website' => 'first_column',
       'event_list' => 'first_column',
-      'members_signed_up' => 'second_column',
+      'field_link_website' => 'first_column',
       'group_events_wrapper' => 'first_column',
       'group_team_wrapper' => 'second_column',
       'field_link_twitter' => 'first_column',

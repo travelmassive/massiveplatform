@@ -47,22 +47,23 @@ class TMCompanyMigration extends TMBaseMigration {
       ->sourceMigration('TMUser');
 
     // Author, default to admin
-    $this->addFieldMapping('uid')
-      ->defaultValue(1);
+    $this->addFieldMapping('uid', 'owner')->separator(' ')->sourceMigration('TMUser');
+    //$this->addFieldMapping('uid')
+    // ->defaultValue(1);
 
     // Avatar
     $this->addFieldMapping('field_avatar', 'avatar');
     $this->addFieldMapping('field_avatar:file_replace')
       ->defaultValue(FILE_EXISTS_REPLACE);
     $this->addFieldMapping('field_avatar:source_dir')
-      ->defaultValue(drupal_get_path('module', 'tm_sample_content') . '/import/files');
+      ->defaultValue(drupal_get_path('module', 'tm_sample_content') . '/import/files/company_photos');
     
     // Banner image
     $this->addFieldMapping('field_image', 'banner');
     $this->addFieldMapping('field_image:file_replace')
       ->defaultValue(FILE_EXISTS_REPLACE);
     $this->addFieldMapping('field_image:source_dir')
-      ->defaultValue(drupal_get_path('module', 'tm_sample_content') . '/import/files');
+      ->defaultValue(drupal_get_path('module', 'tm_sample_content') . '/import/files/company_photos');
 
     // Friendly URL
     $this->addFieldMapping('field_friendly_url','url');

@@ -39,6 +39,12 @@ function _tm_event_seats_count($field, $title = NULL) {
   
   $count = $flag->get_count($event->nid);
 
+  $display_external = (isset($event->field_external_rsvp[LANGUAGE_NONE][0]['value']) && $event->field_external_rsvp[LANGUAGE_NONE][0]['value'] !== '0');
+
+  if ($display_external) {
+    return t('Please RSVP For This Event');
+  }
+
   if ($count == 0) {
     return t('Be the first to register!');
   }
@@ -143,10 +149,15 @@ function tm_event_signup_preprocess_flag(&$variables) {
       $variables['approved_members_only'] = TRUE;
     }
   }
-  
+
+  // TODO - Rewrite the logic of whether to display the waitlist, register flags this is hacky - Ian
+
   // Register flag
   // Only validate the 'register' flag whenever an 'event' is flagged. Users may always unflag.
   if ($flag->name == 'event_register' && $status == 'unflagged' && $flagged_entity->type == 'event') {
+
+    $result = _tm_event_display_waitlist_or_register($event_id);
+    $variables['display_external'] = $result['display_external'];
 
     // Check if we are already on waitlist 
     // This might happen if you added to waitlist then increased capacity
@@ -157,7 +168,6 @@ function tm_event_signup_preprocess_flag(&$variables) {
       $variables['hide_flag'] = TRUE;
     } 
     else {
-      $result = _tm_event_display_waitlist_or_register($event_id);
       $variables['display_closed'] = $result['display_closed'];
       if (!$result['display_register']) {
         $variables['hide_flag'] = TRUE;
@@ -173,6 +183,9 @@ function tm_event_signup_preprocess_flag(&$variables) {
   // Show this if the event is full and if the user isn't already registered
   if ($flag->name == 'event_waitlist' && $status == 'unflagged' && $flagged_entity->type == 'event') {
 
+    $result = _tm_event_display_waitlist_or_register($event_id);
+    $variables['display_closed'] = $result['display_closed'];
+
     // Check if we are already registered
     $register_flag = flag_get_flag('event_register');
     if ($register_flag->is_flagged($flagged_entity->nid))
@@ -181,12 +194,13 @@ function tm_event_signup_preprocess_flag(&$variables) {
       $variables['hide_flag'] = TRUE;
     } 
     else {
-      $result = _tm_event_display_waitlist_or_register($event_id);
-      if (!$result['display_waitlist']) {
+      if ($result['display_external']) {
         $variables['hide_flag'] = TRUE;
-      }
-      if ($result['error'] == 'Not a Travel Massive Event.') {
-        $variables['hide_flag'] = TRUE;
+      } 
+      else {
+        if (!$result['display_waitlist']) {
+          $variables['hide_flag'] = TRUE;
+        }
       }
     }
   }
@@ -211,20 +225,24 @@ function _tm_event_display_waitlist_or_register($nid) {
     throw new Exception("Invalid event node. Nid: " . $nid);
   }
   
-  // Check if the event has already happened.
+  // Is external event
+  $display_external = (isset($event->field_external_rsvp[LANGUAGE_NONE][0]['value']) && $event->field_external_rsvp[LANGUAGE_NONE][0]['value'] !== '0');
+
+  // Check if the event has already happened
+  // Todo: Use the event's timezone
   if (isset($event->field_event_date[LANGUAGE_NONE][0]['value'])) {
     $event_date = new DateTime($event->field_event_date[LANGUAGE_NONE][0]['value'], new DateTimeZone('UTC'));
     $now = new DateTime('now', new DateTimeZone('UTC'));
 
     if ($event_date < $now) {
       // The event already happened.
-      return array('display_register' => FALSE, 'display_waitlist' => FALSE, 'display_closed' => TRUE, 'display_external' => FALSE, 'error' => 'Event already happened.');
+      return array('display_register' => FALSE, 'display_waitlist' => FALSE, 'display_closed' => TRUE, 'display_external' => $display_external, 'error' => 'Event already happened.');
     }
   }
 
   // Check if is external RSVP.
-  if (isset($event->field_external_rsvp[LANGUAGE_NONE][0]['value']) && $event->field_external_rsvp[LANGUAGE_NONE][0]['value'] !== '0') {
-    return array('display_register' => FALSE, 'display_waitlist' => FALSE, 'display_closed' => FALSE, 'display_external' => TRUE, 'error' => 'Not a Travel Massive Event.');
+  if ($display_external) {
+    return array('display_register' => FALSE, 'display_waitlist' => FALSE, 'display_closed' => FALSE, 'display_external' => $display_external, 'error' => 'Not a Travel Massive Event.');
   }
   
   // Check signup limit.

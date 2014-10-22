@@ -52,14 +52,14 @@ class TMUserMigration extends TMBaseMigration {
     $this->addFieldMapping('field_avatar:file_replace')
       ->defaultValue(FILE_EXISTS_REPLACE);
     $this->addFieldMapping('field_avatar:source_dir')
-      ->defaultValue(drupal_get_path('module', 'tm_sample_content') . '/import/files');
+      ->defaultValue(drupal_get_path('module', 'tm_sample_content') . '/import/files/user_photos');
     
     // Banner image
     $this->addFieldMapping('field_image', 'banner');
     $this->addFieldMapping('field_image:file_replace')
       ->defaultValue(FILE_EXISTS_REPLACE);
     $this->addFieldMapping('field_image:source_dir')
-      ->defaultValue(drupal_get_path('module', 'tm_sample_content') . '/import/files');
+      ->defaultValue(drupal_get_path('module', 'tm_sample_content') . '/import/files/user_photos');
 
     // Role ID
     $this->addFieldMapping('roles', 'role');
@@ -71,29 +71,36 @@ class TMUserMigration extends TMBaseMigration {
     $this->addFieldMapping('field_friendly_url','url');
 
     // The profile questions
-    $this->addFieldMapping('field_user_question_destination','q1');
-    $this->addFieldMapping('field_user_question_dream_travel','q2');
-    $this->addFieldMapping('field_user_question_learn','q3');
-    $this->addFieldMapping('field_user_question_job','q4');
-    $this->addFieldMapping('field_user_question_why_travel','q5');
+    $this->addFieldMapping('field_user_question_destination','q1')->callbacks(array($this, 'removeEmptyData'));
+    $this->addFieldMapping('field_user_question_dream_travel','q2')->callbacks(array($this, 'removeEmptyData'));
+    $this->addFieldMapping('field_user_question_learn','q3')->callbacks(array($this, 'removeEmptyData'));
+    $this->addFieldMapping('field_user_question_job','q4')->callbacks(array($this, 'removeEmptyData'));
+    $this->addFieldMapping('field_user_question_why_travel','q5')->callbacks(array($this, 'removeEmptyData'));
 
     // The social link fields
-    $this->addFieldMapping('field_link_twitter', 'tw_link');
-    $this->addFieldMapping('field_link_facebook', 'fb_link');
-    $this->addFieldMapping('field_link_linkedin', 'li_link');
-    $this->addFieldMapping('field_link_website', 'web_link');
+    $this->addFieldMapping('field_link_twitter', 'tw_link')->callbacks(array($this, 'removeEmptyData'));
+    $this->addFieldMapping('field_link_facebook', 'fb_link')->callbacks(array($this, 'removeEmptyData'));
+    $this->addFieldMapping('field_link_linkedin', 'li_link')->callbacks(array($this, 'removeEmptyData'));
+    $this->addFieldMapping('field_link_website', 'web_link')->callbacks(array($this, 'removeEmptyData'));
 
     // City + country fields
     $this->addFieldMapping('field_location_city', 'city');
-    $this->addFieldMapping('field_country', 'country');
+    $this->addFieldMapping('field_user_country', 'country');
 
     // Job role + organization
-    $this->addFieldMapping('field_job_role', 'job');
+    $this->addFieldMapping('field_job_role', 'job')->callbacks(array($this, 'removeEmptyData'));
     $this->addFieldMapping('field_job_organization', 'org');
 
     // Home chapter
     //$this->addFieldMapping('field_chapter', 'home_chapter')
     //  ->sourceMigration('TMChapter');
+  }
+
+  protected function removeEmptyData($value) {
+    if ($value == "") {
+          return array();
+    }
+    return $value;
   }
 
   public function prepareRow($row) {

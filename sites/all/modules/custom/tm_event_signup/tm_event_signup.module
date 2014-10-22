@@ -148,8 +148,6 @@ function tm_event_signup_preprocess_flag(&$variables) {
   // Only validate the 'register' flag whenever an 'event' is flagged. Users may always unflag.
   if ($flag->name == 'event_register' && $status == 'unflagged' && $flagged_entity->type == 'event') {
 
-    //$date = $node->field_event_date
-
     // Check if we are already on waitlist 
     // This might happen if you added to waitlist then increased capacity
     $register_flag = flag_get_flag('event_waitlist');
@@ -160,9 +158,9 @@ function tm_event_signup_preprocess_flag(&$variables) {
     } 
     else {
       $result = _tm_event_display_waitlist_or_register($event_id);
+      $variables['display_closed'] = $result['display_closed'];
       if (!$result['display_register']) {
         $variables['hide_flag'] = TRUE;
-        //$variables['flag_classes_array'][] = 'disabled';
       }
       if ($result['error'] == 'Not a Travel Massive Event.') {
         $variables['hide_flag'] = TRUE;
@@ -186,7 +184,6 @@ function tm_event_signup_preprocess_flag(&$variables) {
       $result = _tm_event_display_waitlist_or_register($event_id);
       if (!$result['display_waitlist']) {
         $variables['hide_flag'] = TRUE;
-        //$variables['flag_classes_array'][] = 'disabled';
       }
       if ($result['error'] == 'Not a Travel Massive Event.') {
         $variables['hide_flag'] = TRUE;
@@ -214,11 +211,6 @@ function _tm_event_display_waitlist_or_register($nid) {
     throw new Exception("Invalid event node. Nid: " . $nid);
   }
   
-  // Check if is external RSVP.
-  if (isset($event->field_external_rsvp[LANGUAGE_NONE][0]['value']) && $event->field_external_rsvp[LANGUAGE_NONE][0]['value'] !== '0') {
-    return array('display_register' => FALSE, 'display_waitlist' => FALSE, 'error' => 'Not a Travel Massive Event.');
-  }
-  
   // Check if the event has already happened.
   if (isset($event->field_event_date[LANGUAGE_NONE][0]['value'])) {
     $event_date = new DateTime($event->field_event_date[LANGUAGE_NONE][0]['value'], new DateTimeZone('UTC'));
@@ -226,8 +218,13 @@ function _tm_event_display_waitlist_or_register($nid) {
 
     if ($event_date < $now) {
       // The event already happened.
-      return array('display_register' => FALSE, 'display_waitlist' => FALSE, 'error' => 'Event already happened.');
+      return array('display_register' => FALSE, 'display_waitlist' => FALSE, 'display_closed' => TRUE, 'display_external' => FALSE, 'error' => 'Event already happened.');
     }
+  }
+
+  // Check if is external RSVP.
+  if (isset($event->field_external_rsvp[LANGUAGE_NONE][0]['value']) && $event->field_external_rsvp[LANGUAGE_NONE][0]['value'] !== '0') {
+    return array('display_register' => FALSE, 'display_waitlist' => FALSE, 'display_closed' => FALSE, 'display_external' => TRUE, 'error' => 'Not a Travel Massive Event.');
   }
   
   // Check signup limit.
@@ -237,13 +234,13 @@ function _tm_event_display_waitlist_or_register($nid) {
   
   if ($limit === 0) {
     // No limit set.
-    return array('display_register' => TRUE, 'display_waitlist' => FALSE, 'error' => NULL);
+    return array('display_register' => TRUE, 'display_waitlist' => FALSE, 'display_closed' => FALSE, 'display_external' => FALSE, 'error' => NULL);
   }
   
   if ($flag->get_count($nid) >= $limit) {
-    return array('display_register' => FALSE, 'display_waitlist' => TRUE, 'error' => 'Signup limit reached.');
+    return array('display_register' => FALSE, 'display_waitlist' => TRUE, 'display_closed' => FALSE, 'display_external' => FALSE, 'error' => 'Signup limit reached.');
   }
   else {
-    return array('display_register' => TRUE, 'display_waitlist' => FALSE, 'error' => NULL);
+    return array('display_register' => TRUE, 'display_waitlist' => FALSE, 'display_closed' => FALSE, 'display_external' => FALSE, 'error' => NULL);
   }
 }

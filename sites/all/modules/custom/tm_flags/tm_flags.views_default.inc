@@ -35,6 +35,7 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['pager']['options']['items_per_page'] = '5';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['style_options']['default_row_class'] = FALSE;
   $handler->display->display_options['style_options']['row_class_special'] = FALSE;
@@ -71,8 +72,20 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['arguments']['entity_id']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['entity_id']['summary']['format'] = 'default_summary';
 
-  /* Display: Block - signed up */
-  $handler = $view->new_display('block', 'Block - signed up', 'members_signedup_block');
+  /* Display: Block - registered to event */
+  $handler = $view->new_display('block', 'Block - registered to event', 'members_signedup_block');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Registered to event';
+  $handler->display->display_options['defaults']['use_more'] = FALSE;
+  $handler->display->display_options['use_more'] = TRUE;
+  $handler->display->display_options['defaults']['use_more_always'] = FALSE;
+  $handler->display->display_options['defaults']['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['defaults']['use_more_text'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'View all attendees';
+  $handler->display->display_options['defaults']['link_display'] = FALSE;
+  $handler->display->display_options['link_display'] = 'custom_url';
+  $handler->display->display_options['link_url'] = 'node/%1/attendees';
   $handler->display->display_options['defaults']['empty'] = FALSE;
   /* No results behavior: Global: Text area */
   $handler->display->display_options['empty']['area']['id'] = 'area';
@@ -81,9 +94,23 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['empty']['area']['empty'] = TRUE;
   $handler->display->display_options['empty']['area']['content'] = 'No members signed up yet.';
   $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Flags: User's flaggings */
+  $handler->display->display_options['relationships']['flag_user_content_rel']['id'] = 'flag_user_content_rel';
+  $handler->display->display_options['relationships']['flag_user_content_rel']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_user_content_rel']['field'] = 'flag_user_content_rel';
+  $handler->display->display_options['relationships']['flag_user_content_rel']['flag'] = 'event_register';
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: Flags: Flagged time */
+  $handler->display->display_options['sorts']['timestamp']['id'] = 'timestamp';
+  $handler->display->display_options['sorts']['timestamp']['table'] = 'flagging';
+  $handler->display->display_options['sorts']['timestamp']['field'] = 'timestamp';
+  $handler->display->display_options['sorts']['timestamp']['relationship'] = 'flag_user_content_rel';
+  $handler->display->display_options['sorts']['timestamp']['order'] = 'DESC';
+  $handler->display->display_options['block_description'] = 'Registered to event';
 
-  /* Display: Page - signed up */
-  $handler = $view->new_display('page', 'Page - signed up', 'members_signedup_page');
+  /* Display: Page - registered to event */
+  $handler = $view->new_display('page', 'Page - registered to event', 'members_signedup_page');
   $handler->display->display_options['defaults']['css_class'] = FALSE;
   $handler->display->display_options['css_class'] = 'user-list grid';
   $handler->display->display_options['defaults']['use_more'] = FALSE;
@@ -105,6 +132,12 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['empty']['area']['empty'] = TRUE;
   $handler->display->display_options['empty']['area']['content'] = 'No members signed up yet.';
   $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Flags: User's flaggings */
+  $handler->display->display_options['relationships']['flag_user_content_rel']['id'] = 'flag_user_content_rel';
+  $handler->display->display_options['relationships']['flag_user_content_rel']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_user_content_rel']['field'] = 'flag_user_content_rel';
+  $handler->display->display_options['relationships']['flag_user_content_rel']['flag'] = 'event_register';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Flags: Content ID */
   $handler->display->display_options['arguments']['entity_id']['id'] = 'entity_id';
@@ -113,12 +146,12 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['arguments']['entity_id']['relationship'] = 'flag_user_content_rel';
   $handler->display->display_options['arguments']['entity_id']['default_action'] = 'default';
   $handler->display->display_options['arguments']['entity_id']['title_enable'] = TRUE;
-  $handler->display->display_options['arguments']['entity_id']['title'] = '%1 - attendees';
+  $handler->display->display_options['arguments']['entity_id']['title'] = 'Who\'s going?';
   $handler->display->display_options['arguments']['entity_id']['default_argument_type'] = 'node';
   $handler->display->display_options['arguments']['entity_id']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['entity_id']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['entity_id']['summary_options']['items_per_page'] = '25';
-  $handler->display->display_options['path'] = 'node/%/community';
+  $handler->display->display_options['path'] = 'node/%/attendees';
 
   /* Display: Block - following org */
   $handler = $view->new_display('block', 'Block - following org', 'block_following_org');

@@ -22,7 +22,7 @@ function tm_flags_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'Community';
+  $handler->display->display_options['title'] = 'Member Listing';
   $handler->display->display_options['css_class'] = 'user-list related-list';
   $handler->display->display_options['use_more'] = TRUE;
   $handler->display->display_options['use_more_always'] = FALSE;
@@ -63,28 +63,13 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['fields']['name']['label'] = '';
   $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
-  /* Sort criterion: Flags: Flagged time */
-  $handler->display->display_options['sorts']['timestamp']['id'] = 'timestamp';
-  $handler->display->display_options['sorts']['timestamp']['table'] = 'flagging';
-  $handler->display->display_options['sorts']['timestamp']['field'] = 'timestamp';
-  $handler->display->display_options['sorts']['timestamp']['relationship'] = 'flag_user_content_rel';
   /* Contextual filter: Flags: Content ID */
   $handler->display->display_options['arguments']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['arguments']['entity_id']['table'] = 'flagging';
   $handler->display->display_options['arguments']['entity_id']['field'] = 'entity_id';
   $handler->display->display_options['arguments']['entity_id']['relationship'] = 'flag_user_content_rel';
-  $handler->display->display_options['arguments']['entity_id']['default_action'] = 'default';
-  $handler->display->display_options['arguments']['entity_id']['default_argument_type'] = 'node';
-  $handler->display->display_options['arguments']['entity_id']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['entity_id']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['entity_id']['summary']['format'] = 'default_summary';
-  $handler->display->display_options['arguments']['entity_id']['summary_options']['items_per_page'] = '25';
-  /* Filter criterion: User: Active */
-  $handler->display->display_options['filters']['status']['id'] = 'status';
-  $handler->display->display_options['filters']['status']['table'] = 'users';
-  $handler->display->display_options['filters']['status']['field'] = 'status';
-  $handler->display->display_options['filters']['status']['value'] = '1';
-  $handler->display->display_options['filters']['status']['group'] = 1;
-  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
 
   /* Display: Block - signed up */
   $handler = $view->new_display('block', 'Block - signed up', 'members_signedup_block');
@@ -136,7 +121,9 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['path'] = 'node/%/community';
 
   /* Display: Block - following org */
-  $handler = $view->new_display('block', 'Block - following org', 'members_following_org_block');
+  $handler = $view->new_display('block', 'Block - following org', 'block_following_org');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Following Organisations';
   $handler->display->display_options['defaults']['link_display'] = FALSE;
   $handler->display->display_options['link_display'] = 'members_following_org_page';
   $handler->display->display_options['defaults']['relationships'] = FALSE;
@@ -145,17 +132,6 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['relationships']['flag_user_content_rel']['table'] = 'users';
   $handler->display->display_options['relationships']['flag_user_content_rel']['field'] = 'flag_user_content_rel';
   $handler->display->display_options['relationships']['flag_user_content_rel']['flag'] = 'follow_organizations';
-
-  /* Display: Block - following members */
-  $handler = $view->new_display('block', 'Block - following members', 'members_following_members_block');
-  $handler->display->display_options['defaults']['link_display'] = FALSE;
-  $handler->display->display_options['link_display'] = 'members_following_members_page';
-  $handler->display->display_options['defaults']['relationships'] = FALSE;
-  /* Relationship: Flags: User's flaggings */
-  $handler->display->display_options['relationships']['flag_user_content_rel']['id'] = 'flag_user_content_rel';
-  $handler->display->display_options['relationships']['flag_user_content_rel']['table'] = 'users';
-  $handler->display->display_options['relationships']['flag_user_content_rel']['field'] = 'flag_user_content_rel';
-  $handler->display->display_options['relationships']['flag_user_content_rel']['flag'] = 'follow_members';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Flags: Content ID */
   $handler->display->display_options['arguments']['entity_id']['id'] = 'entity_id';
@@ -163,14 +139,42 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['arguments']['entity_id']['field'] = 'entity_id';
   $handler->display->display_options['arguments']['entity_id']['relationship'] = 'flag_user_content_rel';
   $handler->display->display_options['arguments']['entity_id']['default_action'] = 'default';
-  $handler->display->display_options['arguments']['entity_id']['default_argument_type'] = 'user';
-  $handler->display->display_options['arguments']['entity_id']['default_argument_options']['user'] = FALSE;
+  $handler->display->display_options['arguments']['entity_id']['default_argument_type'] = 'node';
   $handler->display->display_options['arguments']['entity_id']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['entity_id']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['entity_id']['summary_options']['items_per_page'] = '25';
 
+  /* Display: Block - following */
+  $handler = $view->new_display('block', 'Block - following', 'block_following');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Following';
+  $handler->display->display_options['defaults']['link_display'] = FALSE;
+  $handler->display->display_options['link_display'] = 'page_1';
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Flags: follow_members */
+  $handler->display->display_options['relationships']['flag_content_rel']['id'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_content_rel']['field'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel']['required'] = 0;
+  $handler->display->display_options['relationships']['flag_content_rel']['flag'] = 'follow_members';
+  $handler->display->display_options['relationships']['flag_content_rel']['user_scope'] = 'any';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Flags: User uid */
+  $handler->display->display_options['arguments']['uid']['id'] = 'uid';
+  $handler->display->display_options['arguments']['uid']['table'] = 'flagging';
+  $handler->display->display_options['arguments']['uid']['field'] = 'uid';
+  $handler->display->display_options['arguments']['uid']['relationship'] = 'flag_content_rel';
+  $handler->display->display_options['arguments']['uid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['uid']['default_argument_type'] = 'user';
+  $handler->display->display_options['arguments']['uid']['default_argument_options']['user'] = FALSE;
+  $handler->display->display_options['arguments']['uid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['uid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['uid']['summary_options']['items_per_page'] = '25';
+
   /* Display: Page - following org */
   $handler = $view->new_display('page', 'Page - following org', 'members_following_org_page');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Following Organizations';
   $handler->display->display_options['defaults']['css_class'] = FALSE;
   $handler->display->display_options['css_class'] = 'user-list grid';
   $handler->display->display_options['defaults']['use_more'] = FALSE;
@@ -205,8 +209,10 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['arguments']['entity_id']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['path'] = 'node/%/followers';
 
-  /* Display: Page - following members */
-  $handler = $view->new_display('page', 'Page - following members', 'members_following_members_page');
+  /* Display: Page - followers */
+  $handler = $view->new_display('page', 'Page - followers', 'members_following_members_page');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Followers';
   $handler->display->display_options['defaults']['css_class'] = FALSE;
   $handler->display->display_options['css_class'] = 'user-list grid';
   $handler->display->display_options['defaults']['use_more'] = FALSE;
@@ -233,13 +239,75 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['arguments']['entity_id']['field'] = 'entity_id';
   $handler->display->display_options['arguments']['entity_id']['relationship'] = 'flag_user_content_rel';
   $handler->display->display_options['arguments']['entity_id']['default_action'] = 'default';
-  $handler->display->display_options['arguments']['entity_id']['title_enable'] = TRUE;
-  $handler->display->display_options['arguments']['entity_id']['title'] = 'Members following %1';
   $handler->display->display_options['arguments']['entity_id']['default_argument_type'] = 'node';
   $handler->display->display_options['arguments']['entity_id']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['entity_id']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['entity_id']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['path'] = 'user/%/followers';
+
+  /* Display: Block - followers */
+  $handler = $view->new_display('block', 'Block - followers', 'block_followers');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Followers';
+  $handler->display->display_options['defaults']['link_display'] = FALSE;
+  $handler->display->display_options['link_display'] = 'members_following_members_page';
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Flags: User's flaggings */
+  $handler->display->display_options['relationships']['flag_user_content_rel']['id'] = 'flag_user_content_rel';
+  $handler->display->display_options['relationships']['flag_user_content_rel']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_user_content_rel']['field'] = 'flag_user_content_rel';
+  $handler->display->display_options['relationships']['flag_user_content_rel']['flag'] = 'follow_members';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Flags: Content ID */
+  $handler->display->display_options['arguments']['entity_id']['id'] = 'entity_id';
+  $handler->display->display_options['arguments']['entity_id']['table'] = 'flagging';
+  $handler->display->display_options['arguments']['entity_id']['field'] = 'entity_id';
+  $handler->display->display_options['arguments']['entity_id']['relationship'] = 'flag_user_content_rel';
+  $handler->display->display_options['arguments']['entity_id']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['entity_id']['default_argument_type'] = 'user';
+  $handler->display->display_options['arguments']['entity_id']['default_argument_options']['user'] = FALSE;
+  $handler->display->display_options['arguments']['entity_id']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['entity_id']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['entity_id']['summary_options']['items_per_page'] = '25';
+
+  /* Display: Page - following */
+  $handler = $view->new_display('page', 'Page - following', 'page_1');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Following';
+  $handler->display->display_options['defaults']['css_class'] = FALSE;
+  $handler->display->display_options['css_class'] = 'user-list grid';
+  $handler->display->display_options['defaults']['use_more'] = FALSE;
+  $handler->display->display_options['defaults']['use_more_always'] = FALSE;
+  $handler->display->display_options['defaults']['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['defaults']['use_more_text'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'View more';
+  $handler->display->display_options['defaults']['pager'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'mini';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '18';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Flags: follow_members */
+  $handler->display->display_options['relationships']['flag_content_rel']['id'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_content_rel']['field'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel']['required'] = 0;
+  $handler->display->display_options['relationships']['flag_content_rel']['flag'] = 'follow_members';
+  $handler->display->display_options['relationships']['flag_content_rel']['user_scope'] = 'any';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Flags: User uid */
+  $handler->display->display_options['arguments']['uid']['id'] = 'uid';
+  $handler->display->display_options['arguments']['uid']['table'] = 'flagging';
+  $handler->display->display_options['arguments']['uid']['field'] = 'uid';
+  $handler->display->display_options['arguments']['uid']['relationship'] = 'flag_content_rel';
+  $handler->display->display_options['arguments']['uid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['uid']['default_argument_type'] = 'user';
+  $handler->display->display_options['arguments']['uid']['default_argument_options']['user'] = FALSE;
+  $handler->display->display_options['arguments']['uid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['uid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['uid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['path'] = 'user/%/following';
   $export['member_listings'] = $view;
 
   return $export;

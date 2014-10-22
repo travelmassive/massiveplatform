@@ -11,9 +11,9 @@ include_once 'tm_notifications_event.features.inc';
  */
 function tm_notifications_event_tm_notif_info() {
   $notification = array();
-  $notification['user_event_join'] = array(
-    'title' => 'Member joined event',    
-    'description' => 'Send the member a confirmation when joining an event.',
+  $notification['user_event_register'] = array(
+    'title' => 'Member registered for event',    
+    'description' => 'Send the member a confirmation when registering for an event.',
     'use_cron' => FALSE,
     'tokens' => array(
       // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
@@ -25,9 +25,23 @@ function tm_notifications_event_tm_notif_info() {
     )
   );
   
-  $notification['user_event_unjoin'] = array(
-    'title' => 'Member unjoined event',
-    'description' => 'Send the member a confirmation when unjoining an event.',
+  $notification['user_event_unregister'] = array(
+    'title' => 'Member unregistered from event',
+    'description' => 'Send the member a confirmation when unregistering for an event.',
+    'use_cron' => FALSE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('node', 'current-user'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+
+  $notification['user_event_join_waitlist'] = array(
+    'title' => 'Member joined waitlist for event',    
+    'description' => 'Send the member a confirmation when joining waiting list.',
     'use_cron' => FALSE,
     'tokens' => array(
       // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
@@ -60,12 +74,21 @@ function tm_notifications_event_tm_notif_info() {
  * Implement hook_flag_flag()
  */
 function tm_notifications_event_flag_flag($flag, $entity_id, $account, $flagging) {
-  // We want to target the signup flag on nodes.
-  if ($flag->name == 'signup' && $flag->entity_type == 'node') {
+  // We want to target the register flag on nodes.
+  if ($flag->name == 'event_register' && $flag->entity_type == 'node') {
     $node = node_load($entity_id);
     // Only for event nodes.
     if ($node->type == 'event') {
-      tm_notifications_notify('user_event_join', $account, array('node' => $node));
+      tm_notifications_notify('user_event_register', $account, array('node' => $node));
+    }
+  }
+
+  // We want to target the register flag on nodes.
+  if ($flag->name == 'event_waitlist' && $flag->entity_type == 'node') {
+    $node = node_load($entity_id);
+    // Only for event nodes.
+    if ($node->type == 'event') {
+      tm_notifications_notify('user_event_join_waitlist', $account, array('node' => $node));
     }
   }
 }
@@ -74,14 +97,17 @@ function tm_notifications_event_flag_flag($flag, $entity_id, $account, $flagging
  * Implement hook_flag_unflag()
  */
 function tm_notifications_event_flag_unflag($flag, $entity_id, $account, $flagging) {
-  // We want to target the signup flag on nodes.
-  if ($flag->name == 'signup' && $flag->entity_type == 'node') {
+  // We want to target the unregister flag on nodes.
+  if ($flag->name == 'event_register' && $flag->entity_type == 'node') {
     $node = node_load($entity_id);
     // Only for event nodes.
     if ($node->type == 'event') {
-      tm_notifications_notify('user_event_unjoin', $account, array('node' => $node));
+      tm_notifications_notify('user_event_unregister', $account, array('node' => $node));
     }
   }
+
+  // Note: No notification if we leave the waiting list
+
 }
 
 /**

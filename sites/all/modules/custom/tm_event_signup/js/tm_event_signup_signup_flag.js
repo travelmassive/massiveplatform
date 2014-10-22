@@ -5,7 +5,10 @@
  * @author Daniel da Silva (daniel.silva@flipside.org)
  */
 
+alert("hello!!");
+
 Drupal.behaviors.tm_event_signup_flag = {
+
   attach: function (context, settings) {
     // Local jQuery.
     var $ = jQuery;

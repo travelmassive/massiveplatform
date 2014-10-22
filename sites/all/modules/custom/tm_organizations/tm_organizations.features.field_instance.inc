@@ -209,7 +209,7 @@ function tm_organizations_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_country',
     'label' => 'Country',
-    'required' => 0,
+    'required' => 1,
     'settings' => array(
       'user_register_form' => FALSE,
     ),
@@ -683,7 +683,7 @@ function tm_organizations_field_default_field_instances() {
     'bundle' => 'organization',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Your home city',
+    'description' => 'Where your business is based',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -723,7 +723,7 @@ function tm_organizations_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_location_city',
     'label' => 'City',
-    'required' => 0,
+    'required' => 1,
     'settings' => array(
       'text_processing' => 0,
       'user_register_form' => FALSE,
@@ -736,67 +736,6 @@ function tm_organizations_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 4,
-    ),
-  );
-
-  // Exported field_instance: 'node-organization-field_location_country'
-  $field_instances['node-organization-field_location_country'] = array(
-    'bundle' => 'organization',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 12,
-      ),
-      'full' => array(
-        'label' => 'hidden',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 1,
-      ),
-      'grid' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-      'list' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-      'search_result' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 12,
-      ),
-    ),
-    'ds_extras_field_template' => '',
-    'entity_type' => 'node',
-    'field_name' => 'field_location_country',
-    'label' => 'Country',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 5,
     ),
   );
 
@@ -884,7 +823,6 @@ function tm_organizations_field_default_field_instances() {
           'chapter' => 0,
           'event' => 0,
           'organization' => 0,
-          'page' => 0,
           'partner_event' => 0,
         ),
         'priority' => 0,
@@ -963,19 +901,16 @@ function tm_organizations_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_segment',
-    'label' => 'Segment',
-    'required' => 0,
+    'label' => 'Industry Segment',
+    'required' => 1,
     'settings' => array(
       'user_register_form' => FALSE,
     ),
     'widget' => array(
-      'active' => 0,
-      'module' => 'hs_taxonomy',
-      'settings' => array(
-        'autocomplete_path' => 'term_ref_autocomplete/autocomplete',
-        'size' => 60,
-      ),
-      'type' => 'taxonomy_hs',
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
       'weight' => 3,
     ),
   );
@@ -989,16 +924,16 @@ function tm_organizations_field_default_field_instances() {
   t('Facebook');
   t('Friendly URL');
   t('Image');
+  t('Industry Segment');
   t('Linkedin');
   t('Logo');
   t('Managed by');
   t('Please provide the segment which identifies the company the best.');
-  t('Segment');
   t('Select the Travel Massive member that manages this account.');
   t('This image will used as the main banner for your profile and should be a good reflection of your company.');
   t('Twitter');
   t('Website');
-  t('Your home city');
+  t('Where your business is based');
 
   return $field_instances;
 }

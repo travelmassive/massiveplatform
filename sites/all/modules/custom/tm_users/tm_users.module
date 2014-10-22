@@ -147,4 +147,17 @@ function tm_users_email_registration_name($edit, $account) {
 }
 
 
+/**
+ * Hook on creation of a new redirect in redirect module.
+ * This is a sneaky method to delete automatically created user redirects
+ */
+function tm_users_redirect_insert($redirect) {
+  print_r($redirect->source);
+  $parts = explode("/", $redirect->redirect);
+  if ($parts[0] == "user") {
+    redirect_delete_by_path($redirect->source);
+  }
+}
+
+
 

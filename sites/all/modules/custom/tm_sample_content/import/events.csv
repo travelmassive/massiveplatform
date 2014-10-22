@@ -1,4 +1,4 @@
-id,title,body,chapter,organizer,signed_up,banner,date,limit,external,rsvp_link,venue,address,map_link
+id,title,body,chapter,organizer,event_register,banner,date,limit,external,rsvp_link,venue,address,map_link
 2,London Tower event,This is a description for an event of the London chapter,1,3,2|4|6|7|8|3,event2.jpeg,2014-10-19T12:34:56+00:00,6,0,,Freedom 229,Freedom street 12 - London,flipside.org
 1,Beers in Munich,The Munich chapter is the most German of them all,2,4,2|3|4|5|6|7,event1.jpg,2013-06-09T19:00:00-07:00,20,0,,Freiheit 229,Freiheitstraße 229,flipside.org
 3,Event way in the past,This is a description for a London event that goes way back,1,3,,,2011-10-19T21:30:00-00:00,,1,flipside.org,Mozambique Tower and Suites,Mozambique Street 29 - London,flipside.org

@@ -193,6 +193,7 @@ function tm_users_field_group_info() {
       5 => 'field_job_role',
       6 => 'field_location_city',
       7 => 'field_segment',
+      8 => 'field_user_country',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -466,8 +467,8 @@ function tm_users_field_group_info() {
     'children' => array(
       0 => 'group_user_account',
       1 => 'group_user_notifications',
-      2 => 'group_user_profile',
-      3 => 'group_user_twitter_settings',
+      2 => 'group_user_twitter_settings',
+      3 => 'group_user_profile',
     ),
     'format_type' => 'htabs',
     'format_settings' => array(
@@ -507,35 +508,6 @@ function tm_users_field_group_info() {
     ),
   );
   $export['group_user_notifications|user|user|form'] = $field_group;
-
-  $field_group = new stdClass();
-  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
-  $field_group->api_version = 1;
-  $field_group->identifier = 'group_user_twitter_settings|user|user|form';
-  $field_group->group_name = 'group_user_twitter_settings';
-  $field_group->entity_type = 'user';
-  $field_group->bundle = 'user';
-  $field_group->mode = 'form';
-  $field_group->parent_name = 'group_user_edit';
-  $field_group->data = array(
-    'label' => 'Twitter',
-    'weight' => '36',
-    'children' => array(
-      0 => 'tm_twitter_settings',
-    ),
-    'format_type' => 'htab',
-    'format_settings' => array(
-      'label' => 'Twitter',
-      'instance_settings' => array(
-        'required_fields' => 1,
-        'id' => 'user-twitter-options',
-        'classes' => '',
-        'description' => '',
-      ),
-      'formatter' => 'closed',
-    ),
-  );
-  $export['group_user_twitter_settings|user|user|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -629,6 +601,35 @@ function tm_users_field_group_info() {
     ),
   );
   $export['group_user_qa|user|user|default'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_user_twitter_settings|user|user|form';
+  $field_group->group_name = 'group_user_twitter_settings';
+  $field_group->entity_type = 'user';
+  $field_group->bundle = 'user';
+  $field_group->mode = 'form';
+  $field_group->parent_name = 'group_user_edit';
+  $field_group->data = array(
+    'label' => 'Twitter',
+    'weight' => '37',
+    'children' => array(
+      0 => 'tm_twitter_settings',
+    ),
+    'format_type' => 'htab',
+    'format_settings' => array(
+      'label' => 'Twitter',
+      'instance_settings' => array(
+        'required_fields' => 1,
+        'id' => 'user-twitter-options',
+        'classes' => '',
+        'description' => '',
+      ),
+      'formatter' => 'closed',
+    ),
+  );
+  $export['group_user_twitter_settings|user|user|form'] = $field_group;
 
   return $export;
 }

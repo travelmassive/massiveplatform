@@ -25,6 +25,86 @@ function tm_flags_views_api($module = NULL, $api = NULL) {
  */
 function tm_flags_flag_default_flags() {
   $flags = array();
+  // Exported flag: "Event Register".
+  $flags['event_register'] = array(
+    'entity_type' => 'node',
+    'title' => 'Event Register',
+    'global' => 0,
+    'types' => array(
+      0 => 'event',
+    ),
+    'flag_short' => 'Register',
+    'flag_long' => 'Register for [node:title]',
+    'flag_message' => 'You successfully registered for [node:title]',
+    'unflag_short' => 'Unregister',
+    'unflag_long' => 'Unregister for [node:title]',
+    'unflag_message' => 'You successfuly unregistered for [node:title]',
+    'unflag_denied_text' => '',
+    'link_type' => 'toggle',
+    'weight' => 0,
+    'show_in_links' => array(
+      'full' => 0,
+      'teaser' => 0,
+      'rss' => 0,
+      'search_index' => 0,
+      'search_result' => 0,
+      'diff_standard' => 0,
+      'token' => 0,
+      'grid' => 0,
+      'list' => 0,
+      'revision' => 0,
+    ),
+    'show_as_field' => 0,
+    'show_on_form' => 0,
+    'access_author' => '',
+    'show_contextual_link' => 0,
+    'i18n' => 0,
+    'module' => 'tm_flags',
+    'locked' => array(
+      0 => 'name',
+    ),
+    'api_version' => 3,
+  );
+  // Exported flag: "Event Waitlist".
+  $flags['event_waitlist'] = array(
+    'entity_type' => 'node',
+    'title' => 'Event Waitlist',
+    'global' => 0,
+    'types' => array(
+      0 => 'event',
+    ),
+    'flag_short' => 'Join Waitlist',
+    'flag_long' => 'Join Waitlist for [node:title]',
+    'flag_message' => 'You successfully joined the waitlist for [node:title]',
+    'unflag_short' => 'Leave Waitlist',
+    'unflag_long' => 'Leave Waitlist for [node:title]',
+    'unflag_message' => 'You successfuly left the Waitlist for [node:title]',
+    'unflag_denied_text' => '',
+    'link_type' => 'toggle',
+    'weight' => 0,
+    'show_in_links' => array(
+      'full' => 0,
+      'teaser' => 0,
+      'rss' => 0,
+      'search_index' => 0,
+      'search_result' => 0,
+      'diff_standard' => 0,
+      'token' => 0,
+      'grid' => 0,
+      'list' => 0,
+      'revision' => 0,
+    ),
+    'show_as_field' => 0,
+    'show_on_form' => 0,
+    'access_author' => '',
+    'show_contextual_link' => 0,
+    'i18n' => 0,
+    'module' => 'tm_flags',
+    'locked' => array(
+      0 => 'name',
+    ),
+    'api_version' => 3,
+  );
   // Exported flag: "Follow members".
   $flags['follow_members'] = array(
     'entity_type' => 'user',
@@ -135,6 +215,47 @@ function tm_flags_flag_default_flags() {
       0 => 'name',
     ),
     'api_version' => 3,
+  );
+  // Exported flag: "Waitlist".
+  $flags['waitlist'] = array(
+    'entity_type' => 'node',
+    'title' => 'Waitlist',
+    'global' => 0,
+    'types' => array(
+      0 => 'event',
+    ),
+    'flag_short' => 'Join Waitlist',
+    'flag_long' => 'Join Waitlist for [node:title]',
+    'flag_message' => 'You successfully joined the waitlist for [node:title]',
+    'unflag_short' => 'Leave Waitlist',
+    'unflag_long' => 'Leave Waitlist for [node:title]',
+    'unflag_message' => 'You successfuly left the Waitlist for [node:title]',
+    'unflag_denied_text' => '',
+    'link_type' => 'toggle',
+    'weight' => 0,
+    'show_in_links' => array(
+      'full' => 0,
+      'teaser' => 0,
+      'rss' => 0,
+      'search_index' => 0,
+      'search_result' => 0,
+      'diff_standard' => 0,
+      'token' => 0,
+      'grid' => 0,
+      'list' => 0,
+      'revision' => 0,
+    ),
+    'show_as_field' => 0,
+    'show_on_form' => 0,
+    'access_author' => '',
+    'show_contextual_link' => 0,
+    'i18n' => 0,
+    'api_version' => 3,
+    'module' => 'tm_flags',
+    'locked' => array(
+      0 => 'name',
+    ),
+    'status' => FALSE,
   );
   return $flags;
 

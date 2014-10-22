@@ -115,14 +115,14 @@ function _tm_chapter_sticker_process($field, $title = NULL) {
 function _tm_approved_process($field, $title = NULL) {
   $approval = "notapproved";
   $approval_text = "Pending Approval";
-  $approval_img = "/sites/all/themes/tm/images/notapproved_icon_16x16.png";
+  $approval_img = "/sites/all/themes/tm/images/notapproved_icon_32x32.png";
   if (in_array("approved user", $field['entity']->roles)){
     $approval = "approved";
     $approval_text = "Approved Member";
-    $approval_img = "/sites/all/themes/tm/images/approved_icon_16x16.png";
+    $approval_img = "/sites/all/themes/tm/images/approved_icon_32x32.png";
   }
   // so small it's not really worth a tpl
-  return '<p class="approval"><img src="'.$approval_img.'"><span class="text_'.$approval.'">'.$approval_text.'</span></p>';
+  return '<p class="approval"><img style="width:16px; height:16px; padding:0px; margin-right: 4px;" src="'.$approval_img.'"><span class="text_'.$approval.'">'.$approval_text.'</span></p>';
 }
 /**
  * Custom function to build the more_actions menu
@@ -263,13 +263,13 @@ function _tm_more_actions_process($field, $title = NULL) {
   // START Contact chapter owners.
   if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
     $node = menu_get_object();
-    if ($node->type == 'event'){
+    if ($node->type == 'event') {
       if (isset($node->field_chapter[$node->language])){
         $links['contactleaders'][] = array(
           'wrapper_class' => array('contactleaders'),
-          'content' => l(t('Contact leaders'), 'chapters/contact/'.$node->field_chapter[$node->language][0]['target_id'], array(
+          'content' => l(t('Contact Chapter Leaders'), 'chapters/contact/'.$node->field_chapter[$node->language][0]['target_id'], array(
             'attributes' => array(
-            'title' => t('Contact leaders')
+            'title' => t('Contact Chapter Leaders')
             )
           ))
         );
@@ -356,6 +356,7 @@ function _tm_edit_own_profile_process($field, $title = NULL) {
  * type being viewed.
  */
 function _tm_anon_flag_placeholder($field, $title = NULL) {
+
   global $user;
   if (!$user->uid) {
     $entity = $field['entity'];
@@ -390,7 +391,7 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
         ));
         break;
       case 'event':
-        $result = _tm_event_signup_can_join($entity->nid);
+        $result = _tm_event_display_waitlist_or_register($entity->nid);
         
         // Only show the button for travel massive events.
         // The other events will have an external RSVP link.
@@ -398,16 +399,29 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
           return;
         }
         
-        if (!$result['allowed']) {
+        // Show register
+        if ($result['display_register']) {
           $css_classes .= ' disabled';
-        }
-        
-        return l(t('Join'), 'user',array(
+          return l(t('Register'), 'user',array(
           'attributes' => array(
-            'title' => t('Join :event', array(':event' => $entity->title)),
+            'title' => t('Register for :event', array(':event' => $entity->title)),
             'class' => array($css_classes)
           )
-        ));
+          ));
+        }
+
+        // Show waitlist
+        if ($result['display_waitlist']) {
+          $css_classes .= ' disabled';
+          return l(t('Join Waitlist'), 'user',array(
+          'attributes' => array(
+            'title' => t('Join waitlist for :event', array(':event' => $entity->title)),
+            'class' => array($css_classes)
+          )
+          ));
+        }
+        
+        
         break;
     }
   }

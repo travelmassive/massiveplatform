@@ -84,9 +84,10 @@ function tm_events_field_group_info() {
     'weight' => '18',
     'children' => array(
       0 => 'field_rsvp_link',
-      1 => 'ds_flag_signup',
-      2 => 'tm_ds_more_actions',
-      3 => 'tm_ds_anon_flag_placeholder',
+      1 => 'ds_flag_event_waitlist',
+      2 => 'ds_flag_event_register',
+      3 => 'tm_ds_more_actions',
+      4 => 'tm_ds_anon_flag_placeholder',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(
@@ -206,6 +207,34 @@ function tm_events_field_group_info() {
     ),
   );
   $export['group_details_wrapper|node|partner_event|full'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_event_settings|node|event|form';
+  $field_group->group_name = 'group_event_settings';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'event';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Event Settings',
+    'weight' => '15',
+    'children' => array(
+      0 => 'field_is_partner_event',
+      1 => 'field_approved_members_only',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'formatter' => 'collapsible',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-event-settings field-group-fieldset',
+        'required_fields' => 1,
+      ),
+    ),
+  );
+  $export['group_event_settings|node|event|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -369,7 +398,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '1',
+    'weight' => '2',
     'children' => array(
       0 => 'field_event_venue_name',
       1 => 'field_location',

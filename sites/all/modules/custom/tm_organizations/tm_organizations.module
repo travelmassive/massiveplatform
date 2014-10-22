@@ -38,19 +38,21 @@ function _tm_sponsor($field, $title = NULL) {
 /* 
  * Alters a node on saving to make sure organizations have the owner field set to author
  */
-function tm_organizations_node_insert($node){
+function tm_organizations_node_presave($node){
   
   // make sure we are working on an organization node
   if ($node->type != "organization") { return; }
 
   // probably should check if this user is already there first, in case they manually added themselves
   // because two of the same user just looks silly
-  $userexists = 0;
-  foreach ($node->field_owner[$node->language] as $owner){
-    if ($owner['target_id'] == $node->uid)
-      $userexists++;
-  }
-  if (!$userexists){
-    $node->field_owner[$node->language][] = array('target_id' => $node->uid);
+  if ($node->is_new){
+    $userexists = 0;
+    foreach ($node->field_owner[$node->language] as $owner){
+      if ($owner['target_id'] == $node->uid)
+        $userexists++;
+    }
+    if (!$userexists){
+      $node->field_owner[$node->language][] = array('target_id' => $node->uid);
+    }
   }
 }

@@ -169,6 +169,63 @@ function _tm_more_actions_process($field, $title = NULL) {
   }
   // END Edit link.
 
+  // START manage RSVPs.
+  if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
+    $node = menu_get_object();
+    if ($node->type == 'event') {
+      $targetuser = user_load($user->uid);
+      if (!in_array("chapter leader", $targetuser->roles)){
+        $links['managersvp'][] = array(
+          'wrapper_class' => array('managersvp'),
+          'content' => l(t('Manage RSVPs'), 'node/' . $nid . '/rsvp', array(
+            'attributes' => array( 
+            'title' => t('Manage RSVPs')
+            )
+          ))
+        );
+        }
+      }
+    }
+  // END manage RSVPs
+
+  // START contact attendees.
+  if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
+    $node = menu_get_object();
+    if ($node->type == 'event') {
+      $targetuser = user_load($user->uid);
+      if (!in_array("chapter leader", $targetuser->roles)){
+        $links['contactattendees'][] = array(
+          'wrapper_class' => array('contactattendees'),
+          'content' => l(t('Contact attendees'), 'node/' . $nid . '/communicate', array(
+            'attributes' => array( 
+            'title' => t('Contact attendees')
+            )
+          ))
+        );
+        }
+      }
+    }
+  // END contact attendees
+
+  // START download chapter members.
+  if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
+    $node = menu_get_object();
+    if ($node->type == 'chapter') {
+      $targetuser = user_load($user->uid);
+      if (!in_array("chapter leader", $targetuser->roles)){
+        $links['downloadmembers'][] = array(
+          'wrapper_class' => array('downloadmembers'),
+          'content' => l(t('Download members as CSV'), 'download/csv/' . $nid, array(
+            'attributes' => array( 
+            'title' => t('Download members as CSV')
+            )
+          ))
+        );
+        }
+      }
+    }
+  // END download chapter members
+
   // START approve link
   //drupal_set_message("<pre>".print_r($menu_item,TRUE)."</pre>");
   if ($menu_item['path'] == 'user/%'){

@@ -274,3 +274,257 @@ function tm_events_node_presave($node) {
     }
   }
 }
+/*
+* Implements hook_menu()
+*/
+function tm_events_menu() {
+  // need to change the permissions on both of these 
+  // to be chapter leaders of the referenced event
+  $items['node/%node/communicate'] = array(
+    'title' => t('Communicate with attendees'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('tm_events_communication_form'),
+    'access arguments' => array('approve users'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['node/%node/rsvp'] = array(
+    'title' => t('Manage RSVPs'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('tm_events_rsvp_form'),
+    'access arguments' => array('approve users'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['download/csv/%'] = array(
+    'title' => t('Manage RSVPs'),
+    'page callback' => 'tm_events_download_csv',
+    'page arguments' => array(2),
+    'access arguments' => array('approve users'),
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+/* Form for communicating with attendees */
+function tm_events_communication_form($event){
+  // didn't want to pass from the url
+  $event = node_load(arg(1));
+  $form = array();
+
+  if ($event){
+    $view = field_view_field('node',$event,'field_event_date',
+      array('label'=>'hidden',));
+    $date = render($view);
+    $view = field_view_field('node',$event,'field_event_venue_name',
+      array('label'=>'hidden',));
+    $venue = render($view);
+
+    $form['subject'] = array(
+      '#title' => t('Subject: '),
+      '#type' =>'textfield',
+      '#required' => TRUE,
+      );
+    $form['message'] = array(
+      '#title' => t('Event Details'),
+      '#type' =>'markup',
+      // The first part of the email that is sent out
+      '#markup' => '<br/><strong>Event: </strong><br/>'.$event->title.'<br/><strong>Date: </strong>'.$date.'<strong>Venue: </strong>'.$venue,
+      );
+    $form['body'] = array(
+      '#type' =>'textarea',
+      '#title' => t('Custom Message'),
+      '#rows' => 10,
+      );
+    $form['eventid'] = array(
+      '#type' =>'hidden',
+      '#value' => $event->nid,
+      );
+    /*
+    Temporarily remove this and then make it ajax 
+    $form['testemail'] = array(
+      '#title' => t('Send test email to:'),
+      '#type' =>'textfield',
+      );
+    $form['test_button'] = array(
+      '#type' => 'submit',
+      '#value' => t('Send test email'),
+      '#id' => 'test-submit',
+      '#submit' => array('tm_events_test_email'),
+    );
+    */
+    $options['rsvp'] = t('RSVPs');  
+    $options['waitlist'] = t('Waitlist');  
+    $options['all'] = t('RSVPs/Waitlist');  
+    $options['chapter'] = t('Entire chapter');  
+
+    $form['recipients'] = array(
+      '#type' =>'select',
+      '#options' => $options,
+      '#title' => t('Recipients'),
+      );
+    $form['submit_button'] = array(
+      '#type' => 'submit',
+      '#value' => t('Send'),
+      '#id' => 'edit-submit'  
+    );
+  }
+  return $form;
+}
+/* Submit functions */
+function tm_events_test_email($form, &$form_state){
+  if (isset($form_state['values']['testemail'])){
+    // actually send that email
+    drupal_set_message(t('Sent a test message to '.$form_state['values']['testemail']));
+  }
+  else{
+    drupal_set_message(t('No email set'));
+  }
+  // needs to go back to that form with everything prefilled .. hmmm
+}
+
+
+/* Form for managing RSVPs */
+function tm_events_rsvp_form($event){
+  // didn't want to pass from the url
+  $event = node_load(arg(1));
+  $form = array();
+
+  if ($event){
+
+    $options['rsvp'] = t('RSVP');  
+    $options['waitlist'] = t('Waitlist');  
+    $options['remove'] = t('Not attending');  
+
+    $form['status'] = array(
+      '#type' =>'select',
+      '#options' => $options,
+      '#title' => t('Change status'),
+      );
+
+    $form['eventid'] = array(
+      '#type' =>'hidden',
+      '#value' => $event->nid,
+      );
+
+    $form['submit_button'] = array(
+      '#type' => 'submit',
+      '#value' => t('Update'),
+      '#id' => 'edit-submit'  
+    );
+    // list of users, each with checkbox
+    $users = db_select('flagging', 'f')
+          ->fields('f')
+          ->condition('entity_id',$event->nid,'=')
+          ->condition('entity_type','node','=')
+          ->execute();
+    $useroptions = array();
+    while ($user = $users->fetchAssoc()){
+      $account = user_load($user['uid']);
+      $useroptions[$user['uid']] = 
+        '<span class="tmeventuser">'.tm_events_username($account).'</span>'.
+        '<span class="tmeventstatus">'.tm_events_status($user['fid']).'</span>';
+    }
+    $form['userlist'] = array(
+      '#type' =>'checkboxes',
+      '#options' => $useroptions,
+      '#title' => t('Attendees'),
+      );
+    $form['download'] = array(
+      '#type' => 'markup',
+      '#value' => t('Download as CSV'),
+      '#markup' => '<a class="form-submit" href="/download/csv/'.$event->nid.'">'.t('Download as CSV').'</a>',
+    );
+  }
+  return $form;
+}
+/* RSVP form submit function */
+function tm_events_rsvp_form_submit($form, &$form_state){
+  $rsvpflag = flag_get_flag('event_register', NULL);
+  $waitflag = flag_get_flag('event_waitlist', NULL);
+
+  $action = $form_state['values']['status'];
+  $event  = $form_state['values']['eventid'];
+
+  // Ian - TODO confirm that flag and unflag do nothing if the flag is already set/unset
+  // docs suggest that nothing happens
+
+  foreach($form_state['values']['userlist'] as $uid){
+    if (!empty($uid)){
+      $account = user_load($uid);
+      if ($action == 'remove'){
+        $rsvpflag->flag('unflag', $event, $account, TRUE);
+        $waitflag->flag('unflag', $event, $account, TRUE);
+      }
+      else if ($action == 'waitlist'){
+        $rsvpflag->flag('unflag', $event, $account, TRUE);
+        $waitflag->flag('flag', $event, $account, TRUE);
+      }
+      else if ($action == 'rsvp'){
+        $waitflag->flag('unflag', $event, $account, TRUE);
+        $rsvpflag->flag('flag', $event, $account, TRUE);
+      }
+    }
+  }
+}
+
+/* RSVP Download function */
+function tm_events_download_csv($nid){
+
+  // csv header
+  drupal_add_http_header('Content-Type', 'text/csv; utf-8');
+  drupal_add_http_header('Content-Disposition', 'attachment; filename = output.csv');
+  
+  $fh = fopen('php://output', 'w');
+  // puts a header row across the top of the csv
+  $item = array(t('First name'),t('Last name'),t('Email'),t('Country'),t('Organisation'),t('Type'),t('Date registered'));
+  fputcsv($fh, $item);
+
+  // list of users
+  $users = db_select('flagging', 'f')
+    ->fields('f')
+    ->condition('entity_id',$nid,'=')
+    ->condition('entity_type','node','=')
+    ->execute();
+  while ($user = $users->fetchAssoc()){
+    $account = user_load($user['uid']);
+    if (empty($account->language)) $language = LANGUAGE_NONE;
+    else $language = $account->language;
+
+    $item = array();
+    // columns in same order as the header array above
+    $item[] = $account->field_user_first_name[$language][0]['value'];
+    $item[] = $account->field_user_last_name[$language][0]['value'];
+    $item[] = $account->mail;
+    if (isset($account->field_user_country[$language])){
+      $item[] = $account->field_user_country[$language][0]['value'];
+    }
+    else $item[] = t('none');
+    if (isset($account->field_job_organization[$language])){
+      $item[] = $account->field_job_organization[$language][0]['value'];
+    }
+    else $item[] = t('none');
+    $item[] = tm_events_status($user['fid']);
+    $item[] = date('j M Y',$user['timestamp']);
+    fputcsv($fh, $item);
+  } 
+  fclose($fh);
+}
+
+/* Converts the flag ID to the flag name */
+function tm_events_status($fid){
+  $flag = flag_get_flag(NULL, $fid);
+  if ($flag->name == 'event_register') return t('RSVP');
+  if ($flag->name == 'event_waitlist') return t('Waitlist');
+  return '';
+}
+/* Formats the user's name */
+function tm_events_username($user){
+  if (empty($user->language)) $language = LANGUAGE_NONE;
+  else $language = $user->language;
+  $name = $user->name;
+  if (isset($user->field_user_first_name[$language])){
+    $name = $user->field_user_first_name[$language][0]['value'];
+    if (isset($user->field_user_first_name[$language])){
+      $name .= ' '.$user->field_user_last_name[$language][0]['value'];
+    }
+  }
+  return $name;
+}

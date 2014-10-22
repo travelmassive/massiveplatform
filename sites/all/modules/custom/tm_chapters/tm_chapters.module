@@ -32,7 +32,7 @@ function tm_chapters_menu() {
     'title' => t('Contact chapter leaders'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('tm_chapters_contact_form',1),
-    'access arguments' => array('flag follow members'),
+    'access arguments' => array('flag follow_members'),
     'type' => MENU_CALLBACK,
   );
   return $items;
@@ -120,12 +120,14 @@ function tm_chapters_contact_form_submit($form, &$form_state){
       $chapterleader = user_load($leader['target_id']);
       tm_chapters_send_email($chapterleader->mail, $form_state['values']['subject'], $form_state['values']['body'], $account);
     }
+  drupal_set_message(t('Your message has been sent.'));
+  drupal_goto('node/'.$chapter->nid);
   }
 }
 /* Email sending function */
 function tm_chapters_send_email($email, $subject, $body, $user){
 
-    if (isset($user->language)) $language = LANGUAGE_NONE;
+    if (empty($user->language)) $language = LANGUAGE_NONE;
     else $language = $user->language;
     $name = $user->name;
     if (isset($user->field_user_first_name[$language])){

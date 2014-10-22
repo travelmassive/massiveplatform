@@ -65,7 +65,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['filters']['status']['value'] = '1';
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Field: Industry Segment (field_segment) */
+  /* Filter criterion: Field: Segment (field_segment) */
   $handler->display->display_options['filters']['field_segment_tid']['id'] = 'field_segment_tid';
   $handler->display->display_options['filters']['field_segment_tid']['table'] = 'field_data_field_segment';
   $handler->display->display_options['filters']['field_segment_tid']['field'] = 'field_segment_tid';
@@ -178,7 +178,7 @@ function tm_users_views_default_views() {
     4 => 0,
     3 => 0,
   );
-  /* Filter criterion: Field: Industry Segment (field_segment) */
+  /* Filter criterion: Field: Segment (field_segment) */
   $handler->display->display_options['filters']['field_segment_tid']['id'] = 'field_segment_tid';
   $handler->display->display_options['filters']['field_segment_tid']['table'] = 'field_data_field_segment';
   $handler->display->display_options['filters']['field_segment_tid']['field'] = 'field_segment_tid';
@@ -287,6 +287,13 @@ function tm_users_views_default_views() {
 
   /* Display: Block - joined events */
   $handler = $view->new_display('block', 'Block - joined events', 'block_joined_events');
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Flags: event_register */
+  $handler->display->display_options['relationships']['flag_content_rel']['id'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel']['table'] = 'node';
+  $handler->display->display_options['relationships']['flag_content_rel']['field'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel']['flag'] = 'event_register';
+  $handler->display->display_options['relationships']['flag_content_rel']['user_scope'] = 'any';
 
   /* Display: Block - joined chapters */
   $handler = $view->new_display('block', 'Block - joined chapters', 'block_joined_chapters');

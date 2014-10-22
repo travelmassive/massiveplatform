@@ -107,9 +107,9 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Followers',
-    'weight' => '8',
+    'weight' => '9',
     'children' => array(
-      0 => 'members_following_members',
+      0 => 'members_followed_by_members',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -160,7 +160,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Events joined',
-    'weight' => '10',
+    'weight' => '12',
     'children' => array(
       0 => 'joined_event_list',
     ),
@@ -377,7 +377,6 @@ function tm_users_field_group_info() {
     'weight' => '21',
     'children' => array(
       0 => 'field_location_city',
-      1 => 'field_location_country',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(

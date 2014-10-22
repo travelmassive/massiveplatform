@@ -151,7 +151,7 @@ function tm_users_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 16,
+        'weight' => 17,
       ),
       'grid' => array(
         'label' => 'above',
@@ -209,7 +209,7 @@ function tm_users_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 15,
+        'weight' => 16,
       ),
       'grid' => array(
         'label' => 'above',
@@ -819,7 +819,7 @@ function tm_users_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 17,
+        'weight' => 18,
       ),
       'grid' => array(
         'label' => 'above',
@@ -871,7 +871,7 @@ function tm_users_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 18,
+        'weight' => 19,
       ),
       'grid' => array(
         'label' => 'above',

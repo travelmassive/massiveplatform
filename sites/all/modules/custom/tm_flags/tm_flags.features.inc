@@ -99,11 +99,11 @@ function tm_flags_flag_default_flags() {
     'access_author' => '',
     'show_contextual_link' => 0,
     'i18n' => 0,
-    'api_version' => 3,
     'module' => 'tm_flags',
     'locked' => array(
       0 => 'name',
     ),
+    'api_version' => 3,
   );
   // Exported flag: "Follow members".
   $flags['follow_members'] = array(
@@ -177,13 +177,14 @@ function tm_flags_flag_default_flags() {
     ),
     'api_version' => 3,
   );
-  // Exported flag: "Join Chapter".
+  // Exported flag: "Signup".
   $flags['signup'] = array(
     'entity_type' => 'node',
-    'title' => 'Join Chapter',
+    'title' => 'Signup',
     'global' => 0,
     'types' => array(
       0 => 'chapter',
+      1 => 'event',
     ),
     'flag_short' => 'Join',
     'flag_long' => 'Join [node:title]',
@@ -198,8 +199,6 @@ function tm_flags_flag_default_flags() {
       'full' => 0,
       'teaser' => 0,
       'rss' => 0,
-      'search_index' => 0,
-      'search_result' => 0,
       'diff_standard' => 0,
       'token' => 0,
       'grid' => 0,

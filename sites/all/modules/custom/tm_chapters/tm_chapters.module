@@ -120,6 +120,8 @@ function tm_chapters_contact_form_submit($form, &$form_state){
       $chapterleader = user_load($leader['target_id']);
       tm_chapters_send_email($chapterleader->mail, $form_state['values']['subject'], $form_state['values']['body'], $account);
     }
+  drupal_set_message(t('Your message has been sent.'));
+  drupal_goto('node/'.$chapter->nid);
   }
 }
 /* Email sending function */

@@ -87,8 +87,8 @@ function tm_event_signup_flag_validate($action, $flag, $entity_id, $account, $sk
 
   // Only validate the 'signup' flag whenever an 'event' is flagged. Users may always unflag.
   if ($flag->name == 'event_register' && $action == 'flag' && $flagged_entity->type == 'event') {
-    $result = _tm_event_display_waitlist_or_register($entity_id);
-    if (!$result['display_register']) {
+    $result = _tm_event_display_flag($entity_id);
+    if ($result == "display_waitlist") {
       return(array('access-denied' => t('Signup limit reached.')));
     }
   }
@@ -139,71 +139,28 @@ function tm_event_signup_preprocess_flag(&$variables) {
   $event_id = $variables['entity_id'];
   $flagged_entity = node_load($event_id);
 
-  // Check if we are approved
-  if (node_type_get_name($flagged_entity) == "Event") {
-    global $user;
-    $approved_members_only = $flagged_entity->field_approved_members_only[LANGUAGE_NONE][0]['value'];
-    $approved_member = in_array("approved user", $user->roles);
+  // Get flag for event
+  // Either: show_closed, show_external_rsvp, show_register, show_waitlist, or show_not_approved
+  if (isset($flagged_entity->type)) {
+    if ($status == 'unflagged' && $flagged_entity->type == 'event') {
+      $event_flag = _tm_event_display_flag($event_id);
 
-    if ($approved_members_only and !$approved_member) {
-      $variables['approved_members_only'] = TRUE;
-    }
-  }
+      // flag is event_register
+      if ($flag->name == "event_register") { //} && $status == 'unflagged') {
+          $variables['hide_flag'] = ($event_flag != "show_register");
 
-  // TODO - Rewrite the logic of whether to display the waitlist, register flags this is hacky - Ian
-
-  // Register flag
-  // Only validate the 'register' flag whenever an 'event' is flagged. Users may always unflag.
-  if ($flag->name == 'event_register' && $status == 'unflagged' && $flagged_entity->type == 'event') {
-
-    $result = _tm_event_display_waitlist_or_register($event_id);
-    $variables['display_external'] = $result['display_external'];
-
-    // Check if we are already on waitlist 
-    // This might happen if you added to waitlist then increased capacity
-    $register_flag = flag_get_flag('event_waitlist');
-    if ($register_flag->is_flagged($flagged_entity->nid))
-    { 
-      // Hide register button if we are on waitlist already
-      $variables['hide_flag'] = TRUE;
-    } 
-    else {
-      $variables['display_closed'] = $result['display_closed'];
-      if (!$result['display_register']) {
-        $variables['hide_flag'] = TRUE;
+          // the register flag may be hidden but also send through variables to flag.tpl.php to
+          // indicate whether to show closed event, external_rsvp, etc.
+          $variables['event_flag'] = $event_flag;
       }
-      if ($result['error'] == 'Not a Travel Massive Event.') {
-        $variables['hide_flag'] = TRUE;
-      }
-    }
-    
-  }
 
-  // Waitlist flag
-  // Show this if the event is full and if the user isn't already registered
-  if ($flag->name == 'event_waitlist' && $status == 'unflagged' && $flagged_entity->type == 'event') {
-
-    $result = _tm_event_display_waitlist_or_register($event_id);
-    $variables['display_closed'] = $result['display_closed'];
-
-    // Check if we are already registered
-    $register_flag = flag_get_flag('event_register');
-    if ($register_flag->is_flagged($flagged_entity->nid))
-    { 
-      // Hide waitlist button if we are registered already
-      $variables['hide_flag'] = TRUE;
-    } 
-    else {
-      if ($result['display_external']) {
-        $variables['hide_flag'] = TRUE;
-      } 
-      else {
-        if (!$result['display_waitlist']) {
-          $variables['hide_flag'] = TRUE;
-        }
+      // flag is event_waitlist
+      if ($flag->name == "event_waitlist") {
+         $variables['hide_flag'] = ($event_flag != "show_waitlist");
       }
     }
   }
+  
 }
 
 /**
@@ -211,10 +168,12 @@ function tm_event_signup_preprocess_flag(&$variables) {
  * In order to signup, the signup limit can't be reached and the event
  * can't be in the past.
  * 
+ * returns show_closed, show_external_rsvp, show_register, show_waitlist, or show_not_approved
+ * 
  * @param $nid
  *   The event id
  */
-function _tm_event_display_waitlist_or_register($nid) {
+function _tm_event_display_flag($nid) {
 
   $flag = flag_get_flag('event_register');
 
@@ -225,9 +184,21 @@ function _tm_event_display_waitlist_or_register($nid) {
     throw new Exception("Invalid event node. Nid: " . $nid);
   }
   
+  // Check if is external RSVP.
   // Is external event
   $display_external = (isset($event->field_external_rsvp[LANGUAGE_NONE][0]['value']) && $event->field_external_rsvp[LANGUAGE_NONE][0]['value'] !== '0');
+  if ($display_external) {
+    return 'show_external_rsvp';
+  }
 
+  // Check if we are approved
+  global $user;
+  $approved_members_only = $event->field_approved_members_only[LANGUAGE_NONE][0]['value'];
+  $approved_member = in_array("approved user", $user->roles);
+  if ($approved_members_only and !$approved_member) {
+    return 'show_not_approved';
+  }
+  
   // Check if the event has already happened
   // Todo: Use the event's timezone
   if (isset($event->field_event_date[LANGUAGE_NONE][0]['value'])) {
@@ -235,30 +206,34 @@ function _tm_event_display_waitlist_or_register($nid) {
     $now = new DateTime('now', new DateTimeZone('UTC'));
 
     if ($event_date < $now) {
-      // The event already happened.
-      return array('display_register' => FALSE, 'display_waitlist' => FALSE, 'display_closed' => TRUE, 'display_external' => $display_external, 'error' => 'Event already happened.');
+      return 'show_closed';
     }
   }
 
-  // Check if is external RSVP.
-  if ($display_external) {
-    return array('display_register' => FALSE, 'display_waitlist' => FALSE, 'display_closed' => FALSE, 'display_external' => $display_external, 'error' => 'Not a Travel Massive Event.');
-  }
-  
   // Check signup limit.
   if (isset($event->field_signup_limit[LANGUAGE_NONE][0]['value'])) {
     $limit = $event->field_signup_limit[LANGUAGE_NONE][0]['value'];
   }
   
+  // No signup limit, show register
   if ($limit === 0) {
-    // No limit set.
-    return array('display_register' => TRUE, 'display_waitlist' => FALSE, 'display_closed' => FALSE, 'display_external' => FALSE, 'error' => NULL);
+    return 'show_register';
   }
   
+  // Signup limit
   if ($flag->get_count($nid) >= $limit) {
-    return array('display_register' => FALSE, 'display_waitlist' => TRUE, 'display_closed' => FALSE, 'display_external' => FALSE, 'error' => 'Signup limit reached.');
+    // Show waitlist, event booked out
+    global $user;
+    if ($flag->is_flagged($nid, $user->uid)) {
+      return 'show_register';
+    } else {
+      // not registered, show waitlist
+      return 'show_waitlist';
+    }
+    
   }
   else {
-    return array('display_register' => TRUE, 'display_waitlist' => FALSE, 'display_closed' => FALSE, 'display_external' => FALSE, 'error' => NULL);
+    // Spare seats, show register
+    return 'show_register';
   }
 }

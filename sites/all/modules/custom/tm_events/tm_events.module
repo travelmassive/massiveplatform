@@ -273,6 +273,11 @@ function tm_events_node_presave($node) {
       $node->field_rsvp_link[LANGUAGE_NONE] = array();
     }
   }
+  if ($node->type == 'event'){
+    // I have absolutely no idea why this is necessary, but the organiser field
+    // is being copied and not copied back
+    $node->field_organizer = $node->field_organizer_child;
+  }
 }
 /*
 * Implements hook_menu()

@@ -468,9 +468,15 @@ function tm_events_rsvp_form_submit($form, &$form_state){
 /* RSVP Download function */
 function tm_events_download_csv($nid){
 
+  $chapternode = node_load($nid);
+  $oldzone = date_default_timezone_get();
+  date_default_timezone_set(drupal_get_user_timezone());
+  $csvname = $chapternode->title.'_'.date('M_d_Y_Gi',time());
+  date_default_timezone_set($oldzone);
+
   // csv header
   drupal_add_http_header('Content-Type', 'text/csv; utf-8');
-  drupal_add_http_header('Content-Disposition', 'attachment; filename = output.csv');
+  drupal_add_http_header('Content-Disposition', 'attachment; filename = '.$csvname);
   
   $fh = fopen('php://output', 'w');
   // puts a header row across the top of the csv
@@ -493,11 +499,11 @@ function tm_events_download_csv($nid){
     $item[] = $account->field_user_first_name[$language][0]['value'];
     $item[] = $account->field_user_last_name[$language][0]['value'];
     $item[] = $account->mail;
-    if (isset($account->field_user_country[$language])){
+    if (isset($account->field_user_country[$language][0])){
       $item[] = $account->field_user_country[$language][0]['value'];
     }
     else $item[] = t('none');
-    if (isset($account->field_job_organization[$language])){
+    if (isset($account->field_job_organization[$language][0])){
       $item[] = $account->field_job_organization[$language][0]['value'];
     }
     else $item[] = t('none');

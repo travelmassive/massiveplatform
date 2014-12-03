@@ -182,3 +182,19 @@ function tm_users_chapters($uid){
   return $markup;
 }
 
+/* Checks if a user is a chapter leader of a chapter */
+function tm_users_is_chapter_leader($uid, $chapterid){
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'chapter')
+    ->propertyCondition('nid', $chapterid)
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->fieldCondition('field_chapter_leaders', 'target_id', $uid, '=');
+
+  $result = $query->execute();
+
+  if (isset($result['node'])) {
+    return TRUE;
+  }
+  return FALSE;
+}

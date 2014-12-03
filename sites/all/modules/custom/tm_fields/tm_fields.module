@@ -174,15 +174,18 @@ function _tm_more_actions_process($field, $title = NULL) {
     $node = menu_get_object();
     if ($node->type == 'event') {
       $targetuser = user_load($user->uid);
-      if (!in_array("chapter leader", $targetuser->roles)){
-        $links['managersvp'][] = array(
-          'wrapper_class' => array('managersvp'),
-          'content' => l(t('Manage RSVPs'), 'node/' . $nid . '/rsvp', array(
-            'attributes' => array( 
-            'title' => t('Manage RSVPs')
-            )
-          ))
-        );
+      //if (!in_array("chapter leader", $targetuser->roles)){
+      if (isset($node->field_chapter[LANGUAGE_NONE][0])){
+        if (tm_users_is_chapter_leader($user->uid, $node->field_chapter[LANGUAGE_NONE][0]['target_id'])){ 
+          $links['manageattendees'][] = array(
+            'wrapper_class' => array('managersvp'),
+            'content' => l(t('Manage RSVPs'), 'node/' . $nid . '/rsvp', array(
+              'attributes' => array( 
+              'title' => t('Manage RSVPs')
+              )
+            ))
+          );
+          }
         }
       }
     }
@@ -193,15 +196,18 @@ function _tm_more_actions_process($field, $title = NULL) {
     $node = menu_get_object();
     if ($node->type == 'event') {
       $targetuser = user_load($user->uid);
-      if (!in_array("chapter leader", $targetuser->roles)){
-        $links['contactattendees'][] = array(
-          'wrapper_class' => array('contactattendees'),
-          'content' => l(t('Contact attendees'), 'node/' . $nid . '/communicate', array(
-            'attributes' => array( 
-            'title' => t('Contact attendees')
-            )
-          ))
-        );
+      //if (in_array("chapter leader", $targetuser->roles)){
+      if (isset($node->field_chapter[LANGUAGE_NONE][0])){
+        if (tm_users_is_chapter_leader($user->uid, $node->field_chapter[LANGUAGE_NONE][0]['target_id'])){ 
+          $links['manageattendees'][] = array(
+            'wrapper_class' => array('contactattendees'),
+            'content' => l(t('Contact attendees'), 'node/' . $nid . '/communicate', array(
+              'attributes' => array( 
+              'title' => t('Contact attendees')
+              )
+            ))
+          );
+          }
         }
       }
     }

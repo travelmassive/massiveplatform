@@ -314,6 +314,8 @@ function tm_events_communication_form($event){
   $event = node_load(arg(1));
   $form = array();
 
+  $form['#prefix'] = l(t('Back to event'),'node/'.$event->nid);
+
   if ($event){
     $view = field_view_field('node',$event,'field_event_date',
       array('label'=>'hidden',));
@@ -391,6 +393,8 @@ function tm_events_rsvp_form($event){
   // didn't want to pass from the url
   $event = node_load(arg(1));
   $form = array();
+
+  $form['#prefix'] = l(t('Back to event'),'node/'.$event->nid);
 
   if ($event){
 

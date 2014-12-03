@@ -131,10 +131,6 @@ function tm_events_views_default_views() {
   $handler->display->display_options['filters']['field_is_partner_event_value']['id'] = 'field_is_partner_event_value';
   $handler->display->display_options['filters']['field_is_partner_event_value']['table'] = 'field_data_field_is_partner_event';
   $handler->display->display_options['filters']['field_is_partner_event_value']['field'] = 'field_is_partner_event_value';
-  $handler->display->display_options['filters']['field_is_partner_event_value']['value'] = array(
-    0 => '0',
-    1 => '1',
-  );
   $handler->display->display_options['filters']['field_is_partner_event_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_is_partner_event_value']['expose']['operator_id'] = 'field_is_partner_event_value_op';
   $handler->display->display_options['filters']['field_is_partner_event_value']['expose']['operator'] = 'field_is_partner_event_value_op';
@@ -147,14 +143,6 @@ function tm_events_views_default_views() {
     7 => 0,
     3 => 0,
     5 => 0,
-  );
-  $handler->display->display_options['filters']['field_is_partner_event_value']['group_info']['label'] = 'Partner Event (field_is_partner_event)';
-  $handler->display->display_options['filters']['field_is_partner_event_value']['group_info']['identifier'] = 'field_is_partner_event_value';
-  $handler->display->display_options['filters']['field_is_partner_event_value']['group_info']['remember'] = FALSE;
-  $handler->display->display_options['filters']['field_is_partner_event_value']['group_info']['group_items'] = array(
-    1 => array(),
-    2 => array(),
-    3 => array(),
   );
   $handler->display->display_options['path'] = 'events';
   $handler->display->display_options['menu']['type'] = 'normal';
@@ -260,7 +248,7 @@ function tm_events_views_default_views() {
   $handler->display->display_options['sorts']['field_event_date_value']['id'] = 'field_event_date_value';
   $handler->display->display_options['sorts']['field_event_date_value']['table'] = 'field_data_field_event_date';
   $handler->display->display_options['sorts']['field_event_date_value']['field'] = 'field_event_date_value';
-  /* Contextual filter: Field: Event Chapter (field_chapter) */
+  /* Contextual filter: Field: Home Chapter (field_chapter) */
   $handler->display->display_options['arguments']['field_chapter_target_id']['id'] = 'field_chapter_target_id';
   $handler->display->display_options['arguments']['field_chapter_target_id']['table'] = 'field_data_field_chapter';
   $handler->display->display_options['arguments']['field_chapter_target_id']['field'] = 'field_chapter_target_id';
@@ -309,7 +297,7 @@ function tm_events_views_default_views() {
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['pager']['options']['id'] = '0';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Field: Event Chapter (field_chapter) */
+  /* Contextual filter: Field: Home Chapter (field_chapter) */
   $handler->display->display_options['arguments']['field_chapter_target_id']['id'] = 'field_chapter_target_id';
   $handler->display->display_options['arguments']['field_chapter_target_id']['table'] = 'field_data_field_chapter';
   $handler->display->display_options['arguments']['field_chapter_target_id']['field'] = 'field_chapter_target_id';

@@ -55,6 +55,7 @@ features[field_instance][] = node-event-field_chapter
 features[field_instance][] = node-event-field_event_date
 features[field_instance][] = node-event-field_event_venue_name
 features[field_instance][] = node-event-field_image
+features[field_instance][] = node-event-field_is_partner_event
 features[field_instance][] = node-event-field_location
 features[field_instance][] = node-event-field_map_link
 features[field_instance][] = node-event-field_organizer

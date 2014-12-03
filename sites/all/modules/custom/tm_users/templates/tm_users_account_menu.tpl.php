@@ -77,6 +77,13 @@ if (!$twitter_data) {
       <li><?php print l(t('My companies'), 'user/' . $loaded->uid . '/companies', array('fragment' => 'user-notifications-options')); ?></li>
     </ul>
   <?php endif; ?>
+  <!-- Link by title to any chapters you are a chapter leader of -->
+  <?php if (in_array("chapter leader", $loaded->roles)) : ?>
+    <ul class="dropd-menu">
+      <?php print tm_users_chapters($loaded->uid); ?>
+    </ul>
+  <?php endif; ?>
+
     <ul class="dropd-menu">
       <li><?php print l(t('Sign out'), 'user/logout'); ?></li>
     </ul>

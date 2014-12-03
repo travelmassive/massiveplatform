@@ -159,5 +159,26 @@ function tm_users_redirect_insert($redirect) {
   }
 }
 
+/* 
+ * Link by title to any chapters this user is a chapter leader of 
+ * inserts this markup into the user menu tpl file
+*/
+function tm_users_chapters($uid){
+  $query = new EntityFieldQuery();
+  $markup = '';
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'chapter')
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->fieldCondition('field_chapter_leaders', 'target_id', $uid, '=');
 
+  $result = $query->execute();
+
+  if (isset($result['node'])) {
+    $chapters_nids = array_keys($result['node']);
+    foreach ($chapters_nids as $nid)
+    $chapter = node_load($nid);
+    $markup .= "<li>".l($chapter->title,'node/'.$chapter->nid).'</li>';
+  }
+  return $markup;
+}
 

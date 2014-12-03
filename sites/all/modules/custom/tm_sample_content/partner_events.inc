@@ -26,7 +26,7 @@ class TMPartnerEventMigration extends TMBaseMigration {
     );
 
     // Destination
-    $this->destination = new MigrateDestinationNode('partner_event');
+    $this->destination = new MigrateDestinationNode('event');
 
 
     // Field Mappings

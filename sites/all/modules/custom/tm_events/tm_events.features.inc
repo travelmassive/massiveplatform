@@ -42,14 +42,6 @@ function tm_events_node_info() {
       'title_label' => t('Title'),
       'help' => '',
     ),
-    'partner_event' => array(
-      'name' => t('Partner event'),
-      'base' => 'node_content',
-      'description' => t('Travel related events organized by TM partners.'),
-      'has_title' => '1',
-      'title_label' => t('Title'),
-      'help' => '',
-    ),
   );
   drupal_alter('node_info', $items);
   return $items;

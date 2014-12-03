@@ -160,14 +160,14 @@ function tm_events_ds_fields_info($entity_type) {
   $fields['tm_ds_date_avatar'] = array(
     'title' => t('Date avatar'),
     'field_type' => DS_FIELD_TYPE_FUNCTION,
-    'ui_limit' => array('event|*', 'partner_event|*'),
+    'ui_limit' => array('event|*',),
     'function' => '_tm_date_avatar'
   );
 
   $fields['tm_ds_fulldate_event'] = array(
     'title' => t('Full datetime event'),
     'field_type' => DS_FIELD_TYPE_FUNCTION,
-    'ui_limit' => array('event|full', 'partner_event|full'),
+    'ui_limit' => array('event|full',),
     'function' => '_tm_fulldate_event'
   );
 

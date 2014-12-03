@@ -221,7 +221,6 @@ function tm_chapters_field_default_field_instances() {
           'chapter' => 0,
           'event' => 'event',
           'organization' => 0,
-          'partner_event' => 0,
         ),
         'priority' => 0,
         'referenced' => array(

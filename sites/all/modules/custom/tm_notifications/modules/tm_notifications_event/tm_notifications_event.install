@@ -1,5 +1,0 @@
-<?php
-
-function tm_notifications_event_uninstall() {
-  tm_notifications_preferences_purge_bulk(array('user_event_register', 'user_event_unregister', 'user_event_join_waitlist', 'event_added_member_chapter'));
-}

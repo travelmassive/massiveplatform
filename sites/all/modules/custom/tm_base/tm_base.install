@@ -201,7 +201,7 @@ function tm_base_update_7017() {
  * Enable the queue_mail, ultimate_cron and tm_notifications modules.
  */
 function tm_base_update_7018() {
-  module_enable(array('queue_mail', 'tm_notifications', 'tm_notifications_event', 'tm_notifications_chapter', 'tm_notifications_upcoming_event', 'ultimate_cron'));
+  module_enable(array('queue_mail', 'tm_notifications', 'tm_notifications_new_follower', 'tm_notifications_new_organization_follower', 'tm_notifications_chapter', 'tm_notifications_upcoming_event', 'ultimate_cron'));
 }
 
 /**

@@ -52,6 +52,7 @@ html.js .form-text.form-autocomplete {
 }
 
 .form-submit {
+  margin-top: 10px;
   @extend .bttn-tertiary, .bttn-m;
   &:before {
     @extend .icon-s-tick;
@@ -83,7 +84,11 @@ label {
 //   margin-bottom: -1rem;
 //   text-transform: uppercase;
 // }
-
+#tm-events-rsvp-form,
+#tm-events-communication-form,
+.vbo-views-form{
+  padding: 2rem;
+}
 .node-form,
 #user-profile-form,
 #user-register-form {
@@ -509,3 +514,20 @@ select {
 
 // Invitation form
 #page-title { margin-left: 16px; }
+
+#edit-userlist{
+  border-top: 1px solid #e8e8e8;
+  width: 70%;
+ .form-item{
+    padding: 5px;
+    border: 1px solid #e8e8e8;
+    border-top: none;
+  .tmeventuser{
+    width: 80%;
+    display: inline-block;
+  }
+  .tmeventstatus{
+    width: 20%;
+  }
+ } 
+}

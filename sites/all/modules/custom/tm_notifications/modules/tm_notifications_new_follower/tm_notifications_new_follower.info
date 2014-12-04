@@ -1,0 +1,15 @@
+name = TM Notifications Following
+description = Travel Massive notification system for following.
+core = 7.x
+package = TM Notifications
+version = 7.x-1.0-dev
+project = tm_notifications
+dependencies[] = ctools
+dependencies[] = features
+dependencies[] = strongarm
+dependencies[] = tm_notifications
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:2
+features[variable][] = tm_notifications__new_follower
+features[variable][] = tm_notifications__new_organization_follower
+

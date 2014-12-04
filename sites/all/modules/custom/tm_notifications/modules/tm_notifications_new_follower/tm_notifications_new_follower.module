@@ -1,0 +1,86 @@
+<?php
+/**
+ * @file
+ * Code for the TM Notifications Following feature.
+ */
+
+include_once 'tm_notifications_new_follower.features.inc';
+
+/**
+ * Implements hook_tm_notif_info()
+ */
+function tm_notifications_new_follower_tm_notif_info() {
+  $notification = array();
+
+  $notification['new_follower'] = array(
+    'title' => 'New Follower',
+    'description' => 'Notification of a new follower.',
+    'use_cron' => FALSE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('user', 'current-user', 'node'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+
+  $notification['new_organization_follower'] = array(
+    'title' => 'New Organization Follower',
+    'description' => 'Notification of a new organization follower.',
+    'use_cron' => FALSE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('user', 'current-user', 'node'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+
+  return $notification;
+}
+
+/**
+ * Implement hook_flag_flag()
+ */
+function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $flagging) {
+
+  // You have a new follower
+  if ($flag->name == 'follow_members' && $flag->entity_type == 'user') {
+    $followed_user = user_load($entity_id);
+    $who_followed = user_load($account->uid);
+    
+    // set profile url (either friendly url or community url)
+    $profile_url = "community/" . $who_followed->name;
+    if (count($who_followed->field_friendly_url) > 0) { 
+      $profile_url = $who_followed->field_friendly_url['und']['0']['value'];
+    } 
+
+    // notify the user that they have a new follower
+    tm_notifications_notify('new_follower', $followed_user, array('user' => $followed_user, '__PROFILE_URL__' => $profile_url));
+  }
+
+  // Your organization has a new follower
+  if ($flag->name == 'follow_organizations' && $flag->entity_type == 'node') {
+    $followed_organization = node_load($entity_id);
+    $who_followed = user_load($account->uid);
+
+    // notify each owner of the organizational profile that they have a new follower
+    foreach ($followed_organization->field_owner['und'] as $owner) {
+      $organizational_owner = user_load($owner['target_id']);
+
+      // set profile url (either friendly url or community url)
+      $profile_url = "community/" . $who_followed->name;
+      if (count($who_followed->field_friendly_url) > 0) { 
+        $profile_url = $who_followed->field_friendly_url['und']['0']['value'];
+      } 
+
+      // notify the user that they have a new follower
+      tm_notifications_notify('new_organization_follower', $organizational_owner, array('user' => $organizational_owner, 'node' => $followed_organization, '__PROFILE_URL__' => $profile_url));
+    }
+
+  }
+}

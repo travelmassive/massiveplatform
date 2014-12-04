@@ -41,6 +41,7 @@ $image = theme('image_style', array(
             <div class="media-bd">
               <strong><?php print check_plain($loaded->realname); ?></strong>
               <?php print t('Edit profile'); ?>
+              <!--<?php if (!in_array("approved user", $user->roles)) { ?><br><i>Pending Approval</i><?php } ?>-->
             </div>
           </a>
         </div>
@@ -68,14 +69,22 @@ if (!$twitter_data) {
 <?php
 } // end if
 ?>
-   
+
     </ul>
     <?php if (in_array("approved user", $loaded->roles)) : ?>
     <ul class="dropd-menu">
+      <?php print tm_users_companies($loaded->uid); ?>
+      <!--<li><?php print l(t('My companies'), 'user/' . $loaded->uid . '/companies', array('fragment' => 'user-notifications-options')); ?></li>-->
       <li><?php print l(t('Add company'), 'node/add/organization'); ?></li>
-      <li><?php print l(t('My companies'), 'user/' . $loaded->uid . '/companies', array('fragment' => 'user-notifications-options')); ?></li>
     </ul>
   <?php endif; ?>
+  <!-- Link by title to any chapters you are a chapter leader of -->
+  <?php if (in_array("chapter leader", $loaded->roles)) : ?>
+    <ul class="dropd-menu">
+      <?php print tm_users_chapters($loaded->uid); ?>
+    </ul>
+  <?php endif; ?>
+
     <ul class="dropd-menu">
       <li><?php print l(t('Sign out'), 'user/logout'); ?></li>
     </ul>

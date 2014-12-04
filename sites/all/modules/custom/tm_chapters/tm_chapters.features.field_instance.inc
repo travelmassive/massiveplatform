@@ -221,7 +221,6 @@ function tm_chapters_field_default_field_instances() {
           'chapter' => 0,
           'event' => 'event',
           'organization' => 0,
-          'partner_event' => 0,
         ),
         'priority' => 0,
         'referenced' => array(
@@ -857,8 +856,8 @@ function tm_chapters_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('Chapter leaders');
   t('Chapter color');
+  t('Chapter leaders');
   t('Chapter shortcode');
   t('Chapter timezone');
   t('Country');

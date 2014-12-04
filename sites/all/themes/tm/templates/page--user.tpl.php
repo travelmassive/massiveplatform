@@ -118,7 +118,7 @@
           </strong>
           <small><?php print variable_get_value('tm_base_copright'); ?> <time datetime="2011/<?= date('Y'); ?>">2011-<?= date('Y'); ?></time></small>
         </p>
-        <p>Design & built by <strong><a href="http://flipside.org/" title="Visit Flipside">Flipside</a></strong></p>
+        <p>Powered by Massive Platform</p>
       </div>
     </div>
   </footer>

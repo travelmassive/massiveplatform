@@ -1,0 +1,5 @@
+<?php
+
+function tm_notifications_new_follower_uninstall() {
+  tm_notifications_preferences_purge_bulk(array('new_follower', 'new_organization_follower'));
+}

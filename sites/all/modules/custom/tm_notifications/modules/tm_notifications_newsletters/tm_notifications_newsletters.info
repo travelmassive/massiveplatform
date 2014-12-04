@@ -1,0 +1,15 @@
+name = TM Notifications Newsletters
+description = Travel Massive notification system for newsletters.
+core = 7.x
+package = TM Notifications
+version = 7.x-1.0-dev
+project = tm_notifications
+dependencies[] = ctools
+dependencies[] = features
+dependencies[] = strongarm
+dependencies[] = tm_notifications
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:2
+features[variable][] = tm_notifications__chapter_newsletters
+features[variable][] = tm_notifications__global_newsletter
+

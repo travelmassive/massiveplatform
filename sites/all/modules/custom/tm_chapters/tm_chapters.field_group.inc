@@ -85,7 +85,7 @@ function tm_chapters_field_group_info() {
     'label' => 'Community',
     'weight' => '8',
     'children' => array(
-      0 => 'members_signed_up',
+      0 => 'chapter_members',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(

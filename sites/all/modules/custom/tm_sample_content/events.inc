@@ -55,7 +55,7 @@ class TMEventMigration extends TMBaseMigration {
       ->sourceMigration('TMUser');
 
     // Temporary field mapping to use on flags
-    $this->addFieldMapping('signed_up', 'signed_up')
+    $this->addFieldMapping('event_register', 'event_register')
       ->separator('|')
       ->sourceMigration('TMUser');
     
@@ -87,19 +87,19 @@ class TMEventMigration extends TMBaseMigration {
 
   public function prepareRow($row) {
     // Make sure that any 'empty' signup limits, are imported as null and not empty strings.
-    if (empty($row->limit)) {
+    if (empty($row->limit) or ($row->limit == "0")) {
       $row->limit = array();
     }
   }
 
   public function complete($entity, $row) {
-    // simulate "signed up" flag activation
-    if ($entity->signed_up) {
+    // simulate "event register" flag activation
+    if ($entity->event_register) {
       // prepare variables
-      $flag = flag_get_flag('signup');
+      $flag = flag_get_flag('event_register');
 
       // perform flagging
-      foreach ($entity->signed_up as $uid) {
+      foreach ($entity->event_register as $uid) {
         $participant = user_load($uid);
         $flag->flag('flag', $entity->nid, $participant, TRUE);
       }

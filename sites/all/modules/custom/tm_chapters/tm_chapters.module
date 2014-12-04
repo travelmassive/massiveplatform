@@ -24,7 +24,19 @@ function tm_chapters_ds_fields_info($entity_type) {
 
   return array($entity_type => $fields);
 }
-
+/*
+* Implements hook_menu()
+*/
+function tm_chapters_menu() {
+  $items['chapters/contact/%'] = array(
+    'title' => t('Contact chapter leaders'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('tm_chapters_contact_form',1),
+    'access arguments' => array('flag follow_members'),
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
 /**
  * Custom function to print the amount of members belonging to a chapter
  */
@@ -75,4 +87,75 @@ function flatten_chapter_leaders($array){
     $newarray[] = $item['target_id'];
   }
   return $newarray;
+}
+/* Form for chapter contact form */
+function tm_chapters_contact_form($chapter){
+
+  $form['subject'] = array(
+    '#title' => t('Subject'),
+    '#type' =>'textfield',
+    '#required' => TRUE,
+    );
+  $form['body'] = array(
+    '#type' =>'textarea',
+    '#title' => t('Message'),
+    '#rows' => 10,
+    '#required' => TRUE,
+    );
+  $form['submit_button'] = array(
+    '#type' => 'submit',
+    '#value' => t('Contact chapter leaders'),
+    '#id' => 'edit-submit'  
+  );
+  return $form;
+}
+
+/* Contact chapter leaders form submit */
+function tm_chapters_contact_form_submit($form, &$form_state){
+  global $user;
+  $account = user_load($user->uid);
+  $chapter = node_load(arg(2));
+  if ($chapter){
+    foreach($chapter->field_chapter_leaders[$chapter->language] as $leader){
+      $chapterleader = user_load($leader['target_id']);
+      tm_chapters_send_email($chapterleader->mail, $form_state['values']['subject'], $form_state['values']['body'], $account);
+    }
+  drupal_set_message(t('Your message has been sent.'));
+  drupal_goto('node/'.$chapter->nid);
+  }
+}
+/* Email sending function */
+function tm_chapters_send_email($email, $subject, $body, $user){
+
+    if (empty($user->language)) $language = LANGUAGE_NONE;
+    else $language = $user->language;
+    $name = $user->name;
+    if (isset($user->field_user_first_name[$language])){
+      $name = $user->field_user_first_name[$language][0]['value'];
+      if (isset($user->field_user_first_name[$language])){
+        $name .= ' '.$user->field_user_last_name[$language][0]['value'];
+      }
+    }
+
+    $module = 'tm_chapters';
+    $key = 'key';
+    $language = language_default();
+    $params = array();
+    $from = $user->mail;
+    $send = FALSE;
+    $message = drupal_mail($module, $key, $email, $language, $params, $from, $send);
+    // prepend something to this subject if you want to 
+    $message['subject'] = check_plain($subject);
+    $message['body'] = array();
+    $message['body'][] = check_plain($body);
+    $message['body'][] = "Sent by user $name ".url('user/'.$user->uid, array('absolute'=>TRUE));
+
+    // Retrieve the responsible implementation for this message.
+    $system = drupal_mail_system($module, $key);
+
+    // Format the message body.
+    $message = $system->format($message);
+
+    // Send e-mail.
+    $message['result'] = $system->mail($message);
 }

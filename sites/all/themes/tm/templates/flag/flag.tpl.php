@@ -39,10 +39,24 @@
  * advanced theming you may have to remove all the whitespace.
  */
 ?>
-<?php if (!isset($hide_flag) || $hide_flag == FALSE) : ?>
+
+
+<?php if (isset($event_flag) && $event_flag == "show_closed") : ?>
 
 <li class="<?php print $flag_wrapper_classes; ?>">
-  <?php if ($link_href): ?>
+  <span class="follow bttn bttn-secondary bttn-m disabled" rel="nofollow">Past Event </span>
+</li>
+
+<?php elseif (isset($event_flag) && $event_flag == "show_not_approved") : ?>
+
+<li class="<?php print $flag_wrapper_classes; ?>">
+    <span onClick="alert('You need to be an Approved Member to register for this event.');" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></span>
+</li>
+
+<?php elseif (!isset($hide_flag) || $hide_flag == FALSE) : ?>
+
+<li class="<?php print $flag_wrapper_classes; ?>">
+	<?php if ($link_href): ?>
     <a href="<?php print $link_href; ?>" title="<?php print $link_title; ?>" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?>" rel="nofollow"><span><?php print $link_text; ?></span></a>
   <?php else: ?>
     <span class="<?php print $flag_classes ?>"><?php print $link_text; ?></span>

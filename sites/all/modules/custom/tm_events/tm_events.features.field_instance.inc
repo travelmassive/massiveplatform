@@ -29,7 +29,7 @@ function tm_events_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',
-        'weight' => 2,
+        'weight' => 3,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -60,13 +60,14 @@ function tm_events_field_default_field_instances() {
         'weight' => 0,
       ),
     ),
+    'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'body',
     'label' => 'Description',
     'required' => 0,
     'settings' => array(
       'display_summary' => 0,
-      'text_processing' => 0,
+      'text_processing' => 1,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -81,13 +82,75 @@ function tm_events_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-event-field_approved_members_only'
+  $field_instances['node-event-field_approved_members_only'] = array(
+    'bundle' => 'event',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Check this box if you want to restrict registration and waitlist to members who are approved. Non-approved members won\'t be able to sign up. ',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 16,
+      ),
+      'full' => array(
+        'label' => 'hidden',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 9,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_approved_members_only',
+    'label' => 'Approved Members Only',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 14,
+    ),
+  );
+
   // Exported field_instance: 'node-event-field_chapter'
   $field_instances['node-event-field_chapter'] = array(
     'bundle' => 'event',
     'default_value' => NULL,
     'default_value_function' => 'entityreference_prepopulate_field_default_value',
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Leave this field empty for a partner event that is not associated with a chapter.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -102,7 +165,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 18,
+        'weight' => 19,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -135,8 +198,8 @@ function tm_events_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_chapter',
-    'label' => 'Organizing city',
-    'required' => 1,
+    'label' => 'Event Chapter',
+    'required' => 0,
     'settings' => array(
       'behaviors' => array(
         'prepopulate' => array(
@@ -221,7 +284,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 17,
       ),
       'grid' => array(
         'label' => 'above',
@@ -415,6 +478,68 @@ function tm_events_field_default_field_instances() {
       ),
       'type' => 'image_image',
       'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_is_partner_event'
+  $field_instances['node-event-field_is_partner_event'] = array(
+    'bundle' => 'event',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '(Advanced Use Only) Check this to indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 14,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 16,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_is_partner_event',
+    'label' => 'Partner Event',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 15,
     ),
   );
 
@@ -706,524 +831,20 @@ function tm_events_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-partner_event-body'
-  $field_instances['node-partner_event-body'] = array(
-    'bundle' => 'partner_event',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'hidden',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 0,
-      ),
-      'full' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 1,
-      ),
-      'grid' => array(
-        'label' => 'hidden',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 3,
-      ),
-      'list' => array(
-        'label' => 'hidden',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 0,
-      ),
-      'search_result' => array(
-        'label' => 'hidden',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 0,
-      ),
-      'teaser' => array(
-        'label' => 'hidden',
-        'module' => 'text',
-        'settings' => array(
-          'trim_length' => 600,
-        ),
-        'type' => 'text_summary_or_trimmed',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'body',
-    'label' => 'Description',
-    'required' => 0,
-    'settings' => array(
-      'display_summary' => 0,
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 5,
-        'summary_rows' => 5,
-      ),
-      'type' => 'text_textarea_with_summary',
-      'weight' => 2,
-    ),
-  );
-
-  // Exported field_instance: 'node-partner_event-field_event_date'
-  $field_instances['node-partner_event-field_event_date'] = array(
-    'bundle' => 'partner_event',
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'date',
-        'settings' => array(
-          'format_type' => 'long',
-          'fromto' => '',
-          'multiple_from' => '',
-          'multiple_number' => '',
-          'multiple_to' => '',
-        ),
-        'type' => 'date_default',
-        'weight' => 2,
-      ),
-      'full' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 2,
-      ),
-      'grid' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 11,
-      ),
-      'list' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-      'search_result' => array(
-        'label' => 'above',
-        'module' => 'date',
-        'settings' => array(
-          'format_type' => 'long',
-          'fromto' => '',
-          'multiple_from' => '',
-          'multiple_number' => '',
-          'multiple_to' => '',
-        ),
-        'type' => 'date_default',
-        'weight' => 2,
-      ),
-    ),
-    'ds_extras_field_template' => 'theme_ds_field_reset',
-    'entity_type' => 'node',
-    'field_name' => 'field_event_date',
-    'label' => 'Event date',
-    'required' => 1,
-    'settings' => array(
-      'default_value' => 'strtotime',
-      'default_value2' => '',
-      'default_value_code' => '+14 days',
-      'default_value_code2' => '',
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'date',
-      'settings' => array(
-        'increment' => 15,
-        'input_format' => 'm/d/Y - H:i:s',
-        'input_format_custom' => '',
-        'label_position' => 'above',
-        'text_parts' => array(),
-        'year_range' => '-0:+3',
-      ),
-      'type' => 'date_popup',
-      'weight' => 2,
-    ),
-  );
-
-  // Exported field_instance: 'node-partner_event-field_event_venue_name'
-  $field_instances['node-partner_event-field_event_venue_name'] = array(
-    'bundle' => 'partner_event',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 6,
-      ),
-      'full' => array(
-        'label' => 'hidden',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 8,
-      ),
-      'grid' => array(
-        'label' => 'hidden',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 1,
-      ),
-      'list' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-      'search_result' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 6,
-      ),
-    ),
-    'ds_extras_field_template' => '',
-    'entity_type' => 'node',
-    'field_name' => 'field_event_venue_name',
-    'label' => 'Venue name',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 7,
-    ),
-  );
-
-  // Exported field_instance: 'node-partner_event-field_image'
-  $field_instances['node-partner_event-field_image'] = array(
-    'bundle' => 'partner_event',
-    'deleted' => 0,
-    'description' => 'Add a banner that represents this partner event.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'image',
-        'settings' => array(
-          'image_link' => '',
-          'image_style' => '',
-        ),
-        'type' => 'image',
-        'weight' => 3,
-      ),
-      'full' => array(
-        'label' => 'hidden',
-        'module' => 'image',
-        'settings' => array(
-          'image_link' => '',
-          'image_style' => 'banner',
-        ),
-        'type' => 'image',
-        'weight' => 0,
-      ),
-      'grid' => array(
-        'label' => 'hidden',
-        'module' => 'image',
-        'settings' => array(
-          'image_link' => '',
-          'image_style' => 'banner',
-        ),
-        'type' => 'image',
-        'weight' => 0,
-      ),
-      'list' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-      'search_result' => array(
-        'label' => 'above',
-        'module' => 'image',
-        'settings' => array(
-          'image_link' => '',
-          'image_style' => '',
-        ),
-        'type' => 'image',
-        'weight' => 3,
-      ),
-    ),
-    'ds_extras_field_template' => '',
-    'entity_type' => 'node',
-    'field_name' => 'field_image',
-    'label' => 'Banner',
-    'required' => 0,
-    'settings' => array(
-      'alt_field' => 0,
-      'default_image' => 0,
-      'file_directory' => 'images/partner-events',
-      'file_extensions' => 'png gif jpg jpeg',
-      'max_filesize' => '',
-      'max_resolution' => '',
-      'min_resolution' => '',
-      'title_field' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'image',
-      'settings' => array(
-        'preview_image_style' => 'thumbnail',
-        'progress_indicator' => 'throbber',
-      ),
-      'type' => 'image_image',
-      'weight' => 3,
-    ),
-  );
-
-  // Exported field_instance: 'node-partner_event-field_location'
-  $field_instances['node-partner_event-field_location'] = array(
-    'bundle' => 'partner_event',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Provide the street address for this event.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 7,
-      ),
-      'full' => array(
-        'label' => 'hidden',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 9,
-      ),
-      'grid' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-      'list' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-      'search_result' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 7,
-      ),
-    ),
-    'ds_extras_field_template' => '',
-    'entity_type' => 'node',
-    'field_name' => 'field_location',
-    'label' => 'Location',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 1,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 4,
-      ),
-      'type' => 'text_textarea',
-      'weight' => 8,
-    ),
-  );
-
-  // Exported field_instance: 'node-partner_event-field_map_link'
-  $field_instances['node-partner_event-field_map_link'] = array(
-    'bundle' => 'partner_event',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Help the attendees find the right location by providing a link to a map, for example <a href="http://maps.google.com/">Google Maps</a>.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'link',
-        'settings' => array(),
-        'type' => 'link_default',
-        'weight' => 5,
-      ),
-      'full' => array(
-        'label' => 'hidden',
-        'module' => 'link',
-        'settings' => array(),
-        'type' => 'link_default',
-        'weight' => 10,
-      ),
-      'grid' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-      'list' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-      'search_result' => array(
-        'label' => 'above',
-        'module' => 'link',
-        'settings' => array(),
-        'type' => 'link_default',
-        'weight' => 5,
-      ),
-    ),
-    'ds_extras_field_template' => '',
-    'entity_type' => 'node',
-    'field_name' => 'field_map_link',
-    'label' => 'Map link',
-    'required' => 0,
-    'settings' => array(
-      'attributes' => array(
-        'class' => '',
-        'configurable_title' => 0,
-        'rel' => 'nofollow',
-        'target' => '_blank',
-        'title' => '',
-      ),
-      'display' => array(
-        'url_cutoff' => 80,
-      ),
-      'enable_tokens' => 0,
-      'rel_remove' => 'rel_remove_internal',
-      'title' => 'value',
-      'title_maxlength' => 128,
-      'title_value' => 'View map',
-      'url' => 0,
-      'user_register_form' => FALSE,
-      'validate_url' => 1,
-    ),
-    'widget' => array(
-      'active' => 0,
-      'module' => 'link',
-      'settings' => array(),
-      'type' => 'link_field',
-      'weight' => 9,
-    ),
-  );
-
-  // Exported field_instance: 'node-partner_event-field_rsvp_link'
-  $field_instances['node-partner_event-field_rsvp_link'] = array(
-    'bundle' => 'partner_event',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Provide a link to a page with more information or the RSVP.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'link',
-        'settings' => array(),
-        'type' => 'link_default',
-        'weight' => 4,
-      ),
-      'full' => array(
-        'label' => 'hidden',
-        'module' => 'link',
-        'settings' => array(),
-        'type' => 'link_default',
-        'weight' => 0,
-      ),
-      'grid' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 8,
-      ),
-      'list' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-      'search_result' => array(
-        'label' => 'above',
-        'module' => 'link',
-        'settings' => array(),
-        'type' => 'link_default',
-        'weight' => 4,
-      ),
-    ),
-    'ds_extras_field_template' => '',
-    'entity_type' => 'node',
-    'field_name' => 'field_rsvp_link',
-    'label' => 'RSVP link',
-    'required' => 0,
-    'settings' => array(
-      'attributes' => array(
-        'class' => 'external bttn bttn-secondary bttn-m',
-        'configurable_title' => 0,
-        'rel' => 'nofollow',
-        'target' => '_blank',
-        'title' => 'External RSVP',
-      ),
-      'display' => array(
-        'url_cutoff' => 80,
-      ),
-      'enable_tokens' => 0,
-      'rel_remove' => 'rel_remove_internal',
-      'title' => 'value',
-      'title_maxlength' => 128,
-      'title_value' => 'RSVP',
-      'url' => 0,
-      'user_register_form' => FALSE,
-      'validate_url' => 1,
-    ),
-    'widget' => array(
-      'active' => 0,
-      'module' => 'link',
-      'settings' => array(),
-      'type' => 'link_field',
-      'weight' => 4,
-    ),
-  );
-
   // Translatables
   // Included for use with string extractors like potx.
-  t('Add a banner that represents this partner event.');
-  t('Banner');
+  t('(Advanced Use Only) Check this to indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)');
+  t('Approved Members Only');
+  t('Check this box if you want to restrict registration and waitlist to members who are approved. Non-approved members won\'t be able to sign up. ');
   t('Description');
-  t('Event date');
+  t('Event Chapter');
   t('Help the attendees find the right location by providing a link to a map, for example <a href="http://maps.google.com/">Google Maps</a>.');
   t('Image');
+  t('Leave this field empty for a partner event that is not associated with a chapter.');
   t('Location');
   t('Map link');
   t('Organizer');
-  t('Organizing city');
-  t('Provide a link to a page with more information or the RSVP.');
+  t('Partner Event');
   t('Provide a link to the page with the RSVP.');
   t('Provide the street address for this event.');
   t('RSVP link');

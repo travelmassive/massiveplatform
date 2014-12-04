@@ -1,0 +1,45 @@
+<?php
+/**
+ * @file
+ * Code for the TM Notifications Newsletters feature.
+ */
+
+include_once 'tm_notifications_newsletters.features.inc';
+
+/**
+ * Implements hook_tm_notif_info()
+ */
+function tm_notifications_newsletters_tm_notif_info() {
+  $notification = array();
+
+  $notification['chapter_newsletters'] = array(
+    'title' => 'Subscribe to local Chapter newsletters',
+    'description' => 'Local Chapter Newsletters',
+    'use_cron' => FALSE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('user', 'current-user', 'node'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+
+  $notification['global_newsletter'] = array(
+    'title' => 'Subscribe to Global Newsletter',
+    'description' => 'Travel Massive Global Newsletter',
+    'use_cron' => FALSE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('user', 'current-user', 'node'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+
+  return $notification;
+}
+

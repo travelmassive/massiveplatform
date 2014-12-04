@@ -140,10 +140,10 @@ function tm_users_views_default_views() {
   $handler->display->display_options['empty']['area']['empty'] = TRUE;
   $handler->display->display_options['empty']['area']['content'] = 'No Travel Massive member found with those criteria. Please change your filters.';
   $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
-  /* Relationship: Content: Country (field_country) */
-  $handler->display->display_options['relationships']['field_country_iso2']['id'] = 'field_country_iso2';
-  $handler->display->display_options['relationships']['field_country_iso2']['table'] = 'field_data_field_country';
-  $handler->display->display_options['relationships']['field_country_iso2']['field'] = 'field_country_iso2';
+  /* Relationship: User: Country (field_user_country) */
+  $handler->display->display_options['relationships']['field_user_country_iso2']['id'] = 'field_user_country_iso2';
+  $handler->display->display_options['relationships']['field_user_country_iso2']['table'] = 'field_data_field_user_country';
+  $handler->display->display_options['relationships']['field_user_country_iso2']['field'] = 'field_user_country_iso2';
   /* Field: User: Name */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'users';
@@ -151,10 +151,22 @@ function tm_users_views_default_views() {
   $handler->display->display_options['fields']['name']['label'] = '';
   $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
-  /* Sort criterion: User: First name (field_user_first_name) */
-  $handler->display->display_options['sorts']['field_user_first_name_value']['id'] = 'field_user_first_name_value';
-  $handler->display->display_options['sorts']['field_user_first_name_value']['table'] = 'field_data_field_user_first_name';
-  $handler->display->display_options['sorts']['field_user_first_name_value']['field'] = 'field_user_first_name_value';
+  /* Sort criterion: User: Created date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'users';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Contextual filter: Countries: ISO2 */
+  $handler->display->display_options['arguments']['iso2']['id'] = 'iso2';
+  $handler->display->display_options['arguments']['iso2']['table'] = 'countries_country';
+  $handler->display->display_options['arguments']['iso2']['field'] = 'iso2';
+  $handler->display->display_options['arguments']['iso2']['relationship'] = 'field_user_country_iso2';
+  $handler->display->display_options['arguments']['iso2']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['iso2']['default_argument_options']['argument'] = 'ZA';
+  $handler->display->display_options['arguments']['iso2']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['iso2']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['iso2']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['iso2']['limit'] = '0';
   /* Filter criterion: User: Active */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'users';
@@ -166,7 +178,8 @@ function tm_users_views_default_views() {
   $handler->display->display_options['filters']['name_list']['id'] = 'name_list';
   $handler->display->display_options['filters']['name_list']['table'] = 'countries_country';
   $handler->display->display_options['filters']['name_list']['field'] = 'name_list';
-  $handler->display->display_options['filters']['name_list']['relationship'] = 'field_country_iso2';
+  $handler->display->display_options['filters']['name_list']['relationship'] = 'field_user_country_iso2';
+  $handler->display->display_options['filters']['name_list']['group'] = 1;
   $handler->display->display_options['filters']['name_list']['exposed'] = TRUE;
   $handler->display->display_options['filters']['name_list']['expose']['operator_id'] = 'name_list_op';
   $handler->display->display_options['filters']['name_list']['expose']['operator'] = 'name_list_op';
@@ -174,14 +187,22 @@ function tm_users_views_default_views() {
   $handler->display->display_options['filters']['name_list']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
-    5 => 0,
     4 => 0,
+    6 => 0,
+    7 => 0,
     3 => 0,
+    5 => 0,
+  );
+  $handler->display->display_options['filters']['name_list']['configuration'] = '1';
+  $handler->display->display_options['filters']['name_list']['filter'] = array(
+    'enabled' => '0',
+    'continents' => array(),
   );
   /* Filter criterion: Field: Segment (field_segment) */
   $handler->display->display_options['filters']['field_segment_tid']['id'] = 'field_segment_tid';
   $handler->display->display_options['filters']['field_segment_tid']['table'] = 'field_data_field_segment';
   $handler->display->display_options['filters']['field_segment_tid']['field'] = 'field_segment_tid';
+  $handler->display->display_options['filters']['field_segment_tid']['group'] = 1;
   $handler->display->display_options['filters']['field_segment_tid']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_segment_tid']['expose']['operator_id'] = 'field_segment_tid_op';
   $handler->display->display_options['filters']['field_segment_tid']['expose']['operator'] = 'field_segment_tid_op';
@@ -195,6 +216,7 @@ function tm_users_views_default_views() {
   );
   $handler->display->display_options['filters']['field_segment_tid']['type'] = 'select';
   $handler->display->display_options['filters']['field_segment_tid']['vocabulary'] = 'tm_segments';
+  $handler->display->display_options['filters']['field_segment_tid']['hierarchy'] = 1;
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -408,6 +430,13 @@ function tm_users_views_default_views() {
 
   /* Display: Block - joined events */
   $handler = $view->new_display('block', 'Block - joined events', 'block_joined_events');
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Flags: event_register */
+  $handler->display->display_options['relationships']['flag_content_rel']['id'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel']['table'] = 'node';
+  $handler->display->display_options['relationships']['flag_content_rel']['field'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel']['flag'] = 'event_register';
+  $handler->display->display_options['relationships']['flag_content_rel']['user_scope'] = 'any';
 
   /* Display: Block - joined chapters */
   $handler = $view->new_display('block', 'Block - joined chapters', 'block_joined_chapters');

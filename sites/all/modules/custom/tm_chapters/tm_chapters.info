@@ -28,6 +28,7 @@ features[ds_field_settings][] = node|chapter|full
 features[ds_field_settings][] = node|chapter|grid
 features[ds_field_settings][] = node|chapter|search_result
 features[ds_fields][] = chapter_avatar
+features[ds_fields][] = chapter_members
 features[ds_fields][] = joined_chapter_list
 features[ds_layout_settings][] = node|chapter|default
 features[ds_layout_settings][] = node|chapter|full

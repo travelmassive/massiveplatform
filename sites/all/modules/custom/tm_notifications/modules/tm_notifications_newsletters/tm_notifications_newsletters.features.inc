@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * tm_notifications_new_follower.features.inc
+ * tm_notifications_newsletters.features.inc
  */
 
 /**

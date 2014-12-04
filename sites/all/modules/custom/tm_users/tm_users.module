@@ -189,7 +189,7 @@ function tm_users_chapters($uid){
       //$img_url = 'public://images/chapters/Athens.jpg';  // the orig image uri
       $chapter = node_load($nid);
       $img_url = @$chapter->field_image['und'][0]['uri'];
-      if ($img_url == "") { $img_url = "public://default_images/cover-default.png"; }
+      if ($img_url == "") { $img_url = "public://default_images/cover-default.jpg"; }
       $style = 'thumbnail';  // or any other custom image style you've created via /admin/config/media/image-styles
       $markup .= "<li style='margin-bottom: 4px;'><img align='left' style='margin-left: 16px; margin-top: 4px; padding-right: 8px; width: 40px;' src='".image_style_url($style, $img_url) . "'>" . l($chapter->title . ' (Chapter Leader)','node/'.$chapter->nid).'</li>';
     }
@@ -218,7 +218,7 @@ function tm_users_companies($uid){
     foreach ($companies_nids as $nid) {
       $company = node_load($nid);
       $img_url = @$company->field_image['und'][0]['uri'];
-      if ($img_url == "") { $img_url = "public://default_images/cover-default.png"; }
+      if ($img_url == "") { $img_url = "public://default_images/cover-default.jpg"; }
       $style = 'thumbnail';  // or any other custom image style you've created via /admin/config/media/image-styles
       $markup .= "<li style='margin-bottom: 4px;'><img align='left' style='margin-left: 16px; margin-top: 4px; padding-right: 8px; width: 40px;' src='".image_style_url($style, $img_url) . "'>". l($company->title,'node/'.$company->nid).'</li>'; 
     }
@@ -242,32 +242,3 @@ function tm_users_is_chapter_leader($uid, $chapterid){
   }
   return FALSE;
 }
-
-/* Hook for when user validated their email address, we can send them a welcome message
-See: http://drupal.stackexchange.com/questions/30219/is-there-a-hook-after-user-confirmation
-*/
-function tm_users_user($op, &$edit, &$account, $category) {
-
-  die("here");
-  
-  if ($op == 'validate') {
-    if ( $category == 'account' ) {
-    
-      // send user a welcome message
-
-      // set profile url (either friendly url or community url)
-      $profile_url = "community/" . $account->name;
-      if (count($account->field_friendly_url) > 0) { 
-        $profile_url = $account->field_friendly_url['und']['0']['value'];
-      } 
-      tm_notifications_notify('user_welcome', $user, array('user' => $account, '__PROFILE_URL__' => $profile_url));
-
-      die("got here..");
-    }
-  }
-
-   print("in here...");
-  die();
-}
-
-

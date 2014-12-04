@@ -29,6 +29,5 @@ function tm_base_menu_default_menu_custom() {
   t('More massive');
   t('The footer menu');
 
-
   return $menus;
 }

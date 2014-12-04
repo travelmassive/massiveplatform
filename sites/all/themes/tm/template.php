@@ -65,6 +65,11 @@ function tm_preprocess_page(&$variables, $hook) {
   $variables['foot_menu']['links'] = menu_navigation_links('menu-footer-menu');
   $variables['social_menu'] = menu_load('menu-social-links');
   $variables['social_menu']['links'] = menu_navigation_links('menu-social-links');
+
+  // On registration page put a twitter link
+  if (current_path() == "user/register") {
+      drupal_set_message('Have Twitter? &nbsp;Sign In Faster!<br> <a href="/tm_twitter/oauth" class="twitter-login" style="width: 200px; text-decoration: none;">Twitter</a>');
+  }
 }
 
 /**

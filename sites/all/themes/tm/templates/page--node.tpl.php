@@ -80,7 +80,11 @@
     <div class="row">
       <nav id="foot-nav" role="navigation">
         <div class="inner">
-        <?php if ($foot_menu['links']): ?>
+
+        <?php include './'. path_to_theme() .'/templates/block--footer-links.tpl.php';?>
+
+        <!--<?php if ($foot_menu['links']): ?>
+
           <section class="foot">
           <?php
             print theme('links', array(
@@ -91,7 +95,7 @@
               ),
             )); 
           ?>
-          </section>
+          </section>-->
         <?php endif; ?>
         <?php if ($social_menu['links']): ?>
           <section class="social">
@@ -116,9 +120,10 @@
               <span><?php print $site_name; ?></span>
             </a>
           </strong>
-          <small><?php print variable_get_value('tm_base_copright'); ?> <time datetime="2011/<?= date('Y'); ?>">2011-<?= date('Y'); ?></time></small>
+          <small><time datetime="2011/<?= date('Y'); ?>">&copy; 2011-<?= date('Y'); ?> All Rights Reserved</time>Travel Massive Global P.B.C.</small>
         </p>
-        <p>Powered by Massive Platform</strong></p>
+        <p>Powered by Massive Platform<br>
+          Made with <span style='color: red;'>&hearts;</span> around the world</p>
       </div>
     </div>
   </footer>

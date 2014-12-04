@@ -350,11 +350,11 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
 
 #footer {
   position: relative;
-  background: tint($primary-color, 80%);
+  background: #121212;
   padding: 2rem 0 1rem 0;
-  color: tint($primary-color, 20%);
+  color: #efefef;
   a {
-    color: tint($primary-color, 20%);
+    color: #ffffff;
   }
 }
 

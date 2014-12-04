@@ -63,6 +63,7 @@ function tm_preprocess_page(&$variables, $hook) {
   // Pass the footer and social menu to the page template
   $variables['foot_menu'] = menu_load('menu-footer-menu');
   $variables['foot_menu']['links'] = menu_navigation_links('menu-footer-menu');
+
   $variables['social_menu'] = menu_load('menu-social-links');
   $variables['social_menu']['links'] = menu_navigation_links('menu-social-links');
 

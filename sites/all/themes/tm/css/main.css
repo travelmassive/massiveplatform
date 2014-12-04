@@ -2832,7 +2832,7 @@ tr.selected td {
 /* line 803, ../sass/components/_misc.scss */
 .progress .filled {
   background-color: #0072b9;
-  background-image: url('../images/progress.gif?1412121636');
+  background-image: url('../images/progress.gif?1417692062');
 }
 
 /* ==========================================================================
@@ -3970,13 +3970,13 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 /* line 351, ../sass/_base.scss */
 #footer {
   position: relative;
-  background: #d2d5d8;
+  background: #121212;
   padding: 2rem 0 1rem 0;
-  color: #4d5966;
+  color: #efefef;
 }
 /* line 356, ../sass/_base.scss */
 #footer a {
-  color: #4d5966;
+  color: #ffffff;
 }
 
 /* line 361, ../sass/_base.scss */
@@ -6543,11 +6543,11 @@ select:disabled {
 
 /* line 232, ../sass/_single.scss */
 .front {
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(33, 48, 64, 0)), color-stop(50%, rgba(33, 48, 64, 0)), color-stop(100%, #213040)), url('../images/../images/layout/home-bg-img-01a.jpg?1412121636');
-  background: -webkit-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1412121636');
-  background: -moz-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1412121636');
-  background: -o-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1412121636');
-  background: linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1412121636');
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(33, 48, 64, 0)), color-stop(50%, rgba(33, 48, 64, 0)), color-stop(100%, #213040)), url('../images/../images/layout/home-bg-img-01a.jpg?1417692062');
+  background: -webkit-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1417692062');
+  background: -moz-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1417692062');
+  background: -o-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1417692062');
+  background: linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1417692062');
   background-repeat: no-repeat, no-repeat;
   background-position: center center, center center;
   -webkit-background-size: 100% 100%, cover;

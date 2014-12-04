@@ -103,6 +103,11 @@ dependencies[] = tm_invitations
 ; TM - notifications
 dependencies[] = tm_notifications
 dependencies[] = tm_notifications_new_follower
-dependencies[] = tm_notifications_new_organization_follower
 dependencies[] = tm_notifications_chapter
 dependencies[] = tm_notifications_upcoming_event
+dependencies[] = tm_notifications_newsletters
+dependencies[] = tm_notifications_approval
+dependencies[] = tm_notifications_welcome
+
+
+

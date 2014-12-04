@@ -1,0 +1,5 @@
+<?php
+
+function tm_notifications_newsletters_uninstall() {
+  tm_notifications_preferences_purge_bulk(array('chapter_newsletters', 'global_newsletter'));
+}

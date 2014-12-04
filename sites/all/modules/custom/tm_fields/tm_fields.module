@@ -285,7 +285,7 @@ function _tm_more_actions_process($field, $title = NULL) {
 
   // START approve link
   //drupal_set_message("<pre>".print_r($menu_item,TRUE)."</pre>");
-  if ($menu_item['path'] == 'user/%'){
+  if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
     if (isset($menu_item['page_arguments'][0]->uid)){
       $uid = $menu_item['page_arguments'][0]->uid;
       $targetuser = user_load($uid);
@@ -312,9 +312,9 @@ function _tm_more_actions_process($field, $title = NULL) {
         if (user_access("unapprove users")){
           $links['approve'][] = array(
             'wrapper_class' => array('unapprove'),
-            'content' => l(t('Un-approve'), 'user/' . $uid . '/unapprove', array(
+            'content' => l(t('Un-Approve'), 'user/' . $uid . '/unapprove', array(
               'attributes' => array(
-              'title' => t('Un-approve user')
+              'title' => t('Un-Approve user')
               )
             ))
           );    

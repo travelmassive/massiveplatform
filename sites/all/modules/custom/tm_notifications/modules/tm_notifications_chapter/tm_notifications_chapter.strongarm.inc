@@ -30,8 +30,8 @@ We hope you can learn, share, and connect with other like-minded travel insiders
 
 If you are a new member, please ensure that you\'ve filled out your profile so the Chapter Leaders can approve your account. 
 
-cheers,
-The Travel Massive team',
+__EMAIL_NOTIFICATION_FOOTER__
+',
     ),
   );
   $export['tm_notifications__user_chapter_join_welcome_member'] = $strongarm;
@@ -57,8 +57,8 @@ __SERVER_NAME__/__PROFILE_URL__
 
 If they are a new member to Travel Massive, they may also need approval. Please take the time to review their profile and ensure it\'s valid before approving them.
 
-cheers,
-The Travel Massive team',
+__EMAIL_NOTIFICATION_FOOTER__
+',
     ),
   );
   $export['tm_notifications__user_chapter_join_notify_leaders'] = $strongarm;

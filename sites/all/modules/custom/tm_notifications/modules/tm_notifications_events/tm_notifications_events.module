@@ -1,0 +1,266 @@
+<?php
+/**
+ * @file
+ * Code for the TM Notifications Events feature.
+ */
+
+include_once 'tm_notifications_events.features.inc';
+
+/**
+ * Implements hook_tm_notif_info()
+ */
+function tm_notifications_events_tm_notif_info() {
+  $notification = array();
+
+  // EVENT ORGANISER NOTIFICATIONS
+  ////////////////////////////////
+
+  $notification['events_register_flag'] = array(
+    'title' => 'New Registration',
+    'description' => 'Notification of a new event registration.',
+    'use_cron' => FALSE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('user', 'current-user', 'node'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+
+  $notification['events_register_unflag'] = array(
+    'title' => 'Member Unregistered',
+    'description' => 'Notification of member removed from registration.',
+    'use_cron' => FALSE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('user', 'current-user', 'node'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+
+  $notification['events_waitlist_flag'] = array(
+    'title' => 'New Waitlist',
+    'description' => 'Notification of a new waitlist registration.',
+    'use_cron' => FALSE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('user', 'current-user', 'node'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+
+  $notification['events_waitlist_unflag'] = array(
+    'title' => 'Member Unwaitlist',
+    'description' => 'Notification of a member removed off waitlist.',
+    'use_cron' => FALSE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('user', 'current-user', 'node'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+
+
+  // USER NOTIFICATIONS
+  //////////////////////
+
+  $notification['events_register_flag_user'] = array(
+    'title' => 'New Registration',
+    'description' => 'Notification user of a new event registration.',
+    'use_cron' => FALSE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('user', 'current-user', 'node'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+
+  $notification['events_register_unflag_user'] = array(
+    'title' => 'Member Unregistered',
+    'description' => 'Notification user removed from registration.',
+    'use_cron' => FALSE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('user', 'current-user', 'node'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+
+  $notification['events_waitlist_flag_user'] = array(
+    'title' => 'New Waitlist',
+    'description' => 'Notification user of a new waitlist registration.',
+    'use_cron' => FALSE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('user', 'current-user', 'node'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+
+  $notification['events_waitlist_unflag_user'] = array(
+    'title' => 'Member Unwaitlist',
+    'description' => 'Notification user removed off waitlist.',
+    'use_cron' => FALSE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('user', 'current-user', 'node'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+  
+  return $notification;
+}
+
+/**
+ * Implement hook_flag_flag()
+ */
+function tm_notifications_events_flag_flag($flag, $entity_id, $account, $flagging) {
+  tm_notifications_events_handle_flagging("flag", $flag, $entity_id, $account, $flagging);
+}
+
+function tm_notifications_events_flag_unflag($flag, $entity_id, $account, $flagging) {
+  tm_notifications_events_handle_flagging("unflag", $flag, $entity_id, $account, $flagging);
+}
+
+function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity_id, $account, $flagging) {
+
+  // only listen for event flags
+  if ($flag->entity_type == 'event') {
+    return;
+  }
+
+  // only listen for register or waitlist
+  if (($flag->name != 'event_register') and ($flag->name != 'event_waitlist')) {
+    return;
+  }
+
+  // get the event that was flagged
+  $event = node_load($entity_id);
+  $event_url = drupal_get_path_alias('node/' . $event->nid);
+
+  // get user and profile url of who flagged the event
+  $who_flagged = user_load($GLOBALS['user']->uid);
+  $profile_url = "community/" . $who_flagged->name;
+  if (count($who_flagged->field_friendly_url) > 0) { 
+    $profile_url = $who_flagged->field_friendly_url['und']['0']['value'];
+  }
+
+  // User Registered for Event
+  if (($GLOBALS['user']->uid == $flagging->uid)) {
+
+    // work out who to notify
+    // either: 
+    // case 1: event with organizers -> organizers
+    // case 2: event with no organizers and a chapter -> chapter leaders
+    // case 3: event with no organizers and no chapter -> event creator
+
+    $notify_ids = array();
+
+    // case 1: event with organizers -> organizers
+    if (sizeof($event->field_organizer) > 0) {
+      foreach ($event->field_organizer['und'] as $organizer) {
+        $notify_ids[] = $organizer['target_id'];
+      }
+    }
+
+    // case 2: event with no organizers and a chapter -> chapter leaders
+    if ((sizeof($event->field_organizer) == 0) and (sizeof($event->field_chapter > 0))) {
+
+      $chapter_id = $event->field_chapter['und'][0]['target_id'];
+      $chapter = node_load($chapter_id);
+      
+      foreach($chapter->field_chapter_leaders['und'] as $chapter_leader) {
+        $notify_ids[] = $chapter_leader['target_id'];
+      }
+    }
+
+    // case 3: event with no organizers and no chapter -> event creator
+    if ((sizeof($event->field_organizer) == 0) and (sizeof($event->field_chapter == 0))) {
+        $notify_ids[] = $event->uid;
+    }
+
+    // STEP 1
+    // Notify the event organisers
+    // Ok, now notify everyone we need to
+    foreach ($notify_ids as $notify_id) {
+
+      // load the user to notify
+      $notify_user = user_load($notify_id);
+
+      // events_register_flag
+      if (($flag_or_unflag == "flag") && ($flag->name == 'event_register')) {
+        tm_notifications_notify('events_register_flag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url));
+      }
+
+       // events_register_unflag
+      if (($flag_or_unflag == "unflag") && ($flag->name == 'event_register')) {
+        tm_notifications_notify('events_register_unflag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url));
+      }
+
+      // waitlist_register_flag
+      if (($flag_or_unflag == "flag") && ($flag->name == 'event_waitlist')) {
+        tm_notifications_notify('events_waitlist_flag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url));
+      }
+
+       // waitlist_register_unflag
+      if (($flag_or_unflag == "unflag") && ($flag->name == 'event_waitlist')) {
+        tm_notifications_notify('events_waitlist_unflag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url));
+      }
+      
+    }
+  }
+
+  // STEP 2
+  // Notify the member who has been flagged
+  $notify_user = $account;
+
+  $event_date_time = strtotime( $event->field_event_date['und'][0]['value']);
+  $nice_date = date('l j F', $event_date_time );
+  $event_time = date('g:ia', $event_date_time );
+
+  // events_register_flag
+  $map_link_url = $event->field_map_link['und'][0]['url'];
+  if (($flag_or_unflag == "flag") && ($flag->name == 'event_register')) {
+    tm_notifications_notify('events_register_flag_user', $notify_user, array('node' => $event, 'user' => $who_flagged, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url, '__MAP_LINK__' => $map_link_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time));
+  }
+
+  // events_register_unflag
+  if (($flag_or_unflag == "unflag") && ($flag->name == 'event_register')) {
+    tm_notifications_notify('events_register_unflag_user', $notify_user, array('node' => $event, 'user' => $who_flagged, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time));
+  }
+
+  // waitlist_register_flag
+  if (($flag_or_unflag == "flag") && ($flag->name == 'event_waitlist')) {
+    tm_notifications_notify('events_waitlist_flag_user', $notify_user, array('node' => $event, 'user' => $who_flagged, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time));
+  }
+
+   // waitlist_register_unflag
+  if (($flag_or_unflag == "unflag") && ($flag->name == 'event_waitlist')) {
+    tm_notifications_notify('events_waitlist_unflag_user', $notify_user, array('node' => $event, 'user' => $who_flagged, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time));
+  }
+
+
+}

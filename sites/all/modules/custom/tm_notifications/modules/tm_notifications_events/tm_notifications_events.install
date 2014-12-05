@@ -1,0 +1,5 @@
+<?php
+
+function tm_notifications_events_uninstall() {
+  tm_notifications_preferences_purge_bulk(array('events_register_flag', 'events_register_unflag', 'events_waitlist_flag', 'events_waitlist_unflag', 'events_register_flag_user', 'events_register_unflag_user', 'events_waitlist_flag_user', 'events_waitlist_unflag_user'));
+}

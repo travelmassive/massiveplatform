@@ -19,13 +19,12 @@ function tm_notifications_upcoming_event_strongarm() {
     'default_state' => '1',
     'change_allowed' => 1,
     'email' => array(
-      'subject' => '[node:title]. in 2 days',
+      'subject' => '[node:title] in 2 days',
       'message' => 'Hi [current-user:field_user_first_name],
 
-This is a friendly reminder that the Travel Massive event; {node:title]  will take place in two days. 
+This is a friendly reminder that the event [node:title] will take place in two days.
 
-cheers,
-The Travel Massive team',
+__EMAIL_NOTIFICATION_FOOTER__',
     ),
   );
   $export['tm_notifications__event_upcoming_2_days'] = $strongarm;

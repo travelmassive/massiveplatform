@@ -52,7 +52,8 @@ class TMEventMigration extends TMBaseMigration {
 
     // Event organizer, only one user ref
     $this->addFieldMapping('field_organizer', 'organizer')
-      ->sourceMigration('TMUser');
+    ->separator('|')
+    ->sourceMigration('TMUser');
 
     // Temporary field mapping to use on flags
     $this->addFieldMapping('event_register', 'event_register')
@@ -82,6 +83,9 @@ class TMEventMigration extends TMBaseMigration {
     $this->addFieldMapping('field_event_venue_name', 'venue');
     $this->addFieldMapping('field_location', 'address');
     $this->addFieldMapping('field_map_link', 'map_link');
+
+    // Partner Event
+    $this->addFieldMapping('field_is_partner_event', 'is_partner_event');
 
   }
 

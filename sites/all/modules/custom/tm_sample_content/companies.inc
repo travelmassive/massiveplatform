@@ -43,7 +43,7 @@ class TMCompanyMigration extends TMBaseMigration {
 
     // Owner (user manager by)
     $this->addFieldMapping('field_owner', 'owner')
-      ->separator(' ')
+      ->separator('|')
       ->sourceMigration('TMUser');
 
     // Author, default to admin

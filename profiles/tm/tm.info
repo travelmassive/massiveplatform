@@ -108,6 +108,8 @@ dependencies[] = tm_notifications_upcoming_event
 dependencies[] = tm_notifications_newsletters
 dependencies[] = tm_notifications_approval
 dependencies[] = tm_notifications_welcome
+dependencies[] = tm_notifications_events
+
 
 
 

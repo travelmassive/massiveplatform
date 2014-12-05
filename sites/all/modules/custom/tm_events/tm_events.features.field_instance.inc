@@ -695,8 +695,10 @@ function tm_events_field_default_field_instances() {
   $field_instances['node-event-field_organizer'] = array(
     'bundle' => 'event',
     'default_value' => NULL,
+    'default_value_function' => '',
     'deleted' => 0,
-    'description' => 'You can appoint any other chapter leader of this city as organizer of the event.',
+    'description' => 'Who is organizing this event? Organizers will be notified of all event registrations.
+If set to none, then all chapter leaders will be notified of any registrations and waitlists.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -745,6 +747,44 @@ function tm_events_field_default_field_instances() {
     'label' => 'Organizer',
     'required' => 0,
     'settings' => array(
+      'behaviors' => array(
+        'prepopulate' => array(
+          'status' => 0,
+        ),
+      ),
+      'nodeaccess_userreference' => array(
+        'all' => array(
+          'view' => 0,
+        ),
+        'all_published' => 0,
+        'author' => array(
+          'delete' => 0,
+          'update' => 0,
+          'view' => 0,
+        ),
+        'author_published' => 0,
+        'create' => array(
+          'chapter' => 0,
+          'event' => 0,
+          'organization' => 0,
+          'page' => 0,
+        ),
+        'priority' => 0,
+        'referenced' => array(
+          'delete' => 0,
+          'deny_delete' => 0,
+          'deny_update' => 0,
+          'deny_view' => 0,
+          'update' => 0,
+          'view' => 0,
+        ),
+        'referenced_published' => 0,
+        'unused' => 0,
+        'views' => array(
+          'view' => '',
+          'view_args' => '',
+        ),
+      ),
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -851,7 +891,8 @@ function tm_events_field_default_field_instances() {
   t('This image will used as the main banner for the event.');
   t('Venue name');
   t('When');
-  t('You can appoint any other chapter leader of this city as organizer of the event.');
+  t('Who is organizing this event? Organizers will be notified of all event registrations.
+If set to none, then all chapter leaders will be notified of any registrations and waitlists.');
 
   return $field_instances;
 }

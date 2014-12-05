@@ -51,8 +51,8 @@ Your account is currently pending approval by one of our local chapter leaders. 
 
 Thanks for joining and welcome to Travel Massive!
 
-cheers,
-The Travel Massive team',
+__EMAIL_NOTIFICATION_FOOTER__
+',
     ),
   );
   $export['tm_notifications__user_approved'] = $strongarm;

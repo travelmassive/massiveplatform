@@ -123,6 +123,9 @@ function tm_notifications_mail($key, &$message, $params) {
   //$message['body'][] = $msg;
   // replace the __SERVER_NAME__ field as we always need this
   $msg = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $msg);
+  $footer = "cheers, The Travel Massive team";
+  $msg = str_replace("__EMAIL_NOTIFICATION_FOOTER__", $footer, $msg);
+  
 
   // replace custom tokens ie: __PROFILE_URL__
   foreach ($params['tokens'] as $token_name => $token_value) {

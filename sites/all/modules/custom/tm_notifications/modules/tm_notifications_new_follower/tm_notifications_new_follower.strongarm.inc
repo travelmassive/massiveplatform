@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * tm_notifications_chapter.strongarm.inc
+ * tm_notifications_new_follower.strongarm.inc
  */
 
 /**
@@ -28,8 +28,7 @@ You can view their profile here:
 
 __SERVER_NAME__/__PROFILE_URL__
 
-cheers,
-The Travel Massive team',
+__EMAIL_NOTIFICATION_FOOTER__',
     ),
   );
   $export['tm_notifications__new_follower'] = $strongarm;
@@ -53,8 +52,7 @@ You can view their profile here:
 
 __SERVER_NAME__/__PROFILE_URL__
 
-cheers,
-The Travel Massive team',
+__EMAIL_NOTIFICATION_FOOTER__',
     ),
   );
   $export['tm_notifications__new_organization_follower'] = $strongarm;

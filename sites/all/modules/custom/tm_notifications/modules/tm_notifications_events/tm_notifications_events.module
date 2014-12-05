@@ -235,7 +235,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
 
   // STEP 2
   // Notify the member who has been flagged
-  $notify_user = $account;
+  $notify_user = user_load($account->uid);
 
   $event_date_time = strtotime( $event->field_event_date['und'][0]['value']);
   $nice_date = date('l j F', $event_date_time );
@@ -244,22 +244,22 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
   // events_register_flag
   $map_link_url = $event->field_map_link['und'][0]['url'];
   if (($flag_or_unflag == "flag") && ($flag->name == 'event_register')) {
-    tm_notifications_notify('events_register_flag_user', $notify_user, array('node' => $event, 'user' => $who_flagged, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url, '__MAP_LINK__' => $map_link_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time));
+    tm_notifications_notify('events_register_flag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url, '__MAP_LINK__' => $map_link_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time));
   }
 
   // events_register_unflag
   if (($flag_or_unflag == "unflag") && ($flag->name == 'event_register')) {
-    tm_notifications_notify('events_register_unflag_user', $notify_user, array('node' => $event, 'user' => $who_flagged, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time));
+    tm_notifications_notify('events_register_unflag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time));
   }
 
   // waitlist_register_flag
   if (($flag_or_unflag == "flag") && ($flag->name == 'event_waitlist')) {
-    tm_notifications_notify('events_waitlist_flag_user', $notify_user, array('node' => $event, 'user' => $who_flagged, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time));
+    tm_notifications_notify('events_waitlist_flag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time));
   }
 
    // waitlist_register_unflag
   if (($flag_or_unflag == "unflag") && ($flag->name == 'event_waitlist')) {
-    tm_notifications_notify('events_waitlist_unflag_user', $notify_user, array('node' => $event, 'user' => $who_flagged, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time));
+    tm_notifications_notify('events_waitlist_unflag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time));
   }
 
 

@@ -49,7 +49,7 @@ __EMAIL_NOTIFICATION_FOOTER__
       'subject' => 'New member: [current-user:field_user_first_name] joined [node:title]',
       'message' => 'Hi [user:field_user_first_name],
 
-A new member [current-user:field_user_first_name] [current-user:field_user_last_name]just joined your chapter [node:title].
+A new member [current-user:field_user_first_name] [current-user:field_user_last_name] just joined your chapter [node:title].
 
 You can view their profile here:
 

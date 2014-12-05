@@ -13,8 +13,9 @@
  * The users go to this url to signin with twitter.
  */
 function tm_users_external_signin_oauth() {
-  $key = variable_get('tm_twitter_consumer_key', '');
-  $secret = variable_get('tm_twitter_consumer_secret', '');
+  global $conf;
+  $key = $conf['tm_twitter_consumer_key'];
+  $secret = $conf['tm_twitter_consumer_secret'];
   $twitter = new Twitter($key, $secret);
   $token = $twitter->get_request_token();
 
@@ -31,8 +32,9 @@ function tm_users_external_signin_oauth() {
  * Either logs in the user or redirects to complete registration.
  */
 function tm_users_external_signin_oauth_callback() {
-  $key = variable_get('tm_twitter_consumer_key', '');
-  $secret = variable_get('tm_twitter_consumer_secret', '');
+  global $conf;
+  $key = $conf['tm_twitter_consumer_key'];
+  $secret = $conf['tm_twitter_consumer_secret'];
 
   // Is the user requesting twitter integration?
   if (isset($_SESSION['twitter_oauth'])) {

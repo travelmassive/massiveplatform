@@ -16,13 +16,15 @@ function tm_users_external_signin_admin_form($form, &$form_state) {
     '#type' => 'fieldset',
     '#title' => t('OAuth Settings'),
     '#access' => module_exists('oauth_common'),
-    '#description' => t('To enable OAuth based access for twitter, you must <a href="@url">register your application</a> with Twitter and add the provided keys here.', array('@url' => 'https://dev.twitter.com/apps/new')),
-  );
+    '#description' => t('To enable OAuth based access for twitter, you must <a href="@url">register your application</a> with Twitter and add the provided keys into your settings.php file ($conf[\'tm_twitter_consumer_key\'] and $conf[\'tm_twitter_consumer_secret\'])'));
+
   $form['oauth']['callback_url'] = array(
     '#type' => 'item',
     '#title' => t('Callback URL'),
     '#markup' => url('tm_twitter/oauth/callback', array('absolute' => TRUE)),
   );
+  /*
+  // This is now provided in settings.php
   $form['oauth']['tm_twitter_consumer_key'] = array(
     '#type' => 'textfield',
     '#title' => t('OAuth Consumer key'),
@@ -32,8 +34,7 @@ function tm_users_external_signin_admin_form($form, &$form_state) {
     '#type' => 'textfield',
     '#title' => t('OAuth Consumer secret'),
     '#default_value' => variable_get('tm_twitter_consumer_secret', NULL),
-  );
-
+  );*/
   // Twitter external APIs settings.
   $form['twitter'] = array(
     '#type' => 'fieldset',

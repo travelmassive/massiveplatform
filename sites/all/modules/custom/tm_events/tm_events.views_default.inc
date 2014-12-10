@@ -85,8 +85,8 @@ function tm_events_views_default_views() {
   $handler->display->display_options['filters']['field_event_date_value']['id'] = 'field_event_date_value';
   $handler->display->display_options['filters']['field_event_date_value']['table'] = 'field_data_field_event_date';
   $handler->display->display_options['filters']['field_event_date_value']['field'] = 'field_event_date_value';
-  $handler->display->display_options['filters']['field_event_date_value']['operator'] = '>=';
-  $handler->display->display_options['filters']['field_event_date_value']['default_date'] = 'now';
+  $handler->display->display_options['filters']['field_event_date_value']['operator'] = '>';
+  $handler->display->display_options['filters']['field_event_date_value']['default_date'] = 'now -1 day';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -126,7 +126,7 @@ function tm_events_views_default_views() {
   $handler->display->display_options['filters']['field_event_date_value']['table'] = 'field_data_field_event_date';
   $handler->display->display_options['filters']['field_event_date_value']['field'] = 'field_event_date_value';
   $handler->display->display_options['filters']['field_event_date_value']['operator'] = '>=';
-  $handler->display->display_options['filters']['field_event_date_value']['default_date'] = 'now';
+  $handler->display->display_options['filters']['field_event_date_value']['default_date'] = 'now -1 day';
   /* Filter criterion: Content: Partner Event (field_is_partner_event) */
   $handler->display->display_options['filters']['field_is_partner_event_value']['id'] = 'field_is_partner_event_value';
   $handler->display->display_options['filters']['field_is_partner_event_value']['table'] = 'field_data_field_is_partner_event';
@@ -168,32 +168,6 @@ function tm_events_views_default_views() {
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['pager']['options']['items_per_page'] = '3';
   $handler->display->display_options['pager']['options']['offset'] = '0';
-  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
-  $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Published */
-  $handler->display->display_options['filters']['status']['id'] = 'status';
-  $handler->display->display_options['filters']['status']['table'] = 'node';
-  $handler->display->display_options['filters']['status']['field'] = 'status';
-  $handler->display->display_options['filters']['status']['value'] = 1;
-  $handler->display->display_options['filters']['status']['group'] = 1;
-  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content: Type */
-  $handler->display->display_options['filters']['type_1']['id'] = 'type_1';
-  $handler->display->display_options['filters']['type_1']['table'] = 'node';
-  $handler->display->display_options['filters']['type_1']['field'] = 'type';
-  $handler->display->display_options['filters']['type_1']['value'] = array(
-    'event' => 'event',
-  );
-  $handler->display->display_options['filters']['type_1']['expose']['operator_id'] = 'type_1_op';
-  $handler->display->display_options['filters']['type_1']['expose']['label'] = 'Type';
-  $handler->display->display_options['filters']['type_1']['expose']['operator'] = 'type_1_op';
-  $handler->display->display_options['filters']['type_1']['expose']['identifier'] = 'type_1';
-  /* Filter criterion: Content: When -  start date (field_event_date) */
-  $handler->display->display_options['filters']['field_event_date_value']['id'] = 'field_event_date_value';
-  $handler->display->display_options['filters']['field_event_date_value']['table'] = 'field_data_field_event_date';
-  $handler->display->display_options['filters']['field_event_date_value']['field'] = 'field_event_date_value';
-  $handler->display->display_options['filters']['field_event_date_value']['operator'] = '>';
-  $handler->display->display_options['filters']['field_event_date_value']['default_date'] = 'now';
   $export['events'] = $view;
 
   $view = new view();

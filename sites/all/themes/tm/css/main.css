@@ -4179,22 +4179,37 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   width: 100%;
 }
 
+/* line 504, ../sass/_base.scss */
+#footer-sponsors {
+  height: 3rem;
+  padding-left: 1rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid #4d5966;
+}
+
+/* line 511, ../sass/_base.scss */
+.sponsors-headline {
+  font-size: 12pt;
+  font-weight: bold;
+  color: #90979f;
+}
+
 /* IE<9 */
-/* line 508, ../sass/_base.scss */
+/* line 520, ../sass/_base.scss */
 .lt-ie9 body {
   background: #e8eaeb;
 }
-/* line 511, ../sass/_base.scss */
+/* line 523, ../sass/_base.scss */
 .lt-ie9 #page, .lt-ie9 #site-canvas {
   display: none;
 }
-/* line 514, ../sass/_base.scss */
+/* line 526, ../sass/_base.scss */
 .lt-ie9 #nocando {
   margin: 200px auto;
   padding: 0 20px;
   width: 440px;
 }
-/* line 518, ../sass/_base.scss */
+/* line 530, ../sass/_base.scss */
 .lt-ie9 #nocando h1 {
   color: inherit;
   line-height: 1.1;

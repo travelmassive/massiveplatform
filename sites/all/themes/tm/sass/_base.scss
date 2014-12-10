@@ -501,6 +501,18 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
   }
 }
 
+#footer-sponsors {
+  height: 3rem; 
+  padding-left: 1rem; 
+  padding-top: 1.2rem; 
+  border-top: 1px solid tint($primary-color, 20%);
+}
+
+.sponsors-headline {
+  font-size: 12pt; 
+  font-weight: bold; 
+  color: tint($primary-color, 50%);
+}
 
 /* IE<9 */
 

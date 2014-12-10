@@ -116,5 +116,6 @@
       </nav>
       <?php include './'. path_to_theme() .'/templates/block--footer-credits.tpl.php';?>
     </div>
+    <?php include './'. path_to_theme() .'/templates/block--footer-sponsors.tpl.php';?>
   </footer>
 </div>

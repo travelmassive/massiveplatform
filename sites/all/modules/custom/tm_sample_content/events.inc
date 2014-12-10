@@ -24,6 +24,8 @@ class TMEventMigration extends TMBaseMigration {
     // Create a MigrateSource object.
     $this->source = new MigrateSourceCSV(
       drupal_get_path('module', 'tm_sample_content') . '/import/events.csv',
+      // drupal_get_path('module', 'tm_sample_content') . '/import/events_travelmassive_historical.csv',
+
       array(),
       $this->sourceFileOptions()
     );

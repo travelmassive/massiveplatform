@@ -155,7 +155,7 @@ $primary-color: #213040;                            // very dark desaturated blu
 $secondary-color: #007EB5;                          // strong blue
 $warning-color: #f39c12;                          	// strong orange
 $success-color: #1abc9c;                          	// strong turquoise
-$danger-color: #e74c3c;                          		// strong blue
+$danger-color: #e74c3c;                          	// strong blue
 
 // We use these to control various global styles
 $body-bg: tint($primary-color, 80%);
@@ -182,9 +182,9 @@ $xspace: 2rem;
 // < 544
 $xsmall-range: (0em, 34rem);
 // 545 - 768
-$small-range: (34.063rem, 48rem);
+$small-range: (34.063rem, 55rem);
 // 769 - 992
-$medium-range: (48.063rem, 62rem);
+$medium-range: (55.063rem, 62rem);
 // 993 - 1200
 $large-range: (62.063rem, 75rem);
 // > 1201

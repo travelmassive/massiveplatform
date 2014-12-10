@@ -36,7 +36,7 @@ class TMPageMigration extends TMBaseMigration {
     // Body
     $this->addFieldMapping('body', 'body');
     $this->addFieldMapping('body:format')
-      ->defaultValue('filtered_html');
+      ->defaultValue('full_html');
 
     // Author, default to admin
     $this->addFieldMapping('uid')

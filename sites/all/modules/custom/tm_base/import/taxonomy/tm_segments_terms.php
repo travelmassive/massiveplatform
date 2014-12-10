@@ -23,6 +23,7 @@ $tm_segments_terms = array(
     'Affiliate network',
     'Tour booking',
     'Local tours',
+    'Professional Consulting'
   ),
   'Blogger' => array(
     'Adventure travel blogging',
@@ -36,17 +37,19 @@ $tm_segments_terms = array(
   ),
   'Media' => array(
     'Media',
+    'Media and Events',
     'Journalists',
     'Trade magazines',
     'Editorial offices',
     'TV/Radio-stations',
     'Publishers',
     'Travel photography',
+    'Film Maker',
   ),
   'Tourism Organization/Association' => array(
     'Organizations',
     'Associations',
-    'Touristic Representations/Tourism Boards',
+    'Tourism Board',
     'Spas and health institutions',
   ),
   'Tour Operators/Travel Agencies' => array(
@@ -102,6 +105,7 @@ $tm_segments_terms = array(
     'Destination Management Companies',
   ),
   'IT and Software' => array(
+    'Consulting Services',
     'IT and Software',
     'Reservation and booking technologies',
     'Distribution technologies',
@@ -110,12 +114,20 @@ $tm_segments_terms = array(
     'Online Payment Systems',
     'Telecommunication',
   ),
-  'Information and advice' => array(
+  'Information and Advice' => array(
     'Information and advice',
     'Education and further education',
-    'Investment Services',
     'Trade associations/organizations',
     'Press/ PR Agencies',
+  ),
+   'Investment' => array(
+    'Angel Investor',
+    'Venture Capital',
+    'Mergers and Acquisitions',
+    'Professional Services',
+    'Startup Accelerator',
+    'Startup Lab',
+    'Investment Advisory',
   ),
   'Destination' => array(
     'Theme park',

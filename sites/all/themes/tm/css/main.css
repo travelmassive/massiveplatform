@@ -529,14 +529,14 @@ table {
 /* Layout rules */
 /* line 293, ../sass/foundation_5.0.3/components/_global.scss */
 meta.foundation-mq-small {
-  font-family: "/only screen and (min-width:34.063rem) and (max-width:48rem)/";
+  font-family: "/only screen and (min-width:34.063rem) and (max-width:55rem)/";
   width: 34.063rem;
 }
 
 /* line 298, ../sass/foundation_5.0.3/components/_global.scss */
 meta.foundation-mq-medium {
-  font-family: "/only screen and (min-width:48.063rem)/";
-  width: 48.063rem;
+  font-family: "/only screen and (min-width:55.063rem)/";
+  width: 55.063rem;
 }
 
 /* line 303, ../sass/foundation_5.0.3/components/_global.scss */
@@ -980,7 +980,7 @@ meta.foundation-mq-xxlarge {
     float: left;
   }
 }
-@media only screen and (min-width: 48.063rem) {
+@media only screen and (min-width: 55.063rem) {
   /* line 148, ../sass/foundation_5.0.3/components/_grid.scss */
   .column.medium-centered,
   .columns.medium-centered {
@@ -2832,7 +2832,7 @@ tr.selected td {
 /* line 803, ../sass/components/_misc.scss */
 .progress .filled {
   background-color: #0072b9;
-  background-image: url('../images/progress.gif?1417692062');
+  background-image: url('../images/progress.gif?1418018116');
 }
 
 /* ==========================================================================
@@ -3606,14 +3606,14 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 
 /* line 84, ../sass/_base.scss */
 #page, #site-canvas {
-  background: #e8eaeb;
+  background: #f3f4f5;
 }
 
 /* line 88, ../sass/_base.scss */
 #main {
   padding: 2rem 0;
 }
-@media only screen and (min-width: 48.063rem) {
+@media only screen and (min-width: 55.063rem) {
   /* line 88, ../sass/_base.scss */
   #main {
     padding: 3rem 0;
@@ -3651,7 +3651,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   display: block;
   height: 2rem;
 }
-@media only screen and (min-width: 48.063rem) {
+@media only screen and (min-width: 55.063rem) {
   /* line 103, ../sass/_base.scss */
   #site-title {
     position: relative;
@@ -3785,7 +3785,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 .logged-in #prime-nav .account-wrapper .toggle:before {
   display: none;
 }
-@media only screen and (min-width: 48.063rem) {
+@media only screen and (min-width: 55.063rem) {
   /* line 125, ../sass/_base.scss */
   #prime-nav {
     position: relative;
@@ -3864,7 +3864,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   width: 100%;
   float: left;
 }
-@media only screen and (min-width: 48.063rem) {
+@media only screen and (min-width: 55.063rem) {
   /* line 299, ../sass/_base.scss */
   #content .trilithon .column {
     position: relative;
@@ -3936,7 +3936,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   }
 }
 
-@media only screen and (min-width: 48.063rem) {
+@media only screen and (min-width: 55.063rem) {
   /* line 342, ../sass/_base.scss */
   .page-node-communicate #content,
   .page-node-rsvp #content,
@@ -4055,7 +4055,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
     float: left;
   }
 }
-@media only screen and (min-width: 48.063rem) {
+@media only screen and (min-width: 55.063rem) {
   /* line 406, ../sass/_base.scss */
   #foot-nav section {
     position: relative;
@@ -4119,7 +4119,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
     padding-top: 0;
   }
 }
-@media only screen and (min-width: 48.063rem) {
+@media only screen and (min-width: 55.063rem) {
   /* line 451, ../sass/_base.scss */
   #foot-credits .logo {
     float: none;
@@ -5035,7 +5035,7 @@ label {
 #user-register-form .form-actions * {
   margin: 0 0.25rem;
 }
-@media only screen and (min-width: 48.063rem) {
+@media only screen and (min-width: 55.063rem) {
   /* line 242, ../sass/_forms.scss */
   .node-form .link-field-column,
   #user-profile-form .link-field-column,
@@ -5276,7 +5276,7 @@ select:disabled {
   color: #213040;
   font-weight: normal;
 }
-@media only screen and (min-width: 48.063rem) {
+@media only screen and (min-width: 55.063rem) {
   /* line 419, ../sass/_forms.scss */
   .views-exposed-form .form-type-select {
     margin-right: 0;
@@ -5371,11 +5371,6 @@ select:disabled {
 /* line 511, ../sass/_forms.scss */
 #edit-revalidate {
   margin-bottom: 48px;
-}
-
-/* line 516, ../sass/_forms.scss */
-#page-title {
-  margin-left: 16px;
 }
 
 /* line 518, ../sass/_forms.scss */
@@ -6274,7 +6269,7 @@ select:disabled {
 .page-search .messages--error {
   margin: 1rem 1rem 2rem 1rem;
 }
-@media only screen and (min-width: 48.063rem) {
+@media only screen and (min-width: 55.063rem) {
   /* line 30, ../sass/_single.scss */
   .page-views #page-title,
   .page-search #page-title {
@@ -6358,7 +6353,7 @@ select:disabled {
 .page-search #user-profile-form {
   padding: 0 !important;
 }
-@media only screen and (min-width: 48.063rem) {
+@media only screen and (min-width: 55.063rem) {
   /* line 75, ../sass/_single.scss */
   .page-node-rsvp #page-title,
   .page-node-communicate #page-title,
@@ -6480,7 +6475,7 @@ select:disabled {
     margin-bottom: 2rem;
   }
 }
-@media only screen and (min-width: 48.063rem) {
+@media only screen and (min-width: 55.063rem) {
   /* line 172, ../sass/_single.scss */
   .page-search .contained-block {
     padding: 2rem;
@@ -6534,7 +6529,7 @@ select:disabled {
     width: 20%;
   }
 }
-@media only screen and (min-width: 48.063rem) {
+@media only screen and (min-width: 55.063rem) {
   /* line 226, ../sass/_single.scss */
   #content .search-form > div {
     padding: 2rem;
@@ -6543,11 +6538,11 @@ select:disabled {
 
 /* line 232, ../sass/_single.scss */
 .front {
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(33, 48, 64, 0)), color-stop(50%, rgba(33, 48, 64, 0)), color-stop(100%, #213040)), url('../images/../images/layout/home-bg-img-01a.jpg?1417692062');
-  background: -webkit-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1417692062');
-  background: -moz-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1417692062');
-  background: -o-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1417692062');
-  background: linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1417692062');
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(33, 48, 64, 0)), color-stop(50%, rgba(33, 48, 64, 0)), color-stop(100%, #213040)), url('../images/../images/layout/home-bg-img-01a.jpg?1418018116');
+  background: -webkit-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1418018116');
+  background: -moz-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1418018116');
+  background: -o-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1418018116');
+  background: linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1418018116');
   background-repeat: no-repeat, no-repeat;
   background-position: center center, center center;
   -webkit-background-size: 100% 100%, cover;
@@ -6749,7 +6744,7 @@ select:disabled {
     margin-bottom: 4rem;
   }
 }
-@media only screen and (min-width: 48.063rem) {
+@media only screen and (min-width: 55.063rem) {
   /* line 377, ../sass/_single.scss */
   #welcome .hd {
     position: relative;
@@ -7022,7 +7017,7 @@ select:disabled {
     line-height: 1.5;
   }
 }
-@media only screen and (min-width: 48.063rem) {
+@media only screen and (min-width: 55.063rem) {
   /* line 614, ../sass/_single.scss */
   .trilithon-header .media {
     display: table-cell;

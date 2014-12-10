@@ -114,23 +114,7 @@
         <?php endif ?>
         </div>
       </nav>
-      <div id="foot-credits">
-        <p>
-          <strong class="logo">
-            <a title="<?php print t('Home'); ?>" rel="home" href="<?php print $front_page; ?>">
-              <?php if($is_front) : ?>
-              <img src="<?php print $base_path . path_to_theme(); ?>/images/layout/tm-logo-w.svg" alt="<?php print t('Home'); ?>" width="104" height="48" />
-              <?php else : ?>
-              <img src="<?php print $base_path . path_to_theme(); ?>/images/layout/tm-logo.svg" alt="<?php print t('Home'); ?>" width="104" height="48" />
-              <?php endif; ?>
-              <span><?php print $site_name; ?></span>
-            </a>
-          </strong>
-          <small><time datetime="2011/<?= date('Y'); ?>">&copy; 2011-<?= date('Y'); ?> All Rights Reserved</time>Travel Massive Global P.B.C.</small>
-        </p>
-        <p>Powered by Massive Platform<br>
-          Made with <span style='color: red;'>&hearts;</span> around the world</p>
-      </div>
+      <?php include './'. path_to_theme() .'/templates/block--footer-credits.tpl.php';?>
     </div>
   </footer>
 </div>

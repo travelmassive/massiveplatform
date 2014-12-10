@@ -69,7 +69,7 @@ function tm_preprocess_page(&$variables, $hook) {
 
   // On registration page put a twitter link
   if (current_path() == "user/register") {
-      drupal_set_message('Have Twitter? &nbsp;Sign In Faster!<br> <a href="/tm_twitter/oauth" class="twitter-login" style="width: 200px; text-decoration: none;">Twitter</a>');
+      drupal_set_message('<a href="/tm_twitter/oauth" class="twitter-login" style="width: 220px; text-decoration: none;">Sign Up With Twitter</a>');
   }
 }
 

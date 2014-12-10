@@ -463,7 +463,7 @@ function tm_events_field_default_field_instances() {
       'default_image' => 0,
       'file_directory' => 'images/events',
       'file_extensions' => 'png gif jpg jpeg',
-      'max_filesize' => '8 MB',
+      'max_filesize' => '',
       'max_resolution' => '',
       'min_resolution' => '',
       'title_field' => 0,

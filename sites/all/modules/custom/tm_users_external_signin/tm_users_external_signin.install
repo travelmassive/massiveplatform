@@ -17,9 +17,10 @@ function tm_users_external_signin_requirements($phase) {
   $t = get_t();
   if ($phase == 'runtime') {
     // Verify that the Twitter Application keys are set.
+    global $conf;
     $requirements['tm_twitter_keys'] = array('title' => $t('Twitter Application keys'));
-    $consumer_key = variable_get('tm_twitter_consumer_key', NULL);
-    $consumer_secret = variable_get('tm_twitter_consumer_secret', NULL);
+    $consumer_key = $conf['tm_twitter_consumer_key'];
+    $consumer_secret = $conf['tm_twitter_consumer_secret'];
     if (empty($consumer_key) || empty($consumer_secret)) {
       $requirements['tm_twitter_keys']['value'] = $t('Missing');
       $requirements['tm_twitter_keys']['description'] =

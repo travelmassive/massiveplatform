@@ -143,7 +143,7 @@ function hook_cron_easy_hooks() {
           'phase' => 'full',
         ),
       ),
-    )
+    ),
   );
 }
 
@@ -187,7 +187,7 @@ function hook_cron_easy_hooks_alter(&$easy_hooks) {
  * @param UltimateCronJob $job
  *   The job being queried.
  */
-function hook_pre_schedule($job) {
+function hook_cron_pre_schedule($job) {
 }
 
 /**
@@ -196,7 +196,7 @@ function hook_pre_schedule($job) {
  * @param UltimateCronJob $job
  *   The job being queried.
  */
-function hook_post_schedule($job) {
+function hook_cron_post_schedule($job) {
 }
 
 /**
@@ -205,7 +205,7 @@ function hook_post_schedule($job) {
  * @param UltimateCronJob $job
  *   The job being launched.
  */
-function hook_pre_launch($job) {
+function hook_cron_pre_launch($job) {
 }
 
 /**
@@ -214,7 +214,7 @@ function hook_pre_launch($job) {
  * @param UltimateCronJob $job
  *   The job that was launched.
  */
-function hook_post_launch($job) {
+function hook_cron_post_launch($job) {
 }
 
 /**
@@ -223,7 +223,7 @@ function hook_post_launch($job) {
  * @param UltimateCronJob $job
  *   The job being run.
  */
-function hook_pre_run($job) {
+function hook_cron_pre_run($job) {
 }
 
 /**
@@ -232,7 +232,7 @@ function hook_pre_run($job) {
  * @param UltimateCronJob $job
  *   The job that was run.
  */
-function hook_post_run($job) {
+function hook_cron_post_run($job) {
 }
 
 /**
@@ -241,7 +241,7 @@ function hook_post_run($job) {
  * @param UltimateCronJob $job
  *   The job being invoked.
  */
-function hook_pre_invoke($job) {
+function hook_cron_pre_invoke($job) {
 }
 
 /**
@@ -250,7 +250,7 @@ function hook_pre_invoke($job) {
  * @param UltimateCronJob $job
  *   The job that was invoked.
  */
-function hook_post_invoke($job) {
+function hook_cron_post_invoke($job) {
 }
 
 /**
@@ -265,5 +265,5 @@ function hook_post_invoke($job) {
  * @param array &$allowed_operations
  *   Allowed operations for this job.
  */
-function hook_ultimate_cron_plugin_build_operations($job, &$allowed_operations) {
+function hook_ultimate_cron_plugin_build_operations_alter($job, &$allowed_operations) {
 }

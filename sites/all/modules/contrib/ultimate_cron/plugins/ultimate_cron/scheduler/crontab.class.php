@@ -14,7 +14,7 @@ class UltimateCronCrontabScheduler extends UltimateCronScheduler {
   public function defaultSettings() {
     return array(
       'rules' => array('*/10+@ * * * *'),
-      'catch_up' => '300',
+      'catch_up' => '86400',
     );
   }
 
@@ -31,6 +31,7 @@ class UltimateCronCrontabScheduler extends UltimateCronScheduler {
    */
   public function formatLabelVerbose($job) {
     $settings = $job->getSettings($this->type);
+    $job->log_entry = isset($job->log_entry) ? $job->log_entry : $job->loadLatestLogEntry();
 
     $parsed = '';
     $next_schedule = NULL;
@@ -42,13 +43,16 @@ class UltimateCronCrontabScheduler extends UltimateCronScheduler {
       $result = $cron->getNextSchedule();
       $next_schedule = is_null($next_schedule) || $next_schedule > $result ? $result : $next_schedule;
       $result = $cron->getLastSchedule();
-      if ($time < $result + $settings['catch_up']) {
+
+      // If job didn't run at its last schedule, check if the catch up time
+      // will triger it, and adjust $next_schedule accordingly.
+      if ($job->log_entry->start_time < $result && $time < $result + $settings['catch_up']) {
         $result = floor($time / 60) * 60 + 60;
         $next_schedule = $next_schedule > $result ? $result : $next_schedule;
       }
     }
     $parsed .= t('Next scheduled run at @datetime', array(
-      '@datetime' => format_date($next_schedule, 'custom', 'Y-m-d H:i:s')
+      '@datetime' => format_date($next_schedule, 'custom', 'Y-m-d H:i:s'),
     ));
     return $parsed;
   }
@@ -110,7 +114,7 @@ class UltimateCronCrontabScheduler extends UltimateCronScheduler {
     $log_entry = isset($job->log_entry) ? $job->log_entry : $job->loadLatestLogEntry();
     $skew = $this->getSkew($job);
     $class = get_class($this);
-    return $class::shouldRun($settings['rules'], $log_entry->start_time, NULL, $settings['catch_up'], $skew) ? TRUE : FALSE;
+    return $class::shouldRun($settings['rules'], $log_entry->start_time, NULL, $settings['catch_up'], $skew) !== FALSE ? TRUE : FALSE;
   }
 
   /**
@@ -163,7 +167,7 @@ class UltimateCronCrontabScheduler extends UltimateCronScheduler {
     }
     $behind = REQUEST_TIME - $next_schedule;
 
-    return $behind > $settings['catch_up'] ? $behind: FALSE;
+    return $behind > $settings['catch_up'] ? $behind : FALSE;
   }
 
   /**

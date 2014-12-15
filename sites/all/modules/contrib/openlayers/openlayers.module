@@ -103,16 +103,27 @@ function openlayers_include() {
   $lang = $language->language;
 
   if ('internal' == variable_get('openlayers_source_type', 'external')) {
-    $variant = variable_get('openlayers_source_internal_variant', NULL);
-    if ($variant == 'original') $variant = NULL;
+    $variant = (variable_get('openlayers_source_internal_variant', NULL) == 'original') ? 'original' : NULL;
     libraries_load('openlayers', $variant);
 
     if ($lang != 'en') {
-      drupal_add_js(libraries_get_path('openlayers') . '/lib/OpenLayers/Lang.js', 'file');
-      drupal_add_js(libraries_get_path('openlayers') . '/lib/OpenLayers/Lang/' . $lang . '.js', 'file');
+      $main_locale = libraries_get_path('openlayers') . '/lib/OpenLayers/Lang.js';
+      if (file_exists($main_locale)) {
+        drupal_add_js($main_locale, 'file');
+      }
+
+      $language_locale = libraries_get_path('openlayers') . '/lib/OpenLayers/Lang/' . $lang . '.js';
+      if (file_exists($language_locale)) {
+        drupal_add_js($language_locale, 'file');
+      } else {
+        $country_code = variable_get('site_default_country', '');
+        $language_locale = libraries_get_path('openlayers') . '/lib/OpenLayers/Lang/' . $lang . '-' . $country_code . '.js';
+        if (file_exists($language_locale)) {
+          drupal_add_js($language_locale, 'file');
+        }
+      }
     }
-  }
-  else {
+  } else {
     // Use a static variable to prevent running URL check code repeatedly.
     static $once;
     if (!isset($once)) {
@@ -129,13 +140,25 @@ function openlayers_include() {
       // Check for full URL and include it manually if external.
       if (valid_url($path, TRUE)) {
         drupal_add_js($path, 'external');
-      }
-      else {
+      } else {
         drupal_add_js($path);
       }
       if ($lang != 'en') {
-        drupal_add_js(libraries_get_path('openlayers') . '/lib/OpenLayers/Lang.js', 'file');
-        drupal_add_js(libraries_get_path('openlayers') . '/lib/OpenLayers/Lang/' . $lang . '.js', 'file');
+        $main_locale = libraries_get_path('openlayers') . '/lib/OpenLayers/Lang.js';
+        if (file_exists($main_locale)) {
+          drupal_add_js($main_locale, 'file');
+        }
+
+        $language_locale = libraries_get_path('openlayers') . '/lib/OpenLayers/Lang/' . $lang . '.js';
+        if (file_exists($language_locale)) {
+          drupal_add_js($language_locale, 'file');
+        } else {
+          $country_code = variable_get('site_default_country', '');
+          $language_locale = libraries_get_path('openlayers') . '/lib/OpenLayers/Lang/' . $lang . '-' . $country_code . '.js';
+          if (file_exists($language_locale)) {
+            drupal_add_js($language_locale, 'file');
+          }
+        }
       }
 
       drupal_add_css(drupal_get_path('module', 'openlayers') .
@@ -211,7 +234,7 @@ function openlayers_build_map($map = array()) {
       if($layerProjectionIdentifier===FALSE){
         throw new Exception(
           t('Layer !title lacks its projection. Please edit it to select a projection.', array(
-              '!title' => $layer['title']
+            '!title' => $layer['title']
           ))
         );
       }
@@ -282,15 +305,19 @@ function openlayers_render_map_data($map = array()) {
     // In case the layer offers the same projection as the map, use this and do not provide
     // projection definition to client. Otherwise rely on the client to reproject on the fly.
     foreach ($map['layers'] as $layer_name => $layer) {
-        // Provide client with projection definition so that it can reproject
-        openlayers_add_js_projection_definition(
-          openlayers_get_projection_by_identifier($map['layers'][$layer_name]['projection'])
-        );
+      // Provide client with projection definition so that it can reproject
+      openlayers_add_js_projection_definition(
+        openlayers_get_projection_by_identifier($map['layers'][$layer_name]['projection'])
+      );
     }
 
     // Ensure projections in use are known to the client (loads Proj4js if required)
     openlayers_add_js_projection_definition(openlayers_get_projection_by_identifier($map['projection']));
     openlayers_add_js_projection_definition(openlayers_get_projection_by_identifier($map['displayProjection']));
+
+    // Make sure, that any previously added settings are removed (see Drupal core issue #208611).
+    $js = array('openlayers' => array('maps' => array($map['id'] => '')));
+    drupal_add_js($js, 'setting');
 
     $js = array('openlayers' => array('maps' => array($map['id'] => $map)));
     drupal_add_js($js, 'setting');
@@ -544,7 +571,7 @@ function openlayers_layer_sanity_check($layer, $projection = FALSE, $strict = FA
     drupal_set_message(
       t('OpenLayers layers failed the sanity check. See the
       <a href="@drupallog">Drupal log</a> for details',
-      array('@drupallog' => url('admin/reports/dblog')))
+        array('@drupallog' => url('admin/reports/dblog')))
     );
     return !$strict;
   }
@@ -555,7 +582,7 @@ function openlayers_layer_sanity_check($layer, $projection = FALSE, $strict = FA
     drupal_set_message(
       t('OpenLayers layers failed the sanity check. See the
       <a href="@drupallog">Drupal log</a> for details',
-      array('@drupallog' => url('admin/reports/dblog')))
+        array('@drupallog' => url('admin/reports/dblog')))
     );
     return !$strict;
   }
@@ -732,10 +759,10 @@ function openlayers_style_load($name, $reset = FALSE) {
 function openlayers_style_save($style) {
   if (!empty($style->name)) {
     return (db_select('openlayers_styles')
-          ->fields('openlayers_styles', array('name'))
-          ->condition('name', $style->name)
-          ->execute()
-          ->fetchCol()) ?
+      ->fields('openlayers_styles', array('name'))
+      ->condition('name', $style->name)
+      ->execute()
+      ->fetchCol()) ?
       drupal_write_record('openlayers_styles', $style, 'name') :
       drupal_write_record('openlayers_styles', $style);
   }
@@ -826,11 +853,11 @@ function openlayers_map_load($name = '', $reset = FALSE) {
  */
 function openlayers_map_save($map) {
   if (!empty($map->name)) {
-     return (db_select('openlayers_maps')
-          ->fields('openlayers_maps', array('name'))
-          ->condition('name', $map->name)
-          ->execute()
-          ->fetchCol()) ?
+    return (db_select('openlayers_maps')
+      ->fields('openlayers_maps', array('name'))
+      ->condition('name', $map->name)
+      ->execute()
+      ->fetchCol()) ?
       drupal_write_record('openlayers_maps', $map, 'name') :
       drupal_write_record('openlayers_maps', $map);
   }
@@ -888,9 +915,9 @@ function openlayers_map_options($reset = FALSE) {
 function openlayers_object_delete($ol_object, $type) {
   // Check for object or name
   $tables = array(
-      'style' => 'openlayers_styles',
-      'layer' => 'openlayers_layers',
-      'map' => 'openlayers_maps');
+    'style' => 'openlayers_styles',
+    'layer' => 'openlayers_layers',
+    'map' => 'openlayers_maps');
   if (is_object($ol_object) && isset($ol_object->name) && isset($tables[$type])) {
     $ol_object = $ol_object->name;
     return db_delete($tables[$type])->condition('name', $ol_object)->execute();

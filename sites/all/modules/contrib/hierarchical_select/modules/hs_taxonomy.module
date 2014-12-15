@@ -56,7 +56,7 @@ function hs_taxonomy_form_field_ui_widget_type_form_alter(&$form, &$form_state) 
       'root_term'                  => NULL,
       'entity_count_for_node_type' => NULL,
     );
-    $config_id = "taxonomy-$vid";
+    $config_id = hs_taxonomy_get_config_id($vocabulary);
     $defaults = array(
       // Enable the save_lineage setting by default if the multiple parents
       // vocabulary option is enabled.
@@ -110,7 +110,7 @@ function hs_taxonomy_form_field_ui_widget_type_form_alter(&$form, &$form_state) 
 function hs_taxonomy_field_settings_submit(&$form, &$form_state) {
   $field = field_info_field($form['#field_name']);
   $vocabulary = taxonomy_vocabulary_machine_name_load($field['settings']['allowed_values'][0]['vocabulary']);
-  $config = hierarchical_select_common_config_get("taxonomy-$vocabulary->vid");
+  $config = hierarchical_select_common_config_get(hs_taxonomy_get_config_id($vocabulary));
 
   if ($config['dropbox']['status'] || $config['save_lineage']) {
     $field = field_info_field($form['#field_name']);
@@ -133,7 +133,7 @@ function hs_taxonomy_form_field_ui_field_edit_form_alter(&$form, &$form_state) {
     require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'hierarchical_select') . '/includes/common.inc';
 
     $vocabulary = taxonomy_vocabulary_machine_name_load($form['#field']['settings']['allowed_values'][0]['vocabulary']);
-    $config = hierarchical_select_common_config_get("taxonomy-$vocabulary->vid");
+    $config = hierarchical_select_common_config_get(hs_taxonomy_get_config_id($vocabulary));
 
     if ($config['dropbox']['status'] || $config['save_lineage']) {
       $form['field']['cardinality']['#disabled'] = TRUE;
@@ -155,9 +155,10 @@ function hs_taxonomy_form_taxonomy_form_term_alter(&$form, &$form_state) {
 
   // Build an appropriate config, that inherits the level_labels settings
   // from the vocabulary's Hierarchical Select config.
-  $vid = $form['#vocabulary']->vid;
+  $vocabulary = $form['#vocabulary'];
+  $vid = $vocabulary->vid;
   module_load_include('inc', 'hierarchical_select', 'includes/common');
-  $vocabulary_config = hierarchical_select_common_config_get("taxonomy-$vid");
+  $vocabulary_config = hierarchical_select_common_config_get(hs_taxonomy_get_config_id($vocabulary));
   $config = array(
     'module' => 'hs_taxonomy',
     'params' => array(
@@ -193,6 +194,43 @@ function hs_taxonomy_form_taxonomy_form_term_alter(&$form, &$form_state) {
   $form['relations']['parent']['#config']['dropbox']['title'] = t('All parent terms');
 }
 
+/**
+ * Implements hook_taxonomy_vocabulary_update().
+ *
+ * This enables us to rename HS configs appropriately when machine names of
+ * taxonomy vocabularies change.
+ *
+ * @param stdClass $vocabulary
+ *   The vocabulary that is being updated.
+ */
+function hs_taxonomy_taxonomy_vocabulary_update(stdClass $vocabulary) {
+  require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'hierarchical_select') . '/includes/common.inc';
+
+  if (isset($vocabulary->original) && ($vocabulary->machine_name != $vocabulary->original->machine_name)) {
+    $config = hierarchical_select_common_config_get(hs_taxonomy_get_config_id($vocabulary->original));
+
+    if (!empty($config)) {
+      $old_config_id = hs_taxonomy_get_config_id($vocabulary->original);
+
+      hierarchical_select_common_config_set(hs_taxonomy_get_config_id($vocabulary), $config);
+      hierarchical_select_common_config_del($old_config_id);
+    }
+  }
+}
+
+/**
+ * Implements hook_taxonomy_vocabulary_delete().
+ *
+ * This enables us to delete HS configs when vocabularies are deleted.
+ *
+ * @param stdClass $vocabulary
+ *   The vocabulary that is being deleted.
+ */
+function hs_taxonomy_taxonomy_vocabulary_delete(stdClass $vocabulary) {
+  require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'hierarchical_select') . '/includes/common.inc';
+
+  hierarchical_select_common_config_del(hs_taxonomy_get_config_id($vocabulary));
+}
 
 //----------------------------------------------------------------------------
 // FAPI callbacks.
@@ -256,7 +294,7 @@ function hs_taxonomy_field_widget_form(&$form, &$form_state, $field, $instance, 
     '#default_value' => $tids,
   );
 
-  hierarchical_select_common_config_apply($element, "taxonomy-$vocabulary->vid");
+  hierarchical_select_common_config_apply($element, hs_taxonomy_get_config_id($vocabulary));
 
   // Append another #process callback that transforms #return_value to the
   // format that Field API/Taxonomy Field expects.
@@ -356,7 +394,7 @@ function hs_taxonomy_field_formatter_prepare_view($entity_type, $entities, $fiel
 
   // Get the config for this field.
   module_load_include('inc', 'hierarchical_select', 'includes/common');
-  $config_id = "taxonomy-$vid";
+  $config_id = hs_taxonomy_get_config_id($vocabulary);
   $config = hierarchical_select_common_config_get($config_id);
   $config += array(
     'module' => 'hs_taxonomy',
@@ -703,25 +741,20 @@ function hs_taxonomy_hierarchical_select_item_get_label($item, $params) {
   if (!isset($labels[$item])) {
     if ($item === 0 && isset($params['root_term']) && $params['root_term'] === TRUE) {
       $term = new StdClass();
-      $term->tid = 0;
       $term->name = '<' . t('root') . '>';
     }
     else {
       $term = taxonomy_term_load($item);
+      // Try to translate the label if the i18n module is available.
+      if (module_exists('i18n_taxonomy')) {
+        $term->name = i18n_taxonomy_term_name($term);
+      }
     }
-
-    // Use the translated term when available!
-    if (module_exists('i18ntaxonomy') && i18ntaxonomy_vocabulary($term->vid) == I18N_TAXONOMY_LOCALIZE) {
-      $labels[$item] = i18n_taxonomy_term_name($term);
-    }
-    else {
-      $labels[$item] = t($term->name);
-    }
+    $labels[$item] = $term->name;
   }
 
   return $labels[$item];
 }
-
 
 /**
  * Implementation of hook_hierarchical_select_create_item().
@@ -795,8 +828,9 @@ function hs_taxonomy_hierarchical_select_config_info() {
           if ($instance['widget']['type'] == 'taxonomy_hs') {
             $bundles_info = field_info_bundles($entity_type);
             $entity_info = entity_get_info($entity_type);
-            $vocabulary = taxonomy_vocabulary_machine_name_load($field['settings']['allowed_values'][0]['vocabulary']);
-            $config_id = "taxonomy-$vocabulary->vid";
+            $machine_name = $field['settings']['allowed_values'][0]['vocabulary'];
+            $vocabulary = taxonomy_vocabulary_machine_name_load($machine_name);
+            $config_id = hs_taxonomy_get_config_id($vocabulary);
             $config_info[$config_id] = array(
               'config_id'      => $config_id,
               'hierarchy type' => t('Taxonomy'),
@@ -1017,6 +1051,7 @@ function _hs_taxonomy_hierarchical_select_get_tree($vid, $parent = 0, $depth = -
     $result = $query
       ->addTag('translatable')
       ->addTag('term_access')
+      ->addTag('hs_taxonomy_tree')
       ->fields('t')
       ->fields('h', array('parent'))
       ->condition('t.vid', $vid)
@@ -1031,11 +1066,23 @@ function _hs_taxonomy_hierarchical_select_get_tree($vid, $parent = 0, $depth = -
     }
   }
 
+  // Provide support for Title module. If Title module is enabled and this
+  // vocabulary uses translated term names we want output those terms with their
+  // translated version. Therefore a full taxonomy term entity load is required,
+  // similar to taxonomy_get_tree().
+  if (module_exists('title')) {
+    $vocabulary = taxonomy_vocabulary_load($vid);
+    if (title_field_replacement_enabled('taxonomy_term', $vocabulary->machine_name, 'name')) {
+      $term_entities = taxonomy_term_load_multiple(array_keys($terms[$vid]));
+    }
+  }
+
   $max_depth = (is_null($max_depth)) ? count($children[$vid]) : $max_depth;
   if (isset($children[$vid][$parent])) {
     foreach ($children[$vid][$parent] as $child) {
       if ($max_depth > $depth) {
-        $term = clone $terms[$vid][$child];
+        $term = isset($term_entities[$child]) ? $term_entities[$child] : $terms[$vid][$child];
+        $term = clone $term;
         $term->depth = $depth;
         // The "parent" attribute is not useful, as it would show one parent only.
         unset($term->parent);
@@ -1050,6 +1097,20 @@ function _hs_taxonomy_hierarchical_select_get_tree($vid, $parent = 0, $depth = -
   }
 
   return isset($tree) ? $tree : array();
+}
+
+/**
+ * Returns the configuration ID that would be used for the specified taxonomy
+ * vocabulary.
+ *
+ * @param stdClass $vocabulary
+ *   The vocabulary for which a config ID will be returned.
+ *
+ * @return string
+ *   The config id for the provided vocabulary.
+ */
+function hs_taxonomy_get_config_id(stdClass $vocabulary) {
+  return "taxonomy-{$vocabulary->machine_name}";
 }
 
 /**
@@ -1068,14 +1129,21 @@ function hs_taxonomy_term_count_nodes($tid, $type = 0) {
   }
 
   if (!isset($count[$type][$tid])) {
-    if (is_numeric($type)) {
-      // TODO Please convert this statement to the D7 database API syntax.
-      $count[$type][$tid] = db_query(db_rewrite_sql("SELECT COUNT(DISTINCT(n.nid)) AS count FROM {taxonomy_term_node} t INNER JOIN {node} n ON t.nid = n.nid WHERE n.status = 1 AND t.tid IN (%s)"), implode(',', $tids))->fetchField();
+    $query = db_select('taxonomy_term_node','t');
+    $query->join('node', 'n', 't.nid = n.nid');
+    $query->addExpression('COUNT(DISTINCT(n.nid))', 'count')
+      ->condition('n.status', 1)
+      ->condition('t,tid', $tids);
+
+    if (!is_numeric($type)) {
+      $query->condition('n.type', $type);
     }
-    else {
-      // TODO Please convert this statement to the D7 database API syntax.
-      $count[$type][$tid] = db_query(db_rewrite_sql("SELECT COUNT(DISTINCT(n.nid)) AS count FROM {taxonomy_term_node} t INNER JOIN {node} n ON t.nid = n.nid WHERE n.status = 1 AND n.type = '%s' AND t.tid IN (%s)"), $type, implode(',', $tids))->fetchField();
-    }
+
+    $query->addTag('hs_taxonomy_term_count_nodes');
+    $query->addTag('term_access');
+    $result = $query->execute();
+
+    $count[$type][$tid] = $result->fetchField();
   }
   return $count[$type][$tid];
 }
@@ -1094,7 +1162,7 @@ function _hs_taxonomy_hierarchical_select_terms_to_options($terms) {
   $use_i18n = module_exists('i18n_taxonomy');
   foreach ($terms as $key => $term) {
     // Use the translated term when available!
-    $options[$term->tid] = $use_i18n && isset($term->vid) ? i18n_taxonomy_term_name($term) : t($term->name);
+    $options[$term->tid] = $use_i18n && isset($term->vid) ? i18n_taxonomy_term_name($term) : $term->name;
   }
   return $options;
 }

@@ -19,14 +19,14 @@ function ultimate_cron_schema() {
       'key' => 'name',
       'primary key' => 'jid',
       'identifier' => 'job',
-      'load callback' => 'ultimate_cron_job_load',
-      'load all callback' => 'ultimate_cron_job_load_all',
-      'load multiple callback' => 'ultimate_cron_job_load_multiple',
-      'save callback' => 'ultimate_cron_job_save',
-      'delete callback' => 'ultimate_cron_job_delete',
-      'status callback' => 'ultimate_cron_job_set_status',
-      'import callback' => 'ultimate_cron_job_import',
-      'export callback' => 'ultimate_cron_job_export',
+      'load callback' => '_ultimate_cron_job_load',
+      'load all callback' => '_ultimate_cron_job_load_all',
+      'load multiple callback' => '_ultimate_cron_job_load_multiple',
+      'save callback' => '_ultimate_cron_job_save',
+      'delete callback' => '_ultimate_cron_job_delete',
+      'status callback' => '_ultimate_cron_job_set_status',
+      'import callback' => '_ultimate_cron_job_import',
+      'export callback' => '_ultimate_cron_job_export',
       'cache defaults' => TRUE,
       'default cache bin' => 'cache_ultimate_cron',
       'object' => $class,
@@ -69,12 +69,12 @@ function ultimate_cron_schema() {
           'logger' => array(),
           'settings' => array(),
         ),
-        'export callback' => 'ultimate_cron_job_export_settings',
+        'export callback' => '_ultimate_cron_job_export_settings',
       ),
     ),
     'primary key' => array('jid'),
     'unique keys' => array(
-      'machine_name' => array('name')
+      'machine_name' => array('name'),
     ),
   );
 
@@ -258,7 +258,7 @@ function ultimate_cron_requirements($phase) {
 
       // Check if any jobs are behind.
       $jobs_behind = 0;
-      $jobs = ultimate_cron_job_load_all();
+      $jobs = _ultimate_cron_job_load_all();
       $class = _ultimate_cron_get_class('job');
       $log_entries = $class::loadLatestLogEntries($jobs);
 
@@ -277,8 +277,9 @@ function ultimate_cron_requirements($phase) {
         );
         $response['description'][] = $t(
           'Some jobs are behind their schedule. Please check if !link is running properly.', array(
-            '!link' => l($t('cron'), 'admin/config/system/cron')
-        ));
+            '!link' => l($t('cron'), 'admin/config/system/cron'),
+          )
+        );
       }
 
       // Check for PHP safe mode.
@@ -347,7 +348,10 @@ function ultimate_cron_update_7102() {
 }
 
 /**
- * Merge ultimate_cron_function and ultimate_cron_configuration into ultimate_cron.
+ * Merge configuration.
+ *
+ * Merge ultimate_cron_function and ultimate_cron_configuration
+ * into ultimate_cron.
  */
 function ultimate_cron_update_7103() {
   if (!db_table_exists('ultimate_cron')) {
@@ -416,8 +420,8 @@ function ultimate_cron_update_7104() {
     // ultimate_cron_update_6106(). If one of these updates had run, we would
     // have already done this update and could safely skip it.
 
-    // 'function' also does not exist, so this update has never run and was never run when
-    // it was previously called ultimate_cron_update_6003() or
+    // 'function' also does not exist, so this update has never run and was
+    // never run when it was previously called ultimate_cron_update_6003() or
     // ultimate_cron_update_7003() - hence, it needs to be run.
     db_add_field('ultimate_cron_log', 'function', array(
       'description' => 'Function name',
@@ -593,12 +597,16 @@ function ultimate_cron_update_7200() {
       'key' => 'name',
       'primary key' => 'jid',
       'identifier' => 'job',
-      'load callback' => 'ultimate_cron_job_load',
-      'load all callback' => 'ultimate_cron_job_load_all',
-      'load multiple callback' => 'ultimate_cron_job_load_multiple',
-      'save callback' => 'ultimate_cron_job_save',
-      'delete callback' => 'ultimate_cron_job_delete',
-      'status callback' => 'ultimate_cron_job_set_status',
+      'load callback' => '_ultimate_cron_job_load',
+      'load all callback' => '_ultimate_cron_job_load_all',
+      'load multiple callback' => '_ultimate_cron_job_load_multiple',
+      'save callback' => '_ultimate_cron_job_save',
+      'delete callback' => '_ultimate_cron_job_delete',
+      'status callback' => '_ultimate_cron_job_set_status',
+      'import callback' => '_ultimate_cron_job_import',
+      'export callback' => '_ultimate_cron_job_export',
+      'cache defaults' => TRUE,
+      'default cache bin' => 'cache_ultimate_cron',
       'object' => $class,
       'api' => array(
         'owner' => 'ultimate_cron',
@@ -606,7 +614,6 @@ function ultimate_cron_update_7200() {
         'minimum_version' => 3,
         'current_version' => 3,
       ),
-      'in_code_only' => TRUE,
     ),
     'fields' => array(
       'jid' => array(
@@ -640,11 +647,12 @@ function ultimate_cron_update_7200() {
           'logger' => array(),
           'settings' => array(),
         ),
+        'export callback' => '_ultimate_cron_job_export_settings',
       ),
     ),
     'primary key' => array('jid'),
     'unique keys' => array(
-      'machine_name' => array('name')
+      'machine_name' => array('name'),
     ),
   );
 
@@ -802,13 +810,13 @@ function ultimate_cron_update_7200() {
   $old_features = module_invoke_all('default_ultimate_cron_function');
   $old_jobs += $old_features;
 
-  $jobs = ultimate_cron_job_load_all();
+  $jobs = _ultimate_cron_job_load_all();
 
   foreach ($old_jobs as $name => $old_job) {
     if (isset($jobs[$name])) {
       $jobs[$name]->settings['scheduler'] = array(
         'name' => 'crontab',
-        'crontab' => array()
+        'crontab' => array(),
       );
       if (!empty($old_job->settings['rules'])) {
         $jobs[$name]->settings['scheduler']['crontab']['rules'] = $old_job->settings['rules'];
@@ -819,7 +827,7 @@ function ultimate_cron_update_7200() {
 
       $jobs[$name]->settings['launcher'] = array(
         'name' => 'background_process_legacy',
-        'background_process_legacy' => array()
+        'background_process_legacy' => array(),
       );
       if (!empty($old_job->settings['catch_up'])) {
         $jobs[$name]->settings['launcher']['background_process_legacy']['service_group'] = $old_job->settings['service_group'];
@@ -854,14 +862,14 @@ function ultimate_cron_update_7200() {
     'type' => 'float',
     'size' => 'big',
     'not null' => TRUE,
-    'default' => 0
+    'default' => 0,
   ));
   db_change_field('ultimate_cron_log', 'end_stamp', 'end_time', array(
     'description' => 'Timestamp of execution start',
     'type' => 'float',
     'size' => 'big',
     'not null' => TRUE,
-    'default' => 0
+    'default' => 0,
   ));
   db_change_field('ultimate_cron_log', 'service_host', 'init_message', array(
     'description' => 'Initial message',
@@ -883,7 +891,7 @@ function ultimate_cron_update_7200() {
   db_add_index('ultimate_cron_log', 'idx_last', array(
     'name',
     'start_time',
-    'end_time'
+    'end_time',
   ));
 
   // Old version of Ultimate Cron used Background Process for launching jobs,
@@ -892,27 +900,27 @@ function ultimate_cron_update_7200() {
   variable_set('ultimate_cron_plugin_launcher_default', 'background_process_legacy');
 
   // Migrate settings.
-  $bgpl = ultimate_cron_plugin_load('launcher', 'background_process_legacy');
+  $bgpl = _ultimate_cron_plugin_load('launcher', 'background_process_legacy');
   $bgpl->settings['max_threads'] = variable_get('ultimate_cron_simultaneous_connections', 40) == 40 ? 2 : variable_get('ultimate_cron_simultaneous_connections', 40);
   $bgpl->settings['service_group'] = variable_get('ultimate_cron_service_group', 'default');
   $bgpl->setSettings();
 
-  $crontab = ultimate_cron_plugin_load('scheduler', 'crontab');
+  $crontab = _ultimate_cron_plugin_load('scheduler', 'crontab');
   $crontab->settings['rules'] = array(variable_get('ultimate_cron_rule', '*/10+@ * * * *'));
-  $crontab->settings['catch_up'] = variable_get('ultimate_cron_catch_up', 300);
+  $crontab->settings['catch_up'] = variable_get('ultimate_cron_catch_up', 86400);
   $crontab->setSettings();
 
-  $database = ultimate_cron_plugin_load('logger', 'database');
+  $database = _ultimate_cron_plugin_load('logger', 'database');
   $database->settings['method'] = ULTIMATE_CRON_DATABASE_LOGGER_CLEANUP_METHOD_EXPIRE;
   $database->settings['expire'] = variable_get('ultimate_cron_cleanup_log', 86400 * 30);
   $database->setSettings();
 
-  $queue = ultimate_cron_plugin_load('settings', 'queue');
+  $queue = _ultimate_cron_plugin_load('settings', 'queue');
   $queue->settings['lease_time'] = variable_get('ultimate_cron_queue_lease_time', 30);
   $queue->settings['empty_delay'] = variable_get('ultimate_cron_queue_polling_latency', 0);
   $queue->setSettings();
 
-  $poorman = ultimate_cron_plugin_load('settings', 'poorman');
+  $poorman = _ultimate_cron_plugin_load('settings', 'poorman');
   $poorman->settings['launcher'] = variable_get('ultimate_cron_poorman', FALSE) ? 'background_process_legacy' : '';
   $poorman->setSettings();
 }

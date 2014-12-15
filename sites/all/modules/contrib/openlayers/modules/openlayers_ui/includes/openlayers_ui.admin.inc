@@ -122,6 +122,11 @@ function openlayers_ui_admin_settings() {
 function openlayers_ui_admin_settings_validate($form, &$form_state) {
   if ($form_state['values']['openlayers_source_type'] == 'external') {
     $url = $form_state['values']['openlayers_source_external'];
+    // If protocol neutral, fake a URL that will pass valid_url() and
+    // url_is_external().
+    if (strpos($url, '//') === 0) {
+     $url = 'http:' . $url;
+    }
     if (!valid_url($url, TRUE) && !url_is_external($url)) {
       form_set_error('openlayers_source_external', 'The source must be a valid external URL, beginning with http(s).');
     }

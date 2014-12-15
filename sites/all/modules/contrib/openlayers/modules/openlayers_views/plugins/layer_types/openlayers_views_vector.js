@@ -11,7 +11,8 @@ Drupal.openlayers.layer.openlayers_views_vector = function(title, map, options) 
   // Note, so that we do not pass all the features along to the Layer
   // options, we use the options.options to give to Layer
   options.options.drupalID = options.drupalID;
-
+  // Allow to set z-order of features (#2241477)
+  options.options.rendererOptions = {yOrdering: true};
   // Create projection
   options.projection = new OpenLayers.Projection(options.projection);
   // Get style map

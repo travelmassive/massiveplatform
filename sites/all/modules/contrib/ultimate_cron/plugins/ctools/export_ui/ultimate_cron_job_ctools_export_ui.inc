@@ -12,7 +12,7 @@ $plugin = array(
   'menu' => array(
     'menu prefix' => 'admin/config/system/cron',
     'menu item' => 'jobs',
-    'menu description' => 'Manage Ultimate Cron jobs',
+    'menu description' => 'Manage cron jobs',
     'items' => array(
       'list callback' => array(
         'type' => MENU_LOCAL_TASK,
@@ -98,7 +98,7 @@ $plugin = array(
     'parent' => 'ctools_export_ui',
   ),
 
-  'title' => t('Cron jobs'),
+  'title' => t('Cron'),
 
   'title singular' => t('cron job'),
   'title plural' => t('cron jobs'),

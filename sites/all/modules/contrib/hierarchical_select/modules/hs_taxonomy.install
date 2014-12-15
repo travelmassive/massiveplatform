@@ -61,3 +61,25 @@ function hs_taxonomy_update_7300() {
 function hs_taxonomy_update_7301() {
   variable_set('taxonomy_override_selector', TRUE);
 }
+
+/**
+ * Convert Taxonomy vocabulary config IDs to use machine name instead of serial
+ * vocabulary ID.
+ */
+function hs_taxonomy_update_7302() {
+  require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'hierarchical_select') . '/includes/common.inc';
+
+  $vocabularies = taxonomy_vocabulary_get_names();
+
+  foreach ($vocabularies as $machine_name => $vocabulary) {
+    $old_config_id = "taxonomy-{$vocabulary->vid}";
+    $new_config_id = "taxonomy-{$machine_name}";
+
+    $old_config = variable_get('hs_config_' . $old_config_id, NULL);
+
+    if (!empty($old_config)) {
+      hierarchical_select_common_config_set($new_config_id, $old_config);
+      hierarchical_select_common_config_del($old_config_id);
+    }
+  }
+}

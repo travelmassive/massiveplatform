@@ -39,7 +39,7 @@ class UltimateCronDatabaseLogger extends UltimateCronLogger {
    * Cleanup logs.
    */
   public function cleanup() {
-    $jobs = ultimate_cron_job_load_all();
+    $jobs = _ultimate_cron_job_load_all();
     $current = 1;
     $max = 0;
     foreach ($jobs as $job) {
@@ -168,7 +168,7 @@ class UltimateCronDatabaseLogger extends UltimateCronLogger {
             ':input[name="settings[' . $this->type . '][' . $this->name . '][method]"]' => array(
               'value' => ULTIMATE_CRON_DATABASE_LOGGER_CLEANUP_METHOD_EXPIRE,
             ),
-          )
+          ),
         ),
       );
 
@@ -377,7 +377,7 @@ class UltimateCronDatabaseLogEntry extends UltimateCronLogEntry {
           'uid' => $this->uid,
           'init_message' => $this->init_message,
           'message' => $this->message,
-          'severity' => $this->severity
+          'severity' => $this->severity,
         ))
         ->execute();
     }
@@ -391,7 +391,7 @@ class UltimateCronDatabaseLogEntry extends UltimateCronLogEntry {
           'end_time' => $this->end_time,
           'init_message' => $this->init_message,
           'message' => $this->message,
-          'severity' => $this->severity
+          'severity' => $this->severity,
         ))
         ->condition('lid', $this->lid)
         ->condition('end_time', 0)

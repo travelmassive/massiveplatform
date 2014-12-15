@@ -32,12 +32,25 @@ Drupal.HierarchicalSelect.initialize = function(hsid) {
     return false;
   }
 
+  var form = $('#hierarchical-select-'+ hsid +'-wrapper').parents('form');
+
+  // Pressing the 'enter' key on a form that contains an HS widget, depending
+  // on which browser, usually causes the first submit button to be pressed
+  // (likely an HS button).  This results in unpredictable behaviour.  There is
+  // no way to determine the 'real' submit button, so disable the enter key.
+  form.find('input').keypress(function(event) {
+    if (event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+
   // Turn off Firefox' autocomplete feature. This causes Hierarchical Select
   // form items to be disabled after a hard refresh.
   // See http://drupal.org/node/453048 and
   // http://www.ryancramer.com/journal/entries/radio_buttons_firefox/
-  if ($.browser.mozilla) {
-    $('#hierarchical-select-'+ hsid +'-wrapper').parents('form').attr('autocomplete', 'off');
+  if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+    form.attr('autocomplete', 'off');
   }
 
   if (this.cache != null) {
@@ -252,7 +265,7 @@ Drupal.HierarchicalSelect.prepareGETSubmit = function(hsid) {
 
 Drupal.HierarchicalSelect.attachBindings = function(hsid) {
   var updateOpString = $('#hierarchical-select-'+ hsid +'-wrapper .update-button').val();
-  var addOpString = $('#hierarchical-select-'+ hsid +'-wrapper .hierarchical-select input', Drupal.HierarchicalSelect.context).val();
+  var addOpString = $('#hierarchical-select-'+ hsid +'-wrapper .hierarchical-select .add-to-dropbox', Drupal.HierarchicalSelect.context).val();
   var createNewItemOpString = $('#hierarchical-select-'+ hsid +'-wrapper .hierarchical-select .create-new-item-create', Drupal.HierarchicalSelect.context).val();
   var cancelNewItemOpString = $('#hierarchical-select-'+ hsid +'-wrapper .hierarchical-select .create-new-item-cancel', Drupal.HierarchicalSelect.context).val();
 
@@ -377,7 +390,7 @@ Drupal.HierarchicalSelect.postUpdateAnimations = function(hsid, updateType, last
       if ($createNewItemInput.size() == 0) {
         // Give focus to the level below the one that has changed, if it
         // exists.
-        if (!$.browser.mozilla) { // Don't give focus in Firefox: the user would have to click twice before he can make a selection.
+        if (!(navigator.userAgent.toLowerCase().indexOf('firefox') > -1)) { // Don't give focus in Firefox: the user would have to click twice before he can make a selection.
           $('#hierarchical-select-'+ hsid +'-wrapper .hierarchical-select .selects select', Drupal.HierarchicalSelect.context)
           .slice(lastUnchanged, lastUnchanged + 1)
           .focus();
@@ -452,6 +465,9 @@ Drupal.HierarchicalSelect.update = function(hsid, updateType, settings) {
 
   // Pass the hierarchical_select id via POST.
   post.push({ name : 'hsid', value : hsid });
+  // Emulate the AJAX data sent normally so that we get the same theme.
+  post.push({ name : 'ajax_page_state[theme]', value : Drupal.settings.ajaxPageState.theme });
+  post.push({ name : 'ajax_page_state[theme_token]', value : Drupal.settings.ajaxPageState.theme_token });
   
   // If a cache system is installed, let the server know if it's running
   // properly. If it is running properly, the server will send back additional
@@ -471,7 +487,7 @@ Drupal.HierarchicalSelect.update = function(hsid, updateType, settings) {
   switch (updateType) {
     case 'update-hierarchical-select':
       var value = $('#'+ settings.select_id).val();
-      var lastUnchanged = parseInt(settings.select_id.replace(/^.*-hierarchical-select-selects-(\d+)$/, "$1")) + 1;
+      var lastUnchanged = parseInt(settings.select_id.replace(/^.*-hierarchical-select-selects-(\d+)/, "$1")) + 1;
       var optionClass = $('#'+ settings.select_id).find('option[value="'+ value +'"]').attr('class');
 
       // Don't do anything (also no callback to the server!) when the selected
@@ -564,7 +580,7 @@ Drupal.HierarchicalSelect.update = function(hsid, updateType, settings) {
       
       // Attach behaviors. This is just after the HTML has been updated, so
       // it's as soon as we can.
-      Drupal.attachBehaviors(Drupal.HierarchicalSelect.context()[0]);
+      Drupal.attachBehaviors($('#hierarchical-select-' + hsid + '-wrapper').parents('div.form-type-hierarchical-select')[0]);
 
       // Transform the hierarchical select and/or dropbox to the JS variant,
       // make it resizable again and re-enable the disabled form items.

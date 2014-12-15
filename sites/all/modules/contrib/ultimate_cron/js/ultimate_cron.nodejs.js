@@ -3,7 +3,9 @@
     disabled: false,
     runningJobs: {},
     callback: function (message) {
-      if (this.disabled) return;
+      if (this.disabled) {
+        return;
+      }
       var action = message.data.action;
       var job = message.data.job;
       var elements = message.data.elements;

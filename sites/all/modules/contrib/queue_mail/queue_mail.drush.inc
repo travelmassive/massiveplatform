@@ -16,7 +16,7 @@ function queue_mail_drush_command() {
     'options' => array(
       'timeout' => array(
         'description' => 'The maximum amount of time to spend sending emails, defaults to 0, which means: keep going until all queued emails are sent.',
-        'example_value' => 60,
+        'example-value' => 60,
         'value' => 'optional',
       ),
     ),

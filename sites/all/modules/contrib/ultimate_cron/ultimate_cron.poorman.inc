@@ -103,7 +103,7 @@ function ultimate_cron_exit($dest = NULL) {
     return;
   }
 
-  $poorman = ultimate_cron_plugin_load('settings', 'poorman');
+  $poorman = _ultimate_cron_plugin_load('settings', 'poorman');
   if (!$poorman) {
     return;
   }
@@ -113,7 +113,7 @@ function ultimate_cron_exit($dest = NULL) {
     return;
   }
 
-  $launcher = ultimate_cron_plugin_load('launcher', $settings['launcher']);
+  $launcher = _ultimate_cron_plugin_load('launcher', $settings['launcher']);
   if (!$launcher) {
     watchdog('ultimate_cron', 'Invalid poormans cron launcher: @name', array(
       '@name' => $settings['launcher'],
@@ -121,29 +121,52 @@ function ultimate_cron_exit($dest = NULL) {
     return;
   }
 
-  // Poormans cron needs to be the last that runs.
-  // Run remaining exit hooks, and shutdown like core does.
-  $modules = module_implements('exit');
+  if ($settings['early_page_flush']) {
+    // Poormans cron needs to be the last that runs.
+    // Run remaining exit hooks, and shutdown like core does.
+    $modules = module_implements('exit');
 
-  do {
-    $module = array_shift($modules);
-  } while ($modules && ($module !== 'ultimate_cron'));
+    do {
+      $module = array_shift($modules);
+    } while ($modules && ($module !== 'ultimate_cron'));
 
-  foreach ($modules as $module) {
-    module_invoke($module, 'exit', $dest);
+    foreach ($modules as $module) {
+      module_invoke($module, 'exit', $dest);
+    }
+
+    // Commit the user session, if needed.
+    drupal_session_commit();
+
+    if (variable_get('cache', 0) && ($cache = drupal_page_set_cache())) {
+      drupal_serve_page_from_cache($cache);
+    }
+
+    _registry_check_code(REGISTRY_WRITE_LOOKUP_CACHE);
+    drupal_cache_system_paths();
+    module_implements_write_cache();
+
+    _ultimate_cron_launch_poorman($launcher);
+    exit;
   }
-
-  // Commit the user session, if needed.
-  drupal_session_commit();
-
-  if (variable_get('cache', 0) && ($cache = drupal_page_set_cache())) {
-    drupal_serve_page_from_cache($cache);
+  else {
+    // Wait until the very end before running cron.
+    register_shutdown_function('_ultimate_cron_launch_poorman', $launcher, 3);
   }
-  // ultimate_cron_poorman_page_flush();
+}
 
-  _registry_check_code(REGISTRY_WRITE_LOOKUP_CACHE);
-  drupal_cache_system_paths();
-  module_implements_write_cache();
+/**
+ * Postponable poormans cron launching.
+ *
+ * @param UltimateCronLauncher $launcher
+ *   The Ultimate Cron launcher to use for poormans cron
+ * @param int $postpone
+ *   The number of times to postpone via register_shutdown_function
+ */
+function _ultimate_cron_launch_poorman($launcher, $postpone = 0) {
+  if ($postpone > 0) {
+    register_shutdown_function(__FUNCTION__, $launcher, $postpone - 1);
+    return;
+  }
 
   // Poormans cron should run as anonymous, just like regular cron does.
   global $user;
@@ -151,7 +174,6 @@ function ultimate_cron_exit($dest = NULL) {
   $user = drupal_anonymous_user();
   $launcher->launchPoorman();
   $user = $original_user;
-  exit;
 }
 
 /**
@@ -177,6 +199,10 @@ function ultimate_cron_poorman_page_flush() {
  * Page callback for triggering poormans cron.
  */
 function ultimate_cron_poorman_page() {
+  if (!isset($_GET['cron_key']) || variable_get('cron_key', 'drupal') != $_GET['cron_key']) {
+    watchdog('cron', 'Cron could not run because an invalid key was used.', array(), WATCHDOG_NOTICE);
+    drupal_access_denied();
+  }
   drupal_page_is_cacheable(FALSE);
   drupal_exit();
 }
@@ -189,13 +215,19 @@ function ultimate_cron_poorman_trigger() {
   $http_options = variable_get('ultimate_cron_poorman_http_options', array());
 
   $url_options = array(
-    'query' => array('timestamp' => REQUEST_TIME),
+    'query' => array(
+      'timestamp' => REQUEST_TIME,
+      'cron_key' => variable_get('cron_key', 'drupal'),
+    ),
     'absolute' => TRUE,
   ) + $url_options;
 
+  $plugin = _ultimate_cron_plugin_load('settings', 'poorman');
+  $settings = $plugin->getDefaultSettings();
+
   $http_options = array(
     'headers' => array(
-      'User-Agent' => 'Ultimate Cron',
+      'User-Agent' => $settings['user_agent'],
     ),
   ) + $http_options;
 

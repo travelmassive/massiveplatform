@@ -65,7 +65,7 @@ class UltimateCronSignal {
    * @param string $signal
    *   The name of the signal.
    *
-   * @return boolean
+   * @return bool
    *   TRUE if the signal was set.
    */
   static public function set($name, $signal) {

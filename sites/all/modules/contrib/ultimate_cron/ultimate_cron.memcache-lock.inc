@@ -115,7 +115,7 @@ class UltimateCronLockMemcache {
    * @param string $name
    *   Name of lock.
    *
-   * @return boolean
+   * @return bool
    *   Result of unlock.
    */
   static private function unlockRaw($name, $lock_id = NULL) {
@@ -134,7 +134,7 @@ class UltimateCronLockMemcache {
    * @param float $timeout
    *   The timeout in seconds for the lock.
    *
-   * @return boolean
+   * @return bool
    *   TRUE if relock was successful.
    */
   static public function reLock($lock_id, $timeout = 30.0) {
@@ -164,7 +164,7 @@ class UltimateCronLockMemcache {
    *
    * @param string $name
    *   Name of the lock.
-   * @param boolean $ignore_expiration
+   * @param bool $ignore_expiration
    *   Ignore expiration, just check if it's present.
    *   Used for retrieving the lock id of an expired lock.
    *

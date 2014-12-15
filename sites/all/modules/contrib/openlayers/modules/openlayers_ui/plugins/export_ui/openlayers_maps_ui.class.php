@@ -499,8 +499,8 @@ class openlayers_maps_ui extends ctools_export_ui {
     $form['layerstyles']['styles']['temporary'] = array(
       '#type' => 'select',
       '#title' => t('Temporary Style'),
-      '#description' => t('Default style for any temporary features in a vector.
-      This will also be used for rollovers for things like Tooltips.'),
+      '#description' => t('Default temporary style for any features in a vector.
+      This can be used with the "Hover behavior" or things like Tooltips.'),
       '#options' => openlayers_ui_get_style_options(),
       '#default_value' => !empty($defaults['styles']['temporary']) ?
         $defaults['styles']['temporary'] : NULL,

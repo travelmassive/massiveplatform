@@ -36,6 +36,17 @@ class UltimateCronJob {
   }
 
   /**
+   * Set status of the job.
+   *
+   * @param bool $status
+   *   TRUE means job is disabled.
+   */
+  public function setStatus($status) {
+    ctools_include('export');
+    ctools_export_crud_set_status('ultimate_cron_job', $this, $status);
+  }
+
+  /**
    * Invoke plugin cron_alter().
    *
    * Calls on cron_alter() on all valid plugins for this job.
@@ -45,7 +56,7 @@ class UltimateCronJob {
     foreach ($plugin_types['ultimate_cron'] as $plugin_type => $info) {
       $class = $info['defaults']['static']['class'];
       if ($class::$multiple) {
-        $plugins = ultimate_cron_plugin_load_all($plugin_type);
+        $plugins = _ultimate_cron_plugin_load_all($plugin_type);
         foreach ($plugins as $plugin) {
           if ($plugin->isValid($this)) {
             $plugin->cron_alter($this);
@@ -171,7 +182,7 @@ class UltimateCronJob {
    */
   public function getPlugin($plugin_type, $name = NULL) {
     if ($name) {
-      return ultimate_cron_plugin_load($plugin_type, $name);
+      return _ultimate_cron_plugin_load($plugin_type, $name);
     }
     if (isset($this->plugins[$plugin_type])) {
       return $this->plugins[$plugin_type];
@@ -185,7 +196,7 @@ class UltimateCronJob {
     else {
       $name = $this->hook[$plugin_type]['name'];
     }
-    $this->plugins[$plugin_type] = ultimate_cron_plugin_load($plugin_type, $name);
+    $this->plugins[$plugin_type] = _ultimate_cron_plugin_load($plugin_type, $name);
     return $this->plugins[$plugin_type];
   }
 
@@ -220,7 +231,7 @@ class UltimateCronJob {
       $settings[$plugin->name] += $plugin->getDefaultSettings($this);
     }
     else {
-      $plugins = ultimate_cron_plugin_load_all($plugin_type);
+      $plugins = _ultimate_cron_plugin_load_all($plugin_type);
       foreach ($plugins as $name => $plugin) {
         if (empty($settings[$name])) {
           $settings[$name] = array();
@@ -262,7 +273,7 @@ class UltimateCronJob {
    * Signal page for plugins.
    */
   public function signal($item, $plugin_type, $plugin_name, $signal) {
-    $plugin = ultimate_cron_plugin_load($plugin_type, $plugin_name);
+    $plugin = _ultimate_cron_plugin_load($plugin_type, $plugin_name);
     return $plugin->signal($item, $signal);
   }
 
@@ -279,7 +290,7 @@ class UltimateCronJob {
         $this->getPlugin($name)->build_operations_alter($this, $allowed_operations);
       }
       else {
-        $plugins = ultimate_cron_plugin_load_all($name);
+        $plugins = _ultimate_cron_plugin_load_all($name);
         foreach ($plugins as $plugin) {
           $this->getPlugin($name, $plugin->name)->build_operations_alter($this, $allowed_operations);
         }
@@ -300,7 +311,7 @@ class UltimateCronJob {
           // error_log("$this->name : INVOKE 1.x");
           if (is_callable($this->hook['callback'])) {
             $result = call_user_func_array($this->hook['callback'], array(
-              $this->name, $this->hook
+              $this->name, $this->hook,
             ));
             break;
           }
@@ -409,7 +420,7 @@ class UltimateCronJob {
    *
    * @param string $lock_id
    *   The lock id to unlock.
-   * @param boolean $manual
+   * @param bool $manual
    *   Whether or not this is a manual unlock.
    */
   public function unlock($lock_id = NULL, $manual = FALSE) {
@@ -446,7 +457,7 @@ class UltimateCronJob {
     }
     $locked = array();
     foreach ($launchers as $launcher => $jobs) {
-      $locked += ultimate_cron_plugin_load('launcher', $launcher)->isLockedMultiple($jobs);
+      $locked += _ultimate_cron_plugin_load('launcher', $launcher)->isLockedMultiple($jobs);
     }
     return $locked;
   }
@@ -471,7 +482,7 @@ class UltimateCronJob {
   /**
    * Get log entries.
    *
-   * @param integer $limit
+   * @param int $limit
    *   (optional) Number of log entries per page.
    *
    * @return array
@@ -521,7 +532,7 @@ class UltimateCronJob {
     }
     $log_entries = array();
     foreach ($loggers as $logger => $jobs) {
-      $log_entries += ultimate_cron_plugin_load('logger', $logger)->loadLatestLogEntries($jobs, $log_types);
+      $log_entries += _ultimate_cron_plugin_load('logger', $logger)->loadLatestLogEntries($jobs, $log_types);
     }
     return $log_entries;
   }
@@ -626,7 +637,7 @@ class UltimateCronJob {
     }
     $progresses = array();
     foreach ($launchers as $launcher => $jobs) {
-      $progresses += ultimate_cron_plugin_load('launcher', $launcher)->getProgressMultiple($jobs);
+      $progresses += _ultimate_cron_plugin_load('launcher', $launcher)->getProgressMultiple($jobs);
     }
     return $progresses;
   }
@@ -681,7 +692,7 @@ class UltimateCronJob {
    */
   public function sendMessage($action, $data = array()) {
     if (module_exists('nodejs')) {
-      $settings = ultimate_cron_plugin_load('settings', 'general')->getDefaultSettings();
+      $settings = _ultimate_cron_plugin_load('settings', 'general')->getDefaultSettings();
       if (empty($settings['nodejs'])) {
         return;
       }
@@ -773,5 +784,25 @@ class UltimateCronJob {
       $final_cells[] = $data;
     }
     return $final_cells;
+  }
+
+  /**
+   * Debug log function for jobs.
+   *
+   * @param string $msg
+   *   The message to log.
+   */
+  public function debugLog($msg) {
+    $callback = variable_get('ultimate_cron_debug_log_callback', array('UltimateCronJob', 'debugLogCallback'));
+    if (is_callable($callback)) {
+      call_user_func($callback, $this, $msg);
+    }
+  }
+
+  /**
+   * Debug log callback.
+   */
+  static public function debugLogCallback($job, $msg) {
+    error_log("[$job->name] $msg");
   }
 }

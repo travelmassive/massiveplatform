@@ -180,20 +180,10 @@ class openlayers_views_style_data extends views_plugin_style {
       '#default_value' => $this->options['data_source']['name_field'],
     );
 
-    // For node content type, we can render the node as with a specific
-    // view mode.
-    if ($this->view->base_table == 'node') {
-      $desc_options = array_merge(array(
-        '' => '',
-        '#row' => '<' . t('entire row') . '>',
-      ), $fields);
-    }
-    else {
-      $desc_options = array_merge(array(
-        '' => '',
-        '#row' => '<' . t('entire row') . '>',
-      ), $fields);
-    }
+    $desc_options = array_merge(array(
+      '' => '',
+      '#row' => '<' . t('entire row') . '>',
+    ), $fields);
 
     // Description field
     $form['data_source']['description_field'] = array(
@@ -204,16 +194,6 @@ class openlayers_views_style_data extends views_plugin_style {
       '#required' => FALSE,
       '#options' => $desc_options,
       '#default_value' => $this->options['data_source']['description_field'],
-    );
-
-    $form['data_source']['style_field'] = array(
-      '#type'          => 'select',
-      '#title'         => t('Style Field'),
-      '#description'   => t('Choose the field which will appear as a style on '
-        . 'the layer.'),
-      '#required'      => FALSE,
-      '#options'       => array('' => '', ) + $fields,
-      '#default_value' => $this->options['data_source']['style_field'],
     );
 
     // A simple way to display attributes and styling
@@ -310,7 +290,7 @@ class openlayers_views_style_data extends views_plugin_style {
         if (isset($this->options['data_source']['description_field'])) {
           // Handle rendering the whole record.
           if ($this->options['data_source']['description_field'] === '#row') {
-            $attributes['description'] = $this->row_plugin->render($record);
+            $attributes['description'] = trim($this->row_plugin->render($record));
           } else {
             if (isset($attributes[$this->options['data_source']['description_field']])) {
               $attributes['description'] = $attributes[$this->options['data_source']['description_field']];
@@ -324,10 +304,15 @@ class openlayers_views_style_data extends views_plugin_style {
         if (isset($this->options['data_source']['value'])) {
           switch ($this->options['data_source']['value']) {
             case 'wkt':
-              $wkt = $this->rendered_fields[$id][$this->options['data_source']['wkt']];
+              $handler = $handlers[$this->options['data_source']['wkt']];
+              $wkt = $handler->allow_advanced_render() ? $handler->advanced_render($record) : $handler->render($record);
               break;
             case 'other_latlon':
-              $wkt = 'POINT(' . $this->rendered_fields[$id][$this->options['data_source']['other_lon']] . ' ' . $this->rendered_fields[$id][$this->options['data_source']['other_lat']] . ')';
+              $handler = $handlers[$this->options['data_source']['other_lon']];
+              $other_lon = $handler->allow_advanced_render() ? $handler->advanced_render($record) : $handler->render($record);
+              $handler = $handlers[$this->options['data_source']['other_lat']];
+              $other_lat = $handler->allow_advanced_render() ? $handler->advanced_render($record) : $handler->render($record);
+              $wkt = 'POINT(' . $other_lon . ' ' . $other_lat . ')';
               break;
           }
         }
@@ -335,9 +320,9 @@ class openlayers_views_style_data extends views_plugin_style {
         // Only render features that has been enabled in the configuration
         // of the display.
         if (isset($this->options['attributes']['display'])) {
-          foreach($this->options['attributes']['display'] as $id => $value) {
-            if ($this->options['attributes']['display'][$id] === 0) {
-              unset($attributes[$id]);
+          foreach($this->options['attributes']['display'] as $fid => $value) {
+            if ($this->options['attributes']['display'][$fid] === 0) {
+              unset($attributes[$fid]);
             }
           }
         }
@@ -346,7 +331,6 @@ class openlayers_views_style_data extends views_plugin_style {
         $feature = array(
           'projection' => 'EPSG:4326',
           'attributes' => $attributes,
-          'style' => $this->get_style($attributes, $handlers, $this->options['data_source'], $record),
           'wkt' => $wkt,
         );
 
@@ -370,58 +354,6 @@ class openlayers_views_style_data extends views_plugin_style {
    */
   function datasource_dependent($type) {
     return array('visible' => array('#edit-style-options-data-source-value' => array('value' => $type)));
-  }
-
-  /**
-   * Find and compute styling attributes.
-   */
-  function get_style($feature, $handlers, $datasource, $record) {
-    $style = NULL;
-
-    if (isset($datasource['style_field']) && !empty($datasource['style_field'])) {
-      $style_field = $handlers[$datasource['style_field']];
-      // Check if field is not empty
-      if ($style_field->original_value) {
-        $style = $style_field->options['settings'];
-
-        if ($style_field->original_value) {
-          $image_info = image_get_info($style_field->original_value);
-          $style['graphicWidth'] = $image_info['width'];
-          $style['graphicHeight'] = $image_info['height'];
-
-          unset($style['imageStyle']);
-          $style['externalGraphic'] = file_create_url($style_field->original_value);
-        }
-
-        foreach ($style as $prop => $value) {
-          if (is_numeric($value)) {
-            $style[$prop] = (float) $value;
-          }
-          if (empty($value)) {
-            unset($style[$prop]);
-          }
-        }
-      }
-    }
-    return $style;
-  }
-
-  /**
-   * Find the data source of an element and pull it into a wkt field
-   *
-   * openlayers_views_style_data specific
-   */
-  function get_wkt($feature, $handlers, $datasource) {
-    $feature['projection'] = '4326';
-    switch ($datasource['value']) {
-      case 'wkt':
-        return strip_tags($feature[$datasource['wkt']]);
-        break;
-
-      case 'other_latlon':
-        return 'POINT(' . strip_tags($feature[$datasource['other_lon']]) . ' ' . strip_tags($feature[$datasource['other_lat']]) . ')';
-        break;
-    }
   }
 
   /**
@@ -459,16 +391,16 @@ class openlayers_views_style_data extends views_plugin_style {
         $formatted_features[] = theme('openlayers_views_group_display_item',
           array(
             'name' => isset($handlers[$ds['name_field']]) ?
-              $subfeature['attributes'][$ds['name_field'] . '_rendered'] : FALSE,
+              $subfeature['attributes'][$ds['name_field']] : FALSE,
             'description' => (in_array($ds['description_field'], $exceptions) ||
               isset($handlers[$ds['description_field']])) ?
-              $subfeature['attributes'][$ds['description_field'] . '_rendered'] : FALSE
+              $subfeature['attributes'][$ds['description_field']] : FALSE
           )
         );
 
         // Remove rendered rows to keep data size down for JS.
         if (in_array($ds['description_field'], $exceptions)) {
-          unset($subfeature['attributes'][$ds['description_field'] . '_rendered']);
+          unset($subfeature['attributes'][$ds['description_field']]);
         }
       }
 

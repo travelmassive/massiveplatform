@@ -27,6 +27,7 @@ class openlayers_layer_type_kml extends openlayers_layer_type {
         'extractTracks' => FALSE,
       ),
       'file' => '',
+      'attribution' => '',
     ) + parent::options_init();
   }
 
@@ -112,6 +113,12 @@ class openlayers_layer_type_kml extends openlayers_layer_type {
             $this->data['formatOptions']['extractAttributes'] : TRUE,
         ),
       ),
+      'attribution' => array(
+        '#type' => 'textfield',
+        '#title' => t('Attribution'),
+        '#default_value' => isset($this->data['attribution']) ?
+          $this->data['attribution'] : '',
+      ),
     );
   }
 
@@ -137,6 +144,8 @@ class openlayers_layer_type_kml extends openlayers_layer_type {
     $form_state['data']['formatOptions']['extractStyles'] = $form_state['data']['formatOptions']['extractStyles']!=0?TRUE:FALSE;
     $form_state['data']['formatOptions']['extractAttributes'] = $form_state['data']['formatOptions']['extractAttributes']!=0?TRUE:FALSE;
     $form_state['data']['formatOptions']['extractTracks'] = $form_state['data']['formatOptions']['extractTracks']!=0?TRUE:FALSE;
+
+    $form_state['data']['attribution'] = isset($form_state['data']['attribution']) ? filter_xss($form_state['data']['attribution']) : '';
   }
 
   /**

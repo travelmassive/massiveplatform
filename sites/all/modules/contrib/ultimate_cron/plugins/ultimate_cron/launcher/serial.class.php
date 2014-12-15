@@ -9,13 +9,14 @@
  */
 class UltimateCronSerialLauncher extends UltimateCronLauncher {
   public $currentThread = NULL;
+  public $currentThreadLockId = NULL;
 
   /**
    * Implements hook_cron_alter().
    */
   public function cron_alter(&$jobs) {
     $class = _ultimate_cron_get_class('lock');
-    if (!empty($class::$killable)) {
+    if (isset($jobs['ultimate_cron_plugin_launcher_serial_cleanup']) && !empty($class::$killable)) {
       $jobs['ultimate_cron_plugin_launcher_serial_cleanup']->hook['tags'][] = 'killable';
     }
   }
@@ -25,7 +26,6 @@ class UltimateCronSerialLauncher extends UltimateCronLauncher {
    */
   public function defaultSettings() {
     return array(
-      'max_execution_time' => 3600,
       'max_threads' => 1,
       'thread' => 'any',
       'lock_timeout' => 3600,
@@ -61,15 +61,6 @@ class UltimateCronSerialLauncher extends UltimateCronLauncher {
 
     if (!$job) {
       $max_threads = $values['max_threads'];
-      $elements['timeouts']['max_execution_time'] = array(
-        '#parents' => array('settings', $this->type, $this->name, 'max_execution_time'),
-        '#title' => t("Maximum execution time"),
-        '#type' => 'textfield',
-        '#default_value' => $values['max_execution_time'],
-        '#description' => t('Maximum execution time for a cron run in seconds.'),
-        '#fallback' => TRUE,
-        '#required' => TRUE,
-      );
       $elements['launcher']['max_threads'] = array(
         '#parents' => array('settings', $this->type, $this->name, 'max_threads'),
         '#title' => t("Maximum number of launcher threads"),
@@ -82,7 +73,11 @@ class UltimateCronSerialLauncher extends UltimateCronLauncher {
         '#weight' => 1,
       );
       $elements['launcher']['poorman_keepalive'] = array(
-        '#parents' => array('settings', $this->type, $this->name, 'poorman_keepalive'),
+        '#parents' => array(
+          'settings',
+          $this->type, $this->name,
+          'poorman_keepalive',
+        ),
         '#title' => t("Poormans cron keepalive"),
         '#type' => 'checkbox',
         '#default_value' => $values['poorman_keepalive'],
@@ -97,8 +92,8 @@ class UltimateCronSerialLauncher extends UltimateCronLauncher {
     }
 
     $options = array(
-      'any' => t('-- Any -- '),
-      'fixed' => t('-- Fixed -- '),
+      'any' => '-- ' . t('Any') . ' --',
+      'fixed' => '-- ' . t('Fixed') . ' --',
     );
     for ($i = 1; $i <= $max_threads; $i++) {
       $options[$i] = $i;
@@ -109,7 +104,10 @@ class UltimateCronSerialLauncher extends UltimateCronLauncher {
       '#type' => 'select',
       '#default_value' => $values['thread'],
       '#options' => $options,
-      '#description' => t('Which thread to run in when invoking with ?thread=N. Note: This setting only has an effect when cron is run through cron.php with an argument ?thread=N or through Drush with --options=thread=N.'),
+      '#description' => t('Which thread to run jobs in.') . "<br/>" .
+      t('<strong>Any</strong>: Just use any available thread') . "<br/>" .
+      t('<strong>Fixed</strong>: Only run in one specific thread. The maximum number of threads is spread across the jobs.') . "<br/>" .
+      t('<strong>1-?</strong>: Only run when a specific thread is invoked. This setting only has an effect when cron is run through cron.php with an argument ?thread=N or through Drush with --options=thread=N.'),
       '#fallback' => TRUE,
       '#required' => TRUE,
       '#weight' => 2,
@@ -125,7 +123,7 @@ class UltimateCronSerialLauncher extends UltimateCronLauncher {
     if (!$job) {
       if (intval($values['max_threads']) <= 0) {
         form_set_error("settings[$this->type][$this->name", t('%title must be greater than 0', array(
-          '%title' => $elements['launcher']['max_threads']['#title']
+          '%title' => $elements['launcher']['max_threads']['#title'],
         )));
       }
     }
@@ -213,12 +211,22 @@ class UltimateCronSerialLauncher extends UltimateCronLauncher {
       '@init_message' => $init_message,
     )));
 
-    // Run job.
+    $class = _ultimate_cron_get_class('lock');
     try {
+      // Allocate time for the job's lock if necessary.
+      $settings = $job->getSettings($this->type);
+      $lock_timeout = drupal_set_time_limit($settings['lock_timeout']);
+
+      // Relock cron thread with proper timeout.
+      if ($this->currentThreadLockId) {
+        $class::reLock($this->currentThreadLockId, $settings['lock_timeout']);
+      }
+
+      // Run job.
       $job->run();
     }
     catch (Exception $e) {
-      watchdog('serial_launcher', 'Error executing %job: @error', array('%job' => $job->name, '@error' => $e->getMessage()), WATCHDOG_ERROR);
+      watchdog('serial_launcher', 'Error executing %job: @error', array('%job' => $job->name, '@error' => (string) $e), WATCHDOG_ERROR);
       $log_entry->finish();
       $job->unlock($lock_id);
       return FALSE;
@@ -274,10 +282,6 @@ class UltimateCronSerialLauncher extends UltimateCronLauncher {
     $class = _ultimate_cron_get_class('lock');
     $settings = $this->getDefaultSettings();
 
-    // Set proper max execution time.
-    $max_execution_time = ini_get('max_execution_time');
-    $lock_timeout = max($max_execution_time, $settings['max_execution_time']);
-
     // We only lock for 55 seconds at a time, to give room for other cron
     // runs.
     $lock_timeout = 55;
@@ -288,7 +292,7 @@ class UltimateCronSerialLauncher extends UltimateCronLauncher {
 
     if ($thread = intval(self::getGlobalOption('thread'))) {
       if ($thread < 1 || $thread > $settings['max_threads']) {
-        watchdog('serial_launcher', "Invalid thread available for starting launch thread", array(), WATCHDOG_WARNING);
+        watchdog('serial_launcher', "Invalid thread available for starting launch thread", array(), WATCHDOG_ERROR);
         return;
       }
 
@@ -307,18 +311,13 @@ class UltimateCronSerialLauncher extends UltimateCronLauncher {
       $timeout = 1;
       list($thread, $lock_id) = $this->findFreeThread(TRUE, $lock_timeout, $timeout);
     }
-    $this->currentThread = $thread;
 
     if (!$thread) {
       watchdog('serial_launcher', "No free threads available for launching jobs", array(), WATCHDOG_WARNING);
       return;
     }
 
-    if ($max_execution_time && $max_execution_time < $settings['max_execution_time']) {
-      set_time_limit($settings['max_execution_time']);
-    }
-
-    watchdog('serial_launcher', "Cron thread %thread started", array('%thread' => $thread), WATCHDOG_INFO);
+    watchdog('serial_launcher', "Cron thread %thread started", array('%thread' => $thread), WATCHDOG_DEBUG);
 
     $this->runThread($lock_id, $thread, $jobs);
     $class::unlock($lock_id);
@@ -335,6 +334,9 @@ class UltimateCronSerialLauncher extends UltimateCronLauncher {
    *   The UltimateCronJobs to run.
    */
   public function runThread($lock_id, $thread, $jobs) {
+    $this->currentThread = $thread;
+    $this->currentThreadLockId = $lock_id;
+
     $class = _ultimate_cron_get_class('lock');
     $lock_name = 'ultimate_cron_serial_launcher_' . $thread;
     foreach ($jobs as $job) {
@@ -385,12 +387,6 @@ class UltimateCronSerialLauncher extends UltimateCronLauncher {
         ultimate_cron_poorman_page_flush();
         $sleep = $cron_next - $time;
         sleep($sleep);
-        /*
-        while ($sleep--) {
-          error_log("SLEEPING3: $sleep");
-          sleep(1);
-        }
-        /**/
         ultimate_cron_poorman_trigger();
         $class::unLock($lock_id);
       }
@@ -403,7 +399,7 @@ class UltimateCronSerialLauncher extends UltimateCronLauncher {
 
     // Check poorman settings. If launcher has changed, we don't want
     // to keepalive.
-    $poorman = ultimate_cron_plugin_load('settings', 'poorman');
+    $poorman = _ultimate_cron_plugin_load('settings', 'poorman');
     if (!$poorman) {
       return;
     }
@@ -422,12 +418,6 @@ class UltimateCronSerialLauncher extends UltimateCronLauncher {
       if ($time < $cron_next) {
         $sleep = $cron_next - $time;
         sleep($sleep);
-        /*
-        while ($sleep--) {
-          error_log("SLEEPING4: $sleep");
-          sleep(1);
-        }
-        /**/
       }
 
       $class::unLock($lock_id);

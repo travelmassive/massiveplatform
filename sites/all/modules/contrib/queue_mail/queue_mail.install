@@ -20,6 +20,7 @@ function queue_mail_uninstall() {
   _queue_mail_get_queue()->deleteQueue();
 
   variable_del('queue_mail_keys');
+  variable_del('queue_mail_queue_time');
 }
 
 /**

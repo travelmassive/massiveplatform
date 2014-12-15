@@ -89,6 +89,9 @@ function hierarchical_select_features_rebuild($module) {
   module_load_include('inc', 'hierarchical_select', 'includes/common');
   $configs = module_invoke($module, 'hierarchical_select_default_configs');
   if (!empty($configs)) {
+    // Apply the configuration.
+    require_once(drupal_get_path('module', 'hierarchical_select') .'/includes/common.inc');
+
     foreach ($configs as $config_id => $config) {
       hierarchical_select_common_config_set($config_id, $config);
     }

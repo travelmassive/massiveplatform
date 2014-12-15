@@ -9,11 +9,6 @@
  */
 Drupal.openlayers.layer.wmts = function(title, map, options) {
 
-  var matrixIds = new Array(26);
-  for (var i=0; i<26; ++i) {
-    matrixIds[i] = options.matrixSet + ":" + i;
-  }
-
   var layer_options = {
     drupalID: options.drupalID,
     name: title,
@@ -23,11 +18,20 @@ Drupal.openlayers.layer.wmts = function(title, map, options) {
     url: options.url,
     style: options.style,
     matrixSet: options.matrixSet,
-    matrixIds: matrixIds,
     format: options.format,
     formatSuffix: options.formatSuffix,
     isBaseLayer: options.isBaseLayer
   };
+
+  if (options.matrixIdsAuto) {
+    layer_options.matrixIds = new Array(26);
+    for (var i=0; i<26; ++i) {
+      layer_options.matrixIds[i] = options.matrixSet + ":" + i;
+    }
+  } else if (options.matrixIds) {
+    layer_options.matrixIds = options.matrixIds;
+  }
+
   if (OpenLayers.Util.isArray(options.maxExtent)) {
     layer_options.maxExtent = OpenLayers.Bounds.fromArray(options.maxExtent);
   }

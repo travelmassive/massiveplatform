@@ -47,7 +47,7 @@ class UltimateCronBackgroundProcessLegacyLauncher extends UltimateCronLauncher {
       $process = background_process_get_process('uc-ultimate_cron_plugin_launcher_background_process_legacy_cleanup');
       if ($process && $process->start + variable_get('background_process_cleanup_age', BACKGROUND_PROCESS_CLEANUP_AGE) < time()) {
         $log_entry = $job->resumeLog($lock_id);
-        $log_entry->log('bgpl_launcher', 'Self unlocking stale lock', array(), WATCHDOG_ERROR);
+        $log_entry->log('bgpl_launcher', 'Self unlocking stale lock', array(), WATCHDOG_NOTICE);
         $log_entry->finish();
         $job->sendSignal('background_process_legacy_dont_log');
         $job->unlock($lock_id);
@@ -166,7 +166,7 @@ class UltimateCronBackgroundProcessLegacyLauncher extends UltimateCronLauncher {
     $methods = module_invoke_all('service_group');
     $options = $this->getServiceGroups();
     foreach ($options as $key => &$value) {
-      $value = (empty($value['description']) ? $key : $value['description']) . ' (' . join(',', $value['hosts']) . ') : ' . $methods['methods'][$value['method']];
+      $value = (empty($value['description']) ? $key : $value['description']) . ' (' . implode(',', $value['hosts']) . ') : ' . $methods['methods'][$value['method']];
     }
     $elements['service_group'] = array(
       '#title' => t("Service group"),
@@ -202,7 +202,7 @@ class UltimateCronBackgroundProcessLegacyLauncher extends UltimateCronLauncher {
       '#default_value' => $values['daemonize_interval'],
       '#description' => t('Seconds to run the job in the same thread before relaunching.'),
       '#states' => array(
-        'visible' => array(':input[name="settings[' . $this->type . '][' . $this->name . '][daemonize]"]' => array('checked' => TRUE))
+        'visible' => array(':input[name="settings[' . $this->type . '][' . $this->name . '][daemonize]"]' => array('checked' => TRUE)),
       ),
     );
     $elements['daemonize_delay'] = array(
@@ -211,7 +211,7 @@ class UltimateCronBackgroundProcessLegacyLauncher extends UltimateCronLauncher {
       '#default_value' => $values['daemonize_delay'],
       '#description' => t('Delay in seconds between in job execution.'),
       '#states' => array(
-        'visible' => array(':input[name="settings[' . $this->type . '][' . $this->name . '][daemonize]"]' => array('checked' => TRUE))
+        'visible' => array(':input[name="settings[' . $this->type . '][' . $this->name . '][daemonize]"]' => array('checked' => TRUE)),
       ),
     );
   }
@@ -234,7 +234,7 @@ class UltimateCronBackgroundProcessLegacyLauncher extends UltimateCronLauncher {
     );
     foreach ($service_groups as &$service_group) {
       $service_group += array(
-        'method' => 'background_process_service_group_random'
+        'method' => 'background_process_service_group_random',
       );
     }
     return $service_groups;
@@ -272,7 +272,7 @@ class UltimateCronBackgroundProcessLegacyLauncher extends UltimateCronLauncher {
     $job_name = $matches[1];
     $handle = 'uc-' . $job_name;
     if ($manual) {
-      $job = ultimate_cron_job_load($job_name);
+      $job = _ultimate_cron_job_load($job_name);
       $job->sendSignal('background_process_legacy_dont_log');
     }
     return background_process_unlock($handle);
@@ -331,8 +331,9 @@ class UltimateCronBackgroundProcessLegacyLauncher extends UltimateCronLauncher {
   }
 
   /**
-   * Background process cleanup uses drupal_set_message() to inform about
-   * the result of the cleanup.
+   * Background process cleanup handler.
+   *
+   * Use drupal_set_message() to inform about the result of the cleanup.
    *
    * We trap these, and log them as watchdog messages.
    */
@@ -397,8 +398,9 @@ class UltimateCronBackgroundProcessLegacyLauncher extends UltimateCronLauncher {
       ));
     }
 
-    // We know that the latest log entry has been used for determining the schedule.
-    // Load the latest log entry and store the timestamp of it for later use.
+    // We know that the latest log entry has been used for determining the
+    // schedule. Load the latest log entry and store the timestamp of it for
+    // later use.
     if (!empty($job->recheck)) {
       $log_entry = isset($job->log_entry) ? $job->log_entry : $job->loadLatestLogEntry();
       $recheck = $log_entry->start_time;
@@ -409,8 +411,11 @@ class UltimateCronBackgroundProcessLegacyLauncher extends UltimateCronLauncher {
 
     $log_entry = $job->startLog($lock_id, $init_message);
 
-    if (!$process->execute(array(get_class($this), 'job_callback'), array($job->name, $lock_id, $recheck))) {
-      watchdog('bgpl_launcher', 'Could execute background process dispatch for handle @handle', array(
+    if (!$process->execute(
+      array(get_class($this), 'job_callback'),
+      array($job->name, $lock_id, $recheck)
+    )) {
+      watchdog('bgpl_launcher', 'Could not execute background process dispatch for handle @handle', array(
         '@handle' => $handle,
       ), WATCHDOG_ERROR);
       $log_entry->finish();
@@ -476,7 +481,6 @@ class UltimateCronBackgroundProcessLegacyLauncher extends UltimateCronLauncher {
       ), WATCHDOG_NOTICE);
     }
 
-
     if ($jobs) {
       watchdog('bgpl_launcher', '@jobs jobs missed their schedule due to congestion.', array(
         '@jobs' => count($jobs),
@@ -530,16 +534,10 @@ class UltimateCronBackgroundProcessLegacyLauncher extends UltimateCronLauncher {
     if ($time < $cron_next) {
       $sleep = $cron_next - $time;
       sleep($sleep);
-      /*
-      while ($sleep--) {
-        error_log("SLEEPING1: $sleep");
-        sleep(1);
-      }
-      /**/
     }
 
     // Get settings, so we can determine the poormans cron service group.
-    $plugin = ultimate_cron_plugin_load('launcher', 'background_process_legacy');
+    $plugin = _ultimate_cron_plugin_load('launcher', 'background_process_legacy');
     if (!$plugin) {
       $class::unlock($lock_id);
       throw new Exception(t('Failed to load launcher plugin?!?!?!?!'));
@@ -552,7 +550,7 @@ class UltimateCronBackgroundProcessLegacyLauncher extends UltimateCronLauncher {
 
     // It's our turn!
     $launchers = array();
-    foreach (ultimate_cron_job_load_all() as $job) {
+    foreach (_ultimate_cron_job_load_all() as $job) {
       $launcher = $job->getPlugin('launcher');
       $launchers[$launcher->name] = $launcher->name;
     }
@@ -576,17 +574,11 @@ class UltimateCronBackgroundProcessLegacyLauncher extends UltimateCronLauncher {
     if ($time < $cron_next) {
       $sleep = $cron_next - $time;
       sleep($sleep);
-      /*
-      while ($sleep--) {
-        error_log("SLEEPING2: $sleep");
-        sleep(1);
-      }
-      /**/
     }
 
     // Check poorman settings. If launcher has changed, we don't want
     // to keepalive.
-    $poorman = ultimate_cron_plugin_load('settings', 'poorman');
+    $poorman = _ultimate_cron_plugin_load('settings', 'poorman');
     if (!$poorman) {
       return;
     }
@@ -708,7 +700,7 @@ class UltimateCronBackgroundProcessLegacyLauncher extends UltimateCronLauncher {
    *   The lock id.
    */
   static public function job_callback($name, $lock_id, $recheck = FALSE) {
-    $job = ultimate_cron_job_load($name);
+    $job = _ultimate_cron_job_load($name);
 
     $log_entry = $job->resumeLog($lock_id);
 
@@ -752,14 +744,14 @@ class UltimateCronBackgroundProcessLegacyLauncher extends UltimateCronLauncher {
           }
 
           if ($job->getSignal('end_daemonize')) {
-            watchdog('bgpl_launcher', 'end daemonize signal recieved', array(), WATCHDOG_WARNING);
+            watchdog('bgpl_launcher', 'end daemonize signal received', array(), WATCHDOG_NOTICE);
             $keepalive = FALSE;
             break;
           }
         } while (microtime(TRUE) < $expire);
 
         // Refresh disabled value.
-        $job = ultimate_cron_job_load($name, TRUE);
+        $job = _ultimate_cron_job_load($name, TRUE);
         $settings = $job->getSettings('launcher');
 
         $keepalive &= empty($job->disabled);
@@ -772,7 +764,7 @@ class UltimateCronBackgroundProcessLegacyLauncher extends UltimateCronLauncher {
           background_process_keepalive($name, $lock_id);
 
           // Save a copy of the log.
-          $log_entry->lid = $lock_id . '-' . urlencode(uniqid('', TRUE));
+          $log_entry->lid = $lock_id . '-' . uniqid('', TRUE);
           $job->sendSignal('background_process_legacy_dont_log');
           $log_entry->finish();
 

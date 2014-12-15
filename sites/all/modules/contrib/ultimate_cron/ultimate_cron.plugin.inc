@@ -110,7 +110,7 @@ class UltimateCronPlugin {
     ctools_include('plugins');
     $plugin_types = ctools_plugin_get_plugin_type_info();
     foreach ($plugin_types['ultimate_cron'] as $plugin_type => $info) {
-      $plugins = ultimate_cron_plugin_load_all($plugin_type);
+      $plugins = _ultimate_cron_plugin_load_all($plugin_type);
       foreach ($plugins as $plugin) {
         if ($plugin->isValid()) {
           $plugin->cron_alter($jobs);
@@ -126,7 +126,7 @@ class UltimateCronPlugin {
     ctools_include('plugins');
     $plugin_types = ctools_plugin_get_plugin_type_info();
     foreach ($plugin_types['ultimate_cron'] as $plugin_type => $info) {
-      $plugins = ultimate_cron_plugin_load_all($plugin_type);
+      $plugins = _ultimate_cron_plugin_load_all($plugin_type);
       foreach ($plugins as $plugin) {
         if ($plugin->isValid($job)) {
           $plugin->cron_pre_schedule($job);
@@ -142,7 +142,7 @@ class UltimateCronPlugin {
     ctools_include('plugins');
     $plugin_types = ctools_plugin_get_plugin_type_info();
     foreach ($plugin_types['ultimate_cron'] as $plugin_type => $info) {
-      $plugins = ultimate_cron_plugin_load_all($plugin_type);
+      $plugins = _ultimate_cron_plugin_load_all($plugin_type);
       foreach ($plugins as $plugin) {
         if ($plugin->isValid($job)) {
           $plugin->cron_post_schedule($job, $result);
@@ -158,7 +158,7 @@ class UltimateCronPlugin {
     ctools_include('plugins');
     $plugin_types = ctools_plugin_get_plugin_type_info();
     foreach ($plugin_types['ultimate_cron'] as $plugin_type => $info) {
-      $plugins = ultimate_cron_plugin_load_all($plugin_type);
+      $plugins = _ultimate_cron_plugin_load_all($plugin_type);
       foreach ($plugins as $plugin) {
         if ($plugin->isValid($job)) {
           $plugin->cron_pre_launch($job);
@@ -174,7 +174,7 @@ class UltimateCronPlugin {
     ctools_include('plugins');
     $plugin_types = ctools_plugin_get_plugin_type_info();
     foreach ($plugin_types['ultimate_cron'] as $plugin_type => $info) {
-      $plugins = ultimate_cron_plugin_load_all($plugin_type);
+      $plugins = _ultimate_cron_plugin_load_all($plugin_type);
       foreach ($plugins as $plugin) {
         if ($plugin->isValid($job)) {
           $plugin->cron_post_launch($job);
@@ -190,7 +190,7 @@ class UltimateCronPlugin {
     ctools_include('plugins');
     $plugin_types = ctools_plugin_get_plugin_type_info();
     foreach ($plugin_types['ultimate_cron'] as $plugin_type => $info) {
-      $plugins = ultimate_cron_plugin_load_all($plugin_type);
+      $plugins = _ultimate_cron_plugin_load_all($plugin_type);
       foreach ($plugins as $plugin) {
         if ($plugin->isValid($job)) {
           $plugin->cron_pre_run($job);
@@ -206,7 +206,7 @@ class UltimateCronPlugin {
     ctools_include('plugins');
     $plugin_types = ctools_plugin_get_plugin_type_info();
     foreach ($plugin_types['ultimate_cron'] as $plugin_type => $info) {
-      $plugins = ultimate_cron_plugin_load_all($plugin_type);
+      $plugins = _ultimate_cron_plugin_load_all($plugin_type);
       foreach ($plugins as $plugin) {
         if ($plugin->isValid($job)) {
           $plugin->cron_post_run($job);
@@ -222,7 +222,7 @@ class UltimateCronPlugin {
     ctools_include('plugins');
     $plugin_types = ctools_plugin_get_plugin_type_info();
     foreach ($plugin_types['ultimate_cron'] as $plugin_type => $info) {
-      $plugins = ultimate_cron_plugin_load_all($plugin_type);
+      $plugins = _ultimate_cron_plugin_load_all($plugin_type);
       foreach ($plugins as $plugin) {
         if ($plugin->isValid($job)) {
           $plugin->cron_pre_invoke($job);
@@ -238,7 +238,7 @@ class UltimateCronPlugin {
     ctools_include('plugins');
     $plugin_types = ctools_plugin_get_plugin_type_info();
     foreach ($plugin_types['ultimate_cron'] as $plugin_type => $info) {
-      $plugins = ultimate_cron_plugin_load_all($plugin_type);
+      $plugins = _ultimate_cron_plugin_load_all($plugin_type);
       foreach ($plugins as $plugin) {
         if ($plugin->isValid($job)) {
           $plugin->cron_post_invoke($job);
@@ -459,7 +459,7 @@ class UltimateCronPlugin {
     $static = $plugin_info['defaults']['static'];
     $key = 'ultimate_cron_plugin_' . $plugin_type . '_default';
     $options = array();
-    foreach (ultimate_cron_plugin_load_all($plugin_type) as $name => $plugin) {
+    foreach (_ultimate_cron_plugin_load_all($plugin_type) as $name => $plugin) {
       if ($plugin->isValid()) {
         $options[$name] = $plugin->title;
       }
@@ -478,7 +478,7 @@ class UltimateCronPlugin {
    */
   static public function jobSettingsForm(&$form, &$form_state, $plugin_type, $job) {
     // Check valid plugins.
-    $plugins = ultimate_cron_plugin_load_all($plugin_type);
+    $plugins = _ultimate_cron_plugin_load_all($plugin_type);
     foreach ($plugins as $name => $plugin) {
       if (!$plugin->isValid($job)) {
         unset($plugins[$name]);
@@ -514,8 +514,8 @@ class UltimateCronPlugin {
       $form_state['values']['settings'][$plugin_type][$current_plugin->name] = array();
     }
 
-    // Default values for current selection. If selection differs from current job, then
-    // take the job into account.
+    // Default values for current selection. If selection differs from current
+    // job, then take the job into account.
     $defaults = $current_plugin->name == $original_plugin ? $job->settings : array();
     $defaults += $current_plugin->getDefaultSettings($job);
 
@@ -599,7 +599,7 @@ class UltimateCronPlugin {
    */
   static public function jobSettingsFormValidate($form, &$form_state, $plugin_type, $job = NULL) {
     $name = !empty($form_state['values']['settings'][$plugin_type]['name']) ? $form_state['values']['settings'][$plugin_type]['name'] : $job->hook[$plugin_type]['name'];
-    $plugin = ultimate_cron_plugin_load($plugin_type, $name);
+    $plugin = _ultimate_cron_plugin_load($plugin_type, $name);
     $plugin->settingsFormValidate($form, $form_state, $job);
   }
 
@@ -608,13 +608,17 @@ class UltimateCronPlugin {
    */
   static public function jobSettingsFormSubmit($form, &$form_state, $plugin_type, $job = NULL) {
     $name = !empty($form_state['values']['settings'][$plugin_type]['name']) ? $form_state['values']['settings'][$plugin_type]['name'] : $job->hook[$plugin_type]['name'];
-    $plugin = ultimate_cron_plugin_load($plugin_type, $name);
+    $plugin = _ultimate_cron_plugin_load($plugin_type, $name);
     $plugin->settingsFormSubmit($form, $form_state, $job);
 
     // Weed out blank values that have fallbacks.
     $elements = &$form['settings'][$plugin_type][$name];
     $values = &$form_state['values']['settings'][$plugin_type][$name];;
-    $plugin->cleanForm($elements, $values, array('settings', $plugin_type, $name));
+    $plugin->cleanForm(
+      $elements,
+      $values,
+      array('settings', $plugin_type, $name)
+    );
   }
 
   /**
@@ -645,7 +649,7 @@ class UltimateCronPlugin {
    *   Elements to process.
    * @param array $defaults
    *   Default values to add to description.
-   * @param boolean $remove_non_fallbacks
+   * @param bool $remove_non_fallbacks
    *   If TRUE, non fallback elements will be removed.
    */
   public function fallbackalize(&$elements, &$values, $defaults, $remove_non_fallbacks = FALSE) {
@@ -708,7 +712,7 @@ class UltimateCronPluginMultiple extends UltimateCronPlugin {
    */
   static public function defaultSettingsForm(&$form, &$form_state, $plugin_info) {
     $plugin_type = $plugin_info['type'];
-    foreach (ultimate_cron_plugin_load_all($plugin_type) as $name => $plugin) {
+    foreach (_ultimate_cron_plugin_load_all($plugin_type) as $name => $plugin) {
       if ($plugin->isValid()) {
         $plugins[] = l($plugin->title, "admin/config/system/cron/$plugin_type/$name");
       }
@@ -716,8 +720,8 @@ class UltimateCronPluginMultiple extends UltimateCronPlugin {
     $form['available'] = array(
       '#markup' => theme('item_list', array(
         'title' => $plugin_info['defaults']['static']['title plural proper'] . ' available',
-        'items' => $plugins
-      ))
+        'items' => $plugins,
+      )),
     );
   }
 
@@ -726,7 +730,7 @@ class UltimateCronPluginMultiple extends UltimateCronPlugin {
    */
   static public function jobSettingsForm(&$form, &$form_state, $plugin_type, $job) {
     // Check valid plugins.
-    $plugins = ultimate_cron_plugin_load_all($plugin_type);
+    $plugins = _ultimate_cron_plugin_load_all($plugin_type);
     foreach ($plugins as $name => $plugin) {
       if (!$plugin->isValid($job)) {
         unset($plugins[$name]);
@@ -781,7 +785,7 @@ class UltimateCronPluginMultiple extends UltimateCronPlugin {
    * Job settings form validate handler.
    */
   static public function jobSettingsFormValidate($form, &$form_state, $plugin_type, $job = NULL) {
-    $plugins = ultimate_cron_plugin_load_all($plugin_type);
+    $plugins = _ultimate_cron_plugin_load_all($plugin_type);
     foreach ($plugins as $plugin) {
       if ($plugin->isValid($job)) {
         $plugin->settingsFormValidate($form, $form_state, $job);
@@ -793,7 +797,7 @@ class UltimateCronPluginMultiple extends UltimateCronPlugin {
    * Job settings form submit handler.
    */
   static public function jobSettingsFormSubmit($form, &$form_state, $plugin_type, $job = NULL) {
-    $plugins = ultimate_cron_plugin_load_all($plugin_type);
+    $plugins = _ultimate_cron_plugin_load_all($plugin_type);
     foreach ($plugins as $name => $plugin) {
       if ($plugin->isValid($job)) {
         $plugin->settingsFormSubmit($form, $form_state, $job);
@@ -801,7 +805,11 @@ class UltimateCronPluginMultiple extends UltimateCronPlugin {
         // Weed out blank values that have fallbacks.
         $elements = &$form['settings'][$plugin_type][$name];
         $values = &$form_state['values']['settings'][$plugin_type][$name];
-        $plugin->cleanForm($elements, $values, array('settings', $plugin_type, $name));
+        $plugin->cleanForm(
+          $elements,
+          $values,
+          array('settings', $plugin_type, $name)
+        );
       }
       else {
         unset($form_state['values']['settings'][$plugin_type][$name]);
@@ -833,7 +841,7 @@ abstract class UltimateCronScheduler extends UltimateCronPlugin {
    * @param UltimateCronJob $job
    *   The job to check schedule for.
    *
-   * @return boolean
+   * @return bool
    *   TRUE if job is scheduled to run.
    */
   abstract public function isScheduled($job);
@@ -844,7 +852,7 @@ abstract class UltimateCronScheduler extends UltimateCronPlugin {
    * @param UltimateCronJob $job
    *   The job to check schedule for.
    *
-   * @return boolean
+   * @return bool
    *   TRUE if job is behind its schedule.
    */
   abstract public function isBehind($job);
@@ -915,10 +923,10 @@ abstract class UltimateCronLauncher extends UltimateCronPlugin {
    *
    * @param string $lock_id
    *   The lock id to unlock.
-   * @param boolean $manual
+   * @param bool $manual
    *   Whether this is a manual unlock or not.
    *
-   * @return boolean
+   * @return bool
    *   TRUE on successful unlock.
    */
   abstract public function unlock($lock_id, $manual = FALSE);
@@ -940,7 +948,7 @@ abstract class UltimateCronLauncher extends UltimateCronPlugin {
    * @param UltimateCronJob $job
    *   The job to launch.
    *
-   * @return boolean
+   * @return bool
    *   TRUE on successful launch.
    */
   abstract public function launch($job);
@@ -1000,7 +1008,7 @@ abstract class UltimateCronLauncher extends UltimateCronPlugin {
 
       watchdog('ultimate_cron', 'Error running @name: @error', array(
         '@name' => $job->name,
-        '@error' => $e->getMessage(),
+        '@error' => (string) $e,
       ), WATCHDOG_ERROR);
     }
     // Restore the user.
@@ -1316,7 +1324,7 @@ abstract class UltimateCronLogger extends UltimateCronPlugin {
    *   Name of job.
    * @param array $log_types
    *   Log types to get.
-   * @param integer $limit
+   * @param int $limit
    *   (optional) Number of log entries per page.
    *
    * @return array
@@ -1456,7 +1464,8 @@ abstract class UltimateCronLogEntry {
   public function log($type, $message, $variables = array(), $severity = WATCHDOG_NOTICE, $link = NULL) {
     global $user, $base_root;
 
-    // The user object may not exist in all conditions, so 0 is substituted if needed.
+    // The user object may not exist in all conditions,
+    // so 0 is substituted if needed.
     $user_uid = isset($user->uid) ? $user->uid : 0;
 
     // Prepare the fields to be logged.

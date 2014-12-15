@@ -5,6 +5,18 @@
  */
 
 class ultimate_cron_job_ctools_export_ui extends ctools_export_ui {
+
+  /**
+   * Access handler for an operation on a specific item.
+   *
+   * @param string $op
+   *   The operation in question.
+   * @param UltimateCronJob $item
+   *   The cron job.
+   *
+   * @return bool
+   *   TRUE if access FALSE if not.
+   */
   public function access($op, $item) {
     switch ($op) {
       case 'list':
@@ -123,8 +135,10 @@ class ultimate_cron_job_ctools_export_ui extends ctools_export_ui {
         unset($allowed_operations[$name]);
         continue;
       }
-      $operation += array('sort' => array(
-        isset($default_sort[$name]) ? $default_sort[$name] : 0),
+      $operation += array(
+        'sort' => array(
+          isset($default_sort[$name]) ? $default_sort[$name] : 0,
+        ),
         'alias' => TRUE,
       );
       $operation['sort'][] = $weight++;
@@ -172,7 +186,7 @@ class ultimate_cron_job_ctools_export_ui extends ctools_export_ui {
         '@name' => $item->name,
         '@username' => $username,
         '@uid' => $user->uid,
-      ), WATCHDOG_WARNING);
+      ), WATCHDOG_NOTICE);
       $log_entry->finish();
     }
 
@@ -193,7 +207,7 @@ class ultimate_cron_job_ctools_export_ui extends ctools_export_ui {
     $header = array(
       t('Started'),
       t('Duration'),
-      t('User'),
+      t('Launched by'),
       t('Initial message'),
       t('Message'),
       t('Status'),
@@ -271,7 +285,7 @@ class ultimate_cron_job_ctools_export_ui extends ctools_export_ui {
     $form['#attached']['js'][] = drupal_get_path('module', 'ultimate_cron') . '/js/ultimate_cron.js';
 
     if (module_exists('nodejs')) {
-      $settings = ultimate_cron_plugin_load('settings', 'general')->getDefaultSettings();
+      $settings = _ultimate_cron_plugin_load('settings', 'general')->getDefaultSettings();
       if (!empty($settings['nodejs'])) {
         nodejs_send_content_channel_token('ultimate_cron');
         $form['#attached']['js'][] = drupal_get_path('module', 'ultimate_cron') . '/js/ultimate_cron.nodejs.js';
@@ -439,14 +453,14 @@ class ultimate_cron_job_ctools_export_ui extends ctools_export_ui {
       $item->log_entry = $item->loadLogEntry($item->lock_id);
     }
 
-    // Note: $item->{$schema['export']['export type string']} should have already been set up by export.inc so
-    // we can use it safely.
+    // Note: $item->{$schema['export']['export type string']} should have
+    // already been set up by export.inc so we can use it safely.
     switch ($form_state['values']['order']) {
       case 'disabled':
         $this->rows[$name]['sort'] = array(
           (int) !empty($item->disabled),
           $item->getModuleName(),
-          empty($this->plugin['export']['admin_title']) ? $name : $item->{$this->plugin['export']['admin_title']}
+          empty($this->plugin['export']['admin_title']) ? $name : $item->{$this->plugin['export']['admin_title']},
         );
         break;
 
@@ -533,12 +547,17 @@ class ultimate_cron_job_ctools_export_ui extends ctools_export_ui {
       'title' => strip_tags($title),
     );
 
-
     // Storage.
     $this->rows[$name]['data'][] = array('data' => check_plain($item->{$schema['export']['export type string']}), 'class' => array('ctools-export-ui-storage'));
 
     // Operations.
-    $ops = theme('links__ctools_dropbutton', array('links' => $operations, 'attributes' => array('class' => array('links', 'inline'))));
+    $ops = theme(
+      'links__ctools_dropbutton',
+      array(
+        'links' => $operations,
+        'attributes' => array('class' => array('links', 'inline')),
+      )
+    );
 
     $this->rows[$name]['data'][] = array('data' => $ops, 'class' => array('ctools-export-ui-operations'));
 

@@ -12,13 +12,6 @@ class UltimateCronQueueSettings extends UltimateCronTaggedSettings {
   static private $queues = NULL;
 
   /**
-   * Include check of enabled plugin for isValid() check.
-   */
-  public function isValid($job = NULL) {
-    return variable_get($this->key . '_enabled', TRUE) ? parent::isValid($job) : FALSE;
-  }
-
-  /**
    * Get cron queues and static cache them.
    *
    * Works like module_invoke_all('cron_queue_info'), but adds
@@ -50,6 +43,9 @@ class UltimateCronQueueSettings extends UltimateCronTaggedSettings {
    */
   public function cronapi() {
     $items = array();
+    if (!variable_get($this->key . '_enabled', TRUE)) {
+      return $items;
+    }
 
     // Grab the defined cron queues.
     $queues = self::get_queues();
@@ -102,9 +98,9 @@ class UltimateCronQueueSettings extends UltimateCronTaggedSettings {
 
     $end = microtime(TRUE) + $settings['queue']['time'];
     $items = 0;
-    while (microtime(TRUE) < $end) {
+    do {
       if ($job->getSignal('kill')) {
-        watchdog('ultimate_cron', 'kill signal recieved', array(), WATCHDOG_WARNING);
+        watchdog('ultimate_cron', 'kill signal received', array(), WATCHDOG_NOTICE);
         break;
       }
 
@@ -119,38 +115,33 @@ class UltimateCronQueueSettings extends UltimateCronTaggedSettings {
         }
       }
       try {
-        if ($settings['queue']['item_delay']) {
-          if ($items == 0) {
-            // Move the boundary if using a throttle, to avoid waiting for nothing.
-            $end -= $settings['queue']['item_delay'] * 1000000;
-          }
-          else {
-            // Sleep before retrieving.
-            usleep($settings['queue']['item_delay'] * 1000000);
-          }
-        }
         $function($item->data);
         $queue->deleteItem($item);
         $items++;
+        // Sleep after processing retrieving.
+        if ($settings['queue']['item_delay']) {
+          usleep($settings['queue']['item_delay'] * 1000000);
+        }
       }
       catch (Exception $e) {
         // Just continue ...
         watchdog($job->hook['module'], "Queue item @item_id from queue @queue failed with message @message", array(
           '@item_id' => $item->item_id,
           '@queue' => $settings['queue']['name'],
-          '@message' => $e->getMessage()
+          '@message' => (string) $e,
         ), WATCHDOG_ERROR);
       }
+    } while (microtime(TRUE) < $end);
+
+    if ($items) {
+      watchdog($job->hook['module'], 'Processed @items items from queue @queue', array(
+        '@items' => $items,
+        '@queue' => $settings['queue']['name'],
+      ), WATCHDOG_INFO);
     }
-    watchdog($job->hook['module'], 'Processed @items items from queue @queue', array(
-      '@items' => $items,
-      '@queue' => $settings['queue']['name'],
-    ), WATCHDOG_INFO);
 
     // Re-throttle.
     $job->getPlugin('settings', 'queue')->throttle($job);
-
-    return;
   }
 
   /**
@@ -293,7 +284,7 @@ class UltimateCronQueueSettings extends UltimateCronTaggedSettings {
 
     $states = !$job ? $states : array(
       '#states' => array(
-        'visible' => array(':input[name="settings[' . $this->type . '][' . $this->name . '][throttle]"]' => array('checked' => TRUE))
+        'visible' => array(':input[name="settings[' . $this->type . '][' . $this->name . '][throttle]"]' => array('checked' => TRUE)),
       ),
     );
 
@@ -308,7 +299,7 @@ class UltimateCronQueueSettings extends UltimateCronTaggedSettings {
       '#default_value' => $values['threads'],
       '#description' => t('Number of threads to use for queues.'),
       '#states' => array(
-        'visible' => array(':input[name="settings[' . $this->type . '][' . $this->name . '][throttle]"]' => array('checked' => TRUE))
+        'visible' => array(':input[name="settings[' . $this->type . '][' . $this->name . '][throttle]"]' => array('checked' => TRUE)),
       ),
       '#fallback' => TRUE,
       '#required' => TRUE,
@@ -320,7 +311,7 @@ class UltimateCronQueueSettings extends UltimateCronTaggedSettings {
       '#default_value' => $values['threshold'],
       '#description' => t('Number of items in queue required to activate the next cron job.'),
       '#states' => array(
-        'visible' => array(':input[name="settings[' . $this->type . '][' . $this->name . '][throttle]"]' => array('checked' => TRUE))
+        'visible' => array(':input[name="settings[' . $this->type . '][' . $this->name . '][throttle]"]' => array('checked' => TRUE)),
       ),
       '#fallback' => TRUE,
       '#required' => TRUE,
@@ -346,7 +337,7 @@ class UltimateCronQueueSettings extends UltimateCronTaggedSettings {
   public function throttle($job) {
     if (!empty($job->hook['settings']['queue']['master'])) {
       // We always base the threads on the master.
-      $master_job = ultimate_cron_job_load($job->hook['settings']['queue']['master']);
+      $master_job = _ultimate_cron_job_load($job->hook['settings']['queue']['master']);
       $settings = $master_job->getSettings('settings');
     }
     else {
@@ -368,11 +359,10 @@ class UltimateCronQueueSettings extends UltimateCronTaggedSettings {
           '@items' => $items,
           '@boundary' => ($thread - 1) * $settings['queue']['threshold'],
           '@threshold' => $settings['queue']['threshold'],
-        ), WATCHDOG_INFO);
+        ), WATCHDOG_DEBUG);
         $log_entry->finish();
         $job->dont_log = TRUE;
-        ultimate_cron_job_set_status($job, $new_status);
-        $job->disabled = $new_status;
+        $job->setStatus($new_status);
       }
     }
   }

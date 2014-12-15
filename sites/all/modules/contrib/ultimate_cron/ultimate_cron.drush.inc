@@ -48,7 +48,7 @@ function ultimate_cron_drush_command() {
       'name' => 'Job in question',
     ),
     'options' => array(
-      'fallback' => 'Also show fallback settings'
+      'fallback' => 'Also show fallback settings',
     ),
     'examples' => array(
       'drush cron-job-get node_cron' => 'Get the node_cron job configuration',
@@ -183,7 +183,7 @@ function drush_ultimate_cron_cron_list() {
   $module = $module ? explode(",", $module) : array();
   $statuses = $statuses ? explode(",", $statuses) : array();
 
-  $jobs = ultimate_cron_job_load_all();
+  $jobs = _ultimate_cron_job_load_all();
 
   $table = array();
   $table[] = array(
@@ -193,7 +193,7 @@ function drush_ultimate_cron_cron_list() {
     dt('Scheduled'),
     dt('Started'),
     dt('Duration'),
-    dt('Status')
+    dt('Status'),
   );
 
   $class = _ultimate_cron_get_class('job');
@@ -291,7 +291,7 @@ function drush_ultimate_cron_cron_logs($name = NULL) {
   if (!$name) {
     return drush_set_error(dt('No job specified?'));
   }
-  $job = ultimate_cron_job_load($name);
+  $job = _ultimate_cron_job_load($name);
   if (!$job) {
     return drush_set_error(dt('@name not found', array('@name' => $name)));
   }
@@ -358,7 +358,7 @@ function drush_ultimate_cron_cron_job_get($name = NULL) {
   if (!$name) {
     return drush_set_error(dt('No job specified?'));
   }
-  $job = ultimate_cron_job_load($name);
+  $job = _ultimate_cron_job_load($name);
   require_once drupal_get_path('module', 'ultimate_cron') . '/includes/nicejson.php';
   $settings = drush_get_option('fallback') ? $job->getSettings() : $job->settings;
   $nicejson = json_format(drupal_json_encode($settings));
@@ -379,7 +379,7 @@ function drush_ultimate_cron_cron_job_set($name = NULL, $settings = NULL) {
   if ($settings === FALSE) {
     return drush_set_error(dt('Invalid JSON'));
   }
-  $job = ultimate_cron_job_load($name);
+  $job = _ultimate_cron_job_load($name);
 
   $plugin_types = ctools_plugin_get_plugin_type_info();
   foreach ($plugin_types['ultimate_cron'] as $plugin_type => $info) {
@@ -390,7 +390,7 @@ function drush_ultimate_cron_cron_job_set($name = NULL, $settings = NULL) {
       }
     }
     else {
-      $plugins = ultimate_cron_plugin_load_all($plugin_type);
+      $plugins = _ultimate_cron_plugin_load_all($plugin_type);
       foreach ($plugins as $plugin) {
         if (isset($settings[$plugin_type][$plugin->name])) {
           $job->settings[$plugin_type][$plugin->name] = $settings[$plugin_type][$plugin->name] + $job->settings[$plugin_type][$plugin->name];
@@ -427,7 +427,7 @@ function drush_ultimate_cron_cron_run($name = NULL) {
     ultimate_cron_run_scheduled(FALSE);
   }
   else {
-    $job = ultimate_cron_job_load($name);
+    $job = _ultimate_cron_job_load($name);
     if (!$job) {
       return drush_set_error(dt('@name not found', array('@name' => $name)));
     }
@@ -448,12 +448,12 @@ function drush_ultimate_cron_cron_enable($name = NULL) {
     if (!drush_get_option('all')) {
       return drush_set_error(dt('No job specified?'));
     }
-    foreach (ultimate_cron_job_load_all() as $job) {
+    foreach (_ultimate_cron_job_load_all() as $job) {
       drush_ultimate_cron_cron_enable($job->name);
     }
     return;
   }
-  $job = ultimate_cron_job_load($name);
+  $job = _ultimate_cron_job_load($name);
   if ($job->enable()) {
     drush_print(dt('@name enabled', array('@name' => $name)));
   }
@@ -467,12 +467,12 @@ function drush_ultimate_cron_cron_disable($name = NULL) {
     if (!drush_get_option('all')) {
       return drush_set_error(dt('No job specified?'));
     }
-    foreach (ultimate_cron_job_load_all() as $job) {
+    foreach (_ultimate_cron_job_load_all() as $job) {
       drush_ultimate_cron_cron_disable($job->name);
     }
     return;
   }
-  $job = ultimate_cron_job_load($name);
+  $job = _ultimate_cron_job_load($name);
   if ($job->disable()) {
     drush_print(dt('@name disabled', array('@name' => $name)));
   }
@@ -486,14 +486,14 @@ function drush_ultimate_cron_cron_unlock($name = NULL) {
     if (!drush_get_option('all')) {
       return drush_set_error(dt('No job specified?'));
     }
-    foreach (ultimate_cron_job_load_all() as $job) {
+    foreach (_ultimate_cron_job_load_all() as $job) {
       if ($job->isLocked()) {
         drush_ultimate_cron_cron_unlock($job->name);
       }
     }
     return;
   }
-  $job = ultimate_cron_job_load($name);
+  $job = _ultimate_cron_job_load($name);
   if (!$job) {
     return drush_set_error(dt('@name not found', array('@name' => $name)));
   }
@@ -511,7 +511,7 @@ function drush_ultimate_cron_cron_unlock($name = NULL) {
       '@name' => $job->name,
       '@username' => $user->name,
       '@uid' => $user->uid,
-    ), WATCHDOG_WARNING);
+    ), WATCHDOG_NOTICE);
     $log_entry->finish();
 
     drush_print(dt('Cron job @name unlocked', array('@name' => $name)));

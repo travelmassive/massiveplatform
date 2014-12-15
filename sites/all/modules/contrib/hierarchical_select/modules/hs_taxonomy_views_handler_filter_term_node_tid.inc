@@ -8,7 +8,7 @@
 
 class hs_taxonomy_views_handler_filter_term_node_tid extends views_handler_filter_term_node_tid {
 
-  function init(&$view, $options) {
+  function init(&$view, &$options) {
     parent::init($view, $options);
 
     // The following code should logically be wrapped in a

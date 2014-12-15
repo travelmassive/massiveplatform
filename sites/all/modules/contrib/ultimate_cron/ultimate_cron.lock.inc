@@ -131,7 +131,7 @@ class UltimateCronLock {
    * @param float $timeout
    *   The timeout in seconds for the lock.
    *
-   * @return boolean
+   * @return bool
    *   TRUE if relock was successful.
    */
   static public function reLock($lock_id, $timeout = 30.0) {
@@ -152,7 +152,7 @@ class UltimateCronLock {
    *
    * @param string $name
    *   Name of the lock.
-   * @param boolean $ignore_expiration
+   * @param bool $ignore_expiration
    *   Ignore expiration, just check if it's present.
    *   Used for retrieving the lock id of an expired lock.
    *
@@ -205,14 +205,39 @@ class UltimateCronLock {
    */
   static public function cleanup() {
     $target = _ultimate_cron_get_transactional_safe_connection();
-    $count = 0;
     $class = _ultimate_cron_get_class('job');
     $now = microtime(TRUE);
-    db_update('ultimate_cron_lock', array('target' => $target))
-      ->expression('current', 'lid')
-      ->condition('expire', $now, '<=')
-      ->execute();
 
+    // Cleanup all expired locks.
+    $count = 0;
+    do {
+      $lids = db_select('ultimate_cron_lock', 'l', array('target' => $target))
+        ->fields('l', array('lid'))
+        ->condition('current', 0)
+        ->condition('expire', $now, '<=')
+        ->range(0, 100)
+        ->execute()
+        ->fetchAll(PDO::FETCH_COLUMN);
+      if ($lids) {
+        $count += db_delete('ultimate_cron_lock', array('target' => $target))
+          ->condition('lid', $lids, 'IN')
+          ->execute();
+      }
+      if ($job = $class::$currentJob) {
+        if ($job->getSignal('kill')) {
+          watchdog('ultimate_cron', 'kill signal received', array(), WATCHDOG_NOTICE);
+          return;
+        }
+      }
+    } while ($lids);
+    if ($count) {
+      watchdog('ultimate_cron_lock', 'Released @count expired locks', array(
+        '@count' => $count,
+      ), WATCHDOG_NOTICE);
+    }
+
+    // Cleanup all released locks.
+    $count = 0;
     do {
       $lids = db_select('ultimate_cron_lock', 'l', array('target' => $target))
         ->fields('l', array('lid'))
@@ -221,20 +246,19 @@ class UltimateCronLock {
         ->execute()
         ->fetchAll(PDO::FETCH_COLUMN);
       if ($lids) {
-        $count += count($lids);
-        db_delete('ultimate_cron_lock', array('target' => $target))
+        $count += db_delete('ultimate_cron_lock', array('target' => $target))
           ->condition('lid', $lids, 'IN')
           ->execute();
       }
       if ($job = $class::$currentJob) {
         if ($job->getSignal('kill')) {
-          watchdog('ultimate_cron', 'kill signal recieved', array(), WATCHDOG_WARNING);
+          watchdog('ultimate_cron', 'kill signal received', array(), WATCHDOG_NOTICE);
           return;
         }
       }
     } while ($lids);
-    watchdog('ultimate_cron_lock', 'Cleaned up @count expired locks', array(
-      '@count' => $count
-    ), WATCHDOG_INFO);
+    watchdog('ultimate_cron_lock', 'Cleaned up @count released locks', array(
+      '@count' => $count,
+    ), WATCHDOG_DEBUG);
   }
 }

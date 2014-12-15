@@ -1,7 +1,8 @@
 <?php
 /**
  * @file
- * This class parses cron rules and determines last execution time using least case integer comparison.
+ * This class parses cron rules and determines last
+ * execution time using least case integer comparison.
  */
 
 class CronRule {
@@ -30,9 +31,9 @@ class CronRule {
    *
    * @param string $rule
    *   The crontab rule to use.
-   * @param integer $time
+   * @param int $time
    *   The time to test against.
-   * @param integer $skew
+   * @param int $skew
    *   Skew for @ flag.
    *
    * @return CronRule
@@ -58,9 +59,9 @@ class CronRule {
    *
    * @param string $rule
    *   The crontab rule to use.
-   * @param integer $time
+   * @param int $time
    *   The time to test against.
-   * @param integer $skew
+   * @param int $skew
    *   Skew for @ flag.
    */
   public function __construct($rule, $time, $skew) {
@@ -103,7 +104,7 @@ class CronRule {
   }
 
   /**
-   * Prepare part
+   * Prepare part.
    *
    * @param string $part
    *   The part.
@@ -123,7 +124,7 @@ class CronRule {
   /**
    * Expand range from cronrule part.
    *
-   * @param string $rule
+   * @param string $part
    *   Cronrule part, e.g.: 1,2,3,4-43/5.
    * @param string $type
    *   Type of range (minutes, hours, etc.)
@@ -241,7 +242,9 @@ class CronRule {
   }
 
   /**
-   * Parse rule. Run through parser expanding expression, and recombine into crontab syntax.
+   * Parse rule.
+   *
+   * Run through parser expanding expression, and recombine into crontab syntax.
    */
   public function parseRule() {
     if (isset($this->parsed)) {
@@ -254,12 +257,12 @@ class CronRule {
   /**
    * Get last schedule time of rule in UNIX timestamp format.
    *
-   * @return integer
+   * @return int
    *   UNIX timestamp of last schedule time.
    */
   public function getLastSchedule() {
-    if (isset($this->last_ran)) {
-      return $this->last_ran;
+    if (isset($this->last_run)) {
+      return $this->last_run;
     }
 
     // Current time round to last minute.
@@ -281,8 +284,8 @@ class CronRule {
     $start_minute = (int) date('i', $time);
 
     // If both weekday and days are restricted, then use either or
-    // otherwise, use and ... when using or, we have to try out all the days in the month
-    // and not just to the ones restricted.
+    // otherwise, use and ... when using or, we have to try out all the days
+    // in the month and not just to the ones restricted.
     $check_weekday = count($intervals['weekdays']) != 7;
     $check_both = $check_weekday && (count($intervals['days']) != 31);
     $days = $check_both ? range(31, 1) : $intervals['days'];
@@ -354,16 +357,20 @@ class CronRule {
       }
     }
 
-    // Create UNIX timestamp from derived date+time.
-    $this->last_ran = mktime($hour, $minute, 0, $month, $day, $year);
+    if (!isset($hour) || !isset($minute) || !isset($month) || !isset($day) || !isset($year)) {
+      return FALSE;
+    }
 
-    return $this->last_ran;
+    // Create UNIX timestamp from derived date+time.
+    $this->last_run = mktime($hour, $minute, 0, $month, $day, $year);
+
+    return $this->last_run;
   }
 
   /**
    * Get next schedule time of rule in UNIX timestamp format.
    *
-   * @return integer
+   * @return int
    *   UNIX timestamp of next schedule time.
    */
   public function getNextSchedule() {

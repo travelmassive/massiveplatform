@@ -66,6 +66,12 @@ class openlayers_layer_type_geojson extends openlayers_layer_type {
         '#description' => t('The ratio of the data bounds to the viewport bounds (in each dimension).  Default is 3.'),
         '#default_value' => isset($this->data['ratio']) ? $this->data['ratio'] : 3
       ),
+      'preload' => array(
+        '#type' => 'checkbox',
+        '#title' => t('Preload layer'),
+        '#description' => t('Load data before layer is made visible. Useful when you want to avoid having to wait for an Ajax call to load the data'),
+        '#default_value' => isset($this->data['preload']) ? $this->data['preload'] : FALSE,
+      ),
       'useScript' => array(
         '#type' => 'checkbox',
         '#title' => t('Use Script Method'),

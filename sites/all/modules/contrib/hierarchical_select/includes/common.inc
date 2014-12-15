@@ -11,7 +11,8 @@
  * modules to provide their own meaningful defaults.
  *
  * @param $config_id
- *   A config id, typically of the form "module-someid", e.g. "taxonomy-vid".
+ *   A config id, typically of the form "module-someid", e.g.
+ *   "taxonomy-vocab_machine_name".
  * @param $defaults_override
  *   Optionally override the defaults.
  */

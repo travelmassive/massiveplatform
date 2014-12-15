@@ -146,6 +146,11 @@ If you don't like how the lineage is displayed, simply override the
 theme_hierarchical_select_selection_as_lineages() function from within your
 theme, create e.g. garland_hierarchical_select_selection_as_lineages().
 
+It's also worth mentioning that the 'hs_taxonomy_tree' tag was added to the
+queries that build the term tree. As a result now you can easily change/filter
+the elements that are selected by the module (see hs_taxonomy.module for more
+info).
+
 
 Setting a fixed size
 --------------------

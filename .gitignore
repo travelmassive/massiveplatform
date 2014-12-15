@@ -6,3 +6,4 @@ sites/*/files
 sites/*/private
 
 .DS_Store
+blog/

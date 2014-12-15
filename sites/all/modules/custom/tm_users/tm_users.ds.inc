@@ -477,7 +477,6 @@ function tm_users_ds_custom_fields_info() {
 
   $ds_field = new stdClass();
   $ds_field->api_version = 1;
-
   $ds_field->field = 'following_organizations';
   $ds_field->label = 'Following Organizations';
   $ds_field->field_type = 6;

@@ -10,7 +10,7 @@
 	</p>
 	<p>Powered by <a href='http://massiveplatform.com'>Massive Platform</a><br>
 	  Made with <span style='color: #e93f33;'>&hearts;</span> around the world
-	 <br><span style='font-size: 9pt;'><a href='/content/terms-use'>Terms</a> &middot; <a href='/content/terms-use'>Privacy</a>
+	 <br><span style='font-size: 9pt;'><a href='/content/terms-use'>Terms</a> &middot; <a href='/content/privacy-policy'>Privacy</a>
 		</span>
 	</p>
 </div>

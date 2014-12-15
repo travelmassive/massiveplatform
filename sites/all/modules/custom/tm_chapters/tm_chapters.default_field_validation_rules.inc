@@ -81,5 +81,117 @@ function tm_chapters_default_field_validation_rule() {
   $rule->error_message = 'This shortcode is already in use by [existing-entity-link], please set another one.';
   $export['shortcode_unique'] = $rule;
 
+  $rule = new stdClass();
+  $rule->disabled = FALSE; /* Edit this to true to make a default rule disabled initially */
+  $rule->api_version = 2;
+  $rule->rulename = 'validate_chapter_facebook_url';
+  $rule->name = 'validate_chapter_facebook_url';
+  $rule->field_name = 'field_link_facebook';
+  $rule->col = 'url';
+  $rule->entity_type = 'node';
+  $rule->bundle = 'chapter';
+  $rule->validator = 'field_validation_url_validator';
+  $rule->settings = array(
+    'external' => 1,
+    'internal' => 0,
+    'bypass' => 0,
+    'roles' => array(
+      1 => 0,
+      2 => 0,
+      4 => 0,
+      6 => 0,
+      7 => 0,
+      3 => 0,
+      5 => 0,
+    ),
+    'errors' => 0,
+  );
+  $rule->error_message = 'Please provide a valid Facebook URL (ie: https://facebook.com/yourname)';
+  $export['validate_chapter_facebook_url'] = $rule;
+
+  $rule = new stdClass();
+  $rule->disabled = FALSE; /* Edit this to true to make a default rule disabled initially */
+  $rule->api_version = 2;
+  $rule->rulename = 'validate_chapter_linkedin_url';
+  $rule->name = 'validate_chapter_linkedin_url';
+  $rule->field_name = 'field_link_linkedin';
+  $rule->col = 'url';
+  $rule->entity_type = 'node';
+  $rule->bundle = 'chapter';
+  $rule->validator = 'field_validation_url_validator';
+  $rule->settings = array(
+    'external' => 1,
+    'internal' => 0,
+    'bypass' => 0,
+    'roles' => array(
+      1 => 0,
+      2 => 0,
+      4 => 0,
+      6 => 0,
+      7 => 0,
+      3 => 0,
+      5 => 0,
+    ),
+    'errors' => 0,
+  );
+  $rule->error_message = 'Please provide a valid LinkedIn URL (ie: https://linkedin.com/groups/yourname)';
+  $export['validate_chapter_linkedin_url'] = $rule;
+
+  $rule = new stdClass();
+  $rule->disabled = FALSE; /* Edit this to true to make a default rule disabled initially */
+  $rule->api_version = 2;
+  $rule->rulename = 'validate_chapter_twitter_url';
+  $rule->name = 'validate_chapter_twitter_url';
+  $rule->field_name = 'field_link_twitter';
+  $rule->col = 'url';
+  $rule->entity_type = 'node';
+  $rule->bundle = 'chapter';
+  $rule->validator = 'field_validation_url_validator';
+  $rule->settings = array(
+    'external' => 1,
+    'internal' => 0,
+    'bypass' => 0,
+    'roles' => array(
+      1 => 0,
+      2 => 0,
+      4 => 0,
+      6 => 0,
+      7 => 0,
+      3 => 0,
+      5 => 0,
+    ),
+    'errors' => 0,
+  );
+  $rule->error_message = 'Please provide a valid Twitter URL (ie: https://twitter.com/yourname)';
+  $export['validate_chapter_twitter_url'] = $rule;
+
+  $rule = new stdClass();
+  $rule->disabled = FALSE; /* Edit this to true to make a default rule disabled initially */
+  $rule->api_version = 2;
+  $rule->rulename = 'validate_chapter_website_url';
+  $rule->name = 'validate_chapter_website_url';
+  $rule->field_name = 'field_link_website';
+  $rule->col = 'url';
+  $rule->entity_type = 'node';
+  $rule->bundle = 'chapter';
+  $rule->validator = 'field_validation_url_validator';
+  $rule->settings = array(
+    'external' => 0,
+    'internal' => 0,
+    'bypass' => 0,
+    'roles' => array(
+      1 => 0,
+      2 => 0,
+      4 => 0,
+      6 => 0,
+      7 => 0,
+      3 => 0,
+      5 => 0,
+    ),
+    'errors' => 0,
+  );
+  $rule->error_message = 'Please provide a valid Website URL (ie: http://www.yourwebsite.com)';
+  $export['validate_chapter_website_url'] = $rule;
+
   return $export;
 }

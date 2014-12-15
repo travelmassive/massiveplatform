@@ -348,30 +348,6 @@ function tm_organizations_ds_field_settings_info() {
 }
 
 /**
- * Implements hook_ds_custom_fields_info().
- */
-function tm_organizations_ds_custom_fields_info() {
-  $export = array();
-
-  $ds_field = new stdClass();
-  $ds_field->api_version = 1;
-  $ds_field->field = 'following_organizations';
-  $ds_field->label = 'Following Organizations';
-  $ds_field->field_type = 6;
-  $ds_field->entities = array(
-    'user' => 'user',
-  );
-  $ds_field->ui_limit = 'user|*';
-  $ds_field->properties = array(
-    'block' => 'views|556ada30b55719eb99cf9afde6fc2f56',
-    'block_render' => '3',
-  );
-  $export['following_organizations'] = $ds_field;
-
-  return $export;
-}
-
-/**
  * Implements hook_ds_layout_settings_info().
  */
 function tm_organizations_ds_layout_settings_info() {

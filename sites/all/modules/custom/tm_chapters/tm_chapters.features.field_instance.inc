@@ -567,7 +567,7 @@ function tm_chapters_field_default_field_instances() {
     'bundle' => 'chapter',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'ie: https://facebook.com/yourname',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -640,7 +640,7 @@ function tm_chapters_field_default_field_instances() {
     'bundle' => 'chapter',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'ie: https://linkedin.com/groups/yourname',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -713,7 +713,7 @@ function tm_chapters_field_default_field_instances() {
     'bundle' => 'chapter',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'ie: https://twitter.com/yourname',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -786,7 +786,7 @@ function tm_chapters_field_default_field_instances() {
     'bundle' => 'chapter',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'ie: http://www.yourwebsite.com',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -872,6 +872,10 @@ function tm_chapters_field_default_field_instances() {
   t('Select a color that sets this city apart from the others. This color should have enough contrast with a white text layered on top.');
   t('Twitter');
   t('Website');
+  t('ie: http://www.yourwebsite.com');
+  t('ie: https://facebook.com/yourname');
+  t('ie: https://linkedin.com/groups/yourname');
+  t('ie: https://twitter.com/yourname');
 
   return $field_instances;
 }

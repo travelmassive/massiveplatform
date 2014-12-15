@@ -383,7 +383,7 @@ function tm_organizations_field_default_field_instances() {
     'bundle' => 'organization',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'ie: https://facebook.com/yourcompany',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -458,7 +458,7 @@ function tm_organizations_field_default_field_instances() {
     'bundle' => 'organization',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'ie: https://linkedin.com/company/mycompany',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -533,7 +533,7 @@ function tm_organizations_field_default_field_instances() {
     'bundle' => 'organization',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'ie: https://twitter.com/companyname',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -608,7 +608,7 @@ function tm_organizations_field_default_field_instances() {
     'bundle' => 'organization',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'ie: http://www.mycompany.com',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -933,6 +933,10 @@ function tm_organizations_field_default_field_instances() {
   t('Twitter');
   t('Website');
   t('Where your business is based');
+  t('ie: http://www.mycompany.com');
+  t('ie: https://facebook.com/yourcompany');
+  t('ie: https://linkedin.com/company/mycompany');
+  t('ie: https://twitter.com/companyname');
 
   return $field_instances;
 }

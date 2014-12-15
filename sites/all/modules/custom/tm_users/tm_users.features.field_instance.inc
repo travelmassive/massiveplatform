@@ -436,7 +436,7 @@ function tm_users_field_default_field_instances() {
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'ie: https://facebook.com/myname',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -504,7 +504,7 @@ function tm_users_field_default_field_instances() {
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'ie: https://linkedin.com/in/myname',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -572,7 +572,7 @@ function tm_users_field_default_field_instances() {
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'ie: https://twitter.com/yourname',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -640,7 +640,7 @@ function tm_users_field_default_field_instances() {
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'ie: http://www.mywebsite.com',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -1263,6 +1263,10 @@ function tm_users_field_default_field_instances() {
   t('Where do you dream of traveling to?');
   t('Where you spend most of your time');
   t('examples: Founder, CEO, VP Marketing, Social Media Manager, Chief Explorer');
+  t('ie: http://www.mywebsite.com');
+  t('ie: https://facebook.com/myname');
+  t('ie: https://linkedin.com/in/myname');
+  t('ie: https://twitter.com/yourname');
 
   return $field_instances;
 }

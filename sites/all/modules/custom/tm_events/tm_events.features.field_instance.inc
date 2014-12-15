@@ -801,7 +801,7 @@ If set to none, then all chapter leaders will be notified of any registrations a
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Provide a link to the page with the RSVP.',
+    'description' => 'Provide a link to the page with the RSVP (ie: http://www.eventbrite.com/e/your-event-url)',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -885,7 +885,7 @@ If set to none, then all chapter leaders will be notified of any registrations a
   t('Map link');
   t('Organizer');
   t('Partner Event');
-  t('Provide a link to the page with the RSVP.');
+  t('Provide a link to the page with the RSVP (ie: http://www.eventbrite.com/e/your-event-url)');
   t('Provide the street address for this event.');
   t('RSVP link');
   t('This image will used as the main banner for the event.');

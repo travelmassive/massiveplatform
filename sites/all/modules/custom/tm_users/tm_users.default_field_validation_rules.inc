@@ -88,5 +88,117 @@ function tm_users_default_field_validation_rule() {
   $rule->error_message = 'This friendly url is already taken by [existing-entity-link].';
   $export['friendly_url_user_unique'] = $rule;
 
+  $rule = new stdClass();
+  $rule->disabled = FALSE; /* Edit this to true to make a default rule disabled initially */
+  $rule->api_version = 2;
+  $rule->rulename = 'validate_user_facebook_url';
+  $rule->name = 'validate_user_facebook_url';
+  $rule->field_name = 'field_link_facebook';
+  $rule->col = 'url';
+  $rule->entity_type = 'user';
+  $rule->bundle = 'user';
+  $rule->validator = 'field_validation_url_validator';
+  $rule->settings = array(
+    'external' => 1,
+    'internal' => 0,
+    'bypass' => 0,
+    'roles' => array(
+      1 => 0,
+      2 => 0,
+      4 => 0,
+      6 => 0,
+      7 => 0,
+      3 => 0,
+      5 => 0,
+    ),
+    'errors' => 0,
+  );
+  $rule->error_message = 'Please provide a valid Facebook URL (ie: https://facebook.com/myname)';
+  $export['validate_user_facebook_url'] = $rule;
+
+  $rule = new stdClass();
+  $rule->disabled = FALSE; /* Edit this to true to make a default rule disabled initially */
+  $rule->api_version = 2;
+  $rule->rulename = 'validate_user_linkedin_url';
+  $rule->name = 'validate_user_linkedin_url';
+  $rule->field_name = 'field_link_linkedin';
+  $rule->col = 'url';
+  $rule->entity_type = 'user';
+  $rule->bundle = 'user';
+  $rule->validator = 'field_validation_url_validator';
+  $rule->settings = array(
+    'external' => 1,
+    'internal' => 0,
+    'bypass' => 0,
+    'roles' => array(
+      1 => 0,
+      2 => 0,
+      4 => 0,
+      6 => 0,
+      7 => 0,
+      3 => 0,
+      5 => 0,
+    ),
+    'errors' => 0,
+  );
+  $rule->error_message = 'Please provide a valid LinkedIn URL (ie: https://linkedin.com/in/myname)';
+  $export['validate_user_linkedin_url'] = $rule;
+
+  $rule = new stdClass();
+  $rule->disabled = FALSE; /* Edit this to true to make a default rule disabled initially */
+  $rule->api_version = 2;
+  $rule->rulename = 'validate_user_twitter_url';
+  $rule->name = 'validate_user_twitter_url';
+  $rule->field_name = 'field_link_twitter';
+  $rule->col = 'url';
+  $rule->entity_type = 'user';
+  $rule->bundle = 'user';
+  $rule->validator = 'field_validation_url_validator';
+  $rule->settings = array(
+    'external' => 1,
+    'internal' => 0,
+    'bypass' => 0,
+    'roles' => array(
+      1 => 0,
+      2 => 0,
+      4 => 0,
+      6 => 0,
+      7 => 0,
+      3 => 0,
+      5 => 0,
+    ),
+    'errors' => 0,
+  );
+  $rule->error_message = 'Please provide a valid Twitter URL (ie: https://twitter.com/myname)';
+  $export['validate_user_twitter_url'] = $rule;
+
+  $rule = new stdClass();
+  $rule->disabled = FALSE; /* Edit this to true to make a default rule disabled initially */
+  $rule->api_version = 2;
+  $rule->rulename = 'validate_user_website_url';
+  $rule->name = 'validate_user_website_url';
+  $rule->field_name = 'field_link_website';
+  $rule->col = 'url';
+  $rule->entity_type = 'user';
+  $rule->bundle = 'user';
+  $rule->validator = 'field_validation_url_validator';
+  $rule->settings = array(
+    'external' => 1,
+    'internal' => 0,
+    'bypass' => 0,
+    'roles' => array(
+      1 => 0,
+      2 => 0,
+      4 => 0,
+      6 => 0,
+      7 => 0,
+      3 => 0,
+      5 => 0,
+    ),
+    'errors' => 0,
+  );
+  $rule->error_message = 'Please provide a valid Website URL (ie: http://about.me/myname)';
+  $export['validate_user_website_url'] = $rule;
+
   return $export;
 }

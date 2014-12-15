@@ -65,7 +65,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['filters']['status']['value'] = '1';
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Field: Segment (field_segment) */
+  /* Filter criterion: Field: Industry Segment (field_segment) */
   $handler->display->display_options['filters']['field_segment_tid']['id'] = 'field_segment_tid';
   $handler->display->display_options['filters']['field_segment_tid']['table'] = 'field_data_field_segment';
   $handler->display->display_options['filters']['field_segment_tid']['field'] = 'field_segment_tid';
@@ -198,7 +198,7 @@ function tm_users_views_default_views() {
     'enabled' => '0',
     'continents' => array(),
   );
-  /* Filter criterion: Field: Segment (field_segment) */
+  /* Filter criterion: Field: Industry Segment (field_segment) */
   $handler->display->display_options['filters']['field_segment_tid']['id'] = 'field_segment_tid';
   $handler->display->display_options['filters']['field_segment_tid']['table'] = 'field_data_field_segment';
   $handler->display->display_options['filters']['field_segment_tid']['field'] = 'field_segment_tid';

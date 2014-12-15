@@ -579,4 +579,8 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
 $conf['tm_twitter_consumer_key'] = '';
 $conf['tm_twitter_consumer_secret'] = '';
 
+/** ENABLE SOCIAL MEDIA FEED ON FRONT PAGE **/
+/** NOTE: You need a TwineSocial account **/
+$conf['tm_enable_fontpage_socialfeeds'] = false;
+
 $conf['install_profile'] = 'tm';

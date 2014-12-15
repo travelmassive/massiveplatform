@@ -71,10 +71,20 @@
           <div class="column">
             <?php print render($page['content']); ?>
             <?php print $feed_icons; ?>
-          </div>
+
+            <?php
+            // show social media feeds
+            // you will need a social media widget such as twinesocial
+            // in settings.php set $conf["tm_enable_fontpage_socialfeeds"] = true;\
+            global $conf;
+            if (@isset($conf["tm_enable_fontpage_socialfeeds"])) {
+              if (($is_front) and ($conf["tm_enable_fontpage_socialfeeds"])) {
+                include './'. path_to_theme() .'/templates/frontpage-socialfeeds.tpl.php';
+              }
+            }
+            ?>
         </section>
       </div>
-
     </div>
   </main>
 

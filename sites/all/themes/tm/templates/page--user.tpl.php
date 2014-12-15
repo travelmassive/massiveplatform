@@ -72,7 +72,6 @@
         <?php print render($page['content']); ?>
         <?php print $feed_icons; ?>
       </div>
-
     </div>
   </main>
 

@@ -141,14 +141,19 @@ function tm_chapters_send_email($email, $subject, $body, $user){
     $key = 'key';
     $language = language_default();
     $params = array();
-    $from = $user->mail;
+    $from = NULL;
+    $reply = $user->mail;
     $send = FALSE;
     $message = drupal_mail($module, $key, $email, $language, $params, $from, $send);
     // prepend something to this subject if you want to 
-    $message['subject'] = check_plain($subject);
+    $message['subject'] = "Contact Form: " . check_plain($subject);
     $message['body'] = array();
-    $message['body'][] = check_plain($body);
-    $message['body'][] = "Sent by user $name ".url('user/'.$user->uid, array('absolute'=>TRUE));
+    $message['body'][] = "Hi, a member just sent a message via your Chapter contact form:";
+    $message['body'][] = "Name: " . $name;
+    $message['body'][] = "Subject: " . check_plain($subject);
+    $message['body'][] = "Message: " . check_plain($body);
+    $message['body'][] = "Member's profile: ".url('user/'.$user->uid, array('absolute'=>TRUE));
+    $message['body'][] = "Member's email: " . $reply;
 
     // Retrieve the responsible implementation for this message.
     $system = drupal_mail_system($module, $key);

@@ -584,3 +584,7 @@ $conf['tm_twitter_consumer_secret'] = '';
 $conf['tm_enable_fontpage_socialfeeds'] = false;
 
 $conf['install_profile'] = 'tm';
+
+/** TM Limit **/
+$conf['massiveplatform_following_ratio_limit'] = '50'; // difference between following/followers
+$conf['massiveplatform_chapter_join_limit'] = '16'; // "join" limit for the non chapter leaders

@@ -306,13 +306,21 @@ function tm_events_menu() {
     'access arguments' => array('approve users'),
     'type' => MENU_CALLBACK,
   );
+  $items['testemail'] = array(
+    'title' => t('Send test email'),
+    'page callback' => 'tm_events_test_email',
+    'access arguments' => array('approve users'),
+    'type' => MENU_CALLBACK,
+  );
   return $items;
 }
+
 /* Form for communicating with attendees */
 function tm_events_communication_form($event){
   // didn't want to pass from the url
   $event = node_load(arg(1));
   $form = array();
+  global $user;
 
   $form['#prefix'] = l(t('Back to event'),'node/'.$event->nid);
 
@@ -320,53 +328,52 @@ function tm_events_communication_form($event){
     $view = field_view_field('node',$event,'field_event_date',
       array('label'=>'hidden',));
     $date = render($view);
-    $view = field_view_field('node',$event,'field_event_venue_name',
-      array('label'=>'hidden',));
-    $venue = render($view);
 
     $form['subject'] = array(
       '#title' => t('Subject: '),
       '#type' =>'textfield',
       '#required' => TRUE,
+      '#value' => t('Travel Massive - ').$event->title,
       );
-    $form['message'] = array(
-      '#title' => t('Event Details'),
-      '#type' =>'markup',
-      // The first part of the email that is sent out
-      '#markup' => '<br/><strong>Event: </strong><br/>'.$event->title.'<br/><strong>Date: </strong>'.$date.'<strong>Venue: </strong>'.$venue,
-      );
+    // prepopulate some of the text
+    $prefill = t('Event').': '.$event->title . "\n";
+    $prefill .= t('Date').': '.strip_tags($date) . "\n";
+    $prefill .= t('Venue').': '.$event->field_event_venue_name[LANGUAGE_NONE][0]['value'];
+
     $form['body'] = array(
       '#type' =>'textarea',
       '#title' => t('Custom Message'),
       '#rows' => 10,
+      '#value' => $prefill,
+      '#required' => TRUE,
       );
     $form['eventid'] = array(
       '#type' =>'hidden',
       '#value' => $event->nid,
       );
-    /*
-    Temporarily remove this and then make it ajax 
     $form['testemail'] = array(
       '#title' => t('Send test email to:'),
       '#type' =>'textfield',
+      '#value' => $user->mail,
       );
     $form['test_button'] = array(
       '#type' => 'submit',
       '#value' => t('Send test email'),
       '#id' => 'test-submit',
-      '#submit' => array('tm_events_test_email'),
     );
-    */
     $options['rsvp'] = t('RSVPs');  
     $options['waitlist'] = t('Waitlist');  
     $options['all'] = t('RSVPs/Waitlist');  
-    $options['chapter'] = t('Entire chapter');  
+    // don't add this to options if its a global event or no chapter TODO
+    $options['chapter'] = t('Entire chapter'); 
 
     $form['recipients'] = array(
       '#type' =>'select',
       '#options' => $options,
-      '#title' => t('Recipients'),
+      '#title' => t('Recipients:'),
       );
+    // send test email to this address (box, button, ajax)
+    // and confirm popup when you hit the final submit
     $form['submit_button'] = array(
       '#type' => 'submit',
       '#value' => t('Send'),
@@ -375,18 +382,99 @@ function tm_events_communication_form($event){
   }
   return $form;
 }
-/* Submit functions */
-function tm_events_test_email($form, &$form_state){
-  if (isset($form_state['values']['testemail'])){
-    // actually send that email
-    drupal_set_message(t('Sent a test message to '.$form_state['values']['testemail']));
+
+/* Submit function of communication form */
+function tm_events_communication_form_submit($form, &$form_state){
+  // all these user lists are just flags to event or chapter
+  $rsvpflag = flag_get_flag('event_register', NULL);
+  $waitflag = flag_get_flag('event_waitlist', NULL);
+  $chapterflag = flag_get_flag('signup', NULL);
+  $sendcount = 0;
+
+  // RSVP list
+  if ($form_state['values']['recipients'] == 'rsvp'){
+    $results = db_select('flagging', 'f')
+      ->fields('f')
+      ->condition('fid', $rsvpflag->fid ,'=')
+      ->condition('entity_id', $form_state['values']['eventid'] ,'=')
+      ->execute();
   }
-  else{
-    drupal_set_message(t('No email set'));
+  // Waitlist
+  if ($form_state['values']['recipients'] == 'waitlist'){
+    $results = db_select('flagging', 'f')
+      ->fields('f')
+      ->condition('fid', $waitflag->fid ,'=')
+      ->condition('entity_id', $form_state['values']['eventid'] ,'=')
+      ->execute();
   }
-  // needs to go back to that form with everything prefilled .. hmmm
+  // both sets - shouldn't cause duplicates
+  if ($form_state['values']['recipients'] == 'all'){
+    $results = db_select('flagging', 'f')
+      ->fields('f')
+      ->condition('fid', array($waitflag->fid, $rsvpflag->fid) ,'in')
+      ->condition('entity_id', $form_state['values']['eventid'] ,'=')
+      ->execute();
+  }
+  // everyone in the chapter
+  if ($form_state['values']['recipients'] == 'chapter'){
+    // load up the event and find out what the chapter is
+    $event = node_load($form_state['values']['eventid']);
+    $chapterid = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
+
+    $results = db_select('flagging', 'f')
+      ->fields('f')
+      ->condition('fid', $chapterflag->fid ,'=')
+      ->condition('entity_id', $chapterid ,'=')
+      ->execute();
+  }
+
+  // send off some emails
+  while ($result = $results->fetchAssoc()){
+    $sendcount++;
+    $account = user_load($result['uid']);
+    tm_events_send_email($account->mail, $form_state['values']['subject'], $form_state['values']['body']);
+  }
+
+  // stats and redirects back to the event
+  drupal_set_message(t("Mail sent to $sendcount people."));
+  drupal_goto('node/'.$form_state['values']['eventid']);
 }
 
+/* Test email callback */
+function tm_events_test_email(){
+  if (!isset($_POST['subject'])) return FALSE;
+  if (!isset($_POST['message'])) return FALSE;
+  if (!isset($_POST['address'])) return FALSE;
+
+  $subject = $_POST['subject'];
+  $message = $_POST['message'];
+  $email = $_POST['address'];
+
+  tm_events_send_email($email, $subject, $message);
+}
+
+/* Sends out a single email */
+function tm_events_send_email($email, $subject, $body){
+
+    $module = 'tm_events';
+    $key = 'key';
+    $language = language_default();
+    $params = array();
+    $send = FALSE;
+    $message = drupal_mail($module, $key, $email, $language, $params, NULL, $send);
+    // prepend something to this subject if you want to 
+    $message['subject'] = check_plain($subject);
+    $message['body'][] = check_plain($body); // this will strip html
+
+    // Retrieve the responsible implementation for this message.
+    $system = drupal_mail_system($module, $key);
+
+    // Format the message body.
+    $message = $system->format($message);
+
+    // Send e-mail.
+    $message['result'] = $system->mail($message);
+}
 
 /* Form for managing RSVPs */
 function tm_events_rsvp_form($event){

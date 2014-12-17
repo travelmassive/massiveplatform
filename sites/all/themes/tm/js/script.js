@@ -58,6 +58,20 @@ Drupal.behaviors.base_scripts = {
       });
     });
 
+    $('#test-submit').click(function (event) {
+      // need to write an email sending page
+      // send the various form elements as parameters
+      $.ajax({
+        type: 'post',
+        data: {'subject': $('#edit-subject').val(),
+              'message': $('#edit-body').val(),
+              'address': $('#edit-testemail').val()},
+        url: "/testemail"}).done(function() {
+        alert("Sent a test email to " + $('#edit-testemail').val());
+      });
+      event.preventDefault();
+    });
+
   }
 };
 

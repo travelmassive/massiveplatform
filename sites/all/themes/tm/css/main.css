@@ -5409,6 +5409,12 @@ select:disabled {
   width: 20%;
 }
 
+/* Signup page */
+/* line 536, ../sass/_forms.scss */
+.signup_notice {
+  background-color: #D2D5D8;
+}
+
 /* line 4, ../sass/_modules.scss */
 #tm-events-communication-form,
 #tm-events-rsvp-form,

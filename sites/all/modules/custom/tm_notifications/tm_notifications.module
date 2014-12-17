@@ -1,5 +1,11 @@
 <?php
 /**
+ * @file
+ * Code for the TM Notifications feature.
+ */
+
+include_once 'tm_notifications.features.inc';
+/**
  * @file tm_notifications.module
  * 
  * @author Daniel Silva (daniel.silva@flipside.org)

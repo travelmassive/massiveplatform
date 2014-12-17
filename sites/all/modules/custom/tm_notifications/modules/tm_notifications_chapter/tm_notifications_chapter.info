@@ -10,5 +10,6 @@ dependencies[] = strongarm
 dependencies[] = tm_notifications
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:2
-features[variable][] = tm_notifications__user_chapter_join_welcome_member
 features[variable][] = tm_notifications__user_chapter_join_notify_leaders
+features[variable][] = tm_notifications__user_chapter_join_welcome_member
+features[variable][] = tm_notifications__user_chapter_announcements

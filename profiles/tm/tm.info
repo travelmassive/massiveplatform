@@ -71,6 +71,9 @@ dependencies[] = openlayers
 dependencies[] = migrate_extras
 dependencies[] = email_registration
 dependencies[] = redirect
+dependencies[] = mimemail
+dependencies[] = ckeditor
+
 
 
 ; TM - development

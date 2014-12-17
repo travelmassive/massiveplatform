@@ -12,7 +12,6 @@
 // - http://www.adequatelygood.com/2010/3/JavaScript-Module-Pattern-In-Depth
 (function ($, Drupal, window, document, undefined) {
 
-
 // To understand behaviors, see https://drupal.org/node/756722#behaviors
 Drupal.behaviors.base_scripts = {
   attach: function(context, settings) {
@@ -58,20 +57,121 @@ Drupal.behaviors.base_scripts = {
       });
     });
 
-    $('#test-submit').click(function (event) {
-      // need to write an email sending page
-      // send the various form elements as parameters
-      $.ajax({
-        type: 'post',
-        data: {'subject': $('#edit-subject').val(),
-              'message': $('#edit-body').val(),
-              'address': $('#edit-testemail').val()},
-        url: "/testemail"}).done(function() {
-        alert("Sent a test email to " + $('#edit-testemail').val());
-      });
+    $('#event-test-email-submit').click(function (event) {
       event.preventDefault();
+      $('#event-test-email-submit').val("Sending...");
+      return event_send_emails("test_email");
     });
 
+    var contact_eventattendess_submitted = false;
+    var contact_eventattendess_completed = false;
+    $('#event-email-attendees-submit').click(function (event) {
+      event.preventDefault();
+      if ($('#event-email-attendees-confirm').prop("checked")) {
+        $('#event-email-attendees-submit').val("Sending (this may take a few moments)...");
+        return event_send_emails("send_emails");
+      } else {
+        alert("Have you tested your email? Please confirm first that you are ready to proceed.");
+        return false;
+      }
+    });
+
+    // send emails
+    // action is either test_email or send_emails
+    event_send_emails = function(form_action) {
+
+      // 1. GET EVENT ID
+      // get event id from drupal form
+      // note: workaround as usual jquery targeting does not work with drupal hidden fields
+      var eventid = $('input[name^="eventid"]').val();
+
+      // 2. GET HTML OR TEXT MESSAGE
+      // get the html message from the CKEditor
+      var message;
+      if (CKEDITOR.instances["edit-body-value"] != undefined) {
+        message = CKEDITOR.instances["edit-body-value"].getData();
+      }
+      else {
+        // plain text selected, so CKEditor is disabled
+        message = $('#edit-body-value').val();
+      }
+
+      // 3. VALIDATION
+      // check message is not empty
+      if (message == "") {
+        alert ("Message can't be empty.");
+        return false;
+      }
+
+      // check subject is not empty
+      if ($('#edit-subject').val() == "") {
+        alert ("Message can't be empty.");
+        return false;
+      }
+
+      // 4. SEND EMAILS
+      // Either test or all emails
+
+      // TEST EMAILS
+      if (form_action == "test_email") {
+
+        // check address is not empty
+        if ($('#edit-testemail').val() == "") {
+          alert ("Address can't be empty.");
+          return false;
+        }
+
+        $.ajax({
+          type: 'post',
+          data: {'subject': $('#edit-subject').val(),
+                'message': message, //$('#edit-body').val(),
+                'eventid': eventid,
+                'address': $('#edit-testemail').val()},
+          url: "/node/" + eventid + "/test_email"}).done(function(return_data) {
+            if (!isNaN(return_data)) {
+              $('#event-test-email-submit').val("Send test email");
+               alert("Sent a test email to " + $('#edit-testemail').val());
+             } else {
+              alert("Error sending email: " + return_data);
+             }
+            return true;
+        });
+      }
+
+      // ALL EMAILS
+      if (form_action == "send_emails") {
+
+        if (contact_eventattendess_completed) {
+          alert("Already sent. As a precaution you can only use this button once.");
+          return false;
+        }
+
+        if (contact_eventattendess_submitted) {
+          alert("Already sending, please wait.");
+          return false;
+        }
+        contact_eventattendess_submitted = true;
+        $.ajax({
+          type: 'post',
+          data: {'subject': $('#edit-subject').val(),
+                'message': message, //$('#edit-body').val(),
+                'recipients': $('#edit-recipients').val(),
+                'eventid': eventid,
+                'address': $('#edit-testemail').val()},
+          url: "/node/" + eventid + "/send_emails"}).done(function(return_data) {
+            if (!isNaN(return_data)) {
+                $('#event-email-attendees-submit').val("Successfully sent " + return_data + " emails.");
+                $('#event-email-attendees-submit').attr("disabled", true);
+                $('#event-email-attendees-confirm').attr("disabled", true);
+                $('#edit-recipients').attr("disabled", true);
+                contact_eventattendess_completed = true;
+               alert("Successfully sent " + return_data + " emails.");
+             } else {
+              alert("Error sending emails: " + return_data);
+             }
+        });
+      }
+    }
   }
 };
 

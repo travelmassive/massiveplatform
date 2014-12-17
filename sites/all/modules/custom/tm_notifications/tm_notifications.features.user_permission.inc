@@ -10,6 +10,13 @@
 function tm_notifications_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: 'edit mimemail user settings'.
+  $permissions['edit mimemail user settings'] = array(
+    'name' => 'edit mimemail user settings',
+    'roles' => array(),
+    'module' => 'mimemail',
+  );
+
   // Exported permission: 'manage tm notifications'.
   $permissions['manage tm notifications'] = array(
     'name' => 'manage tm notifications',

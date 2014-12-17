@@ -238,9 +238,9 @@ function _tm_more_actions_process($field, $title = NULL) {
       if ($show_menu_item) {
         $links['manageattendees'][] = array(
           'wrapper_class' => array('contactattendees'),
-          'content' => l(t('Contact attendees'), 'node/' . $nid . '/communicate', array(
+          'content' => l(t('Send Announcement'), 'node/' . $nid . '/announcement', array(
             'attributes' => array( 
-            'title' => t('Contact attendees')
+            'title' => t('Send Announcement')
             )
           ))
         );

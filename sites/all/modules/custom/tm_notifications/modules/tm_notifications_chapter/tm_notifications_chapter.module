@@ -40,6 +40,21 @@ function tm_notifications_chapter_tm_notif_info() {
     )
   );
   
+  $notification['user_chapter_announcements'] = array(
+    'title' => 'Send members Chapter Announcements',
+    'description' => 'Send members Chapter Announcements',
+    'use_cron' => FALSE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('node', 'current-user'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+  
+
   return $notification;
 }
 

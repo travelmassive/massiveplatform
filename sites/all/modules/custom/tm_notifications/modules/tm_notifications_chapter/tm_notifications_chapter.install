@@ -1,5 +1,5 @@
 <?php
 
 function tm_notifications_chapter_uninstall() {
-  tm_notifications_preferences_purge_bulk(array('user_chapter_join_welcome_member', 'user_chapter_join_notify_leaders'));
+  tm_notifications_preferences_purge_bulk(array('user_chapter_join_welcome_member', 'user_chapter_join_notify_leaders', 'user_chapter_announcements'));
 }

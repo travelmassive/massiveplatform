@@ -25,7 +25,7 @@ function tm_events_permission() {
  * Implement hook_form_FORM_ID_alter()
  */
 function tm_events_form_event_node_form_alter(&$form, &$form_state) {
-  
+   
   // Field visibilty based on whether the RSVP is handled through the TM.
   
   // Visible when RSVP is handled on TM.
@@ -69,18 +69,22 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
   // There was an ajax request. Provide correct values.
   if (isset($form_state['values']['field_chapter'][LANGUAGE_NONE][0]['target_id'])) {
     $chapter_id = $form_state['values']['field_chapter'][LANGUAGE_NONE][0]['target_id'];
-    
-    // Get possible options.
+  } else {
+    $chapter_id = null;
+  }
+
+  // Get possible options.
+  //if (isset($chapter_id)) {
     $opts = array('_none' => t('- None -'))  + _load_organizers_per_chapter($chapter_id);
     $form['field_organizer']['field_organizer_child'][LANGUAGE_NONE]['#options'] = $opts;
     // By default the value of the organizer is the author.
     $form['field_organizer']['field_organizer_child'][LANGUAGE_NONE]['#default_value'] = $user->uid;
-  }
+  //}
   
   // There's a value for the field_chapter. This means:
   // - the node is being edited; or
   // - the field_chapter was prepopulated.
-  else if (!empty($form['field_chapter'][LANGUAGE_NONE][0]['target_id']['#default_value'])) {
+  if (!empty($form['field_chapter'][LANGUAGE_NONE][0]['target_id']['#default_value'])) {
     // Get id from default value.
     preg_match("/.* \(([0-9]+)\)/", $form['field_chapter'][LANGUAGE_NONE][0]['target_id']['#default_value'], $chapter_id);
     $chapter_id = $chapter_id[1];
@@ -98,7 +102,7 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
   }
   else {
     // Disable access if we're editing a node for the first time.
-    $form['field_organizer']['field_organizer_child']['#access'] = FALSE;
+    //$form['field_organizer']['field_organizer_child']['#access'] = FALSE;
   }
 }
 
@@ -119,20 +123,36 @@ function _tm_events_field_organizer_ajax_cb($form, $form_state) {
  * @return Array [stdClass]
  */
 function _load_organizers_per_chapter($chapter_id) {
-  $result = db_query('
-    SELECT users.name AS name, users.uid AS uid, n.nid AS chapter_nid
-    FROM
-      {users} users
-    INNER JOIN {field_data_field_chapter_leaders} f_c_l ON users.uid = f_c_l.field_chapter_leaders_target_id AND f_c_l.entity_type = :entity_type AND f_c_l.deleted = :deleted
-    INNER JOIN {node} n ON f_c_l.entity_id = n.nid
-    WHERE users.status <> :user_status AND n.nid = :chapter_id
-    ORDER BY name', array(
-      ':entity_type' => 'node',
-      ':deleted' => 0,
-      ':user_status' => 0,
-      ':chapter_id' => $chapter_id
-  ))->fetchAll();
-    
+
+  // if no chapter_id, get all chapter leaders
+  if ($chapter_id == null) {
+    $result = db_query('
+        SELECT users.name AS name, users.uid AS uid
+        FROM
+          {users} users
+        INNER JOIN {field_data_field_chapter_leaders} f_c_l ON users.uid = f_c_l.field_chapter_leaders_target_id AND f_c_l.entity_type = :entity_type AND f_c_l.deleted = :deleted
+        WHERE users.status <> :user_status
+        ORDER BY name', array(
+          ':entity_type' => 'node',
+          ':deleted' => 0,
+          ':user_status' => 0
+      ))->fetchAll();
+  } else {
+    $result = db_query('
+      SELECT users.name AS name, users.uid AS uid, n.nid AS chapter_nid
+      FROM
+        {users} users
+      INNER JOIN {field_data_field_chapter_leaders} f_c_l ON users.uid = f_c_l.field_chapter_leaders_target_id AND f_c_l.entity_type = :entity_type AND f_c_l.deleted = :deleted
+      INNER JOIN {node} n ON f_c_l.entity_id = n.nid
+      WHERE users.status <> :user_status AND n.nid = :chapter_id
+      ORDER BY name', array(
+        ':entity_type' => 'node',
+        ':deleted' => 0,
+        ':user_status' => 0,
+        ':chapter_id' => $chapter_id
+    ))->fetchAll();
+  }
+
   $data = array();
   foreach ($result as $value) {
     $data[$value->uid] = $value->name;
@@ -276,7 +296,10 @@ function tm_events_node_presave($node) {
   if ($node->type == 'event'){
     // I have absolutely no idea why this is necessary, but the organiser field
     // is being copied and not copied back
-    $node->field_organizer = $node->field_organizer_child;
+    //print_r($node->field_organizer_child);
+    if ($node->field_organizer_child['und'][0]['target_id'] != null) {
+      $node->field_organizer = $node->field_organizer_child;
+    }
   }
 }
 /*

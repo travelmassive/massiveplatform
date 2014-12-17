@@ -250,8 +250,6 @@ function _tm_more_actions_process($field, $title = NULL) {
   // END contact attendees
 
   // START download chapter members.
-  // TODO needs restriction to only be own chapter - not essential but should be there
-  // same permissions check as communicate with attendees
   if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
     $node = menu_get_object();
     if ($node->type == 'chapter') {
@@ -260,7 +258,7 @@ function _tm_more_actions_process($field, $title = NULL) {
 
       // show to chapter leaders
       $targetuser = user_load($user->uid);
-      if (in_array("chapter leader", $targetuser->roles)){
+      if (tm_users_is_chapter_leader($targetuser->uid, $node->nid)) {
         $show_menu_item = true;
       }
 

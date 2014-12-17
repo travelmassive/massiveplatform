@@ -334,7 +334,7 @@ function tm_events_menu() {
     'type' => MENU_CALLBACK,
   );
   $items['download/csv/%'] = array(
-    'title' => t('Manage RSVPs'),
+    'title' => t('Download RSVPs'),
     'page callback' => 'tm_events_download_csv',
     'page arguments' => array(2),
     'access arguments' => array('approve users'),
@@ -543,10 +543,10 @@ function tm_events_download_csv($nid){
     $item[] = $account->field_user_last_name[$language][0]['value'];
     $item[] = $account->mail;
     if (isset($account->field_user_country[$language][0])){
-      $item[] = $account->field_user_country[$language][0]['value'];
+      $item[] = $account->field_user_country[$language][0]['iso2'];
     }
     else $item[] = t('none');
-    if (isset($account->field_job_organization[$language][0])){
+    if (isset($account->field_job_organization[$language][0]['value'])){
       $item[] = $account->field_job_organization[$language][0]['value'];
     }
     else $item[] = t('none');

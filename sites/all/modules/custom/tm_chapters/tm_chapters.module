@@ -35,6 +35,14 @@ function tm_chapters_menu() {
     'access arguments' => array('flag follow_members'),
     'type' => MENU_CALLBACK,
   );
+  $items['chapters/export/%'] = array(
+    'title' => t('Export Members'),
+    'page callback' => 'tm_chapters_download_csv',
+    'page arguments' => array(2),
+    'access arguments' => array('approve users'),
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
   return $items;
 }
 /**
@@ -163,6 +171,54 @@ function tm_chapters_send_email($email, $subject, $body, $user){
 
     // Send e-mail.
     $message['result'] = $system->mail($message);
+}
+
+/* Download Chapter CSV function */
+function tm_chapters_download_csv($nid){
+
+  $chapternode = node_load($nid);
+  $oldzone = date_default_timezone_get();
+  date_default_timezone_set(drupal_get_user_timezone());
+  $csvname = $chapternode->title.'_'.date('M_d_Y_Gi',time());
+  date_default_timezone_set($oldzone);
+
+  // csv header
+  drupal_add_http_header('Content-Type', 'text/csv; utf-8');
+  drupal_add_http_header('Content-Disposition', 'attachment; filename = '.$csvname);
+  
+  $fh = fopen('php://output', 'w');
+  // puts a header row across the top of the csv
+  $item = array(t('First name'),t('Last name'),t('Email'),t('Country'),t('Organisation'),t('Date registered'));
+  fputcsv($fh, $item);
+
+  // list of users
+  $users = db_select('flagging', 'f')
+    ->fields('f')
+    ->condition('entity_id',$nid,'=')
+    ->condition('entity_type','node','=')
+    ->execute();
+  while ($user = $users->fetchAssoc()){
+    $account = user_load($user['uid']);
+    if (empty($account->language)) $language = LANGUAGE_NONE;
+    else $language = $account->language;
+
+    $item = array();
+    // columns in same order as the header array above
+    $item[] = $account->field_user_first_name[$language][0]['value'];
+    $item[] = $account->field_user_last_name[$language][0]['value'];
+    $item[] = $account->mail;
+    if (isset($account->field_user_country[$language][0])){
+      $item[] = $account->field_user_country[$language][0]['iso2'];
+    }
+    else $item[] = t('none');
+    if (isset($account->field_job_organization[$language][0]['value'])){
+      $item[] = $account->field_job_organization[$language][0]['value'];
+    }
+    else $item[] = t('none');
+    $item[] = date('j M Y',$user['timestamp']);
+    fputcsv($fh, $item);
+  } 
+  fclose($fh);
 }
 
 // Joining first chapter sets home chapter 

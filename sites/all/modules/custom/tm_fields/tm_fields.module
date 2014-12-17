@@ -272,7 +272,7 @@ function _tm_more_actions_process($field, $title = NULL) {
       if ($show_menu_item) {
         $links['downloadmembers'][] = array(
           'wrapper_class' => array('downloadmembers'),
-          'content' => l(t('Download Members CSV'), 'download/csv/' . $nid, array(
+          'content' => l(t('Download Members CSV'), 'chapters/export/' . $nid, array(
             'attributes' => array( 
             'title' => t('Download Members CSV')
             )

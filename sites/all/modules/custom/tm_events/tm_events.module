@@ -104,6 +104,17 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
     // Disable access if we're editing a node for the first time.
     //$form['field_organizer']['field_organizer_child']['#access'] = FALSE;
   }
+
+  // Set timezone automatically from chapter if creating new event
+  $node = $form_state['node'];
+  if (!isset($node->nid) || isset($node->is_new)) {
+    if ($chapter_id != null) {
+      $chapter = node_load($chapter_id);
+      $chapter_timezone = $chapter->field_chapter_timezone[LANGUAGE_NONE][0]['value'];
+      $form['field_event_date'][LANGUAGE_NONE][0]['timezone']['#default_value'] = $chapter_timezone;
+    }
+  }
+
 }
 
 /**

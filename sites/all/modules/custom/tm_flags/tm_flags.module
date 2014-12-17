@@ -115,7 +115,10 @@ function tm_flags_preprocess_flag(&$variables) {
       
       // Get followers count
       $fr = flag_get_counts('user', $uid, FALSE);
-      $fr_count = $fr['follow_members'];
+      $fr_count = 0;
+      if (isset($fr['follow_members'])) {
+        $fr_count = $fr['follow_members'];
+      }
 
       if ($fg_count - $fr_count >= $limit){
         $tm_limit = TRUE;

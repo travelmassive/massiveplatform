@@ -5,3 +5,139 @@
  */
 
 include_once 'tm_flags.features.inc';
+
+/**
+ * Implementation hook tm_flags_preprocess_flag
+ */
+function tm_flags_preprocess_flag(&$variables) {
+  global $user;
+  $initialized = &drupal_static(__FUNCTION__, array());
+
+  // Some typing shotcuts:
+  $flag = &$variables['flag'];
+  $action = $variables['action'];
+  $entity_id = $variables['entity_id'];
+  $flag_css_name = str_replace('_', '-', $flag->name);
+
+  // Generate the link URL.
+  $link_type = $flag->get_link_type();
+  $link = module_invoke($link_type['module'], 'flag_link', $flag, $action, $entity_id);
+  if (isset($link['title']) && empty($link['html'])) {
+    $link['title'] = check_plain($link['title']);
+  }
+
+  // Replace the link with the access denied text if unable to flag.
+  if ($action == 'unflag' && !$flag->access($entity_id, 'unflag')) {
+    $link['title'] = $flag->get_label('unflag_denied_text', $entity_id);
+    unset($link['href']);
+  }
+
+  // Anonymous users always need the JavaScript to maintain their flag state.
+  if ($user->uid == 0) {
+    $link_type['uses standard js'] = TRUE;
+  }
+
+  // Load the JavaScript/CSS, if the link type requires it.
+  if (!isset($initialized[$link_type['name']])) {
+    if ($link_type['uses standard css']) {
+      drupal_add_css(drupal_get_path('module', 'flag') . '/theme/flag.css');
+    }
+    if ($link_type['uses standard js']) {
+      drupal_add_js(drupal_get_path('module', 'flag') . '/theme/flag.js');
+    }
+    $initialized[$link_type['name']] = TRUE;
+  }
+
+  $variables['link'] = $link;
+  $variables['link_href'] = isset($link['href']) ? check_url(url($link['href'], $link)) : FALSE;
+  $variables['link_text'] = isset($link['title']) ? $link['title'] : $flag->get_label($action . '_short', $entity_id);
+  $variables['link_title'] = isset($link['attributes']['title']) ? check_plain($link['attributes']['title']) : check_plain(strip_tags($flag->get_label($action . '_long', $entity_id)));
+  $variables['status'] = ($action == 'flag' ? 'unflagged' : 'flagged');
+  $variables['flag_name_css'] = $flag_css_name;
+
+  $variables['flag_wrapper_classes_array'] = array();
+  $variables['flag_wrapper_classes_array'][] = 'flag-wrapper';
+  $variables['flag_wrapper_classes_array'][] = 'flag-' . $flag_css_name;
+  $variables['flag_wrapper_classes_array'][] = 'flag-' . $flag_css_name . '-' . $entity_id;
+  $variables['flag_wrapper_classes'] = implode(' ', $variables['flag_wrapper_classes_array']);
+
+  $variables['flag_classes_array'] = array();
+  $variables['flag_classes_array'][] = 'flag';
+  if (isset($link['href'])) {
+    $variables['flag_classes_array'][] = $variables['action'] . '-action';
+    $variables['flag_classes_array'][] = 'flag-link-' . $flag->link_type;
+  }
+  else {
+    $variables['flag_classes_array'][] = $variables['action'] . '-disabled';
+  }
+  if (isset($link['attributes']['class'])) {
+    $link['attributes']['class'] = is_string($link['attributes']['class']) ? array_filter(explode(' ', $link['attributes']['class'])) : $link['attributes']['class'];
+    $variables['flag_classes_array'] = array_merge($variables['flag_classes_array'], $link['attributes']['class']);
+  }
+  if ($variables['after_flagging']) {
+    $inverse_action = ($action == 'flag' ? 'unflag' : 'flag');
+    $variables['message_text'] = $flag->get_label($inverse_action . '_message', $entity_id);
+    $variables['flag_classes_array'][] = $variables['status'];
+  }
+  $variables['flag_classes'] = implode(' ', $variables['flag_classes_array']);
+
+  // Backward compatibility: The following section preserves some deprecated
+  // variables either to make old flag.tpl.php files continue to work, or to
+  // prevent PHP from generating E_NOTICEs there. @todo: Remove these sometime.
+  $variables['setup'] = FALSE;
+  $variables['last_action'] = $variables['status'];
+
+  /** TM Limit **/
+  if($variables['action'] == 'flag') {
+    $uid = $user->uid;
+    $flag_name = $flag->name;
+    $entity_type = $flag->entity_type;
+    $fg_u = flag_get_user_flags('user', NULL, $uid, NULL, FALSE);
+    $fg_n = flag_get_user_flags('node', NULL, $uid, NULL, FALSE);
+    
+    // "Join" limit for the non chapter leaders
+    if (($flag_name == 'signup') && ($entity_type == 'node')) {
+      $limit = variable_get('massiveplatform_chapter_join_limit', NULL);
+      // Get Join count
+      $fg_n = flag_get_user_flags('node', NULL, $uid, NULL, FALSE);
+      $fg_count = (isset($fg_n['signup'])) ? count($fg_n['signup']) : 0;
+      if ($fg_count >= $limit){
+        $tm_limit = TRUE;
+      };
+    }
+    // Following limit reached
+    if(in_array($flag_name, array('follow_members', 'follow_organizations')) && in_array($entity_type, array('node', 'user'))) {
+      $limit = variable_get('massiveplatform_following_ratio_limit', NULL);
+      // Get following count
+      $fg_count = 0;
+      $fg_count = (isset($fg_u['follow_members'])) ? $fg_count += count($fg_u['follow_members']) : $fg_count;
+      $fg_count = (isset($fg_n['follow_organizations'])) ? $fg_count += count($fg_n['follow_organizations']) : $fg_count;
+      
+      // Get followers count
+      $fr = flag_get_counts('user', $uid, FALSE);
+      $fr_count = $fr['follow_members'];
+
+      if ($fg_count - $fr_count >= $limit){
+        $tm_limit = TRUE;
+      }
+    }
+    
+    if(isset($tm_limit)) {
+      $variables['link_href'] = '';
+      $variables['flag_button_class'] = 'flag-limit follow bttn bttn-secondary bttn-m';
+      drupal_add_js('
+      jQuery(document).ready(function($) {
+        $( ".flag-limit" ).click(function() {
+          $( ".flag-limit-message" ).remove();
+          var message = $( ".flag-limit span.flag-action" ).text();
+          $("<div class=\"flag-limit-message\">" + message + " limit reached.</div>").fadeToggle( "200", "linear" ).insertBefore( ".actions-menu" );
+
+          setTimeout(function() {
+            $(".flag-limit-message").fadeOut("slow");
+          }, 5000); 
+        }); 
+      });
+      ', 'inline');
+    }       
+  }
+}

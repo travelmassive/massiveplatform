@@ -462,9 +462,11 @@ function tm_events_send_email($email, $subject, $body){
     $params = array();
     $send = FALSE;
     $message = drupal_mail($module, $key, $email, $language, $params, NULL, $send);
-    // prepend something to this subject if you want to 
+    $message['headers']['MIME-Version'] = '1.0';
+    $message['headers']['Content-Type'] = 'multipart/mixed;';
+    $message['headers']['Content-Type'] = 'text/html;';
     $message['subject'] = check_plain($subject);
-    $message['body'][] = check_plain($body); // this will strip html
+    $message['body'][] = $body;
 
     // Retrieve the responsible implementation for this message.
     $system = drupal_mail_system($module, $key);

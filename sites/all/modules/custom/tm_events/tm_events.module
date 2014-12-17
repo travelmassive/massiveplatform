@@ -407,7 +407,7 @@ function tm_events_communication_form($event){
     if ($event->body != null) {
       $prefill .= $event->body[LANGUAGE_NONE][0]['value'] . "";
     }
-    $prefill .= "Cheers";
+    $prefill .= "<br>Cheers";
 
     if ($chapter != null) {
       $prefill .= ",<br>- The " . $chapter->title  . " Team";

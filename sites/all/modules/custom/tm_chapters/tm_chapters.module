@@ -164,3 +164,23 @@ function tm_chapters_send_email($email, $subject, $body, $user){
     // Send e-mail.
     $message['result'] = $system->mail($message);
 }
+
+// Joining first chapter sets home chapter 
+// https://github.com/travelmassive/massiveplatform/issues/28
+function tm_chapters_flag_flag($flag, $entity_id, $account, $flagging) {
+
+  // only listen for signup to chapter
+  if ($flag->name != 'signup') {
+    return;
+  }
+
+  // get user who flagged
+  $user = user_load($account->uid);
+
+  // if they don't have a home chapter, set this as their home chapter
+  if (sizeof($user->field_chapter) == 0) {
+    $user->field_chapter[LANGUAGE_NONE][0]['target_id'] =  $entity_id;
+    user_save($user);
+  }
+
+}

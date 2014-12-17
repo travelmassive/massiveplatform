@@ -607,6 +607,7 @@ function tm_chapters_field_default_field_instances() {
     'label' => 'Facebook',
     'required' => 0,
     'settings' => array(
+      'absolute_url' => 1,
       'attributes' => array(
         'class' => '',
         'configurable_title' => 0,
@@ -620,6 +621,7 @@ function tm_chapters_field_default_field_instances() {
       'enable_tokens' => 0,
       'rel_remove' => 'default',
       'title' => 'none',
+      'title_label_use_field_label' => FALSE,
       'title_maxlength' => 44,
       'title_value' => '',
       'url' => 0,
@@ -680,6 +682,7 @@ function tm_chapters_field_default_field_instances() {
     'label' => 'Linkedin',
     'required' => 0,
     'settings' => array(
+      'absolute_url' => 1,
       'attributes' => array(
         'class' => '',
         'configurable_title' => 0,
@@ -693,6 +696,7 @@ function tm_chapters_field_default_field_instances() {
       'enable_tokens' => 0,
       'rel_remove' => 'default',
       'title' => 'none',
+      'title_label_use_field_label' => FALSE,
       'title_maxlength' => 44,
       'title_value' => '',
       'url' => 0,
@@ -753,6 +757,7 @@ function tm_chapters_field_default_field_instances() {
     'label' => 'Twitter',
     'required' => 0,
     'settings' => array(
+      'absolute_url' => 1,
       'attributes' => array(
         'class' => '',
         'configurable_title' => 0,
@@ -766,6 +771,7 @@ function tm_chapters_field_default_field_instances() {
       'enable_tokens' => 0,
       'rel_remove' => 'default',
       'title' => 'none',
+      'title_label_use_field_label' => FALSE,
       'title_maxlength' => 44,
       'title_value' => '',
       'url' => 0,
@@ -826,6 +832,7 @@ function tm_chapters_field_default_field_instances() {
     'label' => 'Website',
     'required' => 0,
     'settings' => array(
+      'absolute_url' => 1,
       'attributes' => array(
         'class' => '',
         'configurable_title' => 0,
@@ -839,6 +846,7 @@ function tm_chapters_field_default_field_instances() {
       'enable_tokens' => 0,
       'rel_remove' => 'default',
       'title' => 'none',
+      'title_label_use_field_label' => FALSE,
       'title_maxlength' => 44,
       'title_value' => '',
       'url' => 0,

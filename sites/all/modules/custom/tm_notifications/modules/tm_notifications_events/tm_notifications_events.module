@@ -147,11 +147,6 @@ function tm_notifications_events_flag_unflag($flag, $entity_id, $account, $flagg
 
 function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity_id, $account, $flagging) {
 
-  // only listen for event flags
-  if ($flag->entity_type == 'event') {
-    return;
-  }
-
   // only listen for register or waitlist
   if (($flag->name != 'event_register') and ($flag->name != 'event_waitlist')) {
     return;

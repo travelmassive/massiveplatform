@@ -100,6 +100,16 @@ function tm_users_approve($user){
 $role_name = 'approved user'; // The name of the role to add.
   if ($role = user_role_load_by_name($role_name)) {
     user_multiple_role_edit(array($user->uid), 'add_role', $role->rid);
+
+    // send notification message to user that they have been approved
+    // there doesn't seem to be a hook that can detect we are applying a new role, so do it here
+    $approving_user = user_uid_optional_load();
+    // set profile url (either friendly url or community url)
+    $profile_url = "community/" . $user->name;
+    if (count($user->field_friendly_url) > 0) { 
+      $profile_url = $user->field_friendly_url['und']['0']['value'];
+    } 
+    tm_notifications_notify('user_approved', $user, array('user' => $user, '__PROFILE_URL__' => $profile_url));
   }
   drupal_goto("user/$user->uid/view");
 }
@@ -175,9 +185,43 @@ function tm_users_chapters($uid){
 
   if (isset($result['node'])) {
     $chapters_nids = array_keys($result['node']);
-    foreach ($chapters_nids as $nid)
-    $chapter = node_load($nid);
-    $markup .= "<li>".l($chapter->title,'node/'.$chapter->nid).'</li>';
+    foreach ($chapters_nids as $nid) {
+      //$img_url = 'public://images/chapters/Athens.jpg';  // the orig image uri
+      $chapter = node_load($nid);
+      $img_url = @$chapter->field_image['und'][0]['uri'];
+      if ($img_url == "") { $img_url = "public://default_images/cover-default.png"; }
+      $style = 'thumbnail';  // or any other custom image style you've created via /admin/config/media/image-styles
+      $markup .= "<li style='margin-bottom: 4px;'><img align='left' style='margin-left: 16px; margin-top: 4px; padding-right: 8px; width: 40px;' src='".image_style_url($style, $img_url) . "'>" . l($chapter->title . ' (Chapter Leader)','node/'.$chapter->nid).'</li>';
+    }
+  }
+  return $markup;
+}
+
+
+/* 
+ * Link by title to any companies this user is managing 
+ * inserts this markup into the user menu tpl file
+*/
+function tm_users_companies($uid){
+
+  $query = new EntityFieldQuery();
+  $markup = '';
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'organization')
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->fieldCondition('field_owner', 'target_id', $uid, '=');
+
+  $result = $query->execute();
+
+  if (isset($result['node'])) {
+    $companies_nids = array_keys($result['node']);
+    foreach ($companies_nids as $nid) {
+      $company = node_load($nid);
+      $img_url = @$company->field_image['und'][0]['uri'];
+      if ($img_url == "") { $img_url = "public://default_images/cover-default.png"; }
+      $style = 'thumbnail';  // or any other custom image style you've created via /admin/config/media/image-styles
+      $markup .= "<li style='margin-bottom: 4px;'><img align='left' style='margin-left: 16px; margin-top: 4px; padding-right: 8px; width: 40px;' src='".image_style_url($style, $img_url) . "'>". l($company->title,'node/'.$company->nid).'</li>'; 
+    }
   }
   return $markup;
 }
@@ -198,3 +242,32 @@ function tm_users_is_chapter_leader($uid, $chapterid){
   }
   return FALSE;
 }
+
+/* Hook for when user validated their email address, we can send them a welcome message
+See: http://drupal.stackexchange.com/questions/30219/is-there-a-hook-after-user-confirmation
+*/
+function tm_users_user($op, &$edit, &$account, $category) {
+
+  die("here");
+  
+  if ($op == 'validate') {
+    if ( $category == 'account' ) {
+    
+      // send user a welcome message
+
+      // set profile url (either friendly url or community url)
+      $profile_url = "community/" . $account->name;
+      if (count($account->field_friendly_url) > 0) { 
+        $profile_url = $account->field_friendly_url['und']['0']['value'];
+      } 
+      tm_notifications_notify('user_welcome', $user, array('user' => $account, '__PROFILE_URL__' => $profile_url));
+
+      die("got here..");
+    }
+  }
+
+   print("in here...");
+  die();
+}
+
+

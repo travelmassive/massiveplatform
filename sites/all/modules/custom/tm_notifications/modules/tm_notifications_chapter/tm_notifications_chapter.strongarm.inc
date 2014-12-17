@@ -13,62 +13,55 @@ function tm_notifications_chapter_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'tm_notifications__event_added_member_chapter';
+  $strongarm->name = 'tm_notifications__user_chapter_join_welcome_member';
   $strongarm->value = array(
-    'user_label' => 'New event in one of your chapters',
+    'user_label' => 'Welcome message when joining a chapter',
     'default_state' => '1',
-    'change_allowed' => 1,
+    'change_allowed' => 0,
     'email' => array(
-      'subject' => 'New event in [node:field_chapter]',
+      'subject' => 'Welcome to Travel Massive [node:title]',
       'message' => 'Hi [current-user:field_user_first_name],
 
-One of the organizers of the [node:field_chapter] chapter added an event to Travel Massive: [node:title]. Sign up today to make sure you can participate.
+You\'re in!
+
+Thanks for joining the Travel Massive [node:title] Chapter.
+
+We hope you can learn, share, and connect with other like-minded travel insiders through local chapter events in [node:title].
+
+If you are a new member, please ensure that you\'ve filled out your profile so the Chapter Leaders can approve your account. 
 
 cheers,
 The Travel Massive team',
     ),
   );
-  $export['tm_notifications__event_added_member_chapter'] = $strongarm;
+  $export['tm_notifications__user_chapter_join_welcome_member'] = $strongarm;
+
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'tm_notifications__user_chapter_join';
+  $strongarm->name = 'tm_notifications__user_chapter_join_notify_leaders';
   $strongarm->value = array(
-    'user_label' => 'Confirmation when joining a chapter',
+    'user_label' => 'Notify chapter leaders when new member joins chapter',
     'default_state' => '1',
-    'change_allowed' => 1,
+    'change_allowed' => 0,
     'email' => array(
-      'subject' => 'You joined [node:title]',
-      'message' => 'Hi [current-user:field_user_first_name],
+      'subject' => 'New member: [current-user:field_user_first_name] joined [node:title]',
+      'message' => 'Hi [user:field_user_first_name],
 
-This is a notification to let you know that you successfully joined the Travel Massive chapter: [node:title].
+A new member [current-user:field_user_first_name] [current-user:field_user_last_name]just joined your chapter [node:title].
+
+You can view their profile here:
+
+__SERVER_NAME__/__PROFILE_URL__
+
+If they are a new member to Travel Massive, they may also need approval. Please take the time to review their profile and ensure it\'s valid before approving them.
 
 cheers,
 The Travel Massive team',
     ),
   );
-  $export['tm_notifications__user_chapter_join'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'tm_notifications__user_chapter_unjoin';
-  $strongarm->value = array(
-    'user_label' => 'Confirmation when leaving a chapter',
-    'default_state' => '1',
-    'change_allowed' => 1,
-    'email' => array(
-      'subject' => 'You left [node:title]',
-      'message' => 'Hi [current-user:field_user_first_name],
-
-This is a notification to let you know that you successfully left the Travel Massive chapter: [node:title].
-
-cheers,
-The Travel Massive team',
-    ),
-  );
-  $export['tm_notifications__user_chapter_unjoin'] = $strongarm;
+  $export['tm_notifications__user_chapter_join_notify_leaders'] = $strongarm;
 
   return $export;
 }

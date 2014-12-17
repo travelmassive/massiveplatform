@@ -11,9 +11,10 @@ include_once 'tm_notifications_chapter.features.inc';
  */
 function tm_notifications_chapter_tm_notif_info() {
   $notification = array();
-  $notification['user_chapter_join'] = array(
-    'title' => 'Member joined city',
-    'description' => 'Send the member a confirmation when joining a city.',
+
+  $notification['user_chapter_join_welcome_member'] = array(
+    'title' => 'Member joined chapter',
+    'description' => 'Send the member a welcome message when joining a chapter.',
     'use_cron' => FALSE,
     'tokens' => array(
       // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
@@ -24,10 +25,10 @@ function tm_notifications_chapter_tm_notif_info() {
       'click_insert' => TRUE
     )
   );
-  
-  $notification['user_chapter_unjoin'] = array(
-    'title' => 'Member unjoined city',
-    'description' => 'Send the member a confirmation when unjoining a city.',
+
+  $notification['user_chapter_join_notify_leaders'] = array(
+    'title' => 'Notify chapter leaders that a new member joined',
+    'description' => 'Send chapter leaders a notification about a new member',
     'use_cron' => FALSE,
     'tokens' => array(
       // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
@@ -51,21 +52,23 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
     $node = node_load($entity_id);
     // Only for event nodes.
     if ($node->type == 'chapter') {
-      tm_notifications_notify('user_chapter_join', $account, array('node' => $node));
-    }
-  }
-}
 
-/**
- * Implement hook_flag_unflag()
- */
-function tm_notifications_chapter_flag_unflag($flag, $entity_id, $account, $flagging) {
-  // We want to target the signup flag on nodes.
-  if ($flag->name == 'signup' && $flag->entity_type == 'node') {
-    $node = node_load($entity_id);
-    // Only for event nodes.
-    if ($node->type == 'chapter') {
-      tm_notifications_notify('user_chapter_unjoin', $account, array('node' => $node));
+      // send welcome message to the user
+      tm_notifications_notify('user_chapter_join_welcome_member', $account, array('node' => $node));
+
+      // notify each owner of the organizational profile that they have a new follower
+      foreach ($node->field_chapter_leaders['und'] as $leader) {
+        $leader = user_load($leader['target_id']);
+
+        // set profile url (either friendly url or community url)
+        $who_joined = user_load($account->uid);
+        $profile_url = "community/" . $who_followed->name;
+        if (count($who_joined->field_friendly_url) > 0) { 
+          $profile_url = $who_joined->field_friendly_url['und']['0']['value'];
+        } 
+
+        tm_notifications_notify('user_chapter_join_notify_leaders', $leader, array('node' => $node, 'user' => $leader, '__PROFILE_URL__' => $profile_url));
+      }
     }
   }
 }

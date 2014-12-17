@@ -173,44 +173,80 @@ function _tm_more_actions_process($field, $title = NULL) {
   if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
     $node = menu_get_object();
     if ($node->type == 'event') {
+      
+      $show_menu_item = false;
+
       $targetuser = user_load($user->uid);
       //if (!in_array("chapter leader", $targetuser->roles)){
+
+      // if is chapter leader
       if (isset($node->field_chapter[LANGUAGE_NONE][0])){
-        if (tm_users_is_chapter_leader($user->uid, $node->field_chapter[LANGUAGE_NONE][0]['target_id'])){ 
-          $links['manageattendees'][] = array(
-            'wrapper_class' => array('managersvp'),
-            'content' => l(t('Manage RSVPs'), 'node/' . $nid . '/rsvp', array(
-              'attributes' => array( 
-              'title' => t('Manage RSVPs')
-              )
-            ))
-          );
+        if (tm_users_is_chapter_leader($user->uid, $node->field_chapter[LANGUAGE_NONE][0]['target_id'])) { 
+            $show_menu_item = true;
           }
-        }
+      }
+
+      // if is admin always show
+      if (in_array('administrator', array_values($user->roles))) {
+        $show_menu_item = true;
+      }
+
+      // if event is external rsvp, don't show
+      if ($node->field_external_rsvp['und'][0]['value']) {
+        $show_menu_item = false;
+      }
+
+      if ($show_menu_item) {
+        $links['manageattendees'][] = array(
+          'wrapper_class' => array('managersvp'),
+          'content' => l(t('Manage RSVPs'), 'node/' . $nid . '/rsvp', array(
+            'attributes' => array( 
+            'title' => t('Manage RSVPs')
+            )
+          ))
+        );
       }
     }
+  }
   // END manage RSVPs
 
   // START contact attendees.
   if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
     $node = menu_get_object();
     if ($node->type == 'event') {
+
+      $show_menu_item = false;
+
       $targetuser = user_load($user->uid);
       //if (in_array("chapter leader", $targetuser->roles)){
       if (isset($node->field_chapter[LANGUAGE_NONE][0])){
-        if (tm_users_is_chapter_leader($user->uid, $node->field_chapter[LANGUAGE_NONE][0]['target_id'])){ 
-          $links['manageattendees'][] = array(
-            'wrapper_class' => array('contactattendees'),
-            'content' => l(t('Contact attendees'), 'node/' . $nid . '/communicate', array(
-              'attributes' => array( 
-              'title' => t('Contact attendees')
-              )
-            ))
-          );
-          }
+        if (tm_users_is_chapter_leader($user->uid, $node->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
+          $show_menu_item = true;
         }
       }
+
+      // if is admin always show
+      if (in_array('administrator', array_values($user->roles))) {
+        $show_menu_item = true;
+      }
+
+      // if event is external rsvp, don't show
+      if ($node->field_external_rsvp['und'][0]['value']) {
+        $show_menu_item = false;
+      }
+
+      if ($show_menu_item) {
+        $links['manageattendees'][] = array(
+          'wrapper_class' => array('contactattendees'),
+          'content' => l(t('Contact attendees'), 'node/' . $nid . '/communicate', array(
+            'attributes' => array( 
+            'title' => t('Contact attendees')
+            )
+          ))
+        );
+      }
     }
+  }
   // END contact attendees
 
   // START download chapter members.
@@ -220,24 +256,36 @@ function _tm_more_actions_process($field, $title = NULL) {
     $node = menu_get_object();
     if ($node->type == 'chapter') {
       global $user;
+      $show_menu_item = false;
+
+      // show to chapter leaders
       $targetuser = user_load($user->uid);
       if (in_array("chapter leader", $targetuser->roles)){
+        $show_menu_item = true;
+      }
+
+      // if is admin always show
+      if (in_array('administrator', array_values($user->roles))) {
+        $show_menu_item = true;
+      }
+
+      if ($show_menu_item) {
         $links['downloadmembers'][] = array(
           'wrapper_class' => array('downloadmembers'),
-          'content' => l(t('Download members as CSV'), 'download/csv/' . $nid, array(
+          'content' => l(t('Download Members CSV'), 'download/csv/' . $nid, array(
             'attributes' => array( 
-            'title' => t('Download members as CSV')
+            'title' => t('Download Members CSV')
             )
           ))
         );
-        }
       }
     }
+  }
   // END download chapter members
 
   // START approve link
   //drupal_set_message("<pre>".print_r($menu_item,TRUE)."</pre>");
-  if ($menu_item['path'] == 'user/%'){
+  if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
     if (isset($menu_item['page_arguments'][0]->uid)){
       $uid = $menu_item['page_arguments'][0]->uid;
       $targetuser = user_load($uid);
@@ -264,9 +312,9 @@ function _tm_more_actions_process($field, $title = NULL) {
         if (user_access("unapprove users")){
           $links['approve'][] = array(
             'wrapper_class' => array('unapprove'),
-            'content' => l(t('Un-approve'), 'user/' . $uid . '/unapprove', array(
+            'content' => l(t('Un-Approve'), 'user/' . $uid . '/unapprove', array(
               'attributes' => array(
-              'title' => t('Un-approve user')
+              'title' => t('Un-Approve user')
               )
             ))
           );    

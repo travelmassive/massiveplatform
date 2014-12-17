@@ -120,6 +120,17 @@ function tm_notifications_mail($key, &$message, $params) {
   }
   
   $message['subject'] = $subject;
+  //$message['body'][] = $msg;
+  // replace the __SERVER_NAME__ field as we always need this
+  $msg = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $msg);
+
+  // replace custom tokens ie: __PROFILE_URL__
+  foreach ($params['tokens'] as $token_name => $token_value) {
+    if (strpos($token_name, "__") === 0) {
+      $msg = str_replace($token_name, $token_value, $msg);
+    }
+  }
+
   $message['body'][] = $msg;
   
   // Notifications that are likely to be sent to multiple user at the

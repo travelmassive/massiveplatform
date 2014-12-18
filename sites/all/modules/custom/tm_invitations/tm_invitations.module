@@ -154,7 +154,7 @@ function tm_invitations_send_email($email, $user){
     $name = $user->name;
     if (isset($user->field_user_first_name[$language])){
       $name = $user->field_user_first_name[$language][0]['value'];
-      if (isset($user->field_user_first_name[$language])){
+      if (isset($user->field_user_last_name[$language])){
         $name .= ' '.$user->field_user_last_name[$language][0]['value'];
       }
     }
@@ -164,22 +164,63 @@ function tm_invitations_send_email($email, $user){
     $language = language_default();
     $params = array();
     $from = NULL;
-    $send = FALSE;
-    $message = drupal_mail($module, $key, $email, $language, $params, $from, $send);
-    $message['subject'] = "Travel Massive Invitation from $name";
-    $message['body'] = array();
-    $message['body'][] = "Hi,";
-    $message['body'][] = "I want to invite you to be a part of Travel Massive.";
-    $message['body'][] = "Join the community and connect with me by visiting http://" . $_SERVER["SERVER_NAME"] . "/user/register";
-    $message['body'][] = "Regards,";
-    $message['body'][] = $name;
+    $send = FALSE;    
 
+    // CONSTRUCT MESSAGE
+    $member_url = url('user/'.$user->uid, array('absolute'=>TRUE));
+    $message = "Hi,";
+    $message .= "<br>";
+    $message .= "<br>You've been invited to __SITE_NAME__ by " . $name . ".";
+    $message .= "<br>";
+    $message .= "<br>Join the community by visiting <a href='__SERVER_HTTP__://__SERVER_NAME__/user/register'>__SERVER_NAME__/user/register</a>";
+    $message .= "<br>";
+    $message .= "<br>__EMAIL_SIGNOFF__";
+
+    // STEP 1. LOAD HTML TEMPLATE
+    $template_file = drupal_get_path('module', 'tm_notifications') . '/templates/tm_notifications-email_template.tpl.php';
+    $template = file_get_contents($template_file);
+
+
+    // STEP 2. SET MAIL HTML HEADERS
+    $email_message = drupal_mail($module, $key, $email, $language, $params, NULL, $send);
+    $email_message['headers']['MIME-Version'] = '1.0';
+    $email_message['headers']['Content-Type'] = 'multipart/mixed;';
+    $email_message['headers']['Content-Type'] = 'text/html;';
+
+
+    // STEP 3. SET SUBJECT 
+    global $conf;
+    $email_message['subject'] = "Your Invitation to __SITE_NAME__";
+    $email_message['subject'] = str_replace("__SITE_NAME__", $conf["tm_site_name"], $email_message['subject']);
+
+
+    // STEP 4. REPLACE BODY AND FOOTER IN HTML TEMPLATE
+    $template = str_replace("__EMAIL_BODY__", $message, $template);
+    $footer = $conf["tm_email_default_footer"];
+    if (isset ($params['footer'])) {
+      $footer = $params['footer'];
+    }
+    $template = str_replace("__EMAIL_FOOTER__", $footer, $template);
+
+    // Other vars
+    $template = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $template); 
+    $template = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $template);  
+    $template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
+    $template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template); 
+
+    // STEP 5. LOAD HTML TEMPLATE INTO EMAIL BODY
+    $email_message['body'] = $template;
+
+    // STEP 6. SEND EMAIL
     // Retrieve the responsible implementation for this message.
     $system = drupal_mail_system($module, $key);
 
     // Format the message body.
-    $message = $system->format($message);
+    $format_message = $system->format($email_message);
 
     // Send e-mail.
-    $message['result'] = $system->mail($message);
+    $result = $system->mail($format_message);
+
+
+
 }

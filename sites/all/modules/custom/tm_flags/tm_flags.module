@@ -91,34 +91,43 @@ function tm_flags_preprocess_flag(&$variables) {
   if($variables['action'] == 'flag') {
     $uid = $user->uid;
     $flag_name = $flag->name;
-    $entity_type = $flag->entity_type;
-    $fg_u = flag_get_user_flags('user', NULL, $uid, NULL, FALSE);
-    $fg_n = flag_get_user_flags('node', NULL, $uid, NULL, FALSE);
+    // We want override flag function only on the node and user pages, only for no trusted user
+    $cur_entity = ((arg(0) == 'node' || arg(0) == 'user') && is_numeric(arg(1))) ? arg(0) : '';
+    $trusted_user = (array_intersect($user->roles, array('administrator', 'chapter leader'))) ? TRUE : FALSE;
     
     // "Join" limit for the non chapter leaders
-    if (($flag_name == 'signup') && ($entity_type == 'node')) {
+  if ($flag_name == 'signup' && $cur_entity == 'node' && $trusted_user !== TRUE) {
       $limit = variable_get('massiveplatform_chapter_join_limit', NULL);
       // Get Join count
       $fg_n = flag_get_user_flags('node', NULL, $uid, NULL, FALSE);
-      $fg_count = (isset($fg_n['signup'])) ? count($fg_n['signup']) : 0;
-      if ($fg_count >= $limit){
+      $fg_signup_count = (isset($fg_n['signup'])) ? count($fg_n['signup']) : NULL;
+      if ($fg_signup_count >= $limit){
         $tm_limit = TRUE;
       };
     }
+    
     // Following limit reached
-    if(in_array($flag_name, array('follow_members', 'follow_organizations')) && in_array($entity_type, array('node', 'user'))) {
-      $limit = variable_get('massiveplatform_following_ratio_limit', NULL);
-      // Get following count
-      $fg_count = 0;
-      $fg_count = (isset($fg_u['follow_members'])) ? $fg_count += count($fg_u['follow_members']) : $fg_count;
-      $fg_count = (isset($fg_n['follow_organizations'])) ? $fg_count += count($fg_n['follow_organizations']) : $fg_count;
-      
-      // Get followers count
-      $fr = flag_get_counts('user', $uid, FALSE);
-      $fr_count = (isset($fr['follow_members'])) ? count($fr['follow_members']) : 0;
+    // Add a simple cache for pages with multiple flags
+    global $fg_count; // Following count
+    global $mfr_limit;
+    if((($flag_name == 'follow_members' && $cur_entity = 'user') || ($flag_name == 'follow_organizations' && $cur_entity = 'node')) && $trusted_user !== TRUE) {
+      if(!isset($fg_count) && !isset($mfr_limit)) {
+        $fg_u = flag_get_user_flags('user', NULL, $uid, NULL, FALSE); // Following user
+        $fg_n = flag_get_user_flags('node', NULL, $uid, NULL, FALSE); // Following node
+        $mfr_limit = variable_get('massiveplatform_following_ratio_limit', NULL);
+        // Get following count
+        $fg_count = (isset($fg_u['follow_members'])) ? count($fg_u['follow_members']) : NULL;
+        $fg_count = (isset($fg_n['follow_organizations'])) ? $fg_count += count($fg_n['follow_organizations']) : $fg_count;
+      }
+      // Calculate only when flaging count >= massiveplatform_following_ratio_limit
+      if ($fg_count >= $mfr_limit) {
+        // Get followers count
+        $fr = flag_get_counts('user', $uid, FALSE);
+        $fr_count = (isset($fr['follow_members'])) ? count($fr['follow_members']) : 0;
 
-      if ($fg_count - $fr_count >= $limit){
-        $tm_limit = TRUE;
+        if ($fg_count - $fr_count >= $mfr_limit){
+          $tm_limit = TRUE;
+        }
       }
     }
     

@@ -24,8 +24,6 @@ function tm_users_external_signin_oauth() {
   $_SESSION['twitter_oauth']['signin'] = TRUE;
 
   $url = $twitter->get_authenticate_url($token);
-  print($conf['tm_twitter_consumer_key']);
-  die($url);
   drupal_goto($url);
 }
 

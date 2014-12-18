@@ -585,6 +585,7 @@ $conf['tm_enable_fontpage_socialfeeds'] = false;
 
 $conf['install_profile'] = 'tm';
 
-/** TM Limit **/
-$conf['massiveplatform_following_ratio_limit'] = '50'; // difference between following/followers
-$conf['massiveplatform_chapter_join_limit'] = '16'; // "join" limit for the non chapter leaders
+/** Limit Follow and Join **/
+/** NOTE: Administrator and chapter leaders do not have limits **/
+$conf['tm_following_ratio_limit'] = '50'; // difference between following/followers
+$conf['tm_chapter_join_limit'] = '16'; // "join" limit for the non chapter leaders

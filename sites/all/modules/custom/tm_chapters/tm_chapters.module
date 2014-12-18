@@ -135,6 +135,7 @@ function tm_chapters_contact_form_submit($form, &$form_state){
 /* Email sending function */
 function tm_chapters_send_email($email, $subject, $body, $user){
 
+    // Get Users Name
     if (empty($user->language)) $language = LANGUAGE_NONE;
     else $language = $user->language;
     $name = $user->name;
@@ -145,6 +146,7 @@ function tm_chapters_send_email($email, $subject, $body, $user){
       }
     }
 
+    // SEND EMAIL
     $module = 'tm_chapters';
     $key = 'key';
     $language = language_default();
@@ -152,25 +154,64 @@ function tm_chapters_send_email($email, $subject, $body, $user){
     $from = NULL;
     $reply = $user->mail;
     $send = FALSE;
-    $message = drupal_mail($module, $key, $email, $language, $params, $from, $send);
-    // prepend something to this subject if you want to 
-    $message['subject'] = "Contact Form: " . check_plain($subject);
-    $message['body'] = array();
-    $message['body'][] = "Hi, a member just sent a message via your Chapter contact form:";
-    $message['body'][] = "Name: " . $name;
-    $message['body'][] = "Subject: " . check_plain($subject);
-    $message['body'][] = "Message: " . check_plain($body);
-    $message['body'][] = "Member's profile: ".url('user/'.$user->uid, array('absolute'=>TRUE));
-    $message['body'][] = "Member's email: " . $reply;
+    
 
+    // CONSTRUCT MESSAGE
+    $member_url = url('user/'.$user->uid, array('absolute'=>TRUE));
+    $message = "Hi, a member just sent a message via your Chapter contact form:";
+    $message .= "<br>";
+    $message .= "<br>Name: " . $name;
+    $message .= "<br>Subject: " . check_plain($subject);
+    $message .= "<br>Message: " . check_plain($body);
+    $message .= "<br>Member's profile: <a href='" . $member_url . "'>" . $member_url . "</a>";
+    $message .= "<br>Member's email: " . $reply;
+    $message .= "<br>";
+    $message .= "<br>To reply directly, just reply to this email.";
+    $message .= "<br>";
+    $message .= "<br>__EMAIL_SIGNOFF__";
+
+    // STEP 1. LOAD HTML TEMPLATE
+    $template_file = drupal_get_path('module', 'tm_notifications') . '/templates/tm_notifications-email_template.tpl.php';
+    $template = file_get_contents($template_file);
+
+
+    // STEP 2. SET MAIL HTML HEADERS
+    $email_message = drupal_mail($module, $key, $email, $language, $params, NULL, $send);
+    $email_message['headers']['MIME-Version'] = '1.0';
+    $email_message['headers']['Content-Type'] = 'multipart/mixed;';
+    $email_message['headers']['Content-Type'] = 'text/html;';
+    $email_message['headers']['Reply-to'] = $reply; // set reply-to to the user
+
+    // STEP 3. SET SUBJECT 
+    $email_message['subject'] = "Contact Form: " . check_plain($subject);
+
+    // STEP 4. REPLACE BODY AND FOOTER IN HTML TEMPLATE
+    $template = str_replace("__EMAIL_BODY__", $message, $template);
+    global $conf;
+    $footer = $conf["tm_email_default_footer"];
+    if (isset ($params['footer'])) {
+      $footer = $params['footer'];
+    }
+    $template = str_replace("__EMAIL_FOOTER__", $footer, $template);
+
+    // Other vars
+    $template = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $template); 
+    $template = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $template);  
+    $template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
+    $template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template); 
+
+    // STEP 5. LOAD HTML TEMPLATE INTO EMAIL BODY
+    $email_message['body'] = $template;
+
+    // STEP 6. SEND EMAIL
     // Retrieve the responsible implementation for this message.
     $system = drupal_mail_system($module, $key);
 
     // Format the message body.
-    $message = $system->format($message);
+    $format_message = $system->format($email_message);
 
     // Send e-mail.
-    $message['result'] = $system->mail($message);
+    $result = $system->mail($format_message);
 }
 
 /* Download Chapter CSV function */

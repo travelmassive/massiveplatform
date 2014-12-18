@@ -584,8 +584,9 @@ $conf['tm_twitter_consumer_secret'] = '';
 $conf['tm_enable_fontpage_socialfeeds'] = false;
 
 /** Limit Follow and Join **/
-$conf['massiveplatform_following_ratio_limit'] = '50'; // difference between following/followers
-$conf['massiveplatform_chapter_join_limit'] = '16'; // "join" limit for the non chapter leaders
+/** NOTE: Administrator and chapter leaders do not have limits **/
+$conf['tm_following_ratio_limit'] = '50'; // difference between following/followers
+$conf['tm_chapter_join_limit'] = '16'; // "join" limit for the non chapter leaders
 
 /** Settings for Email Templates **/
 $conf['tm_site_name'] = "Travel Massive"; // used by emails and in templates to refer to the site

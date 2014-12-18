@@ -52,6 +52,15 @@ function tm_users_strongarm() {
         'tm_twitter_settings' => array(
           'weight' => '80',
         ),
+        'ckeditor' => array(
+          'weight' => '10',
+        ),
+        'mimemail' => array(
+          'weight' => '0',
+        ),
+        'redirect' => array(
+          'weight' => '30',
+        ),
       ),
       'display' => array(
         'masquerade' => array(

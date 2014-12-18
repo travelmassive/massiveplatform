@@ -2,7 +2,6 @@
 /**
  * @file
  * Industry segments taxonomy terms to import on installation.
- * @author Olaf Veerman (olaf.veerman@flipside.org)
  */
 $tm_segments_terms = array(
   'Online Travel Industry' => array(
@@ -23,9 +22,11 @@ $tm_segments_terms = array(
     'Affiliate network',
     'Tour booking',
     'Local tours',
-    'Professional Consulting'
+    'Professional Consulting',
+    'Innovation'
   ),
   'Blogger' => array(
+    'Travel Blogger',
     'Adventure travel blogging',
     'Family travel blogging',
     'Food blogging',
@@ -56,6 +57,7 @@ $tm_segments_terms = array(
     'Tour Operator',
     'Travel Agencies',
     'Adventure Tours',
+    'Tour Guide',
     'Cultural & Study Tours',
     'Incentive Holidays',
     'Incoming Agencies',
@@ -95,7 +97,7 @@ $tm_segments_terms = array(
     'Charter operators/Aviation Service',
   ),
   'Business Travel' => array(
-    'Travel Management Companies',
+    'Corporate Travel',
     'Business Travel Agencies',
     'Exhibition Centres',
     'Conference & Meeting Venue',
@@ -114,6 +116,15 @@ $tm_segments_terms = array(
     'Online Payment Systems',
     'Telecommunication',
   ),
+  'Marketing' => array(
+    'Brand Manager',
+    'Marketing Manager',
+    'Affiliate Marketing',
+    'Customer Relationship',
+    'Market Research',
+    'Advertisting Agency',
+    'Digital Marketing'
+   ),
   'Information and Advice' => array(
     'Information and advice',
     'Education and further education',
@@ -133,6 +144,7 @@ $tm_segments_terms = array(
     'Theme park',
     'National park',
     'Museum',
+    'Art Gallery',
     'Exhibition / Show',
     'Tourist attraction',
   ),
@@ -142,5 +154,12 @@ $tm_segments_terms = array(
     'Student',
     'Science and research',
   ),
+  'Travel Insider' => array(
+    'Pilot',
+    'Travel King',
+    'Travel Queen',
+    'Travel Professor',
+    'Travel Massive'.
+   ),
 );
 ?>

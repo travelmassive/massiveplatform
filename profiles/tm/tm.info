@@ -73,7 +73,7 @@ dependencies[] = email_registration
 dependencies[] = redirect
 dependencies[] = mimemail
 dependencies[] = ckeditor
-
+dependencies[] = shs
 
 
 ; TM - development

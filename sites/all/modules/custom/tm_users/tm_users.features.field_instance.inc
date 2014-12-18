@@ -768,7 +768,7 @@ function tm_users_field_default_field_instances() {
   // Exported field_instance: 'user-user-field_segment'
   $field_instances['user-user-field_segment'] = array(
     'bundle' => 'user',
-    'default_value' => array(),
+    'default_value' => NULL,
     'deleted' => 0,
     'description' => 'Please select the industry segment that best applies to you.',
     'display' => array(
@@ -802,16 +802,23 @@ function tm_users_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'user',
     'field_name' => 'field_segment',
-    'label' => 'Segment',
+    'label' => 'Industry Segment',
     'required' => 0,
     'settings' => array(
       'user_register_form' => 0,
     ),
     'widget' => array(
       'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_select',
+      'module' => 'shs',
+      'settings' => array(
+        'shs' => array(
+          'create_new_levels' => 0,
+          'create_new_terms' => 0,
+          'force_deepest' => 0,
+          'node_count' => 0,
+        ),
+      ),
+      'type' => 'taxonomy_shs',
       'weight' => 43,
     ),
   );
@@ -1250,6 +1257,7 @@ function tm_users_field_default_field_instances() {
   t('Facebook');
   t('First name');
   t('Home Chapter');
+  t('Industry Segment');
   t('Job Role');
   t('Last name');
   t('Linkedin');
@@ -1259,7 +1267,6 @@ function tm_users_field_default_field_instances() {
   t('Please select the industry segment that best applies to you.');
   t('Please select what you consider to be your home chapter.');
   t('Provide the other members with some more information about yourself. This information will be <strong>public</strong>.');
-  t('Segment');
   t('The name of your business, company, or organization.');
   t('Three words that describe why we should travel?');
   t('Travel Massive URL (travelmassive.com/your-url)');

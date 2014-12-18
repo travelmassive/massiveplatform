@@ -82,5 +82,5 @@ features[variable][] = node_submitted_event
 features[variable][] = pathauto_node_event_pattern
 features[views_view][] = events
 features[views_view][] = related_events
-mtime = 1418887574
+mtime = 1418891297
 project path = sites/all/modules/custom

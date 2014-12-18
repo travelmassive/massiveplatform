@@ -388,7 +388,8 @@ function tm_events_communication_form($event){
       );
 
     // prepopulate some of the text
-    $event_url = $_SERVER["SERVER_NAME"] . drupal_get_path_alias('node/' . $event->nid);
+    $event_url = $_SERVER["SERVER_NAME"] . "/" .
+    drupal_get_path_alias('node/' . $event->nid);
 
     
     $prefill = "Hi [first_name],<br><br>";
@@ -477,9 +478,8 @@ function tm_events_communication_form($event){
     $form['help_text'] = array(
       '#markup' => '<br><br><small>Note: Members can opt-out by unchecking <i>Chapter and Event Announcements</i> in their notification settings.</small>',
     );
-
-    
   }
+
   return $form;
 }
 
@@ -495,7 +495,7 @@ function tm_events_send_emails_ajax(){
 
   $subject = $_POST['subject'];
   $message = $_POST['message'];
-  $message .= "<br><p><small>(Manage your Notification Settings at " . $_SERVER["SERVER_NAME"] . '</small>)</p>';
+  $message .= "<p><small>(Event ID: " . $_POST['eventid'] . ")</small></p>";
   $recipients = $_POST['recipients'];
   $eventid = $_POST['eventid'];
 
@@ -517,8 +517,7 @@ function tm_events_test_email_ajax(){
 
   $subject = $_POST['subject'];
   $message = $_POST['message'];
-  $message .= "<br><p><small>(Manage your Notification Settings at " . $_SERVER["SERVER_NAME"] . '</small>)</p>';
-
+  $message .= "<p><small>(Event ID: " . $_POST['eventid'] . ")</small></p>";
   $email = $_POST['address'];
   $eventid = $_POST['eventid'];
 
@@ -605,13 +604,48 @@ function tm_events_send_email($email, $subject, $message, $eventid){
     $language = language_default();
     $params = array();
     $send = FALSE;
+    
+
+    // STEP 1. LOAD HTML TEMPLATE
+    $template_file = drupal_get_path('module', 'tm_notifications') . '/templates/tm_notifications-email_template.tpl.php';
+    $template = file_get_contents($template_file);
+ 
+
+    // STEP 2. SET MAIL HTML HEADERS
     $email_message = drupal_mail($module, $key, $email, $language, $params, NULL, $send);
     $email_message['headers']['MIME-Version'] = '1.0';
     $email_message['headers']['Content-Type'] = 'multipart/mixed;';
     $email_message['headers']['Content-Type'] = 'text/html;';
-    $email_message['subject'] = check_plain($subject);
-    $email_message['body'][] = $message;
 
+
+    // STEP 3. SET SUBJECT
+    $subject = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $subject);
+    $subject = str_replace("__SERVER_HTTP__", $conf["tm_server_http"], $subject);  
+    $subject = str_replace("__SITE_NAME__", $conf["tm_site_name"], $subject);  
+    $email_message['subject'] = check_plain($subject);
+
+  
+    // STEP 4. REPLACE BODY AND FOOTER IN HTML TEMPLATE
+    $template = str_replace("__EMAIL_BODY__", $message, $template);
+    global $conf;
+    $footer = $conf["tm_email_default_footer"];
+    if (isset ($params['footer'])) {
+      $footer = $params['footer'];
+    }
+    $template = str_replace("__EMAIL_FOOTER__", $footer, $template);
+
+    // Other vars
+    $template = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $template); 
+    $template = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $template);  
+    $template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
+    $template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template);  
+
+
+    // STEP 5. LOAD HTML TEMPLATE INTO EMAIL BODY
+    $email_message['body'] = $template;
+
+
+    // STEP 6. SEND EMAIL
     // Retrieve the responsible implementation for this message.
     $system = drupal_mail_system($module, $key);
 

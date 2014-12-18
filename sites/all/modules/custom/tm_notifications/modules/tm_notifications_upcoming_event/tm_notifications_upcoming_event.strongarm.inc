@@ -21,10 +21,10 @@ function tm_notifications_upcoming_event_strongarm() {
     'email' => array(
       'subject' => '[node:title] in 2 days',
       'message' => 'Hi [current-user:field_user_first_name],
-
-This is a friendly reminder that the event [node:title] will take place in two days.
-
-__EMAIL_NOTIFICATION_FOOTER__',
+<br>
+<br>This is a friendly reminder that the event [node:title] will take place in two days.
+<br>
+<br>__EMAIL_SIGNOFF__',
     ),
   );
   $export['tm_notifications__event_upcoming_2_days'] = $strongarm;

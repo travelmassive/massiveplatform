@@ -21,18 +21,19 @@ function tm_notifications_events_strongarm() {
     'email' => array(
       'subject' => '[current-user:field_user_first_name] [current-user:field_user_last_name] just registered for [node:title]',
       'message' => 'Hi [user:field_user_first_name],
-
-[current-user:field_user_first_name] [current-user:field_user_last_name] just signed up for your event [node:title].
-
-You can view their profile here:
-
-__SERVER_NAME__/__PROFILE_URL__
-
-Here\'s the link to your event:
-
-__SERVER_NAME__/__EVENT_URL__
-
-__EMAIL_NOTIFICATION_FOOTER__
+<br>
+<br>[current-user:field_user_first_name] [current-user:field_user_last_name] just signed up for your event [node:title].
+<br>
+<br>You can view their profile here:
+<br>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br>
+<br>Here\'s the link to your event:
+<br>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">__SERVER_NAME__/__EVENT_URL__</a>
+<br>
+<br>
+<br>__EMAIL_SIGNOFF__
 ',
     ),
   );
@@ -50,18 +51,18 @@ __EMAIL_NOTIFICATION_FOOTER__
     'email' => array(
       'subject' => '[current-user:field_user_first_name] [current-user:field_user_last_name] just un-registered for [node:title]',
       'message' => 'Hi [user:field_user_first_name],
-
-[current-user:field_user_first_name] [current-user:field_user_last_name] just removed their registration for your event [node:title].
-
-You can view their profile here:
-
-__SERVER_NAME__/__PROFILE_URL__
-
-Here\'s the link to your event:
-
-__SERVER_NAME__/__EVENT_URL__
-
-__EMAIL_NOTIFICATION_FOOTER__
+<br>
+<br>[current-user:field_user_first_name] [current-user:field_user_last_name] just removed their registration for your event [node:title].
+<br>
+<br>You can view their profile here:
+<br>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br>
+<br>Here\'s the link to your event:
+<br>
+<a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">__SERVER_NAME__/__EVENT_URL__</a>
+<br>
+<br>__EMAIL_SIGNOFF__
 ',
     ),
   );
@@ -78,18 +79,18 @@ __EMAIL_NOTIFICATION_FOOTER__
     'email' => array(
       'subject' => '[current-user:field_user_first_name] [current-user:field_user_last_name] just registered for the waitlist to [node:title]',
       'message' => 'Hi [user:field_user_first_name],
-
-[current-user:field_user_first_name] [current-user:field_user_last_name] just signed up to the waiting list for your event [node:title].
-
-You can view their profile here:
-
-__SERVER_NAME__/__PROFILE_URL__
-
-Here\'s the link to your event:
-
-__SERVER_NAME__/__EVENT_URL__
-
-__EMAIL_NOTIFICATION_FOOTER__
+<br>
+<br>[current-user:field_user_first_name] [current-user:field_user_last_name] just signed up to the waiting list for your event [node:title].
+<br>
+<br>You can view their profile here:
+<br>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br>
+<br>Here\'s the link to your event:
+<br>
+<a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">__SERVER_NAME__/__EVENT_URL__</a>
+<br>
+<br>__EMAIL_SIGNOFF__
 ',
     ),
   );
@@ -107,18 +108,18 @@ __EMAIL_NOTIFICATION_FOOTER__
     'email' => array(
       'subject' => '[current-user:field_user_first_name] [current-user:field_user_last_name] just un-registered from the waitlist for [node:title]',
       'message' => 'Hi [user:field_user_first_name],
-
-[current-user:field_user_first_name] [current-user:field_user_last_name] just removed their waiting list registration for your event [node:title].
-
-You can view their profile here:
-
-__SERVER_NAME__/__PROFILE_URL__
-
-Here\'s the link to your event:
-
-__SERVER_NAME__/__EVENT_URL__
-
-__EMAIL_NOTIFICATION_FOOTER__
+<br>
+<br>[current-user:field_user_first_name] [current-user:field_user_last_name] just removed their waiting list registration for your event [node:title].
+<br>
+<br>You can view their profile here:
+<br>
+<br><a href="__SERVER_HTTP://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br>
+<br>Here\'s the link to your event:
+<br>
+<a href="__SERVER_HTTP://__SERVER_NAME__/__EVENT_URL__">__SERVER_NAME__/__EVENT_URL__</a>
+<br>
+<br>__EMAIL_SIGNOFF__
 ',
     ),
   );
@@ -135,26 +136,26 @@ __EMAIL_NOTIFICATION_FOOTER__
     'change_allowed' => 0,
     'email' => array(
       'subject' => 'You are now registered for [node:title]',
-      'message' => "Hi [user:field_user_first_name],
-
-You are now signed up to attend the event [node:title].
-
-Here's the event details to keep handy:
-
-[node:title]
-\r\nDate: __EVENT_DATE__
-\r\nStart: __EVENT_TIME__
-\r\nVenue: [node:field_event_venue_name]
-\r\nLocation: [node:field_location]
-
-See who else is attending by visiting the event page:
-
-__SERVER_NAME__/__EVENT_URL__
-
-See you there!
-
-__EMAIL_NOTIFICATION_FOOTER__
-",
+      'message' => 'Hi [user:field_user_first_name],
+<br>
+<br>You are now signed up to attend the event [node:title].
+<br>
+<br>Here\'s the event details to keep handy:
+<br>
+<br>[node:title]
+<br>Date: __EVENT_DATE__
+<br>Start: __EVENT_TIME__
+<br>Venue: [node:field_event_venue_name]
+<br>Location: [node:field_location]
+<br>
+<br>See who else is attending by visiting the event page:
+<br>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">__SERVER_NAME__/__EVENT_URL__</a>
+<br>
+<br>See you there!
+<br>
+<br>__EMAIL_SIGNOFF__
+',
     ),
   );
   $export['tm_notifications__events_register_flag_user'] = $strongarm;
@@ -171,14 +172,14 @@ __EMAIL_NOTIFICATION_FOOTER__
     'email' => array(
       'subject' => 'You\'ve been un-registered for [node:title]',
       'message' => 'Hi [user:field_user_first_name],
-
-This is a confirmation that you\'ve been un-registered for the event [node:title].
-
-If you\'d like to register again in the future, please visit the event page:
-
-__SERVER_NAME__/__EVENT_URL__
-
-__EMAIL_NOTIFICATION_FOOTER__
+<br>
+<br>This is a confirmation that you\'ve been un-registered for the event [node:title].
+<br>
+<br>If you\'d like to register again in the future, please visit the event page:
+<br>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">__SERVER_NAME__/__EVENT_URL__</a>
+<br>
+<br>__EMAIL_SIGNOFF__
 ',
     ),
   );
@@ -196,16 +197,16 @@ __EMAIL_NOTIFICATION_FOOTER__
     'email' => array(
       'subject' => 'You\'re on the waitlist to [node:title]',
       'message' => 'Hi [user:field_user_first_name],
-
-This is a confirmation that you\'re on the waiting list for the event [node:title].
-
-We\'ll let you know if we\'re able to get you on the attendee list. Because of limited venue or event capacity we might not be able to fit everyone in.
-
-You can view the event details here:
-
-__SERVER_NAME__/__EVENT_URL__
-
-__EMAIL_NOTIFICATION_FOOTER__
+<br>
+<br>This is a confirmation that you\'re on the waiting list for the event [node:title].
+<br>
+<br>We\'ll let you know if we\'re able to get you on the attendee list. Because of limited venue or event capacity we might not be able to fit everyone in.
+<br>
+<br>You can view the event details here:
+<br>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">__SERVER_NAME__/__EVENT_URL__</a>
+<br>
+<br>__EMAIL_SIGNOFF__
 ',
     ),
   );
@@ -223,14 +224,14 @@ __EMAIL_NOTIFICATION_FOOTER__
     'email' => array(
       'subject' => 'You\'ve been removed from the waitlist for [node:title]',
       'message' => 'Hi [user:field_user_first_name],
-
-This is a confirmation that we\'ve removed your waiting list registration for the event [node:title].
-
-If you\'d like to register again in the future, please visit the event page:
-
-__SERVER_NAME__/__EVENT_URL__
-
-__EMAIL_NOTIFICATION_FOOTER__
+<br>
+<br>This is a confirmation that we\'ve removed your waiting list registration for the event [node:title].
+<br>
+<br>If you\'d like to register again in the future, please visit the event page:
+<br>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">__SERVER_NAME__/__EVENT_URL__</a>
+<br>
+<br>__EMAIL_SIGNOFF__
 ',
     ),
   );

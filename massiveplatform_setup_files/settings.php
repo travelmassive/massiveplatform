@@ -587,6 +587,12 @@ $conf['tm_enable_fontpage_socialfeeds'] = false;
 $conf['massiveplatform_following_ratio_limit'] = '50'; // difference between following/followers
 $conf['massiveplatform_chapter_join_limit'] = '16'; // "join" limit for the non chapter leaders
 
+/** Settings for Email Templates **/
+$conf['tm_site_name'] = "Travel Massive"; // used by emails and in templates to refer to the site
+$conf['tm_email_server_http'] = "https"; // http or https depending on your setup. Will be used in email settings
+$conf['tm_email_signoff'] = "Cheers,<br>- The Travel Massive Team"; // default email sign off at bottom of emails
+$conf['tm_email_default_footer'] = "Update Your Notification Settings at <a href='__SERVER_HTTP__://__SERVER_NAME__'>__SERVER_NAME__</a><br>
+Travel Massive P.B.C. 385 Grove St, San Francisco CA 94102<br> Phone +1 779-999-0042 &middot; community@travelmassive.com"; // used by emails and in templates to refer to the site
 
 $conf['install_profile'] = 'tm';
 

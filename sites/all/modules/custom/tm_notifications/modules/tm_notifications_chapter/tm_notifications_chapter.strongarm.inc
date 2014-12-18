@@ -21,16 +21,16 @@ function tm_notifications_chapter_strongarm() {
     'email' => array(
       'subject' => 'New member: [current-user:field_user_first_name] joined [node:title]',
       'message' => 'Hi [user:field_user_first_name],
-
-A new member [current-user:field_user_first_name] [current-user:field_user_last_name] just joined your chapter [node:title].
-
-You can view their profile here:
-
-__SERVER_NAME__/__PROFILE_URL__
-
-If they are a new member to Travel Massive, they may also need approval. Please take the time to review their profile and ensure it\'s valid before approving them.
-
-__EMAIL_NOTIFICATION_FOOTER__
+<br>
+<br>A new member [current-user:field_user_first_name] [current-user:field_user_last_name] just joined your chapter [node:title].
+<br>
+<br>You can view their profile here:
+<br>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br>
+<br>If they are a new member to __SITE_NAME__, they may also need approval. Please take the time to review their profile and ensure it\'s valid before approving them.
+<br>
+<br>__EMAIL_SIGNOFF__
 ',
     ),
   );
@@ -45,18 +45,18 @@ __EMAIL_NOTIFICATION_FOOTER__
     'default_state' => '1',
     'change_allowed' => 0,
     'email' => array(
-      'subject' => 'Welcome to Travel Massive [node:title]',
+      'subject' => 'Welcome to __SITE_NAME__ [node:title]',
       'message' => 'Hi [current-user:field_user_first_name],
-
-You\'re in!
-
-Thanks for joining the Travel Massive [node:title] Chapter.
-
-We hope you can learn, share, and connect with other like-minded travel insiders through local chapter events in [node:title].
-
-If you are a new member, please ensure that you\'ve filled out your profile so the Chapter Leaders can approve your account. 
-
-__EMAIL_NOTIFICATION_FOOTER__
+<br>
+<br>You\'re in!
+<br>
+<br>Thanks for joining the __SITE_NAME__ [node:title] Chapter.
+<br>
+<br>We hope you can learn, share, and connect with other like-minded travel insiders through local chapter events in [node:title].
+<br>
+<br>If you are a new member, please ensure that you\'ve filled out your profile so the Chapter Leaders can approve your account.
+<br>
+<br>__EMAIL_SIGNOFF__
 ',
     ),
   );

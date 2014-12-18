@@ -10,15 +10,4 @@ dependencies[] = strongarm
 dependencies[] = tm_notifications
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:2
-features[variable][] = tm_notifications__event_register_flag
-features[variable][] = tm_notifications__event_register_unflag
-features[variable][] = tm_notifications__event_waitlist_flag
-features[variable][] = tm_notifications__event_waitlist_unflag
-features[variable][] = tm_notifications__event_register_flag_user
-features[variable][] = tm_notifications__event_register_unflag_user
-features[variable][] = tm_notifications__event_waitlist_flag_user
-features[variable][] = tm_notifications__event_waitlist_unflag_user
-
-
-
-
+mtime = 1418795744

@@ -21,14 +21,15 @@ function tm_notifications_new_follower_strongarm() {
     'email' => array(
       'subject' => '[current-user:field_user_first_name] [current-user:field_user_last_name] just followed you on Travel Massive',
       'message' => 'Hi [user:field_user_first_name],
-
-[current-user:field_user_first_name] [current-user:field_user_last_name] just followed you on Travel Massive.
-
-You can view their profile here:
-
-__SERVER_NAME__/__PROFILE_URL__
-
-__EMAIL_NOTIFICATION_FOOTER__',
+<br>
+<br>[current-user:field_user_first_name] [current-user:field_user_last_name] just followed you on Travel Massive.
+<br>
+<br>You can view their profile here:
+<br>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br>
+<br>__EMAIL_SIGNOFF__
+',
     ),
   );
   $export['tm_notifications__new_follower'] = $strongarm;
@@ -45,14 +46,15 @@ __EMAIL_NOTIFICATION_FOOTER__',
     'email' => array(
       'subject' => '[current-user:field_user_first_name] [current-user:field_user_last_name] just followed [node:title] on Travel Massive',
       'message' => 'Hi [user:field_user_first_name],
-
-[current-user:field_user_first_name] [current-user:field_user_last_name] just followed your company profile [node:title] on Travel Massive.
-
-You can view their profile here:
-
-__SERVER_NAME__/__PROFILE_URL__
-
-__EMAIL_NOTIFICATION_FOOTER__',
+<br>
+<br>[current-user:field_user_first_name] [current-user:field_user_last_name] just followed your company profile [node:title] on Travel Massive.
+<br>
+<br>You can view their profile here:
+<br>
+<a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br>
+<br>__EMAIL_SIGNOFF__
+',
     ),
   );
   $export['tm_notifications__new_organization_follower'] = $strongarm;

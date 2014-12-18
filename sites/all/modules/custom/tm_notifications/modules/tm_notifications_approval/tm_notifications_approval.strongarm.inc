@@ -19,39 +19,36 @@ function tm_notifications_approval_strongarm() {
     'default_state' => '1',
     'change_allowed' => 0,
     'email' => array(
-      'subject' => 'Your Travel Massive account has been approved',
+      'subject' => 'Your __SITE_NAME__ account has been approved',
       'message' => 'Hi [user:field_user_first_name],
-
-Your account has been approved by [current-user:field_user_first_name].
-
-You can view your profile here:
-
-__SERVER_NAME__/__PROFILE_URL__
-
-ARE YOU READY TO CHANGE TRAVEL?
-
-Our mission is to connect travel insiders in every city in the world in order to empower change in travel.
-
-Travel Massive has always been an open and collaborative community founded on three simple principles – to be open to everyone in the travel industry, to be free to participate, and to connect and share globally.
-
-In addition to our core values we have the following community values:
-
-* Building Meaningful Partnerships
-* Fostering Innovation And Big Ideas
-* Supporting Diversity And New Talent
-* Empowering Change In Travel
-* Promoting Responsible Travel
-
-You can read more on our public plan at www.travelmassive.org
-
-If there\'s a chapter in your city, then please join it and attend our events to connect with like-minded travel industry professionals. If you can\'t find a chapter, why don\'t you consider starting a Travel Massive chapter? Get in touch with us to find out more.
-
-Why is my account pending approval?
-Your account is currently pending approval by one of our local chapter leaders. We manually approve every account to ensure the Travel Massive community is genuine. 
-
-Thanks for joining and welcome to Travel Massive!
-
-__EMAIL_NOTIFICATION_FOOTER__
+<br>
+<br>Your account has been approved by [current-user:field_user_first_name].
+<br>
+<br>You can view your profile here:
+<br>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br>
+<br><strong>ARE YOU READY TO CHANGE TRAVEL?</strong>
+<br>
+<br>Our mission is to connect travel insiders in every city in the world in order to empower change in travel.
+<br>
+<br>Travel Massive has always been an open and collaborative community founded on three simple principles – to be open to everyone in the travel industry, to be free to participate, and to connect and share globally.
+<br>
+<br>In addition to our core values we have the following community values:
+<br>
+<br>* Building Meaningful Partnerships
+<br>* Fostering Innovation And Big Ideas
+<br>* Supporting Diversity And New Talent
+<br>* Empowering Change In Travel
+<br>* Promoting Responsible Travel
+<br>
+<br>You can read more on our public plan at <a href="http://www.travelmassive.org">www.travelmassive.org</a>
+<br>
+<br>If there\'s a chapter in your city, then please join it and attend our events to connect with like-minded travel industry professionals. If you can\'t find a chapter, why don\'t you consider starting a Travel Massive chapter? Get in touch with us to find out more.
+<br>
+<br>Thanks for joining and welcome to __SITE_NAME__!
+<br>
+<br>__EMAIL_SIGNOFF__
 ',
     ),
   );

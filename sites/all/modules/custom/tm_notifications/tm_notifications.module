@@ -116,32 +116,70 @@ function tm_notifications_user_form_submit($form, &$form_state) {
  * Compose the email to send.
  */
 function tm_notifications_mail($key, &$message, $params) {
+
+  global $conf;
   $notif = new TMNotification($key);
   $subject = $notif->getEmailSubject();
   $msg = $notif->getEmailMessage();
   
+  // STEP 1. 
+  // Replace tokens
   if (!empty($params['tokens'])) {
     $subject = token_replace($subject, $params['tokens']);
     $msg = token_replace($msg, $params['tokens']);
   }
   
-  $message['subject'] = $subject;
-  //$message['body'][] = $msg;
-  // replace the __SERVER_NAME__ field as we always need this
-  $msg = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $msg);
-  $footer = "cheers, The Travel Massive team";
-  $msg = str_replace("__EMAIL_NOTIFICATION_FOOTER__", $footer, $msg);
-  
-
   // replace custom tokens ie: __PROFILE_URL__
   foreach ($params['tokens'] as $token_name => $token_value) {
     if (strpos($token_name, "__") === 0) {
       $msg = str_replace($token_name, $token_value, $msg);
     }
   }
-
-  $message['body'][] = $msg;
   
+
+  // STEP 2. LOAD HTML TEMPLATE
+  $template_file = drupal_get_path('module', 'tm_notifications') . '/templates/tm_notifications-email_template.tpl.php';
+  $template = file_get_contents($template_file);
+ 
+
+  // STEP 3. SET MAIL HTML HEADERS
+  $module = 'tm_notifications';
+  $language = language_default();
+  $params = array();
+  $send = FALSE;
+  //$email_message = drupal_mail($module, $key, $email, $language, $params, NULL, $send);
+  $message['headers']['MIME-Version'] = '1.0';
+  $message['headers']['Content-Type'] = 'multipart/mixed;';
+  $message['headers']['Content-Type'] = 'text/html;';
+
+
+  // STEP 4. SET SUBJECT
+  $subject = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $subject);
+  $subject = str_replace("__SERVER_HTTP__", $conf["tm_server_http"], $subject);  
+  $subject = str_replace("__SITE_NAME__", $conf["tm_site_name"], $subject);  
+  $message['subject'] = check_plain($subject);
+
+
+  // STEP 5. REPLACE BODY AND FOOTER IN HTML TEMPLATE
+  $template = str_replace("__EMAIL_BODY__", $msg, $template);
+  $footer = $conf["tm_email_default_footer"];
+  if (isset ($params['footer'])) {
+    $footer = $params['footer'];
+  }
+  $template = str_replace("__EMAIL_FOOTER__", $footer, $template);
+
+  // Other vars
+  $template = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $template); 
+  $template = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $template);  
+  $template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
+  $template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template);  
+
+  // STEP 6. LOAD HTML TEMPLATE INTO EMAIL BODY
+  $message['body'] = $template;
+
+
+  // STEP 7. Cron Flag
+  // TODO: This is untested with mimemail
   // Notifications that are likely to be sent to multiple user at the
   // same time should be put in a queue and sent through cron.
   // To achieve this we mimic the behaviour of queue_mail and use
@@ -149,14 +187,13 @@ function tm_notifications_mail($key, &$message, $params) {
   // Whether or not to use cron is defined by the developer in the hook.
   $notifications = module_invoke_all('tm_notif_info');
   $info = $notifications[$key];
-  
   if (isset($info['use_cron']) && $info['use_cron']) {
     // Store the message for sending on cron.
     _queue_mail_get_queue()->createItem($message);
     // And prevent the message from being sent instantly.
     $message['send'] = FALSE;
   }
-  
+
 }
 
 /**

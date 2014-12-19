@@ -1,0 +1,20 @@
+<?php
+/**
+ * @file
+ * Code for the TM Chapters Map feature.
+ */
+
+include_once 'tm_chapters_leaflet_map.features.inc';
+
+// Add a link to the map from the /chapters page
+function tm_chapters_leaflet_map_views_post_execute(&$view) {
+	if ($view->name == 'chapters') {
+		//print_r($view->display[$view->current_display]);
+		$view->build_info['title'] = "Chapters &middot; <a style='color: red;' href='/chapters/map'>Map</a>";
+	}
+
+	if ($view->name == 'chapters_map') {
+		//print_r($view->display[$view->current_display]);
+		$view->build_info['title'] = "<a href='/chapters'>Chapters</a> &middot; Map";
+	}
+}

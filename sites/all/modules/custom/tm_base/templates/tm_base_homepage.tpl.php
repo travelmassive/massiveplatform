@@ -12,9 +12,15 @@ global $user;
 		<p class="subtitle"><?php print check_plain($homepage_description) ?></p>
 	</header>
 	<div class="bd">
-  	<?php if ($homepage_stats_block) : ?>
-  	  <?php print render($homepage_stats_block); ?>
-  	<?php endif; ?>
+    <?php
+      // if tm_frontpage_beta_message is set, show message instead of the stats block
+      if (variable_get('tm_frontpage_launch_message', NULL) != null) {
+        print "<span class='beta_message'>" . (variable_get('tm_frontpage_launch_message', NULL)) . "</span>";
+      }
+      else { 
+        print render($homepage_stats_block);
+      }
+    ?>
   	<?php if (!$user->uid): ?>
   	<p class="cta-wrapper"><?php print l(t('Join now!'), 'user/register', array('attributes' => array('class' => 'bttn bttn-secondary bttn-xl'))) ?></p>
   	<?php endif; ?>

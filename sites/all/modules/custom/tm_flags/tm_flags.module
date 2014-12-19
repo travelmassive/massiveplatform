@@ -11,13 +11,35 @@ include_once 'tm_flags.features.inc';
  */
 function tm_flags_preprocess_flag(&$variables) {
 
-  /*print(variable_get('tm_following_ratio_limit', NULL));
-  print("<hr>");
-  print(variable_get('tm_chapter_join_limit', NULL));*/
-  //die();
+  // check for follow and join limits
+  return _tm_flags_flag_limits($variables);
+}
+
+
+/*
+ * Impose a limit on follower/following ratio and join limit
+ * https://github.com/travelmassive/massiveplatform/issues/52
+ * https://github.com/travelmassive/massiveplatform/issues/51
+ * 
+ * config.php settings:
+ * $conf['tm_following_ratio_limit'] = '50'; // difference between following/followers
+ * $conf['tm_chapter_join_limit'] = '16'; // "join" limit for the non chapter leaders
+ */
+function _tm_flags_flag_limits(&$variables) {
 
   global $user;
   $initialized = &drupal_static(__FUNCTION__, array());
+
+  global $mfr_limit;
+  $mfr_limit = 50; // default if not set
+  if (variable_get('tm_following_ratio_limit', NULL) != null) {
+    $mfr_limit = variable_get('tm_following_ratio_limit', NULL);
+  }
+
+  $limit = 16; // default if not set
+  if (variable_get('tm_following_ratio_limit', NULL) != null) {
+    $limit = variable_get('tm_chapter_join_limit', NULL);
+  }
 
   // Some typing shotcuts:
   $flag = &$variables['flag'];
@@ -103,7 +125,6 @@ function tm_flags_preprocess_flag(&$variables) {
     
     // "Join" limit for the non chapter leaders
   if ($flag_name == 'signup' && $cur_entity == 'node' && $trusted_user !== TRUE) {
-      $limit = variable_get('tm_chapter_join_limit', NULL);
       // Get Join count
       $fg_n = flag_get_user_flags('node', NULL, $uid, NULL, FALSE);
       $fg_signup_count = (isset($fg_n['signup'])) ? count($fg_n['signup']) : NULL;
@@ -115,12 +136,11 @@ function tm_flags_preprocess_flag(&$variables) {
     // Following limit reached
     // Add a simple cache for pages with multiple flags
     global $fg_count; // Following count
-    global $mfr_limit;
     if((($flag_name == 'follow_members' && $cur_entity = 'user') || ($flag_name == 'follow_organizations' && $cur_entity = 'node')) && $trusted_user !== TRUE) {
       if(!isset($fg_count) && !isset($mfr_limit)) {
         $fg_u = flag_get_user_flags('user', NULL, $uid, NULL, FALSE); // Following user
         $fg_n = flag_get_user_flags('node', NULL, $uid, NULL, FALSE); // Following node
-        $mfr_limit = variable_get('tm_following_ratio_limit', NULL);
+        
         // Get following count
         $fg_count = (isset($fg_u['follow_members'])) ? count($fg_u['follow_members']) : NULL;
         $fg_count = (isset($fg_n['follow_organizations'])) ? $fg_count += count($fg_n['follow_organizations']) : $fg_count;

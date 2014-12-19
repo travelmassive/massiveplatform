@@ -87,8 +87,6 @@ function tm_chapters_leaflet_map_views_default_views() {
   $handler->display->display_options['menu']['context'] = 0;
   $handler->display->display_options['menu']['context_only_inline'] = 0;
 
-  /* Display: OpenLayers Data Overlay */
-  $handler = $view->new_display('openlayers', 'OpenLayers Data Overlay', 'openlayers_1');
   $export['chapters_map'] = $view;
 
   return $export;

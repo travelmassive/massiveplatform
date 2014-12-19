@@ -67,13 +67,15 @@ dependencies[] = ultimate_cron
 dependencies[] = role_watchdog
 dependencies[] = geophp
 dependencies[] = geofield
-dependencies[] = openlayers
 dependencies[] = migrate_extras
 dependencies[] = email_registration
 dependencies[] = redirect
 dependencies[] = mimemail
 dependencies[] = ckeditor
 dependencies[] = shs
+dependencies[] = leaflet
+dependencies[] = leaflet_views
+
 
 
 ; TM - development
@@ -100,7 +102,7 @@ dependencies[] = tm_search
 dependencies[] = tm_theme
 dependencies[] = tm_users
 dependencies[] = tm_users_external_signin
-dependencies[] = tm_chapters_map
+dependencies[] = tm_chapters_leaflet_map
 dependencies[] = tm_invitations
 
 ; TM - notifications

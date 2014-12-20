@@ -15,6 +15,7 @@ function tm_flags_user_default_permissions() {
     'name' => 'flag event_register',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+      'non-validated' => 'non-validated',
     ),
     'module' => 'flag',
   );
@@ -24,6 +25,7 @@ function tm_flags_user_default_permissions() {
     'name' => 'flag event_waitlist',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+      'non-validated' => 'non-validated',
     ),
     'module' => 'flag',
   );
@@ -33,6 +35,7 @@ function tm_flags_user_default_permissions() {
     'name' => 'flag signup',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+      'non-validated' => 'non-validated',
     ),
     'module' => 'flag',
   );
@@ -42,6 +45,7 @@ function tm_flags_user_default_permissions() {
     'name' => 'unflag event_register',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+      'non-validated' => 'non-validated',
     ),
     'module' => 'flag',
   );
@@ -51,6 +55,7 @@ function tm_flags_user_default_permissions() {
     'name' => 'unflag event_waitlist',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+      'non-validated' => 'non-validated',
     ),
     'module' => 'flag',
   );
@@ -60,6 +65,7 @@ function tm_flags_user_default_permissions() {
     'name' => 'unflag signup',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+      'non-validated' => 'non-validated',
     ),
     'module' => 'flag',
   );

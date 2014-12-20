@@ -303,9 +303,15 @@ password: Your password
   $strongarm->name = 'user_mail_register_no_approval_required_body';
   $strongarm->value = '[user:name],
 
-Thank you for registering at [site:name]. You may activate your account by clicking this link or copying and pasting it to your browser:
+Thank you for registering at [site:name].
+
+You need to validate your email address by visiting this link:
 
 [user:validate-url]
+
+Until you activate your account, you won\'t receive any notification emails such as new followers or event updates.
+
+Thanks for signing up!
 
 --  [site:name] team';
   $export['user_mail_register_no_approval_required_body'] = $strongarm;

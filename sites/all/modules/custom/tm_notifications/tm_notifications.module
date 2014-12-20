@@ -155,7 +155,7 @@ function tm_notifications_mail($key, &$message, $params) {
 
   // STEP 4. SET SUBJECT
   $subject = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $subject);
-  $subject = str_replace("__SERVER_HTTP__", $conf["tm_server_http"], $subject);  
+  $subject = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $subject);  
   $subject = str_replace("__SITE_NAME__", $conf["tm_site_name"], $subject);  
   $message['subject'] = check_plain($subject);
 
@@ -255,6 +255,21 @@ function tm_notifications_scheduled_worker_run() {
  *   TRUE if the notification is enabled for the user and it was scheduled.
  */
 function tm_notifications_notify($notification, $account, $tokens = array()) {
+
+  // You can go one step further and disable any outbound notifications triggered by a non-validated member
+  // Just uncomment below.
+  /*global $user;
+  if (in_array('non-validated', $user->roles)) {
+    watchdog('Not sending email trigged by non-verified user ', $notification . ", " . $account->mail);
+    return;
+  }*/
+
+  // if notified user is not validated, then don't trigger any notifications
+  if (in_array('non-validated', $account->roles)) {
+    watchdog('Not sending email to a non-verified user ', $notification . ", " . $account->mail);
+    return;
+  }
+
   $notification = new TMNotification($notification);
   if ($notification->isEnabled($account->uid) && $account->status) {
     drupal_mail('tm_notifications', $notification->getName(), $account->mail, user_preferred_language($account), array('tokens' => $tokens));

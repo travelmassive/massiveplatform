@@ -866,7 +866,7 @@ function tm_organizations_field_default_field_instances() {
   // Exported field_instance: 'node-organization-field_segment'
   $field_instances['node-organization-field_segment'] = array(
     'bundle' => 'organization',
-    'default_value' => NULL,
+    'default_value' => array(),
     'deleted' => 0,
     'description' => 'Please provide the segment which identifies the company the best.',
     'display' => array(

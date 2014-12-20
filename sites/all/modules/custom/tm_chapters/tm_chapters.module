@@ -43,8 +43,8 @@ function tm_chapters_menu() {
     'type' => MENU_CALLBACK,
   );
   return $items;
-  return $items;
 }
+
 /**
  * Custom function to print the amount of members belonging to a chapter
  */
@@ -279,5 +279,4 @@ function tm_chapters_flag_flag($flag, $entity_id, $account, $flagging) {
     $user->field_chapter[LANGUAGE_NONE][0]['target_id'] =  $entity_id;
     user_save($user);
   }
-
 }

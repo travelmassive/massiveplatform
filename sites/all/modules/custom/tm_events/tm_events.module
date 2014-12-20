@@ -27,7 +27,7 @@ function tm_events_permission() {
 function tm_events_form_event_node_form_alter(&$form, &$form_state) {
    
   // Field visibilty based on whether the RSVP is handled through the TM.
-  
+
   // Visible when RSVP is handled on TM.
   $form['field_signup_limit']['#states'] = array(
     'visible' => array(
@@ -312,7 +312,9 @@ function tm_events_node_presave($node) {
     // is being copied and not copied back
     //print_r($node->field_organizer_child);
     if ($node->field_organizer_child['und'][0]['target_id'] != null) {
-      $node->field_organizer = $node->field_organizer_child;
+      if (isset($node->field_organizer_child)) {
+        $node->field_organizer = $node->field_organizer_child;
+      }
     }
   }
 }
@@ -417,8 +419,6 @@ function tm_events_communication_form($event){
       $prefill .= ",<br>- The " . $chapter->title  . " Team";
     }
     
-
-    //$prefill = t('Link').': '.$event->event . "\n";
 
     $form['body'] = array(
       '#type' =>'text_format',
@@ -588,7 +588,7 @@ function tm_events_send_emails($recipients, $subject, $message, $eventid){
     $notif = new TMNotification("user_chapter_announcements");
     if ($notif->isEnabled($account->uid)) {
         $sendcount++;
-        tm_events_send_email($account->mail, $subject, $message);
+        tm_events_send_email($account->mail, $subject, $message, $eventid);
     }
 
   }
@@ -622,8 +622,9 @@ function tm_events_send_email($email, $subject, $message, $eventid){
 
 
     // STEP 3. SET SUBJECT
+    global $conf;
     $subject = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $subject);
-    $subject = str_replace("__SERVER_HTTP__", $conf["tm_server_http"], $subject);  
+    $subject = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $subject);  
     $subject = str_replace("__SITE_NAME__", $conf["tm_site_name"], $subject);  
     $email_message['subject'] = check_plain($subject);
 
@@ -656,7 +657,7 @@ function tm_events_send_email($email, $subject, $message, $eventid){
     $format_message = $system->format($email_message);
 
     // Send e-mail.
-    $message['result'] = $system->mail($format_message);
+    $result = $system->mail($format_message);
 
     // Send 1 email
     return 1;
@@ -804,6 +805,7 @@ function tm_events_status($fid){
   if ($flag->name == 'event_waitlist') return t('Waitlist');
   return '';
 }
+
 /* Formats the user's name */
 function tm_events_username($user){
   if (empty($user->language)) $language = LANGUAGE_NONE;
@@ -817,3 +819,38 @@ function tm_events_username($user){
   }
   return $name;
 }
+
+// Automatically join chapter if you sign up to an event for that chapter
+// https://github.com/travelmassive/massiveplatform/issues/44
+function tm_events_flag_flag($flag, $entity_id, $account, $flagging) {
+
+  // only listen for event register or event waitlist
+  if (($flag->name != 'event_register') and ($flag->name != 'event_waitlist')) {
+    return;
+  }
+
+  // get user who flagged
+  $user = user_load($account->uid);
+
+  // get the chapter
+  $event = node_load($entity_id);
+
+  // if event doesn't have a chapter, return
+  if (sizeof($event->field_chapter['und'] == 0)) {
+    return;
+  }
+
+  $chapter_id = $event->field_chapter['und'][0]['target_id'];
+  $chapter = node_load($chapter_id);
+
+  // get signup flag
+  $signup_flag = flag_get_flag('signup');
+  if ($signup_flag) {
+    if (!$signup_flag->is_flagged($chapter->nid, $account->uid)) {
+      flag('flag', 'signup', $chapter->nid, $user);
+    } 
+  }
+}
+
+
+

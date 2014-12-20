@@ -102,7 +102,7 @@ function tm_fields_field_default_field_bases() {
         'view' => array(
           'args' => array(),
           'display_name' => 'entityreference_chapter_leaders_chapter',
-          'view_name' => 'chapter_leaders_chapter',
+          'view_name' => 'users_chapters',
         ),
       ),
       'target_type' => 'node',

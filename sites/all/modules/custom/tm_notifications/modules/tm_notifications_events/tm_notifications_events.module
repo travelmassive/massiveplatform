@@ -237,7 +237,10 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
   $event_time = date('g:ia', $event_date_time );
 
   // events_register_flag
-  $map_link_url = $event->field_map_link['und'][0]['url'];
+  $map_link_url = "";
+  if ($event->field_map_link != null) {
+    $map_link_url = $event->field_map_link['und'][0]['url'];
+  }
   if (($flag_or_unflag == "flag") && ($flag->name == 'event_register')) {
     tm_notifications_notify('events_register_flag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url, '__MAP_LINK__' => $map_link_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time));
   }

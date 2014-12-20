@@ -26,7 +26,7 @@ function tm_flags_preprocess_flag(&$variables) {
  * $conf['tm_chapter_join_limit'] = '16'; // "join" limit for the non chapter leaders
  */
 function _tm_flags_flag_limits(&$variables) {
-
+  
   global $user;
   $initialized = &drupal_static(__FUNCTION__, array());
 

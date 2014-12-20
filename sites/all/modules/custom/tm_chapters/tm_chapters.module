@@ -275,8 +275,8 @@ function tm_chapters_flag_flag($flag, $entity_id, $account, $flagging) {
   $user = user_load($account->uid);
 
   // if they don't have a home chapter, set this as their home chapter
-  if (sizeof($user->field_chapter) == 0) {
-    $user->field_chapter[LANGUAGE_NONE][0]['target_id'] =  $entity_id;
+  if (sizeof($user->field_home_chapter) == 0) {
+    $user->field_home_chapter[LANGUAGE_NONE][0]['target_id'] =  $entity_id;
     user_save($user);
   }
 }

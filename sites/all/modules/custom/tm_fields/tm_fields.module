@@ -98,8 +98,21 @@ function _tm_content_type_process($field, $title = NULL) {
  * Custom function to build the chapter sticker
  */
 function _tm_chapter_sticker_process($field, $title = NULL) {
+
+  $id = null;
+
+  // field_chapter
   if (isset($field['entity']->field_chapter['und'][0]['target_id'])) {
-    $related_chapter = node_load($field['entity']->field_chapter['und'][0]['target_id']);
+    $id = $field['entity']->field_chapter['und'][0]['target_id'];
+  }
+
+  // field_home_chapter (user)
+  if (isset($field['entity']->field_home_chapter['und'][0]['target_id'])) {
+    $id = $field['entity']->field_home_chapter['und'][0]['target_id'];
+  }
+
+  if ($id != null) {
+    $related_chapter = node_load($id);
     if ($related_chapter){
       return theme('tm_chapter_sticker', array(
         'chapter_id' => $related_chapter->nid,

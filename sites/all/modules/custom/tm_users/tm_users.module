@@ -251,8 +251,8 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
     $user = user_load($form['#user']->uid);
 
     // if they don't have a home chapter, hide the field
-    if (sizeof($user->field_chapter) == 0) {      
-      hide($form['field_chapter']);;
+    if (sizeof($user->field_home_chapter) == 0) {      
+      hide($form['field_home_chapter']);;
     }
 
     // hide loggintobgan revalidate notice since we print it anyway

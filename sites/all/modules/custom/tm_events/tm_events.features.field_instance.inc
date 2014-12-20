@@ -78,7 +78,7 @@ function tm_events_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 3,
+      'weight' => 4,
     ),
   );
 
@@ -147,10 +147,10 @@ function tm_events_field_default_field_instances() {
   // Exported field_instance: 'node-event-field_chapter'
   $field_instances['node-event-field_chapter'] = array(
     'bundle' => 'event',
-    'default_value' => NULL,
+    'default_value' => array(),
     'default_value_function' => 'entityreference_prepopulate_field_default_value',
     'deleted' => 0,
-    'description' => 'Leave this field empty for a partner event that is not associated with a chapter.',
+    'description' => 'Select the chapter associated with the event.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -199,7 +199,7 @@ function tm_events_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_chapter',
     'label' => 'Event Chapter',
-    'required' => 0,
+    'required' => 1,
     'settings' => array(
       'behaviors' => array(
         'prepopulate' => array(
@@ -216,7 +216,7 @@ function tm_events_field_default_field_instances() {
       ),
       'nodeaccess_nodereference' => array(
         'all' => array(
-          'view' => 0,
+          'view' => 'view',
         ),
         'all_published' => 0,
         'author' => array(
@@ -257,7 +257,7 @@ function tm_events_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 6,
+      'weight' => 2,
     ),
   );
 
@@ -477,7 +477,7 @@ function tm_events_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 4,
+      'weight' => 5,
     ),
   );
 
@@ -871,7 +871,7 @@ If set to none, then all chapter leaders will be notified of any registrations a
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 6,
+      'weight' => 7,
     ),
   );
 
@@ -884,7 +884,6 @@ If set to none, then all chapter leaders will be notified of any registrations a
   t('Event Chapter');
   t('Help the attendees find the right location by providing a link to a map, for example <a href="http://maps.google.com/">Google Maps</a>.');
   t('Image');
-  t('Leave this field empty for a partner event that is not associated with a chapter.');
   t('Location');
   t('Map link');
   t('Organizer');
@@ -892,6 +891,7 @@ If set to none, then all chapter leaders will be notified of any registrations a
   t('Provide a link to the page with the RSVP (ie: http://www.eventbrite.com/e/your-event-url)');
   t('Provide the street address for this event.');
   t('RSVP link');
+  t('Select the chapter associated with the event.');
   t('This image will used as the main banner for the event.');
   t('Venue name');
   t('When');

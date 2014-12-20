@@ -39,6 +39,7 @@ function tm_users_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'authenticated user' => 'authenticated user',
+      'non-validated' => 'non-validated',
     ),
     'module' => 'flag',
   );
@@ -59,6 +60,7 @@ function tm_users_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'authenticated user' => 'authenticated user',
+      'non-validated' => 'non-validated',
     ),
     'module' => 'flag',
   );

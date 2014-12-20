@@ -192,8 +192,9 @@ function tm_events_field_group_info() {
       3 => 'field_image',
       4 => 'field_organizer',
       5 => 'field_rsvp_link',
-      6 => 'title',
-      7 => 'path',
+      6 => 'field_chapter',
+      7 => 'title',
+      8 => 'path',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -221,10 +222,9 @@ function tm_events_field_group_info() {
     'label' => 'Where',
     'weight' => '2',
     'children' => array(
-      0 => 'field_chapter',
-      1 => 'field_event_venue_name',
-      2 => 'field_location',
-      3 => 'field_map_link',
+      0 => 'field_event_venue_name',
+      1 => 'field_location',
+      2 => 'field_map_link',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

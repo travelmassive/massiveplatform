@@ -301,17 +301,17 @@ password: Your password
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'user_mail_register_no_approval_required_body';
-  $strongarm->value = '[user:name],
+  $strongarm->value = 'Hi [user:name],
 
 Thank you for registering at [site:name].
 
-You need to validate your email address by visiting this link:
+Please validate your email address by using this validation link:
 
 [user:validate-url]
 
-Until you activate your account, you won\'t receive any notification emails such as new followers or event updates.
+Note that until you validate your email address, you won\'t receive any notification emails such as new followers or event updates.
 
-Thanks for signing up!
+Thanks for signing up.
 
 --  [site:name] team';
   $export['user_mail_register_no_approval_required_body'] = $strongarm;

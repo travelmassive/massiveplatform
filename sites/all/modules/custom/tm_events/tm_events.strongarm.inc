@@ -71,10 +71,10 @@ function tm_events_strongarm() {
     'extra_fields' => array(
       'form' => array(
         'title' => array(
-          'weight' => '2',
+          'weight' => '3',
         ),
         'path' => array(
-          'weight' => '8',
+          'weight' => '9',
         ),
         'redirect' => array(
           'weight' => '30',

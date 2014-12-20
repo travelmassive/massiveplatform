@@ -244,6 +244,7 @@ function tm_users_field_group_info() {
       6 => 'field_location_city',
       7 => 'field_segment',
       8 => 'field_user_country',
+      9 => 'field_home_chapter',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

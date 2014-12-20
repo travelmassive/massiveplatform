@@ -139,65 +139,6 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_chapter'
-  $field_instances['user-user-field_chapter'] = array(
-    'bundle' => 'user',
-    'default_value' => NULL,
-    'default_value_function' => '',
-    'deleted' => 0,
-    'description' => 'Please select what you consider to be your home chapter.',
-    'display' => array(
-      'default' => array(
-        'label' => 'hidden',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 17,
-      ),
-      'grid' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 5,
-      ),
-      'list' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 8,
-      ),
-      'search_result' => array(
-        'label' => 'hidden',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 13,
-      ),
-    ),
-    'ds_extras_field_template' => '',
-    'entity_type' => 'user',
-    'field_name' => 'field_chapter',
-    'label' => 'Home Chapter',
-    'required' => 0,
-    'settings' => array(
-      'behaviors' => array(
-        'prepopulate' => array(
-          'status' => 0,
-        ),
-      ),
-      'user_register_form' => 0,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(
-        'match_operator' => 'CONTAINS',
-        'path' => '',
-        'size' => 60,
-      ),
-      'type' => 'options_select',
-      'weight' => 39,
-    ),
-  );
-
   // Exported field_instance: 'user-user-field_friendly_url'
   $field_instances['user-user-field_friendly_url'] = array(
     'bundle' => 'user',
@@ -372,7 +313,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 44,
+      'weight' => 45,
     ),
   );
 
@@ -427,7 +368,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 42,
+      'weight' => 43,
     ),
   );
 
@@ -497,7 +438,7 @@ function tm_users_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 53,
+      'weight' => 54,
     ),
   );
 
@@ -567,7 +508,7 @@ function tm_users_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 52,
+      'weight' => 53,
     ),
   );
 
@@ -761,7 +702,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 40,
+      'weight' => 41,
     ),
   );
 
@@ -819,7 +760,7 @@ function tm_users_field_default_field_instances() {
         ),
       ),
       'type' => 'taxonomy_shs',
-      'weight' => 43,
+      'weight' => 44,
     ),
   );
 
@@ -868,7 +809,7 @@ function tm_users_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 41,
+      'weight' => 42,
     ),
   );
 
@@ -1026,7 +967,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 45,
+      'weight' => 53,
     ),
   );
 
@@ -1080,7 +1021,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 46,
+      'weight' => 54,
     ),
   );
 
@@ -1134,7 +1075,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 48,
+      'weight' => 56,
     ),
   );
 
@@ -1188,7 +1129,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 47,
+      'weight' => 55,
     ),
   );
 
@@ -1242,7 +1183,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 50,
+      'weight' => 57,
     ),
   );
 
@@ -1256,7 +1197,6 @@ function tm_users_field_default_field_instances() {
   t('Country');
   t('Facebook');
   t('First name');
-  t('Home Chapter');
   t('Industry Segment');
   t('Job Role');
   t('Last name');
@@ -1265,7 +1205,6 @@ function tm_users_field_default_field_instances() {
   t('Please provide your given name. This field will be <strong>public</strong>.');
   t('Please provide your last name. This field will be <strong>public</strong>.');
   t('Please select the industry segment that best applies to you.');
-  t('Please select what you consider to be your home chapter.');
   t('Provide the other members with some more information about yourself. This information will be <strong>public</strong>.');
   t('The name of your business, company, or organization.');
   t('Three words that describe why we should travel?');

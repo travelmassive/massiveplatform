@@ -48,6 +48,9 @@ function tm_invitations_invite_form_validate($form, &$form_state) {
   $email_list = trim(str_replace(",", "", $form_state['values']['invitations'])); // remove ,
   $emails = explode("\n",$email_list);
   foreach($emails as $email){
+    // remove non printable characters
+    // Android seems to send non-ascii that doesn't validate
+    $email = preg_replace('/[[:^print:]]/', '', $str);
     if (!valid_email_address(trim($email))){
       form_set_error('invitations', $email.t(' is not a valid email address'));
     }

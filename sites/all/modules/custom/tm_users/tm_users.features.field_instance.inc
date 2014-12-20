@@ -191,6 +191,64 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'user-user-field_home_chapter'
+  $field_instances['user-user-field_home_chapter'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'default_value_function' => '',
+    'deleted' => 0,
+    'description' => 'Please select what you consider to be your home chapter.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 24,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'user',
+    'field_name' => 'field_home_chapter',
+    'label' => 'Home Chapter',
+    'required' => 0,
+    'settings' => array(
+      'behaviors' => array(
+        'prepopulate' => array(
+          'status' => 0,
+        ),
+      ),
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 40,
+    ),
+  );
+
   // Exported field_instance: 'user-user-field_image'
   $field_instances['user-user-field_image'] = array(
     'bundle' => 'user',
@@ -1197,6 +1255,7 @@ function tm_users_field_default_field_instances() {
   t('Country');
   t('Facebook');
   t('First name');
+  t('Home Chapter');
   t('Industry Segment');
   t('Job Role');
   t('Last name');
@@ -1205,6 +1264,7 @@ function tm_users_field_default_field_instances() {
   t('Please provide your given name. This field will be <strong>public</strong>.');
   t('Please provide your last name. This field will be <strong>public</strong>.');
   t('Please select the industry segment that best applies to you.');
+  t('Please select what you consider to be your home chapter.');
   t('Provide the other members with some more information about yourself. This information will be <strong>public</strong>.');
   t('The name of your business, company, or organization.');
   t('Three words that describe why we should travel?');

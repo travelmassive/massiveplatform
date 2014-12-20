@@ -51,6 +51,7 @@ function tm_invitations_invite_form_validate($form, &$form_state) {
     // remove non printable characters
     // Android seems to send non-ascii that doesn't validate
     $email = preg_replace('/[[:^print:]]/', '', $email);
+    $email = str_replace(" ", "", $email); // remove all spaces
     if (!valid_email_address(trim($email))){
       form_set_error('invitations', $email.t(' is not a valid email address'));
     }
@@ -116,6 +117,11 @@ function tm_invitations_user_presave(&$edit, $account, $category){
       if (in_array("chapter leader", $inviter->roles)){
         if ($role = user_role_load_by_name('approved user')) {
           $edit['roles'][$role->rid] = $role->rid;
+
+          // send approval email
+          $approval_text = "Your account has been approved by " . $inviter->field_user_first_name[LANGUAGE_NONE][0]['value'] . ".";
+          tm_notifications_notify('user_approved', $account, array('user' => $account, '__PROFILE_URL__' => "community", '__APPROVAL_INTRO_TEXT__' => $approval_text));
+
         }
       }
     // update this record as accepted
@@ -127,6 +133,7 @@ function tm_invitations_user_presave(&$edit, $account, $category){
     }
   }
   else{
+    // TODO: Do this in a better way for performance
     // check email message against unfollowed invites
     // unfortunately have to come back and do this later
     // as there is no UID for flag to use to follow

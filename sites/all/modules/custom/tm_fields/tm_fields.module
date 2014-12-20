@@ -346,7 +346,6 @@ function _tm_more_actions_process($field, $title = NULL) {
   else if (isset($field['entity']->type) && $field['entity']->type == 'chapter') {
     // Does the user have access.
     $router_item = menu_get_item($path);
-    print_r($router_item);
     if ($router_item['access']) {
       if (isset($field['entity']->field_chapter_leaders[LANGUAGE_NONE]) && !empty($field['entity']->field_chapter_leaders[LANGUAGE_NONE])) {
         // Check if the current user is a chapter leader.

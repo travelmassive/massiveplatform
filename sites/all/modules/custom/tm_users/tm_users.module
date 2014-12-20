@@ -97,7 +97,10 @@ function tm_users_menu() {
 
 /* Approval callback */
 function tm_users_approve($user){
-$role_name = 'approved user'; // The name of the role to add.
+
+  $approving_user = $GLOBALS['user'];
+  $role_name = 'approved user'; // The name of the role to add.
+
   if ($role = user_role_load_by_name($role_name)) {
     user_multiple_role_edit(array($user->uid), 'add_role', $role->rid);
 
@@ -108,9 +111,12 @@ $role_name = 'approved user'; // The name of the role to add.
     $profile_url = "community/" . $user->name;
     if (count($user->field_friendly_url) > 0) { 
       $profile_url = $user->field_friendly_url['und']['0']['value'];
-    } 
-    tm_notifications_notify('user_approved', $user, array('user' => $user, '__PROFILE_URL__' => $profile_url));
+    }
+    $approval_text = "Your account has been approved by " . $approving_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . ".";
+
+    tm_notifications_notify('user_approved', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__APPROVAL_INTRO_TEXT__' => $approval_text));
   }
+
   drupal_goto("user/$user->uid/view");
 }
 
@@ -132,7 +138,7 @@ function tm_users_email_registration_name($edit, $account) {
   //return email_registration_cleanup_username('u' . $account->uid);
 
   // Make username from first and last name and a digit
-  print_r($account);
+  //print_r($account);
   $first_name = $account->field_user_first_name['und'][0]['value'];
   $last_name = $account->field_user_last_name['und'][0]['value'];
   $username = email_registration_cleanup_username($first_name . $last_name); 
@@ -162,7 +168,7 @@ function tm_users_email_registration_name($edit, $account) {
  * This is a sneaky method to delete automatically created user redirects
  */
 function tm_users_redirect_insert($redirect) {
-  print_r($redirect->source);
+  //print_r($redirect->source);
   $parts = explode("/", $redirect->redirect);
   if ($parts[0] == "user") {
     redirect_delete_by_path($redirect->source);

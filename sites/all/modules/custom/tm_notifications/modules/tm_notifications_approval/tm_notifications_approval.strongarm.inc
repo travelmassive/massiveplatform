@@ -22,7 +22,7 @@ function tm_notifications_approval_strongarm() {
       'subject' => 'Your __SITE_NAME__ account has been approved',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>Your account has been approved by [current-user:field_user_first_name].
+<br>__APPROVAL_INTRO_TEXT__
 <br>
 <br>You can view your profile here:
 <br>

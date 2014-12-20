@@ -265,7 +265,8 @@ function tm_notifications_notify($notification, $account, $tokens = array()) {
   }*/
 
   // if notified user is not validated, then don't trigger any notifications
-  if (in_array('non-validated', $account->roles)) {
+  // allow the user_approved notification to be sent
+  if (in_array('non-validated', $account->roles) && ($notification != "user_approved")) {
     watchdog('Not sending email to a non-verified user ', $notification . ", " . $account->mail);
     return;
   }

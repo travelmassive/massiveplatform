@@ -249,9 +249,19 @@ function tm_users_is_chapter_leader($uid, $chapterid){
   return FALSE;
 }
 
-/* Hide home chapter field if the user has not joined a chapter */
+
 function tm_users_form_alter(&$form, $form_state, $form_id) {
 
+  // Add terms and conditions agreement to sign up form
+  if ($form_id == 'user_register_form') {
+    $form['cutomtext'] = array(
+        '#type' => 'item',
+        '#markup' => '<p class="description" style="text-align: center; margin-bottom: 12px;">By creating an account you agree to our <a target="_blank" href="/content/terms-use">Terms Of Use</a> and <a target = "_blank" href="/content/privacy-policy">Privacy Policy</a></p>',
+        '#weight' => 10, // Adjust so that you can place it whereever 
+        );
+  }
+
+  // Hide home chapter field if the user has not joined a chapter
   if ($form_id == 'user_profile_form') {
     // get current user
     $user = user_load($form['#user']->uid);
@@ -265,3 +275,4 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
     hide($form['revalidate']);
   }
 }
+

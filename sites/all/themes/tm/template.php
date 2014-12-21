@@ -55,6 +55,10 @@ function tm_preprocess_html(&$variables, $hook) {
 
 function tm_preprocess_page(&$variables, $hook) {
 
+  global $user;
+  // Only a loaded user has values for the fields.
+  $loaded = user_load($user->uid);
+
   // Hide the page title from the user profiles
   if (isset($variables['page']['content']['system_main']['#entity_type']) && $variables['page']['content']['system_main']['#entity_type'] == 'user' && isset($variables['page']['content']['system_main']['#view_mode']) && $variables['page']['content']['system_main']['#view_mode'] == 'full') {
     drupal_set_title('');
@@ -71,6 +75,14 @@ function tm_preprocess_page(&$variables, $hook) {
   if (current_path() == "user/register") {
       drupal_set_message('<a href="/tm_twitter/oauth" class="twitter-login" style="margin-left: -16px; width: 220px; text-decoration: none;">Sign Up With Twitter</a>', 'signup_notice');
   }
+
+  // Nag user to verify email if there are no other messages
+  if (in_array("non-validated", $loaded->roles)) {
+    //if (count(drupal_get_messages()) == 0) {
+        drupal_set_message("Please verify your email address. We sent a verification email to " . $loaded->mail . ". Didn't get it? " . l(t('Re-send it'), 'toboggan/revalidate/' . $loaded->uid) . ".", "warning", FALSE);
+    //}
+  }
+  
 }
 
 /**

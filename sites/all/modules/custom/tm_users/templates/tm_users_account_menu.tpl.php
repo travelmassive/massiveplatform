@@ -20,15 +20,6 @@ $image = theme('image_style', array(
 ));
 ?>
 
-<?php
-// Nag user to verify email if there are no other messages
-if (in_array("non-validated", $loaded->roles)) {
-  //if (count(drupal_get_messages()) == 0) {
-      drupal_set_message("Please verify your email address. We sent a verification email to " . $loaded->mail . ". Didn't get it? " . l(t('Re-send it'), 'toboggan/revalidate/' . $loaded->uid) . ".", "warning", FALSE);
-  //}
-}
-?>
-
 <h2>
   <a class="toggle" href="#account-menu-blk" data-dropd-toggle>
     <span class="hide"><?= t('Account'); ?></span>

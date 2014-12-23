@@ -15,9 +15,10 @@ function tm_notifications_chapter_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'tm_notifications__user_chapter_join_notify_leaders';
   $strongarm->value = array(
-    'user_label' => 'Notify chapter leaders when new member joins chapter',
+    'user_label' => '[Chapter Leaders] Notify when new member joins your chapter',
     'default_state' => '1',
-    'change_allowed' => 0,
+    'change_allowed' => 1,
+    'change_allowed_roles' => array("chapter leader"),
     'email' => array(
       'subject' => 'New member: [current-user:field_user_first_name] joined [node:title]',
       'message' => 'Hi [user:field_user_first_name],

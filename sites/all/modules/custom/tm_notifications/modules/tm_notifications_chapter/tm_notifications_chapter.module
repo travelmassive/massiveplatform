@@ -14,7 +14,7 @@ function tm_notifications_chapter_tm_notif_info() {
 
   $notification['user_chapter_join_welcome_member'] = array(
     'title' => 'Member joined chapter',
-    'description' => 'Send the member a welcome message when joining a chapter.',
+    'description' => 'Welcome message when joining a chapter',
     'use_cron' => FALSE,
     'tokens' => array(
       // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
@@ -28,7 +28,7 @@ function tm_notifications_chapter_tm_notif_info() {
 
   $notification['user_chapter_join_notify_leaders'] = array(
     'title' => 'Notify chapter leaders that a new member joined',
-    'description' => 'Send chapter leaders a notification about a new member',
+    'description' => '[Chapter Leaders] Notify when new member joins your chapter',
     'use_cron' => FALSE,
     'tokens' => array(
       // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
@@ -42,7 +42,7 @@ function tm_notifications_chapter_tm_notif_info() {
   
   $notification['user_chapter_announcements'] = array(
     'title' => 'Send members Chapter Announcements',
-    'description' => 'Send members Chapter Announcements',
+    'description' => 'Chapter and Event Announcements',
     'use_cron' => FALSE,
     'tokens' => array(
       // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'

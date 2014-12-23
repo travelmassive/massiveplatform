@@ -13,8 +13,8 @@ function tm_notifications_newsletters_tm_notif_info() {
   $notification = array();
 
   $notification['chapter_newsletters'] = array(
-    'title' => 'Subscribe to local Chapter newsletters',
-    'description' => 'Local Chapter Newsletters',
+    'title' => 'Subscribe to Local Chapter Newsletters',
+    'description' => 'Subscribe to Local Chapter Newsletters',
     'use_cron' => FALSE,
     'tokens' => array(
       // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
@@ -28,7 +28,7 @@ function tm_notifications_newsletters_tm_notif_info() {
 
   $notification['global_newsletter'] = array(
     'title' => 'Subscribe to Global Newsletter',
-    'description' => 'Travel Massive Global Newsletter',
+    'description' => 'Subscribe to Global Newsletter',
     'use_cron' => FALSE,
     'tokens' => array(
       // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'

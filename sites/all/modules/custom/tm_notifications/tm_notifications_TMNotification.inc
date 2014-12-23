@@ -124,6 +124,13 @@ class TMNotification {
     return $this->getVarField('change_allowed', $default);
   }
 
+
+  // get array of roles allowed to change the setting
+  // allows to limit roles to chapter leader, moderator, etc.
+  public function getChangeAllowedRoles($default = array('authenticated user')) {
+    return $this->getVarField('change_allowed_roles', $default);
+  }
+
   /**
    * Returns the default state for this notification.
    * It's a field set through the admin interface.

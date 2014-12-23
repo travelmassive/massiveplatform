@@ -83,9 +83,32 @@ function tm_notifications_form_user_profile_form_alter(&$form, &$form_state) {
       '#tree' => TRUE,
     );
     
+    // sort notifications by their printed description
+    $sort = array();
+    foreach ($notifications as $name => $value) {
+      $sort[$name] = $value['description'] . "";
+    }
+    array_multisort($notifications, SORT_DESC, SORT_NUMERIC, $sort);
+    
     foreach ($notifications as $name => $value) {
       $notif = new TMNotification($name);
-      if ($notif->isChangeAllowed()) {
+
+      // Determine if the user can change the settings
+      // If change_allowed true and change_allowed_roles, then check if user is in role
+      // Otherwise use value of change_allowed
+      $change_allowed = false;
+      $change_roles_allowed = $notif->getChangeAllowedRoles();
+      if ($notif->isChangeAllowed() && (sizeof($change_roles_allowed) > 0)) {
+        foreach($change_roles_allowed as $role) {
+          if (in_array($role, $user->roles)) {
+            $change_allowed = true;
+          }
+        }
+      } else {
+        $change_allowed = $notif->isChangeAllowed();
+      }
+
+      if ($change_allowed) {
         $form['tm_notifications'][$name] = array(
           '#type' => 'checkbox',
           '#title' => $notif->getLabel($value['title']),

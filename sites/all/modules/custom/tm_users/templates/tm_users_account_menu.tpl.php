@@ -62,18 +62,26 @@ if (!$twitter_data) {
 ?>
 
     </ul>
-    <?php if (in_array("approved user", $loaded->roles)) : ?>
+  <?php if (in_array("approved user", $loaded->roles)) : ?>
     <ul class="dropd-menu">
       <?php print tm_users_companies($loaded->uid); ?>
       <!--<li><?php print l(t('My companies'), 'user/' . $loaded->uid . '/companies', array('fragment' => 'user-notifications-options')); ?></li>-->
       <li><?php print l(t('Add company'), 'node/add/organization'); ?></li>
     </ul>
+
   <?php endif; ?>
-  <!-- Link by title to any chapters you are a chapter leader of -->
-  <?php if (in_array("chapter leader", $loaded->roles)) : ?>
-    <ul class="dropd-menu">
-      <?php print tm_users_chapters($loaded->uid); ?>
-    </ul>
+    <!-- Link by title to any chapters you are a chapter leader of -->
+    <?php if (in_array("chapter leader", $loaded->roles)) : ?>
+      <ul class="dropd-menu">
+        <?php print tm_users_chapters($loaded->uid); ?>
+      </ul>
+  <?php endif; ?>
+
+  <?php if (in_array("moderator", $loaded->roles)) : ?>
+      <ul class="dropd-menu">
+        <li><?php print l(t('Add chapter'), 'node/add/organization'); ?></li>
+        <li><?php print l(t('Unapproved users'), 'admin/config/tm/unapproved-users'); ?></li>
+      </ul>
   <?php endif; ?>
 
     <ul class="dropd-menu">

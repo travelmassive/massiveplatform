@@ -9,4 +9,6 @@
  */
 ?>
 
-<a href="<?php print $url ?>"><?php print t('Sigin with Twitter') ?></a>
+<p style="margin-bottom: 0.8em;">
+	<a href="<?php print $url ?>" class="twitter-login" style="width: 200px;"><?php print t('Sign in with Twitter') ?></a>
+</p>

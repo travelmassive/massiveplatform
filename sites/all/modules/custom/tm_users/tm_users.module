@@ -252,6 +252,14 @@ function tm_users_is_chapter_leader($uid, $chapterid){
 
 function tm_users_form_alter(&$form, $form_state, $form_id) {
 
+  if ($form_id == 'user_login') {
+    $form['cutomtext'] = array(
+        '#type' => 'item',
+        '#markup' => '<p style="margin-top: 0.8em;">Don\'t have an account? <a href="/user/register">Sign up</a></p>',
+        '#weight' => 200, // Adjust so that you can place it whereever 
+        );
+  }
+
   // Add terms and conditions agreement to sign up form
   if (($form_id == 'user_register_form') or ($form_id == 'tm_users_external_signin_register_form')) {
     $form['cutomtext'] = array(

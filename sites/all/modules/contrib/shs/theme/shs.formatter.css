@@ -1,0 +1,24 @@
+/**
+* @file
+* Styles for formatted output of shs module.
+*/
+
+.field-type-taxonomy-term-reference ul.shs-hierarchy {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.field-type-taxonomy-term-reference .links ul.shs-hierarchy li {
+  padding: 0 5px 0 0;
+}
+.field-type-taxonomy-term-reference .links ul.shs-hierarchy li.last {
+  padding: 0;
+}
+.shs-hierarchy li:after {
+  content: '>';
+  margin: 0 0 0 5px;
+}
+.shs-hierarchy li.last:after {
+  content: '';
+  margin: 0;
+}

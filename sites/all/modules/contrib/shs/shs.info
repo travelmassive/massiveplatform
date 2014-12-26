@@ -1,0 +1,13 @@
+name = Simple hierarchical select
+core = 7.x
+description = Creates a simple hierarchical select widget for taxonomy fields.
+dependencies[] = taxonomy
+files[] = includes/handlers/shs_handler_filter_term_node_tid.inc
+files[] = includes/handlers/shs_handler_filter_term_node_tid_depth.inc
+
+; Information added by drupal.org packaging script on 2013-03-17
+version = "7.x-1.6"
+core = "7.x"
+project = "shs"
+datestamp = "1363529732"
+

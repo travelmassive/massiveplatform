@@ -1,0 +1,28 @@
+/**
+* @file
+* Styles for shs module on forms.
+*/
+
+.shs-wrapper-processed select {
+  margin-top: 4px;
+  vertical-align: top;
+}
+.shs-term-add-new-wrapper {
+  display: inline-block;
+  margin: 0 0 0 10px;
+  vertical-align: bottom;
+}
+.shs-term-add-new-wrapper .buttons {
+  font-size: 12px;
+  text-align: right;
+}
+.shs-term-add-new-wrapper a {
+  display: inline;
+  font-size: 12px;
+  margin: 0 2px;
+  padding: 1px 3px;
+}
+.shs-term-add-new-wrapper input {
+  font-size: 90%;
+  padding: 1px 4px;
+}

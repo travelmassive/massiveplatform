@@ -113,7 +113,7 @@ function tm_base_block_view($delta) {
         $no_chapter = db_query('SELECT count(nid) AS no FROM {node} WHERE status = :status AND type = :type', array(':status' => 1, ':type' => 'chapter'))->fetchField();
         $no_company = db_query('SELECT count(nid) AS no FROM {node} WHERE status = :status AND type = :type', array(':status' => 1, ':type' => 'organization'))->fetchField();
 
-        $block['content'] .= '<li><a href="' . url('community') . '" title="' . t('Go to community') . '"><strong class="key">' . t('Users') . '<small>: </small></strong><span class="value">' . $no_community . '</span></a></li>';
+        $block['content'] .= '<li><a href="' . url('community') . '" title="' . t('Go to community') . '"><strong class="key">' . t('Members') . '<small>: </small></strong><span class="value">' . $no_community . '</span></a></li>';
         $block['content'] .= '<li><a href="' . url('chapters') . '" title="' . t('Go to chapters') . '"><strong class="key">' . t('Chapters') . '<small>: </small></strong><span class="value">' . $no_chapter . '</span></a></li>';
         $block['content'] .= '<li><a href="' . url('companies') . '" title="' . t('Go to companies') . '"><strong class="key">' . t('Companies') . '<small>: </small></strong><span class="value">' . $no_company . '</span></a></li>';
       }

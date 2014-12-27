@@ -228,6 +228,13 @@ function tm_chapters_download_csv($nid){
   drupal_add_http_header('Content-Disposition', 'attachment; filename = '.$csvname);
   
   $fh = fopen('php://output', 'w');
+
+  // put information use reminder
+  global $conf;
+  $message = "# IMPORTANT: This information is provided by members under the Privacy Terms of " . $conf["tm_site_name"];
+  $message .= "\n# Please respect members' privacy and their data when using this information.\n\n";
+  fputs($fh,$message,strlen($message));
+
   // puts a header row across the top of the csv
   $item = array(t('First name'),t('Last name'),t('Email'),t('Country'),t('Organisation'),t('Date registered'));
   fputcsv($fh, $item);

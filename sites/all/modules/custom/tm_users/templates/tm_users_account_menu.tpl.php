@@ -79,7 +79,7 @@ if (!$twitter_data) {
 
   <?php if (in_array("moderator", $loaded->roles)) : ?>
       <ul class="dropd-menu">
-        <li><?php print l(t('Add chapter'), 'node/add/organization'); ?></li>
+        <li><?php print l(t('Add chapter'), 'node/add/chapter'); ?></li>
         <li><?php print l(t('Unapproved users'), 'admin/config/tm/unapproved-users'); ?></li>
       </ul>
   <?php endif; ?>

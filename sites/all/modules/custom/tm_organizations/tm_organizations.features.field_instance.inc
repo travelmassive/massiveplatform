@@ -27,10 +27,8 @@ function tm_organizations_field_default_field_instances() {
       'full' => array(
         'label' => 'above',
         'module' => 'text',
-        'settings' => array(
-          'trim_length' => 600,
-        ),
-        'type' => 'text_trimmed',
+        'settings' => array(),
+        'type' => 'text_plain',
         'weight' => 1,
       ),
       'grid' => array(
@@ -63,6 +61,7 @@ function tm_organizations_field_default_field_instances() {
         'weight' => 0,
       ),
     ),
+    'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'body',
     'label' => 'Description',

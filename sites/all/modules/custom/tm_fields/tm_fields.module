@@ -579,7 +579,23 @@ function tm_fields_theme() {
       ),
       'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
       'template' => 'tm_more_actions'
-    )
+    ),
+    'tm_fields_link' => array(
+      'variables' => array(
+        'title' => NULL,
+        'url' => NULL,
+      ),
+      'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
+      'template' => 'tm_fields_link',
+    ),
+    'tm_fields_twitter' => array(
+      'variables' => array(
+        'title' => NULL,
+        'url' => NULL,
+      ),
+      'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
+      'template' => 'tm_fields_twitter',
+    ),
   );
 }
 
@@ -591,3 +607,53 @@ function tm_fields_ctools_plugin_directory($module, $plugin) {
     return 'plugins/' . $plugin;
   }
 }
+
+/**
+* Implements hook_field_formatter_info().
+* see: See more at: http://www.whenwhowhere.com/tech-blog/create-custom-field-formatter-drupal-7#sthash.pf9Fsjzp.dpuf
+*/
+function tm_fields_field_formatter_info() {
+  $info = array(
+    'tm_fields_link' => array(
+      'label' => t('TM Link'), 
+      'field types' => array('link_field'),
+      'description' => t('Diplays URL without http:// prefix'),
+    ),
+    'tm_fields_twitter' => array(
+      'label' => t('TM Twitter'), 
+      'field types' => array('link_field'),
+      'description' => t('Diplays a Twitter URL from an @ or # name'),
+    ), 
+  );
+  return $info;
+}
+
+/**
+* Implements hook_field_formatter_view()
+* see: See more at: http://www.whenwhowhere.com/tech-blog/create-custom-field-formatter-drupal-7#sthash.pf9Fsjzp.dpuf
+*/
+function tm_fields_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+  switch ($display['type']) {
+    case 'tm_fields_link':
+      foreach ($items as $delta => $item) {
+        $element[$delta] = array(
+          '#theme' => 'tm_fields_link', 
+          '#title' => $item['title'], 
+          '#url' => $item['url'], 
+        );
+     }
+    break;
+    case 'tm_fields_twitter':
+      foreach ($items as $delta => $item) {
+        $element[$delta] = array(
+          '#theme' => 'tm_fields_twitter', 
+          '#title' => $item['title'], 
+          '#url' => $item['url'], 
+        );
+     }
+    break;
+  }
+  return $element;
+}
+

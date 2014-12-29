@@ -112,16 +112,16 @@ function tm_base_strongarm() {
   $strongarm->value = array(
     'event' => array(
       'field_chapter' => array(
+        'all' => array(
+          'view' => 'view',
+        ),
         'referenced' => array(
-          'view' => array(
-            'view' => 'view',
-          ),
           'update' => array(
             'update' => 'update',
           ),
-        ),
-        'all' => array(
-          'view' => 'view',
+          'view' => array(
+            'view' => 'view',
+          ),
         ),
         'field_type' => 'entityreference',
       ),

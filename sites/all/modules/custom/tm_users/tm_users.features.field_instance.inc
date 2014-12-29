@@ -436,10 +436,10 @@ function tm_users_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'link',
+        'module' => 'tm_fields',
         'settings' => array(),
-        'type' => 'link_default',
-        'weight' => 16,
+        'type' => 'tm_fields_link',
+        'weight' => 18,
       ),
       'grid' => array(
         'label' => 'above',
@@ -506,10 +506,10 @@ function tm_users_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'link',
+        'module' => 'tm_fields',
         'settings' => array(),
-        'type' => 'link_default',
-        'weight' => 17,
+        'type' => 'tm_fields_link',
+        'weight' => 19,
       ),
       'grid' => array(
         'label' => 'above',
@@ -572,14 +572,14 @@ function tm_users_field_default_field_instances() {
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'ie: https://twitter.com/yourname',
+    'description' => 'ie: @twittername or https://twitter.com/yourname',
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'link',
+        'module' => 'tm_fields',
         'settings' => array(),
-        'type' => 'link_default',
-        'weight' => 18,
+        'type' => 'tm_fields_twitter',
+        'weight' => 17,
       ),
       'grid' => array(
         'label' => 'above',
@@ -610,6 +610,7 @@ function tm_users_field_default_field_instances() {
       'absolute_url' => 1,
       'attributes' => array(
         'class' => '',
+        'configurable_class' => 0,
         'configurable_title' => 0,
         'rel' => 'nofollow',
         'target' => '_blank',
@@ -621,12 +622,12 @@ function tm_users_field_default_field_instances() {
       'enable_tokens' => 0,
       'rel_remove' => 'default',
       'title' => 'none',
-      'title_label_use_field_label' => FALSE,
+      'title_label_use_field_label' => 0,
       'title_maxlength' => 44,
       'title_value' => '',
       'url' => 0,
       'user_register_form' => 0,
-      'validate_url' => 1,
+      'validate_url' => 0,
     ),
     'widget' => array(
       'active' => 0,
@@ -646,10 +647,10 @@ function tm_users_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'link',
+        'module' => 'tm_fields',
         'settings' => array(),
-        'type' => 'link_default',
-        'weight' => 19,
+        'type' => 'tm_fields_link',
+        'weight' => 16,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1274,10 +1275,10 @@ function tm_users_field_default_field_instances() {
   t('Where do you dream of traveling to?');
   t('Where you spend most of your time');
   t('examples: Founder, CEO, VP Marketing, Social Media Manager, Chief Explorer');
+  t('ie: @twittername or https://twitter.com/yourname');
   t('ie: http://www.mywebsite.com');
   t('ie: https://facebook.com/myname');
   t('ie: https://linkedin.com/in/myname');
-  t('ie: https://twitter.com/yourname');
 
   return $field_instances;
 }

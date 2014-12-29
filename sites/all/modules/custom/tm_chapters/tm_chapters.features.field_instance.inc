@@ -320,9 +320,8 @@ function tm_chapters_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'tzfield',
         'settings' => array(),
-        'type' => 'tzfield_default',
+        'type' => 'hidden',
         'weight' => 10,
       ),
       'full' => array(
@@ -376,9 +375,8 @@ function tm_chapters_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'countries',
         'settings' => array(),
-        'type' => 'country_default',
+        'type' => 'hidden',
         'weight' => 9,
       ),
       'full' => array(
@@ -432,11 +430,8 @@ function tm_chapters_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'geofield',
-        'settings' => array(
-          'data' => 'full',
-        ),
-        'type' => 'geofield_wkt',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 11,
       ),
       'full' => array(
@@ -577,9 +572,9 @@ function tm_chapters_field_default_field_instances() {
       ),
       'full' => array(
         'label' => 'above',
-        'module' => 'link',
+        'module' => 'tm_fields',
         'settings' => array(),
-        'type' => 'link_default',
+        'type' => 'tm_fields_link',
         'weight' => 8,
       ),
       'grid' => array(
@@ -652,9 +647,9 @@ function tm_chapters_field_default_field_instances() {
       ),
       'full' => array(
         'label' => 'above',
-        'module' => 'link',
+        'module' => 'tm_fields',
         'settings' => array(),
-        'type' => 'link_default',
+        'type' => 'tm_fields_link',
         'weight' => 9,
       ),
       'grid' => array(
@@ -717,7 +712,7 @@ function tm_chapters_field_default_field_instances() {
     'bundle' => 'chapter',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'ie: https://twitter.com/yourname',
+    'description' => 'ie: @twittername or https://twitter.com/yourname',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -727,9 +722,9 @@ function tm_chapters_field_default_field_instances() {
       ),
       'full' => array(
         'label' => 'above',
-        'module' => 'link',
+        'module' => 'tm_fields',
         'settings' => array(),
-        'type' => 'link_default',
+        'type' => 'tm_fields_twitter',
         'weight' => 7,
       ),
       'grid' => array(
@@ -760,6 +755,7 @@ function tm_chapters_field_default_field_instances() {
       'absolute_url' => 1,
       'attributes' => array(
         'class' => '',
+        'configurable_class' => 0,
         'configurable_title' => 0,
         'rel' => 'nofollow',
         'target' => '_blank',
@@ -771,12 +767,12 @@ function tm_chapters_field_default_field_instances() {
       'enable_tokens' => 0,
       'rel_remove' => 'default',
       'title' => 'none',
-      'title_label_use_field_label' => FALSE,
+      'title_label_use_field_label' => 0,
       'title_maxlength' => 44,
       'title_value' => '',
       'url' => 0,
       'user_register_form' => FALSE,
-      'validate_url' => 1,
+      'validate_url' => 0,
     ),
     'widget' => array(
       'active' => 0,
@@ -802,9 +798,9 @@ function tm_chapters_field_default_field_instances() {
       ),
       'full' => array(
         'label' => 'above',
-        'module' => 'link',
+        'module' => 'tm_fields',
         'settings' => array(),
-        'type' => 'link_default',
+        'type' => 'tm_fields_link',
         'weight' => 6,
       ),
       'grid' => array(
@@ -880,10 +876,10 @@ function tm_chapters_field_default_field_instances() {
   t('Select a color that sets this city apart from the others. This color should have enough contrast with a white text layered on top.');
   t('Twitter');
   t('Website');
+  t('ie: @twittername or https://twitter.com/yourname');
   t('ie: http://www.yourwebsite.com');
   t('ie: https://facebook.com/yourname');
   t('ie: https://linkedin.com/groups/yourname');
-  t('ie: https://twitter.com/yourname');
 
   return $field_instances;
 }

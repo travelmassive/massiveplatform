@@ -76,6 +76,9 @@ function tm_organizations_strongarm() {
         'path' => array(
           'weight' => '11',
         ),
+        'redirect' => array(
+          'weight' => '30',
+        ),
       ),
       'display' => array(
         'flag_tm_sponsor' => array(

@@ -75,7 +75,7 @@ dependencies[] = ckeditor
 dependencies[] = shs
 dependencies[] = leaflet
 dependencies[] = leaflet_views
-
+dependencies[] = taxonomy_entity_index
 
 
 ; TM - development

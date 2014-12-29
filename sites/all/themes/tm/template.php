@@ -82,6 +82,26 @@ function tm_preprocess_page(&$variables, $hook) {
         drupal_set_message("Please verify your email address. We sent a verification email to " . $loaded->mail . ". Didn't get it? " . l(t('Re-send it'), 'toboggan/revalidate/' . $loaded->uid) . ".", "warning", FALSE);
     //}
   }
+
+  // customize account page titles
+  if (!$user->uid) {
+
+      if (arg(0) == 'user' && arg(1) == 'login') {
+          drupal_set_title(t('Sign in'));
+      }
+
+      if (arg(0) == 'user') {
+          drupal_set_title(t('Sign in'));
+      }
+
+      if (arg(0) == 'user' && arg(1) == 'password') {
+          drupal_set_title(t('Forgot password'));
+      }
+
+      if (arg(0) == 'user' && arg(1) == 'register') {
+          drupal_set_title(t('Join Travel Massive'));
+      }
+    }
   
 }
 

@@ -92,6 +92,10 @@ function tm_users_field_group_info() {
     'format_settings' => array(
       'label' => 'Chapters joined',
       'formatter' => 'open',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => '',
+      ),
     ),
   );
   $export['group_chapter_list_wrapper|user|user|default'] = $field_group;
@@ -107,7 +111,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Followers',
-    'weight' => '9',
+    'weight' => '10',
     'children' => array(
       0 => 'members_followed_by_members',
     ),
@@ -160,7 +164,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Events joined',
-    'weight' => '12',
+    'weight' => '13',
     'children' => array(
       0 => 'joined_event_list',
     ),
@@ -183,7 +187,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Following Organizations',
-    'weight' => '11',
+    'weight' => '12',
     'children' => array(
       0 => 'following_organizations',
     ),
@@ -208,7 +212,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Following',
-    'weight' => '10',
+    'weight' => '11',
     'children' => array(
       0 => 'members_following_members',
     ),

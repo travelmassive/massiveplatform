@@ -46,12 +46,16 @@ function tm_organizations_default_field_validation_rule() {
   $rule->bundle = 'organization';
   $rule->validator = 'field_validation_regex_validator';
   $rule->settings = array(
-    'data' => '^[-_a-zA-Z]+$',
+    'data' => '^[_\\-\\sa-zA-Z0-9]+$',
     'bypass' => 0,
     'roles' => array(
       1 => 0,
       2 => 0,
+      4 => 0,
+      6 => 0,
+      7 => 0,
       3 => 0,
+      5 => 0,
     ),
     'errors' => 0,
   );

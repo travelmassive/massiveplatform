@@ -17,8 +17,13 @@ function tm_users_ds_field_settings_info() {
   $ds_fieldsetting->bundle = 'user';
   $ds_fieldsetting->view_mode = 'default';
   $ds_fieldsetting->settings = array(
-    'following_organizations' => array(
-      'weight' => '14',
+    'list_users_companies' => array(
+      'weight' => '0',
+      'label' => 'hidden',
+      'format' => 'default',
+    ),
+    'joined_chapter_list' => array(
+      'weight' => '11',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -27,7 +32,7 @@ function tm_users_ds_field_settings_info() {
         ),
       ),
     ),
-    'members_followed_by_members' => array(
+    'joined_event_list' => array(
       'weight' => '12',
       'label' => 'hidden',
       'format' => 'default',
@@ -47,8 +52,8 @@ function tm_users_ds_field_settings_info() {
         ),
       ),
     ),
-    'joined_chapter_list' => array(
-      'weight' => '11',
+    'following_organizations' => array(
+      'weight' => '14',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -57,7 +62,7 @@ function tm_users_ds_field_settings_info() {
         ),
       ),
     ),
-    'joined_event_list' => array(
+    'members_followed_by_members' => array(
       'weight' => '12',
       'label' => 'hidden',
       'format' => 'default',
@@ -492,6 +497,21 @@ function tm_users_ds_custom_fields_info() {
 
   $ds_field = new stdClass();
   $ds_field->api_version = 1;
+  $ds_field->field = 'list_users_companies';
+  $ds_field->label = 'List Users Companies';
+  $ds_field->field_type = 6;
+  $ds_field->entities = array(
+    'user' => 'user',
+  );
+  $ds_field->ui_limit = 'user|*';
+  $ds_field->properties = array(
+    'block' => 'views|cb8676855b7262194e5050809bd7e81b',
+    'block_render' => '3',
+  );
+  $export['list_users_companies'] = $ds_field;
+
+  $ds_field = new stdClass();
+  $ds_field->api_version = 1;
   $ds_field->field = 'members_followed_by_members';
   $ds_field->label = 'Followers';
   $ds_field->field_type = 6;
@@ -525,92 +545,96 @@ function tm_users_ds_layout_settings_info() {
     'regions' => array(
       'header_body' => array(
         0 => 'tm_ds_edit_own_profile',
-        2 => 'field_job_role',
-        3 => 'flag_follow_members',
-        4 => 'field_avatar',
-        5 => 'tm_ds_anon_flag_placeholder',
-        6 => 'name',
-        7 => 'field_job_organization',
-        8 => 'group_job_wrapper',
+        3 => 'field_avatar',
+        4 => 'field_job_role',
+        5 => 'flag_follow_members',
+        6 => 'tm_ds_anon_flag_placeholder',
+        7 => 'name',
+        8 => 'field_job_organization',
         9 => 'tm_ds_more_actions',
-        10 => 'tm_ds_approved',
-        11 => 'group_action_menu_wrapper',
+        10 => 'group_job_wrapper',
+        11 => 'tm_ds_approved',
+        12 => 'group_action_menu_wrapper',
         15 => 'group_action_menu',
       ),
       'header_media' => array(
         1 => 'field_image',
       ),
+      'second_column' => array(
+        2 => 'list_users_companies',
+        16 => 'group_chapter_list_wrapper',
+        17 => 'group_companies_list_wrapper',
+        18 => 'group_community_wrapper',
+        19 => 'group_following_wrapper',
+        20 => 'joined_chapter_list',
+        21 => 'group_following_organizations',
+        22 => 'members_followed_by_members',
+        23 => 'joined_event_list',
+        24 => 'group_event_list_wrapper',
+        25 => 'members_following_members',
+        27 => 'following_organizations',
+      ),
       'header_extra' => array(
-        12 => 'tm_ds_chapter_sticker',
+        13 => 'tm_ds_chapter_sticker',
       ),
       'first_column' => array(
-        13 => 'group_details_wrapper',
-        25 => 'field_about_me',
-        26 => 'field_segment',
-        27 => 'field_link_facebook',
-        28 => 'field_user_question_destination',
-        29 => 'field_link_linkedin',
-        30 => 'field_user_question_dream_travel',
+        14 => 'group_details_wrapper',
+        26 => 'field_about_me',
+        28 => 'field_segment',
+        29 => 'field_link_facebook',
+        30 => 'field_user_question_destination',
         31 => 'group_user_qa',
-        32 => 'field_link_twitter',
-        33 => 'field_user_question_learn',
-        34 => 'field_user_question_job',
-        35 => 'field_link_website',
-        36 => 'group_user_qa_wrapper',
-        37 => 'field_user_question_why_travel',
-        38 => 'group_location_wrapper',
-        39 => 'field_location_city',
-      ),
-      'second_column' => array(
-        14 => 'group_chapter_list_wrapper',
-        16 => 'group_community_wrapper',
-        17 => 'group_following_wrapper',
-        18 => 'group_following_organizations',
-        19 => 'joined_chapter_list',
-        20 => 'joined_event_list',
-        21 => 'members_followed_by_members',
-        22 => 'group_event_list_wrapper',
-        23 => 'members_following_members',
-        24 => 'following_organizations',
+        32 => 'field_user_question_dream_travel',
+        33 => 'field_link_linkedin',
+        34 => 'field_user_question_learn',
+        35 => 'field_link_twitter',
+        36 => 'field_link_website',
+        37 => 'field_user_question_job',
+        38 => 'group_user_qa_wrapper',
+        39 => 'field_user_question_why_travel',
+        40 => 'group_location_wrapper',
+        41 => 'field_location_city',
       ),
     ),
     'fields' => array(
       'tm_ds_edit_own_profile' => 'header_body',
       'field_image' => 'header_media',
+      'list_users_companies' => 'second_column',
+      'field_avatar' => 'header_body',
       'field_job_role' => 'header_body',
       'flag_follow_members' => 'header_body',
-      'field_avatar' => 'header_body',
       'tm_ds_anon_flag_placeholder' => 'header_body',
       'name' => 'header_body',
       'field_job_organization' => 'header_body',
-      'group_job_wrapper' => 'header_body',
       'tm_ds_more_actions' => 'header_body',
+      'group_job_wrapper' => 'header_body',
       'tm_ds_approved' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
       'tm_ds_chapter_sticker' => 'header_extra',
       'group_details_wrapper' => 'first_column',
-      'group_chapter_list_wrapper' => 'second_column',
       'group_action_menu' => 'header_body',
+      'group_chapter_list_wrapper' => 'second_column',
+      'group_companies_list_wrapper' => 'second_column',
       'group_community_wrapper' => 'second_column',
       'group_following_wrapper' => 'second_column',
-      'group_following_organizations' => 'second_column',
       'joined_chapter_list' => 'second_column',
-      'joined_event_list' => 'second_column',
+      'group_following_organizations' => 'second_column',
       'members_followed_by_members' => 'second_column',
+      'joined_event_list' => 'second_column',
       'group_event_list_wrapper' => 'second_column',
       'members_following_members' => 'second_column',
-      'following_organizations' => 'second_column',
       'field_about_me' => 'first_column',
+      'following_organizations' => 'second_column',
       'field_segment' => 'first_column',
       'field_link_facebook' => 'first_column',
       'field_user_question_destination' => 'first_column',
-      'field_link_linkedin' => 'first_column',
-      'field_user_question_dream_travel' => 'first_column',
       'group_user_qa' => 'first_column',
-      'field_link_twitter' => 'first_column',
+      'field_user_question_dream_travel' => 'first_column',
+      'field_link_linkedin' => 'first_column',
       'field_user_question_learn' => 'first_column',
-      'field_user_question_job' => 'first_column',
+      'field_link_twitter' => 'first_column',
       'field_link_website' => 'first_column',
+      'field_user_question_job' => 'first_column',
       'group_user_qa_wrapper' => 'first_column',
       'field_user_question_why_travel' => 'first_column',
       'group_location_wrapper' => 'first_column',

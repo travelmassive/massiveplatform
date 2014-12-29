@@ -232,14 +232,14 @@ function tm_organizations_field_group_info() {
   $field_group->mode = 'full';
   $field_group->parent_name = '';
   $field_group->data = array(
-    'label' => 'Managed by',
+    'label' => 'Profile managed by',
     'weight' => '8',
     'children' => array(
       0 => 'field_owner',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
-      'label' => 'Managed by',
+      'label' => 'Profile managed by',
       'formatter' => 'open',
     ),
   );

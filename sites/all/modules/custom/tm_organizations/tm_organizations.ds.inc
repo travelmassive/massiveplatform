@@ -364,7 +364,7 @@ function tm_organizations_ds_layout_settings_info() {
     'regions' => array(
       'first_column' => array(
         0 => 'field_location_city',
-        2 => 'tm_ds_tm_sponsor',
+        1 => 'tm_ds_tm_sponsor',
         4 => 'body',
         8 => 'field_link_twitter',
         9 => 'field_country',
@@ -375,7 +375,7 @@ function tm_organizations_ds_layout_settings_info() {
         18 => 'group_details_wrapper',
       ),
       'header_media' => array(
-        1 => 'field_image',
+        2 => 'field_image',
       ),
       'header_body' => array(
         3 => 'field_avatar',
@@ -396,8 +396,8 @@ function tm_organizations_ds_layout_settings_info() {
     ),
     'fields' => array(
       'field_location_city' => 'first_column',
-      'field_image' => 'header_media',
       'tm_ds_tm_sponsor' => 'first_column',
+      'field_image' => 'header_media',
       'field_avatar' => 'header_body',
       'body' => 'first_column',
       'ds_flag_follow_organizations' => 'header_body',

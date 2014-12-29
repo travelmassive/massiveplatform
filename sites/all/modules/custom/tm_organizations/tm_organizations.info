@@ -78,5 +78,5 @@ features[variable][] = node_submitted_organization
 features[variable][] = pathauto_node_organization_pattern
 features[views_view][] = companies
 features[views_view][] = sponsors
-mtime = 1419837792
+mtime = 1419838614
 project path = sites/all/modules/custom

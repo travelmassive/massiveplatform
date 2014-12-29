@@ -393,10 +393,10 @@ function tm_organizations_field_default_field_instances() {
       ),
       'full' => array(
         'label' => 'above',
-        'module' => 'link',
+        'module' => 'tm_fields',
         'settings' => array(),
-        'type' => 'link_default',
-        'weight' => 3,
+        'type' => 'tm_fields_link',
+        'weight' => 4,
       ),
       'grid' => array(
         'label' => 'above',
@@ -470,10 +470,10 @@ function tm_organizations_field_default_field_instances() {
       ),
       'full' => array(
         'label' => 'above',
-        'module' => 'link',
+        'module' => 'tm_fields',
         'settings' => array(),
-        'type' => 'link_default',
-        'weight' => 4,
+        'type' => 'tm_fields_link',
+        'weight' => 5,
       ),
       'grid' => array(
         'label' => 'above',
@@ -547,10 +547,10 @@ function tm_organizations_field_default_field_instances() {
       ),
       'full' => array(
         'label' => 'above',
-        'module' => 'link',
+        'module' => 'tm_fields',
         'settings' => array(),
-        'type' => 'link_default',
-        'weight' => 2,
+        'type' => 'tm_fields_twitter',
+        'weight' => 3,
       ),
       'grid' => array(
         'label' => 'above',
@@ -625,10 +625,10 @@ function tm_organizations_field_default_field_instances() {
       ),
       'full' => array(
         'label' => 'above',
-        'module' => 'link',
+        'module' => 'tm_fields',
         'settings' => array(),
-        'type' => 'link_default',
-        'weight' => 5,
+        'type' => 'tm_fields_link',
+        'weight' => 2,
       ),
       'grid' => array(
         'label' => 'above',

@@ -434,7 +434,7 @@ function tm_events_communication_form($event){
       '#required' => TRUE,
       '#id' => 'edit-body',
       '#wysiwyg' => TRUE,
-      //'#format' => "text"
+      '#format' => 'html_email',
       //'#description' => "<small>Tip: The text [first_name] will be replaced with your member's first name when sent.</small>",
       );
     $form['eventid'] = array(
@@ -611,7 +611,7 @@ function tm_events_send_emails($recipients, $subject, $message, $eventid){
   // If there are more recipients, we need to defer this to cron emails and
   // refactor the ajax code that sends so the browser doesn't wait.
   // We will see what happens here and be prepared to update this.
-  // - Ian
+  // - ian@travelmassive.com
   $original_message = $message;
   while ($result = $results->fetchAssoc()){
     $user_account = user_load($result['uid']);

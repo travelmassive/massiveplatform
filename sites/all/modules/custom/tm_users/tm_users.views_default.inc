@@ -198,25 +198,27 @@ function tm_users_views_default_views() {
     'enabled' => '0',
     'continents' => array(),
   );
-  /* Filter criterion: Field: Industry Segment (field_segment) */
-  $handler->display->display_options['filters']['field_segment_tid']['id'] = 'field_segment_tid';
-  $handler->display->display_options['filters']['field_segment_tid']['table'] = 'field_data_field_segment';
-  $handler->display->display_options['filters']['field_segment_tid']['field'] = 'field_segment_tid';
-  $handler->display->display_options['filters']['field_segment_tid']['group'] = 1;
-  $handler->display->display_options['filters']['field_segment_tid']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_segment_tid']['expose']['operator_id'] = 'field_segment_tid_op';
-  $handler->display->display_options['filters']['field_segment_tid']['expose']['operator'] = 'field_segment_tid_op';
-  $handler->display->display_options['filters']['field_segment_tid']['expose']['identifier'] = 'field_segment_tid';
-  $handler->display->display_options['filters']['field_segment_tid']['expose']['remember_roles'] = array(
+  /* Filter criterion: Taxonomy Entity Index: Has taxonomy terms on User  (with depth and indexed in taxonomy_entity_index) */
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['id'] = 'taxonomy_entity_index_tid_depth';
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['table'] = 'users';
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['field'] = 'taxonomy_entity_index_tid_depth';
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['expose']['operator_id'] = 'taxonomy_entity_index_tid_depth_op';
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['expose']['operator'] = 'taxonomy_entity_index_tid_depth_op';
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['expose']['identifier'] = 'taxonomy_entity_index_tid_depth';
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
-    5 => 0,
     4 => 0,
+    6 => 0,
+    7 => 0,
     3 => 0,
+    5 => 0,
   );
-  $handler->display->display_options['filters']['field_segment_tid']['type'] = 'select';
-  $handler->display->display_options['filters']['field_segment_tid']['vocabulary'] = 'tm_segments';
-  $handler->display->display_options['filters']['field_segment_tid']['hierarchy'] = 1;
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['type'] = 'select';
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['vocabulary'] = 'tm_segments';
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['hierarchy'] = 1;
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['depth'] = '2';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');

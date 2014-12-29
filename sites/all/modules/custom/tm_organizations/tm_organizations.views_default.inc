@@ -113,6 +113,65 @@ function tm_organizations_views_default_views() {
   /* Display: All companies */
   $handler = $view->new_display('page', 'All companies', 'page');
   $handler->display->display_options['exposed_block'] = TRUE;
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Content: Country (field_country) */
+  $handler->display->display_options['relationships']['field_country_iso2']['id'] = 'field_country_iso2';
+  $handler->display->display_options['relationships']['field_country_iso2']['table'] = 'field_data_field_country';
+  $handler->display->display_options['relationships']['field_country_iso2']['field'] = 'field_country_iso2';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'organization' => 'organization',
+  );
+  /* Filter criterion: Countries: Name - list */
+  $handler->display->display_options['filters']['name_list']['id'] = 'name_list';
+  $handler->display->display_options['filters']['name_list']['table'] = 'countries_country';
+  $handler->display->display_options['filters']['name_list']['field'] = 'name_list';
+  $handler->display->display_options['filters']['name_list']['relationship'] = 'field_country_iso2';
+  $handler->display->display_options['filters']['name_list']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['name_list']['expose']['operator_id'] = 'name_list_op';
+  $handler->display->display_options['filters']['name_list']['expose']['operator'] = 'name_list_op';
+  $handler->display->display_options['filters']['name_list']['expose']['identifier'] = 'name_list';
+  $handler->display->display_options['filters']['name_list']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: Content: Has taxonomy terms (with depth) */
+  $handler->display->display_options['filters']['term_node_tid_depth']['id'] = 'term_node_tid_depth';
+  $handler->display->display_options['filters']['term_node_tid_depth']['table'] = 'node';
+  $handler->display->display_options['filters']['term_node_tid_depth']['field'] = 'term_node_tid_depth';
+  $handler->display->display_options['filters']['term_node_tid_depth']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['term_node_tid_depth']['expose']['operator_id'] = 'term_node_tid_depth_op';
+  $handler->display->display_options['filters']['term_node_tid_depth']['expose']['operator'] = 'term_node_tid_depth_op';
+  $handler->display->display_options['filters']['term_node_tid_depth']['expose']['identifier'] = 'term_node_tid_depth';
+  $handler->display->display_options['filters']['term_node_tid_depth']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    4 => 0,
+    6 => 0,
+    7 => 0,
+    3 => 0,
+    5 => 0,
+  );
+  $handler->display->display_options['filters']['term_node_tid_depth']['type'] = 'select';
+  $handler->display->display_options['filters']['term_node_tid_depth']['vocabulary'] = 'tm_segments';
+  $handler->display->display_options['filters']['term_node_tid_depth']['hierarchy'] = 1;
+  $handler->display->display_options['filters']['term_node_tid_depth']['depth'] = '2';
   $handler->display->display_options['path'] = 'companies';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Companies';

@@ -364,6 +364,7 @@ function tm_events_communication_form($event){
   $event = node_load(arg(1));
   $form = array();
   global $user;
+  global $conf;
 
   // get chapter associated with event if there is one
   $chapter = null;
@@ -383,11 +384,18 @@ function tm_events_communication_form($event){
       array('label'=>'hidden',));
     $date = render($view);
 
+    // create subject
+    $subject = t($conf['tm_site_name'] . ' - ').$event->title;
+    if ($chapter != null) {
+      $subject = t($chapter->title . ' ' . $conf['tm_site_name'] . ' - ').$event->title;
+      //$subject = t($conf['tm_site_name'] . ' ' . $chapter->title . ' - ').$event->title;
+    }
+
     $form['subject'] = array(
       '#title' => t('Subject: '),
       '#type' =>'textfield',
       '#required' => TRUE,
-      '#value' => t('Travel Massive - ').$event->title,
+      '#value' => $subject,
       );
 
     // prepopulate some of the text
@@ -498,6 +506,8 @@ function tm_events_communication_form($event){
 /* Send emails callback */
 function tm_events_send_emails_ajax(){
 
+  global $conf;
+
   if (!isset($_POST['subject'])) return FALSE;
   if (!isset($_POST['message'])) return FALSE;
   if (!isset($_POST['recipients'])) return FALSE;
@@ -509,6 +519,13 @@ function tm_events_send_emails_ajax(){
   $recipients = $_POST['recipients'];
   $eventid = $_POST['eventid'];
 
+
+  // copy announcement email to a specific address
+  if (isset($conf["tm_announcement_copy_email"])) {
+      tm_events_send_email($conf["tm_announcement_copy_email"], "[Copy] " . $subject, $message, $eventid);
+  }
+
+  // send to recipients
   $sendcount = tm_events_send_emails($recipients, $subject, $message, $eventid);
 
   // indicate success to the js ajax handler
@@ -590,17 +607,24 @@ function tm_events_send_emails($recipients, $subject, $message, $eventid){
   }
 
   // send off the emails
+  // TODO: This has been performance tested to 1000 recipients 
+  // If there are more recipients, we need to defer this to cron emails and
+  // refactor the ajax code that sends so the browser doesn't wait.
+  // We will see what happens here and be prepared to update this.
+  // - Ian
+  $original_message = $message;
   while ($result = $results->fetchAssoc()){
-    $account = user_load($result['uid']);
+    $user_account = user_load($result['uid']);
 
     // replace [first_name] token
-    $message = str_replace("[first_name]", $account->field_user_first_name[LANGUAGE_NONE][0]['value'], $message);
+    $first_name = $user_account->field_user_first_name[LANGUAGE_NONE][0]['value'];
+    $message = str_replace("[first_name]", $first_name, $original_message);
 
     // Check user notification is checked: user_chapter_announcements
     $notif = new TMNotification("user_chapter_announcements");
-    if ($notif->isEnabled($account->uid)) {
-        $sendcount++;
-        tm_events_send_email($account->mail, $subject, $message, $eventid);
+    if ($notif->isEnabled($user_account->uid)) {
+      $sendcount++;
+      tm_events_send_email($user_account->mail, $subject, $message, $eventid);
     }
 
   }

@@ -117,7 +117,15 @@ Drupal.behaviors.base_scripts = {
 
         // check address is not empty
         if ($('#edit-testemail').val() == "") {
+          $('#event-test-email-submit').val("Send test email");
           alert ("Address can't be empty.");
+          return false;
+        }
+
+        // check address is not empty
+        if ($('#edit-testemail-name').val() == "") {
+          $('#event-test-email-submit').val("Send test email");
+          alert ("Name can't be empty.");
           return false;
         }
 
@@ -126,7 +134,8 @@ Drupal.behaviors.base_scripts = {
           data: {'subject': $('#edit-subject').val(),
                 'message': message, //$('#edit-body').val(),
                 'eventid': eventid,
-                'address': $('#edit-testemail').val()},
+                'address': $('#edit-testemail').val(),
+                'first_name': $('#edit-testemail-name').val()},
           url: "/node/" + eventid + "/test_email"}).done(function(return_data) {
             if (!isNaN(return_data)) {
               $('#event-test-email-submit').val("Send test email");
@@ -140,6 +149,13 @@ Drupal.behaviors.base_scripts = {
 
       // ALL EMAILS
       if (form_action == "send_emails") {
+
+        if ($('#edit-recipients').val() == "chapter") {
+          if (!confirm('Send message to all Chapter Members?')) {
+            $('#event-email-attendees-submit').val("Send Email To All Recipients");
+            return;
+          }
+        }
 
         if (contact_eventattendess_completed) {
           alert("Already sent. As a precaution you can only use this button once.");

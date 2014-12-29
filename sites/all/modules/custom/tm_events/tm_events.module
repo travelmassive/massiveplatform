@@ -426,7 +426,8 @@ function tm_events_communication_form($event){
       '#required' => TRUE,
       '#id' => 'edit-body',
       '#wysiwyg' => TRUE,
-      '#description' => "<small>Tip: The text [first_name] will be replaced with your member's first name when sent.</small>",
+      //'#format' => "text"
+      //'#description' => "<small>Tip: The text [first_name] will be replaced with your member's first name when sent.</small>",
       );
     $form['eventid'] = array(
       '#type' => 'token',
@@ -438,6 +439,14 @@ function tm_events_communication_form($event){
       '#type' =>'textfield',
       '#id' => 'edit-testemail',
       '#value' => $user->mail,
+      );
+    $full_user = user_load($user->uid);
+    $form['test_email_name'] = array(
+      '#title' => t('Replace [first_name] with:'),
+      '#type' =>'textfield',
+      '#id' => 'edit-testemail-name',
+      '#value' => $full_user->field_user_first_name[LANGUAGE_NONE][0]['value'],
+      '#description' => "[first_name] will be replaced with your member's first name when sent to all recipients."
       );
     $form['test_button'] = array(
       '#type' => 'submit',
@@ -515,12 +524,17 @@ function tm_events_test_email_ajax(){
   if (!isset($_POST['message'])) return FALSE;
   if (!isset($_POST['address'])) return FALSE;
   if (!isset($_POST['eventid'])) return FALSE;
+  if (!isset($_POST['first_name'])) return FALSE;
 
   $subject = $_POST['subject'];
   $message = $_POST['message'];
   $message .= "<p><small>(Event ID: " . $_POST['eventid'] . ")</small></p>";
   $email = $_POST['address'];
   $eventid = $_POST['eventid'];
+  $first_name = $_POST['first_name'];
+
+  // replace [first_name] token
+  $message = str_replace("[first_name]", $first_name, $message);
 
   $sendcount = tm_events_send_email($email, $subject, $message, $eventid);
 

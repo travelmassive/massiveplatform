@@ -90,10 +90,6 @@ function tm_preprocess_page(&$variables, $hook) {
           drupal_set_title(t('Sign in'));
       }
 
-      if (arg(0) == 'user') {
-          drupal_set_title(t('Sign in'));
-      }
-
       if (arg(0) == 'user' && arg(1) == 'password') {
           drupal_set_title(t('Forgot password'));
       }

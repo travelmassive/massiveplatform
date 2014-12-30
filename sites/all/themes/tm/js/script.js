@@ -193,3 +193,23 @@ Drupal.behaviors.base_scripts = {
 
 
 })(jQuery, Drupal, this, this.document);
+
+// Set the "to date" to be the "from date" when changed
+// from http://tylerfrankenstein.com/code/drupal-automatically-set-date-when-date-changes-popup-calendar
+(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){
+
+      // When the 'from date' is changed on the following date fields, set
+      // the 'to date' equal to the 'from date'.
+      var date_fields_default_to_from = new Array(
+        'field_event_date',
+        'field_event_date_range'
+      );
+      var css_selector = '';
+      $.each(date_fields_default_to_from, function(index, field){
+          css_selector += '#edit-' + field.replace(/_/g,'-') + '-und-0-value-datepicker-popup-0, ';
+      });
+      css_selector = css_selector.substring(0, css_selector.length - 2); // Remove last ', '
+      $(css_selector).change(function(){
+          $('#' + $(this).attr('id').replace(/value/g, 'value2')).val($(this).val());
+      });
+});})(jQuery, Drupal, this, this.document);

@@ -57,6 +57,13 @@ function tm_users_theme() {
 function tm_users_preprocess_page(&$variables) {
   // Add account menu to page.
   $variables['page']['account_menu'] = theme('account_menu');
+
+  // disable personal contact form setting
+  // see: http://stackoverflow.com/questions/2540582/how-do-i-disable-the-personal-contact-form-option-in-the-user-edit-form
+  $menu_items = menu_get_item();
+    if('user/%/edit' === $menu_items['path']){
+         $variables['page']['content']['content']['content']['system_main']['contact']['#access'] = FALSE;
+    }
 }
 
 /*
@@ -354,5 +361,10 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
       '#weight' => -10);
   }
 
+  // disable user from choosing own contact form
+  // http://stackoverflow.com/questions/2540582/how-do-i-disable-the-personal-contact-form-option-in-the-user-edit-form
+  if ('user_profile_form' === $form_id) {
+     $form['contact']['#access'] = FALSE;
+  }
 }
 

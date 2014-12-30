@@ -77,7 +77,7 @@ dependencies[] = leaflet
 dependencies[] = leaflet_views
 dependencies[] = taxonomy_entity_index
 dependencies[] = queue_ui
-
+dependencies[] = contact
 
 ; TM - development
 dependencies[] = admin_menu

@@ -346,6 +346,13 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
       }
     }
   }
+  
+  if($form_id == "contact_site_form") {
+    global $conf;
+    $form['intro'] = array(
+      '#markup' => "<p>Get in touch with " . $conf["tm_site_name"] . " and send us your ideas, comments or feedback!</p>",
+      '#weight' => -10);
+  }
 
 }
 

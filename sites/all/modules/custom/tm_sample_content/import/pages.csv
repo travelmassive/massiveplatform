@@ -73,61 +73,6 @@ Please see our <a href='/blog/start-a-chapter'>Starting A Chapter</a> page for i
 </p>
 
 </p>"
-2,Contact Us,"
-
-<script src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
-
-<script>
-function SendContactMail() {
-	var isValid = true;
-    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-    if(!emailReg.test($('#email').val()) || $('#email').val() == ''){
-        isValid = false;
-		$('#mail-message').html('Enter valid email!');
-		return;
-    }
-
-    if ($('#name').val() == '') {
-    	isValid = false;
-    	$('#mail-message').html('Enter provide your name');
-    	return;
-    }
-
-    if ($('#subject').val() == '') {
-    	isValid = false;
-    	$('#mail-message').html('Enter provide a message subject');
-    	return;
-    }
-
-    if ($('#message').val() == '') {
-    	isValid = false;
-    	$('#mail-message').html('Enter provide a message');
-    	return;
-    }
-
-    if(isValid){
-    	$('#mail-message').html('Sending...');
-        $('#contact-form').submit();
-    }
-}
-</script>
-
-
-<p>
-Please get in touch with us using the contact form below, or email us at team@travelmassive.com. <br>We'd love to hear from you if you have any ideas, questions or feedback!
-
-<div style='width: 300px;'>
-				<form name='contact-form' id='contact-form' action='//formspree.io/team@travelmassive.com' method='post'>
-					Name <input type='text' id='name' name='name'>
-					Email <input type='text' id='email' name='email'>
-					Subject <input type='text' id='subject' name='subject'>
-					Message <textarea id='message' name='message' cols='42' rows='7'></textarea>
-					<a class='bttn bttn-secondary bttn-m' href='javascript:void(0)' onClick='javascript:SendContactMail();' id='submit-mail' class='submit-btn'>Send Message</a> 
-				</form>
-				<div style='margin-top: 8px;' id='mail-message'></div>
-			</div>
-
-</p>"
 3,Terms Of Use,"
 
 <p>The legal stuff. By using this website, you agree to the following:</p>

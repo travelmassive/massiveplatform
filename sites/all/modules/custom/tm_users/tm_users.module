@@ -282,5 +282,70 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
     // hide loggintobgan revalidate notice since we print it anyway
     hide($form['revalidate']);
   }
+
+
+  // Alter companies view dropdowns
+  // Note this should be in tm_organizations but it doesn't seem to fire there
+  if(isset($form_state['view'])) {
+    if ($form_state['view']->name == 'companies') {
+
+      // Limit countries dropdown to users countries
+      $output = '';
+      $output = cache_get('views-exposed-form-companies-countries', 'cache');
+      if (empty($output)) {
+        $result = db_query("SELECT DISTINCT iso2, name from {field_data_field_country} f LEFT JOIN {countries_country} c ON f.field_country_iso2 = c.iso2 WHERE f.bundle = 'organization' AND c.iso2 IS NOT NULL ORDER BY name ASC");
+        $defaultoptions = array('All'=>'- Any -');
+        $output = $defaultoptions + $result->fetchAllKeyed();
+        $form['name_list']['#options'] = $output;
+      cache_set('views-exposed-form-companies-countries', $output, 'cache');
+      } else{
+        $form['name_list']['#options'] = $output->data;
+      }
+
+      // Alter the segment dropdown
+      // Hide the 2nd level of taxonomy
+      // In the future we might allow searching deeper
+      foreach ($form['term_node_tid_depth']['#options'] as $key => $obj) {
+        if (isset($obj->option)) {
+          $option = $obj->option;
+          if (strpos(current($option), "-") === 0) {
+            unset($form['term_node_tid_depth']['#options'][$key]);
+          }
+        }
+      }
+    }
+  }
+
+  // Alter community view dropdowns
+  if(isset($form_state['view'])) {
+    if ($form_state['view']->name == 'community') {
+
+      // Limit countries dropdown to users countries
+      $output = '';
+      $output = cache_get('views-exposed-form-community-countries', 'cache');
+      if (empty($output)) {
+        $result = db_query("SELECT DISTINCT iso2, name from {field_data_field_user_country} f LEFT JOIN {countries_country} c ON f.field_user_country_iso2 = c.iso2 WHERE f.bundle = 'user' AND c.iso2 IS NOT NULL ORDER BY name ASC");
+        $defaultoptions = array('All'=>'- Any -');
+        $output = $defaultoptions + $result->fetchAllKeyed();
+        $form['name_list']['#options'] = $output;
+      cache_set('views-exposed-form-community-countries', $output, 'cache');
+      } else{
+        $form['name_list']['#options'] = $output->data;
+      }
+
+      // Alter the segment dropdown
+      // Hide the 2nd level of taxonomy
+      // In the future we might allow searching deeper
+      foreach ($form['taxonomy_entity_index_tid_depth']['#options'] as $key => $obj) {
+        if (isset($obj->option)) {
+          $option = $obj->option;
+          if (strpos(current($option), "-") === 0) {
+            unset($form['taxonomy_entity_index_tid_depth']['#options'][$key]);
+          }
+        }
+      }
+    }
+  }
+
 }
 

@@ -1,0 +1,14 @@
+# Notes for preparing sample database
+
+- Remove test users (via drupal admin)
+
+- Check table sizes:
+SELECT table_name AS "Tables",  round(((data_length + index_length) / 1024 / 1024), 2) "Size in MB"  FROM information_schema.TABLES  WHERE table_schema = "travelmassive" ORDER BY (data_length + index_length) DESC;
+
+- Clear cache
+drush cc all
+
+- Clear other tables
+truncate cache_form;
+truncate watchdog;
+truncate queue;

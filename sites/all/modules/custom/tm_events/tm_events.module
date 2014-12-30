@@ -607,11 +607,7 @@ function tm_events_send_emails($recipients, $subject, $message, $eventid){
   }
 
   // send off the emails
-  // TODO: This has been performance tested to 1000 recipients 
-  // If there are more recipients, we need to defer this to cron emails and
-  // refactor the ajax code that sends so the browser doesn't wait.
-  // We will see what happens here and be prepared to update this.
-  // - ian@travelmassive.com
+  // We use a cron queue tm_event_announcements to send emails in the background.
   $original_message = $message;
   while ($result = $results->fetchAssoc()){
     $user_account = user_load($result['uid']);
@@ -621,10 +617,20 @@ function tm_events_send_emails($recipients, $subject, $message, $eventid){
     $message = str_replace("[first_name]", $first_name, $original_message);
 
     // Check user notification is checked: user_chapter_announcements
+    $queue = DrupalQueue::get('tm_event_announcements');
     $notif = new TMNotification("user_chapter_announcements");
     if ($notif->isEnabled($user_account->uid)) {
+
       $sendcount++;
-      tm_events_send_email($user_account->mail, $subject, $message, $eventid);
+
+      // add to user_chapter_announcements cron queue
+      $queue->createItem(["email" => $user_account->mail, 
+                        "subject" => $subject, 
+                        "message" => $message,
+                        "eventid" => $eventid]);
+      
+      // below is the non queue method
+      //tm_events_send_email($user_account->mail, $subject, $message, $eventid);
     }
 
   }
@@ -635,8 +641,30 @@ function tm_events_send_emails($recipients, $subject, $message, $eventid){
   //drupal_goto('node/'.$form_state['values']['eventid']);
 }
 
+
+/**
+ * Implements hook_cron_queue_info().
+ */
+function tm_events_cron_queue_info() {
+  $queues = array();
+  $queues['tm_event_announcements'] = array(
+    'worker callback' => 'tm_events_send_email_cron', //function to call for each item
+    'time' => 120, //seconds to spend working on the queue
+  );
+  return $queues;
+}
+
+/**
+ * Cron call back to send announcement emails
+ *
+ */
+function tm_events_send_email_cron($item) {
+  tm_events_send_email($item["email"], $item["subject"], $item["message"], $item["eventid"]);
+}
+
+
 /* Sends out a single email */
-function tm_events_send_email($email, $subject, $message, $eventid){
+function tm_events_send_email($email, $subject, $message, $eventid) {
 
     $module = 'tm_events';
     $key = 'key';

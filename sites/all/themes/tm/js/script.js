@@ -181,7 +181,7 @@ Drupal.behaviors.base_scripts = {
                 $('#event-email-attendees-confirm').attr("disabled", true);
                 $('#edit-recipients').attr("disabled", true);
                 contact_eventattendess_completed = true;
-               alert("Successfully sent " + return_data + " emails.");
+               alert("Successfully sent " + return_data + " emails. \nIt may take a few minutes to be delivered.");
              } else {
               alert("Error sending emails: " + return_data);
              }

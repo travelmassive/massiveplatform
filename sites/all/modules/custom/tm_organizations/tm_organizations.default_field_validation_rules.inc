@@ -99,7 +99,7 @@ function tm_organizations_default_field_validation_rule() {
   $rule->bundle = 'organization';
   $rule->validator = 'field_validation_url_validator';
   $rule->settings = array(
-    'external' => 1,
+    'external' => 0,
     'internal' => 0,
     'bypass' => 0,
     'roles' => array(
@@ -127,7 +127,7 @@ function tm_organizations_default_field_validation_rule() {
   $rule->bundle = 'organization';
   $rule->validator = 'field_validation_url_validator';
   $rule->settings = array(
-    'external' => 1,
+    'external' => 0,
     'internal' => 0,
     'bypass' => 0,
     'roles' => array(
@@ -183,7 +183,7 @@ function tm_organizations_default_field_validation_rule() {
   $rule->bundle = 'organization';
   $rule->validator = 'field_validation_url_validator';
   $rule->settings = array(
-    'external' => 1,
+    'external' => 0,
     'internal' => 0,
     'bypass' => 0,
     'roles' => array(

@@ -1,0 +1,149 @@
+<?php
+
+function tm_api_menu() {
+
+   $items = array();
+
+   $items['api'] = array(
+      'page callback' => 'tm_api_home',
+      'access arguments' => array('access content')
+   );
+
+   $items['api/public/test'] = array(
+      'page callback' => 'tm_api_test',
+      'access arguments' => array('access content')
+   );
+
+   $items['api/public/stats'] = array(
+      'page callback' => 'tm_api_stats',
+      'access arguments' => array('access content')
+   );
+
+   $items['api/public/chapters_lat_lon'] = array(
+      'page callback' => 'tm_api_chapters_lat_lon',
+      'access arguments' => array('access content')
+   );
+
+   return $items;
+}
+
+function tm_api_home() {
+
+   // initialize api data
+	global $conf;
+	print("<p><h1>" . $conf["tm_site_name"] . " API</h1>
+		Welcome! Here's a list of what you can do so far:
+		<br>
+		<br>api/public/test - API test page
+		<br>api/public/stats - basic stats
+		<br>api/public/chapters_lat_lon - chapters lat and lon
+		<br>
+		<br>All results as returned as JSON. For JSONP append ?callback=myfunction to the URL.
+		<br>For help please email team@travelmassive.com</p>");
+   drupal_exit();
+}
+
+function tm_api_test() {
+   
+   // initialize api data
+   $api_data = _get_empty_api_data();
+
+   global $conf;
+   $api_data["$message"] = $conf["tm_site_name"] . ' RESTful API Test. If you see this, the API module is loaded.';
+   
+   tm_api_return_json($api_data);
+}
+
+function tm_api_stats() {
+
+	// initialize api data
+	$api_data = array("message" => null, "error" => null, "success" => true);
+
+	// number of chapters
+	$query = "SELECT COUNT(*) amount FROM {node} n ".
+              "WHERE n.type = :type";
+    $num_chapters = db_query($query, array(':type' => "chapter"))->fetch();
+    $api_data["num_chapters"] = $num_chapters->amount;
+
+    // number of organizations
+	$query = "SELECT COUNT(*) amount FROM {node} n ".
+              "WHERE n.type = :type";
+    $num_organizations = db_query($query, array(':type' => "organization"))->fetch();
+    $api_data["num_organizations"] = $num_organizations->amount;
+
+    // number of events
+	$query = "SELECT COUNT(*) amount FROM {node} n ".
+              "WHERE n.type = :type";
+    $num_events = db_query($query, array(':type' => "event"))->fetch();
+    $api_data["num_events"] = $num_events->amount;
+
+    // number of members
+	$query = "SELECT COUNT(*) amount FROM {users} u";
+    $num_members = db_query($query)->fetch();
+    $api_data["num_members"] = $num_members->amount;
+ 
+	// number of chapter countries
+    $result = db_query("SELECT DISTINCT iso2, name from {field_data_field_country} f LEFT JOIN {countries_country} c ON f.field_country_iso2 = c.iso2 WHERE f.bundle = 'chapter' AND c.iso2 IS NOT NULL ORDER BY name ASC");
+    $chapter_countries = $result->fetchAllKeyed();
+    $num_chapter_countries = (sizeof($chapter_countries));
+    $api_data["num_chapter_countries"] = $num_chapter_countries;
+
+    tm_api_return_json($api_data);
+}
+
+function tm_api_chapters_lat_lon() {
+
+	// initialize api data
+	$api_data = _get_empty_api_data();
+
+	// get chapters
+	$query = "SELECT nid FROM {node} n ".
+              "WHERE n.type = :type";
+    $chapter_ids = db_query($query, array(':type' => "chapter"))->fetchAll();
+
+    $chapter_data = array();
+    foreach($chapter_ids as $result) {
+    	$chapter = node_load($result->nid);
+    	if (isset($chapter->field_geomaplocation['und'][0])) {
+    		$point = $chapter->field_geomaplocation['und'][0]['geom'];
+    		$point = str_replace("POINT (", "", $point); // remove POINT ( text
+    		$point = str_replace(")", "", $point); // remove ) text
+    		$parts = explode(" ", $point); // split lat, lon
+    		$lat = $parts[1];
+    		$lon = $parts[0];
+    	} else {
+    		$lat = null;
+    		$lon = null;
+    	}
+    	$chapter_data[] = array("title" => $chapter->title, "lat" => $lat, "lon" => $lon);
+    }
+
+	$api_data["chapters"] = $chapter_data; 
+	tm_api_return_json($api_data);
+
+}
+
+// Initial API data
+function _get_empty_api_data() {
+	return array("message" => null, "error" => null, "success" => true);
+}
+
+// print api data as JSON object
+function tm_api_return_json($api_data) {
+
+	// check if we are embedding in a jsonp callback
+	$query = drupal_get_query_parameters();
+	if (isset($query["callback"])) {
+		// jsonp callback
+		// ie: mycallback({json_data});
+		print($query["callback"] . "(" . json_encode($api_data) . ");");
+	} else {
+		// standard json
+		// ie: {json_data}
+		print(json_encode($api_data));
+	}
+	drupal_exit();
+}
+
+
+?>

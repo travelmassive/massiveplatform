@@ -117,7 +117,7 @@ function SendContactMail() {
 Please get in touch with us using the contact form below, or email us at team@travelmassive.com. <br>We'd love to hear from you if you have any ideas, questions or feedback!
 
 <div style='width: 300px;'>
-				<form name='contact-form' id='contact-form' action='//forms.brace.io/team@travelmassive.com' method='post'>
+				<form name='contact-form' id='contact-form' action='//formspree.io/team@travelmassive.com' method='post'>
 					Name <input type='text' id='name' name='name'>
 					Email <input type='text' id='email' name='email'>
 					Subject <input type='text' id='subject' name='subject'>

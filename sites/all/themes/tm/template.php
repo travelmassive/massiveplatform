@@ -99,7 +99,8 @@ function tm_preprocess_page(&$variables, $hook) {
       }
 
       if (arg(0) == 'user' && arg(1) == 'register') {
-          drupal_set_title(t('Join Travel Massive'));
+          global $conf;
+          drupal_set_title(t('Join ' . $conf["tm_site_name"] ));
       }
     }
   

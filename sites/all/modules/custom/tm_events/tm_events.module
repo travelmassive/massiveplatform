@@ -494,7 +494,7 @@ function tm_events_communication_form($event){
     );
 
     $form['help_text'] = array(
-      '#markup' => '<br><br><small>Note: Members can opt-out by unchecking <i>Chapter and Event Announcements</i> in their notification settings.</small>',
+      '#markup' => '<br><br><small><b>Notes:</b><br>Members can opt-out by unchecking <i>Chapter and Event Announcements</i> in their notification settings.<br>Emails to attendees are sent out in a queue and may take a number of minutes to be delivered.</small>',
     );
   }
 

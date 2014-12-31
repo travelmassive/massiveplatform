@@ -75,6 +75,10 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
       foreach ($node->field_chapter_leaders['und'] as $leader) {
         $leader = user_load($leader['target_id']);
 
+        // dont't sent notification if the user is null
+        // if the chapter doesn't have any chapter leaders
+        if ($leader == null) { continue; }
+
         // set profile url (either friendly url or community url)
         $who_joined = user_load($account->uid);
         $profile_url = "community/" . $who_followed->name;

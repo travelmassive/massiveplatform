@@ -144,7 +144,7 @@ function tm_users_field_default_field_instances() {
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Claim your own URL on travelmassive.com for your profile such as http://travelmassive.com/my-name. Example: "your-name"',
+    'description' => 'Claim your own URL on travelmassive.com for your profile such as http://travelmassive.com/my-name. Example: "my-name"',
     'display' => array(
       'default' => array(
         'label' => 'above',

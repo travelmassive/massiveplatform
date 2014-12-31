@@ -144,7 +144,7 @@ function tm_users_field_default_field_instances() {
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Claim your own URL on travelmassive.com for your profile. For example: http://travelmassive.com/my-awesome-company',
+    'description' => 'Claim your own URL on travelmassive.com for your profile such as http://travelmassive.com/my-name. Example: "your-name"',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -1252,7 +1252,7 @@ function tm_users_field_default_field_instances() {
   t('Avatar');
   t('Banner');
   t('City');
-  t('Claim your own URL on travelmassive.com for your profile. For example: http://travelmassive.com/my-awesome-company');
+  t('Claim your own URL on travelmassive.com for your profile such as http://travelmassive.com/my-name. Example: "your-name"');
   t('Country');
   t('Facebook');
   t('First name');

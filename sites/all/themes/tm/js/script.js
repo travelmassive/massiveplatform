@@ -213,3 +213,5 @@ Drupal.behaviors.base_scripts = {
           $('#' + $(this).attr('id').replace(/value/g, 'value2')).val($(this).val());
       });
 });})(jQuery, Drupal, this, this.document);
+
+

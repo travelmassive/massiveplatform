@@ -226,7 +226,8 @@ function tm_organizations_field_default_field_instances() {
     'bundle' => 'organization',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'By picking a custom URL for your company, you make sure that your profile is accesible through a friendly URL. For example: http://travelmassive.com/your-url',
+    'description' => 'Make your profile available through a friendly URL such as http://travelmassive.com/your-company.
+Example: "your-company"',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -268,6 +269,7 @@ function tm_organizations_field_default_field_instances() {
         'weight' => 0,
       ),
     ),
+    'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_friendly_url',
     'label' => 'Friendly URL',
@@ -937,7 +939,6 @@ function tm_organizations_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('By picking a custom URL for your company, you make sure that your profile is accesible through a friendly URL. For example: http://travelmassive.com/your-url');
   t('City');
   t('Country');
   t('Description');
@@ -947,6 +948,8 @@ function tm_organizations_field_default_field_instances() {
   t('Industry Segment');
   t('Linkedin');
   t('Logo');
+  t('Make your profile available through a friendly URL such as http://travelmassive.com/your-company.
+Example: "your-company"');
   t('Managed by');
   t('Please provide the segment which identifies the company the best.');
   t('Select the Travel Massive member that manages this account.');

@@ -9,6 +9,8 @@ SELECT table_name AS "Tables",  round(((data_length + index_length) / 1024 / 102
 drush cc all
 
 - Clear other tables
+truncate tm_notifications;
+truncate tm_invitations;
 truncate cache_form;
 truncate watchdog;
 truncate queue;

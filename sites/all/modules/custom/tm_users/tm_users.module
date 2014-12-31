@@ -304,7 +304,7 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
         $defaultoptions = array('All'=>'- Any -');
         $output = $defaultoptions + $result->fetchAllKeyed();
         $form['name_list']['#options'] = $output;
-      cache_set('views-exposed-form-companies-countries', $output, 'cache');
+      cache_set('views-exposed-form-companies-countries', $output, 'cache', time() + 120);
       } else{
         $form['name_list']['#options'] = $output->data;
       }
@@ -335,7 +335,7 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
         $defaultoptions = array('All'=>'- Any -');
         $output = $defaultoptions + $result->fetchAllKeyed();
         $form['name_list']['#options'] = $output;
-      cache_set('views-exposed-form-community-countries', $output, 'cache');
+      cache_set('views-exposed-form-community-countries', $output, 'cache', time() + 120);
       } else{
         $form['name_list']['#options'] = $output->data;
       }
@@ -366,5 +366,29 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
   if ('user_profile_form' === $form_id) {
      $form['contact']['#access'] = FALSE;
   }
+
+  // adjustments to the organization add form
+  // hide row weights for non administrator/moderator
+  // hide manager on first edit
+  if ($form_id == 'organization_node_form') {
+    
+    // Hide row weights unless administrator or moderator
+    global $user;
+    if (!((in_array('administrator', $user->roles)) or (in_array('moderator', $user->roles)))) {
+      $form['#attached']['js'][] = array(
+        'data' => "(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){ $('.tabledrag-toggle-weight-wrapper').hide(); });})(jQuery, Drupal, this, this.document);",
+        'type' => 'inline',
+      );
+    }
+
+    // Hide managed by if its first edit
+    if (!(isset($form['nid']['#value']))) {
+      hide($form['field_owner']);
+    }
+  }
+
 }
+
+
+
 

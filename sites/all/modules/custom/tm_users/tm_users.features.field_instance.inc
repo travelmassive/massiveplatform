@@ -1252,7 +1252,7 @@ function tm_users_field_default_field_instances() {
   t('Avatar');
   t('Banner');
   t('City');
-  t('Claim your own URL on travelmassive.com for your profile such as http://travelmassive.com/my-name. Example: "your-name"');
+  t('Claim your own URL on travelmassive.com for your profile such as http://travelmassive.com/my-name. Example: "my-name"');
   t('Country');
   t('Facebook');
   t('First name');

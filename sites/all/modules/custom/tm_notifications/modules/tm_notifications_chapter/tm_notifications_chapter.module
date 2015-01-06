@@ -81,7 +81,7 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
 
         // set profile url (either friendly url or community url)
         $who_joined = user_load($account->uid);
-        $profile_url = "community/" . $who_followed->name;
+        $profile_url = "community/" . $who_joined->name;
         if (count($who_joined->field_friendly_url) > 0) { 
           $profile_url = $who_joined->field_friendly_url['und']['0']['value'];
         } 

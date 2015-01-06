@@ -389,6 +389,37 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
 
 }
 
+// If the user is already approved then overwrite role to approved when they save profile.
+// Reason: if user signs up, and in middle of editing profile is approved, then
+// saving their profile would overwrite the approved role (making them unapproved).
+// This method fixes this edge case.
+// see: https://github.com/travelmassive/massiveplatform/issues/68
+function tm_users_user_presave(&$edit, $account, $category) {
+
+  global $user;
+
+  // only fire this method if saving your own account
+  if ($account->uid == $user->uid) {
+
+    // don't mess with administrators' forms
+    if (in_array('administrator', $user->roles)) {
+      return;
+    }
+
+    // if the user is already approved then override to be approved
+    if (in_array('approved user', $user->roles)) {
+      if ($role = user_role_load_by_name('approved user')) {
+
+        // set approved user role
+        $edit['roles'][$role->rid] = $role->rid;
+
+        // below is a hammer if we need it
+        // unset($edit["roles"]);
+      }
+    }
+  }
+
+}
 
 
 

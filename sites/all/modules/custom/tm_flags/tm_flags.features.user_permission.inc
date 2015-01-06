@@ -40,6 +40,15 @@ function tm_flags_user_default_permissions() {
     'module' => 'flag',
   );
 
+  // Exported permission: 'flag tm_sponsor'.
+  $permissions['flag tm_sponsor'] = array(
+    'name' => 'flag tm_sponsor',
+    'roles' => array(
+      'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
   // Exported permission: 'unflag event_register'.
   $permissions['unflag event_register'] = array(
     'name' => 'unflag event_register',
@@ -66,6 +75,15 @@ function tm_flags_user_default_permissions() {
     'roles' => array(
       'authenticated user' => 'authenticated user',
       'non-validated' => 'non-validated',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag tm_sponsor'.
+  $permissions['unflag tm_sponsor'] = array(
+    'name' => 'unflag tm_sponsor',
+    'roles' => array(
+      'moderator' => 'moderator',
     ),
     'module' => 'flag',
   );

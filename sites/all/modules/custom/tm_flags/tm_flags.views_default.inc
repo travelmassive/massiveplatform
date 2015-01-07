@@ -86,7 +86,7 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['use_more_text'] = 'View all attendees';
   $handler->display->display_options['defaults']['link_display'] = FALSE;
   $handler->display->display_options['link_display'] = 'custom_url';
-  $handler->display->display_options['link_url'] = 'node/%1/attendees';
+  $handler->display->display_options['link_url'] = 'node/!1/attendees';
   $handler->display->display_options['defaults']['empty'] = FALSE;
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   /* Relationship: Flags: User's flaggings */

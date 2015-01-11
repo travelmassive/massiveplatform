@@ -2832,7 +2832,7 @@ tr.selected td {
 /* line 803, ../sass/components/_misc.scss */
 .progress .filled {
   background-color: #0072b9;
-  background-image: url('../images/progress.gif?1419811701');
+  background-image: url('../images/progress.gif?1419949660');
 }
 
 /* ==========================================================================
@@ -5415,6 +5415,12 @@ select:disabled {
   background-color: #D2D5D8;
 }
 
+/* line 540, ../sass/_forms.scss */
+.form-item-chapter-list {
+  margin-top: -24px;
+  padding-bottom: 16px;
+}
+
 /* line 4, ../sass/_modules.scss */
 #tm-events-communication-form,
 #tm-events-rsvp-form,
@@ -6559,11 +6565,11 @@ select:disabled {
 
 /* line 232, ../sass/_single.scss */
 .front {
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(33, 48, 64, 0)), color-stop(50%, rgba(33, 48, 64, 0)), color-stop(100%, #213040)), url('../images/../images/layout/home-bg-img-01a.jpg?1419811701');
-  background: -webkit-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1419811701');
-  background: -moz-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1419811701');
-  background: -o-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1419811701');
-  background: linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1419811701');
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(33, 48, 64, 0)), color-stop(50%, rgba(33, 48, 64, 0)), color-stop(100%, #213040)), url('../images/../images/layout/home-bg-img-01a.jpg?1419949660');
+  background: -webkit-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1419949660');
+  background: -moz-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1419949660');
+  background: -o-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1419949660');
+  background: linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1419949660');
   background-repeat: no-repeat, no-repeat;
   background-position: center center, center center;
   -webkit-background-size: 100% 100%, cover;

@@ -76,12 +76,10 @@ if (!$twitter_data) {
     </ul>
   <?php endif; ?>
 
-    <!-- Link by title to any chapters you are a chapter leader of -->
-    <?php if (in_array("chapter leader", $loaded->roles)) : ?>
-      <ul class="dropd-menu">
-        <?php print tm_users_chapters($loaded->uid); ?>
-      </ul>
-  <?php endif; ?>
+  <!-- Link to chapters the user has joined -->
+    <ul class="dropd-menu">
+        <?php print tm_users_menu_chapters($loaded->uid); ?>
+    </ul>
 
   <?php if (in_array("moderator", $loaded->roles)) : ?>
       <ul class="dropd-menu">

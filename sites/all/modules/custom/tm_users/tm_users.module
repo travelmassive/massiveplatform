@@ -169,7 +169,6 @@ function tm_users_email_registration_name($edit, $account) {
 
 }
 
-
 /**
  * Hook on creation of a new redirect in redirect module.
  * This is a sneaky method to delete automatically created user redirects
@@ -186,7 +185,7 @@ function tm_users_redirect_insert($redirect) {
  * Link by title to any chapters this user is a chapter leader of 
  * inserts this markup into the user menu tpl file
 */
-function tm_users_chapters($uid){
+function tm_users_leading_chapters($uid){
   $query = new EntityFieldQuery();
   $markup = '';
   $query->entityCondition('entity_type', 'node')
@@ -207,6 +206,121 @@ function tm_users_chapters($uid){
       $markup .= "<li style='margin-bottom: 4px;'><img align='left' style='margin-left: 16px; margin-top: 4px; padding-right: 8px; width: 40px;' src='".image_style_url($style, $img_url) . "'>" . l($chapter->title . ' (Chapter Leader)','node/'.$chapter->nid).'</li>';
     }
   }
+  return $markup;
+}
+
+/* 
+ * Link by title to any chapters this user has joined
+ * inserts this markup into the user menu tpl file
+*/
+function tm_users_menu_chapters($uid){
+ 
+  $markup = "";
+  $MAX_ITEMS = 4;
+
+  // Step 1. Fetch list of chapters the user has joined
+  $flags = flag_get_user_flags("node");
+  $chapters_nids = array();
+  foreach ($flags as $flag_name => $flag) {
+    if ($flag_name == "signup") {
+      foreach($flag as $f) {
+        $chapters_nids[] = $f->entity_id;
+      }
+    }
+  }
+
+  // Step 2. Fetch list of chapters the user is a leader of
+  $chapters_leader_nids = array();
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'chapter')
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->fieldCondition('field_chapter_leaders', 'target_id', $uid, '=');
+
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    $chapters_leader_nids = array_keys($result['node']);
+  }
+
+  // Step 3. Join the two arrays of chapter leader nids and joined chapters
+  $all_chapter_nids = $chapters_leader_nids;
+  foreach ($chapters_nids as $nid) {
+    $all_chapter_nids[] = $nid;
+  }
+
+  // Step 4. Create HTML
+  $chapter_html = array();
+  $chapter_leader_html = array();
+  $num_items = 0;
+  $count_chapters = 0;
+  foreach ($all_chapter_nids as $nid) {
+
+    $count_chapters++;
+
+    //$img_url = 'public://images/chapters/Athens.jpg';  // the orig image uri
+    $chapter = node_load($nid);
+
+    $img_url = @$chapter->field_image['und'][0]['uri'];
+    if ($img_url == "") { $img_url = "public://default_images/cover-default.jpg"; }
+    $style = 'thumbnail';  // or any other custom image style you've created via /admin/config/media/image-styles
+
+    // add to chapter html
+    if (!array_key_exists($chapter->title, $chapter_html)) {
+
+      // Create html for menu entry
+      $chapter_leader_text = "";
+      if (in_array($nid, $chapters_leader_nids)) { 
+        $chapter_leader_text = " (Chapter Leader)";
+      }
+
+      $html = "<li style='margin-bottom: 4px;'><img align='left' style='margin-left: 16px; margin-top: 4px; padding-right: 8px; width: 40px;' src='".image_style_url($style, $img_url) . "'>" . l($chapter->title . $chapter_leader_text,'node/'.$chapter->nid) . '</li>';
+
+      // Put into either a chapter or chapter_leader array
+      if (in_array($nid, $chapters_leader_nids)) { 
+        $chapter_leader_html[$chapter->title] = $html;
+      } else {
+        $chapter_html[$chapter->title] = $html;
+      }
+    }
+  }
+
+  // Step 5. Join HTML
+  $markup = "";
+
+  if ($count_chapters > 0) {
+
+    // Sort the chapters by title
+    ksort($chapter_html);
+    ksort($chapter_leader_html);
+
+    // Show chapters you are a chapter leader for first
+    foreach ($chapter_leader_html as $html) {
+      // only print max items
+      $num_items++;
+      if ($num_items > $MAX_ITEMS) {
+        continue;
+      }
+      $markup .= $html;
+    }
+
+    // Show other chapters second
+    foreach ($chapter_html as $html) {
+      // only print max items
+      $num_items++;
+      if ($num_items > $MAX_ITEMS) {
+        continue;
+      }
+
+      $markup .= $html;
+    }
+    if ($num_items > $MAX_ITEMS) {
+      $markup .= "<li>" . l(t('(View ') . ($num_items - $MAX_ITEMS) . " more)", 'user/' . $uid) . "</li>";
+    }
+  }
+  else {
+    $markup .= "<li>" . l(t('Join a chapter'), 'chapters') . "</li>";
+  }
+
   return $markup;
 }
 
@@ -266,6 +380,34 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
         '#weight' => 200, // Adjust so that you can place it whereever 
         );
   }
+
+ 
+  // Allow user to join up to chapter when they sign up
+  if (($form_id == 'user_register_form') or ($form_id == 'tm_users_external_signin_register_form')) {
+
+    // get a list of chapters
+    $chapters = node_load_multiple(array(), array('type' => "chapter"));
+
+    // create dropdown list
+    $chapter_list = array();
+    foreach ($chapters as $chapter) { // See this line in your original code
+      $chapter_list[$chapter->nid] = $chapter->title; 
+    }
+    asort($chapter_list);
+    $chapter_list = array("" => "Select a chapter", "-1" => "Choose later") + $chapter_list;
+    
+    // add chapter list to registraton form
+    $form['chapter_list']=array(
+      '#type'=>'select',
+      '#title' => t('Home City'),
+      '#options' => $chapter_list,
+      '#multiple' => false,
+      '#weight'=>1,
+      '#description'=>'Please select a home chapter to join.',
+    );
+
+  }
+
 
   // Add terms and conditions agreement to sign up form
   if (($form_id == 'user_register_form') or ($form_id == 'tm_users_external_signin_register_form')) {
@@ -385,6 +527,30 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
     if (!(isset($form['nid']['#value']))) {
       hide($form['field_owner']);
     }
+  }
+}
+
+// If user selected a home chapter on signup, then join it
+// See: https://github.com/travelmassive/massiveplatform/issues/75
+// todo: should check for a valid chapter id
+function tm_users_user_insert(&$edit, $account, $category) {
+  
+  // need user
+  if (!isset($edit['chapter_list'])) {
+    return;
+  }
+
+  $chapter_id = $edit['chapter_list'];
+  if (($chapter_id != null) && ($chapter_id > 0)) {    
+    
+    // flag the user so they join the chapter
+    $signup_flag = flag_get_flag('signup');
+    if ($signup_flag) {
+      if (!$signup_flag->is_flagged($chapter_id, $account->uid)) {
+        flag('flag', 'signup', $chapter_id, $account);
+      } 
+    }
+
   }
 
 }

@@ -210,6 +210,7 @@ function tm_users_external_signin_register_form($form, &$form_state) {
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => 'Finish Registration',
+    '#weight' => 2
   );
   
   $form['#submit'][] = 'tm_users_external_signin_register_form_submit';

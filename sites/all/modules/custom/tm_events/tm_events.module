@@ -103,18 +103,20 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
     //$form['field_organizer']['field_organizer_child']['#access'] = FALSE;
   }
 
-  // Set timezone automatically from chapter if creating new event
-  $node = $form_state['node'];
+  // Ian: Set timezone automatically from chapter if creating new event
+  // This is currently disabled as we are now using "none" timezone.
+  // If the field_event_date uses "date's timezone" then enable this again.
+  /*$node = $form_state['node'];
   if (!isset($node->nid) || isset($node->is_new)) {
     if ($chapter_id != null) {
       $chapter = node_load($chapter_id);
       // If chapter has timezone set
       if ($chapter->field_chapter_timezone != null) {
         $chapter_timezone = $chapter->field_chapter_timezone[LANGUAGE_NONE][0]['value'];
-      $form['field_event_date'][LANGUAGE_NONE][0]['timezone']['#default_value'] = $chapter_timezone;
+        $form['field_event_date'][LANGUAGE_NONE][0]['timezone']['#default_value'] = $chapter_timezone;
       }
     }
-  }
+  }*/
 
 }
 
@@ -260,11 +262,42 @@ function _tm_next_event($field, $title = NULL) {
 }
 
 /**
+ * Fetch the timezone of an event.
+ * Returns UTC if no timezone.
+ * Note: Due to known bugs in the "date's timezone" handling we use "none" timezone handling
+ * when saving field_event_date. For this reason we use the chapter's timezone.
+ * In the future if events need their own timezone (ie: without a chapter) then we need
+ * to do one of the following options:
+ * 1. Add a new "field_event_timezone" field (set default on new event) and refer to this
+ * 2. Wait for a fix for "date's timezone" and we can refer to this value instead.
+ * see: https://www.drupal.org/node/1455578 (Date Locale & Time Zone settings)
+ * see: https://www.drupal.org/node/1707122 (Bug)
+ */
+function _tm_get_event_timezone($event) {
+    $chapter_timezone = 'UTC';
+    if (isset($event->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
+      $chapter = node_load($event->field_chapter[LANGUAGE_NONE][0]['target_id']);
+      // If chapter has timezone set
+      if ($chapter->field_chapter_timezone != null) {
+        $chapter_timezone = $chapter->field_chapter_timezone[LANGUAGE_NONE][0]['value'];
+      } else {
+        // no timezone for chapter, so use UTC
+        $chapter_timezone = 'UTC';
+      }
+    }
+    return $chapter_timezone;
+}
+
+/**
  * Custom function to prepare date for a date badge.
  */
 function _tm_date_avatar($field, $title = NULL) {
   if (isset($field['entity']->field_event_date['und'][0]['value'])) {
-    $event_date = new DateTime($field['entity']->field_event_date['und'][0]['value'], new DateTimeZone($field['entity']->field_event_date['und'][0]['timezone']));
+
+    // Use the timezone of the event
+    $event_timezone = _tm_get_event_timezone($field['entity']);
+
+    $event_date = new DateTime($field['entity']->field_event_date['und'][0]['value'], new DateTimeZone($event_timezone));
     return theme('tm_date_avatar', array(
       'date' => $event_date,
     ));
@@ -275,12 +308,14 @@ function _tm_date_avatar($field, $title = NULL) {
  * Custom function to return the full date and time of an event
  */
 function _tm_fulldate_event($field, $title = NULL) {
-  // Site timezone is set to UTC. Date field has timezone handling and the 
-  // values are stored in the db as provided by user. Since we're interested
-  // in local time, we don't need to do conversion.
+
   if (isset($field['entity']->field_event_date['und'][0]['value'])) {
-    $event_date = new DateTime($field['entity']->field_event_date['und'][0]['value'], new DateTimeZone($field['entity']->field_event_date['und'][0]['timezone']));
-    $event_date2 = new DateTime($field['entity']->field_event_date['und'][0]['value2'], new DateTimeZone($field['entity']->field_event_date['und'][0]['timezone']));
+
+    // Use the timezone of the event
+    $event_timezone = _tm_get_event_timezone($field['entity']);
+    
+    $event_date = new DateTime($field['entity']->field_event_date['und'][0]['value'], new DateTimeZone($event_timezone));
+    $event_date2 = new DateTime($field['entity']->field_event_date['und'][0]['value2'], new DateTimeZone($event_timezone));
     if ($event_date != $event_date2) {
       return '<span class="date">' . $event_date->format('l, F j, Y') . '</span><span class="time">' . t('From') . ' ' . $event_date->format('G:i') . ' ' . t('to') . ' ' . $event_date2->format('G:i') . '</span>';      
     }
@@ -294,6 +329,10 @@ function _tm_fulldate_event($field, $title = NULL) {
  * Implement hook_node_presave()
  */
 function tm_events_node_presave($node) {
+
+  // make sure we are working on an event node
+  if ($node->type != "event") { return; }
+
   if (isset($node->field_external_rsvp[LANGUAGE_NONE][0]['value'])) {
     $external_rsvp = $node->field_external_rsvp[LANGUAGE_NONE][0]['value'];
     // If is not a Travel Massive RSVP remove the signup limit.
@@ -306,9 +345,8 @@ function tm_events_node_presave($node) {
     }
   }
   if ($node->type == 'event'){
-    // I have absolutely no idea why this is necessary, but the organiser field
+    // Robyn: I have absolutely no idea why this is necessary, but the organiser field
     // is being copied and not copied back
-    //print_r($node->field_organizer_child);
     if ($node->field_organizer_child['und'][0]['target_id'] != null) {
       if (isset($node->field_organizer_child)) {
         $node->field_organizer = $node->field_organizer_child;
@@ -316,6 +354,7 @@ function tm_events_node_presave($node) {
     }
   }
 }
+
 /*
 * Implements hook_menu()
 */

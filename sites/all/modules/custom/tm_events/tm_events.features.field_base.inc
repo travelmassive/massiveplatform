@@ -60,7 +60,7 @@ function tm_events_field_default_field_bases() {
       ),
       'timezone_db' => 'America/Los_Angeles',
       'todate' => 'optional',
-      'tz_handling' => 'date',
+      'tz_handling' => 'none',
     ),
     'translatable' => 0,
     'type' => 'datetime',

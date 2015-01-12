@@ -148,6 +148,9 @@ function tm_users_email_registration_name($edit, $account) {
   //print_r($account);
   $first_name = $account->field_user_first_name['und'][0]['value'];
   $last_name = $account->field_user_last_name['und'][0]['value'];
+  // remove spaces
+  $first_name = str_replace(" ", "", $first_name);
+  $last_name = str_replace(" ", "", $last_name);
   $username = email_registration_cleanup_username($first_name . $last_name); 
 
   // check if username exists
@@ -172,11 +175,13 @@ function tm_users_email_registration_name($edit, $account) {
 /**
  * Hook on creation of a new redirect in redirect module.
  * This is a sneaky method to delete automatically created user redirects
+ * We preserve the original /community/name URL (for old links in notification emails)
  */
 function tm_users_redirect_insert($redirect) {
   //print_r($redirect->source);
   $parts = explode("/", $redirect->redirect);
-  if ($parts[0] == "user") {
+  $source_parts = explode("/", $redirect->source);
+  if (($parts[0] == "user") && ($source_parts[0] != "community")) {
     redirect_delete_by_path($redirect->source);
   }
 }

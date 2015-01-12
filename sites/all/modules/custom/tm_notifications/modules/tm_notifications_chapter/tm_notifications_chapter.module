@@ -69,7 +69,15 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
     if ($node->type == 'chapter') {
 
       // send welcome message to the user
-      tm_notifications_notify('user_chapter_join_welcome_member', $account, array('node' => $node));
+      // set profile url (either friendly url or community url)
+      $who_joined = user_load($account->uid);
+
+      // get user first name and last name
+      // we can't always rely on current-user token as user can sign up to chapters on signup
+      $first_name = $who_joined->field_user_first_name['und'][0]['value'];
+      $last_name = $who_joined->field_user_last_name['und'][0]['value'];
+
+      tm_notifications_notify('user_chapter_join_welcome_member', $account, array('node' => $node, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name));
 
       // notify each owner of the organizational profile that they have a new follower
       foreach ($node->field_chapter_leaders['und'] as $leader) {
@@ -79,14 +87,12 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
         // if the chapter doesn't have any chapter leaders
         if ($leader == null) { continue; }
 
-        // set profile url (either friendly url or community url)
-        $who_joined = user_load($account->uid);
         $profile_url = "community/" . $who_joined->name;
         if (count($who_joined->field_friendly_url) > 0) { 
           $profile_url = $who_joined->field_friendly_url['und']['0']['value'];
         } 
 
-        tm_notifications_notify('user_chapter_join_notify_leaders', $leader, array('node' => $node, 'user' => $leader, '__PROFILE_URL__' => $profile_url));
+        tm_notifications_notify('user_chapter_join_notify_leaders', $leader, array('node' => $node, 'user' => $leader, '__PROFILE_URL__' => $profile_url, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name));
       }
     }
   }

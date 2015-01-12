@@ -153,9 +153,11 @@ function tm_notifications_mail($key, &$message, $params) {
   }
   
   // replace custom tokens ie: __PROFILE_URL__
+  // replace in message and subject
   foreach ($params['tokens'] as $token_name => $token_value) {
     if (strpos($token_name, "__") === 0) {
       $msg = str_replace($token_name, $token_value, $msg);
+      $subject = str_replace($token_name, $token_value, $subject);
     }
   }
   
@@ -180,6 +182,7 @@ function tm_notifications_mail($key, &$message, $params) {
   $subject = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $subject);
   $subject = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $subject);  
   $subject = str_replace("__SITE_NAME__", $conf["tm_site_name"], $subject);  
+
   $message['subject'] = check_plain($subject);
 
 

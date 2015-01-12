@@ -20,10 +20,10 @@ function tm_notifications_chapter_strongarm() {
     'change_allowed' => 1,
     'change_allowed_roles' => array("chapter leader"),
     'email' => array(
-      'subject' => 'New member: [current-user:field_user_first_name] joined [node:title]',
+      'subject' => 'New member: __USER_FIRST_NAME__ joined [node:title]',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>A new member [current-user:field_user_first_name] [current-user:field_user_last_name] just joined your chapter [node:title].
+<br>A new member __USER_FIRST_NAME__ __USER_LAST_NAME__ just joined your chapter [node:title].
 <br>
 <br>You can view their profile here:
 <br>
@@ -47,7 +47,7 @@ function tm_notifications_chapter_strongarm() {
     'change_allowed' => 0,
     'email' => array(
       'subject' => 'Welcome to __SITE_NAME__ [node:title]',
-      'message' => 'Hi [current-user:field_user_first_name],
+      'message' => 'Hi __USER_FIRST_NAME__,
 <br>
 <br>You\'re in!
 <br>

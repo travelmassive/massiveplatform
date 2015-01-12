@@ -234,6 +234,7 @@ function tm_users_external_signin_register_form_validate($form, &$form_state) {
  * magic.
  */
 function tm_users_external_signin_register_form_submit($form, &$form_state) {
+
   // First name:
   $field_user_first_name = $form_state['values']['field_user_first_name'];
   // Last name:
@@ -245,7 +246,7 @@ function tm_users_external_signin_register_form_submit($form, &$form_state) {
   // User password (generated):
   $pwd = user_password(50);
   
-  // Reset the form_state for the user_reguster form.
+  // Reset the form_state for the user_register form.
   $form_state_user = array();
   $form_state_user['values']['group_user_account'] = array();
   // thankyou https://www.drupal.org/node/1514312
@@ -282,8 +283,24 @@ function tm_users_external_signin_register_form_submit($form, &$form_state) {
     // The user is logged in by the logintoboggan module.
     tm_users_save_twitter_data_to_user($uid, $account);
 
-    // is this ok to do this here, what if errors on page and we reload this method?
+    // Is this ok to do this here, what if errors on page and we reload this method?
     unset($_SESSION['twitter_account']);
+
+    // If user has set a chapter to join, then join it
+    $chapter_id = null;
+    if (isset($form_state['values']['chapter_list'])) {
+      $chapter_id = $form_state['values']['chapter_list'];
+    }
+    if (($chapter_id != null) && ($chapter_id > 0)) {
+      // flag the user so they join the chapter
+      $signup_flag = flag_get_flag('signup');
+      if ($signup_flag) {
+        if (!$signup_flag->is_flagged($chapter_id, $uid)) {
+          $user_account = user_load($uid);
+          flag('flag', 'signup', $chapter_id, $user_account);
+        } 
+      }
+    }
     
     // Use the redirect set by the logintoboggan module.
     $form_state['redirect'] = $form_state_user['redirect'];

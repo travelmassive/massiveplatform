@@ -15,7 +15,9 @@ function tm_users_field_default_field_instances() {
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Provide the other members with some more information about yourself. This information will be <strong>public</strong>.',
+    'description' => 'Provide the other members with some more information about yourself. This information will be <strong>public</strong>.
+<br>
+<strong>Providing information about your company?</strong> Please add a <a href="/companies">company profile</a>.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -68,7 +70,8 @@ function tm_users_field_default_field_instances() {
   $field_instances['user-user-field_avatar'] = array(
     'bundle' => 'user',
     'deleted' => 0,
-    'description' => '',
+    'description' => 'A photo is preferred so other members can recognize you.
+<br>Your profile picture will be cropped to a square format.',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -114,7 +117,7 @@ function tm_users_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'user',
     'field_name' => 'field_avatar',
-    'label' => 'Avatar',
+    'label' => 'Profile Picture',
     'required' => 0,
     'settings' => array(
       'alt_field' => 0,
@@ -144,7 +147,7 @@ function tm_users_field_default_field_instances() {
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Claim your own URL on travelmassive.com for your profile such as http://travelmassive.com/my-name. Example: "my-name"',
+    'description' => 'Claim your own URL on travelmassive.com for your profile such as http://travelmassive.com/my-name. Example: "your-name"',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -292,8 +295,10 @@ function tm_users_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'user',
     'field_name' => 'field_image',
-    'label' => 'Banner',
+    'label' => 'Cover Image',
     'required' => 0,
+    'description' => 'Provide a cover image to be displayed behind your profile picture.
+<br>If you want to be pixel perfect, upload your image sized to 805x453',
     'settings' => array(
       'alt_field' => 0,
       'default_image' => 0,
@@ -322,7 +327,8 @@ function tm_users_field_default_field_instances() {
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The name of your business, company, or organization.',
+    'description' => 'The name of your business, company, or organization.
+<br>Once your account is approved you can add a <a href="/companies">company profile</a>.',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -1248,11 +1254,12 @@ function tm_users_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('A photo is preferred so other members can recognize you.
+<br>Your profile picture will be cropped to a square format.');
   t('About me');
-  t('Avatar');
   t('Banner');
   t('City');
-  t('Claim your own URL on travelmassive.com for your profile such as http://travelmassive.com/my-name. Example: "my-name"');
+  t('Claim your own URL on travelmassive.com for your profile such as http://travelmassive.com/my-name. Example: "your-name"');
   t('Country');
   t('Facebook');
   t('First name');
@@ -1266,8 +1273,12 @@ function tm_users_field_default_field_instances() {
   t('Please provide your last name. This field will be <strong>public</strong>.');
   t('Please select the industry segment that best applies to you.');
   t('Please select what you consider to be your home chapter.');
-  t('Provide the other members with some more information about yourself. This information will be <strong>public</strong>.');
-  t('The name of your business, company, or organization.');
+  t('Profile Picture');
+  t('Provide the other members with some more information about yourself. This information will be <strong>public</strong>.
+<br>
+<strong>Providing information about your company?</strong> Please add a <a href="/companies">company profile</a>.');
+  t('The name of your business, company, or organization.
+<br>Once your account is approved you can add a <a href="/companies">company profile</a>.');
   t('Three words that describe why we should travel?');
   t('Travel Massive URL (travelmassive.com/your-url)');
   t('Twitter');

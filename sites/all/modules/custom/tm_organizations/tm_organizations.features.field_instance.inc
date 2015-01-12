@@ -354,7 +354,9 @@ Example: "your-company"',
     ),
     'entity_type' => 'node',
     'field_name' => 'field_image',
-    'label' => 'Image',
+    'label' => 'Cover Image',
+    'description' => 'Provide a cover image to be displayed behind your company logo.
+<br>If you want to be pixel perfect, upload your image sized to 805x453',
     'required' => 0,
     'settings' => array(
       'alt_field' => 0,

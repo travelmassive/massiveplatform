@@ -64,7 +64,7 @@ if (!$twitter_data) {
     </ul>
   <?php if (in_array("approved user", $loaded->roles)) : ?>
     <ul class="dropd-menu">
-      <?php print tm_users_companies($loaded->uid); ?>
+      <?php print tm_users_menu_companies($loaded->uid); ?>
       <!--<li><?php print l(t('My companies'), 'user/' . $loaded->uid . '/companies', array('fragment' => 'user-notifications-options')); ?></li>-->
       <li><?php print l(t('Add company'), 'node/add/organization'); ?></li>
     </ul>

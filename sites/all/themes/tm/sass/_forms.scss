@@ -537,7 +537,28 @@ select {
   background-color: #D2D5D8;
 }
 
-.form-item-chapter-list { 
+.form-item-is-company { 
   margin-top: -24px; 
   padding-bottom: 16px;
 }
+
+.form-item-chapter-list { 
+  padding-bottom: 16px;
+}
+
+/* Company page */
+.page_notice {
+  background-color: #fff;
+  color: tint($primary-color, 20%);
+  padding-left: 16px;
+}
+
+.page_notice a {
+  color: $primary-color;
+}
+
+.page_notice a:hover {
+  color: $primary-color;
+}
+
+

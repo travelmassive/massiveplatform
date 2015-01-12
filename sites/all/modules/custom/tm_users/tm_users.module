@@ -182,34 +182,6 @@ function tm_users_redirect_insert($redirect) {
 }
 
 /* 
- * Link by title to any chapters this user is a chapter leader of 
- * inserts this markup into the user menu tpl file
-*/
-function tm_users_leading_chapters($uid){
-  $query = new EntityFieldQuery();
-  $markup = '';
-  $query->entityCondition('entity_type', 'node')
-    ->entityCondition('bundle', 'chapter')
-    ->propertyCondition('status', NODE_PUBLISHED)
-    ->fieldCondition('field_chapter_leaders', 'target_id', $uid, '=');
-
-  $result = $query->execute();
-
-  if (isset($result['node'])) {
-    $chapters_nids = array_keys($result['node']);
-    foreach ($chapters_nids as $nid) {
-      //$img_url = 'public://images/chapters/Athens.jpg';  // the orig image uri
-      $chapter = node_load($nid);
-      $img_url = @$chapter->field_image['und'][0]['uri'];
-      if ($img_url == "") { $img_url = "public://default_images/cover-default.jpg"; }
-      $style = 'thumbnail';  // or any other custom image style you've created via /admin/config/media/image-styles
-      $markup .= "<li style='margin-bottom: 4px;'><img align='left' style='margin-left: 16px; margin-top: 4px; padding-right: 8px; width: 40px;' src='".image_style_url($style, $img_url) . "'>" . l($chapter->title . ' (Chapter Leader)','node/'.$chapter->nid).'</li>';
-    }
-  }
-  return $markup;
-}
-
-/* 
  * Link by title to any chapters this user has joined
  * inserts this markup into the user menu tpl file
 */
@@ -268,7 +240,7 @@ function tm_users_menu_chapters($uid){
     if (!array_key_exists($chapter->title, $chapter_html)) {
 
       // Create html for menu entry
-      $chapter_leader_text = "";
+      $chapter_leader_text = " (Member)";
       if (in_array($nid, $chapters_leader_nids)) { 
         $chapter_leader_text = " (Chapter Leader)";
       }
@@ -329,7 +301,7 @@ function tm_users_menu_chapters($uid){
  * Link by title to any companies this user is managing 
  * inserts this markup into the user menu tpl file
 */
-function tm_users_companies($uid){
+function tm_users_menu_companies($uid){
 
   $query = new EntityFieldQuery();
   $markup = '';
@@ -371,55 +343,66 @@ function tm_users_is_chapter_leader($uid, $chapterid){
 }
 
 
-function tm_users_form_alter(&$form, $form_state, $form_id) {
+// modify the user registration form
+function _tm_users_modify_register_form(&$form, $form_state, $form_id) {
 
-  if ($form_id == 'user_login') {
-    $form['cutomtext'] = array(
-        '#type' => 'item',
-        '#markup' => '<p style="margin-top: 0.8em;">Don\'t have an account? <a href="/user/register">Sign up</a></p>',
-        '#weight' => 200, // Adjust so that you can place it whereever 
-        );
+  // Step 1. Allow user to join up to chapter when they sign up
+
+  // get a list of chapters
+  $chapters = node_load_multiple(array(), array('type' => "chapter"));
+
+  // create dropdown list
+  $chapter_list = array();
+  foreach ($chapters as $chapter) { // See this line in your original code
+    $chapter_list[$chapter->nid] = $chapter->title; 
   }
+  asort($chapter_list);
+  $chapter_list = array("" => "Select a chapter", "-1" => "Choose later") + $chapter_list;
+  
+  // add chapter list to registraton form
+  $form['chapter_list']=array(
+    '#type'=>'select',
+    '#title' => t('Home City'),
+    '#options' => $chapter_list,
+    '#multiple' => false,
+    '#description'=>'Please select a home chapter to join.',
+    '#weight'=>2,
+  );
 
- 
-  // Allow user to join up to chapter when they sign up
-  if (($form_id == 'user_register_form') or ($form_id == 'tm_users_external_signin_register_form')) {
+  
+  // Step 2. Add an checkbox for company accounts
 
-    // get a list of chapters
-    $chapters = node_load_multiple(array(), array('type' => "chapter"));
+  // add chapter list to registraton form
+  global $conf;
+  $form['check_company']=array(
+    '#type'=>'checkbox',
+    '#title' => t('I\'m signing up as a Company'),
+    '#element_validate' => array('_tm_users_company_validation_callback'),
+    '#description'=> "Hold up! " . $conf["tm_site_name"] . " accounts are for personal profiles. Once your personal account is approved you can add a company profile to our companies section.",
+    '#weight'=>1,
+  );
 
-    // create dropdown list
-    $chapter_list = array();
-    foreach ($chapters as $chapter) { // See this line in your original code
-      $chapter_list[$chapter->nid] = $chapter->title; 
-    }
-    asort($chapter_list);
-    $chapter_list = array("" => "Select a chapter", "-1" => "Choose later") + $chapter_list;
-    
-    // add chapter list to registraton form
-    $form['chapter_list']=array(
-      '#type'=>'select',
-      '#title' => t('Home City'),
-      '#options' => $chapter_list,
-      '#multiple' => false,
-      '#weight'=>1,
-      '#description'=>'Please select a home chapter to join.',
-    );
 
+  // Step 3. Add terms and conditions agreement to sign up form
+  $form['cutomtext'] = array(
+      '#type' => 'item',
+      '#markup' => '<p class="description" style="text-align: center; margin-bottom: 12px;">By creating an account you agree to our <a target="_blank" href="/content/terms-use">Terms Of Use</a> and <a target = "_blank" href="/content/privacy-policy">Privacy Policy</a></p>',
+      '#weight' => 10, // Adjust so that you can place it whereever 
+      );
+}
+
+// Make sure users understand profiles are for individual use
+function _tm_users_company_validation_callback($element, &$form_state, $form) {
+  if (($form['check_company']['#checked'])) {
+    $form['check_company']['#checked'] = false;
+    global $conf;
+    form_set_error('check_company', t("Hold up! " . $conf["tm_site_name"] . " accounts are for personal profiles. Once your personal account is approved you can add a company profile to our companies section.<br><br>Got it? Great! Please continue with creating your personal profile."));
   }
+}
 
+// Modify the user's profile form
+function _tm_users_modify_profile_form(&$form, $form_state, $form_id) {
 
-  // Add terms and conditions agreement to sign up form
-  if (($form_id == 'user_register_form') or ($form_id == 'tm_users_external_signin_register_form')) {
-    $form['cutomtext'] = array(
-        '#type' => 'item',
-        '#markup' => '<p class="description" style="text-align: center; margin-bottom: 12px;">By creating an account you agree to our <a target="_blank" href="/content/terms-use">Terms Of Use</a> and <a target = "_blank" href="/content/privacy-policy">Privacy Policy</a></p>',
-        '#weight' => 10, // Adjust so that you can place it whereever 
-        );
-  }
-
-  // Hide home chapter field if the user has not joined a chapter
-  if ($form_id == 'user_profile_form') {
     // get current user
     $user = user_load($form['#user']->uid);
 
@@ -432,6 +415,27 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
     hide($form['revalidate']);
   }
 
+
+function tm_users_form_alter(&$form, $form_state, $form_id) {
+
+  if ($form_id == 'user_login') {
+    $form['cutomtext'] = array(
+        '#type' => 'item',
+        '#markup' => '<p style="margin-top: 0.8em;">Don\'t have an account? <a href="/user/register">Sign up</a></p>',
+        '#weight' => 200, // Adjust so that you can place it whereever 
+        );
+  }
+
+ 
+  // Modify registrration form
+  if (($form_id == 'user_register_form') or ($form_id == 'tm_users_external_signin_register_form')) {
+    _tm_users_modify_register_form($form, $form_state, $form_id);
+  }
+
+  // 
+  if ($form_id == 'user_profile_form') {
+    _tm_users_modify_profile_form($form, $form_state, $form_id);
+  }
 
   // Alter companies view dropdowns
   // Note this should be in tm_organizations but it doesn't seem to fire there

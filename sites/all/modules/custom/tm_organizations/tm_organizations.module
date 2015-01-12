@@ -56,3 +56,86 @@ function tm_organizations_node_presave($node){
     }
   }
 }
+
+function tm_organizations_preprocess_page(&$variables, $hook) {
+
+  global $user;
+  global $conf;
+
+  $default_message = "Discover and connect with other companies in the " . $conf["tm_site_name"] . " network.";
+
+  // Put a notice to create company accounts on company page
+  if (current_path() == "companies") {
+
+
+    // Ignore anonymous users
+    if (!user_is_logged_in()) {
+      drupal_set_message($default_message, 'page_notice');
+      return;
+    }
+
+    // Only a loaded user has values for the fields.
+    $loaded = user_load($user->uid);
+
+    // Check if user has created any company profiles
+    $user_has_companies = false;
+    $query = new EntityFieldQuery();
+    $markup = '';
+    $query->entityCondition('entity_type', 'node')
+      ->entityCondition('bundle', 'organization')
+      ->propertyCondition('status', NODE_PUBLISHED)
+      ->fieldCondition('field_owner', 'target_id', $user->uid, '=');
+    $result = $query->execute();
+
+    if (isset($result['node'])) {
+      $user_has_companies = true;
+    }
+
+    // Check if user has provided a job role
+    $job_role = null;
+    if (isset($loaded->field_job_role[LANGUAGE_NONE][0]['value'])) {
+      $job_role = $loaded->field_job_role[LANGUAGE_NONE][0]['value'];
+    }
+
+    // Check if user has provided a job organization
+    $job_organization = null;
+    if (isset($loaded->field_job_organization[LANGUAGE_NONE][0]['value'])) {
+      $job_organization = $loaded->field_job_organization[LANGUAGE_NONE][0]['value'];
+    }
+
+    // Don't show message if no role or organizaton set
+    if (($job_organization == null) && ($job_role == null)) {
+      drupal_set_message($default_message, 'page_notice');
+      return;
+    }
+
+    // Option 1. Create a message if user already has a company
+    if ($user_has_companies) {
+      $message = "Discover and connect with other companies in the " . $conf["tm_site_name"] . " network. View " . l(t('your company profiles'), 'user/' . $loaded->uid . "/companies") . "";
+      drupal_set_message($message, 'page_notice');
+      return;
+    }
+
+    // Option 2. Show message to user to add a company profile
+    if (!in_array("approved user", $loaded->roles)) { 
+      $add_profile_html = "<a href='javascript:void(0)' onclick='document.getElementById(\"pending_approval\").style.display = \"block\";'>company profile</a> (pending approval)";
+      } else {
+        $add_profile_html = "<a href='/node/add/organization'>company profile</a>";
+    }
+
+    // Create a message
+    if ($job_organization != null) {
+      $message = "Get <strong>" . t($job_organization)  . "</strong> discovered by adding a " . $add_profile_html . ".";
+    }
+    elseif ($job_role != null) {
+      $message = "Get your company discovered by adding a " . $add_profile_html . ".";
+    }
+
+    // Display message
+    $message .= "<div id='pending_approval' style='display: none;'>Your account is currently pending approval by our team. Once we've approved your account, you will be able to add your company profile.</div>";
+    drupal_set_message($message, 'page_notice');
+
+
+  }
+
+}

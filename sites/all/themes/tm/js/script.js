@@ -215,3 +215,24 @@ Drupal.behaviors.base_scripts = {
 });})(jQuery, Drupal, this, this.document);
 
 
+// Set the "to date" to be the "from date" when changed
+// from http://tylerfrankenstein.com/code/drupal-automatically-set-date-when-date-changes-popup-calendar
+(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){
+
+  // page load
+  $('.form-item-check-company').find('.description').hide();
+  if ($('#edit-check-company').prop('checked')) {
+          $('.form-item-check-company').find('.description').show();
+  }
+
+  // if company is checked
+  $('#edit-check-company').change(function() {
+    if ($('#edit-check-company').prop('checked')) {
+          $('.form-item-check-company').find('.description').show();
+          //$('#edit-submit').attr('disabled', 'disabled');
+    }
+  });
+     
+});})(jQuery, Drupal, this, this.document);
+
+

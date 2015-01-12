@@ -5416,9 +5416,32 @@ select:disabled {
 }
 
 /* line 540, ../sass/_forms.scss */
-.form-item-chapter-list {
+.form-item-is-company {
   margin-top: -24px;
   padding-bottom: 16px;
+}
+
+/* line 545, ../sass/_forms.scss */
+.form-item-chapter-list {
+  padding-bottom: 16px;
+}
+
+/* Company page */
+/* line 550, ../sass/_forms.scss */
+.page_notice {
+  background-color: #fff;
+  color: #4d5966;
+  padding-left: 16px;
+}
+
+/* line 556, ../sass/_forms.scss */
+.page_notice a {
+  color: #213040;
+}
+
+/* line 560, ../sass/_forms.scss */
+.page_notice a:hover {
+  color: #213040;
 }
 
 /* line 4, ../sass/_modules.scss */

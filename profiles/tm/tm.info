@@ -78,6 +78,9 @@ dependencies[] = leaflet_views
 dependencies[] = taxonomy_entity_index
 dependencies[] = queue_ui
 dependencies[] = contact
+dependencies[] = metatag
+dependencies[] = metatag_dc
+dependencies[] = metatag_opengraph
 
 ; TM - development
 dependencies[] = admin_menu
@@ -115,6 +118,9 @@ dependencies[] = tm_notifications_newsletters
 dependencies[] = tm_notifications_approval
 dependencies[] = tm_notifications_welcome
 dependencies[] = tm_notifications_events
+
+; TM - meta
+dependencies[] = tm_meta
 
 
 

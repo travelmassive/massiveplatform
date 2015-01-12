@@ -143,6 +143,13 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['relationships']['flag_user_content_rel']['table'] = 'users';
   $handler->display->display_options['relationships']['flag_user_content_rel']['field'] = 'flag_user_content_rel';
   $handler->display->display_options['relationships']['flag_user_content_rel']['flag'] = 'event_register';
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: Flags: Flagged time */
+  $handler->display->display_options['sorts']['timestamp']['id'] = 'timestamp';
+  $handler->display->display_options['sorts']['timestamp']['table'] = 'flagging';
+  $handler->display->display_options['sorts']['timestamp']['field'] = 'timestamp';
+  $handler->display->display_options['sorts']['timestamp']['relationship'] = 'flag_user_content_rel';
+  $handler->display->display_options['sorts']['timestamp']['order'] = 'DESC';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Flags: Content ID */
   $handler->display->display_options['arguments']['entity_id']['id'] = 'entity_id';
@@ -170,6 +177,13 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['relationships']['flag_user_content_rel']['table'] = 'users';
   $handler->display->display_options['relationships']['flag_user_content_rel']['field'] = 'flag_user_content_rel';
   $handler->display->display_options['relationships']['flag_user_content_rel']['flag'] = 'follow_organizations';
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: Flags: Flagged time */
+  $handler->display->display_options['sorts']['timestamp']['id'] = 'timestamp';
+  $handler->display->display_options['sorts']['timestamp']['table'] = 'flagging';
+  $handler->display->display_options['sorts']['timestamp']['field'] = 'timestamp';
+  $handler->display->display_options['sorts']['timestamp']['relationship'] = 'flag_user_content_rel';
+  $handler->display->display_options['sorts']['timestamp']['order'] = 'DESC';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Flags: Content ID */
   $handler->display->display_options['arguments']['entity_id']['id'] = 'entity_id';
@@ -196,6 +210,13 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['relationships']['flag_content_rel']['required'] = 0;
   $handler->display->display_options['relationships']['flag_content_rel']['flag'] = 'follow_members';
   $handler->display->display_options['relationships']['flag_content_rel']['user_scope'] = 'any';
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: Flags: Flagged time */
+  $handler->display->display_options['sorts']['timestamp']['id'] = 'timestamp';
+  $handler->display->display_options['sorts']['timestamp']['table'] = 'flagging';
+  $handler->display->display_options['sorts']['timestamp']['field'] = 'timestamp';
+  $handler->display->display_options['sorts']['timestamp']['relationship'] = 'flag_content_rel';
+  $handler->display->display_options['sorts']['timestamp']['order'] = 'DESC';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Flags: User uid */
   $handler->display->display_options['arguments']['uid']['id'] = 'uid';
@@ -232,6 +253,13 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['relationships']['flag_user_content_rel']['table'] = 'users';
   $handler->display->display_options['relationships']['flag_user_content_rel']['field'] = 'flag_user_content_rel';
   $handler->display->display_options['relationships']['flag_user_content_rel']['flag'] = 'follow_organizations';
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: Flags: Flagged time */
+  $handler->display->display_options['sorts']['timestamp']['id'] = 'timestamp';
+  $handler->display->display_options['sorts']['timestamp']['table'] = 'flagging';
+  $handler->display->display_options['sorts']['timestamp']['field'] = 'timestamp';
+  $handler->display->display_options['sorts']['timestamp']['relationship'] = 'flag_user_content_rel';
+  $handler->display->display_options['sorts']['timestamp']['order'] = 'DESC';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Flags: Content ID */
   $handler->display->display_options['arguments']['entity_id']['id'] = 'entity_id';
@@ -270,6 +298,13 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['relationships']['flag_user_content_rel']['table'] = 'users';
   $handler->display->display_options['relationships']['flag_user_content_rel']['field'] = 'flag_user_content_rel';
   $handler->display->display_options['relationships']['flag_user_content_rel']['flag'] = 'follow_members';
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: Flags: Flagged time */
+  $handler->display->display_options['sorts']['timestamp']['id'] = 'timestamp';
+  $handler->display->display_options['sorts']['timestamp']['table'] = 'flagging';
+  $handler->display->display_options['sorts']['timestamp']['field'] = 'timestamp';
+  $handler->display->display_options['sorts']['timestamp']['relationship'] = 'flag_user_content_rel';
+  $handler->display->display_options['sorts']['timestamp']['order'] = 'DESC';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Flags: Content ID */
   $handler->display->display_options['arguments']['entity_id']['id'] = 'entity_id';
@@ -295,6 +330,13 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['relationships']['flag_user_content_rel']['table'] = 'users';
   $handler->display->display_options['relationships']['flag_user_content_rel']['field'] = 'flag_user_content_rel';
   $handler->display->display_options['relationships']['flag_user_content_rel']['flag'] = 'follow_members';
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: Flags: Flagged time */
+  $handler->display->display_options['sorts']['timestamp']['id'] = 'timestamp';
+  $handler->display->display_options['sorts']['timestamp']['table'] = 'flagging';
+  $handler->display->display_options['sorts']['timestamp']['field'] = 'timestamp';
+  $handler->display->display_options['sorts']['timestamp']['relationship'] = 'flag_user_content_rel';
+  $handler->display->display_options['sorts']['timestamp']['order'] = 'DESC';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Flags: Content ID */
   $handler->display->display_options['arguments']['entity_id']['id'] = 'entity_id';
@@ -333,6 +375,13 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['relationships']['flag_content_rel']['required'] = 0;
   $handler->display->display_options['relationships']['flag_content_rel']['flag'] = 'follow_members';
   $handler->display->display_options['relationships']['flag_content_rel']['user_scope'] = 'any';
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: Flags: Flagged time */
+  $handler->display->display_options['sorts']['timestamp']['id'] = 'timestamp';
+  $handler->display->display_options['sorts']['timestamp']['table'] = 'flagging';
+  $handler->display->display_options['sorts']['timestamp']['field'] = 'timestamp';
+  $handler->display->display_options['sorts']['timestamp']['relationship'] = 'flag_content_rel';
+  $handler->display->display_options['sorts']['timestamp']['order'] = 'DESC';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Flags: User uid */
   $handler->display->display_options['arguments']['uid']['id'] = 'uid';

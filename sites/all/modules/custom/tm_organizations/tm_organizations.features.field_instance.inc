@@ -293,7 +293,8 @@ Example: "your-company"',
   $field_instances['node-organization-field_image'] = array(
     'bundle' => 'organization',
     'deleted' => 0,
-    'description' => 'This image will used as the main banner for your profile and should be a good reflection of your company.',
+    'description' => 'Provide a cover image to be displayed behind your company logo.
+<br>If you want to be pixel perfect, upload your image sized to 805x453',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -355,8 +356,6 @@ Example: "your-company"',
     'entity_type' => 'node',
     'field_name' => 'field_image',
     'label' => 'Cover Image',
-    'description' => 'Provide a cover image to be displayed behind your company logo.
-<br>If you want to be pixel perfect, upload your image sized to 805x453',
     'required' => 0,
     'settings' => array(
       'alt_field' => 0,
@@ -943,10 +942,10 @@ Example: "your-company"',
   // Included for use with string extractors like potx.
   t('City');
   t('Country');
+  t('Cover Image');
   t('Description');
   t('Facebook');
   t('Friendly URL');
-  t('Image');
   t('Industry Segment');
   t('Linkedin');
   t('Logo');
@@ -954,8 +953,9 @@ Example: "your-company"',
 Example: "your-company"');
   t('Managed by');
   t('Please provide the segment which identifies the company the best.');
+  t('Provide a cover image to be displayed behind your company logo.
+<br>If you want to be pixel perfect, upload your image sized to 805x453');
   t('Select the Travel Massive member that manages this account.');
-  t('This image will used as the main banner for your profile and should be a good reflection of your company.');
   t('Twitter');
   t('Website');
   t('Where your business is based');

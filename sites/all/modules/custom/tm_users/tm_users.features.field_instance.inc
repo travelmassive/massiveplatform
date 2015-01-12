@@ -253,7 +253,8 @@ function tm_users_field_default_field_instances() {
   $field_instances['user-user-field_image'] = array(
     'bundle' => 'user',
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Provide a cover image to be displayed behind your profile picture.
+<br>If you want to be pixel perfect, upload your image sized to 805x453',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -297,8 +298,6 @@ function tm_users_field_default_field_instances() {
     'field_name' => 'field_image',
     'label' => 'Cover Image',
     'required' => 0,
-    'description' => 'Provide a cover image to be displayed behind your profile picture.
-<br>If you want to be pixel perfect, upload your image sized to 805x453',
     'settings' => array(
       'alt_field' => 0,
       'default_image' => 0,
@@ -1257,10 +1256,10 @@ function tm_users_field_default_field_instances() {
   t('A photo is preferred so other members can recognize you.
 <br>Your profile picture will be cropped to a square format.');
   t('About me');
-  t('Banner');
   t('City');
   t('Claim your own URL on travelmassive.com for your profile such as http://travelmassive.com/my-name. Example: "your-name"');
   t('Country');
+  t('Cover Image');
   t('Facebook');
   t('First name');
   t('Home Chapter');
@@ -1274,6 +1273,8 @@ function tm_users_field_default_field_instances() {
   t('Please select the industry segment that best applies to you.');
   t('Please select what you consider to be your home chapter.');
   t('Profile Picture');
+  t('Provide a cover image to be displayed behind your profile picture.
+<br>If you want to be pixel perfect, upload your image sized to 805x453');
   t('Provide the other members with some more information about yourself. This information will be <strong>public</strong>.
 <br>
 <strong>Providing information about your company?</strong> Please add a <a href="/companies">company profile</a>.');

@@ -438,8 +438,7 @@ function tm_events_communication_form($event){
       );
 
     // prepopulate some of the text
-    $event_url = $_SERVER["SERVER_NAME"] . "/" .
-    drupal_get_path_alias('node/' . $event->nid);
+    $event_url = $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('node/' . $event->nid);
 
     
     $prefill = "Hi [first_name],<br><br>";

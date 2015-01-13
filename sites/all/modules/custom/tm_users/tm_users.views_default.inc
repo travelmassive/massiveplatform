@@ -47,6 +47,10 @@ function tm_users_views_default_views() {
   $handler->display->display_options['empty']['area']['empty'] = TRUE;
   $handler->display->display_options['empty']['area']['content'] = 'No Travel Massive member found with those criteria. Please change your filters.';
   $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
+  /* Relationship: User: Country (field_user_country) */
+  $handler->display->display_options['relationships']['field_user_country_iso2']['id'] = 'field_user_country_iso2';
+  $handler->display->display_options['relationships']['field_user_country_iso2']['table'] = 'field_data_field_user_country';
+  $handler->display->display_options['relationships']['field_user_country_iso2']['field'] = 'field_user_country_iso2';
   /* Field: User: Name */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'users';
@@ -58,6 +62,16 @@ function tm_users_views_default_views() {
   $handler->display->display_options['sorts']['field_user_first_name_value']['id'] = 'field_user_first_name_value';
   $handler->display->display_options['sorts']['field_user_first_name_value']['table'] = 'field_data_field_user_first_name';
   $handler->display->display_options['sorts']['field_user_first_name_value']['field'] = 'field_user_first_name_value';
+  /* Contextual filter: Countries: ISO2 */
+  $handler->display->display_options['arguments']['iso2']['id'] = 'iso2';
+  $handler->display->display_options['arguments']['iso2']['table'] = 'countries_country';
+  $handler->display->display_options['arguments']['iso2']['field'] = 'iso2';
+  $handler->display->display_options['arguments']['iso2']['relationship'] = 'field_user_country_iso2';
+  $handler->display->display_options['arguments']['iso2']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['iso2']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['iso2']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['iso2']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['iso2']['limit'] = '0';
   /* Filter criterion: User: Active */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'users';
@@ -65,23 +79,6 @@ function tm_users_views_default_views() {
   $handler->display->display_options['filters']['status']['value'] = '1';
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Field: Industry Segment (field_segment) */
-  $handler->display->display_options['filters']['field_segment_tid']['id'] = 'field_segment_tid';
-  $handler->display->display_options['filters']['field_segment_tid']['table'] = 'field_data_field_segment';
-  $handler->display->display_options['filters']['field_segment_tid']['field'] = 'field_segment_tid';
-  $handler->display->display_options['filters']['field_segment_tid']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_segment_tid']['expose']['operator_id'] = 'field_segment_tid_op';
-  $handler->display->display_options['filters']['field_segment_tid']['expose']['operator'] = 'field_segment_tid_op';
-  $handler->display->display_options['filters']['field_segment_tid']['expose']['identifier'] = 'field_segment_tid';
-  $handler->display->display_options['filters']['field_segment_tid']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    5 => 0,
-    4 => 0,
-    3 => 0,
-  );
-  $handler->display->display_options['filters']['field_segment_tid']['type'] = 'select';
-  $handler->display->display_options['filters']['field_segment_tid']['vocabulary'] = 'tm_segments';
   /* Filter criterion: User: Roles */
   $handler->display->display_options['filters']['rid']['id'] = 'rid';
   $handler->display->display_options['filters']['rid']['table'] = 'users_roles';
@@ -89,10 +86,79 @@ function tm_users_views_default_views() {
   $handler->display->display_options['filters']['rid']['value'] = array(
     7 => '7',
   );
+  /* Filter criterion: Countries: Name - list */
+  $handler->display->display_options['filters']['name_list']['id'] = 'name_list';
+  $handler->display->display_options['filters']['name_list']['table'] = 'countries_country';
+  $handler->display->display_options['filters']['name_list']['field'] = 'name_list';
+  $handler->display->display_options['filters']['name_list']['relationship'] = 'field_user_country_iso2';
+  $handler->display->display_options['filters']['name_list']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['name_list']['expose']['operator_id'] = 'name_list_op';
+  $handler->display->display_options['filters']['name_list']['expose']['label'] = 'Name - list';
+  $handler->display->display_options['filters']['name_list']['expose']['operator'] = 'name_list_op';
+  $handler->display->display_options['filters']['name_list']['expose']['identifier'] = 'name_list';
+  $handler->display->display_options['filters']['name_list']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    4 => 0,
+    6 => 0,
+    7 => 0,
+    3 => 0,
+    5 => 0,
+  );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
   $handler->display->display_options['exposed_block'] = TRUE;
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: User: Country (field_user_country) */
+  $handler->display->display_options['relationships']['field_user_country_iso2']['id'] = 'field_user_country_iso2';
+  $handler->display->display_options['relationships']['field_user_country_iso2']['table'] = 'field_data_field_user_country';
+  $handler->display->display_options['relationships']['field_user_country_iso2']['field'] = 'field_user_country_iso2';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Countries: ISO2 */
+  $handler->display->display_options['arguments']['iso2']['id'] = 'iso2';
+  $handler->display->display_options['arguments']['iso2']['table'] = 'countries_country';
+  $handler->display->display_options['arguments']['iso2']['field'] = 'iso2';
+  $handler->display->display_options['arguments']['iso2']['relationship'] = 'field_user_country_iso2';
+  $handler->display->display_options['arguments']['iso2']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['iso2']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['iso2']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['iso2']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['iso2']['limit'] = '0';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: User: Active */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'users';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = '1';
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: User: Roles */
+  $handler->display->display_options['filters']['rid']['id'] = 'rid';
+  $handler->display->display_options['filters']['rid']['table'] = 'users_roles';
+  $handler->display->display_options['filters']['rid']['field'] = 'rid';
+  $handler->display->display_options['filters']['rid']['value'] = array(
+    7 => '7',
+  );
+  /* Filter criterion: Countries: Name - list */
+  $handler->display->display_options['filters']['name_list']['id'] = 'name_list';
+  $handler->display->display_options['filters']['name_list']['table'] = 'countries_country';
+  $handler->display->display_options['filters']['name_list']['field'] = 'name_list';
+  $handler->display->display_options['filters']['name_list']['relationship'] = 'field_user_country_iso2';
+  $handler->display->display_options['filters']['name_list']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['name_list']['expose']['operator_id'] = 'name_list_op';
+  $handler->display->display_options['filters']['name_list']['expose']['operator'] = 'name_list_op';
+  $handler->display->display_options['filters']['name_list']['expose']['identifier'] = 'name_list';
+  $handler->display->display_options['filters']['name_list']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    4 => 0,
+    6 => 0,
+    7 => 0,
+    3 => 0,
+    5 => 0,
+  );
   $handler->display->display_options['path'] = 'leaders';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Leaders';

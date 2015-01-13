@@ -36,7 +36,10 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state) {
   $form['timezone']['#type'] = 'fieldset';
   $form['timezone']['#collapsible'] = FALSE;
   unset($form['timezone']['#description']);
+}
 
+function tm_users_validate($form, &$form_state) {
+  die();
 }
 
 /**
@@ -505,6 +508,27 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
     }
   }
   
+  // Alter leaders view dropdowns
+  if(isset($form_state['view'])) {
+
+    if ($form_state['view']->name == 'chapter_leaders') {
+
+      // Limit countries dropdown to users countries
+      $output = '';
+      $output = cache_get('views-exposed-form-leaders-countries', 'cache');
+      if (empty($output)) {
+        $result = db_query("SELECT DISTINCT iso2, name from {field_data_field_user_country} f LEFT JOIN {countries_country} c ON f.field_user_country_iso2 = c.iso2 WHERE f.bundle = 'user' AND c.iso2 IS NOT NULL ORDER BY name ASC");
+        $defaultoptions = array('All'=>'- Any -');
+        $output = $defaultoptions + $result->fetchAllKeyed();
+        $form['name_list']['#options'] = $output;
+      cache_set('views-exposed-form-leaders-countries', $output, 'cache', time() + 120);
+      } else{
+        $form['name_list']['#options'] = $output->data;
+      }
+      
+    }
+  }
+
   if($form_id == "contact_site_form") {
     global $conf;
     $form['intro'] = array(
@@ -564,11 +588,17 @@ function tm_users_user_insert(&$edit, $account, $category) {
 
 }
 
+
+// ITEM 1
 // If the user is already approved then overwrite role to approved when they save profile.
 // Reason: if user signs up, and in middle of editing profile is approved, then
 // saving their profile would overwrite the approved role (making them unapproved).
 // This method fixes this edge case.
 // see: https://github.com/travelmassive/massiveplatform/issues/68
+// 
+// ITEM 2
+// Strip spaces from URL fields
+
 function tm_users_user_presave(&$edit, $account, $category) {
 
   global $user;
@@ -592,6 +622,18 @@ function tm_users_user_presave(&$edit, $account, $category) {
         // unset($edit["roles"]);
       }
     }
+
+    // Trim all URL fields
+    // Otherwise a blank space causes the link to be rendered blank
+    $field_names = array("field_link_website", "field_link_twitter", "field_link_linkedin", "field_link_facebook");
+    foreach ($field_names as $field_name) {
+       if (isset($edit[$field_name][LANGUAGE_NONE][0]['url'])) {
+        if (trim($edit[$field_name][LANGUAGE_NONE][0]['url']) == "") {
+          $edit[$field_name][LANGUAGE_NONE] = array();
+        }
+      }
+    }
+
   }
 
 }

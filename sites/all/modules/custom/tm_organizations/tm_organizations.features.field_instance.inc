@@ -87,7 +87,7 @@ function tm_organizations_field_default_field_instances() {
   $field_instances['node-organization-field_avatar'] = array(
     'bundle' => 'organization',
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Your company logo in a square format. We recommend at least 600x600 pixels.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -959,6 +959,7 @@ Example: "your-company"');
   t('Twitter');
   t('Website');
   t('Where your business is based');
+  t('Your company logo in a square format. We recommend at least 600x600 pixels.');
   t('ie: @companyname or https://twitter.com/yourname');
   t('ie: http://www.mycompany.com');
   t('ie: https://facebook.com/yourcompany');

@@ -21,14 +21,16 @@ function tm_organizations_default_field_validation_rule() {
   $rule->bundle = 'organization';
   $rule->validator = 'field_validation_blacklist_validator';
   $rule->settings = array(
-    'data' => 'about, travelmassive, admin',
+    'data' => 'admin, administrator',
     'bypass' => 0,
     'roles' => array(
       1 => 0,
       2 => 0,
-      5 => 0,
       4 => 0,
+      6 => 0,
+      7 => 0,
       3 => 0,
+      5 => 0,
     ),
     'errors' => 0,
   );
@@ -59,7 +61,7 @@ function tm_organizations_default_field_validation_rule() {
     ),
     'errors' => 0,
   );
-  $rule->error_message = 'The friendly url may only contain letters, numbers, hyphens and underscores.';
+  $rule->error_message = 'The friendly url may only contain letters, numbers, hyphens and underscores. (example: "your-name")';
   $export['friendly_url_org_characters'] = $rule;
 
   $rule = new stdClass();

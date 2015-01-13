@@ -1,18 +1,54 @@
 <?php
+/**
+ * @file
+ * Code for the TM Invitations feature.
+ */
 
-// before signing up follow all people who invited you
-// stop dupe invites even being added in validation
+include_once 'tm_invitations.features.inc';
+
+/*
+ * Implements hook permission
+ */
+function tm_invitations_permission() {
+  return array(
+    'tm invite users' => array(
+      'title' => t('Invite users'),
+      'description' => t('Access to invite users page.'),
+    ),
+    'tm invite unlimited' => array(
+      'title' => t('Allow invite unlimited users'),
+      'description' => t('In other case, the limit is 10 email per page request.'),
+    ),
+    'tm invite own chapters' => array(
+      'title' => t('Allow invite users to own chapters'),
+      'description' => t('Access to own chapters/%/invite page.'),
+    ),
+    'tm invite all chapters' => array(
+      'title' => t('Allow invite users to all chapters'),
+      'description' => t('Access to all chapters/%/invite pages.'),
+    ),
+  );
+}
 
 /*
  * Implements hook menu
  */
-function tm_invitations_menu(){
-
+function tm_invitations_menu() {
   $items['invite'] = array(
-    'title' => t('Invite Members'),
+    'title' => 'Invite Members',
+    'title callback' => 't',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('tm_invitations_invite_form'),
-    'access arguments' => array('access content'),
+    'access arguments' => array('tm invite users'),
+    'class' => 'invite-header',
+    'type' => MENU_CALLBACK,
+  );
+  $items['chapters/%/invitations'] = array(
+    'title' => 'Invite Members to Chapter',
+    'title callback' => 't',
+    'page callback' => 'chapter_invitations_page',
+    'page arguments' => array('tm_invitations_invite_form'),
+    'access arguments' => array('tm invite own chapters'),
     'class' => 'invite-header',
     'type' => MENU_CALLBACK,
   );
@@ -20,142 +56,190 @@ function tm_invitations_menu(){
 }
 
 /* 
+ * Chapters invitations page
+ */
+function chapter_invitations_page() {
+  global $user;
+  $orig_path = _orig_path();
+  // Check: is current path correct?
+  if($orig_path) {
+    $form = drupal_get_form('tm_invitations_invite_form');
+    $output =  t('<p>You can invite and pre-approve members to your chapter using the bulk add form below. Invited members will automatically join your chapter when they sign up and also be approved. (Note that they need to use the email address you invite them with for the pre-approval to occur)</p>');
+    $output .= drupal_render($form);
+    $output .= views_embed_view('invitations', 'default');
+    // Check: has the user permission to access this page?
+    if(!user_access('tm invite all chapters')) {
+      $nid = _orig_nid();
+      if(!tm_users_is_chapter_leader($user->uid, $nid)) {
+        $output = drupal_access_denied();
+      }
+    }
+  }
+  // The current path is not correct.
+  else {
+    $output = drupal_not_found();
+  }
+  return $output;
+}
+
+/* 
  * Invitations form
  */
 function tm_invitations_invite_form($form, &$form_state) {
-//global $user;
-//$account = user_load($user->uid);
-//drupal_set_message("<pre>".print_r($account,TRUE)."</pre>");
-
+  $description = 'Email addresses must be separated by comma, space or newline.';
+  if(!user_access('tm invite unlimited')) {
+    $description .= '<br>Enter up to 10 email addresses.';
+  }
   $form['invitations'] = array(
     '#type' =>'textarea',
     '#rows' => 5,
-    '#description' =>t('Enter up to ten email addresses, one per line, and we\'ll send them an invitation from you.'),
-    );
+    '#description' =>t($description),
+  );
+  
+  $nid = _orig_nid();
+  $form['nid'] = array(
+    '#type' =>'hidden',
+    '#default_value' => $nid,
+  );
   $form['submit_button'] = array(
     '#type' => 'submit',
     '#value' => t('Send Invitations'),
-    '#id' => 'edit-submit'  
+    '#id' => 'edit-submit',
   );
   return $form;
 }
+
 /* 
  * Form validator
  * Up to ten only
  * valid email addresses from users that don't have an account
  */
 function tm_invitations_invite_form_validate($form, &$form_state) {
-  $email_list = trim(str_replace(",", "", $form_state['values']['invitations'])); // remove ,
-  $emails = explode("\n",$email_list);
-  foreach($emails as $email){
-    // remove non printable characters
-    // Android seems to send non-ascii that doesn't validate
-    $email = preg_replace('/[[:^print:]]/', '', $email);
-    $email = str_replace(" ", "", $email); // remove all spaces
-    if (!valid_email_address(trim($email))){
-      form_set_error('invitations', $email.t(' is not a valid email address'));
+  $invalid = array();
+  $emails = preg_split("/[\s,]+/", $form_state['values']['invitations']);
+  $emails = array_unique($emails);
+  foreach ($emails as $email) {
+    $email = preg_replace('/[[:^print:]]/', '', $email);  // remove non printable characters for Android
+    $email = trim($email);
+    if ($email == '') {
+      continue;
     }
-    // if user already exists
-    if (user_load_by_mail(trim($email))){
-      form_set_error('invitations', $email.t(' already has an account'));
+    if (!valid_email_address($email)) {
+      $invalid[] = $email;
     }
   }
-  if (count($emails) > 10){
+  // check permission for invite unlimited
+  if(!user_access('tm invite unlimited') && count($emails) > 10) {
     form_set_error('invitations', t('You have entered more than ten emails'));
   }
+  if ($invalid) {
+    $invalid = implode(", ", $invalid);
+    form_set_error('invitations', t('The following addresses are invalid: %invalid.', array('%invalid' => $invalid)));
+  }
 }
+
 /* 
  * Submit function
  */
-function tm_invitations_invite_form_submit($form, &$form_state) {
+function tm_invitations_invite_form_submit($form_id, &$form_state) {
   global $user;
-  $account = user_load($user->uid);
-  $email_list = trim($form_state['values']['invitations']);
-  $emails = explode("\n",$email_list);
-  $count = count($emails);
+  $account = user_load($user->uid); 
+  $is_registered = array();
+  $emails = preg_split("/[\s,]+/", $form_state['values']['invitations']);
+  $emails = array_unique($emails);
+  $nid = $form_state['values']['nid'];
+  $count = 0;
   foreach($emails as $email){
+    $email = preg_replace('/[[:^print:]]/', '', $email);  // remove non printable characters for Android
+    $email = trim($email);
+    if ($email == '') {
+      continue;
+    }
+    if (user_load_by_mail($email)){
+      $is_registered[] = $email; // user already exists
+    }
+    else {
     // send out an email
     tm_invitations_send_email($email, $account);
-    // add to table
+    // add to db
     $invite = db_insert('tm_invitations')
       ->fields(array(
-      'email' => trim($email),
-      'uid' => $user->uid,
-      'followed' => 0,
-      'created' => REQUEST_TIME,
-    ))
-    ->execute();
-  } 
-  if ($count == 1) {
-      drupal_set_message(t("Thanks for spreading the word! Your invitation has been sent."));
-  } else {
-      drupal_set_message(t("Thanks for spreading the word! You've sent $count invitations!"));
+        'email' => trim($email),
+        'uid' => $user->uid,
+        'nid' => $nid,
+        'followed' => 0,
+        'created' => REQUEST_TIME,
+      ))
+      ->execute();
+    $count++;
+    }
   }
-  drupal_goto("user/$user->uid/view");
+  
+  if ($count == 1) {
+    drupal_set_message(t("Thanks for spreading the word! Your invitation has been sent."));
+  }
+  else {
+    drupal_set_message(t("Thanks for spreading the word! You've sent $count invitations!"));
+  }
+  if ($is_registered) {
+    $is_registered = implode(", ", $is_registered);
+    drupal_set_message(t('The following users already has accounts: %is_registered.', array('%is_registered' => $is_registered)));
+  }
+  if ($nid == 0) {
+    drupal_goto("user/$user->uid");
+  }
+  else {
+    drupal_goto("node/$nid");
+  }
 }
 
 /*
  * Hook user presave
  * If there are multiple inviters, follow them all 
  */
-function tm_invitations_user_presave(&$edit, $account, $category){
-  if ($account->is_new){
-    // check email message against incomplete invites
-    $invites = db_select('tm_invitations', 'i')
-        ->fields('i')
-        ->condition('accepted',0,'=')
-        ->condition('email',$account->mail,'=')
-        ->execute();
-    // loop through invites
-    while ($invite = $invites->fetchAssoc()){
-      $inviter = user_load($invite['uid']);
-      // follow the $invite->uid user.
-      // this won't work as there is no uid yet
-      /* $flag = flag_get_flag('follow_members');
-      $flag->flag('flag', $invite['uid'], $account, TRUE);*/
-      // if person who invited is a chapter leader, change to approved
-      if (in_array("chapter leader", $inviter->roles)){
-        if ($role = user_role_load_by_name('approved user')) {
-          $edit['roles'][$role->rid] = $role->rid;
-
-          // send approval email
-          $approval_text = "Your account has been approved by " . $inviter->field_user_first_name[LANGUAGE_NONE][0]['value'] . ".";
-          tm_notifications_notify('user_approved', $account, array('user' => $account, '__PROFILE_URL__' => "community", '__APPROVAL_INTRO_TEXT__' => $approval_text));
-
-        }
+function tm_invitations_user_insert(&$edit, $account, $category) {
+  $uid = $account->uid; 
+  // Check email in tm_invitations table, and if it there, use the last invite record.
+  $invites = db_select('tm_invitations', 'i')
+      ->fields('i')
+      ->condition('accepted',0,'=')
+      ->condition('email',$account->mail,'=')
+      ->orderBy('created', 'DESC')
+      ->range(0,1)
+      ->execute();
+  // loop through invites
+  while ($invite = $invites->fetchAssoc()){
+    // Follow for the inviter
+     if ($invite['nid'] == 0) {
+      $flag = flag_get_flag('follow_members');
+      $flag->flag('flag', $invite['uid'], $account, TRUE);
+    } 
+    // Join Chapter
+    else {
+      $flag = flag_get_flag('signup');
+      $flag->flag('flag', $invite['nid'], $account, TRUE);
+    }
+    // if person who invited is a chapter leader, change to approved
+    $inviter = user_load($invite['uid']);
+    if(user_access('tm invite own chapters', $inviter) || user_access('tm invite unlimited', $inviter)) {
+      if ($role = user_role_load_by_name('approved user')) {
+        $edit['roles'][$role->rid] = $role->rid;
+        // send approval email
+        $approval_text = "Your account has been approved by " . $inviter->field_user_first_name[LANGUAGE_NONE][0]['value'] . ".";
+        tm_notifications_notify('user_approved', $account, array('user' => $account, '__PROFILE_URL__' => "community", '__APPROVAL_INTRO_TEXT__' => $approval_text));
+        // Display a message about approval
+        drupal_set_message(t('Your account has been pre-approved, welcome!'));
       }
+    }
     // update this record as accepted
     db_update('tm_invitations')
       ->fields(array(
         'accepted' => REQUEST_TIME))
       ->condition('id', $invite['id'], '=')
       ->execute();
-    }
-  }
-  else{
-    // TODO: Do this in a better way for performance
-    // check email message against unfollowed invites
-    // unfortunately have to come back and do this later
-    // as there is no UID for flag to use to follow
-    $invites = db_select('tm_invitations', 'i')
-        ->fields('i')
-        ->condition('email',$account->mail,'=')
-        ->condition('followed',0,'=')
-        ->execute();
-    // loop through invites
-    while ($invite = $invites->fetchAssoc()){
-      // follow the $invite->uid user.
-      $flag = flag_get_flag('follow_members');
-      $flag->flag('flag', $invite['uid'], $account, TRUE);
-      // set as followed
-      db_update('tm_invitations')
-        ->fields(array(
-          'followed' => 1))
-        ->condition('id', $invite['id'], '=')
-        ->execute();
-    }  
   }
 }
+
 /* Email sending function */
 function tm_invitations_send_email($email, $user){
 
@@ -230,7 +314,19 @@ function tm_invitations_send_email($email, $user){
 
     // Send e-mail.
     $result = $system->mail($format_message);
+}
 
+/* The helper function to detect original nid for the current page. */
+function _orig_nid() {
+  $orig_path = _orig_path();
+  $node = menu_get_object('node', 1, $orig_path);
+  $nid = (isset($node) ? $node->nid : 0 );
+  return $nid;
+}
 
-
+/* The helper function to detect original path for the current page. */
+function _orig_path() {
+  $url = arg(0).'/'.arg(1);
+  $path = (drupal_lookup_path('source', $url));
+  return $path;
 }

@@ -452,7 +452,7 @@ function tm_events_communication_form($event){
     if ($event->field_location != null) {
       $prefill .= "<li>" . t('Location').': '.$event->field_location[LANGUAGE_NONE][0]['value'] . "</li>";
     }
-    $prefill .= "<li>" . t('More Info').': <a href="' . $event_url . '">' . $event_url .'</a>'; 
+    $prefill .= "<li>" . t('More Info').': <a href="http://' . $event_url . '">' . $event_url .'</a>'; 
     $prefill .= "</ul>";
     if ($event->body != null) {
       $prefill .= $event->body[LANGUAGE_NONE][0]['value'] . "";

@@ -832,6 +832,7 @@ function tm_events_rsvp_form($event){
   }
   return $form;
 }
+
 /* RSVP form submit function */
 function tm_events_rsvp_form_submit($form, &$form_state){
   $rsvpflag = flag_get_flag('event_register', NULL);

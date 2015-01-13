@@ -294,6 +294,35 @@ function _tm_more_actions_process($field, $title = NULL) {
   }
   // END download chapter members
 
+  // START chapter invitiations.
+  if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
+    $node = menu_get_object();
+    if ($node->type == 'chapter') {
+      global $user;
+      $show_menu_item = false;
+
+      // show to chapter leaders
+      if (tm_users_is_chapter_leader($user->uid, $node->nid) || user_access('tm invite all chapters')) {
+        $show_menu_item = true;
+      }
+
+      if ($show_menu_item) {
+        $current_uri = request_uri();
+        $current_uri = substr($current_uri, 1); // delete first slash
+        $link_path = $current_uri.'/invitations';
+        $links['chapterinvitiations'][] = array(
+          'wrapper_class' => array('chapterinvitiations'),
+          'content' => l(t('Chapter Invitations'), $link_path , array(
+            'attributes' => array( 
+            'title' => t('Chapter Invitations')
+            )
+          ))
+        );
+      }
+    }
+  }
+  // END chapter invitiations  
+
   // START approve link
   //drupal_set_message("<pre>".print_r($menu_item,TRUE)."</pre>");
   if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {

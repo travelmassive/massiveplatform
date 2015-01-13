@@ -5444,6 +5444,21 @@ select:disabled {
   color: #213040;
 }
 
+/* line 564, ../sass/_forms.scss */
+.page_notice a:visited {
+  color: #213040;
+}
+
+/* line 568, ../sass/_forms.scss */
+.view-content tbody {
+  font-size: 0.85rem;
+}
+
+/* line 572, ../sass/_forms.scss */
+.view-content td {
+  padding-left: 1rem;
+}
+
 /* line 4, ../sass/_modules.scss */
 #tm-events-communication-form,
 #tm-events-rsvp-form,

@@ -24,13 +24,16 @@ function tm_invitations_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Invitation';
   $handler->display->display_options['use_ajax'] = TRUE;
+  $handler->display->display_options['use_more'] = TRUE;
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
-  $handler->display->display_options['pager']['type'] = 'some';
-  $handler->display->display_options['pager']['options']['items_per_page'] = '50';
+  $handler->display->display_options['pager']['type'] = 'mini';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '100';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
     'email' => 'email',
@@ -79,13 +82,13 @@ function tm_invitations_views_default_views() {
   $handler->display->display_options['fields']['created']['id'] = 'created';
   $handler->display->display_options['fields']['created']['table'] = 'tm_invitations';
   $handler->display->display_options['fields']['created']['field'] = 'created';
-  $handler->display->display_options['fields']['created']['date_format'] = 'short';
+  $handler->display->display_options['fields']['created']['date_format'] = 'time ago';
   $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
   /* Field: TM invitations: Accepted */
   $handler->display->display_options['fields']['accepted']['id'] = 'accepted';
   $handler->display->display_options['fields']['accepted']['table'] = 'tm_invitations';
   $handler->display->display_options['fields']['accepted']['field'] = 'accepted';
-  $handler->display->display_options['fields']['accepted']['date_format'] = 'short';
+  $handler->display->display_options['fields']['accepted']['date_format'] = 'time ago';
   $handler->display->display_options['fields']['accepted']['second_date_format'] = 'long';
   /* Field: TM invitations: Email */
   $handler->display->display_options['fields']['email']['id'] = 'email';
@@ -117,6 +120,7 @@ function tm_invitations_views_default_views() {
   $handler->display->display_options['sorts']['created']['table'] = 'tm_invitations';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  $handler->display->display_options['sorts']['created']['expose']['label'] = 'Created';
   /* Contextual filter: TM invitations: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
   $handler->display->display_options['arguments']['nid']['table'] = 'tm_invitations';

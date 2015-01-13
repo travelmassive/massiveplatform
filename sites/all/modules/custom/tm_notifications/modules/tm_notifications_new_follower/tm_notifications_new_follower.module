@@ -60,7 +60,14 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
     } 
 
     // notify the user that they have a new follower
-    tm_notifications_notify('new_follower', $followed_user, array('user' => $followed_user, '__PROFILE_URL__' => $profile_url));
+    $who_joined = user_load($account->uid);
+
+    // get user first name and last name
+    // we can't always rely on current-user token as user can follow on signup via tm_invitations
+    $first_name = $who_joined->field_user_first_name['und'][0]['value'];
+    $last_name = $who_joined->field_user_last_name['und'][0]['value'];
+
+    tm_notifications_notify('new_follower', $followed_user, array('user' => $followed_user, '__PROFILE_URL__' => $profile_url, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name));
   }
 
   // Your organization has a new follower

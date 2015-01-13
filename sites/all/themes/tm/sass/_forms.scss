@@ -561,4 +561,15 @@ select {
   color: $primary-color;
 }
 
+.page_notice a:visited {
+  color: $primary-color;
+}
+
+.view-content tbody { 
+  font-size: 0.85rem;
+}
+
+.view-content td { 
+  padding-left: 1rem;
+}
 

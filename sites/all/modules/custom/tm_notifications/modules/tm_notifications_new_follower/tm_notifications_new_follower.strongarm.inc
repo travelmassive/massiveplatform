@@ -19,10 +19,10 @@ function tm_notifications_new_follower_strongarm() {
     'default_state' => '1',
     'change_allowed' => 1,
     'email' => array(
-      'subject' => '[current-user:field_user_first_name] [current-user:field_user_last_name] just followed you on Travel Massive',
+      'subject' => '__USER_FIRST_NAME__ __USER_LAST_NAME__ just followed you on Travel Massive',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>[current-user:field_user_first_name] [current-user:field_user_last_name] just followed you on Travel Massive.
+<br>__USER_FIRST_NAME__ __USER_LAST_NAME__ just followed you on __SITE_NAME__.
 <br>
 <br>You can view their profile here:
 <br>
@@ -47,7 +47,7 @@ function tm_notifications_new_follower_strongarm() {
       'subject' => '[current-user:field_user_first_name] [current-user:field_user_last_name] just followed [node:title] on Travel Massive',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>[current-user:field_user_first_name] [current-user:field_user_last_name] just followed your company profile [node:title] on Travel Massive.
+<br>[current-user:field_user_first_name] [current-user:field_user_last_name] just followed your company profile [node:title] on __SITE_NAME__.
 <br>
 <br>You can view their profile here:
 <br>

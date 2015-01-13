@@ -76,7 +76,7 @@ function chapter_invitations_page() {
       <li>Users who already have an account will not be invited.</li>
       <li>Only use email addresses that you have consent to contact.</li>
       <li>Invitations may take a few minutes to arrive to the recipients.</li>
-      <li>User will need to use the email address you invite them with for the pre-approval to occur</li>
+      <li>The member needs to use the email address you invite them with for the pre-approval to occur.</li>
       </ul>
       </p>');
     $output .= drupal_render($form);
@@ -272,7 +272,8 @@ function tm_invitations_invite_form_submit($form_id, &$form_state) {
 
   // Step 8. Redirect user to profile page or chapter invite page
   if ($nid == 0) {
-    drupal_goto(url("user/$user->uid", array('absolute' => FALSE)));
+    // remove pesky leading / if user has friendly URL
+    drupal_goto(ltrim(url("user/$user->uid", array('absolute' => FALSE)), "/"));
   }
   else {
     drupal_goto(url("node/$nid", array('absolute' => FALSE)) . "/invitations");
@@ -318,19 +319,29 @@ function tm_invitations_user_insert(&$edit, $account, $category) {
 
   // Step 2. Loop through invites
   $has_been_approved = false;
-  while ($invite = $invites->fetchAssoc()){
+  while ($invite = $invites->fetchAssoc()) {
 
     // Step 3. If person who invited is a chapter leader, change to approved
     if (!$has_been_approved) {
+
       $inviter = user_load($invite['uid']);
       if(user_access('tm invite own chapters', $inviter) || user_access('tm invite unlimited', $inviter)) {
 
         if ($role = user_role_load_by_name('approved user')) {
-          $edit['roles'][$role->rid] = $role->rid;
+
+          // Set user to approved
+          user_multiple_role_edit(array($account->uid), 'add_role', $role->rid);
+
+          // Get approver profile url (either friendly url or community url)
+          $profile_url = "community/" . $account->name;
+          if (count($account->field_friendly_url['und']) > 0) { 
+            $profile_url = $account->field_friendly_url['und']['0']['value'];
+          }
 
           // Send approval email
           $approval_text = "Your account has been approved by " . $inviter->field_user_first_name[LANGUAGE_NONE][0]['value'] . ".";
-          tm_notifications_notify('user_approved', $account, array('user' => $account, '__PROFILE_URL__' => "community", '__APPROVAL_INTRO_TEXT__' => $approval_text));
+
+          tm_notifications_notify('user_approved', $account, array('approving-user' => $inviter, 'user' => $account, '__PROFILE_URL__' => $profile_url, '__APPROVAL_INTRO_TEXT__' => $approval_text));
 
           // Display a message about approval
           drupal_set_message(t('Your account has been pre-approved.'));

@@ -5,3 +5,19 @@
  */
 
 include_once 'tm_theme.features.inc';
+
+// Alter html head
+// Remove shortlink metatags to node/123
+// from: https://gist.github.com/Dreamseer/3865185
+function tm_theme_html_head_alter(&$head_elements) {
+  
+  // remove unneeded shortlink url
+  $remove = array(
+    '/^drupal_add_html_head_link:shortlink:/',     // Shortlink
+  );
+  foreach ($remove as $item) {
+    foreach (preg_grep($item, array_keys($head_elements)) as $key) {
+      unset($head_elements[$key]);
+    }
+  }
+}

@@ -484,16 +484,13 @@ function tm_meta_metatag_export_default() {
         'value' => '[node:field_segment], [node:field_country]',
       ),
       'image_src' => array(
-        'value' => '[node:field_avatar]',
-      ),
-      'shortlink' => array(
-        'value' => '',
+        'value' => '[node:field_image]',
       ),
       'dcterms.subject' => array(
         'value' => 'organization, company',
       ),
       'og:image' => array(
-        'value' => '[node:field_avatar]',
+        'value' => '[node:field_image]',
       ),
       'og:country-name' => array(
         'value' => '[node:field_country]',

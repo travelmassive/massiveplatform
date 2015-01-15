@@ -115,12 +115,11 @@ function tm_invitations_views_default_views() {
   $handler->display->display_options['fields']['uid']['hide_empty'] = TRUE;
   $handler->display->display_options['fields']['uid']['empty_zero'] = TRUE;
   $handler->display->display_options['fields']['uid']['link_to_user'] = FALSE;
-  /* Sort criterion: TM invitations: Created */
-  $handler->display->display_options['sorts']['created']['id'] = 'created';
-  $handler->display->display_options['sorts']['created']['table'] = 'tm_invitations';
-  $handler->display->display_options['sorts']['created']['field'] = 'created';
-  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  $handler->display->display_options['sorts']['created']['expose']['label'] = 'Created';
+  /* Sort criterion: TM invitations: Accepted */
+  $handler->display->display_options['sorts']['accepted']['id'] = 'accepted';
+  $handler->display->display_options['sorts']['accepted']['table'] = 'tm_invitations';
+  $handler->display->display_options['sorts']['accepted']['field'] = 'accepted';
+  $handler->display->display_options['sorts']['accepted']['order'] = 'DESC';
   /* Contextual filter: TM invitations: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
   $handler->display->display_options['arguments']['nid']['table'] = 'tm_invitations';

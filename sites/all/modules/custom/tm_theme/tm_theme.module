@@ -20,4 +20,19 @@ function tm_theme_html_head_alter(&$head_elements) {
       unset($head_elements[$key]);
     }
   }
+
+  // add noindex to node URLS
+  // all URLs we want indexed should be clean URLS
+  $url_parts = explode('/', request_uri());
+  if ($url_parts[1] == 'node') {
+	$head_elements['MYMODULE_meta_robots'] = array(
+		'#tag' => 'meta',
+		'#type' => 'html_tag',
+		'#attributes' => array(
+		'name' => 'robots',
+		'content' => 'noindex'
+		)
+	);
+  }
+
 }

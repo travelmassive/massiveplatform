@@ -45,6 +45,10 @@ function tm_notifications_approval_strongarm() {
 <br>* Fill out your profile questions
 <br>* Provide links to your website, Twitter, Facebook or LinkedIn accounts
 <br>
+<br><strong>I\'ve updated my account, what next?</strong>
+<br>When you\'re ready for us to review your account, select "Request approval" from your account menu.
+<br>Our team will review your profile and you\'ll be notified when you are approved.
+<br>
 <br>__EMAIL_SIGNOFF__
 ',
     ),
@@ -79,6 +83,10 @@ function tm_notifications_approval_strongarm() {
 <br>* Update your Industry Segment
 <br>* Fill out your profile questions
 <br>* Provide links to your website, Twitter, Facebook or LinkedIn accounts
+<br>
+<br><strong>I\'ve updated my account, what next?</strong>
+<br>When you\'re ready for us to review your account, select "Request approval" from your account menu.
+<br>Our team will review your profile and you\'ll be notified when you are approved.
 <br>
 <br>__EMAIL_SIGNOFF__
 ',

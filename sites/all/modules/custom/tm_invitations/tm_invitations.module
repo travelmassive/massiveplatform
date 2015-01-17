@@ -100,15 +100,37 @@ function chapter_invitations_page() {
  * Invitations form
  */
 function tm_invitations_invite_form($form, &$form_state) {
+  global $conf;
+  global $user;
+
   $description = 'Email addresses must be separated by comma, space or newline.';
   if(!user_access('tm invite unlimited')) {
     $description .= '<br>Enter up to 10 email addresses.';
   }
+
+  if (_orig_nid() == 0) {
+    $form['help_message'] = array(
+    '#markup' => '<p>Help us grow the community and increase your connections by inviting your friends or colleagues.</p>'
+    );
+  }
+  
   $form['invitations'] = array(
+    '#title' => 'Email Addresses',
     '#type' =>'textarea',
     '#rows' => 5,
     '#description' =>t($description),
   );
+
+  // only show custom message to approved users
+  if (in_array("approved user", $user->roles)) {
+    $form['custom_message'] = array(
+    '#title' => 'Custom Message',
+    '#type' =>'textarea',
+    '#rows' => 3,
+    '#description' => 'Add a custom message to you invitation. Links and HTML will be removed. You can also leave this blank.',
+    '#default_value' => $conf['tm_invitations_custom_message'] //Hi, I\'d like to invite you!'
+    );
+  }
   
   $nid = _orig_nid();
   $form['nid'] = array(
@@ -164,6 +186,11 @@ function tm_invitations_invite_form_submit($form_id, &$form_state) {
   $emails = preg_split("/[\s,]+/", $form_state['values']['invitations']);
   $emails = array_unique($emails);
   $nid = $form_state['values']['nid'];
+  $custom_message = "";
+  if (isset($form_state['values']['custom_message']))  {
+    $custom_message = strip_tags($form_state['values']['custom_message']);
+    $custom_message = preg_replace('@((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*(\?\S+)?)?)*)@', '(link removed)', $custom_message);
+  }
   $count = 0;
 
   // Get chapter title if invited to chapter
@@ -222,7 +249,9 @@ function tm_invitations_invite_form_submit($form_id, &$form_state) {
       $queue->createItem(["email" => $email, 
                         "inviter_name" => $inviter_name,
                         "inviter_uid" => $inviter_uid,
-                        "chapter_name" => $chapter_title]);
+                        "custom_message" => $custom_message,
+                        "chapter_name" => $chapter_title,
+                        "server_name" => $_SERVER["SERVER_NAME"]]);
 
       // below is the non queue method
       //tm_invitations_send_email($email, $account, $chapter_title);
@@ -261,7 +290,7 @@ function tm_invitations_invite_form_submit($form_id, &$form_state) {
   // Step 6. Notice if users are already registered
   if ($is_registered) {
     $is_registered = implode(", ", $is_registered);
-    drupal_set_message(t('The following users already has accounts: %is_registered.', array('%is_registered' => $is_registered)));
+    drupal_set_message(t('The following users already have accounts: %is_registered.', array('%is_registered' => $is_registered)));
   }
 
   // Step 7. Notice if users are already invited to chapter
@@ -271,12 +300,12 @@ function tm_invitations_invite_form_submit($form_id, &$form_state) {
   }
 
   // Step 8. Redirect user to profile page or chapter invite page
+  // remove pesky leading / from the redirect URL
   if ($nid == 0) {
-    // remove pesky leading / if user has friendly URL
     drupal_goto(ltrim(url("user/$user->uid", array('absolute' => FALSE)), "/"));
   }
   else {
-    drupal_goto(url("node/$nid", array('absolute' => FALSE)) . "/invitations");
+    drupal_goto(ltrim(url("node/$nid", array('absolute' => FALSE)) . "/invitations", "/"));
   }
 
 }
@@ -392,12 +421,12 @@ function tm_invitations_cron_queue_info() {
  *
  */
 function tm_invitations_send_email_cron($item) {
-  tm_invitations_send_email($item["email"], $item["inviter_name"], $item["inviter_uid"], $item["chapter_name"]);
+  tm_invitations_send_email($item["email"], $item["inviter_name"], $item["inviter_uid"], $item["custom_message"], $item["chapter_name"], $item["server_name"]);
 }
 
 
 /* Email sending function */
-function tm_invitations_send_email($email, $inviter_name, $inviter_uid, $chapter_name = ""){
+function tm_invitations_send_email($email, $inviter_name, $inviter_uid, $custom_message = "", $chapter_name = "", $server_name = "") {
 
     $module = 'tm_invitations';
     $key = 'key';
@@ -415,7 +444,12 @@ function tm_invitations_send_email($email, $inviter_name, $inviter_uid, $chapter
     } else {
       $message .= "<br>You've been invited to __SITE_NAME__ by " . $inviter_name . ".";
     }
-    $message .= "<br>";
+    if (trim($custom_message) != "") {
+      $message .= "<p><strong>Message:</strong><br>";
+      $custom_message = strip_tags($custom_message); // remove html
+      $message .= str_replace("\n", "<br>", $custom_message); // add line breaks
+      $message .= "</p>";
+    }
     $message .= "<br>Join the community by visiting <a href='__SERVER_HTTP__://__SERVER_NAME__/user/register'>__SERVER_NAME__/user/register</a>";
     $message .= "<br>";
     $message .= "<br>__EMAIL_SIGNOFF__";
@@ -451,7 +485,8 @@ function tm_invitations_send_email($email, $inviter_name, $inviter_uid, $chapter
     $template = str_replace("__EMAIL_FOOTER__", $footer, $template);
 
     // Other vars
-    $template = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $template); 
+    $template = str_replace("__SERVER_NAME__", $server_name, $template);
+    //$template = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $template); 
     $template = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $template);  
     $template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
     $template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template); 

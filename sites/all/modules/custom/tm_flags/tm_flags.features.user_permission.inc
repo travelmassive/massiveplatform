@@ -10,6 +10,34 @@
 function tm_flags_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: 'flag approval_is_company_or_brand'.
+  $permissions['flag approval_is_company_or_brand'] = array(
+    'name' => 'flag approval_is_company_or_brand',
+    'roles' => array(
+      'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'flag approval_need_more_info'.
+  $permissions['flag approval_need_more_info'] = array(
+    'name' => 'flag approval_need_more_info',
+    'roles' => array(
+      'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'flag approval_requested_by_user'.
+  $permissions['flag approval_requested_by_user'] = array(
+    'name' => 'flag approval_requested_by_user',
+    'roles' => array(
+      'authenticated user' => 'authenticated user',
+      'non-validated' => 'non-validated',
+    ),
+    'module' => 'flag',
+  );
+
   // Exported permission: 'flag event_register'.
   $permissions['flag event_register'] = array(
     'name' => 'flag event_register',
@@ -45,6 +73,34 @@ function tm_flags_user_default_permissions() {
     'name' => 'flag tm_sponsor',
     'roles' => array(
       'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag approval_is_company_or_brand'.
+  $permissions['unflag approval_is_company_or_brand'] = array(
+    'name' => 'unflag approval_is_company_or_brand',
+    'roles' => array(
+      'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag approval_need_more_info'.
+  $permissions['unflag approval_need_more_info'] = array(
+    'name' => 'unflag approval_need_more_info',
+    'roles' => array(
+      'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag approval_requested_by_user'.
+  $permissions['unflag approval_requested_by_user'] = array(
+    'name' => 'unflag approval_requested_by_user',
+    'roles' => array(
+      'authenticated user' => 'authenticated user',
+      'non-validated' => 'non-validated',
     ),
     'module' => 'flag',
   );

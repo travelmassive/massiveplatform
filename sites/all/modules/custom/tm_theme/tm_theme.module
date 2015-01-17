@@ -21,10 +21,10 @@ function tm_theme_html_head_alter(&$head_elements) {
     }
   }
 
-  // add noindex to node URLS
+  // add noindex to /node or /user URLS
   // all URLs we want indexed should be clean URLS
   $url_parts = explode('/', request_uri());
-  if ($url_parts[1] == 'node') {
+  if (($url_parts[1] == 'node') or ($url_parts[1] == 'user')) {
 	$head_elements['MYMODULE_meta_robots'] = array(
 		'#tag' => 'meta',
 		'#type' => 'html_tag',

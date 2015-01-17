@@ -47,6 +47,7 @@ function tm_invitations_user_default_permissions() {
     'name' => 'tm invite users',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+      'non-validated' => 'non-validated',
     ),
     'module' => 'tm_invitations',
   );

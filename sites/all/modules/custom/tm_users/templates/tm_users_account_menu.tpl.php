@@ -41,7 +41,6 @@ $image = theme('image_style', array(
             <div class="media-bd">
               <strong><?php print check_plain($loaded->realname); ?></strong>
               <?php print t('Edit profile'); ?>
-              <!--<?php if (!in_array("approved user", $user->roles)) { ?><br><i>Pending Approval</i><?php } ?>-->
             </div>
           </a>
         </div>
@@ -59,6 +58,25 @@ if (!$twitter_data) {
       <li><?php print l(t('Connect with Twitter'), 'tm_twitter/oauth'); ?></li>
 <?php
 } // end if
+?>
+
+<?php if (!in_array("approved user", $loaded->roles)) { 
+    // show last time request info was flagged
+    //print_r(flag_get_entity_flags("user", $loaded->uid));     
+    $who_flagged = flag_get_entity_flags("user", $loaded->uid, "approval_requested_by_user");
+    //print_r($who_flagged);
+    if (sizeof($who_flagged) > 0) {
+      foreach ($who_flagged as $flagger) {
+        $difference = time() - $flagger->timestamp;
+      }
+      $flagged_time = format_interval($difference, 1) . " ago";
+?>
+<li><?php print l(t('Approval requested (' . $flagged_time . ')'), 'javascript:alert("Please allow 12-24 hours for us to review your account. Please ensure you\'ve filled out your profile so we can approve you.")', array('fragment' => '','external'=>true)); ?></li>
+<?php } else { ?>
+<li><?php print l(t('Request approval'), 'user/' . $loaded->uid . '/request_approval'); ?></li>
+<?php
+} // end if flagged
+} // end if not approved
 ?>
 
     </ul>

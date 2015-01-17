@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * tm_notifications_chapter.strongarm.inc
+ * tm_notifications_approval.strongarm.inc
  */
 
 /**
@@ -9,6 +9,82 @@
  */
 function tm_notifications_approval_strongarm() {
   $export = array();
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'tm_notifications__user_approval_is_company_or_brand';
+  $strongarm->value = array(
+    'user_label' => 'Notification that account is company or brand related',
+    'default_state' => '1',
+    'change_allowed' => 0,
+    'email' => array(
+      'subject' => 'Action required for approval: Your __SITE_NAME__ account must be an individual profile',
+      'message' => 'Hi [user:field_user_first_name],
+<br>
+<br>We can\'t approve your account because it looks like you\'ve created an account for a company or brand. See below for how to get your account approved and how to add a company profile.
+<br>
+<br><strong>Please read carefully:</strong>
+<br>All accounts on __SITE_NAME__ are for individual use. After your account is approved, you can then add and manage your company listing which will be displayed on our <a href="__SERVER_HTTP__://__SERVER_NAME__/companies">company listings page</a>.
+<br>
+<br><strong>How to add your company profile:</strong>
+<br>First, sign in and update your profile information so it\'s about yourself (not your brand) to get approved. Once your individual account is approved, you can add a company profile by visiting the "Add company" link from your profile menu.
+<br>
+<br><strong>What you need to do:</strong>
+<br>Please sign in and personalize your profile information so we can approve your account:
+<br>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br>
+<br><strong>Once you\'ve personalized your account, we\'ll be able to approve you and you can add your company profile.</strong>
+<br>
+<br>Here\'s some tips to get approved:
+<br>* Provide your real First and Last name if you haven\'t already
+<br>* Tell us about yourself (not your company) in the "About me" section
+<br>* Upload a photo of yourself so members can recognize you
+<br>* Tell us what city you are based in
+<br>* Fill out your profile questions
+<br>* Provide links to your website, Twitter, Facebook or LinkedIn accounts
+<br>
+<br>__EMAIL_SIGNOFF__
+',
+    ),
+  );
+  $export['tm_notifications__user_approval_is_company_or_brand'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'tm_notifications__user_approval_need_more_info';
+  $strongarm->value = array(
+    'user_label' => 'Notification that user needs to provide more information',
+    'default_state' => '1',
+    'change_allowed' => 0,
+    'email' => array(
+      'subject' => 'Action required for approval: Your __SITE_NAME__ profile needs more information',
+      'message' => 'Hi [user:field_user_first_name],
+<br>
+<br>Your profile needs to be completed before we can approve your account.
+<br>
+<br><strong>What you need to do:</strong>
+<br>Please sign in and complete your profile information so we can approve your account:
+<br>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br>
+<br>
+<br>Here\'s some tips to get approved:
+<br>* Tell us about yourself in the "About me" section
+<br>* Upload a profile picture so members can recognize you
+<br>* Tell us what city you are based in
+<br>* Fill out your Job Role and Organization Name (if you work for a company)
+<br>* Update your Industry Segment
+<br>* Fill out your profile questions
+<br>* Provide links to your website, Twitter, Facebook or LinkedIn accounts
+<br>
+<br>__EMAIL_SIGNOFF__
+',
+    ),
+  );
+  $export['tm_notifications__user_approval_need_more_info'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
@@ -53,6 +129,34 @@ function tm_notifications_approval_strongarm() {
     ),
   );
   $export['tm_notifications__user_approved'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'tm_notifications__user_requested_approval';
+  $strongarm->value = array(
+    'user_label' => '[Chapter Leaders] Notify when new member requests approval',
+    'default_state' => '1',
+    'change_allowed' => 1,
+    'change_allowed_roles' => array(
+      0 => 'chapter leader',
+    ),
+    'email' => array(
+      'subject' => 'Approval request: __USER_FIRST_NAME__ __USER_LAST_NAME__ requested approval on __SITE_NAME__',
+      'message' => 'Hi [user:field_user_first_name],
+<br>
+<br>__USER_FIRST_NAME__ __USER_LAST_NAME__ has requested approval of their account:
+<br>
+<br>Please review their profile here:
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br>
+<br>If you are satisfied with their profile you may approve the account. To approve the account select the "Approve member" option on their profile page menu.
+<br>
+<br>__EMAIL_SIGNOFF__
+',
+    ),
+  );
+  $export['tm_notifications__user_requested_approval'] = $strongarm;
 
   return $export;
 }

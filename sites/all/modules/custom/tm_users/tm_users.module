@@ -102,6 +102,28 @@ function tm_users_menu() {
     'access arguments' => array('unapprove users'),
     'type' => MENU_CALLBACK,
   );
+  $items['user/%user/approval_need_more_info'] = array(
+    'title' => 'Request more info',
+    'page callback' => 'tm_users_approval_need_more_info',
+    'page arguments' => array(1),
+    'access arguments' => array('approve users'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['user/%user/approval_is_company_or_brand'] = array(
+    'title' => 'Account is company or brand',
+    'page callback' => 'tm_users_approval_is_company_or_brand',
+    'page arguments' => array(1),
+    'access arguments' => array('approve users'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['user/%user/request_approval'] = array(
+    'title' => 'Request approval',
+    'page callback' => 'tm_users_request_approval',
+    'page arguments' => array(1),
+    'access callback' => 'tm_users_check_request_approval',
+    //'access arguments' => array('user_is_logged_in'),
+    'type' => MENU_CALLBACK,
+  );
   return $items;
 }
 
@@ -125,7 +147,172 @@ function tm_users_approve($user){
     $approval_text = "Your account has been approved by " . $approving_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . ".";
 
     tm_notifications_notify('user_approved', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__APPROVAL_INTRO_TEXT__' => $approval_text));
+
+    // Remove any moderation flags the user has
+    $who_flagged = flag_get_entity_flags("user", $user->uid, "approval_is_company_or_brand");
+    foreach ($who_flagged as $flagger) {
+      $moderator = user_load($flagger->uid); 
+      flag('unflag', 'approval_is_company_or_brand', $user->uid, $moderator);
+    }
+
+    $who_flagged = flag_get_entity_flags("user", $user->uid, "approval_need_more_info");
+    foreach ($who_flagged as $flagger) {
+      $moderator = user_load($flagger->uid); 
+      flag('unflag', 'approval_need_more_info', $user->uid, $moderator);
+    }
+   
+    flag('unflag', 'approval_requested_by_user', $user->uid, $user);
+
   }
+
+  drupal_goto("user/$user->uid/view");
+}
+
+/* Approval callback for requesting approval */
+function tm_users_check_request_approval() {
+
+  // check the user is requesting approval for their own account
+  $approval_user = arg(1);
+  $logged_in_user = user_uid_optional_load();
+  if (($approval_user != $logged_in_user->uid)) {
+    return false;
+  }
+
+  // ok
+  return true;
+}
+
+/* Request approval */
+function tm_users_request_approval($user) {
+
+  // set profile url (either friendly url or community url)
+  $profile_url = "community/" . $user->name;
+  if (count($user->field_friendly_url) > 0) { 
+    $profile_url = $user->field_friendly_url['und']['0']['value'];
+  }
+
+  // construct a list of moderators to notify
+  $moderator_ids = array();
+
+  // Get list of people who flagged this user as needs more info
+  $who_flagged = flag_get_entity_flags("user", $user->uid, "approval_need_more_info");
+  foreach ($who_flagged as $flagger) {
+    $moderator_ids[] = $flagger->uid;
+  }
+
+  // get list of people who flagged this user as a company or brand
+  $who_flagged = flag_get_entity_flags("user", $user->uid, "approval_is_company_or_brand");
+  foreach ($who_flagged as $flagger) {
+    $moderator_ids[] = $flagger->uid;
+  }
+
+  // if user has not been flagged, fall back to their home chapter
+  if (sizeof($moderator_ids) == 0) {
+
+    if (sizeof($user->field_home_chapter) > 0) {
+
+      // get home chapter
+      $home_chapter_id = $user->field_home_chapter['und'][0]['target_id'];
+      $home_chapter = node_load($home_chapter_id);
+      foreach ($home_chapter->field_chapter_leaders['und'] as $leader) {
+        $moderator_ids[] = $leader['target_id'];
+      }
+    }
+  }
+
+  // if user has not joined a chapter, fall back to all moderators
+  if (sizeof($moderator_ids) == 0) {
+
+    $moderator_id = array_search('moderator', user_roles());
+    $query = 'SELECT DISTINCT(ur.uid) 
+      FROM {users_roles} AS ur
+      WHERE ur.rid IN (:rids)';
+    $result = db_query($query, array(':rids' => array($moderator_id)));
+
+    $moderator_ids = $result->fetchCol();
+  }
+
+  // don't send multiple notifications
+  $moderator_ids = array_unique($moderator_ids);
+
+  // notify list of moderators
+  $first_name = $user->field_user_first_name['und'][0]['value'];
+  $last_name = $user->field_user_last_name['und'][0]['value'];
+  foreach ($moderator_ids as $uid) {
+
+      // send notification
+      $notify_user = user_load($uid);
+      tm_notifications_notify('user_requested_approval', $notify_user, array('user' => $notify_user, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__PROFILE_URL__' => $profile_url));
+  }
+
+  // flag user as having requested approval
+  $flag = flag_get_flag('approval_requested_by_user');
+  $flag->flag("flag", $user->uid);
+
+  // Notify user
+  drupal_set_message("Our team has been notified to review your account. Please ensure you've completed your profile to ensure your account is approved, thanks!");
+
+  drupal_goto("user/$user->uid/view");
+
+}
+
+
+/* Need more info callback */
+function tm_users_approval_need_more_info($user){
+
+  $approving_user = $GLOBALS['user'];
+  
+  // send notification message to user that they need to provide more information
+  // there doesn't seem to be a hook that can detect we are applying a new role, so do it here
+  $approving_user = user_uid_optional_load();
+  // set profile url (either friendly url or community url)
+  $profile_url = "community/" . $user->name;
+  if (count($user->field_friendly_url) > 0) { 
+    $profile_url = $user->field_friendly_url['und']['0']['value'];
+  }
+
+  tm_notifications_notify('user_approval_need_more_info', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url));
+
+  // unflag then flag again
+  flag('unflag', 'approval_need_more_info', $user->uid, $approving_user);
+  flag('flag', 'approval_need_more_info', $user->uid, $approving_user);
+
+  // unflag requested approval (so they can re-request if they already did)
+  flag('unflag', 'approval_requested_by_user', $user->uid, $user);
+
+  // Notify user
+  drupal_set_message("An email has been sent to " . $user->mail . " requesting they complete their profile information.");
+
+  drupal_goto("user/$user->uid/view");
+}
+
+/* Account is company or brand callback */
+function tm_users_approval_is_company_or_brand($user){
+
+  $approving_user = $GLOBALS['user'];
+  $role_name = 'approved user'; // The name of the role to add.
+
+  // send notification message to user that they need to provide more information
+  // there doesn't seem to be a hook that can detect we are applying a new role, so do it here
+  $approving_user = user_uid_optional_load();
+  // set profile url (either friendly url or community url)
+  $profile_url = "community/" . $user->name;
+  if (count($user->field_friendly_url) > 0) { 
+    $profile_url = $user->field_friendly_url['und']['0']['value'];
+  }
+
+  tm_notifications_notify('user_approval_is_company_or_brand', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url));
+
+  // flag the user that its a company or brand
+  flag('unflag', 'approval_is_company_or_brand', $user->uid, $approving_user);
+  flag('flag', 'approval_is_company_or_brand', $user->uid, $approving_user); 
+
+  // unflag requested approval (so they can re-request if they already did)
+  flag('unflag', 'approval_requested_by_user', $user->uid, $user);
+
+
+  // Notify user
+  drupal_set_message("An email has been sent to " . $user->mail . " requesting they personalize their account.");
 
   drupal_goto("user/$user->uid/view");
 }
@@ -384,9 +571,9 @@ function _tm_users_modify_register_form(&$form, $form_state, $form_id) {
   global $conf;
   $form['check_company']=array(
     '#type'=>'checkbox',
-    '#title' => t('I\'m signing up as a Company'),
+    '#title' => t('I\'m signing up as a Company / Brand'),
     '#element_validate' => array('_tm_users_company_validation_callback'),
-    '#description'=> "Hold up! " . $conf["tm_site_name"] . " accounts are for personal profiles. Once your personal account is approved you can add a company profile to our companies section.",
+    '#description'=> "Hold up! " . $conf["tm_site_name"] . " accounts are for individuals. Once your personal account is approved you can add a company profile to our companies section.",
     '#weight'=>1,
   );
 
@@ -404,7 +591,7 @@ function _tm_users_company_validation_callback($element, &$form_state, $form) {
   if (($form['check_company']['#checked'])) {
     $form['check_company']['#checked'] = false;
     global $conf;
-    form_set_error('check_company', t("Hold up! " . $conf["tm_site_name"] . " accounts are for personal profiles. Once your personal account is approved you can add a company profile to our companies section.<br><br>Got it? Great! Please continue with creating your personal profile."));
+    form_set_error('check_company', t("Hold up! " . $conf["tm_site_name"] . " accounts are for individuals. Once your personal account is approved you can add a company profile to our companies section.<br><br>Got it? Great! Please continue with creating your personal profile."));
   }
 }
 

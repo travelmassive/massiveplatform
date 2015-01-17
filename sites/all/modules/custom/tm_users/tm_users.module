@@ -38,9 +38,6 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state) {
   unset($form['timezone']['#description']);
 }
 
-function tm_users_validate($form, &$form_state) {
-  die();
-}
 
 /**
  * Implements hook_theme()

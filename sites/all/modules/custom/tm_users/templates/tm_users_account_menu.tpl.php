@@ -62,9 +62,7 @@ if (!$twitter_data) {
 
 <?php if (!in_array("approved user", $loaded->roles)) { 
     // show last time request info was flagged
-    //print_r(flag_get_entity_flags("user", $loaded->uid));     
     $who_flagged = flag_get_entity_flags("user", $loaded->uid, "approval_requested_by_user");
-    //print_r($who_flagged);
     if (sizeof($who_flagged) > 0) {
       foreach ($who_flagged as $flagger) {
         $difference = time() - $flagger->timestamp;

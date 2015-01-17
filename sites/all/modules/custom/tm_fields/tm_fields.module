@@ -337,7 +337,7 @@ function _tm_more_actions_process($field, $title = NULL) {
             'wrapper_class' => array('approve'),
             'content' => l(t('Approve member'), 'user/' . $uid . '/approve', array(
               'attributes' => array(
-              'onclick' => "javascript:return confirm('Do you want to approve this account?\\n\\nGuidelines for approval:\\n* Account is a real person\\n* Profile is filled out\\n* Profile is not company or brand');",
+              'onclick' => "javascript:return confirm('Do you want to approve this account?\\n\\nGuidelines for approval:\\n* Account is a real person\\n* Profile is filled out\\n* Profile is not a company or brand');",
               'title' => t('Approve member')
               )
             ))

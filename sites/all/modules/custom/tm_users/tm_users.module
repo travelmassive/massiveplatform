@@ -373,6 +373,37 @@ function tm_users_redirect_insert($redirect) {
   }
 }
 
+/* Check if a member is in a user's chapter */
+function tm_users_member_in_users_chapter($member_uid, $chapter_leader_uid) {
+
+  // Step 1. Fetch list of chapters the user has joined
+  $flags = flag_get_user_flags("node", null, $member_uid);
+  $chapters_nids = array();
+  foreach ($flags as $flag_name => $flag) {
+    if ($flag_name == "signup") {
+      foreach($flag as $f) {
+        $chapters_nids[] = $f->entity_id;
+      }
+    }
+  }
+
+  // Step 2. Fetch list of chapters the user is a leader of
+  $chapters_leader_nids = array();
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'chapter')
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->fieldCondition('field_chapter_leaders', 'target_id', $chapter_leader_uid, '=');
+
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    $chapters_leader_nids = array_keys($result['node']);
+  }
+
+  $intersect = array_intersect($chapters_nids, $chapters_leader_nids);
+  return (sizeof($intersect) > 0);
+}
+
 /* 
  * Link by title to any chapters this user has joined
  * inserts this markup into the user menu tpl file

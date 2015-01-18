@@ -350,13 +350,21 @@ function _tm_more_actions_process($field, $title = NULL) {
 
   // START profile incomplete link
   if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
-    if (in_array("moderator", $user->roles) or user_access('administer')) {
-      if (!in_array("approved user", $targetuser->roles)){
+
+    // Only show link for unapproved users
+    if (!in_array("approved user", $targetuser->roles)){
+
+      // Show if flagging tool if:
+      // 1. if user is a moderator or administrator
+      // 2. or if they are chapter leader and the member is signed up their chapter
+      if ((in_array("moderator", $user->roles) or user_access('administer'))
+        or ((in_array("chapter leader", $user->roles))) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid))) {
 
         $links['approve'][] = array(
           'wrapper_class' => array('approve'),
           'content' => l(t('Flag: Incomplete profile'), 'user/' . $uid . '/approval_need_more_info', array(
             'attributes' => array(
+            'onclick' => "javascript:return confirm('Do you want to flag this account as incomplete?\\n\\nThis action will:\\n* Notify the member they need to update their profile\\n* Notify you when the member requests approval');",
             'title' => t('Profile incomplete')
             )
           ))
@@ -392,13 +400,21 @@ function _tm_more_actions_process($field, $title = NULL) {
 
   // START is company or brand link
   if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
-    if (in_array("moderator", $user->roles) or user_access('administer')) {
-      if (!in_array("approved user", $targetuser->roles)){
+
+    // Only show link for unapproved users
+    if (!in_array("approved user", $targetuser->roles)){
+
+      // Show if flagging tool if:
+      // 1. if user is a moderator or administrator
+      // 2. or if they are chapter leader and the member is signed up their chapter
+      if ((in_array("moderator", $user->roles) or user_access('administer')) 
+        or ((in_array("chapter leader", $user->roles))) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid))) {
 
         $links['approve'][] = array(
           'wrapper_class' => array('approval_is_company_or_brand'),
           'content' => l(t('Flag: Is company or brand'), 'user/' . $uid . '/approval_is_company_or_brand', array(
             'attributes' => array(
+            'onclick' => "javascript:return confirm('Flag this account as a company or brand?\\n\\nThis action will:\\n* Notify the member to personalize their profile\\n* Inform member on how to list their company\\n* Notify you when the member requests approval');",
             'title' => t('Is company or brand')
             )
           ))

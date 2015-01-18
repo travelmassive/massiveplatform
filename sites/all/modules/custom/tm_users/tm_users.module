@@ -1172,18 +1172,9 @@ function tm_users_event_tips() {
 
   $chapters_nids = array();
   if (user_is_logged_in()) {
-    // Fetch list of chapters the user has joined
-    $flags = flag_get_user_flags("node");
-    foreach ($flags as $flag_name => $flag) {
-      if ($flag_name == "signup") {
-        foreach($flag as $f) {
-          $chapters_nids[] = $f->entity_id;
-        }
-      }
-    }
-    if ((sizeof($chapters_nids) > 0)) {
+    if (isset($account->field_home_chapter['und'][0]['target_id'])) {
       $account = user_load($user->uid);
-      $chapter = node_load($account->field_home_chapter['und'][0]['target_id']);
+      $chapter = node_load();
       $chapter_url = url('node/' . $chapter->nid, array("absolute" => true));
       $user_tip = "Visit your home chapter " . l(t( $conf["tm_site_name"] . " " . $chapter->title), $chapter_url) . " for events near you.";
     }

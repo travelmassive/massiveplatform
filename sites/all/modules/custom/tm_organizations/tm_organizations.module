@@ -67,7 +67,6 @@ function tm_organizations_preprocess_page(&$variables, $hook) {
   // Put a notice to create company accounts on company page
   if (current_path() == "companies") {
 
-
     // Ignore anonymous users
     if (!user_is_logged_in()) {
       drupal_set_message($default_message, 'page_notice');

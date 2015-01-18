@@ -41,6 +41,26 @@ $image = theme('image_style', array(
             <div class="media-bd">
               <strong><?php print check_plain($loaded->realname); ?></strong>
               <?php print t('Edit profile'); ?>
+              <?php 
+// show score
+$user_score = tm_users_signup_score();
+if ($user_score >= 100) { ?>
+<span style='padding-left: 0.2em; font-size: smaller; font-style: normal; background-color: green; color: #fff; border-radius: 2px; padding: 2px;'><?php print($user_score); ?>% complete</span>
+<?php } else {
+if ($user_score < 100) {
+  $css_color = "green";
+}
+if ($user_score < 50) {
+  $css_color = "orange";
+}
+if ($user_score < 20) {
+  $css_color = "orange"; // could be red but we don't want to alarm
+}
+?>
+<span style='padding-left: 0.2em; font-size: smaller; font-style: normal; background-color: <?php print($css_color); ?>; color: #fff; border-radius: 2px; padding: 2px;'><?php print($user_score); ?>% complete</span>
+<?php
+} // end user score display
+?>
             </div>
           </a>
         </div>

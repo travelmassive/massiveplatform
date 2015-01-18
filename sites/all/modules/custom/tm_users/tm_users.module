@@ -55,15 +55,20 @@ function tm_users_theme() {
  * Implements template_preprocess_page()
  */
 function tm_users_preprocess_page(&$variables) {
+
   // Add account menu to page.
   $variables['page']['account_menu'] = theme('account_menu');
 
   // disable personal contact form setting
   // see: http://stackoverflow.com/questions/2540582/how-do-i-disable-the-personal-contact-form-option-in-the-user-edit-form
   $menu_items = menu_get_item();
-    if('user/%/edit' === $menu_items['path']){
-         $variables['page']['content']['content']['content']['system_main']['contact']['#access'] = FALSE;
-    }
+  if('user/%/edit' === $menu_items['path']){
+       $variables['page']['content']['content']['content']['system_main']['contact']['#access'] = FALSE;
+  }
+
+  // Give the user some signup tips
+  tm_users_signup_tips();
+
 }
 
 /*
@@ -861,9 +866,180 @@ function tm_users_user_presave(&$edit, $account, $category) {
         }
       }
     }
-
   }
 
+}
+
+
+/* Get the signup score of the users profile */
+/* It will be between 0 and 100 based on how much the user has filled in */
+function tm_users_signup_score() {
+  return tm_users_signup_tips(true);
+}
+
+/* Give new members some signup tips to help */
+function tm_users_signup_tips($return_score = false) {
+
+  global $user;
+  global $conf;
+
+  // don't calculate to non-logged in users
+  if (!user_is_logged_in()) {
+    return 0;
+  }
+
+  $account = user_load($user->uid);
+
+  $user_tip = "";
+  $user_points = 10; // some points for signing up
+  $total_points = 10; // start at 10
+
+   // user edit page
+  $edit_url = "user/" . $user->uid . "/edit";
+
+  // job role (10 points)
+  $total_points += 10;
+  if (sizeof($account->field_about_me) == 0) {
+    if ($user_tip == "") {
+      $user_tip = "Share a little bit " . l(t('about yourself'), $edit_url, array('fragment' => 'edit-field-about-me')) . " and your story with the community.";
+    }
+  } else {
+    $user_points += 10;
+  }
+
+  // location (city and country) (10 points)
+  $total_points += 10;
+  if ((sizeof($account->field_location_city) == 0) or (sizeof($account->field_user_country) == 0)) {
+    if ($user_tip == "") {
+      $user_tip = "Tell us " . l(t('where you are located'), $edit_url, array('fragment' => 'edit-field-location-city')) . " so other members can discover you.";
+    }
+  } else {
+    $user_points += 10;
+  }
+
+  // job role (10 points)
+  $total_points += 10;
+  if (sizeof($account->field_job_role) == 0) {
+    if ($user_tip == "") {
+      $user_tip = "Share your " . l(t('job role'), $edit_url, array('fragment' => 'edit-field-job-role')) . " so like-minded members can connect with you.";
+    }
+  } else {
+    $user_points += 10;
+  }
+
+  // organization (10 points)
+  $total_points += 10;
+  if (sizeof($account->field_job_organization) == 0) {
+    if ($user_tip == "") {
+      $user_tip = "Share the organization " . l(t('where you work'), $edit_url, array('fragment' => 'edit-field-job-organization')) . ", unless you're a top secret agent.";
+    }
+  } else {
+    $user_points += 10;
+  }
+
+  // industry segment (10 points)
+  $total_points += 10;
+  if (sizeof($account->field_segment) == 0) {
+    if ($user_tip == "") {
+      $user_tip = "Select an " . l(t('industy segment'), $edit_url, array('fragment' => 'edit-field-segment')) . " to help us connect you with other members.";
+    }
+  } else {
+    $user_points += 10;
+  }
+
+  // user photo (10 points)
+  $total_points += 10;
+  if (sizeof($account->field_avatar) == 0) {
+    if ($user_tip == "") {
+      $user_tip = "Upload a " . l(t('profile photo'), $edit_url, array('fragment' => 'edit-field-avatar')) . " so members can recognize you.";
+    }
+  } else {
+    $user_points += 10;
+  }
+
+  // cover photo (10 points)
+  $total_points += 10;
+  if (sizeof($account->field_image) == 0) {
+    if ($user_tip == "") {
+      $user_tip = "Upload a " . l(t('cover image'), $edit_url, array('fragment' => 'edit-field-image')) . " to make your profile stand out.";
+    }
+  } else {
+    $user_points += 10;
+  }
+
+  // profile questions (10 points)
+  $total_points += 10;
+  // get question fields
+  // we search the object array rather than hardcoding in case the question fields are changed
+  $object_vars = get_object_vars($account);
+  $has_answered_question = false;
+  foreach ($object_vars as $name => $value) {
+    if (strpos($name, "field_user_question_") === 0) {
+      if (sizeof($value) > 0) {
+        $has_answered_question = true;
+      }
+    }
+  }
+  if (!$has_answered_question) {
+    if ($user_tip == "") {
+      $user_tip = "Answer some " . l(t('profile questions'), $edit_url, array('fragment' => 'edit-field-user-question-destination')) . " so other members can learn about you.";
+    }
+  } else {
+    $user_points += 10;
+  }
+
+  // website fields (10 points)
+  $total_points += 10;
+  // get website fields
+  // we search the object array rather than hardcoding in case more links are added
+  $object_vars = get_object_vars($account);
+  $has_linked_website = false;
+  foreach ($object_vars as $name => $value) {
+    if (strpos($name, "field_link_") === 0) {
+      if (sizeof($value) > 0) {
+        $has_linked_website = true;
+      }
+    }
+  }
+  if (!$has_linked_website) {
+    if ($user_tip == "") {
+      $user_tip = "List your " . l(t('website, blog, or social accounts'), $edit_url, array('fragment' => 'edit-field-link-website')) . " so other members can find you.";
+    }
+  } else {
+    $user_points += 10;
+  }
+
+  // calculate percentage complete
+  $percentage = round((($user_points / $total_points) * 100), 0);
+  // score is in 0 to 100 in increments of 5
+  $user_score = round($percentage / 5) * 5;
+
+  // Option 1. Return score
+  // if we only want the score
+  // score wil be 0 to 100
+  if ($return_score) {
+      return $user_score;
+  }
+
+  // Option 2. Display the tips
+  // Don't show on user edit page
+  $menu_items = menu_get_item();
+  if('user/%/edit' === $menu_items['path']) { 
+    return;
+  }
+
+  // Don't show on companies page
+  if (current_path() == "companies") {
+    return;
+  }
+
+  // Display the user tip
+  if ($user_tip != "") {
+      $user_tip = "Your profile is " . $user_score . "% complete. " . $user_tip;
+      drupal_set_message($user_tip, 'page_notice');
+  }
+
+  return;
 }
 
 

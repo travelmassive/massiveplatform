@@ -649,15 +649,28 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
         );
   }
 
- 
-  // Modify registrration form
+  // Modify registration form
   if (($form_id == 'user_register_form') or ($form_id == 'tm_users_external_signin_register_form')) {
     _tm_users_modify_register_form($form, $form_state, $form_id);
   }
 
-  // 
+  // Modify profile form
   if ($form_id == 'user_profile_form') {
     _tm_users_modify_profile_form($form, $form_state, $form_id);
+  }
+
+  // Hide revision information, authoring information from moderators
+  // http://drupal.stackexchange.com/questions/45339/how-to-hide-authoring-information-revision-information-publishing-options-tabs-i
+  global $user;
+  if (!in_array('administrator', $user->roles)) {
+    if (isset($form['revision_information'])) {
+      $form['revision_information']['#access'] = FALSE;
+      $form['author']['#access'] = FALSE;
+      $form['options']['#access'] = FALSE;
+      $form['padding_before_save'] = array(
+        '#markup' => '<br>',
+        '#weight' => 10);
+    }
   }
 
   // Alter companies view dropdowns

@@ -330,18 +330,27 @@ function _tm_more_actions_process($field, $title = NULL) {
       $uid = $menu_item['page_arguments'][0]->uid;
       $targetuser = user_load($uid);
       if (!in_array("approved user", $targetuser->roles)){
+
+        // Need approve users access
         if (user_access("approve users")){
 
-          // Show approve user link
-          $links['approve'][] = array(
-            'wrapper_class' => array('approve'),
-            'content' => l(t('Approve member'), 'user/' . $uid . '/approve', array(
-              'attributes' => array(
-              'onclick' => "javascript:return confirm('Do you want to approve this account?\\n\\nGuidelines for approval:\\n* Account is a real person\\n* Profile is filled out\\n* Profile is not a company or brand');",
-              'title' => t('Approve member')
-              )
-            ))
-          );
+          // Show approval tool if:
+          // 1. if user is a moderator or administrator
+          // 2. or if they are chapter leader and the member is signed up their chapter
+          if ((in_array("moderator", $user->roles) or user_access('administer')) 
+          or ((in_array("chapter leader", $user->roles))) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid))) {
+
+            // Show approve user link
+            $links['approve'][] = array(
+              'wrapper_class' => array('approve'),
+              'content' => l(t('Approve member'), 'user/' . $uid . '/approve', array(
+                'attributes' => array(
+                'onclick' => "javascript:return confirm('Do you want to approve this account?\\n\\nGuidelines for approval:\\n* Account is a real person\\n* Profile is filled out\\n* Profile is not a company or brand');",
+                'title' => t('Approve member')
+                )
+              ))
+            );
+          }
         }
       }
     }
@@ -354,7 +363,7 @@ function _tm_more_actions_process($field, $title = NULL) {
     // Only show link for unapproved users
     if (!in_array("approved user", $targetuser->roles)){
 
-      // Show if flagging tool if:
+      // Show flagging tool if:
       // 1. if user is a moderator or administrator
       // 2. or if they are chapter leader and the member is signed up their chapter
       if ((in_array("moderator", $user->roles) or user_access('administer'))
@@ -404,7 +413,7 @@ function _tm_more_actions_process($field, $title = NULL) {
     // Only show link for unapproved users
     if (!in_array("approved user", $targetuser->roles)){
 
-      // Show if flagging tool if:
+      // Show flagging tool if:
       // 1. if user is a moderator or administrator
       // 2. or if they are chapter leader and the member is signed up their chapter
       if ((in_array("moderator", $user->roles) or user_access('administer')) 

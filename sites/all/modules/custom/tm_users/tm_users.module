@@ -66,7 +66,32 @@ function tm_users_preprocess_page(&$variables) {
        $variables['page']['content']['content']['content']['system_main']['contact']['#access'] = FALSE;
   }
 
-  // Give the user some signup tips
+  // Show chapter page tips
+  if (explode("/", current_path())[0] == "chapters") {
+    tm_users_chapter_tips();
+  }
+
+  // Show leaders page tips
+  if (explode("/", current_path())[0] == "leaders") {
+    tm_users_leaders_tips();
+  }
+
+  // Show community page tips
+  if (explode("/", current_path())[0] == "community") {
+    tm_users_community_tips();
+  }  
+
+  // Show events page tips
+  if (explode("/", current_path())[0] == "events") {
+    tm_users_event_tips();
+  }
+
+   // Show events page tips
+  if (explode("/", current_path())[0] == "sponsors") {
+    tm_users_sponsors_tips();
+  }
+
+  // If viewing chapter, show tips
   tm_users_signup_tips();
 
 }
@@ -833,7 +858,6 @@ function tm_users_user_insert(&$edit, $account, $category) {
 // 
 // ITEM 2
 // Strip spaces from URL fields
-
 function tm_users_user_presave(&$edit, $account, $category) {
 
   global $user;
@@ -871,7 +895,6 @@ function tm_users_user_presave(&$edit, $account, $category) {
   }
 
 }
-
 
 /* Get the signup score of the users profile */
 /* It will be between 0 and 100 based on how much the user has filled in */
@@ -933,7 +956,35 @@ function tm_users_signup_tips($return_score = false) {
   $total_points += 10;
   if (sizeof($account->field_job_organization) == 0) {
     if ($user_tip == "") {
-      $user_tip = "Share the organization " . l(t('where you work'), $edit_url, array('fragment' => 'edit-field-job-organization')) . ", unless you're a top secret agent.";
+      $user_tip = "Share the organization " . l(t('where you work'), $edit_url, array('fragment' => 'edit-field-job-organization')) . ", except if you are a top secret agent.";
+    }
+  } else {
+    $user_points += 10;
+  }
+
+  // user photo (10 points)
+  $total_points += 10;
+  $default_image = false;
+  if (isset($account->field_avatar['und'][0]['is_default'])) {
+    $default_image = (isset($account->field_avatar['und'][0]['is_default']));
+  }
+  if ((sizeof($account->field_avatar) == 0) or ($default_image)) {
+    if ($user_tip == "") {
+      $user_tip = "Upload a " . l(t('profile photo'), $edit_url, array('fragment' => 'edit-field-avatar')) . " so members can recognize you.";
+    }
+  } else {
+    $user_points += 10;
+  }
+
+  // cover photo (10 points)
+  $total_points += 10;
+  $default_image = false;
+  if (isset($account->field_image['und'][0]['is_default'])) {
+    $default_image = (isset($account->field_image['und'][0]['is_default']));
+  }
+  if ((sizeof($account->field_image) == 0) or ($default_image)) {
+    if ($user_tip == "") {
+      $user_tip = "Upload a " . l(t('cover image'), $edit_url, array('fragment' => 'edit-field-image')) . " to make your profile stand out.";
     }
   } else {
     $user_points += 10;
@@ -944,26 +995,6 @@ function tm_users_signup_tips($return_score = false) {
   if (sizeof($account->field_segment) == 0) {
     if ($user_tip == "") {
       $user_tip = "Select an " . l(t('industy segment'), $edit_url, array('fragment' => 'edit-field-segment')) . " to help us connect you with other members.";
-    }
-  } else {
-    $user_points += 10;
-  }
-
-  // user photo (10 points)
-  $total_points += 10;
-  if (sizeof($account->field_avatar) == 0) {
-    if ($user_tip == "") {
-      $user_tip = "Upload a " . l(t('profile photo'), $edit_url, array('fragment' => 'edit-field-avatar')) . " so members can recognize you.";
-    }
-  } else {
-    $user_points += 10;
-  }
-
-  // cover photo (10 points)
-  $total_points += 10;
-  if (sizeof($account->field_image) == 0) {
-    if ($user_tip == "") {
-      $user_tip = "Upload a " . l(t('cover image'), $edit_url, array('fragment' => 'edit-field-image')) . " to make your profile stand out.";
     }
   } else {
     $user_points += 10;
@@ -1024,22 +1055,13 @@ function tm_users_signup_tips($return_score = false) {
   }
 
   // Option 2. Display the tips
-  // Don't show on user edit page
-  $menu_items = menu_get_item();
-  if('user/%/edit' === $menu_items['path']) { 
+  // Only show on the following pages
+  $target_pages = array("chapters", "events", "community", "leaders");
+  $url_parts = explode('/', current_path());
+  if (!in_array($url_parts[0], $target_pages)) {
     return;
   }
-
-  // Don't show on companies page
-  if (explode("/", current_path())[0] == "companies") {
-    return;
-  }
-
-  // Don't show on admin page
-  if (explode("/", current_path())[0] == "admin") {
-    return;
-  }
-
+  
   // Display the user tip
   if ($user_tip != "") {
       $user_tip = "Your profile is " . $user_score . "% complete. " . $user_tip;
@@ -1047,6 +1069,151 @@ function tm_users_signup_tips($return_score = false) {
   }
 
   return;
+}
+
+/* Show user tips on chapter page */
+function tm_users_chapter_tips() {
+
+  global $conf;
+  global $user;
+  $user_tip = "";
+
+  $chapters_nids = array();
+  if (user_is_logged_in()) {
+    // Fetch list of chapters the user has joined
+    $flags = flag_get_user_flags("node");
+    foreach ($flags as $flag_name => $flag) {
+      if ($flag_name == "signup") {
+        foreach($flag as $f) {
+          $chapters_nids[] = $f->entity_id;
+        }
+      }
+    }
+  }
+
+  // If no chapters, show apply for chapter link
+  $account = user_load($user->uid);
+  if ((sizeof($chapters_nids) == 0)) {
+    $user_tip = "Join a " . $conf["tm_site_name"] . " chapter near you or apply to " . l(t('start a chapter'), $conf["tm_tips_start_chapter_link"]) . " in your city.";
+    drupal_get_messages('page_notice');
+    drupal_set_message($user_tip, 'page_notice');
+  } 
+  elseif (sizeof($account->field_home_chapter) > 0) {
+      $chapter = node_load($account->field_home_chapter['und'][0]['target_id']);
+      $chapter_url = url('node/' . $chapter->nid, array("absolute" => true));
+      $user_tip = "Discover chapters world-wide and explore the community. Your home chapter is " . l(t( $conf["tm_site_name"] . " " . $chapter->title), $chapter_url) . ".";
+  }
+
+  // Shower user tip
+  if ($user_tip != "") {
+    drupal_get_messages('page_notice');
+    drupal_set_message($user_tip, 'page_notice');
+  }
+  
+}
+
+/* Show user tips on leaders page */
+function tm_users_leaders_tips() {
+
+  global $conf;
+  global $user;
+  $user_tip = "";
+
+  if (in_array('chapter leader', $user->roles)) {
+    // Fetch list of chapters the user is a leader of
+    $chapters_leader_nids = array();
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+      ->entityCondition('bundle', 'chapter')
+      ->propertyCondition('status', NODE_PUBLISHED)
+      ->fieldCondition('field_chapter_leaders', 'target_id', $user->uid, '=');
+    $result = $query->execute();
+    if (isset($result['node'])) {
+      $chapters_leader_nids = array_keys($result['node']);
+    }
+    if (sizeof($chapters_leader_nids) > 0) {
+      $first_chapter = node_load($chapters_leader_nids[0]);
+      $chapter_url = url('node/' . $first_chapter->nid, array("absolute" => true));
+      $user_tip = "Connect with other chapter leaders world-wide. You are a chapter leader of  " . l(t($conf["tm_site_name"] . " " . $first_chapter->title), $chapter_url) . ".";
+    }
+  } else {
+    $user_tip = "Follow chapter leaders in the " . $conf["tm_site_name"] . " community, or apply to " . l(t('start a chapter'), $conf["tm_tips_start_chapter_link"]) . " in your city.";
+  }
+
+  // Shower user tip
+  if ($user_tip != "") {
+    drupal_get_messages('page_notice');
+    drupal_set_message($user_tip, 'page_notice');
+  }
+
+}
+
+/* Show user tips on communities page */
+function tm_users_community_tips() {
+
+  global $conf;
+  global $user;
+  $user_tip = "Discover and follow other members in the " . $conf["tm_site_name"] . " community. Looking for an organization? Check out our " . l(t("company listings"), "companies") . ".";
+
+  // Shower user tip
+  if ($user_tip != "") {
+    drupal_get_messages('page_notice');
+    drupal_set_message($user_tip, 'page_notice');
+  } 
+
+}
+
+/* Show user tips on events page */
+function tm_users_event_tips() {
+
+  global $conf;
+  global $user;
+  $user_tip = "";
+
+  $chapters_nids = array();
+  if (user_is_logged_in()) {
+    // Fetch list of chapters the user has joined
+    $flags = flag_get_user_flags("node");
+    foreach ($flags as $flag_name => $flag) {
+      if ($flag_name == "signup") {
+        foreach($flag as $f) {
+          $chapters_nids[] = $f->entity_id;
+        }
+      }
+    }
+    if ((sizeof($chapters_nids) > 0)) {
+      $account = user_load($user->uid);
+      $chapter = node_load($account->field_home_chapter['und'][0]['target_id']);
+      $chapter_url = url('node/' . $chapter->nid, array("absolute" => true));
+      $user_tip = "Visit your home chapter " . l(t( $conf["tm_site_name"] . " " . $chapter->title), $chapter_url) . " for events near you.";
+    }
+  } 
+  
+  if ($user_tip == "") {
+    $user_tip = "Find and register for upcoming events in the " . $conf["tm_site_name"] . " community around the world to learn, share and connect with other members.";
+  }
+
+  // Shower user tip
+  if ($user_tip != "") {
+    drupal_get_messages('page_notice');
+    drupal_set_message($user_tip, 'page_notice');
+  }
+  
+}
+
+/* Show user tips on sponsors page */
+function tm_users_sponsors_tips() {
+
+  global $conf;
+  global $user;
+  $user_tip = "Our events are sponsored by leading companies and brands around the world. Learn more about " . l(t('sponsoring a ' . $conf["tm_site_name"]), $conf["tm_tips_sponsor_page_link"]) . ".";
+
+  // Shower user tip
+  if ($user_tip != "") {
+    drupal_get_messages('page_notice');
+    drupal_set_message($user_tip, 'page_notice');
+  }
+  
 }
 
 

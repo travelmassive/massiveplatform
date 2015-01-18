@@ -598,8 +598,14 @@ Travel Massive P.B.C. 385 Grove St, San Francisco CA 94102<br> Phone +1 779-999-
 /** Send a copy of any announcement to this address **/
 $conf['tm_announcement_copy_email'] = "commmunity+announcement@travelmassive.com";
 
-/** tm_invite_custom_message **/
+/** tm_invitations_custom_message **/
 $conf['tm_invitations_custom_message'] = "I'd like to invite you to Travel Massive.";
+
+/** tm_tips_start_chapter_link **/
+$conf['tm_tips_start_chapter_link'] = "https://travelmassive.com/blog/start-a-chapter-guide/";
+
+/** tm_tips_start_chapter_link **/
+$conf['tm_tips_sponsor_page_link'] = "https://travelmassive.com/blog/sponsors-guide/";
 
 /** Set a front page launch message and hide the stats. Comment out to disable **/
 //$conf['tm_frontpage_launch_message'] = "We've just launched our new community platform. Read our <a style='color: #fff; text-decoration: underline;' href='/blog/'>announcement</a>.";

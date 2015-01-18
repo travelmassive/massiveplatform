@@ -1012,7 +1012,7 @@ function tm_users_signup_tips($return_score = false) {
   // calculate percentage complete
   $percentage = round((($user_points / $total_points) * 100), 0);
   // score is in 0 to 100 in increments of 5
-  $user_score = round($percentage / 5) * 5;
+  $user_score = round($percentage*2,-1)/2;
 
   // Option 1. Return score
   // if we only want the score

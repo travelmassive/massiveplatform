@@ -199,8 +199,8 @@ function _tm_more_actions_process($field, $title = NULL) {
           }
       }
 
-      // if is admin always show
-      if (in_array('administrator', array_values($user->roles))) {
+      // if is admin or moderator always show
+      if ((in_array('administrator', array_values($user->roles))) or (in_array('moderator', array_values($user->roles)))) {
         $show_menu_item = true;
       }
 
@@ -238,8 +238,8 @@ function _tm_more_actions_process($field, $title = NULL) {
         }
       }
 
-      // if is admin always show
-      if (in_array('administrator', array_values($user->roles))) {
+      // if is admin or moderator always show
+      if ((in_array('administrator', array_values($user->roles))) or (in_array('moderator', array_values($user->roles)))) {
         $show_menu_item = true;
       }
 
@@ -275,8 +275,8 @@ function _tm_more_actions_process($field, $title = NULL) {
         $show_menu_item = true;
       }
 
-      // if is admin always show
-      if (in_array('administrator', array_values($user->roles))) {
+      // if is admin or moderator always show
+      if ((in_array('administrator', array_values($user->roles))) or (in_array('moderator', array_values($user->roles)))) {
         $show_menu_item = true;
       }
 
@@ -303,6 +303,11 @@ function _tm_more_actions_process($field, $title = NULL) {
 
       // show to chapter leaders
       if (tm_users_is_chapter_leader($user->uid, $node->nid) || user_access('tm invite all chapters')) {
+        $show_menu_item = true;
+      }
+
+      // if is admin or moderator always show
+      if ((in_array('administrator', array_values($user->roles))) or (in_array('moderator', array_values($user->roles)))) {
         $show_menu_item = true;
       }
 

@@ -273,7 +273,8 @@ function tm_users_approval_need_more_info($user){
     $profile_url = $user->field_friendly_url['und']['0']['value'];
   }
 
-  tm_notifications_notify('user_approval_need_more_info', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url));
+  $moderator_first_name = $approving_user->field_user_first_name['und'][0]['value'];
+  tm_notifications_notify('user_approval_need_more_info', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__MODERATOR_FIRST_NAME__' => $moderator_first_name));
 
   // unflag then flag again
   flag('unflag', 'approval_need_more_info', $user->uid, $approving_user);
@@ -303,7 +304,8 @@ function tm_users_approval_is_company_or_brand($user){
     $profile_url = $user->field_friendly_url['und']['0']['value'];
   }
 
-  tm_notifications_notify('user_approval_is_company_or_brand', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url));
+  $moderator_first_name = $approving_user->field_user_first_name['und'][0]['value'];
+  tm_notifications_notify('user_approval_is_company_or_brand', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__MODERATOR_FIRST_NAME__' => $moderator_first_name));
 
   // flag the user that its a company or brand
   flag('unflag', 'approval_is_company_or_brand', $user->uid, $approving_user);

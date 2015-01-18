@@ -31,7 +31,7 @@ function tm_notifications_approval_strongarm() {
 <br>First, sign in and update your profile information so it\'s about yourself (not your brand) to get approved. Once your individual account is approved, you can add a company profile by visiting the "Add company" link from your profile menu.
 <br>
 <br><strong>What you need to do:</strong>
-<br>Please sign in and personalize your profile information so we can approve your account:
+<br>Please sign in and personalize your profile information. Here\'s a link to you public profile:
 <br>
 <br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>
@@ -48,8 +48,10 @@ function tm_notifications_approval_strongarm() {
 <br><strong>I\'ve updated my account, what next?</strong>
 <br>When you\'re ready for us to review your account, select "Request approval" from your account menu.
 <br>Our team will review your profile and you\'ll be notified when you are approved.
+<br>If you need any assistance please reply to this email.
 <br>
 <br>__EMAIL_SIGNOFF__
+<p><small>(Moderator: __MODERATOR_FIRST_NAME__)</small></p>
 ',
     ),
   );
@@ -70,10 +72,9 @@ function tm_notifications_approval_strongarm() {
 <br>Your profile needs to be completed before we can approve your account.
 <br>
 <br><strong>What you need to do:</strong>
-<br>Please sign in and complete your profile information so we can approve your account:
+<br>Please sign in and complete your profile information. Here\'s a link to you public profile:
 <br>
 <br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
-<br>
 <br>
 <br>Here\'s some tips to get approved:
 <br>* Tell us about yourself in the "About me" section
@@ -87,8 +88,10 @@ function tm_notifications_approval_strongarm() {
 <br><strong>I\'ve updated my account, what next?</strong>
 <br>When you\'re ready for us to review your account, select "Request approval" from your account menu.
 <br>Our team will review your profile and you\'ll be notified when you are approved.
+<br>If you need any assistance please reply to this email.
 <br>
 <br>__EMAIL_SIGNOFF__
+<p><small>(Moderator: __MODERATOR_FIRST_NAME__)</small></p>
 ',
     ),
   );

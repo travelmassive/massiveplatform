@@ -19,7 +19,7 @@ function tm_event_signup_field_default_field_instances() {
       ),
     ),
     'deleted' => 0,
-    'description' => 'Though we encourage you to use the Travel Massive platform for the RSVP, you can include a link to an external service like meetup.com.',
+    'description' => 'Though we encourage you to manage RSVPs for the event using the community platform, you can choose to link to an external service such as eventbrite.com',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -54,9 +54,10 @@ function tm_event_signup_field_default_field_instances() {
         'weight' => 24,
       ),
     ),
+    'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_external_rsvp',
-    'label' => 'External RSVP',
+    'label' => 'RSVP Method',
     'required' => 1,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -149,9 +150,9 @@ function tm_event_signup_field_default_field_instances() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Add the amount of available spots for the event. Leave empty for unlimited signup.');
-  t('External RSVP');
+  t('RSVP Method');
   t('Signup limit');
-  t('Though we encourage you to use the Travel Massive platform for the RSVP, you can include a link to an external service like meetup.com.');
+  t('Though we encourage you to manage RSVPs for the event using the community platform, you can choose to link to an external service such as eventbrite.com');
 
   return $field_instances;
 }

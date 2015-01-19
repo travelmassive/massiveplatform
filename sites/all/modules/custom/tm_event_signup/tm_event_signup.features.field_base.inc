@@ -27,7 +27,7 @@ function tm_event_signup_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        0 => 'Travel Massive RSVP',
+        0 => 'Manage RSVP',
         1 => 'External RSVP',
       ),
       'allowed_values_function' => '',

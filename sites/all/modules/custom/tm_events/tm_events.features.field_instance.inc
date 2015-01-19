@@ -549,7 +549,7 @@ function tm_events_field_default_field_instances() {
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Provide the street address for this event.',
+    'description' => 'Provide the street address or physical location for this event.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -595,7 +595,7 @@ function tm_events_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_location',
     'label' => 'Location',
-    'required' => 0,
+    'required' => 1,
     'settings' => array(
       'text_processing' => 0,
       'user_register_form' => FALSE,
@@ -890,10 +890,11 @@ If set to none, then all chapter leaders will be notified of any registrations a
   t('Organizer');
   t('Partner Event');
   t('Provide a link to the page with the RSVP (ie: http://www.eventbrite.com/e/your-event-url)');
-  t('Provide the street address for this event.');
+  t('Provide the street address or physical location for this event.');
   t('RSVP link');
   t('Select the chapter associated with the event.');
-  t('This image will used as the main banner for the event.');
+  t('This will be used as the main image for the event.
+<br>If you want to be pixel perfect, upload your image sized to 805x453');
   t('Venue name');
   t('When');
   t('Who is organizing this event? Organizers will be notified of all event registrations.

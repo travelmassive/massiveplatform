@@ -633,7 +633,7 @@ function _tm_users_modify_register_form(&$form, $form_state, $form_id) {
     '#type'=>'checkbox',
     '#title' => t('I\'m signing up as a Company / Brand'),
     '#element_validate' => array('_tm_users_company_validation_callback'),
-    '#description'=> "Hold up! " . $conf["tm_site_name"] . " accounts are for individuals. Once your personal account is approved you can add a company profile to our companies section.",
+    '#description'=> "Hold up! " . $conf["tm_site_name"] . " accounts are for individuals. <strong>What to do:</strong> Sign up as an individual and when your account is approved you can add a company profile to our <a target='_blank' href='/companies'>companies section</a>.",
     '#weight'=>1,
   );
 

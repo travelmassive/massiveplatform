@@ -398,7 +398,8 @@ function tm_events_field_default_field_instances() {
   $field_instances['node-event-field_image'] = array(
     'bundle' => 'event',
     'deleted' => 0,
-    'description' => 'This image will used as the main banner for the event.',
+    'description' => 'This will be used as the main image for the event.
+<br>If you want to be pixel perfect, upload your image sized to 805x453',
     'display' => array(
       'default' => array(
         'label' => 'above',

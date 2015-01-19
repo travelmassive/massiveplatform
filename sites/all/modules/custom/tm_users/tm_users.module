@@ -66,32 +66,35 @@ function tm_users_preprocess_page(&$variables) {
        $variables['page']['content']['content']['content']['system_main']['contact']['#access'] = FALSE;
   }
 
+  // Split url parts
+  $url_parts = explode("/", request_path());
+
   // Show chapter page tips
-  if (explode("/", current_path())[0] == "chapters") {
+  if (($url_parts[0] == "chapters") and (sizeof($url_parts) == 1)) {
     tm_users_chapter_tips();
   }
 
   // Show leaders page tips
-  if (explode("/", current_path())[0] == "leaders") {
+  if (($url_parts[0] == "leaders") and (sizeof($url_parts) == 1)) {
     tm_users_leaders_tips();
   }
 
   // Show community page tips
-  if (explode("/", current_path())[0] == "community") {
+  if (($url_parts[0] == "community") and (sizeof($url_parts) == 1)) {
     tm_users_community_tips();
   }  
 
   // Show events page tips
-  if (explode("/", current_path())[0] == "events") {
+  if (($url_parts[0] == "events") and (sizeof($url_parts) == 1)) {
     tm_users_event_tips();
   }
 
    // Show events page tips
-  if (explode("/", current_path())[0] == "sponsors") {
+  if (($url_parts[0] == "sponsors") and (sizeof($url_parts) == 1)) {
     tm_users_sponsors_tips();
   }
 
-  // If viewing chapter, show tips
+  // Show user signup tips
   tm_users_signup_tips();
 
 }
@@ -1056,9 +1059,10 @@ function tm_users_signup_tips($return_score = false) {
 
   // Option 2. Display the tips
   // Only show on the following pages
+  // Only show on up to two levels deep (ie: /chapters and /chapters/london)
   $target_pages = array("chapters", "events", "community", "leaders");
-  $url_parts = explode('/', current_path());
-  if (!in_array($url_parts[0], $target_pages)) {
+  $url_parts = explode('/', request_path());
+  if ((!in_array($url_parts[0], $target_pages)) or (sizeof($url_parts) > 2)) {
     return;
   }
   

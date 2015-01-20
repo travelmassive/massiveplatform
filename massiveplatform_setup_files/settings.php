@@ -607,6 +607,9 @@ $conf['tm_tips_start_chapter_link'] = "https://travelmassive.com/blog/start-a-ch
 /** tm_tips_start_chapter_link **/
 $conf['tm_tips_sponsor_page_link'] = "https://travelmassive.com/blog/sponsors-guide/";
 
+/** Where to send contact form emails to **/
+$conf['tm_contact_page_email'] = "hello@travelmassive.com";
+
 /** Set a front page launch message and hide the stats. Comment out to disable **/
 //$conf['tm_frontpage_launch_message'] = "We've just launched our new community platform. Read our <a style='color: #fff; text-decoration: underline;' href='/blog/'>announcement</a>.";
 

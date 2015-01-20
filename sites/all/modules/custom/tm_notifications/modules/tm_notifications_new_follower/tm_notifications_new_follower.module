@@ -47,7 +47,7 @@ function tm_notifications_new_follower_tm_notif_info() {
  * Implement hook_flag_flag()
  */
 function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $flagging) {
-
+  
   // You have a new follower
   if ($flag->name == 'follow_members' && $flag->entity_type == 'user') {
     $followed_user = user_load($entity_id);

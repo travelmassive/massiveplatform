@@ -136,8 +136,9 @@ function _tm_flags_flag_limits(&$variables) {
     // Following limit reached
     // Add a simple cache for pages with multiple flags
     global $fg_count; // Following count
-    if((($flag_name == 'follow_members' && $cur_entity = 'user') || ($flag_name == 'follow_organizations' && $cur_entity = 'node')) && $trusted_user !== TRUE) {
-      if(!isset($fg_count) && !isset($mfr_limit)) {
+    if((($flag_name == 'follow_members' && $cur_entity == 'user') || ($flag_name == 'follow_organizations' && $cur_entity = 'node')) && $trusted_user !== TRUE) {
+      if(!isset($fg_count)) { //} && !isset($mfr_limit)) {
+  
         $fg_u = flag_get_user_flags('user', NULL, $uid, NULL, FALSE); // Following user
         $fg_n = flag_get_user_flags('node', NULL, $uid, NULL, FALSE); // Following node
         

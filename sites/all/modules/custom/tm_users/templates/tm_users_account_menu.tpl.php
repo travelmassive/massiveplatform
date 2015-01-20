@@ -115,6 +115,12 @@ if (!$twitter_data) {
   <!-- Link to chapters the user has joined -->
     <ul class="dropd-menu">
         <?php print tm_users_menu_chapters($loaded->uid); ?>
+        <?php
+        if (in_array("chapter leader", $loaded->roles)) { ?>
+        <li><?php
+        global $conf;
+        print l(t('Chapters leader resources'), $conf['tm_tips_chapter_leaders_link'], array('fragment' => '','external'=>true)); 
+        } // end if ?></li>        
     </ul>
 
   <?php if (in_array("moderator", $loaded->roles)) : ?>

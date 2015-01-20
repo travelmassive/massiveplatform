@@ -607,6 +607,9 @@ $conf['tm_tips_start_chapter_link'] = "https://travelmassive.com/blog/start-a-ch
 /** tm_tips_start_chapter_link **/
 $conf['tm_tips_sponsor_page_link'] = "https://travelmassive.com/blog/sponsors-guide/";
 
+/** tm_tips_chapter_leaders_guide **/
+$conf['tm_tips_chapter_leaders_link'] = "https://travelmassive.com/blog/chapter-leader-resources/";
+
 /** Where to send contact form emails to **/
 $conf['tm_contact_page_email'] = "hello@travelmassive.com";
 

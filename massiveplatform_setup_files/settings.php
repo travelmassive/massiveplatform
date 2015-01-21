@@ -596,7 +596,10 @@ $conf['tm_email_default_footer'] = "Update Your Notification Settings at <a href
 Travel Massive P.B.C. 385 Grove St, San Francisco CA 94102<br> Phone +1 779-999-0042 &middot; community@travelmassive.com"; // used by emails and in templates to refer to the site
 
 /** Send a copy of any announcement to this address **/
-$conf['tm_announcement_copy_email'] = "commmunity+announcement@travelmassive.com";
+$conf['tm_announcement_copy_email'] = "commmunity@travelmassive.com";
+
+/** Default reply_to address if left blank **/
+$conf['tm_announcement_reply_email'] = "commmunity@travelmassive.com";
 
 /** tm_invitations_custom_message **/
 $conf['tm_invitations_custom_message'] = "I'd like to invite you to Travel Massive.";

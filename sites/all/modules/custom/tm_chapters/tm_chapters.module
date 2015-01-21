@@ -24,6 +24,7 @@ function tm_chapters_ds_fields_info($entity_type) {
 
   return array($entity_type => $fields);
 }
+
 /*
 * Implements hook_menu()
 */

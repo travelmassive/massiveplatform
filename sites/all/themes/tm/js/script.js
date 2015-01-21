@@ -105,6 +105,28 @@ Drupal.behaviors.base_scripts = {
 
       // check subject is not empty
       if ($('#edit-subject').val() == "") {
+        $('#event-test-email-submit').val("Send test email");
+        $('#event-email-attendees-submit').val("Send Email To All Recipients");
+        alert ("Message can't be empty.");
+        return false;
+      }
+
+      // check reply-to is empty or valid
+      // trim spaces
+      var inputEmail = $('#edit-reply-to').val().replace(/ /g,'');
+      if (inputEmail != "") {
+        var isValid = true;
+        var emailReg = /^([\w-\.\+]+@([\w-]+\.)+[\w-]{2,4})?$/;
+        if(!emailReg.test(inputEmail)){
+            isValid = false;
+            $('#event-test-email-submit').val("Send test email");
+            $('#event-email-attendees-submit').val("Send Email To All Recipients");
+            alert ("Reply-to address is not valid.\n\nTip: You may leave it blank for no reply address.");
+            return false;
+        }
+      }
+
+      if ($('#edit-subject').val() == "") {
         alert ("Message can't be empty.");
         return false;
       }
@@ -122,6 +144,19 @@ Drupal.behaviors.base_scripts = {
           return false;
         }
 
+        // check address is valid
+        // trim spaces
+        var inputEmail = $('#edit-testemail').val().replace(/ /g,'');;
+        if (inputEmail != "") {
+          var isValid = true;
+          var emailReg = /^([\w-\.\+]+@([\w-]+\.)+[\w-]{2,4})?$/;
+          if(!emailReg.test(inputEmail)){
+              isValid = false;
+              alert ("Test email address is not valid.");
+              return false;
+          }
+        }
+
         // check address is not empty
         if ($('#edit-testemail-name').val() == "") {
           $('#event-test-email-submit').val("Send test email");
@@ -134,6 +169,7 @@ Drupal.behaviors.base_scripts = {
           data: {'subject': $('#edit-subject').val(),
                 'message': message, //$('#edit-body').val(),
                 'eventid': eventid,
+                'replyto': $('#edit-reply-to').val(),
                 'address': $('#edit-testemail').val(),
                 'first_name': $('#edit-testemail-name').val()},
           url: "/node/" + eventid + "/test_email"}).done(function(return_data) {
@@ -173,10 +209,12 @@ Drupal.behaviors.base_scripts = {
                 'message': message, //$('#edit-body').val(),
                 'recipients': $('#edit-recipients').val(),
                 'eventid': eventid,
+                'replyto': $('#edit-reply-to').val(),
                 'address': $('#edit-testemail').val()},
           url: "/node/" + eventid + "/send_emails"}).done(function(return_data) {
             if (!isNaN(return_data)) {
                 $('#event-email-attendees-submit').val("Successfully sent " + return_data + " emails.");
+                $('#event-test-email-submit').attr("disabled", true);
                 $('#event-email-attendees-submit').attr("disabled", true);
                 $('#event-email-attendees-confirm').attr("disabled", true);
                 $('#edit-recipients').attr("disabled", true);

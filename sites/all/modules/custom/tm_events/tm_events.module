@@ -430,11 +430,22 @@ function tm_events_communication_form($event){
       //$subject = t($conf['tm_site_name'] . ' ' . $chapter->title . ' - ').$event->title;
     }
 
+    // subject
     $form['subject'] = array(
       '#title' => t('Subject: '),
       '#type' =>'textfield',
       '#required' => TRUE,
       '#value' => $subject,
+      );
+
+    // reply to address
+    $form['reply_to'] = array(
+      '#title' => t('Reply-to:'),
+      '#type' =>'textfield',
+      '#id' => 'edit-reply-to',
+      '#default_value' => $user->mail,
+      '#description' => 'Any replies to this announcement will be sent here. Leave blank for no reply-to address.',
+      '#rules' => array('email')
       );
 
     // prepopulate some of the text
@@ -450,12 +461,16 @@ function tm_events_communication_form($event){
       $prefill .= "<li>" . t('Venue').': '.$event->field_event_venue_name[LANGUAGE_NONE][0]['value'];
     }
     if ($event->field_location != null) {
-      $prefill .= "<li>" . t('Location').': '.$event->field_location[LANGUAGE_NONE][0]['value'] . "</li>";
+      $location_text = $event->field_location[LANGUAGE_NONE][0]['value'];
+      $location_text = str_replace("\r", ", ", $location_text);
+      $prefill .= "<li>" . t('Location').': '. $location_text . "</li>";
     }
     $prefill .= "<li>" . t('More Info').': <a href="http://' . $event_url . '">' . $event_url .'</a>'; 
     $prefill .= "</ul>";
     if ($event->body != null) {
-      $prefill .= $event->body[LANGUAGE_NONE][0]['value'] . "";
+      // add line breaks
+      $event_message = str_replace("\n", "<br>", $event->body[LANGUAGE_NONE][0]['value']); 
+      $prefill .=  $event_message . "<br>";
     }
     $prefill .= "<br>Cheers";
 
@@ -550,21 +565,23 @@ function tm_events_send_emails_ajax(){
   if (!isset($_POST['message'])) return FALSE;
   if (!isset($_POST['recipients'])) return FALSE;
   if (!isset($_POST['eventid'])) return FALSE;
+  if (!isset($_POST['replyto'])) return FALSE;
+
 
   $subject = $_POST['subject'];
   $message = $_POST['message'];
   $message .= "<p><small>(Event ID: " . $_POST['eventid'] . ")</small></p>";
   $recipients = $_POST['recipients'];
   $eventid = $_POST['eventid'];
-
+  $replyto = trim($_POST['replyto']);
 
   // copy announcement email to a specific address
   if (isset($conf["tm_announcement_copy_email"])) {
-      tm_events_send_email($conf["tm_announcement_copy_email"], "[Copy] " . $subject, $message, $eventid);
+      tm_events_send_email($conf["tm_announcement_copy_email"], "[Copy] " . $subject, $message, $eventid, $replyto);
   }
 
   // send to recipients
-  $sendcount = tm_events_send_emails($recipients, $subject, $message, $eventid);
+  $sendcount = tm_events_send_emails($recipients, $subject, $message, $eventid, $replyto);
 
   // indicate success to the js ajax handler
   // todo: return a nicer json response and parse it in the js
@@ -580,6 +597,8 @@ function tm_events_test_email_ajax(){
   if (!isset($_POST['address'])) return FALSE;
   if (!isset($_POST['eventid'])) return FALSE;
   if (!isset($_POST['first_name'])) return FALSE;
+  if (!isset($_POST['replyto'])) return FALSE;
+
 
   $subject = $_POST['subject'];
   $message = $_POST['message'];
@@ -587,11 +606,13 @@ function tm_events_test_email_ajax(){
   $email = $_POST['address'];
   $eventid = $_POST['eventid'];
   $first_name = $_POST['first_name'];
+  $replyto = trim($_POST['replyto']);
+
 
   // replace [first_name] token
   $message = str_replace("[first_name]", $first_name, $message);
 
-  $sendcount = tm_events_send_email($email, $subject, $message, $eventid);
+  $sendcount = tm_events_send_email($email, $subject, $message, $eventid, $replyto);
 
   // indicate success to the js ajax handler
   // todo: return a nicer json response and parse it in the js
@@ -599,7 +620,7 @@ function tm_events_test_email_ajax(){
 }
 
 /* Submit function of communication ajax request */
-function tm_events_send_emails($recipients, $subject, $message, $eventid){
+function tm_events_send_emails($recipients, $subject, $message, $eventid, $replyto = ""){
 
   // all these user lists are just flags to event or chapter
   $rsvpflag = flag_get_flag('event_register', NULL);
@@ -665,6 +686,7 @@ function tm_events_send_emails($recipients, $subject, $message, $eventid){
       $queue->createItem(["email" => $user_account->mail, 
                         "subject" => $subject, 
                         "message" => $message,
+                        "replyto" => $replyto,
                         "eventid" => $eventid]);
       
       // below is the non queue method
@@ -697,19 +719,21 @@ function tm_events_cron_queue_info() {
  *
  */
 function tm_events_send_email_cron($item) {
-  tm_events_send_email($item["email"], $item["subject"], $item["message"], $item["eventid"]);
+  tm_events_send_email($item["email"], $item["subject"], $item["message"], $item["eventid"], $item["replyto"]);
 }
 
 
 /* Sends out a single email */
-function tm_events_send_email($email, $subject, $message, $eventid) {
+function tm_events_send_email($email, $subject, $message, $eventid, $replyto="") {
+
+    global $conf;
 
     $module = 'tm_events';
     $key = 'key';
     $language = language_default();
     $params = array();
     $send = FALSE;
-    
+
 
     // STEP 1. LOAD HTML TEMPLATE
     $template_file = drupal_get_path('module', 'tm_notifications') . '/templates/tm_notifications-email_template.tpl.php';
@@ -749,6 +773,14 @@ function tm_events_send_email($email, $subject, $message, $eventid) {
 
     // STEP 5. LOAD HTML TEMPLATE INTO EMAIL BODY
     $email_message['body'] = $template;
+
+
+    // STEP 6. SET REPLY TO
+    // If blank, use tm_announcement_reply_email
+    if ($replyto == "") {
+      $replyto = $conf["tm_announcement_reply_email"];
+    }
+    $email_message['headers']['Reply-To'] = $replyto;
 
 
     // STEP 6. SEND EMAIL

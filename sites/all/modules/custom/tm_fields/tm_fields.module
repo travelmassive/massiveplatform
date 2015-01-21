@@ -362,6 +362,45 @@ function _tm_more_actions_process($field, $title = NULL) {
   }
   // END approve link
 
+  // START requested approval note
+  if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
+
+    // Only show link for unapproved users
+    if (!in_array("approved user", $targetuser->roles)){
+
+      // Show flagging tool if:
+      // 1. if user is a moderator or administrator
+      // 2. or if they are chapter leader and the member is signed up their chapter
+      if ((in_array("moderator", $user->roles) or user_access('administer'))
+        or ((in_array("chapter leader", $user->roles))) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid))) {
+
+        // show if user request approval
+        $flag = flag_get_flag('approval_requested_by_user');
+
+        // get list of people who flagged
+        $self_flagged = flag_get_entity_flags("user", $uid, "approval_requested_by_user");
+
+        // There should only be one flag (by the user)
+        $menu_text = "";
+        foreach ($self_flagged as $flagger) {
+          $difference = time() - $flagger->timestamp;
+          $flagged_time = format_interval($difference, 1) . " ago";
+          $flagged_user = user_load($flagger->uid);
+          $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Requested approval " . $flagged_time . "</span><br>";
+        }
+        
+        if ($menu_text != "") {
+          $links['approve'][] = array(
+            'wrapper_class' => array('approve'),
+            'content' => t($menu_text),
+          );
+        }
+        
+      }
+    }
+  }
+  // END requested approval note
+
   // START profile incomplete link
   if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
 

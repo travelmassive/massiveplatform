@@ -15,7 +15,7 @@ function tm_organizations_field_default_field_instances() {
     'bundle' => 'organization',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Tell us about your organization or company. Describe your business and the service or product that you provide.',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -65,7 +65,7 @@ function tm_organizations_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'body',
     'label' => 'Description',
-    'required' => 0,
+    'required' => 1,
     'settings' => array(
       'display_summary' => 0,
       'text_processing' => 0,
@@ -956,6 +956,7 @@ Example: "your-company"');
   t('Provide a cover image to be displayed behind your company logo.
 <br>If you want to be pixel perfect, upload your image sized to 805x453');
   t('Select the Travel Massive member that manages this account.');
+  t('Tell us about your organization or company. Describe your business and the service or product that you provide.');
   t('Twitter');
   t('Website');
   t('Where your business is based');

@@ -214,7 +214,6 @@ Drupal.behaviors.base_scripts = {
           url: "/node/" + eventid + "/send_emails"}).done(function(return_data) {
             if (!isNaN(return_data)) {
                 $('#event-email-attendees-submit').val("Successfully sent " + return_data + " emails.");
-                $('#event-test-email-submit').attr("disabled", true);
                 $('#event-email-attendees-submit').attr("disabled", true);
                 $('#event-email-attendees-confirm').attr("disabled", true);
                 $('#edit-recipients').attr("disabled", true);

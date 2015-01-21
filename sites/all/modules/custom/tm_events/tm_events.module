@@ -565,15 +565,16 @@ function tm_events_send_emails_ajax(){
   if (!isset($_POST['message'])) return FALSE;
   if (!isset($_POST['recipients'])) return FALSE;
   if (!isset($_POST['eventid'])) return FALSE;
-  if (!isset($_POST['replyto'])) return FALSE;
-
 
   $subject = $_POST['subject'];
   $message = $_POST['message'];
   $message .= "<p><small>(Event ID: " . $_POST['eventid'] . ")</small></p>";
   $recipients = $_POST['recipients'];
   $eventid = $_POST['eventid'];
-  $replyto = trim($_POST['replyto']);
+  $replyto = "";
+  if (isset($_POST['replyto'])) { 
+    $replyto = trim($_POST['replyto']);
+  }
 
   // copy announcement email to a specific address
   if (isset($conf["tm_announcement_copy_email"])) {
@@ -597,8 +598,6 @@ function tm_events_test_email_ajax(){
   if (!isset($_POST['address'])) return FALSE;
   if (!isset($_POST['eventid'])) return FALSE;
   if (!isset($_POST['first_name'])) return FALSE;
-  if (!isset($_POST['replyto'])) return FALSE;
-
 
   $subject = $_POST['subject'];
   $message = $_POST['message'];
@@ -606,8 +605,10 @@ function tm_events_test_email_ajax(){
   $email = $_POST['address'];
   $eventid = $_POST['eventid'];
   $first_name = $_POST['first_name'];
-  $replyto = trim($_POST['replyto']);
-
+  $replyto = "";
+  if (isset($_POST['replyto'])) { 
+    $replyto = trim($_POST['replyto']);
+  }
 
   // replace [first_name] token
   $message = str_replace("[first_name]", $first_name, $message);

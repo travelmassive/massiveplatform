@@ -3,41 +3,64 @@
 // take a "twitter" URL and format it
 // can take a variety of human entered formats
 
-// strip spaces
-$url = str_replace(" ", "", $url);
+// fix user typos
+$url = trim($url);
+$url = str_replace(" ", "", $url); // strip spaces
+$url = str_replace(",", ".", $url); // replace , with .
+$url = str_replace("http//", "http://", $url); // replace http// with http:// in url
+
 $twitter_url = "";
 $display_url = "";
+$found_match = false;
 
 // Case 1.
 // @twittername
-if (strpos($url, "@") == 0) {
-	$twitter_url = "https://twitter.com/" . str_replace("@", "", $url);
+if (!$found_match) {
+	if ((strpos($url, "@") == 0) && (strpos($url, "@") !== FALSE)) {
+		$twitter_url = "https://twitter.com/" . str_replace("@", "", $url);
+		//$display_url = $url;
+		$found_match = true;
+	}
 }
 
 // Case 2
 // #hashtag
 // link to search
-if (strpos($url, "#") === 0) {
-	$twitter_url = "https://twitter.com/search?q=%23" . str_replace("#", "", $url);
-	$display_url = $url;
+if (!$found_match) {
+	if ((strpos($url, "#") == 0) && (strpos($url, "#") !== FALSE)) {
+		$twitter_url = "https://twitter.com/search?q=%23" . str_replace("#", "", $url);
+		$display_url = $url;
+		$found_match = true;
+	}
 }
+
 
 // Case 3
 // twitter url
-if ((strpos(strtolower($url), "https://twitter.com/") === 0) or (strpos($url, "http://twitter.com/") === 0)) {
-	$twitter_url = str_ireplace("https://twitter.com/", "https://twitter.com/", $url);
-	$twitter_url = str_ireplace("http://twitter.com/", "https://twitter.com/", $url);
+if (!$found_match) {
+	if ((strpos(strtolower($url), "https://twitter.com/") !== FALSE) or (strpos($url, "http://twitter.com/") !== FALSE)) {
+		$twitter_url = str_ireplace("https://twitter.com/", "https://twitter.com/", $url);
+		$twitter_url = str_ireplace("http://twitter.com/", "https://twitter.com/", $url);
+		$found_match = true;
+	}
+	if (strpos(strtolower($url), "http://www.twitter.com/") !== FALSE) {
+		$twitter_url = str_ireplace("http://www.twitter.com/", "https://twitter.com/", $url);
+		$found_match = true;
+	}
 }
-if (strpos(strtolower($url), "http://www.twitter.com/") === 0) {
-	$twitter_url = str_ireplace("http://www.twitter.com/", "https://twitter.com/", $url);
-}
+
 
 // Case 4.
 // twittername
 // Anything not starting with http or www
-if (($twitter_url == "") and (strpos(strtolower($url), "http") == FALSE) and (strpos(strtolower($url), "www") === FALSE)) {
-	$twitter_url = "https://twitter.com/" . $url;
+if (!$found_match) {
+	if (($twitter_url == "") and (strpos(strtolower($url), "http") === FALSE) and (strpos(strtolower($url), "www") === FALSE)) {
+		$twitter_url = "https://twitter.com/" . $url;
+		$found_match = true;
+	}
 }
+
+
 
 // remove http and https
 if ($display_url == "") {

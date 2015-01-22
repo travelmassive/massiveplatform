@@ -895,6 +895,19 @@ function tm_users_user_presave(&$edit, $account, $category) {
         }
       }
     }
+
+    // Trim about about field
+    // Remove it if it's empty (stop user from entering a space)
+    if (isset($edit['field_about_me'][LANGUAGE_NONE][0]['value'])) {
+      $trimmed = trim($edit['field_about_me'][LANGUAGE_NONE][0]['value']);
+      // if blank, remove it
+      if ($edit['field_about_me'][LANGUAGE_NONE][0]['value'] == "") {
+        unset($edit['field_about_me']);
+      } else {
+        // save trimmed value
+        $edit['field_about_me'][LANGUAGE_NONE][0]['value'] = $trimmed;
+      }
+    }
   }
 
 }

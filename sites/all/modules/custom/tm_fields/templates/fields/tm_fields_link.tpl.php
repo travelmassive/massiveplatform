@@ -1,16 +1,23 @@
 <?php
 
+
+// fix user typos
+$url = trim($url);
+$url = str_replace(" ", "", $url); // strip spaces
+$url = str_replace(",", ".", $url); // replace , with .
+$url = str_replace("http//", "http://", $url); // replace http// with http:// in url
+
 $display_url = $url;
+
+// add http when it's not given
+if (strpos(strtolower($url), "http") === FALSE) {
+	$url = "http://" . $url; // add http://
+}
 
 // check url
 $render_url = true;
 if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) {
 	$render_url = false;
-}
-
-// add http when it's not given
-if (strpos("http", $url) === 0) {
-	$url = "http://" . $url; // add http://
 }
 
 // remove http and https

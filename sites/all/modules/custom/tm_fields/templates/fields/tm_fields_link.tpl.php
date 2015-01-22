@@ -10,13 +10,16 @@ $url = str_replace("http//", "http://", $url); // replace http// with http:// in
 $display_url = $url;
 
 // add http when it's not given
-if (strpos(strtolower($url), "http") === FALSE) {
+// we should expect at least one period
+// ie: test.com
+$parts = explode(".", $url);
+if ((strpos(strtolower($url), "http") === FALSE) && (sizeof($parts) > 1)) {
 	$url = "http://" . $url; // add http://
 }
 
 // check url
 $render_url = true;
-if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) {
+if (filter_var($url, FILTER_VALIDATE_URL) == FALSE) {
 	$render_url = false;
 }
 

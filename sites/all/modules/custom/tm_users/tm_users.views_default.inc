@@ -611,6 +611,7 @@ function tm_users_views_default_views() {
     'field_user_last_name' => 'field_user_last_name',
     'mail' => 'mail',
     'name_1' => 'name_1',
+    'field_home_chapter' => 'field_home_chapter',
     'created' => 'created',
     'flagged' => 'flagged',
     'flagged_1' => 'flagged_1',
@@ -641,6 +642,13 @@ function tm_users_views_default_views() {
     ),
     'name_1' => array(
       'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_home_chapter' => array(
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
@@ -765,6 +773,14 @@ function tm_users_views_default_views() {
   $handler->display->display_options['fields']['name_1']['table'] = 'users';
   $handler->display->display_options['fields']['name_1']['field'] = 'name';
   $handler->display->display_options['fields']['name_1']['label'] = 'Username';
+  /* Field: User: Home Chapter */
+  $handler->display->display_options['fields']['field_home_chapter']['id'] = 'field_home_chapter';
+  $handler->display->display_options['fields']['field_home_chapter']['table'] = 'field_data_field_home_chapter';
+  $handler->display->display_options['fields']['field_home_chapter']['field'] = 'field_home_chapter';
+  $handler->display->display_options['fields']['field_home_chapter']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_home_chapter']['settings'] = array(
+    'link' => 0,
+  );
   /* Field: User: Created date */
   $handler->display->display_options['fields']['created']['id'] = 'created';
   $handler->display->display_options['fields']['created']['table'] = 'users';

@@ -178,7 +178,7 @@ function tm_organizations_preprocess_page(&$variables, $hook) {
   // Target page, ie: /user/10447/companies
   $parts = explode("/", current_path());
   if (sizeof($parts) == 3) {
-    if (($parts[0] = "user") and ($parts[2] = "companies")) {
+    if (($parts[0] == "user") and ($parts[2] == "companies")) {
       if ($parts[1] == $user->uid) {        
         $add_profile_html = "<a href='/node/add/organization'>company profile</a>";
         $message = "You are managing the following company profiles. ";

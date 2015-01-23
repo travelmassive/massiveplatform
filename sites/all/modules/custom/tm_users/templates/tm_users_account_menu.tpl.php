@@ -102,7 +102,9 @@ if (!$twitter_data) {
     <ul class="dropd-menu">
       <?php print tm_users_menu_companies($loaded->uid); ?>
       <!--<li><?php print l(t('My companies'), 'user/' . $loaded->uid . '/companies', array('fragment' => 'user-notifications-options')); ?></li>-->
+      <?php if (tm_organizations_check_user_can_create_company($loaded->uid)): ?>
       <li><?php print l(t('Add company profile'), 'node/add/organization'); ?></li>
+      <?php endif; ?>
     </ul>
   <?php endif; ?>
 

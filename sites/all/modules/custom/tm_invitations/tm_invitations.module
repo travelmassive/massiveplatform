@@ -59,24 +59,35 @@ function tm_invitations_menu() {
  * Chapters invitations page
  */
 function chapter_invitations_page() {
+
   global $user;
+  global $conf;
   $orig_path = _orig_path();
+
   // Check: is current path correct?
   if($orig_path) {
     $form = drupal_get_form('tm_invitations_invite_form');
 
+    $chapter_id = explode("/", $orig_path)[1];
+    $chapter = node_load($chapter_id);
+    $chapter_name = $chapter->title;
+
     $nid = _orig_nid();
     $output = l(t('Back to chapter page'), url('node/'.$nid, array('absolute' => TRUE)));
 
-    $output .=  t('<p style="font-size: 11pt;">Grow your chapter by inviting new members with email invitations. You can invite and pre-approve members to your chapter using the bulk add form below. Invited members will automatically join your chapter when they sign up and also be approved.</p>
+    $output .=  t('<p style="font-size: 11pt;">Grow your chapter by inviting new members to your chapter with email invitations. Just use the form below to bulk add your invitiation emails.</p>
+      <p style="font-size: 11pt;"><strong>How it works</strong>
+        <br>1. Members will be sent an invitation email to join your chapter (<i>subject: Your Invitation to ' . $conf['tm_site_name'] . " " . $chapter_name . '</i>)
+        <br>2. If they sign up using the email address you invited them with, they will automatically join your chapter.
+        <br>3. You will receive a notification when a new member joins your chapter so that you can approve them.
+      </p>
       <p style="font-size: 11pt;">
       <strong>Tips</strong>
       <ul style="font-size: 11pt; margin-top: -1em;">
-      <li>Email addresses must be separated by comma, space or newline.</li>
-      <li>Users who already have an account will not be invited.</li>
-      <li>Only use email addresses that you have consent to contact.</li>
-      <li>Invitations may take a few minutes to arrive to the recipients.</li>
-      <li>The member needs to use the email address you invite them with for the pre-approval to occur.</li>
+        <li>Email addresses must be separated by comma, space or newline.</li>
+        <li>Users who already have an account will not be invited.</li>
+        <li>Only use email addresses that you have consent to contact.</li>
+        <li>Invitations may take a few minutes to arrive to the recipients.</li>
       </ul>
       </p>');
     $output .= drupal_render($form);
@@ -351,7 +362,10 @@ function tm_invitations_user_insert(&$edit, $account, $category) {
   while ($invite = $invites->fetchAssoc()) {
 
     // Step 3. If person who invited is a chapter leader, change to approved
-    if (!$has_been_approved) {
+    // Note, this feature has been disabled because many members signed up with incomplete
+    // profile information. So we have decided to discontinue this feature.
+    // If you want members to be automatically approved then uncomment below.
+    /*if (!$has_been_approved) {
 
       $inviter = user_load($invite['uid']);
       if(user_access('tm invite own chapters', $inviter) || user_access('tm invite unlimited', $inviter)) {
@@ -377,7 +391,7 @@ function tm_invitations_user_insert(&$edit, $account, $category) {
           $has_been_approved = true;
         }
       }
-    }
+    }*/
 
     // Step 4. Follow for the inviter if user invited them
     if ($invite['nid'] == 0) {

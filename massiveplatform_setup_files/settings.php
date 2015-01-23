@@ -587,6 +587,7 @@ $conf['tm_enable_fontpage_socialfeeds'] = false;
 /** NOTE: Administrator and chapter leaders do not have limits **/
 $conf['tm_following_ratio_limit'] = '50'; // difference between following/followers
 $conf['tm_chapter_join_limit'] = '16'; // "join" limit for the non chapter leaders
+$conf['tm_add_company_limit'] = '8'; // maximum number of companies a user can add (no limit for chapter leaders, moderators)
 
 /** Settings for Email Templates **/
 $conf['tm_site_name'] = "Travel Massive"; // used by emails and in templates to refer to the site

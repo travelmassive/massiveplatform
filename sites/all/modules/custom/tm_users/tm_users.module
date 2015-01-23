@@ -600,6 +600,25 @@ function tm_users_is_chapter_leader($uid, $chapterid){
   return FALSE;
 }
 
+// get a list of uids of companies managed by the user
+function tm_users_get_companies($uid){
+
+  $query = new EntityFieldQuery();
+  $markup = '';
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'organization')
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->fieldCondition('field_owner', 'target_id', $uid, '=');
+
+  $result = $query->execute();
+
+  $companies_nids = array();
+  if (isset($result['node'])) {
+    $companies_nids = array_keys($result['node']);
+  }
+
+  return $companies_nids;
+}
 
 // modify the user registration form
 function _tm_users_modify_register_form(&$form, $form_state, $form_id) {

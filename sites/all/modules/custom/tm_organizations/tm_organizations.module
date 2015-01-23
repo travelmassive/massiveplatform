@@ -57,12 +57,50 @@ function tm_organizations_node_presave($node){
   }
 }
 
+// Check if the user can create a company
+// 
+function tm_organizations_check_user_can_create_company($uid) {
+
+  global $conf;
+  $account = user_load($uid);
+
+  // Must be an approved user
+  if (!in_array("approved user", $account->roles)) {
+    return false;
+  }
+
+  // Chapter leaders, moderators can always create companies
+  if (in_array("chapter leader", $account->roles) or in_array("moderator", $account->roles)) {
+    return true;
+  }
+
+  // Limit number of companies a user can create
+  // Set tm_add_company_limit
+  $users_companies = tm_users_get_companies($uid);
+  $tm_add_company_limit = 8; // default if not set
+  if (isset($conf["tm_add_company_limit"])) {
+    $tm_add_company_limit = $conf["tm_add_company_limit"];
+  }
+
+  return (sizeof($users_companies) < $tm_add_company_limit);
+}
+
+
 function tm_organizations_preprocess_page(&$variables, $hook) {
 
   global $user;
   global $conf;
 
   $default_message = "Discover and connect with other companies in the " . $conf["tm_site_name"] . " network.";
+
+  // Don't allow user to exceed limit of adding companies
+  if (current_path() == "node/add/organization") {
+    if (!tm_organizations_check_user_can_create_company($user->uid)) {
+      $message = "Sorry, you've reached the limit of the number of company profiles you can create.";
+      drupal_set_message($message, 'page_notice');
+      drupal_goto("user/$user->uid/companies");
+    }
+  }
 
   // Put a notice to create company accounts on company page
   if (current_path() == "companies") {
@@ -134,7 +172,25 @@ function tm_organizations_preprocess_page(&$variables, $hook) {
     $message .= "<div id='pending_approval' style='display: none;'>Your account is currently pending approval by our team. Once we've approved your account, you will be able to add your company profile.</div>";
     drupal_set_message($message, 'page_notice');
 
-
+  }
+  
+  // Put a notice to create company accounts on users company page
+  // Target page, ie: /user/10447/companies
+  $parts = explode("/", current_path());
+  if (sizeof($parts) == 3) {
+    if (($parts[0] = "user") and ($parts[2] = "companies")) {
+      if ($parts[1] == $user->uid) {        
+        $add_profile_html = "<a href='/node/add/organization'>company profile</a>";
+        $message = "You are managing the following company profiles. ";
+        if (!tm_organizations_check_user_can_create_company($user->uid)) {
+          $message .= "You cannot add any more company profiles.";
+        } else {
+          $message .= "Add a new " . $add_profile_html . ".";
+        }
+        drupal_set_message($message, 'page_notice');
+      }
+    }
   }
 
 }
+

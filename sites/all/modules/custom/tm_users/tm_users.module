@@ -36,6 +36,17 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state) {
   $form['timezone']['#type'] = 'fieldset';
   $form['timezone']['#collapsible'] = FALSE;
   unset($form['timezone']['#description']);
+
+  // Redirect user to their profile page when they save profile
+  // http://drupal.stackexchange.com/questions/64171/redirect-user-to-their-profile-page-after-saving
+  $form['#submit'][] = 'tm_users_user_profile_form_submit';
+
+}
+
+// Redirect user to their profile page
+function tm_users_user_profile_form_submit($form, &$form_state) {
+  global $user;
+  drupal_goto('user/' . $user->uid);
 }
 
 

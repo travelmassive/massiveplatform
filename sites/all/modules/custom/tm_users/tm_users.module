@@ -1103,6 +1103,10 @@ function tm_users_signup_tips($return_score = false) {
   if ((!in_array($url_parts[0], $target_pages)) or (sizeof($url_parts) > 2)) {
     return;
   }
+  // Only show on the /community page and not on users profiles ie: /community/username
+  if (($url_parts[0] == "community") && (sizeof($url_parts) > 1)) {
+    return;
+  }
   
   // Display the user tip
   if ($user_tip != "") {

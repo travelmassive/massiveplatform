@@ -78,9 +78,16 @@ function tm_preprocess_page(&$variables, $hook) {
 
   // Nag user to verify email if there are no other messages
   if (in_array("non-validated", $loaded->roles)) {
-    //if (count(drupal_get_messages()) == 0) {
+
+      // Check we haven't already displaying the validation e-mail message
+      $drupal_message = drupal_get_messages('status', false);
+      $hide_message = false;
+      if (isset($drupal_message['status'][0])) {
+        $hide_message = (strpos($drupal_message['status'][0], "A validation e-mail has been sent to your e-mail address") !== FALSE);
+      }
+      if (!$hide_message) {
         drupal_set_message("Please verify your email address. We sent a verification email to " . $loaded->mail . ". Didn't get it? " . l(t('Re-send it'), 'toboggan/revalidate/' . $loaded->uid) . ".", "warning", FALSE);
-    //}
+      }
   }
 
   // customize account page titles

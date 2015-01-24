@@ -45,8 +45,8 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state) {
 
 // Redirect user to their profile page
 function tm_users_user_profile_form_submit($form, &$form_state) {
-  global $user;
-  drupal_goto('user/' . $user->uid);
+  $user_id = $form['#user']->uid;
+  drupal_goto('user/' . $user_id);
 }
 
 

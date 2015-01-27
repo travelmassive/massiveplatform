@@ -200,7 +200,10 @@ function tm_invitations_invite_form_submit($form_id, &$form_state) {
   $custom_message = "";
   if (isset($form_state['values']['custom_message']))  {
     $custom_message = strip_tags($form_state['values']['custom_message']);
-    $custom_message = preg_replace('@((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*(\?\S+)?)?)*)@', '(link removed)', $custom_message);
+    // Remove links for non-chapter leaders and non-moderators
+    if (!in_array("chapter leader", $account->roles) and !in_array("chapter leader", $account->roles)) {
+          $custom_message = preg_replace('@((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*(\?\S+)?)?)*)@', '(link removed)', $custom_message);
+    }
   }
   $count = 0;
 

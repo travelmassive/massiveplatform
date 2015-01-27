@@ -75,7 +75,7 @@ function chapter_invitations_page() {
     $nid = _orig_nid();
     $output = l(t('Back to chapter page'), url('node/'.$nid, array('absolute' => TRUE)));
 
-    $output .=  t('<p style="font-size: 11pt;">Grow your chapter by inviting new members to your chapter with email invitations. Just use the form below to bulk add your invitiation emails.</p>
+    $output .=  t('<p style="font-size: 11pt;">Grow your chapter by inviting new members to your chapter with email invitations. Just use the form below to bulk add your invitation emails.</p>
       <p style="font-size: 11pt;"><strong>How it works</strong>
         <br>1. Members will be sent an invitation email to join your chapter (<i>subject: Your Invitation to ' . $conf['tm_site_name'] . " " . $chapter_name . '</i>)
         <br>2. If they sign up using the email address you invited them with, they will automatically join your chapter.

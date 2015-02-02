@@ -121,7 +121,7 @@ if (!$twitter_data) {
         if (in_array("chapter leader", $loaded->roles)) { ?>
         <li><?php
         global $conf;
-        print l(t('Chapters leader resources'), $conf['tm_tips_chapter_leaders_link'], array('fragment' => '','external'=>true)); 
+        print l(t('Chapter leader resources'), $conf['tm_tips_chapter_leaders_link'], array('fragment' => '','external'=>true)); 
         } // end if ?></li>        
     </ul>
 

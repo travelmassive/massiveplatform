@@ -93,6 +93,8 @@ function tm_preprocess_page(&$variables, $hook) {
   // customize account page titles
   if (!$user->uid) {
 
+      global $conf;
+
       if (arg(0) == 'user' && arg(1) == 'login') {
           drupal_set_title(t('Sign in'));
       }
@@ -102,7 +104,6 @@ function tm_preprocess_page(&$variables, $hook) {
       }
 
       if (arg(0) == 'user' && arg(1) == 'register') {
-          global $conf;
           drupal_set_title(t('Join ' . $conf["tm_site_name"] ));
       }
     }

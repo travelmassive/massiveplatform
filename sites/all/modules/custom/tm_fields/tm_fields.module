@@ -690,7 +690,7 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
     
     if (isset($entity->pass)) {
       // Password set, it's a user;
-      return l(t('Follow'), 'user',array(
+      return l(t('Follow'), 'user/login',array(
         'attributes' => array(
           'title' => t('Follow :user', array(':user' => $entity->realname)),
           'class' => array($css_classes)
@@ -701,7 +701,7 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
     // Behaviour based on content type.
     switch ($entity->type) {
       case 'chapter':
-        return l(t('Join'), 'user',array(
+        return l(t('Join'), 'user/login',array(
           'attributes' => array(
             'title' => t('Join :chapter', array(':chapter' => $entity->title)),
             'class' => array($css_classes)
@@ -709,7 +709,7 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
         ));
         break;
       case 'organization':
-        return l(t('Follow'), 'user',array(
+        return l(t('Follow'), 'user/login',array(
           'attributes' => array(
             'title' => t('Follow :organization', array(':organization' => $entity->title)),
             'class' => array($css_classes)
@@ -739,7 +739,7 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
         // Show waitlist
         if ($result == 'show_waitlist') {
           $css_classes .= ' disabled';
-          return l(t('Join Waitlist'), 'user',array(
+          return l(t('Join Waitlist'), 'user/login',array(
           'attributes' => array(
             'title' => t('Join waitlist for :event', array(':event' => $entity->title)),
             'class' => array($css_classes)

@@ -128,7 +128,7 @@ if (!$twitter_data) {
   <?php if (in_array("moderator", $loaded->roles)) : ?>
       <ul class="dropd-menu">
         <li><?php print l(t('Add chapter'), 'node/add/chapter'); ?></li>
-        <li><?php print l(t('Unapproved users'), 'admin/config/tm/unapproved-users'); ?></li>
+        <li><?php print l(t('All unapproved members'), 'admin/unapproved-members'); ?></li>
       </ul>
   <?php endif; ?>
 

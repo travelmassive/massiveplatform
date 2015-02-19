@@ -294,7 +294,7 @@ function _tm_more_actions_process($field, $title = NULL) {
   }
   // END download chapter members
 
-  // START chapter invitiations.
+  // START chapter invitations and unapproved members
   if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
     $node = menu_get_object();
     if ($node->type == 'chapter') {
@@ -315,6 +315,8 @@ function _tm_more_actions_process($field, $title = NULL) {
         $current_uri = request_uri();
         $current_uri = substr($current_uri, 1); // delete first slash
         $link_path = $current_uri.'/invitations';
+
+        // chapter invitations
         $links['chapterinvitiations'][] = array(
           'wrapper_class' => array('chapterinvitiations'),
           'content' => l(t('Chapter Invitations'), $link_path , array(
@@ -323,10 +325,21 @@ function _tm_more_actions_process($field, $title = NULL) {
             )
           ))
         );
+
+        // unapproved members
+        $link_path = 'node/'.$node->nid.'/unapproved-members';
+        $links['chapterinvitiations'][] = array(
+          'wrapper_class' => array('chapterinvitiations'),
+          'content' => l(t('Unapproved members'), $link_path , array(
+            'attributes' => array( 
+            'title' => t('Unapproved members')
+            )
+          ))
+        );
       }
     }
   }
-  // END chapter invitiations  
+  // END chapter invitiations and unapproved members 
 
   // START approve link
   //drupal_set_message("<pre>".print_r($menu_item,TRUE)."</pre>");

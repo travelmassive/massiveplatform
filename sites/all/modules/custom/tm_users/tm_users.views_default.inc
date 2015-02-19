@@ -595,6 +595,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['access']['type'] = 'role';
   $handler->display->display_options['access']['role'] = array(
     4 => '4',
+    7 => '7',
     5 => '5',
   );
   $handler->display->display_options['cache']['type'] = 'none';
@@ -728,8 +729,16 @@ function tm_users_views_default_views() {
     6 => '6',
   );
 
-  /* Display: Page */
-  $handler = $view->new_display('page', 'Page', 'page');
+  /* Display: All unapproved members */
+  $handler = $view->new_display('page', 'All unapproved members', 'page');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'All unapproved users';
+  $handler->display->display_options['defaults']['header'] = FALSE;
+  /* Header: Global: Text area */
+  $handler->display->display_options['header']['area']['id'] = 'area';
+  $handler->display->display_options['header']['area']['table'] = 'views';
+  $handler->display->display_options['header']['area']['field'] = 'area';
+  $handler->display->display_options['header']['area']['format'] = 'filtered_html';
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   /* Relationship: Flags: approval_need_more_info */
   $handler->display->display_options['relationships']['flag_content_rel']['id'] = 'flag_content_rel';
@@ -812,8 +821,124 @@ function tm_users_views_default_views() {
   $handler->display->display_options['fields']['flagged_2']['label'] = 'User requested approval?';
   $handler->display->display_options['fields']['flagged_2']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['flagged_2']['not'] = 0;
-  $handler->display->display_options['path'] = 'admin/config/tm/unapproved-users';
+  $handler->display->display_options['path'] = 'admin/unapproved-members';
   $handler->display->display_options['menu']['type'] = 'normal';
+  $handler->display->display_options['menu']['title'] = 'Unapproved users';
+  $handler->display->display_options['menu']['weight'] = '0';
+  $handler->display->display_options['menu']['name'] = 'management';
+  $handler->display->display_options['menu']['context'] = 0;
+  $handler->display->display_options['menu']['context_only_inline'] = 0;
+
+  /* Display: Unapproved Chapter members */
+  $handler = $view->new_display('page', 'Unapproved Chapter members', 'page_1');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Unapproved Chapter Members';
+  $handler->display->display_options['defaults']['header'] = FALSE;
+  /* Header: Global: Text area */
+  $handler->display->display_options['header']['area']['id'] = 'area';
+  $handler->display->display_options['header']['area']['table'] = 'views';
+  $handler->display->display_options['header']['area']['field'] = 'area';
+  $handler->display->display_options['header']['area']['format'] = 'filtered_html';
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Flags: approval_need_more_info */
+  $handler->display->display_options['relationships']['flag_content_rel']['id'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_content_rel']['field'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel']['label'] = 'flag_approval_need_more_info';
+  $handler->display->display_options['relationships']['flag_content_rel']['required'] = 0;
+  $handler->display->display_options['relationships']['flag_content_rel']['flag'] = 'approval_need_more_info';
+  $handler->display->display_options['relationships']['flag_content_rel']['user_scope'] = 'any';
+  /* Relationship: Flags: approval_is_company_or_brand */
+  $handler->display->display_options['relationships']['flag_content_rel_1']['id'] = 'flag_content_rel_1';
+  $handler->display->display_options['relationships']['flag_content_rel_1']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_content_rel_1']['field'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel_1']['label'] = 'flag_approval_is_company_or_brand';
+  $handler->display->display_options['relationships']['flag_content_rel_1']['required'] = 0;
+  $handler->display->display_options['relationships']['flag_content_rel_1']['flag'] = 'approval_is_company_or_brand';
+  $handler->display->display_options['relationships']['flag_content_rel_1']['user_scope'] = 'any';
+  /* Relationship: Flags: approval_requested_by_user */
+  $handler->display->display_options['relationships']['flag_content_rel_2']['id'] = 'flag_content_rel_2';
+  $handler->display->display_options['relationships']['flag_content_rel_2']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_content_rel_2']['field'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel_2']['label'] = 'flag_user_requested_approval';
+  $handler->display->display_options['relationships']['flag_content_rel_2']['required'] = 0;
+  $handler->display->display_options['relationships']['flag_content_rel_2']['flag'] = 'approval_requested_by_user';
+  $handler->display->display_options['relationships']['flag_content_rel_2']['user_scope'] = 'any';
+  /* Relationship: Flags: User's flaggings */
+  $handler->display->display_options['relationships']['flag_user_content_rel']['id'] = 'flag_user_content_rel';
+  $handler->display->display_options['relationships']['flag_user_content_rel']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_user_content_rel']['field'] = 'flag_user_content_rel';
+  $handler->display->display_options['relationships']['flag_user_content_rel']['label'] = 'user_joined_chapter';
+  $handler->display->display_options['relationships']['flag_user_content_rel']['flag'] = 'signup';
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: User: First name */
+  $handler->display->display_options['fields']['field_user_first_name']['id'] = 'field_user_first_name';
+  $handler->display->display_options['fields']['field_user_first_name']['table'] = 'field_data_field_user_first_name';
+  $handler->display->display_options['fields']['field_user_first_name']['field'] = 'field_user_first_name';
+  /* Field: User: Last name */
+  $handler->display->display_options['fields']['field_user_last_name']['id'] = 'field_user_last_name';
+  $handler->display->display_options['fields']['field_user_last_name']['table'] = 'field_data_field_user_last_name';
+  $handler->display->display_options['fields']['field_user_last_name']['field'] = 'field_user_last_name';
+  /* Field: User: E-mail */
+  $handler->display->display_options['fields']['mail']['id'] = 'mail';
+  $handler->display->display_options['fields']['mail']['table'] = 'users';
+  $handler->display->display_options['fields']['mail']['field'] = 'mail';
+  /* Field: User: Name */
+  $handler->display->display_options['fields']['name_1']['id'] = 'name_1';
+  $handler->display->display_options['fields']['name_1']['table'] = 'users';
+  $handler->display->display_options['fields']['name_1']['field'] = 'name';
+  $handler->display->display_options['fields']['name_1']['label'] = 'View Profile';
+  /* Field: User: Home Chapter */
+  $handler->display->display_options['fields']['field_home_chapter']['id'] = 'field_home_chapter';
+  $handler->display->display_options['fields']['field_home_chapter']['table'] = 'field_data_field_home_chapter';
+  $handler->display->display_options['fields']['field_home_chapter']['field'] = 'field_home_chapter';
+  $handler->display->display_options['fields']['field_home_chapter']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_home_chapter']['settings'] = array(
+    'link' => 0,
+  );
+  /* Field: User: Created date */
+  $handler->display->display_options['fields']['created']['id'] = 'created';
+  $handler->display->display_options['fields']['created']['table'] = 'users';
+  $handler->display->display_options['fields']['created']['field'] = 'created';
+  $handler->display->display_options['fields']['created']['label'] = 'Joined';
+  $handler->display->display_options['fields']['created']['date_format'] = 'time ago';
+  $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
+  /* Field: Flags: Flagged */
+  $handler->display->display_options['fields']['flagged']['id'] = 'flagged';
+  $handler->display->display_options['fields']['flagged']['table'] = 'flagging';
+  $handler->display->display_options['fields']['flagged']['field'] = 'flagged';
+  $handler->display->display_options['fields']['flagged']['relationship'] = 'flag_content_rel';
+  $handler->display->display_options['fields']['flagged']['label'] = 'Flagged: Profile Incomplete';
+  $handler->display->display_options['fields']['flagged']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['flagged']['not'] = 0;
+  /* Field: Flags: Flagged */
+  $handler->display->display_options['fields']['flagged_1']['id'] = 'flagged_1';
+  $handler->display->display_options['fields']['flagged_1']['table'] = 'flagging';
+  $handler->display->display_options['fields']['flagged_1']['field'] = 'flagged';
+  $handler->display->display_options['fields']['flagged_1']['relationship'] = 'flag_content_rel_1';
+  $handler->display->display_options['fields']['flagged_1']['label'] = 'Flagged: Company Account';
+  $handler->display->display_options['fields']['flagged_1']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['flagged_1']['not'] = 0;
+  /* Field: Flags: Flagged */
+  $handler->display->display_options['fields']['flagged_2']['id'] = 'flagged_2';
+  $handler->display->display_options['fields']['flagged_2']['table'] = 'flagging';
+  $handler->display->display_options['fields']['flagged_2']['field'] = 'flagged';
+  $handler->display->display_options['fields']['flagged_2']['relationship'] = 'flag_content_rel_2';
+  $handler->display->display_options['fields']['flagged_2']['label'] = 'User requested approval?';
+  $handler->display->display_options['fields']['flagged_2']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['flagged_2']['not'] = 0;
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Flags: Content ID */
+  $handler->display->display_options['arguments']['entity_id']['id'] = 'entity_id';
+  $handler->display->display_options['arguments']['entity_id']['table'] = 'flagging';
+  $handler->display->display_options['arguments']['entity_id']['field'] = 'entity_id';
+  $handler->display->display_options['arguments']['entity_id']['relationship'] = 'flag_user_content_rel';
+  $handler->display->display_options['arguments']['entity_id']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['entity_id']['default_argument_type'] = 'node';
+  $handler->display->display_options['arguments']['entity_id']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['entity_id']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['entity_id']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['path'] = 'node/%/unapproved-members';
   $handler->display->display_options['menu']['title'] = 'Unapproved users';
   $handler->display->display_options['menu']['weight'] = '0';
   $handler->display->display_options['menu']['name'] = 'management';

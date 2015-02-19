@@ -221,7 +221,7 @@ function tm_chapters_download_csv($nid){
   $chapternode = node_load($nid);
   $oldzone = date_default_timezone_get();
   date_default_timezone_set(drupal_get_user_timezone());
-  $csvname = $chapternode->title.'_'.date('M_d_Y_Gi',time());
+  $csvname = $chapternode->title.'_'.date('M_d_Y_Gi',time()) . ".csv";
   date_default_timezone_set($oldzone);
 
   // csv header

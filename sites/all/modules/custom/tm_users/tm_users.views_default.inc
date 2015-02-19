@@ -590,7 +590,7 @@ function tm_users_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'Unapproved users';
+  $handler->display->display_options['title'] = 'Unapproved members';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'role';
   $handler->display->display_options['access']['role'] = array(
@@ -730,7 +730,7 @@ function tm_users_views_default_views() {
   );
 
   /* Display: All unapproved members */
-  $handler = $view->new_display('page', 'All unapproved members', 'page');
+  $handler = $view->new_display('page', 'All unapproved members', 'all_unapproved_members');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'All unapproved users';
   $handler->display->display_options['defaults']['header'] = FALSE;
@@ -823,14 +823,14 @@ function tm_users_views_default_views() {
   $handler->display->display_options['fields']['flagged_2']['not'] = 0;
   $handler->display->display_options['path'] = 'admin/unapproved-members';
   $handler->display->display_options['menu']['type'] = 'normal';
-  $handler->display->display_options['menu']['title'] = 'Unapproved users';
+  $handler->display->display_options['menu']['title'] = 'Unapproved members';
   $handler->display->display_options['menu']['weight'] = '0';
   $handler->display->display_options['menu']['name'] = 'management';
   $handler->display->display_options['menu']['context'] = 0;
   $handler->display->display_options['menu']['context_only_inline'] = 0;
 
   /* Display: Unapproved Chapter members */
-  $handler = $view->new_display('page', 'Unapproved Chapter members', 'page_1');
+  $handler = $view->new_display('page', 'Unapproved Chapter members', 'unapproved_members_in_chapter');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'Unapproved Chapter Members';
   $handler->display->display_options['defaults']['header'] = FALSE;

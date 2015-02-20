@@ -40,7 +40,6 @@ $image = theme('image_style', array(
             </div>
             <div class="media-bd">
               <strong><?php print check_plain($loaded->realname); ?></strong>
-              <?php print $loaded->field_friendly_url['und']['0']['value']; ?>
               <?php print t('Edit profile'); ?>
               <?php 
 // show score

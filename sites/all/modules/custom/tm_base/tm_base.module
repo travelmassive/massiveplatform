@@ -104,6 +104,10 @@ function tm_base_block_view($delta) {
         $followers = $follow_members_flag->get_count($user->uid);
         $following = flag_get_user_flag_counts($follow_members_flag, $user);
 
+        // format stats
+        $followers = tm_base_stats_format($followers);
+        $following = tm_base_stats_format($following);
+
         $block['content'] .= '<li><a href="' . url('user') . '" title="' . t('View followers') . '"><strong class="key">' . t('Followers') . '<small>: </small></strong><span class="value">' . $followers . '</span></a></li>';
         $block['content'] .= '<li><a href="' . url('user') . '" title="' . t('View following') . '"><strong class="key">' . t('Following') . '<small>: </small></strong><span class="value">' . $following . '</span></a></li>';
       }
@@ -112,6 +116,11 @@ function tm_base_block_view($delta) {
         $no_community = db_query('SELECT count(uid) AS no FROM {users} WHERE status = :status', array(':status' => 1))->fetchField();
         $no_chapter = db_query('SELECT count(nid) AS no FROM {node} WHERE status = :status AND type = :type', array(':status' => 1, ':type' => 'chapter'))->fetchField();
         $no_company = db_query('SELECT count(nid) AS no FROM {node} WHERE status = :status AND type = :type', array(':status' => 1, ':type' => 'organization'))->fetchField();
+
+        // format stats
+        $no_community = tm_base_stats_format($no_community);
+        $no_chapter = tm_base_stats_format($no_chapter);
+        $no_company = tm_base_stats_format($no_company);
 
         $block['content'] .= '<li><a href="' . url('community') . '" title="' . t('Go to community') . '"><strong class="key">' . t('Members') . '<small>: </small></strong><span class="value">' . $no_community . '</span></a></li>';
         $block['content'] .= '<li><a href="' . url('chapters') . '" title="' . t('Go to chapters') . '"><strong class="key">' . t('Chapters') . '<small>: </small></strong><span class="value">' . $no_chapter . '</span></a></li>';
@@ -122,6 +131,20 @@ function tm_base_block_view($delta) {
   }
 
   return $block;
+}
+
+// return formatted number for display
+// ie: 80, 1.1k, 3.0k, etc.
+function tm_base_stats_format($num) {
+
+  // less than a thousand
+  if ($num < 1000) {
+    return $num;
+  }
+
+  // more than a thousand
+  $k_format = floor(round(($num / 1000.0)*10,2)) / 10 . "k";
+  return $k_format;
 }
 
 /**

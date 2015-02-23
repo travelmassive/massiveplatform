@@ -58,7 +58,7 @@
       <div id="nocando">
         <h1>Your browser is not supported.</h1>
         <p>To view this website, we recommend using the <strong>latest version</strong> of Chrome, Safari or Firefox.</p>
-        <p>Here: <a href="http://browsehappy.com/" title="Visit Broser happy">upgrade your browser</a>!</p>
+        <p>Here: <a href="http://browsehappy.com/" title="Visit Browser happy">upgrade your browser</a>!</p>
       </div>
     <![endif]-->
     

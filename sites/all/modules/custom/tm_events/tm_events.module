@@ -258,9 +258,20 @@ function _tm_next_event($field, $title = NULL) {
       $event_datetime = new DateTime($event_date[0]['value'], new DateTimeZone($event_timezone));
       $time_until = format_interval($event_datetime->format('U') - $current_date->format('U'), 1);
     }
-  }
-  return $time_until ? t('Event in @time.', array('@time' => $time_until)) : t('');
+
+    // calculate number of members in chapter
+    $flag = flag_get_flag('signup');
+    $amount_members = $flag->get_count($chapter_id);
+    return $amount_members ? format_plural($amount_members, '1 member.','@members members', array('@members' => $amount_members)) : t('No members yet');
+
+    // show time to next event
+    // if no event, then display number of members in chapter
+    return $time_until ? t('Event in @time.', array('@time' => $time_until)) : t($amount_members);
+    }
+
 }
+
+ 
 
 /**
  * Fetch the timezone of an event.

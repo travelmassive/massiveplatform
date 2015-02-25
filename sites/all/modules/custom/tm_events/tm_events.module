@@ -254,11 +254,12 @@ function _tm_next_event($field, $title = NULL) {
       $event_date = field_get_items('node',$next_event,'field_event_date');
       
       // Create datetime object and ensure UTC timezone, instead of user-defined timezone.
-      $event_datetime = new DateTime($event_date[0]['value'], new DateTimeZone($event_date[0]['timezone']));
+      $event_timezone = _tm_get_event_timezone($next_event);
+      $event_datetime = new DateTime($event_date[0]['value'], new DateTimeZone($event_timezone));
       $time_until = format_interval($event_datetime->format('U') - $current_date->format('U'), 1);
     }
   }
-  return $time_until ? t('Event in @time.', array('@time' => $time_until)) : t('No upcoming events.');
+  return $time_until ? t('Event in @time.', array('@time' => $time_until)) : t('');
 }
 
 /**

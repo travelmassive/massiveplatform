@@ -122,7 +122,11 @@ function tm_base_block_view($delta) {
         $no_chapter = tm_base_stats_format($no_chapter);
         $no_company = tm_base_stats_format($no_company);
 
-        $block['content'] .= '<li><a href="' . url('community') . '" title="' . t('Go to community') . '"><strong class="key">' . t('Members') . '<small>: </small></strong><span class="value">' . $no_community . '</span></a></li>';
+        /** Member label for displaying membership counts **/
+        global $conf;
+        $members_label = $conf["tm_members_label"];
+
+        $block['content'] .= '<li><a href="' . url('community') . '" title="' . t('Go to community') . '"><strong class="key">' . t(ucwords($members_label)) . '<small>: </small></strong><span class="value">' . $no_community . '</span></a></li>';
         $block['content'] .= '<li><a href="' . url('chapters') . '" title="' . t('Go to chapters') . '"><strong class="key">' . t('Chapters') . '<small>: </small></strong><span class="value">' . $no_chapter . '</span></a></li>';
         $block['content'] .= '<li><a href="' . url('companies') . '" title="' . t('Go to companies') . '"><strong class="key">' . t('Companies') . '<small>: </small></strong><span class="value">' . $no_company . '</span></a></li>';
       }

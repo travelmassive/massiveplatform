@@ -261,8 +261,11 @@ function _tm_next_event($field, $title = NULL) {
 
     // calculate number of members in chapter
     $flag = flag_get_flag('signup');
+    global $conf;
+    $member_label = $conf["tm_member_label"];
+    $members_label = $conf["tm_members_label"];
     $amount_members = $flag->get_count($chapter_id);
-    $no_event_text = $amount_members ? format_plural($amount_members, '1 member.','@members members', array('@members' => $amount_members)) : t('No members yet');
+    $no_event_text = $amount_members ? format_plural($amount_members, '1 '.$member_label,'@members '.$members_label, array('@members' => $amount_members)) : t('No members yet');
 
     // check if its a new chapter (less than 30 days old)
     $chapter = node_load($chapter_id);

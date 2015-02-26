@@ -617,6 +617,10 @@ $conf['tm_tips_chapter_leaders_link'] = "https://travelmassive.com/blog/chapter-
 /** Where to send contact form emails to **/
 $conf['tm_contact_page_email'] = "hello@travelmassive.com";
 
+/** Member label for displaying membership counts **/
+$conf["tm_member_label"] = "travel insider"; // singular
+$conf["tm_members_label"] = "travel insiders"; // plural
+
 /** Set a front page launch message and hide the stats. Comment out to disable **/
 //$conf['tm_frontpage_launch_message'] = "We've just launched our new community platform. Read our <a style='color: #fff; text-decoration: underline;' href='/blog/'>announcement</a>.";
 

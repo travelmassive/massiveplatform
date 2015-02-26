@@ -50,9 +50,13 @@ function tm_chapters_menu() {
  * Custom function to print the amount of members belonging to a chapter
  */
 function _tm_members_chapter($field, $title = NULL) {
+  global $conf;
+  $member_label = $conf["tm_member_label"];
+  $members_label = $conf["tm_members_label"];
+
   $flag = flag_get_flag('signup');
   $amount_members = $flag->get_count($field['entity']->nid);
-  return $amount_members ? format_plural($amount_members, '1 member.','@members members', array('@members' => $amount_members)) : t('No members yet');
+  return $amount_members ? format_plural($amount_members, '1 ' . $member_label,'@members '.$members_label, array('@members' => $amount_members)) : t('No members yet');
 }
 
 /* 

@@ -44,6 +44,12 @@ $image = theme('image_style', array(
               <?php 
 // show score
 $user_score = tm_users_signup_score();
+
+// store user score and uid in form fields to access via js
+?>
+<input style='display: none;' id='current_user_score' value='<?php print($user_score); ?>'>
+<input style='display: none;' id='current_user_uid' value='<?php print($loaded->uid); ?>'>
+<?php
 if ($user_score >= 100) { ?>
 <span style='padding-left: 0.2em; font-size: smaller; font-style: normal; background-color: green; color: #fff; border-radius: 2px; padding: 2px;'><?php print($user_score); ?>% complete</span>
 <?php } else {
@@ -91,7 +97,7 @@ if (!$twitter_data) {
 ?>
 <li><?php print l(t('Approval requested (' . $flagged_time . ')'), 'javascript:alert("Please allow 12-24 hours for us to review your account. Please ensure you\'ve filled out your profile so we can approve you.")', array('fragment' => '','external'=>true)); ?></li>
 <?php } else { ?>
-<li><?php print l(t('Request approval'), 'user/' . $loaded->uid . '/request_approval'); ?></li>
+<li><?php print l(t('Request approval'), 'user/' . $loaded->uid . '/request_approval', array('attributes' => array('class' => array('approval-link')))); ?></li>
 <?php
 } // end if flagged
 } // end if not approved

@@ -23,6 +23,7 @@ function tm_users_form_user_login_block_alter(&$form, &$form_state) {
 }
 
 function tm_users_form_user_profile_form_alter(&$form, &$form_state) {
+
   // Add an indication of the username, in case users are not allowed to edit 
   // their usernames.
   if (!user_access('change own username')) {
@@ -40,6 +41,11 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state) {
   // Redirect user to their profile page when they save profile
   // http://drupal.stackexchange.com/questions/64171/redirect-user-to-their-profile-page-after-saving
   $form['#submit'][] = 'tm_users_user_profile_form_submit';
+
+  // Add javascript protection to prompt to save profile if its edited
+  // Use case is that many users don't click the save button on their profile
+  drupal_add_js(drupal_get_path('module', 'tm_users') . '/js/user-edit-protection.js');
+
 
 }
 

@@ -272,4 +272,33 @@ Drupal.behaviors.base_scripts = {
      
 });})(jQuery, Drupal, this, this.document);
 
+(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){
 
+  var current_user_score = $('#current_user_score').val();
+  var current_user_uid = $('#current_user_uid').val();
+  var confirm_message = "Oops, your profile is only " + current_user_score + "% complete.\n\nPlease fill out your community profile first and then request approval so we can review your profile.";
+  var score_threshold = 50;
+  var profile_edit_url = "/user/" + current_user_uid + "/edit#user-profile-options";
+
+  $(".approval-link").each(function() {
+    $(this).click(function(event) {
+
+      // don't ask if the user score is above the threshold
+      if (current_user_score > score_threshold) {
+        window.location = $(this).attr('href');
+        return;
+      }
+    
+      // confirm user
+      var r = confirm(confirm_message);
+      if (r==true) {
+        event.preventDefault();
+        window.location = profile_edit_url;
+      } else {
+        event.preventDefault();
+      }
+    });
+  });
+     
+});})(jQuery, Drupal, this, this.document);
+  

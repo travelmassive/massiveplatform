@@ -241,13 +241,14 @@ function _tm_next_event($field, $title = NULL) {
       ->entityCondition('bundle', 'event')
       ->propertyCondition('status', 1)
       ->fieldCondition('field_chapter', 'target_id', $chapter_id)
-      ->fieldCondition('field_event_date', 'value', $current_date->format('Y-m-d H:i:s'), '>=')
-      ->fieldOrderBy('field_event_date', 'value', 'ASC')
+      ->fieldCondition('field_event_date', 'value2', $current_date->format('Y-m-d H:i:s'), '>=')
+      ->fieldOrderBy('field_event_date', 'value2', 'ASC')
       ->range(0,1);
     $result = $query->execute();
 
     // Initialize time_until.
     $time_until = NULL;
+
     if (isset($result['node'])) {
       $next_event_array = array_keys($result['node']);
       $next_event = node_load($next_event_array[0]);
@@ -257,6 +258,9 @@ function _tm_next_event($field, $title = NULL) {
       $event_timezone = _tm_get_event_timezone($next_event);
       $event_datetime = new DateTime($event_date[0]['value'], new DateTimeZone($event_timezone));
       $time_until = format_interval($event_datetime->format('U') - $current_date->format('U'), 1);
+      if ($time_until == "0 sec") {
+        return "Event now";
+      }
     }
 
     // calculate number of members in chapter

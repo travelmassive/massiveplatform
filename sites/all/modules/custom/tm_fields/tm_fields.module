@@ -778,6 +778,17 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
           ));
         }
 
+        // Show closed
+        if (($result == 'show_closed')) {
+          $css_classes .= ' disabled';
+          return l(t('Past Event'), 'user/login', array(
+          'attributes' => array(
+            'title' => t('Register for :event', array(':event' => $entity->title)),
+            'class' => array($css_classes)
+          )
+          ));
+        }
+
         // Show waitlist
         if ($result == 'show_waitlist') {
           $css_classes .= ' disabled';

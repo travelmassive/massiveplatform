@@ -200,11 +200,11 @@ function _tm_event_display_flag($nid) {
   }
   
   // Check if the event has already happened
-  if (isset($event->field_event_date[LANGUAGE_NONE][0]['value'])) {
+  if (isset($event->field_event_date[LANGUAGE_NONE][0]['value2'])) {
     
     $timezone = _tm_get_event_timezone($event);
+    $event_date = new DateTime($event->field_event_date[LANGUAGE_NONE][0]['value2'], new DateTimeZone($timezone));
 
-    $event_date = new DateTime($event->field_event_date[LANGUAGE_NONE][0]['value'], new DateTimeZone($timezone));
     $now = new DateTime('now', new DateTimeZone($timezone));
 
     if ($event_date < $now) {

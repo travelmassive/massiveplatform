@@ -141,7 +141,7 @@ function tm_flags_flag_default_flags() {
     'flag_short' => 'Register',
     'flag_long' => 'Register for [node:title]',
     'flag_message' => 'You successfully registered for [node:title]',
-    'unflag_short' => 'Unregister',
+    'unflag_short' => 'Registered',
     'unflag_long' => 'Unregister for [node:title]',
     'unflag_message' => 'You successfuly unregistered for [node:title]',
     'unflag_denied_text' => '',

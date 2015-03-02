@@ -700,21 +700,35 @@ function _tm_users_modify_profile_form(&$form, $form_state, $form_id) {
     // get current user
     $user = user_load($form['#user']->uid);
 
+    // Modify the home chapter form
+    // Filter drop down list to the list of chapters the user is in
+
     // fetch list of chapters the user has joined
     $flags = flag_get_user_flags("node", NULL, $user->uid, NULL, FALSE);
     $chapters_nids = array();
+    $home_chapter_options = array("_none" => "- None -");
     foreach ($flags as $flag_name => $flag) {
       if ($flag_name == "signup") {
         foreach($flag as $f) {
           $chapters_nids[] = $f->entity_id;
+          $chapter = node_load($f->entity_id);
+          $home_chapter_options[$f->entity_id] = $chapter->title;
         }
       }
     }
 
+    // alter home chapter form for the user
+    // list only the chapters they have joined
+    // if they have a home chapter then set it as default
+    $form['field_home_chapter']['und']['#options'] = $home_chapter_options;
+    if (isset($user->field_home_chapter['und'][0]['target_id'])) {
+      $home_chapter_id = $user->field_home_chapter['und'][0]['target_id'];
+      $form['field_home_chapter']['und']['#default_value'] = array(0 => $home_chapter_id);
+    }
+    
     // if they don't have a home chapter, hide the field
-    //if (sizeof($user->field_home_chapter) == 0) {
-    if (sizeof($chapter_nids) > 0) {
-      hide($form['field_home_chapter']);;
+    if (sizeof($chapters_nids) == 0) {
+      hide($form['field_home_chapter']);
     }
 
     // hide loggintobgan revalidate notice since we print it anyway
@@ -1386,4 +1400,5 @@ function tm_users_mail_alter(&$mail_form) {
 
 }
 
+?>
 

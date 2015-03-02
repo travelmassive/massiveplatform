@@ -67,7 +67,13 @@ function _tm_event_seats_count($field, $title = NULL) {
     }
 
     if ($left == 0) {
-      return t($count . ' ' . $count_text . '.<br>This event is full.<br>');
+      $waitlist_flag = flag_get_flag('event_waitlist');
+      $waitlist_count = $waitlist_flag->get_count($event->nid);
+      if ($waitlist_count > 0) {
+        return t($count . ' ' . $count_text . '.<br>' . $waitlist_count . ' on the waitlist.<br>');
+      } else {
+        return t($count . ' ' . $count_text . '.<br>This event is full.<br>');
+      }
     }
     
     return t($count . ' ' . $count_text . '.<br>' . $left . ' ' . $left_text . '.');

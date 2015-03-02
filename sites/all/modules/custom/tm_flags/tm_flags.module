@@ -11,8 +11,81 @@ include_once 'tm_flags.features.inc';
  */
 function tm_flags_preprocess_flag(&$variables) {
 
+  // check for unflag of chapter
+  if (_tm_flags_unflag_chapter($variables)) {
+    return;
+  }
+
   // check for follow and join limits
   return _tm_flags_flag_limits($variables);
+}
+
+function _tm_flags_unflag_chapter(&$variables) {
+
+  // Some typing shotcuts:
+  $flag = &$variables['flag'];
+  $action = $variables['action'];
+  $entity_id = $variables['entity_id'];
+  $flag_css_name = str_replace('_', '-', $flag->name);
+  $uid = $variables['user']->uid;
+
+  // check for chapter leader of chapter leaving
+  // we don't want to allow chapter leaders to leave their own chapter
+  if (($flag->name == "signup") && ($action == "unflag")) {
+
+    $chapters_leader_nids = array();
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+      ->entityCondition('bundle', 'chapter')
+      ->propertyCondition('status', NODE_PUBLISHED)
+      ->fieldCondition('field_chapter_leaders', 'target_id', $uid, '=');
+
+    $result = $query->execute();
+    if (isset($result['node'])) {
+      $chapters_leader_nids = array_keys($result['node']);
+    }
+
+    if (in_array($entity_id, $chapters_leader_nids)) {
+      $chapter = node_load($entity_id);
+      $variables['flag_button_class'] = 'flag-limit follow bttn bttn-secondary bttn-m';
+      drupal_add_js('
+      jQuery(document).ready(function($) {
+        $( ".flag" ).unbind("click");
+        $( ".flag" ).bind("click.confirm", function(event) {
+          alert("You can\'t leave this chapter as you are currently a Chapter Leader for ' . $chapter->title . '.");
+          event.preventDefault();
+        });
+      });
+      ', 'inline');
+      return true;
+    }
+  }
+
+  // check for a member leaving a chapter
+  // confirm that the user wants to leave the chapter
+  if (($flag->name == "signup") && ($action == "unflag")) {
+    $chapter = node_load($entity_id);
+    $variables['flag_button_class'] = 'flag-limit follow bttn bttn-secondary bttn-m';
+    drupal_add_js('
+    jQuery(document).ready(function($) {
+      $( ".flag" ).unbind("click");
+      $( ".flag" ).bind("click.confirm", function(event) {
+        var r = confirm("Are you sure you want to leave this chapter?\n\nIf you leave you won\'t be notified about upcoming events in ' . $chapter->title .'.");
+        if (r == true) {
+          $( ".flag-confirm" ).unbind("click.confirm");
+          $( ".flag-confirm" ).click();
+        } else {
+          event.preventDefault();
+        }
+      });
+    });
+    ', 'inline');
+    return true;
+  }
+
+  // no action
+  return false;
+
 }
 
 

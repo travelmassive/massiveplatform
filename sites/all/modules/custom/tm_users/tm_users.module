@@ -700,8 +700,20 @@ function _tm_users_modify_profile_form(&$form, $form_state, $form_id) {
     // get current user
     $user = user_load($form['#user']->uid);
 
+    // fetch list of chapters the user has joined
+    $flags = flag_get_user_flags("node", NULL, $user->uid, NULL, FALSE);
+    $chapters_nids = array();
+    foreach ($flags as $flag_name => $flag) {
+      if ($flag_name == "signup") {
+        foreach($flag as $f) {
+          $chapters_nids[] = $f->entity_id;
+        }
+      }
+    }
+
     // if they don't have a home chapter, hide the field
-    if (sizeof($user->field_home_chapter) == 0) {      
+    //if (sizeof($user->field_home_chapter) == 0) {
+    if (sizeof($chapter_nids) > 0) {
       hide($form['field_home_chapter']);;
     }
 
@@ -918,6 +930,20 @@ function tm_users_user_presave(&$edit, $account, $category) {
 
         // below is a hammer if we need it
         // unset($edit["roles"]);
+      }
+    }
+
+    // preserve chapter leader roles
+    if (in_array('chapter leader', $user->roles)) {
+      if ($role = user_role_load_by_name('chapter leader')) {
+        $edit['roles'][$role->rid] = $role->rid;
+      }
+    }
+
+    // preserve moderator roles
+    if (in_array('moderator', $user->roles)) {
+      if ($role = user_role_load_by_name('moderator')) {
+        $edit['roles'][$role->rid] = $role->rid;
       }
     }
 

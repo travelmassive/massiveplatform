@@ -328,4 +328,5 @@ function tm_chapters_flag_flag($flag, $entity_id, $account, $flagging) {
     $user->field_home_chapter[LANGUAGE_NONE][0]['target_id'] =  $entity_id;
     user_save($user);
   }
+
 }

@@ -50,7 +50,7 @@
 <?php elseif (isset($event_flag) && $event_flag == "show_not_approved") : ?>
 
 <li class="<?php print $flag_wrapper_classes; ?>">
-    <span onClick="alert('You need to be an Approved Member to register for this event.');" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></span>
+    <span onClick="alert('You need to be an approved member to register for this event.\n\n1. Please complete your profile so we can review it\n2. Click \'Approve my account\' from your profile page.\n3. When you are approved, you may register for this event.\n\nAs we review accounts manually, approval may take up to 24 hours.');" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></span>
 </li>
 
 <?php elseif (!isset($hide_flag) || $hide_flag == FALSE) : ?>

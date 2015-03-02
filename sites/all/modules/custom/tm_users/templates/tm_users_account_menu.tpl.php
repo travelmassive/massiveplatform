@@ -97,7 +97,7 @@ if (!$twitter_data) {
 ?>
 <li><?php print l(t('Approval requested (' . $flagged_time . ')'), 'javascript:alert("Please allow 12-24 hours for us to review your account. Please ensure you\'ve filled out your profile so we can approve you.")', array('fragment' => '','external'=>true)); ?></li>
 <?php } else { ?>
-<li><?php print l(t('Request approval'), 'user/' . $loaded->uid . '/request_approval', array('attributes' => array('class' => array('approval-link')))); ?></li>
+<li><?php print l(t('Approve my account'), 'user/' . $loaded->uid . '/request_approval', array('attributes' => array('class' => array('approval-link')))); ?></li>
 <?php
 } // end if flagged
 } // end if not approved

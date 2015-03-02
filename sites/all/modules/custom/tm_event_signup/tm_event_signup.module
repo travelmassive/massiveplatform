@@ -67,7 +67,7 @@ function _tm_event_seats_count($field, $title = NULL) {
     }
 
     if ($left == 0) {
-      return t($count . ' ' . $count_text . '.<br>This event is full.<br>');
+      return t($count . ' ' . $count_text . '.<br>Join the waitlist.<br>');
     }
     
     return t($count . ' ' . $count_text . '.<br>' . $left . ' ' . $left_text . '.');

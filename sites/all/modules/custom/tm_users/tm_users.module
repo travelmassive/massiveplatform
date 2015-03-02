@@ -720,6 +720,7 @@ function _tm_users_modify_profile_form(&$form, $form_state, $form_id) {
     // alter home chapter form for the user
     // list only the chapters they have joined
     // if they have a home chapter then set it as default
+    asort($home_chapter_options);
     $form['field_home_chapter']['und']['#options'] = $home_chapter_options;
     if (isset($user->field_home_chapter['und'][0]['target_id'])) {
       $home_chapter_id = $user->field_home_chapter['und'][0]['target_id'];

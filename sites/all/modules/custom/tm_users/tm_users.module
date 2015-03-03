@@ -887,6 +887,18 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
       hide($form['field_owner']);
     }
   }
+
+  // Modify chapter edit form (can't use hook in tm_chapters)
+  // For non-admin and non-moderator hide the chapter leaders and geomap location fields
+  if ($form_id == 'chapter_node_form') {
+    global $user;
+    $loaded = user_load($user->uid);
+    if (!in_array("moderator", $loaded->roles) and !in_array("administrator", $loaded->roles)) {
+      hide($form['field_chapter_leaders']);
+      hide($form['field_geomaplocation']);
+    }
+  }
+  
 }
 
 // If user selected a home chapter on signup, then join it

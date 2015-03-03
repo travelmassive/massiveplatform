@@ -42,6 +42,7 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
      ':input[name="field_external_rsvp[und]"]' => array('value' => 1),
     ),
   );
+  
   // /end field visibility based on RSVP.
   $form['field_chapter'][LANGUAGE_NONE][0]['target_id']['#ajax'] = array(
     'callback' => '_tm_events_field_organizer_ajax_cb',

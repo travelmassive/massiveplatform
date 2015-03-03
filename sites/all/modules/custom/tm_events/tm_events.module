@@ -25,7 +25,7 @@ function tm_events_permission() {
  * Implement hook_form_FORM_ID_alter()
  */
 function tm_events_form_event_node_form_alter(&$form, &$form_state) {
-   
+  
   // Field visibilty based on whether the RSVP is handled through the TM.
 
   // Visible when RSVP is handled on TM.
@@ -66,43 +66,25 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
   $form['field_organizer'] = $field_organizer_wrapper;
   global $user;
   
-  // There was an ajax request. Provide correct values.
-  if (isset($form_state['values']['field_chapter'][LANGUAGE_NONE][0]['target_id'])) {
-    $chapter_id = $form_state['values']['field_chapter'][LANGUAGE_NONE][0]['target_id'];
-  } else {
-    $chapter_id = null;
-  }
-
-  // Get possible options.
-  $opts = array('_none' => t('- None -'))  + _load_organizers_per_chapter($chapter_id);
-  $form['field_organizer']['field_organizer_child'][LANGUAGE_NONE]['#options'] = $opts;
-  // By default the value of the organizer is the author.
-  $form['field_organizer']['field_organizer_child'][LANGUAGE_NONE]['#default_value'] = $user->uid;
-  
-  // There's a value for the field_chapter. This means:
-  // - the node is being edited; or
-  // - the field_chapter was prepopulated.
-  if (!empty($form['field_chapter'][LANGUAGE_NONE][0]['target_id']['#default_value'])) {
-    // Get id from default value.
+  // STEP 1. Get chapter id
+  // It's either in form state, or via ?field_chapter=, or null (partner event)
+  $chapter_id = null;
+  if (isset($form_state['build_info']['args'][0]->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
+    $chapter_id = $form_state['build_info']['args'][0]->field_chapter[LANGUAGE_NONE][0]['target_id'];
+  } elseif (isset($_GET["field_chapter"])) {
     preg_match("/.* \(([0-9]+)\)/", $form['field_chapter'][LANGUAGE_NONE][0]['target_id']['#default_value'], $chapter_id);
     $chapter_id = $chapter_id[1];
-    
-    // Get possible options.
-    $opts = array('_none' => t('- None -'))  + _load_organizers_per_chapter($chapter_id);
-    $form['field_organizer']['field_organizer_child'][LANGUAGE_NONE]['#options'] = $opts;
-    
-    // If there's a default value but we're not editing a node, means that
-    // the value was prepopulated from the url.
-    // If so, set the default user.
-    if (!isset($form['#node']->nid)) {
-      $form['field_organizer']['field_organizer_child'][LANGUAGE_NONE]['#default_value'] = $user->uid;
-    }
-  }
-  else {
-    // Disable access if we're editing a node for the first time.
-    //$form['field_organizer']['field_organizer_child']['#access'] = FALSE;
   }
 
+  // STEP 2. Populate chapter leaders/organisers
+  $opts = array('_none' => t('- None -'))  + _load_organizers_per_chapter($chapter_id);
+  $form['field_organizer']['field_organizer_child'][LANGUAGE_NONE]['#options'] = $opts;
+
+  // STEP 3. Set default value of the organizer
+  // By default the value of the organizer is the author
+  //$form['field_organizer']['field_organizer_child'][LANGUAGE_NONE]['#default_value'] = $user->uid;
+
+  // STEP 4. Set timezone of chapter
   // Ian: Set timezone automatically from chapter if creating new event
   // This is currently disabled as we are now using "none" timezone.
   // If the field_event_date uses "date's timezone" then enable this again.
@@ -1098,6 +1080,5 @@ function tm_events_flag_flag($flag, $entity_id, $account, $flagging) {
     } 
   }
 }
-
 
 

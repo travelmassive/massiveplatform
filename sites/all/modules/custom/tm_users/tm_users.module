@@ -898,7 +898,7 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
       hide($form['field_geomaplocation']);
     }
   }
-  
+
 }
 
 // If user selected a home chapter on signup, then join it
@@ -1414,4 +1414,3 @@ function tm_users_mail_alter(&$mail_form) {
 }
 
 ?>
-

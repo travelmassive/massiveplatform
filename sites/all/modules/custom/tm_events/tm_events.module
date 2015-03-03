@@ -76,6 +76,10 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
     $chapter_id = $chapter_id[1];
   }
 
+  // TODO:
+  // Check that the user is a chapter leader of the chapter id
+  // Otherwise a chapter leader can create an event in other chapters via url
+
   // STEP 2. Populate chapter leaders/organisers
   $opts = array('_none' => t('- None -'))  + _load_organizers_per_chapter($chapter_id);
   $form['field_organizer']['field_organizer_child'][LANGUAGE_NONE]['#options'] = $opts;

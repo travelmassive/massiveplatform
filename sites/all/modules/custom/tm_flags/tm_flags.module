@@ -16,15 +16,11 @@ function tm_flags_preprocess_flag(&$variables) {
     return;
   }
 
-  // Some typing shotcuts:
+  // modify follow flag name (connected)
   $flag = &$variables['flag'];
   if ($flag->name == "follow_members") {
     $flag->unflag_short = "Following";
   }
-  //print_r($flag);
-  //die();
-  //$variables = array();
-  //return;
 
   // check for follow and join limits
   return _tm_flags_flag_limits($variables);

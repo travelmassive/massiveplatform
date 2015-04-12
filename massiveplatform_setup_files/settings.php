@@ -628,6 +628,12 @@ $conf['tm_contact_page_email'] = "hello@travelmassive.com";
 $conf["tm_member_label"] = "travel insider"; // singular
 $conf["tm_members_label"] = "travel insiders"; // plural
 
+/** Background video on front page **/
+/** Set to true to enable. Set external url if you want mp4 to be delivered from external url (ie: vimeo) **/
+/** Save your videos in tm/themes/videos/frontpage/background_video.mp4,ogv,webm,jpg **/
+$conf['tm_background_bg'] = True;   
+$conf['tm_background_bg_mp4_external_url'] = "https://player.vimeo.com/external/124102297.hd.mp4?s=ea8a1d4f544c9d26f148c8cf848197ec&profile_id=113";
+
 /** Set a front page launch message and hide the stats. Comment out to disable **/
 //$conf['tm_frontpage_launch_message'] = "We've just launched our new community platform. Read our <a style='color: #fff; text-decoration: underline;' href='/blog/'>announcement</a>.";
 

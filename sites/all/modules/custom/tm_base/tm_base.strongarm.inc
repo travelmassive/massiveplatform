@@ -264,21 +264,21 @@ function tm_base_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'tm_base_homepage_description_anon';
-  $strongarm->value = 'Travel Massive connects thousands of travel insiders to meet, learn and collaborate at free events all around the world. We are a world-wide community of locally organised meet ups for travel & tourism companies, travel bloggers, startups, and travel media to connect and share globally.';
+  $strongarm->value = 'Travel Massive connects thousands of travel insiders to meet, learn and collaborate at free events all around the world. We are a global community of travel industry insiders, leaders, and innovators.';
   $export['tm_base_homepage_description_anon'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'tm_base_homepage_description_members';
-  $strongarm->value = 'Welcome to the Travel Massive Community. Travel Massive connects thousands of travel insiders around the world to meet, learn and collaborate at free events. Join your local chapter, connect with other members, or apply to start a chapter in your city.';
+  $strongarm->value = 'Welcome to the Travel Massive Community. We are the world\'s largest community of travel industry insiders, leaders, and innovators. Join your local chapter, connect with other members, or apply to start a chapter in your city.';
   $export['tm_base_homepage_description_members'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'tm_base_homepage_title_anon';
-  $strongarm->value = 'Be Part Of Something Massive.';
+  $strongarm->value = 'Building The Future Of Travel.';
   $export['tm_base_homepage_title_anon'] = $strongarm;
 
   $strongarm = new stdClass();

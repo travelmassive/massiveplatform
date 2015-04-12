@@ -583,6 +583,13 @@ $conf['tm_twitter_consumer_secret'] = '';
 /** NOTE: You need a TwineSocial account **/
 $conf['tm_enable_fontpage_socialfeeds'] = false;
 
+/** ENABLE FEEDME **/
+/** This calls a module hosted on wordpress to embed blog (plus other) content based on current page **/
+/** You will need this wordpress plugin: https://github.com/travelmassive/massiveplatform-wordpress-feedme **/
+$conf['tm_enable_wordpress_feedme'] = false;
+$conf['tm_wordpress_feedme_url'] = "/blog/wp-content/plugins/tm-feeds/feedme.php";
+$conf['tm_wordpress_feedme_frontpage_id'] = "1831"
+
 /** Limit Follow and Join **/
 /** NOTE: Administrator and chapter leaders do not have limits **/
 $conf['tm_following_ratio_limit'] = '50'; // difference between following/followers

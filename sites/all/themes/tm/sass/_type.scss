@@ -351,6 +351,10 @@ Icons
    @extend .icon;
    content: "\e64d";
 }
+.icon-connection {
+   @extend .icon;
+   content: "\e639"; //641 // 639
+}
 
 /* ==========================================================================
    Headings

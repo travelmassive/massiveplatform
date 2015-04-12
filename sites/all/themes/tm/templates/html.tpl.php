@@ -52,7 +52,29 @@
       <![endif]-->
     <?php endif; ?>
   </head>
-  <body class="<?php print $classes; ?>" <?php print $attributes;?>>
+  <?php
+    // https://github.com/VodkaBears/Vide#readme
+    global $conf;
+    $bg_video_body_attributes = "";
+    if (@isset($conf["tm_background_bg"])) {
+      if (($is_front) && ($conf["tm_background_bg"] == True)) {
+        $bg_video = $base_path . path_to_theme() . "/videos/frontpage/background_video";
+        // host mp4 externally to make use of CDN
+        if (@isset($conf["tm_background_bg_mp4_external_url"])) {
+          $bg_video_mp4 = $conf["tm_background_bg_mp4_external_url"];
+        }
+        else {
+          $bg_video_mp4 = $base_path . path_to_theme() . "/videos/frontpage/background_video.mp4";
+        }
+        $bg_video_webm = $base_path . path_to_theme() . "/videos/frontpage/background_video.webm";
+        $bg_video_ogv = $base_path . path_to_theme() . "/videos/frontpage/background_video.ogv";
+        $bg_video_poster = $base_path . path_to_theme() . "/videos/frontpage/background_video.poster";
+
+        $bg_video_body_attributes = "data-vide-bg=\"mp4: $bg_video_mp4, webm: $bg_video_webm, ogv: $bg_video_ogv, poster: $bg_video_poster\" data-vide-options=\"posterType: jpg, playbackRate: 1\"";
+        }
+    }
+  ?>
+  <body class="<?php print $classes; ?>" <?php print $attributes;?> <?php if ($is_front) { print($bg_video_body_attributes); } ?>>
     
     <!--[if lt IE 9]>
       <div id="nocando">

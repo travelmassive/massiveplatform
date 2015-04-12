@@ -165,8 +165,9 @@ function tm_users_field_group_info() {
       3 => 'field_link_twitter',
       4 => 'field_link_website',
       5 => 'field_segment',
-      6 => 'group_location_wrapper',
-      7 => 'group_user_qa_wrapper',
+      6 => 'tm_ds_connection_actions',
+      7 => 'group_location_wrapper',
+      8 => 'group_user_qa_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(

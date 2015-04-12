@@ -8,7 +8,6 @@ Your theme can add JavaScript files in two ways:
 2. To add a JavaScript file depending on a certain condition, you can add it
    using some PHP code in a preprocess function:
 
-     drupal_add_js(drupal_get_path('theme', 'THEME_NAME') . '/js/my-jquery-script.js', array('group' => JS_THEME));
-
+      
    For the full documentation of drupal_add_js(), see:
      http://api.drupal.org/api/function/drupal_add_js

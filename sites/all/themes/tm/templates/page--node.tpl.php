@@ -11,6 +11,17 @@
  */
 ?>
 
+<?php
+  // Enable wordpress feedme plugin
+  // Show recent blog posts and more
+  global $conf;
+  if (@isset($conf["tm_enable_wordpress_feedme"])) {
+    if ($conf["tm_enable_wordpress_feedme"]) {
+      include './'. path_to_theme() .'/templates/page--wordpress-feedme.tpl.php';
+    }
+  }
+?>
+
 <div id="page">
 
   <header class="header" id="header" role="banner">

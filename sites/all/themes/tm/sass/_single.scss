@@ -230,11 +230,11 @@
 }
 
 .front {
-  @include background(linear-gradient(rgba($primary-color, 0), rgba($primary-color, 0), $primary-color), image-url("../images/layout/home-bg-img-01a.jpg"));
+  /*@include background(linear-gradient(rgba($primary-color, 0), rgba($primary-color, 0), $primary-color), image-url("../videos/frontpage/tm_background_video.jpg"));
   background-repeat: no-repeat, no-repeat;
   background-position: center center, center center;
-  @include background-size(100% 100%, cover);
-  background-color: $primary-color;
+  @include background-size(100% 100%, cover);*/
+  background-color: #000; /*$primary-color;*/
 
   #page, #site-canvas {
     background: none;
@@ -268,6 +268,8 @@
 #block-tm-base-tm-homepage-stats {
   margin: 0;
 }
+
+#block-tm-base-tm-homepage-stats li:after { display: none; }
 
 #upcoming-events {
   .hd {

@@ -125,6 +125,7 @@
     &.field-link-website:before { @extend .icon-globe; }
     &.field-segment:before { @extend .icon-briefcase; }
     &.field-qa:before, &.qa:before { @extend .icon-bubble; }
+    &.tm-ds-connection-actions:before { @extend .icon-connection; }
 
     &.field-link-facebook,
     &.field-link-linkedin,

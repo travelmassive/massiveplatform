@@ -62,6 +62,21 @@ function tm_fields_ds_fields_info($entity_type) {
       )
     ),
   );
+
+  $fields['tm_ds_connection_actions'] = array(
+    'title' => t('Connection Actions'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('user|*'),
+    'function' => 'tm_fields_connection_actions',
+    'properties' => array(
+      'settings' => array(
+        'Extra classes' => array(
+          'type' => 'textfield',
+          'description' => t('Classes for the link')
+        )
+      )
+    )
+  );
   
   return array($entity_type => $fields);
 }
@@ -550,6 +565,56 @@ function _tm_more_actions_process($field, $title = NULL) {
   }
   // END is company or brand link
 
+  // START profile incomplete link
+  if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
+
+    // Only show link for approved users
+    if (in_array("approved user", $targetuser->roles)){
+
+      // Show flagging tool if:
+      // 1. if user is a moderator or administrator
+      // 2. or if they are chapter leader and the member is signed up their chapter
+      if ((in_array("moderator", $user->roles) or user_access('administer'))
+        or ((in_array("chapter leader", $user->roles))) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid))) {
+
+        $links['approve'][] = array(
+          'wrapper_class' => array('approve'),
+          'content' => l(t('Flag: Incomplete profile'), 'user/' . $uid . '/approval_need_more_info', array(
+            'attributes' => array(
+            'onclick' => "javascript:return confirm('Do you want to flag this account as incomplete?\\n\\nThis action will:\\n* Notify the member they need to update their profile\\n* Notify you when the member requests approval');",
+            'title' => t('Profile incomplete')
+            )
+          ))
+        );
+        
+        // show last time request info was flagged
+        $flag = flag_get_flag('approval_need_more_info');
+
+        // get list of people who flagged
+        $who_flagged = flag_get_entity_flags("user", $uid, "approval_need_more_info");
+
+        // sort by flag time
+        usort($who_flagged, function($a, $b){
+          return ($a->timestamp > $b->timestamp) ? -1 : 1;
+        });
+
+        $menu_text = "";
+        foreach ($who_flagged as $flagger) {
+          $difference = time() - $flagger->timestamp;
+          $flagged_time = format_interval($difference, 1) . " ago";
+          $flagged_user = user_load($flagger->uid);
+          $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Flagged by " . $flagged_user->field_user_first_name['und'][0]['value'] . " " . $flagged_time . "</span><br>";
+        }
+        
+        $links['approve'][] = array(
+          'wrapper_class' => array('approve'),
+          'content' => t($menu_text),
+        );
+      }
+    }
+  }
+  // END profile incomplete link
+
   // START unapprove link
   if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
     if (isset($menu_item['page_arguments'][0]->uid)){
@@ -904,4 +969,48 @@ function tm_fields_field_formatter_view($entity_type, $entity, $field, $instance
   return $element;
 }
 
+/**
+ * Display connection actions for following
+ */
+function tm_fields_connection_actions($field) {
+  
+  if (!user_is_logged_in()) {
+    return;
+  }
+
+  if (isset($field['entity']->name)) {
+
+    global $user;
+    $my_uid = $user->uid;
+    $their_uid = $field['entity']->uid;
+    $their_name = $field['entity']->realname;
+
+    // check if looking at self
+    if ($my_uid == $their_uid) {
+      return;
+    }
+
+    $flag = flag_get_flag('follow_members');
+    $you_are_following_them = ($flag->is_flagged($their_uid, $my_uid));
+    $they_are_following_you = ($flag->is_flagged($my_uid, $their_uid));
+
+    if ($you_are_following_them and $they_are_following_you) {
+      return "Great, you follow each other! ";
+      // . '<span class="hierarchical-select-item-separator">›</span>' . "<a href=''>Send email introduction</a>";
+    }
+
+    if ($they_are_following_you) {
+      return $their_name . " is following you";
+    }
+
+    if ($you_are_following_them) {
+      return "You are following " . $their_name;
+    }
+
+    if (!$you_are_following_them and !$they_are_following_you) {
+      return;
+    }
+
+  }
+}
 

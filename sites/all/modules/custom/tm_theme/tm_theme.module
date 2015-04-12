@@ -25,14 +25,20 @@ function tm_theme_html_head_alter(&$head_elements) {
   // all URLs we want indexed should be clean URLS
   $url_parts = explode('/', request_uri());
   if (($url_parts[1] == 'node') or ($url_parts[1] == 'user')) {
-	$head_elements['MYMODULE_meta_robots'] = array(
-		'#tag' => 'meta',
-		'#type' => 'html_tag',
-		'#attributes' => array(
-		'name' => 'robots',
-		'content' => 'noindex'
-		)
-	);
+  	$head_elements['MYMODULE_meta_robots'] = array(
+  		'#tag' => 'meta',
+  		'#type' => 'html_tag',
+  		'#attributes' => array(
+  		'name' => 'robots',
+  		'content' => 'noindex'
+  		)
+  	);
   }
+
+  // if front page add vid js for background videp
+  if (drupal_is_front_page()) {
+    drupal_add_js(drupal_get_path('theme', 'tm') . '/js/jquery.vide.min.js', array('group' => JS_THEME));
+  }
+  
 
 }

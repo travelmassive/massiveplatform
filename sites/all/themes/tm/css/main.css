@@ -2832,7 +2832,7 @@ tr.selected td {
 /* line 803, ../sass/components/_misc.scss */
 .progress .filled {
   background-color: #0072b9;
-  background-image: url('../images/progress.gif?1419949660');
+  background-image: url('../images/progress.gif?1421906487');
 }
 
 /* ==========================================================================
@@ -2895,7 +2895,7 @@ Icons
 .form-submit.follow.flagged:before, .form-submit:before, .messages.status:before, .status.messages--status:before, .status.messages--warning:before, .status.messages--error:before, .icon-s-subtract, .icon-s-cancel, .icon-s-arr-up, .icon-s-arr-right, .cta-inline:after, .contained-block .detail-item .detail-venue-link a:after, .contained-block .more-link a:after, #foot-nav a:before, .icon-s-arr-left, .icon-s-arr-down, .bttn-dropdown:after, html.js .collapsible .fieldset-legend a:after, .views-exposed-form .form-type-select:after, .icon-s-add, .bttn.follow:before, .bttn-group a.follow:before, .page-search .tabs-primary a.follow:before, .pager li a.follow:before, .pager .follow.pager-current:before, .views-exposed-form .follow.form-type-select:before, .follow.twitter-login:before,
 .form-submit.follow:before, .icon-refresh, .icon-phone, .icon-pencil, .bttn.edit:before, .bttn-group a.edit:before, .page-search .tabs-primary a.edit:before, .pager li a.edit:before, .pager .edit.pager-current:before, .views-exposed-form .edit.form-type-select:before, .edit.twitter-login:before,
 .form-submit.edit:before, .icon-my-location, .icon-mobile, .icon-menu, #prime-nav .browse-wrapper .toggle:before, .icon-map, .icon-map-marker, .contained-block .detail-item.field-location:before, .contained-block .detail-item.location:before, .icon-list, .icon-linkedin, #foot-nav .linkedin:before, .contained-block .detail-item.field-link-linkedin:before, .icon-image, .icon-home, .icon-history, .icon-grid, .icon-google-plus, .icon-globe, .contained-block .detail-item.field-link-website:before, .icon-github, .icon-flickr, .icon-feed, .icon-facebook, #foot-nav .facebook:before, .contained-block .detail-item.field-link-facebook:before, .icon-expand, .icon-email, .icon-download, .icon-disc-cancel, .icon-description, .contained-block .detail-item.field-about-me:before, .contained-block .detail-item.about-me:before, .contained-block .detail-item.body:before, .icon-cog, .bttn.settings:before, .bttn-group a.settings:before, .page-search .tabs-primary a.settings:before, .pager li a.settings:before, .pager .settings.pager-current:before, .views-exposed-form .settings.form-type-select:before, .settings.twitter-login:before,
-.form-submit.settings:before, .icon-clock, .contained-block .detail-item.field-date-event:before, .icon-circle-warning, .messages.warning:before, .warning.messages--status:before, .warning.messages--warning:before, .warning.messages--error:before, .icon-circle-success, .icon-circle-question, .icon-circle-play, .icon-circle-info, .icon-circle-error, .messages.error:before, .error.messages--status:before, .error.messages--warning:before, .error.messages--error:before, .icon-cancel, .icon-arr-up, .icon-arr-tail-up, .icon-arr-tail-right, .icon-arr-tail-left, .icon-arr-tail-down, .icon-arr-right, .icon-arr-right-last, .icon-arr-left, .icon-arr-left-first, .icon-arr-down, .icon-add, [class^="icon-"], [class*=" icon-"] {
+.form-submit.settings:before, .icon-clock, .contained-block .detail-item.field-date-event:before, .icon-circle-warning, .messages.warning:before, .warning.messages--status:before, .warning.messages--warning:before, .warning.messages--error:before, .icon-circle-success, .icon-circle-question, .icon-circle-play, .icon-circle-info, .icon-circle-error, .messages.error:before, .error.messages--status:before, .error.messages--warning:before, .error.messages--error:before, .icon-cancel, .icon-arr-up, .icon-arr-tail-up, .icon-arr-tail-right, .icon-arr-tail-left, .icon-arr-tail-down, .icon-arr-right, .icon-arr-right-last, .icon-arr-left, .icon-arr-left-first, .icon-arr-down, .icon-add, .icon-connection, .contained-block .detail-item.tm-ds-connection-actions:before, [class^="icon-"], [class*=" icon-"] {
   font-family: 'tm-icons';
   speak: none;
   font-style: normal;
@@ -3308,10 +3308,15 @@ Icons
   content: "\e64d";
 }
 
+/* line 354, ../sass/_type.scss */
+.icon-connection, .contained-block .detail-item.tm-ds-connection-actions:before {
+  content: "\e639";
+}
+
 /* ==========================================================================
    Headings
    ========================================================================== */
-/* line 359, ../sass/_type.scss */
+/* line 363, ../sass/_type.scss */
 .sh-std, #welcome .hd .subtitle {
   font-size: 1rem;
   line-height: 1.5;
@@ -3319,14 +3324,14 @@ Icons
   padding: 0;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 359, ../sass/_type.scss */
+  /* line 363, ../sass/_type.scss */
   .sh-std, #welcome .hd .subtitle {
     font-size: 1.25rem;
     line-height: 1.4;
   }
 }
 
-/* line 372, ../sass/_type.scss */
+/* line 376, ../sass/_type.scss */
 .hd-xxl, #welcome .hd .prime-title {
   font-size: 1.75rem;
   line-height: 1.28571;
@@ -3335,7 +3340,7 @@ Icons
   padding: 0;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 372, ../sass/_type.scss */
+  /* line 376, ../sass/_type.scss */
   .hd-xxl, #welcome .hd .prime-title {
     font-size: 2.25rem;
     line-height: 1.22222;
@@ -3343,7 +3348,7 @@ Icons
   }
 }
 
-/* line 386, ../sass/_type.scss */
+/* line 390, ../sass/_type.scss */
 h1, .hd-xl {
   font-size: 1.75rem;
   line-height: 1.28571;
@@ -3352,7 +3357,7 @@ h1, .hd-xl {
   padding: 0;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 386, ../sass/_type.scss */
+  /* line 390, ../sass/_type.scss */
   h1, .hd-xl {
     font-size: 2rem;
     line-height: 1.25;
@@ -3360,7 +3365,7 @@ h1, .hd-xl {
   }
 }
 
-/* line 400, ../sass/_type.scss */
+/* line 404, ../sass/_type.scss */
 h2, .hd-l, .page-node-rsvp #page-title,
 .page-node-communicate #page-title,
 .page-views #page-title,
@@ -3376,7 +3381,7 @@ h2, .hd-l, .page-node-rsvp #page-title,
   padding: 0;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 400, ../sass/_type.scss */
+  /* line 404, ../sass/_type.scss */
   h2, .hd-l, .page-node-rsvp #page-title,
   .page-node-communicate #page-title,
   .page-views #page-title,
@@ -3390,7 +3395,7 @@ h2, .hd-l, .page-node-rsvp #page-title,
   }
 }
 
-/* line 415, ../sass/_type.scss */
+/* line 419, ../sass/_type.scss */
 h3, .hd-m, #tm-events-communication-form.block .prime-title, #tm-events-communication-form.modal .prime-title,
 #tm-events-rsvp-form.block .prime-title,
 #tm-events-rsvp-form.modal .prime-title,
@@ -3413,7 +3418,7 @@ h3, .hd-m, #tm-events-communication-form.block .prime-title, #tm-events-communic
   padding: 0;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 415, ../sass/_type.scss */
+  /* line 419, ../sass/_type.scss */
   h3, .hd-m, #tm-events-communication-form.block .prime-title, #tm-events-communication-form.modal .prime-title,
   #tm-events-rsvp-form.block .prime-title,
   #tm-events-rsvp-form.modal .prime-title,
@@ -3435,7 +3440,7 @@ h3, .hd-m, #tm-events-communication-form.block .prime-title, #tm-events-communic
   }
 }
 
-/* line 429, ../sass/_type.scss */
+/* line 433, ../sass/_type.scss */
 h4, .hd-s {
   font-size: 1.25rem;
   line-height: 1.4;
@@ -3445,7 +3450,7 @@ h4, .hd-s {
   letter-spacing: normal;
 }
 
-/* line 438, ../sass/_type.scss */
+/* line 442, ../sass/_type.scss */
 h5, .hd-xs, #foot-nav h2, #tm-events-communication-form h2, #tm-events-communication-form h3,
 #tm-events-rsvp-form h2,
 #tm-events-rsvp-form h3,
@@ -3469,7 +3474,7 @@ h5, .hd-xs, #foot-nav h2, #tm-events-communication-form h2, #tm-events-communica
   letter-spacing: normal;
 }
 
-/* line 448, ../sass/_type.scss */
+/* line 452, ../sass/_type.scss */
 h6, .hd-xxs, #account-menu-blk .menu-blk-title {
   font-size: 0.875rem;
   line-height: 1.42857;
@@ -3479,7 +3484,7 @@ h6, .hd-xxs, #account-menu-blk .menu-blk-title {
   letter-spacing: normal;
 }
 
-/* line 457, ../sass/_type.scss */
+/* line 461, ../sass/_type.scss */
 .hd-xxxs, #welcome .bd ul .key {
   font-size: 0.75rem;
   line-height: 1.33333;
@@ -3489,7 +3494,7 @@ h6, .hd-xxs, #account-menu-blk .menu-blk-title {
   letter-spacing: normal;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 457, ../sass/_type.scss */
+  /* line 461, ../sass/_type.scss */
   .hd-xxxs, #welcome .bd ul .key {
     font-size: 0.875rem;
     line-height: 1.42857;
@@ -5679,99 +5684,99 @@ select:disabled {
   font-weight: 800;
   display: block;
 }
-/* line 133, ../sass/_modules.scss */
+/* line 134, ../sass/_modules.scss */
 .contained-block .detail-item.field-link-facebook, .contained-block .detail-item.field-link-linkedin, .contained-block .detail-item.field-link-twitter, .contained-block .detail-item.field-link-instagram, .contained-block .detail-item.field-link-website {
   word-wrap: break-word;
 }
-/* line 137, ../sass/_modules.scss */
+/* line 138, ../sass/_modules.scss */
 .contained-block .detail-item .detail-venue-name {
   font-weight: 800;
 }
-/* line 141, ../sass/_modules.scss */
+/* line 142, ../sass/_modules.scss */
 .contained-block .detail-item .detail-venue-link {
   margin: 1rem 0 0 0;
 }
-/* line 149, ../sass/_modules.scss */
+/* line 150, ../sass/_modules.scss */
 .contained-block .detail-item p {
   margin: 0 0 1rem 0;
 }
-/* line 151, ../sass/_modules.scss */
+/* line 152, ../sass/_modules.scss */
 .contained-block .detail-item p:last-child {
   margin: 0;
 }
-/* line 155, ../sass/_modules.scss */
+/* line 156, ../sass/_modules.scss */
 .contained-block .detail-item dl {
   margin: 0;
   padding: 0;
 }
-/* line 158, ../sass/_modules.scss */
+/* line 159, ../sass/_modules.scss */
 .contained-block .detail-item dl dt {
   font-weight: 800;
   margin: 0;
 }
-/* line 162, ../sass/_modules.scss */
+/* line 163, ../sass/_modules.scss */
 .contained-block .detail-item dl dd {
   margin: 0 0 1rem 0;
 }
-/* line 164, ../sass/_modules.scss */
+/* line 165, ../sass/_modules.scss */
 .contained-block .detail-item dl dd:last-child {
   margin: 0;
 }
-/* line 171, ../sass/_modules.scss */
+/* line 172, ../sass/_modules.scss */
 .contained-block .more-link {
   padding: 0 1rem 1rem 2.5rem;
   margin: 0 0 1rem 0;
 }
-/* line 179, ../sass/_modules.scss */
+/* line 180, ../sass/_modules.scss */
 .contained-block .view-empty {
   padding: 0 1rem;
   margin: 0 0 1rem 0;
   color: #79828c;
 }
-/* line 183, ../sass/_modules.scss */
+/* line 184, ../sass/_modules.scss */
 .contained-block .view-empty p {
   margin: 0 0 1rem 0;
 }
-/* line 185, ../sass/_modules.scss */
+/* line 186, ../sass/_modules.scss */
 .contained-block .view-empty p:last-child {
   margin: 0;
 }
 @media only screen and (min-width: 62.063rem) {
-  /* line 192, ../sass/_modules.scss */
+  /* line 193, ../sass/_modules.scss */
   .contained-block .contained-head {
     padding: 2rem 2rem 1.5rem 2rem;
   }
-  /* line 195, ../sass/_modules.scss */
+  /* line 196, ../sass/_modules.scss */
   .contained-block .detail-item {
     padding: 0 2rem 1rem 3.5rem;
   }
-  /* line 197, ../sass/_modules.scss */
+  /* line 198, ../sass/_modules.scss */
   .contained-block .detail-item:before {
     left: 2rem;
   }
-  /* line 200, ../sass/_modules.scss */
+  /* line 201, ../sass/_modules.scss */
   .contained-block .detail-item:last-child {
     margin-bottom: 2rem;
   }
-  /* line 203, ../sass/_modules.scss */
+  /* line 204, ../sass/_modules.scss */
   .contained-block .detail-item .detail-venue-name {
     padding-right: 7rem;
   }
-  /* line 206, ../sass/_modules.scss */
+  /* line 207, ../sass/_modules.scss */
   .contained-block .detail-item .detail-venue-link {
     position: absolute;
     top: 0;
     right: 2rem;
     margin: 0;
   }
-  /* line 213, ../sass/_modules.scss */
+  /* line 214, ../sass/_modules.scss */
   .contained-block .view-empty {
     padding: 0 2rem;
     margin: 0 0 2rem 0;
   }
 }
 
-/* line 220, ../sass/_modules.scss */
+/* line 221, ../sass/_modules.scss */
 .card.contained, .node-form > div.card,
 #user-profile-form > div.card,
 #user-register-form > div.card, #content .card.search-form {
@@ -5779,7 +5784,7 @@ select:disabled {
   background: transparent;
   position: relative;
 }
-/* line 224, ../sass/_modules.scss */
+/* line 225, ../sass/_modules.scss */
 .card.contained > a, .node-form > div.card > a,
 #user-profile-form > div.card > a,
 #user-register-form > div.card > a, #content .card.search-form > a {
@@ -5787,20 +5792,20 @@ select:disabled {
   display: table;
   color: #213040;
 }
-/* line 229, ../sass/_modules.scss */
+/* line 230, ../sass/_modules.scss */
 .card.contained.node-event > a, .node-form > div.card.node-event > a,
 #user-profile-form > div.card.node-event > a,
 #user-register-form > div.card.node-event > a, #content .card.node-event.search-form > a {
   padding-right: 2.25rem;
 }
-/* line 232, ../sass/_modules.scss */
+/* line 233, ../sass/_modules.scss */
 .card.contained .media, .node-form > div.card .media,
 #user-profile-form > div.card .media,
 #user-register-form > div.card .media, #content .card.search-form .media {
   float: left;
   margin: 0 0.75rem 0 0;
 }
-/* line 236, ../sass/_modules.scss */
+/* line 237, ../sass/_modules.scss */
 .card.contained .cover, .node-form > div.card .cover,
 #user-profile-form > div.card .cover,
 #user-register-form > div.card .cover, #content .card.search-form .cover {
@@ -5808,14 +5813,14 @@ select:disabled {
   position: relative;
   z-index: 1;
 }
-/* line 240, ../sass/_modules.scss */
+/* line 241, ../sass/_modules.scss */
 .card.contained .cover img, .node-form > div.card .cover img,
 #user-profile-form > div.card .cover img,
 #user-register-form > div.card .cover img, #content .card.search-form .cover img {
   display: block;
   border-radius: 0.25rem 0.25rem 0 0;
 }
-/* line 245, ../sass/_modules.scss */
+/* line 246, ../sass/_modules.scss */
 .card.contained .avatar, .node-form > div.card .avatar,
 #user-profile-form > div.card .avatar,
 #user-register-form > div.card .avatar, #content .card.search-form .avatar {
@@ -5828,7 +5833,7 @@ select:disabled {
   text-transform: uppercase;
   font-weight: 800;
 }
-/* line 256, ../sass/_modules.scss */
+/* line 257, ../sass/_modules.scss */
 .card.contained .badge-chapter, .node-form > div.card .badge-chapter,
 #user-profile-form > div.card .badge-chapter,
 #user-register-form > div.card .badge-chapter, #content .card.search-form .badge-chapter {
@@ -5842,7 +5847,7 @@ select:disabled {
   display: inline-block;
   padding-bottom: 0.5rem;
 }
-/* line 266, ../sass/_modules.scss */
+/* line 267, ../sass/_modules.scss */
 .card.contained .badge-chapter:before, .node-form > div.card .badge-chapter:before,
 #user-profile-form > div.card .badge-chapter:before,
 #user-register-form > div.card .badge-chapter:before, #content .card.search-form .badge-chapter:before {
@@ -5852,7 +5857,7 @@ select:disabled {
   vertical-align: bottom;
   width: 0;
 }
-/* line 273, ../sass/_modules.scss */
+/* line 274, ../sass/_modules.scss */
 .card.contained .badge-chapter:after, .node-form > div.card .badge-chapter:after,
 #user-profile-form > div.card .badge-chapter:after,
 #user-register-form > div.card .badge-chapter:after, #content .card.search-form .badge-chapter:after {
@@ -5867,7 +5872,7 @@ select:disabled {
   background-size: cover;
   border-radius: 0.125rem 0 0 0;
 }
-/* line 286, ../sass/_modules.scss */
+/* line 287, ../sass/_modules.scss */
 .card.contained .badge-cal, .node-form > div.card .badge-cal,
 #user-profile-form > div.card .badge-cal,
 #user-register-form > div.card .badge-cal, #content .card.search-form .badge-cal {
@@ -5875,7 +5880,7 @@ select:disabled {
   width: 4rem;
   height: 4rem;
 }
-/* line 290, ../sass/_modules.scss */
+/* line 291, ../sass/_modules.scss */
 .card.contained .badge-cal .month, .node-form > div.card .badge-cal .month,
 #user-profile-form > div.card .badge-cal .month,
 #user-register-form > div.card .badge-cal .month, #content .card.search-form .badge-cal .month {
@@ -5886,7 +5891,7 @@ select:disabled {
   font-size: 0.875rem;
   line-height: 1.5rem;
 }
-/* line 298, ../sass/_modules.scss */
+/* line 299, ../sass/_modules.scss */
 .card.contained .badge-cal .day, .node-form > div.card .badge-cal .day,
 #user-profile-form > div.card .badge-cal .day,
 #user-register-form > div.card .badge-cal .day, #content .card.search-form .badge-cal .day {
@@ -5898,7 +5903,7 @@ select:disabled {
   padding-bottom: 0.25rem;
   letter-spacing: -0.0625rem;
 }
-/* line 312, ../sass/_modules.scss */
+/* line 313, ../sass/_modules.scss */
 .card.contained .badge-organization, .node-form > div.card .badge-organization,
 #user-profile-form > div.card .badge-organization,
 #user-register-form > div.card .badge-organization, #content .card.search-form .badge-organization,
@@ -5911,7 +5916,7 @@ select:disabled {
   height: 4rem;
   display: block;
 }
-/* line 316, ../sass/_modules.scss */
+/* line 317, ../sass/_modules.scss */
 .card.contained .badge-organization img, .node-form > div.card .badge-organization img,
 #user-profile-form > div.card .badge-organization img,
 #user-register-form > div.card .badge-organization img, #content .card.search-form .badge-organization img,
@@ -5924,7 +5929,7 @@ select:disabled {
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 322, ../sass/_modules.scss */
+/* line 323, ../sass/_modules.scss */
 .card.contained .teaser, .node-form > div.card .teaser,
 #user-profile-form > div.card .teaser,
 #user-register-form > div.card .teaser, #content .card.search-form .teaser {
@@ -5933,13 +5938,13 @@ select:disabled {
   vertical-align: middle;
   padding-right: 1.75rem;
 }
-/* line 327, ../sass/_modules.scss */
+/* line 328, ../sass/_modules.scss */
 .card.contained .teaser p, .node-form > div.card .teaser p,
 #user-profile-form > div.card .teaser p,
 #user-register-form > div.card .teaser p, #content .card.search-form .teaser p {
   margin: 0;
 }
-/* line 329, ../sass/_modules.scss */
+/* line 330, ../sass/_modules.scss */
 .card.contained .prime-title, .node-form > div.card .prime-title,
 #user-profile-form > div.card .prime-title,
 #user-register-form > div.card .prime-title, #content .card.search-form .prime-title {
@@ -5950,7 +5955,7 @@ select:disabled {
   padding: 0;
   letter-spacing: normal;
 }
-/* line 338, ../sass/_modules.scss */
+/* line 339, ../sass/_modules.scss */
 .card.contained .meta, .node-form > div.card .meta,
 #user-profile-form > div.card .meta,
 #user-register-form > div.card .meta, #content .card.search-form .meta {
@@ -5959,26 +5964,26 @@ select:disabled {
   line-height: 1.25rem;
   display: block;
 }
-/* line 344, ../sass/_modules.scss */
+/* line 345, ../sass/_modules.scss */
 .card.contained .meta span:after, .node-form > div.card .meta span:after,
 #user-profile-form > div.card .meta span:after,
 #user-register-form > div.card .meta span:after, #content .card.search-form .meta span:after {
   content: ', ';
 }
-/* line 349, ../sass/_modules.scss */
+/* line 350, ../sass/_modules.scss */
 .card.contained .meta span:last-of-type:after, .node-form > div.card .meta span:last-of-type:after,
 #user-profile-form > div.card .meta span:last-of-type:after,
 #user-register-form > div.card .meta span:last-of-type:after, #content .card.search-form .meta span:last-of-type:after {
   content: '';
 }
-/* line 354, ../sass/_modules.scss */
+/* line 355, ../sass/_modules.scss */
 .card.contained .extra, .node-form > div.card .extra,
 #user-profile-form > div.card .extra,
 #user-register-form > div.card .extra, #content .card.search-form .extra {
   position: absolute;
   top: 0.5rem;
 }
-/* line 358, ../sass/_modules.scss */
+/* line 359, ../sass/_modules.scss */
 .card.contained .chapter-sticker, .node-form > div.card .chapter-sticker,
 #user-profile-form > div.card .chapter-sticker,
 #user-register-form > div.card .chapter-sticker, #content .card.search-form .chapter-sticker {
@@ -6002,13 +6007,13 @@ select:disabled {
   -o-transform-origin: top right;
   transform-origin: top right;
 }
-/* line 377, ../sass/_modules.scss */
+/* line 378, ../sass/_modules.scss */
 .node-chapter .card.contained .extra, .node-chapter .node-form > div.card .extra,
 .node-chapter #user-profile-form > div.card .extra,
 .node-chapter #user-register-form > div.card .extra, .node-chapter #content .card.search-form .extra, #content .node-chapter .card.search-form .extra {
   display: none;
 }
-/* line 382, ../sass/_modules.scss */
+/* line 383, ../sass/_modules.scss */
 .team-list .card.contained, .team-list .node-form > div.card,
 .team-list #user-profile-form > div.card,
 .team-list #user-register-form > div.card, .team-list #content .card.search-form, #content .team-list .card.search-form, .related-list .card.contained, .related-list .node-form > div.card,
@@ -6017,7 +6022,7 @@ select:disabled {
   margin-bottom: 0;
   border-radius: 0;
 }
-/* line 387, ../sass/_modules.scss */
+/* line 388, ../sass/_modules.scss */
 .team-list .card.contained > a, .team-list .node-form > div.card > a,
 .team-list #user-profile-form > div.card > a,
 .team-list #user-register-form > div.card > a, .team-list #content .card.search-form > a, #content .team-list .card.search-form > a, .related-list .card.contained > a, .related-list .node-form > div.card > a,
@@ -6041,7 +6046,7 @@ select:disabled {
   -o-transition-delay: 0, 0, 0, 0;
   transition-delay: 0, 0, 0, 0;
 }
-/* line 394, ../sass/_modules.scss */
+/* line 395, ../sass/_modules.scss */
 .team-list .card.contained > a:hover, .team-list .node-form > div.card > a:hover,
 .team-list #user-profile-form > div.card > a:hover,
 .team-list #user-register-form > div.card > a:hover, .team-list #content .card.search-form > a:hover, #content .team-list .card.search-form > a:hover, .related-list .card.contained > a:hover, .related-list .node-form > div.card > a:hover,
@@ -6051,7 +6056,7 @@ select:disabled {
   background-color: rgba(127, 190, 218, 0.2);
   color: #007eb5;
 }
-/* line 401, ../sass/_modules.scss */
+/* line 402, ../sass/_modules.scss */
 .team-list .card.contained .extra, .team-list .node-form > div.card .extra,
 .team-list #user-profile-form > div.card .extra,
 .team-list #user-register-form > div.card .extra, .team-list #content .card.search-form .extra, #content .team-list .card.search-form .extra, .related-list .card.contained .extra, .related-list .node-form > div.card .extra,
@@ -6060,7 +6065,7 @@ select:disabled {
   right: 2.25rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 382, ../sass/_modules.scss */
+  /* line 383, ../sass/_modules.scss */
   .team-list .card.contained, .team-list .node-form > div.card,
   .team-list #user-profile-form > div.card,
   .team-list #user-register-form > div.card, .team-list #content .card.search-form, #content .team-list .card.search-form, .related-list .card.contained, .related-list .node-form > div.card,
@@ -6070,7 +6075,7 @@ select:disabled {
   }
 }
 @media only screen and (min-width: 62.063rem) {
-  /* line 410, ../sass/_modules.scss */
+  /* line 411, ../sass/_modules.scss */
   .team-list .card.contained > a, .team-list .node-form > div.card > a,
   .team-list #user-profile-form > div.card > a,
   .team-list #user-register-form > div.card > a, .team-list #content .card.search-form > a, #content .team-list .card.search-form > a, .related-list .card.contained > a, .related-list .node-form > div.card > a,
@@ -6079,7 +6084,7 @@ select:disabled {
     padding-left: 2rem;
     padding-right: 4rem;
   }
-  /* line 414, ../sass/_modules.scss */
+  /* line 415, ../sass/_modules.scss */
   .team-list .card.contained .extra, .team-list .node-form > div.card .extra,
   .team-list #user-profile-form > div.card .extra,
   .team-list #user-register-form > div.card .extra, .team-list #content .card.search-form .extra, #content .team-list .card.search-form .extra, .related-list .card.contained .extra, .related-list .node-form > div.card .extra,
@@ -6088,7 +6093,7 @@ select:disabled {
     right: 3.25rem;
   }
 }
-/* line 423, ../sass/_modules.scss */
+/* line 424, ../sass/_modules.scss */
 .grid .card.contained > a, .grid .node-form > div.card > a,
 .grid #user-profile-form > div.card > a,
 .grid #user-register-form > div.card > a, .grid #content .card.search-form > a, #content .grid .card.search-form > a {
@@ -6100,7 +6105,7 @@ select:disabled {
   -o-transition: -o-transform 0.1s ease-in-out;
   transition: transform 0.1s ease-in-out;
 }
-/* line 429, ../sass/_modules.scss */
+/* line 430, ../sass/_modules.scss */
 .grid .card.contained > a:hover, .grid .node-form > div.card > a:hover,
 .grid #user-profile-form > div.card > a:hover,
 .grid #user-register-form > div.card > a:hover, .grid #content .card.search-form > a:hover, #content .grid .card.search-form > a:hover {
@@ -6112,46 +6117,46 @@ select:disabled {
   -o-transform: scale(1.05);
   transform: scale(1.05);
 }
-/* line 435, ../sass/_modules.scss */
+/* line 436, ../sass/_modules.scss */
 .grid .card.contained .extra, .grid .node-form > div.card .extra,
 .grid #user-profile-form > div.card .extra,
 .grid #user-register-form > div.card .extra, .grid #content .card.search-form .extra, #content .grid .card.search-form .extra {
   right: 1.75rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 421, ../sass/_modules.scss */
+  /* line 422, ../sass/_modules.scss */
   .grid .card.contained, .grid .node-form > div.card,
   .grid #user-profile-form > div.card,
   .grid #user-register-form > div.card, .grid #content .card.search-form, #content .grid .card.search-form {
     text-align: center;
   }
-  /* line 441, ../sass/_modules.scss */
+  /* line 442, ../sass/_modules.scss */
   .grid .card.contained > a, .grid .node-form > div.card > a,
   .grid #user-profile-form > div.card > a,
   .grid #user-register-form > div.card > a, .grid #content .card.search-form > a, #content .grid .card.search-form > a {
     display: block;
     padding: 0 0 2rem 0;
   }
-  /* line 445, ../sass/_modules.scss */
+  /* line 446, ../sass/_modules.scss */
   .grid .card.contained.node-event > a, .grid .node-form > div.card.node-event > a,
   .grid #user-profile-form > div.card.node-event > a,
   .grid #user-register-form > div.card.node-event > a, .grid #content .card.node-event.search-form > a, #content .grid .card.node-event.search-form > a {
     padding-right: 0;
   }
-  /* line 448, ../sass/_modules.scss */
+  /* line 449, ../sass/_modules.scss */
   .grid .card.contained .media, .grid .node-form > div.card .media,
   .grid #user-profile-form > div.card .media,
   .grid #user-register-form > div.card .media, .grid #content .card.search-form .media, #content .grid .card.search-form .media {
     float: none;
     margin: 0 0 1rem 0;
   }
-  /* line 452, ../sass/_modules.scss */
+  /* line 453, ../sass/_modules.scss */
   .grid .card.contained .cover, .grid .node-form > div.card .cover,
   .grid #user-profile-form > div.card .cover,
   .grid #user-register-form > div.card .cover, .grid #content .card.search-form .cover, #content .grid .card.search-form .cover {
     display: block;
   }
-  /* line 455, ../sass/_modules.scss */
+  /* line 456, ../sass/_modules.scss */
   .grid .card.contained .avatar, .grid .node-form > div.card .avatar,
   .grid #user-profile-form > div.card .avatar,
   .grid #user-register-form > div.card .avatar, .grid #content .card.search-form .avatar, #content .grid .card.search-form .avatar {
@@ -6161,7 +6166,7 @@ select:disabled {
     background-color: #FFF;
     margin: -4rem auto 0 auto;
   }
-  /* line 462, ../sass/_modules.scss */
+  /* line 463, ../sass/_modules.scss */
   .grid .card.contained .badge-chapter, .grid .node-form > div.card .badge-chapter,
   .grid #user-profile-form > div.card .badge-chapter,
   .grid #user-register-form > div.card .badge-chapter, .grid #content .card.search-form .badge-chapter, #content .grid .card.search-form .badge-chapter {
@@ -6170,7 +6175,7 @@ select:disabled {
     font-size: 1.25rem;
     padding-bottom: 1rem;
   }
-  /* line 467, ../sass/_modules.scss */
+  /* line 468, ../sass/_modules.scss */
   .grid .card.contained .badge-chapter:after, .grid .node-form > div.card .badge-chapter:after,
   .grid #user-profile-form > div.card .badge-chapter:after,
   .grid #user-register-form > div.card .badge-chapter:after, .grid #content .card.search-form .badge-chapter:after, #content .grid .card.search-form .badge-chapter:after {
@@ -6178,21 +6183,21 @@ select:disabled {
     width: 1rem;
     border-radius: 0.25rem 0 0 0;
   }
-  /* line 473, ../sass/_modules.scss */
+  /* line 474, ../sass/_modules.scss */
   .grid .card.contained .badge-cal, .grid .node-form > div.card .badge-cal,
   .grid #user-profile-form > div.card .badge-cal,
   .grid #user-register-form > div.card .badge-cal, .grid #content .card.search-form .badge-cal, #content .grid .card.search-form .badge-cal {
     width: 6rem;
     height: 6rem;
   }
-  /* line 476, ../sass/_modules.scss */
+  /* line 477, ../sass/_modules.scss */
   .grid .card.contained .badge-cal .month, .grid .node-form > div.card .badge-cal .month,
   .grid #user-profile-form > div.card .badge-cal .month,
   .grid #user-register-form > div.card .badge-cal .month, .grid #content .card.search-form .badge-cal .month, #content .grid .card.search-form .badge-cal .month {
     font-size: 1.25rem;
     line-height: 2rem;
   }
-  /* line 480, ../sass/_modules.scss */
+  /* line 481, ../sass/_modules.scss */
   .grid .card.contained .badge-cal .day, .grid .node-form > div.card .badge-cal .day,
   .grid #user-profile-form > div.card .badge-cal .day,
   .grid #user-register-form > div.card .badge-cal .day, .grid #content .card.search-form .badge-cal .day, #content .grid .card.search-form .badge-cal .day {
@@ -6201,7 +6206,7 @@ select:disabled {
     padding-bottom: 0.5rem;
     letter-spacing: -0.125rem;
   }
-  /* line 488, ../sass/_modules.scss */
+  /* line 489, ../sass/_modules.scss */
   .grid .card.contained .badge-organization, .grid .node-form > div.card .badge-organization,
   .grid #user-profile-form > div.card .badge-organization,
   .grid #user-register-form > div.card .badge-organization, .grid #content .card.search-form .badge-organization, #content .grid .card.search-form .badge-organization,
@@ -6214,7 +6219,7 @@ select:disabled {
     width: 6rem;
     height: 6rem;
   }
-  /* line 492, ../sass/_modules.scss */
+  /* line 493, ../sass/_modules.scss */
   .grid .card.contained .teaser, .grid .node-form > div.card .teaser,
   .grid #user-profile-form > div.card .teaser,
   .grid #user-register-form > div.card .teaser, .grid #content .card.search-form .teaser, #content .grid .card.search-form .teaser {
@@ -6222,21 +6227,21 @@ select:disabled {
     width: auto;
     padding: 0 1rem;
   }
-  /* line 497, ../sass/_modules.scss */
+  /* line 498, ../sass/_modules.scss */
   .grid .card.contained .prime-title, .grid .node-form > div.card .prime-title,
   .grid #user-profile-form > div.card .prime-title,
   .grid #user-register-form > div.card .prime-title, .grid #content .card.search-form .prime-title, #content .grid .card.search-form .prime-title {
     font-size: 1.5rem;
     line-height: 1.16667;
   }
-  /* line 502, ../sass/_modules.scss */
+  /* line 503, ../sass/_modules.scss */
   .grid .card.contained .meta, .grid .node-form > div.card .meta,
   .grid #user-profile-form > div.card .meta,
   .grid #user-register-form > div.card .meta, .grid #content .card.search-form .meta, #content .grid .card.search-form .meta {
     font-size: 1rem;
     line-height: 1.5;
   }
-  /* line 506, ../sass/_modules.scss */
+  /* line 507, ../sass/_modules.scss */
   .grid .card.contained .extra, .grid .node-form > div.card .extra,
   .grid #user-profile-form > div.card .extra,
   .grid #user-register-form > div.card .extra, .grid #content .card.search-form .extra, #content .grid .card.search-form .extra {
@@ -6245,7 +6250,7 @@ select:disabled {
     left: 0.5rem;
     right: auto;
   }
-  /* line 512, ../sass/_modules.scss */
+  /* line 513, ../sass/_modules.scss */
   .grid .card.contained .chapter-sticker, .grid .node-form > div.card .chapter-sticker,
   .grid #user-profile-form > div.card .chapter-sticker,
   .grid #user-register-form > div.card .chapter-sticker, .grid #content .card.search-form .chapter-sticker, #content .grid .card.search-form .chapter-sticker {
@@ -6603,18 +6608,12 @@ select:disabled {
 
 /* line 232, ../sass/_single.scss */
 .front {
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(33, 48, 64, 0)), color-stop(50%, rgba(33, 48, 64, 0)), color-stop(100%, #213040)), url('../images/../images/layout/home-bg-img-01a.jpg?1419949660');
-  background: -webkit-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1419949660');
-  background: -moz-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1419949660');
-  background: -o-linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1419949660');
-  background: linear-gradient(rgba(33, 48, 64, 0), rgba(33, 48, 64, 0), #213040), url('../images/../images/layout/home-bg-img-01a.jpg?1419949660');
+  /*@include background(linear-gradient(rgba($primary-color, 0), rgba($primary-color, 0), $primary-color), image-url("../videos/frontpage/tm_background_video.jpg"));
   background-repeat: no-repeat, no-repeat;
   background-position: center center, center center;
-  -webkit-background-size: 100% 100%, cover;
-  -moz-background-size: 100% 100%, cover;
-  -o-background-size: 100% 100%, cover;
-  background-size: 100% 100%, cover;
-  background-color: #213040;
+  @include background-size(100% 100%, cover);*/
+  background-color: #000;
+  /*$primary-color;*/
 }
 /* line 239, ../sass/_single.scss */
 .front #page, .front #site-canvas {
@@ -6662,28 +6661,33 @@ select:disabled {
   margin: 0;
 }
 
-/* line 273, ../sass/_single.scss */
+/* line 272, ../sass/_single.scss */
+#block-tm-base-tm-homepage-stats li:after {
+  display: none;
+}
+
+/* line 275, ../sass/_single.scss */
 #upcoming-events .hd {
   margin-bottom: 2rem;
   text-shadow: 0 2px 0 rgba(33, 48, 64, 0.4);
 }
-/* line 277, ../sass/_single.scss */
+/* line 279, ../sass/_single.scss */
 #upcoming-events .hd .prime-title {
   color: #FFF;
   text-align: center;
   margin-bottom: 0;
 }
-/* line 284, ../sass/_single.scss */
+/* line 286, ../sass/_single.scss */
 #upcoming-events .more-link {
   text-align: center;
   margin: 1rem 0 0 0;
 }
-/* line 288, ../sass/_single.scss */
+/* line 290, ../sass/_single.scss */
 #upcoming-events .more-link .bttn, #upcoming-events .more-link .bttn-group a, .bttn-group #upcoming-events .more-link a, #upcoming-events .more-link .page-search .tabs-primary a, .page-search .tabs-primary #upcoming-events .more-link a, #upcoming-events .more-link .pager li a, .pager li #upcoming-events .more-link a, #upcoming-events .more-link .pager .pager-current, .pager #upcoming-events .more-link .pager-current, #upcoming-events .more-link .views-exposed-form .form-type-select, .views-exposed-form #upcoming-events .more-link .form-type-select, #upcoming-events .more-link .twitter-login {
   width: 14rem;
 }
 
-/* line 294, ../sass/_single.scss */
+/* line 296, ../sass/_single.scss */
 #welcome {
   width: auto;
   margin-left: -1rem;
@@ -6706,7 +6710,7 @@ select:disabled {
 #welcome:after {
   clear: both;
 }
-/* line 301, ../sass/_single.scss */
+/* line 303, ../sass/_single.scss */
 #welcome .hd {
   position: relative;
   padding-left: 1rem;
@@ -6716,16 +6720,16 @@ select:disabled {
   clear: both;
   margin-bottom: 2rem;
 }
-/* line 308, ../sass/_single.scss */
+/* line 310, ../sass/_single.scss */
 #welcome .hd .subtitle {
   margin-bottom: 0;
 }
-/* line 313, ../sass/_single.scss */
+/* line 315, ../sass/_single.scss */
 #welcome .bd {
   float: left;
   width: 100%;
 }
-/* line 316, ../sass/_single.scss */
+/* line 318, ../sass/_single.scss */
 #welcome .bd ul {
   width: auto;
   margin-left: -1rem;
@@ -6747,7 +6751,7 @@ select:disabled {
 #welcome .bd ul:after {
   clear: both;
 }
-/* line 321, ../sass/_single.scss */
+/* line 323, ../sass/_single.scss */
 #welcome .bd ul li {
   overflow: hidden;
   position: relative;
@@ -6758,7 +6762,7 @@ select:disabled {
   display: inline-block;
   float: none !important;
 }
-/* line 326, ../sass/_single.scss */
+/* line 328, ../sass/_single.scss */
 #welcome .bd ul li:after {
   position: absolute;
   right: 0;
@@ -6769,18 +6773,18 @@ select:disabled {
   background: rgba(255, 255, 255, 0.2);
   text-shadow: none;
 }
-/* line 336, ../sass/_single.scss */
+/* line 338, ../sass/_single.scss */
 #welcome .bd ul li:last-child:after {
   display: none;
 }
-/* line 340, ../sass/_single.scss */
+/* line 342, ../sass/_single.scss */
 #welcome .bd ul a {
   position: relative;
   display: block;
   color: #FFF;
   padding-bottom: 1.5rem;
 }
-/* line 346, ../sass/_single.scss */
+/* line 348, ../sass/_single.scss */
 #welcome .bd ul .key {
   position: absolute;
   bottom: 0;
@@ -6789,28 +6793,28 @@ select:disabled {
   text-transform: uppercase;
   margin: 0;
 }
-/* line 355, ../sass/_single.scss */
+/* line 357, ../sass/_single.scss */
 #welcome .bd ul .value {
   font-size: 2.75rem;
   line-height: 1;
 }
-/* line 364, ../sass/_single.scss */
+/* line 366, ../sass/_single.scss */
 #welcome .cta-wrapper {
   margin: 2rem 0 0 0;
 }
-/* line 366, ../sass/_single.scss */
+/* line 368, ../sass/_single.scss */
 #welcome .cta-wrapper .bttn, #welcome .cta-wrapper .bttn-group a, .bttn-group #welcome .cta-wrapper a, #welcome .cta-wrapper .page-search .tabs-primary a, .page-search .tabs-primary #welcome .cta-wrapper a, #welcome .cta-wrapper .pager li a, .pager li #welcome .cta-wrapper a, #welcome .cta-wrapper .pager .pager-current, .pager #welcome .cta-wrapper .pager-current, #welcome .cta-wrapper .views-exposed-form .form-type-select, .views-exposed-form #welcome .cta-wrapper .form-type-select, #welcome .cta-wrapper .twitter-login {
   text-shadow: none;
   width: 14rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 294, ../sass/_single.scss */
+  /* line 296, ../sass/_single.scss */
   #welcome {
     margin-bottom: 4rem;
   }
 }
 @media only screen and (min-width: 55.063rem) {
-  /* line 377, ../sass/_single.scss */
+  /* line 379, ../sass/_single.scss */
   #welcome .hd {
     position: relative;
     padding-left: 1rem;
@@ -6820,7 +6824,7 @@ select:disabled {
     right: auto;
     float: left;
   }
-  /* line 382, ../sass/_single.scss */
+  /* line 384, ../sass/_single.scss */
   #welcome .bd ul li {
     position: relative;
     padding-left: 1rem;
@@ -6830,7 +6834,7 @@ select:disabled {
   }
 }
 @media only screen and (min-width: 62.063rem) {
-  /* line 389, ../sass/_single.scss */
+  /* line 391, ../sass/_single.scss */
   #welcome .hd {
     position: relative;
     padding-left: 1rem;
@@ -6840,7 +6844,7 @@ select:disabled {
     right: auto;
     float: left;
   }
-  /* line 394, ../sass/_single.scss */
+  /* line 396, ../sass/_single.scss */
   #welcome .bd ul li {
     position: relative;
     padding-left: 1rem;
@@ -6850,27 +6854,27 @@ select:disabled {
   }
 }
 
-/* line 402, ../sass/_single.scss */
+/* line 404, ../sass/_single.scss */
 .trilithon-header {
   margin: 0 1rem 1rem 1rem;
   position: relative;
 }
-/* line 406, ../sass/_single.scss */
+/* line 408, ../sass/_single.scss */
 .trilithon-header .media {
   margin-bottom: -3rem;
   overflow: hidden;
   border-radius: 0.25rem 0.25rem 0 0;
 }
-/* line 411, ../sass/_single.scss */
+/* line 413, ../sass/_single.scss */
 .trilithon-header .cover {
   max-height: 16rem;
 }
-/* line 413, ../sass/_single.scss */
+/* line 415, ../sass/_single.scss */
 .trilithon-header .cover img {
   display: block;
   width: 100%;
 }
-/* line 418, ../sass/_single.scss */
+/* line 420, ../sass/_single.scss */
 .trilithon-header .avatar {
   text-align: center;
   position: relative;
@@ -6885,7 +6889,7 @@ select:disabled {
   background-color: #FFF;
   margin: 0 auto 1rem auto;
 }
-/* line 433, ../sass/_single.scss */
+/* line 435, ../sass/_single.scss */
 .trilithon-header .badge-chapter {
   position: relative;
   display: block;
@@ -6897,7 +6901,7 @@ select:disabled {
   display: inline-block;
   padding-bottom: 0.5rem;
 }
-/* line 443, ../sass/_single.scss */
+/* line 445, ../sass/_single.scss */
 .trilithon-header .badge-chapter:before {
   content: '';
   display: inline-block;
@@ -6905,7 +6909,7 @@ select:disabled {
   vertical-align: bottom;
   width: 0;
 }
-/* line 450, ../sass/_single.scss */
+/* line 452, ../sass/_single.scss */
 .trilithon-header .badge-chapter:after {
   position: absolute;
   display: block;
@@ -6918,13 +6922,13 @@ select:disabled {
   background-size: cover;
   border-radius: 0.125rem 0 0 0;
 }
-/* line 463, ../sass/_single.scss */
+/* line 465, ../sass/_single.scss */
 .trilithon-header .badge-cal {
   display: block;
   width: 4rem;
   height: 4rem;
 }
-/* line 467, ../sass/_single.scss */
+/* line 469, ../sass/_single.scss */
 .trilithon-header .badge-cal .month {
   display: block;
   border-radius: 0.25rem 0.25rem 0 0;
@@ -6933,7 +6937,7 @@ select:disabled {
   font-size: 0.875rem;
   line-height: 1.5rem;
 }
-/* line 475, ../sass/_single.scss */
+/* line 477, ../sass/_single.scss */
 .trilithon-header .badge-cal .day {
   display: block;
   border-radius: 0 0 0.25rem 0.25rem;
@@ -6943,53 +6947,53 @@ select:disabled {
   padding-bottom: 0.25rem;
   letter-spacing: -0.0625rem;
 }
-/* line 489, ../sass/_single.scss */
+/* line 491, ../sass/_single.scss */
 .trilithon-header .badge-organization,
 .trilithon-header .badge-user {
   width: 4rem;
   height: 4rem;
   display: block;
 }
-/* line 493, ../sass/_single.scss */
+/* line 495, ../sass/_single.scss */
 .trilithon-header .badge-organization img,
 .trilithon-header .badge-user img {
   display: block;
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 499, ../sass/_single.scss */
+/* line 501, ../sass/_single.scss */
 .trilithon-header .bd {
   padding: 0 1rem 6rem 1rem;
   text-align: center;
 }
-/* line 503, ../sass/_single.scss */
+/* line 505, ../sass/_single.scss */
 .trilithon-header .prime-title {
   font-size: 1.5rem;
   line-height: 1.16667;
   margin: 0;
 }
-/* line 509, ../sass/_single.scss */
+/* line 511, ../sass/_single.scss */
 .trilithon-header .meta {
   margin: 0;
   color: #79828c;
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
-/* line 515, ../sass/_single.scss */
+/* line 517, ../sass/_single.scss */
 .trilithon-header .meta span:after {
   content: ', ';
 }
-/* line 520, ../sass/_single.scss */
+/* line 522, ../sass/_single.scss */
 .trilithon-header .meta span:last-of-type:after {
   content: '';
 }
-/* line 525, ../sass/_single.scss */
+/* line 527, ../sass/_single.scss */
 .trilithon-header .extra {
   position: absolute;
   top: 0.5rem;
   left: 0.5rem;
 }
-/* line 530, ../sass/_single.scss */
+/* line 532, ../sass/_single.scss */
 .trilithon-header .chapter-sticker {
   border-radius: 0.25rem;
   display: block;
@@ -7001,7 +7005,7 @@ select:disabled {
   font-size: 0.875rem;
   width: 4rem;
 }
-/* line 543, ../sass/_single.scss */
+/* line 545, ../sass/_single.scss */
 .trilithon-header .actions {
   position: absolute;
   right: 0;
@@ -7011,7 +7015,7 @@ select:disabled {
   padding: 1rem;
   border-top: 1px #e8eaeb solid;
 }
-/* line 553, ../sass/_single.scss */
+/* line 555, ../sass/_single.scss */
 .trilithon-header .actions-menu {
   list-style: none;
   margin: 0;
@@ -7020,77 +7024,77 @@ select:disabled {
   vertical-align: bottom;
   text-align: left;
 }
-/* line 560, ../sass/_single.scss */
+/* line 562, ../sass/_single.scss */
 .trilithon-header .actions-menu > li {
   float: left;
   position: relative;
   margin: 0 0.25rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 402, ../sass/_single.scss */
+  /* line 404, ../sass/_single.scss */
   .trilithon-header {
     margin-bottom: 2rem;
   }
-  /* line 569, ../sass/_single.scss */
+  /* line 571, ../sass/_single.scss */
   .trilithon-header .media {
     margin-bottom: -4rem;
   }
-  /* line 572, ../sass/_single.scss */
+  /* line 574, ../sass/_single.scss */
   .trilithon-header .badge-chapter {
     width: 6rem;
     height: 6rem;
     font-size: 1.25rem;
     padding-bottom: 1rem;
   }
-  /* line 577, ../sass/_single.scss */
+  /* line 579, ../sass/_single.scss */
   .trilithon-header .badge-chapter:after {
     height: 1rem;
     width: 1rem;
     border-radius: 0.25rem 0 0 0;
   }
-  /* line 583, ../sass/_single.scss */
+  /* line 585, ../sass/_single.scss */
   .trilithon-header .badge-cal {
     width: 6rem;
     height: 6rem;
   }
-  /* line 586, ../sass/_single.scss */
+  /* line 588, ../sass/_single.scss */
   .trilithon-header .badge-cal .month {
     font-size: 1.25rem;
     line-height: 2rem;
   }
-  /* line 590, ../sass/_single.scss */
+  /* line 592, ../sass/_single.scss */
   .trilithon-header .badge-cal .day {
     line-height: 3.5rem;
     font-size: 2.5rem;
     padding-bottom: 0.5rem;
     letter-spacing: -0.125rem;
   }
-  /* line 598, ../sass/_single.scss */
+  /* line 600, ../sass/_single.scss */
   .trilithon-header .badge-organization,
   .trilithon-header .badge-user {
     width: 6rem;
     height: 6rem;
   }
-  /* line 602, ../sass/_single.scss */
+  /* line 604, ../sass/_single.scss */
   .trilithon-header .prime-title {
     font-size: 1.75rem;
     line-height: 1.14286;
   }
-  /* line 607, ../sass/_single.scss */
+  /* line 609, ../sass/_single.scss */
   .trilithon-header .meta {
     font-size: 1rem;
     line-height: 1.5;
   }
 }
 @media only screen and (min-width: 55.063rem) {
-  /* line 614, ../sass/_single.scss */
+  /* line 616, ../sass/_single.scss */
   .trilithon-header .media {
     display: table-cell;
     width: 58%;
     margin-bottom: 0;
     border-radius: 0.25rem 0 0 0.25rem;
   }
-  /* line 620, ../sass/_single.scss */
+  /* line 622, ../sass/_single.scss */
   .trilithon-header .cover {
     position: relative;
     width: 150%;
@@ -7098,51 +7102,51 @@ select:disabled {
     margin-left: -70%;
     max-height: none;
   }
-  /* line 627, ../sass/_single.scss */
+  /* line 629, ../sass/_single.scss */
   .trilithon-header .bd {
     vertical-align: middle;
     display: table-cell;
     padding: 1rem 1rem 5rem 1rem;
   }
-  /* line 632, ../sass/_single.scss */
+  /* line 634, ../sass/_single.scss */
   .trilithon-header .extra {
     top: 1rem;
     left: 1rem;
   }
-  /* line 636, ../sass/_single.scss */
+  /* line 638, ../sass/_single.scss */
   .trilithon-header .actions {
     width: 42%;
   }
 }
 @media only screen and (min-width: 62.063rem) {
-  /* line 642, ../sass/_single.scss */
+  /* line 644, ../sass/_single.scss */
   .trilithon-header .media {
     width: 68%;
   }
-  /* line 645, ../sass/_single.scss */
+  /* line 647, ../sass/_single.scss */
   .trilithon-header .cover {
     width: 100%;
     margin-left: 0;
     left: 0;
   }
-  /* line 650, ../sass/_single.scss */
+  /* line 652, ../sass/_single.scss */
   .trilithon-header .bd {
     padding: 2rem 2rem 5rem 2rem;
   }
-  /* line 653, ../sass/_single.scss */
+  /* line 655, ../sass/_single.scss */
   .trilithon-header .chapter-sticker {
     line-height: 3rem;
     font-size: 1.5rem;
     width: 7rem;
   }
-  /* line 658, ../sass/_single.scss */
+  /* line 660, ../sass/_single.scss */
   .trilithon-header .actions {
     width: 32%;
     padding: 1rem 2rem;
   }
 }
 
-/* line 667, ../sass/_single.scss */
+/* line 669, ../sass/_single.scss */
 .team-list,
 .related-list,
 .related-list ul {
@@ -7150,20 +7154,20 @@ select:disabled {
   padding: 0;
   margin: -0.5rem 0 1rem 0;
 }
-/* line 671, ../sass/_single.scss */
+/* line 673, ../sass/_single.scss */
 .team-list li,
 .related-list li,
 .related-list ul li {
   padding: 0.5rem 0;
   box-shadow: 0 1px 0 0 rgba(33, 48, 64, 0.1);
 }
-/* line 674, ../sass/_single.scss */
+/* line 676, ../sass/_single.scss */
 .team-list li:first-child,
 .related-list li:first-child,
 .related-list ul li:first-child {
   padding-top: 0;
 }
-/* line 677, ../sass/_single.scss */
+/* line 679, ../sass/_single.scss */
 .team-list li:last-child,
 .related-list li:last-child,
 .related-list ul li:last-child {

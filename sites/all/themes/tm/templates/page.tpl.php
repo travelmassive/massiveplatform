@@ -10,7 +10,7 @@
 
 <div id="page">
 
-  <header class="header" id="header" role="banner">
+  <header class="header" id="header" role="banner" <?php if ($is_front) {?>style="opacity: 0.9;"<?php } ?>>
     <div class="row">
       <h1 id="site-title">
         <a title="<?php print t('Home'); ?>" rel="home" href="<?php print $front_page; ?>">
@@ -80,6 +80,17 @@
             if (@isset($conf["tm_enable_fontpage_socialfeeds"])) {
               if (($is_front) and ($conf["tm_enable_fontpage_socialfeeds"])) {
                 include './'. path_to_theme() .'/templates/frontpage-socialfeeds.tpl.php';
+              }
+            }
+            ?>
+
+            <?php
+            // Enable wordpress feedme plugin
+            // Show recent blog posts and more
+            global $conf;
+            if (@isset($conf["tm_enable_wordpress_feedme"])) {
+              if ($conf["tm_enable_wordpress_feedme"]) {
+                include './'. path_to_theme() .'/templates/page--wordpress-feedme.tpl.php';
               }
             }
             ?>

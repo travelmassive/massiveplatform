@@ -588,7 +588,7 @@ $conf['tm_enable_fontpage_socialfeeds'] = false;
 /** You will need this wordpress plugin: https://github.com/travelmassive/massiveplatform-wordpress-feedme **/
 $conf['tm_enable_wordpress_feedme'] = false;
 $conf['tm_wordpress_feedme_url'] = "/blog/wp-content/plugins/tm-feeds/feedme.php";
-$conf['tm_wordpress_feedme_frontpage_id'] = "1831"
+$conf['tm_wordpress_feedme_frontpage_id'] = "1831";
 
 /** Limit Follow and Join **/
 /** NOTE: Administrator and chapter leaders do not have limits **/

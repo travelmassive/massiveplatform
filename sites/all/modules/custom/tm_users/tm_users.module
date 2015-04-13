@@ -210,9 +210,12 @@ function tm_users_approve($user){
    
     flag('unflag', 'approval_requested_by_user', $user->uid, $user);
 
+    // Keep track of who approved with approval_approved_by flag
+    flag('flag', 'approval_approved_by', $user->uid, $moderator);
+
   }
 
-  drupal_goto("user/$user->uid/view");
+  drupal_goto(drupal_get_path_alias("user/$user->uid"));
 }
 
 /* Approval callback for requesting approval */
@@ -237,6 +240,11 @@ function tm_users_request_approval($user) {
   if (count($user->field_friendly_url) > 0) { 
     $profile_url = $user->field_friendly_url['und']['0']['value'];
   }
+
+  // get reason for approving and store update user object
+  $reason_for_joining = trim($_GET["reason_for_joining"]);
+  $user->field_reason_for_joining[LANGUAGE_NONE][0]['value'] = $reason_for_joining;
+  field_attach_update('user', $user);
 
   // construct a list of moderators to notify
   $moderator_ids = array();
@@ -285,11 +293,17 @@ function tm_users_request_approval($user) {
   // notify list of moderators
   $first_name = $user->field_user_first_name['und'][0]['value'];
   $last_name = $user->field_user_last_name['und'][0]['value'];
+
+  // send notification
+  $reason_for_joining_safe = strip_tags(check_plain($reason_for_joining));
+  if ($reason_for_joining_safe == "") {
+    $reason_for_joining_safe = "(not provided)";
+  }
+
   foreach ($moderator_ids as $uid) {
 
-      // send notification
       $notify_user = user_load($uid);
-      tm_notifications_notify('user_requested_approval', $notify_user, array('user' => $notify_user, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__PROFILE_URL__' => $profile_url));
+      tm_notifications_notify('user_requested_approval', $notify_user, array('user' => $notify_user, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__PROFILE_URL__' => $profile_url, '__REASON_FOR_JOINING__' => $reason_for_joining_safe));
   }
 
   // flag user as having requested approval
@@ -299,7 +313,7 @@ function tm_users_request_approval($user) {
   // Notify user
   drupal_set_message("Our team has been notified to review your account. Please ensure you've completed your profile to ensure your account is approved, thanks!");
 
-  drupal_goto("user/$user->uid/view");
+  drupal_goto(drupal_get_path_alias("user/$user->uid"));
 
 }
 
@@ -308,7 +322,7 @@ function tm_users_request_approval($user) {
 function tm_users_approval_need_more_info($user){
 
   $approving_user = $GLOBALS['user'];
-  
+
   // send notification message to user that they need to provide more information
   // there doesn't seem to be a hook that can detect we are applying a new role, so do it here
   $approving_user = user_uid_optional_load();
@@ -319,7 +333,17 @@ function tm_users_approval_need_more_info($user){
   }
 
   $moderator_first_name = $approving_user->field_user_first_name['und'][0]['value'];
-  tm_notifications_notify('user_approval_need_more_info', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__MODERATOR_FIRST_NAME__' => $moderator_first_name));
+
+  // get moderator message to send to member
+  // add line breaks
+  $moderator_message = trim($_GET["moderator_message"]);
+  $moderator_message_safe = "";
+  if ($moderator_message != "") {
+      $moderator_message_safe = "<br><strong>Message from " . $moderator_first_name . ":</strong> " . check_plain($moderator_message) . "<br>";
+      $moderator_message_safe = str_replace("__NL__", "<br>", $moderator_message_safe); 
+  }
+
+  tm_notifications_notify('user_approval_need_more_info', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe));
 
   // unflag then flag again
   flag('unflag', 'approval_need_more_info', $user->uid, $approving_user);
@@ -331,7 +355,7 @@ function tm_users_approval_need_more_info($user){
   // Notify user
   drupal_set_message("An email has been sent to " . $user->mail . " requesting they complete their profile information.");
 
-  drupal_goto("user/$user->uid/view");
+  drupal_goto(drupal_get_path_alias("user/$user->uid"));
 }
 
 /* Account is company or brand callback */
@@ -350,7 +374,17 @@ function tm_users_approval_is_company_or_brand($user){
   }
 
   $moderator_first_name = $approving_user->field_user_first_name['und'][0]['value'];
-  tm_notifications_notify('user_approval_is_company_or_brand', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__MODERATOR_FIRST_NAME__' => $moderator_first_name));
+
+  // get moderator message to send to member
+  // add line breaks
+  $moderator_message = trim($_GET["moderator_message"]);
+  $moderator_message_safe = "";
+  if ($moderator_message != "") {
+      $moderator_message_safe = "<br><strong>Message from " . $moderator_first_name . ":</strong> " . check_plain($moderator_message) . "<br>";
+      $moderator_message_safe = str_replace("__NL__", "<br>", $moderator_message_safe); 
+  }
+
+  tm_notifications_notify('user_approval_is_company_or_brand', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe));
 
   // flag the user that its a company or brand
   flag('unflag', 'approval_is_company_or_brand', $user->uid, $approving_user);
@@ -359,11 +393,10 @@ function tm_users_approval_is_company_or_brand($user){
   // unflag requested approval (so they can re-request if they already did)
   flag('unflag', 'approval_requested_by_user', $user->uid, $user);
 
-
   // Notify user
   drupal_set_message("An email has been sent to " . $user->mail . " requesting they personalize their account.");
 
-  drupal_goto("user/$user->uid/view");
+  drupal_goto(drupal_get_path_alias("user/$user->uid"));
 }
 
 /* Un-approval callback */
@@ -372,7 +405,8 @@ function tm_users_unapprove($user){
   if ($role = user_role_load_by_name($role_name)) {
     user_multiple_role_edit(array($user->uid), 'remove_role', $role->rid);
   }
-  drupal_goto("user/$user->uid/view");
+
+  drupal_goto(drupal_get_path_alias("user/$user->uid"));
 }
 
 /* Using Email Registration Form we automatically set the users email address */
@@ -426,7 +460,7 @@ function tm_users_redirect_insert($redirect) {
 }
 
 /* Check if a member is in a user's chapter */
-function tm_users_member_in_users_chapter($member_uid, $chapter_leader_uid) {
+function tm_users_member_in_users_chapter($member_uid, $chapter_leader_uid, $return_true_no_chapter = false) {
 
   // Step 1. Fetch list of chapters the user has joined
   $flags = flag_get_user_flags("node", null, $member_uid);
@@ -437,6 +471,12 @@ function tm_users_member_in_users_chapter($member_uid, $chapter_leader_uid) {
         $chapters_nids[] = $f->entity_id;
       }
     }
+  }
+
+  // If user has not joined any chapters, we can return true
+  // This is for cases where chapter leader can moderator members with no chapter
+  if (((sizeof($chapters_nids)) == 0) && ($return_true_no_chapter)) {
+    return true;
   }
 
   // Step 2. Fetch list of chapters the user is a leader of
@@ -656,7 +696,7 @@ function _tm_users_modify_register_form(&$form, $form_state, $form_id) {
   // add chapter list to registraton form
   $form['chapter_list']=array(
     '#type'=>'select',
-    '#title' => t('Home City'),
+    '#title' => t('Home Chapter'),
     '#options' => $chapter_list,
     '#multiple' => false,
     '#description'=>'Please select a home chapter to join.',
@@ -679,10 +719,21 @@ function _tm_users_modify_register_form(&$form, $form_state, $form_id) {
 
   // Step 3. Add terms and conditions agreement to sign up form
   $form['cutomtext'] = array(
-      '#type' => 'item',
-      '#markup' => '<p class="description" style="text-align: center; margin-bottom: 12px;">By creating an account you agree to our <a target="_blank" href="/content/terms-use">Terms Of Use</a> and <a target = "_blank" href="/content/privacy-policy">Privacy Policy</a></p>',
-      '#weight' => 10, // Adjust so that you can place it whereever 
-      );
+    '#type' => 'item',
+    '#markup' => '<p class="description" style="text-align: center; margin-bottom: 12px;">By creating an account you agree to our <a target="_blank" href="/content/terms-use">Terms Of Use</a> and <a target = "_blank" href="/content/privacy-policy">Privacy Policy</a></p>',
+    '#weight' => 10, // Adjust so that you can place it whereever 
+  );
+
+  // Step 4. Add reason for joining
+  $form['reason_for_joining'] = array('#type' => 'textfield',
+    '#title' => t('Why do you want to join?'),
+    '#size' => 60,
+    '#maxlength' => 150,
+    '#required' => false,
+    '#attributes' => array('placeholder' => 'I want to join because...'),
+    '#description'=> 'In a few short words, tell us why you\'d like to join the community.',
+    '#weight' => 2
+  );
 }
 
 // Make sure users understand profiles are for individual use
@@ -734,6 +785,10 @@ function _tm_users_modify_profile_form(&$form, $form_state, $form_id) {
 
     // hide loggintobgan revalidate notice since we print it anyway
     hide($form['revalidate']);
+
+    // hide reason for joining (only display on signup and requesting approval)
+    hide($form['field_reason_for_joining']);
+
   }
 
 
@@ -904,6 +959,7 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
 // If user selected a home chapter on signup, then join it
 // See: https://github.com/travelmassive/massiveplatform/issues/75
 // todo: should check for a valid chapter id
+// Also add reason for joining to users fields
 function tm_users_user_insert(&$edit, $account, $category) {
   
   // need user
@@ -921,7 +977,6 @@ function tm_users_user_insert(&$edit, $account, $category) {
         flag('flag', 'signup', $chapter_id, $account);
       } 
     }
-
   }
 
 }
@@ -992,6 +1047,22 @@ function tm_users_user_presave(&$edit, $account, $category) {
       // save trimmed value
       $edit['field_about_me'][LANGUAGE_NONE][0]['value'] = $trimmed;
     }
+
+    // Trim first_name, last_name, job role, organization name, city
+    // Otherwise a blank space causes the link to be rendered blank
+    $field_names = array("field_user_first_name", "field_user_last_name", "field_job_role", "field_job_organization", "field_location_city");
+    foreach ($field_names as $field_name) {
+      if (isset($edit[$field_name][LANGUAGE_NONE][0]['value'])) {
+        $trimmed = trim($edit[$field_name][LANGUAGE_NONE][0]['value']);
+        $edit[$field_name][LANGUAGE_NONE][0]['value'] = $trimmed;
+      }
+    }
+   
+    // store reason for joining
+    if (isset($edit['reason_for_joining'])) {
+      $edit['field_reason_for_joining'][LANGUAGE_NONE][0]['value'] = trim($edit['reason_for_joining']);
+    }
+
   }
 
 }

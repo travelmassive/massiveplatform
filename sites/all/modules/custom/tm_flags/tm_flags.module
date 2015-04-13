@@ -58,7 +58,7 @@ function _tm_flags_unflag_chapter(&$variables) {
       jQuery(document).ready(function($) {
         $( ".flag" ).unbind("click");
         $( ".flag" ).bind("click.confirm", function(event) {
-          alert("You can\'t leave this chapter as you are currently a Chapter Leader for ' . $chapter->title . '.");
+          jq_alert(null, "You can\'t leave this chapter as you are currently a Chapter Leader for ' . $chapter->title . '.");
           event.preventDefault();
         });
       });
@@ -76,13 +76,8 @@ function _tm_flags_unflag_chapter(&$variables) {
     jQuery(document).ready(function($) {
       $( ".flag" ).unbind("click");
       $( ".flag" ).bind("click.confirm", function(event) {
-        var r = confirm("Are you sure you want to leave this chapter?\n\nIf you leave you won\'t be notified about upcoming events in ' . $chapter->title .'.");
-        if (r == true) {
-          $( ".flag-confirm" ).unbind("click.confirm");
-          $( ".flag-confirm" ).click();
-        } else {
-          event.preventDefault();
-        }
+        jq_confirm_leave_chapter(\''.$chapter->title.'\');
+        return false;
       });
     });
     ', 'inline');

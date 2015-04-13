@@ -61,6 +61,12 @@ function tm_users_strongarm() {
         'redirect' => array(
           'weight' => '30',
         ),
+        'metatags' => array(
+          'weight' => '40',
+        ),
+        'contact' => array(
+          'weight' => '5',
+        ),
       ),
       'display' => array(
         'masquerade' => array(

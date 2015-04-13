@@ -10,6 +10,17 @@
 function tm_flags_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: 'flag approval_approved_by'.
+  $permissions['flag approval_approved_by'] = array(
+    'name' => 'flag approval_approved_by',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'approved user' => 'approved user',
+      'chapter leader' => 'chapter leader',
+    ),
+    'module' => 'flag',
+  );
+
   // Exported permission: 'flag approval_is_company_or_brand'.
   $permissions['flag approval_is_company_or_brand'] = array(
     'name' => 'flag approval_is_company_or_brand',
@@ -77,6 +88,17 @@ function tm_flags_user_default_permissions() {
     'name' => 'flag tm_sponsor',
     'roles' => array(
       'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag approval_approved_by'.
+  $permissions['unflag approval_approved_by'] = array(
+    'name' => 'unflag approval_approved_by',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'approved user' => 'approved user',
+      'chapter leader' => 'chapter leader',
     ),
     'module' => 'flag',
   );

@@ -276,7 +276,8 @@ Drupal.behaviors.base_scripts = {
 
   var current_user_score = $('#current_user_score').val();
   var current_user_uid = $('#current_user_uid').val();
-  var confirm_message = "Oops, your profile is only " + current_user_score + "% complete.\n\nPlease fill out your community profile first and then request approval so we can review your profile.";
+  var confirm_title = "Oops, your profile is only " + current_user_score + "% complete.";
+  var confirm_message = "Please fill out your community profile first and then request approval so we can review your profile.";
   var score_threshold = 50;
   var profile_edit_url = "/user/" + current_user_uid + "/edit#user-profile-options";
 
@@ -285,22 +286,185 @@ Drupal.behaviors.base_scripts = {
 
       // don't ask if the user score is above the threshold
       if (current_user_score > score_threshold) {
-        window.location = $(this).attr('href');
         return;
       }
-    
-      // confirm user
-      var r = confirm(confirm_message);
-      if (r==true) {
-        event.preventDefault();
-        window.location = profile_edit_url;
-      } else {
-        event.preventDefault();
-      }
+      
+      // prompt to complete profile
+      event.preventDefault();
+      $.prompt(confirm_message, {
+          title: confirm_title,
+          buttons: { "OK": false, "Edit Profile": true },
+          submit: function(e,v,m,f){
+            if (v==true) {
+              window.location = profile_edit_url;
+            }
+          },
+        }
+      );
+
     });
   });
      
 });})(jQuery, Drupal, this, this.document);
+
+(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){
+
+  // set default classes for impromptu
+  $.prompt.setDefaults({classes: {
+    button: 'pure-button',
+    defaultButton: 'pure-button-primary',
+  }});
+
+  // wrapper for alert
+  jq_alert = function(alert_title, message) {
+    $.prompt(message, {title: alert_title});
+  } 
+
+  // wrapper for confirm
+  jq_confirm_url = function(confirm_title, message, ok_url) {
+    $.prompt(message, { buttons: { "OK": true, "Cancel": false },
+      title: confirm_title,
+      submit: function(e,v,m,f){
+        if (v == true) {
+          window.location = ok_url;
+        }
+      },
+    });
+  }
+
+  jq_confirm_leave_chapter = function(chapter_title) {
+    confirm_title = "Are you sure you want to leave this chapter?";
+    message = "If you leave you won\'t be notified about upcoming events in " + chapter_title + ".";
+    $.prompt(message, { buttons: { "OK": true, "Cancel": false },
+      title: confirm_title,
+      submit: function(e,v,m,f){
+        if (v == true) {
+          // this worked but now now
+          // $( ".flag-confirm" ).unbind("click.confirm");
+          //$( ".flag-confirm" ).click();
+
+          // plan b, get the unflag url from the href and visit it
+          href = $( "a.unflag-action" ).attr('href');
+          window.location = href;
+        }
+      },
+    });
+  }
+
+  jq_request_approval = function(uid) {
+    confirm_title = "Approve my account";
+    message = ""; //We\'re a growing community, and we need your help to ensure everyone fits in. ";
+    message = message + "<p style='margin-top: 0px;'>In a few words, please tell us why you would like to join the community.</p>";
+    if (reason_for_joining != "") {
+
+    }
+    // get reason for joining from hidden form field
+    // we don't want to move this around in the js call as it\'s visible
+    //reason_for_joining = $("#reason_for_joining").val();
+    message = message + "<input type='text' id='form_reason_for_approval' value='' maxlength='150' placeholder='I want to join because...' size='100'>";
+
+    $.prompt(message, { buttons: { "Request Approval": true, "Cancel": false },
+      title: confirm_title,
+      loaded: function() {
+        // copy in reason for approval from hidden field
+        // avoids uri encoding
+        $("#form_reason_for_approval").val(decodeURIComponent($("#reason_for_joining").val().replace(/\+/g, " ", true)));
+      },
+      submit: function(e,v,m,f){
+        if (v == true) {
+          window.location = '/user/' + uid + '/request_approval?reason_for_joining=' + $("#form_reason_for_approval").val();
+        }
+      },
+    });
+  }
+
+  jq_approval_already_requested = function() {
+    jq_alert(null, "Please allow 12-24 hours for a Chapter Leader to review your account.<br><br>Our community is important to us, so please ensure you\'ve filled out your profile so we can approve you.<br><br>If your account has not been approved please <a href='/contact'>contact us</a> so we can assist you.");
+  }
+
+  jq_confirm_approve_member = function(uid) {
+    jq_confirm_url('Do you want to approve this account?', 'Guidelines for approval:<li>Account is a real person</li><li>Profile is filled out</li><li>Profile is not a company or brand</li>', '/user/' + uid + '/approve');
+  }
+
+  jq_confirm_unapprove_user = function(uid) {
+    jq_confirm_url('Do you want to un-approve this account?', 'The user will not be notified automatically. Please contact the user to address the issue.', '/user/' + uid + '/unapprove');
+  }
+
+  jq_confirm_incomplete_profile = function(uid) {
+
+    $.prompt({
+      state0: {
+        title: 'Flag this account as incomplete?',
+        html: 'This action will:<li>Notify the member to update their profile</li><li>Notify you when the member requests approval</li>',
+        buttons: { Cancel: false, Next: true },
+        focus: 1,
+        submit:function(e,v,m,f){
+          if(v){
+            e.preventDefault();
+            $.prompt.goToState('state1');
+            return false;
+          }
+          $.prompt.close();
+        }
+      },
+      state1: {
+        title: 'Add a helpful comment?',
+        html: "You can send a short message to the member. <textarea id='form_moderator_message' value='' placeholder='Please complete your profile...' rows='3' cols='50'></textarea>",
+        buttons: { Back: -1, OK: true },
+        focus: 1,
+        submit:function(e,v,m,f){
+          if (v == true) {
+            // replace new lines with __NL__ as we moving this via regular GET and cant pass it via XHR
+            window.location = '/user/' + uid + '/approval_need_more_info?moderator_message=' + document.getElementById('form_moderator_message').value.replace(/\n/mg,"__NL__"); 
+          } 
+          else if(v==-1) {
+            $.prompt.goToState('state0');
+          }
+        }
+      }
+    });
+
+  }
+
+  jq_confirm_company_profile = function(uid) {
+
+    $.prompt({
+      state0: {
+        title: 'Flag this account as a company or brand?',
+        html: 'This action will:<li>Notify the member to personalize their profile</li><li>Inform member on how to list their company</li><li>Notify you when the member requests approval</li>',
+        buttons: { Cancel: false, Next: true },
+        focus: 1,
+        submit:function(e,v,m,f){
+          if(v){
+            e.preventDefault();
+            $.prompt.goToState('state1');
+            return false;
+          }
+          $.prompt.close();
+        }
+      },
+      state1: {
+        title: 'Add a helpful comment?',
+        html: "You can send a short message to the member. <textarea id='form_moderator_message' value='' placeholder='Please complete your profile...' rows='3' cols='50'></textarea>",
+        buttons: { Back: -1, OK: true },
+        focus: 1,
+        submit:function(e,v,m,f){
+          if (v == true) {
+            // replace new lines with __NL__ as we moving this via regular GET and cant pass it via XHR
+            window.location = '/user/' + uid + '/approval_is_company_or_brand?moderator_message=' + document.getElementById('form_moderator_message').value.replace(/\n/mg,"__NL__"); 
+          } 
+          else if(v==-1) {
+            $.prompt.goToState('state0');
+          }
+        }
+      }
+    });
+
+  }
+
+
+});})(jQuery, Drupal, this, this.document);
+
 
 
   

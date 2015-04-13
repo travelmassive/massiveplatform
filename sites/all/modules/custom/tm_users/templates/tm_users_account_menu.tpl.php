@@ -95,9 +95,12 @@ if (!$twitter_data) {
       }
       $flagged_time = format_interval($difference, 1) . " ago";
 ?>
-<li><?php print l(t('Approval requested (' . $flagged_time . ')'), 'javascript:alert("Please allow 12-24 hours for us to review your account. Please ensure you\'ve filled out your profile so we can approve you.")', array('fragment' => '','external'=>true)); ?></li>
+<li><?php print l(t('Approval requested (' . $flagged_time . ')'), 'javascript:jq_approval_already_requested();', array('fragment' => '','external'=>true)); ?></li>
 <?php } else { ?>
-<li><?php print l(t('Approve my account'), 'user/' . $loaded->uid . '/request_approval', array('attributes' => array('class' => array('approval-link')))); ?></li>
+<li><?php
+$reason_for_joining = $loaded->field_reason_for_joining[LANGUAGE_NONE][0]['value'];
+print ("<input style='display: none;' id='reason_for_joining' value='" . urlencode($reason_for_joining) . "'>");
+print l(t('Approve my account'), 'javascript:jq_request_approval(' . $loaded->uid . ')', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('approval-link')))); ?></li>
 <?php
 } // end if flagged
 } // end if not approved
@@ -116,7 +119,7 @@ if (!$twitter_data) {
 
   <?php if (!in_array("approved user", $loaded->roles)) : ?>
     <ul class="dropd-menu">
-      <li><?php print l(t('Add company profile (pending approval)'), 'javascript:void(0)', array('fragment' => '','external'=>true)); ?></li>
+      <li><?php print l(t('Add company profile (pending approval)'), 'javascript:void(0);', array('fragment' => '','external'=>true)); ?></li>
     </ul>
   <?php endif; ?>
 

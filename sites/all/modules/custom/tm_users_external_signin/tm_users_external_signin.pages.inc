@@ -236,15 +236,18 @@ function tm_users_external_signin_register_form_validate($form, &$form_state) {
 function tm_users_external_signin_register_form_submit($form, &$form_state) {
 
   // First name:
-  $field_user_first_name = $form_state['values']['field_user_first_name'];
+  $field_user_first_name = trim($form_state['values']['field_user_first_name']);
   // Last name:
-  $field_user_last_name = $form_state['values']['field_user_last_name'];
+  $field_user_last_name = trim($form_state['values']['field_user_last_name']);
   // User name:
   // $name = $form_state['values']['name'];
   // User email:
   $email = $form_state['values']['mail'];
   // User password (generated):
   $pwd = user_password(50);
+
+  // Reason for joining
+  $reason_for_joining = trim($form_state['values']['reason_for_joining']);
   
   // Reset the form_state for the user_register form.
   $form_state_user = array();
@@ -252,6 +255,7 @@ function tm_users_external_signin_register_form_submit($form, &$form_state) {
   // thankyou https://www.drupal.org/node/1514312
   $form_state_user['values']['field_user_first_name']['und'][0]['value'] = $field_user_first_name;
   $form_state_user['values']['field_user_last_name']['und'][0]['value'] = $field_user_last_name;
+
   //$form_state_user['values']['name'] = $name;
   $form_state_user['values']['mail'] = $email;
   $form_state_user['values']['pass']['pass1'] = $pwd;
@@ -285,6 +289,11 @@ function tm_users_external_signin_register_form_submit($form, &$form_state) {
 
     // Is this ok to do this here, what if errors on page and we reload this method?
     unset($_SESSION['twitter_account']);
+
+    // get reason for approving and store update user object
+    $user_account = user_load($uid);
+    $user_account->field_reason_for_joining[LANGUAGE_NONE][0]['value'] = $reason_for_joining;
+    field_attach_update('user', $user_account);
 
     // If user has set a chapter to join, then join it
     $chapter_id = null;

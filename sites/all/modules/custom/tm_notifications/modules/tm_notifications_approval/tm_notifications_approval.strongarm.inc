@@ -24,6 +24,7 @@ function tm_notifications_approval_strongarm() {
 <br>
 <br>We can\'t approve your account because it looks like you\'ve created an account for a company or brand. See below for how to get your account approved and how to add a company profile.
 <br>
+__MODERATOR_MESSAGE__
 <br><strong>Please read carefully:</strong>
 <br>All accounts on __SITE_NAME__ are for individual use. After your account is approved, you can then add and manage your company listing which will be displayed on our <a href="__SERVER_HTTP__://__SERVER_NAME__/companies">company listings page</a>.
 <br>
@@ -46,7 +47,7 @@ function tm_notifications_approval_strongarm() {
 <br>* Provide links to your website, Twitter, Facebook or LinkedIn accounts
 <br>
 <br><strong>I\'ve updated my account, what next?</strong>
-<br>When you\'re ready for us to review your account, select "Request approval" from your account menu.
+<br>When you\'re ready for us to review your account, select "Approve my account" from your account menu.
 <br>Our team will review your profile and you\'ll be notified when you are approved.
 <br>If you need any assistance please reply to this email.
 <br>
@@ -71,6 +72,7 @@ function tm_notifications_approval_strongarm() {
 <br>
 <br>Your profile needs to be completed before we can approve your account.
 <br>
+__MODERATOR_MESSAGE__
 <br><strong>What you need to do:</strong>
 <br>Please sign in and complete your profile information. Here\'s a link to you public profile:
 <br>
@@ -86,7 +88,7 @@ function tm_notifications_approval_strongarm() {
 <br>* Provide links to your website, Twitter, Facebook or LinkedIn accounts
 <br>
 <br><strong>I\'ve updated my account, what next?</strong>
-<br>When you\'re ready for us to review your account, select "Request approval" from your account menu.
+<br>When you\'re ready for us to review your account, select "Approve my account" from your account menu.
 <br>Our team will review your profile and you\'ll be notified when you are approved.
 <br>If you need any assistance please reply to this email.
 <br>
@@ -160,6 +162,8 @@ function tm_notifications_approval_strongarm() {
 <br>
 <br>Please review their profile here:
 <br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br>
+<br>Reason for joining: __REASON_FOR_JOINING__
 <br>
 <br>If you are satisfied with their profile you may approve the account. To approve the account select the "Approve member" option on their profile page menu.
 <br>

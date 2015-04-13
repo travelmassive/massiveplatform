@@ -167,13 +167,15 @@ function _tm_approved_process($field, $title = NULL) {
       $flagged_time = format_interval($difference, 1) . " ago";
 
       // 1. Show approval requested link
-      $approval_link = l(t('Approval requested (' . $flagged_time . ')'), 'javascript:alert("Please allow 12-24 hours for us to review your account. Please ensure you\'ve filled out your profile so we can approve you.")', array('fragment' => '','external'=>true));
+      $approval_link = l(t('Approval requested (' . $flagged_time . ')'), 'javascript:jq_approval_already_requested();', array('fragment' => '','external'=>true));
       $html .= '<span class="approval_pending" style="font-size: 10pt;">' . $approval_link . '</span>';
 
     } else {
 
       // 2. Show "Approve my account" link
-      $approval_link = l(t('Approve my account'), 'user/' . $loaded->uid . '/request_approval', array('attributes' => array('class' => array('approval-link'))));
+      $approval_link = l(t('Approve my account'), 'javascript:jq_request_approval(' . $loaded->uid . ')', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('approval-link'))));
+
+      //$approval_link = l(t('Approve my account'), 'user/' . $loaded->uid . '/request_approval', array('attributes' => array('class' => array('approval-link'))));
       $html .= '<span class="approval" style="font-size: 10pt;">' . $approval_link . '</span>';
     }
   }
@@ -400,15 +402,16 @@ function _tm_more_actions_process($field, $title = NULL) {
           // 1. if user is a moderator or administrator
           // 2. or if they are chapter leader and the member is signed up their chapter
           if ((in_array("moderator", $user->roles) or user_access('administer')) 
-          or ((in_array("chapter leader", $user->roles))) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid))) {
+          or ((in_array("chapter leader", $user->roles))) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid, true))) {
 
             // Show approve user link
             $links['approve'][] = array(
               'wrapper_class' => array('approve'),
-              'content' => l(t('Approve member'), 'user/' . $uid . '/approve', array(
+              'content' => l(t('Approve member'), "javascript:jq_confirm_approve_member(" . $uid . ")", array(
+                'fragment' => '',
+                'external'=>true,
                 'attributes' => array(
-                'onclick' => "javascript:return confirm('Do you want to approve this account?\\n\\nGuidelines for approval:\\n* Account is a real person\\n* Profile is filled out\\n* Profile is not a company or brand');",
-                'title' => t('Approve member')
+                  'title' => t('Approve member')
                 )
               ))
             );
@@ -418,6 +421,30 @@ function _tm_more_actions_process($field, $title = NULL) {
     }
   }
   // END approve link
+
+
+  // START unapprove link
+  if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
+    if (isset($menu_item['page_arguments'][0]->uid)){
+      $uid = $menu_item['page_arguments'][0]->uid;
+      $targetuser = user_load($uid);
+      if (in_array("approved user", $targetuser->roles)){
+        if (user_access("unapprove users")){
+          $links['approve'][] = array(
+            'wrapper_class' => array('unapprove'),
+            'content' => l(t('Un-Approve'), 'javascript:jq_confirm_unapprove_user(' . $targetuser->uid . ')', array(
+              'fragment' => '',
+              'external'=>true,
+              'attributes' => array(
+                'title' => t('Un-Approve user')
+              )
+            ))
+          );    
+        }
+      }
+    }
+  }
+  // END unapprove link
 
   // START requested approval note
   if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
@@ -429,7 +456,7 @@ function _tm_more_actions_process($field, $title = NULL) {
       // 1. if user is a moderator or administrator
       // 2. or if they are chapter leader and the member is signed up their chapter
       if ((in_array("moderator", $user->roles) or user_access('administer'))
-        or ((in_array("chapter leader", $user->roles))) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid))) {
+        or ((in_array("chapter leader", $user->roles))) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid, true))) {
 
         // show if user request approval
         $flag = flag_get_flag('approval_requested_by_user');
@@ -445,25 +472,87 @@ function _tm_more_actions_process($field, $title = NULL) {
           $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Requested " . $flagged_time . "</span><br>";
         }
 
-        // If user hasn't requested approval, show signup date
-        if ($menu_text == "") {
-          $show_user = user_load($uid);
-          $difference = time() - $show_user->created;
-          $flagged_time = format_interval($difference, 1) . " ago";
-          $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Signed up " . $flagged_time . "</span><br>";
-        }
-        
         if ($menu_text != "") {
           $links['approve'][] = array(
             'wrapper_class' => array('approve'),
             'content' => t($menu_text),
           );
         }
-        
       }
     }
   }
   // END requested approval note
+
+
+  // START moderator info
+  // Signup date
+  // Reason for joining
+  // Who approved
+  if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
+
+    // show who approved user
+    if ((in_array("moderator", $user->roles) or user_access('administer')) 
+    or ((in_array("chapter leader", $user->roles)))) {
+
+      // 1. SIGNUP DATE
+      $menu_text = "";
+      $show_user = user_load($uid);
+      $difference = time() - $show_user->created;
+      $flagged_time = format_interval($difference, 1) . " ago";
+      $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Signed up " . $flagged_time . "</span><br>";
+      
+      $links['approve'][] = array(
+        'wrapper_class' => array('approve'),
+        'content' => t($menu_text),
+      );
+
+      // 2. WHO APPROVED
+      $flag = flag_get_flag('approval_approved_by');
+
+      // get list of people who flagged
+      $who_flagged = flag_get_entity_flags("user", $uid, "approval_approved_by");
+
+      // sort by flag time
+      usort($who_flagged, function($a, $b){
+        return ($a->timestamp > $b->timestamp) ? -1 : 1;
+      });
+
+      $menu_text = "";
+      foreach ($who_flagged as $flagger) {
+        $difference = time() - $flagger->timestamp;
+        $flagged_time = format_interval($difference, 1) . " ago";
+        $flagged_user = user_load($flagger->uid);
+        $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>".$item_prefix."Approved by " . $flagged_user->field_user_first_name['und'][0]['value'] . " " . $flagged_time . "</span><br>";
+      }
+
+      // if empty menu text, then user was approved before we started flagging
+      if (($menu_text == "") and (in_array("approved user", $targetuser->roles))) {
+        $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Approved by administrator</span>";
+      }
+
+      $links['approve'][] = array(
+        'wrapper_class' => array('approve'),
+        'content' => t($menu_text),
+      );
+
+      // 3. REASON FOR JOINING
+      if (isset($targetuser->field_reason_for_joining[LANGUAGE_NONE][0]['value'])) {
+        $reason_for_joining = strip_tags($targetuser->field_reason_for_joining[LANGUAGE_NONE][0]['value']);
+        if (trim($reason_for_joining) != "") {
+          $menu_text = "<div style='font-size: smaller; font-style: italic; padding-left: 2em; background-color: #efefef;'>Reason for joining:<br><span style='color: #888; font-style: normal;'>" . $reason_for_joining . "</span></div>";
+
+          $links['approve'][] = array(
+            'wrapper_class' => array('approve'),
+            'content' => t($menu_text),
+          );
+        }
+      }
+
+
+    }
+  }
+  // END moderator info
+    
 
   // START profile incomplete link
   if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
@@ -475,14 +564,16 @@ function _tm_more_actions_process($field, $title = NULL) {
       // 1. if user is a moderator or administrator
       // 2. or if they are chapter leader and the member is signed up their chapter
       if ((in_array("moderator", $user->roles) or user_access('administer'))
-        or ((in_array("chapter leader", $user->roles))) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid))) {
+        or ((in_array("chapter leader", $user->roles))) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid, true))) {
 
         $links['approve'][] = array(
           'wrapper_class' => array('approve'),
-          'content' => l(t('Flag: Incomplete profile'), 'user/' . $uid . '/approval_need_more_info', array(
+          'content' => l(t('Flag: Incomplete profile'), 'javascript:jq_confirm_incomplete_profile(' . $uid . ')',
+            array(
+            'fragment' => '',
+            'external'=> true,
             'attributes' => array(
-            'onclick' => "javascript:return confirm('Do you want to flag this account as incomplete?\\n\\nThis action will:\\n* Notify the member they need to update their profile\\n* Notify you when the member requests approval');",
-            'title' => t('Profile incomplete')
+              'title' => t('Profile incomplete')
             )
           ))
         );
@@ -525,14 +616,16 @@ function _tm_more_actions_process($field, $title = NULL) {
       // 1. if user is a moderator or administrator
       // 2. or if they are chapter leader and the member is signed up their chapter
       if ((in_array("moderator", $user->roles) or user_access('administer')) 
-        or ((in_array("chapter leader", $user->roles))) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid))) {
+        or ((in_array("chapter leader", $user->roles))) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid, true))) {
 
         $links['approve'][] = array(
           'wrapper_class' => array('approval_is_company_or_brand'),
-          'content' => l(t('Flag: Is company or brand'), 'user/' . $uid . '/approval_is_company_or_brand', array(
+          'content' => l(t('Flag: Is company or brand'), 'javascript:jq_confirm_company_profile(' . $uid . ')',
+            array(
+            'fragment' => '',
+            'external'=> true,
             'attributes' => array(
-            'onclick' => "javascript:return confirm('Flag this account as a company or brand?\\n\\nThis action will:\\n* Notify the member to personalize their profile\\n* Inform member on how to list their company\\n* Notify you when the member requests approval');",
-            'title' => t('Is company or brand')
+              'title' => t('Is company or brand')
             )
           ))
         );
@@ -560,31 +653,12 @@ function _tm_more_actions_process($field, $title = NULL) {
           'wrapper_class' => array('approve'),
           'content' => t($menu_text),
         );
+
       }
     }
   }
   // END is company or brand link
 
-  // START unapprove link
-  if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
-    if (isset($menu_item['page_arguments'][0]->uid)){
-      $uid = $menu_item['page_arguments'][0]->uid;
-      $targetuser = user_load($uid);
-      if (in_array("approved user", $targetuser->roles)){
-        if (user_access("unapprove users")){
-          $links['approve'][] = array(
-            'wrapper_class' => array('unapprove'),
-            'content' => l(t('Un-Approve'), 'user/' . $uid . '/unapprove', array(
-              'attributes' => array(
-              'title' => t('Un-Approve user')
-              )
-            ))
-          );    
-        }
-      }
-    }
-  }
-  // END unapprove link
 
   // START Add event Link
   // The 'Add event' link should be available to the leaders of the city, moderators and admins.

@@ -770,6 +770,59 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'user-user-field_reason_for_joining'
+  $field_instances['user-user-field_reason_for_joining'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'In a few short words, tell us why you\\\'d like to join the community.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 24,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'user',
+    'field_name' => 'field_reason_for_joining',
+    'label' => 'Reason for joining',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 81,
+    ),
+  );
+
   // Exported field_instance: 'user-user-field_segment'
   $field_instances['user-user-field_segment'] = array(
     'bundle' => 'user',
@@ -1263,6 +1316,7 @@ function tm_users_field_default_field_instances() {
   t('Facebook');
   t('First name');
   t('Home Chapter');
+  t('In a few short words, tell us why you\\\'d like to join the community.');
   t('Industry Segment');
   t('Job Role');
   t('Last name');
@@ -1278,6 +1332,7 @@ function tm_users_field_default_field_instances() {
   t('Provide the other members with some more information about yourself. This information will be <strong>public</strong>.
 <br>
 <strong>Providing information about your company?</strong> Please add a <a href="/companies">company profile</a>.');
+  t('Reason for joining');
   t('The name of your business, company, or organization.
 <br>Once your account is approved you can add a <a href="/companies">company profile</a>.');
   t('Three words that describe why we should travel?');

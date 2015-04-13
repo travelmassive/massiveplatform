@@ -50,7 +50,15 @@
 <?php elseif (isset($event_flag) && $event_flag == "show_not_approved") : ?>
 
 <li class="<?php print $flag_wrapper_classes; ?>">
-    <span onClick="alert('You need to be an Approved Member to register for this event.\n\n1. Please ensure your profile is complete\n2. Click \'Approve my account\' from your profile page\n3. Once approved, you may register for this event\n\nAs we review accounts manually, approval may take up to 24 hours.');" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></span>
+	<!--<style>
+	.cog_example { padding-left: 0.2em; padding-right: 0.2em;}
+	.cog_example:before {
+	font-family: tm-icons;
+  	content: "\e636";
+  	}
+  	</style>-->
+  	<!--<span>You can contact the organizers from the <span class='cog_example'>menu.</span>-->
+    <span onClick="jq_alert('This event is for approved members', '<strong>Here\'s what you need to do.</strong><ol style=\'margin-left: -24px;\'><li>Please ensure your profile is complete</li><li>Click \'Approve my account\' from your profile page</li><li>Once approved, you may register for this event</li></ol>It may take a short while to approve your account as we review all community profiles manually.');" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></span>
 </li>
 
 <?php elseif (!isset($hide_flag) || $hide_flag == FALSE) : ?>

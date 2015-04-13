@@ -87,7 +87,7 @@ function tm_events_field_default_field_instances() {
     'bundle' => 'event',
     'default_value' => array(
       0 => array(
-        'value' => 0,
+        'value' => 1,
       ),
     ),
     'deleted' => 0,

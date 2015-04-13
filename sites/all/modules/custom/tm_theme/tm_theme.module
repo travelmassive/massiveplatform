@@ -44,6 +44,12 @@ function tm_theme_html_head_alter(&$head_elements) {
   // see: http://trentrichardson.com/Impromptu/
   // https://github.com/trentrichardson/jQuery-Impromptu
   drupal_add_js(drupal_get_path('theme', 'tm') . '/js/jquery-impromptu.js', array('group' => JS_THEME));
+
   drupal_add_css(drupal_get_path('theme', 'tm') . '/css/jquery-impromptu.css', array('group' => CSS_THEME));
+
+   // impromptu pure css theme effects admin theme
+  if (!path_is_admin(current_path())) {
+          drupal_add_css(drupal_get_path('theme', 'tm') . '/css/jquery-impromptu.pure.css', array('group' => CSS_THEME));
+  }
   
 }

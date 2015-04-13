@@ -46,13 +46,23 @@ function _tm_event_seats_count($field, $title = NULL) {
   }
 
   if ($count == 0) {
-    return t('Be the first to register!');
+    if (isset($event->field_signup_limit[LANGUAGE_NONE][0]['value'])) {
+      $limit = $event->field_signup_limit[LANGUAGE_NONE][0]['value'];
+      $waitlist_flag = flag_get_flag('event_waitlist');
+      $waitlist_count = $waitlist_flag->get_count($event->nid);
+      if (($limit == 0) && ($waitlist_count == 0)) {
+        // event it set to waitlist all attendees
+        return t('This is a waitlisted event');
+      }
+    } else {
+      return t('Be the first to register!');
+    }
   }
   
   $count_text = "people are going";
-    if ($count == 1) {
-      $count_text = "person is going";
-    }
+  if ($count == 1) {
+    $count_text = "person is going";
+  }
 
   if (isset($event->field_signup_limit[LANGUAGE_NONE][0]['value'])) {
     $limit = $event->field_signup_limit[LANGUAGE_NONE][0]['value'];
@@ -70,7 +80,13 @@ function _tm_event_seats_count($field, $title = NULL) {
       $waitlist_flag = flag_get_flag('event_waitlist');
       $waitlist_count = $waitlist_flag->get_count($event->nid);
       if ($waitlist_count > 0) {
-        return t($count . ' ' . $count_text . '.<br>' . $waitlist_count . ' on the waitlist.<br>');
+        if ($count == 0) {
+          // ie: 5 people on the waitlist
+          return t($waitlist_count . ' on the waitlist.<br>');
+        } else {
+          // ie: 5 people are going, 3 on waitlist
+          return t($count . ' ' . $count_text . '.<br>' . $waitlist_count . ' on the waitlist.<br>');
+        }
       } else {
         return t($count . ' ' . $count_text . '.<br>This event is full.<br>');
       }

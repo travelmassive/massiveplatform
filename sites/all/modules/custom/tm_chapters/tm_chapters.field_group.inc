@@ -142,8 +142,9 @@ function tm_chapters_field_group_info() {
       4 => 'field_image',
       5 => 'field_chapter_timezone',
       6 => 'field_country',
-      7 => 'title',
-      8 => 'path',
+      7 => 'field_join_chapter_message',
+      8 => 'title',
+      9 => 'path',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

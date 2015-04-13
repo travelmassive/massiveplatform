@@ -152,6 +152,7 @@ function tm_notifications_events_strongarm() {
 <br>Venue: [node:field_event_venue_name]
 <br>Location: [node:field_location]
 <br>
+__REGISTER_EVENT_MESSAGE__
 <br>See who else is attending by visiting the event page:
 <br>
 <br><a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">__SERVER_NAME__/__EVENT_URL__</a>
@@ -204,6 +205,7 @@ function tm_notifications_events_strongarm() {
 <br>
 <br>This is a confirmation that you\'re on the waiting list for the event [node:title].
 <br>
+__WAITLIST_EVENT_MESSAGE__
 <br>We\'ll let you know if we\'re able to get you on the attendee list. Because of limited venue or event capacity we might not be able to fit everyone in.
 <br>
 <br>You can view the event details here:

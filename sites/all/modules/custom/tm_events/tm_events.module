@@ -165,6 +165,7 @@ function _load_organizers_per_chapter($chapter_id) {
 /**
  * Implement hook_ds_field_info()
  */
+// see: https://ohthehugemanatee.org/blog/2014/04/02/how-to-create-a-custom-display-suite-field/
 function tm_events_ds_fields_info($entity_type) {
   if ($entity_type != 'node') {
     return;
@@ -191,6 +192,27 @@ function tm_events_ds_fields_info($entity_type) {
     'ui_limit' => array('event|full',),
     'function' => '_tm_fulldate_event'
   );
+
+  // venue details
+  /*$fields['field_location'] = array(
+    'title' => t(''),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('event|full',),
+    'function' => '_tm_field_location'
+  );*/
+
+  /*
+  $fields['field_event_venue_name'] = array(
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('event|full',),
+    'function' => '_tm_field_event_venue_name'
+  );
+
+  $fields['field_map_link'] = array(
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('event|full',),
+    'function' => '_tm_field_map_link'
+  );*/
 
   return array($entity_type => $fields);
 }
@@ -272,7 +294,6 @@ function _tm_next_event($field, $title = NULL) {
 
 }
 
- 
 
 /**
  * Fetch the timezone of an event.
@@ -1085,5 +1106,29 @@ function tm_events_flag_flag($flag, $entity_id, $account, $flagging) {
     } 
   }
 }
+
+/**
+ * Custom function to display location of event
+ * Can toggle if event is displayed or not
+ */
+/*function _tm_field_location($field, $title = NULL) {
+  if (isset($field['entity']->field_location['und'][0]['value'])) {
+    $location = $field['entity']->field_location['und'][0]['value'];
+    return $location;
+  }
+}*/
+
+/*function _tm_field_event_venue_name($field, $title = NULL) {
+  if (isset($field['entity']->field_location['und'][0]['value'])) {
+    return "hello!";
+  }
+}
+
+function _tm_field_map_link($field, $title = NULL) {
+  if (isset($field['entity']->field_location['und'][0]['value'])) {
+    return null;
+  }
+}*/
+
 
 

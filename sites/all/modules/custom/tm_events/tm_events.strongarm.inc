@@ -79,6 +79,9 @@ function tm_events_strongarm() {
         'redirect' => array(
           'weight' => '30',
         ),
+        'metatags' => array(
+          'weight' => '40',
+        ),
       ),
       'display' => array(),
     ),

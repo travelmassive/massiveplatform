@@ -77,7 +77,17 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
       $first_name = $who_joined->field_user_first_name['und'][0]['value'];
       $last_name = $who_joined->field_user_last_name['und'][0]['value'];
 
-      tm_notifications_notify('user_chapter_join_welcome_member', $account, array('node' => $node, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name));
+      // get welcome message
+      $welcome_message = "";
+      if (isset($node->field_join_chapter_message['und'][0]['value'])) {
+        $welcome_message = trim(strip_tags(check_plain($node->field_join_chapter_message['und'][0]['value'])));
+        $welcome_message = str_replace("\n", "<br>", $welcome_message); // add line breaks
+        if ($welcome_message != "") {
+          $welcome_message = "<br><strong>Here's a welcome message from your local Chapter Leaders:</strong><p>" . $welcome_message . "</p>";
+        }
+      }
+
+      tm_notifications_notify('user_chapter_join_welcome_member', $account, array('node' => $node, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__WELCOME_MESSAGE__' => $welcome_message));
 
       // notify each owner of the organizational profile that they have a new follower
       foreach ($node->field_chapter_leaders['und'] as $leader) {

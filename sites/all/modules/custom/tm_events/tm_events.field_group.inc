@@ -137,6 +137,8 @@ function tm_events_field_group_info() {
     'children' => array(
       0 => 'field_is_partner_event',
       1 => 'field_approved_members_only',
+      2 => 'field_register_event_message',
+      3 => 'field_waitlist_event_message',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

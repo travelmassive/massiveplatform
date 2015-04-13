@@ -133,7 +133,7 @@ function tm_chapters_field_default_field_instances() {
       'module' => 'color_field',
       'settings' => array(),
       'type' => 'color_field_spectrum_widget',
-      'weight' => 4,
+      'weight' => 5,
     ),
   );
 
@@ -249,7 +249,7 @@ function tm_chapters_field_default_field_instances() {
         'size' => 40,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 6,
+      'weight' => 7,
     ),
   );
 
@@ -307,7 +307,7 @@ function tm_chapters_field_default_field_instances() {
         'size' => 10,
       ),
       'type' => 'text_textfield',
-      'weight' => 3,
+      'weight' => 4,
     ),
   );
 
@@ -362,7 +362,7 @@ function tm_chapters_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 8,
+      'weight' => 9,
     ),
   );
 
@@ -417,7 +417,7 @@ function tm_chapters_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 7,
+      'weight' => 8,
     ),
   );
 
@@ -553,7 +553,67 @@ function tm_chapters_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 5,
+      'weight' => 6,
+    ),
+  );
+
+  // Exported field_instance: 'node-chapter-field_join_chapter_message'
+  $field_instances['node-chapter-field_join_chapter_message'] = array(
+    'bundle' => 'chapter',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Add a welcome message to new members when they join your chapter.<br>
+The message will be included in the notification email sent to the member when they join.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 12,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_join_chapter_message',
+    'label' => 'Welcome message',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 4,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 3,
     ),
   );
 
@@ -863,6 +923,8 @@ function tm_chapters_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Add a welcome message to new members when they join your chapter.<br>
+The message will be included in the notification email sent to the member when they join.');
   t('Chapter color');
   t('Chapter leaders');
   t('Chapter shortcode');
@@ -879,6 +941,7 @@ function tm_chapters_field_default_field_instances() {
   t('Select a color that sets this city apart from the others. This color should have enough contrast with a white text layered on top.');
   t('Twitter');
   t('Website');
+  t('Welcome message');
   t('ie: @twittername or https://twitter.com/yourname');
   t('ie: http://www.yourwebsite.com');
   t('ie: https://facebook.com/yourname');

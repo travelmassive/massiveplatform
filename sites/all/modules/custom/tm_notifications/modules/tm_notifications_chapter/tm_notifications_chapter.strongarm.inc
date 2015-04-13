@@ -53,9 +53,10 @@ function tm_notifications_chapter_strongarm() {
 <br>
 <br>Thanks for joining the __SITE_NAME__ [node:title] Chapter.
 <br>
+__WELCOME_MESSAGE__
 <br>We hope you can learn, share, and connect with other like-minded travel insiders through local chapter events in [node:title].
 <br>
-<br>If you are a new member, please ensure that you\'ve filled out your profile so the Chapter Leaders can approve your account.
+<br>PS: If you are a new member, please ensure that you\'ve filled out your profile so the Chapter Leaders can approve your account.
 <br>
 <br>__EMAIL_SIGNOFF__
 ',

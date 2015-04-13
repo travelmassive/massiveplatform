@@ -799,6 +799,67 @@ If set to none, then all chapter leaders will be notified of any registrations a
     ),
   );
 
+  // Exported field_instance: 'node-event-field_register_event_message'
+  $field_instances['node-event-field_register_event_message'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Include any additional information you only want to provide to members when they register.<br>
+This will be included in the automatic registration notification email. No HTML allowed.
+',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 17,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_register_event_message',
+    'label' => 'Email Information When Registered (Advanced)',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 16,
+    ),
+  );
+
   // Exported field_instance: 'node-event-field_rsvp_link'
   $field_instances['node-event-field_rsvp_link'] = array(
     'bundle' => 'event',
@@ -876,15 +937,84 @@ If set to none, then all chapter leaders will be notified of any registrations a
     ),
   );
 
+  // Exported field_instance: 'node-event-field_waitlist_event_message'
+  $field_instances['node-event-field_waitlist_event_message'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Include any additional information you only want to provide to members when they are waitlisted.<br>
+This will be included in the automatic waitlist notification email. No HTML allowed.
+',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 18,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_waitlist_event_message',
+    'label' => 'Email Information When Waitlisted (Advanced)',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 17,
+    ),
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
   t('(Advanced Use Only) Check this to indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)');
   t('Approved Members Only');
   t('Check this box if you want to restrict registration and waitlist to members who are approved. Non-approved members won\'t be able to sign up. ');
   t('Description');
+  t('Email Information When Registered (Advanced)');
+  t('Email Information When Waitlisted (Advanced)');
   t('Event Chapter');
   t('Help the attendees find the right location by providing a link to a map, for example <a href="http://maps.google.com/">Google Maps</a>.');
   t('Image');
+  t('Include any additional information you only want to provide to members when they are waitlisted.<br>
+This will be included in the automatic waitlist notification email. No HTML allowed.
+');
+  t('Include any additional information you only want to provide to members when they register.<br>
+This will be included in the automatic registration notification email. No HTML allowed.
+');
   t('Location');
   t('Map link');
   t('Organizer');

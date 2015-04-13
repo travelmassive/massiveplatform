@@ -52,7 +52,7 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state) {
 // Redirect user to their profile page
 function tm_users_user_profile_form_submit($form, &$form_state) {
   $user_id = $form['#user']->uid;
-  drupal_goto('user/' . $user_id);
+  drupal_goto(drupal_get_path_alias('user/' . $user_id));
 }
 
 
@@ -89,6 +89,16 @@ function tm_users_preprocess_page(&$variables) {
   // Show chapter page tips
   if (($url_parts[0] == "chapters") and (sizeof($url_parts) == 1)) {
     tm_users_chapter_tips();
+  }
+
+  // Show chapter page tips
+  if (($url_parts[0] == "chapters") and (sizeof($url_parts) == 2)) {
+    tm_users_in_chapter_tips();
+  }
+  // Show chapter page tips
+  // ie /node/12833/members
+  if (($url_parts[0] == "node") and ($url_parts[2] == "members") and (sizeof($url_parts) == 3)) {
+    tm_users_in_chapter_tips();
   }
 
   // Show leaders page tips
@@ -1228,7 +1238,7 @@ function tm_users_signup_tips($return_score = false) {
   // Option 2. Display the tips
   // Only show on the following pages
   // Only show on up to two levels deep (ie: /chapters and /chapters/london)
-  $target_pages = array("chapters", "events", "community", "leaders");
+  $target_pages = array("events", "community", "leaders");
   $url_parts = explode('/', request_path());
   if ((!in_array($url_parts[0], $target_pages)) or (sizeof($url_parts) > 2)) {
     return;
@@ -1245,6 +1255,76 @@ function tm_users_signup_tips($return_score = false) {
   }
 
   return;
+}
+
+/* Show user tips on chapter page */
+function tm_users_in_chapter_tips() {
+
+  global $conf;
+  global $user;
+  $user_tip = "";
+
+  // make sure we are logged in
+  if (!user_is_logged_in()) {
+    return;
+  }
+
+  // get chapter
+  // /chapters/berlin
+  // Show chapter page tips
+  $url_parts = explode("/", request_path());
+  if (($url_parts[0] == "chapters") and (sizeof($url_parts) == 2)) {
+    $node = menu_get_object();
+    $nodeid = 0;
+    if ($node->type == "chapter") {
+      $nodeid = $node->nid;
+    }
+  }
+
+  // /node/12833/members
+  if (($url_parts[0] == "node") and ($url_parts[2] == "members") and (sizeof($url_parts) == 3)) {
+    $nodeid = $url_parts[1];
+    $node = node_load($nodeid);
+    if ($node->type == "chapter") {
+      $nodeid = $node->nid;
+    }
+  }
+
+  // get chapter title
+  $chapter_name = $node->title;
+
+  // get users chapters
+  $chapters_nids = array();
+
+  // Fetch list of chapters the user has joined
+  $in_chapter = false;
+  $flags = flag_get_user_flags("node");
+  foreach ($flags as $flag_name => $flag) {
+    if ($flag_name == "signup") {
+      foreach($flag as $f) {
+        $chapters_nids[] = $f->entity_id;
+        if ($nodeid == $f->entity_id) {
+          $in_chapter = true;
+        }
+      }
+    }
+  }
+
+  // if you are a member of the chapter and non-approved
+  // warn user they will not be displayed
+  if ($in_chapter) {
+    if (!in_array("approved user", $user->roles)) {
+        $your_account_url = drupal_get_path_alias('user/' . $user->uid);
+        $user_tip = "Your membership will be displayed in the " . $chapter_name . " community when <a href='/" . $your_account_url . "'>your account</a> has been approved.";
+    }
+  }
+
+  // Shower user tip
+  if ($user_tip != "") {
+    drupal_get_messages('page_notice');
+    drupal_set_message($user_tip, 'page_notice');
+  }
+  
 }
 
 /* Show user tips on chapter page */

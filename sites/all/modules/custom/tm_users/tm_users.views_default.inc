@@ -728,11 +728,14 @@ function tm_users_views_default_views() {
   $handler->display->display_options['filters']['rid']['value'] = array(
     6 => '6',
   );
+  $handler->display->display_options['filters']['rid']['reduce_duplicates'] = TRUE;
 
   /* Display: All unapproved members */
   $handler = $view->new_display('page', 'All unapproved members', 'all_unapproved_members');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'All unapproved users';
+  $handler->display->display_options['defaults']['group_by'] = FALSE;
+  $handler->display->display_options['group_by'] = TRUE;
   $handler->display->display_options['defaults']['header'] = FALSE;
   /* Header: Global: Text area */
   $handler->display->display_options['header']['area']['id'] = 'area';
@@ -833,6 +836,8 @@ function tm_users_views_default_views() {
   $handler = $view->new_display('page', 'Unapproved Chapter members', 'unapproved_members_in_chapter');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'Unapproved Chapter Members';
+  $handler->display->display_options['defaults']['group_by'] = FALSE;
+  $handler->display->display_options['group_by'] = TRUE;
   $handler->display->display_options['defaults']['header'] = FALSE;
   /* Header: Global: Text area */
   $handler->display->display_options['header']['area']['id'] = 'area';

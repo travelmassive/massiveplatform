@@ -1105,7 +1105,7 @@ function _tm_event_message($field, $title = NULL) {
 
       // just return body if not logged in
       if (!user_is_logged_in()) {
-        return $node->body['und'][0]['value'];
+        return null;
       }
 
       // extra information to prepend
@@ -1139,7 +1139,7 @@ function _tm_event_message($field, $title = NULL) {
       }
 
       // event description
-      $description = $heading . $extra; // . $node->body['und'][0]['value'];
+      $description = $heading . $extra;
 
       if (trim($description) == "") {
         return null;

@@ -3621,8 +3621,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 @media only screen and (min-width: 55.063rem) {
   /* line 88, ../sass/_base.scss */
   #main {
-    padding: 2rem 0;
-    /* not as much gap */
+    padding: 3rem 0;
   }
 }
 

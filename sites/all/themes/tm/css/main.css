@@ -5334,13 +5334,12 @@ select:disabled {
   font-size: 0.85rem;
   line-height: 1.25rem;
   margin: 1rem 0;
-  margin-top: -1rem;
   padding: 1rem 1rem 1rem 2.75rem;
   background: none;
   color: #FFF;
   clear: both;
 }
-/* line 465, ../sass/_forms.scss */
+/* line 464, ../sass/_forms.scss */
 .messages:before, .messages--status:before, .messages--warning:before, .messages--error:before, .messages--status:before, .messages--warning:before, .messages--error:before {
   font-size: 1rem;
   position: absolute;
@@ -5352,33 +5351,33 @@ select:disabled {
   border-radius: 12rem;
   text-align: center;
 }
-/* line 476, ../sass/_forms.scss */
+/* line 475, ../sass/_forms.scss */
 .messages a, .messages--status a, .messages--warning a, .messages--error a, .messages a:visited, .messages--status a:visited, .messages--warning a:visited, .messages--error a:visited, .messages a:hover, .messages--status a:hover, .messages--warning a:hover, .messages--error a:hover, .messages--status a, .messages--status a:visited, .messages--status a:hover, .messages--warning a, .messages--warning a:visited, .messages--warning a:hover, .messages--error a, .messages--error a:visited, .messages--error a:hover {
   color: #FFF;
   text-decoration: underline;
 }
-/* line 480, ../sass/_forms.scss */
+/* line 479, ../sass/_forms.scss */
 .messages .messages__list, .messages--status .messages__list, .messages--warning .messages__list, .messages--error .messages__list, .messages--status .messages__list, .messages--warning .messages__list, .messages--error .messages__list {
   margin: 0 0 0 1rem;
   padding: 0;
 }
 
-/* line 486, ../sass/_forms.scss */
+/* line 485, ../sass/_forms.scss */
 .messages.status, .status.messages--status, .status.messages--warning, .status.messages--error {
   background: #1abc9c;
 }
 
-/* line 491, ../sass/_forms.scss */
+/* line 490, ../sass/_forms.scss */
 .messages.warning, .warning.messages--status, .warning.messages--warning, .warning.messages--error {
   background: #f39c12;
 }
 
-/* line 496, ../sass/_forms.scss */
+/* line 495, ../sass/_forms.scss */
 .messages.error, .error.messages--status, .error.messages--warning, .error.messages--error {
   background: #e74c3c;
 }
 
-/* line 507, ../sass/_forms.scss */
+/* line 506, ../sass/_forms.scss */
 .sp-replacer,
 .sp-replacer:hover,
 .sp-replacer.sp-active,
@@ -5389,78 +5388,78 @@ select:disabled {
   border-radius: 0.25rem;
 }
 
-/* line 512, ../sass/_forms.scss */
+/* line 511, ../sass/_forms.scss */
 #edit-revalidate {
   margin-bottom: 48px;
 }
 
-/* line 519, ../sass/_forms.scss */
+/* line 518, ../sass/_forms.scss */
 #edit-userlist {
   border-top: 1px solid #e8e8e8;
   width: 80%;
 }
-/* line 522, ../sass/_forms.scss */
+/* line 521, ../sass/_forms.scss */
 #edit-userlist .form-item {
   padding: 5px;
   border: 1px solid #e8e8e8;
   border-top: none;
 }
-/* line 526, ../sass/_forms.scss */
+/* line 525, ../sass/_forms.scss */
 #edit-userlist .form-item .tmeventuser {
   width: 60%;
   display: inline-block;
 }
-/* line 530, ../sass/_forms.scss */
+/* line 529, ../sass/_forms.scss */
 #edit-userlist .form-item .tmeventstatus {
   width: 40%;
 }
 
 /* Signup page */
-/* line 537, ../sass/_forms.scss */
+/* line 536, ../sass/_forms.scss */
 .signup_notice {
   background-color: #D2D5D8;
 }
 
-/* line 541, ../sass/_forms.scss */
+/* line 540, ../sass/_forms.scss */
 .form-item-is-company {
   margin-top: -24px;
   padding-bottom: 16px;
 }
 
-/* line 546, ../sass/_forms.scss */
+/* line 545, ../sass/_forms.scss */
 .form-item-chapter-list {
   padding-bottom: 16px;
 }
 
 /* Company page */
-/* line 551, ../sass/_forms.scss */
+/* line 550, ../sass/_forms.scss */
 .page_notice {
   background-color: #fff;
   color: #4d5966;
   padding-left: 16px;
 }
 
-/* line 557, ../sass/_forms.scss */
+/* line 556, ../sass/_forms.scss */
 .page_notice a {
   color: #213040;
 }
 
-/* line 561, ../sass/_forms.scss */
+/* line 560, ../sass/_forms.scss */
 .page_notice a:hover {
   color: #213040;
 }
 
-/* line 565, ../sass/_forms.scss */
+/* line 564, ../sass/_forms.scss */
 .page_notice a:visited {
   color: #213040;
 }
 
-/* line 569, ../sass/_forms.scss */
+/* line 568, ../sass/_forms.scss */
 .view-content tbody {
   font-size: 0.85rem;
 }
 
-/* line 573, ../sass/_forms.scss */
+/* line 572, ../sass/_forms.scss */
 .view-content td {
   padding-left: 1rem;
 }
@@ -7174,6 +7173,12 @@ select:disabled {
 .related-list ul li:last-child {
   box-shadow: none;
   padding-bottom: 0;
+}
+
+/* not sure why but the messages are pushed down */
+/* line 687, ../sass/_single.scss */
+.header-wrapper {
+  margin-top: -3rem;
 }
 
 /* line 2, ../sass/_login.scss */

@@ -17,8 +17,8 @@ function tm_events_ds_field_settings_info() {
   $ds_fieldsetting->bundle = 'event';
   $ds_fieldsetting->view_mode = 'full';
   $ds_fieldsetting->settings = array(
-    'ds_flag_event_waitlist' => array(
-      'weight' => '3',
+    'ds_flag_event_register' => array(
+      'weight' => '2',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -27,8 +27,8 @@ function tm_events_ds_field_settings_info() {
         ),
       ),
     ),
-    'ds_flag_event_register' => array(
-      'weight' => '2',
+    'ds_flag_event_waitlist' => array(
+      'weight' => '3',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -142,6 +142,16 @@ function tm_events_ds_field_settings_info() {
           'ow-def-cl' => FALSE,
           'ow-at' => '',
           'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'tm_ds_event_message' => array(
+      'weight' => '3',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_tm_default',
         ),
       ),
     ),
@@ -450,58 +460,60 @@ function tm_events_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
-      'header_media' => array(
-        0 => 'field_image',
-      ),
       'first_column' => array(
-        1 => 'field_event_venue_name',
-        2 => 'tm_ds_fulldate_event',
-        3 => 'field_location',
-        7 => 'field_map_link',
+        0 => 'field_event_venue_name',
+        2 => 'field_location',
+        5 => 'tm_ds_fulldate_event',
         8 => 'group_location_wrapper',
-        12 => 'body',
-        17 => 'group_details_wrapper',
+        9 => 'field_map_link',
+        11 => 'tm_ds_event_message',
+        15 => 'body',
+        18 => 'group_details_wrapper',
+      ),
+      'header_media' => array(
+        1 => 'field_image',
       ),
       'header_body' => array(
-        4 => 'field_rsvp_link',
-        5 => 'tm_ds_date_avatar',
-        6 => 'ds_flag_event_register',
-        9 => 'title',
+        3 => 'field_rsvp_link',
+        4 => 'tm_ds_date_avatar',
+        6 => 'title',
+        7 => 'ds_flag_event_register',
         10 => 'tm_ds_event_seats_count',
-        11 => 'ds_flag_event_waitlist',
+        12 => 'ds_flag_event_waitlist',
         13 => 'tm_ds_anon_flag_placeholder',
         14 => 'group_action_menu_wrapper',
         16 => 'tm_ds_more_actions',
-        22 => 'group_action_menu',
+        23 => 'group_action_menu',
       ),
       'header_extra' => array(
-        15 => 'tm_ds_chapter_sticker',
+        17 => 'tm_ds_chapter_sticker',
       ),
       'second_column' => array(
-        18 => 'group_organizers_wrapper',
-        19 => 'members_signed_up',
-        20 => 'group_community_wrapper',
-        21 => 'field_organizer',
+        19 => 'group_organizers_wrapper',
+        20 => 'members_signed_up',
+        21 => 'group_community_wrapper',
+        22 => 'field_organizer',
       ),
     ),
     'fields' => array(
-      'field_image' => 'header_media',
       'field_event_venue_name' => 'first_column',
-      'tm_ds_fulldate_event' => 'first_column',
+      'field_image' => 'header_media',
       'field_location' => 'first_column',
       'field_rsvp_link' => 'header_body',
       'tm_ds_date_avatar' => 'header_body',
-      'ds_flag_event_register' => 'header_body',
-      'field_map_link' => 'first_column',
-      'group_location_wrapper' => 'first_column',
+      'tm_ds_fulldate_event' => 'first_column',
       'title' => 'header_body',
+      'ds_flag_event_register' => 'header_body',
+      'group_location_wrapper' => 'first_column',
+      'field_map_link' => 'first_column',
       'tm_ds_event_seats_count' => 'header_body',
+      'tm_ds_event_message' => 'first_column',
       'ds_flag_event_waitlist' => 'header_body',
-      'body' => 'first_column',
       'tm_ds_anon_flag_placeholder' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
-      'tm_ds_chapter_sticker' => 'header_extra',
+      'body' => 'first_column',
       'tm_ds_more_actions' => 'header_body',
+      'tm_ds_chapter_sticker' => 'header_extra',
       'group_details_wrapper' => 'first_column',
       'group_organizers_wrapper' => 'second_column',
       'members_signed_up' => 'second_column',

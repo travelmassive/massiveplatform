@@ -2895,7 +2895,7 @@ Icons
 .form-submit.follow.flagged:before, .form-submit:before, .messages.status:before, .status.messages--status:before, .status.messages--warning:before, .status.messages--error:before, .icon-s-subtract, .icon-s-cancel, .icon-s-arr-up, .icon-s-arr-right, .cta-inline:after, .contained-block .detail-item .detail-venue-link a:after, .contained-block .more-link a:after, #foot-nav a:before, .icon-s-arr-left, .icon-s-arr-down, .bttn-dropdown:after, html.js .collapsible .fieldset-legend a:after, .views-exposed-form .form-type-select:after, .icon-s-add, .bttn.follow:before, .bttn-group a.follow:before, .page-search .tabs-primary a.follow:before, .pager li a.follow:before, .pager .follow.pager-current:before, .views-exposed-form .follow.form-type-select:before, .follow.twitter-login:before,
 .form-submit.follow:before, .icon-refresh, .icon-phone, .icon-pencil, .bttn.edit:before, .bttn-group a.edit:before, .page-search .tabs-primary a.edit:before, .pager li a.edit:before, .pager .edit.pager-current:before, .views-exposed-form .edit.form-type-select:before, .edit.twitter-login:before,
 .form-submit.edit:before, .icon-my-location, .icon-mobile, .icon-menu, #prime-nav .browse-wrapper .toggle:before, .icon-map, .icon-map-marker, .contained-block .detail-item.field-location:before, .contained-block .detail-item.location:before, .icon-list, .icon-linkedin, #foot-nav .linkedin:before, .contained-block .detail-item.field-link-linkedin:before, .icon-image, .icon-home, .icon-history, .icon-grid, .icon-google-plus, .icon-globe, .contained-block .detail-item.field-link-website:before, .icon-github, .icon-flickr, .icon-feed, .icon-facebook, #foot-nav .facebook:before, .contained-block .detail-item.field-link-facebook:before, .icon-expand, .icon-email, .icon-download, .icon-disc-cancel, .icon-description, .contained-block .detail-item.field-about-me:before, .contained-block .detail-item.about-me:before, .contained-block .detail-item.body:before, .icon-cog, .bttn.settings:before, .bttn-group a.settings:before, .page-search .tabs-primary a.settings:before, .pager li a.settings:before, .pager .settings.pager-current:before, .views-exposed-form .settings.form-type-select:before, .settings.twitter-login:before,
-.form-submit.settings:before, .icon-clock, .contained-block .detail-item.field-date-event:before, .icon-circle-warning, .messages.warning:before, .warning.messages--status:before, .warning.messages--warning:before, .warning.messages--error:before, .icon-circle-success, .icon-circle-question, .icon-circle-play, .icon-circle-info, .icon-circle-error, .messages.error:before, .error.messages--status:before, .error.messages--warning:before, .error.messages--error:before, .icon-cancel, .icon-arr-up, .icon-arr-tail-up, .icon-arr-tail-right, .icon-arr-tail-left, .icon-arr-tail-down, .icon-arr-right, .icon-arr-right-last, .icon-arr-left, .icon-arr-left-first, .icon-arr-down, .icon-add, .icon-connection, .contained-block .detail-item.tm-ds-connection-actions:before, [class^="icon-"], [class*=" icon-"] {
+.form-submit.settings:before, .icon-clock, .contained-block .detail-item.field-date-event:before, .icon-circle-warning, .messages.warning:before, .warning.messages--status:before, .warning.messages--warning:before, .warning.messages--error:before, .icon-circle-success, .icon-circle-question, .icon-circle-play, .icon-circle-info, .contained-block .detail-item.tm-ds-event-message:before, .icon-circle-error, .messages.error:before, .error.messages--status:before, .error.messages--warning:before, .error.messages--error:before, .icon-cancel, .icon-arr-up, .icon-arr-tail-up, .icon-arr-tail-right, .icon-arr-tail-left, .icon-arr-tail-down, .icon-arr-right, .icon-arr-right-last, .icon-arr-left, .icon-arr-left-first, .icon-arr-down, .icon-add, .icon-connection, .contained-block .detail-item.tm-ds-connection-actions:before, [class^="icon-"], [class*=" icon-"] {
   font-family: 'tm-icons';
   speak: none;
   font-style: normal;
@@ -3239,7 +3239,7 @@ Icons
 }
 
 /* line 298, ../sass/_type.scss */
-.icon-circle-info {
+.icon-circle-info, .contained-block .detail-item.tm-ds-event-message:before {
   content: "\e63c";
 }
 
@@ -5334,12 +5334,13 @@ select:disabled {
   font-size: 0.85rem;
   line-height: 1.25rem;
   margin: 1rem 0;
+  margin-top: -1rem;
   padding: 1rem 1rem 1rem 2.75rem;
   background: none;
   color: #FFF;
   clear: both;
 }
-/* line 464, ../sass/_forms.scss */
+/* line 465, ../sass/_forms.scss */
 .messages:before, .messages--status:before, .messages--warning:before, .messages--error:before, .messages--status:before, .messages--warning:before, .messages--error:before {
   font-size: 1rem;
   position: absolute;
@@ -5351,33 +5352,33 @@ select:disabled {
   border-radius: 12rem;
   text-align: center;
 }
-/* line 475, ../sass/_forms.scss */
+/* line 476, ../sass/_forms.scss */
 .messages a, .messages--status a, .messages--warning a, .messages--error a, .messages a:visited, .messages--status a:visited, .messages--warning a:visited, .messages--error a:visited, .messages a:hover, .messages--status a:hover, .messages--warning a:hover, .messages--error a:hover, .messages--status a, .messages--status a:visited, .messages--status a:hover, .messages--warning a, .messages--warning a:visited, .messages--warning a:hover, .messages--error a, .messages--error a:visited, .messages--error a:hover {
   color: #FFF;
   text-decoration: underline;
 }
-/* line 479, ../sass/_forms.scss */
+/* line 480, ../sass/_forms.scss */
 .messages .messages__list, .messages--status .messages__list, .messages--warning .messages__list, .messages--error .messages__list, .messages--status .messages__list, .messages--warning .messages__list, .messages--error .messages__list {
   margin: 0 0 0 1rem;
   padding: 0;
 }
 
-/* line 485, ../sass/_forms.scss */
+/* line 486, ../sass/_forms.scss */
 .messages.status, .status.messages--status, .status.messages--warning, .status.messages--error {
   background: #1abc9c;
 }
 
-/* line 490, ../sass/_forms.scss */
+/* line 491, ../sass/_forms.scss */
 .messages.warning, .warning.messages--status, .warning.messages--warning, .warning.messages--error {
   background: #f39c12;
 }
 
-/* line 495, ../sass/_forms.scss */
+/* line 496, ../sass/_forms.scss */
 .messages.error, .error.messages--status, .error.messages--warning, .error.messages--error {
   background: #e74c3c;
 }
 
-/* line 506, ../sass/_forms.scss */
+/* line 507, ../sass/_forms.scss */
 .sp-replacer,
 .sp-replacer:hover,
 .sp-replacer.sp-active,
@@ -5388,78 +5389,78 @@ select:disabled {
   border-radius: 0.25rem;
 }
 
-/* line 511, ../sass/_forms.scss */
+/* line 512, ../sass/_forms.scss */
 #edit-revalidate {
   margin-bottom: 48px;
 }
 
-/* line 518, ../sass/_forms.scss */
+/* line 519, ../sass/_forms.scss */
 #edit-userlist {
   border-top: 1px solid #e8e8e8;
   width: 80%;
 }
-/* line 521, ../sass/_forms.scss */
+/* line 522, ../sass/_forms.scss */
 #edit-userlist .form-item {
   padding: 5px;
   border: 1px solid #e8e8e8;
   border-top: none;
 }
-/* line 525, ../sass/_forms.scss */
+/* line 526, ../sass/_forms.scss */
 #edit-userlist .form-item .tmeventuser {
   width: 60%;
   display: inline-block;
 }
-/* line 529, ../sass/_forms.scss */
+/* line 530, ../sass/_forms.scss */
 #edit-userlist .form-item .tmeventstatus {
   width: 40%;
 }
 
 /* Signup page */
-/* line 536, ../sass/_forms.scss */
+/* line 537, ../sass/_forms.scss */
 .signup_notice {
   background-color: #D2D5D8;
 }
 
-/* line 540, ../sass/_forms.scss */
+/* line 541, ../sass/_forms.scss */
 .form-item-is-company {
   margin-top: -24px;
   padding-bottom: 16px;
 }
 
-/* line 545, ../sass/_forms.scss */
+/* line 546, ../sass/_forms.scss */
 .form-item-chapter-list {
   padding-bottom: 16px;
 }
 
 /* Company page */
-/* line 550, ../sass/_forms.scss */
+/* line 551, ../sass/_forms.scss */
 .page_notice {
   background-color: #fff;
   color: #4d5966;
   padding-left: 16px;
 }
 
-/* line 556, ../sass/_forms.scss */
+/* line 557, ../sass/_forms.scss */
 .page_notice a {
   color: #213040;
 }
 
-/* line 560, ../sass/_forms.scss */
+/* line 561, ../sass/_forms.scss */
 .page_notice a:hover {
   color: #213040;
 }
 
-/* line 564, ../sass/_forms.scss */
+/* line 565, ../sass/_forms.scss */
 .page_notice a:visited {
   color: #213040;
 }
 
-/* line 568, ../sass/_forms.scss */
+/* line 569, ../sass/_forms.scss */
 .view-content tbody {
   font-size: 0.85rem;
 }
 
-/* line 572, ../sass/_forms.scss */
+/* line 573, ../sass/_forms.scss */
 .view-content td {
   padding-left: 1rem;
 }
@@ -5684,99 +5685,99 @@ select:disabled {
   font-weight: 800;
   display: block;
 }
-/* line 134, ../sass/_modules.scss */
+/* line 135, ../sass/_modules.scss */
 .contained-block .detail-item.field-link-facebook, .contained-block .detail-item.field-link-linkedin, .contained-block .detail-item.field-link-twitter, .contained-block .detail-item.field-link-instagram, .contained-block .detail-item.field-link-website {
   word-wrap: break-word;
 }
-/* line 138, ../sass/_modules.scss */
+/* line 139, ../sass/_modules.scss */
 .contained-block .detail-item .detail-venue-name {
   font-weight: 800;
 }
-/* line 142, ../sass/_modules.scss */
+/* line 143, ../sass/_modules.scss */
 .contained-block .detail-item .detail-venue-link {
   margin: 1rem 0 0 0;
 }
-/* line 150, ../sass/_modules.scss */
+/* line 151, ../sass/_modules.scss */
 .contained-block .detail-item p {
   margin: 0 0 1rem 0;
 }
-/* line 152, ../sass/_modules.scss */
+/* line 153, ../sass/_modules.scss */
 .contained-block .detail-item p:last-child {
   margin: 0;
 }
-/* line 156, ../sass/_modules.scss */
+/* line 157, ../sass/_modules.scss */
 .contained-block .detail-item dl {
   margin: 0;
   padding: 0;
 }
-/* line 159, ../sass/_modules.scss */
+/* line 160, ../sass/_modules.scss */
 .contained-block .detail-item dl dt {
   font-weight: 800;
   margin: 0;
 }
-/* line 163, ../sass/_modules.scss */
+/* line 164, ../sass/_modules.scss */
 .contained-block .detail-item dl dd {
   margin: 0 0 1rem 0;
 }
-/* line 165, ../sass/_modules.scss */
+/* line 166, ../sass/_modules.scss */
 .contained-block .detail-item dl dd:last-child {
   margin: 0;
 }
-/* line 172, ../sass/_modules.scss */
+/* line 173, ../sass/_modules.scss */
 .contained-block .more-link {
   padding: 0 1rem 1rem 2.5rem;
   margin: 0 0 1rem 0;
 }
-/* line 180, ../sass/_modules.scss */
+/* line 181, ../sass/_modules.scss */
 .contained-block .view-empty {
   padding: 0 1rem;
   margin: 0 0 1rem 0;
   color: #79828c;
 }
-/* line 184, ../sass/_modules.scss */
+/* line 185, ../sass/_modules.scss */
 .contained-block .view-empty p {
   margin: 0 0 1rem 0;
 }
-/* line 186, ../sass/_modules.scss */
+/* line 187, ../sass/_modules.scss */
 .contained-block .view-empty p:last-child {
   margin: 0;
 }
 @media only screen and (min-width: 62.063rem) {
-  /* line 193, ../sass/_modules.scss */
+  /* line 194, ../sass/_modules.scss */
   .contained-block .contained-head {
     padding: 2rem 2rem 1.5rem 2rem;
   }
-  /* line 196, ../sass/_modules.scss */
+  /* line 197, ../sass/_modules.scss */
   .contained-block .detail-item {
     padding: 0 2rem 1rem 3.5rem;
   }
-  /* line 198, ../sass/_modules.scss */
+  /* line 199, ../sass/_modules.scss */
   .contained-block .detail-item:before {
     left: 2rem;
   }
-  /* line 201, ../sass/_modules.scss */
+  /* line 202, ../sass/_modules.scss */
   .contained-block .detail-item:last-child {
     margin-bottom: 2rem;
   }
-  /* line 204, ../sass/_modules.scss */
+  /* line 205, ../sass/_modules.scss */
   .contained-block .detail-item .detail-venue-name {
     padding-right: 7rem;
   }
-  /* line 207, ../sass/_modules.scss */
+  /* line 208, ../sass/_modules.scss */
   .contained-block .detail-item .detail-venue-link {
     position: absolute;
     top: 0;
     right: 2rem;
     margin: 0;
   }
-  /* line 214, ../sass/_modules.scss */
+  /* line 215, ../sass/_modules.scss */
   .contained-block .view-empty {
     padding: 0 2rem;
     margin: 0 0 2rem 0;
   }
 }
 
-/* line 221, ../sass/_modules.scss */
+/* line 222, ../sass/_modules.scss */
 .card.contained, .node-form > div.card,
 #user-profile-form > div.card,
 #user-register-form > div.card, #content .card.search-form {
@@ -5784,7 +5785,7 @@ select:disabled {
   background: transparent;
   position: relative;
 }
-/* line 225, ../sass/_modules.scss */
+/* line 226, ../sass/_modules.scss */
 .card.contained > a, .node-form > div.card > a,
 #user-profile-form > div.card > a,
 #user-register-form > div.card > a, #content .card.search-form > a {
@@ -5792,20 +5793,20 @@ select:disabled {
   display: table;
   color: #213040;
 }
-/* line 230, ../sass/_modules.scss */
+/* line 231, ../sass/_modules.scss */
 .card.contained.node-event > a, .node-form > div.card.node-event > a,
 #user-profile-form > div.card.node-event > a,
 #user-register-form > div.card.node-event > a, #content .card.node-event.search-form > a {
   padding-right: 2.25rem;
 }
-/* line 233, ../sass/_modules.scss */
+/* line 234, ../sass/_modules.scss */
 .card.contained .media, .node-form > div.card .media,
 #user-profile-form > div.card .media,
 #user-register-form > div.card .media, #content .card.search-form .media {
   float: left;
   margin: 0 0.75rem 0 0;
 }
-/* line 237, ../sass/_modules.scss */
+/* line 238, ../sass/_modules.scss */
 .card.contained .cover, .node-form > div.card .cover,
 #user-profile-form > div.card .cover,
 #user-register-form > div.card .cover, #content .card.search-form .cover {
@@ -5813,14 +5814,14 @@ select:disabled {
   position: relative;
   z-index: 1;
 }
-/* line 241, ../sass/_modules.scss */
+/* line 242, ../sass/_modules.scss */
 .card.contained .cover img, .node-form > div.card .cover img,
 #user-profile-form > div.card .cover img,
 #user-register-form > div.card .cover img, #content .card.search-form .cover img {
   display: block;
   border-radius: 0.25rem 0.25rem 0 0;
 }
-/* line 246, ../sass/_modules.scss */
+/* line 247, ../sass/_modules.scss */
 .card.contained .avatar, .node-form > div.card .avatar,
 #user-profile-form > div.card .avatar,
 #user-register-form > div.card .avatar, #content .card.search-form .avatar {
@@ -5833,7 +5834,7 @@ select:disabled {
   text-transform: uppercase;
   font-weight: 800;
 }
-/* line 257, ../sass/_modules.scss */
+/* line 258, ../sass/_modules.scss */
 .card.contained .badge-chapter, .node-form > div.card .badge-chapter,
 #user-profile-form > div.card .badge-chapter,
 #user-register-form > div.card .badge-chapter, #content .card.search-form .badge-chapter {
@@ -5847,7 +5848,7 @@ select:disabled {
   display: inline-block;
   padding-bottom: 0.5rem;
 }
-/* line 267, ../sass/_modules.scss */
+/* line 268, ../sass/_modules.scss */
 .card.contained .badge-chapter:before, .node-form > div.card .badge-chapter:before,
 #user-profile-form > div.card .badge-chapter:before,
 #user-register-form > div.card .badge-chapter:before, #content .card.search-form .badge-chapter:before {
@@ -5857,7 +5858,7 @@ select:disabled {
   vertical-align: bottom;
   width: 0;
 }
-/* line 274, ../sass/_modules.scss */
+/* line 275, ../sass/_modules.scss */
 .card.contained .badge-chapter:after, .node-form > div.card .badge-chapter:after,
 #user-profile-form > div.card .badge-chapter:after,
 #user-register-form > div.card .badge-chapter:after, #content .card.search-form .badge-chapter:after {
@@ -5872,7 +5873,7 @@ select:disabled {
   background-size: cover;
   border-radius: 0.125rem 0 0 0;
 }
-/* line 287, ../sass/_modules.scss */
+/* line 288, ../sass/_modules.scss */
 .card.contained .badge-cal, .node-form > div.card .badge-cal,
 #user-profile-form > div.card .badge-cal,
 #user-register-form > div.card .badge-cal, #content .card.search-form .badge-cal {
@@ -5880,7 +5881,7 @@ select:disabled {
   width: 4rem;
   height: 4rem;
 }
-/* line 291, ../sass/_modules.scss */
+/* line 292, ../sass/_modules.scss */
 .card.contained .badge-cal .month, .node-form > div.card .badge-cal .month,
 #user-profile-form > div.card .badge-cal .month,
 #user-register-form > div.card .badge-cal .month, #content .card.search-form .badge-cal .month {
@@ -5891,7 +5892,7 @@ select:disabled {
   font-size: 0.875rem;
   line-height: 1.5rem;
 }
-/* line 299, ../sass/_modules.scss */
+/* line 300, ../sass/_modules.scss */
 .card.contained .badge-cal .day, .node-form > div.card .badge-cal .day,
 #user-profile-form > div.card .badge-cal .day,
 #user-register-form > div.card .badge-cal .day, #content .card.search-form .badge-cal .day {
@@ -5903,7 +5904,7 @@ select:disabled {
   padding-bottom: 0.25rem;
   letter-spacing: -0.0625rem;
 }
-/* line 313, ../sass/_modules.scss */
+/* line 314, ../sass/_modules.scss */
 .card.contained .badge-organization, .node-form > div.card .badge-organization,
 #user-profile-form > div.card .badge-organization,
 #user-register-form > div.card .badge-organization, #content .card.search-form .badge-organization,
@@ -5916,7 +5917,7 @@ select:disabled {
   height: 4rem;
   display: block;
 }
-/* line 317, ../sass/_modules.scss */
+/* line 318, ../sass/_modules.scss */
 .card.contained .badge-organization img, .node-form > div.card .badge-organization img,
 #user-profile-form > div.card .badge-organization img,
 #user-register-form > div.card .badge-organization img, #content .card.search-form .badge-organization img,
@@ -5929,7 +5930,7 @@ select:disabled {
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 323, ../sass/_modules.scss */
+/* line 324, ../sass/_modules.scss */
 .card.contained .teaser, .node-form > div.card .teaser,
 #user-profile-form > div.card .teaser,
 #user-register-form > div.card .teaser, #content .card.search-form .teaser {
@@ -5938,13 +5939,13 @@ select:disabled {
   vertical-align: middle;
   padding-right: 1.75rem;
 }
-/* line 328, ../sass/_modules.scss */
+/* line 329, ../sass/_modules.scss */
 .card.contained .teaser p, .node-form > div.card .teaser p,
 #user-profile-form > div.card .teaser p,
 #user-register-form > div.card .teaser p, #content .card.search-form .teaser p {
   margin: 0;
 }
-/* line 330, ../sass/_modules.scss */
+/* line 331, ../sass/_modules.scss */
 .card.contained .prime-title, .node-form > div.card .prime-title,
 #user-profile-form > div.card .prime-title,
 #user-register-form > div.card .prime-title, #content .card.search-form .prime-title {
@@ -5955,7 +5956,7 @@ select:disabled {
   padding: 0;
   letter-spacing: normal;
 }
-/* line 339, ../sass/_modules.scss */
+/* line 340, ../sass/_modules.scss */
 .card.contained .meta, .node-form > div.card .meta,
 #user-profile-form > div.card .meta,
 #user-register-form > div.card .meta, #content .card.search-form .meta {
@@ -5964,26 +5965,26 @@ select:disabled {
   line-height: 1.25rem;
   display: block;
 }
-/* line 345, ../sass/_modules.scss */
+/* line 346, ../sass/_modules.scss */
 .card.contained .meta span:after, .node-form > div.card .meta span:after,
 #user-profile-form > div.card .meta span:after,
 #user-register-form > div.card .meta span:after, #content .card.search-form .meta span:after {
   content: ', ';
 }
-/* line 350, ../sass/_modules.scss */
+/* line 351, ../sass/_modules.scss */
 .card.contained .meta span:last-of-type:after, .node-form > div.card .meta span:last-of-type:after,
 #user-profile-form > div.card .meta span:last-of-type:after,
 #user-register-form > div.card .meta span:last-of-type:after, #content .card.search-form .meta span:last-of-type:after {
   content: '';
 }
-/* line 355, ../sass/_modules.scss */
+/* line 356, ../sass/_modules.scss */
 .card.contained .extra, .node-form > div.card .extra,
 #user-profile-form > div.card .extra,
 #user-register-form > div.card .extra, #content .card.search-form .extra {
   position: absolute;
   top: 0.5rem;
 }
-/* line 359, ../sass/_modules.scss */
+/* line 360, ../sass/_modules.scss */
 .card.contained .chapter-sticker, .node-form > div.card .chapter-sticker,
 #user-profile-form > div.card .chapter-sticker,
 #user-register-form > div.card .chapter-sticker, #content .card.search-form .chapter-sticker {
@@ -6007,13 +6008,13 @@ select:disabled {
   -o-transform-origin: top right;
   transform-origin: top right;
 }
-/* line 378, ../sass/_modules.scss */
+/* line 379, ../sass/_modules.scss */
 .node-chapter .card.contained .extra, .node-chapter .node-form > div.card .extra,
 .node-chapter #user-profile-form > div.card .extra,
 .node-chapter #user-register-form > div.card .extra, .node-chapter #content .card.search-form .extra, #content .node-chapter .card.search-form .extra {
   display: none;
 }
-/* line 383, ../sass/_modules.scss */
+/* line 384, ../sass/_modules.scss */
 .team-list .card.contained, .team-list .node-form > div.card,
 .team-list #user-profile-form > div.card,
 .team-list #user-register-form > div.card, .team-list #content .card.search-form, #content .team-list .card.search-form, .related-list .card.contained, .related-list .node-form > div.card,
@@ -6022,7 +6023,7 @@ select:disabled {
   margin-bottom: 0;
   border-radius: 0;
 }
-/* line 388, ../sass/_modules.scss */
+/* line 389, ../sass/_modules.scss */
 .team-list .card.contained > a, .team-list .node-form > div.card > a,
 .team-list #user-profile-form > div.card > a,
 .team-list #user-register-form > div.card > a, .team-list #content .card.search-form > a, #content .team-list .card.search-form > a, .related-list .card.contained > a, .related-list .node-form > div.card > a,
@@ -6046,7 +6047,7 @@ select:disabled {
   -o-transition-delay: 0, 0, 0, 0;
   transition-delay: 0, 0, 0, 0;
 }
-/* line 395, ../sass/_modules.scss */
+/* line 396, ../sass/_modules.scss */
 .team-list .card.contained > a:hover, .team-list .node-form > div.card > a:hover,
 .team-list #user-profile-form > div.card > a:hover,
 .team-list #user-register-form > div.card > a:hover, .team-list #content .card.search-form > a:hover, #content .team-list .card.search-form > a:hover, .related-list .card.contained > a:hover, .related-list .node-form > div.card > a:hover,
@@ -6056,7 +6057,7 @@ select:disabled {
   background-color: rgba(127, 190, 218, 0.2);
   color: #007eb5;
 }
-/* line 402, ../sass/_modules.scss */
+/* line 403, ../sass/_modules.scss */
 .team-list .card.contained .extra, .team-list .node-form > div.card .extra,
 .team-list #user-profile-form > div.card .extra,
 .team-list #user-register-form > div.card .extra, .team-list #content .card.search-form .extra, #content .team-list .card.search-form .extra, .related-list .card.contained .extra, .related-list .node-form > div.card .extra,
@@ -6065,7 +6066,7 @@ select:disabled {
   right: 2.25rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 383, ../sass/_modules.scss */
+  /* line 384, ../sass/_modules.scss */
   .team-list .card.contained, .team-list .node-form > div.card,
   .team-list #user-profile-form > div.card,
   .team-list #user-register-form > div.card, .team-list #content .card.search-form, #content .team-list .card.search-form, .related-list .card.contained, .related-list .node-form > div.card,
@@ -6075,7 +6076,7 @@ select:disabled {
   }
 }
 @media only screen and (min-width: 62.063rem) {
-  /* line 411, ../sass/_modules.scss */
+  /* line 412, ../sass/_modules.scss */
   .team-list .card.contained > a, .team-list .node-form > div.card > a,
   .team-list #user-profile-form > div.card > a,
   .team-list #user-register-form > div.card > a, .team-list #content .card.search-form > a, #content .team-list .card.search-form > a, .related-list .card.contained > a, .related-list .node-form > div.card > a,
@@ -6084,7 +6085,7 @@ select:disabled {
     padding-left: 2rem;
     padding-right: 4rem;
   }
-  /* line 415, ../sass/_modules.scss */
+  /* line 416, ../sass/_modules.scss */
   .team-list .card.contained .extra, .team-list .node-form > div.card .extra,
   .team-list #user-profile-form > div.card .extra,
   .team-list #user-register-form > div.card .extra, .team-list #content .card.search-form .extra, #content .team-list .card.search-form .extra, .related-list .card.contained .extra, .related-list .node-form > div.card .extra,
@@ -6093,7 +6094,7 @@ select:disabled {
     right: 3.25rem;
   }
 }
-/* line 424, ../sass/_modules.scss */
+/* line 425, ../sass/_modules.scss */
 .grid .card.contained > a, .grid .node-form > div.card > a,
 .grid #user-profile-form > div.card > a,
 .grid #user-register-form > div.card > a, .grid #content .card.search-form > a, #content .grid .card.search-form > a {
@@ -6105,7 +6106,7 @@ select:disabled {
   -o-transition: -o-transform 0.1s ease-in-out;
   transition: transform 0.1s ease-in-out;
 }
-/* line 430, ../sass/_modules.scss */
+/* line 431, ../sass/_modules.scss */
 .grid .card.contained > a:hover, .grid .node-form > div.card > a:hover,
 .grid #user-profile-form > div.card > a:hover,
 .grid #user-register-form > div.card > a:hover, .grid #content .card.search-form > a:hover, #content .grid .card.search-form > a:hover {
@@ -6117,46 +6118,46 @@ select:disabled {
   -o-transform: scale(1.05);
   transform: scale(1.05);
 }
-/* line 436, ../sass/_modules.scss */
+/* line 437, ../sass/_modules.scss */
 .grid .card.contained .extra, .grid .node-form > div.card .extra,
 .grid #user-profile-form > div.card .extra,
 .grid #user-register-form > div.card .extra, .grid #content .card.search-form .extra, #content .grid .card.search-form .extra {
   right: 1.75rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 422, ../sass/_modules.scss */
+  /* line 423, ../sass/_modules.scss */
   .grid .card.contained, .grid .node-form > div.card,
   .grid #user-profile-form > div.card,
   .grid #user-register-form > div.card, .grid #content .card.search-form, #content .grid .card.search-form {
     text-align: center;
   }
-  /* line 442, ../sass/_modules.scss */
+  /* line 443, ../sass/_modules.scss */
   .grid .card.contained > a, .grid .node-form > div.card > a,
   .grid #user-profile-form > div.card > a,
   .grid #user-register-form > div.card > a, .grid #content .card.search-form > a, #content .grid .card.search-form > a {
     display: block;
     padding: 0 0 2rem 0;
   }
-  /* line 446, ../sass/_modules.scss */
+  /* line 447, ../sass/_modules.scss */
   .grid .card.contained.node-event > a, .grid .node-form > div.card.node-event > a,
   .grid #user-profile-form > div.card.node-event > a,
   .grid #user-register-form > div.card.node-event > a, .grid #content .card.node-event.search-form > a, #content .grid .card.node-event.search-form > a {
     padding-right: 0;
   }
-  /* line 449, ../sass/_modules.scss */
+  /* line 450, ../sass/_modules.scss */
   .grid .card.contained .media, .grid .node-form > div.card .media,
   .grid #user-profile-form > div.card .media,
   .grid #user-register-form > div.card .media, .grid #content .card.search-form .media, #content .grid .card.search-form .media {
     float: none;
     margin: 0 0 1rem 0;
   }
-  /* line 453, ../sass/_modules.scss */
+  /* line 454, ../sass/_modules.scss */
   .grid .card.contained .cover, .grid .node-form > div.card .cover,
   .grid #user-profile-form > div.card .cover,
   .grid #user-register-form > div.card .cover, .grid #content .card.search-form .cover, #content .grid .card.search-form .cover {
     display: block;
   }
-  /* line 456, ../sass/_modules.scss */
+  /* line 457, ../sass/_modules.scss */
   .grid .card.contained .avatar, .grid .node-form > div.card .avatar,
   .grid #user-profile-form > div.card .avatar,
   .grid #user-register-form > div.card .avatar, .grid #content .card.search-form .avatar, #content .grid .card.search-form .avatar {
@@ -6166,7 +6167,7 @@ select:disabled {
     background-color: #FFF;
     margin: -4rem auto 0 auto;
   }
-  /* line 463, ../sass/_modules.scss */
+  /* line 464, ../sass/_modules.scss */
   .grid .card.contained .badge-chapter, .grid .node-form > div.card .badge-chapter,
   .grid #user-profile-form > div.card .badge-chapter,
   .grid #user-register-form > div.card .badge-chapter, .grid #content .card.search-form .badge-chapter, #content .grid .card.search-form .badge-chapter {
@@ -6175,7 +6176,7 @@ select:disabled {
     font-size: 1.25rem;
     padding-bottom: 1rem;
   }
-  /* line 468, ../sass/_modules.scss */
+  /* line 469, ../sass/_modules.scss */
   .grid .card.contained .badge-chapter:after, .grid .node-form > div.card .badge-chapter:after,
   .grid #user-profile-form > div.card .badge-chapter:after,
   .grid #user-register-form > div.card .badge-chapter:after, .grid #content .card.search-form .badge-chapter:after, #content .grid .card.search-form .badge-chapter:after {
@@ -6183,21 +6184,21 @@ select:disabled {
     width: 1rem;
     border-radius: 0.25rem 0 0 0;
   }
-  /* line 474, ../sass/_modules.scss */
+  /* line 475, ../sass/_modules.scss */
   .grid .card.contained .badge-cal, .grid .node-form > div.card .badge-cal,
   .grid #user-profile-form > div.card .badge-cal,
   .grid #user-register-form > div.card .badge-cal, .grid #content .card.search-form .badge-cal, #content .grid .card.search-form .badge-cal {
     width: 6rem;
     height: 6rem;
   }
-  /* line 477, ../sass/_modules.scss */
+  /* line 478, ../sass/_modules.scss */
   .grid .card.contained .badge-cal .month, .grid .node-form > div.card .badge-cal .month,
   .grid #user-profile-form > div.card .badge-cal .month,
   .grid #user-register-form > div.card .badge-cal .month, .grid #content .card.search-form .badge-cal .month, #content .grid .card.search-form .badge-cal .month {
     font-size: 1.25rem;
     line-height: 2rem;
   }
-  /* line 481, ../sass/_modules.scss */
+  /* line 482, ../sass/_modules.scss */
   .grid .card.contained .badge-cal .day, .grid .node-form > div.card .badge-cal .day,
   .grid #user-profile-form > div.card .badge-cal .day,
   .grid #user-register-form > div.card .badge-cal .day, .grid #content .card.search-form .badge-cal .day, #content .grid .card.search-form .badge-cal .day {
@@ -6206,7 +6207,7 @@ select:disabled {
     padding-bottom: 0.5rem;
     letter-spacing: -0.125rem;
   }
-  /* line 489, ../sass/_modules.scss */
+  /* line 490, ../sass/_modules.scss */
   .grid .card.contained .badge-organization, .grid .node-form > div.card .badge-organization,
   .grid #user-profile-form > div.card .badge-organization,
   .grid #user-register-form > div.card .badge-organization, .grid #content .card.search-form .badge-organization, #content .grid .card.search-form .badge-organization,
@@ -6219,7 +6220,7 @@ select:disabled {
     width: 6rem;
     height: 6rem;
   }
-  /* line 493, ../sass/_modules.scss */
+  /* line 494, ../sass/_modules.scss */
   .grid .card.contained .teaser, .grid .node-form > div.card .teaser,
   .grid #user-profile-form > div.card .teaser,
   .grid #user-register-form > div.card .teaser, .grid #content .card.search-form .teaser, #content .grid .card.search-form .teaser {
@@ -6227,21 +6228,21 @@ select:disabled {
     width: auto;
     padding: 0 1rem;
   }
-  /* line 498, ../sass/_modules.scss */
+  /* line 499, ../sass/_modules.scss */
   .grid .card.contained .prime-title, .grid .node-form > div.card .prime-title,
   .grid #user-profile-form > div.card .prime-title,
   .grid #user-register-form > div.card .prime-title, .grid #content .card.search-form .prime-title, #content .grid .card.search-form .prime-title {
     font-size: 1.5rem;
     line-height: 1.16667;
   }
-  /* line 503, ../sass/_modules.scss */
+  /* line 504, ../sass/_modules.scss */
   .grid .card.contained .meta, .grid .node-form > div.card .meta,
   .grid #user-profile-form > div.card .meta,
   .grid #user-register-form > div.card .meta, .grid #content .card.search-form .meta, #content .grid .card.search-form .meta {
     font-size: 1rem;
     line-height: 1.5;
   }
-  /* line 507, ../sass/_modules.scss */
+  /* line 508, ../sass/_modules.scss */
   .grid .card.contained .extra, .grid .node-form > div.card .extra,
   .grid #user-profile-form > div.card .extra,
   .grid #user-register-form > div.card .extra, .grid #content .card.search-form .extra, #content .grid .card.search-form .extra {
@@ -6250,7 +6251,7 @@ select:disabled {
     left: 0.5rem;
     right: auto;
   }
-  /* line 513, ../sass/_modules.scss */
+  /* line 514, ../sass/_modules.scss */
   .grid .card.contained .chapter-sticker, .grid .node-form > div.card .chapter-sticker,
   .grid #user-profile-form > div.card .chapter-sticker,
   .grid #user-register-form > div.card .chapter-sticker, .grid #content .card.search-form .chapter-sticker, #content .grid .card.search-form .chapter-sticker {

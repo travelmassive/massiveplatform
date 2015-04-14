@@ -54,8 +54,8 @@ function tm_events_field_group_info() {
     'weight' => '18',
     'children' => array(
       0 => 'field_rsvp_link',
-      1 => 'ds_flag_event_waitlist',
-      2 => 'ds_flag_event_register',
+      1 => 'ds_flag_event_register',
+      2 => 'ds_flag_event_waitlist',
       3 => 'tm_ds_more_actions',
       4 => 'tm_ds_anon_flag_placeholder',
     ),
@@ -112,7 +112,8 @@ function tm_events_field_group_info() {
     'children' => array(
       0 => 'body',
       1 => 'tm_ds_fulldate_event',
-      2 => 'group_location_wrapper',
+      2 => 'tm_ds_event_message',
+      3 => 'group_location_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(

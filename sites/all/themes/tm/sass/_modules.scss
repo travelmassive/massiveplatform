@@ -117,6 +117,7 @@
       &:before { @extend .icon-clock; }
     }
     &.tm-ds-tm-sponsor:before { @extend .icon-medal; }
+    &.tm-ds-event-message:before { @extend .icon-circle-info; }
     &.field-about-me:before, &.about-me:before, &.body:before { @extend .icon-description; }
     &.field-link-facebook:before { @extend .icon-facebook; }
     &.field-link-linkedin:before { @extend .icon-linkedin; }

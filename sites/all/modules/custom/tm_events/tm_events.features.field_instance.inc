@@ -29,7 +29,7 @@ function tm_events_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',
-        'weight' => 3,
+        'weight' => 4,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -804,8 +804,8 @@ If set to none, then all chapter leaders will be notified of any registrations a
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Include any additional information you only want to provide to members when they register.<br>
-This will be included in the automatic registration notification email. No HTML allowed.
+    'description' => 'Include any additional information you want to provide to members only when they register.<br>
+This will be displayed to the member on the event page and included in the automatic registration notification email.
 ',
     'display' => array(
       'default' => array(
@@ -843,7 +843,7 @@ This will be included in the automatic registration notification email. No HTML 
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_register_event_message',
-    'label' => 'Email Information When Registered (Advanced)',
+    'label' => 'Message When Registered',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -942,8 +942,8 @@ This will be included in the automatic registration notification email. No HTML 
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Include any additional information you only want to provide to members when they are waitlisted.<br>
-This will be included in the automatic waitlist notification email. No HTML allowed.
+    'description' => 'Include any additional information you want to provide to members only when they are waitlisted.<br>
+This will be displayed to the member on the event page and included in the automatic waitlist notification email.
 ',
     'display' => array(
       'default' => array(
@@ -981,7 +981,7 @@ This will be included in the automatic waitlist notification email. No HTML allo
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_waitlist_event_message',
-    'label' => 'Email Information When Waitlisted (Advanced)',
+    'label' => 'Message When Waitlisted',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -1004,19 +1004,19 @@ This will be included in the automatic waitlist notification email. No HTML allo
   t('Approved Members Only');
   t('Check this box if you want to restrict registration and waitlist to members who are approved. Non-approved members won\'t be able to sign up. ');
   t('Description');
-  t('Email Information When Registered (Advanced)');
-  t('Email Information When Waitlisted (Advanced)');
   t('Event Chapter');
   t('Help the attendees find the right location by providing a link to a map, for example <a href="http://maps.google.com/">Google Maps</a>.');
   t('Image');
-  t('Include any additional information you only want to provide to members when they are waitlisted.<br>
-This will be included in the automatic waitlist notification email. No HTML allowed.
+  t('Include any additional information you want to provide to members only when they are waitlisted.<br>
+This will be displayed to the member on the event page and included in the automatic waitlist notification email.
 ');
-  t('Include any additional information you only want to provide to members when they register.<br>
-This will be included in the automatic registration notification email. No HTML allowed.
+  t('Include any additional information you want to provide to members only when they register.<br>
+This will be displayed to the member on the event page and included in the automatic registration notification email.
 ');
   t('Location');
   t('Map link');
+  t('Message When Registered');
+  t('Message When Waitlisted');
   t('Organizer');
   t('Partner Event');
   t('Provide a link to the page with the RSVP (ie: http://www.eventbrite.com/e/your-event-url)');

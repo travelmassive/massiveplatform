@@ -180,7 +180,7 @@ function tm_flags_flag_default_flags() {
     'unflag_long' => 'Unregister for [node:title]',
     'unflag_message' => 'You successfuly unregistered for [node:title]',
     'unflag_denied_text' => '',
-    'link_type' => 'toggle',
+    'link_type' => 'normal',
     'weight' => 0,
     'show_in_links' => array(
       'full' => 0,
@@ -220,7 +220,7 @@ function tm_flags_flag_default_flags() {
     'unflag_long' => 'Leave Waitlist for [node:title]',
     'unflag_message' => 'You successfuly left the Waitlist for [node:title]',
     'unflag_denied_text' => '',
-    'link_type' => 'toggle',
+    'link_type' => 'normal',
     'weight' => 0,
     'show_in_links' => array(
       'full' => 0,

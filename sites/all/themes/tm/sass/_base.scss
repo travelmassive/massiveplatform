@@ -88,7 +88,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
 #main {
   padding: 2rem 0;
   @media #{$medium-up} {
-    padding: 3rem 0;
+    padding: 2rem 0; /* not as much gap */
   }
 }
 

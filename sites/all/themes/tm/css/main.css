@@ -3621,7 +3621,8 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 @media only screen and (min-width: 55.063rem) {
   /* line 88, ../sass/_base.scss */
   #main {
-    padding: 3rem 0;
+    padding: 2rem 0;
+    /* not as much gap */
   }
 }
 
@@ -7173,12 +7174,6 @@ select:disabled {
 .related-list ul li:last-child {
   box-shadow: none;
   padding-bottom: 0;
-}
-
-/* not sure why but the messages are pushed down */
-/* line 687, ../sass/_single.scss */
-.header-wrapper {
-  margin-top: -3rem;
 }
 
 /* line 2, ../sass/_login.scss */

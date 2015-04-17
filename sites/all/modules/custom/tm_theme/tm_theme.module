@@ -35,7 +35,7 @@ function tm_theme_html_head_alter(&$head_elements) {
   	);
   }
 
-  // if front page add vid js for background videp
+  // if front page add vid js for background video
   if (drupal_is_front_page()) {
     drupal_add_js(drupal_get_path('theme', 'tm') . '/js/jquery.vide.min.js', array('group' => JS_THEME));
   }
@@ -47,9 +47,14 @@ function tm_theme_html_head_alter(&$head_elements) {
 
   drupal_add_css(drupal_get_path('theme', 'tm') . '/css/jquery-impromptu.css', array('group' => CSS_THEME));
 
-   // impromptu pure css theme effects admin theme
+  // impromptu pure css theme effects admin theme
   if (!path_is_admin(current_path())) {
           drupal_add_css(drupal_get_path('theme', 'tm') . '/css/jquery-impromptu.pure.css', array('group' => CSS_THEME));
+  }
+
+  // if not front page add sticky header
+  if (!drupal_is_front_page()) {
+    drupal_add_js(drupal_get_path('theme', 'tm') . '/js/jquery.sticky.js', array('group' => JS_THEME));
   }
   
 }

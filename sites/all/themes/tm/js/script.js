@@ -466,5 +466,15 @@ Drupal.behaviors.base_scripts = {
 });})(jQuery, Drupal, this, this.document);
 
 
+(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function() {
+
+  // set sticky header
+  if (typeof($(".header").sticky) == "function") {
+      $(".header").sticky({topSpacing:0});
+  }
+
+});})(jQuery, Drupal, this, this.document);
+
+
 
   

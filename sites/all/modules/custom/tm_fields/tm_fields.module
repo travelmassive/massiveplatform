@@ -245,6 +245,13 @@ function _tm_more_actions_process($field, $title = NULL) {
           }
       }
 
+      // for events without a chapter, if the user is an organizer of
+      foreach ($node->field_organizer[LANGUAGE_NONE] as $field_organizer) {  
+        if ($field_organizer["target_id"] == $user->uid) {
+          $show_menu_item = true;
+        }
+      }
+
       // if is admin or moderator always show
       if ((in_array('administrator', array_values($user->roles))) or (in_array('moderator', array_values($user->roles)))) {
         $show_menu_item = true;
@@ -280,6 +287,13 @@ function _tm_more_actions_process($field, $title = NULL) {
       //if (in_array("chapter leader", $targetuser->roles)){
       if (isset($node->field_chapter[LANGUAGE_NONE][0])){
         if (tm_users_is_chapter_leader($user->uid, $node->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
+          $show_menu_item = true;
+        }
+      }
+
+      // for events without a chapter, if the user is an organizer of
+      foreach ($node->field_organizer[LANGUAGE_NONE] as $field_organizer) {  
+        if ($field_organizer["target_id"] == $user->uid) {
           $show_menu_item = true;
         }
       }

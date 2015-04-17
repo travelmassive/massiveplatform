@@ -199,7 +199,7 @@ function tm_events_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_chapter',
     'label' => 'Event Chapter',
-    'required' => 1,
+    'required' => 0,
     'settings' => array(
       'behaviors' => array(
         'prepopulate' => array(
@@ -244,7 +244,7 @@ function tm_events_field_default_field_instances() {
             'view' => 'view',
           ),
         ),
-        'unused' => 0,
+        'unused' => 1,
       ),
       'user_register_form' => FALSE,
     ),

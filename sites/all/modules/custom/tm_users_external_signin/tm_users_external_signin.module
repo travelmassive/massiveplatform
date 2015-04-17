@@ -117,7 +117,8 @@ function tm_users_external_signin_theme() {
 
 function tm_users_external_signin_form_user_login_alter(&$form, &$form_state) {
   $form['tm_users_external_signin'] = array(
-    '#markup' => theme('tm_users_external_signin_link_signin', array('url' => url('tm_twitter/oauth')))
+    '#markup' => theme('tm_users_external_signin_link_signin', array('url' => url('tm_twitter/oauth'))),
+    '#weight' => 100 // move to below login button
   );
 }
 

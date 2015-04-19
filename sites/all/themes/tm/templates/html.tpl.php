@@ -51,6 +51,9 @@
       <script src="<?php print $base_path . $path_to_zen; ?>/js/respond.js"></script>
       <![endif]-->
     <?php endif; ?>
+    <style>
+    .sticky-wrapper.sticky .header { height: border: 0px solid red;}
+    </style>
   </head>
   <?php
     // https://github.com/VodkaBears/Vide#readme

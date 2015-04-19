@@ -468,9 +468,43 @@ Drupal.behaviors.base_scripts = {
 
 (function ($, Drupal, window, document, undefined) {jQuery(document).ready(function() {
 
+  // get IE version
+  // http://stackoverflow.com/questions/19999388/jquery-check-if-user-is-using-ie
+  function msieversion() {
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+    // If Internet Explorer, return version number
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+      return (parseInt(ua.substring(msie + 5, ua.indexOf(".", msie))));
+    }
+    else {
+      // If another browser, return 0
+      return 0;
+    }
+  }
+
   // set sticky header
   if (typeof($(".header").sticky) == "function") {
-      $(".header").sticky({topSpacing:0});
+    $(".header").sticky({topSpacing:0, className: 'sticky'});
+
+    console.log($(".header").width());
+    $('.prime-nav-wrappers').css({'margin-top': '0rem'});
+
+    // animate if non-IE
+    if (msieversion() == 0) {
+
+      // shrink
+      $('.header').on('sticky-start', function() {
+        $('.header').animate({height: "3rem", 'padding-top': "0rem"}, 500);
+        $('.header-logo').animate({height: "1em", 'margin-top': "0.4rem"}, 500);
+      });
+    
+      // expand
+      $('.header').on('sticky-end', function() { 
+        $('.header').animate({height: "5rem", 'padding-top': "1rem"}, 150);
+        $('.header-logo').animate({height: "3rem", 'margin-top': "0"}, 150);
+      });
+    }
   }
 
 });})(jQuery, Drupal, this, this.document);

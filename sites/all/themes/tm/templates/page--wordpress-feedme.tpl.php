@@ -5,6 +5,7 @@ $feedme_query = ""; // ie: Berlin
 $feedme_theme = ""; // empty, or "dark" for dark theme
 $feedme_off = true; // turn off by default
 $feedme_style = ""; // add style to the #feedme div
+$feedme_num_items = 5; // number of items to display
 
 // user
 if (arg(0) == 'user' and is_numeric(arg(1)) and arg(2) == FALSE) {
@@ -42,8 +43,9 @@ if ($is_front) {
     $feedme_query = "";
     $feedme_theme = "light";
     $feedme_off = false;
-    $feedme_append = "#main";
-    $feedme_style = "margin: 0 auto; width: 100%; text-align: center; margin-top: 64px;";
+    $feedme_append = "#frontpage_wordpress_feed";
+    $feedme_style = "margin: 0 auto; width: 100%;";
+    $feedme_num_items = 5;
 }
 
 if (!$feedme_off) {
@@ -61,13 +63,21 @@ function load_feedme() {
     feedme_query = "<?php print($feedme_query);?>";
     feedme_theme = "<?php print($feedme_theme);?>";
     feedme_frontpage_id = "<?php global $conf; print($conf["tm_wordpress_feedme_frontpage_id"]);?>";
+    feedme_num_items = "<?php print($feedme_num_items);?>";
     feedme_base_url = "<?php global $conf; print($conf["tm_wordpress_feedme_url"]);?>";
-    feedme_url = feedme_base_url + "?mode=" + feedme_mode + "&q=" + encodeURIComponent(feedme_query) + "&theme=" + feedme_theme;
+    feedme_url = feedme_base_url + "?mode=" + feedme_mode + "&q=" + encodeURIComponent(feedme_query) + "&theme=" + feedme_theme + "&num_items=" + feedme_num_items;
     if (feedme_mode == "frontpage") {
     	feedme_url = feedme_url + "&frontpage_id=" + feedme_frontpage_id;
     }
     //console.log(feedme_url);
-    $("#feedme").load(feedme_url);
+    $.get(feedme_url, function(data) {
+        $("#feedme").replaceWith(data);
+        // if feedme_loaded() function defined, call it
+        // this can be used to display a div when the feed loads
+        if (typeof(feedme_loaded) == "function") {
+            feedme_loaded();
+        }
+    });
 }
 
 load_feedme(); // This will run on page load

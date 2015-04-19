@@ -112,7 +112,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
   }
   img {
     display: block;
-    height: 2rem;
+    height: 3rem;
   }
   @media #{$medium-up} {
     @include grid-column(2);
@@ -140,6 +140,9 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
         margin-left: 0;
       }
     }
+  }
+  .prime-nav-wrappers {
+    padding-top: 0.5rem;
   }
   .toggle {
     display: block;
@@ -252,6 +255,8 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
     > ul {
       padding: 0.5rem 0;
     }
+    .prime-nav-wrappers {
+    } 
     .browse-wrapper {
       .toggle:before {
         display: none;

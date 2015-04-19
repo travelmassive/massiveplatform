@@ -28,13 +28,13 @@
     <div class="row">
       <h1 id="site-title">
         <a title="<?php print t('Home'); ?>" rel="home" href="<?php print $front_page; ?>">
-          <img src="<?php print $base_path . path_to_theme(); ?>/images/layout/tm-logo.svg" alt="<?php print t('Home'); ?>" width="104" height="48" />
+          <img class="header-logo" src="<?php print $base_path . path_to_theme(); ?>/images/layout/tm-logo.svg" alt="<?php print t('Home'); ?>" width="104" height="48" />
           <span><?php print $site_name; ?></span>
         </a>
       </h1>
       <nav id="prime-nav" role="navigation">
         <h1><?= t('Primary navigation'); ?></h1>
-        <ul>
+        <ul class="prime-nav-wrappers">
           <?php if ($main_menu): ?>
           <li class="browse-wrapper" data-dropd-wrapper>
             <h2><a class="toggle" href="#browse-menu-blk" data-dropd-toggle><span class="hide"><?= t('Browse'); ?></span></a></h2>

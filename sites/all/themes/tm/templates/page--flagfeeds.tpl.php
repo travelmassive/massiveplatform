@@ -12,6 +12,7 @@ img.flagfeed-image { max-height: 64px;}
 
 	flagfeedShowAll = function() {
 		$("#flagfeedShowAll").hide();
+		$("#flagfeedViewCommunity").show();
 		$("li.flagfeed").show();
 	}
 
@@ -268,6 +269,7 @@ $tm_feeds_template = <<<EOT
 			</div>
 			<div class="more-link" style="font-size: 14px;">
   				<a id='flagfeedShowAll' href='javascript:flagfeedShowAll();'>Show more</a>&nbsp;
+				<a id='flagfeedViewCommunity' style='display:none;' href='/community'>View the community</a>&nbsp;
 			</div>
 		</section>
 	<!--</div>

@@ -72,22 +72,6 @@
             <?php print render($page['content']); ?>
 
             <?php
-            // show social media feeds
-            // you will need a social media widget such as twinesocial
-            // in settings.php set $conf["tm_enable_fontpage_socialfeeds"] = true;\
-            global $conf;
-            if (@isset($conf["tm_enable_fontpage_socialfeeds"])) {
-              if (($is_front) and ($conf["tm_enable_fontpage_socialfeeds"])) {
-                include './'. path_to_theme() .'/templates/frontpage-socialfeeds.tpl.php';
-              }
-            }
-            ?>
-
-            <div id="frontpage_wordpress_content" style="margin-top: 64px; display: none;"></div>
-
-            <div class="trilithon" id="frontpage_feed" style="margin-top: 64px;">
-            
-            <?php
             // Enable wordpress feedme plugin
             // Show recent blog posts and more
             global $conf;
@@ -95,6 +79,15 @@
             if (@isset($conf["tm_enable_wordpress_feedme"])) {
               if ($conf["tm_enable_wordpress_feedme"]) {
                 $tm_enable_wordpress_feedme = true;
+
+            ?>
+            <div id="frontpage_wordpress_content" style="margin-top: 64px; display: none;"></div>
+            <?php } ?>
+
+            <div class="trilithon" id="frontpage_feed" style="margin-top: 64px;">
+            
+            <?php
+              if ($tm_enable_wordpress_feedme) {
             ?>
             <div class="column first" id="frontpage_wordpress_feed" style="float: left;"></div>
               <script type="text/javascript">
@@ -112,7 +105,6 @@
               </script>
             <?php include './'. path_to_theme() .'/templates/page--wordpress-feedme.tpl.php'; ?>
             <?php 
-                } // end if
               } // end if
             ?>
 

@@ -21,13 +21,15 @@ img.flagfeed-image { max-height: 64px;}
 
 <?php
 
-function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cache_key = "page-flagfeeds", $cache_time = 0, $show_unapproved = false, $show_repeat_user = false) {
+function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cache_key = "page-flagfeeds", $cache_time = 60, $show_unapproved = false, $show_repeat_user = false) {
 
-	// check cache first
-	$cache_value = cache_get($cache_key, 'cache');
-	if (!empty($cache_value)) {
-		print($cache_value->data);
-		return;
+	// cache for logged out users
+	if (!user_is_logged_in()) {
+		$cache_value = cache_get($cache_key, 'cache');
+		if (!empty($cache_value)) {
+			print($cache_value->data);
+			return;
+		}
 	}
 
 	global $conf;
@@ -229,9 +231,11 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 	$tm_feeds_template = str_replace("__FEED_ITEMS__", $feed_html, $tm_feeds_template);
 	
 	// store in cache
-	// disabled currently
-	if ($cache_time > 0) {
-		cache_set($cache_key, $tm_feeds_template, 'cache', time() + $cache_time);
+	// for public users
+	if (!user_is_logged_in()) {
+		if ($cache_time > 0) {
+			cache_set($cache_key, $tm_feeds_template, 'cache', time() + $cache_time);
+		}
 	}
 
 	// output

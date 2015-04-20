@@ -483,6 +483,10 @@ Drupal.behaviors.base_scripts = {
     }
   }
 
+  function isMobileDevice() {
+    return ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+  }
+
   // set sticky header
   if (typeof($(".header").sticky) == "function") {
     $(".header").sticky({topSpacing:0, className: 'sticky'});
@@ -495,14 +499,30 @@ Drupal.behaviors.base_scripts = {
 
       // shrink
       $('.header').on('sticky-start', function() {
-        $('.header').animate({height: "3rem", 'padding-top': "0rem"}, 500);
-        $('.header-logo').animate({height: "1em", 'margin-top': "0.5rem"}, 500);
+
+        if (isMobileDevice()) {
+          // no animation
+          $('.header').css({height: "3rem", 'padding-top': "0rem"});
+          $('.header-logo').css({height: "1em", 'margin-top': "0.5rem"});
+        } else {
+          // animate
+          $('.header').animate({height: "3rem", 'padding-top': "0rem"}, 500);
+          $('.header-logo').animate({height: "1em", 'margin-top': "0.5rem"}, 500);
+        }
+        
       });
     
       // expand
       $('.header').on('sticky-end', function() { 
-        $('.header').animate({height: "5rem", 'padding-top': "1rem"}, 150);
-        $('.header-logo').animate({height: "3rem", 'margin-top': "0"}, 150);
+        if (isMobileDevice()) {
+          $('.header').css({height: "5rem", 'padding-top': "1rem"});
+          $('.header-logo').css({height: "3rem", 'margin-top': "0"});
+        } else {
+          // animate
+          $('.header').animate({height: "5rem", 'padding-top': "1rem"}, 150);
+          $('.header-logo').animate({height: "3rem", 'margin-top': "0"}, 150);
+        }
+        
       });
     }
   }

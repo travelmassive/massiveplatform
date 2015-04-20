@@ -21,7 +21,7 @@ img.flagfeed-image { max-height: 64px;}
 
 <?php
 
-function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cache_key = "page-flagfeeds", $cache_time = 60, $show_unapproved = false, $show_repeat_user = false) {
+function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cache_key = "page-flagfeeds", $cache_time = 120, $show_unapproved = false, $show_repeat_user = false) {
 
 	// cache for logged out users
 	if (!user_is_logged_in()) {

@@ -579,16 +579,16 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
 $conf['tm_twitter_consumer_key'] = '';
 $conf['tm_twitter_consumer_secret'] = '';
 
-/** ENABLE SOCIAL MEDIA FEED ON FRONT PAGE **/
-/** NOTE: You need a TwineSocial account **/
-$conf['tm_enable_fontpage_socialfeeds'] = false;
-
 /** ENABLE FEEDME **/
 /** This calls a module hosted on wordpress to embed blog (plus other) content based on current page **/
 /** You will need this wordpress plugin: https://github.com/travelmassive/massiveplatform-wordpress-feedme **/
 $conf['tm_enable_wordpress_feedme'] = false;
 $conf['tm_wordpress_feedme_url'] = "/blog/wp-content/plugins/tm-feeds/feedme.php";
 $conf['tm_wordpress_feedme_frontpage_id'] = "1831";
+
+/** ENABLE FLAG FEEDS **/
+/** This will display a feed of recent actions on the front page, such as signup, new members, and following **/
+$conf['tm_enable_flags_feed'] = true;
 
 /** Limit Follow and Join **/
 /** NOTE: Administrator and chapter leaders do not have limits **/

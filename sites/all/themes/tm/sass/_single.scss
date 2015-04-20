@@ -498,6 +498,26 @@
       border-radius: $global-radius;
     }
   }
+  .badge-flagfeed {
+    width: 4rem;
+    height: 4rem;
+    display: block;
+    img {
+      display: block;
+      max-width: 100%;
+      border-radius: $global-radius;
+    }
+  }
+  .badge-wordpress-feedme {
+    width: 4rem;
+    height: 4rem;
+    display: block;
+    img {
+      display: block;
+      max-width: 100%;
+      border-radius: $global-radius;
+    }
+  }
   .bd {
     padding: 0 1rem 6rem 1rem;
     text-align: center;

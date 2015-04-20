@@ -487,7 +487,7 @@ Drupal.behaviors.base_scripts = {
   if (typeof($(".header").sticky) == "function") {
     $(".header").sticky({topSpacing:0, className: 'sticky'});
 
-    console.log($(".header").width());
+    //console.log($(".header").width());
     $('.prime-nav-wrappers').css({'margin-top': '0rem'});
 
     // animate if non-IE
@@ -496,7 +496,7 @@ Drupal.behaviors.base_scripts = {
       // shrink
       $('.header').on('sticky-start', function() {
         $('.header').animate({height: "3rem", 'padding-top': "0rem"}, 500);
-        $('.header-logo').animate({height: "1em", 'margin-top': "0.4rem"}, 500);
+        $('.header-logo').animate({height: "1em", 'margin-top': "0.5rem"}, 500);
       });
     
       // expand

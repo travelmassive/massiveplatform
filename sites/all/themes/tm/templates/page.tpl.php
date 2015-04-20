@@ -91,8 +91,10 @@
             // Enable wordpress feedme plugin
             // Show recent blog posts and more
             global $conf;
+            $tm_enable_wordpress_feedme = false;
             if (@isset($conf["tm_enable_wordpress_feedme"])) {
               if ($conf["tm_enable_wordpress_feedme"]) {
+                $tm_enable_wordpress_feedme = true;
             ?>
             <div class="column first" id="frontpage_wordpress_feed" style="float: left;"></div>
               <script type="text/javascript">
@@ -118,7 +120,7 @@
             if (@isset($conf["tm_enable_flags_feed"])) {
               if ($conf["tm_enable_flags_feed"]) {
             ?>
-              <div class="column second" id="frontpage_flag_feed" style="float: right;">
+              <div class="<?php if($tm_enable_wordpress_feedme) { print("column second"); }?>" id="frontpage_flag_feed" style="float: right;">
                 
             <?php include './'. path_to_theme() .'/templates/page--flagfeeds.tpl.php'; ?>
               </div> <!-- close second column -->

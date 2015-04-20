@@ -5934,6 +5934,38 @@ select:disabled {
   border-radius: 0.25rem;
 }
 /* line 324, ../sass/_modules.scss */
+.card.contained .badge-flagfeed, .node-form > div.card .badge-flagfeed,
+#user-profile-form > div.card .badge-flagfeed,
+#user-register-form > div.card .badge-flagfeed, #content .card.search-form .badge-flagfeed {
+  width: 4rem;
+  height: 4rem;
+  display: block;
+}
+/* line 328, ../sass/_modules.scss */
+.card.contained .badge-flagfeed img, .node-form > div.card .badge-flagfeed img,
+#user-profile-form > div.card .badge-flagfeed img,
+#user-register-form > div.card .badge-flagfeed img, #content .card.search-form .badge-flagfeed img {
+  display: block;
+  max-width: 100%;
+  border-radius: 0.25rem;
+}
+/* line 334, ../sass/_modules.scss */
+.card.contained .badge-wordpress-feedme, .node-form > div.card .badge-wordpress-feedme,
+#user-profile-form > div.card .badge-wordpress-feedme,
+#user-register-form > div.card .badge-wordpress-feedme, #content .card.search-form .badge-wordpress-feedme {
+  width: 4rem;
+  height: 4rem;
+  display: block;
+}
+/* line 338, ../sass/_modules.scss */
+.card.contained .badge-wordpress-feedme img, .node-form > div.card .badge-wordpress-feedme img,
+#user-profile-form > div.card .badge-wordpress-feedme img,
+#user-register-form > div.card .badge-wordpress-feedme img, #content .card.search-form .badge-wordpress-feedme img {
+  display: block;
+  max-width: 100%;
+  border-radius: 0.25rem;
+}
+/* line 344, ../sass/_modules.scss */
 .card.contained .teaser, .node-form > div.card .teaser,
 #user-profile-form > div.card .teaser,
 #user-register-form > div.card .teaser, #content .card.search-form .teaser {
@@ -5942,13 +5974,13 @@ select:disabled {
   vertical-align: middle;
   padding-right: 1.75rem;
 }
-/* line 329, ../sass/_modules.scss */
+/* line 349, ../sass/_modules.scss */
 .card.contained .teaser p, .node-form > div.card .teaser p,
 #user-profile-form > div.card .teaser p,
 #user-register-form > div.card .teaser p, #content .card.search-form .teaser p {
   margin: 0;
 }
-/* line 331, ../sass/_modules.scss */
+/* line 351, ../sass/_modules.scss */
 .card.contained .prime-title, .node-form > div.card .prime-title,
 #user-profile-form > div.card .prime-title,
 #user-register-form > div.card .prime-title, #content .card.search-form .prime-title {
@@ -5959,7 +5991,7 @@ select:disabled {
   padding: 0;
   letter-spacing: normal;
 }
-/* line 340, ../sass/_modules.scss */
+/* line 360, ../sass/_modules.scss */
 .card.contained .meta, .node-form > div.card .meta,
 #user-profile-form > div.card .meta,
 #user-register-form > div.card .meta, #content .card.search-form .meta {
@@ -5968,26 +6000,26 @@ select:disabled {
   line-height: 1.25rem;
   display: block;
 }
-/* line 346, ../sass/_modules.scss */
+/* line 366, ../sass/_modules.scss */
 .card.contained .meta span:after, .node-form > div.card .meta span:after,
 #user-profile-form > div.card .meta span:after,
 #user-register-form > div.card .meta span:after, #content .card.search-form .meta span:after {
   content: ', ';
 }
-/* line 351, ../sass/_modules.scss */
+/* line 371, ../sass/_modules.scss */
 .card.contained .meta span:last-of-type:after, .node-form > div.card .meta span:last-of-type:after,
 #user-profile-form > div.card .meta span:last-of-type:after,
 #user-register-form > div.card .meta span:last-of-type:after, #content .card.search-form .meta span:last-of-type:after {
   content: '';
 }
-/* line 356, ../sass/_modules.scss */
+/* line 376, ../sass/_modules.scss */
 .card.contained .extra, .node-form > div.card .extra,
 #user-profile-form > div.card .extra,
 #user-register-form > div.card .extra, #content .card.search-form .extra {
   position: absolute;
   top: 0.5rem;
 }
-/* line 360, ../sass/_modules.scss */
+/* line 380, ../sass/_modules.scss */
 .card.contained .chapter-sticker, .node-form > div.card .chapter-sticker,
 #user-profile-form > div.card .chapter-sticker,
 #user-register-form > div.card .chapter-sticker, #content .card.search-form .chapter-sticker {
@@ -6011,13 +6043,13 @@ select:disabled {
   -o-transform-origin: top right;
   transform-origin: top right;
 }
-/* line 379, ../sass/_modules.scss */
+/* line 399, ../sass/_modules.scss */
 .node-chapter .card.contained .extra, .node-chapter .node-form > div.card .extra,
 .node-chapter #user-profile-form > div.card .extra,
 .node-chapter #user-register-form > div.card .extra, .node-chapter #content .card.search-form .extra, #content .node-chapter .card.search-form .extra {
   display: none;
 }
-/* line 384, ../sass/_modules.scss */
+/* line 404, ../sass/_modules.scss */
 .team-list .card.contained, .team-list .node-form > div.card,
 .team-list #user-profile-form > div.card,
 .team-list #user-register-form > div.card, .team-list #content .card.search-form, #content .team-list .card.search-form, .related-list .card.contained, .related-list .node-form > div.card,
@@ -6026,7 +6058,7 @@ select:disabled {
   margin-bottom: 0;
   border-radius: 0;
 }
-/* line 389, ../sass/_modules.scss */
+/* line 409, ../sass/_modules.scss */
 .team-list .card.contained > a, .team-list .node-form > div.card > a,
 .team-list #user-profile-form > div.card > a,
 .team-list #user-register-form > div.card > a, .team-list #content .card.search-form > a, #content .team-list .card.search-form > a, .related-list .card.contained > a, .related-list .node-form > div.card > a,
@@ -6050,7 +6082,7 @@ select:disabled {
   -o-transition-delay: 0, 0, 0, 0;
   transition-delay: 0, 0, 0, 0;
 }
-/* line 396, ../sass/_modules.scss */
+/* line 416, ../sass/_modules.scss */
 .team-list .card.contained > a:hover, .team-list .node-form > div.card > a:hover,
 .team-list #user-profile-form > div.card > a:hover,
 .team-list #user-register-form > div.card > a:hover, .team-list #content .card.search-form > a:hover, #content .team-list .card.search-form > a:hover, .related-list .card.contained > a:hover, .related-list .node-form > div.card > a:hover,
@@ -6060,7 +6092,7 @@ select:disabled {
   background-color: rgba(127, 190, 218, 0.2);
   color: #007eb5;
 }
-/* line 403, ../sass/_modules.scss */
+/* line 423, ../sass/_modules.scss */
 .team-list .card.contained .extra, .team-list .node-form > div.card .extra,
 .team-list #user-profile-form > div.card .extra,
 .team-list #user-register-form > div.card .extra, .team-list #content .card.search-form .extra, #content .team-list .card.search-form .extra, .related-list .card.contained .extra, .related-list .node-form > div.card .extra,
@@ -6069,7 +6101,7 @@ select:disabled {
   right: 2.25rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 384, ../sass/_modules.scss */
+  /* line 404, ../sass/_modules.scss */
   .team-list .card.contained, .team-list .node-form > div.card,
   .team-list #user-profile-form > div.card,
   .team-list #user-register-form > div.card, .team-list #content .card.search-form, #content .team-list .card.search-form, .related-list .card.contained, .related-list .node-form > div.card,
@@ -6079,7 +6111,7 @@ select:disabled {
   }
 }
 @media only screen and (min-width: 62.063rem) {
-  /* line 412, ../sass/_modules.scss */
+  /* line 432, ../sass/_modules.scss */
   .team-list .card.contained > a, .team-list .node-form > div.card > a,
   .team-list #user-profile-form > div.card > a,
   .team-list #user-register-form > div.card > a, .team-list #content .card.search-form > a, #content .team-list .card.search-form > a, .related-list .card.contained > a, .related-list .node-form > div.card > a,
@@ -6088,7 +6120,7 @@ select:disabled {
     padding-left: 2rem;
     padding-right: 4rem;
   }
-  /* line 416, ../sass/_modules.scss */
+  /* line 436, ../sass/_modules.scss */
   .team-list .card.contained .extra, .team-list .node-form > div.card .extra,
   .team-list #user-profile-form > div.card .extra,
   .team-list #user-register-form > div.card .extra, .team-list #content .card.search-form .extra, #content .team-list .card.search-form .extra, .related-list .card.contained .extra, .related-list .node-form > div.card .extra,
@@ -6097,7 +6129,7 @@ select:disabled {
     right: 3.25rem;
   }
 }
-/* line 425, ../sass/_modules.scss */
+/* line 445, ../sass/_modules.scss */
 .grid .card.contained > a, .grid .node-form > div.card > a,
 .grid #user-profile-form > div.card > a,
 .grid #user-register-form > div.card > a, .grid #content .card.search-form > a, #content .grid .card.search-form > a {
@@ -6109,7 +6141,7 @@ select:disabled {
   -o-transition: -o-transform 0.1s ease-in-out;
   transition: transform 0.1s ease-in-out;
 }
-/* line 431, ../sass/_modules.scss */
+/* line 451, ../sass/_modules.scss */
 .grid .card.contained > a:hover, .grid .node-form > div.card > a:hover,
 .grid #user-profile-form > div.card > a:hover,
 .grid #user-register-form > div.card > a:hover, .grid #content .card.search-form > a:hover, #content .grid .card.search-form > a:hover {
@@ -6121,46 +6153,46 @@ select:disabled {
   -o-transform: scale(1.05);
   transform: scale(1.05);
 }
-/* line 437, ../sass/_modules.scss */
+/* line 457, ../sass/_modules.scss */
 .grid .card.contained .extra, .grid .node-form > div.card .extra,
 .grid #user-profile-form > div.card .extra,
 .grid #user-register-form > div.card .extra, .grid #content .card.search-form .extra, #content .grid .card.search-form .extra {
   right: 1.75rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 423, ../sass/_modules.scss */
+  /* line 443, ../sass/_modules.scss */
   .grid .card.contained, .grid .node-form > div.card,
   .grid #user-profile-form > div.card,
   .grid #user-register-form > div.card, .grid #content .card.search-form, #content .grid .card.search-form {
     text-align: center;
   }
-  /* line 443, ../sass/_modules.scss */
+  /* line 463, ../sass/_modules.scss */
   .grid .card.contained > a, .grid .node-form > div.card > a,
   .grid #user-profile-form > div.card > a,
   .grid #user-register-form > div.card > a, .grid #content .card.search-form > a, #content .grid .card.search-form > a {
     display: block;
     padding: 0 0 2rem 0;
   }
-  /* line 447, ../sass/_modules.scss */
+  /* line 467, ../sass/_modules.scss */
   .grid .card.contained.node-event > a, .grid .node-form > div.card.node-event > a,
   .grid #user-profile-form > div.card.node-event > a,
   .grid #user-register-form > div.card.node-event > a, .grid #content .card.node-event.search-form > a, #content .grid .card.node-event.search-form > a {
     padding-right: 0;
   }
-  /* line 450, ../sass/_modules.scss */
+  /* line 470, ../sass/_modules.scss */
   .grid .card.contained .media, .grid .node-form > div.card .media,
   .grid #user-profile-form > div.card .media,
   .grid #user-register-form > div.card .media, .grid #content .card.search-form .media, #content .grid .card.search-form .media {
     float: none;
     margin: 0 0 1rem 0;
   }
-  /* line 454, ../sass/_modules.scss */
+  /* line 474, ../sass/_modules.scss */
   .grid .card.contained .cover, .grid .node-form > div.card .cover,
   .grid #user-profile-form > div.card .cover,
   .grid #user-register-form > div.card .cover, .grid #content .card.search-form .cover, #content .grid .card.search-form .cover {
     display: block;
   }
-  /* line 457, ../sass/_modules.scss */
+  /* line 477, ../sass/_modules.scss */
   .grid .card.contained .avatar, .grid .node-form > div.card .avatar,
   .grid #user-profile-form > div.card .avatar,
   .grid #user-register-form > div.card .avatar, .grid #content .card.search-form .avatar, #content .grid .card.search-form .avatar {
@@ -6170,7 +6202,7 @@ select:disabled {
     background-color: #FFF;
     margin: -4rem auto 0 auto;
   }
-  /* line 464, ../sass/_modules.scss */
+  /* line 484, ../sass/_modules.scss */
   .grid .card.contained .badge-chapter, .grid .node-form > div.card .badge-chapter,
   .grid #user-profile-form > div.card .badge-chapter,
   .grid #user-register-form > div.card .badge-chapter, .grid #content .card.search-form .badge-chapter, #content .grid .card.search-form .badge-chapter {
@@ -6179,7 +6211,7 @@ select:disabled {
     font-size: 1.25rem;
     padding-bottom: 1rem;
   }
-  /* line 469, ../sass/_modules.scss */
+  /* line 489, ../sass/_modules.scss */
   .grid .card.contained .badge-chapter:after, .grid .node-form > div.card .badge-chapter:after,
   .grid #user-profile-form > div.card .badge-chapter:after,
   .grid #user-register-form > div.card .badge-chapter:after, .grid #content .card.search-form .badge-chapter:after, #content .grid .card.search-form .badge-chapter:after {
@@ -6187,21 +6219,21 @@ select:disabled {
     width: 1rem;
     border-radius: 0.25rem 0 0 0;
   }
-  /* line 475, ../sass/_modules.scss */
+  /* line 495, ../sass/_modules.scss */
   .grid .card.contained .badge-cal, .grid .node-form > div.card .badge-cal,
   .grid #user-profile-form > div.card .badge-cal,
   .grid #user-register-form > div.card .badge-cal, .grid #content .card.search-form .badge-cal, #content .grid .card.search-form .badge-cal {
     width: 6rem;
     height: 6rem;
   }
-  /* line 478, ../sass/_modules.scss */
+  /* line 498, ../sass/_modules.scss */
   .grid .card.contained .badge-cal .month, .grid .node-form > div.card .badge-cal .month,
   .grid #user-profile-form > div.card .badge-cal .month,
   .grid #user-register-form > div.card .badge-cal .month, .grid #content .card.search-form .badge-cal .month, #content .grid .card.search-form .badge-cal .month {
     font-size: 1.25rem;
     line-height: 2rem;
   }
-  /* line 482, ../sass/_modules.scss */
+  /* line 502, ../sass/_modules.scss */
   .grid .card.contained .badge-cal .day, .grid .node-form > div.card .badge-cal .day,
   .grid #user-profile-form > div.card .badge-cal .day,
   .grid #user-register-form > div.card .badge-cal .day, .grid #content .card.search-form .badge-cal .day, #content .grid .card.search-form .badge-cal .day {
@@ -6210,7 +6242,7 @@ select:disabled {
     padding-bottom: 0.5rem;
     letter-spacing: -0.125rem;
   }
-  /* line 490, ../sass/_modules.scss */
+  /* line 510, ../sass/_modules.scss */
   .grid .card.contained .badge-organization, .grid .node-form > div.card .badge-organization,
   .grid #user-profile-form > div.card .badge-organization,
   .grid #user-register-form > div.card .badge-organization, .grid #content .card.search-form .badge-organization, #content .grid .card.search-form .badge-organization,
@@ -6223,7 +6255,7 @@ select:disabled {
     width: 6rem;
     height: 6rem;
   }
-  /* line 494, ../sass/_modules.scss */
+  /* line 514, ../sass/_modules.scss */
   .grid .card.contained .teaser, .grid .node-form > div.card .teaser,
   .grid #user-profile-form > div.card .teaser,
   .grid #user-register-form > div.card .teaser, .grid #content .card.search-form .teaser, #content .grid .card.search-form .teaser {
@@ -6231,21 +6263,21 @@ select:disabled {
     width: auto;
     padding: 0 1rem;
   }
-  /* line 499, ../sass/_modules.scss */
+  /* line 519, ../sass/_modules.scss */
   .grid .card.contained .prime-title, .grid .node-form > div.card .prime-title,
   .grid #user-profile-form > div.card .prime-title,
   .grid #user-register-form > div.card .prime-title, .grid #content .card.search-form .prime-title, #content .grid .card.search-form .prime-title {
     font-size: 1.5rem;
     line-height: 1.16667;
   }
-  /* line 504, ../sass/_modules.scss */
+  /* line 524, ../sass/_modules.scss */
   .grid .card.contained .meta, .grid .node-form > div.card .meta,
   .grid #user-profile-form > div.card .meta,
   .grid #user-register-form > div.card .meta, .grid #content .card.search-form .meta, #content .grid .card.search-form .meta {
     font-size: 1rem;
     line-height: 1.5;
   }
-  /* line 508, ../sass/_modules.scss */
+  /* line 528, ../sass/_modules.scss */
   .grid .card.contained .extra, .grid .node-form > div.card .extra,
   .grid #user-profile-form > div.card .extra,
   .grid #user-register-form > div.card .extra, .grid #content .card.search-form .extra, #content .grid .card.search-form .extra {
@@ -6254,7 +6286,7 @@ select:disabled {
     left: 0.5rem;
     right: auto;
   }
-  /* line 514, ../sass/_modules.scss */
+  /* line 534, ../sass/_modules.scss */
   .grid .card.contained .chapter-sticker, .grid .node-form > div.card .chapter-sticker,
   .grid #user-profile-form > div.card .chapter-sticker,
   .grid #user-register-form > div.card .chapter-sticker, .grid #content .card.search-form .chapter-sticker, #content .grid .card.search-form .chapter-sticker {
@@ -6966,38 +6998,62 @@ select:disabled {
   border-radius: 0.25rem;
 }
 /* line 501, ../sass/_single.scss */
+.trilithon-header .badge-flagfeed {
+  width: 4rem;
+  height: 4rem;
+  display: block;
+}
+/* line 505, ../sass/_single.scss */
+.trilithon-header .badge-flagfeed img {
+  display: block;
+  max-width: 100%;
+  border-radius: 0.25rem;
+}
+/* line 511, ../sass/_single.scss */
+.trilithon-header .badge-wordpress-feedme {
+  width: 4rem;
+  height: 4rem;
+  display: block;
+}
+/* line 515, ../sass/_single.scss */
+.trilithon-header .badge-wordpress-feedme img {
+  display: block;
+  max-width: 100%;
+  border-radius: 0.25rem;
+}
+/* line 521, ../sass/_single.scss */
 .trilithon-header .bd {
   padding: 0 1rem 6rem 1rem;
   text-align: center;
 }
-/* line 505, ../sass/_single.scss */
+/* line 525, ../sass/_single.scss */
 .trilithon-header .prime-title {
   font-size: 1.5rem;
   line-height: 1.16667;
   margin: 0;
 }
-/* line 511, ../sass/_single.scss */
+/* line 531, ../sass/_single.scss */
 .trilithon-header .meta {
   margin: 0;
   color: #79828c;
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
-/* line 517, ../sass/_single.scss */
+/* line 537, ../sass/_single.scss */
 .trilithon-header .meta span:after {
   content: ', ';
 }
-/* line 522, ../sass/_single.scss */
+/* line 542, ../sass/_single.scss */
 .trilithon-header .meta span:last-of-type:after {
   content: '';
 }
-/* line 527, ../sass/_single.scss */
+/* line 547, ../sass/_single.scss */
 .trilithon-header .extra {
   position: absolute;
   top: 0.5rem;
   left: 0.5rem;
 }
-/* line 532, ../sass/_single.scss */
+/* line 552, ../sass/_single.scss */
 .trilithon-header .chapter-sticker {
   border-radius: 0.25rem;
   display: block;
@@ -7009,7 +7065,7 @@ select:disabled {
   font-size: 0.875rem;
   width: 4rem;
 }
-/* line 545, ../sass/_single.scss */
+/* line 565, ../sass/_single.scss */
 .trilithon-header .actions {
   position: absolute;
   right: 0;
@@ -7019,7 +7075,7 @@ select:disabled {
   padding: 1rem;
   border-top: 1px #e8eaeb solid;
 }
-/* line 555, ../sass/_single.scss */
+/* line 575, ../sass/_single.scss */
 .trilithon-header .actions-menu {
   list-style: none;
   margin: 0;
@@ -7028,7 +7084,7 @@ select:disabled {
   vertical-align: bottom;
   text-align: left;
 }
-/* line 562, ../sass/_single.scss */
+/* line 582, ../sass/_single.scss */
 .trilithon-header .actions-menu > li {
   float: left;
   position: relative;
@@ -7039,66 +7095,66 @@ select:disabled {
   .trilithon-header {
     margin-bottom: 2rem;
   }
-  /* line 571, ../sass/_single.scss */
+  /* line 591, ../sass/_single.scss */
   .trilithon-header .media {
     margin-bottom: -4rem;
   }
-  /* line 574, ../sass/_single.scss */
+  /* line 594, ../sass/_single.scss */
   .trilithon-header .badge-chapter {
     width: 6rem;
     height: 6rem;
     font-size: 1.25rem;
     padding-bottom: 1rem;
   }
-  /* line 579, ../sass/_single.scss */
+  /* line 599, ../sass/_single.scss */
   .trilithon-header .badge-chapter:after {
     height: 1rem;
     width: 1rem;
     border-radius: 0.25rem 0 0 0;
   }
-  /* line 585, ../sass/_single.scss */
+  /* line 605, ../sass/_single.scss */
   .trilithon-header .badge-cal {
     width: 6rem;
     height: 6rem;
   }
-  /* line 588, ../sass/_single.scss */
+  /* line 608, ../sass/_single.scss */
   .trilithon-header .badge-cal .month {
     font-size: 1.25rem;
     line-height: 2rem;
   }
-  /* line 592, ../sass/_single.scss */
+  /* line 612, ../sass/_single.scss */
   .trilithon-header .badge-cal .day {
     line-height: 3.5rem;
     font-size: 2.5rem;
     padding-bottom: 0.5rem;
     letter-spacing: -0.125rem;
   }
-  /* line 600, ../sass/_single.scss */
+  /* line 620, ../sass/_single.scss */
   .trilithon-header .badge-organization,
   .trilithon-header .badge-user {
     width: 6rem;
     height: 6rem;
   }
-  /* line 604, ../sass/_single.scss */
+  /* line 624, ../sass/_single.scss */
   .trilithon-header .prime-title {
     font-size: 1.75rem;
     line-height: 1.14286;
   }
-  /* line 609, ../sass/_single.scss */
+  /* line 629, ../sass/_single.scss */
   .trilithon-header .meta {
     font-size: 1rem;
     line-height: 1.5;
   }
 }
 @media only screen and (min-width: 55.063rem) {
-  /* line 616, ../sass/_single.scss */
+  /* line 636, ../sass/_single.scss */
   .trilithon-header .media {
     display: table-cell;
     width: 58%;
     margin-bottom: 0;
     border-radius: 0.25rem 0 0 0.25rem;
   }
-  /* line 622, ../sass/_single.scss */
+  /* line 642, ../sass/_single.scss */
   .trilithon-header .cover {
     position: relative;
     width: 150%;
@@ -7106,51 +7162,51 @@ select:disabled {
     margin-left: -70%;
     max-height: none;
   }
-  /* line 629, ../sass/_single.scss */
+  /* line 649, ../sass/_single.scss */
   .trilithon-header .bd {
     vertical-align: middle;
     display: table-cell;
     padding: 1rem 1rem 5rem 1rem;
   }
-  /* line 634, ../sass/_single.scss */
+  /* line 654, ../sass/_single.scss */
   .trilithon-header .extra {
     top: 1rem;
     left: 1rem;
   }
-  /* line 638, ../sass/_single.scss */
+  /* line 658, ../sass/_single.scss */
   .trilithon-header .actions {
     width: 42%;
   }
 }
 @media only screen and (min-width: 62.063rem) {
-  /* line 644, ../sass/_single.scss */
+  /* line 664, ../sass/_single.scss */
   .trilithon-header .media {
     width: 68%;
   }
-  /* line 647, ../sass/_single.scss */
+  /* line 667, ../sass/_single.scss */
   .trilithon-header .cover {
     width: 100%;
     margin-left: 0;
     left: 0;
   }
-  /* line 652, ../sass/_single.scss */
+  /* line 672, ../sass/_single.scss */
   .trilithon-header .bd {
     padding: 2rem 2rem 5rem 2rem;
   }
-  /* line 655, ../sass/_single.scss */
+  /* line 675, ../sass/_single.scss */
   .trilithon-header .chapter-sticker {
     line-height: 3rem;
     font-size: 1.5rem;
     width: 7rem;
   }
-  /* line 660, ../sass/_single.scss */
+  /* line 680, ../sass/_single.scss */
   .trilithon-header .actions {
     width: 32%;
     padding: 1rem 2rem;
   }
 }
 
-/* line 669, ../sass/_single.scss */
+/* line 689, ../sass/_single.scss */
 .team-list,
 .related-list,
 .related-list ul {
@@ -7158,20 +7214,20 @@ select:disabled {
   padding: 0;
   margin: -0.5rem 0 1rem 0;
 }
-/* line 673, ../sass/_single.scss */
+/* line 693, ../sass/_single.scss */
 .team-list li,
 .related-list li,
 .related-list ul li {
   padding: 0.5rem 0;
   box-shadow: 0 1px 0 0 rgba(33, 48, 64, 0.1);
 }
-/* line 676, ../sass/_single.scss */
+/* line 696, ../sass/_single.scss */
 .team-list li:first-child,
 .related-list li:first-child,
 .related-list ul li:first-child {
   padding-top: 0;
 }
-/* line 679, ../sass/_single.scss */
+/* line 699, ../sass/_single.scss */
 .team-list li:last-child,
 .related-list li:last-child,
 .related-list ul li:last-child {

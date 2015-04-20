@@ -20,7 +20,7 @@ img.flagfeed-image { max-height: 64px;}
 
 <?php
 
-function tm_show_flagfeeds($display_num_items = 5, $fetch_num_items = 100, $cache_key = "page-flagfeeds", $cache_time = 0, $show_unapproved = false, $show_repeat_user = false) {
+function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cache_key = "page-flagfeeds", $cache_time = 0, $show_unapproved = false, $show_repeat_user = false) {
 
 	// check cache first
 	$cache_value = cache_get($cache_key, 'cache');
@@ -33,6 +33,7 @@ function tm_show_flagfeeds($display_num_items = 5, $fetch_num_items = 100, $cach
 	global $tm_feeds_template;
 
 	// get recent flag items
+	$fetch_num_items = $display_max_items * 4; // get more items than we need as we dont display all items
 	$result = db_query("SELECT * FROM flagging ORDER BY timestamp DESC LIMIT " . $fetch_num_items);
 	$results = $result->fetchAll();
 
@@ -54,7 +55,7 @@ function tm_show_flagfeeds($display_num_items = 5, $fetch_num_items = 100, $cach
 		$flagged_user = null;
 
 		// see if we've reached the number of flags we want to display
-		if ($feed_item_count >= $fetch_num_items) { 
+		if ($feed_item_count >= $display_max_items) { 
 			continue;
 		}
 

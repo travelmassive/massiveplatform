@@ -4,7 +4,7 @@
 .card.flagfeed { padding-top: 0.5rem; padding-bottom: 0.5rem;}
 .card.flagfeed:hover { background-color: #e7f2f7;}
 img.flagfeed-image { max-height: 64px;}
-.contained.contained-block.flagfeed { border-left: 8px solid #3080b2; }
+/*.contained.contained-block.flagfeed { border-left: 8px solid #3080b2; }*/
 </style>
 
 <script type="text/javascript">

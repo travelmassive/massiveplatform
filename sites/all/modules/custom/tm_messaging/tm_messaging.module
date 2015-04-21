@@ -213,11 +213,13 @@ function tm_messaging_send_message_ajax() {
 
   // Get message
   $send_message = trim($_POST["send_message"]);
-  $send_message = strip_tags($send_message);
   // Remove links for non-chapter leaders and non-moderators
   if (!in_array("chapter leader", $sending_user->roles) and !in_array("moderator", $sending_user->roles)) {
     $send_message = preg_replace('@((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*(\?\S+)?)?)*)@', '(link removed)', $send_message);
   }
+
+  $send_message = strip_tags($send_message); // remove html
+  $send_message = str_replace("\n", "<br>", $send_message); // add line breaks
 
   // Softfail if message too short
   if (strlen($send_message) < 10) {

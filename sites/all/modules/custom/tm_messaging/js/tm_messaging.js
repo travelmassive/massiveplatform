@@ -54,7 +54,7 @@
               if (data.result == true) {
                 $('[name="jqi_state2_buttonPleasewait"]').html("Close");
                 $(".lead.jqititle.undefined").html("Message sent");
-                $("#message_sending_prompt").html('<span style="color: #555">\u2714</span> <strong>Your message to ' + decodeURIComponent(recipient_name) + ' has been sent</strong>');
+                $("#message_sending_prompt").html('<span style="color: #555">&#x2714</span> <strong>Your message to ' + decodeURIComponent(recipient_name) + ' has been sent</strong>');
               } else {
                 $("#message_sending_prompt").html('Oops, there was a problem sending your message<br><br>Reason: ' + data.error_message); 
                 $('[name="jqi_state2_buttonPleasewait"]').html("Close");

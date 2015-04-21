@@ -18,8 +18,6 @@ Drupal.behaviors.base_scripts = {
 
     $('[data-dropd-toggle]').click(function(e){
 
-      $(".header").unstick();
-
       e.preventDefault();
       e.stopPropagation();
       var _self = $(this);
@@ -36,11 +34,25 @@ Drupal.behaviors.base_scripts = {
         _self.removeClass('on');
         $drop.removeClass('on');
       }
+
       else {
         _self.addClass('on');
         $drop.addClass('on');
       }
 
+      // if not enough room to display accoubt menu, scroll to top and turn off sticky
+      // otherwise we might not be able to see all menu items
+      if (_self.attr("href") == "#account-menu-blk") {
+        if ($(window).height() <= $("#account-menu-blk").height()) {
+          if (_self.hasClass('on')) {
+            $(".header").unstick();
+            window.scrollTo(0, 0);
+          } else {
+            makeHeaderSticky();
+          }
+        }
+      }
+      
     });
 
     $(document).click(function(e){
@@ -476,7 +488,7 @@ Drupal.behaviors.base_scripts = {
 
   // get IE version
   // http://stackoverflow.com/questions/19999388/jquery-check-if-user-is-using-ie
-  function msieversion() {
+  msieversion = function() {
     var ua = window.navigator.userAgent;
     var msie = ua.indexOf("MSIE ");
     // If Internet Explorer, return version number
@@ -489,49 +501,54 @@ Drupal.behaviors.base_scripts = {
     }
   }
 
-  function isMobileDevice() {
+  isMobileDevice = function() {
     return ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
   }
 
   // set sticky header
-  if (typeof($(".header").sticky) == "function") {
-    $(".header").sticky({topSpacing:0, className: 'sticky'});
+  makeHeaderSticky = function() {
 
-    //console.log($(".header").width());
-    $('.prime-nav-wrappers').css({'margin-top': '0rem'});
+    if (typeof($(".header").sticky) == "function") {
+      $(".header").sticky({topSpacing:0, className: 'sticky'});
 
-    // animate if non-IE
-    if (msieversion() == 0) {
+      //console.log($(".header").width());
+      $('.prime-nav-wrappers').css({'margin-top': '0rem'});
 
-      // shrink
-      $('.header').on('sticky-start', function() {
+      // animate if non-IE
+      if (msieversion() == 0) {
 
-        if (isMobileDevice()) {
-          // no animation
-          $('.header').css({height: "3rem", 'padding-top': "0rem"});
-          $('.header-logo').css({height: "1em", 'margin-top': "0.5rem"});
-        } else {
-          // animate
-          $('.header').animate({height: "3rem", 'padding-top': "0rem"}, 500);
-          $('.header-logo').animate({height: "1em", 'margin-top': "0.5rem"}, 500);
-        }
-        
-      });
-    
-      // expand
-      $('.header').on('sticky-end', function() { 
-        if (isMobileDevice()) {
-          $('.header').css({height: "5rem", 'padding-top': "1rem"});
-          $('.header-logo').css({height: "3rem", 'margin-top': "0"});
-        } else {
-          // animate
-          $('.header').animate({height: "5rem", 'padding-top': "1rem"}, 150);
-          $('.header-logo').animate({height: "3rem", 'margin-top': "0"}, 150);
-        }
-        
-      });
+        // shrink
+        $('.header').on('sticky-start', function() {
+
+          if (isMobileDevice()) {
+            // no animation
+            $('.header').css({height: "3rem", 'padding-top': "0rem"});
+            $('.header-logo').css({height: "1em", 'margin-top': "0.5rem"});
+          } else {
+            // animate
+            $('.header').animate({height: "3rem", 'padding-top': "0rem"}, 500);
+            $('.header-logo').animate({height: "1em", 'margin-top': "0.5rem"}, 500);
+          }
+          
+        });
+      
+        // expand
+        $('.header').on('sticky-end', function() { 
+          if (isMobileDevice()) {
+            $('.header').css({height: "5rem", 'padding-top': "1rem"});
+            $('.header-logo').css({height: "3rem", 'margin-top': "0"});
+          } else {
+            // animate
+            $('.header').animate({height: "5rem", 'padding-top': "1rem"}, 150);
+            $('.header-logo').animate({height: "3rem", 'margin-top': "0"}, 150);
+          }
+          
+        });
+      }
     }
   }
+
+  makeHeaderSticky();
 
 });})(jQuery, Drupal, this, this.document);
 

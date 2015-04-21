@@ -1,0 +1,32 @@
+<?php
+/**
+ * @file
+ * Code for the TM Notifications Messaging feature.
+ */
+
+include_once 'tm_notifications_messaging.features.inc';
+
+/**
+ * Implements hook_tm_notif_info()
+ */
+function tm_notifications_messaging_tm_notif_info() {
+  $notification = array();
+
+  global $conf;
+  $notification['member_message'] = array(
+    'title' => 'Allow members who I follow to contact me',
+    'description' => 'Allow messaging',
+    'use_cron' => FALSE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('user', 'current-user', 'node'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+
+  return $notification;
+
+}

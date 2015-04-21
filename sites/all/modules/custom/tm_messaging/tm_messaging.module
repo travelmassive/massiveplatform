@@ -1,0 +1,264 @@
+<?php
+/**
+ * @file
+ * Code for the tm_messaging feature.
+ */
+
+include_once 'tm_messaging.features.inc';
+
+/*
+* Implements hook_menu()
+*/
+function tm_messaging_menu() {
+  $items['user/%user/send_message/%'] = array(
+    'title' => 'Send message',
+    'page callback' => 'tm_messaging_send_message_ajax',
+    'page arguments' => array(1,2),
+    'access callback' => 'tm_messaging_check_send_message_callback',
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+/* Approval callback for sending message */
+function tm_messaging_check_send_message_callback() {
+
+  $sender_uid = arg(1);
+  $recipient_uid = arg(3);
+
+  return tm_messaging_check_send_message($sender_uid, $recipient_uid);
+}
+
+/* Check if its possible for two users to send message to each other */
+/* Set check_if_possible = true to test if the sender could message if they followed */
+function tm_messaging_check_send_message($sender_uid, $recipient_uid, $check_if_possible = false) {
+
+  global $user;
+  global $conf;
+
+  // need to be logged in
+  if (!user_is_logged_in()) {
+    return false;
+  }
+
+  // check if messaging is enabled
+  if (!$conf["tm_messaging_enabled"]) {
+    return false;
+  }
+
+  // check if sending to yourself
+  if ($sender_uid == $recipient_uid) {
+    return false;
+  }
+
+  // check its your uid
+  if ($user->uid != $sender_uid) {
+    return false;
+  }
+
+  // sender need to be approved member
+  if (!in_array("approved user", $user->roles)) { 
+    return false;
+  }
+
+  // recipient needs to be valid
+  $recipient = user_load($recipient_uid); 
+  if ($recipient == false) {
+    return false;
+  }
+
+  // sender need to have verified email
+  if (in_array("non-validated", $user->roles)) { 
+    return false;
+  }
+
+  // recipient need to have verified email
+  if (in_array("non-validated", $recipient->roles)) { 
+    return false;
+  }
+
+  // recipient need to be approved member
+  if (!in_array("approved user", $recipient->roles)) {
+    return false;
+  }
+
+  // check rules of sending messages, you must follow each other
+  if (!$check_if_possible) {
+    $flag = flag_get_flag('follow_members');
+    $you_are_following_them = ($flag->is_flagged($recipient_uid, $sender_uid));
+    $they_are_following_you = ($flag->is_flagged($sender_uid, $recipient_uid));
+
+    if (!$you_are_following_them and $they_are_following_you) {
+      return false; // not following each other
+    }
+  }
+  
+  // todo: check recipient has notification setting enabled
+  $notification = new TMNotification("member_message");
+  if (!$notification->isEnabled($recipient_uid)) {
+    return false;
+  }
+
+  // ok, we can send message
+  return true;
+}
+
+/* Return in seconds time a user last messaged another user */
+/* This uses the message_sent flag */
+function tm_messaging_last_sent_message_time($sender_uid, $recipient_uid) {
+
+  $flag = flag_get_flag('message_sent');
+
+  // check if user has sent a message to this person before
+  if ($flag->is_flagged($recipient_uid, $sending_uid)) {
+
+    // get flags
+    $message_sent_flags = flag_get_entity_flags("user", $recipient_uid, "message_sent");
+
+    // search flags for when sender_uid last flagged
+    if (sizeof($message_sent_flags) > 0) {
+      foreach ($message_sent_flags as $flagger) {
+        if ($sender_uid == $flagger->uid) {
+          $last_message_sent = time() - $flagger->timestamp; // seconds since flagged
+          return $last_message_sent;
+        }
+      }
+    }
+  }
+
+  // hasn't sent message before
+  return -1;
+}
+
+
+/* Get number of messages a user has sent to distinct members since a given time */
+function tm_messaging_num_messages_sent($uid, $timestamp) {
+
+  $flag = flag_get_flag('message_sent');
+
+  $result = db_select('flagging', 'fc')->fields('fc', array('flagging_id'))
+      ->condition('fid', $flag->fid)
+      ->condition('uid', $uid)
+      ->where("timestamp > :timestamp", array(":timestamp" => $timestamp))
+      ->countQuery()
+      ->execute()
+      ->fetchField();
+
+  return $result;
+}
+
+/* Check if a user is over the message rate limit */
+function tm_messaging_check_rate_limit($uid) {
+
+  global $conf;
+
+  // don't rate limit chapter leaders and moderators
+  $sending_user = user_load($uid);
+  if (in_array("chapter leader", $sending_user->roles) or in_array("moderator", $sending_user->roles)) {
+    return true;
+  }
+
+  $limit_days = $conf['tm_messaging_limit_days'];
+  $limit_messages = $conf['tm_messaging_limit_max'];
+
+  $timestamp = time() - ($limit_days * 24 * 60 * 60);
+  $num_messages = tm_messaging_num_messages_sent($uid, $timestamp);
+
+  return $num_messages < $limit_messages;
+} 
+
+/* Send message */
+/* tm_messaging_check_send_message should be called first to ensure */
+/* returns array. ie: array("result" => false, "error_message" => "something"); */
+function tm_messaging_send_message_ajax() {
+
+  global $conf;
+
+  // get sending and recipient uid from url
+  // ie: /user/10527/send_message/10438
+  $sender_uid = arg(1);
+  $recipient_uid = arg(3);
+
+  // load user sending message
+  $sending_user = user_load($sender_uid);
+  if ($sending_user == false) {
+    $ret = array("result" => false, "error_message" => "Unable to retrieve user account");
+    drupal_json_output($ret);
+    return;
+  }
+
+  // Load user receiving message
+  $recipient_user = user_load($recipient_uid);
+  if ($recipient_user == false) {
+    $ret = array("result" => false, "error_message" => "Unable to retrieve recipient account");
+    drupal_json_output($ret);
+    return;
+  }
+
+  // Softfail if too soon since last message
+  $last_messaged = tm_messaging_last_sent_message_time($sending_user->uid, $recipient_user->uid);
+
+  if (($last_messaged != -1) && ($last_messaged < $conf["tm_messaging_wait_time"])) {
+    $ret = array("result" => false, "error_message" => "Please wait a while before sending another message to this member.");
+    drupal_json_output($ret);
+    return;
+  }
+
+  // Softfail if hit rate limit
+  if (!tm_messaging_check_rate_limit($sending_user->uid)) {
+    $ret = array("result" => false, "error_message" => "You have reached the limit of members you can contact in the period. Please try again later.");
+    drupal_json_output($ret);
+    return;
+  }
+
+  // Get message
+  $send_message = trim($_POST["send_message"]);
+  $send_message = strip_tags($send_message);
+  // Remove links for non-chapter leaders and non-moderators
+  if (!in_array("chapter leader", $sending_user->roles) and !in_array("moderator", $sending_user->roles)) {
+    $send_message = preg_replace('@((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*(\?\S+)?)?)*)@', '(link removed)', $send_message);
+  }
+
+  // Softfail if message too short
+  if (strlen($send_message) < 10) {
+    $ret = array("result" => false, "error_message" => "Message is too short.");
+    drupal_json_output($ret);
+    return;
+  }
+
+  // Softfail if message too long
+  if (strlen($send_message) > 1000) {
+    $ret = array("result" => false, "error_message" => "Message is too long.");
+    drupal_json_output($ret);
+    return;
+  }
+
+  // Get profile url
+  $profile_url = drupal_get_path_alias("user/" . $sending_user->uid);
+
+  // First and last name of sending user
+  $first_name = $sending_user->field_user_first_name['und'][0]['value'];
+  $last_name = $sending_user->field_user_last_name['und'][0]['value'];
+
+  // Reply address
+  $reply_to = $first_name . " " . $last_name . " <" . $sending_user->mail . ">";
+
+  tm_notifications_notify('member_message', $recipient_user, array('user' => $recipient_user, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__PROFILE_URL__' => $profile_url, '__MESSAGE__' => $send_message, '__REPLY_TO__' => $reply_to));
+
+  // flag user as having sent message
+  $flag = flag_get_flag('message_sent');
+  $flag->flag("unflag", $recipient_user->uid); // unflag so we can flag again
+  $flag->flag("flag", $recipient_user->uid);
+
+  // Sent successfully
+  $ret = array("result" => true, "error_message" => null);
+  drupal_json_output($ret);
+  return;
+}
+
+/* Add js */
+function tm_messaging_init() {
+  drupal_add_js(drupal_get_path('module', 'tm_messaging') . '/js/tm_messaging.js');
+}
+
+?>

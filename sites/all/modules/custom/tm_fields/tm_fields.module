@@ -1019,9 +1019,11 @@ function tm_fields_connection_actions($field) {
   if (isset($field['entity']->name)) {
 
     global $user;
+    global $conf;
     $my_uid = $user->uid;
     $their_uid = $field['entity']->uid;
     $their_name = $field['entity']->realname;
+    $first_name = $field['entity']->field_user_first_name[LANGUAGE_NONE][0]['value'];
 
     // check if looking at self
     if ($my_uid == $their_uid) {
@@ -1033,12 +1035,50 @@ function tm_fields_connection_actions($field) {
     $they_are_following_you = ($flag->is_flagged($my_uid, $their_uid));
 
     if ($you_are_following_them and $they_are_following_you) {
-      return "Great, you follow each other! ";
-      // . '<span class="hierarchical-select-item-separator">›</span>' . "<a href=''>Send email introduction</a>";
+      $html = "You are connected";
+
+      // if user can send message
+      if (tm_messaging_check_send_message($my_uid, $their_uid)) {
+
+        $html .= '<span class="hierarchical-select-item-separator">›</span>';
+
+        // check last time we sent message
+        $last_messaged = tm_messaging_last_sent_message_time($my_uid, $their_uid);
+        if (($last_messaged != -1) && ($last_messaged < $conf["tm_messaging_wait_time"])) {
+
+          // need to wait
+          $html .= "<a href='javascript:void(0);' onClick='jq_alert(\"Send Message\", \"Please wait a while before sending another message to this member.\")'>Send " . $first_name . " a message</a>";
+          return $html;
+
+        } 
+
+        if (!tm_messaging_check_rate_limit($my_uid)) {
+
+          // need to wait
+          global $conf;
+          $limit_days = $conf['tm_messaging_limit_days'];
+          $limit_messages = $conf['tm_messaging_limit_max'];
+
+          $html .= "<a href='javascript:void(0);' onClick='jq_alert(\"Notice\", \"You have reached the limit of members you can contact in a " . $limit_days . " day period.<br><br>Please wait and try again later.\")'>Send " . $first_name . " a message</a>";
+          return $html;
+
+        }
+
+        // all ok
+        $html .= "<a href='javascript:void(0);' onClick='jq_connection_email($my_uid, $their_uid, \"" . rawurlencode($their_name) . "\");'>Send " . $first_name . " a message</a>";        
+      }
+
+      return $html;
     }
 
     if ($they_are_following_you) {
-      return $their_name . " is following you";
+      $html = $their_name . " is following you";
+      if (tm_messaging_check_send_message($my_uid, $their_uid, true)) {
+        drupal_set_message("You can message " . $their_name . " if you follow them back.", 'page_notice');
+        drupal_add_js(drupal_get_path('module', 'tm_messaging') . '/js/tm_messaging_turn_off_flag_ajax.js');
+
+      }
+      return $html;
     }
 
     if ($you_are_following_them) {

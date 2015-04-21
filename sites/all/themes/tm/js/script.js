@@ -307,6 +307,8 @@ Drupal.behaviors.base_scripts = {
      
 });})(jQuery, Drupal, this, this.document);
 
+
+// impromptu alerts
 (function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){
 
   // set default classes for impromptu
@@ -466,6 +468,7 @@ Drupal.behaviors.base_scripts = {
 });})(jQuery, Drupal, this, this.document);
 
 
+// sticky headers
 (function ($, Drupal, window, document, undefined) {jQuery(document).ready(function() {
 
   // get IE version
@@ -530,5 +533,3 @@ Drupal.behaviors.base_scripts = {
 });})(jQuery, Drupal, this, this.document);
 
 
-
-  

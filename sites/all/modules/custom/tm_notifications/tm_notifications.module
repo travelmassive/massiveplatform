@@ -160,6 +160,11 @@ function tm_notifications_mail($key, &$message, $params) {
       $subject = str_replace($token_name, $token_value, $subject);
     }
   }
+
+  // set reply to from token
+  if (isset ($params['tokens']['__REPLY_TO__'])) {
+    $message['headers']['Reply-To'] = $params['tokens']['__REPLY_TO__'];
+  }
   
 
   // STEP 2. LOAD HTML TEMPLATE

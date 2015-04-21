@@ -53,7 +53,9 @@ function tm_theme_html_head_alter(&$head_elements) {
   }
 
   // if not front page add sticky header
+  // also ignore node or user edit pages as account menu is obscured when using sticky header
   if (!drupal_is_front_page()) {
+  // && !(((arg(0) == 'node' || (arg(0) == 'user')) && arg(2) == 'edit')))  {
     drupal_add_js(drupal_get_path('theme', 'tm') . '/js/jquery.sticky.js', array('group' => JS_THEME));
   }
   

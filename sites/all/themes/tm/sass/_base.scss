@@ -98,6 +98,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
   padding: 1rem 0;
   background: #FFF;
   box-shadow: 0 0.125rem 0 0 rgba($primary-color, 0.1);
+  overflow: visible !important;
 }
 
 #site-title {

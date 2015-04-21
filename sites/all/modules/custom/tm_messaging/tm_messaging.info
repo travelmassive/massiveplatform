@@ -1,0 +1,14 @@
+name = TM Messaging
+core = 7.x
+package = TM Messaging
+version = 7.x-1.0-dev
+project = tm_messaging
+dependencies[] = features
+dependencies[] = flag
+features[features_api][] = api:2
+features[flag][] = message_sent
+features[user_permission][] = flag message_sent
+features[user_permission][] = unflag message_sent
+files[] = tm_messaging.module
+mtime = 1429592558
+project path = sites/all/modules/custom

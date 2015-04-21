@@ -82,7 +82,9 @@
 
             ?>
             <div id="frontpage_wordpress_content" style="margin-top: 64px; display: none;"></div>
-            <?php } ?>
+            <?php } // end if
+            } // end if
+            ?>
 
             <div class="trilithon" id="frontpage_feed" style="margin-top: 64px;">
             

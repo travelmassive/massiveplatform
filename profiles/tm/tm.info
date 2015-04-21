@@ -108,6 +108,8 @@ dependencies[] = tm_users
 dependencies[] = tm_users_external_signin
 dependencies[] = tm_chapters_leaflet_map
 dependencies[] = tm_invitations
+dependencies[] = tm_api
+dependencies[] = tm_messaging
 
 ; TM - notifications
 dependencies[] = tm_notifications
@@ -118,6 +120,7 @@ dependencies[] = tm_notifications_newsletters
 dependencies[] = tm_notifications_approval
 dependencies[] = tm_notifications_welcome
 dependencies[] = tm_notifications_events
+dependencies[] = tm_notifications_messaging
 
 ; TM - meta
 dependencies[] = tm_meta

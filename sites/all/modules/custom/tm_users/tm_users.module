@@ -45,8 +45,6 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state) {
   // Add javascript protection to prompt to save profile if its edited
   // Use case is that many users don't click the save button on their profile
   drupal_add_js(drupal_get_path('module', 'tm_users') . '/js/user-edit-protection.js');
-
-
 }
 
 // Redirect user to their profile page
@@ -141,6 +139,7 @@ function tm_users_permission() {
     ),
   );
 }
+
 /*
 * Implements hook_menu()
 */
@@ -185,7 +184,7 @@ function tm_users_menu() {
 }
 
 /* Approval callback */
-function tm_users_approve($user){
+function tm_users_approve($user) {
 
   $approving_user = $GLOBALS['user'];
   $role_name = 'approved user'; // The name of the role to add.

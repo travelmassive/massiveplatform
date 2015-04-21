@@ -140,7 +140,7 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 		    	// if event has chapter
   				if (isset($event->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
     				$event_chapter = node_load($event->field_chapter[LANGUAGE_NONE][0]['target_id']);
-    				$feed_info = "<span class='flagfeed_ago'>" . $flagged_time . "</span>, " . $event_chapter->title;
+    				$feed_info = "<span class='flagfeed_ago'>" . $flagged_time . "</span>, in " . $event_chapter->title;
   				} else {
   					$feed_info = "<span class='flagfeed_ago'>" . $flagged_time . "</span>";
   				}
@@ -162,7 +162,7 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 		    	// if event has chapter
   				if (isset($event->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
     				$event_chapter = node_load($event->field_chapter[LANGUAGE_NONE][0]['target_id']);
-    				$feed_info = "<span class='flagfeed_ago'>" . $flagged_time . "</span>, " . $event_chapter->title;
+    				$feed_info = "<span class='flagfeed_ago'>" . $flagged_time . "</span>, in " . $event_chapter->title;
   				} else {
   					$feed_info = "<span class='flagfeed_ago'>" . $flagged_time . "</span>";
   				}

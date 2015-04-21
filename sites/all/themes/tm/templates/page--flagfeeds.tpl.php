@@ -56,6 +56,8 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 
 		// reset vars
 		$html = "";
+		$feed_info = "";
+
 		$flagged_node = null;
 		$flagged_user = null;
 
@@ -180,6 +182,7 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 		    	} else {
 		    		$image_url = file_create_url("public://default_images/cover-default.png");
 		    	}
+		    	$feed_info = "<span class='flagfeed_ago'>" . $flagged_time . "</span>";
 		    	$feed_title = l($flagging_user_name, $flagging_user_url) . " joined " . l($chapter->title . " " . $conf["tm_site_name"], $flagged_node_url);
 		        $html = tm_render_flag_feed($flagged_node_url, $image_url, $feed_title, $feed_info, $feed_item_count, $display_num_items);
 		        break;

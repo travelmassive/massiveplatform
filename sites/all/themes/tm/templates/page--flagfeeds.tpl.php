@@ -48,8 +48,10 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 	}
 
 	$feed_html_items = array();
-	$last_flagging_user = null;
+	$last_flagging_user_uid = null;
 	$feed_item_count = 0;
+	$show_flags = array("approval_approved_by", "event_register", "event_waitlist", "signup", "follow_members", "follow_organizations", "tm_sponsor");
+
 	foreach($results as $result) {
 
 		// reset vars
@@ -62,7 +64,13 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 			continue;
 		}
 
+		// load flag
 		$flag = $flag_types[$result->fid];
+
+		// make sure we want to display this flag
+      	if (!in_array($flag->name, $show_flags)) {
+      		continue;
+      	}
 
 		if ($result->entity_type == "node") {
 			$flagged_node = node_load($result->entity_id);
@@ -88,16 +96,15 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 
 		// skip showing if same user has flagged multiple times
 		if (!$show_repeat_user) {
-      		if ($last_flagging_user == $flagging_user) {
-      			$last_flagging_user = $flagging_user;
+      		if ($last_flagging_user_uid == $flagging_user->uid) {
+      			$last_flagging_user_uid = $flagging_user->uid;
       			continue;
       		}
       	}
-      		
-      	// keep track of last flagged user
-      	$last_flagging_user = $flagging_user;
 
-		//print($flag->name);
+      	// keep track of last flagged user
+      	$last_flagging_user_uid = $flagging_user->uid;
+
 		switch ($flag->name) {
 
 			// NEW MEMBER APPROVED

@@ -709,7 +709,7 @@ function _tm_users_modify_register_form(&$form, $form_state, $form_id) {
     '#options' => $chapter_list,
     '#multiple' => false,
     '#description'=>'Please select a home chapter to join.',
-    '#weight'=>2,
+    '#weight'=>9,
   );
 
   

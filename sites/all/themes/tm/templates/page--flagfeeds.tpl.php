@@ -124,10 +124,10 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 		    case "event_register":
 
 		    	$event = $flagged_node;
-		    	if (isset($event->field_image[LANGUAGE_NONE][0]['uri'])) {
-		    		$image_url = file_create_url($event->field_image[LANGUAGE_NONE][0]['uri']);
+		    	if (isset($flagging_user->field_avatar[LANGUAGE_NONE][0]['uri'])) {
+		    		$image_url = file_create_url($flagging_user->field_avatar[LANGUAGE_NONE][0]['uri']);
 		    	} else {
-		    		$image_url = file_create_url("public://default_images/cover-default.png");
+		    		$image_url = file_create_url("public://default_images/avatar-default.png");
 		    	}
 
 		    	// if event has chapter
@@ -139,17 +139,17 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
   				}
 
 		    	$feed_title = l($flagging_user_name, $flagging_user_url) . " registered for " . l($event->title, $flagged_node_url);
-		        $html = tm_render_flag_feed($flagged_node_url, $image_url, $feed_title, $feed_info, $feed_item_count, $display_num_items);
+		        $html = tm_render_flag_feed($flagging_user_url, $image_url, $feed_title, $feed_info, $feed_item_count, $display_num_items);
 		        break;
 
 		    // MEMBER REGISTERED FOR WAITLIST
 		    case "event_waitlist":
 
 		    	$event = $flagged_node;
-		    	if (isset($event->field_image[LANGUAGE_NONE][0]['uri'])) {
-		    		$image_url = file_create_url($event->field_image[LANGUAGE_NONE][0]['uri']);
+		    	if (isset($flagging_user->field_avatar[LANGUAGE_NONE][0]['uri'])) {
+		    		$image_url = file_create_url($flagging_user->field_avatar[LANGUAGE_NONE][0]['uri']);
 		    	} else {
-		    		$image_url = file_create_url("public://default_images/cover-default.png");
+		    		$image_url = file_create_url("public://default_images/avatar-default.png");
 		    	}
 
 		    	// if event has chapter
@@ -161,7 +161,7 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
   				}
 
 		    	$feed_title = l($flagging_user_name, $flagging_user_url) . " joined the waitlist for " . l($event->title, $flagged_node_url);
-		        $html = tm_render_flag_feed($flagged_node_url, $image_url, $feed_title, $feed_info, $feed_item_count, $display_num_items);
+		        $html = tm_render_flag_feed($flagging_user_url, $image_url, $feed_title, $feed_info, $feed_item_count, $display_num_items);
 		        break;
 
 		    // MEMBER JOINED CHAPTER

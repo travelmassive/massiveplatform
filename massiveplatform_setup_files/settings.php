@@ -634,6 +634,14 @@ $conf["tm_members_label"] = "travel insiders"; // plural
 $conf['tm_background_bg'] = True;   
 $conf['tm_background_bg_mp4_external_url'] = "https://player.vimeo.com/external/124102297.hd.mp4?s=ea8a1d4f544c9d26f148c8cf848197ec&profile_id=113";
 
+/** MESSAGING Options **/
+/** Allow approved members to message each other via email if they follow each other **/
+/** Emails will be sent by notification system and reply-to set to the sender's email address **/
+$conf['tm_messaging_enabled'] = true; // turn on or off email messaging if following each other
+$conf['tm_messaging_wait_time'] = 1800; // number of seconds between messaging the same person
+$conf['tm_messaging_limit_days'] = 14; // number of days to check for rate limit
+$conf['tm_messaging_limit_max'] = 30; // limit of messages you can send to different people within period
+
 /** Set a front page launch message and hide the stats. Comment out to disable **/
 //$conf['tm_frontpage_launch_message'] = "We've just launched our new community platform. Read our <a style='color: #fff; text-decoration: underline;' href='/blog/'>announcement</a>.";
 

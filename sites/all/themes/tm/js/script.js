@@ -34,13 +34,12 @@ Drupal.behaviors.base_scripts = {
         _self.removeClass('on');
         $drop.removeClass('on');
       }
-
       else {
         _self.addClass('on');
         $drop.addClass('on');
       }
 
-      // if not enough room to display accoubt menu, scroll to top and turn off sticky
+      // if not enough room to display account menu, scroll to top and turn off sticky
       // otherwise we might not be able to see all menu items
       if (_self.attr("href") == "#account-menu-blk") {
         if ($(window).height() <= $("#account-menu-blk").height()) {

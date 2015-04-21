@@ -17,6 +17,9 @@ Drupal.behaviors.base_scripts = {
   attach: function(context, settings) {
 
     $('[data-dropd-toggle]').click(function(e){
+
+      $(".header").unstick();
+
       e.preventDefault();
       e.stopPropagation();
       var _self = $(this);
@@ -532,4 +535,14 @@ Drupal.behaviors.base_scripts = {
 
 });})(jQuery, Drupal, this, this.document);
 
+// account menu functions
+(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function() {
+
+  tm_show_account_menu_moderator_actions = function() {
+    $("#account_menu_moderator_actions_show").hide();
+    $("#account_menu_moderator_actions_items").show();
+  }
+
+
+});})(jQuery, Drupal, this, this.document);
 

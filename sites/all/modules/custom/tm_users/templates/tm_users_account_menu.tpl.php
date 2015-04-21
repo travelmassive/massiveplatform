@@ -135,7 +135,10 @@ print l(t('Approve my account'), 'javascript:jq_request_approval(' . $loaded->ui
     </ul>
 
   <?php if (in_array("moderator", $loaded->roles)) : ?>
-      <ul class="dropd-menu">
+      <ul class="dropd-menu" id="account_menu_moderator_actions_show">
+        <li><?php print l(t('Moderator tools'), 'javascript:tm_show_account_menu_moderator_actions();', array('fragment' => '','external'=>true)); ?></li>
+      </ul>
+      <ul class="dropd-menu" id="account_menu_moderator_actions_items" style="display: none;">
         <li><?php print l(t('Add event'), 'node/add/event'); ?></li>
         <li><?php print l(t('Add chapter'), 'node/add/chapter'); ?></li>
         <li><?php print l(t('All unapproved members'), 'admin/unapproved-members'); ?></li>

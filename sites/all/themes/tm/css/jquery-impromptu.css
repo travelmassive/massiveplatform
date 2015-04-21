@@ -18,6 +18,19 @@ div.jqi{
 	-webkit-border-radius: 6px;
 	padding: 7px;
 }
+/* fit for mobile devices */
+@media screen and (max-device-width: 400px) {
+        div.jqi {
+                width: 320px;
+                font-size: smaller;
+        }
+        div.jqi li {
+                font-size: smaller;
+        }
+        .jqimessage {
+                font-size: smaller;
+        }
+}
 div.jqi .jqicontainer{ 
 }
 div.jqi .jqiclose{ 

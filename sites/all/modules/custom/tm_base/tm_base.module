@@ -358,7 +358,7 @@ function theme_ds_field_tm_default($variables) {
   foreach ($variables['items'] as $delta => $item) {
     $rendered_item = drupal_render($item);
     $rendered_item = str_replace("\n", "<br>", $rendered_item); // add line breaks
-    $output .= tm_base_linkify($rendered_item, ["http", "https", "mail", "twitter"], ["rel" => "nofollow"]); // add links
+    $output .= tm_base_linkify($rendered_item, ["http", "https", "mail", "twitter"], ["rel" => "nofollow", "target" => "_blank"]); // add links
   }
   $output .= '</div>';
 

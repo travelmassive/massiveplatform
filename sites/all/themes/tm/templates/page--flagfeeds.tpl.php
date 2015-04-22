@@ -97,7 +97,8 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 		}
 
 		// skip showing if same user has flagged multiple times
-		if (!$show_repeat_user) {
+		// exception of approval flag
+		if (!$show_repeat_user && ($flag->name != "approval_approved_by")) {
       		if ($last_flagging_user_uid == $flagging_user->uid) {
       			$last_flagging_user_uid = $flagging_user->uid;
       			continue;
@@ -113,9 +114,9 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 			case "approval_approved_by":
 
 		    	if (isset($flagged_user->field_avatar[LANGUAGE_NONE][0]['uri'])) {
-		    		$image_url = file_create_url($flagged_user->field_avatar[LANGUAGE_NONE][0]['uri']);
+		    		$image_url = image_style_url("avatar", $flagged_user->field_avatar[LANGUAGE_NONE][0]['uri']);
 		    	} else {
-		    		$image_url = file_create_url("public://default_images/avatar-default.png");
+		    		$image_url = image_style_url("avatar", "public://default_images/avatar-default.png");
 		    	}
 
 		    	if (isset($flagged_user->field_location_city[LANGUAGE_NONE][0]['value'])) {
@@ -134,9 +135,9 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 
 		    	$event = $flagged_node;
 		    	if (isset($flagging_user->field_avatar[LANGUAGE_NONE][0]['uri'])) {
-		    		$image_url = file_create_url($flagging_user->field_avatar[LANGUAGE_NONE][0]['uri']);
+		    		$image_url = image_style_url("avatar", $flagging_user->field_avatar[LANGUAGE_NONE][0]['uri']);
 		    	} else {
-		    		$image_url = file_create_url("public://default_images/avatar-default.png");
+		    		$image_url = image_style_url("avatar", "public://default_images/avatar-default.png");
 		    	}
 
 		    	// if event has chapter
@@ -156,9 +157,9 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 
 		    	$event = $flagged_node;
 		    	if (isset($flagging_user->field_avatar[LANGUAGE_NONE][0]['uri'])) {
-		    		$image_url = file_create_url($flagging_user->field_avatar[LANGUAGE_NONE][0]['uri']);
+		    		$image_url = image_style_url("avatar", $flagging_user->field_avatar[LANGUAGE_NONE][0]['uri']);
 		    	} else {
-		    		$image_url = file_create_url("public://default_images/avatar-default.png");
+		    		$image_url = image_style_url("avatar", "public://default_images/avatar-default.png");
 		    	}
 
 		    	// if event has chapter
@@ -178,9 +179,9 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 
 		   		$chapter = $flagged_node;
 		    	if (isset($chapter->field_image[LANGUAGE_NONE][0]['uri'])) {
-		    		$image_url = file_create_url($chapter->field_image[LANGUAGE_NONE][0]['uri']);
+		    		$image_url = image_style_url("banner", $chapter->field_image[LANGUAGE_NONE][0]['uri']);
 		    	} else {
-		    		$image_url = file_create_url("public://default_images/cover-default.png");
+		    		$image_url = image_style_url("banner", "public://default_images/cover-default.png");
 		    	}
 		    	$feed_info = "<span class='flagfeed_ago'>" . $flagged_time . "</span>";
 		    	$feed_title = l($flagging_user_name, $flagging_user_url) . " joined " . l($chapter->title . " " . $conf["tm_site_name"], $flagged_node_url);
@@ -191,9 +192,9 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 		    case "follow_members":
 
 		    	if (isset($flagging_user->field_avatar[LANGUAGE_NONE][0]['uri'])) {
-		    		$image_url = file_create_url($flagging_user->field_avatar[LANGUAGE_NONE][0]['uri']);
+		    		$image_url = image_style_url("avatar", $flagging_user->field_avatar[LANGUAGE_NONE][0]['uri']);
 		    	} else {
-		    		$image_url = file_create_url("public://default_images/avatar-default.png");
+		    		$image_url = image_style_url("avatar", "public://default_images/avatar-default.png");
 		    	}
 
 		    	$feed_info = "<span class='flagfeed_ago'>" . $flagged_time . "</span>";
@@ -206,9 +207,9 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 		    case "follow_organizations":
 		    	$organization = $flagged_node;
 		    	if (isset($organization->field_avatar[LANGUAGE_NONE][0]['uri'])) {
-		    		$image_url = file_create_url($organization->field_avatar[LANGUAGE_NONE][0]['uri']);
+		    		$image_url = image_style_url("avatar", $organization->field_avatar[LANGUAGE_NONE][0]['uri']);
 		    	} else {
-		    		$image_url = file_create_url("public://default_images/avatar-default.png");
+		    		$image_url = image_style_url("avatar", "public://default_images/avatar-default.png");
 		    	}
 
 		    	$feed_info = "<span class='flagfeed_ago'>" . $flagged_time . "</span>";
@@ -220,9 +221,9 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 		   	case "tm_sponsor":
 		   		$organization = $flagged_node;
 		    	if (isset($organization->field_avatar[LANGUAGE_NONE][0]['uri'])) {
-		    		$image_url = file_create_url($organization->field_avatar[LANGUAGE_NONE][0]['uri']);
+		    		$image_url = image_style_url("avatar", $organization->field_avatar[LANGUAGE_NONE][0]['uri']);
 		    	} else {
-		    		$image_url = file_create_url("public://default_images/avatar-default.png");
+		    		$image_url = image_style_url("avatar", "public://default_images/avatar-default.png");
 		    	}
 
 		    	$feed_info = "<span class='flagfeed_ago'>" . $flagged_time . "</span>";

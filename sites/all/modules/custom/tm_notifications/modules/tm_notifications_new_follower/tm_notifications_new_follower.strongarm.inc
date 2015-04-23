@@ -28,6 +28,7 @@ function tm_notifications_new_follower_strongarm() {
 <br>
 <br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>
+__MESSAGING_INSTRUCTIONS__
 <br>__EMAIL_SIGNOFF__
 ',
     ),

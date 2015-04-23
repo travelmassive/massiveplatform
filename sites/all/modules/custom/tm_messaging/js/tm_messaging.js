@@ -63,6 +63,7 @@
             },
             error: function(data) {
               $("#message_sending_prompt").html('Oops, there was a problems sending your message.'); 
+              $('[name="jqi_state2_buttonPleasewait"]').html("Close");
             }
           });
 

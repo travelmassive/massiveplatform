@@ -48,6 +48,8 @@ function tm_notifications_new_follower_tm_notif_info() {
  */
 function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $flagging) {
   
+  global $conf;
+
   // You have a new follower
   if ($flag->name == 'follow_members' && $flag->entity_type == 'user') {
     $followed_user = user_load($entity_id);
@@ -64,7 +66,12 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
     $first_name = $who_joined->field_user_first_name['und'][0]['value'];
     $last_name = $who_joined->field_user_last_name['und'][0]['value'];
 
-    tm_notifications_notify('new_follower', $followed_user, array('user' => $followed_user, '__PROFILE_URL__' => $profile_url, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name));
+    $messaging_instructions = "";
+    if ($conf["tm_messaging_enabled"]) {
+      $messaging_instructions = "<br>You can send " . $first_name . " a message if you follow them back.<br>";
+    }
+
+    tm_notifications_notify('new_follower', $followed_user, array('user' => $followed_user, '__PROFILE_URL__' => $profile_url, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__MESSAGING_INSTRUCTIONS__' => $messaging_instructions));
   }
 
   // Your organization has a new follower

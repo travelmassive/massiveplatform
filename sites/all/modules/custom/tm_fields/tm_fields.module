@@ -749,6 +749,25 @@ function _tm_more_actions_process($field, $title = NULL) {
     }
   // END contact chapter owners
 
+  // START message member link
+  if ($menu_item['path'] == 'user/%') {
+
+    // Only show link for approved users
+    if (in_array("approved user", $targetuser->roles)){
+
+      $send_message_html = tm_messaging_make_send_message_link($user, $targetuser);
+
+      if ($send_message_html != null) {
+        $links['messaging'][] = array(
+        'wrapper_class' => array('messaging'),
+        'content' => $send_message_html
+        );
+      }
+    }
+  }
+  // END message member link
+
+  // START sharing links
   $links['share'][] = array(
     'wrapper_class' => array('facebook'),
     'content' => l(t('Share on Facebook'), 'https://www.facebook.com/sharer/sharer.php', array(
@@ -787,6 +806,7 @@ function _tm_more_actions_process($field, $title = NULL) {
       )
     ))
   );
+  // END sharing links
   
   return theme('more_actions', array('links' => $links));
 }
@@ -1020,6 +1040,7 @@ function tm_fields_connection_actions($field) {
 
     global $user;
     global $conf;
+
     $my_uid = $user->uid;
     $their_uid = $field['entity']->uid;
     $their_name = $field['entity']->realname;
@@ -1037,35 +1058,12 @@ function tm_fields_connection_actions($field) {
     if ($you_are_following_them and $they_are_following_you) {
       $html = "You are connected";
 
-      // if user can send message
-      if (tm_messaging_check_send_message($my_uid, $their_uid)) {
+      // Generate message link
+      $messaging_html = tm_messaging_make_send_message_link($user, $field['entity']);
 
+      if ($messaging_html != null) {
         $html .= '<span class="hierarchical-select-item-separator">›</span>';
-
-        // check last time we sent message
-        $last_messaged = tm_messaging_last_sent_message_time($my_uid, $their_uid);
-        if (($last_messaged != -1) && ($last_messaged < $conf["tm_messaging_wait_time"])) {
-
-          // need to wait
-          $html .= "<a href='javascript:void(0);' onClick='jq_alert(\"Send Message\", \"Please wait a while before sending another message to this member.\")'>Send " . $first_name . " a message</a>";
-          return $html;
-
-        } 
-
-        if (!tm_messaging_check_rate_limit($my_uid)) {
-
-          // need to wait
-          global $conf;
-          $limit_days = $conf['tm_messaging_limit_days'];
-          $limit_messages = $conf['tm_messaging_limit_max'];
-
-          $html .= "<a href='javascript:void(0);' onClick='jq_alert(\"Notice\", \"You have reached the limit of members you can contact in a " . $limit_days . " day period.<br><br>Please wait and try again later.\")'>Send " . $first_name . " a message</a>";
-          return $html;
-
-        }
-
-        // all ok
-        $html .= "<a href='javascript:void(0);' onClick='jq_connection_email($my_uid, $their_uid, \"" . rawurlencode($their_name) . "\");'>Send " . $first_name . " a message</a>";        
+        $html .= $messaging_html;
       }
 
       return $html;
@@ -1088,7 +1086,7 @@ function tm_fields_connection_actions($field) {
     if (!$you_are_following_them and !$they_are_following_you) {
       return;
     }
-
   }
 }
+
 

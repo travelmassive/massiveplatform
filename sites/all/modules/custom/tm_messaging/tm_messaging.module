@@ -258,9 +258,73 @@ function tm_messaging_send_message_ajax() {
   return;
 }
 
+/* Create a link to send a message to user */
+/* Returns html to open message window */
+/* Returns null if no message can be created (ie: not following, etc) */
+function tm_messaging_make_send_message_link($my_user, $their_user) {
+
+  global $conf;
+  $html = null;
+
+  // check if messaging is enabled
+  if (!$conf["tm_messaging_enabled"]) {
+    return null;
+  }
+
+  $my_uid = $my_user->uid;
+  $their_uid = $their_user->uid;
+  $their_name = $their_user->realname;
+  $first_name = $their_user->field_user_first_name[LANGUAGE_NONE][0]['value'];
+
+  // check if looking at self
+  if ($my_uid == $their_uid) {
+    return null;
+  }
+
+  // check following
+  $flag = flag_get_flag('follow_members');
+  $you_are_following_them = ($flag->is_flagged($their_uid, $my_uid));
+  $they_are_following_you = ($flag->is_flagged($my_uid, $their_uid));
+
+  if ($you_are_following_them and $they_are_following_you) {
+
+    // if user can send message
+    if (tm_messaging_check_send_message($my_uid, $their_uid)) {
+
+      // check last time we sent message
+      $last_messaged = tm_messaging_last_sent_message_time($my_uid, $their_uid);
+      if (($last_messaged != -1) && ($last_messaged < $conf["tm_messaging_wait_time"])) {
+
+        // need to wait
+        $html = "<a href='javascript:void(0);' onClick='jq_alert(\"Send Message\", \"Please wait a while before sending another message to this member.\")'>Send " . $first_name . " a message</a>";
+        return $html;
+
+      } 
+
+      if (!tm_messaging_check_rate_limit($my_uid)) {
+
+        // need to wait
+        global $conf;
+        $limit_days = $conf['tm_messaging_limit_days'];
+        $limit_messages = $conf['tm_messaging_limit_max'];
+
+        $html = "<a href='javascript:void(0);' onClick='jq_alert(\"Notice\", \"You have reached the limit of members you can contact in a " . $limit_days . " day period.<br><br>Please wait and try again later.\")'>Send " . $first_name . " a message</a>";
+        return $html;
+
+      }
+
+      // all ok
+      $html = "<a href='javascript:void(0);' onClick='jq_connection_email($my_uid, $their_uid, \"" . rawurlencode($their_name) . "\");'>Send " . $first_name . " a message</a>";     
+    }
+  }
+
+  return $html;
+}
+
 /* Add js */
 function tm_messaging_init() {
   drupal_add_js(drupal_get_path('module', 'tm_messaging') . '/js/tm_messaging.js');
 }
+
 
 ?>

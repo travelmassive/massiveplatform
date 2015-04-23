@@ -891,10 +891,7 @@ function tm_events_rsvp_form($event){
     while ($user = $users->fetchAssoc()){
       $account = user_load($user['uid']);
       // set profile url (either friendly url or community url)
-      $profile_url = "community/" . $account->name;
-      if (count($account->field_friendly_url) > 0) { 
-        $profile_url = $account->field_friendly_url['und']['0']['value'];
-      } 
+      $profile_url = drupal_get_path_alias("user/" . $account->uid);
 
       $useroptions[$user['uid']] = 
         '<span class="tmeventuser">'.tm_events_username($account).'</span>'.

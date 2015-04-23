@@ -54,10 +54,7 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
     $who_followed = user_load($account->uid);
     
     // set profile url (either friendly url or community url)
-    $profile_url = "community/" . $who_followed->name;
-    if (count($who_followed->field_friendly_url) > 0) { 
-      $profile_url = $who_followed->field_friendly_url['und']['0']['value'];
-    } 
+    $profile_url = drupal_get_path_alias("user/" . $who_followed->uid);
 
     // notify the user that they have a new follower
     $who_joined = user_load($account->uid);
@@ -80,10 +77,7 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
       $organizational_owner = user_load($owner['target_id']);
 
       // set profile url (either friendly url or community url)
-      $profile_url = "community/" . $who_followed->name;
-      if (count($who_followed->field_friendly_url) > 0) { 
-        $profile_url = $who_followed->field_friendly_url['und']['0']['value'];
-      } 
+      $profile_url = drupal_get_path_alias("user/" . $who_followed->uid);
 
       // notify the user that they have a new follower
       tm_notifications_notify('new_organization_follower', $organizational_owner, array('user' => $organizational_owner, 'node' => $followed_organization, '__PROFILE_URL__' => $profile_url));

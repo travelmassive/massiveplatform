@@ -158,10 +158,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
 
   // get user and profile url of who flagged the event
   $who_flagged = user_load($GLOBALS['user']->uid);
-  $profile_url = "community/" . $who_flagged->name;
-  if (count($who_flagged->field_friendly_url) > 0) { 
-    $profile_url = $who_flagged->field_friendly_url['und']['0']['value'];
-  }
+  $profile_url = drupal_get_path_alias("user/" . $who_flagged->uid);
 
   // User Registered for Event
   if (($GLOBALS['user']->uid == $flagging->uid)) {

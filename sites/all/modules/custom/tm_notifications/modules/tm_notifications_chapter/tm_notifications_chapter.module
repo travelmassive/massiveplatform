@@ -97,10 +97,7 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
         // if the chapter doesn't have any chapter leaders
         if ($leader == null) { continue; }
 
-        $profile_url = "community/" . $who_joined->name;
-        if (count($who_joined->field_friendly_url) > 0) { 
-          $profile_url = $who_joined->field_friendly_url['und']['0']['value'];
-        } 
+        $profile_url = drupal_get_path_alias("user/" . $who_joined->uid);
 
         tm_notifications_notify('user_chapter_join_notify_leaders', $leader, array('node' => $node, 'user' => $leader, '__PROFILE_URL__' => $profile_url, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name));
       }

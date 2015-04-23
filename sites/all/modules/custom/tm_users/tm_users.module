@@ -196,10 +196,8 @@ function tm_users_approve($user) {
     // there doesn't seem to be a hook that can detect we are applying a new role, so do it here
     $approving_user = user_uid_optional_load();
     // set profile url (either friendly url or community url)
-    $profile_url = "community/" . $user->name;
-    if (count($user->field_friendly_url) > 0) { 
-      $profile_url = $user->field_friendly_url['und']['0']['value'];
-    }
+    $profile_url = drupal_get_path_alias("user/" . $user->uid);
+
     $approval_text = "Your account has been approved by " . $approving_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . ".";
 
     tm_notifications_notify('user_approved', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__APPROVAL_INTRO_TEXT__' => $approval_text));
@@ -245,10 +243,7 @@ function tm_users_check_request_approval() {
 function tm_users_request_approval($user) {
 
   // set profile url (either friendly url or community url)
-  $profile_url = "community/" . $user->name;
-  if (count($user->field_friendly_url) > 0) { 
-    $profile_url = $user->field_friendly_url['und']['0']['value'];
-  }
+  $profile_url = drupal_get_path_alias("user/" . $user->uid);
 
   // get reason for approving and store update user object
   $reason_for_joining = trim($_GET["reason_for_joining"]);
@@ -336,10 +331,7 @@ function tm_users_approval_need_more_info($user){
   // there doesn't seem to be a hook that can detect we are applying a new role, so do it here
   $approving_user = user_uid_optional_load();
   // set profile url (either friendly url or community url)
-  $profile_url = "community/" . $user->name;
-  if (count($user->field_friendly_url) > 0) { 
-    $profile_url = $user->field_friendly_url['und']['0']['value'];
-  }
+  $profile_url = drupal_get_path_alias("user/" . $user->uid);
 
   $moderator_first_name = $approving_user->field_user_first_name['und'][0]['value'];
 
@@ -377,10 +369,7 @@ function tm_users_approval_is_company_or_brand($user){
   // there doesn't seem to be a hook that can detect we are applying a new role, so do it here
   $approving_user = user_uid_optional_load();
   // set profile url (either friendly url or community url)
-  $profile_url = "community/" . $user->name;
-  if (count($user->field_friendly_url) > 0) { 
-    $profile_url = $user->field_friendly_url['und']['0']['value'];
-  }
+  $profile_url = drupal_get_path_alias("user/" . $user->uid);
 
   $moderator_first_name = $approving_user->field_user_first_name['und'][0]['value'];
 

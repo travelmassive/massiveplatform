@@ -129,23 +129,6 @@ function tm_events_views_default_views() {
   $handler->display->display_options['filters']['field_event_date_value']['operator'] = '>=';
   $handler->display->display_options['filters']['field_event_date_value']['granularity'] = 'hour';
   $handler->display->display_options['filters']['field_event_date_value']['default_date'] = 'now -12 hours';
-  /* Filter criterion: Content: Partner Event (field_is_partner_event) */
-  $handler->display->display_options['filters']['field_is_partner_event_value']['id'] = 'field_is_partner_event_value';
-  $handler->display->display_options['filters']['field_is_partner_event_value']['table'] = 'field_data_field_is_partner_event';
-  $handler->display->display_options['filters']['field_is_partner_event_value']['field'] = 'field_is_partner_event_value';
-  $handler->display->display_options['filters']['field_is_partner_event_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_is_partner_event_value']['expose']['operator_id'] = 'field_is_partner_event_value_op';
-  $handler->display->display_options['filters']['field_is_partner_event_value']['expose']['operator'] = 'field_is_partner_event_value_op';
-  $handler->display->display_options['filters']['field_is_partner_event_value']['expose']['identifier'] = 'field_is_partner_event_value';
-  $handler->display->display_options['filters']['field_is_partner_event_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    4 => 0,
-    6 => 0,
-    7 => 0,
-    3 => 0,
-    5 => 0,
-  );
   $handler->display->display_options['path'] = 'events';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Events';

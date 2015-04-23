@@ -68,7 +68,27 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
 
     $messaging_instructions = "";
     if ($conf["tm_messaging_enabled"]) {
-      $messaging_instructions = "<br>You can send " . $first_name . " a message if you follow them back.<br>";
+
+      // check following
+      $flag = flag_get_flag('follow_members');
+      $you_are_following_them = ($flag->is_flagged($who_followed->uid, $followed_user->uid));
+
+      // get notificaton setting
+      $notification = new TMNotification("member_message");
+
+      // check if we are following them already
+      if ($you_are_following_them) {
+        // check if we can send messages
+        if (tm_messaging_check_send_message($followed_user->uid, $who_followed->uid, true, false)) {
+          $messaging_instructions = "<br>You are now connected. You can send " . $first_name . " a message by visiting their profile.<br>";
+        }
+      } else {
+        // not already following
+        // check person who followed has notification setting enabled
+        if ($notification->isEnabled($who_followed->uid)) {
+          $messaging_instructions = "<br>You can send " . $first_name . " a message if you follow them back.<br>";
+        }
+      }
     }
 
     tm_notifications_notify('new_follower', $followed_user, array('user' => $followed_user, '__PROFILE_URL__' => $profile_url, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__MESSAGING_INSTRUCTIONS__' => $messaging_instructions));

@@ -31,7 +31,8 @@ function tm_messaging_check_send_message_callback() {
 
 /* Check if its possible for two users to send message to each other */
 /* Set check_if_possible = true to test if the sender could message if they followed */
-function tm_messaging_check_send_message($sender_uid, $recipient_uid, $check_if_possible = false) {
+/* Set check_sender_uid = false to ignore check if sending user is current user */
+function tm_messaging_check_send_message($sender_uid, $recipient_uid, $check_if_possible = false, $check_sender_uid = true) {
 
   global $user;
   global $conf;
@@ -52,10 +53,12 @@ function tm_messaging_check_send_message($sender_uid, $recipient_uid, $check_if_
   }
 
   // check its your uid
-  if ($user->uid != $sender_uid) {
-    return false;
+  if ($check_sender_uid) {
+    if ($user->uid != $sender_uid) {
+      return false;
+    }
   }
-
+ 
   // sender need to be approved member
   if (!in_array("approved user", $user->roles)) { 
     return false;
@@ -93,7 +96,7 @@ function tm_messaging_check_send_message($sender_uid, $recipient_uid, $check_if_
     }
   }
   
-  // todo: check recipient has notification setting enabled
+  // check recipient has notification setting enabled
   $notification = new TMNotification("member_message");
   if (!$notification->isEnabled($recipient_uid)) {
     return false;

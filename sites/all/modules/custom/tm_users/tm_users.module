@@ -218,9 +218,7 @@ function tm_users_approve($user) {
     flag('unflag', 'approval_requested_by_user', $user->uid, $user);
 
     // Keep track of who approved with approval_approved_by flag
-    if (isset($moderator)) {
-      flag('flag', 'approval_approved_by', $user->uid, $moderator);
-    }
+    flag('flag', 'approval_approved_by', $user->uid, $approving_user);
 
   }
 

@@ -98,7 +98,10 @@ if (!$twitter_data) {
 <li><?php print l(t('Approval requested (' . $flagged_time . ')'), 'javascript:jq_approval_already_requested();', array('fragment' => '','external'=>true)); ?></li>
 <?php } else { ?>
 <li><?php
-$reason_for_joining = $loaded->field_reason_for_joining[LANGUAGE_NONE][0]['value'];
+$reason_for_joining = "";
+if (isset($loaded->field_reason_for_joining[LANGUAGE_NONE][0]['value'])) {
+  $reason_for_joining = $loaded->field_reason_for_joining[LANGUAGE_NONE][0]['value'];
+}
 print ("<input style='display: none;' id='reason_for_joining' value='" . urlencode($reason_for_joining) . "'>");
 print l(t('Approve my account'), 'javascript:jq_request_approval(' . $loaded->uid . ')', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('approval-link')))); ?></li>
 <?php

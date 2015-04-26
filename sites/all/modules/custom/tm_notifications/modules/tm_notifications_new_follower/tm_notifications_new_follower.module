@@ -58,6 +58,13 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
     // set profile url (either friendly url or community url)
     $profile_url = drupal_get_path_alias("user/" . $who_followed->uid);
 
+    // workaround: if we are following automatically via tm_inivitations, then
+    // drupal_get_path_alias will return 'user/uid' for the newly created user. 
+    // So in this case we look for this and change it to a community/username url.
+    if (strpos($profile_url, "user/") === 0) {
+      $profile_url = "community/" . strtolower($who_followed->name);
+    }
+
     // notify the user that they have a new follower
     $who_joined = user_load($account->uid);
 

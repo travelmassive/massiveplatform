@@ -1105,6 +1105,18 @@ function _tm_event_message($field, $title = NULL) {
         return null;
       }
 
+      // External event link
+      if (isset($node->field_external_rsvp[LANGUAGE_NONE][0]['value'])) {
+        $external_rsvp = $node->field_external_rsvp[LANGUAGE_NONE][0]['value'];
+        if ($external_rsvp === '1') {
+          $rsvp_link = $node->field_rsvp_link[LANGUAGE_NONE][0]['url'];
+          if ($rsvp_link != "") {
+            $heading = l(t('Register for this event'), $rsvp_link, array('attributes' => array('target'=>'_blank')));
+            return $heading;
+          }
+        }
+      }
+
       // extra information to prepend
       $heading = "You have not yet registered";
       $extra = "";

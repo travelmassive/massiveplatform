@@ -162,7 +162,8 @@ print l(t('Approve my account'), 'javascript:jq_request_approval(' . $loaded->ui
     <?php print render($login_form); ?>
 
     <?php if (variable_get('user_register', 1)) : ?>
-      <h3 class="menu-blk-title">New to Travel Massive?</h3>
+      <?php global $conf; ?>
+      <h3 class="menu-blk-title">New to <?php print($conf["tm_site_name"]);?>?</h3>
       <p><?php print l(t('Sign up now'), 'user/register', array('attributes' => array('title' => 'Create account', 'class' => array('cta-inline')))); ?></p>
     <?php endif; ?>
 

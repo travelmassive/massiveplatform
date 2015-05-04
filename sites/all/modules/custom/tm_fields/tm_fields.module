@@ -419,10 +419,12 @@ function _tm_more_actions_process($field, $title = NULL) {
           or ((in_array("chapter leader", $user->roles))) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid, true))) {
 
             // Check if user can be approved
-            // show score
+            // Note: users can request if score > 50
+            // We allow approval if score >= 50 to give a bit of flexibility
             $user_score = tm_users_signup_score($uid);
+            $score_threshold = 50; 
             
-            if (($user_score > 50) or (in_array("moderator", $user->roles) or user_access('administer'))) {
+            if (($user_score >= $score_threshold) or (in_array("moderator", $user->roles) or user_access('administer'))) {
 
               // Show approve user link
               $links['approve'][] = array(

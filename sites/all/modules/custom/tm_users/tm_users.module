@@ -1067,12 +1067,12 @@ function tm_users_user_presave(&$edit, $account, $category) {
 
 /* Get the signup score of the users profile */
 /* It will be between 0 and 100 based on how much the user has filled in */
-function tm_users_signup_score() {
-  return tm_users_signup_tips(true);
+function tm_users_signup_score($uid = null) {
+  return tm_users_signup_tips(true, $uid);
 }
 
 /* Give new members some signup tips to help */
-function tm_users_signup_tips($return_score = false) {
+function tm_users_signup_tips($return_score = false, $uid = null) {
 
   global $user;
   global $conf;
@@ -1082,14 +1082,19 @@ function tm_users_signup_tips($return_score = false) {
     return 0;
   }
 
-  $account = user_load($user->uid);
+  // load current user if no uid specified
+  if ($uid == null) {
+    $uid = $user->uid;
+  }
+
+  $account = user_load($uid);
 
   $user_tip = "";
   $user_points = 10; // some points for signing up
   $total_points = 10; // start at 10
 
    // user edit page
-  $edit_url = "user/" . $user->uid . "/edit";
+  $edit_url = "user/" . $uid . "/edit";
 
   // job role (10 points)
   $total_points += 10;

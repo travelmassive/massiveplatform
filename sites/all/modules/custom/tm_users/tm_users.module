@@ -114,13 +114,13 @@ function tm_users_preprocess_page(&$variables) {
     tm_users_event_tips();
   }
 
-   // Show events page tips
+  // Show events page tips
   if (($url_parts[0] == "sponsors") and (sizeof($url_parts) == 1)) {
     tm_users_sponsors_tips();
   }
 
-  // Show user signup tips
-  tm_users_signup_tips();
+  // Show user signup tips if < 80% complete
+  tm_users_signup_tips(false, null, 80);
 
 }
 
@@ -1072,7 +1072,7 @@ function tm_users_signup_score($uid = null) {
 }
 
 /* Give new members some signup tips to help */
-function tm_users_signup_tips($return_score = false, $uid = null) {
+function tm_users_signup_tips($return_score = false, $uid = null, $show_threshold = 80) {
 
   global $user;
   global $conf;
@@ -1231,7 +1231,7 @@ function tm_users_signup_tips($return_score = false, $uid = null) {
   // Option 2. Display the tips
   // Only show on the following pages
   // Only show on up to two levels deep (ie: /chapters and /chapters/london)
-  $target_pages = array("events", "community", "leaders");
+  $target_pages = array("events", "community", "leaders", "discuss");
   $url_parts = explode('/', request_path());
   if ((!in_array($url_parts[0], $target_pages)) or (sizeof($url_parts) > 2)) {
     return;
@@ -1242,7 +1242,7 @@ function tm_users_signup_tips($return_score = false, $uid = null) {
   }
   
   // Display the user tip
-  if ($user_tip != "") {
+  if (($user_tip != "") and ($show_threshold > $user_score)) {
       $user_tip = "Your profile is " . $user_score . "% complete. " . $user_tip;
       drupal_set_message($user_tip, 'page_notice');
   }
@@ -1555,6 +1555,17 @@ function tm_users_mail_alter(&$mail_form) {
     $mail_form['send'] = false;
   }
 
+}
+
+// Add a link to chapter leaders from the community page
+function tm_users_views_post_execute(&$view) {
+  if ($view->name == 'community') {
+    $view->build_info['title'] = "Community &middot; <a style='color: red;' href='/leaders'>Chapter Leaders</a>";
+  }
+
+  if ($view->name == 'leaders') {
+    $view->build_info['title'] = "<a href='/community'>Community</a> &middot; Chapter Leaders";
+  }
 }
 
 ?>

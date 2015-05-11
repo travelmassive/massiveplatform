@@ -1,0 +1,13 @@
+name = TM Discuss
+core = 7.x
+package = TM Discuss
+version = 7.x-1.0-dev
+project = tm_discuss
+
+files[] = tm_discuss.module
+
+dependencies[] = tm_users
+dependencies[] = orchid
+dependencies[] = views
+
+project path = sites/all/modules/custom

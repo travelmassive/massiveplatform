@@ -194,3 +194,16 @@ function tm_organizations_preprocess_page(&$variables, $hook) {
 
 }
 
+// Add a link to sponsors from the companies page
+function tm_organizations_views_post_execute(&$view) {
+
+  if ($view->name == 'companies') {
+    $view->build_info['title'] = "Companies &middot; <a style='color: red;' href='/sponsors'>Sponsors</a>";
+  }
+
+  if ($view->name == 'sponsors') {
+    $view->build_info['title'] = "<a href='/companies'>Companies</a> &middot; Sponsors";
+  }
+
+}
+

@@ -1,0 +1,63 @@
+<?php
+
+/* Custom module for vanilla integration */
+/* This also requires orchid module (custom) */
+/* Install vanilla to /discussions/ and use embed to host discussion on /discuss page */
+function tm_discuss_menu() {
+
+   $items = array();
+
+   $items['discuss'] = array(
+   	  'title' => '',
+      'page callback' => 'tm_discuss_embed_vanilla',
+      'access arguments' => array('access content')
+   );
+
+   return $items;
+}
+
+function tm_discuss_embed_vanilla() {
+
+	global $conf;
+	global $user;
+	$loaded = user_load($user->uid);
+
+	$embed_script = '<script type="text/javascript" src="/discussions/js/embed.js"></script>';
+
+	// hide title as it's displayed on the forum anyway
+	drupal_add_css('#page-title { display: none; }', 'inline');
+
+	$signedIn = (isset($user->uid) && ($user->uid > 0)) ? true : false; 
+
+	if (($signedIn) && (!in_array("approved user", $loaded->roles))) {
+
+    	// show approval link
+    	$who_flagged = flag_get_entity_flags("user", $loaded->uid, "approval_requested_by_user");
+    	if (sizeof($who_flagged) > 0) {
+      		foreach ($who_flagged as $flagger) {
+        		$difference = time() - $flagger->timestamp;
+      		}
+      		$flagged_time = format_interval($difference, 1) . " ago";
+			$approval_link = l(t('Approval requested (' . $flagged_time . ')'), 'javascript:jq_approval_already_requested();', array('fragment' => '','external'=>true));
+		} 
+		else {
+			$approval_link = l(t('Approve my account'), 'javascript:jq_request_approval(' . $loaded->uid . ')', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('approval-link'))));
+		}
+
+		// tell user they need to be approved
+		drupal_set_message("Your profile needs to be approved before you can join the discussion. " . $approval_link, 'page_notice');
+
+	} else if (!$signedIn) {
+		drupal_set_message("Welcome to " . $conf["tm_site_name"] . " Discuss. Want to join the discussion? <a href='/user/register'>Sign up now</a> or <a href='/user/login'>Log In</a>.");
+	} else {
+		// welcome message
+		//drupal_get_messages();
+		//drupal_set_message("Welcome to " . $conf["tm_site_name"] . " Discuss. Have your say and share your ideas with the community."); // page_notice
+	}
+
+	drupal_set_title("Discuss");
+	return $embed_script;
+
+}
+
+?>

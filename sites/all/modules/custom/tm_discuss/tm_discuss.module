@@ -1,8 +1,38 @@
 <?php
 
-/* Custom module for vanilla integration */
-/* This also requires orchid module (custom) */
-/* Install vanilla to /discussions/ and use embed to host discussion on /discuss page */
+/* 
+
+Custom module for vanilla integration
+This also requires orchid module (custom)
+Install vanilla to /discussions/ and use embed to host discussion on /discuss page
+Install steps:
+
+Install Vanilla
+- Create /discussions folder in Drupal root
+- Clone vanilla "git clone https://github.com/vanilla/vanilla discussions"
+- Create mysql database for vanilla, etc.
+- Download http://vanillaforums.org/addon/jsconnect-plugin
+- Download http://vanillaforums.org/addon/jsconnectautosignin-plugin
+- Visit /discussions in web browser and install vanilla
+- Setup jsconnect plugin
+- In jsconnect plugin set "This is trusted connection and can sync roles & permissions."
+- In jsconnect plugin set "Make this connection your default signin method."
+- Add roles for chapter leader, non-validated, moderator, approved user, administrator (to sync)
+- Set embed
+
+Drupal
+- Enable drupal modules: "drush en orchid tm_discuss"
+- Go to /admin/config/vanilla/orchid to configure
+- Set client id, secret key from vanilla setttings
+- Set Vanilla forum URL to /discussions/
+- Enable avatar sync
+
+Additional references: 
+- Orchid module - https://www.drupal.org/project/orchid
+- Orchid instructions - https://www.drupal.org/node/1117992
+
+*/
+
 function tm_discuss_menu() {
 
    $items = array();

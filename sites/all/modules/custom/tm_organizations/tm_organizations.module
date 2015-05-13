@@ -29,10 +29,11 @@ function tm_organizations_ds_fields_info($entity_type) {
  * Print an indication that a company is a TM sponsor
  */
 function _tm_sponsor($field, $title = NULL) {
+  global $conf;
   //$flag = flag_get_flag('tm_sponsor') or die('no "bookmarks" flag defined');
   $flag = flag_get_flag('tm_sponsor');
   if ($flag->is_flagged($field['entity']->nid)) {
-    return t('A Travel Massive sponsor');
+    return t('A ' . $conf['tm_site_name'] . ' sponsor');
   }
 }
 /* 

@@ -85,7 +85,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Who\'s Going?',
-    'weight' => '8',
+    'weight' => '9',
     'children' => array(
       0 => 'members_signed_up',
     ),
@@ -134,7 +134,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Event Settings',
-    'weight' => '15',
+    'weight' => '4',
     'children' => array(
       0 => 'field_is_partner_event',
       1 => 'field_approved_members_only',
@@ -223,7 +223,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Where',
-    'weight' => '2',
+    'weight' => '1',
     'children' => array(
       0 => 'field_event_venue_name',
       1 => 'field_location',
@@ -284,7 +284,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Organizers',
-    'weight' => '7',
+    'weight' => '8',
     'children' => array(
       0 => 'field_organizer',
     ),
@@ -295,6 +295,57 @@ function tm_events_field_group_info() {
     ),
   );
   $export['group_organizers_wrapper|node|event|full'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_sponsors|node|event|form';
+  $field_group->group_name = 'group_sponsors';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'event';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Event Sponsors',
+    'weight' => '3',
+    'children' => array(
+      0 => 'field_event_sponsors',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'label' => 'Event Sponsors',
+      'instance_settings' => array(
+        'required_fields' => 1,
+        'classes' => 'group-sponsors field-group-fieldset',
+        'description' => '',
+      ),
+      'formatter' => 'collapsible',
+    ),
+  );
+  $export['group_sponsors|node|event|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_sponsors|node|event|full';
+  $field_group->group_name = 'group_sponsors';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'event';
+  $field_group->mode = 'full';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Sponsors',
+    'weight' => '7',
+    'children' => array(
+      0 => 'field_event_sponsors',
+    ),
+    'format_type' => 'contained_block',
+    'format_settings' => array(
+      'label' => 'Sponsors',
+      'formatter' => 'open',
+    ),
+  );
+  $export['group_sponsors|node|event|full'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */

@@ -2832,7 +2832,7 @@ tr.selected td {
 /* line 803, ../sass/components/_misc.scss */
 .progress .filled {
   background-color: #0072b9;
-  background-image: url('../images/progress.gif?1421906487');
+  background-image: url('../images/progress.gif?1430725689');
 }
 
 /* ==========================================================================
@@ -7234,6 +7234,11 @@ select:disabled {
 .related-list ul li:last-child {
   box-shadow: none;
   padding-bottom: 0;
+}
+
+/* line 706, ../sass/_single.scss */
+.sponsors-list {
+  padding-bottom: 1rem;
 }
 
 /* line 2, ../sass/_login.scss */

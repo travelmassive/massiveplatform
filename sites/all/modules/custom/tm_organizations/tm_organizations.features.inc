@@ -37,10 +37,10 @@ function tm_organizations_views_api($module = NULL, $api = NULL) {
  */
 function tm_organizations_flag_default_flags() {
   $flags = array();
-  // Exported flag: "TM Sponsor".
+  // Exported flag: "Event Sponsor".
   $flags['tm_sponsor'] = array(
     'entity_type' => 'node',
-    'title' => 'TM Sponsor',
+    'title' => 'Event Sponsor',
     'global' => 1,
     'types' => array(
       0 => 'organization',
@@ -51,7 +51,7 @@ function tm_organizations_flag_default_flags() {
     'unflag_short' => 'Unset as sponsor',
     'unflag_long' => 'Remove [node:title] from the sponsor list',
     'unflag_message' => '[node:title] was removed as a Travel Massive sponsor',
-    'unflag_denied_text' => '',
+    'unflag_denied_text' => 'Company is a sponsor',
     'link_type' => 'normal',
     'weight' => 0,
     'show_in_links' => array(

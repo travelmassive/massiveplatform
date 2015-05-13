@@ -941,6 +941,17 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
     }
   }
 
+  // adjustments to the event add form
+  // hide row weights for non administrator/moderator
+  if ($form_id == 'event_node_form') {
+    
+    // Hide row weights unless administrator or moderator
+    $form['#attached']['js'][] = array(
+      'data' => "(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){ $('.tabledrag-toggle-weight-wrapper').hide(); });})(jQuery, Drupal, this, this.document);",
+      'type' => 'inline',
+    );
+  }
+
   // Modify chapter edit form (can't use hook in tm_chapters)
   // For non-admin and non-moderator hide the chapter leaders and geomap location fields
   if ($form_id == 'chapter_node_form') {

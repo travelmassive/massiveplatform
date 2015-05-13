@@ -87,6 +87,8 @@ function tm_flags_user_default_permissions() {
   $permissions['flag tm_sponsor'] = array(
     'name' => 'flag tm_sponsor',
     'roles' => array(
+      'administrator' => 'administrator',
+      'chapter leader' => 'chapter leader',
       'moderator' => 'moderator',
     ),
     'module' => 'flag',
@@ -169,6 +171,7 @@ function tm_flags_user_default_permissions() {
   $permissions['unflag tm_sponsor'] = array(
     'name' => 'unflag tm_sponsor',
     'roles' => array(
+      'administrator' => 'administrator',
       'moderator' => 'moderator',
     ),
     'module' => 'flag',

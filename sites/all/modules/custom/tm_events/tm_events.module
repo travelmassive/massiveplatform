@@ -396,6 +396,7 @@ function tm_events_node_presave($node) {
       $node->field_rsvp_link[LANGUAGE_NONE] = array();
     }
   }
+
   if ($node->type == 'event'){
     // Robyn: I have absolutely no idea why this is necessary, but the organiser field
     // is being copied and not copied back
@@ -403,6 +404,18 @@ function tm_events_node_presave($node) {
       if (isset($node->field_organizer_child)) {
         $node->field_organizer = $node->field_organizer_child;
       }
+    }
+  }
+
+  // If sponsors are set, flag them
+  // IC note:
+  // Flag module (7.x-3.5) sets uid 0 for global flags.
+  // So we use this patch from https://www.drupal.org/node/2087797 to set a uid
+  // Patch file (flag_record_uid_2087797_28.patch) is in flags module directory
+  if (isset($node->field_event_sponsors[LANGUAGE_NONE][0])) {
+    $flag = flag_get_flag('tm_sponsor');
+    foreach ($node->field_event_sponsors[LANGUAGE_NONE] as $arr) {
+      $flag->flag("flag", $arr['target_id']);        
     }
   }
 }
@@ -501,7 +514,7 @@ function tm_events_communication_form($event){
       );
 
     // prepopulate some of the text
-    $event_url = $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('node/' . $event->nid);
+    $event_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('node/' . $event->nid);
 
     
     $prefill = "Hi [first_name],<br><br>";
@@ -517,7 +530,20 @@ function tm_events_communication_form($event){
       $location_text = str_replace("\r", ", ", $location_text);
       $prefill .= "<li>" . t('Location').': '. $location_text . "</li>";
     }
-    $prefill .= "<li>" . t('More Info').': <a href="http://' . $event_url . '">' . $event_url .'</a>'; 
+
+    // List sponsors
+    if (isset($event->field_event_sponsors[LANGUAGE_NONE][0])) {
+        $sponsor_links = array();
+        foreach ($event->field_event_sponsors[LANGUAGE_NONE] as $arr) {
+          $sponsor = node_load($arr['target_id']);
+          $sponsor_profile_url = drupal_get_path_alias("node/" . $arr['target_id']);
+          $external_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . $sponsor_profile_url;
+          $sponsor_links[] = l(t($sponsor->title), $external_url);
+        }
+        $prefill .= "<li>Sponsors: " . implode(", ", $sponsor_links) . "</li>";
+    }
+
+    $prefill .= "<li>" . t('More Info').': <a href="' . $event_url . '">' . $event_url .'</a>'; 
     $prefill .= "</ul>";
     if ($event->body != null) {
       // add line breaks

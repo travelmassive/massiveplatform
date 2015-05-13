@@ -104,7 +104,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 9,
+        'weight' => 18,
       ),
       'grid' => array(
         'label' => 'above',
@@ -165,7 +165,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 19,
+        'weight' => 22,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -284,7 +284,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 17,
+        'weight' => 21,
       ),
       'grid' => array(
         'label' => 'above',
@@ -329,7 +329,116 @@ function tm_events_field_default_field_instances() {
         'year_range' => '-0:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 10,
+      'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_sponsors'
+  $field_instances['node-event-field_event_sponsors'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'default_value_function' => '',
+    'deleted' => 0,
+    'description' => 'Got an event sponsor? Show their company profile <span style="color: #e93f33 !important;">♥</span> by listing them as a sponsor.<br>
+<ul>
+<li>To add a sponsor, search and select a company profile page from the dropdown.</li>
+<li>A sponsor must have a company profile in order to be listed as a sponsor.</li>
+<li>Sponsors will also be added to our world-wide <a target="_blank" href="/sponsors">sponsors page</a>.</li>
+</ul>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 19,
+      ),
+      'full' => array(
+        'label' => 'hidden',
+        'module' => 'entityreference',
+        'settings' => array(
+          'links' => 0,
+          'view_mode' => 'grid',
+        ),
+        'type' => 'entityreference_entity_view',
+        'weight' => 10,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_sponsors',
+    'label' => 'Sponsors',
+    'required' => 0,
+    'settings' => array(
+      'behaviors' => array(
+        'prepopulate' => array(
+          'status' => 0,
+        ),
+      ),
+      'nodeaccess_nodereference' => array(
+        'all' => array(
+          'view' => 'view',
+        ),
+        'all_published' => 0,
+        'author' => array(
+          'delete' => 0,
+          'update' => 0,
+          'view' => 'view',
+        ),
+        'author_published' => 0,
+        'priority' => 0,
+        'referenced' => array(
+          'delete' => array(
+            'delete' => 0,
+            'update' => 0,
+            'view' => 'view',
+          ),
+          'published' => 0,
+          'update' => array(
+            'delete' => 0,
+            'update' => 0,
+            'view' => 'view',
+          ),
+          'view' => array(
+            'delete' => 0,
+            'update' => 0,
+            'view' => 'view',
+          ),
+        ),
+        'unused' => 0,
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'entityreference',
+      'settings' => array(
+        'match_operator' => 'CONTAINS',
+        'path' => '',
+        'size' => 60,
+      ),
+      'type' => 'entityreference_autocomplete',
+      'weight' => 18,
     ),
   );
 
@@ -504,7 +613,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 16,
+        'weight' => 20,
       ),
       'grid' => array(
         'label' => 'above',
@@ -819,7 +928,7 @@ This will be displayed to the member on the event page and included in the autom
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 17,
       ),
       'grid' => array(
         'label' => 'above',
@@ -957,7 +1066,7 @@ This will be displayed to the member on the event page and included in the autom
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 16,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1005,6 +1114,12 @@ This will be displayed to the member on the event page and included in the autom
   t('Check this box if you want to restrict registration and waitlist to members who are approved. Non-approved members won\'t be able to sign up. ');
   t('Description');
   t('Event Chapter');
+  t('Got an event sponsor? Show their company profile <span style="color: #e93f33 !important;">♥</span> by listing them as a sponsor.<br>
+<ul>
+<li>To add a sponsor, search and select a company profile page from the dropdown.</li>
+<li>A sponsor must have a company profile in order to be listed as a sponsor.</li>
+<li>Sponsors will also be added to our world-wide <a target="_blank" href="/sponsors">sponsors page</a>.</li>
+</ul>');
   t('Help the attendees find the right location by providing a link to a map, for example <a href="http://maps.google.com/">Google Maps</a>.');
   t('Image');
   t('Include any additional information you want to provide to members only when they are waitlisted.<br>
@@ -1023,6 +1138,7 @@ This will be displayed to the member on the event page and included in the autom
   t('Provide the street address or physical location for this event.');
   t('RSVP link');
   t('Select the chapter associated with the event.');
+  t('Sponsors');
   t('This will be used as the main image for the event.
 <br>If you want to be pixel perfect, upload your image sized to 805x453');
   t('Venue name');

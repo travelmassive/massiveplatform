@@ -264,6 +264,7 @@ function tm_flags_flag_default_flags() {
       'full' => 0,
       'diff_standard' => 0,
       'token' => 0,
+      'search_result' => 0,
       'grid' => 0,
       'list' => 0,
     ),

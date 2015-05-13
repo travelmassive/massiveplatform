@@ -742,10 +742,49 @@ function _tm_more_actions_process($field, $title = NULL) {
   
   // START Set as sponsor link
   if (isset($field['entity']->nid) && $flag_link = flag_create_link('tm_sponsor', $field['entity']->nid)) {
-    $links['edition'][] = array(
-      'wrapper_class' => array('sponsor'),
-      'content' => $flag_link
-    );
+
+
+      // 1. Show Flag / Unflag link
+      // only show for admin and moderator
+      // chapter leaders flag sponsors via the event page but not directly
+      if ((in_array('administrator', array_values($user->roles))) or (in_array('moderator', array_values($user->roles)))) {
+
+      $links['edition'][] = array(
+        'wrapper_class' => array('sponsor'),
+        'content' => $flag_link
+      );
+
+      // 2. WHO FLAGGED
+      $flag = flag_get_flag('tm_sponsor');
+
+      // get list of people who flagged
+      $who_flagged = flag_get_entity_flags("node", $field['entity']->nid, "tm_sponsor");
+
+      // sort by flag time
+      usort($who_flagged, function($a, $b){
+        return ($a->timestamp > $b->timestamp) ? -1 : 1;
+      });
+
+      $menu_text = "";
+      foreach ($who_flagged as $flagger) {
+        $difference = time() - $flagger->timestamp;
+        $flagged_time = format_interval($difference, 1) . " ago";
+        if ($flagger->uid == 0) { 
+          $flagger_name = "Adminstrator"; // global flags used to record 0
+        }
+        else {
+          $flagged_user = user_load($flagger->uid);
+          $flagger_name = $flagged_user->field_user_first_name['und'][0]['value'];
+        }
+        $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Set by " . $flagger_name . " " . $flagged_time . "</span><br>";
+      }
+
+      $links['edition'][] = array(
+        'wrapper_class' => array('approve'),
+        'content' => t($menu_text),
+      );
+
+    }
   }
   // END Set as sponsor link
 

@@ -49,6 +49,12 @@ function tm_discuss_menu() {
 
 function tm_discuss_embed_vanilla() {
 
+	// add trailing slash if path is /discuss
+	if (request_uri() == "/discuss") {
+		drupal_goto('discuss/');
+		return;
+	}
+
 	global $conf;
 	global $user;
 	$loaded = user_load($user->uid);

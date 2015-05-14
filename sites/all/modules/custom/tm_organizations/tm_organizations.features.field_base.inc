@@ -10,13 +10,13 @@
 function tm_organizations_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_location_country'
-  $field_bases['field_location_country'] = array(
+  // Exported field_base: 'field_follower_message'
+  $field_bases['field_follower_message'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_location_country',
+    'field_name' => 'field_follower_message',
     'foreign keys' => array(
       'format' => array(
         'columns' => array(
@@ -32,11 +32,9 @@ function tm_organizations_field_default_field_bases() {
     ),
     'locked' => 0,
     'module' => 'text',
-    'settings' => array(
-      'max_length' => 255,
-    ),
+    'settings' => array(),
     'translatable' => 0,
-    'type' => 'text',
+    'type' => 'text_long',
   );
 
   return $field_bases;

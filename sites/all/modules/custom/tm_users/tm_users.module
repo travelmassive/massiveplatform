@@ -939,6 +939,13 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
     if (!(isset($form['nid']['#value']))) {
       hide($form['field_owner']);
     }
+
+    // Add placeholder text for follower message
+    $form['#attached']['js'][] = array(
+      'data' => "(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){ $('#edit-field-follower-message-und-0-value').attr('placeholder', 'Thanks for following us...'); });})(jQuery, Drupal, this, this.document);",
+      'type' => 'inline',
+    );
+
   }
 
   // adjustments to the event add form

@@ -1156,6 +1156,7 @@ function _tm_event_message($field, $title = NULL) {
 
         if (isset($node->field_register_event_message['und'][0]['value'])) {
           $field_register_event_message = trim($node->field_register_event_message['und'][0]['value']);
+          $field_register_event_message = strip_tags(trim($field_register_event_message));
           $extra = "<p>" . $field_register_event_message . "</p>";
         }     
       }
@@ -1169,6 +1170,7 @@ function _tm_event_message($field, $title = NULL) {
 
         if (isset($node->field_waitlist_event_message['und'][0]['value'])) {
           $field_waitlist_event_message = trim($node->field_waitlist_event_message['und'][0]['value']);
+          $field_waitlist_event_message = strip_tags(trim($field_waitlist_event_message));
           $extra = "<p>" . $field_waitlist_event_message . "</p>";
         }
       }

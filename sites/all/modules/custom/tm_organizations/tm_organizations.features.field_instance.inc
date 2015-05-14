@@ -29,7 +29,7 @@ function tm_organizations_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',
-        'weight' => 1,
+        'weight' => 2,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -221,6 +221,66 @@ function tm_organizations_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-organization-field_follower_message'
+  $field_instances['node-organization-field_follower_message'] = array(
+    'bundle' => 'organization',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Give something back to members who follow your company profile.<br>
+Displays a short message to followers on your company profile page.<br>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 14,
+      ),
+      'full' => array(
+        'label' => 'hidden',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 8,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_follower_message',
+    'label' => 'Message for Followers (Optional)',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 4,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 2,
+    ),
+  );
+
   // Exported field_instance: 'node-organization-field_friendly_url'
   $field_instances['node-organization-field_friendly_url'] = array(
     'bundle' => 'organization',
@@ -399,7 +459,7 @@ Example: "your-company"',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_link',
-        'weight' => 4,
+        'weight' => 5,
       ),
       'grid' => array(
         'label' => 'above',
@@ -477,7 +537,7 @@ Example: "your-company"',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_link',
-        'weight' => 5,
+        'weight' => 6,
       ),
       'grid' => array(
         'label' => 'above',
@@ -555,7 +615,7 @@ Example: "your-company"',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_twitter',
-        'weight' => 3,
+        'weight' => 4,
       ),
       'grid' => array(
         'label' => 'above',
@@ -633,7 +693,7 @@ Example: "your-company"',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_link',
-        'weight' => 2,
+        'weight' => 3,
       ),
       'grid' => array(
         'label' => 'above',
@@ -946,12 +1006,15 @@ Example: "your-company"',
   t('Description');
   t('Facebook');
   t('Friendly URL');
+  t('Give something back to members who follow your company profile.<br>
+Displays a short message to followers on your company profile page.<br>');
   t('Industry Segment');
   t('Linkedin');
   t('Logo');
   t('Make your profile available through a friendly URL such as http://travelmassive.com/your-company.
 Example: "your-company"');
   t('Managed by');
+  t('Message for Followers (Optional)');
   t('Please provide the segment which identifies the company the best.');
   t('Provide a cover image to be displayed behind your company logo.
 <br>If you want to be pixel perfect, upload your image sized to 805x453');

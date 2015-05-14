@@ -77,7 +77,10 @@ function tm_organizations_strongarm() {
           'weight' => '11',
         ),
         'redirect' => array(
-          'weight' => '30',
+          'weight' => '3',
+        ),
+        'metatags' => array(
+          'weight' => '4',
         ),
       ),
       'display' => array(

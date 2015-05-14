@@ -24,7 +24,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 14,
+        'weight' => 23,
       ),
       'grid' => array(
         'label' => 'above',
@@ -444,7 +444,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_link',
-        'weight' => 18,
+        'weight' => 27,
       ),
       'grid' => array(
         'label' => 'above',
@@ -515,7 +515,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_link',
-        'weight' => 19,
+        'weight' => 28,
       ),
       'grid' => array(
         'label' => 'above',
@@ -586,7 +586,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_twitter',
-        'weight' => 17,
+        'weight' => 26,
       ),
       'grid' => array(
         'label' => 'above',
@@ -657,7 +657,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_link',
-        'weight' => 16,
+        'weight' => 25,
       ),
       'grid' => array(
         'label' => 'above',
@@ -779,9 +779,8 @@ function tm_users_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'text',
         'settings' => array(),
-        'type' => 'text_default',
+        'type' => 'hidden',
         'weight' => 24,
       ),
       'grid' => array(
@@ -835,7 +834,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'hs_taxonomy',
         'settings' => array(),
         'type' => 'hs_taxonomy_term_reference_hierarchical_text',
-        'weight' => 15,
+        'weight' => 24,
       ),
       'grid' => array(
         'label' => 'above',

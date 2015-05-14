@@ -127,6 +127,8 @@
     &.field-segment:before { @extend .icon-briefcase; }
     &.field-qa:before, &.qa:before { @extend .icon-bubble; }
     &.tm-ds-connection-actions:before { @extend .icon-connection; }
+    &.tm-ds-organization-follow-message { display: none; }
+    &.tm-ds-organization-follow-message:before { @extend .icon-connection; }
 
     &.field-link-facebook,
     &.field-link-linkedin,

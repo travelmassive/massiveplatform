@@ -15,11 +15,28 @@ function tm_organizations_ds_fields_info($entity_type) {
   }
   $fields = array();
 
+  // sponsor badge
   $fields['tm_ds_tm_sponsor'] = array(
     'title' => t('TM Sponsor'),
     'field_type' => DS_FIELD_TYPE_FUNCTION,
     'ui_limit' => array('organization|full'),
     'function' => '_tm_sponsor'
+  );
+
+  // follower message
+  $fields['tm_ds_organization_follow_message'] = array(
+    'title' => t('Message for Followers'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('organization|*'),
+    'function' => 'tm_fields_organization_follow_message',
+    'properties' => array(
+      'settings' => array(
+        'Extra classes' => array(
+          'type' => 'textfield',
+          'description' => t('Classes for the link')
+        )
+      )
+    )
   );
 
   return array($entity_type => $fields);
@@ -33,9 +50,10 @@ function _tm_sponsor($field, $title = NULL) {
   //$flag = flag_get_flag('tm_sponsor') or die('no "bookmarks" flag defined');
   $flag = flag_get_flag('tm_sponsor');
   if ($flag->is_flagged($field['entity']->nid)) {
-    return t('A ' . $conf['tm_site_name'] . ' sponsor');
+    return t('A ' . $conf['tm_site_name']) . ' ' . l('sponsor', 'sponsors') . '';
   }
 }
+
 /* 
  * Alters a node on saving to make sure organizations have the owner field set to author
  */
@@ -208,3 +226,84 @@ function tm_organizations_views_post_execute(&$view) {
 
 }
 
+
+/*
+ * Display follow message for organziations
+ */
+function tm_fields_organization_follow_message($field) {
+  
+  if (!user_is_logged_in()) {
+    return;
+  }
+
+  if ($field['entity']->type == "organization") {
+
+    $my_uid = $user->uid;
+    $node_id = $field['entity']->nid;
+
+    // always render following message 
+    // it is hidden on page load and displayed in tm_organizations_preprocess_flag
+    $company = node_load($node_id);
+    if (isset($company->field_follower_message[LANGUAGE_NONE][0]['value'])) {
+      $message = $company->field_follower_message[LANGUAGE_NONE][0]['value'];
+      $message = strip_tags(trim($message));
+      if ($message != "") {
+        return "You are following " . t($company->title) . "<p class='ds-organization-follow-message-insert'>" . $message . "</p>";
+      }
+    } else {
+      return "You are following " . t($company->title);
+    }
+  }
+
+}
+
+
+function tm_organizations_preprocess_flag(&$variables) {
+
+  if (!user_is_logged_in()) {
+    return;
+  }
+
+  // operate on follow_organizations
+  $flag = &$variables['flag'];
+  $entity_id = $variables['entity_id'];
+  if ($flag->name != "follow_organizations") {
+    return;
+  }
+
+  // if already following
+  // show the .tm-ds-organization-follow-message field
+  if ($variables['last_action'] == "flagged") {
+
+    drupal_add_js('
+    jQuery(document).ready(function($) {
+
+      // show message
+      $( ".tm-ds-organization-follow-message").show();
+
+      // hide when unfollowed
+      $( ".flag-follow-organizations .unflag-action").click(function() {
+        $( ".tm-ds-organization-follow-message" ).slideUp();
+      }); 
+
+    });
+    ', 'inline');
+    return;
+  }
+
+  // hide follow message when unfollowing
+  if ($variables['last_action'] == "unflagged") {
+
+    drupal_add_js('
+    jQuery(document).ready(function($) {
+
+      // show when followed
+      $( ".flag-follow-organizations .flag-action").click(function() {
+        $( ".tm-ds-organization-follow-message" ).slideDown();
+      }); 
+
+    });
+    ', 'inline');
+  }
+
+}

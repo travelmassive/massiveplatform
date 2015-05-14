@@ -83,7 +83,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Followers',
-    'weight' => '9',
+    'weight' => '7',
     'children' => array(
       0 => 'members_following',
     ),
@@ -106,7 +106,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'About',
-    'weight' => '7',
+    'weight' => '5',
     'children' => array(
       0 => 'body',
       1 => 'field_link_facebook',
@@ -114,7 +114,8 @@ function tm_organizations_field_group_info() {
       3 => 'field_link_twitter',
       4 => 'field_link_website',
       5 => 'tm_ds_tm_sponsor',
-      6 => 'group_location_wrapper',
+      6 => 'tm_ds_organization_follow_message',
+      7 => 'group_location_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -172,7 +173,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Elsewhere',
-    'weight' => '11',
+    'weight' => '1',
     'children' => array(
       0 => 'field_link_facebook',
       1 => 'field_link_linkedin',
@@ -203,7 +204,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '6',
+    'weight' => '7',
     'children' => array(
       0 => 'field_location_city',
       1 => 'field_country',
@@ -233,7 +234,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Profile managed by',
-    'weight' => '8',
+    'weight' => '6',
     'children' => array(
       0 => 'field_owner',
     ),

@@ -452,7 +452,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '21',
+    'weight' => '30',
     'children' => array(
       0 => 'field_location_city',
     ),
@@ -628,7 +628,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'QA',
-    'weight' => '20',
+    'weight' => '29',
     'children' => array(
       0 => 'group_user_qa',
     ),

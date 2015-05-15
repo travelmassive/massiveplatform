@@ -42,6 +42,7 @@ function _tm_event_seats_count($field, $title = NULL) {
 
   // Registered count
   $count = $flag->get_count($event->nid);
+  $registered_count = $count; // keep track of registered count
 
   // Extra stuff. Add non-registered guests to count
   $extra_guests_count = 0;
@@ -65,7 +66,7 @@ function _tm_event_seats_count($field, $title = NULL) {
     }
 
     // No total attendance specified
-    return t($count . " people went.");
+    return t(($count + $extra_guests_count) . " people went.");
   }
   
   // Future event...
@@ -102,7 +103,7 @@ function _tm_event_seats_count($field, $title = NULL) {
     $limit = $event->field_signup_limit[LANGUAGE_NONE][0]['value'];
     
     // Seats left.
-    $left = $limit - $count;
+    $left = $limit - $registered_count;
     $left = $left < 0 ? 0 : $left;
 
     $left_text = "spots left";

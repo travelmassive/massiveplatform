@@ -333,6 +333,72 @@ function tm_events_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-event-field_event_extra_guests'
+  $field_instances['node-event-field_event_extra_guests'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'How many non-registered guests are coming?<br>
+This will be added to the attendee count on the event page.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 0,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_integer',
+        'weight' => 22,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_extra_guests',
+    'label' => 'Non-registered Guests',
+    'required' => 0,
+    'settings' => array(
+      'max' => 100000,
+      'min' => 0,
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 19,
+    ),
+  );
+
   // Exported field_instance: 'node-event-field_event_sponsors'
   $field_instances['node-event-field_event_sponsors'] = array(
     'bundle' => 'event',
@@ -439,6 +505,71 @@ function tm_events_field_default_field_instances() {
       ),
       'type' => 'entityreference_autocomplete',
       'weight' => 18,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_total_attendance'
+  $field_instances['node-event-field_event_total_attendance'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'This will be displayed on the event page when it\'s a past event.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 0,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_integer',
+        'weight' => 25,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_total_attendance',
+    'label' => 'How many people attended?',
+    'required' => 0,
+    'settings' => array(
+      'max' => 100000,
+      'min' => 0,
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 20,
     ),
   );
 
@@ -587,7 +718,7 @@ function tm_events_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 5,
+      'weight' => 6,
     ),
   );
 
@@ -1042,7 +1173,7 @@ This will be displayed to the member on the event page and included in the autom
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 7,
+      'weight' => 9,
     ),
   );
 
@@ -1121,6 +1252,9 @@ This will be displayed to the member on the event page and included in the autom
 <li>Sponsors will also be added to our world-wide <a target="_blank" href="/sponsors">sponsors page</a>.</li>
 </ul>');
   t('Help the attendees find the right location by providing a link to a map, for example <a href="http://maps.google.com/">Google Maps</a>.');
+  t('How many non-registered guests are coming?<br>
+This will be added to the attendee count on the event page.');
+  t('How many people attended?');
   t('Image');
   t('Include any additional information you want to provide to members only when they are waitlisted.<br>
 This will be displayed to the member on the event page and included in the automatic waitlist notification email.
@@ -1132,6 +1266,7 @@ This will be displayed to the member on the event page and included in the autom
   t('Map link');
   t('Message When Registered');
   t('Message When Waitlisted');
+  t('Non-registered Guests');
   t('Organizer');
   t('Partner Event');
   t('Provide a link to the page with the RSVP (ie: http://www.eventbrite.com/e/your-event-url)');
@@ -1139,6 +1274,7 @@ This will be displayed to the member on the event page and included in the autom
   t('RSVP link');
   t('Select the chapter associated with the event.');
   t('Sponsors');
+  t('This will be displayed on the event page when it\'s a past event.');
   t('This will be used as the main image for the event.
 <br>If you want to be pixel perfect, upload your image sized to 805x453');
   t('Venue name');

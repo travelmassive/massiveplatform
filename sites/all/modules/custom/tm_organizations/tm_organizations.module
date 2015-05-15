@@ -283,7 +283,9 @@ function tm_organizations_preprocess_flag(&$variables) {
 
       // hide when unfollowed
       $( ".flag-follow-organizations .unflag-action").click(function() {
-        $( ".tm-ds-organization-follow-message" ).slideUp();
+        setTimeout(function() {
+          $( ".tm-ds-organization-follow-message" ).slideUp();
+        }, 500); 
       }); 
 
     });
@@ -299,7 +301,9 @@ function tm_organizations_preprocess_flag(&$variables) {
 
       // show when followed
       $( ".flag-follow-organizations .flag-action").click(function() {
-        $( ".tm-ds-organization-follow-message" ).slideDown();
+        setTimeout(function() {
+          $( ".tm-ds-organization-follow-message" ).slideDown();
+        }, 500); 
       }); 
 
     });

@@ -1581,7 +1581,7 @@ function tm_users_views_post_execute(&$view) {
     $view->build_info['title'] = "Community &middot; <a style='color: red;' href='/leaders'>Chapter Leaders</a>";
   }
 
-  if ($view->name == 'leaders') {
+  if ($view->name == 'chapter_leaders') {
     $view->build_info['title'] = "<a href='/community'>Community</a> &middot; Chapter Leaders";
   }
 }

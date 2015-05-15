@@ -36,13 +36,42 @@ function tm_event_signup_ds_fields_info($entity_type) {
 function _tm_event_seats_count($field, $title = NULL) {
   $event = $field['entity'];
   $flag = flag_get_flag('event_register');
-  
-  $count = $flag->get_count($event->nid);
 
+  // External event check  
   $display_external = (isset($event->field_external_rsvp[LANGUAGE_NONE][0]['value']) && $event->field_external_rsvp[LANGUAGE_NONE][0]['value'] !== '0');
 
+  // Registered count
+  $count = $flag->get_count($event->nid);
+
+  // Extra stuff. Add non-registered guests to count
+  $extra_guests_count = 0;
+  if (isset($event->field_event_extra_guests[LANGUAGE_NONE][0]['value'])) {
+    $extra_guests_count = $event->field_event_extra_guests[LANGUAGE_NONE][0]['value'];
+    $count = $count + $extra_guests_count;
+  }
+
+  // Past event
+  if (_tm_event_is_past($event)) {
+    
+    // Extra stuff. Show total attendance
+    if (isset($event->field_event_total_attendance[LANGUAGE_NONE][0]['value'])) {
+      $total_attendance = $event->field_event_total_attendance[LANGUAGE_NONE][0]['value'];
+      return t($total_attendance . " people went.");
+    }
+
+    // RSVP event without total attenance
+    if ($display_external) {
+      return t('Past event');
+    }
+
+    // No total attendance specified
+    return t($count . " people went.");
+  }
+  
+  // Future event...
+
   if ($display_external) {
-    return t('Please RSVP For This Event');
+    return t('Please RSVP For This Event.');
   }
 
   if ($count == 0) {
@@ -63,6 +92,11 @@ function _tm_event_seats_count($field, $title = NULL) {
   if ($count == 1) {
     $count_text = "person is going";
   }
+
+  // If extra guests show them
+  /*if ($extra_guests_count > 0) {
+    $count_text .= " (" . $extra_guests_count . ' guests)';
+  }*/
 
   if (isset($event->field_signup_limit[LANGUAGE_NONE][0]['value'])) {
     $limit = $event->field_signup_limit[LANGUAGE_NONE][0]['value'];
@@ -185,6 +219,7 @@ function tm_event_signup_preprocess_flag(&$variables) {
   
 }
 
+
 /**
  * Checks if the current user can join the event with the given nid.
  * In order to signup, the signup limit can't be reached and the event
@@ -222,16 +257,8 @@ function _tm_event_display_flag($nid) {
   }
   
   // Check if the event has already happened
-  if (isset($event->field_event_date[LANGUAGE_NONE][0]['value2'])) {
-    
-    $timezone = _tm_get_event_timezone($event);
-    $event_date = new DateTime($event->field_event_date[LANGUAGE_NONE][0]['value2'], new DateTimeZone($timezone));
-
-    $now = new DateTime('now', new DateTimeZone($timezone));
-
-    if ($event_date < $now) {
-      return 'show_closed';
-    }
+  if (_tm_event_is_past($event)) {
+    return 'show_closed';
   }
 
   // Check signup limit.
@@ -261,3 +288,26 @@ function _tm_event_display_flag($nid) {
     return 'show_register';
   }
 }
+
+/** 
+ * Helper method to determine if event has happened
+ */
+function _tm_event_is_past($event) {
+
+  // Check if the event has already happened
+  if (isset($event->field_event_date[LANGUAGE_NONE][0]['value2'])) {
+    
+    $timezone = _tm_get_event_timezone($event);
+    $event_date = new DateTime($event->field_event_date[LANGUAGE_NONE][0]['value2'], new DateTimeZone($timezone));
+
+    $now = new DateTime('now', new DateTimeZone($timezone));
+
+    // past event
+    if ($event_date < $now) {
+      return true;
+    }
+  }
+
+  return false;
+}
+

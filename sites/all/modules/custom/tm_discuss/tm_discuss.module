@@ -14,7 +14,7 @@ Install Vanilla
 - Download http://vanillaforums.org/addon/jsconnect-plugin
 - Download http://vanillaforums.org/addon/jsconnectautosignin-plugin
 - Visit /discussions in web browser and install vanilla
-- Setup jsconnect plugin
+- Setup jsconnect plugin (set Authenticate URL to /orchid/jsconnect)
 - In jsconnect plugin set "This is trusted connection and can sync roles & permissions."
 - In jsconnect plugin set "Make this connection your default signin method."
 - Add roles for chapter leader, non-validated, moderator, approved user, administrator (to sync)

@@ -74,7 +74,7 @@ function tm_events_strongarm() {
           'weight' => '3',
         ),
         'path' => array(
-          'weight' => '9',
+          'weight' => '10',
         ),
         'redirect' => array(
           'weight' => '5',

@@ -30,7 +30,19 @@ function tm_base_menu() {
     'file path' => drupal_get_path('module', 'system'),
   );
 
+  // Fake blog item so we can add a menu item
+  $items['blog'] = array(
+      'title' => '',
+      'page callback' => 'tm_base_blog',
+      'access arguments' => array('access content')
+   );
+
   return $items;
+}
+
+// Placeholder for blog so we can add menu item
+function tm_base_blog() {
+  return;
 }
 
 /**

@@ -44,24 +44,24 @@ function tm_base_menu_default_menu_links() {
     'weight' => -46,
     'customized' => 1,
   );
-  // Exported menu link: main-menu_discuss:https:/discuss/
-  $menu_links['main-menu_discuss:https:/discuss/'] = array(
+  // Exported menu link: main-menu_discuss:discuss/
+  $menu_links['main-menu_discuss:discuss/'] = array(
     'menu_name' => 'main-menu',
-    'link_path' => 'https:/discuss/',
-    'router_path' => '',
+    'link_path' => 'discuss/',
+    'router_path' => 'discuss',
     'link_title' => 'Discuss',
     'options' => array(
+      'identifier' => 'main-menu_discuss:discuss/',
       'attributes' => array(),
       'item_attributes' => array(
         'id' => '',
         'class' => '',
         'style' => '',
       ),
-      'identifier' => 'main-menu_discuss:https:/discuss/',
     ),
     'module' => 'menu',
     'hidden' => 0,
-    'external' => 1,
+    'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
     'weight' => -45,
@@ -101,24 +101,24 @@ function tm_base_menu_default_menu_links() {
     'weight' => -47,
     'customized' => 1,
   );
-  // Exported menu link: main-menu_news:https:/blog/
-  $menu_links['main-menu_news:https:/blog/'] = array(
+  // Exported menu link: main-menu_news:blog/
+  $menu_links['main-menu_news:blog/'] = array(
     'menu_name' => 'main-menu',
-    'link_path' => 'https:/blog/',
-    'router_path' => '',
+    'link_path' => 'blog/',
+    'router_path' => 'blog',
     'link_title' => 'News',
     'options' => array(
+      'identifier' => 'main-menu_news:blog/',
       'attributes' => array(),
       'item_attributes' => array(
         'id' => '',
         'class' => '',
         'style' => '',
       ),
-      'identifier' => 'main-menu_news:https:/blog/',
     ),
     'module' => 'menu',
     'hidden' => 0,
-    'external' => 1,
+    'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
     'weight' => -44,

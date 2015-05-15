@@ -126,26 +126,6 @@ function tm_base_strongarm() {
         'unused' => '1',
         'field_type' => 'entityreference',
       ),
-      'field_event_sponsors' => array(
-        'referenced' => array(
-          'view' => array(
-            'view' => 'view',
-          ),
-          'update' => array(
-            'view' => 'view',
-          ),
-          'delete' => array(
-            'view' => 'view',
-          ),
-        ),
-        'author' => array(
-          'view' => 'view',
-        ),
-        'all' => array(
-          'view' => 'view',
-        ),
-        'field_type' => 'entityreference',
-      ),
     ),
   );
   $export['nodeaccess_nodereference'] = $strongarm;
@@ -155,7 +135,7 @@ function tm_base_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'nodeaccess_nodereference_cross_access';
   $strongarm->value = array(
-    'view' => TRUE,
+    'view' => FALSE,
     'update' => FALSE,
     'delete' => FALSE,
   );

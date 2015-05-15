@@ -120,14 +120,14 @@ function _tm_event_seats_count($field, $title = NULL) {
           return t($waitlist_count . ' on the waitlist.<br>');
         } else {
           // ie: 5 people are going, 3 on waitlist
-          return t($count . ' ' . $count_text . '.<br>' . $waitlist_count . ' on the waitlist<br>');
+          return t($count . ' ' . $count_text . '<br>' . $waitlist_count . ' on the waitlist<br>');
         }
       } else {
-        return t($count . ' ' . $count_text . '.<br>This event is full<br>');
+        return t($count . ' ' . $count_text . '<br>This event is full<br>');
       }
     }
     
-    return t($count . ' ' . $count_text . '.<br>' . $left . ' ' . $left_text);
+    return t($count . ' ' . $count_text . '<br>' . $left . ' ' . $left_text);
   }
   
   // No signup limit, must say how many people are going

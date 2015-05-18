@@ -123,7 +123,6 @@
           $(view).waypoint(function(event, direction) {
             $(".pager-next.first.last a").text("Loading more...");
             views_more_autoload_count = views_more_autoload_count + 1;
-            console.log(views_more_autoload_count);
             if (views_more_autoload_count <= views_more_autoload_max) {
               $(view).click();
             } else {

@@ -1,0 +1,79 @@
+<?php
+/**
+ * @file
+ *
+ *
+ *
+ * @author Kálmán Hosszu - hosszu.kalman@gmail.com - http://www.kalman-hosszu.com
+ */
+
+/* ====================== */
+/* ==== DRUPAL HOOKS ==== */
+/* ====================== */
+
+/**
+ * Implement of hook_menu().
+ *
+ * @return
+ *   An array of menu items.
+ */
+function waypoints_menu() {
+  $items = array();
+
+  $items['admin/config/user-interface/waypoints'] = array(
+    'title' => 'jQuery Waypoints',
+    'description' => 'Configure Waypoints module.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('waypoints_settings_form'),
+    'access arguments' => array('configure waypoints module'),
+    'file' => 'includes/waypoints.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implement of hook_permission().
+ *
+ * @return array
+ *   An array of valid permissions for the browserclass module
+ */
+function waypoints_permission() {
+  return array(
+    'configure waypoints module' => array(
+      'title' => 'Configure jQuery Waypoints module',
+      'description' => 'Configure jQuery Waypoints module, set JavaScript operation.',
+      'restrict access' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Implement of hook_init().
+ */
+function waypoints_init() {
+  if (variable_get('waypoints_always_add_js')) {
+    drupal_add_library('waypoints', 'waypoints');
+  }
+}
+
+/**
+ * Implement hook_library().
+ *
+ * @return array
+ *   An array defining libraries associated with a module.
+ */
+function waypoints_library() {
+  $libraries = array();
+
+  $libraries['waypoints'] = array(
+    'title' => 'jQuery Waypoints',
+    'website' => 'http://imakewebthings.github.com/jquery-waypoints/',
+    'version' => '1.0.2',
+    'js' => array(
+      drupal_get_path('module', 'waypoints') . '/waypoints.min.js' => array(),
+    ),
+  );
+
+  return $libraries;
+}

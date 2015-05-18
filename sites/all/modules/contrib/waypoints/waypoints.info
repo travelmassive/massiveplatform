@@ -1,0 +1,13 @@
+name = jQuery waypoints
+description = Add jQuery Waypoints plugin to the site
+core = 7.x
+files[] = waypoints.module
+package = User interface
+
+configure = admin/config/user-interface/waypoints
+; Information added by drupal.org packaging script on 2011-04-21
+version = "7.x-1.0"
+core = "7.x"
+project = "waypoints"
+datestamp = "1303377116"
+

@@ -187,9 +187,14 @@ function theme_embed_vanilla(){
   return '<script type="text/javascript" src="'.$vanilla_root.'/plugins/embedvanilla/remote.js"></script>';
 }
 
-function orchid_user_logout($account){
-  setcookie('Vanilla',' ',time()-3600,'/','localdev.travelmassive.com');
-  setcookie('Vanilla-ConnectFlood',' ',time()+1,'/','localdev.travelmassive.com');
+/*
+ * Signout from vanilla when user logs out
+ * see: https://www.drupal.org/node/1691392
+ */
+function orchid_user_logout($account) {
+  global $conf;
+  setcookie('Vanilla',' ',time()-3600,'/',$_SERVER['SERVER_NAME']);
+  setcookie('Vanilla-ConnectFlood',' ',time()+1,'/',$_SERVER['SERVER_NAME']);
   unset($_COOKIE['Vanilla']);
   unset($_COOKIE['Vanilla-ConnectFlood']);
 }

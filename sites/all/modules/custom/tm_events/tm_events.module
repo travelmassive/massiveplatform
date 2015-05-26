@@ -252,8 +252,9 @@ function _tm_next_event($field, $title = NULL) {
       // Create datetime object and ensure UTC timezone, instead of user-defined timezone.
       $event_timezone = _tm_get_event_timezone($next_event);
       $event_datetime = new DateTime($event_date[0]['value'], new DateTimeZone($event_timezone));
-      $time_until = format_interval($event_datetime->format('U') - $current_date->format('U'), 2);
-      if ($time_until == "0 sec") {
+      //$time_until = format_interval($event_datetime->format('U') - $current_date->format('U'), 2);
+      $time_until = _tm_event_time_elapsed($event_datetime->format('U') - $current_date->format('U'));
+      if ($time_until == "0 seconds") {
         return "Event now";
       }
     }
@@ -275,9 +276,33 @@ function _tm_next_event($field, $title = NULL) {
 
     // show time to next event
     // if no event, then display number of members in chapter
-    return $time_until ? t('Event in @time.', array('@time' => $time_until)) : t($no_event_text);
+    return $time_until ? t('Event in @time', array('@time' => $time_until)) : t($no_event_text);
     }
 
+}
+
+function _tm_event_time_elapsed($elapsed) {
+    $etime = $elapsed;
+
+    if ($etime < 1) {
+        return '0 seconds';
+    }
+
+    $a = array(12 * 30 * 24 * 60 * 60 => 'year',
+        30 * 24 * 60 * 60 => 'month',
+        24 * 60 * 60 => 'day',
+        60 * 60 => 'hour',
+        60 => 'min',
+        1 => 'sec'
+    );
+
+    foreach ($a as $secs => $text) {
+        $d = $etime / $secs;
+        if ($d >= 1) {
+            $r = round($d);
+            return $r . ' ' . $text . ($r > 1 ? 's' : ''); // . ' from now';
+        }
+    }
 }
 
 

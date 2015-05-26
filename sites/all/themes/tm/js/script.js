@@ -394,6 +394,42 @@ Drupal.behaviors.base_scripts = {
     });
   }
 
+  // prompt if user can request approval
+  // allow a 30 minute wait time if user opts for "not yet"
+  jq_prompt_request_approval = function(uid) {
+
+    var current_user_score = $('#current_user_score').val();
+
+    // if user has previouslly chosen "No, not yet" then don't show
+    if ($.cookie("Drupal.visitor.dont_request_approval")) {
+      return;
+    }
+
+    $.prompt({
+      state0: {
+        title: 'Would you like to request approval?',
+        html: 'Your profile is now ' + current_user_score + '% complete and we can review your account.',
+        buttons: { "Yes, request approval": true, "No, not yet": false },
+        //focus: 1,
+        submit:function(e,v,m,f){
+          if(v){
+            e.preventDefault();
+            $.prompt.close();
+            jq_request_approval(uid);
+            return false;
+          } else {
+            // set not to request for next 30 minutes
+            var date = new Date();
+            var minutes = 30;
+            date.setTime(date.getTime() + (minutes * 60 * 1000));
+            $.cookie("Drupal.visitor.dont_request_approval", 1, { expires : date });
+          }
+          $.prompt.close();
+        }
+      }
+    });
+  }
+
   jq_approval_already_requested = function() {
     jq_alert(null, "Please allow 12-24 hours for a Chapter Leader to review your account.<br><br>Our community is important to us, so please ensure you\'ve filled out your profile so we can approve you.<br><br>If your account has not been approved please <a href='/contact'>contact us</a> so we can assist you.");
   }

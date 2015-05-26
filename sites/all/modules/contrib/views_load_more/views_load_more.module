@@ -32,6 +32,7 @@ function views_load_more_theme() {
  * Implements hook_views_ajax_data_alter().
  */
 function views_load_more_views_ajax_data_alter(&$commands, $view) {
+
   // Support No results behavior.
   if (!$view->total_rows) {
     return;

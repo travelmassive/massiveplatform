@@ -1586,4 +1586,79 @@ function tm_users_views_post_execute(&$view) {
   }
 }
 
-?>
+
+// Hook user_update
+// Check if user had edited profile and saved it
+// If so, set $_SESSION["tm_account_changed"] to true
+// This can be picked up in tm_users_account_menu.tpl.php for further actions
+function tm_users_user_update(&$edit, $account, $category) {
+
+  global $user;
+
+  // Make sure we are editing our own account
+  if ($user->uid != $account->uid) {
+    return;
+  }
+
+  // Compare new and original fields that start with "field_"
+  $different_fields = array();
+  foreach ($edit as $key => $value) {
+
+    if (strpos($key, "field_") === 0) {
+
+      // get new and original field values
+      $new_value = _tm_users_get_field_value($value);
+      $orig_value = _tm_users_get_field_value($account->original->$key);
+      
+      // check if fields are different
+      if ($new_value != $orig_value) {
+        $different_fields[] = $key;
+      }
+
+    }
+  }  
+
+  // Did we update the account?
+  if (sizeof($different_fields) > 0) {
+    $_SESSION['tm_account_changed'] = true;
+  } else {
+    $_SESSION['tm_account_changed'] = false;
+  }
+
+}
+
+
+// Helper method to get field value for comparison
+// Used in tm_users_user_update
+function _tm_users_get_field_value($field) {
+
+  // empty value
+  if (sizeof($field) == 0) {
+    return ""; 
+  }
+
+  // empty value
+  if (sizeof($field[LANGUAGE_NONE]) == 0) {
+    return "";
+  }
+ 
+  // text value
+  if (isset($field[LANGUAGE_NONE][0]['value'])) {
+    return $field[LANGUAGE_NONE][0]['value'];
+  }
+
+  // url value
+  if (isset($field[LANGUAGE_NONE][0]['url'])) {
+    return $field[LANGUAGE_NONE][0]['url'];
+  }
+
+  // file value
+  if (isset($field[LANGUAGE_NONE][0]['fid'])) {
+    return $field[LANGUAGE_NONE][0]['fid'];
+  }
+
+  // unkown type
+  return null;
+
+}
+

@@ -170,3 +170,50 @@ print l(t('Approve my account'), 'javascript:jq_request_approval(' . $loaded->ui
   <?php endif; ?>
 
 </div>
+
+<?php 
+
+// Prompt user to request approval.
+// Conditions:
+// 1. User is not approved
+// 2. User score > 50
+// 3. User account has changed
+// 4. User is not flagged as requested approval
+// 5. (in jq_prompt_request_approval) user has not clicked "not yet" in past day
+// Then show a prompt to request approval of account
+
+$tm_account_changed = false;
+$tm_account_changed_set = false;
+if (isset($_SESSION["tm_account_changed"])) {
+  $tm_account_changed_set = true;
+  $tm_account_changed = $_SESSION["tm_account_changed"];
+}
+
+// show last time request info was flagged
+$who_flagged = flag_get_entity_flags("user", $loaded->uid, "approval_requested_by_user");
+$user_requested_approval = (sizeof($who_flagged) > 0);
+
+if ((!in_array("approved user", $loaded->roles)) 
+  and ($user_score > 50) 
+  and ($tm_account_changed)
+  and (!$user_requested_approval)) {
+    
+      // add cookie library  
+      drupal_add_library('system', 'jquery.cookie');
+
+      // Load the prompt
+      drupal_add_js("jQuery(document).ready(function($) {
+          setTimeout(function(){
+            if (typeof jq_prompt_request_approval == 'function') { 
+              jq_prompt_request_approval(" . $loaded->uid . ");
+            }
+          }, 1000);
+          });
+        ", "inline");
+} 
+
+//  unset account changed session
+if ($tm_account_changed_set) {
+  unset($_SESSION["tm_account_changed"]);
+}
+?>

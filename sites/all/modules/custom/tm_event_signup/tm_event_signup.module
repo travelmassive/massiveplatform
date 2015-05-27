@@ -67,7 +67,7 @@ function _tm_event_seats_count($field, $title = NULL) {
 
     // Nobody came, wtf? :(
     if ($count == 0) {
-      return "Past event";
+      return t("Past event");
     }
 
     // No total attendance specified

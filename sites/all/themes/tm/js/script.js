@@ -595,6 +595,45 @@ Drupal.behaviors.base_scripts = {
     $("#account_menu_moderator_actions_items").show();
   }
 
+  
 
 });})(jQuery, Drupal, this, this.document);
+
+
+// front page video controls
+(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function() {
+
+  tm_frontpage_video_play = function() {
+    var video_instance = $(document.body).data('vide');
+    video_instance.getVideoObject().play();
+  }
+
+  tm_frontpage_video_pause = function() {
+    var video_instance = $(document.body).data('vide');
+    video_instance.getVideoObject().pause();
+  }
+
+  // handlers if front page video showing and not mobile
+  if ($('#tm-frontpage-video-controls').length && !(isMobileDevice())) {
+
+    // click handler for pause
+    $(".tm-frontpage-video-pause").click(function() { 
+      $(".tm-frontpage-video-pause").hide();
+      $(".tm-frontpage-video-play").show();
+      tm_frontpage_video_pause();
+    });
+
+    // click handler for play
+    $(".tm-frontpage-video-play").click(function() { 
+      $(".tm-frontpage-video-pause").show();
+      $(".tm-frontpage-video-play").hide();
+      tm_frontpage_video_play();
+    });
+
+    // show video controls after 5 seconds
+    $("#tm-frontpage-video-controls").delay(5000).fadeIn();
+  }
+
+});})(jQuery, Drupal, this, this.document);
+
 

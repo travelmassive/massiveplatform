@@ -1,6 +1,7 @@
 <?php global $user;
 // Only a loaded user has values for the fields.
 $loaded = user_load($user->uid);
+$user_score = 0;
 if (empty($loaded->field_avatar)) {
   // It is not possible to get an imagefield default value
   // using the standard default function. Load the file instead.

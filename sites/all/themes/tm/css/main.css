@@ -2832,7 +2832,7 @@ tr.selected td {
 /* line 803, ../sass/components/_misc.scss */
 .progress .filled {
   background-color: #0072b9;
-  background-image: url('../images/progress.gif?1430725689');
+  background-image: url('../images/progress.gif?1433387335');
 }
 
 /* ==========================================================================
@@ -2890,12 +2890,12 @@ Icons
 
 /* line 25, ../sass/_type.scss */
 .icon, .icon-medal, .contained-block .detail-item.tm-ds-tm-sponsor:before, .icon-move, .draggable a.tabledrag-handle:before, .icon-briefcase, .contained-block .detail-item.field-segment:before, .icon-bubble, .contained-block .detail-item.field-qa:before, .contained-block .detail-item.qa:before, .icon-s-new-window, .bttn.external:before, .bttn-group a.external:before, .page-search .tabs-primary a.external:before, .pager li a.external:before, .pager .external.pager-current:before, .views-exposed-form .external.form-type-select:before, .external.twitter-login:before,
-.form-submit.external:before, .icon-instagram, #foot-nav .instagram:before, .contained-block .detail-item.field-link-instagram:before, .icon-users, .icon-user, #prime-nav .account-wrapper .toggle:before, .icon-twitter, #foot-nav .twitter:before, .contained-block .detail-item.field-link-twitter:before, .twitter-login:before, .icon-triangle-up, .dropd:before, .icon-triangle-right, .icon-triangle-left, .icon-triangle-down, .icon-trash-bin, .icon-tick, .icon-subtract, .icon-star, .icon-spinner, .icon-share, .icon-share-reg, .icon-search-r, #prime-nav .search-wrapper .toggle:before, .icon-search-l, .icon-s-triangle-up, .icon-s-triangle-right, .icon-s-triangle-left, .icon-s-triangle-down, .icon-s-tick, .bttn.follow.on:before, .bttn-group a.follow.on:before, .page-search .tabs-primary a.follow.on:before, .pager li a.follow.on:before, .pager .follow.on.pager-current:before, .views-exposed-form .follow.on.form-type-select:before, .follow.on.twitter-login:before, .bttn.follow.flagged:before, .bttn-group a.follow.flagged:before, .page-search .tabs-primary a.follow.flagged:before, .pager li a.follow.flagged:before, .pager .follow.flagged.pager-current:before, .views-exposed-form .follow.flagged.form-type-select:before, .follow.flagged.twitter-login:before,
+.form-submit.external:before, .icon-instagram, #foot-nav .instagram:before, .contained-block .detail-item.field-link-instagram:before, .icon-users, .icon-user, #prime-nav .account-wrapper .toggle:before, .icon-twitter, #foot-nav .twitter:before, .contained-block .detail-item.field-link-twitter:before, .twitter-login:before, .icon-triangle-up, .dropd:before, .icon-triangle-right, .icon-triangle-left, .icon-triangle-down, .icon-trash-bin, .icon-tick, .icon-subtract, .icon-star, .icon-spinner, .icon-share, .icon-share-reg, .icon-search-r, #prime-nav .search-wrapper .toggle:before, .icon-search-l, .icon-s-triangle-up, .icon-s-triangle-right, .tm-frontpage-video-pause:before, .icon-s-triangle-left, .icon-s-triangle-down, .icon-s-tick, .bttn.follow.on:before, .bttn-group a.follow.on:before, .page-search .tabs-primary a.follow.on:before, .pager li a.follow.on:before, .pager .follow.on.pager-current:before, .views-exposed-form .follow.on.form-type-select:before, .follow.on.twitter-login:before, .bttn.follow.flagged:before, .bttn-group a.follow.flagged:before, .page-search .tabs-primary a.follow.flagged:before, .pager li a.follow.flagged:before, .pager .follow.flagged.pager-current:before, .views-exposed-form .follow.flagged.form-type-select:before, .follow.flagged.twitter-login:before,
 .form-submit.follow.on:before,
 .form-submit.follow.flagged:before, .form-submit:before, .messages.status:before, .status.messages--status:before, .status.messages--warning:before, .status.messages--error:before, .icon-s-subtract, .icon-s-cancel, .icon-s-arr-up, .icon-s-arr-right, .cta-inline:after, .contained-block .detail-item .detail-venue-link a:after, .contained-block .more-link a:after, #foot-nav a:before, .icon-s-arr-left, .icon-s-arr-down, .bttn-dropdown:after, html.js .collapsible .fieldset-legend a:after, .views-exposed-form .form-type-select:after, .icon-s-add, .bttn.follow:before, .bttn-group a.follow:before, .page-search .tabs-primary a.follow:before, .pager li a.follow:before, .pager .follow.pager-current:before, .views-exposed-form .follow.form-type-select:before, .follow.twitter-login:before,
 .form-submit.follow:before, .icon-refresh, .icon-phone, .icon-pencil, .bttn.edit:before, .bttn-group a.edit:before, .page-search .tabs-primary a.edit:before, .pager li a.edit:before, .pager .edit.pager-current:before, .views-exposed-form .edit.form-type-select:before, .edit.twitter-login:before,
 .form-submit.edit:before, .icon-my-location, .icon-mobile, .icon-menu, #prime-nav .browse-wrapper .toggle:before, .icon-map, .icon-map-marker, .contained-block .detail-item.field-location:before, .contained-block .detail-item.location:before, .icon-list, .icon-linkedin, #foot-nav .linkedin:before, .contained-block .detail-item.field-link-linkedin:before, .icon-image, .icon-home, .icon-history, .icon-grid, .icon-google-plus, .icon-globe, .contained-block .detail-item.field-link-website:before, .icon-github, .icon-flickr, .icon-feed, .icon-facebook, #foot-nav .facebook:before, .contained-block .detail-item.field-link-facebook:before, .icon-expand, .icon-email, .icon-download, .icon-disc-cancel, .icon-description, .contained-block .detail-item.field-about-me:before, .contained-block .detail-item.about-me:before, .contained-block .detail-item.body:before, .icon-cog, .bttn.settings:before, .bttn-group a.settings:before, .page-search .tabs-primary a.settings:before, .pager li a.settings:before, .pager .settings.pager-current:before, .views-exposed-form .settings.form-type-select:before, .settings.twitter-login:before,
-.form-submit.settings:before, .icon-clock, .contained-block .detail-item.field-date-event:before, .icon-circle-warning, .messages.warning:before, .warning.messages--status:before, .warning.messages--warning:before, .warning.messages--error:before, .icon-circle-success, .icon-circle-question, .icon-circle-play, .icon-circle-info, .contained-block .detail-item.tm-ds-event-message:before, .icon-circle-error, .messages.error:before, .error.messages--status:before, .error.messages--warning:before, .error.messages--error:before, .icon-cancel, .icon-arr-up, .icon-arr-tail-up, .icon-arr-tail-right, .icon-arr-tail-left, .icon-arr-tail-down, .icon-arr-right, .icon-arr-right-last, .icon-arr-left, .icon-arr-left-first, .icon-arr-down, .icon-add, .icon-connection, .contained-block .detail-item.tm-ds-connection-actions:before, .contained-block .detail-item.tm-ds-organization-follow-message:before, [class^="icon-"], [class*=" icon-"] {
+.form-submit.settings:before, .icon-clock, .contained-block .detail-item.field-date-event:before, .icon-circle-warning, .messages.warning:before, .warning.messages--status:before, .warning.messages--warning:before, .warning.messages--error:before, .icon-circle-success, .icon-circle-question, .icon-circle-play, .tm-frontpage-video-play:before, .icon-circle-info, .contained-block .detail-item.tm-ds-event-message:before, .icon-circle-error, .messages.error:before, .error.messages--status:before, .error.messages--warning:before, .error.messages--error:before, .icon-cancel, .icon-arr-up, .icon-arr-tail-up, .icon-arr-tail-right, .icon-arr-tail-left, .icon-arr-tail-down, .icon-arr-right, .icon-arr-right-last, .icon-arr-left, .icon-arr-left-first, .icon-arr-down, .icon-add, .icon-connection, .contained-block .detail-item.tm-ds-connection-actions:before, .contained-block .detail-item.tm-ds-organization-follow-message:before, [class^="icon-"], [class*=" icon-"] {
   font-family: 'tm-icons';
   speak: none;
   font-style: normal;
@@ -3024,7 +3024,7 @@ Icons
 }
 
 /* line 130, ../sass/_type.scss */
-.icon-s-triangle-right {
+.icon-s-triangle-right, .tm-frontpage-video-pause:before {
   content: "\e612";
 }
 
@@ -3234,7 +3234,7 @@ Icons
 }
 
 /* line 294, ../sass/_type.scss */
-.icon-circle-play {
+.icon-circle-play, .tm-frontpage-video-play:before {
   content: "\e63b";
 }
 
@@ -7259,6 +7259,58 @@ select:disabled {
   border-left: 4px solid #4382af;
   padding-left: 0.5rem;
   margin-top: 1rem !important;
+}
+
+/* Front page video controls */
+/* line 713, ../sass/_single.scss */
+#tm-frontpage-video-controls {
+  padding-top: 2px;
+  position: absolute;
+  top: 96px;
+  left: 24px;
+  background-color: #fff;
+  opacity: 0.9;
+  border-radius: 2px;
+  font-size: 10pt;
+  padding-left: 0px;
+  padding-right: 8px;
+  display: none;
+}
+
+/* line 726, ../sass/_single.scss */
+#tm-frontpage-video-info {
+  margin-top: -1px;
+  float: right;
+}
+
+/* line 730, ../sass/_single.scss */
+#tm-frontpage-video-buttons {
+  float: left;
+}
+
+/* line 734, ../sass/_single.scss */
+.tm-frontpage-video-play {
+  display: inline-block;
+  padding-left: 4px;
+  padding-right: 4px;
+  display: none;
+}
+
+/* line 735, ../sass/_single.scss */
+.tm-frontpage-video-pause {
+  display: inline-block;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+/* line 736, ../sass/_single.scss */
+.tm-frontpage-video-play:hover {
+  color: #888;
+}
+
+/* line 737, ../sass/_single.scss */
+.tm-frontpage-video-pause:hover {
+  color: #888;
 }
 
 /* line 2, ../sass/_login.scss */

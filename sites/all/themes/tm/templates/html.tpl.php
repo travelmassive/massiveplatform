@@ -80,7 +80,7 @@
   <body class="<?php print $classes; ?>" <?php print $attributes;?> <?php if ($is_front) { print($bg_video_body_attributes); } ?>>
     
   <?php if (($is_front) && (@isset($conf["tm_background_bg_title"]))) { ?>
-    <div id="tm-frontpage-video-controls">
+    <div id="tm-frontpage-video-controls" style="display:none;">
       <div id="tm-frontpage-video-buttons"><span class="tm-frontpage-video-pause"></span><span class="tm-frontpage-video-play"></span></div>
       <div id="tm-frontpage-video-info">Now playing: <a <?php if ($conf["tm_background_bg_link_ext"]) {?>target="_blank" <?php }?> href="<?php print($conf["tm_background_bg_link_url"]);?>"><?php print($conf["tm_background_bg_title"]);?></a>
       </div>

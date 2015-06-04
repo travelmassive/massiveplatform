@@ -635,7 +635,7 @@ $conf['tm_background_bg'] = true;
 $conf['tm_background_bg_title'] = "NYC Travel Massive";
 $conf['tm_background_bg_link_url'] = "/chapters/new-york-city";
 $conf['tm_background_bg_link_ext'] = false; // load external
-$conf['tm_background_bg_mp4_external_url'] = "http://player.vimeo.com/external/129766268.hd.mp4?s=759daa867154be27e52a57d4d147073f&profile_id=113";
+$conf['tm_background_bg_mp4_external_url'] = "https://player.vimeo.com/external/129766268.hd.mp4?s=759daa867154be27e52a57d4d147073f&profile_id=113";
 
 /** MESSAGING Options **/
 /** Allow approved members to message each other via email if they follow each other **/

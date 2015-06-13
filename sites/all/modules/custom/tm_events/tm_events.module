@@ -568,7 +568,7 @@ function tm_events_communication_form($event){
         $prefill .= "<li>Sponsors: " . implode(", ", $sponsor_links) . "</li>";
     }
 
-    $prefill .= "<li>" . t('RSVP and Info').': <a href="' . $event_url . '">' . $event_url .'</a>'; 
+    $prefill .= "<li>" . t('RSVP here').': <a href="' . $event_url . '">' . $event_url .'</a>'; 
     $prefill .= "</ul>";
     if ($event->body != null) {
       // add line breaks
@@ -911,27 +911,6 @@ function tm_events_rsvp_form($event){
 
   if ($event){
 
-    $options['rsvp'] = t('RSVP');  
-    $options['waitlist'] = t('Waitlist');  
-    $options['remove'] = t('Not attending');  
-
-    $form['status'] = array(
-      '#type' =>'select',
-      '#options' => $options,
-      '#title' => t('Change status'),
-      );
-
-    $form['eventid'] = array(
-      '#type' =>'hidden',
-      '#value' => $event->nid,
-      );
-
-    $form['submit_button'] = array(
-      '#type' => 'submit',
-      '#value' => t('Update'),
-      '#id' => 'edit-submit'  
-    );
-    
     // list of users, each with checkbox
     $users = db_select('flagging', 'f')
           ->fields('f')
@@ -952,15 +931,38 @@ function tm_events_rsvp_form($event){
         '<span class="tmeventuser">'.tm_events_username($account).'</span>'.
         '<span class="tmeventstatus">'.tm_events_status($user['fid']).' <span class="tmeventstime">'.$flagged_time.'</span> | <span class="tmeventslink"><a target="_blank" href="/' . $profile_url . '">view profile</a></span></span>';
     }
+
     $form['userlist'] = array(
       '#type' =>'checkboxes',
       '#options' => $useroptions,
       '#title' => t('Attendees'),
       );
+    
+    $options['rsvp'] = t('RSVP');  
+    $options['waitlist'] = t('Waitlist');  
+    $options['remove'] = t('Not attending');  
+
+    $form['status'] = array(
+      '#type' =>'select',
+      '#options' => $options,
+      '#title' => t('Change status of selected attendees'),
+      );
+
+    $form['eventid'] = array(
+      '#type' =>'hidden',
+      '#value' => $event->nid,
+      );
+
+    $form['submit_button'] = array(
+      '#type' => 'submit',
+      '#value' => t('Update'),
+      '#id' => 'edit-submit'
+    );
+
     $form['download'] = array(
       '#type' => 'markup',
       '#value' => t('Download as CSV'),
-      '#markup' => '<a class="form-submit" href="/download/csv/'.$event->nid.'">'.t('Download as CSV').'</a>',
+      '#markup' => '<div style="margin-top: 24px;"><a class="form-submit" href="/download/csv/'.$event->nid.'">'.t('Download as CSV').'</a></div>',
       );
     $form['notes'] = array(
       '#markup' => '<hr><p style="font-size: smaller;"><b>Notes</b><br>1. Update attendee status (RSVP, Waitlist, Not Attending) by using the <b>Update</b> button to apply your changes to selected attendees. Members will automatically be notified of the change via email.</p><p style="font-size: smaller;">2. Click <b>Download as CSV</b> to download attendee information including name, email and company.</p><p style="font-size: smaller;">3. If you are using a Signup Limit, you need to manually move waitlisted attendees to the RSVP list.<br><br><b>Privacy Note</b><br>We care about privacy so please use CSV data in accordance with our members\' Privacy Terms.</p>'

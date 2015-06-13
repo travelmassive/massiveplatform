@@ -909,6 +909,27 @@ function tm_events_rsvp_form($event){
 
   $form['#prefix'] = l(t('Back to event'),'node/'.$event->nid);
 
+  $options['rsvp'] = t('RSVP');  
+  $options['waitlist'] = t('Waitlist');  
+  $options['remove'] = t('Not attending');  
+
+  $form['status'] = array(
+    '#type' =>'select',
+    '#options' => $options,
+    '#title' => t('Change status of selected attendees'),
+    );
+
+  $form['eventid'] = array(
+    '#type' =>'hidden',
+    '#value' => $event->nid,
+    );
+
+  $form['submit_button'] = array(
+    '#type' => 'submit',
+    '#value' => t('Update'),
+    '#id' => 'edit-submit'
+  );
+
   if ($event){
 
     // list of users, each with checkbox
@@ -937,32 +958,11 @@ function tm_events_rsvp_form($event){
       '#options' => $useroptions,
       '#title' => t('Attendees'),
       );
-    
-    $options['rsvp'] = t('RSVP');  
-    $options['waitlist'] = t('Waitlist');  
-    $options['remove'] = t('Not attending');  
-
-    $form['status'] = array(
-      '#type' =>'select',
-      '#options' => $options,
-      '#title' => t('Change status of selected attendees'),
-      );
-
-    $form['eventid'] = array(
-      '#type' =>'hidden',
-      '#value' => $event->nid,
-      );
-
-    $form['submit_button'] = array(
-      '#type' => 'submit',
-      '#value' => t('Update'),
-      '#id' => 'edit-submit'
-    );
 
     $form['download'] = array(
       '#type' => 'markup',
       '#value' => t('Download as CSV'),
-      '#markup' => '<div style="margin-top: 24px;"><a class="form-submit" href="/download/csv/'.$event->nid.'">'.t('Download as CSV').'</a></div>',
+      '#markup' => '<p><a class="form-submit" href="/download/csv/'.$event->nid.'">'.t('Download as CSV').'</a></p>',
       );
     $form['notes'] = array(
       '#markup' => '<hr><p style="font-size: smaller;"><b>Notes</b><br>1. Update attendee status (RSVP, Waitlist, Not Attending) by using the <b>Update</b> button to apply your changes to selected attendees. Members will automatically be notified of the change via email.</p><p style="font-size: smaller;">2. Click <b>Download as CSV</b> to download attendee information including name, email and company.</p><p style="font-size: smaller;">3. If you are using a Signup Limit, you need to manually move waitlisted attendees to the RSVP list.<br><br><b>Privacy Note</b><br>We care about privacy so please use CSV data in accordance with our members\' Privacy Terms.</p>'

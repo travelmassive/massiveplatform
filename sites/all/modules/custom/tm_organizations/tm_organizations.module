@@ -238,7 +238,6 @@ function tm_fields_organization_follow_message($field) {
 
   if ($field['entity']->type == "organization") {
 
-    $my_uid = $user->uid;
     $node_id = $field['entity']->nid;
 
     // always render following message 

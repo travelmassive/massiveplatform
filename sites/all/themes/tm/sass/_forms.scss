@@ -523,11 +523,17 @@ select {
     border: 1px solid #e8e8e8;
     border-top: none;
   .tmeventuser{
-    width: 60%;
+    width: 50%;
     display: inline-block;
   }
   .tmeventstatus{
-    width: 40%;
+    width: 50%;
+  }
+  .tmeventstime{
+    font-size: smaller;
+    color: #888;
+  }
+  .tmeventslink{
   }
  } 
 }
@@ -573,3 +579,17 @@ select {
   padding-left: 1rem;
 }
 
+#user-cancel-confirm-form #edit-cancel {
+  padding-left: 16px;
+}
+
+.cancel_account_link {
+  float: right;
+  padding-bottom: 0.5rem;
+  font-size: 10pt;
+}
+
+a.cancel_account_link {
+  margin-top: -0.5rem;
+  color: #888;
+}

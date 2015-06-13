@@ -5425,62 +5425,85 @@ select:disabled {
 }
 /* line 525, ../sass/_forms.scss */
 #edit-userlist .form-item .tmeventuser {
-  width: 60%;
+  width: 50%;
   display: inline-block;
 }
 /* line 529, ../sass/_forms.scss */
 #edit-userlist .form-item .tmeventstatus {
-  width: 40%;
+  width: 50%;
+}
+/* line 532, ../sass/_forms.scss */
+#edit-userlist .form-item .tmeventstime {
+  font-size: smaller;
+  color: #888;
 }
 
 /* Signup page */
-/* line 536, ../sass/_forms.scss */
+/* line 542, ../sass/_forms.scss */
 .signup_notice {
   background-color: #D2D5D8;
 }
 
-/* line 540, ../sass/_forms.scss */
+/* line 546, ../sass/_forms.scss */
 .form-item-is-company {
   margin-top: -24px;
   padding-bottom: 16px;
 }
 
-/* line 545, ../sass/_forms.scss */
+/* line 551, ../sass/_forms.scss */
 .form-item-chapter-list {
   padding-bottom: 16px;
 }
 
 /* Company page */
-/* line 550, ../sass/_forms.scss */
+/* line 556, ../sass/_forms.scss */
 .page_notice {
   background-color: #fff;
   color: #4d5966;
   padding-left: 16px;
 }
 
-/* line 556, ../sass/_forms.scss */
+/* line 562, ../sass/_forms.scss */
 .page_notice a {
   color: #213040;
 }
 
-/* line 560, ../sass/_forms.scss */
+/* line 566, ../sass/_forms.scss */
 .page_notice a:hover {
   color: #213040;
 }
 
-/* line 564, ../sass/_forms.scss */
+/* line 570, ../sass/_forms.scss */
 .page_notice a:visited {
   color: #213040;
 }
 
-/* line 568, ../sass/_forms.scss */
+/* line 574, ../sass/_forms.scss */
 .view-content tbody {
   font-size: 0.85rem;
 }
 
-/* line 572, ../sass/_forms.scss */
+/* line 578, ../sass/_forms.scss */
 .view-content td {
   padding-left: 1rem;
+}
+
+/* line 582, ../sass/_forms.scss */
+#user-cancel-confirm-form #edit-cancel {
+  padding-left: 16px;
+}
+
+/* line 586, ../sass/_forms.scss */
+.cancel_account_link {
+  float: right;
+  padding-bottom: 0.5rem;
+  font-size: 10pt;
+}
+
+/* line 592, ../sass/_forms.scss */
+a.cancel_account_link {
+  margin-top: -0.5rem;
+  color: #888;
 }
 
 /* line 4, ../sass/_modules.scss */
@@ -7288,7 +7311,7 @@ select:disabled {
   float: left;
 }
 
-/* line 734, ../sass/_single.scss */
+/* line 733, ../sass/_single.scss */
 .tm-frontpage-video-play {
   display: inline-block;
   padding-left: 4px;
@@ -7296,19 +7319,19 @@ select:disabled {
   display: none;
 }
 
-/* line 735, ../sass/_single.scss */
+/* line 734, ../sass/_single.scss */
 .tm-frontpage-video-pause {
   display: inline-block;
   padding-left: 4px;
   padding-right: 4px;
 }
 
-/* line 736, ../sass/_single.scss */
+/* line 735, ../sass/_single.scss */
 .tm-frontpage-video-play:hover {
   color: #888;
 }
 
-/* line 737, ../sass/_single.scss */
+/* line 736, ../sass/_single.scss */
 .tm-frontpage-video-pause:hover {
   color: #888;
 }

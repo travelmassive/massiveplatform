@@ -160,12 +160,6 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
   $who_flagged = user_load($GLOBALS['user']->uid);
   $profile_url = drupal_get_path_alias("user/" . $who_flagged->uid);
 
-  // If user being moved from waitlist to register, then don't send un-waitlist emails
-  // In tm_events_rsvp_form_submit we set register flag, then unset waitlist flag
-  // So we can use the register flag to determin if this case exists
-  $registered_flag = flag_get_flag('event_register');
-  $registered_for_event = ($registered_flag && $registered_flag->is_flagged($event->nid, $account->uid));
-
   // User Registered for Event
   if (($GLOBALS['user']->uid == $flagging->uid)) {
 
@@ -225,12 +219,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
 
        // waitlist_register_unflag
       if (($flag_or_unflag == "unflag") && ($flag->name == 'event_waitlist')) {
-
-        // check if not registered for event (moving from waitlist to registered)
-        if (!$registered_for_event) {
-          tm_notifications_notify('events_waitlist_unflag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url));
-        }
-        
+        tm_notifications_notify('events_waitlist_unflag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url));
       }
       
     }
@@ -289,7 +278,12 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
   // waitlist_register_unflag
   if (($flag_or_unflag == "unflag") && ($flag->name == 'event_waitlist')) {
 
-    // check if not registered for event (moving from waitlist to registered)
+    // If user being moved from waitlist to register, then don't send un-waitlist emails
+    // In tm_events_rsvp_form_submit we set register flag, then unset waitlist flag
+    // So we can use the register flag to determin if this case exists
+    $registered_flag = flag_get_flag('event_register');
+    $registered_for_event = ($registered_flag && $registered_flag->is_flagged($event->nid, $account->uid));
+
     if (!$registered_for_event) {
       tm_notifications_notify('events_waitlist_unflag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time));
     }

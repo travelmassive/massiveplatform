@@ -54,11 +54,7 @@ function tm_users_user_default_permissions() {
   // Exported permission: 'cancel account'.
   $permissions['cancel account'] = array(
     'name' => 'cancel account',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'authenticated user' => 'authenticated user',
-      'non-validated' => 'non-validated',
-    ),
+    'roles' => array(),
     'module' => 'user',
   );
 

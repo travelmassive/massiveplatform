@@ -1033,8 +1033,8 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_user_question_destination'
-  $field_instances['user-user-field_user_question_destination'] = array(
+  // Exported field_instance: 'user-user-field_user_question_1'
+  $field_instances['user-user-field_user_question_1'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
@@ -1069,7 +1069,7 @@ function tm_users_field_default_field_instances() {
     ),
     'ds_extras_field_template' => '',
     'entity_type' => 'user',
-    'field_name' => 'field_user_question_destination',
+    'field_name' => 'field_user_question_1',
     'label' => 'What is your favorite travel destination?',
     'required' => 0,
     'settings' => array(
@@ -1087,8 +1087,8 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_user_question_dream_travel'
-  $field_instances['user-user-field_user_question_dream_travel'] = array(
+  // Exported field_instance: 'user-user-field_user_question_2'
+  $field_instances['user-user-field_user_question_2'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
@@ -1123,7 +1123,7 @@ function tm_users_field_default_field_instances() {
     ),
     'ds_extras_field_template' => '',
     'entity_type' => 'user',
-    'field_name' => 'field_user_question_dream_travel',
+    'field_name' => 'field_user_question_2',
     'label' => 'Where do you dream of traveling to?',
     'required' => 0,
     'settings' => array(
@@ -1141,8 +1141,8 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_user_question_job'
-  $field_instances['user-user-field_user_question_job'] = array(
+  // Exported field_instance: 'user-user-field_user_question_3'
+  $field_instances['user-user-field_user_question_3'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
@@ -1177,7 +1177,7 @@ function tm_users_field_default_field_instances() {
     ),
     'ds_extras_field_template' => '',
     'entity_type' => 'user',
-    'field_name' => 'field_user_question_job',
+    'field_name' => 'field_user_question_3',
     'label' => 'What was your first travel job?',
     'required' => 0,
     'settings' => array(
@@ -1195,8 +1195,8 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_user_question_learn'
-  $field_instances['user-user-field_user_question_learn'] = array(
+  // Exported field_instance: 'user-user-field_user_question_4'
+  $field_instances['user-user-field_user_question_4'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
@@ -1231,7 +1231,7 @@ function tm_users_field_default_field_instances() {
     ),
     'ds_extras_field_template' => '',
     'entity_type' => 'user',
-    'field_name' => 'field_user_question_learn',
+    'field_name' => 'field_user_question_4',
     'label' => 'What do you want to learn more about?',
     'required' => 0,
     'settings' => array(
@@ -1249,8 +1249,8 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_user_question_why_travel'
-  $field_instances['user-user-field_user_question_why_travel'] = array(
+  // Exported field_instance: 'user-user-field_user_question_5'
+  $field_instances['user-user-field_user_question_5'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
@@ -1285,7 +1285,7 @@ function tm_users_field_default_field_instances() {
     ),
     'ds_extras_field_template' => '',
     'entity_type' => 'user',
-    'field_name' => 'field_user_question_why_travel',
+    'field_name' => 'field_user_question_5',
     'label' => 'Three words that describe why we should travel?',
     'required' => 0,
     'settings' => array(

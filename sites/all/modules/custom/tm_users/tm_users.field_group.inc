@@ -362,11 +362,11 @@ function tm_users_field_group_info() {
     'label' => 'A little more about you',
     'weight' => '32',
     'children' => array(
-      0 => 'field_user_question_destination',
-      1 => 'field_user_question_dream_travel',
-      2 => 'field_user_question_job',
-      3 => 'field_user_question_learn',
-      4 => 'field_user_question_why_travel',
+      0 => 'field_user_question_1',
+      1 => 'field_user_question_2',
+      2 => 'field_user_question_3',
+      3 => 'field_user_question_4',
+      4 => 'field_user_question_5',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -659,11 +659,11 @@ function tm_users_field_group_info() {
     'label' => 'QA',
     'weight' => '17',
     'children' => array(
-      0 => 'field_user_question_destination',
-      1 => 'field_user_question_dream_travel',
-      2 => 'field_user_question_job',
-      3 => 'field_user_question_learn',
-      4 => 'field_user_question_why_travel',
+      0 => 'field_user_question_1',
+      1 => 'field_user_question_2',
+      2 => 'field_user_question_3',
+      3 => 'field_user_question_4',
+      4 => 'field_user_question_5',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(

@@ -71,11 +71,11 @@ class TMUserMigration extends TMBaseMigration {
     $this->addFieldMapping('field_friendly_url','url');
 
     // The profile questions
-    $this->addFieldMapping('field_user_question_destination','q1')->callbacks(array($this, 'removeEmptyData'));
-    $this->addFieldMapping('field_user_question_dream_travel','q2')->callbacks(array($this, 'removeEmptyData'));
-    $this->addFieldMapping('field_user_question_learn','q3')->callbacks(array($this, 'removeEmptyData'));
-    $this->addFieldMapping('field_user_question_job','q4')->callbacks(array($this, 'removeEmptyData'));
-    $this->addFieldMapping('field_user_question_why_travel','q5')->callbacks(array($this, 'removeEmptyData'));
+    $this->addFieldMapping('field_user_question_1','q1')->callbacks(array($this, 'removeEmptyData'));
+    $this->addFieldMapping('field_user_question_2','q2')->callbacks(array($this, 'removeEmptyData'));
+    $this->addFieldMapping('field_user_question_3','q3')->callbacks(array($this, 'removeEmptyData'));
+    $this->addFieldMapping('field_user_question_4','q4')->callbacks(array($this, 'removeEmptyData'));
+    $this->addFieldMapping('field_user_question_5','q5')->callbacks(array($this, 'removeEmptyData'));
 
     // The social link fields
     $this->addFieldMapping('field_link_twitter', 'tw_link')->callbacks(array($this, 'removeEmptyData'));

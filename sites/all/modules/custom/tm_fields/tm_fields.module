@@ -702,7 +702,7 @@ function _tm_more_actions_process($field, $title = NULL) {
   if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
 
     // Don't show flag for chapter leaders or moderators
-    if ((!in_array("moderator", $targetuser->roles)) and (!in_array("chapter leader", $targetuser->roles))) {
+    if ((!in_array("moderator", $targetuser->roles)) and (!in_array("chapter leader", $targetuser->roles)) and (!in_array("administrator", $targetuser->roles))) {
 
       // Show flagging tool if:
       // 1. if user is a moderator or administrator

@@ -176,7 +176,7 @@ __MODERATOR_MESSAGE__
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'tm_notifications__user_moderate_community_guidelines';
+  $strongarm->name = 'tm_notifications__user_approval_community_guidelines';
   $strongarm->value = array(
     'user_label' => 'Notification that user account is non community',
     'default_state' => '1',
@@ -219,7 +219,22 @@ __MODERATOR_MESSAGE__
 ',
     ),
   );
-  $export['tm_notifications__user_moderate_community_guidelines'] = $strongarm;
+  $export['tm_notifications__user_approval_community_guidelines'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'tm_notifications__user_approval_allow_reply_to';
+  $strongarm->value = array(
+    'user_label' => '[Moderation] Allow members that I flag to reply to me',
+    'default_state' => '1',
+    'change_allowed' => 1,
+    'email' => array(
+      'subject' => '',
+      'message' => '',
+    ),
+  );
+  $export['tm_notifications__user_approval_allow_reply_to'] = $strongarm;
 
   return $export;
 }

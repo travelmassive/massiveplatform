@@ -194,6 +194,15 @@ function tm_users_menu() {
     //'access arguments' => array('user_is_logged_in'),
     'type' => MENU_CALLBACK,
   );
+  $items['user/%user/moderate_non_community_profile'] = array(
+    'title' => 'Request approval',
+    'page callback' => 'tm_users_moderate_non_community_profile',
+    'page arguments' => array(1),
+    'access arguments' => array('approve users'),
+    //'access arguments' => array('user_is_logged_in'),
+    'type' => MENU_CALLBACK,
+  );
+
   return $items;
 }
 
@@ -407,6 +416,53 @@ function tm_users_approval_is_company_or_brand($user){
 
   // Notify user
   drupal_set_message("An email has been sent to " . $user->mail . " requesting they personalize their account.");
+
+  drupal_goto(drupal_get_path_alias("user/$user->uid"));
+}
+
+
+/* Profile does not meet community criteria */
+function tm_users_moderate_non_community_profile($user){
+
+  global $conf;
+  $approving_user = $GLOBALS['user'];
+  $role_name = 'approved user'; // The name of the role to add.
+
+  // send notification message to user that their account doesn't meet community guideliens
+  // there doesn't seem to be a hook that can detect we are applying a new role, so do it here
+  $approving_user = user_uid_optional_load();
+  // set profile url (either friendly url or community url)
+  $profile_url = drupal_get_path_alias("user/" . $user->uid);
+
+  $moderator_first_name = $approving_user->field_user_first_name['und'][0]['value'];
+
+  // get moderator message to send to member
+  // add line breaks
+  $moderator_message = trim($_GET["moderator_message"]);
+  $moderator_message_safe = "";
+  if ($moderator_message != "") {
+      $moderator_message_safe = "<br><strong>Message from " . $moderator_first_name . ":</strong> " . check_plain($moderator_message) . "<br>";
+      $moderator_message_safe = str_replace("__NL__", "<br>", $moderator_message_safe); 
+  }
+
+  $community_guidelines_url = $conf["tm_community_guidelines_url"];
+  tm_notifications_notify('user_moderate_community_guidelines', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe, '__COMMUNITY_GUIDELINES_URL__' => $community_guidelines_url));
+
+  // flag the user their profile does not meet community guidelines
+  flag('unflag', 'moderate_non_community_profile', $user->uid, $approving_user);
+  flag('flag', 'moderate_non_community_profile', $user->uid, $approving_user); 
+
+  // set the user to unapproved
+  $role_name = 'approved user'; // The name of the role to remove.
+  if ($role = user_role_load_by_name($role_name)) {
+    user_multiple_role_edit(array($user->uid), 'remove_role', $role->rid);
+  }
+
+  // unflag requested approval (so they can re-request if they already did)
+  flag('unflag', 'approval_requested_by_user', $user->uid, $user);
+
+  // Notify user
+  drupal_set_message("An email has been sent to " . $user->mail . " requesting they address the membership criteria of the community.");
 
   drupal_goto(drupal_get_path_alias("user/$user->uid"));
 }

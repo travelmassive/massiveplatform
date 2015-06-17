@@ -14,4 +14,5 @@ features[variable][] = tm_notifications__user_approval_is_company_or_brand
 features[variable][] = tm_notifications__user_approval_need_more_info
 features[variable][] = tm_notifications__user_approved
 features[variable][] = tm_notifications__user_requested_approval
+features[variable][] = tm_notifications__user_approval_non_community
 mtime = 1421506805

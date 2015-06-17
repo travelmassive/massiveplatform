@@ -173,5 +173,53 @@ __MODERATOR_MESSAGE__
   );
   $export['tm_notifications__user_requested_approval'] = $strongarm;
 
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'tm_notifications__user_moderate_community_guidelines';
+  $strongarm->value = array(
+    'user_label' => 'Notification that user account is non community',
+    'default_state' => '1',
+    'change_allowed' => 0,
+    'email' => array(
+      'subject' => 'Action required: Your __SITE_NAME__ profile doesn\'t meet our community guidelines',
+      'message' => 'Hi [user:field_user_first_name],
+<br>
+<br>Thanks for signing up, however it looks like your account doesn\'t meet our community guidelines:
+<br>
+__MODERATOR_MESSAGE__
+<br>
+<br>To be a member of the __SITE_NAME__ community, you must demonstrate one of the following:
+<br>* You are active in the travel industry (example: tour operator, travel brand, DMO)
+<br>* You are active in a field closely related to the travel industry (example: Tourism PR)
+<br>* You are studying tourism or a closely related field
+<br>* If you are are a content creator (blogger, video) and you create travel content
+<br>* Any other criteria that reasonably demonstrates a professional connection to the tourism or travel industry.
+<br>* You can read our community guidelines at __COMMUNITY_GUIDELINES_URL__
+<br>
+<br>
+<br><strong>But I love travel, can I join still?</strong>
+<br>Our community provides professional networking and skills development for members of the travel and tourism industry. We are unable to accept hobbyist or avid travelers, but we wish your all the best on your journeys!
+<br>
+<br>
+<br><strong>What you need to do:</strong>
+<br>If you meet the community guidelines, please update your profile information to demonstrate how you meet the criteria. Here\'s a link to you public profile:
+<br>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br>
+<br><strong>I\'ve updated my account, what next?</strong>
+<br>When you\'re ready for us to review your account, select "Approve my account" from your account menu so we can check it out.
+<br>Our team will review your profile and you\'ll be notified when you are approved.
+<br>If you need any assistance please reply to this email.
+<br>
+<br><strong>Important:</strong>
+<br>We may remove your account without further notice if you are unable to respond to this request or meet our community guidelines.
+<br>__EMAIL_SIGNOFF__
+<p><small>(Moderator: __MODERATOR_FIRST_NAME__)</small></p>
+',
+    ),
+  );
+  $export['tm_notifications__user_moderate_community_guidelines'] = $strongarm;
+
   return $export;
 }

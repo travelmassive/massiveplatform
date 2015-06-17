@@ -514,6 +514,42 @@ Drupal.behaviors.base_scripts = {
 
   }
 
+  jq_confirm_non_community_profile = function(uid) {
+
+    $.prompt({
+      state0: {
+        title: 'Flag this account as non-community profile?',
+        html: 'This action will:<li>Set their account to un-approved</li><li>Inform account owner of membership requirements</li><li>Notify you if the account owner requests approval</li>',
+        buttons: { Cancel: false, Next: true },
+        focus: 1,
+        submit:function(e,v,m,f){
+          if(v){
+            e.preventDefault();
+            $.prompt.goToState('state1');
+            return false;
+          }
+          $.prompt.close();
+        }
+      },
+      state1: {
+        title: 'Add a helpful comment?',
+        html: "You can send a short message to the person. <textarea id='form_moderator_message' value='' placeholder='Please complete your profile...' rows='3' cols='50'></textarea>",
+        buttons: { Back: -1, OK: true },
+        focus: 1,
+        submit:function(e,v,m,f){
+          if (v == true) {
+            // replace new lines with __NL__ as we moving this via regular GET and cant pass it via XHR
+            window.location = '/user/' + uid + '/moderate_non_community_profile?moderator_message=' + document.getElementById('form_moderator_message').value.replace(/\n/mg,"__NL__"); 
+          } 
+          else if(v==-1) {
+            $.prompt.goToState('state0');
+          }
+        }
+      }
+    });
+
+  }
+
 
 });})(jQuery, Drupal, this, this.document);
 

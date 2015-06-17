@@ -519,7 +519,7 @@ Drupal.behaviors.base_scripts = {
     $.prompt({
       state0: {
         title: 'Flag this account as non-community profile?',
-        html: 'This action will:<li>Set their account to un-approved</li><li>Inform account owner of membership requirements</li><li>Notify you if the account owner requests approval</li>',
+        html: 'This action will:<li>Set this account to un-approved</li><li>Inform account owner of membership requirements</li><li>Notify you if the account owner requests approval</li>',
         buttons: { Cancel: false, Next: true },
         focus: 1,
         submit:function(e,v,m,f){

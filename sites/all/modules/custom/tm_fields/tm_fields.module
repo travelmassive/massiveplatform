@@ -919,7 +919,8 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
     
     if (isset($entity->pass)) {
       // Password set, it's a user;
-      return l(t('Follow'), 'user/login',array(
+      return l(t('Follow'), 'javascript:jq_login_signup_box();', array(
+        'external' => true,
         'attributes' => array(
           'title' => t('Follow :user', array(':user' => $entity->realname)),
           'class' => array($css_classes)
@@ -930,7 +931,8 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
     // Behaviour based on content type.
     switch ($entity->type) {
       case 'chapter':
-        return l(t('Join'), 'user/login',array(
+        return l(t('Join'), 'javascript:jq_login_signup_box();', array(
+          'external' => true,
           'attributes' => array(
             'title' => t('Join :chapter', array(':chapter' => $entity->title)),
             'class' => array($css_classes)
@@ -938,7 +940,8 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
         ));
         break;
       case 'organization':
-        return l(t('Follow'), 'user/login',array(
+        return l(t('Follow'), 'javascript:jq_login_signup_box();', array(
+          'external' => true,
           'attributes' => array(
             'title' => t('Follow :organization', array(':organization' => $entity->title)),
             'class' => array($css_classes)
@@ -957,8 +960,9 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
         // Show register
         if (($result == 'show_register') or ($result == 'show_not_approved')) {
           $css_classes .= ' disabled';
-          return l(t('Register'), 'user/login', array(
-          'attributes' => array(
+          return l(t('Register'), 'javascript:jq_login_signup_box();', array(
+            'external' => true,
+            'attributes' => array(
             'title' => t('Register for :event', array(':event' => $entity->title)),
             'class' => array($css_classes)
           )
@@ -968,7 +972,8 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
         // Show closed
         if (($result == 'show_closed')) {
           $css_classes .= ' disabled';
-          return l(t('Past Event'), 'user/login', array(
+          return l(t('Past Event'), 'javascript:jq_login_signup_box();', array(
+          'external' => true,
           'attributes' => array(
             'title' => t('Register for :event', array(':event' => $entity->title)),
             'class' => array($css_classes)
@@ -979,8 +984,9 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
         // Show waitlist
         if ($result == 'show_waitlist') {
           $css_classes .= ' disabled';
-          return l(t('Join Waitlist'), 'user/login',array(
-          'attributes' => array(
+          return l(t('Join Waitlist'), 'javascript:jq_login_signup_box();', array(
+            'external' => true,
+            'attributes' => array(
             'title' => t('Join waitlist for :event', array(':event' => $entity->title)),
             'class' => array($css_classes)
           )

@@ -1268,7 +1268,7 @@ function _tm_event_location($field, $title = NULL) {
   if (isset($node->field_event_hide_location[LANGUAGE_NONE][0]['value'])) {
     if ($node->field_event_hide_location[LANGUAGE_NONE][0]['value'] == 1) {
 
-      // Hide if not logged in
+      // Hide if not logged in or not registered
       if (!user_is_logged_in()) {
         $show_location = false;
       }
@@ -1303,10 +1303,13 @@ function _tm_event_location($field, $title = NULL) {
     $event_map_link = $node->field_map_link[LANGUAGE_NONE][0]['url'];
   }
   
+  // Render the location html
   $html = '<h2><span>Location</span></h2>';
   $html .= '<div class="detail-venue-name">' . t($event_venue_name) . '</div>';
   $html .= '<div class="detail-venue-address">' . str_replace("\n", "<br>", t($event_location)) . '</div>';
-  $html .= '<div class="detail-venue-link"><a href="' . t($event_map_link) . '" rel="nofollow" target="_blank">View map</a></div>';
+  if ($event_map_link) {
+    $html .= '<div class="detail-venue-link"><a href="' . t($event_map_link) . '" rel="nofollow" target="_blank">View map</a></div>';
+  }
 
   return $html;
 }

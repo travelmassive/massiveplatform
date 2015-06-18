@@ -200,6 +200,13 @@ function tm_events_ds_fields_info($entity_type) {
     'function' => '_tm_event_message'
   );
 
+  $fields['tm_ds_event_location'] = array(
+    'title' => t('Event location'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('event|full',),
+    'function' => '_tm_event_location'
+  );
+
   return array($entity_type => $fields);
 }
 
@@ -624,8 +631,10 @@ function tm_events_communication_form($event){
 
     // only show chapter option if the event has a chapter
     if ($chapter != null) {
-      $options['chapter'] = t('All Chapter Members'); 
+      $options['chapter_all'] = t('All Chapter Members');
+      $options['chapter_approved'] = t('Approved Chapter Members');
     }
+
     $options['rsvp'] = t('Members who have RSVPs');  
     $options['waitlist'] = t('Members on the Waitlist');  
     $options['all'] = t('Both RSVPs/Waitlist');  
@@ -756,12 +765,16 @@ function tm_events_send_emails($recipients, $subject, $message, $eventid, $reply
       ->condition('entity_id', $eventid ,'=')
       ->execute();
   }
-  // everyone in the chapter
-  if ($recipients == 'chapter'){
+  // chapter_approved = everyone in the chapter who is approved
+  // chapter_all = everyone in the chapter including un-approved
+  // this query gets all including unapproved, and we filter in the message loop
+  // todo: would be better to filter approved members here in the query
+  if (($recipients == 'chapter_approved') or ($recipients == 'chapter_all')) {
     // load up the event and find out what the chapter is
     $event = node_load($eventid);
     $chapterid = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
 
+    // todo: only approved members
     $results = db_select('flagging', 'f')
       ->fields('f')
       ->condition('fid', $chapterflag->fid ,'=')
@@ -774,6 +787,13 @@ function tm_events_send_emails($recipients, $subject, $message, $eventid, $reply
   $original_message = $message;
   while ($result = $results->fetchAssoc()){
     $user_account = user_load($result['uid']);
+
+    // if chapter_approved then check approval status of user
+    if ($recipients == 'chapter_approved') {
+      if (!in_array('approved user', $user_account->roles)) {
+        continue; // skip this member, they are not approved
+      }
+    }
 
     // replace [first_name] token
     $first_name = $user_account->field_user_first_name[LANGUAGE_NONE][0]['value'];
@@ -1218,7 +1238,77 @@ function _tm_event_message($field, $title = NULL) {
       // return description
       return $description;
     }
+}
 
+/* Render event location */
+/* If field_event_hide_location is set, only show location to registered attendees */
+function _tm_event_location($field, $title = NULL) {
+
+  global $user;
+
+  // check if user is flagged
+  $node = $field['entity'];
+  if ($node->type != "event") {
+    return;
+  }
+
+  // If logged in, check if registered or waitlisted
+  $registered_flag = false; // default if not logged in
+  $waitlist_for_event = false; // default if not logged in
+  if (user_is_logged_in()) {
+    $registered_flag = flag_get_flag('event_register');
+    $registered_for_event = ($registered_flag && $registered_flag->is_flagged($node->nid, $user->uid));
+    $waitlist_flag = flag_get_flag('event_waitlist');
+    $waitlist_for_event = ($waitlist_flag && $waitlist_flag->is_flagged($node->nid, $user->uid));
+  }
+
+  // Determine if we show the location
+  // If the event has field_event_hide_location set to TRUE
+  $show_location = true;
+  if (isset($node->field_event_hide_location[LANGUAGE_NONE][0]['value'])) {
+    if ($node->field_event_hide_location[LANGUAGE_NONE][0]['value'] == 1) {
+
+      // Hide if not logged in
+      if (!user_is_logged_in()) {
+        $show_location = false;
+      }
+      else if (!$registered_for_event) {
+        $show_location = false;
+      }
+    }
+  }
+
+  // If not showing the location
+  if (!$show_location && !$waitlist_for_event) {
+    $html = 'Register to see the event location';
+    return $html;
+  } else if (!$show_location && $waitlist_for_event) {
+    $html = 'Only registered attendees can see the location';
+    return $html;
+  }
+
+  // Otherwise we can show the event location
+  $event_venue_name = "";
+  if (isset($node->field_event_venue_name[LANGUAGE_NONE][0]['value'])) {
+    $event_venue_name = $node->field_event_venue_name[LANGUAGE_NONE][0]['value'];
+  }
+
+  $event_location = "";
+  if (isset($node->field_location[LANGUAGE_NONE][0]['value'])) {
+    $event_location = $node->field_location[LANGUAGE_NONE][0]['value'];
+  }
+
+  $event_map_link = "";
+  if (isset($node->field_map_link[LANGUAGE_NONE][0]['url'])) {
+    $event_map_link = $node->field_map_link[LANGUAGE_NONE][0]['url'];
+  }
+  
+  $html = '<h2><span>Location</span></h2>';
+  $html .= '<div class="detail-venue-name">' . t($event_venue_name) . '</div>';
+  $html .= '<div class="detail-venue-address">' . str_replace("\n", "<br>", t($event_location)) . '</div>';
+  $html .= '<div class="detail-venue-link"><a href="' . t($event_map_link) . '" rel="nofollow" target="_blank">View map</a></div>';
+
+  return $html;
 }
 
 

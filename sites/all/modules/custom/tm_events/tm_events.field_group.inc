@@ -113,7 +113,7 @@ function tm_events_field_group_info() {
       0 => 'body',
       1 => 'tm_ds_fulldate_event',
       2 => 'tm_ds_event_message',
-      3 => 'group_location_wrapper',
+      3 => 'tm_ds_event_location',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -140,6 +140,7 @@ function tm_events_field_group_info() {
       1 => 'field_approved_members_only',
       2 => 'field_register_event_message',
       3 => 'field_waitlist_event_message',
+      4 => 'field_event_hide_location',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -278,10 +279,10 @@ function tm_events_field_group_info() {
   $field_group->entity_type = 'node';
   $field_group->bundle = 'event';
   $field_group->mode = 'full';
-  $field_group->parent_name = 'group_details_wrapper';
+  $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '2',
+    'weight' => '3',
     'children' => array(
       0 => 'field_event_venue_name',
       1 => 'field_location',

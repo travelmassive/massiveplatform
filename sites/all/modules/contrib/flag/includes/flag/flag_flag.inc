@@ -726,14 +726,20 @@ class flag_flag {
       return FALSE;
     }
 
-    $uid = $account->uid;
+    // Find out which user id to use.
+    $uid = $this->global ? 0 : $account->uid;
 
     // Find out which session id to use.
-    $sid = flag_get_sid($uid, TRUE);
-    // Anonymous users must always have a session id.
-    if ($sid == 0 && $account->uid == 0) {
-      $this->errors['session'] = t('Internal error: You are anonymous but you have no session ID.');
-      return FALSE;
+    if ($this->global) {
+      $sid = 0;
+    }
+    else {
+      $sid = flag_get_sid($uid, TRUE);
+      // Anonymous users must always have a session id.
+      if ($sid == 0 && $account->uid == 0) {
+        $this->errors['session'] = t('Internal error: You are anonymous but you have no session ID.');
+        return FALSE;
+      }
     }
 
     // @todo: Discuss: Core wraps everything in a try { }, should we?
@@ -787,11 +793,11 @@ class flag_flag {
    * Create a new Flagging to flag an entity.
    *
    * @param $flagging
-   *  The flagging entity that is to be removed.
+   *  The flagging entity that is to be saved.
    * @param $entity_id
-   *  The entity ID of entity being unflagged.
+   *  The entity ID of entity being flagged.
    * @param $account
-   *  The account performing the unflagging.
+   *  The account performing the flagging.
    */
   private function flagging_insert($flagging, $entity_id, $account) {
     if ($this->uses_anonymous_cookies()) {
@@ -836,32 +842,14 @@ class flag_flag {
   }
 
   /**
-   * Invoke a Rules event in reaction to a flagging or unflagging.
-   *
-   * @param $action
-   *   Either 'flag' or 'unflag'.
-   * @param $flagging
-   *  The flagging entity that is to be removed.
-   * @param $entity_id
-   *  The entity ID of entity being unflagged.
-   * @param $account
-   *  The account performing the unflagging.
-   */
-  protected function invoke_rules_event($action, $flagging, $entity_id, $account) {
-    // We only support flags on entities: do nothing in this class.
-    // See flag_entity::invoke_rules_event().
-    return;
-  }
-
-  /**
    * Update a Flagging.
    *
    * @param $flagging
-   *  The flagging entity that is to be removed.
+   *  The flagging entity that is being updated.
    * @param $entity_id
-   *  The entity ID of entity being unflagged.
+   *  The entity ID of entity the flagging is on.
    * @param $account
-   *  The account performing the unflagging.
+   *  The account performing the action.
    */
   private function flagging_update($flagging, $entity_id, $account) {
     // Invoke presave hooks.
@@ -940,6 +928,24 @@ class flag_flag {
   }
 
   /**
+   * Invoke a Rules event in reaction to a flagging or unflagging.
+   *
+   * @param $action
+   *   Either 'flag' or 'unflag'.
+   * @param $flagging
+   *  The flagging entity that is either newly created or about to be deleted.
+   * @param $entity_id
+   *  The entity ID of entity being flagged or unflagged.
+   * @param $account
+   *  The account performing the action.
+   */
+  protected function invoke_rules_event($action, $flagging, $entity_id, $account) {
+    // We only support flags on entities: do nothing in this class.
+    // See flag_entity::invoke_rules_event().
+    return;
+  }
+
+  /**
    * Construct a new, empty flagging entity object.
    *
    * @param mixed $entity_id
@@ -999,8 +1005,8 @@ class flag_flag {
    * Parameters are the same as is_flagged()'s.
    */
   function get_flagging_record($entity_id, $uid = NULL, $sid = NULL) {
-    $uid = (!isset($uid) ? $GLOBALS['user']->uid : $uid);
-    $sid = (!isset($sid) ? flag_get_sid($uid) : $sid);
+    $uid = $this->global ? 0 : (!isset($uid) ? $GLOBALS['user']->uid : $uid);
+    $sid = $this->global ? 0 : (!isset($sid) ? flag_get_sid($uid) : $sid);
 
     // flag_get_user_flags() does caching.
     $user_flags = flag_get_user_flags($this->entity_type, $entity_id, $uid, $sid);
@@ -1033,16 +1039,14 @@ class flag_flag {
    * @private
    */
   function _is_flagged($entity_id, $uid, $sid) {
-    $query = db_select('flagging', 'fc');
-    $query->fields('fc', array('flagging_id'))
+    return db_select('flagging', 'fc')
+      ->fields('fc', array('flagging_id'))
       ->condition('fid', $this->fid)
+      ->condition('uid', $uid)
       ->condition('sid', $sid)
-      ->condition('entity_id', $entity_id);
-    // Only check the uid for non-global flags.
-    if (!$this->global) {
-      $query->condition('uid', $uid);
-    }
-    return $query->execute()->fetchField();
+      ->condition('entity_id', $entity_id)
+      ->execute()
+      ->fetchField();
   }
 
   /**

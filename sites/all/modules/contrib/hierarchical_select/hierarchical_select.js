@@ -5,7 +5,7 @@ Drupal.behaviors.HierarchicalSelect = {
   attach: function (context) {
     $('.hierarchical-select-wrapper:not(.hierarchical-select-wrapper-processed)', context)
     .addClass('hierarchical-select-wrapper-processed').each(function() {
-      var hsid = $(this).attr('id').replace(/^hierarchical-select-(\d+)-wrapper$/, "$1");
+      var hsid = $(this).attr('id').replace(/^hierarchical-select-(.+)-wrapper$/, "$1");
       Drupal.HierarchicalSelect.initialize(hsid);
     });
   }
@@ -53,6 +53,13 @@ Drupal.HierarchicalSelect.initialize = function(hsid) {
     form.attr('autocomplete', 'off');
   }
 
+  // Enable *all* submit buttons in this form, as well as all input-related
+  // elements of the current hierarchical select, in case we reloaded while
+  // they were disabled.
+  form.add('#hierarchical-select-' + hsid +'-wrapper .hierarchical-select .selects select')
+      .add('#hierarchical-select-' + hsid +'-wrapper .hierarchical-select input')
+      .attr('disabled', false);
+
   if (this.cache != null) {
     this.cache.initialize();
   }
@@ -86,7 +93,7 @@ Drupal.HierarchicalSelect.log = function(hsid, messages) {
 
   // Store the log messages. The first call to this function may not contain a
   // message: the initial log included in the initial HTML rendering should be
-  // used instead.. 
+  // used instead..
   if (Drupal.HierarchicalSelect.state["hs-" + hsid].log.length == 0) {
     Drupal.HierarchicalSelect.state["hs-" + hsid].log.push(Drupal.settings.HierarchicalSelect.initialLog["hs-" + hsid]);
   }
@@ -115,7 +122,7 @@ Drupal.HierarchicalSelect.transform = function(hsid) {
   // we want to continue to use the "Remove" checkboxes.
   .find('*').css('display', 'none').end() // We can't use .hide() because of collapse.js: http://drupal.org/node/351458#comment-1258303.
   // Put a "Remove" link there instead.
-  .append('<a href="">'+ removeString +'</a>');  
+  .append('<a href="">'+ removeString +'</a>');
 };
 
 Drupal.HierarchicalSelect.resizable = function(hsid) {
@@ -133,7 +140,8 @@ Drupal.HierarchicalSelect.resizable = function(hsid) {
   // speed up DOM manipulation during dragging.
   var $selects = $selectsWrapper.find('select');
 
-  var defaultHeight = Drupal.HierarchicalSelect.state["hs-" + hsid].defaultHeight = $selects.slice(0, 1).height();
+  var defaultPadding = parseInt($selects.slice(0, 1).css('padding-top').replace(/^(\d+)px$/, "$1")) + parseInt($selects.slice(0, 1).css('padding-bottom').replace(/^(\d+)px$/, "$1"));
+  var defaultHeight = Drupal.HierarchicalSelect.state["hs-" + hsid].defaultHeight = $selects.slice(0, 1).height() + defaultPadding;
   var defaultSize = Drupal.HierarchicalSelect.state["hs-" + hsid].defaultSize = $selects.slice(0, 1).attr('size');
   defaultSize = (defaultSize == 0) ? 1 : defaultSize;
   var margin = Drupal.HierarchicalSelect.state["hs-" + hsid].margin = parseInt($selects.slice(0, 1).css('margin-bottom').replace(/^(\d+)px$/, "$1"));
@@ -277,7 +285,7 @@ Drupal.HierarchicalSelect.attachBindings = function(hsid) {
   .unbind('disable-updates').bind('disable-updates', data, function(e) {
     Drupal.settings.HierarchicalSelect.settings["hs-" + e.data.hsid]['updatesEnabled'] = false;
   })
-  
+
   // "enforce-update" event
   .unbind('enforce-update').bind('enforce-update', data, function(e, extraPost) {
      Drupal.HierarchicalSelect.update(e.data.hsid, 'enforced-update', { opString: updateOpString, extraPost: extraPost });
@@ -333,7 +341,7 @@ Drupal.HierarchicalSelect.attachBindings = function(hsid) {
       }
 
       // Check the (hidden, because JS is enabled) checkbox that marks this
-      // dropbox entry for removal. 
+      // dropbox entry for removal.
       $(this).parent().find('input[type=checkbox]').attr('checked', true);
       Drupal.HierarchicalSelect.update(_hsid, 'remove-from-dropbox', { opString: updateOpString });
       return false; // Prevent the browser from POSTing the page.
@@ -366,14 +374,14 @@ Drupal.HierarchicalSelect.preUpdateAnimations = function(hsid, updateType, lastU
     default:
       if (callback) {
         callback();
-      }  
+      }
       break;
   }
 };
 
 Drupal.HierarchicalSelect.postUpdateAnimations = function(hsid, updateType, lastUnchanged, callback) {
   if (Drupal.settings.HierarchicalSelect.settings["hs-" + hsid].resizable) {
-    // Restore the resize.  
+    // Restore the resize.
     Drupal.HierarchicalSelect.resize(
       $('#hierarchical-select-' + hsid + '-wrapper .hierarchical-select .selects select', Drupal.HierarchicalSelect.context),
       Drupal.HierarchicalSelect.state["hs-" + hsid].defaultHeight,
@@ -386,22 +394,6 @@ Drupal.HierarchicalSelect.postUpdateAnimations = function(hsid, updateType, last
   switch (updateType) {
     case 'update-hierarchical-select':
       var $createNewItemInput = $('#hierarchical-select-'+ hsid +'-wrapper .hierarchical-select .create-new-item-input', Drupal.HierarchicalSelect.context);
-      
-      if ($createNewItemInput.size() == 0) {
-        // Give focus to the level below the one that has changed, if it
-        // exists.
-        if (!(navigator.userAgent.toLowerCase().indexOf('firefox') > -1)) { // Don't give focus in Firefox: the user would have to click twice before he can make a selection.
-          $('#hierarchical-select-'+ hsid +'-wrapper .hierarchical-select .selects select', Drupal.HierarchicalSelect.context)
-          .slice(lastUnchanged, lastUnchanged + 1)
-          .focus();
-        }
-      }
-      else {
-        // Give focus to the input field of the "create new item/level"
-        // section, if it exists, and also select the existing text.
-        $createNewItemInput.focus();
-        $createNewItemInput[0].select();
-      }
       // Hide the loaded selects after the one that was just changed, then
       // drop them in.
       var animationDelay = Drupal.settings.HierarchicalSelect.settings["hs-" + hsid]['animationDelay'];
@@ -419,6 +411,24 @@ Drupal.HierarchicalSelect.postUpdateAnimations = function(hsid, updateType, last
       }
       else if (callback) {
         callback();
+      }
+      if ($createNewItemInput.size() == 0) {
+        // Give focus to the level below the one that has changed, if it
+        // exists.
+        setTimeout(
+          function() {
+            $('#hierarchical-select-'+ hsid +'-wrapper .hierarchical-select .selects select', Drupal.HierarchicalSelect.context)
+              .slice(lastUnchanged, lastUnchanged + 1)
+              .focus();
+          },
+          animationDelay + 100
+        );
+      }
+      else {
+        // Give focus to the input field of the "create new item/level"
+        // section, if it exists, and also select the existing text.
+        $createNewItemInput.focus();
+        $createNewItemInput[0].select();
       }
       break;
 
@@ -462,13 +472,16 @@ Drupal.HierarchicalSelect.triggerEvents = function(hsid, updateType, settings) {
 
 Drupal.HierarchicalSelect.update = function(hsid, updateType, settings) {
   var post = $('form:has(#hierarchical-select-' + hsid +'-wrapper)', Drupal.HierarchicalSelect.context).formToArray();
+  var hs_current_language = Drupal.settings.HierarchicalSelect.hs_current_language;
 
   // Pass the hierarchical_select id via POST.
   post.push({ name : 'hsid', value : hsid });
+  // Send the current language so we can use the same language during the AJAX callback.
+  post.push({ name : 'hs_current_language', value : hs_current_language});
   // Emulate the AJAX data sent normally so that we get the same theme.
   post.push({ name : 'ajax_page_state[theme]', value : Drupal.settings.ajaxPageState.theme });
   post.push({ name : 'ajax_page_state[theme_token]', value : Drupal.settings.ajaxPageState.theme_token });
-  
+
   // If a cache system is installed, let the server know if it's running
   // properly. If it is running properly, the server will send back additional
   // information to maintain a lazily-loaded cache.
@@ -525,7 +538,7 @@ Drupal.HierarchicalSelect.update = function(hsid, updateType, settings) {
       }
       post.push({ name : 'op', value : settings.opString });
       break;
-    
+
     case 'enforced-update':
       post.push({ name : 'op', value : settings.opString });
       post = post.concat(settings.extraPost);
@@ -548,14 +561,16 @@ Drupal.HierarchicalSelect.update = function(hsid, updateType, settings) {
   // Construct the object that contains the options for a callback to the
   // server. If a client-side cache is found however, it's possible that this
   // won't be used.
-  var ajaxOptions = {
+  var ajaxOptions = $.extend({}, Drupal.ajax.prototype, {
     url:        url,
     type:       'POST',
     dataType:   'json',
     data:       post,
+    effect:     'fade',
+    wrapper:    '#hierarchical-select-' + hsid + '-wrapper',
     beforeSend: function() {
       Drupal.HierarchicalSelect.triggerEvents(hsid, 'before-' + updateType, settings);
-      Drupal.HierarchicalSelect.disableForm(hsid); 
+      Drupal.HierarchicalSelect.disableForm(hsid);
     },
     error: function (XMLHttpRequest, textStatus, errorThrown) {
       // When invalid HTML is received in Safari, jQuery calls this function.
@@ -572,12 +587,28 @@ Drupal.HierarchicalSelect.update = function(hsid, updateType, settings) {
       // Execute all AJAX commands in the response. But pass an additional
       // hsid parameter, which is then only used by the commands written
       // for Hierarchical Select.
+
+      // This is another hack because of the non-Drupal ajax implementation
+      // of this module, one of the response that can come from a drupal
+      // ajax command is insert, which expects a Drupal.ajax object as the first
+      // arguments and assumes that certain functions/settings are available.
+      // Because we are calling a Drupal.ajax.command but providing the regular
+      // jQuery ajax object itself, we are allowing Drupal.ajax.prototype.commands
+      // to misserably fail.
+      //
+      // This hack attempts to fix one issue with an insert command,
+      // @see https://www.drupal.org/node/2393695, allowing it to work properly
+      // Other hacks might be necessary for other ajax commands if they are added
+      // by external modules.
+      this.effect = 'none';
+      this.getEffect = Drupal.ajax.prototype.getEffect;
+
       for (var i in response) {
         if (response[i]['command'] && Drupal.ajax.prototype.commands[response[i]['command']]) {
           Drupal.ajax.prototype.commands[response[i]['command']](this, response[i], status, hsid);
         }
       }
-      
+
       // Attach behaviors. This is just after the HTML has been updated, so
       // it's as soon as we can.
       Drupal.attachBehaviors($('#hierarchical-select-' + hsid + '-wrapper').parents('div.form-type-hierarchical-select')[0]);
@@ -607,7 +638,7 @@ Drupal.HierarchicalSelect.update = function(hsid, updateType, settings) {
         }
       });
     }
-  };
+  });
 
   // Use the client-side cache to update the hierarchical select when:
   // - the hierarchical select is being updated (i.e. no add/remove), and
@@ -626,6 +657,32 @@ Drupal.HierarchicalSelect.update = function(hsid, updateType, settings) {
   }
   else {
     Drupal.HierarchicalSelect.preUpdateAnimations(hsid, updateType, lastUnchanged, function() {
+      // Adding current theme to prevent conflicts, @see ajax.js
+      // @TODO, try converting to use Drupal.ajax instead.
+
+      // Prevent duplicate HTML ids in the returned markup.
+      // @see drupal_html_id()
+      var ids = [];
+      $('[id]').each(function () {
+        ids.push(this.id);
+      });
+
+      ajaxOptions.data.push({ name : 'ajax_html_ids[]', value : ids });
+
+      ajaxOptions.data.push({ name : 'ajax_page_state[theme]', value : Drupal.settings.ajaxPageState.theme });
+      ajaxOptions.data.push({ name : 'ajax_page_state[theme_token]', value : Drupal.settings.ajaxPageState.theme_token });
+      for (var key in Drupal.settings.ajaxPageState.css) {
+        ajaxOptions.data.push({ name : 'ajax_page_state[css][' + key + ']', value : 1});
+      }
+      for (var key in Drupal.settings.ajaxPageState.js) {
+        ajaxOptions.data.push({ name : 'ajax_page_state[js][' + key + ']', value : 1});
+      }
+
+      // Make it work with jquery update
+      if (Drupal.settings.ajaxPageState.jquery_version) {
+        ajaxOptions.data.push({ name : 'ajax_page_state[jquery_version]', value : Drupal.settings.ajaxPageState.jquery_version });
+      }
+
       $.ajax(ajaxOptions);
     });
   }

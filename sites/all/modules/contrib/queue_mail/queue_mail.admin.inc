@@ -14,7 +14,13 @@ function queue_mail_settings_form() {
     '#type' => 'item',
     '#title' => t('Queue status'),
     '#markup' => format_plural(_queue_mail_get_queue()->numberOfItems(), '1 mail currently queued for sending.', '@count mails currently queued for sending.'),
-    '#description' => t('Sending of queued mails happens on cron. You can <a href="@cron_link">run cron manually</a>.', array('@cron_link' => url('admin/reports/status/run-cron', array('query' => drupal_get_destination())))),
+  );
+
+  $form['queue_mail_send_on_cron'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Send queued mail on cron run'),
+    '#description' => t('If checked, sending of queued mail will happen on cron runs. You can <a href="@cron_link">run cron manually</a>. Uncheck this if you want to process the mail queue outside of cron (e.g. via Drush).', array('@cron_link' => url('admin/reports/status/run-cron', array('query' => drupal_get_destination())))),
+    '#default_value' => variable_get('queue_mail_send_on_cron', TRUE),
   );
 
   $form['queue_mail_keys'] = array(

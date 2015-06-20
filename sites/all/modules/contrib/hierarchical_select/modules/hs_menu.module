@@ -30,7 +30,7 @@ function hs_menu_menu() {
  * Alter the node form's menu form.
  */
 function hs_menu_form_node_form_alter(&$form, &$form_state) {
-  if (isset($form['menu']['link']['parent']) && $form['menu']['#access']) {
+  if (isset($form['menu']['link']['parent']) && isset($form['menu']['#access']) && $form['menu']['#access']) {
     unset($form['menu']['link']['parent']['#options']);
     $form['menu']['link']['parent']['#type'] = 'hierarchical_select';
     _hs_menu_apply_config($form['menu']['link']['parent'], array('type' => $form['type']['#value']));
@@ -172,6 +172,10 @@ function hs_menu_hierarchical_select_lineage($item, $params) {
     do {
       $plid = db_query("SELECT plid FROM {menu_links} WHERE mlid = :mlid", array(':mlid' => $mlid))->fetchField();
       array_unshift($lineage, "$menu_name:$plid");
+      if ($mlid == $plid) {
+        // Somehow we have an infinite loop situation. Bail out of the loop.
+        break;
+      }
       $mlid = $plid;
     } while ($plid > 0);
   }

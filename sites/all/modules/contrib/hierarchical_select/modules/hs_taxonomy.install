@@ -83,3 +83,41 @@ function hs_taxonomy_update_7302() {
     }
   }
 }
+
+/**
+ * Convert Taxonomy vocabulary config IDs to use field name.
+ */
+function hs_taxonomy_update_7303() {
+  require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'hierarchical_select') . '/includes/common.inc';
+
+  foreach (field_info_instances() as $entity_type => $bundles) {
+    foreach ($bundles as $bundle => $field_list) {
+      foreach ($field_list as $field_name => $instance) {
+        if ($instance['widget']['type'] == 'taxonomy_hs') {
+          $field_info = field_info_field($field_name);
+          $allowed_value = $field_info['settings']['allowed_values'][0];
+          $vocabulary_name = $allowed_value['vocabulary'];
+          $old_config_id = "taxonomy-{$vocabulary_name}";
+          $new_config_id = "taxonomy-{$field_name}";
+          $old_config = hierarchical_select_common_config_get($old_config_id);
+          if (!empty($old_config)) {
+            hierarchical_select_common_config_set($new_config_id, $old_config);
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Cleanup old-named configs.
+ */
+function hs_taxonomy_update_7304() {
+  require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'hierarchical_select') . '/includes/common.inc';
+
+  $vocabularies = taxonomy_get_vocabularies();
+  foreach ($vocabularies as $vid => $vocabulary) {
+    $old_config_id = "taxonomy-{$vocabulary->machine_name}";
+    hierarchical_select_common_config_del($old_config_id);
+  }
+}

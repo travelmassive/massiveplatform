@@ -12,7 +12,7 @@
  *
  * @param $config_id
  *   A config id, typically of the form "module-someid", e.g.
- *   "taxonomy-vocab_machine_name".
+ *   "taxonomy-field_name".
  * @param $defaults_override
  *   Optionally override the defaults.
  */

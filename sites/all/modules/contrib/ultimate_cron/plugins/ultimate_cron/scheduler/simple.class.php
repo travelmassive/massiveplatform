@@ -47,7 +47,7 @@ class UltimateCronSimpleScheduler extends UltimateCronCrontabScheduler {
    */
   public function getDefaultSettings($job = NULL) {
     $settings = parent::getDefaultSettings($job);
-    $settings['catch_up'] = $this->catch_up[isset($job->settings['scheduler']['simple']['rules'][0]) ? $job->settings['scheduler']['simple']['rules'][0] : $this->default_rule];
+    $settings['catch_up'] = $this->catch_up[isset($settings['rules'][0]) ? $settings['rules'][0] : $this->default_rule];
     return $settings;
   }
 

@@ -170,19 +170,10 @@ function tm_meta_metatag_export_default() {
       'og:longitude' => array(
         'value' => '',
       ),
-      'og:street-address' => array(
-        'value' => '',
-      ),
       'og:locality' => array(
         'value' => '',
       ),
       'og:region' => array(
-        'value' => '',
-      ),
-      'og:postal-code' => array(
-        'value' => '',
-      ),
-      'og:country-name' => array(
         'value' => '',
       ),
       'og:email' => array(
@@ -291,6 +282,15 @@ function tm_meta_metatag_export_default() {
         'value' => '',
       ),
       'video:series' => array(
+        'value' => '',
+      ),
+      'og:street_address' => array(
+        'value' => '',
+      ),
+      'og:postal_code' => array(
+        'value' => '',
+      ),
+      'og:country_name' => array(
         'value' => '',
       ),
     ),
@@ -442,11 +442,11 @@ function tm_meta_metatag_export_default() {
       'og:image' => array(
         'value' => '[node:field_image]',
       ),
-      'og:country-name' => array(
-        'value' => '[node:field_country]',
-      ),
       'article:tag' => array(
         'value' => 'chapter, group',
+      ),
+      'og:country_name' => array(
+        'value' => '[node:field_country]',
       ),
     ),
   );
@@ -470,7 +470,7 @@ function tm_meta_metatag_export_default() {
       'og:image' => array(
         'value' => '[node:field_image]',
       ),
-      'og:street-address' => array(
+      'og:street_address' => array(
         'value' => '[node:field_location]',
       ),
     ),
@@ -492,11 +492,11 @@ function tm_meta_metatag_export_default() {
       'og:image' => array(
         'value' => '[node:field_image]',
       ),
-      'og:country-name' => array(
-        'value' => '[node:field_country]',
-      ),
       'article:tag' => array(
         'value' => 'organization, company',
+      ),
+      'og:country_name' => array(
+        'value' => '[node:field_country]',
       ),
     ),
   );
@@ -570,9 +570,6 @@ function tm_meta_metatag_export_default() {
       'og:image' => array(
         'value' => '[user:field_avatar]',
       ),
-      'og:country-name' => array(
-        'value' => '[user:field_user_country]',
-      ),
       'profile:first_name' => array(
         'value' => '[user:field_user_first_name]',
       ),
@@ -581,6 +578,9 @@ function tm_meta_metatag_export_default() {
       ),
       'profile:username' => array(
         'value' => '[user:friendly_url_user]',
+      ),
+      'og:country_name' => array(
+        'value' => '[user:field_user_country]',
       ),
     ),
   );

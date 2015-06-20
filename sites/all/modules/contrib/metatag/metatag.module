@@ -1371,6 +1371,11 @@ function metatag_field_extra_fields() {
  * or it may be controlled via the Settings form.
  */
 function metatag_entity_supports_metatags($entity_type = NULL, $bundle = NULL) {
+
+  // Ian C - Enable support for user entity as admin page doesn't seem to save this correctly.
+  // Filed issue on drupal.org: https://www.drupal.org/node/2509306#comment-10042190
+  if ($entity_type == "user") { return true; }
+
   $entity_types = &drupal_static(__FUNCTION__);
 
   // Identify which entities & bundles are supported the first time the

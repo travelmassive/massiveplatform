@@ -163,7 +163,7 @@ class flag_handler_relationship_content extends flag_handler_relationship {
       'value' => $flag->fid,
       'numeric' => TRUE,
     );
-    if ($this->options['user_scope'] == 'current' && !$flag->global) {
+    if ($this->options['user_scope'] == 'current') {
       $this->definition['extra'][] = array(
         'field' => 'uid',
         'value' => '***CURRENT_USER***',

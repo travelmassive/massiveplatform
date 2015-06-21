@@ -726,20 +726,14 @@ class flag_flag {
       return FALSE;
     }
 
-    // Find out which user id to use.
-    $uid = $this->global ? 0 : $account->uid;
+    $uid = $account->uid;
 
     // Find out which session id to use.
-    if ($this->global) {
-      $sid = 0;
-    }
-    else {
-      $sid = flag_get_sid($uid, TRUE);
-      // Anonymous users must always have a session id.
-      if ($sid == 0 && $account->uid == 0) {
-        $this->errors['session'] = t('Internal error: You are anonymous but you have no session ID.');
-        return FALSE;
-      }
+    $sid = flag_get_sid($uid, TRUE);
+    // Anonymous users must always have a session id.
+    if ($sid == 0 && $account->uid == 0) {
+      $this->errors['session'] = t('Internal error: You are anonymous but you have no session ID.');
+      return FALSE;
     }
 
     // @todo: Discuss: Core wraps everything in a try { }, should we?
@@ -1005,8 +999,8 @@ class flag_flag {
    * Parameters are the same as is_flagged()'s.
    */
   function get_flagging_record($entity_id, $uid = NULL, $sid = NULL) {
-    $uid = $this->global ? 0 : (!isset($uid) ? $GLOBALS['user']->uid : $uid);
-    $sid = $this->global ? 0 : (!isset($sid) ? flag_get_sid($uid) : $sid);
+    $uid = (!isset($uid) ? $GLOBALS['user']->uid : $uid);
+    $sid = (!isset($sid) ? flag_get_sid($uid) : $sid);
 
     // flag_get_user_flags() does caching.
     $user_flags = flag_get_user_flags($this->entity_type, $entity_id, $uid, $sid);
@@ -1039,14 +1033,16 @@ class flag_flag {
    * @private
    */
   function _is_flagged($entity_id, $uid, $sid) {
-    return db_select('flagging', 'fc')
-      ->fields('fc', array('flagging_id'))
+    $query = db_select('flagging', 'fc');
+    $query->fields('fc', array('flagging_id'))
       ->condition('fid', $this->fid)
-      ->condition('uid', $uid)
       ->condition('sid', $sid)
-      ->condition('entity_id', $entity_id)
-      ->execute()
-      ->fetchField();
+      ->condition('entity_id', $entity_id);
+    // Only check the uid for non-global flags.
+    if (!$this->global) {
+      $query->condition('uid', $uid);
+    }
+    return $query->execute()->fetchField();
   }
 
   /**

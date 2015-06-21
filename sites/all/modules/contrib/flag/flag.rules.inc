@@ -171,7 +171,7 @@ function flag_rules_action_info() {
     'flagging_user' => array(
       'type' => 'user',
       'label' => t('User on whose behalf to flag'),
-      'description' => t('For non-global flags, this is the user on whose behalf to flag the object. In addition, if checked below, the access permissions to the flag are checked against this user.'),
+      'description' => t('This is the user on whose behalf to flag the object. In addition, if checked below, the access permissions to the flag are checked against this user.'),
     ),
     'permission_check' => array(
       'type' => 'boolean',
@@ -301,7 +301,7 @@ function flag_rules_action_info() {
           'flagging_user' => array(
             'type' => 'user',
             'label' => t('User who flagged the @label', array('@label' => $label)),
-            'description' => t('For non-global flags, this is the user who flagged the @label. (For global flags, this argument is ignored.)', array('@label' => $label)),
+            'description' => t('This is the user who flagged the @label.', array('@label' => $label)),
           ),
         ),
         'provides' => array(
@@ -432,17 +432,15 @@ function flag_rules_action_fetch_entity_by_user($flag, $entity) {
     ->fields('fc', array('entity_id'))
     ->condition('entity_type', $flag->entity_type)
     ->condition('fid', $flag->fid);
-  // For global flags the user parameter is ignored, so we add the
-  // extra 'uid' condition when the flag is NOT global.
-  if (!$flag->global) {
-    $user = entity_metadata_wrapper('user', $entity);
-    $sid = $user->flag_sid->value();
-    $query = $query->condition('uid', $user->uid->value());
-    // Filter out any bad session ids and any users that aren't anonymous.
-    if (!empty($sid) && $sid != -1) {
-      $query->condition('sid', $sid);
-    }
+
+  $user = entity_metadata_wrapper('user', $entity);
+  $sid = $user->flag_sid->value();
+  $query = $query->condition('uid', $user->uid->value());
+  // Filter out any bad session ids and any users that aren't anonymous.
+  if (!empty($sid) && $sid != -1) {
+    $query->condition('sid', $sid);
   }
+
   $result = $query->execute();
   $flagged = $result->fetchCol();
   return array('content_flagged_by_user' => $flagged);
@@ -560,7 +558,7 @@ function flag_rules_condition_info() {
           'flagging_user' => array(
             'type' => 'user',
             'label' => t('User on whose behalf to check'),
-            'description' => t('For non-global flags, this is the user on whose behalf the flag is checked.'),
+            'description' => t('This is the user on whose behalf the flag is checked.'),
           ),
         ),
         'group' => t('Flag'),

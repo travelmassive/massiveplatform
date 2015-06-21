@@ -75,7 +75,6 @@ function _tm_event_seats_count($field, $title = NULL) {
   }
   
   // Future event...
-
   if ($display_external) {
     return t('Please RSVP For This Event');
   }
@@ -88,6 +87,8 @@ function _tm_event_seats_count($field, $title = NULL) {
       if (($limit == 0) && ($waitlist_count == 0)) {
         // event it set to waitlist all attendees
         return t('This is a waitlisted event');
+      } else {
+        return t('Be the first to register!');
       }
     } else {
       return t('Be the first to register!');

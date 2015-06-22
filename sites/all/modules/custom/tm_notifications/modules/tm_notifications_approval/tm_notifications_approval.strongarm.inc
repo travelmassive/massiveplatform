@@ -185,21 +185,21 @@ __MODERATOR_MESSAGE__
       'subject' => 'Action required: Your __SITE_NAME__ profile doesn\'t meet our community guidelines',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>Thanks for signing up, however it looks like your account doesn\'t meet our community guidelines:
+<br>Thanks for signing up, however it looks like your account doesn\'t meet our <a href="__COMMUNITY_GUIDELINES_URL__">community guidelines</a>:
 <br>
 __MODERATOR_MESSAGE__
 <br>
 <br>To be a member of the __SITE_NAME__ community, you must demonstrate one of the following:
 <br>* You are active in the travel industry (example: tour operator, travel brand, DMO)
 <br>* You are active in a field closely related to the travel industry (example: Tourism PR)
-<br>* You are studying tourism or a closely related field
-<br>* If you are are a content creator (blogger, video) and you create travel content
+<br>* You are are a travel content creator (example: blogger, vlogger, presenter)
+<br>* You are studying tourism or a closely related course
 <br>* Any other criteria that reasonably demonstrates a professional connection to the tourism or travel industry.
 <br>* You can read our community guidelines at __COMMUNITY_GUIDELINES_URL__
 <br>
 <br>
 <br><strong>But I love travel, can I join still?</strong>
-<br>Our community provides professional networking and skills development for members of the travel and tourism industry. We are unable to accept hobbyist or avid travelers, but we wish your all the best on your journeys!
+<br>Our community provides professional networking and skills development for members of the travel and tourism industry. If you are an expert or avid traveler, then thanks for stopping by and we wish you all the best on your journeys!
 <br>
 <br>
 <br><strong>What you need to do:</strong>

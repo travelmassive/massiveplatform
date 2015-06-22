@@ -188,6 +188,7 @@ function _tm_approved_process($field, $title = NULL) {
  */
 function _tm_more_actions_process($field, $title = NULL) {
   global $base_root, $user;
+  global $conf;
   $base = $base_root . request_uri();
   $links = array(
     'edition' => array(),
@@ -427,9 +428,10 @@ function _tm_more_actions_process($field, $title = NULL) {
             if (($user_score >= $score_threshold) or (in_array("moderator", $user->roles) or user_access('administer'))) {
 
               // Show approve user link
+              $community_guidelines_url = $conf["tm_community_guidelines_url"];
               $links['approve'][] = array(
                 'wrapper_class' => array('approve'),
-                'content' => l(t('Approve member'), "javascript:jq_confirm_approve_member(" . $uid . ")", array(
+                'content' => l(t('Approve member'), "javascript:jq_confirm_approve_member(" . $uid . ", '" . $community_guidelines_url . "')", array(
                   'fragment' => '',
                   'external'=>true,
                   'attributes' => array(
@@ -710,9 +712,11 @@ function _tm_more_actions_process($field, $title = NULL) {
       if ((in_array("moderator", $user->roles) or user_access('administer'))
         or ((in_array("chapter leader", $user->roles))) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid, true))) {
 
+        $community_guidelines_url = $conf["tm_community_guidelines_url"];
+
         $links['approve'][] = array(
           'wrapper_class' => array('approve'),
-          'content' => l(t('Flag: Non-community'), 'javascript:jq_confirm_non_community_profile(' . $uid . ')',
+          'content' => l(t('Flag: Non-community'), 'javascript:jq_confirm_non_community_profile(' . $uid . ', \'' . $community_guidelines_url . '\')',
             array(
             'fragment' => '',
             'external'=> true,

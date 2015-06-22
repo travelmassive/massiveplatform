@@ -434,8 +434,8 @@ Drupal.behaviors.base_scripts = {
     jq_alert(null, "Please allow 12-24 hours for a Chapter Leader to review your account.<br><br>Our community is important to us, so please ensure you\'ve filled out your profile so we can approve you.<br><br>If your account has not been approved please <a href='/contact'>contact us</a> so we can assist you.");
   }
 
-  jq_confirm_approve_member = function(uid) {
-    jq_confirm_url('Do you want to approve this account?', 'Guidelines for approval:<li>Account is a real person</li><li>Profile is filled out</li><li>Profile is not a company or brand</li>', '/user/' + uid + '/approve');
+  jq_confirm_approve_member = function(uid, community_guidelines_url) {
+    jq_confirm_url('Do you want to approve this account?', 'Guidelines for approval:<li>Account is a real person</li><li>Profile is not a company or brand</li><li>Profile meets our <a target="_blank" href="' + community_guidelines_url + '">community guidelines</a></li>', '/user/' + uid + '/approve');
   }
 
   jq_confirm_unapprove_user = function(uid) {
@@ -514,12 +514,12 @@ Drupal.behaviors.base_scripts = {
 
   }
 
-  jq_confirm_non_community_profile = function(uid) {
+  jq_confirm_non_community_profile = function(uid, community_guidelines_url) {
 
     $.prompt({
       state0: {
         title: 'Flag this account as non-community profile?',
-        html: 'This action will:<li>Set this account to un-approved</li><li>Inform account owner of membership requirements</li><li>Notify you if the account owner requests approval</li>',
+        html: 'This action will:<li>Set this account to un-approved</li><li>Inform account owner of <a target="_blank" href="' + community_guidelines_url + '">membership guidelines</a></li><li>Notify you if the account owner requests approval</li>',
         buttons: { Cancel: false, Next: true },
         focus: 1,
         submit:function(e,v,m,f){
@@ -533,7 +533,7 @@ Drupal.behaviors.base_scripts = {
       },
       state1: {
         title: 'Add a helpful comment?',
-        html: "You can send a short message to the person. <textarea id='form_moderator_message' value='' placeholder='Please complete your profile...' rows='3' cols='50'></textarea>",
+        html: "You can send a short message to the person. <textarea id='form_moderator_message' value='' placeholder='Hello, it looks like your profile does not meet our community guidelines...' rows='3' cols='50'></textarea>",
         buttons: { Back: -1, OK: true },
         focus: 1,
         submit:function(e,v,m,f){

@@ -297,7 +297,7 @@ function tm_notifications_notify($notification, $account, $tokens = array()) {
 
   // if notified user is not validated, then don't trigger any notifications
   // allow the user_approved and related notification to be sent
-  $allow_unverified_notifications = array("user_approved", "user_approval_need_more_info", "user_approval_is_company_or_brand");
+  $allow_unverified_notifications = array("user_approved", "user_approval_need_more_info", "user_approval_is_company_or_brand", "user_approval_community_guidelines");
   if (in_array('non-validated', $account->roles) && !in_array($notification, $allow_unverified_notifications)) {
     watchdog('Not sending email to a non-verified user ', $notification . ", " . $account->mail);
     return;

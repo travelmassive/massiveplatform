@@ -347,7 +347,7 @@ password: Your password
 <br>
 <br>__EMAIL_SIGNOFF__
 <br>
-<br>If you are unable to view the button, please use the validation link below:
+<br>If you are unable to view the button, please use the confirmation link below:
 <br>[user:validate-url]
 <br>
 ';

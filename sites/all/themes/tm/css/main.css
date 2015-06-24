@@ -7336,6 +7336,19 @@ a.cancel_account_link {
   color: #888;
 }
 
+/* line 740, ../sass/_single.scss */
+.tm_community_guidelines_validation_message {
+  display: none;
+  background-color: #fff;
+  padding: 0.25rem;
+  border-radius: 4px;
+  padding-left: 1rem;
+  border-left: 8px solid orange;
+  margin-top: 0.25rem;
+  margin-left: 1rem;
+  padding-top: 0.5rem;
+}
+
 /* line 2, ../sass/_login.scss */
 #account-menu-blk .menu-blk-title {
   text-transform: uppercase;

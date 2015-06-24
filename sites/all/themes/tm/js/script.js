@@ -266,23 +266,23 @@ Drupal.behaviors.base_scripts = {
 });})(jQuery, Drupal, this, this.document);
 
 
-// Set the "to date" to be the "from date" when changed
-// from http://tylerfrankenstein.com/code/drupal-automatically-set-date-when-date-changes-popup-calendar
+// Show sign up community validation message
 (function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){
 
-  // page load
-  $('.form-item-check-company').find('.description').hide();
-  if ($('#edit-check-company').prop('checked')) {
-          $('.form-item-check-company').find('.description').show();
+  tm_community_guidelines_show_validation_message = function() {
+    $(".tm_community_guidelines_validation_message").hide();
+    selected_option = $('input[name=check_community_guidelines]:checked').val();
+    $(".tm_community_guidelines_validation_message.validation_message-" + selected_option).show();
   }
 
-  // if company is checked
-  $('#edit-check-company').change(function() {
-    if ($('#edit-check-company').prop('checked')) {
-          $('.form-item-check-company').find('.description').show();
-          //$('#edit-submit').attr('disabled', 'disabled');
-    }
+  // show validation message when radio button selected
+  $('input[name=check_community_guidelines]').change(function() {
+    tm_community_guidelines_show_validation_message();
   });
+
+  // show validation message on page load (if held up by validation)
+  tm_community_guidelines_show_validation_message();
+
      
 });})(jQuery, Drupal, this, this.document);
 

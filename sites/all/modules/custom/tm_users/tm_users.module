@@ -819,18 +819,39 @@ function _tm_users_modify_register_form(&$form, $form_state, $form_id) {
   );
 
   
-  // Step 2. Add an checkbox for company accounts
-
-  // add chapter list to registraton form
+  // Step 2. Add community connection to validate membership
   global $conf;
-  $form['check_company']=array(
-    '#type'=>'checkbox',
-    '#title' => t('I\'m signing up as a Company / Brand'),
-    '#element_validate' => array('_tm_users_company_validation_callback'),
-    '#description'=> "Hold up! " . $conf["tm_site_name"] . " accounts are for individuals. <strong>What to do:</strong> Sign up as an individual and when your account is approved you can add a company profile to our <a target='_blank' href='/companies'>companies section</a>.",
-    '#weight'=>1,
-  );
+  $check_community_guidelines_options = $conf["tm_community_guidelines_options"];
+  $check_community_guidelines_options_validate = $conf["tm_community_guidelines_options_validate"];
+  $check_community_guidelines_description = $conf["tm_community_guidelines_description"];
 
+  // Create divs for validation messages
+  // These can be displayed in javascript via tm_community_guidelines_show_validation_message
+  foreach($check_community_guidelines_options as $index => $val) {
+
+    $validation_message = "";
+    $validation_class = "";
+    if (!$check_community_guidelines_options_validate[$index]["valid"]) {
+      $validation_message = $check_community_guidelines_options_validate[$index]["message"];
+      $validation_class = "validation_message-" . $index;
+    }
+
+    $check_community_guidelines_options[$index] = $val . "<div style='display: none;' class='tm_community_guidelines_validation_message " . $validation_class . "'>" . $validation_message . "</div>";
+  }
+  
+  // Add how do you connect form
+  $form['check_community_guidelines_text']['active'] = array(
+  '#type' => 'item',
+  '#markup' => "<label>How do you connect with our community?</label>",
+  '#weight'=>1,
+  );  
+  $form['check_community_guidelines'] = array(
+  '#type' => 'radios',
+  '#options' => $check_community_guidelines_options,
+  '#element_validate' => array('_tm_users_community_validation_callback'),
+  '#description' => $check_community_guidelines_description . " See our " . l(t('Community Guidelines'), $conf["tm_community_guidelines_url"], array('attributes' => array('target' => '_blank'))) . ".",
+  '#weight'=> 1,
+  );    
 
   // Step 3. Add terms and conditions agreement to sign up form
   $form['cutomtext'] = array(
@@ -851,13 +872,26 @@ function _tm_users_modify_register_form(&$form, $form_state, $form_id) {
   );
 }
 
-// Make sure users understand profiles are for individual use
-function _tm_users_company_validation_callback($element, &$form_state, $form) {
-  if (($form['check_company']['#checked'])) {
-    $form['check_company']['#checked'] = false;
-    global $conf;
-    form_set_error('check_company', t("Hold up! " . $conf["tm_site_name"] . " accounts are for individuals. Once your personal account is approved you can add a company profile to our companies section.<br><br>Got it? Great! Please continue with creating your personal profile."));
+// Validate community connection option on signup page
+function _tm_users_community_validation_callback($element, &$form_state, $form) {
+
+  global $conf;
+  $validation = $conf["tm_community_guidelines_options_validate"];
+
+  // Check if form value was set
+  if (!isset($form_state['values']['check_community_guidelines'])) {
+    form_set_error('check_community', "Please select how you connect with the community");
+    return;
   }
+
+  // Get item checked
+  $item_checked = $form_state['values']['check_community_guidelines'];
+
+  // If not valid, use message in validation array
+  if (!$validation[$item_checked]["valid"]) {
+    form_set_error('check_community', $validation[$item_checked]["message"]);
+  }
+  
 }
 
 // Modify the user's profile form

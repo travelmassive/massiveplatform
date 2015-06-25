@@ -736,3 +736,5 @@
 .tm-frontpage-video-pause:hover { color: #888; }
 .tm-frontpage-video-play:before { @extend .icon-circle-play; }
 .tm-frontpage-video-pause:before { @extend .icon-s-triangle-right; }
+
+.tm_community_values_validation_message { display: none; background-color: #eee; padding: 0.25rem; border-radius: 4px; padding-left: 1rem; border-left: 8px solid orange; margin-top: 0.25rem; margin-left: 1rem; }

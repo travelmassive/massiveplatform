@@ -266,23 +266,23 @@ Drupal.behaviors.base_scripts = {
 });})(jQuery, Drupal, this, this.document);
 
 
-// Set the "to date" to be the "from date" when changed
-// from http://tylerfrankenstein.com/code/drupal-automatically-set-date-when-date-changes-popup-calendar
+// Show sign up community validation message
 (function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){
 
-  // page load
-  $('.form-item-check-company').find('.description').hide();
-  if ($('#edit-check-company').prop('checked')) {
-          $('.form-item-check-company').find('.description').show();
+  tm_community_values_show_validation_message = function() {
+    $(".tm_community_values_validation_message").hide();
+    selected_option = $('input[name=check_community_values]:checked').val();
+    $(".tm_community_values_validation_message.validation_message-" + selected_option).show();
   }
 
-  // if company is checked
-  $('#edit-check-company').change(function() {
-    if ($('#edit-check-company').prop('checked')) {
-          $('.form-item-check-company').find('.description').show();
-          //$('#edit-submit').attr('disabled', 'disabled');
-    }
+  // show validation message when radio button selected
+  $('input[name=check_community_values]').change(function() {
+    tm_community_values_show_validation_message();
   });
+
+  // show validation message on page load (if held up by validation)
+  tm_community_values_show_validation_message();
+
      
 });})(jQuery, Drupal, this, this.document);
 
@@ -434,8 +434,8 @@ Drupal.behaviors.base_scripts = {
     jq_alert(null, "Please allow 12-24 hours for a Chapter Leader to review your account.<br><br>Our community is important to us, so please ensure you\'ve filled out your profile so we can approve you.<br><br>If your account has not been approved please <a href='/contact'>contact us</a> so we can assist you.");
   }
 
-  jq_confirm_approve_member = function(uid) {
-    jq_confirm_url('Do you want to approve this account?', 'Guidelines for approval:<li>Account is a real person</li><li>Profile is filled out</li><li>Profile is not a company or brand</li>', '/user/' + uid + '/approve');
+  jq_confirm_approve_member = function(uid, community_values_url) {
+    jq_confirm_url('Do you want to approve this account?', 'Guidelines for approval:<li>Account is a real person</li><li>Profile is not a company or brand</li><li>Profile meets our <a target="_blank" href="' + community_values_url + '">community values</a></li>', '/user/' + uid + '/approve');
   }
 
   jq_confirm_unapprove_user = function(uid) {
@@ -504,6 +504,42 @@ Drupal.behaviors.base_scripts = {
           if (v == true) {
             // replace new lines with __NL__ as we moving this via regular GET and cant pass it via XHR
             window.location = '/user/' + uid + '/approval_is_company_or_brand?moderator_message=' + document.getElementById('form_moderator_message').value.replace(/\n/mg,"__NL__"); 
+          } 
+          else if(v==-1) {
+            $.prompt.goToState('state0');
+          }
+        }
+      }
+    });
+
+  }
+
+  jq_confirm_non_community_profile = function(uid, community_values_url) {
+
+    $.prompt({
+      state0: {
+        title: 'Flag this account as non-community profile?',
+        html: 'This action will:<li>Set this account to <i>un-approved</i></li><li>Inform account owner of <a target="_blank" href="' + community_values_url + '">membership guidelines</a></li><li>Notify you if the account owner requests approval</li>',
+        buttons: { Cancel: false, Next: true },
+        focus: 1,
+        submit:function(e,v,m,f){
+          if(v){
+            e.preventDefault();
+            $.prompt.goToState('state1');
+            return false;
+          }
+          $.prompt.close();
+        }
+      },
+      state1: {
+        title: 'Add a helpful comment?',
+        html: "You can send a short message to the person. <textarea id='form_moderator_message' value='' placeholder='Hello, it looks like your profile does not meet our community guidelines...' rows='3' cols='50'></textarea>",
+        buttons: { Back: -1, OK: true },
+        focus: 1,
+        submit:function(e,v,m,f){
+          if (v == true) {
+            // replace new lines with __NL__ as we moving this via regular GET and cant pass it via XHR
+            window.location = '/user/' + uid + '/moderate_non_community_profile?moderator_message=' + document.getElementById('form_moderator_message').value.replace(/\n/mg,"__NL__"); 
           } 
           else if(v==-1) {
             $.prompt.goToState('state0');

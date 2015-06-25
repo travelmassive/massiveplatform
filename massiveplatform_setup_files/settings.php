@@ -621,6 +621,9 @@ $conf['tm_tips_sponsor_page_link'] = "https://travelmassive.com/blog/sponsors-gu
 /** tm_tips_chapter_leaders_guide **/
 $conf['tm_tips_chapter_leaders_link'] = "https://travelmassive.com/blog/chapter-leader-resources/";
 
+/** tm_community_values_url **/
+$conf['tm_community_values_url'] = "https://travelmassive.com/blog/community-values/";
+
 /** Where to send contact form emails to **/
 $conf['tm_contact_page_email'] = "hello@travelmassive.com";
 
@@ -644,6 +647,24 @@ $conf['tm_messaging_enabled'] = true; // turn on or off email messaging if follo
 $conf['tm_messaging_wait_time'] = 1800; // number of seconds between messaging the same person
 $conf['tm_messaging_limit_days'] = 14; // number of days to check for rate limit
 $conf['tm_messaging_limit_max'] = 30; // limit of messages you can send to different people within period
+
+/** Provides a list of validated options on the signup page to indicate how the user connects with the community **/
+/** These options are not saved to the user account **/
+$conf["tm_community_values_description"] = "Our community is for travel industry insiders, leaders, and innovators.";
+$conf["tm_community_values_options"] = array(
+    0 => t('I work in the travel industry (example: startup, tour operator, DMO)'),
+    1 => t('I work with travel industry customers (example: marketing, Tourism PR)'),
+    2 => t('I create travel content (example: blogger, vlogger, presenter)'),
+    3 => t('I study tourism or a closely related course'),
+    4 => t('I am signing up as a travel company / brand'),
+    5 => t('I love travel'));
+$conf["tm_community_values_options_validate"] = array(
+    0 => array("valid" => true, "message" => ""),
+    1 => array("valid" => true, "message" => ""),
+    2 => array("valid" => true, "message" => ""),
+    3 => array("valid" => true, "message" => ""),
+    4 => array("valid" => false, "message" => "<strong>Travel Massive accounts are for individuals.</strong> Please choose a community connection that applies to you personally. Once your account is approved you can create a company profile."),
+    5 => array("valid" => false, "message" => "<strong>Why can't I join?</strong> Our community provides professional networking and development for members of the travel and tourism industry. We wish you safe travels and instead please become a <a href='https://travelmassive.com/blog/i-love-travel/'>friend of our community</a>."));
 
 /** Set a front page launch message and hide the stats. Comment out to disable **/
 //$conf['tm_frontpage_launch_message'] = "We've just launched our new community platform. Read our <a style='color: #fff; text-decoration: underline;' href='/blog/'>announcement</a>.";

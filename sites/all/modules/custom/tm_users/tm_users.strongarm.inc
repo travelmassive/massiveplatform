@@ -262,17 +262,31 @@ This link expires in one day and nothing will happen if it is not used.
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'user_mail_password_reset_body';
-  $strongarm->value = '[user:name],
-
-A request to reset the password for your account has been made at [site:name].
-
-You may now log in by clicking this link or copying and pasting it to your browser:
-
-[user:one-time-login-url]
-
-This link can only be used once to log in and will lead you to a page where you can set your password. It expires after one day and nothing will happen if it\'s not used.
-
---  [site:name] team';
+  $strongarm->value = 'Hi [user:name],
+<br>
+<br>A request to reset the password for your __SITE_NAME__ account has been made.
+<br>
+<br>If you wish to reset your password, click the button below:
+<br>
+<br><div>
+  <table cellspacing="0" cellpadding="0"> <tr> 
+  <td align="center" width="300" height="40" bgcolor="#007db7" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block;">
+    <a href="[user:one-time-login-url]" style="font-size:16px; font-weight: bold; font-family:sans-serif; text-decoration: none; line-height:40px; width:100%; display:inline-block">
+    <span style="color: #ffffff;">
+      Reset password
+    </span>
+    </a>
+  </td> 
+  </tr> </table> 
+</div>
+<br>
+<br>This link will expire in 24 hours and you can only use it once.
+<br>
+<br>__EMAIL_SIGNOFF__
+<br>
+<br>If you are unable to view the button, please use the recovery link below:
+<br>[user:one-time-login-url]
+<br>';
   $export['user_mail_password_reset_body'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -314,18 +328,29 @@ password: Your password
   $strongarm->api_version = 1;
   $strongarm->name = 'user_mail_register_no_approval_required_body';
   $strongarm->value = 'Hi [user:name],
-
-Thank you for registering at [site:name].
-
-You need to validate your email address by visiting this link:
-
-[user:validate-url]
-
-Until you activate your account, you won\'t receive any notification emails such as new followers or event updates.
-
-Thanks for signing up!
-
---  [site:name] team';
+<br>
+<br>Confirm your email address to complete your __SITE_NAME__ account. It\'s easy - just click the button below.
+<br>
+<br><div>
+  <table cellspacing="0" cellpadding="0"> <tr> 
+  <td align="center" width="300" height="40" bgcolor="#007db7" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block;">
+    <a href="[user:validate-url]" style="font-size:16px; font-weight: bold; font-family:sans-serif; text-decoration: none; line-height:40px; width:100%; display:inline-block">
+    <span style="color: #ffffff;">
+      Confirm now
+    </span>
+    </a>
+  </td> 
+  </tr> </table> 
+</div>
+<br>
+<br>Until you activate your account, you won\'t receive any notification emails such as new followers or event updates.
+<br>
+<br>__EMAIL_SIGNOFF__
+<br>
+<br>If you are unable to view the button, please use the confirmation link below:
+<br>[user:validate-url]
+<br>
+';
   $export['user_mail_register_no_approval_required_body'] = $strongarm;
 
   $strongarm = new stdClass();

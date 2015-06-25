@@ -194,6 +194,15 @@ function tm_users_menu() {
     //'access arguments' => array('user_is_logged_in'),
     'type' => MENU_CALLBACK,
   );
+  $items['user/%user/moderate_non_community_profile'] = array(
+    'title' => 'Request approval',
+    'page callback' => 'tm_users_moderate_non_community_profile',
+    'page arguments' => array(1),
+    'access arguments' => array('approve users'),
+    //'access arguments' => array('user_is_logged_in'),
+    'type' => MENU_CALLBACK,
+  );
+
   return $items;
 }
 
@@ -214,21 +223,39 @@ function tm_users_approve($user) {
 
     $approval_text = "Your account has been approved by " . $approving_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . ".";
 
-    tm_notifications_notify('user_approved', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__APPROVAL_INTRO_TEXT__' => $approval_text));
+    // Set moderator's reply-to address if they have allowed in their notification settings
+    $reply_to = null;
+    $notif = new TMNotification("user_approval_allow_reply_to");
+    if ($notif->isEnabled($approving_user->uid)) {
+      $reply_to = $approving_user->mail;
+    }
+
+    tm_notifications_notify('user_approved', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__APPROVAL_INTRO_TEXT__' => $approval_text, '__REPLY_TO__' => $reply_to));
 
     // Remove any moderation flags the user has
+
+    // Unflag approval_is_company_or_brand
     $who_flagged = flag_get_entity_flags("user", $user->uid, "approval_is_company_or_brand");
     foreach ($who_flagged as $flagger) {
       $moderator = user_load($flagger->uid); 
       flag('unflag', 'approval_is_company_or_brand', $user->uid, $moderator);
     }
 
+    // Unflag approval_need_more_info
     $who_flagged = flag_get_entity_flags("user", $user->uid, "approval_need_more_info");
     foreach ($who_flagged as $flagger) {
       $moderator = user_load($flagger->uid); 
       flag('unflag', 'approval_need_more_info', $user->uid, $moderator);
     }
-   
+
+    // Unflag moderate_non_community_profile
+    $who_flagged = flag_get_entity_flags("user", $user->uid, "moderate_non_community_profile");
+    foreach ($who_flagged as $flagger) {
+      $moderator = user_load($flagger->uid); 
+      flag('unflag', 'moderate_non_community_profile', $user->uid, $moderator);
+    }
+
+    // Remove approval request flag
     flag('unflag', 'approval_requested_by_user', $user->uid, $user);
 
     // Keep track of who approved with approval_approved_by flag
@@ -358,7 +385,14 @@ function tm_users_approval_need_more_info($user){
       $moderator_message_safe = str_replace("__NL__", "<br>", $moderator_message_safe); 
   }
 
-  tm_notifications_notify('user_approval_need_more_info', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe));
+  // Set moderator's reply-to address if they have allowed in their notification settings
+  $reply_to = null;
+  $notif = new TMNotification("user_approval_allow_reply_to");
+  if ($notif->isEnabled($approving_user->uid)) {
+    $reply_to = $approving_user->mail;
+  }
+
+  tm_notifications_notify('user_approval_need_more_info', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe, '__REPLY_TO__' => $reply_to));
 
   // unflag then flag again
   flag('unflag', 'approval_need_more_info', $user->uid, $approving_user);
@@ -396,7 +430,14 @@ function tm_users_approval_is_company_or_brand($user){
       $moderator_message_safe = str_replace("__NL__", "<br>", $moderator_message_safe); 
   }
 
-  tm_notifications_notify('user_approval_is_company_or_brand', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe));
+  // Set moderator's reply-to address if they have allowed in their notification settings
+  $reply_to = null;
+  $notif = new TMNotification("user_approval_allow_reply_to");
+  if ($notif->isEnabled($approving_user->uid)) {
+    $reply_to = $approving_user->mail;
+  }
+
+  tm_notifications_notify('user_approval_is_company_or_brand', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe, '__REPLY_TO__' => $reply_to));
 
   // flag the user that its a company or brand
   flag('unflag', 'approval_is_company_or_brand', $user->uid, $approving_user);
@@ -407,6 +448,68 @@ function tm_users_approval_is_company_or_brand($user){
 
   // Notify user
   drupal_set_message("An email has been sent to " . $user->mail . " requesting they personalize their account.");
+
+  drupal_goto(drupal_get_path_alias("user/$user->uid"));
+}
+
+
+/* Profile does not meet community criteria */
+function tm_users_moderate_non_community_profile($user){
+
+  global $conf;
+  $approving_user = $GLOBALS['user'];
+
+  // Permission check in addition to access arguments
+  // Don't allow flagging of admin account
+  if (((in_array('administrator', $user->roles)) 
+    or (in_array('moderator', $user->roles))) 
+    or (in_array('chapter leader', $user->roles))) {
+    drupal_set_message("Unable to flag this account as non-community.");
+    return;
+  }
+
+  // Send notification message to user that their account doesn't meet community guidelines
+  // there doesn't seem to be a hook that can detect we are applying a new role, so do it here
+  $approving_user = user_uid_optional_load();
+  // set profile url (either friendly url or community url)
+  $profile_url = drupal_get_path_alias("user/" . $user->uid);
+
+  $moderator_first_name = $approving_user->field_user_first_name['und'][0]['value'];
+
+  // get moderator message to send to member
+  // add line breaks
+  $moderator_message = trim($_GET["moderator_message"]);
+  $moderator_message_safe = "";
+  if ($moderator_message != "") {
+      $moderator_message_safe = "<br><strong>Message from " . $moderator_first_name . ":</strong> " . check_plain($moderator_message) . "<br>";
+      $moderator_message_safe = str_replace("__NL__", "<br>", $moderator_message_safe); 
+  }
+
+  // Set moderator's reply-to address if they have allowed in their notification settings
+  $reply_to = null;
+  $notif = new TMNotification("user_approval_allow_reply_to");
+  if ($notif->isEnabled($approving_user->uid)) {
+    $reply_to = $approving_user->mail;
+  }
+
+  $community_values_url = $conf["tm_community_values_url"];
+  tm_notifications_notify('user_approval_non_community', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe, '__COMMUNITY_VALUES_URL__' => $community_values_url, '__REPLY_TO__' => $reply_to));
+
+  // flag the user their profile does not meet community values
+  flag('unflag', 'moderate_non_community_profile', $user->uid, $approving_user);
+  flag('flag', 'moderate_non_community_profile', $user->uid, $approving_user); 
+
+  // set the user to unapproved
+  $role_name = 'approved user'; // The name of the role to remove.
+  if ($role = user_role_load_by_name($role_name)) {
+    user_multiple_role_edit(array($user->uid), 'remove_role', $role->rid);
+  }
+
+  // unflag requested approval (so they can re-request if they already did)
+  flag('unflag', 'approval_requested_by_user', $user->uid, $user);
+
+  // Notify user
+  drupal_set_message("An email has been sent to " . $user->mail . " requesting they address the membership guidelines of the community.");
 
   drupal_goto(drupal_get_path_alias("user/$user->uid"));
 }
@@ -716,18 +819,39 @@ function _tm_users_modify_register_form(&$form, $form_state, $form_id) {
   );
 
   
-  // Step 2. Add an checkbox for company accounts
-
-  // add chapter list to registraton form
+  // Step 2. Add community connection to validate membership
   global $conf;
-  $form['check_company']=array(
-    '#type'=>'checkbox',
-    '#title' => t('I\'m signing up as a Company / Brand'),
-    '#element_validate' => array('_tm_users_company_validation_callback'),
-    '#description'=> "Hold up! " . $conf["tm_site_name"] . " accounts are for individuals. <strong>What to do:</strong> Sign up as an individual and when your account is approved you can add a company profile to our <a target='_blank' href='/companies'>companies section</a>.",
-    '#weight'=>1,
-  );
+  $check_community_values_options = $conf["tm_community_values_options"];
+  $check_community_values_options_validate = $conf["tm_community_values_options_validate"];
+  $check_community_values_description = $conf["tm_community_values_description"];
 
+  // Create divs for validation messages
+  // These can be displayed in javascript via tm_community_values_show_validation_message
+  foreach($check_community_values_options as $index => $val) {
+
+    $validation_message = "";
+    $validation_class = "";
+    if (!$check_community_values_options_validate[$index]["valid"]) {
+      $validation_message = $check_community_values_options_validate[$index]["message"];
+      $validation_class = "validation_message-" . $index;
+    }
+
+    $check_community_values_options[$index] = $val . "<div style='display: none;' class='tm_community_values_validation_message " . $validation_class . "'>" . $validation_message . "</div>";
+  }
+  
+  // Add how do you connect form
+  $form['check_community_values_text']['active'] = array(
+  '#type' => 'item',
+  '#markup' => "<label>How do you connect with our community?</label>",
+  '#weight'=>1,
+  );  
+  $form['check_community_values'] = array(
+  '#type' => 'radios',
+  '#options' => $check_community_values_options,
+  '#element_validate' => array('_tm_users_community_validation_callback'),
+  '#description' => $check_community_values_description . " See our " . l(t('Community Values'), $conf["tm_community_values_url"], array('attributes' => array('target' => '_blank'))) . ".",
+  '#weight'=> 1,
+  );    
 
   // Step 3. Add terms and conditions agreement to sign up form
   $form['cutomtext'] = array(
@@ -748,13 +872,26 @@ function _tm_users_modify_register_form(&$form, $form_state, $form_id) {
   );
 }
 
-// Make sure users understand profiles are for individual use
-function _tm_users_company_validation_callback($element, &$form_state, $form) {
-  if (($form['check_company']['#checked'])) {
-    $form['check_company']['#checked'] = false;
-    global $conf;
-    form_set_error('check_company', t("Hold up! " . $conf["tm_site_name"] . " accounts are for individuals. Once your personal account is approved you can add a company profile to our companies section.<br><br>Got it? Great! Please continue with creating your personal profile."));
+// Validate community connection option on signup page
+function _tm_users_community_validation_callback($element, &$form_state, $form) {
+
+  global $conf;
+  $validation = $conf["tm_community_values_options_validate"];
+
+  // Check if form value was set
+  if (!isset($form_state['values']['check_community_values'])) {
+    form_set_error('check_community', "Please select how you connect with the community");
+    return;
   }
+
+  // Get item checked
+  $item_checked = $form_state['values']['check_community_values'];
+
+  // If not valid, use message in validation array
+  if (!$validation[$item_checked]["valid"]) {
+    form_set_error('check_community', $validation[$item_checked]["message"]);
+  }
+  
 }
 
 // Modify the user's profile form
@@ -1505,12 +1642,47 @@ function tm_users_form_contact_site_form_alter(&$form, &$form_state, $form_id) {
 }
 
 
+// Override some system emails
+// We send an html email with the reply-to address set
+// We also stop the default contact email from being sent.
 function tm_users_mail_alter(&$mail_form) {
 
-  // If site contact page is sent we take over from here
-  // We send an html email with the reply-to address set
-  // We also stop the default contact email from being sent.
+  // Verify email an dd reset password
+  if (($mail_form['id'] == 'user_register_no_approval_required') or ($mail_form['id'] == 'user_password_reset')) {
+    
+    global $user;
+    global $conf;
 
+    $module = 'tm_users';
+    $key = $mail_form['key'];
+    $language = language_default();
+    $params = $mail_form['params'];
+    $to = $mail_form['to'];
+    $email = $mail_form['to'];
+    $account = $mail_form['params']['account'];
+    $first_name = $account->field_user_first_name[LANGUAGE_NONE][0]['value'];
+    $last_name = $account->field_user_last_name[LANGUAGE_NONE][0]['value'];
+
+    // SET SUBJECT
+    //$subject = $mail_form['subject'];
+    if ($mail_form['id'] == 'user_register_no_approval_required') {
+      $subject = "Confirm your " . $conf["tm_site_name"] . " account, " . $first_name . " " . $last_name;
+
+    } elseif ($mail_form['id'] == 'user_password_reset') {
+      drupal_set_message("We've just sent an email to " . $email . " with a link to recover your account. Please allow a few minutes for the email to arrive.");
+      $subject = "Recover your " . $conf["tm_site_name"] . " login";
+    }
+
+    $message = $mail_form['body']['0'];
+
+     // SEND EMAIL
+    tm_users_send_html_mail($module, $key, $email, $language, $params, $subject, $message, NULL);
+  
+    // Don't send via drupal mail
+    $mail_form['send'] = false;
+  }
+
+  // Site contact page
   if ($mail_form['id'] == 'contact_page_mail') {
     
     global $user;
@@ -1520,9 +1692,7 @@ function tm_users_mail_alter(&$mail_form) {
     $key = 'key';
     $language = language_default();
     $params = array();
-    $from = NULL;
     $reply = $mail_form['params']['mail'];
-    $send = FALSE;
     $email = $conf['tm_contact_page_email'];
 
     // CONSTRUCT MESSAGE
@@ -1544,50 +1714,71 @@ function tm_users_mail_alter(&$mail_form) {
     $message .= "<br>";
     $message .= "<br>__EMAIL_SIGNOFF__";
 
-    // STEP 1. LOAD HTML TEMPLATE
-    $template_file = drupal_get_path('module', 'tm_notifications') . '/templates/tm_notifications-email_template.tpl.php';
-    $template = file_get_contents($template_file);
+    // SUBJECT
+    $subject = "Contact Form: " . check_plain($mail_form['params']['subject']);
 
-
-    // STEP 2. SET MAIL HTML HEADERS
-    $email_message = drupal_mail($module, $key, $email, $language, $params, NULL, $send);
-    $email_message['headers']['MIME-Version'] = '1.0';
-    $email_message['headers']['Content-Type'] = 'multipart/mixed;';
-    $email_message['headers']['Content-Type'] = 'text/html;';
-    $email_message['headers']['Reply-to'] = $reply; // set reply-to to the user
-
-    // STEP 3. SET SUBJECT 
-    $email_message['subject'] = "Contact Form: " . check_plain($mail_form['params']['subject']);
-
-    // STEP 4. REPLACE BODY AND FOOTER IN HTML TEMPLATE
-    $template = str_replace("__EMAIL_BODY__", $message, $template);
-    $footer = $conf["tm_email_default_footer"];
-    $template = str_replace("__EMAIL_FOOTER__", $footer, $template);
-
-    // Other vars
-    $template = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $template); 
-    $template = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $template);  
-    $template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
-    $template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template); 
-
-    // STEP 5. LOAD HTML TEMPLATE INTO EMAIL BODY
-    $email_message['body'] = $template;
-
-    // STEP 6. SEND EMAIL
-    // Retrieve the responsible implementation for this message.
-    $system = drupal_mail_system($module, $key);
-
-    // Format the message body.
-    $format_message = $system->format($email_message);
-
-    // Send e-mail.
-    $result = $system->mail($format_message);
-
+    // SEND EMAIL
+    tm_users_send_html_mail($module, $key, $email, $language, $params, $subject, $message, $reply);
+  
     // Don't send via drupal mail
     $mail_form['send'] = false;
   }
+}
+
+
+/* Helper method
+ * Send html email
+ * Note for system messages you need to set $mail_form['send'] = false;
+ */
+function tm_users_send_html_mail($module, $key, $email, $language, $params, $subject, $message, $reply = NULL) {
+
+  global $conf;
+
+  // STEP 1. LOAD HTML TEMPLATE
+  $template_file = drupal_get_path('module', 'tm_notifications') . '/templates/tm_notifications-email_template.tpl.php';
+  $template = file_get_contents($template_file);
+
+  // STEP 2. SET MAIL HTML HEADERS
+  $email_message = drupal_mail($module, $key, $email, $language, $params, NULL, FALSE);
+  $email_message['headers']['MIME-Version'] = '1.0';
+  $email_message['headers']['Content-Type'] = 'multipart/mixed;';
+  $email_message['headers']['Content-Type'] = 'text/html;';
+  if ($reply != NULL) {
+    $email_message['headers']['Reply-to'] = $reply; // set reply-to to the user
+  }
+
+  // STEP 3. SET SUBJECT 
+  $email_message['subject'] = $subject;
+
+  // STEP 4. REPLACE BODY AND FOOTER IN HTML TEMPLATE
+  $template = str_replace("__EMAIL_BODY__", $message, $template);
+  $footer = $conf["tm_email_default_footer"];
+  $template = str_replace("__EMAIL_FOOTER__", $footer, $template);
+
+  // Other vars
+  $template = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $template); 
+  $template = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $template);  
+  $template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
+  $template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template); 
+
+  // STEP 5. LOAD HTML TEMPLATE INTO EMAIL BODY
+  $email_message['body'] = $template;
+
+  // STEP 6. SEND EMAIL
+  // Retrieve the responsible implementation for this message.
+  $system = drupal_mail_system($module, $key);
+
+  // Format the message body.
+  $format_message = $system->format($email_message);
+
+  // Send e-mail.
+  $result = $system->mail($format_message);
+
+  // Don't send via drupal mail
+  $mail_form['send'] = false;
 
 }
+
 
 // Add a link to chapter leaders from the community page
 function tm_users_views_post_execute(&$view) {

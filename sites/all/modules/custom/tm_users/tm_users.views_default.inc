@@ -309,6 +309,107 @@ function tm_users_views_default_views() {
   $handler->display->display_options['pager']['options']['waypoint']['infinite'] = 1;
   $handler->display->display_options['pager']['options']['effects']['speed'] = 'slow';
   $handler->display->display_options['exposed_block'] = TRUE;
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: User: Country (field_user_country) */
+  $handler->display->display_options['relationships']['field_user_country_iso2']['id'] = 'field_user_country_iso2';
+  $handler->display->display_options['relationships']['field_user_country_iso2']['table'] = 'field_data_field_user_country';
+  $handler->display->display_options['relationships']['field_user_country_iso2']['field'] = 'field_user_country_iso2';
+  /* Relationship: Flags: moderate_non_community_profile */
+  $handler->display->display_options['relationships']['flag_content_rel']['id'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_content_rel']['field'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel']['label'] = 'flagged_non_community';
+  $handler->display->display_options['relationships']['flag_content_rel']['required'] = 0;
+  $handler->display->display_options['relationships']['flag_content_rel']['flag'] = 'moderate_non_community_profile';
+  $handler->display->display_options['relationships']['flag_content_rel']['user_scope'] = 'any';
+  /* Relationship: Flags: approval_need_more_info */
+  $handler->display->display_options['relationships']['flag_content_rel_1']['id'] = 'flag_content_rel_1';
+  $handler->display->display_options['relationships']['flag_content_rel_1']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_content_rel_1']['field'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel_1']['label'] = 'flagged_approval_need_more_info';
+  $handler->display->display_options['relationships']['flag_content_rel_1']['required'] = 0;
+  $handler->display->display_options['relationships']['flag_content_rel_1']['flag'] = 'approval_need_more_info';
+  $handler->display->display_options['relationships']['flag_content_rel_1']['user_scope'] = 'any';
+  /* Relationship: Flags: approval_is_company_or_brand */
+  $handler->display->display_options['relationships']['flag_content_rel_2']['id'] = 'flag_content_rel_2';
+  $handler->display->display_options['relationships']['flag_content_rel_2']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_content_rel_2']['field'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel_2']['label'] = 'flagged_approval_company_profile';
+  $handler->display->display_options['relationships']['flag_content_rel_2']['required'] = 0;
+  $handler->display->display_options['relationships']['flag_content_rel_2']['flag'] = 'approval_is_company_or_brand';
+  $handler->display->display_options['relationships']['flag_content_rel_2']['user_scope'] = 'any';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: User: Active */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'users';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = '1';
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Countries: Name - list */
+  $handler->display->display_options['filters']['name_list']['id'] = 'name_list';
+  $handler->display->display_options['filters']['name_list']['table'] = 'countries_country';
+  $handler->display->display_options['filters']['name_list']['field'] = 'name_list';
+  $handler->display->display_options['filters']['name_list']['relationship'] = 'field_user_country_iso2';
+  $handler->display->display_options['filters']['name_list']['group'] = 1;
+  $handler->display->display_options['filters']['name_list']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['name_list']['expose']['operator_id'] = 'name_list_op';
+  $handler->display->display_options['filters']['name_list']['expose']['operator'] = 'name_list_op';
+  $handler->display->display_options['filters']['name_list']['expose']['identifier'] = 'name_list';
+  $handler->display->display_options['filters']['name_list']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    4 => 0,
+    6 => 0,
+    7 => 0,
+    3 => 0,
+    5 => 0,
+  );
+  $handler->display->display_options['filters']['name_list']['configuration'] = '1';
+  $handler->display->display_options['filters']['name_list']['filter'] = array(
+    'enabled' => '0',
+    'continents' => array(),
+  );
+  /* Filter criterion: Taxonomy Entity Index: Has taxonomy terms on User  (with depth and indexed in taxonomy_entity_index) */
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['id'] = 'taxonomy_entity_index_tid_depth';
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['table'] = 'users';
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['field'] = 'taxonomy_entity_index_tid_depth';
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['expose']['operator_id'] = 'taxonomy_entity_index_tid_depth_op';
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['expose']['operator'] = 'taxonomy_entity_index_tid_depth_op';
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['expose']['identifier'] = 'taxonomy_entity_index_tid_depth';
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    4 => 0,
+    6 => 0,
+    7 => 0,
+    3 => 0,
+    5 => 0,
+  );
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['type'] = 'select';
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['vocabulary'] = 'tm_segments';
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['hierarchy'] = 1;
+  $handler->display->display_options['filters']['taxonomy_entity_index_tid_depth']['depth'] = '2';
+  /* Filter criterion: Flags: Flagged */
+  $handler->display->display_options['filters']['flagged']['id'] = 'flagged';
+  $handler->display->display_options['filters']['flagged']['table'] = 'flagging';
+  $handler->display->display_options['filters']['flagged']['field'] = 'flagged';
+  $handler->display->display_options['filters']['flagged']['relationship'] = 'flag_content_rel';
+  $handler->display->display_options['filters']['flagged']['value'] = '0';
+  /* Filter criterion: Flags: Flagged */
+  $handler->display->display_options['filters']['flagged_1']['id'] = 'flagged_1';
+  $handler->display->display_options['filters']['flagged_1']['table'] = 'flagging';
+  $handler->display->display_options['filters']['flagged_1']['field'] = 'flagged';
+  $handler->display->display_options['filters']['flagged_1']['relationship'] = 'flag_content_rel_2';
+  $handler->display->display_options['filters']['flagged_1']['value'] = '0';
+  /* Filter criterion: Flags: Flagged */
+  $handler->display->display_options['filters']['flagged_2']['id'] = 'flagged_2';
+  $handler->display->display_options['filters']['flagged_2']['table'] = 'flagging';
+  $handler->display->display_options['filters']['flagged_2']['field'] = 'flagged';
+  $handler->display->display_options['filters']['flagged_2']['relationship'] = 'flag_content_rel_1';
+  $handler->display->display_options['filters']['flagged_2']['value'] = '0';
   $handler->display->display_options['path'] = 'community';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Community';

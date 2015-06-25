@@ -246,6 +246,9 @@ function tm_users_external_signin_register_form_submit($form, &$form_state) {
   // User password (generated):
   $pwd = user_password(50);
 
+  // Community values options
+  $check_community_values = $form_state['values']['check_community_values'];
+
   // Reason for joining
   $reason_for_joining = trim($form_state['values']['reason_for_joining']);
   
@@ -255,6 +258,7 @@ function tm_users_external_signin_register_form_submit($form, &$form_state) {
   // thankyou https://www.drupal.org/node/1514312
   $form_state_user['values']['field_user_first_name']['und'][0]['value'] = $field_user_first_name;
   $form_state_user['values']['field_user_last_name']['und'][0]['value'] = $field_user_last_name;
+  $form_state_user['values']['check_community_values'] = $check_community_values;
 
   //$form_state_user['values']['name'] = $name;
   $form_state_user['values']['mail'] = $email;

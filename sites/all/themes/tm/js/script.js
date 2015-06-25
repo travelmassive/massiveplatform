@@ -269,19 +269,19 @@ Drupal.behaviors.base_scripts = {
 // Show sign up community validation message
 (function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){
 
-  tm_community_guidelines_show_validation_message = function() {
-    $(".tm_community_guidelines_validation_message").hide();
-    selected_option = $('input[name=check_community_guidelines]:checked').val();
-    $(".tm_community_guidelines_validation_message.validation_message-" + selected_option).show();
+  tm_community_values_show_validation_message = function() {
+    $(".tm_community_values_validation_message").hide();
+    selected_option = $('input[name=check_community_values]:checked').val();
+    $(".tm_community_values_validation_message.validation_message-" + selected_option).show();
   }
 
   // show validation message when radio button selected
-  $('input[name=check_community_guidelines]').change(function() {
-    tm_community_guidelines_show_validation_message();
+  $('input[name=check_community_values]').change(function() {
+    tm_community_values_show_validation_message();
   });
 
   // show validation message on page load (if held up by validation)
-  tm_community_guidelines_show_validation_message();
+  tm_community_values_show_validation_message();
 
      
 });})(jQuery, Drupal, this, this.document);
@@ -434,8 +434,8 @@ Drupal.behaviors.base_scripts = {
     jq_alert(null, "Please allow 12-24 hours for a Chapter Leader to review your account.<br><br>Our community is important to us, so please ensure you\'ve filled out your profile so we can approve you.<br><br>If your account has not been approved please <a href='/contact'>contact us</a> so we can assist you.");
   }
 
-  jq_confirm_approve_member = function(uid, community_guidelines_url) {
-    jq_confirm_url('Do you want to approve this account?', 'Guidelines for approval:<li>Account is a real person</li><li>Profile is not a company or brand</li><li>Profile meets our <a target="_blank" href="' + community_guidelines_url + '">community guidelines</a></li>', '/user/' + uid + '/approve');
+  jq_confirm_approve_member = function(uid, community_values_url) {
+    jq_confirm_url('Do you want to approve this account?', 'Guidelines for approval:<li>Account is a real person</li><li>Profile is not a company or brand</li><li>Profile meets our <a target="_blank" href="' + community_values_url + '">community values</a></li>', '/user/' + uid + '/approve');
   }
 
   jq_confirm_unapprove_user = function(uid) {
@@ -514,12 +514,12 @@ Drupal.behaviors.base_scripts = {
 
   }
 
-  jq_confirm_non_community_profile = function(uid, community_guidelines_url) {
+  jq_confirm_non_community_profile = function(uid, community_values_url) {
 
     $.prompt({
       state0: {
         title: 'Flag this account as non-community profile?',
-        html: 'This action will:<li>Set this account to un-approved</li><li>Inform account owner of <a target="_blank" href="' + community_guidelines_url + '">membership guidelines</a></li><li>Notify you if the account owner requests approval</li>',
+        html: 'This action will:<li>Set this account to <i>un-approved</i></li><li>Inform account owner of <a target="_blank" href="' + community_values_url + '">membership guidelines</a></li><li>Notify you if the account owner requests approval</li>',
         buttons: { Cancel: false, Next: true },
         focus: 1,
         submit:function(e,v,m,f){

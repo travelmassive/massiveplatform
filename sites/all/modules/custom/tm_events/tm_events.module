@@ -31,7 +31,7 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
   // Visible when RSVP is handled on TM.
   $form['field_signup_limit']['#states'] = array(
     'visible' => array(
-     ':input[name="field_external_rsvp[und]"]' => array('value' => 0),
+     ':input[name="field_external_rsvp[und]"]' => array('value' => '0'),
     ),
   );
 
@@ -39,7 +39,7 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
   $form['field_rsvp_link']['#states'] = array(
     // Only show RSVP link when event is a TM event.
     'visible' => array(
-     ':input[name="field_external_rsvp[und]"]' => array('value' => 1),
+     ':input[name="field_external_rsvp[und]"]' => array('value' => '1'),
     ),
   );
   

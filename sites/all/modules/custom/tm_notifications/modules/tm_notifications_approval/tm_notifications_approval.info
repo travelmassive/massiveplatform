@@ -15,5 +15,5 @@ features[variable][] = tm_notifications__user_approval_need_more_info
 features[variable][] = tm_notifications__user_approved
 features[variable][] = tm_notifications__user_requested_approval
 features[variable][] = tm_notifications__user_approval_non_community
-features[variable][] = tm_notifications__user_approval_setting_allow_reply_to
+features[variable][] = tm_notifications__user_approval_allow_reply_to
 mtime = 1421506805

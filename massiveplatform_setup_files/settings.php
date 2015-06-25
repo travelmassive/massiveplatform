@@ -621,8 +621,8 @@ $conf['tm_tips_sponsor_page_link'] = "https://travelmassive.com/blog/sponsors-gu
 /** tm_tips_chapter_leaders_guide **/
 $conf['tm_tips_chapter_leaders_link'] = "https://travelmassive.com/blog/chapter-leader-resources/";
 
-/** tm_community_guidlines_url **/
-$conf['tm_community_guidelines_url'] = "https://travelmassive.com/blog/community-guidlines/";
+/** tm_community_values_url **/
+$conf['tm_community_values_url'] = "https://travelmassive.com/blog/community-values/";
 
 /** Where to send contact form emails to **/
 $conf['tm_contact_page_email'] = "hello@travelmassive.com";
@@ -650,15 +650,15 @@ $conf['tm_messaging_limit_max'] = 30; // limit of messages you can send to diffe
 
 /** Provides a list of validated options on the signup page to indicate how the user connects with the community **/
 /** These options are not saved to the user account **/
-$conf["tm_community_guidelines_description"] = "Our community is for travel industry insiders, leaders, and innovators.";
-$conf["tm_community_guidelines_options"] = array(
+$conf["tm_community_values_description"] = "Our community is for travel industry insiders, leaders, and innovators.";
+$conf["tm_community_values_options"] = array(
     0 => t('I work in the travel industry (example: startup, tour operator, DMO)'),
     1 => t('I work with travel industry customers (example: marketing, Tourism PR)'),
     2 => t('I create travel content (example: blogger, vlogger, presenter)'),
     3 => t('I study tourism or a closely related course'),
     4 => t('I am signing up as a travel company / brand'),
     5 => t('I love travel'));
-$conf["tm_community_guidelines_options_validate"] = array(
+$conf["tm_community_values_options_validate"] = array(
     0 => array("valid" => true, "message" => ""),
     1 => array("valid" => true, "message" => ""),
     2 => array("valid" => true, "message" => ""),

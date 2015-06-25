@@ -252,13 +252,13 @@ function tm_users_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_user_question_destination'
-  $field_bases['field_user_question_destination'] = array(
+  // Exported field_base: 'field_user_question_1'
+  $field_bases['field_user_question_1'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_user_question_destination',
+    'field_name' => 'field_user_question_1',
     'foreign keys' => array(
       'format' => array(
         'columns' => array(
@@ -281,13 +281,13 @@ function tm_users_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_user_question_dream_travel'
-  $field_bases['field_user_question_dream_travel'] = array(
+  // Exported field_base: 'field_user_question_2'
+  $field_bases['field_user_question_2'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_user_question_dream_travel',
+    'field_name' => 'field_user_question_2',
     'foreign keys' => array(
       'format' => array(
         'columns' => array(
@@ -310,13 +310,13 @@ function tm_users_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_user_question_job'
-  $field_bases['field_user_question_job'] = array(
+  // Exported field_base: 'field_user_question_3'
+  $field_bases['field_user_question_3'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_user_question_job',
+    'field_name' => 'field_user_question_3',
     'foreign keys' => array(
       'format' => array(
         'columns' => array(
@@ -339,13 +339,13 @@ function tm_users_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_user_question_learn'
-  $field_bases['field_user_question_learn'] = array(
+  // Exported field_base: 'field_user_question_4'
+  $field_bases['field_user_question_4'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_user_question_learn',
+    'field_name' => 'field_user_question_4',
     'foreign keys' => array(
       'format' => array(
         'columns' => array(
@@ -368,13 +368,13 @@ function tm_users_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_user_question_why_travel'
-  $field_bases['field_user_question_why_travel'] = array(
+  // Exported field_base: 'field_user_question_5'
+  $field_bases['field_user_question_5'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_user_question_why_travel',
+    'field_name' => 'field_user_question_5',
     'foreign keys' => array(
       'format' => array(
         'columns' => array(

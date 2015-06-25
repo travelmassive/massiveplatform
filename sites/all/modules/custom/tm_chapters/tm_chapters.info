@@ -85,5 +85,4 @@ features[variable][] = pathauto_node_chapter_pattern
 features[views_view][] = chapter_leaders_list
 features[views_view][] = chapters
 features[views_view][] = users_chapters
-mtime = 1430725673
 project path = sites/all/modules/custom

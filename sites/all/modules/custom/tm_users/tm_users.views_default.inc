@@ -958,7 +958,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['fields']['flagged_2']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['flagged_2']['not'] = 0;
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Flags: Content ID */
+  /* Contextual filter: Flags: Entity ID */
   $handler->display->display_options['arguments']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['arguments']['entity_id']['table'] = 'flagging';
   $handler->display->display_options['arguments']['entity_id']['field'] = 'entity_id';

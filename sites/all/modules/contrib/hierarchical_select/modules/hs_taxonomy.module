@@ -42,7 +42,9 @@ function hs_taxonomy_form_field_ui_widget_type_form_alter(&$form, &$form_state) 
   $current_widget_type = (isset($form_state['input']['widget_type'])) ? $form_state['input']['widget_type'] : $form_state['build_info']['args'][0]['widget']['type'];
   if ($current_widget_type == 'taxonomy_hs') {
     $field = field_info_field($form['#field_name']);
-    $vocabulary = taxonomy_vocabulary_machine_name_load($field['settings']['allowed_values'][0]['vocabulary']);
+    if (!empty($field['settings']['allowed_values'][0]['vocabulary'])) {
+      $vocabulary = taxonomy_vocabulary_machine_name_load($field['settings']['allowed_values'][0]['vocabulary']);
+    }
 
     $vid = isset($vocabulary->vid) ? $vocabulary->vid : NULL;
     $save_lineage = isset($vocabulary->hierarchy) ? (int) ($vocabulary->hierarchy == 2) : 0;
@@ -56,7 +58,7 @@ function hs_taxonomy_form_field_ui_widget_type_form_alter(&$form, &$form_state) 
       'root_term'                  => NULL,
       'entity_count_for_node_type' => NULL,
     );
-    $config_id = hs_taxonomy_get_config_id($vocabulary);
+    $config_id = hs_taxonomy_get_config_id($form['#field_name']);
     $defaults = array(
       // Enable the save_lineage setting by default if the multiple parents
       // vocabulary option is enabled.
@@ -109,8 +111,7 @@ function hs_taxonomy_form_field_ui_widget_type_form_alter(&$form, &$form_state) 
  */
 function hs_taxonomy_field_settings_submit(&$form, &$form_state) {
   $field = field_info_field($form['#field_name']);
-  $vocabulary = taxonomy_vocabulary_machine_name_load($field['settings']['allowed_values'][0]['vocabulary']);
-  $config = hierarchical_select_common_config_get(hs_taxonomy_get_config_id($vocabulary));
+  $config = hierarchical_select_common_config_get(hs_taxonomy_get_config_id($form['#field_name']));
 
   if ($config['dropbox']['status'] || $config['save_lineage']) {
     $field = field_info_field($form['#field_name']);
@@ -132,8 +133,7 @@ function hs_taxonomy_form_field_ui_field_edit_form_alter(&$form, &$form_state) {
   if (isset($form['#field']['type']) && $form['#field']['type'] === 'taxonomy_term_reference' && $form['#instance']['widget']['type'] == 'taxonomy_hs') {
     require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'hierarchical_select') . '/includes/common.inc';
 
-    $vocabulary = taxonomy_vocabulary_machine_name_load($form['#field']['settings']['allowed_values'][0]['vocabulary']);
-    $config = hierarchical_select_common_config_get(hs_taxonomy_get_config_id($vocabulary));
+    $config = hierarchical_select_common_config_get(hs_taxonomy_get_config_id($form['#field']['field_name']));
 
     if ($config['dropbox']['status'] || $config['save_lineage']) {
       $form['field']['cardinality']['#disabled'] = TRUE;
@@ -153,12 +153,10 @@ function hs_taxonomy_form_taxonomy_form_term_alter(&$form, &$form_state) {
     return;
   }
 
-  // Build an appropriate config, that inherits the level_labels settings
-  // from the vocabulary's Hierarchical Select config.
+  // Build an appropriate config.
   $vocabulary = $form['#vocabulary'];
   $vid = $vocabulary->vid;
   module_load_include('inc', 'hierarchical_select', 'includes/common');
-  $vocabulary_config = hierarchical_select_common_config_get(hs_taxonomy_get_config_id($vocabulary));
   $config = array(
     'module' => 'hs_taxonomy',
     'params' => array(
@@ -170,9 +168,9 @@ function hs_taxonomy_form_taxonomy_form_term_alter(&$form, &$form_state) {
     'entity_count'    => 0,
     'require_entity'  => 0,
     'save_lineage'    => 0,
-    'level_labels'    => $vocabulary_config['level_labels'],
+    'level_labels'    => array('status' => FALSE, 'labels' => array()),
     'dropbox' => array(
-      'status' => 1,
+      'status' => variable_get('hs_taxonomy_enable_dropbox_on_term_form', 0),
       'limit'  => 0,
     ),
     'editability' => array(
@@ -195,41 +193,13 @@ function hs_taxonomy_form_taxonomy_form_term_alter(&$form, &$form_state) {
 }
 
 /**
- * Implements hook_taxonomy_vocabulary_update().
+ * Implements hook_field_delete().
  *
- * This enables us to rename HS configs appropriately when machine names of
- * taxonomy vocabularies change.
- *
- * @param stdClass $vocabulary
- *   The vocabulary that is being updated.
+ * This enables us to delete HS configs when fields are deleted.
  */
-function hs_taxonomy_taxonomy_vocabulary_update(stdClass $vocabulary) {
+function hs_taxonomy_field_delete($entity_type, $entity, $field, $instance, $langcode, &$items) {
   require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'hierarchical_select') . '/includes/common.inc';
-
-  if (isset($vocabulary->original) && ($vocabulary->machine_name != $vocabulary->original->machine_name)) {
-    $config = hierarchical_select_common_config_get(hs_taxonomy_get_config_id($vocabulary->original));
-
-    if (!empty($config)) {
-      $old_config_id = hs_taxonomy_get_config_id($vocabulary->original);
-
-      hierarchical_select_common_config_set(hs_taxonomy_get_config_id($vocabulary), $config);
-      hierarchical_select_common_config_del($old_config_id);
-    }
-  }
-}
-
-/**
- * Implements hook_taxonomy_vocabulary_delete().
- *
- * This enables us to delete HS configs when vocabularies are deleted.
- *
- * @param stdClass $vocabulary
- *   The vocabulary that is being deleted.
- */
-function hs_taxonomy_taxonomy_vocabulary_delete(stdClass $vocabulary) {
-  require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'hierarchical_select') . '/includes/common.inc';
-
-  hierarchical_select_common_config_del(hs_taxonomy_get_config_id($vocabulary));
+  hierarchical_select_common_config_del(hs_taxonomy_get_config_id($field['field_name']));
 }
 
 //----------------------------------------------------------------------------
@@ -270,7 +240,9 @@ function hs_taxonomy_field_widget_info() {
 function hs_taxonomy_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
   require_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'hierarchical_select') . '/includes/common.inc';
 
-  $vocabulary = taxonomy_vocabulary_machine_name_load($field['settings']['allowed_values'][0]['vocabulary']);
+  if (!empty($field['settings']['allowed_values'][0]['vocabulary'])) {
+    $vocabulary = taxonomy_vocabulary_machine_name_load($field['settings']['allowed_values'][0]['vocabulary']);
+  }
 
   // Build an array of existing term IDs.
   $tids = array();
@@ -285,16 +257,16 @@ function hs_taxonomy_field_widget_form(&$form, &$form_state, $field, $instance, 
     '#config'        => array(
       'module' => 'hs_taxonomy',
       'params' => array(
-        'vid'                        => (int) $vocabulary->vid,
+        'vid'                        => isset($vocabulary->vid) ? (int) $vocabulary->vid : NULL,
         'exclude_tid'                => NULL,
-        'root_term'                  => (int) $field['settings']['allowed_values'][0]['parent'],
+        'root_term'                  => isset($field['settings']['allowed_values'][0]['parent']) ? (int) $field['settings']['allowed_values'][0]['parent'] : NULL,
         'entity_count_for_node_type' => NULL,
       ),
     ),
     '#default_value' => $tids,
   );
 
-  hierarchical_select_common_config_apply($element, hs_taxonomy_get_config_id($vocabulary));
+  hierarchical_select_common_config_apply($element, hs_taxonomy_get_config_id($field['field_name']));
 
   // Append another #process callback that transforms #return_value to the
   // format that Field API/Taxonomy Field expects.
@@ -394,7 +366,7 @@ function hs_taxonomy_field_formatter_prepare_view($entity_type, $entities, $fiel
 
   // Get the config for this field.
   module_load_include('inc', 'hierarchical_select', 'includes/common');
-  $config_id = hs_taxonomy_get_config_id($vocabulary);
+  $config_id = hs_taxonomy_get_config_id($field['field_name']);
   $config = hierarchical_select_common_config_get($config_id);
   $config += array(
     'module' => 'hs_taxonomy',
@@ -492,6 +464,7 @@ function hs_taxonomy_field_formatter_view($entity_type, $entity, $field, $instan
         for ($level = 0; $level < count($lineages[$l]); $level++) {
           $term = $lineages[$l][$level];
           $uri = entity_uri('taxonomy_term', $term);
+          $uri['options']['html'] = TRUE;
           $element[$l]['#lineage'][$level] = array(
             '#type'    => 'link',
             '#title'   => $term->name,
@@ -607,6 +580,9 @@ function hs_taxonomy_hierarchical_select_params() {
  * Implementation of hook_hierarchical_select_root_level().
  */
 function hs_taxonomy_hierarchical_select_root_level($params) {
+  if (!isset($params['vid'])) {
+    return array();
+  }
   // TODO: support multiple parents, i.e. support "save lineage".
   $vocabulary = taxonomy_vocabulary_load($params['vid']);
   $terms = _hs_taxonomy_hierarchical_select_get_tree($params['vid'], 0, -1, 1);
@@ -768,7 +744,7 @@ function hs_taxonomy_hierarchical_select_create_item($label, $parent, $params) {
 
   $status = taxonomy_term_save($term);
 
-  if ($status == SAVED_NEW) {
+  if ($status !== FALSE) {
     // Reset the cached tree.
     _hs_taxonomy_hierarchical_select_get_tree($params['vid'], 0, -1, 1, TRUE);
 
@@ -830,7 +806,7 @@ function hs_taxonomy_hierarchical_select_config_info() {
             $entity_info = entity_get_info($entity_type);
             $machine_name = $field['settings']['allowed_values'][0]['vocabulary'];
             $vocabulary = taxonomy_vocabulary_machine_name_load($machine_name);
-            $config_id = hs_taxonomy_get_config_id($vocabulary);
+            $config_id = hs_taxonomy_get_config_id($field_name);
             $config_info[$config_id] = array(
               'config_id'      => $config_id,
               'hierarchy type' => t('Taxonomy'),
@@ -1039,12 +1015,32 @@ function _hs_taxonomy_hierarchical_select_get_tree($vid, $parent = 0, $depth = -
     $children = $parents = $terms = array();
   }
 
+  $tree = array();
+
+  if (!is_array($parent)) {
+    $parent = array($parent);
+  }
+
+  $max_depth = (is_null($max_depth)) ? 99999999 : $max_depth;
   $depth++;
 
   // We cache trees, so it's not CPU-intensive to call get_tree() on a term
   // and its children, too.
-  if (!isset($children[$vid])) {
-    $children[$vid] = array();
+  if ($max_depth <= $depth) {
+    return $tree;
+  }
+  // Prepare queue for the "IN ( .. )" part of query.
+  $queue = array();
+  foreach ($parent as $single_parent) {
+    // Queue branch for processing if it's not cached yet.
+    if (!isset($children[$vid][$single_parent])) {
+      $queue[] = $single_parent;
+      // Use an empty array to distinguish between a stub (without children)
+      // term and a branch that is not loaded yet.
+      $children[$vid][$single_parent] = array();
+    }
+  }
+  if (!empty($queue)) {
 
     $query = db_select('taxonomy_term_data', 't');
     $query->join('taxonomy_term_hierarchy', 'h', 'h.tid = t.tid');
@@ -1055,6 +1051,7 @@ function _hs_taxonomy_hierarchical_select_get_tree($vid, $parent = 0, $depth = -
       ->fields('t')
       ->fields('h', array('parent'))
       ->condition('t.vid', $vid)
+      ->condition('parent', array_merge(array($vid), $queue), 'IN')
       ->orderBy('t.weight')
       ->orderBy('t.name')
       ->execute();
@@ -1077,40 +1074,44 @@ function _hs_taxonomy_hierarchical_select_get_tree($vid, $parent = 0, $depth = -
     }
   }
 
-  $max_depth = (is_null($max_depth)) ? count($children[$vid]) : $max_depth;
-  if (isset($children[$vid][$parent])) {
-    foreach ($children[$vid][$parent] as $child) {
-      if ($max_depth > $depth) {
-        $term = isset($term_entities[$child]) ? $term_entities[$child] : $terms[$vid][$child];
-        $term = clone $term;
-        $term->depth = $depth;
-        // The "parent" attribute is not useful, as it would show one parent only.
-        unset($term->parent);
-        $term->parents = $parents[$vid][$child];
-        $tree[] = $term;
-
-        if (isset($children[$vid][$child])) {
-          $tree = array_merge($tree, _hs_taxonomy_hierarchical_select_get_tree($vid, $child, $depth, $max_depth));
+  $next_parent = array();
+  foreach ($parent as $single_parent) {
+    foreach ($children[$vid][$single_parent] as $child) {
+      $term = clone($terms[$vid][$child]);
+      $term->depth = $depth;
+      // The "parent" attribute is not useful, as it would show one parent only.
+      unset($term->parent);
+      $term->parents = $parents[$vid][$child];
+      $tree[] = $term;
+      // Need more steps ?
+      if ($max_depth > $depth + 1) {
+        // Queue children for the next step down the tree. Do not process
+        // children which we already know as stub ones.
+        if (!isset($children[$vid][$child]) || !empty($children[$vid][$child])) {
+          $next_parent[] = $child;
         }
       }
     }
+  }
+  if (!empty($next_parent)) {
+    // Process multiple children together i.e. next level.
+    $tree = array_merge($tree, _hs_taxonomy_hierarchical_select_get_tree($vid, $next_parent, $depth, $max_depth));
   }
 
   return isset($tree) ? $tree : array();
 }
 
 /**
- * Returns the configuration ID that would be used for the specified taxonomy
- * vocabulary.
+ * Returns the configuration ID that would be used for the specified field.
  *
- * @param stdClass $vocabulary
- *   The vocabulary for which a config ID will be returned.
+ * @param string $field_name
+ *   The field machine name.
  *
  * @return string
- *   The config id for the provided vocabulary.
+ *   The config id for the provided field.
  */
-function hs_taxonomy_get_config_id(stdClass $vocabulary) {
-  return "taxonomy-{$vocabulary->machine_name}";
+function hs_taxonomy_get_config_id($field_name) {
+  return "taxonomy-{$field_name}";
 }
 
 /**

@@ -21,6 +21,7 @@ function queue_mail_uninstall() {
 
   variable_del('queue_mail_keys');
   variable_del('queue_mail_queue_time');
+  variable_del('queue_mail_send_on_cron');
 }
 
 /**

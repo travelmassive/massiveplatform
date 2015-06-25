@@ -1,5 +1,4 @@
 <?php
-// $Id: tzfield.module,v 1.1.4.10 2010/11/08 22:06:18 mfb Exp $
 
 /**
  * @file
@@ -27,9 +26,10 @@ function tzfield_field_info() {
     'tzfield' => array(
       'label' => t('Time zone'),
       'description' => t('Store a time zone identifier in the database.'),
-      'settings' => array('exclude' => tzfield_excluded_timezones()),
+      'settings' => array('exclude' => tzfield_identifiers_list()),
       'default_widget' => 'options_select',
       'default_formatter' => 'tzfield_default',
+      'property_type' => 'text',
     ),
   );
 }
@@ -44,6 +44,7 @@ function tzfield_field_settings_form($field, $instance, $has_data) {
     '#options' => tzfield_identifiers_list(),
     '#default_value' => $field['settings']['exclude'],
     '#multiple' => TRUE,
+    '#size' => 20,
     '#required' => FALSE,
     '#description' => t('Any time zones selected here will be excluded from the allowed values.'),
   );
@@ -143,15 +144,7 @@ function tzfield_autocomplete($field_name, $string = '', $arg4 = '', $arg5 = '')
  * Implements hook_options_list().
  */
 function tzfield_options_list($field) {
-  return empty($field['settings']['exclude']) ? tzfield_identifiers_list() : array_diff(tzfield_identifiers_list(), $field['settings']['exclude']);
-}
-
-/**
- * Fetch a default array of excluded time zones for use when creating a time zone field.
- * See http://www.php.net/manual/en/timezones.others.php
- */
-function tzfield_excluded_timezones() {
-  return preg_grep(';^((Africa|America|Antarctica|Arctic|Asia|Atlantic|Australia|Europe|Indian|Pacific)/.*|UTC)$;', tzfield_identifiers_list(), PREG_GREP_INVERT);
+  return empty($field['settings']['exclude']) ? tzfield_identifiers_list() : array_diff_key(tzfield_identifiers_list(), $field['settings']['exclude']);
 }
 
 /**
@@ -160,7 +153,7 @@ function tzfield_excluded_timezones() {
 function tzfield_identifiers_list() {
   static $list;
   if (empty($list)) {
-    $list = drupal_map_assoc(timezone_identifiers_list());
+    $list = system_time_zones();
   }
   return $list;
 }
@@ -252,13 +245,11 @@ function tzfield_content_migrate_instance_alter(&$instance) {
     $instance['widget']['module'] = 'options';
   }
   // Use new date formatter.
-  if ($instance['module'] == 'tzfield') {
-    $formats = array('abbreviation' => 'T', 'medium' => variable_get('date_format_medium', 'D, m/d/Y - H:i'), 'rfc2822' => 'r');
-    foreach ($instance['display'] as $view_mode => $display) {
-      if (isset($formats[$display['type']])) {
-        $instance['display'][$view_mode]['type'] = 'tzfield_date';
-        $instance['display'][$view_mode]['settings']['format'] = $formats[$display['type']];
-      }
+  $formats = array('abbreviation' => 'T', 'medium' => variable_get('date_format_medium', 'D, m/d/Y - H:i'), 'rfc2822' => 'r');
+  foreach ($instance['display'] as $view_mode => $display) {
+    if ($display['module'] == 'tzfield' && isset($formats[$display['type']])) {
+      $instance['display'][$view_mode]['type'] = 'tzfield_date';
+      $instance['display'][$view_mode]['settings']['format'] = $formats[$display['type']];
     }
   }
 }

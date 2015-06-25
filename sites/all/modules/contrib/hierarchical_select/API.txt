@@ -560,7 +560,7 @@ The following events are triggered:
   - update-hierarchical-select
   - create-new-item
   - cancel-new-item
-  - add-to-dropbox
+  - add-to-dropbox (check https://www.drupal.org/node/1277068)
   - remove-from-dropbox
   - enforced-update
   - prepared-GET-submit

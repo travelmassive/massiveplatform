@@ -1,0 +1,546 @@
+diff --git a/redirect.admin.inc b/redirect.admin.inc
+index 900c098..080fcbc 100644
+--- a/redirect.admin.inc
++++ b/redirect.admin.inc
+@@ -18,6 +18,7 @@ function redirect_list_form($form, &$form_state) {
+   $header = array(
+     'source' => array('data' => t('From'), 'field' => 'source', 'sort' => 'asc'),
+     'redirect' => array('data' => t('To'), 'field' => 'redirect'),
++    'status' => array('data' => t('Status'), 'field' => 'status'),
+     'status_code' => array('data' => t('Type'), 'field' => 'status_code'),
+     'language' => array('data' => t('Language'), 'field' => 'language'),
+     'count' => array('data' => t('Count'), 'field' => 'count'),
+@@ -84,6 +85,7 @@ function redirect_list_form($form, &$form_state) {
+     drupal_alter('redirect_url', $redirect->redirect, $redirect->redirect_options);
+     $row['source'] = l($source_url, $redirect->source, $redirect->source_options);
+     $row['redirect'] = l($redirect_url, $redirect->redirect, $redirect->redirect_options);
++    $row['status'] = $redirect->status ? t('Enabled') : t('Disabled');
+     $row['status_code'] = $redirect->status_code ? $redirect->status_code : t('Default (@default)', array('@default' => $default_status_code));
+     $row['language'] = module_invoke('locale', 'language_name', $redirect->language);
+     $row['count'] = $redirect->count;
+@@ -262,6 +264,10 @@ function redirect_list_form_operations_submit($form, &$form_state) {
+     }
+     call_user_func_array($function, $args);
+ 
++    // We display the number of redirects the user selected, regardless of
++    // how many redirects actually changed status. Eg. if 1 enabled and 1
++    // disabled redirects are checked for being enabled, we'll still display
++    // "Enabled 1 redirect."
+     $count = count($form_state['values']['rids']);
+     watchdog('redirect', '@action @count redirects.', array('@action' => $operation['action_past'], '@count' => $count));
+     drupal_set_message(format_plural(count($rids), '@action @count redirect.', '@action @count redirects.', array('@action' => $operation['action_past'], '@count' => $count)));
+@@ -365,6 +371,7 @@ function redirect_edit_form($form, &$form_state, $redirect = NULL) {
+     '#description' => t('Enter an internal Drupal path, path alias, or complete external URL (like http://example.com/) to redirect to. Use %front to redirect to the front page.', array('%front' => '<front>')),
+     '#element_validate' => array('redirect_element_validate_redirect'),
+   );
++
+   $form['redirect_options'] = array(
+     '#type' => 'value',
+     '#value' => $redirect->redirect_options,
+@@ -377,6 +384,14 @@ function redirect_edit_form($form, &$form_state, $redirect = NULL) {
+     '#value' => $redirect->language,
+   );
+ 
++  $form['status'] = array(
++    '#type' => 'checkbox',
++    '#title' => t('Enabled'),
++    '#description' => t('If this box is checked, this redirect will be enabled.'),
++    '#default_value' => $redirect->status,
++    '#required' => FALSE,
++  );
++
+   $form['advanced'] = array(
+     '#type' => 'fieldset',
+     '#title' => t('Advanced options'),
+@@ -524,10 +539,13 @@ function redirect_edit_form_validate($form, &$form_state) {
+   $redirect = (object) $form_state['values'];
+ 
+   if (empty($form_state['values']['override'])) {
+-    if ($existing = redirect_load_by_source($redirect->source, $redirect->language)) {
++    // Find out if any (disabled or enabled) redirect with this source already
++    // exists.
++    if ($existing = redirect_load_by_source($redirect->source, $redirect->language, array(), FALSE)) {
+       if ($redirect->rid != $existing->rid && $redirect->language == $existing->language) {
+-        // The "from" path should not conflict with another redirect
+-        $form_state['storage']['override_messages']['redirect-conflict'] = t('The base source path %source is already being redirected. Do you want to <a href="@edit-page">edit the existing redirect</a>?', array('%source' => $redirect->source, '@edit-page' => url('admin/config/search/redirect/edit/'. $existing->rid)));
++        // The "from" path should not conflict with another (disabled or
++        // enabled) redirect.
++        $form_state['storage']['override_messages']['redirect-conflict'] = t('A redirect already exists for the source path %source. Do you want to <a href="@edit-page">edit the existing redirect</a>?', array('%source' => $redirect->source, '@edit-page' => url('admin/config/search/redirect/edit/'. $existing->rid)));
+         $form_state['rebuild'] = TRUE;
+       }
+     }
+@@ -818,6 +836,7 @@ function redirect_list_table($redirects, $header) {
+   $header = array_intersect_key(array(
+     'source' => array('data' => t('From'), 'field' => 'source', 'sort' => 'asc'),
+     'redirect' => array('data' => t('To'), 'field' => 'redirect'),
++    'status' => array('data' => t('Status'), 'field' => 'status'),
+     'status_code' => array('data' => t('Type'), 'field' => 'status_code'),
+     'language' => array('data' => t('Language'), 'field' => 'language'),
+     'count' => array('data' => t('Count'), 'field' => 'count'),
+@@ -838,6 +857,7 @@ function redirect_list_table($redirects, $header) {
+     $redirect_url = redirect_url($redirect->redirect, array_merge($redirect->redirect_options, array('alias' => TRUE)));
+     $row['data']['source'] = l($source_url, $redirect->source, $redirect->source_options);
+     $row['data']['redirect'] = l($redirect_url, $redirect->redirect, $redirect->redirect_options);
++    $row['data']['status'] = $redirect->status ? t('Enabled') : t('Disabled');
+     $row['data']['status_code'] = $redirect->status_code ? $redirect->status_code : t('Default (@default)', array('@default' => $default_status_code));
+     $row['data']['language'] = module_invoke('locale', 'language_name', $redirect->language);
+     $row['data']['count'] = $redirect->count;
+@@ -856,6 +876,12 @@ function redirect_list_table($redirects, $header) {
+       $row['class'][] = 'warning';
+       $row['title'] = t('This redirect overrides an existing internal path.');
+     }
++    if ($redirect->status) {
++      $row['class'][] = 'redirect-enabled';
++    }
++    else {
++      $row['class'][] = 'redirect-disabled';
++    }
+ 
+     $operations = array();
+     if (redirect_access('update', $redirect)) {
+diff --git a/redirect.install b/redirect.install
+index 6ccb75b..a3ef771 100644
+--- a/redirect.install
++++ b/redirect.install
+@@ -86,7 +86,14 @@ function redirect_schema() {
+         'unsigned' => TRUE,
+         'not null' => TRUE,
+         'default' => 0,
+-        'description' => 'The timestamp of when the redirect was last accessed.'
++        'description' => 'The timestamp of when the redirect was last accessed.',
++      ),
++      'status' => array(
++        'type' => 'int',
++        'size' => 'small',
++        'not null' => TRUE,
++        'default' => 1,
++        'description' => 'Boolean indicating whether the redirect is enabled (visible to non-administrators).',
+       ),
+     ),
+     'primary key' => array('rid'),
+@@ -95,7 +102,11 @@ function redirect_schema() {
+     ),
+     'indexes' => array(
+       'expires' => array('type', 'access'),
+-      'source_language' => array('source', 'language'),
++      'status_source_language' => array(
++        'status',
++        'source',
++        'language',
++      ),
+     ),
+   );
+ 
+@@ -264,10 +275,57 @@ function redirect_update_7000(&$sandbox) {
+ }
+ 
+ /**
+- * Empty update to trigger registry and entity info rebuild.
++ * Empty update hook.
+  */
+ function redirect_update_7100() {
+-  // Do nothing.
++  // This update hook was added under the assumption it would trigger a registry
++  // rebuild / entity info rebuild to inform Drupal about ie. the new location
++  // of RedirectController. However, this only happens at the end of an update
++  // run.
++  // @todo: If we ever use redirect entities / the controller in update hooks,
++  // remember to do a manual registry / entity info rebuild.
++}
++
++/**
++ * Add status field.
++ */
++function redirect_update_7101() {
++  db_add_field('redirect', 'status', array(
++    'type' => 'int',
++    'size' => 'small',
++    'not null' => TRUE,
++    'default' => 1,
++    'description' => 'Boolean indicating whether the redirect is enabled (visible to non-administrators).',
++  ));
++  db_drop_index('redirect', 'source_language');
++  db_add_index('redirect', 'status_source_language', array(
++    'status',
++    'source',
++    'language',
++  ));
++}
++
++/**
++ * Disable redirects that could cause infinite loops.
++ */
++function redirect_update_7102() {
++  $rids = db_query("SELECT r.rid FROM {redirect} r INNER JOIN {url_alias} u ON r.source = u.alias AND r.redirect = u.source AND r.language = u.language")->fetchCol();
++  if ($rids) {
++    // Disable redirects
++    $count = db_update('redirect')
++      ->fields(array('status' => 0))
++      ->condition('rid', $rids)
++      ->execute();
++
++    $disabled_redirects_message = format_plural($count,
++      '1 circular redirect causing infinite loop was disabled.',
++      '@count circular redirects causing infinite loop were disabled.');
++
++    return $disabled_redirects_message;
++  }
++  else {
++    return t('No circular redirects were found that could cause infinite loops.');
++  }
+ }
+ 
+ /**
+@@ -322,6 +380,7 @@ function _redirect_migrate_path_redirect_redirect($old_redirect) {
+         'redirect_options' => serialize($redirect->redirect_options),
+         'language' => $redirect->language,
+         'status_code' => $redirect->status_code,
++        'status' => 1,
+         'count' => 0,
+         'access' => $old_redirect->last_used,
+       ))
+diff --git a/redirect.js b/redirect.js
+index 3c2a77f..fedbaed 100644
+--- a/redirect.js
++++ b/redirect.js
+@@ -8,8 +8,19 @@ Drupal.behaviors.redirectFieldsetSummaries = {
+         return Drupal.t('No redirects');
+       }
+       else {
+-        var redirects = $('table.redirect-list tbody tr', context).length;
+-        return Drupal.formatPlural(redirects, '1 redirect', '@count redirects');
++        var enabled_redirects = $('table.redirect-list tbody tr.redirect-enabled', context).length;
++        var disabled_redirects = $('table.redirect-list tbody tr.redirect-disabled', context).length;
++        var text = '';
++        if (enabled_redirects > 0) {
++          var text = Drupal.formatPlural(enabled_redirects, '1 enabled redirect', '@count enabled redirects');
++        }
++        if (disabled_redirects > 0) {
++          if (text.length > 0) {
++            text = text + '<br />';
++          }
++          text = text + Drupal.formatPlural(disabled_redirects, '1 disabled redirect', '@count disabled redirects');
++        }
++        return text;
+       }
+     });
+   }
+diff --git a/redirect.module b/redirect.module
+index f9f0530..fa31917 100644
+--- a/redirect.module
++++ b/redirect.module
+@@ -377,6 +377,8 @@ function redirect_path_update(array $path) {
+   }
+ 
+   if (!empty($path['original']['pid']) && $path['original']['pid'] == $path['pid'] && $path['original']['alias'] != $path['alias']) {
++    // Disable all redirects having the same source as this alias.
++    redirect_disable_by_path($path['alias'], $path['language']);
+     $redirect = new stdClass();
+     redirect_object_prepare($redirect);
+     $redirect->source = $path['original']['alias'];
+@@ -384,9 +386,25 @@ function redirect_path_update(array $path) {
+     $redirect->language = $path['original']['language'];
+     // Check if the redirect exists before saving.
+     $hash = redirect_hash($redirect);
+-    if (!redirect_load_by_hash($hash)) {
++    $existing = redirect_load_by_hash($hash);
++    if (!$existing) {
+       redirect_save($redirect);
+     }
++    // If the existing redirect is disabled, re-enable it.
++    elseif (property_exists($existing, 'status') && $existing->status == 0)  {
++      $existing->status = 1;
++      redirect_save($existing);
++    }
++  }
++}
++
++/**
++ * Implements hook_path_insert().
++ */
++function redirect_path_insert(array $path) {
++  if (!empty($path['alias'])) {
++    // Disable all redirects having the same source as this alias.
++    redirect_disable_by_path($path['alias'], $path['language']);
+   }
+ }
+ 
+@@ -525,28 +543,25 @@ function redirect_load_by_hash($hash, $reset = FALSE) {
+ }
+ 
+ /**
+- * Load multiple URL redirects from the database by {redirect}.source.
++ * Fetches multiple URL redirect IDs from the database by {redirect}.source.
+  *
+  * @param $source
+  *   The source of the URL redirect.
+  * @param $language
+  *   Language of the source URL.
+- * @param $query
+- *   Array of URL query parameters.
++ * @param $enabled_only
++ *   Boolean that indicates whether to only load enabled redirects.
+  *
+  * @return
+- *   The first matched URL redirect object, or FALSE if there aren't any.
+- *
+- * @see redirect_load_multiple()
+- * @see _redirect_uasort()
+- * @see redirect_compare_array_recursive()
+- *
+- * @ingroup redirect_api
++ *   An indexed array of IDs, or an empty array if there is no result set.
+  */
+-function redirect_load_by_source($source, $language = LANGUAGE_NONE, array $query = array()) {
++function redirect_fetch_rids_by_path($source, $language, $enabled_only = FALSE) {
+   // Run a case-insensitive query for matching RIDs first.
+   $rid_query = db_select('redirect');
+   $rid_query->addField('redirect', 'rid');
++  if ($enabled_only) {
++    $rid_query->condition('status', 1);
++  }
+   if ($source != variable_get('site_frontpage', 'node')) {
+     $rid_query->condition('source', db_like($source), 'LIKE');
+   }
+@@ -558,7 +573,33 @@ function redirect_load_by_source($source, $language = LANGUAGE_NONE, array $quer
+   }
+   $rid_query->condition('language', array($language, LANGUAGE_NONE));
+   $rids = $rid_query->execute()->fetchCol();
++  return $rids;
++}
+ 
++
++/**
++ * Load multiple URL redirects from the database by {redirect}.source.
++ *
++ * @param $source
++ *   The source of the URL redirect.
++ * @param $language
++ *   Language of the source URL.
++ * @param $query
++ *   Array of URL query parameters.
++ * @param $enabled_only
++ *   Boolean that indicates whether to only load enabled redirects.
++ *
++ * @return
++ *   The first matched URL redirect object, or FALSE if there aren't any.
++ *
++ * @see redirect_load_multiple()
++ * @see _redirect_uasort()
++ * @see redirect_compare_array_recursive()
++ *
++ * @ingroup redirect_api
++ */
++function redirect_load_by_source($source, $language = LANGUAGE_NONE, array $query = array(), $enabled_only = TRUE) {
++  $rids = redirect_fetch_rids_by_path($source, $language, $enabled_only);
+   if ($rids && $redirects = redirect_load_multiple($rids)) {
+     // Narrow down the list of candidates.
+     foreach ($redirects as $rid => $redirect) {
+@@ -687,7 +728,7 @@ function redirect_validate($redirect, $form, &$form_state) {
+   redirect_hash($redirect);
+   if ($existing = redirect_load_by_hash($redirect->hash)) {
+     if ($redirect->rid != $existing->rid) {
+-      form_set_error('source', t('The source path %source is already being redirected. Do you want to <a href="@edit-page">edit the existing redirect</a>?', array('%source' => redirect_url($redirect->source, $redirect->source_options), '@edit-page' => url('admin/config/search/redirect/edit/'. $existing->rid))));
++      form_set_error('source', t('A redirect already exists for the source path %source. Do you want to <a href="@edit-page">edit the existing redirect</a>?', array('%source' => redirect_url($redirect->source, $redirect->source_options), '@edit-page' => url('admin/config/search/redirect/edit/'. $existing->rid))));
+     }
+   }
+ 
+@@ -710,6 +751,7 @@ function redirect_object_prepare($redirect, $defaults = array()) {
+     'count' => 0,
+     'access' => 0,
+     'hash' => '',
++    'status' => 1,
+   );
+ 
+   foreach ($defaults as $key => $default) {
+@@ -853,6 +895,28 @@ function redirect_delete_by_path($path) {
+ }
+ 
+ /**
++ * Disable any redirects associated with a path.
++ *
++ * Given a source like 'node/1' this function will delete any redirects that
++ * have that specific source.
++ *
++ * @param $path
++ *   An string with an internal Drupal path.
++ *
++ * @param @langauge
++ *   The langcode of the path.
++ *
++ * @ingroup redirect_api
++ */
++function redirect_disable_by_path($path, $language) {
++  $rids = redirect_fetch_rids_by_path($path, $language, FALSE);
++
++  if ($rids) {
++    return redirect_change_status_multiple($rids, 0);
++  }
++}
++
++/**
+  * Delete an entity URL alias and any of its sub-paths.
+  *
+  * This function also checks to see if the default entity URI is different from
+@@ -882,6 +946,48 @@ function redirect_delete_by_entity_path($entity_type, $entity) {
+ }
+ 
+ /**
++ * Change the status of multiple URL redirects.
++ *
++ * @param array $rids
++ *   An array of redirect IDs to disable.
++ * @param int|string $status
++ *   The status to set the redirect to: either disabled (0) or enabled (1).
++ *
++ * @ingroup redirect_api
++ */
++function redirect_change_status_multiple(array $rids, $status) {
++  if ($status !== 0 && $status !== 1 && $status !== '0' && $status !== '1') {
++    watchdog('Cannot change redirect status to %status', array('%status' => $status));
++    drupal_set_message(t('Cannot change redirect status to %status', array('%status' => $status)));
++    return;
++  }
++  if (!empty($rids)) {
++    $redirects = redirect_load_multiple($rids, array(), TRUE);
++
++    foreach ($redirects as $rid => $redirect) {
++      if (property_exists($redirect, 'status') && $redirect->status == $status) {
++        // We no-op if the redirect is not actually changing status.
++        // So if a disabled redirect is disabled, neither redirect_save() is
++        // triggered, nor do we log any message.
++        continue;
++      }
++
++      $redirect->status = $status;
++      redirect_save($redirect);
++
++      if ($status) {
++        $redirect_link = l($redirect->redirect, $redirect->redirect) . '=> ' . l($redirect->source, $redirect->source);
++        watchdog('redirect', 'Enabled redirect: !redirect_source_link', array('!redirect_link' => $redirect_link));
++      }
++      else {
++        $redirect_link = l($redirect->redirect, $redirect->redirect) . '=> ' . l($redirect->source, $redirect->source);
++        watchdog('redirect', 'Disabled redirect: !redirect_source_link', array('!redirect_link' => $redirect_link));
++      }
++    }
++  }
++}
++
++/**
+  * Delete multiple URL redirects.
+  *
+  * @param $rids
+@@ -994,6 +1100,10 @@ function redirect_redirect($redirect = NULL) {
+ 
+   // Continue if the redirect has not been disabled by hook_redirect_alter().
+   if (isset($redirect->redirect) && isset($redirect->callback) && $redirect->redirect !== FALSE && function_exists($redirect->callback)) {
++    // Prevent circular redirects.
++    if ($GLOBALS['base_root'] . request_uri() == url($redirect->redirect, array('absolute' => TRUE) + $redirect->redirect_options)) {
++      return FALSE;
++    }
+     // Perform the actual redirect.
+     $callback = $redirect->callback;
+     $callback($redirect);
+@@ -1482,7 +1592,7 @@ function redirect_field_attach_form($entity_type, $entity, &$form, &$form_state,
+   // since the build array will already be cached.
+   module_load_include('inc', 'redirect', 'redirect.admin');
+   $redirects = redirect_load_multiple(FALSE, array('redirect' => $uri['path']));
+-  $header = array('source', 'status_code', 'language', 'count', 'access', 'operations');
++  $header = array('source', 'status', 'status_code', 'language', 'count', 'access', 'operations');
+   $form['redirect'] += redirect_list_table($redirects, $header);
+ }
+ 
+@@ -1540,5 +1650,19 @@ function redirect_redirect_operations() {
+     'callback' => 'redirect_delete_multiple',
+     'confirm' => TRUE,
+   );
++  $operations['disable'] = array(
++    'action' => t('Disable'),
++    'action_past' => t('Disabled'),
++    'callback' => 'redirect_change_status_multiple',
++    'callback arguments' => array(0),
++    'confirm' => TRUE,
++  );
++  $operations['enable'] = array(
++    'action' => t('Enable'),
++    'action_past' => t('Enabled'),
++    'callback' => 'redirect_change_status_multiple',
++    'callback arguments' => array(1),
++    'confirm' => TRUE,
++  );
+   return $operations;
+ }
+diff --git a/redirect.test b/redirect.test
+index 1c237f8..33c6d23 100644
+--- a/redirect.test
++++ b/redirect.test
+@@ -229,16 +229,59 @@ class RedirectFunctionalTest extends RedirectTestHelper {
+     $node = $this->drupalCreateNode(array('type' => 'article', 'path' => array('alias' => 'first-alias')));
+ 
+     // Change the node's alias will create an automatic redirect from 'first-alias' to the node.
+-    $this->drupalPost("node/{$node->nid}/edit", array('path[alias]' => 'second-alias'), 'Save');
+-    //$redirect = redirect_load_by_source('first-alias');
+-    //$this->assertRedirect($redirect);
++    $this->drupalPost("node/{$node->nid}/edit", array('path[alias]' => 'second-alias'), t('Save'));
++    $this->drupalGet('first-alias');
++    $this->assertText($node->title);
++
++    $this->drupalPost("node/{$node->nid}/edit", array('path[alias]' => 'first-alias'), t('Save'));
++    $this->assertResponse(200, "Changing node's alias back to 'first-alias' does not break page load with a circular redirect.");
++    $this->assertNoText('Infinite redirect loop prevented.');
++    $this->drupalGet('second-alias');
++    $this->assertText($node->title);
++
++    $this->drupalPost("node/{$node->nid}/edit", array('path[alias]' => 'second-alias'), t('Save'));
++    $this->assertResponse(200, "Changing node's alias back to 'second-alias' does not break page load with a circular redirect.");
++    $this->assertNoText('Infinite redirect loop prevented.');
++    // Check that first-alias redirect has been re-enabled.
++    $this->drupalGet('first-alias');
++    $this->assertText($node->title);
++  }
++
++  function testPathAddOverwriteRedirects() {
++    // Create an initial article node with a path alias.
++    $first_node = $this->drupalCreateNode(array('type' => 'article', 'path' => array('alias' => 'first-alias')));
++    // Change the node's alias will create an automatic redirect from 'first-alias' to the node.
++    $this->drupalPost("node/{$first_node->nid}/edit", array('path[alias]' => 'second-alias'), t('Save'));
++
++    // Now create a second article node with the same alias as the redirect
++    // created above.
++    $second_node = $this->drupalCreateNode(array('type' => 'article', 'path' => array('alias' => 'first-alias')));
+ 
+-    $this->drupalPost("node/{$node->nid}/edit", array('path[alias]' => 'first-alias'), 'Save');
+-    //$redirect = redirect_load_by_source('second-alias');
+-    //$this->assertRedirect($redirect);
++    // Visit the path 'first-alias' which should be an alias for $second_node.
++    $this->drupalGet('first-alias');
++    $this->assertNoText($first_node->title, 'Adding a new path alias that matches an existing redirect disables the redirect.');
++    $this->assertText($second_node->title, 'Adding a new path alias that matches an existing redirect disables the redirect.');
++  }
+ 
+-    $this->drupalPost("node/{$node->nid}/edit", array('path[alias]' => 'second-alias'), 'Save');
+-    //$redirect = redirect_load_by_source('first-alias');
+-    //$this->assertRedirect($redirect);
++  function testDisableEnableRedirect() {
++    // Add a new redirect.
++    $redirect = $this->addRedirect('redirect', 'node');
++    // Check that it is enabled.
++    $this->assertEqual($redirect->status, 1);
++
++    // Disable the redirect.
++    $edit = array('status' => FALSE);
++    $this->drupalPost("admin/config/search/redirect/edit/{$redirect->rid}", $edit, t('Save'));
++    $redirect = redirect_load($redirect->rid);
++    // Check that it has been disabled.
++    $this->assertEqual($redirect->status, 0);
++    $this->drupalGet("admin/config/search/redirect/edit/{$redirect->rid}");
++    $this->assertNoFieldChecked('edit-status', 'status is unchecked');
++    $this->assertNoRedirect($redirect);
++
++    // Re-enable the redirect.
++    $edit = array('status' => 1);
++    $this->drupalPost("admin/config/search/redirect/edit/{$redirect->rid}", $edit, t('Save'));
++    $this->assertRedirect($redirect);
+   }
+ }

@@ -13,6 +13,10 @@ function hierarchical_select_uninstall() {
   db_delete('variable')
   ->condition('name', 'hs_config_%', 'LIKE')
   ->execute();
+
+  db_delete('variable')
+  ->condition('name', 'hierarchical_select_%', 'LIKE')
+  ->execute();
 }
 
 

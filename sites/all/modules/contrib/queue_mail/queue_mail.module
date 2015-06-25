@@ -42,6 +42,7 @@ function queue_mail_cron_queue_info() {
   $queues[QUEUE_MAIL_QUEUE_NAME] = array(
     'worker callback' => 'queue_mail_send',
     'time' => variable_get('queue_mail_queue_time', 15),
+    'skip on cron' => !variable_get('queue_mail_send_on_cron', TRUE),
   );
   return $queues;
 }

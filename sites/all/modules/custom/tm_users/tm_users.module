@@ -1873,3 +1873,25 @@ function _tm_users_get_field_value($field) {
 
 }
 
+/* 
+ * Prevent cancelling account if user is chapter leader, moderator or administrator
+ */
+function tm_users_user_cancel_methods_alter(&$methods) {
+ 
+  global $user;
+  $args = arg();
+  if (sizeof($args) == 3) {
+    if (($args[0] == "user") and ($args[2] == "cancel")) {
+
+      $cancel_uid = $args[1];
+      $cancel_user = user_load($cancel_uid);
+
+      if (in_array("chapter leader", $cancel_user->roles) or in_array("moderator", $cancel_user->roles) or in_array("administrator", $cancel_user->roles)) {
+        drupal_set_message("Sorry, you can't remove this user account.");
+        drupal_goto("/user/" . $cancel_uid);
+      }
+    }
+  }
+  
+}
+

@@ -194,6 +194,7 @@ function tm_invitations_invite_form_submit($form_id, &$form_state) {
   $account = user_load($user->uid); 
   $is_registered = array(); // keep track of users who are registered
   $is_invited_to_chapter = array(); // keep track of users who are already invited to chapter
+  $is_invited_by_user = array(); // keep track of users who are already invited by this user
   $emails = preg_split("/[\s,]+/", $form_state['values']['invitations']);
   $emails = array_unique($emails);
   $nid = $form_state['values']['nid'];
@@ -227,6 +228,10 @@ function tm_invitations_invite_form_submit($form_id, &$form_state) {
     }
     if (($nid > 0) && (tm_invitations_check_if_invited_to_chapter($email, $nid))) {
       $is_invited_to_chapter[] = $email; // user already invited to chapter
+      $skip_invitation = true;
+    }
+    if (($nid == 0) && (tm_invitations_check_if_invited_by_user($email, $user->uid))) {
+      $is_invited_by_user[] = $email; // user already invited by inviter 
       $skip_invitation = true;
     }
 
@@ -307,10 +312,14 @@ function tm_invitations_invite_form_submit($form_id, &$form_state) {
     drupal_set_message(t('The following users already have accounts: %is_registered.', array('%is_registered' => $is_registered)));
   }
 
-  // Step 7. Notice if users are already invited to chapter
+  // Step 7. Notice if users are already invited to chapter or by user
   if ($is_invited_to_chapter) {
     $is_invited_to_chapter = implode(", ", $is_invited_to_chapter);
     drupal_set_message(t('The following addresses have already been sent invitations to join the chapter: %is_invited_to_chapter.', array('%is_invited_to_chapter' => $is_invited_to_chapter)));
+  }
+  if ($is_invited_by_user) {
+    $is_invited_by_user = implode(", ", $is_invited_by_user);
+    drupal_set_message(t('You\'ve already sent invitations to: %is_invited_by_user.', array('%is_invited_by_user' => $is_invited_by_user)));
   }
 
   // Step 8. Redirect user to profile page or chapter invite page
@@ -334,6 +343,23 @@ function tm_invitations_check_if_invited_to_chapter($email, $chapter_nid) {
       ->fields('i')
       ->condition('email',$email,'=')
       ->condition('nid',$chapter_nid,'=')
+      ->orderBy('created', 'DESC')
+      ->range(0,1)
+      ->execute()->fetchAll();
+
+  return (count($results) > 0);
+
+}
+
+/*
+ * Helper method to see if a user has alread been invited by that user
+ */
+function tm_invitations_check_if_invited_by_user($email, $inviter_uid) {
+
+  $results = db_select('tm_invitations', 'i')
+      ->fields('i')
+      ->condition('email',$email,'=')
+      ->condition('uid',$inviter_uid,'=')
       ->orderBy('created', 'DESC')
       ->range(0,1)
       ->execute()->fetchAll();
@@ -467,7 +493,7 @@ function tm_invitations_send_email($email, $inviter_name, $inviter_uid, $custom_
       $message .= str_replace("\n", "<br>", $custom_message); // add line breaks
       $message .= "</p>";
     }
-    $message .= "<br>Join the community by visiting <a href='__SERVER_HTTP__://__SERVER_NAME__/user/register'>__SERVER_NAME__/user/register</a>";
+    $message .= "<br>Join the community by visiting <a href='__SERVER_HTTP__://__SERVER_NAME__'>__SERVER_NAME__</a>";
     $message .= "<br>";
     $message .= "<br>__EMAIL_SIGNOFF__";
 
@@ -488,7 +514,7 @@ function tm_invitations_send_email($email, $inviter_name, $inviter_uid, $custom_
     if ($chapter_name != "") {
       $email_message['subject'] = "Your Invitation to __SITE_NAME__ " . $chapter_name;
     } else {
-      $email_message['subject'] = "Your Invitation to __SITE_NAME__";
+      $email_message['subject'] = $inviter_name . " invited you to __SITE_NAME__.";
     }
     $email_message['subject'] = str_replace("__SITE_NAME__", $conf["tm_site_name"], $email_message['subject']);
 

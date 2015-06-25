@@ -2894,9 +2894,9 @@ Icons
 .form-submit.follow.on:before,
 .form-submit.follow.flagged:before, .form-submit:before, .messages.status:before, .status.messages--status:before, .status.messages--warning:before, .status.messages--error:before, .icon-s-subtract, .icon-s-cancel, .icon-s-arr-up, .icon-s-arr-right, .cta-inline:after, .contained-block .detail-item .detail-venue-link a:after, .contained-block .more-link a:after, #foot-nav a:before, .icon-s-arr-left, .icon-s-arr-down, .bttn-dropdown:after, html.js .collapsible .fieldset-legend a:after, .views-exposed-form .form-type-select:after, .icon-s-add, .bttn.follow:before, .bttn-group a.follow:before, .page-search .tabs-primary a.follow:before, .pager li a.follow:before, .pager .follow.pager-current:before, .views-exposed-form .follow.form-type-select:before, .follow.twitter-login:before,
 .form-submit.follow:before, .icon-refresh, .icon-phone, .icon-pencil, .bttn.edit:before, .bttn-group a.edit:before, .page-search .tabs-primary a.edit:before, .pager li a.edit:before, .pager .edit.pager-current:before, .views-exposed-form .edit.form-type-select:before, .edit.twitter-login:before,
-.form-submit.edit:before, .icon-my-location, .icon-mobile, .icon-menu, #prime-nav .browse-wrapper .toggle:before, .icon-map, .icon-map-marker, .contained-block .detail-item.field-location:before, .contained-block .detail-item.location:before, .icon-list, .icon-linkedin, #foot-nav .linkedin:before, .contained-block .detail-item.field-link-linkedin:before, .icon-image, .icon-home, .icon-history, .icon-grid, .icon-google-plus, .icon-globe, .contained-block .detail-item.field-link-website:before, .icon-github, .icon-flickr, .icon-feed, .icon-facebook, #foot-nav .facebook:before, .contained-block .detail-item.field-link-facebook:before, .icon-expand, .icon-email, .bttn.settings:before, .bttn-group a.settings:before, .page-search .tabs-primary a.settings:before, .pager li a.settings:before, .pager .settings.pager-current:before, .views-exposed-form .settings.form-type-select:before, .settings.twitter-login:before,
-.form-submit.settings:before, .icon-download, .icon-disc-cancel, .icon-description, .contained-block .detail-item.field-about-me:before, .contained-block .detail-item.about-me:before, .contained-block .detail-item.body:before, .icon-cog, .bttn.contact:before, .bttn-group a.contact:before, .page-search .tabs-primary a.contact:before, .pager li a.contact:before, .pager .contact.pager-current:before, .views-exposed-form .contact.form-type-select:before, .contact.twitter-login:before,
-.form-submit.contact:before, .icon-clock, .contained-block .detail-item.field-date-event:before, .icon-circle-warning, .messages.warning:before, .warning.messages--status:before, .warning.messages--warning:before, .warning.messages--error:before, .icon-circle-success, .icon-circle-question, .icon-circle-play, .tm-frontpage-video-play:before, .icon-circle-info, .contained-block .detail-item.tm-ds-event-message:before, .icon-circle-error, .messages.error:before, .error.messages--status:before, .error.messages--warning:before, .error.messages--error:before, .icon-cancel, .icon-arr-up, .icon-arr-tail-up, .icon-arr-tail-right, .icon-arr-tail-left, .icon-arr-tail-down, .icon-arr-right, .icon-arr-right-last, .icon-arr-left, .icon-arr-left-first, .icon-arr-down, .icon-add, .icon-connection, .contained-block .detail-item.tm-ds-connection-actions:before, .contained-block .detail-item.tm-ds-organization-follow-message:before, [class^="icon-"], [class*=" icon-"] {
+.form-submit.edit:before, .icon-my-location, .icon-mobile, .icon-menu, #prime-nav .browse-wrapper .toggle:before, .icon-map, .icon-map-marker, .contained-block .detail-item.field-location:before, .contained-block .detail-item.location:before, .icon-list, .icon-linkedin, #foot-nav .linkedin:before, .contained-block .detail-item.field-link-linkedin:before, .icon-image, .icon-home, .icon-history, .icon-grid, .icon-google-plus, .icon-globe, .contained-block .detail-item.field-link-website:before, .icon-github, .icon-flickr, .icon-feed, .icon-facebook, #foot-nav .facebook:before, .contained-block .detail-item.field-link-facebook:before, .icon-expand, .icon-email, .bttn.communication:before, .bttn-group a.communication:before, .page-search .tabs-primary a.communication:before, .pager li a.communication:before, .pager .communication.pager-current:before, .views-exposed-form .communication.form-type-select:before, .communication.twitter-login:before,
+.form-submit.communication:before, .icon-download, .icon-disc-cancel, .icon-description, .contained-block .detail-item.field-about-me:before, .contained-block .detail-item.about-me:before, .contained-block .detail-item.body:before, .icon-cog, .bttn.settings:before, .bttn-group a.settings:before, .page-search .tabs-primary a.settings:before, .pager li a.settings:before, .pager .settings.pager-current:before, .views-exposed-form .settings.form-type-select:before, .settings.twitter-login:before,
+.form-submit.settings:before, .icon-clock, .contained-block .detail-item.field-date-event:before, .icon-circle-warning, .messages.warning:before, .warning.messages--status:before, .warning.messages--warning:before, .warning.messages--error:before, .icon-circle-success, .icon-circle-question, .icon-circle-play, .tm-frontpage-video-play:before, .icon-circle-info, .contained-block .detail-item.tm-ds-event-message:before, .icon-circle-error, .messages.error:before, .error.messages--status:before, .error.messages--warning:before, .error.messages--error:before, .icon-cancel, .icon-arr-up, .icon-arr-tail-up, .icon-arr-tail-right, .icon-arr-tail-left, .icon-arr-tail-down, .icon-arr-right, .icon-arr-right-last, .icon-arr-left, .icon-arr-left-first, .icon-arr-down, .icon-add, .icon-connection, .contained-block .detail-item.tm-ds-connection-actions:before, .contained-block .detail-item.tm-ds-organization-follow-message:before, [class^="icon-"], [class*=" icon-"] {
   font-family: 'tm-icons';
   speak: none;
   font-style: normal;
@@ -3189,8 +3189,8 @@ Icons
 }
 
 /* line 258, ../sass/_type.scss */
-.icon-email, .bttn.settings:before, .bttn-group a.settings:before, .page-search .tabs-primary a.settings:before, .pager li a.settings:before, .pager .settings.pager-current:before, .views-exposed-form .settings.form-type-select:before, .settings.twitter-login:before,
-.form-submit.settings:before {
+.icon-email, .bttn.communication:before, .bttn-group a.communication:before, .page-search .tabs-primary a.communication:before, .pager li a.communication:before, .pager .communication.pager-current:before, .views-exposed-form .communication.form-type-select:before, .communication.twitter-login:before,
+.form-submit.communication:before {
   content: "\e632";
 }
 
@@ -3210,8 +3210,8 @@ Icons
 }
 
 /* line 274, ../sass/_type.scss */
-.icon-cog, .bttn.contact:before, .bttn-group a.contact:before, .page-search .tabs-primary a.contact:before, .pager li a.contact:before, .pager .contact.pager-current:before, .views-exposed-form .contact.form-type-select:before, .contact.twitter-login:before,
-.form-submit.contact:before {
+.icon-cog, .bttn.settings:before, .bttn-group a.settings:before, .page-search .tabs-primary a.settings:before, .pager li a.settings:before, .pager .settings.pager-current:before, .views-exposed-form .settings.form-type-select:before, .settings.twitter-login:before,
+.form-submit.settings:before {
   content: "\e636";
 }
 
@@ -4304,47 +4304,40 @@ button:hover, button:focus {
 /* line 48, ../sass/_buttons.scss */
 .bttn.settings, .bttn-group a.settings, .page-search .tabs-primary a.settings, .pager li a.settings, .pager .settings.pager-current, .views-exposed-form .settings.form-type-select, .settings.twitter-login,
 .form-submit.settings {
-  background-color: #007db7;
-  color: #fff;
   width: 3rem;
 }
-/* line 52, ../sass/_buttons.scss */
-.bttn.settings:before, .bttn-group a.settings:before, .page-search .tabs-primary a.settings:before, .pager li a.settings:before, .pager .settings.pager-current:before, .views-exposed-form .settings.form-type-select:before, .settings.twitter-login:before,
-.form-submit.settings:before {
-  color: #fff;
-}
-/* line 57, ../sass/_buttons.scss */
-.bttn.contact, .bttn-group a.contact, .page-search .tabs-primary a.contact, .pager li a.contact, .pager .contact.pager-current, .views-exposed-form .contact.form-type-select, .contact.twitter-login,
-.form-submit.contact {
+/* line 54, ../sass/_buttons.scss */
+.bttn.communication, .bttn-group a.communication, .page-search .tabs-primary a.communication, .pager li a.communication, .pager .communication.pager-current, .views-exposed-form .communication.form-type-select, .communication.twitter-login,
+.form-submit.communication {
   width: 3rem;
 }
-/* line 65, ../sass/_buttons.scss */
+/* line 62, ../sass/_buttons.scss */
 .bttn.follow, .bttn-group a.follow, .page-search .tabs-primary a.follow, .pager li a.follow, .pager .follow.pager-current, .views-exposed-form .follow.form-type-select, .follow.twitter-login, .bttn.external, .bttn-group a.external, .page-search .tabs-primary a.external, .pager li a.external, .pager .external.pager-current, .views-exposed-form .external.form-type-select, .external.twitter-login, .bttn.edit, .bttn-group a.edit, .page-search .tabs-primary a.edit, .pager li a.edit, .pager .edit.pager-current, .views-exposed-form .edit.form-type-select, .edit.twitter-login,
 .form-submit.follow,
 .form-submit.external,
 .form-submit.edit {
   width: 9rem;
 }
-/* line 67, ../sass/_buttons.scss */
+/* line 64, ../sass/_buttons.scss */
 .bttn.follow:before, .bttn-group a.follow:before, .page-search .tabs-primary a.follow:before, .pager li a.follow:before, .pager .follow.pager-current:before, .views-exposed-form .follow.form-type-select:before, .follow.twitter-login:before, .bttn.external:before, .bttn-group a.external:before, .page-search .tabs-primary a.external:before, .pager li a.external:before, .pager .external.pager-current:before, .views-exposed-form .external.form-type-select:before, .external.twitter-login:before, .bttn.edit:before, .bttn-group a.edit:before, .page-search .tabs-primary a.edit:before, .pager li a.edit:before, .pager .edit.pager-current:before, .views-exposed-form .edit.form-type-select:before, .edit.twitter-login:before,
 .form-submit.follow:before,
 .form-submit.external:before,
 .form-submit.edit:before {
   margin-left: -0.5rem;
 }
-/* line 79, ../sass/_buttons.scss */
+/* line 76, ../sass/_buttons.scss */
 .bttn.hide-txt:before, .bttn-group a.hide-txt:before, .page-search .tabs-primary a.hide-txt:before, .pager li a.hide-txt:before, .pager .hide-txt.pager-current:before, .views-exposed-form .hide-txt.form-type-select:before, .hide-txt.twitter-login:before,
 .form-submit.hide-txt:before {
   margin-right: 0;
 }
 
-/* line 89, ../sass/_buttons.scss */
+/* line 86, ../sass/_buttons.scss */
 .bttn-dropdown:after {
   margin-left: 0.25rem;
   opacity: 0.6;
 }
 
-/* line 96, ../sass/_buttons.scss */
+/* line 93, ../sass/_buttons.scss */
 .bttn-blk, #account-menu-blk .form-submit, .twitter-login {
   display: block;
   width: 100%;
@@ -4352,7 +4345,7 @@ button:hover, button:focus {
 
 /* Button sizes */
 /* 24px */
-/* line 104, ../sass/_buttons.scss */
+/* line 101, ../sass/_buttons.scss */
 .bttn-s, .node-form .image-widget-data #edit-field-image-und-0-remove-button,
 .node-form .image-widget-data #edit-field-avatar-und-0-remove-button,
 #user-profile-form .image-widget-data #edit-field-image-und-0-remove-button,
@@ -4366,7 +4359,7 @@ button:hover, button:focus {
 }
 
 /* 32px */
-/* line 112, ../sass/_buttons.scss */
+/* line 109, ../sass/_buttons.scss */
 .bttn-m, .bttn-group a, .page-search .tabs-primary a, .pager li a, .pager .pager-current, .form-submit, #edit-submit, #edit-delete, .views-exposed-form .form-type-select, .twitter-login {
   line-height: 1.5rem !important;
   font-size: 1rem;
@@ -4375,7 +4368,7 @@ button:hover, button:focus {
 }
 
 /* 40px */
-/* line 120, ../sass/_buttons.scss */
+/* line 117, ../sass/_buttons.scss */
 .bttn-l {
   line-height: 1.75rem;
   font-size: 1.25rem;
@@ -4384,7 +4377,7 @@ button:hover, button:focus {
 }
 
 /* 44px */
-/* line 128, ../sass/_buttons.scss */
+/* line 125, ../sass/_buttons.scss */
 .bttn-xl {
   line-height: 1.75rem;
   font-size: 1.25rem;
@@ -4393,57 +4386,57 @@ button:hover, button:focus {
 }
 
 /* Button colors */
-/* line 138, ../sass/_buttons.scss */
+/* line 135, ../sass/_buttons.scss */
 .bttn-default {
   color: #213040;
   background: #FFF;
   border-color: #c7cbcf;
 }
-/* line 142, ../sass/_buttons.scss */
+/* line 139, ../sass/_buttons.scss */
 .bttn-default:before {
   color: #007eb5;
 }
-/* line 145, ../sass/_buttons.scss */
+/* line 142, ../sass/_buttons.scss */
 .bttn-default:hover, .bttn-default:focus {
   color: #213040;
 }
-/* line 148, ../sass/_buttons.scss */
+/* line 145, ../sass/_buttons.scss */
 .bttn-default:active, .bttn-default.on, .bttn-default.flagged {
   color: #213040;
   box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.5), inset 0 2px 0 0 rgba(33, 48, 64, 0.1);
 }
 
-/* line 155, ../sass/_buttons.scss */
+/* line 152, ../sass/_buttons.scss */
 .bttn-primary, .bttn-group a, .page-search .tabs-primary a, .pager li a, .views-exposed-form .form-type-select {
   color: #FFF !important;
   background: #636e79 !important;
   box-shadow: inset 0 -2px 0 0 #374453;
 }
-/* line 160, ../sass/_buttons.scss */
+/* line 157, ../sass/_buttons.scss */
 .bttn-primary:hover, .bttn-group a:hover, .page-search .tabs-primary a:hover, .pager li a:hover, .views-exposed-form .form-type-select:hover, .bttn-primary:focus, .bttn-group a:focus, .page-search .tabs-primary a:focus, .pager li a:focus, .views-exposed-form .form-type-select:focus {
   color: #FFF !important;
 }
-/* line 163, ../sass/_buttons.scss */
+/* line 160, ../sass/_buttons.scss */
 .bttn-primary:active, .bttn-group a:active, .page-search .tabs-primary a:active, .pager li a:active, .views-exposed-form .form-type-select:active, .bttn-primary.on, .bttn-group a.on, .page-search .tabs-primary a.on, .bttn-group a.is-active, .page-search .tabs-primary a.is-active, .pager li a.on, .pager .pager-current, .views-exposed-form .on.form-type-select, .bttn-primary.flagged, .bttn-group a.flagged, .page-search .tabs-primary a.flagged, .pager li a.flagged, .views-exposed-form .flagged.form-type-select {
   background: #374453 !important;
   box-shadow: inset 0 2px 0 0 #1a2633;
   color: #FFF !important;
 }
 
-/* line 171, ../sass/_buttons.scss */
+/* line 168, ../sass/_buttons.scss */
 .bttn-secondary, #prime-nav .search-wrapper .search-form #edit-submit,
 #prime-nav .search-wrapper .search-form #edit-submit--2, #content .search-form #edit-submit, .twitter-login {
   color: #FFF !important;
   background: #007eb5 !important;
   box-shadow: inset 0 -2px 0 0 #00587e;
 }
-/* line 176, ../sass/_buttons.scss */
+/* line 173, ../sass/_buttons.scss */
 .bttn-secondary:hover, #prime-nav .search-wrapper .search-form #edit-submit:hover,
 #prime-nav .search-wrapper .search-form #edit-submit--2:hover, #content .search-form #edit-submit:hover, .twitter-login:hover, .bttn-secondary:focus, #prime-nav .search-wrapper .search-form #edit-submit:focus,
 #prime-nav .search-wrapper .search-form #edit-submit--2:focus, #content .search-form #edit-submit:focus, .twitter-login:focus {
   color: #FFF !important;
 }
-/* line 179, ../sass/_buttons.scss */
+/* line 176, ../sass/_buttons.scss */
 .bttn-secondary:active, #prime-nav .search-wrapper .search-form #edit-submit:active,
 #prime-nav .search-wrapper .search-form #edit-submit--2:active, #content .search-form #edit-submit:active, .twitter-login:active, .bttn-secondary.on, #prime-nav .search-wrapper .search-form .on#edit-submit,
 #prime-nav .search-wrapper .search-form .on#edit-submit--2, #content .search-form .on#edit-submit, .on.twitter-login, .bttn-secondary.flagged, #prime-nav .search-wrapper .search-form .flagged#edit-submit,
@@ -4453,63 +4446,63 @@ button:hover, button:focus {
   color: #FFF !important;
 }
 
-/* line 187, ../sass/_buttons.scss */
+/* line 184, ../sass/_buttons.scss */
 .bttn-tertiary, .form-submit, #account-menu-blk .form-submit {
   color: #4d5966 !important;
   background: #e8eaeb;
   box-shadow: inset 0 -2px 0 0 #d2d5d8;
 }
-/* line 192, ../sass/_buttons.scss */
+/* line 189, ../sass/_buttons.scss */
 .bttn-tertiary:hover, .form-submit:hover, #account-menu-blk .form-submit:hover, .bttn-tertiary:focus, .form-submit:focus, #account-menu-blk .form-submit:focus {
   color: #4d5966 !important;
 }
-/* line 195, ../sass/_buttons.scss */
+/* line 192, ../sass/_buttons.scss */
 .bttn-tertiary:active, .form-submit:active, #account-menu-blk .form-submit:active, .bttn-tertiary.on, .on.form-submit, #account-menu-blk .on.form-submit, .bttn-tertiary.flagged, .flagged.form-submit, #account-menu-blk .flagged.form-submit {
   background: #d2d5d8;
   box-shadow: inset 0 2px 0 0 #bcc0c5;
   color: #4d5966 !important;
 }
 
-/* line 203, ../sass/_buttons.scss */
+/* line 200, ../sass/_buttons.scss */
 .bttn-danger, #edit-delete {
   color: #FFF !important;
   background: #e74c3c;
   box-shadow: inset 0 -2px 0 0 #a1352a;
 }
-/* line 208, ../sass/_buttons.scss */
+/* line 205, ../sass/_buttons.scss */
 .bttn-danger:hover, #edit-delete:hover, .bttn-danger:focus, #edit-delete:focus {
   color: #FFF !important;
 }
-/* line 211, ../sass/_buttons.scss */
+/* line 208, ../sass/_buttons.scss */
 .bttn-danger:active, #edit-delete:active, .bttn-danger.on, .on#edit-delete, .bttn-danger.flagged, .flagged#edit-delete {
   background: #a1352a;
   box-shadow: inset 0 2px 0 0 #73261e;
   color: #FFF !important;
 }
 
-/* line 219, ../sass/_buttons.scss */
+/* line 216, ../sass/_buttons.scss */
 .bttn-success, #edit-submit {
   color: #FFF !important;
   background: #1abc9c;
   box-shadow: inset 0 -2px 0 0 #12836d;
 }
-/* line 224, ../sass/_buttons.scss */
+/* line 221, ../sass/_buttons.scss */
 .bttn-success:hover, #edit-submit:hover, .bttn-success:focus, #edit-submit:focus {
   color: #FFF !important;
 }
-/* line 227, ../sass/_buttons.scss */
+/* line 224, ../sass/_buttons.scss */
 .bttn-success:active, #edit-submit:active, .bttn-success.on, .on#edit-submit, .bttn-success.flagged, .flagged#edit-submit {
   background: #12836d;
   box-shadow: inset 0 2px 0 0 #0d5e4e;
   color: #FFF !important;
 }
 
-/* line 235, ../sass/_buttons.scss */
+/* line 232, ../sass/_buttons.scss */
 .bttn.disabled, .bttn-group a.disabled, .page-search .tabs-primary a.disabled, .pager li a.disabled, .pager .disabled.pager-current, .views-exposed-form .disabled.form-type-select, .disabled.twitter-login, button.disabled {
   opacity: 0.4;
   cursor: default;
 }
-/* line 239, ../sass/_buttons.scss */
+/* line 236, ../sass/_buttons.scss */
 .bttn.disabled:active, .bttn-group a.disabled:active, .page-search .tabs-primary a.disabled:active, .pager li a.disabled:active, .pager .disabled.pager-current:active, .views-exposed-form .disabled.form-type-select:active, .disabled.twitter-login:active, button.disabled:active {
   position: static;
   top: 0;
@@ -4517,7 +4510,7 @@ button:hover, button:focus {
 }
 
 /* Button group */
-/* line 249, ../sass/_buttons.scss */
+/* line 246, ../sass/_buttons.scss */
 .bttn-group, .page-search .tabs-primary {
   border: 0;
   padding: 0;
@@ -4525,7 +4518,7 @@ button:hover, button:focus {
   list-style: none;
   background: none;
 }
-/* line 256, ../sass/_buttons.scss */
+/* line 253, ../sass/_buttons.scss */
 .bttn-group > *, .page-search .tabs-primary > *,
 .bttn-group > .is-active,
 .page-search .tabs-primary > .is-active {
@@ -4535,55 +4528,55 @@ button:hover, button:focus {
   text-shadow: none;
   border-radius: 0;
 }
-/* line 262, ../sass/_buttons.scss */
+/* line 259, ../sass/_buttons.scss */
 .bttn-group > * a, .page-search .tabs-primary > * a,
 .bttn-group > .is-active a,
 .page-search .tabs-primary > .is-active a {
   border-radius: 0;
 }
-/* line 266, ../sass/_buttons.scss */
+/* line 263, ../sass/_buttons.scss */
 .bttn-group > *:first-child a, .page-search .tabs-primary > *:first-child a,
 .bttn-group > .is-active:first-child a,
 .page-search .tabs-primary > .is-active:first-child a {
   border-top-left-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
 }
-/* line 272, ../sass/_buttons.scss */
+/* line 269, ../sass/_buttons.scss */
 .bttn-group > *:last-child a, .page-search .tabs-primary > *:last-child a,
 .bttn-group > .is-active:last-child a,
 .page-search .tabs-primary > .is-active:last-child a {
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
 }
-/* line 278, ../sass/_buttons.scss */
+/* line 275, ../sass/_buttons.scss */
 .bttn-group a, .page-search .tabs-primary a {
   letter-spacing: inherit;
 }
-/* line 281, ../sass/_buttons.scss */
+/* line 278, ../sass/_buttons.scss */
 .bttn-group a:hover, .page-search .tabs-primary a:hover {
   background-color: inherit;
 }
-/* line 285, ../sass/_buttons.scss */
+/* line 282, ../sass/_buttons.scss */
 .bttn-group a.is-active, .page-search .tabs-primary a.is-active {
   border: 0;
   letter-spacing: inherit;
 }
 
-/* line 292, ../sass/_buttons.scss */
+/* line 289, ../sass/_buttons.scss */
 .pager {
   display: inline-block;
 }
-/* line 301, ../sass/_buttons.scss */
+/* line 298, ../sass/_buttons.scss */
 .pager li a, .pager .pager-current {
   border-radius: 0;
 }
-/* line 305, ../sass/_buttons.scss */
+/* line 302, ../sass/_buttons.scss */
 .pager li:first-child,
 .pager li:first-child a {
   border-top-left-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
 }
-/* line 310, ../sass/_buttons.scss */
+/* line 307, ../sass/_buttons.scss */
 .pager li:last-child,
 .pager li:last-child a {
   border-top-right-radius: 0.25rem;
@@ -4591,7 +4584,7 @@ button:hover, button:focus {
 }
 
 /* Dropdown */
-/* line 317, ../sass/_buttons.scss */
+/* line 314, ../sass/_buttons.scss */
 .dropd {
   min-width: 12.5rem;
   position: absolute;
@@ -4621,7 +4614,7 @@ button:hover, button:focus {
   -o-transition-delay: 0, 0, 0;
   transition-delay: 0, 0, 0;
 }
-/* line 335, ../sass/_buttons.scss */
+/* line 332, ../sass/_buttons.scss */
 .dropd:before {
   position: absolute;
   z-index: 15;
@@ -4634,33 +4627,33 @@ button:hover, button:focus {
   height: 1rem;
   width: 1rem;
 }
-/* line 349, ../sass/_buttons.scss */
+/* line 346, ../sass/_buttons.scss */
 .dropd.dropd-right {
   left: auto;
   right: 0;
 }
-/* line 352, ../sass/_buttons.scss */
+/* line 349, ../sass/_buttons.scss */
 .dropd.dropd-right:before {
   left: auto;
   right: 1rem;
 }
-/* line 358, ../sass/_buttons.scss */
+/* line 355, ../sass/_buttons.scss */
 .dropd.dropd-center {
   left: 50%;
   margin-left: -6.25rem;
 }
-/* line 361, ../sass/_buttons.scss */
+/* line 358, ../sass/_buttons.scss */
 .dropd.dropd-center:before {
   left: 50%;
   margin-left: -0.5rem;
 }
-/* line 367, ../sass/_buttons.scss */
+/* line 364, ../sass/_buttons.scss */
 .dropd.on {
   opacity: 1;
   margin-top: 0.75rem;
   visibility: visible;
 }
-/* line 373, ../sass/_buttons.scss */
+/* line 370, ../sass/_buttons.scss */
 .dropd .dropd-menu {
   list-style: none;
   padding: 0.5rem 0;
@@ -4669,22 +4662,22 @@ button:hover, button:focus {
   line-height: 1.25rem;
   border-bottom: 1px solid #e8eaeb;
 }
-/* line 381, ../sass/_buttons.scss */
+/* line 378, ../sass/_buttons.scss */
 .dropd .dropd-menu:first-child {
   margin-top: -0.75rem;
 }
-/* line 385, ../sass/_buttons.scss */
+/* line 382, ../sass/_buttons.scss */
 .dropd .dropd-menu:last-child {
   margin-bottom: -0.75rem;
   border: none;
 }
-/* line 389, ../sass/_buttons.scss */
+/* line 386, ../sass/_buttons.scss */
 .dropd .dropd-menu li {
   position: relative;
   z-index: 20;
   margin: 0;
 }
-/* line 393, ../sass/_buttons.scss */
+/* line 390, ../sass/_buttons.scss */
 .dropd .dropd-menu li a {
   display: block;
   padding: 0.25rem 1rem;
@@ -4707,13 +4700,13 @@ button:hover, button:focus {
   -o-transition-delay: 0, 0, 0, 0;
   transition-delay: 0, 0, 0, 0;
 }
-/* line 404, ../sass/_buttons.scss */
+/* line 401, ../sass/_buttons.scss */
 .dropd .dropd-menu li a:hover {
   opacity: 1;
   background-color: rgba(127, 190, 218, 0.2);
   color: #007eb5;
 }
-/* line 410, ../sass/_buttons.scss */
+/* line 407, ../sass/_buttons.scss */
 .dropd .dropd-menu li a:before {
   vertical-align: bottom !important;
   font-weight: normal;
@@ -4722,7 +4715,7 @@ button:hover, button:focus {
 }
 
 /* Approval status */
-/* line 421, ../sass/_buttons.scss */
+/* line 418, ../sass/_buttons.scss */
 .approval {
   text-align: center;
   color: #1b2430;
@@ -4731,18 +4724,18 @@ button:hover, button:focus {
   margin-bottom: 0px;
 }
 
-/* line 428, ../sass/_buttons.scss */
+/* line 425, ../sass/_buttons.scss */
 .approval img {
   margin-bottom: -3px;
   padding-right: 4px;
 }
 
-/* line 432, ../sass/_buttons.scss */
+/* line 429, ../sass/_buttons.scss */
 .text_approved {
   font-size: 0.8em;
 }
 
-/* line 435, ../sass/_buttons.scss */
+/* line 432, ../sass/_buttons.scss */
 .text_notapproved {
   font-size: 0.8em;
 }

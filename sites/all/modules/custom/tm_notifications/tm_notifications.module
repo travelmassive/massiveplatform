@@ -285,7 +285,7 @@ function tm_notifications_scheduled_worker_run() {
  * @return boolean
  *   TRUE if the notification is enabled for the user and it was scheduled.
  */
-function tm_notifications_notify($notification, $account, $tokens = array()) {
+function tm_notifications_notify($notification, $account, $tokens = array(), $from = null) {
 
   // You can go one step further and disable any outbound notifications triggered by a non-validated member
   // Just uncomment below.
@@ -305,7 +305,7 @@ function tm_notifications_notify($notification, $account, $tokens = array()) {
 
   $notification = new TMNotification($notification);
   if ($notification->isEnabled($account->uid) && $account->status) {
-    drupal_mail('tm_notifications', $notification->getName(), $account->mail, user_preferred_language($account), array('tokens' => $tokens));
+    drupal_mail('tm_notifications', $notification->getName(), $account->mail, user_preferred_language($account), array('tokens' => $tokens), $from);
     return TRUE;
   }
   

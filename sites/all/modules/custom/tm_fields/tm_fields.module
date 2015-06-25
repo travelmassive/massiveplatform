@@ -37,6 +37,13 @@ function tm_fields_ds_fields_info($entity_type) {
     'ui_limit' => array('*|*'),
     'function' => '_tm_more_actions_process'
   );
+
+  $fields['tm_ds_communication_actions'] = array(
+    'title' => t('Communication actions'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('*|*'),
+    'function' => '_tm_communication_actions_process'
+  );
   
   $fields['tm_ds_anon_flag_placeholder'] = array(
     'title' => t('Anonymous flag placeholder'),
@@ -184,6 +191,81 @@ function _tm_approved_process($field, $title = NULL) {
 }
 
 /**
+ * Custom function to build the communication actions menu
+ */
+function _tm_communication_actions_process($field, $title = NULL) {
+
+  global $base_root, $user;
+  global $conf;
+  $base = $base_root . request_uri();
+  $links = array(
+    'edition' => array(),
+  );
+
+  $show_menu = false;
+
+  $menu_item = menu_get_item();
+
+  // START Contact chapter owners.
+  if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
+    $node = menu_get_object();
+    if ($node->type == 'event' || $node->type == 'chapter') {
+      $dest = 0;
+      if ($node->type == 'event') {
+        if (isset($node->field_chapter[$node->language])){
+          $dest = $node->field_chapter[$node->language][0]['target_id'];
+        }
+      }
+      if ($node->type == 'chapter') $dest = $node->nid;
+      if ($dest){
+        $show_menu = true;
+        $links['contactleaders'][] = array(
+          'wrapper_class' => array('contactleaders'),
+          'content' => l(t('Contact Chapter Leaders'), 'chapters/contact/'.$dest, array(
+            'attributes' => array(
+            'title' => t('Contact Chapter Leaders')
+            )
+          ))
+        );
+      }
+    }
+  }
+  // END contact chapter owners
+
+  // START message member link
+  if ($menu_item['path'] == 'user/%') {
+
+    $uid = $menu_item['page_arguments'][0]->uid;
+    $targetuser = user_load($uid);
+
+    // Only show link for approved users
+    if (in_array("approved user", $user->roles)){
+
+      $send_message_html = tm_messaging_make_send_message_link($user, $targetuser);
+
+      if ($send_message_html != null) {
+        $show_menu = true;
+        $links['messaging'][] = array(
+        'wrapper_class' => array('messaging'),
+        'content' => $send_message_html
+        );
+      }
+    }
+  }
+  // END message member link
+
+  // Don't show menu if there are no communication options
+  if (!$show_menu) { 
+    return null;
+  }
+
+  // Return links
+  return theme('communication_actions', array('links' => $links));
+
+}
+
+
+/**
  * Custom function to build the more_actions menu
  */
 function _tm_more_actions_process($field, $title = NULL) {
@@ -195,8 +277,9 @@ function _tm_more_actions_process($field, $title = NULL) {
     'share' => array()
   );
 
-  // START Edit link.
   $menu_item = menu_get_item();
+
+  // START Edit link.
   // Is it a node?
   if (isset($menu_item['page_arguments'][0]->nid)) {
     $nid = $menu_item['page_arguments'][0]->nid;
@@ -843,48 +926,6 @@ function _tm_more_actions_process($field, $title = NULL) {
   }
   // END Set as sponsor link
 
-  // START Contact chapter owners.
-  if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
-    $node = menu_get_object();
-    if ($node->type == 'event' || $node->type == 'chapter') {
-      $dest = 0;
-      if ($node->type == 'event') {
-        if (isset($node->field_chapter[$node->language])){
-          $dest = $node->field_chapter[$node->language][0]['target_id'];
-        }
-      }
-      if ($node->type == 'chapter') $dest = $node->nid;
-      if ($dest){
-        $links['contactleaders'][] = array(
-          'wrapper_class' => array('contactleaders'),
-          'content' => l(t('Contact Chapter Leaders'), 'chapters/contact/'.$dest, array(
-            'attributes' => array(
-            'title' => t('Contact Chapter Leaders')
-            )
-          ))
-        );
-        }
-      }
-    }
-  // END contact chapter owners
-
-  // START message member link
-  if ($menu_item['path'] == 'user/%') {
-
-    // Only show link for approved users
-    if (in_array("approved user", $targetuser->roles)){
-
-      $send_message_html = tm_messaging_make_send_message_link($user, $targetuser);
-
-      if ($send_message_html != null) {
-        $links['messaging'][] = array(
-        'wrapper_class' => array('messaging'),
-        'content' => $send_message_html
-        );
-      }
-    }
-  }
-  // END message member link
 
   // START sharing links
   $links['share'][] = array(
@@ -1074,6 +1115,13 @@ function tm_fields_theme() {
       ),
       'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
       'template' => 'tm_more_actions'
+    ),
+    'communication_actions' => array(
+      'variables' => array(
+        'links' => array()
+      ),
+      'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
+      'template' => 'tm_communication_actions'
     ),
     'tm_fields_link' => array(
       'variables' => array(

@@ -46,18 +46,15 @@ button {
     opacity: 0.4;
   }
   &.settings {
-    background-color: #007db7;
-    color: #fff;
-    width: 3rem;
-    &:before {
-      @extend .icon-email;
-      color: #fff;
-    }
-  }
-  &.contact {
     width: 3rem;
     &:before {
       @extend .icon-cog;
+    }
+  }
+  &.communication {
+    width: 3rem;
+    &:before {
+      @extend .icon-email;
     }
   }
   &.follow,

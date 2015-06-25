@@ -610,7 +610,7 @@ $conf['tm_announcement_copy_email'] = "commmunity@travelmassive.com";
 $conf['tm_announcement_reply_email'] = "commmunity@travelmassive.com";
 
 /** tm_invitations_custom_message **/
-$conf['tm_invitations_custom_message'] = "I'd like to invite you to Travel Massive.";
+$conf['tm_invitations_custom_message'] = "I'd like to invite you to Travel Massive, a global community that connects travel industry insiders, leaders and innovators to collaborate and share ideas at locally organized events.";
 
 /** tm_tips_start_chapter_link **/
 $conf['tm_tips_start_chapter_link'] = "https://travelmassive.com/blog/start-a-chapter-guide/";
@@ -647,6 +647,7 @@ $conf['tm_messaging_enabled'] = true; // turn on or off email messaging if follo
 $conf['tm_messaging_wait_time'] = 1800; // number of seconds between messaging the same person
 $conf['tm_messaging_limit_days'] = 14; // number of days to check for rate limit
 $conf['tm_messaging_limit_max'] = 30; // limit of messages you can send to different people within period
+$conf['tm_messaging_from_email'] = "communications@travelmassive.com"; // from address. reply-to will be senders.
 
 /** Provides a list of validated options on the signup page to indicate how the user connects with the community **/
 /** These options are not saved to the user account **/

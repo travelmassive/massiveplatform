@@ -502,6 +502,9 @@ function tm_events_communication_form($event){
   global $user;
   global $conf;
 
+  // Add javascript for form
+  drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_communication.js');
+
   // get chapter associated with event if there is one
   $chapter = null;
   if (sizeof($event->field_chapter[LANGUAGE_NONE][0] > 0)) {

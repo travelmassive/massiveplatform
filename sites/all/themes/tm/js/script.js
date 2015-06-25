@@ -550,6 +550,14 @@ Drupal.behaviors.base_scripts = {
 
   }
 
+  // show the login/signup box
+  // called from _tm_anon_flag_placeholder
+  // this method copies the account-menu-blk rendered in tm_users_account_menu for anon users
+  jq_login_signup_box = function() {
+    html_wrapper = '<div id="account-menu-blk">';
+    message = html_wrapper + ($("#account-menu-blk")).html() + "</div>";
+    $.prompt(message, {buttons: {}});
+  } 
 
 });})(jQuery, Drupal, this, this.document);
 

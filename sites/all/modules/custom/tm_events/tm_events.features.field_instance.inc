@@ -29,7 +29,7 @@ function tm_events_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',
-        'weight' => 4,
+        'weight' => 5,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -399,6 +399,68 @@ This will be added to the attendee count on the event page.',
     ),
   );
 
+  // Exported field_instance: 'node-event-field_event_hide_location'
+  $field_instances['node-event-field_event_hide_location'] = array(
+    'bundle' => 'event',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Check this option if you want to restrict displaying the event location to registered attendees only.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 26,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_hide_location',
+    'label' => 'Only show location to registered attendees',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 15,
+    ),
+  );
+
   // Exported field_instance: 'node-event-field_event_sponsors'
   $field_instances['node-event-field_event_sponsors'] = array(
     'bundle' => 'event',
@@ -589,10 +651,9 @@ This will be added to the attendee count on the event page.',
       ),
       'full' => array(
         'label' => 'hidden',
-        'module' => 'text',
         'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 0,
+        'type' => 'hidden',
+        'weight' => 1,
       ),
       'grid' => array(
         'label' => 'above',
@@ -780,7 +841,7 @@ This will be added to the attendee count on the event page.',
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 15,
+      'weight' => 16,
     ),
   );
 
@@ -800,10 +861,9 @@ This will be added to the attendee count on the event page.',
       ),
       'full' => array(
         'label' => 'hidden',
-        'module' => 'text',
         'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 1,
+        'type' => 'hidden',
+        'weight' => 2,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -867,10 +927,9 @@ This will be added to the attendee count on the event page.',
       ),
       'full' => array(
         'label' => 'hidden',
-        'module' => 'link',
         'settings' => array(),
-        'type' => 'link_default',
-        'weight' => 2,
+        'type' => 'hidden',
+        'weight' => 3,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1096,7 +1155,7 @@ This will be displayed to the member on the event page and included in the autom
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 16,
+      'weight' => 17,
     ),
   );
 
@@ -1234,7 +1293,7 @@ This will be displayed to the member on the event page and included in the autom
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 17,
+      'weight' => 18,
     ),
   );
 
@@ -1243,6 +1302,7 @@ This will be displayed to the member on the event page and included in the autom
   t('(Advanced Use Only) Check this to indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)');
   t('Approved Members Only');
   t('Check this box if you want to restrict registration and waitlist to members who are approved. Non-approved members won\'t be able to sign up. ');
+  t('Check this option if you want to restrict displaying the event location to registered attendees only.');
   t('Description');
   t('Event Chapter');
   t('Got an event sponsor? Show their company profile <span style="color: #e93f33 !important;">♥</span> by listing them as a sponsor.<br>
@@ -1267,6 +1327,7 @@ This will be displayed to the member on the event page and included in the autom
   t('Message When Registered');
   t('Message When Waitlisted');
   t('Non-registered Guests');
+  t('Only show location to registered attendees');
   t('Organizer');
   t('Partner Event');
   t('Provide a link to the page with the RSVP (ie: http://www.eventbrite.com/e/your-event-url)');

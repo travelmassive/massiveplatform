@@ -1079,12 +1079,10 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
     
     // Hide row weights unless administrator or moderator
     global $user;
-    if (!((in_array('administrator', $user->roles)) or (in_array('moderator', $user->roles)))) {
-      $form['#attached']['js'][] = array(
-        'data' => "(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){ $('.tabledrag-toggle-weight-wrapper').hide(); });})(jQuery, Drupal, this, this.document);",
-        'type' => 'inline',
-      );
-    }
+    $form['#attached']['js'][] = array(
+      'data' => "(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){ $('.tabledrag-toggle-weight-wrapper').hide(); });})(jQuery, Drupal, this, this.document);",
+      'type' => 'inline',
+    );
 
     // Hide managed by if its first edit
     if (!(isset($form['nid']['#value']))) {
@@ -1118,7 +1116,15 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
     if (!in_array("moderator", $loaded->roles) and !in_array("administrator", $loaded->roles)) {
       hide($form['field_chapter_leaders']);
       hide($form['field_geomaplocation']);
+      unset($form['#fieldgroups']['group_community_management']);
+      unset($form['#groups']['group_community_management']);
     }
+
+    // Hide row weights unless administrator or moderator
+    $form['#attached']['js'][] = array(
+      'data' => "(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){ $('.tabledrag-toggle-weight-wrapper').hide(); });})(jQuery, Drupal, this, this.document);",
+      'type' => 'inline',
+    );
   }
 
 }

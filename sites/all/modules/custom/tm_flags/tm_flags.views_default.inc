@@ -65,7 +65,7 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['fields']['name']['label'] = '';
   $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
-  /* Contextual filter: Flags: Content ID */
+  /* Contextual filter: Flags: Entity ID */
   $handler->display->display_options['arguments']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['arguments']['entity_id']['table'] = 'flagging';
   $handler->display->display_options['arguments']['entity_id']['field'] = 'entity_id';
@@ -102,7 +102,7 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['sorts']['timestamp']['relationship'] = 'flag_user_content_rel';
   $handler->display->display_options['sorts']['timestamp']['order'] = 'DESC';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Flags: Content ID */
+  /* Contextual filter: Flags: Entity ID */
   $handler->display->display_options['arguments']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['arguments']['entity_id']['table'] = 'flagging';
   $handler->display->display_options['arguments']['entity_id']['field'] = 'entity_id';
@@ -156,7 +156,7 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['sorts']['timestamp']['relationship'] = 'flag_user_content_rel';
   $handler->display->display_options['sorts']['timestamp']['order'] = 'DESC';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Flags: Content ID */
+  /* Contextual filter: Flags: Entity ID */
   $handler->display->display_options['arguments']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['arguments']['entity_id']['table'] = 'flagging';
   $handler->display->display_options['arguments']['entity_id']['field'] = 'entity_id';
@@ -190,7 +190,7 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['sorts']['timestamp']['relationship'] = 'flag_user_content_rel';
   $handler->display->display_options['sorts']['timestamp']['order'] = 'DESC';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Flags: Content ID */
+  /* Contextual filter: Flags: Entity ID */
   $handler->display->display_options['arguments']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['arguments']['entity_id']['table'] = 'flagging';
   $handler->display->display_options['arguments']['entity_id']['field'] = 'entity_id';
@@ -271,7 +271,7 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['sorts']['timestamp']['relationship'] = 'flag_user_content_rel';
   $handler->display->display_options['sorts']['timestamp']['order'] = 'DESC';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Flags: Content ID */
+  /* Contextual filter: Flags: Entity ID */
   $handler->display->display_options['arguments']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['arguments']['entity_id']['table'] = 'flagging';
   $handler->display->display_options['arguments']['entity_id']['field'] = 'entity_id';
@@ -321,7 +321,7 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['sorts']['timestamp']['relationship'] = 'flag_user_content_rel';
   $handler->display->display_options['sorts']['timestamp']['order'] = 'DESC';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Flags: Content ID */
+  /* Contextual filter: Flags: Entity ID */
   $handler->display->display_options['arguments']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['arguments']['entity_id']['table'] = 'flagging';
   $handler->display->display_options['arguments']['entity_id']['field'] = 'entity_id';
@@ -353,7 +353,7 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['sorts']['timestamp']['relationship'] = 'flag_user_content_rel';
   $handler->display->display_options['sorts']['timestamp']['order'] = 'DESC';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Flags: Content ID */
+  /* Contextual filter: Flags: Entity ID */
   $handler->display->display_options['arguments']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['arguments']['entity_id']['table'] = 'flagging';
   $handler->display->display_options['arguments']['entity_id']['field'] = 'entity_id';
@@ -434,7 +434,7 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['sorts']['timestamp']['relationship'] = 'flag_user_content_rel';
   $handler->display->display_options['sorts']['timestamp']['order'] = 'DESC';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Flags: Content ID */
+  /* Contextual filter: Flags: Entity ID */
   $handler->display->display_options['arguments']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['arguments']['entity_id']['table'] = 'flagging';
   $handler->display->display_options['arguments']['entity_id']['field'] = 'entity_id';
@@ -485,7 +485,7 @@ function tm_flags_views_default_views() {
   $handler->display->display_options['sorts']['timestamp']['relationship'] = 'flag_user_content_rel';
   $handler->display->display_options['sorts']['timestamp']['order'] = 'DESC';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Flags: Content ID */
+  /* Contextual filter: Flags: Entity ID */
   $handler->display->display_options['arguments']['entity_id']['id'] = 'entity_id';
   $handler->display->display_options['arguments']['entity_id']['table'] = 'flagging';
   $handler->display->display_options['arguments']['entity_id']['field'] = 'entity_id';

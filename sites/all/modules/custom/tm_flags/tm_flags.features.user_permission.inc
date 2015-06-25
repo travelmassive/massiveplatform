@@ -73,6 +73,17 @@ function tm_flags_user_default_permissions() {
     'module' => 'flag',
   );
 
+  // Exported permission: 'flag moderate_non_community_profile'.
+  $permissions['flag moderate_non_community_profile'] = array(
+    'name' => 'flag moderate_non_community_profile',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'chapter leader' => 'chapter leader',
+      'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
   // Exported permission: 'flag signup'.
   $permissions['flag signup'] = array(
     'name' => 'flag signup',
@@ -153,6 +164,17 @@ function tm_flags_user_default_permissions() {
     'roles' => array(
       'authenticated user' => 'authenticated user',
       'non-validated' => 'non-validated',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag moderate_non_community_profile'.
+  $permissions['unflag moderate_non_community_profile'] = array(
+    'name' => 'unflag moderate_non_community_profile',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'chapter leader' => 'chapter leader',
+      'moderator' => 'moderator',
     ),
     'module' => 'flag',
   );

@@ -514,7 +514,7 @@ function tm_invitations_send_email($email, $inviter_name, $inviter_uid, $custom_
     if ($chapter_name != "") {
       $email_message['subject'] = "Your Invitation to __SITE_NAME__ " . $chapter_name;
     } else {
-      $email_message['subject'] = $inviter_name . " invited you to __SITE_NAME__.";
+      $email_message['subject'] = $inviter_name . " invited you to __SITE_NAME__";
     }
     $email_message['subject'] = str_replace("__SITE_NAME__", $conf["tm_site_name"], $email_message['subject']);
 

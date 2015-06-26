@@ -279,7 +279,7 @@ function tm_base_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'tm_base_homepage_title_anon';
-  $strongarm->value = 'Building The Future Of Travel.';
+  $strongarm->value = 'Be Part Of Something Massive.';
   $export['tm_base_homepage_title_anon'] = $strongarm;
 
   $strongarm = new stdClass();

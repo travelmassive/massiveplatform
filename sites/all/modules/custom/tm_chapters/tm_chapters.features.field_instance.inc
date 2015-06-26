@@ -564,7 +564,7 @@ function tm_chapters_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_geomaplocation',
-    'label' => 'GeoMapLocation',
+    'label' => 'Geo Map Location',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -576,7 +576,7 @@ function tm_chapters_field_default_field_instances() {
         'html5_geolocation' => 0,
       ),
       'type' => 'geofield_latlon',
-      'weight' => 2,
+      'weight' => 3,
     ),
   );
 
@@ -1040,7 +1040,7 @@ The message will be included in the notification email sent to the member when t
   t('Country');
   t('Description');
   t('Facebook');
-  t('GeoMapLocation');
+  t('Geo Map Location');
   t('Image');
   t('Linkedin');
   t('Please enter a unique 3 letter shortcode for this city.');

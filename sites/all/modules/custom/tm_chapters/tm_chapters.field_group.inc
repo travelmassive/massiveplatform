@@ -76,6 +76,34 @@ function tm_chapters_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_chapter_location|node|chapter|form';
+  $field_group->group_name = 'group_chapter_location';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'chapter';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Location',
+    'weight' => '2',
+    'children' => array(
+      0 => 'field_geomaplocation',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'label' => 'Location',
+      'instance_settings' => array(
+        'required_fields' => 1,
+        'classes' => 'group-chapter-location field-group-fieldset',
+        'description' => '',
+      ),
+      'formatter' => 'open',
+    ),
+  );
+  $export['group_chapter_location|node|chapter|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_community_management|node|chapter|form';
   $field_group->group_name = 'group_community_management';
   $field_group->entity_type = 'node';
@@ -84,7 +112,7 @@ function tm_chapters_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Community Management',
-    'weight' => '4',
+    'weight' => '3',
     'children' => array(
       0 => 'field_community_managers',
     ),

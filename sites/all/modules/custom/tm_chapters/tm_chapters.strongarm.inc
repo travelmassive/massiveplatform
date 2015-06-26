@@ -80,7 +80,7 @@ function tm_chapters_strongarm() {
           'weight' => '40',
         ),
         'redirect' => array(
-          'weight' => '3',
+          'weight' => '4',
         ),
       ),
       'display' => array(),

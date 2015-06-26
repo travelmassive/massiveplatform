@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * Implements hook_field_widget_info().
+ */
+function tzfield_geofield_field_widget_info() {
+  return array(
+    'tzfield_geofield' => array(
+      'label' => t('Populate from Geofield'),
+      'field types' => array('tzfield'),
+      'behaviors' => array(
+        'multiple values' => FIELD_BEHAVIOR_CUSTOM,
+        'default value' => FIELD_BEHAVIOR_NONE,
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_settings_form().
+ */
+function tzfield_geofield_field_widget_settings_form($field, $instance) {
+  $widget_settings = $instance['widget']['settings'];
+
+  $options = array();
+  foreach (field_info_instances($instance['entity_type'], $instance['bundle']) as $field_name => $field_instance) {
+    $field = field_info_field($field_name);
+    if ($field['type'] == 'geofield') {
+      $options[$field['field_name']] = $field['field_name'];
+    }
+  }
+  
+  $form['geofield'] = array(
+    '#type' => 'select',
+    '#title' => 'Geofield',
+    '#options' => $options,
+    '#default_value' => isset($widget_settings['geofield']) ? $widget_settings['geofield']: '',
+    '#required' => TRUE,
+  );
+  
+  return $form;
+}
+
+/**
+ * Implements hook_field_attach_presave().
+ */
+function tzfield_geofield_field_attach_presave($entity_type, $entity) {
+  list(,,$bundle_name) = entity_extract_ids($entity_type, $entity);
+  foreach (field_info_instances($entity_type, $bundle_name) as $field_name => $field_instance) {
+    if ($field_instance['widget']['type'] == 'tzfield_geofield') {
+      $geofield_value = field_get_items($entity_type, $entity, $field_instance['widget']['settings']['geofield']);
+      if ($geofield_value) {
+        $entity->{$field_name}['und'][0]['value'] = _tzfield_geofield_get_timezone($geofield_value[0]['lat'], $geofield_value[0]['lon']);
+      }
+      else {
+        $entity->{$field_name} = array();
+      }
+    }
+  }
+}
+
+/**
+ * Return timezone by location.
+ */
+function _tzfield_geofield_get_timezone($lat, $lon) {
+  $response = file_get_contents('https://maps.googleapis.com/maps/api/timezone/json?location=' . $lat . ',' . $lon . '&timestamp=' . REQUEST_TIME . '&sensor=false');
+  $json = json_decode($response);
+  return $json->timeZoneId;
+}

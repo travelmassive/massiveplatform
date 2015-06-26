@@ -181,6 +181,10 @@ __MODERATOR_MESSAGE__
     'user_label' => 'Notification that user account is does not meet membership guidelines',
     'default_state' => '1',
     'change_allowed' => 0,
+    'change_allowed_roles' => array(
+      0 => 'chapter leader',
+      1 => 'moderator'
+    ),
     'email' => array(
       'subject' => 'Action required: Your __SITE_NAME__ profile doesn\'t meet our membership guidelines',
       'message' => 'Hi [user:field_user_first_name],

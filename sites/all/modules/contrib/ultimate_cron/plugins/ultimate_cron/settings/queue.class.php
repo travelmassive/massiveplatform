@@ -177,10 +177,7 @@ class UltimateCronQueueSettings extends UltimateCronTaggedSettings {
       }
     }
     $jobs += $new_jobs;
-    print_r($jobs['ultimate_cron_plugin_settings_queue_cleanup']);
-    unset($jobs['ultimate_cron_plugin_settings_queue_cleanup']);
-
-    /*$jobs['ultimate_cron_plugin_settings_queue_cleanup']->settings += array(
+    $jobs['ultimate_cron_plugin_settings_queue_cleanup']->settings += array(
       'scheduler' => array(),
     );
     $jobs['ultimate_cron_plugin_settings_queue_cleanup']->settings['scheduler'] += array(
@@ -192,7 +189,7 @@ class UltimateCronQueueSettings extends UltimateCronTaggedSettings {
     );
     $jobs['ultimate_cron_plugin_settings_queue_cleanup']->settings['scheduler']['simple'] += array(
       'rules' => array('* * * * *'),
-    );*/
+    );
   }
 
   /**

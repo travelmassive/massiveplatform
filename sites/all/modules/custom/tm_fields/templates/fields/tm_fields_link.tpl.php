@@ -1,5 +1,6 @@
 <?php
 
+$original_url = $url;
 
 // fix user typos
 $url = trim($url);

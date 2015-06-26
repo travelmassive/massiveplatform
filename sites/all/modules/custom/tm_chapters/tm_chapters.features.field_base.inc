@@ -125,18 +125,17 @@ function tm_chapters_field_default_field_bases() {
     'locked' => 0,
     'module' => 'entityreference',
     'settings' => array(
-      'handler' => 'views',
+      'handler' => 'base',
       'handler_settings' => array(
         'behaviors' => array(
           'views-select-list' => array(
             'status' => 0,
           ),
         ),
-        'view' => array(
-          'args' => array(),
-          'display_name' => 'entityreference_chapter_leaders',
-          'view_name' => 'chapter_leaders_list',
+        'sort' => array(
+          'type' => 'none',
         ),
+        'target_bundles' => array(),
       ),
       'target_type' => 'user',
     ),

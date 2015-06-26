@@ -198,7 +198,7 @@ __MODERATOR_MESSAGE__
 <br>
 <br>
 <br><strong>But I love travel, can I join still?</strong>
-<br>Our community provides professional networking and development for members of the travel and tourism industry. If you are an expert or avid traveler, then thanks for stopping by and we wish you all the best on your journeys!
+<br>Our community provides professional networking and development for members of the travel and tourism industry. If you are an expert or avid traveler, then thanks for stopping by and we wish you all the best on your journeys.
 <br>
 <br>
 <br><strong>What you need to do:</strong>

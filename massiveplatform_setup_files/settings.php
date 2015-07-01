@@ -671,8 +671,8 @@ $conf["tm_community_values_options_validate"] = array(
 /** Note: Once you launch, you can't change these **/
 $conf["tm_field_user_question_1_title"] = "What is your favorite travel destination?";
 $conf["tm_field_user_question_2_title"] = "Where do you dream of traveling to?";
-$conf["tm_field_user_question_3_title"] = "What do you want to learn more about?";
-$conf["tm_field_user_question_4_title"] = "What was your first travel job?";
+$conf["tm_field_user_question_3_title"] = "What was your first travel job?";
+$conf["tm_field_user_question_4_title"] = "What do you want to learn more about?";
 $conf["tm_field_user_question_5_title"] = "Three words that describe why we should travel?";
 
 /** Site specific title and descriptions in profile and node edit **/

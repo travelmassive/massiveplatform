@@ -310,3 +310,16 @@ function tm_organizations_preprocess_flag(&$variables) {
   }
 
 }
+
+/* Customize organization edit form */
+function tm_organizations_form_alter(&$form, $form_state, $form_id) {
+  global $conf;
+
+  // Modify company edit form
+  if ($form_id == 'organization_node_form') {
+    // friendly url
+    $form['field_friendly_url'][LANGUAGE_NONE][0]['value']['#title'] = $conf["tm_field_company_friendly_url_title"];
+    $form['field_friendly_url'][LANGUAGE_NONE][0]['value']['#description'] = $conf["tm_field_company_friendly_url_description"];
+  }
+  
+} 

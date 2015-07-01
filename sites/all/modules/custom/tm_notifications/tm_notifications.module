@@ -203,7 +203,8 @@ function tm_notifications_mail($key, &$message, $params) {
   $template = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $template); 
   $template = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $template);  
   $template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
-  $template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template);  
+  $template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template);
+  $template = str_replace("__MEMBERS_LABEL__", $conf["tm_members_label"], $template); 
 
   // STEP 6. LOAD HTML TEMPLATE INTO EMAIL BODY
   $message['body'] = $template;

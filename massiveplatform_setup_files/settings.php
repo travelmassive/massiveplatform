@@ -667,6 +667,53 @@ $conf["tm_community_values_options_validate"] = array(
     4 => array("valid" => false, "message" => "<strong>Travel Massive accounts are for individuals.</strong> Please choose a community connection that applies to you personally. Once your account is approved you can create a company profile."),
     5 => array("valid" => false, "message" => "<strong>Why can't I join?</strong> Our community provides professional networking and development for members of the travel and tourism industry. We wish you safe travels and instead please become a <a href='https://travelmassive.com/blog/i-love-travel/'>friend of our community</a>."));
 
+/** Specify the 5 questions users are asked in their profile **/
+/** Note: Once you launch, you can't change these **/
+$conf["tm_field_user_question_1_title"] = "What is your favorite travel destination?";
+$conf["tm_field_user_question_2_title"] = "Where do you dream of traveling to?";
+$conf["tm_field_user_question_3_title"] = "What do you want to learn more about?";
+$conf["tm_field_user_question_4_title"] = "What was your first travel job?";
+$conf["tm_field_user_question_5_title"] = "Three words that describe why we should travel?";
+
+/** Site specific title and descriptions in profile and node edit **/
+$conf["tm_field_job_role_description"] = "examples: Founder, CEO, VP Marketing, Social Media Manager, Chief Explorer";
+$conf["tm_field_friendly_url_title"] = "Travel Massive URL (travelmassive.com/your-name)";
+$conf["tm_field_friendly_url_description"] = "Make your profile available through a friendly URL such as https://travelmassive.com/your-name.<br>Example: \"your-name\"";
+$conf["tm_field_company_friendly_url_title"] = "Travel Massive URL (travelmassive.com/your-company)";
+$conf["tm_field_company_friendly_url_description"] = "Make your company profile available through a friendly URL such as https://travelmassive.com/your-company.<br>Example: \"your-company\"";
+
+/** Approval welcome message when approved **/
+$conf["tm_notification_approval_welcome_message"] = '<strong>ARE YOU READY TO CHANGE TRAVEL?</strong>
+<br>
+<br>Our mission is to connect travel insiders in every city in the world in order to empower change in travel.
+<br>
+<br>Travel Massive has always been an open and collaborative community founded on three simple principles – to be open to everyone in the travel industry, to be free to participate, and to connect and share globally.
+<br>
+<br>In addition to our core values we have the following community values:
+<br>
+<br>* Building Meaningful Partnerships
+<br>* Fostering Innovation And Big Ideas
+<br>* Supporting Diversity And New Talent
+<br>* Empowering Change In Travel
+<br>* Promoting Responsible Travel
+<br>
+<br>You can read more on our public plan at <a href="http://www.travelmassive.org">www.travelmassive.org</a>
+<br>
+<br>If there\'s a chapter in your city, then please join it and attend our events to connect with like-minded travel industry professionals. If you can\'t find a chapter, why don\'t you consider starting a Travel Massive chapter? Get in touch with us to find out more.';
+
+/** Membership criteria provided if member flagged as non-community member **/
+$conf["tm_notification_moderation_non_community_message"] = 'To be a member of the Travel Massive community, you must demonstrate one of the following:
+<br>* You are active in the travel industry (example: tour operator, travel brand, DMO)
+<br>* You are active in a field closely related to the travel industry (example: Tourism PR)
+<br>* You are are a travel content creator (example: blogger, vlogger, presenter)
+<br>* You are studying tourism or a closely related course
+<br>* Any other criteria that reasonably demonstrates a professional connection to the tourism or travel industry.
+<br>* You can read our community values at https://travelmassive.com/blog/community-values/
+<br>
+<br>
+<br><strong>But I love travel, can I join still?</strong>
+<br>Our community provides professional networking and development for members of the travel and tourism industry. If you are an expert or avid traveler, then thanks for stopping by and we wish you all the best on your journeys.';
+
 /** Set a front page launch message and hide the stats. Comment out to disable **/
 //$conf['tm_frontpage_launch_message'] = "We've just launched our new community platform. Read our <a style='color: #fff; text-decoration: underline;' href='/blog/'>announcement</a>.";
 

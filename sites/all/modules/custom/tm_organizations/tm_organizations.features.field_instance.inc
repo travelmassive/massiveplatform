@@ -286,8 +286,7 @@ Displays a short message to followers on your company profile page.<br>',
     'bundle' => 'organization',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Make your profile available through a friendly URL such as http://travelmassive.com/your-company.
-Example: "your-company"',
+    'description' => 'Make your company profile available through a friendly URL. Example: "your-company"',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -819,7 +818,7 @@ Example: "your-company"',
     'default_value' => NULL,
     'default_value_function' => '',
     'deleted' => 0,
-    'description' => 'Select the Travel Massive member that manages this account.',
+    'description' => 'Select the member that manages this account.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -897,6 +896,7 @@ Example: "your-company"',
           'chapter' => 0,
           'event' => 0,
           'organization' => 0,
+          'page' => 0,
         ),
         'priority' => 0,
         'referenced' => array(
@@ -1011,14 +1011,13 @@ Displays a short message to followers on your company profile page.<br>');
   t('Industry Segment');
   t('Linkedin');
   t('Logo');
-  t('Make your profile available through a friendly URL such as http://travelmassive.com/your-company.
-Example: "your-company"');
+  t('Make your company profile available through a friendly URL. Example: "your-company"');
   t('Managed by');
   t('Message for Followers (Optional)');
   t('Please provide the segment which identifies the company the best.');
   t('Provide a cover image to be displayed behind your company logo.
 <br>If you want to be pixel perfect, upload your image sized to 805x453');
-  t('Select the Travel Massive member that manages this account.');
+  t('Select the member that manages this account.');
   t('Tell us about your organization or company. Describe your business and the service or product that you provide.');
   t('Twitter');
   t('Website');

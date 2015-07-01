@@ -553,17 +553,24 @@ function _tm_more_actions_process($field, $title = NULL) {
       $uid = $menu_item['page_arguments'][0]->uid;
       $targetuser = user_load($uid);
       if (in_array("approved user", $targetuser->roles)){
+
         if (user_access("unapprove users")){
-          $links['approve'][] = array(
-            'wrapper_class' => array('unapprove'),
-            'content' => l(t('Un-Approve'), 'javascript:jq_confirm_unapprove_user(' . $targetuser->uid . ')', array(
-              'fragment' => '',
-              'external'=>true,
-              'attributes' => array(
-                'title' => t('Un-Approve user')
-              )
-            ))
-          );    
+
+          // Don't show unapproval of moderators and admins
+          if ((!in_array("moderator", $targetuser->roles)) and (!in_array("chapter leader", $targetuser->roles)) and (!in_array("administrator", $targetuser->roles))) {
+
+            $links['approve'][] = array(
+              'wrapper_class' => array('unapprove'),
+              'content' => l(t('Un-Approve'), 'javascript:jq_confirm_unapprove_user(' . $targetuser->uid . ')', array(
+                'fragment' => '',
+                'external'=>true,
+                'attributes' => array(
+                  'title' => t('Un-Approve user')
+                )
+              ))
+            );
+            
+          }   
         }
       }
     }

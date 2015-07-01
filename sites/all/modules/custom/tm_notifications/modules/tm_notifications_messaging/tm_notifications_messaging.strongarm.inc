@@ -19,7 +19,7 @@ function tm_notifications_messaging_strongarm() {
     'default_state' => '1',
     'change_allowed' => 1,
     'email' => array(
-      'subject' => '__USER_FIRST_NAME__ __USER_LAST_NAME__ just sent you a message via Travel Massive',
+      'subject' => '__USER_FIRST_NAME__ __USER_LAST_NAME__ just sent you a message via __SITE_NAME__',
       'message' => 'Hi [user:field_user_first_name],
 <br>
 <br>__USER_FIRST_NAME__ __USER_LAST_NAME__ just sent you a message on __SITE_NAME__.

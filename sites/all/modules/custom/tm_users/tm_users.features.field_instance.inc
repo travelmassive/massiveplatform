@@ -147,7 +147,7 @@ function tm_users_field_default_field_instances() {
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Claim your own URL on travelmassive.com for your profile such as http://travelmassive.com/my-name. Example: "your-name"',
+    'description' => 'Claim your own URL',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -177,7 +177,7 @@ function tm_users_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'user',
     'field_name' => 'field_friendly_url',
-    'label' => 'Travel Massive URL (travelmassive.com/your-url)',
+    'label' => 'Friendly URL',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -1070,7 +1070,7 @@ function tm_users_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'user',
     'field_name' => 'field_user_question_1',
-    'label' => 'What is your favorite travel destination?',
+    'label' => 'Question 1',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -1124,7 +1124,7 @@ function tm_users_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'user',
     'field_name' => 'field_user_question_2',
-    'label' => 'Where do you dream of traveling to?',
+    'label' => 'Question 2',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -1178,7 +1178,7 @@ function tm_users_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'user',
     'field_name' => 'field_user_question_3',
-    'label' => 'What was your first travel job?',
+    'label' => 'Question 4',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -1232,7 +1232,7 @@ function tm_users_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'user',
     'field_name' => 'field_user_question_4',
-    'label' => 'What do you want to learn more about?',
+    'label' => 'Question 3',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -1286,7 +1286,7 @@ function tm_users_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'user',
     'field_name' => 'field_user_question_5',
-    'label' => 'Three words that describe why we should travel?',
+    'label' => 'Question 5',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -1309,11 +1309,12 @@ function tm_users_field_default_field_instances() {
 <br>Your profile picture will be cropped to a square format.');
   t('About me');
   t('City');
-  t('Claim your own URL on travelmassive.com for your profile such as http://travelmassive.com/my-name. Example: "your-name"');
+  t('Claim your own URL');
   t('Country');
   t('Cover Image');
   t('Facebook');
   t('First name');
+  t('Friendly URL');
   t('Home Chapter');
   t('In a few short words, tell us why you\\\'d like to join the community.');
   t('Industry Segment');
@@ -1331,17 +1332,16 @@ function tm_users_field_default_field_instances() {
   t('Provide the other members with some more information about yourself. This information will be <strong>public</strong>.
 <br>
 <strong>Providing information about your company?</strong> Please add a <a href="/companies">company profile</a>.');
+  t('Question 1');
+  t('Question 2');
+  t('Question 3');
+  t('Question 4');
+  t('Question 5');
   t('Reason for joining');
   t('The name of your business, company, or organization.
 <br>Once your account is approved you can add a <a href="/companies">company profile</a>.');
-  t('Three words that describe why we should travel?');
-  t('Travel Massive URL (travelmassive.com/your-url)');
   t('Twitter');
   t('Website');
-  t('What do you want to learn more about?');
-  t('What is your favorite travel destination?');
-  t('What was your first travel job?');
-  t('Where do you dream of traveling to?');
   t('Where you spend most of your time');
   t('examples: Founder, CEO, VP Marketing, Social Media Manager, Chief Explorer');
   t('ie: @twittername or https://twitter.com/yourname');

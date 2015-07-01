@@ -117,23 +117,7 @@ __MODERATOR_MESSAGE__
 <br>
 <br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>
-<br><strong>ARE YOU READY TO CHANGE TRAVEL?</strong>
-<br>
-<br>Our mission is to connect travel insiders in every city in the world in order to empower change in travel.
-<br>
-<br>Travel Massive has always been an open and collaborative community founded on three simple principles – to be open to everyone in the travel industry, to be free to participate, and to connect and share globally.
-<br>
-<br>In addition to our core values we have the following community values:
-<br>
-<br>* Building Meaningful Partnerships
-<br>* Fostering Innovation And Big Ideas
-<br>* Supporting Diversity And New Talent
-<br>* Empowering Change In Travel
-<br>* Promoting Responsible Travel
-<br>
-<br>You can read more on our public plan at <a href="http://www.travelmassive.org">www.travelmassive.org</a>
-<br>
-<br>If there\'s a chapter in your city, then please join it and attend our events to connect with like-minded travel industry professionals. If you can\'t find a chapter, why don\'t you consider starting a Travel Massive chapter? Get in touch with us to find out more.
+<br>__APPROVAL_WELCOME_MESSAGE__
 <br>
 <br>Thanks for joining and welcome to __SITE_NAME__!
 <br>
@@ -188,17 +172,7 @@ __MODERATOR_MESSAGE__
 <br>Thanks for signing up, however it looks like your account doesn\'t meet our <a href="__COMMUNITY_VALUES_URL__">membership guidelines</a>:
 <br>
 __MODERATOR_MESSAGE__
-<br>To be a member of the __SITE_NAME__ community, you must demonstrate one of the following:
-<br>* You are active in the travel industry (example: tour operator, travel brand, DMO)
-<br>* You are active in a field closely related to the travel industry (example: Tourism PR)
-<br>* You are are a travel content creator (example: blogger, vlogger, presenter)
-<br>* You are studying tourism or a closely related course
-<br>* Any other criteria that reasonably demonstrates a professional connection to the tourism or travel industry.
-<br>* You can read our community values at __COMMUNITY_VALUES_URL__
-<br>
-<br>
-<br><strong>But I love travel, can I join still?</strong>
-<br>Our community provides professional networking and development for members of the travel and tourism industry. If you are an expert or avid traveler, then thanks for stopping by and we wish you all the best on your journeys.
+<br>__MODERATION_MEMBERSHIP_CRITERIA__
 <br>
 <br>
 <br><strong>What you need to do:</strong>

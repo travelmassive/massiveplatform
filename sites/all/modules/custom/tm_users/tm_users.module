@@ -971,23 +971,23 @@ function tm_users_preprocess_field(&$variables) {
   global $conf;
 
   if ($variables['element']['#field_name'] == 'field_user_question_1') {
-    $variables['label'] = $conf["tm_user_question_1_title"];
+    $variables['label'] = $conf["tm_field_user_question_1_title"];
   }
 
   if ($variables['element']['#field_name'] == 'field_user_question_2') {
-    $variables['label'] = $conf["tm_user_question_2_title"];
+    $variables['label'] = $conf["tm_field_user_question_2_title"];
   }
 
   if ($variables['element']['#field_name'] == 'field_user_question_3') {
-    $variables['label'] = $conf["tm_user_question_3_title"];
+    $variables['label'] = $conf["tm_field_user_question_3_title"];
   }
 
   if ($variables['element']['#field_name'] == 'field_user_question_4') {
-    $variables['label'] = $conf["tm_user_question_4_title"];
+    $variables['label'] = $conf["tm_field_user_question_4_title"];
   }
 
   if ($variables['element']['#field_name'] == 'field_user_question_5') {
-    $variables['label'] = $conf["tm_user_question_5_title"];
+    $variables['label'] = $conf["tm_field_user_question_5_title"];
   }
 }
 

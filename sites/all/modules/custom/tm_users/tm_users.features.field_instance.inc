@@ -1153,7 +1153,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 19,
+        'weight' => 18,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1178,7 +1178,7 @@ function tm_users_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'user',
     'field_name' => 'field_user_question_3',
-    'label' => 'Question 4',
+    'label' => 'Question 3',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -1191,7 +1191,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 56,
+      'weight' => 55,
     ),
   );
 
@@ -1207,7 +1207,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 18,
+        'weight' => 19,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1232,7 +1232,7 @@ function tm_users_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'user',
     'field_name' => 'field_user_question_4',
-    'label' => 'Question 3',
+    'label' => 'Question 4',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -1245,7 +1245,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 55,
+      'weight' => 56,
     ),
   );
 

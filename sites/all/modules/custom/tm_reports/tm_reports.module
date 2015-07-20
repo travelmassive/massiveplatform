@@ -1,0 +1,300 @@
+<?php
+/**
+ * @file
+ * Code for the TM Reports feature.
+ */
+
+include_once 'tm_reports.features.inc';
+
+/**
+ * Implements hook_views_query_alter().
+ */
+function tm_reports_views_query_alter(&$view, &$query) {
+ if ($view->current_display == 'chapter_stats' || $view->current_display == 'chapter_stats_export') {
+    // Rewrite JOIN Date of Last Event and Time Ago (field_data_field_event_date table).
+    $join = new views_join;
+    $join->construct('field_data_field_event_date', 'field_chapter_node', 'nid', 'entity_id', array(), 'LEFT');
+    $join->extra = array(
+      array(
+          'field' => 'entity_type',
+          'value' => 'node',
+      ),
+      array(
+          'field' => 'deleted',
+          'value' => '0',
+      ),
+      array(
+          'field' => 'field_event_date_value',
+          'operator' => '>=',
+          'value' => date('Y-m-d', strtotime('-1 year')),
+      ),
+      array(
+          'field' => 'field_event_date_value',
+          'operator' => '<',
+          'value' => date('Y-m-d'),
+      )   
+    );
+    $query->add_relationship('field_chapter_node__field_data_field_event_date', $join, 'node');
+    
+    /* Rewrite community managers JOIN */
+    $join = new views_join;
+    $join->construct('field_data_field_community_managers', 'node', 'nid', 'entity_id', array(), 'LEFT');
+     $join->extra = array(
+      array(
+          'field' => 'entity_type',
+          'value' => 'node',
+      ),
+      array(
+          'field' => 'deleted',
+          'value' => '0',
+      ),
+      /* Add new condition */
+      array(
+          'field' => 'entity_id',
+          'value' => 'field_chapter_node__field_data_field_event_date.entity_id',
+      )
+    );
+    $query->add_relationship('field_data_field_community_managers', $join, 'field_data_field_community_managers');
+
+    /* JOIN next event date */
+    $join = new views_join;
+    $join->construct('field_data_field_event_date', 'field_chapter_node', 'nid', 'entity_id', array(), 'LEFT');
+    $join->extra = array(
+      array(
+          'field' => 'entity_type',
+          'value' => 'node',
+      ),
+      array(
+          'field' => 'deleted',
+          'value' => '0',
+      ),
+      array(
+          'field' => 'field_event_date_value',
+          'operator' => '>',
+          'value' => date('Y-m-d', strtotime('now')),
+      )
+    );
+    $query->add_relationship('field_chapter_node__field_data_field_next_event_date', $join, 'node');
+    $query->fields['field_chapter_node__field_data_field_event_date_field_event__3']['table'] = 'field_chapter_node__field_data_field_next_event_date';
+    
+    /* Add nid field of the next event (need in the link) */
+    $query->add_field(null, 'field_chapter_node__field_data_field_next_event_date.entity_id', 'next_event_date_entity_id', array('function' => 'max'));
+
+    /* JOIN taxonomy_term_hierarchy */
+    $industry_field['846'] = 'segment_tid';
+    $industry_field['996'] = 'aviation';
+    $industry_field['858'] = 'blogger';
+    $industry_field['870'] = 'bt';
+    $industry_field['885'] = 'iaa';
+    $industry_field['889'] = 'iai';
+    $industry_field['900'] = 'marketing';
+    $industry_field['908'] = 'motc';
+    $industry_field['921'] = 'media';
+    $industry_field['929'] = 'oti';
+    $industry_field['878'] = 'poi';
+    $industry_field['944'] = 'per';
+    $industry_field['949'] = 'ts';
+    $industry_field['958'] = 'tota';
+    $industry_field['990'] = 'toa';
+    foreach ($industry_field as $tid => $field_alias) {
+      $join = _tm_reports_add_join_industry ($field_alias, $tid);
+      $query->add_relationship('th_'.$field_alias, $join, 'field_data_field_segment');
+      $query->add_field('th_'.$field_alias, 'tid', $field_alias, array('function' => 'count'));
+    }
+    
+    /* Add event_count for fix industry count in hook_views_pre_render */
+    $query->add_field(null, 'DISTINCT(field_chapter_node.nid)', 'event_count', array('function' => 'count')); 
+  }
+}
+ 
+ /**
+ * Implements hook_views_pre_render().
+ */
+function tm_reports_views_pre_render(&$view) {
+ if ($view->current_display == 'chapter_stats' || $view->current_display == 'chapter_stats_export') {
+    /* Create custom column for the Industry Segment */
+    $table = 'taxonomy_term_hierarchy';
+    $table_alias = 'th';
+    $real_field = 'tid';
+
+    $industry_field['segment_tid'] = '# Accommodation';
+    $industry_field['aviation'] = '# Aviation';
+    $industry_field['blogger'] = '# Blogger';
+    $industry_field['bt'] = '# Business Travel';
+    $industry_field['iaa'] = '# Information and advice';
+    $industry_field['iai'] = '# Innovation and Investment';
+    $industry_field['marketing'] = '# Marketing';
+    $industry_field['motc'] = '# Means of transport/carriers';
+    $industry_field['media'] = '# Media';
+    $industry_field['oti'] = '# Online Travel Industry';
+    $industry_field['poi'] = '# Points of Interest';
+    $industry_field['per'] = '# Professional Education and Research';
+    $industry_field['ts'] = '# Technology Services';
+    $industry_field['tota'] = '# Tour Operators/Travel Agencies';
+    $industry_field['toa'] = '# Tourism Organization/Association';
+    foreach ($industry_field as $field_alias => $label) {
+        /* Count */
+        $view->field[$field_alias] = _tm_reports_add_handler_field_numeric ($view, $table, $table_alias, $real_field, $field_alias, $label);
+        
+        /* Percentage */
+        $field_alias .= '_pct';
+        $label .= ' (%)'; 
+        $view->field[$field_alias] = _tm_reports_add_handler_field_numeric ($view, $table, $table_alias, $real_field, $field_alias, $label);        
+    }
+
+    foreach ($view->result as $i => $result) {
+      // Last Date format
+      if (is_numeric($i) && (!empty($view->result[$i]->field_field_event_date[0]['raw']['value']))) {
+        // Change Date format
+        $event_date = strtotime($view->result[$i]->field_field_event_date[0]['raw']['value']);
+        $formatted_date = date("Y-m-d", $event_date);
+        $view->result[$i]->field_field_event_date[0]['rendered']['#markup'] = $formatted_date;
+        
+        // Link date to event
+        $event_nid = $view->result[$i]->field_chapter_node_nid;
+        $url = 'node/'.$event_nid;
+        $interval = format_interval((time() - $event_date) , 1) . t(' ago');
+        $event_time_ago_link = l($interval, $url);
+        $view->result[$i]->field_field_event_date_1[0]['rendered']['#markup'] = $event_time_ago_link;          
+      }
+      // Next Date format
+      if (is_numeric($i) && (!empty($view->result[$i]->field_field_event_date_3[0]['raw']['value']))) {
+        // Change Date format
+        $event_date = strtotime($view->result[$i]->field_field_event_date_3[0]['raw']['value']);
+        $interval = format_interval(($event_date - time()) , 1) ;
+        $next_event_nid = $view->result[$i]->next_event_date_entity_id;
+        $url = 'node/'.$next_event_nid;
+        $next_event_link = l($interval, $url);        
+        $view->result[$i]->field_field_event_date_3[0]['rendered']['#markup'] = $next_event_link;   
+      }
+      
+      // Fix Count for Inductry Segment term
+      foreach ($industry_field as $field_alias => $label) {
+        if (is_numeric($i) && (!empty($view->field[$field_alias]->view->result[$i]->$field_alias))) {
+          $event_count = ($view->field[$field_alias]->view->result[$i]->event_count);
+          $count = ($view->field[$field_alias]->view->result[$i]->$field_alias);
+          $count_normalise = ($event_count != 0 ? $count / $event_count : $count);
+          $view->field[$field_alias]->view->result[$i]->$field_alias = $count_normalise;
+            
+          /* Percentage */
+          $field_alias .= '_pct';
+          $total = $view->result[$i]->flag_counts_node_count;
+          $pct = ($total !=0? round(($count_normalise * 100 / $total), 1): 0);
+          $view->field[$field_alias]->view->result[$i]->$field_alias = $pct;          
+        }
+      }
+    }
+  }
+}
+
+ /**
+ * Helper function _tm_reports_add_handler_field_numeric
+ */
+function _tm_reports_add_handler_field_numeric (&$view, $table, $table_alias, $real_field, $field_alias, $label) {
+  $field = new views_handler_field_numeric();
+  $field ->field_alias =  $field_alias;
+  $field ->aliases =  array();
+  $field ->original_value =  NULL;
+  $field ->additional_fields =  array();
+  $field ->view =  &$view;
+  $field ->query =  &$view->query;
+  $field ->handler_type =  'field';
+  $field ->table_alias =  $table_alias;
+  $field ->real_field =  $real_field;
+  $field ->relationship =  NULL;
+  $field ->options = array(
+    'id' => 'count',
+    'table' => $table,
+    'field' => 'count',
+    'relationship' => $table_alias,
+    'group_type' => 'group',
+    'ui_name' => '',
+    'label' => $label,
+    'exclude' => FALSE,
+    'alter'  => array(
+      'alter_text' => FALSE,
+      'text' => '',
+      'make_link' => FALSE,
+      'path' => '',
+      'absolute' => FALSE,
+      'external' => FALSE,
+      'replace_spaces' => FALSE,
+      'path_case' => 'none',
+      'trim_whitespace' => FALSE,
+      'alt' => '',
+      'rel' => '',
+      'link_class' => '',
+      'prefix' => '',
+      'suffix' => '',
+      'target' => '',
+      'nl2br' =>  FALSE,
+      'max_length' => '',
+      'word_boundary' =>  TRUE,
+      'ellipsis' => TRUE,
+      'more_link' => FALSE,
+      'more_link_text' => '',
+      'more_link_path' => '',
+      'strip_tags' =>  FALSE,
+      'trim' => FALSE,
+      'preserve_tags' => '',
+      'html' => FALSE,
+    ),
+    'element_type' => '',
+    'element_class' => '',
+    'element_label_type' => '',
+    'element_label_class' => '',
+    'element_label_colon' => TRUE,
+    'element_wrapper_type' => '',
+    'element_wrapper_class' => '',
+    'element_default_classes' => TRUE,
+    'empty' => '',
+    'hide_empty' => FALSE,
+    'empty_zero' => FALSE,
+    'hide_alter_empty' => TRUE,
+    'set_precision'  => FALSE,
+    'precision' =>  0,
+    'decimal' => '.',
+    'separator' => ',',
+    'format_plural' => FALSE,
+    'format_plural_singular' => 1,
+    'format_plural_plural' => '@count',
+    'prefix' => '',
+    'suffix' => '',
+  );
+  
+  $field ->definition =  array(
+    'handler' => 'views_handler_field_numeric',
+    'click sortable' => TRUE,
+    'group' => 'Field',
+    'title' => $label,
+    'help' => '',
+  );
+  
+  $field ->is_handler =  TRUE;
+  $field ->table =  $table;
+  $field ->field =  $real_field;
+  $field ->position =  0;
+  
+  return $field;
+}
+
+/**
+ * Helper function _tm_reports_add_handler_field_numeric
+ */
+function _tm_reports_add_join_industry ($field_alias, $tid) {
+  $join = new views_join;
+  $join->construct('taxonomy_term_hierarchy', 'users_flagging__field_data_field_segment', 'field_segment_tid', 'tid', array(), 'LEFT');
+  $join->extra = array(
+    array(
+        'field' => 'tid',
+        'value' => $tid,
+    ),
+    array(
+        'field' => 'parent',
+        'value' => $tid,
+        'operator' => '=',
+    ),
+  );
+  $join->extra_type = 'OR';
+  return $join;
+}

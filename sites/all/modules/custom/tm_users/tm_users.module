@@ -1492,6 +1492,9 @@ function tm_users_in_chapter_tips() {
   // Show chapter page tips
   $url_parts = explode("/", request_path());
   if (($url_parts[0] == "chapters") and (sizeof($url_parts) == 2)) {
+    if ($url_parts[1] == "map") {
+      return; // don't display for map
+    }
     $node = menu_get_object();
     $nodeid = 0;
     if ($node->type == "chapter") {
@@ -1575,7 +1578,7 @@ function tm_users_chapter_tips() {
   elseif (sizeof($account->field_home_chapter) > 0) {
       $chapter = node_load($account->field_home_chapter['und'][0]['target_id']);
       $chapter_url = url('node/' . $chapter->nid, array("absolute" => true));
-      $user_tip = "Discover chapters world-wide and explore the community. Your home chapter is " . l(t( $conf["tm_site_name"] . " " . $chapter->title), $chapter_url) . ".";
+      $user_tip = "Explore the community and discover chapters world-wide. Your home chapter is " . l(t( $conf["tm_site_name"] . " " . $chapter->title), $chapter_url) . ".";
   }
 
   // Shower user tip
@@ -1671,7 +1674,7 @@ function tm_users_sponsors_tips() {
 
   global $conf;
   global $user;
-  $user_tip = "Our events are sponsored by leading companies and brands around the world. Learn more about " . l(t('sponsoring a ' . $conf["tm_site_name"]), $conf["tm_tips_sponsor_page_link"]) . ".";
+  $user_tip = "Our events are sponsored by leading companies and brands around the world. Learn more about " . l(t('sponsoring ' . $conf["tm_site_name"] . ' or a local chapter'), $conf["tm_tips_sponsor_page_link"]) . ".";
 
   // Shower user tip
   if ($user_tip != "") {

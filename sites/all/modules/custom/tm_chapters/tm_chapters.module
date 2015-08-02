@@ -329,3 +329,45 @@ function tm_chapters_flag_flag($flag, $entity_id, $account, $flagging) {
     user_save($user);
   }
 }
+
+// If leaving home chapter, also remove home chapter from profile
+function tm_chapters_flag_unflag($flag, $entity_id, $account, $flagging) {
+
+  // only listen for signup to chapter
+  if ($flag->name != 'signup') {
+    return;
+  }
+
+  // get user who unflagged
+  $user = user_load($account->uid);
+
+  // nothing to do if user doesn't have a home chapter
+  if (sizeof($user->field_home_chapter) == 0) {
+    return;
+  }
+
+  // fetch list of chapters the user has joined
+  $chapters_nids = array();
+  $flags = flag_get_user_flags("node", null, $account->uid);
+  foreach ($flags as $flag_name => $flag) {
+    if ($flag_name == "signup") {
+      foreach($flag as $f) {
+        $chapters_nids[] = $f->entity_id;
+      }
+    }
+  }
+
+  // remove unflagging chapter from list of user's chapters
+  if(($key = array_search($entity_id, $chapters_nids)) !== false) {
+    unset($chapters_nids[$key]); 
+  }
+
+  // check if user is no longer in their home chapter
+  $home_chapter_id = $user->field_home_chapter[LANGUAGE_NONE][0]['target_id'];
+  if (!array_search($home_chapter_id, $chapters_nids)) {
+    // Remove home chapter
+    $user->field_home_chapter[LANGUAGE_NONE] = array();
+    user_save($user);
+  }
+  
+}

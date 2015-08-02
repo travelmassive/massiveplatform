@@ -320,6 +320,3 @@ EOT;
 tm_show_flagfeeds();
 
 ?>
-
-
-

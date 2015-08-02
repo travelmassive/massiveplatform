@@ -111,16 +111,22 @@
             ?>
 
             <?php
+            // only show flag feeds if enabled and on front page
+            $show_flag_feeds = false;
             if (@isset($conf["tm_enable_flags_feed"])) {
-              if ($conf["tm_enable_flags_feed"]) {
+              if ($conf["tm_enable_flags_feed"] and drupal_is_front_page()) {
+                $show_flag_feeds = true;
+              }
+            }
+            
+            if ($show_flag_feeds) {
             ?>
               <div class="<?php if($tm_enable_wordpress_feedme) { print("column second"); }?>" id="frontpage_flag_feed" style="float: right;">
                 
             <?php include './'. path_to_theme() .'/templates/page--flagfeeds.tpl.php'; ?>
               </div> <!-- close second column -->
-            <?php 
-                } // end if
-              } // end if
+            <?php
+              } // end if show flag feeds
             ?>
 
             </div> <!-- close triliton -->

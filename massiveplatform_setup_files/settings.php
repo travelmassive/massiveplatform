@@ -649,6 +649,9 @@ $conf['tm_messaging_limit_days'] = 14; // number of days to check for rate limit
 $conf['tm_messaging_limit_max'] = 30; // limit of messages you can send to different people within period
 $conf['tm_messaging_from_email'] = "communications@travelmassive.com"; // from address. reply-to will be senders.
 
+/** Event Options **/
+$conf['tm_event_show_spots_left'] = 20; // show number of free seats when less than this number
+
 /** Provides a list of validated options on the signup page to indicate how the user connects with the community **/
 /** These options are not saved to the user account **/
 $conf["tm_community_values_description"] = "Our community is for travel industry insiders, leaders, and innovators.";

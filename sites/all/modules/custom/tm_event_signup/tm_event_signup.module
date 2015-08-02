@@ -133,7 +133,21 @@ function _tm_event_seats_count($field, $title = NULL) {
       }
     }
     
-    return t($count . ' ' . $count_text . '<br>' . $left . ' ' . $left_text);
+    // show x people going
+    $show_text = $count . ' ' . $count_text;
+
+    // show spots
+    global $conf;
+    $tm_event_show_spots_left = 0;
+    if (isset($conf['tm_event_show_spots_left'])) {
+      $tm_event_show_spots_left = $conf['tm_event_show_spots_left'];
+    }
+    // if below threshold, show spots
+    if (($left <= $tm_event_show_spots_left) or ($tm_event_show_spots_left == 0)) {
+      $show_text .= '<br>' . $left . ' ' . $left_text;
+    }
+
+    return t($show_text);
   }
   
   // No signup limit, must say how many people are going

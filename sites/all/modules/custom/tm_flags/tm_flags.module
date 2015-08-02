@@ -84,6 +84,40 @@ function _tm_flags_unflag_chapter(&$variables) {
     return true;
   }
 
+  // check for a member unregistering from event
+  // confirm that the user wants to unregister
+  if (($flag->name == "event_register") && ($action == "unflag")) {
+    $event = node_load($entity_id);
+    $variables['flag_button_class'] = 'flag-limit follow bttn bttn-secondary bttn-m';
+    drupal_add_js('
+    jQuery(document).ready(function($) {
+      $( ".flag" ).unbind("click");
+      $( ".flag" ).bind("click.confirm", function(event) {
+        jq_confirm_unregister_event(\''.htmlentities($event->title).'\');
+        return false;
+      });
+    });
+    ', 'inline');
+    return true;
+  }
+
+  // check for a member unregistering from waitlist
+  // confirm that the user wants to leave waitlist
+  if (($flag->name == "event_waitlist") && ($action == "unflag")) {
+    $event = node_load($entity_id);
+    $variables['flag_button_class'] = 'flag-limit follow bttn bttn-secondary bttn-m';
+    drupal_add_js('
+    jQuery(document).ready(function($) {
+      $( ".flag" ).unbind("click");
+      $( ".flag" ).bind("click.confirm", function(event) {
+        jq_confirm_unregister_waitlist(\''.htmlentities($event->title).'\');
+        return false;
+      });
+    });
+    ', 'inline');
+    return true;
+  }
+
   // no action
   return false;
 

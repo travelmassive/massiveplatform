@@ -207,6 +207,36 @@
     });
   }
 
+  jq_confirm_unregister_event = function(event_title) {
+    confirm_title = "Are you sure you want to unregister?";
+    message = "If you cancel your registration, you will miss out and everyone will have fun without you.";
+    $.prompt(message, { buttons: { "OK": true, "I like fun, I'm still going": false },
+      title: confirm_title,
+      submit: function(e,v,m,f){
+        if (v == true) {
+          //get the unflag url from the href and visit it
+          href = $( "a.unflag-action" ).attr('href');
+          window.location = href;
+        }
+      },
+    });
+  }
+
+  jq_confirm_unregister_waitlist = function(event_title) {
+    confirm_title = "Are you sure you want to leave the waitlist?";
+    message = "If you leave the waitlist the event organizers will not be able to select you if a space becomes available.";
+    $.prompt(message, { buttons: { "OK": true, "Cancel": false },
+      title: confirm_title,
+      submit: function(e,v,m,f){
+        if (v == true) {
+          //get the unflag url from the href and visit it
+          href = $( "a.unflag-action" ).attr('href');
+          window.location = href;
+        }
+      },
+    });
+  }
+
   jq_request_approval = function(uid) {
     confirm_title = "Approve my account";
     message = ""; //We\'re a growing community, and we need your help to ensure everyone fits in. ";

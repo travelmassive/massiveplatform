@@ -368,7 +368,7 @@ function tm_flags_flag_default_flags() {
     'flag_message' => 'You successfully joined [node:title]',
     'unflag_short' => 'Joined',
     'unflag_long' => 'Unjoin [node:title]',
-    'unflag_message' => 'You are no longer a member of the [node:title] chapter',
+    'unflag_message' => 'You have left the [node:title] chapter',
     'unflag_denied_text' => '',
     'link_type' => 'toggle',
     'weight' => 0,

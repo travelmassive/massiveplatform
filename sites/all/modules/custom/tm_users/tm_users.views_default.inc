@@ -51,6 +51,13 @@ function tm_users_views_default_views() {
   $handler->display->display_options['relationships']['field_user_country_iso2']['id'] = 'field_user_country_iso2';
   $handler->display->display_options['relationships']['field_user_country_iso2']['table'] = 'field_data_field_user_country';
   $handler->display->display_options['relationships']['field_user_country_iso2']['field'] = 'field_user_country_iso2';
+  /* Relationship: Flags: follow_members counter */
+  $handler->display->display_options['relationships']['flag_count_rel']['id'] = 'flag_count_rel';
+  $handler->display->display_options['relationships']['flag_count_rel']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_count_rel']['field'] = 'flag_count_rel';
+  $handler->display->display_options['relationships']['flag_count_rel']['label'] = 'number of followers';
+  $handler->display->display_options['relationships']['flag_count_rel']['required'] = 0;
+  $handler->display->display_options['relationships']['flag_count_rel']['flag'] = 'follow_members';
   /* Field: User: Name */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'users';
@@ -62,6 +69,12 @@ function tm_users_views_default_views() {
   $handler->display->display_options['sorts']['field_user_first_name_value']['id'] = 'field_user_first_name_value';
   $handler->display->display_options['sorts']['field_user_first_name_value']['table'] = 'field_data_field_user_first_name';
   $handler->display->display_options['sorts']['field_user_first_name_value']['field'] = 'field_user_first_name_value';
+  /* Sort criterion: Flags: Flag counter */
+  $handler->display->display_options['sorts']['count']['id'] = 'count';
+  $handler->display->display_options['sorts']['count']['table'] = 'flag_counts';
+  $handler->display->display_options['sorts']['count']['field'] = 'count';
+  $handler->display->display_options['sorts']['count']['relationship'] = 'flag_count_rel';
+  $handler->display->display_options['sorts']['count']['order'] = 'DESC';
   /* Contextual filter: Countries: ISO2 */
   $handler->display->display_options['arguments']['iso2']['id'] = 'iso2';
   $handler->display->display_options['arguments']['iso2']['table'] = 'countries_country';

@@ -65,16 +65,16 @@ function tm_users_views_default_views() {
   $handler->display->display_options['fields']['name']['label'] = '';
   $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
-  /* Sort criterion: User: First name (field_user_first_name) */
-  $handler->display->display_options['sorts']['field_user_first_name_value']['id'] = 'field_user_first_name_value';
-  $handler->display->display_options['sorts']['field_user_first_name_value']['table'] = 'field_data_field_user_first_name';
-  $handler->display->display_options['sorts']['field_user_first_name_value']['field'] = 'field_user_first_name_value';
   /* Sort criterion: Flags: Flag counter */
   $handler->display->display_options['sorts']['count']['id'] = 'count';
   $handler->display->display_options['sorts']['count']['table'] = 'flag_counts';
   $handler->display->display_options['sorts']['count']['field'] = 'count';
   $handler->display->display_options['sorts']['count']['relationship'] = 'flag_count_rel';
   $handler->display->display_options['sorts']['count']['order'] = 'DESC';
+  /* Sort criterion: User: First name (field_user_first_name) */
+  $handler->display->display_options['sorts']['field_user_first_name_value']['id'] = 'field_user_first_name_value';
+  $handler->display->display_options['sorts']['field_user_first_name_value']['table'] = 'field_data_field_user_first_name';
+  $handler->display->display_options['sorts']['field_user_first_name_value']['field'] = 'field_user_first_name_value';
   /* Contextual filter: Countries: ISO2 */
   $handler->display->display_options['arguments']['iso2']['id'] = 'iso2';
   $handler->display->display_options['arguments']['iso2']['table'] = 'countries_country';

@@ -7355,6 +7355,18 @@ a.cancel_account_link {
   margin-left: 1rem;
 }
 
+/* line 742, ../sass/_single.scss */
+.tm_chapters_member_icon {
+  padding-left: 0.2em;
+  padding-right: 0.2em;
+}
+
+/* line 743, ../sass/_single.scss */
+.tm_chapters_member_icon:before {
+  font-family: tm-icons;
+  content: '\e637';
+}
+
 /* line 2, ../sass/_login.scss */
 #account-menu-blk .menu-blk-title {
   text-transform: uppercase;

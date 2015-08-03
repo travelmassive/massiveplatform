@@ -281,6 +281,22 @@ function _tm_next_event($field, $title = NULL) {
       $no_event_text = "New chapter";
     }
 
+    // check if you are a member of the chapter
+    // fetch list of chapters the user has joined
+    global $user;
+    $chapters_nids = array();
+    $flags = flag_get_user_flags("node", null, $user->uid);
+    foreach ($flags as $flag_name => $flag) {
+      if ($flag_name == "signup") {
+        foreach($flag as $f) {
+          $chapters_nids[] = $f->entity_id;
+        }
+      }
+    }
+    if (array_search($chapter_id, $chapters_nids) !== false) {
+      $no_event_text = "You are a member";
+    }
+
     // show time to next event
     // if no event, then display number of members in chapter
     return $time_until ? t('Event in @time', array('@time' => $time_until)) : t($no_event_text);

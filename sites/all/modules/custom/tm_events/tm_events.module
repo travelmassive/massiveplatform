@@ -650,19 +650,35 @@ function tm_events_communication_form($event){
 
     // only show chapter option if the event has a chapter
     if ($chapter != null) {
-      $options['chapter_all'] = t('All Chapter Members');
-      $options['chapter_approved'] = t('Approved Chapter Members');
+      $options['chapter'] = t('All Chapter Members');
+      $options['chapter_and_not_rsvp_or_waitlist'] = t('Members who have not yet registered');
     }
 
-    $options['rsvp'] = t('Members who have RSVPs');  
-    $options['waitlist'] = t('Members on the Waitlist');  
-    $options['all'] = t('Both RSVPs/Waitlist');  
+    $options['rsvp'] = t('Members who are registered for the event');  
+    $options['waitlist'] = t('Members on the waitlist');  
+    $options['all'] = t('Both registered or waitlist');
     
+    // Recipients
     $form['recipients'] = array(
       '#type' =>'select',
       '#options' => $options,
-      '#title' => t('Send to Recipients:'),
+      '#title' => t('Send announcement to:'),
       );
+    
+    // Approved members
+    $form['approved_members'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Send to approved members only'),
+      '#default_value' => true,
+    );
+
+    // Confirm
+    $form['confirm_send'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('<strong>I\'m ready.</strong> Have you tested your email? There\'s no undo or turning back from here!'),
+      '#id' => 'event-email-attendees-confirm',
+    );
+
     // send test email to this address (box, button, ajax)
     // and confirm popup when you hit the final submit
     $form['submit_button'] = array(
@@ -671,15 +687,10 @@ function tm_events_communication_form($event){
       '#id' => 'event-email-attendees-submit',
       '#attributes' => array('class' => array(t('bttn-success'))),
     );
-    $form['confirm_send'] = array(
-      '#type' => 'checkbox',
-      '#title' => t('<strong>I\'m ready.</strong> Have you tested your email? There\'s no undo or turning back from here!'),
-      '#id' => 'event-email-attendees-confirm',
-    );
 
     $form['help_text'] = array(
-      '#markup' => '<br>
-        <br><small><b>Here\'s some tips to get the word out:</b>
+      '#markup' => '<div style="margin-top: 2rem; color: #888; background-color: #eee; padding: 0.5rem; border-radius: 4px;">
+        <small><b>Here\'s some tips to get the word out:</b>
         <br>Send the announcement on a weekday between 10.00 and 11.00 (if you are able to)
         <br>Your event is going to rock, tell them why they should come :)
         <br>Write a meaningful subject line that captures people\'s attention
@@ -689,7 +700,7 @@ function tm_events_communication_form($event){
         <br>
         <br><b>Notes:</b>
         <br>Members can opt-out by unchecking <i>Chapter and Event Announcements</i> in their notification settings.
-        <br>Emails to attendees are sent out in a queue and may take a number of minutes to be delivered.</small>',
+        <br>Emails to attendees are sent out in a queue and may take a number of minutes to be delivered.</small></div>',
     );
   }
 
@@ -706,12 +717,14 @@ function tm_events_send_emails_ajax(){
   if (!isset($_POST['subject'])) return FALSE;
   if (!isset($_POST['message'])) return FALSE;
   if (!isset($_POST['recipients'])) return FALSE;
+  if (!isset($_POST['approved_members'])) return FALSE;
   if (!isset($_POST['eventid'])) return FALSE;
 
   $subject = $_POST['subject'];
   $message = $_POST['message'];
   $message .= "<p><small>(Event ID: " . $_POST['eventid'] . ")</small></p>";
   $recipients = $_POST['recipients'];
+  $approved_members = ($_POST['approved_members'] == "true");
   $eventid = $_POST['eventid'];
   $replyto = "";
   if (isset($_POST['replyto'])) { 
@@ -724,7 +737,7 @@ function tm_events_send_emails_ajax(){
   }
 
   // send to recipients
-  $sendcount = tm_events_send_emails($recipients, $subject, $message, $eventid, $replyto);
+  $sendcount = tm_events_send_emails($recipients, $subject, $message, $eventid, $replyto, $approved_members);
 
   // indicate success to the js ajax handler
   // todo: return a nicer json response and parse it in the js
@@ -763,7 +776,7 @@ function tm_events_test_email_ajax(){
 }
 
 /* Submit function of communication ajax request */
-function tm_events_send_emails($recipients, $subject, $message, $eventid, $replyto = ""){
+function tm_events_send_emails($recipients, $subject, $message, $eventid, $replyto = "", $approved_members = true){
 
   // all these user lists are just flags to event or chapter
   $rsvpflag = flag_get_flag('event_register', NULL);
@@ -778,7 +791,13 @@ function tm_events_send_emails($recipients, $subject, $message, $eventid, $reply
       ->condition('fid', $rsvpflag->fid ,'=')
       ->condition('entity_id', $eventid ,'=')
       ->execute();
+
+    // create user_ids list from results
+    while ($result = $results->fetchAssoc()){
+      $user_ids[] = $result['uid'];
+    }
   }
+
   // Waitlist
   if ($recipients == 'waitlist'){
     $results = db_select('flagging', 'f')
@@ -786,40 +805,98 @@ function tm_events_send_emails($recipients, $subject, $message, $eventid, $reply
       ->condition('fid', $waitflag->fid ,'=')
       ->condition('entity_id', $eventid ,'=')
       ->execute();
+
+    // create user_ids list from results
+    while ($result = $results->fetchAssoc()){
+      $user_ids[] = $result['uid'];
+    }
   }
-  // both sets - shouldn't cause duplicates
+
+  // RSVP and Waitlist
+  // Todo: check this shouldn't cause duplicates
   if ($recipients == 'all'){
     $results = db_select('flagging', 'f')
       ->fields('f')
       ->condition('fid', array($waitflag->fid, $rsvpflag->fid) ,'in')
       ->condition('entity_id', $eventid ,'=')
       ->execute();
+
+    // create user_ids list from results
+    while ($result = $results->fetchAssoc()){
+      $user_ids[] = $result['uid'];
+    }
   }
-  // chapter_approved = everyone in the chapter who is approved
-  // chapter_all = everyone in the chapter including un-approved
-  // this query gets all including unapproved, and we filter in the message loop
-  // todo: would be better to filter approved members here in the query
-  if (($recipients == 'chapter_approved') or ($recipients == 'chapter_all')) {
+
+  // All chapter members
+  if ($recipients == 'chapter') {
     // load up the event and find out what the chapter is
     $event = node_load($eventid);
     $chapterid = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
 
-    // todo: only approved members
     $results = db_select('flagging', 'f')
       ->fields('f')
       ->condition('fid', $chapterflag->fid ,'=')
       ->condition('entity_id', $chapterid ,'=')
       ->execute();
+
+    // create user_ids list from results
+    while ($result = $results->fetchAssoc()){
+      $user_ids[] = $result['uid'];
+    }
   }
 
-  // send off the emails
+  // All chapter members who are not registered or on waitlist
+  if ($recipients == 'chapter_and_not_rsvp_or_waitlist') {
+
+    $members_in_chapter = array();
+    $members_who_have_rsvp = array();
+    $members_who_have_waitlist = array();
+
+    // load up the event and find out what the chapter is
+    $event = node_load($eventid);
+    $chapterid = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
+
+    $results = db_select('flagging', 'f')
+      ->fields('f')
+      ->condition('fid', $chapterflag->fid ,'=')
+      ->condition('entity_id', $chapterid ,'=')
+      ->execute();
+    while ($result = $results->fetchAssoc()){
+      $members_in_chapter[] = $result['uid'];
+    }
+
+    $results = db_select('flagging', 'f')
+      ->fields('f')
+      ->condition('fid', $rsvpflag->fid ,'=')
+      ->condition('entity_id', $eventid ,'=')
+      ->execute();
+    while ($result = $results->fetchAssoc()){
+      $members_who_have_rsvp[] = $result['uid'];
+    }
+
+    $results = db_select('flagging', 'f')
+      ->fields('f')
+      ->condition('fid', $waitflag->fid ,'=')
+      ->condition('entity_id', $eventid ,'=')
+      ->execute();
+    while ($result = $results->fetchAssoc()){
+      $members_who_have_waitlist[] = $result['uid'];
+    }
+
+    // we only want people who are in the chapter who have not registered or waitlist
+    $user_ids = array_diff($members_in_chapter, $members_who_have_rsvp, $members_who_have_waitlist);
+  }
+
+
+  // send the emails
   // We use a cron queue tm_event_announcements to send emails in the background.
   $original_message = $message;
-  while ($result = $results->fetchAssoc()){
-    $user_account = user_load($result['uid']);
+  foreach ($user_ids as $user_id) {
 
-    // if chapter_approved then check approval status of user
-    if ($recipients == 'chapter_approved') {
+    $user_account = user_load($user_id);
+
+    // if approved_members then check approval status of user
+    if ($approved_members) {
       if (!in_array('approved user', $user_account->roles)) {
         continue; // skip this member, they are not approved
       }

@@ -152,6 +152,7 @@ $('#event-test-email-submit').click(function (event) {
 	    data: {'subject': $('#edit-subject').val(),
 	          'message': message, //$('#edit-body').val(),
 	          'recipients': $('#edit-recipients').val(),
+	          'approved_members': $('#edit-approved-members').prop("checked"),
 	          'eventid': eventid,
 	          'replyto': $('#edit-reply-to').val(),
 	          'address': $('#edit-testemail').val()},

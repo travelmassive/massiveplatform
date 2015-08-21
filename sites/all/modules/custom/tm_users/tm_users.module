@@ -1054,6 +1054,11 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
           }
         }
       }
+
+      // Replace "All" option to more meaningful name
+      $form['name_list']['#options']['All'] = "Country";
+      $form['term_node_tid_depth']['#options']['All'] = "Industry";
+
     }
   }
 
@@ -1085,6 +1090,11 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
           }
         }
       }
+
+      // Replace "All" option to more meaningful name
+      $form['name_list']['#options']['All'] = "Country";
+      $form['taxonomy_entity_index_tid_depth']['#options']['All'] = "Industry";
+
     }
   }
   
@@ -1105,6 +1115,9 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
       } else{
         $form['name_list']['#options'] = $output->data;
       }
+
+      // Replace "All" option to more meaningful name
+      $form['name_list']['#options']['All'] = "Country";
       
     }
   }
@@ -1946,6 +1959,18 @@ function tm_users_user_cancel_methods_alter(&$methods) {
     }
   }
   
+}
+
+function tm_users_field_display_alter(&$display, $context) {
+  die();
+  // Leave field labels out of the search index.
+  // Note: The check against $context['entity_type'] == 'node' could be avoided
+  // by using hook_field_display_node_alter() instead of
+  // hook_field_display_alter(), resulting in less function calls when
+  // rendering non-node entities.
+  if ($context ['entity_type'] == 'node' && $context ['view_mode'] == 'search_index') {
+    $display ['label'] = 'hidden';
+  }
 }
 
 

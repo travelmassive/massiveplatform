@@ -413,5 +413,3 @@ function tm_chapters_page_alter(&$page) {
   }
 }
 
-
-

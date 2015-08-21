@@ -371,3 +371,47 @@ function tm_chapters_flag_unflag($flag, $entity_id, $account, $flagging) {
   }
 
 }
+
+// Add sort toggles to chapters page
+function tm_chapters_page_alter(&$page) {
+
+  // Split url parts
+  $url_parts = explode("/", request_path());
+
+  // catch either:
+  // /chapters
+  // /chapters/sort/title
+  if (($url_parts[0] == "chapters") and ((sizeof($url_parts) == 1) or (sizeof($url_parts) == 3))) {
+
+    $sort = "members"; // default sort method
+    if (sizeof($url_parts) == 3) {
+      $sort = $url_parts[2]; // ie: title for /chapters/sort/title
+    }
+   
+    // create css classes
+    if ($sort == "members") { $members_active = "is-active active"; } else { $members_active = ""; }
+    if ($sort == "title") { $title_active = "is-active active"; } else { $title_active = ""; }
+    if ($sort == "created") { $created_active = "is-active active"; } else { $created_active = ""; }
+
+    // create button css
+    $html = '
+    <ul class="tabs-primary tabs primary">
+      <li class="tabs-primary__tab is-active">
+        <a href="/chapters" class="tabs-primary__tab-link '.$members_active.'">Members</a>
+      </li>
+      <li class="tabs-primary__tab">
+        <a href="/chapters/sort/title" class="tabs-primary__tab-link '.$title_active.'">A &rarr; Z</a>
+      </li>
+      <li class="tabs-primary__tab">
+        <a href="/chapters/sort/created" class="tabs-primary__tab-link '.$created_active.'">New</a>
+      </li>
+    </ul>';
+
+    // add html to page header
+    $page['header'] = array('#markup' => $html);
+
+  }
+}
+
+
+

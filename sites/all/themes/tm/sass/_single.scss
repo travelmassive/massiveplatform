@@ -79,6 +79,20 @@
   }
 }
 
+/* Added by Iab C - style tab buttons on other views */
+.page-views {
+  .tabs-primary {
+    margin-bottom: 1rem;
+    @extend .bttn-group;
+    font-size: 0;
+    li,
+    li.is-active {
+      float: none;
+      display: inline-block;
+    }
+  }
+}
+
 .page-search {
   .tabs-primary {
     margin-bottom: 1rem;

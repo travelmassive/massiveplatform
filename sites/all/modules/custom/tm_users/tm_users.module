@@ -720,7 +720,7 @@ function tm_users_menu_chapters($uid){
       $markup .= $html;
     }
     if ($num_items > $MAX_ITEMS) {
-      $markup .= "<li>" . l(t('(View ') . ($num_items - $MAX_ITEMS) . " more)", 'user/' . $uid) . "</li>";
+      $markup .= "<li>" . l(t('(View ') . ($num_items - $MAX_ITEMS) . " more)", 'chapters') . "</li>";
     }
   }
   else {

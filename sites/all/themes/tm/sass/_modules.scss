@@ -129,6 +129,8 @@
     &.tm-ds-connection-actions:before { @extend .icon-connection; }
     &.tm-ds-organization-follow-message { display: none; }
     &.tm-ds-organization-follow-message:before { @extend .icon-connection; }
+    &.tm-ds-user-stats:before { @extend .icon-users; }
+    &.tm-ds-organization-stats:before { @extend .icon-users; }
 
     &.field-link-facebook,
     &.field-link-linkedin,

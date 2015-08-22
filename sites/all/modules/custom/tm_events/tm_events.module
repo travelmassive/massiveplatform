@@ -230,7 +230,7 @@ function tm_events_theme() {
  * between the current date and the event's date.
  */
 function _tm_next_event($field, $title = NULL) {
-  if ($field['entity']->type = 'chapter') {
+  if ($field['entity']->type == 'chapter') {
     $chapter_id = $field['entity']->nid;
 
     // Fetch the current and make sure it's UTC and user-defined timezone.

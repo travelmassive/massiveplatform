@@ -300,7 +300,7 @@ function tm_base_tokens($type, $tokens, array $data = array(), array $options = 
  * Implements hook_field_group_formatter_info().
  */
 function tm_base_field_group_formatter_info() {
-  return array(
+  $info = array(
     'display' => array(
       'contained_block' => array(
         'label' => t('TM Contained block '),
@@ -310,6 +310,8 @@ function tm_base_field_group_formatter_info() {
       ),
     ),
   );
+
+  return $info;
 }
 /**
  * Implements hook_field_group_pre_render().
@@ -319,6 +321,8 @@ function tm_base_field_group_formatter_info() {
  */
 function tm_base_field_group_pre_render(&$element, $group, &$form) {
   switch ($group->format_type) {
+
+    // default
     case 'contained_block':
       $add = array(
         '#type' => 'markup',
@@ -334,8 +338,8 @@ function tm_base_field_group_pre_render(&$element, $group, &$form) {
 
       $element += $add;
 
-      break
-;  }
+      break;
+    }
 }
 /**
  * Implements hook_ds_field_theme_functions_info().

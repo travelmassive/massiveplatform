@@ -166,9 +166,10 @@ function tm_users_field_group_info() {
       3 => 'field_link_twitter',
       4 => 'field_link_website',
       5 => 'field_segment',
-      6 => 'tm_ds_connection_actions',
-      7 => 'group_location_wrapper',
-      8 => 'group_user_qa_wrapper',
+      6 => 'tm_ds_user_stats',
+      7 => 'tm_ds_connection_actions',
+      8 => 'group_location_wrapper',
+      9 => 'group_user_qa_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -453,7 +454,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '30',
+    'weight' => '31',
     'children' => array(
       0 => 'field_location_city',
     ),
@@ -629,7 +630,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'QA',
-    'weight' => '29',
+    'weight' => '30',
     'children' => array(
       0 => 'group_user_qa',
     ),

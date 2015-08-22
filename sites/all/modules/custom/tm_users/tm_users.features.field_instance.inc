@@ -444,7 +444,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_link',
-        'weight' => 27,
+        'weight' => 28,
       ),
       'grid' => array(
         'label' => 'above',
@@ -515,7 +515,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_link',
-        'weight' => 28,
+        'weight' => 29,
       ),
       'grid' => array(
         'label' => 'above',
@@ -586,7 +586,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_twitter',
-        'weight' => 26,
+        'weight' => 27,
       ),
       'grid' => array(
         'label' => 'above',
@@ -657,7 +657,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_link',
-        'weight' => 25,
+        'weight' => 26,
       ),
       'grid' => array(
         'label' => 'above',
@@ -834,7 +834,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'hs_taxonomy',
         'settings' => array(),
         'type' => 'hs_taxonomy_term_reference_hierarchical_text',
-        'weight' => 24,
+        'weight' => 25,
       ),
       'grid' => array(
         'label' => 'above',

@@ -39,7 +39,34 @@ function tm_organizations_ds_fields_info($entity_type) {
     )
   );
 
+  // organization stats (followers)
+  $fields['tm_ds_organization_stats'] = array(
+    'title' => t('Organization Stats'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('organization|*'),
+    'function' => '_tm_ds_organization_stats'
+  );
+
   return array($entity_type => $fields);
+}
+
+/* Render organization's follower stats */
+function _tm_ds_organization_stats($field, $title = NULL) {
+
+  // check if user is flagged
+  $node = $field['entity'];
+  $nid = $node->nid;
+
+  $followers_text = "Follower";
+  $num_followers = tm_organizations_get_num_followers($nid);
+
+  $html = "";
+  if ($num_followers > 0) {
+    if ($num_followers > 1) { $followers_text = "Followers"; }
+    $html .= "<a href='/node/" . $nid . "/followers'><span class='tm_stats tm_stats_followers'>" . $num_followers . " <span class='tm_stats_followers_divider'>|</span> " . $followers_text . " </span></a>";
+  }
+
+  return $html;
 }
 
 /**
@@ -322,4 +349,14 @@ function tm_organizations_form_alter(&$form, $form_state, $form_id) {
     $form['field_friendly_url'][LANGUAGE_NONE][0]['value']['#description'] = $conf["tm_field_company_friendly_url_description"];
   }
   
-} 
+}
+
+
+/* Get count of how many followers a company has */
+function tm_organizations_get_num_followers($nid) {
+
+  $flag = flag_get_flag("follow_organizations");
+  $query = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_id = :nid AND f.entity_type = 'node'";
+  $result = db_query($query, array(':fid' => $flag->fid, ':nid' => $nid))->fetch();
+  return $result->total;
+}

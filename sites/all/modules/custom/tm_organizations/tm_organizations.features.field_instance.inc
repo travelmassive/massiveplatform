@@ -29,7 +29,7 @@ function tm_organizations_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',
-        'weight' => 3,
+        'weight' => 2,
       ),
       'grid' => array(
         'label' => 'hidden',

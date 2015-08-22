@@ -28,63 +28,63 @@ function tm_meta_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'metatag_enable_node';
-  $strongarm->value = 1;
+  $strongarm->value = TRUE;
   $export['metatag_enable_node'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'metatag_enable_node__chapter';
-  $strongarm->value = 1;
+  $strongarm->value = TRUE;
   $export['metatag_enable_node__chapter'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'metatag_enable_node__event';
-  $strongarm->value = 1;
+  $strongarm->value = TRUE;
   $export['metatag_enable_node__event'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'metatag_enable_node__organization';
-  $strongarm->value = 1;
+  $strongarm->value = TRUE;
   $export['metatag_enable_node__organization'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'metatag_enable_node__page';
-  $strongarm->value = 1;
+  $strongarm->value = TRUE;
   $export['metatag_enable_node__page'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'metatag_enable_taxonomy_term';
-  $strongarm->value = 1;
+  $strongarm->value = TRUE;
   $export['metatag_enable_taxonomy_term'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'metatag_enable_taxonomy_term__tm_segments';
-  $strongarm->value = 0;
+  $strongarm->value = TRUE;
   $export['metatag_enable_taxonomy_term__tm_segments'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'metatag_enable_user';
-  $strongarm->value = 1;
+  $strongarm->value = TRUE;
   $export['metatag_enable_user'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'metatag_enable_user__user';
-  $strongarm->value = FALSE;
+  $strongarm->value = TRUE;
   $export['metatag_enable_user__user'] = $strongarm;
 
   return $export;

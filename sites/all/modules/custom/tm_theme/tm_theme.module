@@ -58,5 +58,10 @@ function tm_theme_html_head_alter(&$head_elements) {
   // && !(((arg(0) == 'node' || (arg(0) == 'user')) && arg(2) == 'edit')))  {
     drupal_add_js(drupal_get_path('theme', 'tm') . '/js/jquery.sticky.js', array('group' => JS_THEME));
   }
-  
+
+  // add EU cookie consent
+  // https://silktide.com/tools/cookie-consent
+  drupal_add_js(drupal_get_path('theme', 'tm') . '/js/cookieconsent.latest.min.js', array('group' => JS_THEME));
+  drupal_add_js('window.cookieconsent_options = {"message":"We use cookies to ensure you get the best experience on our website.","dismiss":"Got it!","learnMore":"More info","link":"https://travelmassive.com/content/privacy-policy","theme":"dark-bottom"};', 'inline');
+
 }

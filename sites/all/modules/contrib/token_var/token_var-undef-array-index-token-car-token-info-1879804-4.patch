@@ -1,0 +1,22 @@
+diff --git a/sites/all/modules/token_var/token_var.module b/sites/all/modules/token_var/token_var.module
+index bd7032a..e3ae48f 100644
+--- a/sites/all/modules/token_var/token_var.module
++++ b/sites/all/modules/token_var/token_var.module
+@@ -26,7 +26,7 @@ function token_var_token_info() {
+ 
+   $token_var_selected_variables = variable_get(TOKENIZE_DRUPAL_VARIABLES_OPTIONS, array());
+   foreach ($conf as $key => $var) {
+-    if ((!is_array($var)) && (!empty($token_var_selected_variables)) && ($token_var_selected_variables[$key])) {
++    if ((!is_array($var)) && (!empty($token_var_selected_variables)) && isset($token_var_selected_variables[$key])) {
+       $info['tokens']['variables'][$key] = array(
+         'name' => $key,
+         'description' => $var,
+@@ -34,7 +34,7 @@ function token_var_token_info() {
+     }
+     elseif (is_array($var) && ($key != TOKENIZE_DRUPAL_VARIABLES_OPTIONS)) {
+       foreach ($var as $var_key => $var_val) {
+-        if (!empty($token_var_selected_variables) && ($token_var_selected_variables[$key . "|" . $var_key ])) {
++        if (!empty($token_var_selected_variables) && isset($token_var_selected_variables[$key . "|" . $var_key ])) {
+           $info['tokens']['variables_array'][$key . "|" . $var_key] = array(
+             'name' => $key . "|" . $var_key,
+             'description' => $var_val,

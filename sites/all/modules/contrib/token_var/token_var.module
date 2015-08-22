@@ -1,0 +1,92 @@
+<?php
+
+/**
+ * variable constant to store selected varible options
+ */
+define("TOKENIZE_DRUPAL_VARIABLES_OPTIONS", "tokenize_drupal_variables_options");
+
+/**
+ * Implements  hook_token_info
+ */
+function token_var_token_info() {
+
+  global $conf;
+  $info = array();
+
+  $token_var_selected_variables = variable_get(TOKENIZE_DRUPAL_VARIABLES_OPTIONS, array());
+  foreach ($conf as $key => $var) {
+    if ((!is_array($var)) && (!empty($token_var_selected_variables)) && isset($token_var_selected_variables[$key]) && !empty($token_var_selected_variables[$key])) {
+      $info['tokens']['variables'][$key] = array(
+        'name' => $key,
+        'description' => $var,
+      );
+    }
+    elseif (is_array($var) && ($key != TOKENIZE_DRUPAL_VARIABLES_OPTIONS)) {
+      foreach ($var as $var_key => $var_val) {
+        if (!empty($token_var_selected_variables) && isset($token_var_selected_variables[$key . "|" . $var_key ]) && !empty($token_var_selected_variables[$key . "|" . $var_key ])) {
+          $info['tokens']['variables_array'][$key . "|" . $var_key] = array(
+            'name' => $key . "|" . $var_key,
+            'description' => $var_val,
+          );
+        }
+      }
+    }
+  }
+
+  if (!empty($info['tokens']['variables_array'])) { 
+    $info['types']['variables_array'] = array(
+      'name' => t('Variables Array'),
+      'description' => t('Tokens related to drupal variables (Only variables that contain strings can be used).'),
+    );
+  }
+
+  if (!empty($info['tokens']['variables'])) {
+    $info['types']['variables'] = array(
+      'name' => t('Variables'),
+      'description' => t('Tokens related to drupal variables (Only variables that contain strings can be used).'),
+    );
+  }
+
+  return $info;
+}
+
+/**
+ * Implements hook_tokens().
+ */
+function token_var_tokens($type, $tokens, array $data = array(), array $options = array()) {
+  $replacement = array();
+  if ($type == 'variables') {
+    foreach ($tokens as $name => $original) {
+      $replacement[$original] = variable_get($name, '');
+    }
+  }
+  elseif ($type == 'variables_array') {
+    foreach ($tokens as $name => $original) {
+      $key = substr($name, 0, strpos($name, '|'));
+      $index = substr($name, strpos($name, '|')+1);
+      $replacement_array = variable_get($key, '');
+      if (is_array($replacement_array)) {
+        $replacement[$original] = $replacement_array[$index];
+      }
+      else
+        $replacement[$original] = '';
+    }
+  }
+  return $replacement;
+}
+
+/**
+ * Implements hook_menu().
+ */
+function token_var_menu() {
+  $items = array();
+  $items['admin/config/system/tokenizevariables'] = array(
+      'title' => 'Tokenize Drupal Variables',
+      'description' => 'Administer tokenization of drupal variables.',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('token_var_settings_form'),
+      'access arguments' => array('administer token variables'),
+      'file' => 'token_var.admin.inc',
+  );
+  return $items;
+}

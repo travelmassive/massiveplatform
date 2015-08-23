@@ -170,10 +170,19 @@ function _tm_flags_flag_limits(&$variables) {
 
   global $mfr_limit;
   $mfr_limit = 50; // default if not set
-  if (variable_get('tm_following_ratio_limit', NULL) != null) {
-    $mfr_limit = variable_get('tm_following_ratio_limit', NULL);
+
+  if (in_array('approved user', $user->roles)) {
+    // approved users
+    if (variable_get('tm_following_ratio_limit', NULL) != null) {
+      $mfr_limit = variable_get('tm_following_ratio_limit', NULL);
+    }
+    $mfr_limit += $mfr_limit_quota; // add quota
+  } else {
+    // unapproved users
+    if (variable_get('tm_following_ratio_limit_unapproved', NULL) != null) {
+      $mfr_limit = variable_get('tm_following_ratio_limit_unapproved', NULL);
+    }
   }
-  $mfr_limit += $mfr_limit_quota; // add quota
 
   $limit = 16; // default if not set
   if (variable_get('tm_following_ratio_limit', NULL) != null) {

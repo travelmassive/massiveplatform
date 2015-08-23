@@ -592,7 +592,8 @@ $conf['tm_enable_flags_feed'] = true;
 
 /** Limit Follow and Join **/
 /** NOTE: Administrator and chapter leaders do not have limits **/
-$conf['tm_following_ratio_limit'] = '50'; // difference between following/followers
+$conf['tm_following_ratio_limit'] = '100'; // difference between following/followers (for approved members)
+$conf['tm_following_ratio_limit_unapproved'] = '20'; // difference between following/followers (unapproved members)
 $conf['tm_following_ratio_limit_daily'] = '0.5'; // number of followers added to limit each day since approval
 $conf['tm_chapter_join_limit'] = '16'; // "join" limit for the non chapter leaders
 $conf['tm_add_company_limit'] = '8'; // maximum number of companies a user can add (no limit for chapter leaders, moderators)

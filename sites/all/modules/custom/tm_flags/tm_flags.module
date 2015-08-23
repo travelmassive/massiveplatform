@@ -138,11 +138,42 @@ function _tm_flags_flag_limits(&$variables) {
   global $user;
   $initialized = &drupal_static(__FUNCTION__, array());
 
+  // Additional quota for approved members
+  $mfr_limit_quota = 0;
+  if (variable_get('tm_following_ratio_limit_daily', NULL) != null) {
+    if (in_array('approved user', $user->roles)) {
+
+      // get list of people who approved
+      $flag = flag_get_flag('approval_approved_by');
+      $who_flagged = flag_get_entity_flags("user", $user->uid, "approval_approved_by");
+
+      // If no approval flag, use launch date (prior to approval flag being implemented)
+      if (sizeof($who_flagged) == 0) {
+        $approval_timestamp = strtotime("2015-01-01");
+      } else {
+        usort($who_flagged, function($a, $b){
+          return ($a->timestamp > $b->timestamp) ? -1 : 1;
+        });
+        $approval_timestamp = $who_flagged[0]->timestamp;
+      }
+
+      // seconds since approved
+      $age_of_approval = time() - $approval_timestamp;
+
+      // get daily quota
+      $limit_daily = variable_get('tm_following_ratio_limit_daily', NULL);
+
+      // caculate additional quota
+      $mfr_limit_quota = round($limit_daily * ($age_of_approval / (60 * 60 * 24)), 0);
+    }
+  }
+
   global $mfr_limit;
   $mfr_limit = 50; // default if not set
   if (variable_get('tm_following_ratio_limit', NULL) != null) {
     $mfr_limit = variable_get('tm_following_ratio_limit', NULL);
   }
+  $mfr_limit += $mfr_limit_quota; // add quota
 
   $limit = 16; // default if not set
   if (variable_get('tm_following_ratio_limit', NULL) != null) {

@@ -97,8 +97,8 @@ function tm_api_stats() {
   // num of mutual follows
   $flag = flag_get_flag('follow_members', NULL);
   $query = "select count(distinct flagging.uid, f2.uid) from flagging inner join flagging as f2 on flagging.uid = f2.entity_id where flagging.fid = :fid and f2.fid = :fid order by flagging.uid";
-  $num_connections = db_query($query, array(':fid' => $flag->fid))->fetch();
-  $api_data["num_mutual_follows"] = $num_followers->amount;
+  $num_mutual_followers = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $api_data["num_mutual_follows"] = $num_mutual_followers->amount;
 
   // number of company follows
   $flag = flag_get_flag('follow_organizations', NULL);

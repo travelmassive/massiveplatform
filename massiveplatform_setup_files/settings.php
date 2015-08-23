@@ -732,5 +732,8 @@ $conf['tm_event_types_plural'] = array("community" => "Community", "workshop" =>
 $conf['tm_event_types_tips'] = array("workshop" => "Learn and share with other members around the world. have an idea for a workshop you would like to attend or host? Please <a href='/contact'>let us know</a>.", "conference" => "We're proud community partners with the world's leading travel industry conferences and exhibitions. <a href='/blog/about-travel-massive'>Learn more</a>");
 $conf['tm_event_types_default'] = "community";
 
+/** If user removes their account, who do we notify? */
+$conf['tm_user_remove_own_account_notify'] = 'community@travelmassive.com';
+
 $conf['install_profile'] = 'tm';
 

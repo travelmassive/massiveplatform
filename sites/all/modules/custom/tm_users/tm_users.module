@@ -49,15 +49,16 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state) {
   // Allow users to cancel their accounts
   // Note: Chapter leaders and moderators don't get the link as they may have content
   // Todo: With subscription model, warn user of any active subscriptions
-  // Disabled until further testing.
   // See: https://github.com/travelmassive/massiveplatform/issues/81
-  /*global $user;
+  global $user;
   if ((!in_array("chapter leader", $user->roles)) && (!in_array("moderator", $user->roles)) && (!in_array("administrator", $user->roles))) {
 
-    $cancel_url = "user/" . $user->uid . "/cancel";
-    $form['cancel_account_link'] = array('#markup' => l(t('Remove account'), $cancel_url, array('attributes' => array('class' => array('cancel_account_link')))), '#weight' => 100);
+    $cancel_url = "/user/" . $user->uid . "/cancel";
+    $form['cancel_account_link'] = array('#markup' => l(t('Remove account'), 'javascript:jq_confirm_url("Are you really, really sure?", "All information linked to your account will be deleted, including event registrations and company profiles.<br><br>If you continue you will be prompted to confirm your password to cancel your account.", "' . urlencode($cancel_url) . '");', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('cancel_account_link')))), '#weight' => 100);
+
+    //$form['cancel_account_link'] = array('#markup' => l(t('Remove account'), $cancel_url, array('attributes' => array('class' => array('cancel_account_link')))), '#weight' => 100);
     $form['#group_children']['cancel_account_link'] = 'group_user_account';
-  }*/
+  }
 
 }
 

@@ -181,12 +181,15 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
     // case 2: event with no organizers and a chapter -> chapter leaders
     if ((sizeof($event->field_organizer) == 0) and (sizeof($event->field_chapter > 0))) {
 
-      $chapter_id = $event->field_chapter['und'][0]['target_id'];
-      $chapter = node_load($chapter_id);
+      if (isset($event->field_chapter['und'])) {
+        $chapter_id = $event->field_chapter['und'][0]['target_id'];
+        $chapter = node_load($chapter_id);
       
-      foreach($chapter->field_chapter_leaders['und'] as $chapter_leader) {
-        $notify_ids[] = $chapter_leader['target_id'];
+        foreach($chapter->field_chapter_leaders['und'] as $chapter_leader) {
+          $notify_ids[] = $chapter_leader['target_id'];
+        }
       }
+      
     }
 
     // case 3: event with no organizers and no chapter -> event creator

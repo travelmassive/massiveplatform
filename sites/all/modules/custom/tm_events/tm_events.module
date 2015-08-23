@@ -488,6 +488,12 @@ function tm_events_node_presave($node) {
       $flag->flag("flag", $arr['target_id']);        
     }
   }
+
+  // Always enable pathautho for events
+  // This is so that when moderator saves event, the path is updated
+  // http://drupal.stackexchange.com/questions/22983/how-can-i-enable-automatic-path-creating-for-all-nodes
+  $node->path['pathauto']=1;
+
 }
 
 /*
@@ -1284,9 +1290,12 @@ function tm_events_flag_flag($flag, $entity_id, $account, $flagging) {
   $event = node_load($entity_id);
 
   // if event doesn't have a chapter, return
-  if (sizeof($event->field_chapter[LANGUAGE_NONE][0]) == 0) {
+  if (!isset($event->field_chapter[LANGUAGE_NONE])) {
     return;
   }
+  //if (sizeof($event->field_chapter[LANGUAGE_NONE][0]) == 0) {
+  //  return;
+  //}
 
   $chapter_id = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
   $chapter = node_load($chapter_id);

@@ -110,6 +110,8 @@ function tm_base_block_view($delta) {
     case 'tm_homepage_stats':
 
       $block['content'] = '<ul>';
+
+      // logged in
       if ($user->uid) {
         $follow_members_flag = flag_get_flag('follow_members');
         // Number of followers and following.
@@ -124,24 +126,65 @@ function tm_base_block_view($delta) {
         $block['content'] .= '<li><a href="' . url('user/' . $user->uid . '/following') . '" title="' . t('View following') . '"><strong class="key">' . t('Following') . '<small>: </small></strong><span class="value">' . $following . '</span></a></li>';
       }
       else {
-        // Number of communities, chapters, companies.
-        $no_community = db_query('SELECT count(uid) AS no FROM {users} WHERE status = :status', array(':status' => 1))->fetchField();
-        $no_chapter = db_query('SELECT count(nid) AS no FROM {node} WHERE status = :status AND type = :type', array(':status' => 1, ':type' => 'chapter'))->fetchField();
-        $no_company = db_query('SELECT count(nid) AS no FROM {node} WHERE status = :status AND type = :type', array(':status' => 1, ':type' => 'organization'))->fetchField();
 
-        // format stats
-        $no_community = tm_base_stats_format($no_community);
-        $no_chapter = tm_base_stats_format($no_chapter);
-        $no_company = tm_base_stats_format($no_company);
-
-        /** Member label for displaying membership counts **/
+        // logged out stats
         global $conf;
+        $show_stats = array("members", "chapters", "organizations");
+        if (isset($conf["tm_frontpage_show_anon_stats"])) {
+          $show_stats = $conf["tm_frontpage_show_anon_stats"];
+        }
+
+
+        // Member label for displaying membership counts
         $members_label = $conf["tm_members_label"];
 
-        $block['content'] .= '<li><a href="' . url('community') . '" title="' . t('Go to community') . '"><strong class="key">' . t(ucwords($members_label)) . '<small>: </small></strong><span class="value">' . $no_community . '</span></a></li>';
-        $block['content'] .= '<li><a href="' . url('chapters') . '" title="' . t('Go to chapters') . '"><strong class="key">' . t('Chapters') . '<small>: </small></strong><span class="value">' . $no_chapter . '</span></a></li>';
-        $block['content'] .= '<li><a href="' . url('companies') . '" title="' . t('Go to companies') . '"><strong class="key">' . t('Companies') . '<small>: </small></strong><span class="value">' . $no_company . '</span></a></li>';
+        // Number of members
+        if (array_search("members", $show_stats) !== false) {
+          $no_community = db_query('SELECT count(uid) AS no FROM {users} WHERE status = :status', array(':status' => 1))->fetchField();
+          $no_community = tm_base_stats_format($no_community);
+
+          $block['content'] .= '<li><a href="' . url('community') . '" title="' . t('Go to community') . '"><strong class="key">' . t(ucwords($members_label)) . '<small>: </small></strong><span class="value">' . $no_community . '</span></a></li>';
+        }
+
+        // Number of chapters
+        if (array_search("chapters", $show_stats) !== false) {
+          $no_chapter = db_query('SELECT count(nid) AS no FROM {node} WHERE status = :status AND type = :type', array(':status' => 1, ':type' => 'chapter'))->fetchField();
+          $no_chapter = tm_base_stats_format($no_chapter);
+
+          $block['content'] .= '<li><a href="' . url('chapters') . '" title="' . t('Go to chapters') . '"><strong class="key">' . t('Chapters') . '<small>: </small></strong><span class="value">' . $no_chapter . '</span></a></li>';
+        }
+
+        // Number of organizations
+        if (array_search("organizations", $show_stats) !== false) {
+          $no_company = db_query('SELECT count(nid) AS no FROM {node} WHERE status = :status AND type = :type', array(':status' => 1, ':type' => 'organization'))->fetchField();
+          $no_company = tm_base_stats_format($no_company);
+
+          $block['content'] .= '<li><a href="' . url('companies') . '" title="' . t('Go to companies') . '"><strong class="key">' . t('Companies') . '<small>: </small></strong><span class="value">' . $no_company . '</span></a></li>';
+        }
+
+        // Number of followers
+        if (array_search("all_follows", $show_stats) !== false) {
+          $follow_flag = flag_get_flag('follow_members', NULL);
+          $query = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid";
+          $no_follows = db_query($query, array(':fid' => $follow_flag->fid))->fetch()->total;
+          $no_follows = tm_base_stats_format($no_follows);
+
+          $block['content'] .= '<li><a href="' . url('community') . '" title="' . t('Go to companies') . '"><strong class="key">' . t('Connections') . '<small>: </small></strong><span class="value">' . $no_follows . '</span></a></li>';
+
+        }
+
+        // Number of mutual followers
+        if (array_search("mutual_follows", $show_stats) !== false) {
+          $follow_flag = flag_get_flag('follow_members', NULL);
+          $query = "select count(distinct flagging.uid, f2.uid) as total from flagging inner join flagging as f2 on flagging.uid = f2.entity_id where flagging.fid = :fid and f2.fid = :fid order by flagging.uid";
+          $no_mutual_follows = db_query($query, array(':fid' => $follow_flag->fid))->fetch()->total;
+          $no_mutual_follows = tm_base_stats_format($no_mutual_follows);
+
+          $block['content'] .= '<li><a href="' . url('community') . '" title="' . t('Go to companies') . '"><strong class="key">' . t('Friends') . '<small>: </small></strong><span class="value">' . $no_mutual_follows . '</span></a></li>';
+        }
+
       }
+
       $block['content'] .= '</ul>';
       break;
   }

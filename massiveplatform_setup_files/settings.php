@@ -720,6 +720,10 @@ $conf["tm_notification_moderation_non_community_message"] = 'To be a member of t
 /** Set a front page launch message and hide the stats. Comment out to disable **/
 //$conf['tm_frontpage_launch_message'] = "We've just launched our new community platform. Read our <a style='color: #fff; text-decoration: underline;' href='/blog/'>announcement</a>.";
 
+/* Stats option for front page */
+/* Options: members, chapters, organizations, all_follows, mutual_follows */
+$conf['tm_frontpage_show_anon_stats'] = array('members', 'chapters', 'all_follows');
+
 /** Event types **/
 $conf['tm_event_types'] = array("community" => "Community", "workshop" => "Workshop", "conference" => "Conference");
 $conf['tm_event_types_plural'] = array("community" => "Community", "workshop" => "Workshops", "conference" => "Conferences");

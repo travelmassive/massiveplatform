@@ -49,7 +49,7 @@ function tm_api_test() {
    $api_data = _get_empty_api_data();
 
    global $conf;
-   $api_data["$message"] = $conf["tm_site_name"] . ' RESTful API Test. If you see this, the API module is loaded.';
+   $api_data["message"] = $conf["tm_site_name"] . ' RESTful API Test. If you see this, the API module is loaded.';
    
    tm_api_return_json($api_data);
 }
@@ -62,33 +62,64 @@ function tm_api_stats() {
 	// number of chapters
 	$query = "SELECT COUNT(*) amount FROM {node} n ".
               "WHERE n.type = :type";
-    $num_chapters = db_query($query, array(':type' => "chapter"))->fetch();
-    $api_data["num_chapters"] = $num_chapters->amount;
+  $num_chapters = db_query($query, array(':type' => "chapter"))->fetch();
+  $api_data["num_chapters"] = $num_chapters->amount;
 
-    // number of organizations
+  // number of organizations
 	$query = "SELECT COUNT(*) amount FROM {node} n ".
               "WHERE n.type = :type";
-    $num_organizations = db_query($query, array(':type' => "organization"))->fetch();
-    $api_data["num_organizations"] = $num_organizations->amount;
+  $num_organizations = db_query($query, array(':type' => "organization"))->fetch();
+  $api_data["num_organizations"] = $num_organizations->amount;
 
-    // number of events
+  // number of events
 	$query = "SELECT COUNT(*) amount FROM {node} n ".
               "WHERE n.type = :type";
-    $num_events = db_query($query, array(':type' => "event"))->fetch();
-    $api_data["num_events"] = $num_events->amount;
+  $num_events = db_query($query, array(':type' => "event"))->fetch();
+  $api_data["num_events"] = $num_events->amount;
 
-    // number of members
+  // number of members
 	$query = "SELECT COUNT(*) amount FROM {users} u";
-    $num_members = db_query($query)->fetch();
-    $api_data["num_members"] = $num_members->amount;
+  $num_members = db_query($query)->fetch();
+  $api_data["num_members"] = $num_members->amount;
  
 	// number of chapter countries
-    $result = db_query("SELECT DISTINCT iso2, name from {field_data_field_country} f LEFT JOIN {countries_country} c ON f.field_country_iso2 = c.iso2 WHERE f.bundle = 'chapter' AND c.iso2 IS NOT NULL ORDER BY name ASC");
-    $chapter_countries = $result->fetchAllKeyed();
-    $num_chapter_countries = (sizeof($chapter_countries));
-    $api_data["num_chapter_countries"] = $num_chapter_countries;
+  $result = db_query("SELECT DISTINCT iso2, name from {field_data_field_country} f LEFT JOIN {countries_country} c ON f.field_country_iso2 = c.iso2 WHERE f.bundle = 'chapter' AND c.iso2 IS NOT NULL ORDER BY name ASC");
+  $chapter_countries = $result->fetchAllKeyed();
+  $num_chapter_countries = (sizeof($chapter_countries));
+  $api_data["num_chapter_countries"] = $num_chapter_countries;
 
-    tm_api_return_json($api_data);
+  // number of follows
+  $flag = flag_get_flag('follow_members', NULL);
+  $query = "SELECT COUNT(*) amount FROM {flagging} f WHERE f.fid = :fid";
+  $num_followers = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $api_data["num_followers"] = $num_followers->amount;
+
+  // num of mutual follows
+  $flag = flag_get_flag('follow_members', NULL);
+  $query = "select count(distinct flagging.uid, f2.uid) from flagging inner join flagging as f2 on flagging.uid = f2.entity_id where flagging.fid = :fid and f2.fid = :fid order by flagging.uid";
+  $num_connections = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $api_data["num_mutual_follows"] = $num_followers->amount;
+
+  // number of company follows
+  $flag = flag_get_flag('follow_organizations', NULL);
+  $query = "SELECT COUNT(*) amount FROM {flagging} f WHERE f.fid = :fid";
+  $num_organization_followers = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $api_data["num_organization_followers"] = $num_organization_followers->amount;
+
+  // number of registrations
+  $flag = flag_get_flag('event_register', NULL);
+  $query = "SELECT COUNT(*) amount FROM {flagging} f WHERE f.fid = :fid";
+  $num_registrations = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $api_data["num_event_registrations"] = $num_registrations->amount;
+
+  // number of waitlists
+  $flag = flag_get_flag('event_waitlist', NULL);
+  $query = "SELECT COUNT(*) amount FROM {flagging} f WHERE f.fid = :fid";
+  $num_waitlists = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $api_data["num_event_waitlists"] = $num_waitlists->amount;
+
+  // return api data in json format
+  tm_api_return_json($api_data);
 }
 
 function tm_api_chapters_lat_lon() {

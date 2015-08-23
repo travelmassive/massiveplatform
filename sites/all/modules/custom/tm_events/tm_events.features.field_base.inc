@@ -154,6 +154,28 @@ function tm_events_field_default_field_bases() {
     'type' => 'number_integer',
   );
 
+  // Exported field_base: 'field_event_type'
+  $field_bases['field_event_type'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_event_type',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
   // Exported field_base: 'field_is_partner_event'
   $field_bases['field_is_partner_event'] = array(
     'active' => 1,

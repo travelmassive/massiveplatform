@@ -396,13 +396,13 @@ function tm_chapters_page_alter(&$page) {
     // create button css
     $html = '
     <ul class="tabs-primary tabs primary">
-      <li class="tabs-primary__tab is-active">
+      <li class="tabs-primary__tab ' . $members_active . '">
         <a href="/chapters" class="tabs-primary__tab-link '.$members_active.'">Members</a>
       </li>
-      <li class="tabs-primary__tab">
+      <li class="tabs-primary__tab ' . $title_active . '">
         <a href="/chapters/sort/title" class="tabs-primary__tab-link '.$title_active.'">A &rarr; Z</a>
       </li>
-      <li class="tabs-primary__tab">
+      <li class="tabs-primary__tab ' . $created_active . '">
         <a href="/chapters/sort/created" class="tabs-primary__tab-link '.$created_active.'">New</a>
       </li>
     </ul>';

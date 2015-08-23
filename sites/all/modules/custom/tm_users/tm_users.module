@@ -1992,7 +1992,7 @@ function _tm_ds_user_stats($field, $title = NULL) {
   $num_following = tm_users_get_num_following($uid);
   $num_events = tm_users_get_num_registered_events($uid);
 
-  $html = "";
+  $html = "<div class='tm_stats_container'>";
   if ($num_followers > 0) {
     if ($num_followers > 1) { $followers_text = "Followers"; }
     $html .= "<a href='/user/" . $uid . "/followers'><span class='tm_stats tm_stats_followers'>" . $num_followers . " <span class='tm_stats_followers_divider'>|</span> " . $followers_text . " </span></a>";
@@ -2006,6 +2006,7 @@ function _tm_ds_user_stats($field, $title = NULL) {
     if ($num_events > 1) { $events_text = "Events"; }
       $html .= "<span class='tm_stats tm_stats_events'>" . $num_events . " <span class='tm_stats_events_divider'>|</span> " . $events_text . "</span>";
   }
+  $html .= "</div>";
 
   return $html;
 }
@@ -2036,6 +2037,3 @@ function tm_users_get_num_registered_events($uid) {
   $result = db_query($query, array(':fid' => $flag->fid, ':uid' => $uid))->fetch();
   return $result->total;
 }
-
-
-

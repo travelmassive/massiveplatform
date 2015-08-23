@@ -720,5 +720,11 @@ $conf["tm_notification_moderation_non_community_message"] = 'To be a member of t
 /** Set a front page launch message and hide the stats. Comment out to disable **/
 //$conf['tm_frontpage_launch_message'] = "We've just launched our new community platform. Read our <a style='color: #fff; text-decoration: underline;' href='/blog/'>announcement</a>.";
 
+/** Event types **/
+$conf['tm_event_types'] = array("community" => "Community", "workshop" => "Workshop", "conference" => "Conference");
+$conf['tm_event_types_plural'] = array("community" => "Community", "workshop" => "Workshops", "conference" => "Conferences");
+$conf['tm_event_types_tips'] = array("workshop" => "Learn and share with other members around the world. Have an idea for a workshop you would like to attend or host? Please <a href='/contact'>let us know</a>.", "conference" => "We're proud community partners with the world's leading travel industry conferences and exhibitions.");
+$conf['tm_event_types_default'] = "community";
+
 $conf['install_profile'] = 'tm';
 

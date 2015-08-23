@@ -79,7 +79,7 @@ function tm_base_menu_default_menu_links() {
     'module' => 'system',
     'hidden' => 0,
     'external' => 0,
-    'has_children' => 0,
+    'has_children' => 1,
     'expanded' => 0,
     'weight' => -49,
     'customized' => 1,
@@ -243,6 +243,7 @@ function tm_base_menu_default_menu_links() {
     'weight' => -50,
     'customized' => 1,
   );
+
   // Translatables
   // Included for use with string extractors like potx.
   t('Chapters');
@@ -256,7 +257,6 @@ function tm_base_menu_default_menu_links() {
   t('News');
   t('People');
   t('Twitter');
-
 
   return $menu_links;
 }

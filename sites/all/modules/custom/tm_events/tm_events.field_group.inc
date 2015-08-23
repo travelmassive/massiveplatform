@@ -141,6 +141,7 @@ function tm_events_field_group_info() {
       2 => 'field_register_event_message',
       3 => 'field_waitlist_event_message',
       4 => 'field_event_hide_location',
+      5 => 'field_event_type',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

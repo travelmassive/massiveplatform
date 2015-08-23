@@ -7373,6 +7373,12 @@ a.cancel_account_link {
 }
 
 /* line 756, ../sass/_single.scss */
+.tm_stats_container {
+  margin-bottom: -0.2rem;
+  overflow: auto;
+}
+
+/* line 757, ../sass/_single.scss */
 .tm_stats {
   margin-left: 0.4rem;
   padding-left: 0.4rem;
@@ -7382,34 +7388,37 @@ a.cancel_account_link {
   border-radius: 2px;
   padding-top: 0.1rem;
   padding-bottom: 0.1rem;
+  white-space: nowrap;
+  float: left;
+  margin-bottom: 0.2rem;
 }
 
-/* line 757, ../sass/_single.scss */
+/* line 758, ../sass/_single.scss */
 .tm_stats_followers {
   background-color: #007eb5;
 }
 
-/* line 758, ../sass/_single.scss */
+/* line 759, ../sass/_single.scss */
 .tm_stats_following {
   background-color: #bd0053;
 }
 
-/* line 759, ../sass/_single.scss */
+/* line 760, ../sass/_single.scss */
 .tm_stats_events {
   background-color: #88ac00;
 }
 
-/* line 760, ../sass/_single.scss */
+/* line 761, ../sass/_single.scss */
 .tm_stats_followers_divider {
   color: #48a4cd;
 }
 
-/* line 761, ../sass/_single.scss */
+/* line 762, ../sass/_single.scss */
 .tm_stats_following_divider {
   color: #d34a47;
 }
 
-/* line 762, ../sass/_single.scss */
+/* line 763, ../sass/_single.scss */
 .tm_stats_events_divider {
   color: #acc743;
 }

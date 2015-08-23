@@ -753,7 +753,8 @@
 
 .tm_community_values_validation_message { display: none; background-color: #eee; padding: 0.25rem; border-radius: 4px; padding-left: 1rem; border-left: 8px solid orange; margin-top: 0.25rem; margin-left: 1rem; }
 
-.tm_stats { margin-left: 0.4rem; padding-left: 0.4rem; padding-right: 0.4rem; color: #fff; font-weight: normal; border-radius: 2px; padding-top: 0.1rem; padding-bottom: 0.1rem; }
+.tm_stats_container { margin-bottom: -0.2rem; overflow:auto; }
+.tm_stats { margin-left: 0.4rem; padding-left: 0.4rem; padding-right: 0.4rem; color: #fff; font-weight: normal; border-radius: 2px; padding-top: 0.1rem; padding-bottom: 0.1rem; white-space: nowrap; float: left; margin-bottom: 0.2rem;}
 .tm_stats_followers { background-color: #007eb5; }
 .tm_stats_following { background-color: #bd0053; }
 .tm_stats_events { background-color: #88ac00; }

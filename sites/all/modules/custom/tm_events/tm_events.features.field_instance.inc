@@ -635,6 +635,62 @@ This will be added to the attendee count on the event page.',
     ),
   );
 
+  // Exported field_instance: 'node-event-field_event_type'
+  $field_instances['node-event-field_event_type'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '(Advanced Use Only) Specify the type of event for the event page listing.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 27,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_type',
+    'label' => 'Event Type',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 16,
+    ),
+  );
+
   // Exported field_instance: 'node-event-field_event_venue_name'
   $field_instances['node-event-field_event_venue_name'] = array(
     'bundle' => 'event',
@@ -841,7 +897,7 @@ This will be added to the attendee count on the event page.',
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 16,
+      'weight' => 17,
     ),
   );
 
@@ -1155,7 +1211,7 @@ This will be displayed to the member on the event page and included in the autom
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 17,
+      'weight' => 18,
     ),
   );
 
@@ -1293,18 +1349,20 @@ This will be displayed to the member on the event page and included in the autom
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 18,
+      'weight' => 19,
     ),
   );
 
   // Translatables
   // Included for use with string extractors like potx.
   t('(Advanced Use Only) Check this to indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)');
+  t('(Advanced Use Only) Specify the type of event for the event page listing.');
   t('Approved Members Only');
   t('Check this box if you want to restrict registration and waitlist to members who are approved. Non-approved members won\'t be able to sign up. ');
   t('Check this option if you want to restrict displaying the event location to registered attendees only.');
   t('Description');
   t('Event Chapter');
+  t('Event Type');
   t('Got an event sponsor? Show their company profile <span style="color: #e93f33 !important;">♥</span> by listing them as a sponsor.<br>
 <ul>
 <li>To add a sponsor, search and select a company profile page from the dropdown.</li>

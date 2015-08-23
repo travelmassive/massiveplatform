@@ -105,6 +105,28 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
     }
   }*/
 
+  // Set Event types
+  global $conf;
+  $event_types = array();
+  $default_event_type = "";
+
+  if (isset($conf["tm_event_types"])) {
+    $event_types = $conf["tm_event_types"];
+  }
+  if (isset($conf["tm_event_types_default"])) {
+    $default_event_type = $conf["tm_event_types_default"];
+  }
+  
+  // set options
+  $form['field_event_type'][LANGUAGE_NONE]['#options'] = $event_types;
+
+  // if event type saved, select it in the dropdown
+  $event = $form['field_event_type'][LANGUAGE_NONE]['#entity'];
+  if (isset($event->field_event_type[LANGUAGE_NONE][0]['value'])) {
+    $default_event_type = $event->field_event_type[LANGUAGE_NONE][0]['value'];
+  }
+  $form['field_event_type'][LANGUAGE_NONE]['#default_value'] = $default_event_type;
+
 }
 
 /**
@@ -523,9 +545,11 @@ function tm_events_communication_form($event){
 
   // get chapter associated with event if there is one
   $chapter = null;
-  if (sizeof($event->field_chapter[LANGUAGE_NONE][0] > 0)) {
-    $chapterid = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
-    $chapter = node_load($chapterid);
+  if (isset($event->field_chapter[LANGUAGE_NONE])) {
+    if (sizeof($event->field_chapter[LANGUAGE_NONE][0] > 0)) {
+      $chapterid = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
+      $chapter = node_load($chapterid);
+    }
   }
 
   $form['#prefix'] = l(t('Back to event'),'node/'.$event->nid);
@@ -1421,5 +1445,167 @@ function _tm_event_location($field, $title = NULL) {
   return $html;
 }
 
+// Add sort toggles to events page
+function tm_events_page_alter(&$page) {
 
+  // Split url parts
+  $url_parts = explode("/", request_path());
+
+  // catch either:
+  // /events
+  // /events/list/conferences
+  if (($url_parts[0] == "events") and ((sizeof($url_parts) == 1) or (sizeof($url_parts) == 3))) {
+
+    // only show for /events/list/etc
+    if ((sizeof($url_parts) == 3) and ($url_parts != "list")) {
+      return;
+    }
+
+    $event_types = array();
+    $default_event_type = "";
+
+    global $conf;
+    if (!isset($conf["tm_event_types"])) { return; }
+    if (!isset($conf["tm_event_types_plural"])) { return; }
+    if (!isset($conf["tm_event_types_default"])) { return; }
+
+    // get event types from config
+    $event_types = $conf["tm_event_types"];
+    $event_types_plural = $conf["tm_event_types_plural"];
+    $default_event_type = $conf["tm_event_types_default"];
+    
+    $url_event_type = $default_event_type; // default list method
+    if (sizeof($url_parts) == 3) {
+      $url_event_type = $url_parts[2]; // ie: title for /events/list/conferences
+    }
+   
+    // create buttons
+    $html = '<ul class="tabs-primary tabs primary">';
+    foreach ($event_types_plural as $event_type => $name) {
+
+      $css_classes = "";
+      if ($url_event_type == $event_type) { 
+        $css_classes = "is-active active";
+      }
+
+      $url_arg = "";
+      if ($event_type != $default_event_type) {
+        $url_arg = "/list/" . $event_type;
+      }
+
+      $html .= '<li class="tabs-primary__tab ' . $css_classes . '">
+        <a href="/events' . $url_arg . '" class="tabs-primary__tab-link '.$css_classes.'">' . $name . '</a>
+      </li>';
+    }
+    $html .= '</ul>';
+
+    // add html to page header
+    $page['header'] = array('#markup' => $html);
+
+  }
+}
+
+// Add a link to chapter leaders from the community page
+function tm_events_views_post_execute(&$view) {
+ 
+  // make sure we are on events page
+  if ($view->name == 'events') {
+
+    // Split url parts
+    $url_parts = explode("/", request_path());
+
+    // catch either:
+    // /events
+    // /events/list/conferences
+    if (($url_parts[0] == "events") and (sizeof($url_parts) == 3)) {
+
+      global $conf;
+      // get event types from config
+      if (!isset($conf["tm_event_types_plural"])) { return; }
+      $event_types_plural = $conf["tm_event_types_plural"];
+
+      // Step 1. Change Title
+      // if we match event type, change the page title
+      $url_event_type = $url_parts[2];
+      if (array_key_exists($url_event_type, $event_types_plural)) {
+        $view->build_info['title'] = $event_types_plural[$url_event_type];
+      }
+
+      // Step 2. Show Event Tip
+      if (isset($conf['tm_event_types_tips'][$url_event_type])) {
+        $tip = $conf['tm_event_types_tips'][$url_event_type];
+        drupal_set_message($tip, 'page_notice');
+      }
+    }
+  }
+}
+
+/* Modify /events query to only return default event type or events without a type */
+function tm_events_views_query_alter(&$view, &$query) {
+
+  // target /events page only
+  if ($view->name == 'events') {
+    $url_parts = explode("/", request_path());
+    if (sizeof($url_parts) == 1) {
+      global $conf;
+      if (isset($conf['tm_event_types_default'])) {
+        $event_type = array(':event_type' => $conf['tm_event_types_default']);
+        $query->add_where_expression(0, 'field_event_type_value IS NULL OR field_event_type_value = :event_type', $event_type);
+      }
+    }
+  }
+}
+
+/* Token replacement for event. Return year, month or day for field_event_date */
+function tm_events_token_info() { 
+  $info['tokens']['node']['tm-event-date-year'] = array(
+    'name' => t('TM Event date (YYYY)'),
+    'description' => t('Returns the event date year)'),
+  );
+  $info['tokens']['node']['tm-event-date-month'] = array(
+    'name' => t('TM Event date (mm)'),
+    'description' => t('Returns the event date month)'),
+  );
+  $info['tokens']['node']['tm-event-date-day'] = array(
+    'name' => t('TM Event date (dd)'),
+    'description' => t('Returns the event date day)'),
+  );
+  return $info;
+}
+
+/* Token replacement for event. Return year, month or day for field_event_date */
+function tm_events_tokens($type, $tokens, array $data = array(), array $options = array()) {
+ 
+  $replacements = array();   
+
+  if (($type == 'node') && !empty($data['node'])) {
+    $event = $data['node'];
+
+    foreach ($tokens as $name => $original) {     
+      switch ($name) {
+
+        case 'tm-event-date-year':
+          $event_timezone = _tm_get_event_timezone($event);
+          $event_date = new DateTime($event->field_event_date['und'][0]['value'], new DateTimeZone($event_timezone));
+          $replacements[$original] = $event_date->format("Y");
+          break;
+
+        case 'tm-event-date-month':
+          $event_timezone = _tm_get_event_timezone($event);
+          $event_date = new DateTime($event->field_event_date['und'][0]['value'], new DateTimeZone($event_timezone));
+          $replacements[$original] = $event_date->format("m");
+          break;
+
+        case 'tm-event-date-day':
+          $event_timezone = _tm_get_event_timezone($event);
+          $event_date = new DateTime($event->field_event_date['und'][0]['value'], new DateTimeZone($event_timezone));
+          $replacements[$original] = $event_date->format("d");
+          break;
+
+      } // end switch
+    } // end foreach
+  } // end if
+
+  return $replacements;
+}
 

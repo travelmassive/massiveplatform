@@ -91,20 +91,23 @@ function tm_api_stats() {
   // number of follows
   $flag = flag_get_flag('follow_members', NULL);
   $query = "SELECT COUNT(*) amount FROM {flagging} f WHERE f.fid = :fid";
-  $num_followers = db_query($query, array(':fid' => $flag->fid))->fetch();
-  $api_data["num_followers"] = $num_followers->amount;
-
-  // num of mutual follows
-  $flag = flag_get_flag('follow_members', NULL);
-  $query = "select count(distinct flagging.uid, f2.uid) as amount from flagging inner join flagging as f2 on flagging.uid = f2.entity_id where flagging.fid = :fid and f2.fid = :fid order by flagging.uid";
-  $num_mutual_followers = db_query($query, array(':fid' => $flag->fid))->fetch();
-  $api_data["num_mutual_follows"] = $num_mutual_followers->amount;
+  $num_member_followers = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $api_data["num_member_followers"] = $num_member_followers->amount;
 
   // number of company follows
   $flag = flag_get_flag('follow_organizations', NULL);
   $query = "SELECT COUNT(*) amount FROM {flagging} f WHERE f.fid = :fid";
   $num_organization_followers = db_query($query, array(':fid' => $flag->fid))->fetch();
   $api_data["num_organization_followers"] = $num_organization_followers->amount;
+
+  // number of connections (member + organization follows)
+  $api_data["num_connections"] = $api_data["num_member_followers"] + $api_data["num_organization_followers"];
+
+  // num of mutual follows
+  $flag = flag_get_flag('follow_members', NULL);
+  $query = "select count(distinct flagging.uid, f2.uid) as amount from flagging inner join flagging as f2 on flagging.uid = f2.entity_id where flagging.fid = :fid and f2.fid = :fid order by flagging.uid";
+  $num_mutual_followers = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $api_data["num_mutual_follows"] = $num_mutual_followers->amount;
 
   // number of registrations
   $flag = flag_get_flag('event_register', NULL);

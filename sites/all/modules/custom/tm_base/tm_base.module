@@ -162,14 +162,24 @@ function tm_base_block_view($delta) {
           $block['content'] .= '<li><a href="' . url('companies') . '" title="' . t('Go to companies') . '"><strong class="key">' . t('Companies') . '<small>: </small></strong><span class="value">' . $no_company . '</span></a></li>';
         }
 
-        // Number of followers
-        if (array_search("all_follows", $show_stats) !== false) {
+        // Number of connections (member + organization follows)
+        if (array_search("connections", $show_stats) !== false) {
+
+          // following members
           $follow_flag = flag_get_flag('follow_members', NULL);
           $query = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid";
-          $no_follows = db_query($query, array(':fid' => $follow_flag->fid))->fetch()->total;
-          $no_follows = tm_base_stats_format($no_follows);
+          $no_member_follows = db_query($query, array(':fid' => $follow_flag->fid))->fetch()->total;
 
-          $block['content'] .= '<li><a href="' . url('community') . '" title="' . t('Go to companies') . '"><strong class="key">' . t('Connections') . '<small>: </small></strong><span class="value">' . $no_follows . '</span></a></li>';
+          // following organizations
+          $follow_flag = flag_get_flag('follow_organizations', NULL);
+          $query = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid";
+          $no_organization_follows = db_query($query, array(':fid' => $follow_flag->fid))->fetch()->total;
+
+          $no_connections = $no_member_follows + $no_organization_follows;
+
+          $no_connections = tm_base_stats_format($no_connections);
+
+          $block['content'] .= '<li><a href="' . url('community') . '" title="' . t('Go to community') . '"><strong class="key">' . t('Connections') . '<small>: </small></strong><span class="value">' . $no_connections . '</span></a></li>';
 
         }
 
@@ -180,7 +190,7 @@ function tm_base_block_view($delta) {
           $no_mutual_follows = db_query($query, array(':fid' => $follow_flag->fid))->fetch()->total;
           $no_mutual_follows = tm_base_stats_format($no_mutual_follows);
 
-          $block['content'] .= '<li><a href="' . url('community') . '" title="' . t('Go to companies') . '"><strong class="key">' . t('Friends') . '<small>: </small></strong><span class="value">' . $no_mutual_follows . '</span></a></li>';
+          $block['content'] .= '<li><a href="' . url('community') . '" title="' . t('Go to community') . '"><strong class="key">' . t('Friends') . '<small>: </small></strong><span class="value">' . $no_mutual_follows . '</span></a></li>';
         }
 
       }

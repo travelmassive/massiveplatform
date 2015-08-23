@@ -640,7 +640,7 @@ This will be added to the attendee count on the event page.',
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '(Advanced Use Only) Specify the type of event for the event page listing.',
+    'description' => '(Advanced Use Only) Specify the type of event for the event page listing.<br>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -1356,7 +1356,7 @@ This will be displayed to the member on the event page and included in the autom
   // Translatables
   // Included for use with string extractors like potx.
   t('(Advanced Use Only) Check this to indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)');
-  t('(Advanced Use Only) Specify the type of event for the event page listing.');
+  t('(Advanced Use Only) Specify the type of event for the event page listing.<br>');
   t('Approved Members Only');
   t('Check this box if you want to restrict registration and waitlist to members who are approved. Non-approved members won\'t be able to sign up. ');
   t('Check this option if you want to restrict displaying the event location to registered attendees only.');

@@ -1457,7 +1457,7 @@ function tm_events_page_alter(&$page) {
   if (($url_parts[0] == "events") and ((sizeof($url_parts) == 1) or (sizeof($url_parts) == 3))) {
 
     // only show for /events/list/etc
-    if ((sizeof($url_parts) == 3) and ($url_parts != "list")) {
+    if ((sizeof($url_parts) == 3) and ($url_parts[1] != "list")) {
       return;
     }
 

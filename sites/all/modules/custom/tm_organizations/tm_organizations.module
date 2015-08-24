@@ -63,7 +63,9 @@ function _tm_ds_organization_stats($field, $title = NULL) {
   $html = "";
   if ($num_followers > 0) {
     if ($num_followers > 1) { $followers_text = "Followers"; }
+    $html = "<div class='tm_stats_container'>";
     $html .= "<a href='/node/" . $nid . "/followers'><span class='tm_stats tm_stats_followers'>" . $num_followers . " <span class='tm_stats_followers_divider'>|</span> " . $followers_text . " </span></a>";
+    $html .= "</div>";
   }
 
   return $html;

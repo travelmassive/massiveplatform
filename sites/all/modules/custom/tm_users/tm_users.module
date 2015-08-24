@@ -2054,6 +2054,10 @@ function _tm_ds_user_stats($field, $title = NULL) {
   $num_following = tm_users_get_num_following($uid);
   $num_events = tm_users_get_num_registered_events($uid);
 
+  if (($num_followers == 0) and ($num_following == 0) and ($num_events == 0)) {
+    return; 
+  }
+
   $html = "<div class='tm_stats_container'>";
   if ($num_followers > 0) {
     if ($num_followers > 1) { $followers_text = "Followers"; }

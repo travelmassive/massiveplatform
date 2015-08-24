@@ -653,6 +653,7 @@ $conf['tm_messaging_from_email'] = "communications@travelmassive.com"; // from a
 
 /** Event Options **/
 $conf['tm_event_show_spots_left'] = 20; // show number of free seats when less than this number
+$conf['tm_event_auto_register_waitlist'] = true; // if a member unregisters, automatically add next person from waitlist if there are free spots
 
 /** Provides a list of validated options on the signup page to indicate how the user connects with the community **/
 /** These options are not saved to the user account **/

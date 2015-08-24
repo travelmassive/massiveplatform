@@ -1122,7 +1122,20 @@ function tm_events_rsvp_form($event){
       '#markup' => '<p><a class="form-submit" href="/download/csv/'.$event->nid.'">'.t('Download as CSV').'</a></p>',
       );
     $form['notes'] = array(
-      '#markup' => '<hr><p style="font-size: smaller;"><b>Notes</b><br>1. Update attendee status (RSVP, Waitlist, Not Attending) by using the <b>Update</b> button to apply your changes to selected attendees. Members will automatically be notified of the change via email.</p><p style="font-size: smaller;">2. Click <b>Download as CSV</b> to download attendee information including name, email and company.</p><p style="font-size: smaller;">3. If you are using a Signup Limit, you need to manually move waitlisted attendees to the RSVP list.<br><br><b>Privacy Note</b><br>We care about privacy so please use CSV data in accordance with our members\' Privacy Terms.</p>'
+      '#markup' => '<hr>
+        <p style="font-size: smaller;">
+          <b>Notes</b>
+          <br>1. Update attendee status (RSVP, Waitlist, Not Attending) by using the <b>Update</b> button to apply your changes to selected attendees. Members will automatically be notified of the change via email.</p>
+          <p style="font-size: smaller;">2. Click <b>Download as CSV</b> to download attendee information including name, email and company. 
+
+          <br><i>Privacy Note - We care about privacy so please use CSV data in accordance with our members\' Privacy Terms.</i></p>
+          <p style="font-size: smaller;">
+            <b>Using the Waitlist</b>
+          </p>
+          <p style="font-size: smaller;">1. The Waitlist will be enabled if the number of registrations is greater than the number of seats available.</p>
+          <p style="font-size: smaller;">2. If you increase the number of seats, you need to manually move waitlisted attendees to the RSVP list so they are registered for the event.</p>
+          <p style="font-size: smaller;">3. The first person on the Waitlist will be automatically moved to the RSVP list if a member unregisters and there are available seats.
+          </p>'
     );
   }
   return $form;
@@ -1618,5 +1631,99 @@ function tm_events_tokens($type, $tokens, array $data = array(), array $options 
   } // end if
 
   return $replacements;
+}
+
+
+/* Hook for unflag */
+function tm_events_flag_unflag($flag, $entity_id, $account, $flagging) {
+  // If member is un-registered from an event, add next in line for the waitlist
+  // Note: if we want to only work when user peforms the action and not a moderator, add this:
+  // if (($GLOBALS['user']->uid == $user->uid)) {
+  if ($flag->name == 'event_register') {
+    global $conf;
+    if (isset($conf["tm_event_auto_register_waitlist"])) {
+      if ($conf["tm_event_auto_register_waitlist"]) {
+        $event = node_load($entity_id);
+        _tm_events_auto_register_from_waitlist($event);
+      }
+    }
+  }
+}
+
+
+/* Automatically register the next person on the waitlist */
+/* We only do this if spare seats are available */
+function _tm_events_auto_register_from_waitlist($event) {
+
+  // Step 1. Check if there are available seats
+  $seats_left = _tm_events_seats_left($event);
+  if ($seats_left <= 0) {
+    return false;
+  }
+
+  // Step 2. Find next person on waitlist, and add them
+  // Note: We don't handle the user's unregistration here. 
+  $rsvpflag = flag_get_flag('event_register', NULL);
+  $waitflag = flag_get_flag('event_waitlist', NULL);
+
+  // find first person on waitlist for event
+  $waitlisted_users = db_select('flagging', 'f')
+        ->fields('f')
+        ->condition('entity_id',$event->nid,'=')
+        ->condition('entity_type','node','=')
+        ->condition('fid',$waitflag->fid,'=') // waitlist flag condition
+        ->orderBy('f.timestamp', 'ASC') //ORDER BY flagging time
+        ->execute();
+  
+  $firstrow = $waitlisted_users->fetchAssoc();
+  if ($firstrow == FALSE) {
+    return false; // no-one on waitlist
+  }
+
+  $waitlist_user = user_load($firstrow['uid']);
+
+  // Add to rsvp first, unflag waitlist second
+  // this will trigger a single rsvp notification
+  $rsvpflag->flag('flag', $event->nid, $waitlist_user, TRUE);
+  $waitflag->flag('unflag', $event->nid, $waitlist_user, TRUE);
+
+  // We added someone from the waitlist
+  return true;
+}
+
+
+/* Calculate how many many spots are left */
+/* Returns 0 if there are no spare seats (over registered)
+/* Returns -1 if there are unlimited seats or external event */
+function _tm_events_seats_left($event) {
+
+  // external event
+  if (isset($event->field_external_rsvp[LANGUAGE_NONE][0]['value']) && 
+    $event->field_external_rsvp[LANGUAGE_NONE][0]['value'] !== '0') {
+    return -1;
+  }
+
+  // no seat limit
+  if (!isset($event->field_signup_limit[LANGUAGE_NONE][0]['value'])) {
+    return -1;
+  }
+
+  // get seat limit
+  $limit = $event->field_signup_limit[LANGUAGE_NONE][0]['value'];
+    
+  // count number of registrations
+  $flag = flag_get_flag('event_register');
+  $registered_count = $flag->get_count($event->nid);
+
+  // Seats left
+  $left = $limit - $registered_count;
+
+  // If oversubscribed return 0
+  if ($left < 0) {
+    return 0;
+  }
+
+  // Return number of seats
+  return $left;
 }
 

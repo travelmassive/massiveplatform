@@ -1556,10 +1556,12 @@ function tm_events_views_query_alter(&$view, &$query) {
   if ($view->name == 'events') {
     $url_parts = explode("/", request_path());
     if (sizeof($url_parts) == 1) {
-      global $conf;
-      if (isset($conf['tm_event_types_default'])) {
-        $event_type = array(':event_type' => $conf['tm_event_types_default']);
-        $query->add_where_expression(0, 'field_event_type_value IS NULL OR field_event_type_value = :event_type', $event_type);
+      if ($url_parts[0] == "events") {
+        global $conf;
+        if (isset($conf['tm_event_types_default'])) {
+          $event_type = array(':event_type' => $conf['tm_event_types_default']);
+          $query->add_where_expression(0, 'field_event_type_value IS NULL OR field_event_type_value = :event_type', $event_type);
+        }
       }
     }
   }

@@ -48,8 +48,9 @@ function tm_theme_html_head_alter(&$head_elements) {
   drupal_add_css(drupal_get_path('theme', 'tm') . '/css/jquery-impromptu.css', array('group' => CSS_THEME));
 
   // impromptu pure css theme effects admin theme
-  if (!path_is_admin(current_path())) {
-          drupal_add_css(drupal_get_path('theme', 'tm') . '/css/jquery-impromptu.pure.css', array('group' => CSS_THEME));
+  // allow on /user for profile editing
+  if (!path_is_admin(current_path()) or ($url_parts[1] == "user")) {
+    drupal_add_css(drupal_get_path('theme', 'tm') . '/css/jquery-impromptu.pure.css', array('group' => CSS_THEME));
   }
 
   // if not front page add sticky header

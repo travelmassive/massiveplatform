@@ -420,6 +420,22 @@
 
   }
 
+  jq_confirm_cancel_account = function(uid) {
+
+    confirm_title = "Are you sure you want to delete your account?";
+    message = "<p style='margin-top: 0px;'>If you continue you will be prompted to confirm your password to cancel your account. <br></p>";   
+    message = message + "<strong>Reason for leaving</strong><br><input type='text' name='cancel_account_feedback' id='cancel_account_feedback' value='' maxlength='150' placeholder='I am cancelling my account because...' size='100'>";
+
+    $.prompt(message, { buttons: { "Continue": true, "Cancel": false },
+      title: confirm_title,
+      submit: function(e,v,m,f){
+        if (v == true) {
+          window.location = '/user/' + uid + '/confirm_cancel_account?feedback=' + $("#cancel_account_feedback").val();
+        }
+      },
+    });
+  }
+
   // show the login/signup box
   // called from _tm_anon_flag_placeholder
   // this method copies the account-menu-blk rendered in tm_users_account_menu for anon users
@@ -427,7 +443,7 @@
     html_wrapper = '<div id="account-menu-blk">';
     message = html_wrapper + ($("#account-menu-blk")).html() + "</div>";
     $.prompt(message, {buttons: {}});
-  } 
+  }
 
 });})(jQuery, Drupal, this, this.document);
 

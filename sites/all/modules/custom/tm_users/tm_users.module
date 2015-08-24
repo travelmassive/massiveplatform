@@ -54,9 +54,7 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state) {
   if ((!in_array("chapter leader", $user->roles)) && (!in_array("moderator", $user->roles)) && (!in_array("administrator", $user->roles))) {
 
     $cancel_url = "/user/" . $user->uid . "/cancel";
-    $form['cancel_account_link'] = array('#markup' => l(t('Remove account'), 'javascript:jq_confirm_url("Are you really, really sure?", "All information linked to your account will be deleted, including event registrations and company profiles.<br><br>If you continue you will be prompted to confirm your password to cancel your account.", "' . urlencode($cancel_url) . '");', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('cancel_account_link')))), '#weight' => 100);
-
-    //$form['cancel_account_link'] = array('#markup' => l(t('Remove account'), $cancel_url, array('attributes' => array('class' => array('cancel_account_link')))), '#weight' => 100);
+    $form['cancel_account_link'] = array('#markup' => l(t('Remove account'), 'javascript:jq_confirm_cancel_account(' . $user->uid . ');', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('cancel_account_link')))), '#weight' => 100);
     $form['#group_children']['cancel_account_link'] = 'group_user_account';
   }
 
@@ -203,6 +201,13 @@ function tm_users_menu() {
     //'access arguments' => array('user_is_logged_in'),
     'type' => MENU_CALLBACK,
   );
+  $items['user/%user/confirm_cancel_account'] = array(
+    'title' => 'Confirm cancel account',
+    'page callback' => 'tm_users_confirm_cancel_account',
+    'page arguments' => array(1),
+    'access callback' => 'tm_users_check_cancel_account',
+    'type' => MENU_CALLBACK,
+  );
 
   return $items;
 }
@@ -267,6 +272,13 @@ function tm_users_approve($user) {
   }
 
   drupal_goto(drupal_get_path_alias("user/$user->uid"));
+}
+
+
+/* Approval callback for cancelling account */
+/* Wrapper for tm_users_check_request_approval */
+function tm_users_check_cancel_account() {
+  return tm_users_check_request_approval();
 }
 
 /* Approval callback for requesting approval */
@@ -1958,8 +1970,57 @@ function tm_users_user_cancel_methods_alter(&$methods) {
         drupal_goto("/user/" . $cancel_uid);
       }
     }
+  } 
+}
+
+/* User has confirmed they want to revove account */
+/* Notify administrator and also send on any feedback */
+/* Note, user is not 100% deleted yet, the user must confirm password as final step following this */
+function tm_users_confirm_cancel_account($account) {
+
+  global $user;
+
+  // only fire this method if cancelling own account
+  if ($account->uid != $user->uid) {
+    drupal_goto("/");
+    return;
   }
-  
+
+  global $conf;
+  if (isset($conf['tm_user_remove_own_account_notify'])) {
+    $notify_email = $conf['tm_user_remove_own_account_notify'];
+
+    // feedback
+    $feedback = "";
+    if (isset($_GET["feedback"])) {
+      $feedback = trim($_GET["feedback"]);
+    }
+
+    // notify administrator
+    $first_name = $account->field_user_first_name['und'][0]['value'];
+    $last_name = $account->field_user_last_name['und'][0]['value'];
+    $profile_url = $conf["tm_email_server_http"] . "://" . $_SERVER['SERVER_NAME'] . "/" . drupal_get_path_alias("user/" . $account->uid);
+    $profile_link = "<a href='" . $profile_url . "'>" . $profile_url . "</a>";
+
+    $message = "The following member just cancelled their account:";
+    $message .= "<br><br>Name: " . $first_name . " " . $last_name . "";
+    $message .= "<br>Email address: " . $account->mail;
+    $message .= "<br>Profile URL: " . $profile_url . " (will be deleted)";
+
+    if ($feedback != "") {
+      $feedback = strip_tags($feedback); // remove html
+      $feedback = str_replace("\n", "<br>", $feedback); // add line breaks
+      $message .= "<br><br><strong>Feedback</strong> " . $feedback;
+    }
+    $message .= "<br><br>No action is required, this is a notification to let you know.";
+
+    // send the email
+    tm_users_send_html_mail("tm_users", "remove_account_confirm", $notify_email, LANGUAGE_NONE, array(), "Member cancelled account notification", $message, NULL);
+  }
+
+  // redirect to the official cancel page
+  drupal_goto("user/" . $account->uid . "/cancel");
+
 }
 
 /* Add display suite field for follower stats */

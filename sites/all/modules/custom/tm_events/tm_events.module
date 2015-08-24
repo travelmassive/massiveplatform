@@ -1493,7 +1493,7 @@ function tm_events_page_alter(&$page) {
 
     // get event types from config
     $event_types = $conf["tm_event_types"];
-    $event_types_plural = $conf["tm_event_types_display"];
+    $tm_event_types_display = $conf["tm_event_types_display"];
     $default_event_type = $conf["tm_event_types_default"];
     
     $url_event_type = $default_event_type; // default list method
@@ -1503,7 +1503,7 @@ function tm_events_page_alter(&$page) {
    
     // create buttons
     $html = '<ul class="tabs-primary tabs primary">';
-    foreach ($event_types_plural as $event_type => $name) {
+    foreach ($tm_event_types_display as $event_type => $name) {
 
       $css_classes = "";
       if ($url_event_type == $event_type) { 
@@ -1543,14 +1543,14 @@ function tm_events_views_post_execute(&$view) {
 
       global $conf;
       // get event types from config
-      if (!isset($conf["tm_event_types_plural"])) { return; }
-      $event_types_plural = $conf["tm_event_types_plural"];
+      if (!isset($conf["tm_event_types_display"])) { return; }
+      $tm_event_types_display = $conf["tm_event_types_display"];
 
       // Step 1. Change Title
       // if we match event type, change the page title
       $url_event_type = $url_parts[2];
-      if (array_key_exists($url_event_type, $event_types_plural)) {
-        $view->build_info['title'] = $event_types_plural[$url_event_type];
+      if (array_key_exists($url_event_type, $tm_event_types_display)) {
+        $view->build_info['title'] = $tm_event_types_display[$url_event_type];
       }
 
       // Step 2. Show Event Tip

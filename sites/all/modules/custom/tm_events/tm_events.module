@@ -1488,12 +1488,12 @@ function tm_events_page_alter(&$page) {
 
     global $conf;
     if (!isset($conf["tm_event_types"])) { return; }
-    if (!isset($conf["tm_event_types_plural"])) { return; }
+    if (!isset($conf["tm_event_types_display"])) { return; }
     if (!isset($conf["tm_event_types_default"])) { return; }
 
     // get event types from config
     $event_types = $conf["tm_event_types"];
-    $event_types_plural = $conf["tm_event_types_plural"];
+    $event_types_plural = $conf["tm_event_types_display"];
     $default_event_type = $conf["tm_event_types_default"];
     
     $url_event_type = $default_event_type; // default list method

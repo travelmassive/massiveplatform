@@ -59,8 +59,8 @@ $( feedme_append ).append( "<div id='feedme' style='<?php print($feedme_style);?
 
 function load_feedme() {
 	// set feedme_mode and feedme_q
-	feedme_mode = "<?php print($feedme_mode);?>";
-    feedme_query = "<?php print($feedme_query);?>";
+	feedme_mode = "<?php print(htmlentities($feedme_mode, ENT_QUOTES));?>";
+    feedme_query = "<?php print(htmlentities($feedme_query, ENT_QUOTES));?>";
     feedme_theme = "<?php print($feedme_theme);?>";
     feedme_frontpage_id = "<?php global $conf; print($conf["tm_wordpress_feedme_frontpage_id"]);?>";
     feedme_num_items = "<?php print($feedme_num_items);?>";

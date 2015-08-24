@@ -58,7 +58,7 @@ function _tm_flags_unflag_chapter(&$variables) {
       jQuery(document).ready(function($) {
         $( ".flag" ).unbind("click");
         $( ".flag" ).bind("click.confirm", function(event) {
-          jq_alert(null, "You can\'t leave this chapter as you are currently a Chapter Leader for ' . $chapter->title . '.");
+          jq_alert(null, "You can\'t leave this chapter as you are currently a Chapter Leader for ' . htmlentities($chapter->title, ENT_QUOTES | ENT_HTML5) . '.");
           event.preventDefault();
         });
       });
@@ -76,7 +76,7 @@ function _tm_flags_unflag_chapter(&$variables) {
     jQuery(document).ready(function($) {
       $( ".flag" ).unbind("click");
       $( ".flag" ).bind("click.confirm", function(event) {
-        jq_confirm_leave_chapter(\''.$chapter->title.'\');
+        jq_confirm_leave_chapter(\''.htmlentities($chapter->title, ENT_QUOTES | ENT_HTML5).'\');
         return false;
       });
     });
@@ -93,7 +93,7 @@ function _tm_flags_unflag_chapter(&$variables) {
     jQuery(document).ready(function($) {
       $( ".flag" ).unbind("click");
       $( ".flag" ).bind("click.confirm", function(event) {
-        jq_confirm_unregister_event(\''.htmlentities($event->title).'\');
+        jq_confirm_unregister_event(\''.htmlentities($event->title, ENT_QUOTES | ENT_HTML5).'\');
         return false;
       });
     });
@@ -110,7 +110,7 @@ function _tm_flags_unflag_chapter(&$variables) {
     jQuery(document).ready(function($) {
       $( ".flag" ).unbind("click");
       $( ".flag" ).bind("click.confirm", function(event) {
-        jq_confirm_unregister_waitlist(\''.htmlentities($event->title).'\');
+        jq_confirm_unregister_waitlist(\''.htmlentities($event->title, ENT_QUOTES | ENT_HTML5).'\');
         return false;
       });
     });

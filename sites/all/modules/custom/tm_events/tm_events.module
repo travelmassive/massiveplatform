@@ -1527,7 +1527,7 @@ function tm_events_page_alter(&$page) {
   }
 }
 
-// Add a link to chapter leaders from the community page
+// Update title of events page
 function tm_events_views_post_execute(&$view) {
  
   // make sure we are on events page
@@ -1557,24 +1557,6 @@ function tm_events_views_post_execute(&$view) {
       if (isset($conf['tm_event_types_tips'][$url_event_type])) {
         $tip = $conf['tm_event_types_tips'][$url_event_type];
         drupal_set_message($tip, 'page_notice');
-      }
-    }
-  }
-}
-
-/* Modify /events query to only return default event type or events without a type */
-function tm_events_views_query_alter(&$view, &$query) {
-
-  // target /events page only
-  if ($view->name == 'events') {
-    $url_parts = explode("/", request_path());
-    if (sizeof($url_parts) == 1) {
-      if ($url_parts[0] == "events") {
-        global $conf;
-        if (isset($conf['tm_event_types_default'])) {
-          $event_type = array(':event_type' => $conf['tm_event_types_default']);
-          $query->add_where_expression(0, 'field_event_type_value IS NULL OR field_event_type_value = :event_type', $event_type);
-        }
       }
     }
   }

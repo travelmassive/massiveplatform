@@ -728,10 +728,10 @@ $conf["tm_notification_moderation_non_community_message"] = 'To be a member of t
 $conf['tm_frontpage_show_anon_stats'] = array('members', 'chapters', 'connections');
 
 /** Event types **/
-$conf['tm_event_types'] = array("community" => "Community", "workshop" => "Workshop", "conference" => "Conference");
-$conf['tm_event_types_plural'] = array("community" => "Community", "workshop" => "Workshops", "conference" => "Conferences");
+$conf['tm_event_types'] = array("all" => "All Events", "workshop" => "Workshop", "conference" => "Conference");
+$conf['tm_event_types_plural'] = array("all" => "All Events", "workshop" => "Workshops", "conference" => "Conferences");
 $conf['tm_event_types_tips'] = array("workshop" => "Learn and share with other members around the world. have an idea for a workshop you would like to attend or host? Please <a href='/contact'>let us know</a>.", "conference" => "We're proud community partners with the world's leading travel industry conferences and exhibitions. <a href='/blog/about-travel-massive'>Learn more</a>");
-$conf['tm_event_types_default'] = "community";
+$conf['tm_event_types_default'] = "all";
 
 /** If user removes their account, who do we notify? */
 $conf['tm_user_remove_own_account_notify'] = 'community@travelmassive.com';

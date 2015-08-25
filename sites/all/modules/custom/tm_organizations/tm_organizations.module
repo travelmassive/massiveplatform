@@ -91,18 +91,43 @@ function tm_organizations_node_presave($node){
   // make sure we are working on an organization node
   if ($node->type != "organization") { return; }
 
-  // probably should check if this user is already there first, in case they manually added themselves
-  // because two of the same user just looks silly
-  if ($node->is_new){
-    $userexists = 0;
-    foreach ($node->field_owner[$node->language] as $owner){
-      if ($owner['target_id'] == $node->uid)
-        $userexists++;
+  // Step 1. See how many owners the organization has
+  $num_owners = 0;
+  $owned_by_node_creator = false;
+  $owner_uid = 0;
+  foreach ($node->field_owner[$node->language] as $owner) {
+
+    // get owner uid in case transferring ownership
+    if ($num_owners == 0) {
+      $owner_uid = $owner['target_id'];
     }
-    if (!$userexists){
-      $node->field_owner[$node->language][] = array('target_id' => $node->uid);
+    
+    // check if owned by node creator
+    if ($owner['target_id'] == $node->uid) {
+      $owned_by_node_creator = true;
     }
+
+    $num_owners++;
   }
+
+  // Step 2. If no owner set, then add the node owner
+  if ($num_owners == 0){
+    $node->field_owner[$node->language][] = array('target_id' => $node->uid);
+  }
+  
+  // Step 3. If not owned by node creator, re-assign ownership
+  // Note: disabled for time being, as no audit trail of original creator kept
+  /*if ((!$owned_by_node_creator) and ($num_owners > 0)) {
+
+    $new_owner = user_load($owner_uid);
+    $first_name = $new_owner->field_user_first_name['und'][0]['value'];
+    $last_name = $new_owner->field_user_last_name['und'][0]['value'];
+
+    $message = "Ownership of this profile has been assigned to " . $first_name . " " . $last_name . ".";
+    drupal_set_message($message, 'page_notice');
+    $node->uid = $owner_uid;
+  }*/
+
 }
 
 // Check if the user can create a company

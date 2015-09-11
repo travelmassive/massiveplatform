@@ -194,16 +194,27 @@ function _tm_reports_views_pre_render_industry_report(&$view) {
   // Fix Count for Industry Segment term
   foreach ($view->result as $i => $result) {
 
-    $members_with_segment = $view->result[$i]->users_flagging__field_data_field_segment_field_segment_tid;
-    $total_count = 0;
+    // Step 1. count number of members with a segment
+    $members_with_segment = 0;
+    foreach ($industry_field as $field_alias => $label) {
+      if (is_numeric($i) && (!empty($view->field[$field_alias]->view->result[$i]->$field_alias))) {
+        $field_count = ($view->field[$field_alias]->view->result[$i]->field_count);
+        $count = ($view->field[$field_alias]->view->result[$i]->$field_alias);
+        $count_normalise = ($field_count != 0 ? $count / $field_count : $count);
+        $members_with_segment += $count_normalise;     
+      }
+    }
 
+    // correct field value. note: this is horrible code, but what can we do as we are wrangling with views :(
+    $view->result[$i]->users_flagging__field_data_field_segment_field_segment_tid = $members_with_segment;
+
+    // Step 2. Calculate % and update count
     foreach ($industry_field as $field_alias => $label) {
       if (is_numeric($i) && (!empty($view->field[$field_alias]->view->result[$i]->$field_alias))) {
         $field_count = ($view->field[$field_alias]->view->result[$i]->field_count);
         $count = ($view->field[$field_alias]->view->result[$i]->$field_alias);
         $count_normalise = ($field_count != 0 ? $count / $field_count : $count);
         $view->field[$field_alias]->view->result[$i]->$field_alias = $count_normalise;
-        $total_count += $count_normalise;
           
         /* Percentage */
         $field_alias .= '_pct';
@@ -213,9 +224,10 @@ function _tm_reports_views_pre_render_industry_report(&$view) {
       }
     }
 
+    // Step 3. Update total %
     //$approved_members = $view->field["total_has_industry_pct"]->view->result[$i]->total_has_industry_pct
     $approved_members = $view->result[$i]->flag_counts_node_count;
-    $total_has_industry_pct = round($total_count * 100 / $approved_members, 0);
+    $total_has_industry_pct = round($members_with_segment * 100 / $approved_members, 0);
     $view->field["total_has_industry_pct"]->view->result[$i]->total_has_industry_pct = $total_has_industry_pct;
 
   }

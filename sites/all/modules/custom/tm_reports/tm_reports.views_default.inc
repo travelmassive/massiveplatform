@@ -519,6 +519,12 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['title'] = 'Chapters Report';
   $handler->display->display_options['defaults']['group_by'] = FALSE;
   $handler->display->display_options['group_by'] = TRUE;
+  $handler->display->display_options['defaults']['cache'] = FALSE;
+  $handler->display->display_options['cache']['type'] = 'time';
+  $handler->display->display_options['cache']['results_lifespan'] = '300';
+  $handler->display->display_options['cache']['results_lifespan_custom'] = '0';
+  $handler->display->display_options['cache']['output_lifespan'] = '-1';
+  $handler->display->display_options['cache']['output_lifespan_custom'] = '0';
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -1207,7 +1213,7 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['fields']['field_segment']['table'] = 'field_data_field_segment';
   $handler->display->display_options['fields']['field_segment']['field'] = 'field_segment';
   $handler->display->display_options['fields']['field_segment']['relationship'] = 'uid';
-  $handler->display->display_options['fields']['field_segment']['group_type'] = 'count_distinct';
+  $handler->display->display_options['fields']['field_segment']['group_type'] = 'count';
   $handler->display->display_options['fields']['field_segment']['label'] = 'Has Industry Segment';
   $handler->display->display_options['fields']['field_segment']['separator'] = ', ';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
@@ -1343,7 +1349,7 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['fields']['field_segment']['table'] = 'field_data_field_segment';
   $handler->display->display_options['fields']['field_segment']['field'] = 'field_segment';
   $handler->display->display_options['fields']['field_segment']['relationship'] = 'uid';
-  $handler->display->display_options['fields']['field_segment']['group_type'] = 'count_distinct';
+  $handler->display->display_options['fields']['field_segment']['group_type'] = 'count';
   $handler->display->display_options['fields']['field_segment']['label'] = 'Has Industry Segment';
   $handler->display->display_options['fields']['field_segment']['separator'] = ', ';
   $handler->display->display_options['defaults']['arguments'] = FALSE;

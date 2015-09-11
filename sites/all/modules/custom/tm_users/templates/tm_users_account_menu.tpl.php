@@ -146,10 +146,15 @@ print l(t('Approve my account'), 'javascript:jq_request_approval(' . $loaded->ui
         <li><?php print l(t('Add event'), 'node/add/event'); ?></li>
         <li><?php print l(t('Add chapter'), 'node/add/chapter'); ?></li>
         <li><?php print l(t('All unapproved members'), 'admin/unapproved-members'); ?></li>
+<<<<<<< HEAD
         <li><?php print l(t('Chapter Leaders'), 'admin/tm_reports/chapter_leaders'); ?></li>
         <li><?php print l(t('Chapters Report'), 'admin/tm_reports/chapters_report'); ?></li>
         <li><?php print l(t('Industry Report'), 'admin/tm_reports/industry_report'); ?></li>
 
+=======
+        <li><?php print l(t('Chapter Stats'), 'admin/community_stats/chapter_stats'); ?></li>
+        <li><?php print l(t('Organizers Contact'), 'admin/community_stats/chapter_leaders'); ?></li>
+>>>>>>> e90fe08de63a10ec2a93dfe5651133a4801276bd
       </ul>
   <?php endif; ?>
 

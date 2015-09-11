@@ -314,6 +314,7 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['fields']['field_link_website']['id'] = 'field_link_website';
   $handler->display->display_options['fields']['field_link_website']['table'] = 'field_data_field_link_website';
   $handler->display->display_options['fields']['field_link_website']['field'] = 'field_link_website';
+  $handler->display->display_options['fields']['field_link_website']['relationship'] = 'field_chapter_leaders_target_id';
   $handler->display->display_options['fields']['field_link_website']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_link_website']['alter']['text'] = 'View';
   $handler->display->display_options['fields']['field_link_website']['alter']['make_link'] = TRUE;
@@ -325,6 +326,7 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['fields']['field_link_facebook']['id'] = 'field_link_facebook';
   $handler->display->display_options['fields']['field_link_facebook']['table'] = 'field_data_field_link_facebook';
   $handler->display->display_options['fields']['field_link_facebook']['field'] = 'field_link_facebook';
+  $handler->display->display_options['fields']['field_link_facebook']['relationship'] = 'field_chapter_leaders_target_id';
   $handler->display->display_options['fields']['field_link_facebook']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_link_facebook']['alter']['text'] = 'View';
   $handler->display->display_options['fields']['field_link_facebook']['alter']['make_link'] = TRUE;
@@ -336,6 +338,7 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['fields']['field_link_twitter']['id'] = 'field_link_twitter';
   $handler->display->display_options['fields']['field_link_twitter']['table'] = 'field_data_field_link_twitter';
   $handler->display->display_options['fields']['field_link_twitter']['field'] = 'field_link_twitter';
+  $handler->display->display_options['fields']['field_link_twitter']['relationship'] = 'field_chapter_leaders_target_id';
   $handler->display->display_options['fields']['field_link_twitter']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_link_twitter']['alter']['text'] = 'View';
   $handler->display->display_options['fields']['field_link_twitter']['alter']['make_link'] = TRUE;
@@ -347,6 +350,7 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['fields']['field_link_linkedin']['id'] = 'field_link_linkedin';
   $handler->display->display_options['fields']['field_link_linkedin']['table'] = 'field_data_field_link_linkedin';
   $handler->display->display_options['fields']['field_link_linkedin']['field'] = 'field_link_linkedin';
+  $handler->display->display_options['fields']['field_link_linkedin']['relationship'] = 'field_chapter_leaders_target_id';
   $handler->display->display_options['fields']['field_link_linkedin']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_link_linkedin']['alter']['text'] = 'View';
   $handler->display->display_options['fields']['field_link_linkedin']['alter']['make_link'] = TRUE;
@@ -467,24 +471,28 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['fields']['field_link_website']['id'] = 'field_link_website';
   $handler->display->display_options['fields']['field_link_website']['table'] = 'field_data_field_link_website';
   $handler->display->display_options['fields']['field_link_website']['field'] = 'field_link_website';
+  $handler->display->display_options['fields']['field_link_website']['relationship'] = 'field_chapter_leaders_target_id';
   $handler->display->display_options['fields']['field_link_website']['click_sort_column'] = 'url';
   $handler->display->display_options['fields']['field_link_website']['type'] = 'link_plain';
   /* Field: Field: Facebook */
   $handler->display->display_options['fields']['field_link_facebook']['id'] = 'field_link_facebook';
   $handler->display->display_options['fields']['field_link_facebook']['table'] = 'field_data_field_link_facebook';
   $handler->display->display_options['fields']['field_link_facebook']['field'] = 'field_link_facebook';
+  $handler->display->display_options['fields']['field_link_facebook']['relationship'] = 'field_chapter_leaders_target_id';
   $handler->display->display_options['fields']['field_link_facebook']['click_sort_column'] = 'url';
   $handler->display->display_options['fields']['field_link_facebook']['type'] = 'link_plain';
   /* Field: Field: Twitter */
   $handler->display->display_options['fields']['field_link_twitter']['id'] = 'field_link_twitter';
   $handler->display->display_options['fields']['field_link_twitter']['table'] = 'field_data_field_link_twitter';
   $handler->display->display_options['fields']['field_link_twitter']['field'] = 'field_link_twitter';
+  $handler->display->display_options['fields']['field_link_twitter']['relationship'] = 'field_chapter_leaders_target_id';
   $handler->display->display_options['fields']['field_link_twitter']['click_sort_column'] = 'url';
   $handler->display->display_options['fields']['field_link_twitter']['type'] = 'link_title_plain';
   /* Field: Field: Linkedin */
   $handler->display->display_options['fields']['field_link_linkedin']['id'] = 'field_link_linkedin';
   $handler->display->display_options['fields']['field_link_linkedin']['table'] = 'field_data_field_link_linkedin';
   $handler->display->display_options['fields']['field_link_linkedin']['field'] = 'field_link_linkedin';
+  $handler->display->display_options['fields']['field_link_linkedin']['relationship'] = 'field_chapter_leaders_target_id';
   $handler->display->display_options['fields']['field_link_linkedin']['click_sort_column'] = 'url';
   $handler->display->display_options['fields']['field_link_linkedin']['type'] = 'link_plain';
   /* Field: User: Last login */

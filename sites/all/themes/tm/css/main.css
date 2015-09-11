@@ -7428,6 +7428,12 @@ a.cancel_account_link {
   white-space: nowrap;
 }
 
+/* line 765, ../sass/_single.scss */
+#edit-submit-reports {
+  margin-top: 52px;
+  margin-left: 8px;
+}
+
 /* line 2, ../sass/_login.scss */
 #account-menu-blk .menu-blk-title {
   text-transform: uppercase;

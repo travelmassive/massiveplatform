@@ -7423,6 +7423,11 @@ a.cancel_account_link {
   color: #acc743;
 }
 
+/* line 764, ../sass/_single.scss */
+.tm_nowrap {
+  white-space: nowrap;
+}
+
 /* line 2, ../sass/_login.scss */
 #account-menu-blk .menu-blk-title {
   text-transform: uppercase;

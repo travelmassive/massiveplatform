@@ -219,7 +219,7 @@ function _tm_reports_views_pre_render_industry_report(&$view) {
         /* Percentage */
         $field_alias .= '_pct';
         //$total = $view->result[$i]->flag_counts_node_count;
-        $pct = round(($count_normalise * 100 / $members_with_segment), 0);
+        $pct = round(($count_normalise * 100 / $members_with_segment), 1);
         $view->field[$field_alias]->view->result[$i]->$field_alias = $pct;          
       }
     }

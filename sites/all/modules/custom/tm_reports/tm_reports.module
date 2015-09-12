@@ -10,7 +10,7 @@ include_once 'tm_reports.features.inc';
  * Implements hook_views_query_alter().
  */
 function tm_reports_views_query_alter(&$view, &$query) {
- if ($view->current_display == 'chapters_report' || $view->current_display == 'chapter_report_export') {
+ if ($view->current_display == 'chapters_report' || $view->current_display == 'chapters_report_export') {
   _tm_reports_views_query_alter_chapter_report($view, $query);
  }
 
@@ -28,7 +28,7 @@ function tm_reports_views_pre_render(&$view) {
   }
 
   if ($view->current_display == 'industry_report' || $view->current_display == 'industry_report_export') {
-  _tm_reports_views_pre_render_industry_report($view);
+    _tm_reports_views_pre_render_industry_report($view);
   }
 }
 
@@ -130,7 +130,7 @@ function _tm_reports_views_pre_render_chapter_report(&$view) {
     if (is_numeric($i) && (!empty($view->result[$i]->field_field_event_date_3[0]['raw']['value']))) {
       // Change Date format
       $event_date = strtotime($view->result[$i]->field_field_event_date_3[0]['raw']['value']);
-      $interval = format_interval(($event_date - time()) , 1) ;
+      $interval = format_interval(($event_date - time()) , 1);
       $next_event_nid = $view->result[$i]->next_event_date_entity_id;
       $url = 'node/'.$next_event_nid;
       $next_event_link = l($interval, $url);        
@@ -219,7 +219,7 @@ function _tm_reports_views_pre_render_industry_report(&$view) {
         /* Percentage */
         $field_alias .= '_pct';
         //$total = $view->result[$i]->flag_counts_node_count;
-        $pct = round(($count_normalise * 100 / $members_with_segment), 1);
+        $pct = round(($count_normalise * 100 / $members_with_segment), 2);
         $view->field[$field_alias]->view->result[$i]->$field_alias = $pct;          
       }
     }

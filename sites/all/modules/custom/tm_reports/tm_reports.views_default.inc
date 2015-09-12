@@ -265,6 +265,17 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['relationships']['field_country_iso2']['field'] = 'field_country_iso2';
   $handler->display->display_options['relationships']['field_country_iso2']['label'] = 'country';
   $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = 'Chapter';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  /* Field: Content: Country */
+  $handler->display->display_options['fields']['field_country']['id'] = 'field_country';
+  $handler->display->display_options['fields']['field_country']['table'] = 'field_data_field_country';
+  $handler->display->display_options['fields']['field_country']['field'] = 'field_country';
   /* Field: Countries: Continent */
   $handler->display->display_options['fields']['continent']['id'] = 'continent';
   $handler->display->display_options['fields']['continent']['table'] = 'countries_country';
@@ -273,17 +284,6 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['fields']['continent']['label'] = 'Region';
   $handler->display->display_options['fields']['continent']['element_class'] = 'tm_nowrap';
   $handler->display->display_options['fields']['continent']['continent_code'] = 0;
-  /* Field: Content: Country */
-  $handler->display->display_options['fields']['field_country']['id'] = 'field_country';
-  $handler->display->display_options['fields']['field_country']['table'] = 'field_data_field_country';
-  $handler->display->display_options['fields']['field_country']['field'] = 'field_country';
-  /* Field: Content: Title */
-  $handler->display->display_options['fields']['title']['id'] = 'title';
-  $handler->display->display_options['fields']['title']['table'] = 'node';
-  $handler->display->display_options['fields']['title']['field'] = 'title';
-  $handler->display->display_options['fields']['title']['label'] = 'Chapter';
-  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
-  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   /* Field: User: First name */
   $handler->display->display_options['fields']['field_user_first_name']['id'] = 'field_user_first_name';
   $handler->display->display_options['fields']['field_user_first_name']['table'] = 'field_data_field_user_first_name';
@@ -430,17 +430,6 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['relationships']['field_chapter_leaders_target_id']['label'] = 'chapter_leaders';
   $handler->display->display_options['relationships']['field_chapter_leaders_target_id']['required'] = TRUE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Country */
-  $handler->display->display_options['fields']['field_country_1']['id'] = 'field_country_1';
-  $handler->display->display_options['fields']['field_country_1']['table'] = 'field_data_field_country';
-  $handler->display->display_options['fields']['field_country_1']['field'] = 'field_country';
-  $handler->display->display_options['fields']['field_country_1']['label'] = 'Region';
-  $handler->display->display_options['fields']['field_country_1']['element_wrapper_class'] = 'tm_nowrap';
-  $handler->display->display_options['fields']['field_country_1']['type'] = 'country_continent';
-  /* Field: Content: Country */
-  $handler->display->display_options['fields']['field_country']['id'] = 'field_country';
-  $handler->display->display_options['fields']['field_country']['table'] = 'field_data_field_country';
-  $handler->display->display_options['fields']['field_country']['field'] = 'field_country';
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -448,6 +437,17 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = 'Chapter';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  /* Field: Content: Country */
+  $handler->display->display_options['fields']['field_country']['id'] = 'field_country';
+  $handler->display->display_options['fields']['field_country']['table'] = 'field_data_field_country';
+  $handler->display->display_options['fields']['field_country']['field'] = 'field_country';
+  /* Field: Content: Country */
+  $handler->display->display_options['fields']['field_country_1']['id'] = 'field_country_1';
+  $handler->display->display_options['fields']['field_country_1']['table'] = 'field_data_field_country';
+  $handler->display->display_options['fields']['field_country_1']['field'] = 'field_country';
+  $handler->display->display_options['fields']['field_country_1']['label'] = 'Region';
+  $handler->display->display_options['fields']['field_country_1']['element_wrapper_class'] = 'tm_nowrap';
+  $handler->display->display_options['fields']['field_country_1']['type'] = 'country_continent';
   /* Field: User: First name */
   $handler->display->display_options['fields']['field_user_first_name']['id'] = 'field_user_first_name';
   $handler->display->display_options['fields']['field_user_first_name']['table'] = 'field_data_field_user_first_name';
@@ -690,6 +690,15 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['label'] = 'Chapter Nid';
   $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
+  $handler->display->display_options['fields']['title_1']['table'] = 'node';
+  $handler->display->display_options['fields']['title_1']['field'] = 'title';
+  $handler->display->display_options['fields']['title_1']['label'] = 'Chapter';
+  /* Field: Content: Country */
+  $handler->display->display_options['fields']['field_country']['id'] = 'field_country';
+  $handler->display->display_options['fields']['field_country']['table'] = 'field_data_field_country';
+  $handler->display->display_options['fields']['field_country']['field'] = 'field_country';
   /* Field: Countries: Continent */
   $handler->display->display_options['fields']['continent']['id'] = 'continent';
   $handler->display->display_options['fields']['continent']['table'] = 'countries_country';
@@ -697,15 +706,6 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['fields']['continent']['relationship'] = 'field_country_iso2';
   $handler->display->display_options['fields']['continent']['label'] = 'Region';
   $handler->display->display_options['fields']['continent']['continent_code'] = 0;
-  /* Field: Content: Country */
-  $handler->display->display_options['fields']['field_country']['id'] = 'field_country';
-  $handler->display->display_options['fields']['field_country']['table'] = 'field_data_field_country';
-  $handler->display->display_options['fields']['field_country']['field'] = 'field_country';
-  /* Field: Content: Title */
-  $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
-  $handler->display->display_options['fields']['title_1']['table'] = 'node';
-  $handler->display->display_options['fields']['title_1']['field'] = 'title';
-  $handler->display->display_options['fields']['title_1']['label'] = 'Chapter';
   /* Field: Flags: Flag counter */
   $handler->display->display_options['fields']['count']['id'] = 'count';
   $handler->display->display_options['fields']['count']['table'] = 'flag_counts';
@@ -915,21 +915,21 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['relationships']['uid']['relationship'] = 'flag_content_rel';
   $handler->display->display_options['relationships']['uid']['label'] = 'flag_user';
   $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
+  $handler->display->display_options['fields']['title_1']['table'] = 'node';
+  $handler->display->display_options['fields']['title_1']['field'] = 'title';
+  $handler->display->display_options['fields']['title_1']['label'] = 'Chapter';
+  /* Field: Content: Country */
+  $handler->display->display_options['fields']['field_country']['id'] = 'field_country';
+  $handler->display->display_options['fields']['field_country']['table'] = 'field_data_field_country';
+  $handler->display->display_options['fields']['field_country']['field'] = 'field_country';
   /* Field: Content: Country */
   $handler->display->display_options['fields']['field_country_1']['id'] = 'field_country_1';
   $handler->display->display_options['fields']['field_country_1']['table'] = 'field_data_field_country';
   $handler->display->display_options['fields']['field_country_1']['field'] = 'field_country';
   $handler->display->display_options['fields']['field_country_1']['label'] = 'Region';
   $handler->display->display_options['fields']['field_country_1']['type'] = 'country_continent';
-  /* Field: Content: Country */
-  $handler->display->display_options['fields']['field_country']['id'] = 'field_country';
-  $handler->display->display_options['fields']['field_country']['table'] = 'field_data_field_country';
-  $handler->display->display_options['fields']['field_country']['field'] = 'field_country';
-  /* Field: Content: Title */
-  $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
-  $handler->display->display_options['fields']['title_1']['table'] = 'node';
-  $handler->display->display_options['fields']['title_1']['field'] = 'title';
-  $handler->display->display_options['fields']['title_1']['label'] = 'Chapter';
   /* Field: Field: Website */
   $handler->display->display_options['fields']['field_link_website']['id'] = 'field_link_website';
   $handler->display->display_options['fields']['field_link_website']['table'] = 'field_data_field_link_website';
@@ -1058,87 +1058,30 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
-    'continent' => 'continent',
+    'title' => 'title',
     'field_country' => 'field_country',
-    'title_1' => 'title_1',
-    'field_link_website' => 'field_link_website',
-    'field_link_facebook' => 'field_link_facebook',
-    'field_link_twitter' => 'field_link_twitter',
-    'field_event_date' => 'field_event_date',
-    'field_event_date_1' => 'field_event_date_1',
-    'field_event_date_2' => 'field_event_date_2',
-    'field_event_date_3' => 'field_event_date_3',
+    'continent' => 'continent',
     'count' => 'count',
-    'field_community_managers' => 'field_community_managers',
     'field_segment' => 'field_segment',
   );
   $handler->display->display_options['style_options']['default'] = '-1';
   $handler->display->display_options['style_options']['info'] = array(
-    'continent' => array(
-      'sortable' => 0,
+    'title' => array(
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_country' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'title_1' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_link_website' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_link_facebook' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_link_twitter' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_event_date' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_event_date_1' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_event_date_2' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_event_date_3' => array(
-      'sortable' => 0,
+    'continent' => array(
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
@@ -1147,11 +1090,6 @@ function tm_reports_views_default_views() {
     'count' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_community_managers' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -1210,6 +1148,18 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = 'Chapter';
+  /* Field: Content: Country */
+  $handler->display->display_options['fields']['field_country']['id'] = 'field_country';
+  $handler->display->display_options['fields']['field_country']['table'] = 'field_data_field_country';
+  $handler->display->display_options['fields']['field_country']['field'] = 'field_country';
+  /* Field: Countries: Continent */
+  $handler->display->display_options['fields']['continent']['id'] = 'continent';
+  $handler->display->display_options['fields']['continent']['table'] = 'countries_country';
+  $handler->display->display_options['fields']['continent']['field'] = 'continent';
+  $handler->display->display_options['fields']['continent']['relationship'] = 'field_country_iso2';
+  $handler->display->display_options['fields']['continent']['label'] = 'Region';
+  $handler->display->display_options['fields']['continent']['continent_code'] = 0;
   /* Field: Flags: Flag counter */
   $handler->display->display_options['fields']['count']['id'] = 'count';
   $handler->display->display_options['fields']['count']['table'] = 'flag_counts';
@@ -1346,6 +1296,18 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = 'Chapter';
+  /* Field: Content: Country */
+  $handler->display->display_options['fields']['field_country']['id'] = 'field_country';
+  $handler->display->display_options['fields']['field_country']['table'] = 'field_data_field_country';
+  $handler->display->display_options['fields']['field_country']['field'] = 'field_country';
+  /* Field: Countries: Continent */
+  $handler->display->display_options['fields']['continent']['id'] = 'continent';
+  $handler->display->display_options['fields']['continent']['table'] = 'countries_country';
+  $handler->display->display_options['fields']['continent']['field'] = 'continent';
+  $handler->display->display_options['fields']['continent']['relationship'] = 'field_country_iso2';
+  $handler->display->display_options['fields']['continent']['label'] = 'Region';
+  $handler->display->display_options['fields']['continent']['continent_code'] = 0;
   /* Field: Flags: Flag counter */
   $handler->display->display_options['fields']['count']['id'] = 'count';
   $handler->display->display_options['fields']['count']['table'] = 'flag_counts';

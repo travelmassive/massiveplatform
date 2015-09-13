@@ -910,6 +910,14 @@ function tm_users_views_default_views() {
   $handler->display->display_options['relationships']['flag_content_rel_2']['required'] = 0;
   $handler->display->display_options['relationships']['flag_content_rel_2']['flag'] = 'approval_requested_by_user';
   $handler->display->display_options['relationships']['flag_content_rel_2']['user_scope'] = 'any';
+  /* Relationship: Flags: moderate_non_community_profile */
+  $handler->display->display_options['relationships']['flag_content_rel_3']['id'] = 'flag_content_rel_3';
+  $handler->display->display_options['relationships']['flag_content_rel_3']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_content_rel_3']['field'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel_3']['label'] = 'flag_moderate_non_community';
+  $handler->display->display_options['relationships']['flag_content_rel_3']['required'] = 0;
+  $handler->display->display_options['relationships']['flag_content_rel_3']['flag'] = 'moderate_non_community_profile';
+  $handler->display->display_options['relationships']['flag_content_rel_3']['user_scope'] = 'any';
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: User: First name */
   $handler->display->display_options['fields']['field_user_first_name']['id'] = 'field_user_first_name';
@@ -959,6 +967,13 @@ function tm_users_views_default_views() {
   $handler->display->display_options['fields']['flagged_1']['label'] = 'Flagged: Company Account';
   $handler->display->display_options['fields']['flagged_1']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['flagged_1']['not'] = 0;
+  /* Field: Flags: Flagged */
+  $handler->display->display_options['fields']['flagged_3']['id'] = 'flagged_3';
+  $handler->display->display_options['fields']['flagged_3']['table'] = 'flagging';
+  $handler->display->display_options['fields']['flagged_3']['field'] = 'flagged';
+  $handler->display->display_options['fields']['flagged_3']['relationship'] = 'flag_content_rel_3';
+  $handler->display->display_options['fields']['flagged_3']['label'] = 'Flagged: Non Community';
+  $handler->display->display_options['fields']['flagged_3']['not'] = 0;
   /* Field: Flags: Flagged */
   $handler->display->display_options['fields']['flagged_2']['id'] = 'flagged_2';
   $handler->display->display_options['fields']['flagged_2']['table'] = 'flagging';
@@ -1018,6 +1033,14 @@ function tm_users_views_default_views() {
   $handler->display->display_options['relationships']['flag_user_content_rel']['field'] = 'flag_user_content_rel';
   $handler->display->display_options['relationships']['flag_user_content_rel']['label'] = 'user_joined_chapter';
   $handler->display->display_options['relationships']['flag_user_content_rel']['flag'] = 'signup';
+  /* Relationship: Flags: moderate_non_community_profile */
+  $handler->display->display_options['relationships']['flag_content_rel_3']['id'] = 'flag_content_rel_3';
+  $handler->display->display_options['relationships']['flag_content_rel_3']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_content_rel_3']['field'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel_3']['label'] = 'flag_moderate_non_community';
+  $handler->display->display_options['relationships']['flag_content_rel_3']['required'] = 0;
+  $handler->display->display_options['relationships']['flag_content_rel_3']['flag'] = 'moderate_non_community_profile';
+  $handler->display->display_options['relationships']['flag_content_rel_3']['user_scope'] = 'any';
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: User: First name */
   $handler->display->display_options['fields']['field_user_first_name']['id'] = 'field_user_first_name';
@@ -1067,6 +1090,13 @@ function tm_users_views_default_views() {
   $handler->display->display_options['fields']['flagged_1']['label'] = 'Flagged: Company Account';
   $handler->display->display_options['fields']['flagged_1']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['flagged_1']['not'] = 0;
+  /* Field: Flags: Flagged */
+  $handler->display->display_options['fields']['flagged_3']['id'] = 'flagged_3';
+  $handler->display->display_options['fields']['flagged_3']['table'] = 'flagging';
+  $handler->display->display_options['fields']['flagged_3']['field'] = 'flagged';
+  $handler->display->display_options['fields']['flagged_3']['relationship'] = 'flag_content_rel_3';
+  $handler->display->display_options['fields']['flagged_3']['label'] = 'Flagged: Non Community';
+  $handler->display->display_options['fields']['flagged_3']['not'] = 0;
   /* Field: Flags: Flagged */
   $handler->display->display_options['fields']['flagged_2']['id'] = 'flagged_2';
   $handler->display->display_options['fields']['flagged_2']['table'] = 'flagging';

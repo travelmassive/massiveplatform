@@ -383,6 +383,14 @@ function tm_chapters_page_alter(&$page) {
   // /chapters/sort/title
   if (($url_parts[0] == "chapters") and ((sizeof($url_parts) == 1) or (sizeof($url_parts) == 3))) {
 
+
+    // don't show on chapter contact page ie: /chapters/contact/123
+    if (sizeof($url_parts) == 3) {
+      if ($url_parts[1] == "contact") {
+        return;
+      }
+    }
+
     $sort = "members"; // default sort method
     if (sizeof($url_parts) == 3) {
       $sort = $url_parts[2]; // ie: title for /chapters/sort/title

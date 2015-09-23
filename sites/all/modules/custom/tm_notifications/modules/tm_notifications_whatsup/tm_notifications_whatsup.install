@@ -1,0 +1,5 @@
+<?php
+
+function tm_notifications_whatsup_uninstall() {
+  tm_notifications_preferences_purge_bulk(array('weekly_whatsup'));
+}

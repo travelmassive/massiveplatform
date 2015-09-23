@@ -243,7 +243,7 @@ function tm_chapters_download_csv($nid){
   fputs($fh,$message,strlen($message));
 
   // puts a header row across the top of the csv
-  $item = array(t('First name'),t('Last name'),t('Email'),t('SubscribeChapterNewsletter'),t('SubscribeGlobalNewsletter'),t('Country'),t('City'),t('Organization'),t('Role'),t('Website'),t('Segment'),t('MemberSince'));
+  $item = array(t('First name'),t('Last name'),t('Email'),t('SubscribeChapterNewsletter'),t('SubscribeGlobalNewsletter'),t('Country'),t('City'),t('Organization'),t('Role'),t('Website'),t('Segment'),t('MemberSince'),t('ApprovalStatus'));
   fputcsv($fh, $item);
 
   // list of users
@@ -299,6 +299,13 @@ function tm_chapters_download_csv($nid){
     }
     else $item[] = t('none');
     $item[] = date('j M Y',$user['timestamp']);
+
+    // approved or not
+    if (!in_array("approved user", $account->roles)) { 
+      $item[] = "not approved";
+    } else {
+      $item[] = "approved";
+    }
 
     // remove commas from any input data
     $new_item = array();

@@ -1,0 +1,65 @@
+<?php
+/**
+ * @file
+ * Code for the TM Notifications Whats up feature.
+ */
+
+include_once 'tm_notifications_whatsup.features.inc';
+
+/**
+ * Implements hook_tm_notif_info()
+ */
+function tm_notifications_whatsup_tm_notif_info() {
+  $notification = array();
+  $notification['weekly_whatsup'] = array(
+    'title' => 'Weekly What\'s Up',
+    'description' => 'Send a weekly update to members.',
+    'use_cron' => TRUE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('node', 'current-user'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+  
+  return $notification;
+}
+
+/*
+* Implements hook_menu()
+*/
+function tm_notifications_whatsup_menu() {
+  $items['user/%user/whatsup'] = array(
+    'title' => 'Whats up',
+    'page callback' => 'tm_notifications_whatsup_test',
+    'page arguments' => array(1),
+    'access callback' => 'tm_notifications_whatsup_test_callback',
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+/* Approval callback for sending message */
+function tm_notifications_whatsup_test_callback() {
+	return true;
+}
+
+function tm_notifications_whatsup_test() {
+ 
+  $html = "";
+
+  $html .= "<li>Your profile stats";
+  $html .= "<li>Upcoming events in chapters that you are a member of (and conferences)";
+  $html .= "<li>Recent blog articles (via API)";
+  $html .= "<li>Popular discussion articles (via API)";
+  $html .= "<li>Members who followed you";
+  $html .= "<li>New members in your chapter(s)";
+  $html .= "<li>New companies created by members in your chapter(s)";
+  $html .= "<li>If you have a company then show new followers of company (or separate company report..?)";
+  $html .= "<li>Top members in your chapter (by number of followers)";
+
+	return $html;
+}

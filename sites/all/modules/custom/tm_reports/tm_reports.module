@@ -198,12 +198,12 @@ function _tm_reports_views_pre_render_chapter_report(&$view) {
     
 
     // TOTAL MEMBERS
-    $view->field["members_total"] = _tm_reports_add_handler_field_numeric($view, $table, $table_alias, $real_field, "members_approved_total", "Total Members");
+    $view->field["members_total"] = _tm_reports_add_handler_field_numeric($view, $table, $table_alias, $real_field, "members_total", "Total Members");
     // Do a side query to calculate results
     $query_sql = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
     $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id))->fetch();
     $members_total = $query->total;
-    $view->field["members_total"]->view->result[$i]->members_approved_total = $members_total;
+    $view->field["members_total"]->view->result[$i]->members_total = $members_total;
 
 
     // TOTAL APPROVED MEMBERS

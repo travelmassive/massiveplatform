@@ -325,3 +325,36 @@ function _tm_flags_flag_limits(&$variables) {
     }       
   }
 }
+
+/* 
+ * Developer Helper method to recaulcate flag counts
+ * Only use this if the flag_counts table gets out of sync 
+ * This can happen when developing with flag hooks
+ * https://www.drupal.org/files/me-flag-counts.patch
+ */
+function _tm_flags_fix_flag_counts() {
+
+  $query = db_select('flagging', 'fc')
+   ->fields('fc', array('fid', 'entity_type', 'entity_id'));
+  $query->addExpression('COUNT(fid)', 'fcid_cnt');
+  $result = $query->groupBy('fid')
+    ->groupBy('entity_type')
+    ->groupBy('entity_id')
+    ->execute();
+  foreach ($result as $row) {
+    db_merge('flag_counts')
+      ->key(array(
+        'fid' => $row->fid,
+        'entity_type' => $row->entity_type,
+        'entity_id' => $row->entity_id,
+      ))
+      ->fields(array(
+        'count' => $row->fcid_cnt,
+        'last_updated' => REQUEST_TIME,
+      ))
+      ->execute();
+    }
+
+  drupal_set_message("(Developer) flag_count table updated");
+
+}

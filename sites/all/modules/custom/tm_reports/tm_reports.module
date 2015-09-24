@@ -108,7 +108,23 @@ function _tm_reports_views_query_alter_chapter_report(&$view, &$query) {
 /* Modify chapter report view pre render */
 function _tm_reports_views_pre_render_chapter_report(&$view) {
 
+  // developer: uncomment to reset flag count table
+  //_tm_flags_fix_flag_counts();
+
+  // Vars for members counts
+  $table = 'flagging';
+  $table_alias = 'fl';
+  $real_field = 'fid';
+  $flag = flag_get_flag('signup', NULL);
+  $days_ago_30 = time() - (60 * 60 * 24 * 30); // 30 days ago
+  $days_ago_90 = time() - (60 * 60 * 24 * 90); // 90 days ago
+  $approved_role = user_role_load_by_name("approved user");
+
+  // Add additional columns for each row
   foreach ($view->result as $i => $result) {
+
+    // CHAPTER ID
+    $chapter_id = $view->result[$i]->nid;
 
     // Last Date format
     if (is_numeric($i) && (!empty($view->result[$i]->field_field_event_date[0]['raw']['value']))) {
@@ -136,7 +152,80 @@ function _tm_reports_views_pre_render_chapter_report(&$view) {
       $next_event_link = l($interval, $url);        
       $view->result[$i]->field_field_event_date_3[0]['rendered']['#markup'] = $next_event_link;   
     }
+
+    // NEW MEMBERS PAST 30 DAYS
+    $view->field["members_30_days_total"] = _tm_reports_add_handler_field_numeric($view, $table, $table_alias, $real_field, "members_30_days_total", "New Members (30 Days)");
+    // Do a side query to calculate results
+    $query_sql = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id AND timestamp >= :time_ago";
+    $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':time_ago' => $days_ago_30))->fetch();
+    $members_30_days_total = $query->total;
+    $view->field["members_30_days_total"]->view->result[$i]->members_30_days_total = $query->total;
+
+
+    // NEW MEMBERS PAST 90 DAYS
+    $view->field["members_90_days_total"] = _tm_reports_add_handler_field_numeric($view, $table, $table_alias, $real_field, "members_90_days_total", "New Members (90 Days)");
+    // Do a side query to calculate results
+    $query_sql = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id AND timestamp >= :time_ago";
+    $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':time_ago' => $days_ago_90))->fetch();
+    $members_90_days_total = $query->total;
+    $view->field["members_90_days_total"]->view->result[$i]->members_90_days_total = $members_90_days_total;
+
+
+     // MEMBERSHIP GROWTH % PAST 30 DAYS
+    $view->field["members_30_days_pct"] = _tm_reports_add_handler_field_numeric($view, $table, $table_alias, $real_field, "members_30_days_pct", "% Growth (30 Days)");
+    // Do a side query to calculate results
+    $query_sql = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id AND timestamp < :time_ago";
+    $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':time_ago' => $days_ago_30))->fetch();
+    $members_30_days_ago = $query->total;
+    $members_30_days_pct = 0;
+    if ($members_30_days_ago > 0) {      
+      $members_30_days_pct = round((($members_30_days_total / $members_30_days_ago) * 100), 0);
+    }
+    $view->field["members_30_days_pct"]->view->result[$i]->members_30_days_pct = $members_30_days_pct;
+
+
+    // MEMBERSHIP GROWTH % PAST 90 DAYS
+    $view->field["members_90_days_pct"] = _tm_reports_add_handler_field_numeric($view, $table, $table_alias, $real_field, "members_90_days_pct", "% Growth (90 Days)");
+    // Do a side query to calculate results
+    $query_sql = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id AND timestamp < :time_ago";
+    $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':time_ago' => $days_ago_90))->fetch();
+    $members_90_days_ago = $query->total;
+    $members_90_days_pct = 0;
+    if ($members_90_days_ago > 0) {      
+      $members_90_days_pct = round((($members_90_days_total / $members_90_days_ago) * 100), 0);
+    }
+    $view->field["members_90_days_pct"]->view->result[$i]->members_90_days_pct = $members_90_days_pct;
     
+
+    // TOTAL MEMBERS
+    $view->field["members_total"] = _tm_reports_add_handler_field_numeric($view, $table, $table_alias, $real_field, "members_approved_total", "Total Members");
+    // Do a side query to calculate results
+    $query_sql = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
+    $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id))->fetch();
+    $members_total = $query->total;
+    $view->field["members_total"]->view->result[$i]->members_approved_total = $members_total;
+
+
+    // TOTAL APPROVED MEMBERS
+    $view->field["members_approved_total"] = _tm_reports_add_handler_field_numeric($view, $table, $table_alias, $real_field, "members_approved_total", "Total Approved");
+    // Do a side query to calculate results
+    $query_sql = "SELECT COUNT(*) total FROM {flagging} f RIGHT JOIN users_roles ON users_roles.uid = f.uid WHERE users_roles.rid = :role_id AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
+    $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
+    $members_approved_total = $query->total;
+    $view->field["members_approved_total"]->view->result[$i]->members_approved_total = $members_approved_total;
+
+
+    // TOTAL UNAPPROVED MEMBERS
+    $view->field["members_unapproved_total"] = _tm_reports_add_handler_field_numeric($view, $table, $table_alias, $real_field, "members_unapproved_total", "Total Unapproved");
+    $members_unapproved_total = $members_total - $members_approved_total;
+    $view->field["members_unapproved_total"]->view->result[$i]->members_unapproved_total = $members_unapproved_total;
+    
+
+    // % UNAPPROVED MEMBERS
+    $view->field["members_unapproved_pct"] = _tm_reports_add_handler_field_numeric($view, $table, $table_alias, $real_field, "members_unapproved_pct", "% Unapproved");
+    $members_unapproved_pct = round((($members_unapproved_total / $members_total) * 100), 0);
+    $view->field["members_unapproved_pct"]->view->result[$i]->members_unapproved_pct = $members_unapproved_pct;
+
   }
 }
 
@@ -319,7 +408,7 @@ function _tm_reports_add_handler_field_numeric(&$view, $table, $table_alias, $re
   $field ->is_handler =  TRUE;
   $field ->table =  $table;
   $field ->field =  $real_field;
-  $field ->position =  0;
+  $field ->position = 0;
   
   return $field;
 }

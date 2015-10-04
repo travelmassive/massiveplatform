@@ -161,6 +161,9 @@ function orchid_jsconnect_auth(){
       $roles[] = $rolename;
      }
      $account['roles'] = implode(",", $roles); // ie: member,moderator,chapter leader;
+
+     // IC - add extra fields
+     $account['usermeta'] = array('drupal_uid' => $user->uid, 'drupal_profile_url' => drupal_get_path_alias("user/" . $user->uid));
   }  
   module_load_include('php', 'orchid', 'include/functions.jsconnect');
   $secure = true; // this should be true unless for testing modes.
@@ -193,8 +196,9 @@ function theme_embed_vanilla(){
  */
 function orchid_user_logout($account) {
   global $conf;
-  setcookie('Vanilla',' ',time()-3600,'/',$_SERVER['SERVER_NAME']);
-  setcookie('Vanilla-ConnectFlood',' ',time()+1,'/',$_SERVER['SERVER_NAME']);
-  unset($_COOKIE['Vanilla']);
-  unset($_COOKIE['Vanilla-ConnectFlood']);
+  $vanilla_cookies = array("Vanilla", "Vanilla-ConnectFlood", "Vanilla-Vv", "Vanilla-Volatile");
+  foreach ($vanilla_cookies as $cookie_name) {
+    unset($_COOKIE[$cookie_name]);
+    setcookie($cookie_name, '', time() - 3600, "/");
+  }
 }

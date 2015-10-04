@@ -736,5 +736,9 @@ $conf['tm_event_types_default'] = "all";
 /** If user removes their account, who do we notify? */
 $conf['tm_user_remove_own_account_notify'] = 'community@travelmassive.com';
 
+/** Discussion settings **/
+$conf['tm_discuss_menu_hide'] = true; // hide the discussions unless you access /discuss
+$conf['tm_discuss_menu_class'] = 'menu-1458'; // class of the menu item to hide 
+
 $conf['install_profile'] = 'tm';
 

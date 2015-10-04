@@ -7434,24 +7434,45 @@ a.cancel_account_link {
   margin-left: 8px;
 }
 
-/* line 767, ../sass/_single.scss */
+/* Discussions */
+/* line 768, ../sass/_single.scss */
 .tm_discuss #main {
   padding: 0px;
 }
 
-/* line 768, ../sass/_single.scss */
+/* line 769, ../sass/_single.scss */
 .tm_discuss #main .row {
   padding: 0px;
 }
 
-/* line 769, ../sass/_single.scss */
+/* line 770, ../sass/_single.scss */
 .tm_discuss #main .column {
   padding: 0px;
 }
 
-/* line 770, ../sass/_single.scss */
+/* line 771, ../sass/_single.scss */
 .tm_discuss #content {
   padding: 0px;
+}
+
+/* line 772, ../sass/_single.scss */
+.tm_discuss .page_notice {
+  margin: 24px;
+}
+
+/* line 773, ../sass/_single.scss */
+.tm_discuss .messages.status, .tm_discuss .status.messages--status, .tm_discuss .status.messages--warning, .tm_discuss .status.messages--error {
+  margin: 24px;
+}
+
+/* line 774, ../sass/_single.scss */
+.tm_discuss .messages--error {
+  margin: 24px;
+}
+
+/* line 775, ../sass/_single.scss */
+.tm_discuss .messages--warning {
+  margin: 24px;
 }
 
 /* line 2, ../sass/_login.scss */

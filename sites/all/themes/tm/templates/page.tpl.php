@@ -36,10 +36,28 @@
           <?php endif; ?>
           <li class="search-wrapper" data-dropd-wrapper>
             <h2><a class="toggle" href="#search-menu-blk" data-dropd-toggle><span class="hide"><?= t('Search'); ?></span></a></h2>
-            <div id="search-menu-blk" class="inner dropd dropd-right" data-dropd>
+              <div id="search-menu-blk" class="inner dropd dropd-right" data-dropd>
+            <?php if (module_exists("tm_discuss") && (current_path() == "discuss")) { ?>
+              
+                <form class="search-form" action="/discuss/#/search" method="get" id="search-form" accept-charset="UTF-8">
+                  <div>
+                    <div class="container-inline form-wrapper" id="edit-basic">
+                      <div class="form-item form-type-textfield form-item-keys">
+                        <label for="edit-keys">Enter your keywords </label>
+                        <input type="text" id="Search" name="Search" value="" size="40" maxlength="255" class="form-text">
+                      </div>
+                      <input type="submit" id="edit-submit--2" value="Search" class="form-submit" onClick="javascript:document.location.href='/discuss/#search?Search='+document.getElementById('Search').value; return false;">
+                    </div>
+                  </div>
+                </form>
+                <p class="helper">Search discussions and comments.</p>
+              <!-- https://localdev.travelmassive.com/discuss/#/search?Search=foo -->
+
+            <?php } else { ?>
               <?php $sf = drupal_get_form('search_form'); print render($sf); ?>
               <p class="helper"><?php print t('Search chapters, events, members or companies.'); ?></p>
             </div>
+            <?php } ?>
           </li>
           <li class="account-wrapper" data-dropd-wrapper>
             <?php print($page['account_menu']); ?>

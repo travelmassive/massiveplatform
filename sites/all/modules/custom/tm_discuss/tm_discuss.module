@@ -19,7 +19,8 @@ Install Vanilla
 - In jsconnect plugin set "Make this connection your default signin method."
 - Add roles for chapter leader, non-validated, moderator, approved user, administrator (to sync)
 - Set embed
-- $Configuration['Garden']['Profile']['ShowActivities'] = FALSE;
+- $Configuration['Garden']['Profile']['EditPhotos'] = FALSE;
+- $Configuration['Garden']['UserAccount']['AllowEdit'] = FALSE;
 
 Drupal
 - Enable drupal modules: "drush en orchid tm_discuss"
@@ -33,6 +34,19 @@ Additional references:
 - Orchid instructions - https://www.drupal.org/node/1117992
 
 */
+
+// hide the discuss menu if configured to to so
+function tm_discuss_init() {
+	global $conf;
+	if (isset($conf["tm_discuss_menu_hide"])) {
+		if ($conf["tm_discuss_menu_hide"]) {
+			if (!isset($_COOKIE['Drupal_visitor_show_discuss_menu'])) {
+				$css_class = $conf["tm_discuss_menu_class"];
+				drupal_add_css('.' . $css_class . ' { display: none; }', 'inline');
+			}
+		}
+	}
+}
 
 function tm_discuss_menu() {
 
@@ -56,6 +70,14 @@ function tm_discuss_embed_vanilla() {
 	}
 
 	global $conf;
+	if (isset($conf["tm_discuss_menu_hide"])) {
+		if ($conf["tm_discuss_menu_hide"]) {
+			// set cookie so we can show the menu item
+			user_cookie_save(array('show_discuss_menu'=>'true'));
+		}
+	}
+
+	global $conf;
 	global $user;
 	$loaded = user_load($user->uid);
 
@@ -64,7 +86,7 @@ function tm_discuss_embed_vanilla() {
 	// hide title as it's displayed on the forum anyway
 	drupal_add_css('#page-title { display: none; }', 'inline');
 
-	$signedIn = (isset($user->uid) && ($user->uid > 0)) ? true : false; 
+	$signedIn = user_is_logged_in(); //(isset($user->uid) && ($user->uid > 0)) ? true : false; 
 
 	if (($signedIn) && (!in_array("approved user", $loaded->roles))) {
 
@@ -85,7 +107,7 @@ function tm_discuss_embed_vanilla() {
 		drupal_set_message("Your profile needs to be approved before you can join the discussion. " . $approval_link, 'page_notice');
 
 	} else if (!$signedIn) {
-		drupal_set_message("Welcome to " . $conf["tm_site_name"] . " Discuss. Want to join the discussion? <a href='/user/register'>Sign up now</a> or <a href='/user/login'>Log In</a>.");
+		drupal_set_message("Welcome to " . $conf["tm_site_name"] . " Discuss. Want to join the discussion? <a href='/user/register'>Sign up now</a> or <a href='javascript:jq_login_signup_box();'>Log In</a>.");
 	} else {
 		// welcome message
 		//drupal_get_messages();

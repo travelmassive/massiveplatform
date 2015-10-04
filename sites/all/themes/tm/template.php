@@ -35,12 +35,12 @@ function tm_preprocess_maintenance_page(&$variables, $hook) {
  *   The name of the template being rendered ("html" in this case.)
  */
 function tm_preprocess_html(&$variables, $hook) {
-
   // The body tag's classes are controlled by the $classes_array variable.
-  // todo: check if module enabled before adding class
-  /*if (current_path() == "discuss") {
-    $variables['classes_array'][] = "tm_discuss";
-  }*/
+  if (module_exists("tm_discuss")) {
+    if (current_path() == "discuss") {
+      $variables['classes_array'][] = "tm_discuss";
+    }
+  }
 }
 
 /**

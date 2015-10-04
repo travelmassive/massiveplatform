@@ -38,8 +38,15 @@ Additional references:
 // hide the discuss menu if configured to to so
 function tm_discuss_init() {
 	global $conf;
+
+	// hide for logged in user
 	if (isset($conf["tm_discuss_menu_hide"])) {
 		if ($conf["tm_discuss_menu_hide"]) {
+			// always hide for logged out user
+			if (!user_is_logged_in()) {
+				drupal_add_css('.' . $css_class . ' { display: none; }', 'inline');
+			}
+			// else check cookie
 			if (!isset($_COOKIE['Drupal_visitor_show_discuss_menu'])) {
 				$css_class = $conf["tm_discuss_menu_class"];
 				drupal_add_css('.' . $css_class . ' { display: none; }', 'inline');

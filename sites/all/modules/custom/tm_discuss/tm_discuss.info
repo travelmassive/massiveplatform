@@ -3,11 +3,12 @@ core = 7.x
 package = TM Discuss
 version = 7.x-1.0-dev
 project = tm_discuss
-
-files[] = tm_discuss.module
-
+dependencies[] = features
 dependencies[] = tm_users
 dependencies[] = orchid
 dependencies[] = views
-
+features[features_api][] = api:2
+features[user_role][] = discuss-administrator
+features[user_role][] = discuss-moderator
+files[] = tm_discuss.module
 project path = sites/all/modules/custom

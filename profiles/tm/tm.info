@@ -110,6 +110,7 @@ dependencies[] = tm_chapters_leaflet_map
 dependencies[] = tm_invitations
 dependencies[] = tm_api
 dependencies[] = tm_messaging
+dependencies[] = tm_discuss
 
 ; TM - notifications
 dependencies[] = tm_notifications

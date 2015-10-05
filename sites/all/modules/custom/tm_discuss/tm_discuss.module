@@ -42,13 +42,15 @@ function tm_discuss_init() {
 	// hide for logged in user
 	if (isset($conf["tm_discuss_menu_hide"])) {
 		if ($conf["tm_discuss_menu_hide"]) {
+
+			$css_class = $conf["tm_discuss_menu_class"];
+
 			// always hide for logged out user
 			if (!user_is_logged_in()) {
 				drupal_add_css('.' . $css_class . ' { display: none; }', 'inline');
 			}
 			// else check cookie
 			if (!isset($_COOKIE['Drupal_visitor_show_discuss_menu'])) {
-				$css_class = $conf["tm_discuss_menu_class"];
 				drupal_add_css('.' . $css_class . ' { display: none; }', 'inline');
 			}
 		}

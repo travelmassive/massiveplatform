@@ -29,6 +29,13 @@
     sticked = [],
     windowHeight = $window.height(),
     scroller = function() {
+
+      // tm_discuss - don't resize if we are loading discussions
+      if ($(".vn-loading").length) {
+        //console.log("loading discussions");
+        return;
+      }
+
       var scrollTop = $window.scrollTop(),
         documentHeight = $document.height(),
         dwh = documentHeight - windowHeight,

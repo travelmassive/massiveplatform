@@ -428,4 +428,54 @@ function tm_chapters_page_alter(&$page) {
   }
 }
 
+/**
+ * Prevent moderators to delete chapters that have members
+ */
+function tm_chapters_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == "chapter_node_form") {
+    $chapter_id = $form['nid']['#value'];
+    if (!_tm_chapters_check_moderator_delete($chapter_id)) {
+      unset($form['actions']['delete']);
+    }
+  }
+}
+
+/**
+ * Prevent moderators to delete chapters that have members
+ */
+function tm_chapters_form_node_delete_confirm_alter(&$form, &$form_state, $form_id) {
+
+  // Check if we have a node id and stop if not
+  if (empty($form['nid']['#value'])) {
+    return;
+  }
+  
+  // Load the node from the form
+  $chapter_id = $form['nid']['#value'];
+  if (!_tm_chapters_check_moderator_delete($chapter_id)) {
+   drupal_access_denied();
+  }
+}
+
+/**
+ * Check if chapter can be removed by a moderator
+ */
+function _tm_chapters_check_moderator_delete($chapter_id) {
+
+  global $user;
+  if (in_array("moderator", $user->roles)) { 
+
+    $flag = flag_get_flag('signup');
+    $amount_members = $flag->get_count($chapter_id);
+
+    if ($amount_members > 0) {
+      // chapter has members
+      return false;
+    }
+  }
+
+  return true; 
+}
+
+
 

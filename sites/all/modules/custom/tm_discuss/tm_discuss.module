@@ -21,6 +21,7 @@ Install Vanilla
 - Set embed
 - $Configuration['Garden']['Profile']['EditPhotos'] = FALSE;
 - $Configuration['Garden']['UserAccount']['AllowEdit'] = FALSE;
+- $Configuration['Garden']['Profile']['ShowActivities'] = FALSE;
 
 Drupal
 - Enable drupal modules: "drush en orchid tm_discuss"

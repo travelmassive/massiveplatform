@@ -27,7 +27,7 @@ $found_match = false;
 if (!$found_match) {
 	if (($snapchat_url == "") and (strpos(strtolower($url), "http") === FALSE) and (strpos(strtolower($url), "www") === FALSE)) {
 		$display_url = trim($url);
-		$snapchat_url = "snapchat://?u=" . $url;
+		$snapchat_url = "snapchat://?u=" . $url; // deprecated
 		$found_match = true;
 	}
 }
@@ -36,8 +36,10 @@ if (!$found_match) {
 $snapchat_url = str_replace("<", "", $snapchat_url);
 $display_url = check_plain($display_url);
 
+/* deprecated uri */
+/* <a onClick="javascript:jq_confirm_url('View <?php print(check_url($url));?> on Snapchat', 'View this members\'s snaps? Requires <a href=\'https://www.snapchat.com/\' target=\'_blank\' rel=\'nofollow\'>Snapchat</a> app', '<?php print($snapchat_url);?>');" href="javascript:void(0);"><?php print $display_url; ?></a> */
 if ($snapchat_url != "") { ?>
-<a onClick="javascript:jq_confirm_url('View <?php print(check_url($url));?> on Snapchat', 'View this members\'s snaps? Requires <a href=\'https://www.snapchat.com/\' target=\'_blank\' rel=\'nofollow\'>Snapchat</a> app', '<?php print($snapchat_url);?>');" href="javascript:void(0);"><?php print $display_url; ?></a>
+<?php print ($display_url); ?>
 <?php } else { ?>
 <script>try { document.getElementsByClassName("field-link-snapchat")[0].style.display = 'none'; } catch(err) {};</script>
 <?php } ?>

@@ -58,6 +58,17 @@ function tm_discuss_init() {
 	}
 }
 
+
+// Update meta tags for /discuss page
+function tm_discuss_metatag_metatags_view_alter(&$output, $instance) {
+	// remove following metatags as we create them in tm_preprocess_html
+    if (current_path() == "discuss") {
+  		unset($output['canonical']);
+  		unset($output['og:url']);
+  		unset($output['og:title']);
+  	}
+}
+
 function tm_discuss_menu() {
 
    $items = array();

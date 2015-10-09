@@ -36,11 +36,75 @@ function tm_preprocess_maintenance_page(&$variables, $hook) {
  */
 function tm_preprocess_html(&$variables, $hook) {
   // The body tag's classes are controlled by the $classes_array variable.
-  if (module_exists("tm_discuss")) {
-    if (current_path() == "discuss") {
-      $variables['classes_array'][] = "tm_discuss";
+  if ((module_exists("tm_discuss") and (current_path() == "discuss"))) {
+
+    global $conf;
+
+    // add tag
+    $variables['classes_array'][] = "tm_discuss";
+ 
+    // gererate canonical url 
+    $canonical = url('/discuss', array('absolute' => TRUE)) . "/";
+   
+    // canonical url
+    $meta = array(
+      '#tag' => 'link', 
+      '#attributes' => array(
+        'rel' => 'canonical', 
+        'href' => $canonical,
+      ),
+    );
+    drupal_add_html_head($meta, 'canonical');
+
+    // og:url
+    $meta = array(
+      '#tag' => 'meta', 
+      '#attributes' => array(
+        'name' => 'og:url', 
+        'content' => $canonical,
+      ),
+    );
+    drupal_add_html_head($meta, 'og:url');
+
+    // og:title
+    if (isset($conf['tm_discuss_meta_og_title'])) {
+      $meta = array(
+        '#tag' => 'meta', 
+        '#attributes' => array(
+          'name' => 'og:title', 
+          'content' => $conf['tm_discuss_meta_og_title'],
+        ),
+      );
+      drupal_add_html_head($meta, 'og:title');
     }
-  }
+
+    // og:image
+    if (isset($conf['tm_discuss_meta_og_image'])) {
+      $meta = array(
+        '#tag' => 'meta', 
+        '#attributes' => array(
+          'name' => 'og:image', 
+          'content' => $conf['tm_discuss_meta_og_image'],
+        ),
+      );
+      drupal_add_html_head($meta, 'og:image');
+    }
+
+    // description
+    if (isset($conf['tm_discuss_meta_description'])) {
+      $meta = array(
+        '#tag' => 'meta', 
+        '#attributes' => array(
+          'name' => 'description',
+          'property' => 'og:description',
+          'content' => $conf['tm_discuss_meta_description'],
+        ),
+      );
+      drupal_add_html_head($meta, 'description');
+    }
+
+  } // end if tm_discuss and /discuss page
+
 }
 
 /**

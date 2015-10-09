@@ -738,7 +738,10 @@ $conf['tm_user_remove_own_account_notify'] = 'community@travelmassive.com';
 
 /** Discussion settings **/
 $conf['tm_discuss_menu_hide'] = true; // hide the discussions unless you access /discuss
-$conf['tm_discuss_menu_class'] = 'menu-1458'; // class of the menu item to hide 
+$conf['tm_discuss_menu_class'] = 'menu-1458'; // class of the menu item to hide
+$conf['tm_discuss_meta_og_title'] = "Travel Massive Discuss";
+$conf['tm_discuss_meta_og_image'] = "https://localdev.travelmassive.com/discussions/uploads/0O56BOQETSB2.png";
+$conf['tm_discuss_meta_description'] = "Travel Massive Discuss is the place to ask questions and get answers about the tourism and travel industry from members of our community.";
 
 /* Profile and company link fields */
 /* Options available: website, twitter, facebook, linkedin, instagram, youtube, vimeo, snapchat */

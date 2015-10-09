@@ -34,6 +34,10 @@ if (substr_count($display_url, "/") == 1) {
 	$display_url = rtrim($display_url, '/');
 }
 
+// sanitize
+$url = check_url($url);
+$display_url = check_plain($display_url);
+
 if ($render_url) {
 ?>
 <a href="<?php print $url; ?>" rel="nofollow" target="_blank"><?php print $display_url; ?></a>

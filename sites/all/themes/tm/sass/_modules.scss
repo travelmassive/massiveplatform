@@ -124,6 +124,9 @@
     &.field-link-twitter:before { @extend .icon-twitter; }
     &.field-link-instagram:before { @extend .icon-instagram; }
     &.field-link-website:before { @extend .icon-globe; }
+    &.field-link-youtube:before { @extend .icon-youtube; }
+    &.field-link-vimeo:before { @extend .icon-vimeo; }
+    &.field-link-snapchat:before { @extend .icon-snapchat; }
     &.field-segment:before { @extend .icon-briefcase; }
     &.field-qa:before, &.qa:before { @extend .icon-bubble; }
     &.tm-ds-connection-actions:before { @extend .icon-connection; }

@@ -443,7 +443,7 @@ function tm_users_field_default_field_instances() {
         'label' => 'above',
         'module' => 'tm_fields',
         'settings' => array(),
-        'type' => 'tm_fields_link',
+        'type' => 'tm_fields_facebook',
         'weight' => 28,
       ),
       'grid' => array(
@@ -499,6 +499,76 @@ function tm_users_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
+      'weight' => 53,
+    ),
+  );
+
+  // Exported field_instance: 'user-user-field_link_instagram'
+  $field_instances['user-user-field_link_instagram'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'ie: @yourname or https://instagram.com/yourname',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'tm_fields',
+        'settings' => array(),
+        'type' => 'tm_fields_instagram',
+        'weight' => 30,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'user',
+    'field_name' => 'field_link_instagram',
+    'label' => 'Instagram',
+    'required' => 0,
+    'settings' => array(
+      'absolute_url' => 0,
+      'attributes' => array(
+        'class' => '',
+        'configurable_class' => 0,
+        'configurable_title' => 0,
+        'rel' => 'nofollow',
+        'target' => '_blank',
+        'title' => '',
+      ),
+      'display' => array(
+        'url_cutoff' => 80,
+      ),
+      'enable_tokens' => 0,
+      'rel_remove' => 'default',
+      'title' => 'none',
+      'title_label_use_field_label' => 0,
+      'title_maxlength' => 128,
+      'title_value' => '',
+      'url' => 0,
+      'user_register_form' => 0,
+      'validate_url' => 0,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'link',
+      'settings' => array(),
+      'type' => 'link_field',
       'weight' => 54,
     ),
   );
@@ -514,7 +584,7 @@ function tm_users_field_default_field_instances() {
         'label' => 'above',
         'module' => 'tm_fields',
         'settings' => array(),
-        'type' => 'tm_fields_link',
+        'type' => 'tm_fields_linkedin',
         'weight' => 29,
       ),
       'grid' => array(
@@ -570,7 +640,77 @@ function tm_users_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 53,
+      'weight' => 52,
+    ),
+  );
+
+  // Exported field_instance: 'user-user-field_link_snapchat'
+  $field_instances['user-user-field_link_snapchat'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Your Snapchat username',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'tm_fields',
+        'settings' => array(),
+        'type' => 'tm_fields_snapchat',
+        'weight' => 33,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'user',
+    'field_name' => 'field_link_snapchat',
+    'label' => 'Snapchat',
+    'required' => 0,
+    'settings' => array(
+      'absolute_url' => 0,
+      'attributes' => array(
+        'class' => '',
+        'configurable_class' => 0,
+        'configurable_title' => 0,
+        'rel' => 'nofollow',
+        'target' => '_blank',
+        'title' => '',
+      ),
+      'display' => array(
+        'url_cutoff' => 80,
+      ),
+      'enable_tokens' => 0,
+      'rel_remove' => 'default',
+      'title' => 'none',
+      'title_label_use_field_label' => 0,
+      'title_maxlength' => 128,
+      'title_value' => '',
+      'url' => 0,
+      'user_register_form' => 0,
+      'validate_url' => 0,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'link',
+      'settings' => array(),
+      'type' => 'link_field',
+      'weight' => 57,
     ),
   );
 
@@ -645,6 +785,76 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'user-user-field_link_vimeo'
+  $field_instances['user-user-field_link_vimeo'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'ie: https://vimeo.com/yourname',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'tm_fields',
+        'settings' => array(),
+        'type' => 'tm_fields_vimeo',
+        'weight' => 32,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'user',
+    'field_name' => 'field_link_vimeo',
+    'label' => 'Vimeo',
+    'required' => 0,
+    'settings' => array(
+      'absolute_url' => 0,
+      'attributes' => array(
+        'class' => '',
+        'configurable_class' => 0,
+        'configurable_title' => 0,
+        'rel' => '',
+        'target' => '_blank',
+        'title' => 'nofollow',
+      ),
+      'display' => array(
+        'url_cutoff' => 80,
+      ),
+      'enable_tokens' => 0,
+      'rel_remove' => 'default',
+      'title' => 'none',
+      'title_label_use_field_label' => 0,
+      'title_maxlength' => 128,
+      'title_value' => '',
+      'url' => 0,
+      'user_register_form' => 0,
+      'validate_url' => 0,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'link',
+      'settings' => array(),
+      'type' => 'link_field',
+      'weight' => 56,
+    ),
+  );
+
   // Exported field_instance: 'user-user-field_link_website'
   $field_instances['user-user-field_link_website'] = array(
     'bundle' => 'user',
@@ -713,6 +923,76 @@ function tm_users_field_default_field_instances() {
       'settings' => array(),
       'type' => 'link_field',
       'weight' => 50,
+    ),
+  );
+
+  // Exported field_instance: 'user-user-field_link_youtube'
+  $field_instances['user-user-field_link_youtube'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'ie: https://www.youtube.com/user/username',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'tm_fields',
+        'settings' => array(),
+        'type' => 'tm_fields_youtube',
+        'weight' => 31,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'user',
+    'field_name' => 'field_link_youtube',
+    'label' => 'YouTube',
+    'required' => 0,
+    'settings' => array(
+      'absolute_url' => 0,
+      'attributes' => array(
+        'class' => '',
+        'configurable_class' => 0,
+        'configurable_title' => 0,
+        'rel' => 'nofollow',
+        'target' => '_blank',
+        'title' => '',
+      ),
+      'display' => array(
+        'url_cutoff' => 80,
+      ),
+      'enable_tokens' => 0,
+      'rel_remove' => 'default',
+      'title' => 'none',
+      'title_label_use_field_label' => 0,
+      'title_maxlength' => 128,
+      'title_value' => '',
+      'url' => 0,
+      'user_register_form' => 0,
+      'validate_url' => 0,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'link',
+      'settings' => array(),
+      'type' => 'link_field',
+      'weight' => 55,
     ),
   );
 
@@ -1318,6 +1598,7 @@ function tm_users_field_default_field_instances() {
   t('Home Chapter');
   t('In a few short words, tell us why you\\\'d like to join the community.');
   t('Industry Segment');
+  t('Instagram');
   t('Job Role');
   t('Last name');
   t('Linkedin');
@@ -1338,16 +1619,23 @@ function tm_users_field_default_field_instances() {
   t('Question 4');
   t('Question 5');
   t('Reason for joining');
+  t('Snapchat');
   t('The name of your business, company, or organization.
 <br>Once your account is approved you can add a <a href="/companies">company profile</a>.');
   t('Twitter');
+  t('Vimeo');
   t('Website');
   t('Where you spend most of your time');
+  t('YouTube');
+  t('Your Snapchat username');
   t('examples: Founder, CEO, VP Marketing, Social Media Manager, Chief Explorer');
   t('ie: @twittername or https://twitter.com/yourname');
+  t('ie: @yourname or https://instagram.com/yourname');
   t('ie: http://www.mywebsite.com');
   t('ie: https://facebook.com/myname');
   t('ie: https://linkedin.com/in/myname');
+  t('ie: https://vimeo.com/yourname');
+  t('ie: https://www.youtube.com/user/username');
 
   return $field_instances;
 }

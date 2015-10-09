@@ -457,7 +457,7 @@ Displays a short message to followers on your company profile page.<br>',
         'label' => 'above',
         'module' => 'tm_fields',
         'settings' => array(),
-        'type' => 'tm_fields_link',
+        'type' => 'tm_fields_facebook',
         'weight' => 6,
       ),
       'grid' => array(
@@ -513,7 +513,84 @@ Displays a short message to followers on your company profile page.<br>',
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 50,
+      'weight' => 49,
+    ),
+  );
+
+  // Exported field_instance: 'node-organization-field_link_instagram'
+  $field_instances['node-organization-field_link_instagram'] = array(
+    'bundle' => 'organization',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'ie: @yourcompany or https://instagram.com/yourcompany',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'link',
+        'settings' => array(),
+        'type' => 'link_default',
+        'weight' => 15,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'module' => 'tm_fields',
+        'settings' => array(),
+        'type' => 'tm_fields_instagram',
+        'weight' => 8,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_link_instagram',
+    'label' => 'Instagram',
+    'required' => 0,
+    'settings' => array(
+      'absolute_url' => 0,
+      'attributes' => array(
+        'class' => '',
+        'configurable_class' => 0,
+        'configurable_title' => 0,
+        'rel' => '',
+        'target' => '_blank',
+        'title' => 'nofollow',
+      ),
+      'display' => array(
+        'url_cutoff' => 80,
+      ),
+      'enable_tokens' => 0,
+      'rel_remove' => 'default',
+      'title' => 'none',
+      'title_label_use_field_label' => 0,
+      'title_maxlength' => 128,
+      'title_value' => '',
+      'url' => 0,
+      'user_register_form' => FALSE,
+      'validate_url' => 0,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'link',
+      'settings' => array(),
+      'type' => 'link_field',
+      'weight' => 51,
     ),
   );
 
@@ -522,7 +599,7 @@ Displays a short message to followers on your company profile page.<br>',
     'bundle' => 'organization',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'ie: https://linkedin.com/company/mycompany',
+    'description' => 'ie: https://linkedin.com/company/yourcompany',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -535,7 +612,7 @@ Displays a short message to followers on your company profile page.<br>',
         'label' => 'above',
         'module' => 'tm_fields',
         'settings' => array(),
-        'type' => 'tm_fields_link',
+        'type' => 'tm_fields_linkedin',
         'weight' => 7,
       ),
       'grid' => array(
@@ -591,7 +668,84 @@ Displays a short message to followers on your company profile page.<br>',
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 49,
+      'weight' => 50,
+    ),
+  );
+
+  // Exported field_instance: 'node-organization-field_link_snapchat'
+  $field_instances['node-organization-field_link_snapchat'] = array(
+    'bundle' => 'organization',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Your Snapchat username',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'link',
+        'settings' => array(),
+        'type' => 'link_default',
+        'weight' => 18,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'module' => 'tm_fields',
+        'settings' => array(),
+        'type' => 'tm_fields_snapchat',
+        'weight' => 11,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_link_snapchat',
+    'label' => 'Snapchat',
+    'required' => 0,
+    'settings' => array(
+      'absolute_url' => 0,
+      'attributes' => array(
+        'class' => '',
+        'configurable_class' => 0,
+        'configurable_title' => 0,
+        'rel' => 'nofollow',
+        'target' => '_blank',
+        'title' => '',
+      ),
+      'display' => array(
+        'url_cutoff' => 80,
+      ),
+      'enable_tokens' => 0,
+      'rel_remove' => 'default',
+      'title' => 'none',
+      'title_label_use_field_label' => 0,
+      'title_maxlength' => 128,
+      'title_value' => '',
+      'url' => 0,
+      'user_register_form' => FALSE,
+      'validate_url' => 0,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'link',
+      'settings' => array(),
+      'type' => 'link_field',
+      'weight' => 54,
     ),
   );
 
@@ -673,6 +827,83 @@ Displays a short message to followers on your company profile page.<br>',
     ),
   );
 
+  // Exported field_instance: 'node-organization-field_link_vimeo'
+  $field_instances['node-organization-field_link_vimeo'] = array(
+    'bundle' => 'organization',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'ie: https://vimeo.com/yourcompany',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'link',
+        'settings' => array(),
+        'type' => 'link_default',
+        'weight' => 17,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'module' => 'tm_fields',
+        'settings' => array(),
+        'type' => 'tm_fields_vimeo',
+        'weight' => 10,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_link_vimeo',
+    'label' => 'Vimeo',
+    'required' => 0,
+    'settings' => array(
+      'absolute_url' => 0,
+      'attributes' => array(
+        'class' => '',
+        'configurable_class' => 0,
+        'configurable_title' => 0,
+        'rel' => 'nofollow',
+        'target' => '_blank',
+        'title' => '',
+      ),
+      'display' => array(
+        'url_cutoff' => 80,
+      ),
+      'enable_tokens' => 0,
+      'rel_remove' => 'default',
+      'title' => 'none',
+      'title_label_use_field_label' => 0,
+      'title_maxlength' => 128,
+      'title_value' => '',
+      'url' => 0,
+      'user_register_form' => FALSE,
+      'validate_url' => 0,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'link',
+      'settings' => array(),
+      'type' => 'link_field',
+      'weight' => 53,
+    ),
+  );
+
   // Exported field_instance: 'node-organization-field_link_website'
   $field_instances['node-organization-field_link_website'] = array(
     'bundle' => 'organization',
@@ -748,6 +979,83 @@ Displays a short message to followers on your company profile page.<br>',
       'settings' => array(),
       'type' => 'link_field',
       'weight' => 47,
+    ),
+  );
+
+  // Exported field_instance: 'node-organization-field_link_youtube'
+  $field_instances['node-organization-field_link_youtube'] = array(
+    'bundle' => 'organization',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'ie: https://www.youtube.com/user/yourcompany',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'link',
+        'settings' => array(),
+        'type' => 'link_default',
+        'weight' => 16,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'module' => 'tm_fields',
+        'settings' => array(),
+        'type' => 'tm_fields_youtube',
+        'weight' => 9,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_link_youtube',
+    'label' => 'YouTube',
+    'required' => 0,
+    'settings' => array(
+      'absolute_url' => 0,
+      'attributes' => array(
+        'class' => '',
+        'configurable_class' => 0,
+        'configurable_title' => 0,
+        'rel' => 'nofollow',
+        'target' => '_blank',
+        'title' => '',
+      ),
+      'display' => array(
+        'url_cutoff' => 80,
+      ),
+      'enable_tokens' => 0,
+      'rel_remove' => 'default',
+      'title' => 'none',
+      'title_label_use_field_label' => 0,
+      'title_maxlength' => 128,
+      'title_value' => '',
+      'url' => 0,
+      'user_register_form' => FALSE,
+      'validate_url' => 0,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'link',
+      'settings' => array(),
+      'type' => 'link_field',
+      'weight' => 52,
     ),
   );
 
@@ -1009,6 +1317,7 @@ Displays a short message to followers on your company profile page.<br>',
   t('Give something back to members who follow your company profile.<br>
 Displays a short message to followers on your company profile page.<br>');
   t('Industry Segment');
+  t('Instagram');
   t('Linkedin');
   t('Logo');
   t('Make your company profile available through a friendly URL. Example: "your-company"');
@@ -1018,15 +1327,22 @@ Displays a short message to followers on your company profile page.<br>');
   t('Provide a cover image to be displayed behind your company logo.
 <br>If you want to be pixel perfect, upload your image sized to 805x453');
   t('Select the member that manages this account.');
+  t('Snapchat');
   t('Tell us about your organization or company. Describe your business and the service or product that you provide.');
   t('Twitter');
+  t('Vimeo');
   t('Website');
   t('Where your business is based');
+  t('YouTube');
+  t('Your Snapchat username');
   t('Your company logo in a square format. We recommend at least 600x600 pixels.');
   t('ie: @companyname or https://twitter.com/yourname');
+  t('ie: @yourcompany or https://instagram.com/yourcompany');
   t('ie: http://www.mycompany.com');
   t('ie: https://facebook.com/yourcompany');
-  t('ie: https://linkedin.com/company/mycompany');
+  t('ie: https://linkedin.com/company/yourcompany');
+  t('ie: https://vimeo.com/yourcompany');
+  t('ie: https://www.youtube.com/user/yourcompany');
 
   return $field_instances;
 }

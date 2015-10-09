@@ -71,6 +71,10 @@ if ($display_url == "") {
 	$display_url = str_ireplace("https://", "", $display_url);
 }
 
+// sanitize
+$twitter_url = check_url($twitter_url);
+$display_url = check_plain($display_url);
+
 if ($twitter_url != "") { ?>
 <a href="<?php print $twitter_url; ?>" rel="nofollow" target="_blank"><?php print $display_url; ?></a>
 <?php } ?>

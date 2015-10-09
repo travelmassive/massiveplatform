@@ -219,6 +219,35 @@ function tm_base_menu_default_menu_links() {
     'weight' => -47,
     'customized' => 1,
   );
+  // Exported menu link: menu-social-links_snapchat:https://www.snapchat.com/
+  $menu_links['menu-social-links_snapchat:https://www.snapchat.com/'] = array(
+    'menu_name' => 'menu-social-links',
+    'link_path' => 'https://www.snapchat.com/',
+    'router_path' => '',
+    'link_title' => 'Snapchat',
+    'options' => array(
+      'identifier' => 'menu-social-links_snapchat:https://www.snapchat.com/',
+      'attributes' => array(
+        'title' => 'Follow Travel Massive on Snapchat',
+        'class' => array(
+          0 => 'snapchat',
+        ),
+        'target' => '_blank',
+      ),
+      'item_attributes' => array(
+        'id' => '',
+        'class' => '',
+        'style' => '',
+      ),
+    ),
+    'module' => 'menu',
+    'hidden' => 0,
+    'external' => 1,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => -44,
+    'customized' => 1,
+  );
   // Exported menu link: menu-social-links_twitter:http://twitter.com/travelmassive
   $menu_links['menu-social-links_twitter:http://twitter.com/travelmassive'] = array(
     'menu_name' => 'menu-social-links',
@@ -243,6 +272,54 @@ function tm_base_menu_default_menu_links() {
     'weight' => -50,
     'customized' => 1,
   );
+  // Exported menu link: menu-social-links_vimeo:https://vimeo.com/travelmassive
+  $menu_links['menu-social-links_vimeo:https://vimeo.com/travelmassive'] = array(
+    'menu_name' => 'menu-social-links',
+    'link_path' => 'https://vimeo.com/travelmassive',
+    'router_path' => '',
+    'link_title' => 'Vimeo',
+    'options' => array(
+      'identifier' => 'menu-social-links_vimeo:https://vimeo.com/travelmassive',
+      'attributes' => array(
+        'title' => 'See Travel Massive on Vimeo',
+        'class' => array(
+          0 => 'vimeo',
+        ),
+        'target' => '_blank',
+      ),
+    ),
+    'module' => 'menu',
+    'hidden' => 0,
+    'external' => 1,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => -45,
+    'customized' => 1,
+  );
+  // Exported menu link: menu-social-links_youtube:https://www.youtube.com/user/travelmassive/videos
+  $menu_links['menu-social-links_youtube:https://www.youtube.com/user/travelmassive/videos'] = array(
+    'menu_name' => 'menu-social-links',
+    'link_path' => 'https://www.youtube.com/user/travelmassive/videos',
+    'router_path' => '',
+    'link_title' => 'YouTube',
+    'options' => array(
+      'identifier' => 'menu-social-links_youtube:https://www.youtube.com/user/travelmassive/videos',
+      'attributes' => array(
+        'title' => 'See Travel Massive on YouTube',
+        'class' => array(
+          0 => 'youtube',
+        ),
+        'target' => '_blank',
+      ),
+    ),
+    'module' => 'menu',
+    'hidden' => 0,
+    'external' => 1,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => -46,
+    'customized' => 1,
+  );
 
   // Translatables
   // Included for use with string extractors like potx.
@@ -256,7 +333,10 @@ function tm_base_menu_default_menu_links() {
   t('Linkedin');
   t('News');
   t('People');
+  t('Snapchat');
   t('Twitter');
+  t('Vimeo');
+  t('YouTube');
 
   return $menu_links;
 }

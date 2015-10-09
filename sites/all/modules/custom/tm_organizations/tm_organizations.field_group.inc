@@ -113,10 +113,14 @@ function tm_organizations_field_group_info() {
       2 => 'field_link_linkedin',
       3 => 'field_link_twitter',
       4 => 'field_link_website',
-      5 => 'tm_ds_tm_sponsor',
-      6 => 'tm_ds_organization_follow_message',
-      7 => 'tm_ds_organization_stats',
-      8 => 'group_location_wrapper',
+      5 => 'field_link_instagram',
+      6 => 'field_link_youtube',
+      7 => 'field_link_vimeo',
+      8 => 'field_link_snapchat',
+      9 => 'tm_ds_tm_sponsor',
+      10 => 'tm_ds_organization_follow_message',
+      11 => 'tm_ds_organization_stats',
+      12 => 'group_location_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -180,6 +184,10 @@ function tm_organizations_field_group_info() {
       1 => 'field_link_linkedin',
       2 => 'field_link_twitter',
       3 => 'field_link_website',
+      4 => 'field_link_instagram',
+      5 => 'field_link_youtube',
+      6 => 'field_link_vimeo',
+      7 => 'field_link_snapchat',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -205,7 +213,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '8',
+    'weight' => '12',
     'children' => array(
       0 => 'field_location_city',
       1 => 'field_country',

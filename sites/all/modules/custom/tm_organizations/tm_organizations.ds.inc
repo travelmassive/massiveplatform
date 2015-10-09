@@ -244,6 +244,38 @@ function tm_organizations_ds_field_settings_info() {
         ),
       ),
     ),
+    'field_link_instagram' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_tm_default',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'field_link_youtube' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_tm_default',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'field_link_vimeo' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_tm_default',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'field_link_snapchat' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_tm_default',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
   );
   $export['node|organization|full'] = $ds_fieldsetting;
 
@@ -388,35 +420,39 @@ function tm_organizations_ds_layout_settings_info() {
       'first_column' => array(
         0 => 'tm_ds_organization_follow_message',
         1 => 'field_location_city',
-        5 => 'tm_ds_tm_sponsor',
-        7 => 'body',
-        8 => 'field_country',
+        4 => 'tm_ds_tm_sponsor',
+        7 => 'field_country',
+        9 => 'body',
         12 => 'tm_ds_organization_stats',
         13 => 'field_link_website',
         15 => 'group_details_wrapper',
         16 => 'field_link_twitter',
         19 => 'field_link_facebook',
         21 => 'field_link_linkedin',
-        22 => 'group_location_wrapper',
+        22 => 'field_link_instagram',
+        23 => 'field_link_youtube',
+        24 => 'field_link_vimeo',
+        25 => 'field_link_snapchat',
+        26 => 'group_location_wrapper',
       ),
       'header_media' => array(
         2 => 'field_image',
       ),
       'header_body' => array(
         3 => 'field_avatar',
-        4 => 'ds_flag_follow_organizations',
-        6 => 'tm_ds_anon_flag_placeholder',
-        9 => 'title',
-        10 => 'tm_ds_more_actions',
-        11 => 'field_segment',
+        5 => 'ds_flag_follow_organizations',
+        6 => 'title',
+        8 => 'tm_ds_anon_flag_placeholder',
+        10 => 'field_segment',
+        11 => 'tm_ds_more_actions',
         14 => 'group_action_menu_wrapper',
-        24 => 'group_action_menu',
+        28 => 'group_action_menu',
       ),
       'second_column' => array(
         17 => 'group_managed_by_wrapper',
         18 => 'members_following',
         20 => 'group_community_wrapper',
-        23 => 'field_owner',
+        27 => 'field_owner',
       ),
     ),
     'fields' => array(
@@ -424,14 +460,14 @@ function tm_organizations_ds_layout_settings_info() {
       'field_location_city' => 'first_column',
       'field_image' => 'header_media',
       'field_avatar' => 'header_body',
-      'ds_flag_follow_organizations' => 'header_body',
       'tm_ds_tm_sponsor' => 'first_column',
+      'ds_flag_follow_organizations' => 'header_body',
+      'title' => 'header_body',
+      'field_country' => 'first_column',
       'tm_ds_anon_flag_placeholder' => 'header_body',
       'body' => 'first_column',
-      'field_country' => 'first_column',
-      'title' => 'header_body',
-      'tm_ds_more_actions' => 'header_body',
       'field_segment' => 'header_body',
+      'tm_ds_more_actions' => 'header_body',
       'tm_ds_organization_stats' => 'first_column',
       'field_link_website' => 'first_column',
       'group_action_menu_wrapper' => 'header_body',
@@ -442,6 +478,10 @@ function tm_organizations_ds_layout_settings_info() {
       'field_link_facebook' => 'first_column',
       'group_community_wrapper' => 'second_column',
       'field_link_linkedin' => 'first_column',
+      'field_link_instagram' => 'first_column',
+      'field_link_youtube' => 'first_column',
+      'field_link_vimeo' => 'first_column',
+      'field_link_snapchat' => 'first_column',
       'group_location_wrapper' => 'first_column',
       'field_owner' => 'second_column',
       'group_action_menu' => 'header_body',

@@ -404,6 +404,9 @@ a.disabled, .bttn.disabled, .form-submit.disabled {
   .linkedin:before { @extend .icon-linkedin; }
   .twitter:before { @extend .icon-twitter; }
   .instagram:before { @extend .icon-instagram; }
+  .youtube:before { @extend .icon-youtube; }
+  .vimeo:before { @extend .icon-vimeo; }
+  .snapchat:before { @extend .icon-snapchat; }
 
   @media #{$small-up} {
     @include grid-column(8);

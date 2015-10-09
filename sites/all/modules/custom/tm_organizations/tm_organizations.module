@@ -365,6 +365,15 @@ function tm_organizations_preprocess_flag(&$variables) {
 
 }
 
+/* Get count of how many followers a company has */
+function tm_organizations_get_num_followers($nid) {
+
+  $flag = flag_get_flag("follow_organizations");
+  $query = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_id = :nid AND f.entity_type = 'node'";
+  $result = db_query($query, array(':fid' => $flag->fid, ':nid' => $nid))->fetch();
+  return $result->total;
+}
+
 /* Customize organization edit form */
 function tm_organizations_form_alter(&$form, $form_state, $form_id) {
   global $conf;
@@ -374,16 +383,38 @@ function tm_organizations_form_alter(&$form, $form_state, $form_id) {
     // friendly url
     $form['field_friendly_url'][LANGUAGE_NONE][0]['value']['#title'] = $conf["tm_field_company_friendly_url_title"];
     $form['field_friendly_url'][LANGUAGE_NONE][0]['value']['#description'] = $conf["tm_field_company_friendly_url_description"];
+
+    // Show additional link fields based on $conf['tm_users_link_fields']
+    $all_fields = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat');
+    if (isset($conf["tm_organizations_link_fields"])) {
+      $show_link_fields = $conf["tm_organizations_link_fields"];
+      foreach ($all_fields as $field) {
+        if (!in_array($field, $show_link_fields)) {
+          unset($form['field_link_' . $field]); // hide field
+        }
+      }
+    }
   }
   
 }
 
+/* Modify organization node content before being displayed */
+function tm_organizations_node_view($node, $view_mode, $langcode) {
 
-/* Get count of how many followers a company has */
-function tm_organizations_get_num_followers($nid) {
+  if ($node->type != "organization") {
+    return;
+  }
 
-  $flag = flag_get_flag("follow_organizations");
-  $query = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_id = :nid AND f.entity_type = 'node'";
-  $result = db_query($query, array(':fid' => $flag->fid, ':nid' => $nid))->fetch();
-  return $result->total;
+  // Show additional link fields based on $conf['tm_users_link_fields']
+  global $conf;
+  $all_fields = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat');
+  if (isset($conf["tm_organizations_link_fields"])) {
+    $show_link_fields = $conf["tm_organizations_link_fields"];
+    foreach ($all_fields as $field) {
+      if (!in_array($field, $show_link_fields)) {
+        unset($node->content['field_link_' . $field]); // hide field
+      }
+    }
+  }
+
 }

@@ -1142,6 +1142,22 @@ function tm_fields_theme() {
       'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
       'template' => 'tm_fields_link',
     ),
+    'tm_fields_facebook' => array(
+      'variables' => array(
+        'title' => NULL,
+        'url' => NULL,
+      ),
+      'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
+      'template' => 'tm_fields_facebook',
+    ),
+    'tm_fields_linkedin' => array(
+      'variables' => array(
+        'title' => NULL,
+        'url' => NULL,
+      ),
+      'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
+      'template' => 'tm_fields_linkedin',
+    ),
     'tm_fields_twitter' => array(
       'variables' => array(
         'title' => NULL,
@@ -1149,6 +1165,38 @@ function tm_fields_theme() {
       ),
       'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
       'template' => 'tm_fields_twitter',
+    ),
+    'tm_fields_instagram' => array(
+      'variables' => array(
+        'title' => NULL,
+        'url' => NULL,
+      ),
+      'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
+      'template' => 'tm_fields_instagram',
+    ),
+    'tm_fields_youtube' => array(
+      'variables' => array(
+        'title' => NULL,
+        'url' => NULL,
+      ),
+      'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
+      'template' => 'tm_fields_youtube',
+    ),
+    'tm_fields_vimeo' => array(
+      'variables' => array(
+        'title' => NULL,
+        'url' => NULL,
+      ),
+      'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
+      'template' => 'tm_fields_vimeo',
+    ),
+    'tm_fields_snapchat' => array(
+      'variables' => array(
+        'title' => NULL,
+        'url' => NULL,
+      ),
+      'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
+      'template' => 'tm_fields_snapchat',
     ),
   );
 }
@@ -1177,6 +1225,36 @@ function tm_fields_field_formatter_info() {
       'label' => t('TM Twitter'), 
       'field types' => array('link_field'),
       'description' => t('Diplays a Twitter URL from an @ or # name'),
+    ),
+    'tm_fields_facebook' => array(
+      'label' => t('TM Facebook'), 
+      'field types' => array('link_field'),
+      'description' => t('Diplays a Facebook URL'),
+    ),
+    'tm_fields_linkedin' => array(
+      'label' => t('TM LinkedIn'), 
+      'field types' => array('link_field'),
+      'description' => t('Diplays a LinkedIn URL'),
+    ),
+    'tm_fields_instagram' => array(
+      'label' => t('TM Instagram'), 
+      'field types' => array('link_field'),
+      'description' => t('Diplays an Instagram URL from an @ or # name'),
+    ),
+    'tm_fields_youtube' => array(
+      'label' => t('TM YouTube'), 
+      'field types' => array('link_field'),
+      'description' => t('Diplays a YouTube URL from a URL or channel name'),
+    ),
+    'tm_fields_vimeo' => array(
+      'label' => t('TM Vimeo'), 
+      'field types' => array('link_field'),
+      'description' => t('Diplays a Vimeo URL from a URL or user name'),
+    ), 
+    'tm_fields_snapchat' => array(
+      'label' => t('TM Snapchat'), 
+      'field types' => array('link_field'),
+      'description' => t('Diplays a Snapchat URL from a user name'),
     ), 
   );
   return $info;
@@ -1231,6 +1309,60 @@ function tm_fields_field_formatter_view($entity_type, $entity, $field, $instance
       foreach ($items as $delta => $item) {
         $element[$delta] = array(
           '#theme' => 'tm_fields_twitter', 
+          '#title' => $item['title'], 
+          '#url' => $item['url'], 
+        );
+     }
+    break;
+    case 'tm_fields_facebook':
+      foreach ($items as $delta => $item) {
+        $element[$delta] = array(
+          '#theme' => 'tm_fields_facebook', 
+          '#title' => $item['title'], 
+          '#url' => $item['url'], 
+        );
+     }
+    break;
+    case 'tm_fields_linkedin':
+      foreach ($items as $delta => $item) {
+        $element[$delta] = array(
+          '#theme' => 'tm_fields_linkedin', 
+          '#title' => $item['title'], 
+          '#url' => $item['url'], 
+        );
+     }
+    break;
+    case 'tm_fields_instagram':
+      foreach ($items as $delta => $item) {
+        $element[$delta] = array(
+          '#theme' => 'tm_fields_instagram', 
+          '#title' => $item['title'], 
+          '#url' => $item['url'], 
+        );
+     }
+    break;
+    case 'tm_fields_youtube':
+      foreach ($items as $delta => $item) {
+        $element[$delta] = array(
+          '#theme' => 'tm_fields_youtube', 
+          '#title' => $item['title'], 
+          '#url' => $item['url'], 
+        );
+     }
+    break;
+    case 'tm_fields_vimeo':
+      foreach ($items as $delta => $item) {
+        $element[$delta] = array(
+          '#theme' => 'tm_fields_vimeo', 
+          '#title' => $item['title'], 
+          '#url' => $item['url'], 
+        );
+     }
+    break;
+    case 'tm_fields_snapchat':
+      foreach ($items as $delta => $item) {
+        $element[$delta] = array(
+          '#theme' => 'tm_fields_snapchat', 
           '#title' => $item['title'], 
           '#url' => $item['url'], 
         );

@@ -740,5 +740,10 @@ $conf['tm_user_remove_own_account_notify'] = 'community@travelmassive.com';
 $conf['tm_discuss_menu_hide'] = true; // hide the discussions unless you access /discuss
 $conf['tm_discuss_menu_class'] = 'menu-1458'; // class of the menu item to hide 
 
+/* Profile and company link fields */
+/* Options available: website, twitter, facebook, linkedin, instagram, youtube, vimeo, snapchat */
+$conf["tm_users_link_fields"] = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat');
+$conf["tm_organizations_link_fields"] = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo');
+
 $conf['install_profile'] = 'tm';
 

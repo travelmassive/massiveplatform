@@ -31,9 +31,9 @@ if (!$found_match) {
 		$found_match = true;
 	}
 	foreach ($country_codes as $country_code) {
-		if ((strpos(strtolower($url), "https://" . ".linkedin.com/") !== FALSE) or (strpos($url, "http://" . ".linkedin.com/") !== FALSE)) {
-			$linkedin_url = str_ireplace("https://" . ".linkedin.com/", "https://linkedin.com/", $url);
-			$linkedin_url = str_ireplace("http://" . ".linkedin.com/", "https://linkedin.com/", $url);
+		if ((strpos(strtolower($url), "https://" . $country_code . ".linkedin.com/") !== FALSE) or (strpos($url, "http://" . ".linkedin.com/") !== FALSE)) {
+			$linkedin_url = str_ireplace("https://" . $country_code . ".linkedin.com/", "https://linkedin.com/", $url);
+			$linkedin_url = str_ireplace("http://" . $country_code . ".linkedin.com/", "https://linkedin.com/", $url);
 			$found_match = true;
 		}
 	}

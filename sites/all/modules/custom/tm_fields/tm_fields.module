@@ -683,6 +683,18 @@ function _tm_more_actions_process($field, $title = NULL) {
         }
       }
 
+      // Show email address to chapter leader if unapproved
+      // Always show to moderators
+      $targetuser = user_load($uid);
+      if ((!in_array("approved user", $targetuser->roles) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid, true))) or (in_array("moderator", $user->roles))) {
+
+        $menu_text = "<div style='font-size: smaller; font-style: italic; padding-left: 2em; background-color: #efefef;'>Signup email:<br><span style='color: #888; font-style: normal;'>" . $targetuser->mail . "</span></div>";
+
+        $links['approve'][] = array(
+          'wrapper_class' => array('approve'),
+          'content' => t($menu_text),
+        );
+      }
 
     }
   }

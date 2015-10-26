@@ -305,7 +305,39 @@
   }
 
   jq_confirm_approve_member = function(uid, community_values_url) {
-    jq_confirm_url('Do you want to approve this account?', 'Guidelines for approval:<li>Account is a real person</li><li>Profile is not a company or brand</li><li>Profile meets our <a target="_blank" href="' + community_values_url + '">community values</a></li>', '/user/' + uid + '/approve');
+      
+    $.prompt({
+      state0: {
+        title: 'Do you want to approve this account?',
+        html: 'Guidelines for approval:<li>Account is a real person</li><li>Profile is not a company or brand</li><li>Profile meets our <a target="_blank" href="' + community_values_url + '">community values</a></li>',
+        buttons: { Cancel: false, Next: true },
+        focus: 1,
+        submit:function(e,v,m,f){
+          if(v){
+            e.preventDefault();
+            $.prompt.goToState('state1');
+            return false;
+          }
+          $.prompt.close();
+        }
+      },
+      state1: {
+        title: 'Add a welcome message?',
+        html: "You can send a short message to the member. <textarea id='form_moderator_message' value='' placeholder='Thanks for joining...' rows='3' cols='50'></textarea>",
+        buttons: { Back: -1, OK: true },
+        focus: 1,
+        submit:function(e,v,m,f){
+          if (v == true) {
+            // replace new lines with __NL__ as we moving this via regular GET and cant pass it via XHR
+            window.location = '/user/' + uid + '/approve?moderator_message=' + document.getElementById('form_moderator_message').value.replace(/\n/mg,"__NL__"); 
+          } 
+          else if(v==-1) {
+            $.prompt.goToState('state0');
+          }
+        }
+      }
+    });
+
   }
 
   jq_confirm_unapprove_user = function(uid) {

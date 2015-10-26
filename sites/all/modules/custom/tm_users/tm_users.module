@@ -265,6 +265,18 @@ function tm_users_approve($user) {
 
     $approval_text = "Your account has been approved by " . $approving_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . ".";
 
+    $moderator_first_name = $approving_user->field_user_first_name['und'][0]['value'];
+
+    // get moderator message to send to member
+    // add line breaks
+    $moderator_message = trim($_GET["moderator_message"]);
+    $moderator_message_safe = "";
+    if ($moderator_message != "") {
+        $moderator_message_safe = "<br><strong>Message from " . $moderator_first_name . ":</strong> " . check_plain($moderator_message) . "<br>";
+        $moderator_message_safe = str_replace("__NL__", "<br>", $moderator_message_safe);
+        $approval_text .= $moderator_message_safe;
+    }
+
     // Set moderator's reply-to address if they have allowed in their notification settings
     $reply_to = null;
     $notif = new TMNotification("user_approval_allow_reply_to");

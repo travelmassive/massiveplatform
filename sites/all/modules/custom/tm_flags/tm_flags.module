@@ -185,7 +185,7 @@ function _tm_flags_flag_limits(&$variables) {
   }
 
   $limit = 16; // default if not set
-  if (variable_get('tm_following_ratio_limit', NULL) != null) {
+  if (variable_get('tm_chapter_join_limit', NULL) != null) {
     $limit = variable_get('tm_chapter_join_limit', NULL);
   }
 

@@ -1272,6 +1272,29 @@ function tm_fields_field_formatter_info() {
   return $info;
 }
 
+/* 
+ * Helper method return full URL
+ */
+function _tm_fields_full_url($item) {
+
+  // $item['url'] is cut off at argument list
+  // so we need to construct the full url from the query array
+  // ie: ?options=abc
+  $full_url = $item['url'];
+  $arg_seperator = "?";
+  if (sizeof($item['query']) > 0) {
+    foreach($item['query'] as $key => $val) {
+      if ($val != null) {
+        $full_url .= $arg_seperator . t($key) . "=" . t($val);
+      } else {
+        $full_url .= $arg_seperator . t($key);
+      }
+      $arg_seperator = "&"; 
+    }
+  }
+  return $full_url;
+}
+
 /**
 * Implements hook_field_formatter_view()
 * see: See more at: http://www.whenwhowhere.com/tech-blog/create-custom-field-formatter-drupal-7#sthash.pf9Fsjzp.dpuf
@@ -1285,18 +1308,7 @@ function tm_fields_field_formatter_view($entity_type, $entity, $field, $instance
         // $item['url'] is cut off at argument list
         // so we need to construct the full url from the query array
         // ie: ?options=abc
-        $full_url = $item['url'];
-        $arg_seperator = "?";
-        if (sizeof($item['query']) > 0) {
-          foreach($item['query'] as $key => $val) {
-            if ($val != null) {
-              $full_url .= $arg_seperator . t($key) . "=" . t($val);
-            } else {
-              $full_url .= $arg_seperator . t($key);
-            }
-            $arg_seperator = "&"; 
-          }
-        }
+        $full_url = _tm_fields_full_url($item);
         
         // valid URL
         // use diegoperini regex from https://gist.github.com/dperini/729294
@@ -1331,7 +1343,7 @@ function tm_fields_field_formatter_view($entity_type, $entity, $field, $instance
         $element[$delta] = array(
           '#theme' => 'tm_fields_facebook', 
           '#title' => $item['title'], 
-          '#url' => $item['url'], 
+          '#url' => $item['url'], // remove ? arguments
         );
      }
     break;
@@ -1340,7 +1352,7 @@ function tm_fields_field_formatter_view($entity_type, $entity, $field, $instance
         $element[$delta] = array(
           '#theme' => 'tm_fields_linkedin', 
           '#title' => $item['title'], 
-          '#url' => $item['url'], 
+          '#url' => _tm_fields_full_url($item), // may contain ? arguments
         );
      }
     break;
@@ -1358,7 +1370,7 @@ function tm_fields_field_formatter_view($entity_type, $entity, $field, $instance
         $element[$delta] = array(
           '#theme' => 'tm_fields_youtube', 
           '#title' => $item['title'], 
-          '#url' => $item['url'], 
+          '#url' => _tm_fields_full_url($item), // may contain ? arguments
         );
      }
     break;

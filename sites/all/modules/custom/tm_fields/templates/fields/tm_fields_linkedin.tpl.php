@@ -5,7 +5,7 @@
 
 // fix user typos
 $url = trim($url);
-$url = str_replace(" ", "", $url); // strip spaces
+$url = str_replace(" ", "+", $url); // strip spaces
 $url = str_replace(",", ".", $url); // replace , with .
 $url = str_ireplace("http//", "http://", $url); // replace http// with http:// in url
 $url = str_ireplace("https//", "http://", $url); // replace https// with https:// in url

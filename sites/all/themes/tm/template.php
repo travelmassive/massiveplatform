@@ -35,16 +35,21 @@ function tm_preprocess_maintenance_page(&$variables, $hook) {
  *   The name of the template being rendered ("html" in this case.)
  */
 function tm_preprocess_html(&$variables, $hook) {
-  // The body tag's classes are controlled by the $classes_array variable.
-  if ((module_exists("tm_discuss") and (current_path() == "discuss"))) {
 
-    global $conf;
+  global $conf;
+  $discuss_menu_path = "discuss"; // default
+  if (isset($conf["tm_discuss_menu_path"])) {
+    $discuss_menu_path = $conf["tm_discuss_menu_path"];
+  }
+
+  // The body tag's classes are controlled by the $classes_array variable.
+  if ((module_exists("tm_discuss") and (current_path() == $discuss_menu_path))) {
 
     // add tag
     $variables['classes_array'][] = "tm_discuss";
  
-    // gererate canonical url 
-    $canonical = url('/discuss', array('absolute' => TRUE)) . "/";
+    // gererate canonical url
+    $canonical = url('/' . $discuss_menu_path, array('absolute' => TRUE)) . "/";
    
     // canonical url
     $meta = array(

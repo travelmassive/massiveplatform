@@ -529,20 +529,20 @@ table {
 /* Layout rules */
 /* line 293, ../sass/foundation_5.0.3/components/_global.scss */
 meta.foundation-mq-small {
-  font-family: "/only screen and (min-width:34.063rem) and (max-width:55rem)/";
+  font-family: "/only screen and (min-width:34.063rem) and (max-width:65rem)/";
   width: 34.063rem;
 }
 
 /* line 298, ../sass/foundation_5.0.3/components/_global.scss */
 meta.foundation-mq-medium {
-  font-family: "/only screen and (min-width:55.063rem)/";
-  width: 55.063rem;
+  font-family: "/only screen and (min-width:65.063rem)/";
+  width: 65.063rem;
 }
 
 /* line 303, ../sass/foundation_5.0.3/components/_global.scss */
 meta.foundation-mq-large {
-  font-family: "/only screen and (min-width:62.063rem)/";
-  width: 62.063rem;
+  font-family: "/only screen and (min-width:69.063rem)/";
+  width: 69.063rem;
 }
 
 /* line 308, ../sass/foundation_5.0.3/components/_global.scss */
@@ -980,7 +980,7 @@ meta.foundation-mq-xxlarge {
     float: left;
   }
 }
-@media only screen and (min-width: 55.063rem) {
+@media only screen and (min-width: 65.063rem) {
   /* line 148, ../sass/foundation_5.0.3/components/_grid.scss */
   .column.medium-centered,
   .columns.medium-centered {
@@ -1479,7 +1479,7 @@ meta.foundation-mq-xxlarge {
     left: auto;
   }
 }
-@media only screen and (min-width: 62.063rem) {
+@media only screen and (min-width: 69.063rem) {
   /* line 148, ../sass/foundation_5.0.3/components/_grid.scss */
   .column.large-centered,
   .columns.large-centered {
@@ -3641,7 +3641,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 #main {
   padding: 2rem 0;
 }
-@media only screen and (min-width: 55.063rem) {
+@media only screen and (min-width: 65.063rem) {
   /* line 88, ../sass/_base.scss */
   #main {
     padding: 3rem 0;
@@ -3680,7 +3680,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   display: block;
   height: 3rem;
 }
-@media only screen and (min-width: 55.063rem) {
+@media only screen and (min-width: 65.063rem) {
   /* line 104, ../sass/_base.scss */
   #site-title {
     position: relative;
@@ -3818,7 +3818,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 .logged-in #prime-nav .account-wrapper .toggle:before {
   display: none;
 }
-@media only screen and (min-width: 55.063rem) {
+@media only screen and (min-width: 65.063rem) {
   /* line 126, ../sass/_base.scss */
   #prime-nav {
     position: relative;
@@ -3897,7 +3897,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   width: 100%;
   float: left;
 }
-@media only screen and (min-width: 55.063rem) {
+@media only screen and (min-width: 65.063rem) {
   /* line 305, ../sass/_base.scss */
   #content .trilithon .column {
     position: relative;
@@ -3950,7 +3950,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
     clear: left;
   }
 }
-@media only screen and (min-width: 62.063rem) {
+@media only screen and (min-width: 69.063rem) {
   /* line 330, ../sass/_base.scss */
   #content .grid .view-content li {
     position: relative;
@@ -3969,7 +3969,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   }
 }
 
-@media only screen and (min-width: 55.063rem) {
+@media only screen and (min-width: 65.063rem) {
   /* line 348, ../sass/_base.scss */
   .page-node-communicate #content,
   .page-node-rsvp #content,
@@ -3984,7 +3984,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
     float: left;
   }
 }
-@media only screen and (min-width: 62.063rem) {
+@media only screen and (min-width: 69.063rem) {
   /* line 348, ../sass/_base.scss */
   .page-node-communicate #content,
   .page-node-rsvp #content,
@@ -4088,7 +4088,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
     float: left;
   }
 }
-@media only screen and (min-width: 55.063rem) {
+@media only screen and (min-width: 65.063rem) {
   /* line 415, ../sass/_base.scss */
   #foot-nav section {
     position: relative;
@@ -4152,7 +4152,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
     padding-top: 0;
   }
 }
-@media only screen and (min-width: 55.063rem) {
+@media only screen and (min-width: 65.063rem) {
   /* line 460, ../sass/_base.scss */
   #foot-credits .logo {
     float: none;
@@ -5106,7 +5106,7 @@ label {
 #user-register-form .form-actions * {
   margin: 0 0.25rem;
 }
-@media only screen and (min-width: 55.063rem) {
+@media only screen and (min-width: 65.063rem) {
   /* line 242, ../sass/_forms.scss */
   .node-form .link-field-column,
   #user-profile-form .link-field-column,
@@ -5126,7 +5126,7 @@ label {
     padding-left: 0.5rem;
   }
 }
-@media only screen and (min-width: 62.063rem) {
+@media only screen and (min-width: 69.063rem) {
   /* line 249, ../sass/_forms.scss */
   .node-form > div,
   #user-profile-form > div,
@@ -5252,7 +5252,7 @@ label {
   opacity: 0;
   overflow: hidden;
 }
-@media only screen and (min-width: 62.063rem) {
+@media only screen and (min-width: 69.063rem) {
   /* line 327, ../sass/_forms.scss */
   #user-profile-form .horizontal-tabs,
   #user-register-form .horizontal-tabs {
@@ -5347,7 +5347,7 @@ select:disabled {
   color: #213040;
   font-weight: normal;
 }
-@media only screen and (min-width: 55.063rem) {
+@media only screen and (min-width: 65.063rem) {
   /* line 419, ../sass/_forms.scss */
   .views-exposed-form .form-type-select {
     margin-right: 0;
@@ -5649,7 +5649,7 @@ a.cancel_account_link {
     margin-bottom: 2rem;
   }
 }
-@media only screen and (min-width: 62.063rem) {
+@media only screen and (min-width: 69.063rem) {
   /* line 48, ../sass/_modules.scss */
   #tm-events-communication-form.block .contained-head, #tm-events-communication-form.modal .contained-head,
   #tm-events-rsvp-form.block .contained-head,
@@ -5819,7 +5819,7 @@ a.cancel_account_link {
 .contained-block .view-empty p:last-child {
   margin: 0;
 }
-@media only screen and (min-width: 62.063rem) {
+@media only screen and (min-width: 69.063rem) {
   /* line 201, ../sass/_modules.scss */
   .contained-block .contained-head {
     padding: 2rem 2rem 1.5rem 2rem;
@@ -6184,7 +6184,7 @@ a.cancel_account_link {
     margin-bottom: 0;
   }
 }
-@media only screen and (min-width: 62.063rem) {
+@media only screen and (min-width: 69.063rem) {
   /* line 439, ../sass/_modules.scss */
   .team-list .card.contained > a, .team-list .node-form > div.card > a,
   .team-list #user-profile-form > div.card > a,
@@ -6449,7 +6449,7 @@ a.cancel_account_link {
 .page-search .messages--error {
   margin: 1rem 1rem 2rem 1rem;
 }
-@media only screen and (min-width: 55.063rem) {
+@media only screen and (min-width: 65.063rem) {
   /* line 30, ../sass/_single.scss */
   .page-views #page-title,
   .page-search #page-title {
@@ -6533,7 +6533,7 @@ a.cancel_account_link {
 .page-search #user-profile-form {
   padding: 0 !important;
 }
-@media only screen and (min-width: 55.063rem) {
+@media only screen and (min-width: 65.063rem) {
   /* line 75, ../sass/_single.scss */
   .page-node-rsvp #page-title,
   .page-node-communicate #page-title,
@@ -6668,7 +6668,7 @@ a.cancel_account_link {
     margin-bottom: 2rem;
   }
 }
-@media only screen and (min-width: 55.063rem) {
+@media only screen and (min-width: 65.063rem) {
   /* line 186, ../sass/_single.scss */
   .page-search .contained-block {
     padding: 2rem;
@@ -6722,7 +6722,7 @@ a.cancel_account_link {
     width: 20%;
   }
 }
-@media only screen and (min-width: 55.063rem) {
+@media only screen and (min-width: 65.063rem) {
   /* line 240, ../sass/_single.scss */
   #content .search-form > div {
     padding: 2rem;
@@ -6936,7 +6936,7 @@ a.cancel_account_link {
     margin-bottom: 4rem;
   }
 }
-@media only screen and (min-width: 55.063rem) {
+@media only screen and (min-width: 65.063rem) {
   /* line 393, ../sass/_single.scss */
   #welcome .hd {
     position: relative;
@@ -6956,7 +6956,7 @@ a.cancel_account_link {
     float: left;
   }
 }
-@media only screen and (min-width: 62.063rem) {
+@media only screen and (min-width: 69.063rem) {
   /* line 405, ../sass/_single.scss */
   #welcome .hd {
     position: relative;
@@ -7233,7 +7233,7 @@ a.cancel_account_link {
     line-height: 1.5;
   }
 }
-@media only screen and (min-width: 55.063rem) {
+@media only screen and (min-width: 65.063rem) {
   /* line 650, ../sass/_single.scss */
   .trilithon-header .media {
     display: table-cell;
@@ -7265,7 +7265,7 @@ a.cancel_account_link {
     width: 42%;
   }
 }
-@media only screen and (min-width: 62.063rem) {
+@media only screen and (min-width: 69.063rem) {
   /* line 678, ../sass/_single.scss */
   .trilithon-header .media {
     width: 68%;

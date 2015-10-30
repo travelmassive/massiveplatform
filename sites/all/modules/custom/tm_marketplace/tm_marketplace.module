@@ -1,0 +1,120 @@
+<?php
+
+/* 
+
+Custom module for jobskee marketplace integration
+
+Install steps:
+- Install jobskee to /marketplace/
+
+Drupal
+- Enable drupal modules: "drush en tm_marketplace"
+
+Additional references: 
+- Jobskee - http://ww.jobskee.com
+
+*/
+
+// hide the marketplace menu if configured to to so
+function tm_marketplace_init() {
+
+	global $conf;
+
+	// hide for logged in user
+	if (isset($conf["tm_marketplace_menu_hide"])) {
+		if ($conf["tm_marketplace_menu_hide"]) {
+
+			// check cookie
+			$css_class = $conf["tm_marketplace_menu_class"];
+			if (!isset($_COOKIE['Drupal_visitor_show_marketplace_menu'])) {
+				drupal_add_css('.' . $css_class . ' { display: none; }', 'inline');
+			}
+		}
+	}
+
+	// Store encrypted user's email to Drupal_visitor_marketplace_subscription_field
+	if ($conf["tm_marketplace_cookie_enable"]) {
+
+		// encrypt email
+		if (user_is_logged_in()) {
+			global $user;
+			$field_value = tm_marketplace_cookie_encrypt_decrypt("encrypt", $user->mail);
+			user_cookie_save(array('marketplace_subscription_field'=>$field_value));
+		}
+	}
+}
+
+function tm_marketplace_menu() {
+
+	global $conf;
+	$marketplace_menu_path = "marketplace"; // default
+	if (isset($conf["tm_marketplace_menu_path"])) {
+		$marketplace_menu_path = $conf["tm_marketplace_menu_path"];
+	}
+
+	$items = array();
+	$items[$marketplace_menu_path] = array(
+		'title' => '',
+		'page callback' => 'tm_marketplace_placeholder',
+		'access arguments' => array('access content')
+	);
+
+	return $items;
+}
+
+/*
+ * Placeholder page to reserve the url
+ */
+function tm_marketplace_placeholder() {
+	// shouldn't get here
+	return "Marketplace not installed.";
+}
+
+/*
+ * Remove marketplace subscription field when user logs out
+ */
+function tm_marketplace_user_logout($account) {
+  global $conf;
+  $marketplace_cookies = array("Drupal.visitor.marketplace_subscription_field");
+  foreach ($marketplace_cookies as $cookie_name) {
+    unset($_COOKIE[$cookie_name]);
+    setcookie($cookie_name, '', time() - 3600, "/");
+  }
+}
+
+/*
+ * Encrypt and decrypt string
+ * see: https://naveensnayak.wordpress.com/2013/03/12/simple-php-encrypt-and-decrypt/
+ */
+function tm_marketplace_cookie_encrypt_decrypt($action, $string, $secret_key="", $secret_iv="") {
+
+	global $conf;
+    $output = false;
+
+    $encrypt_method = "AES-256-CBC";
+
+    if ($secret_key == "") {
+   		$secret_key = $conf["tm_marketplace_cookie_secret_key"]; // 'This is my secret key';
+    }
+    if ($secret_iv == "") {
+    	$secret_iv = $conf["tm_marketplace_cookie_secret_iv"]; // 'This is my secret iv';
+    }
+
+    // hash
+    $key = hash('sha256', $secret_key);
+    
+    // iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
+    $iv = substr(hash('sha256', $secret_iv), 0, 16);
+
+    if( $action == 'encrypt' ) {
+        $output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
+        $output = base64_encode($output);
+    }
+    else if( $action == 'decrypt' ){
+        $output = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
+    }
+
+    return $output;
+}
+
+?>

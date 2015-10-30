@@ -1,0 +1,12 @@
+name = TM Marketplace
+core = 7.x
+package = TM Marketplace
+version = 7.x-1.0-dev
+project = tm_marketplace
+dependencies[] = features
+dependencies[] = tm_users
+dependencies[] = orchid
+dependencies[] = views
+features[features_api][] = api:2
+files[] = tm_marketplace.module
+project path = sites/all/modules/custom

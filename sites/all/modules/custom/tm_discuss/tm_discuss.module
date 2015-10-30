@@ -44,13 +44,8 @@ function tm_discuss_init() {
 	if (isset($conf["tm_discuss_menu_hide"])) {
 		if ($conf["tm_discuss_menu_hide"]) {
 
+			// check cookie
 			$css_class = $conf["tm_discuss_menu_class"];
-
-			// always hide for logged out user
-			if (!user_is_logged_in()) {
-				drupal_add_css('.' . $css_class . ' { display: none; }', 'inline');
-			}
-			// else check cookie
 			if (!isset($_COOKIE['Drupal_visitor_show_discuss_menu'])) {
 				drupal_add_css('.' . $css_class . ' { display: none; }', 'inline');
 			}
@@ -71,22 +66,62 @@ function tm_discuss_metatag_metatags_view_alter(&$output, $instance) {
 
 function tm_discuss_menu() {
 
-   $items = array();
+	$items = array();
 
-   $items['discuss'] = array(
-   	  'title' => '',
-      'page callback' => 'tm_discuss_embed_vanilla',
-      'access arguments' => array('access content')
-   );
+	// configurable menu path
+	global $conf;
+	$discuss_menu_path = "discuss"; // default
+	if (isset($conf["tm_discuss_menu_path"])) {
+		$discuss_menu_path = $conf["tm_discuss_menu_path"];
+	}
+	$discuss_full_path = "discussions"; // default
+	if (isset($conf["tm_discuss_full_path"])) {
+		$discuss_full_path = $conf["tm_discuss_full_path"];
+	}
+
+	$items[$discuss_menu_path] = array(
+		'title' => '',
+		'page callback' => 'tm_discuss_embed_vanilla',
+		'access arguments' => array('access content')
+	);
+
+	// placeholder menu item
+	$items[$discuss_full_path] = array(
+		'title' => '',
+		'page callback' => 'tm_discussions_placeholder',
+		'access arguments' => array('access content')
+	);
 
    return $items;
 }
 
+/* 
+ * Placeholder for discussions url
+ */
+function tm_discussions_placeholder() {
+	// won't get here as this url is caught by vanilla
+	return "Discussions not installed.";
+}
+
+/*
+ * Embed vanilla
+ */
 function tm_discuss_embed_vanilla() {
 
+	global $conf;
+	$discuss_menu_path = "discuss"; // default
+	if (isset($conf["tm_discuss_menu_path"])) {
+		$discuss_menu_path = $conf["tm_discuss_menu_path"];
+	}
+
+	$discuss_full_path = "discussions"; // default
+	if (isset($conf["tm_discuss_full_path"])) {
+		$discuss_full_path = $conf["tm_discuss_full_path"];
+	}
+
 	// add trailing slash if path is /discuss
-	if (request_uri() == "/discuss") {
-		drupal_goto('discuss/');
+	if (request_uri() == "/" . $discuss_menu_path) {
+		drupal_goto($discuss_menu_path . '/');
 		return;
 	}
 
@@ -102,7 +137,7 @@ function tm_discuss_embed_vanilla() {
 	global $user;
 	$loaded = user_load($user->uid);
 
-	$embed_script = '<script type="text/javascript" src="/discussions/js/embed.js"></script>';
+	$embed_script = '<script type="text/javascript" src="/' . $discuss_full_path . '/js/embed.js"></script>';
 
 	// hide title as it's displayed on the forum anyway
 	drupal_add_css('#page-title { display: none; }', 'inline');

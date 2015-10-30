@@ -20,6 +20,15 @@
       include './'. path_to_theme() .'/templates/page--wordpress-feedme.tpl.php';
     }
   }
+
+  // Enable marketplace feedme plugin
+  // Show recent marketplace posts
+  global $conf;
+  if (@isset($conf["tm_marketplace_enable_feedme"])) {
+    if ($conf["tm_marketplace_enable_feedme"]) {
+      include './'. path_to_theme() .'/templates/page--marketplace-feedme.tpl.php';
+    }
+  }
 ?>
 
 <div id="page">

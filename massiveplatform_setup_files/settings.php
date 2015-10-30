@@ -752,8 +752,8 @@ $conf['tm_marketplace_menu_path'] = "marketplace"; // where jobskee is installed
 $conf['tm_marketplace_cookie_enable'] = true; // for marketplace subscription email field
 $conf['tm_marketplace_cookie_secret_key'] = 'randomstringabc'; // must match jobskee config
 $conf['tm_marketplace_cookie_secret_iv'] = 'randomstring123'; // must match jobskee config
-$conf['tm_marketplace_enable_feeds'] = true; // embed marketplace jobs into chapter and company pages
-$conf['tm_marketplace_feed_url'] = '/marketplace/api/search/'; // url for search
+$conf['tm_marketplace_enable_feedme'] = true; // embed marketplace jobs into chapter and company pages
+$conf['tm_marketplace_feedme_url'] = '/marketplace/api/search/'; // url for search
 
 /* Profile and company link fields */
 /* Options available: website, twitter, facebook, linkedin, instagram, youtube, vimeo, snapchat */

@@ -348,6 +348,16 @@
       border-radius: $global-radius;
     }
   }
+  .badge-marketplace-feedme {
+    width: 4rem;
+    height: 4rem;
+    display: block;
+    img {
+      display: block;
+      max-width: 100%;
+      border-radius: $global-radius;
+    }
+  }
   .teaser {
     display: table-cell;
     width: 64rem;

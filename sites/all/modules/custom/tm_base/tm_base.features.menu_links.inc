@@ -71,33 +71,6 @@ function tm_base_menu_default_menu_links() {
     'weight' => -45,
     'customized' => 1,
   );
-  // Exported menu link: main-menu_marketplace:marketplace/
-  $menu_links['main-menu_marketplace:marketplace/'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'marketplace/',
-    'router_path' => 'marketplace',
-    'link_title' => 'Market',
-    'options' => array(
-      'identifier' => 'main-menu_marketplace:marketplace/',
-      'attributes' => array(
-        'class' => array(
-          0 => 'tm-menu-marketplace',
-        ),
-      ),
-      'item_attributes' => array(
-        'id' => '',
-        'class' => '',
-        'style' => '',
-      ),
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => -44,
-    'customized' => 1,
-  );
   // Exported menu link: main-menu_events:events
   $menu_links['main-menu_events:events'] = array(
     'menu_name' => 'main-menu',

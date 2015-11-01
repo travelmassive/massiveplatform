@@ -41,6 +41,7 @@ features[menu_custom][] = menu-social-links
 features[menu_links][] = main-menu_chapters:chapters
 features[menu_links][] = main-menu_companies:companies
 features[menu_links][] = main-menu_discuss:discuss/
+features[menu_links][] = main-menu_market:marketplace/
 features[menu_links][] = main-menu_events:events
 features[menu_links][] = main-menu_leaders:leaders
 features[menu_links][] = main-menu_news:blog/

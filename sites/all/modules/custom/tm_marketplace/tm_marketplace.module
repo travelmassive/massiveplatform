@@ -27,7 +27,7 @@ function tm_marketplace_init() {
 			// check cookie
 			$css_class = $conf["tm_marketplace_menu_class"];
 			if (!isset($_COOKIE['Drupal_visitor_show_marketplace_menu'])) {
-				drupal_add_css('.' . $css_class . ' { display: none; }', 'inline');
+				drupal_add_css('.' . $css_class . ' { display: none;}', 'inline');
 			}
 		}
 	}

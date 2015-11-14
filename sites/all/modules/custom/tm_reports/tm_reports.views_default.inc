@@ -550,9 +550,14 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
-    'continent' => 'continent',
-    'field_country' => 'field_country',
+    'nid' => 'nid',
     'title_1' => 'title_1',
+    'field_country' => 'field_country',
+    'continent' => 'continent',
+    'created_1' => 'created_1',
+    'created' => 'created',
+    'count' => 'count',
+    'nothing' => 'nothing',
     'field_link_website' => 'field_link_website',
     'field_link_facebook' => 'field_link_facebook',
     'field_link_twitter' => 'field_link_twitter',
@@ -560,13 +565,19 @@ function tm_reports_views_default_views() {
     'field_event_date_1' => 'field_event_date_1',
     'field_event_date_2' => 'field_event_date_2',
     'field_event_date_3' => 'field_event_date_3',
-    'count' => 'count',
     'field_community_managers' => 'field_community_managers',
     'field_segment' => 'field_segment',
   );
   $handler->display->display_options['style_options']['default'] = '-1';
   $handler->display->display_options['style_options']['info'] = array(
-    'continent' => array(
+    'nid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'title_1' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -580,9 +591,35 @@ function tm_reports_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'title_1' => array(
+    'continent' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'created_1' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'created' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'count' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nothing' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -630,13 +667,6 @@ function tm_reports_views_default_views() {
       'empty_column' => 0,
     ),
     'field_event_date_3' => array(
-      'sortable' => 1,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'count' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -720,6 +750,21 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['fields']['continent']['relationship'] = 'field_country_iso2';
   $handler->display->display_options['fields']['continent']['label'] = 'Region';
   $handler->display->display_options['fields']['continent']['continent_code'] = 0;
+  /* Field: Content: Post date */
+  $handler->display->display_options['fields']['created_1']['id'] = 'created_1';
+  $handler->display->display_options['fields']['created_1']['table'] = 'node';
+  $handler->display->display_options['fields']['created_1']['field'] = 'created';
+  $handler->display->display_options['fields']['created_1']['label'] = 'Start date';
+  $handler->display->display_options['fields']['created_1']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['created_1']['custom_date_format'] = 'Y-m-d';
+  $handler->display->display_options['fields']['created_1']['second_date_format'] = 'long';
+  /* Field: Content: Post date */
+  $handler->display->display_options['fields']['created']['id'] = 'created';
+  $handler->display->display_options['fields']['created']['table'] = 'node';
+  $handler->display->display_options['fields']['created']['field'] = 'created';
+  $handler->display->display_options['fields']['created']['label'] = 'Age';
+  $handler->display->display_options['fields']['created']['date_format'] = 'raw time ago';
+  $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
   /* Field: Flags: Flag counter */
   $handler->display->display_options['fields']['count']['id'] = 'count';
   $handler->display->display_options['fields']['count']['table'] = 'flag_counts';
@@ -850,6 +895,13 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['sorts']['title']['id'] = 'title';
   $handler->display->display_options['sorts']['title']['table'] = 'node';
   $handler->display->display_options['sorts']['title']['field'] = 'title';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Content: Nid */
+  $handler->display->display_options['arguments']['nid']['id'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['table'] = 'node';
+  $handler->display->display_options['arguments']['nid']['field'] = 'nid';
+  $handler->display->display_options['arguments']['nid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['filter_groups']['operator'] = 'OR';
   $handler->display->display_options['defaults']['filters'] = FALSE;
@@ -952,6 +1004,21 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['fields']['field_country_1']['field'] = 'field_country';
   $handler->display->display_options['fields']['field_country_1']['label'] = 'Region';
   $handler->display->display_options['fields']['field_country_1']['type'] = 'country_continent';
+  /* Field: Content: Post date */
+  $handler->display->display_options['fields']['created']['id'] = 'created';
+  $handler->display->display_options['fields']['created']['table'] = 'node';
+  $handler->display->display_options['fields']['created']['field'] = 'created';
+  $handler->display->display_options['fields']['created']['label'] = 'Start date';
+  $handler->display->display_options['fields']['created']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['created']['custom_date_format'] = 'Y-m-d';
+  $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
+  /* Field: Content: Post date */
+  $handler->display->display_options['fields']['created_1']['id'] = 'created_1';
+  $handler->display->display_options['fields']['created_1']['table'] = 'node';
+  $handler->display->display_options['fields']['created_1']['field'] = 'created';
+  $handler->display->display_options['fields']['created_1']['label'] = 'Age';
+  $handler->display->display_options['fields']['created_1']['date_format'] = 'raw time ago';
+  $handler->display->display_options['fields']['created_1']['second_date_format'] = 'long';
   /* Field: Field: Website */
   $handler->display->display_options['fields']['field_link_website']['id'] = 'field_link_website';
   $handler->display->display_options['fields']['field_link_website']['table'] = 'field_data_field_link_website';

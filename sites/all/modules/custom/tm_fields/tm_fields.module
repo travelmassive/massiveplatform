@@ -216,12 +216,21 @@ function _tm_communication_actions_process($field, $title = NULL) {
           $dest = $node->field_chapter[$node->language][0]['target_id'];
         }
       }
-      if ($node->type == 'chapter') $dest = $node->nid;
-      if ($dest){
+      if ($node->type == 'chapter') {
+        $dest = $node->nid;
+      }
+      if ($dest) {
         $show_menu = true;
+
+        $current_uri = request_uri();
+        $current_uri = substr($current_uri, 1); // delete first slash
+
+        // chapter invitations
+        $link_path = $current_uri.'/contact';
+
         $links['contactleaders'][] = array(
           'wrapper_class' => array('contactleaders'),
-          'content' => l(t('Contact Chapter Leaders'), 'chapters/contact/'.$dest, array(
+          'content' => l(t('Contact Chapter Leaders'), $link_path, array(
             'attributes' => array(
             'title' => t('Contact Chapter Leaders')
             )
@@ -429,11 +438,28 @@ function _tm_more_actions_process($field, $title = NULL) {
       }
 
       if ($show_menu_item) {
-        $links['downloadmembers'][] = array(
-          'wrapper_class' => array('downloadmembers'),
-          'content' => l(t('Download Members CSV'), 'chapters/export/' . $nid, array(
+
+        $current_uri = request_uri();
+        $current_uri = substr($current_uri, 1); // delete first slash
+
+        // view stats
+        $link_path = $current_uri.'/insights';
+        $links['chapterdata'][] = array(
+          'wrapper_class' => array('chapter_stats'),
+          'content' => l(t('Chapter insights'), $link_path, array(
             'attributes' => array( 
-            'title' => t('Download Members CSV')
+            'title' => t('Chapter insights')
+            )
+          ))
+        );
+
+        // export data
+        $link_path = $current_uri.'/export';
+        $links['chapterdata'][] = array(
+          'wrapper_class' => array('downloadmembers'),
+          'content' => l(t('Download members CSV'), $link_path, array(
+            'attributes' => array( 
+            'title' => t('Download members CSV')
             )
           ))
         );
@@ -462,20 +488,20 @@ function _tm_more_actions_process($field, $title = NULL) {
       if ($show_menu_item) {
         $current_uri = request_uri();
         $current_uri = substr($current_uri, 1); // delete first slash
-        $link_path = $current_uri.'/invitations';
 
         // chapter invitations
+        $link_path = $current_uri.'/invitations';
         $links['chapterinvitiations'][] = array(
           'wrapper_class' => array('chapterinvitiations'),
-          'content' => l(t('Chapter Invitations'), $link_path , array(
+          'content' => l(t('Chapter invitations'), $link_path , array(
             'attributes' => array( 
-            'title' => t('Chapter Invitations')
+            'title' => t('Chapter invitations')
             )
           ))
         );
 
         // unapproved members
-        $link_path = 'node/'.$node->nid.'/unapproved-members';
+        $link_path = $current_uri.'/unapproved-members';
         $links['chapterinvitiations'][] = array(
           'wrapper_class' => array('chapterinvitiations'),
           'content' => l(t('Unapproved members'), $link_path , array(

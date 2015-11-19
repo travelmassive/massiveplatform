@@ -29,17 +29,17 @@ function tm_chapters_ds_fields_info($entity_type) {
 * Implements hook_menu()
 */
 function tm_chapters_menu() {
-  $items['chapters/contact/%'] = array(
+  $items['chapters/%/contact'] = array(
     'title' => t('Contact chapter leaders'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('tm_chapters_contact_form',1),
     'access arguments' => array('flag follow_members'),
     'type' => MENU_CALLBACK,
   );
-  $items['chapters/export/%'] = array(
+  $items['chapters/%/export'] = array(
     'title' => t('Export Members'),
     'page callback' => 'tm_chapters_download_csv',
-    'page arguments' => array(2),
+    //'page arguments' => array(2),
     'access arguments' => array('approve users'),
     'type' => MENU_CALLBACK,
   );
@@ -93,6 +93,7 @@ function tm_chapters_node_presave($node){
     }
   }
 }
+
 // array diff didn't like 2 dimensional arrays
 function flatten_chapter_leaders($array){
   $newarray = array();
@@ -101,8 +102,9 @@ function flatten_chapter_leaders($array){
   }
   return $newarray;
 }
+
 /* Form for chapter contact form */
-function tm_chapters_contact_form($chapter){
+function tm_chapters_contact_form(){
 
   $form['subject'] = array(
     '#title' => t('Subject'),
@@ -124,19 +126,31 @@ function tm_chapters_contact_form($chapter){
 }
 
 /* Contact chapter leaders form submit */
-function tm_chapters_contact_form_submit($form, &$form_state){
+function tm_chapters_contact_form_submit($form, &$form_state) {
+
   global $user;
+  global $conf;
+  $nid = _orig_nid();
+
+  if ($nid == 0) {
+    print drupal_not_found();
+    return;
+  }
+
+  $chapter = node_load($nid);
   $account = user_load($user->uid);
-  $chapter = node_load(arg(2));
-  if ($chapter){
+
+  if ($chapter) {
     foreach($chapter->field_chapter_leaders[$chapter->language] as $leader){
       $chapterleader = user_load($leader['target_id']);
       tm_chapters_send_email($chapterleader->mail, $form_state['values']['subject'], $form_state['values']['body'], $account);
     }
-  drupal_set_message(t('Your message has been sent.'));
-  drupal_goto('node/'.$chapter->nid);
+
+    drupal_set_message(t('Your message has been sent.'));
+    drupal_goto('node/'.$chapter->nid);
   }
 }
+
 /* Email sending function */
 function tm_chapters_send_email($email, $subject, $body, $user){
 
@@ -220,12 +234,33 @@ function tm_chapters_send_email($email, $subject, $body, $user){
 }
 
 /* Download Chapter CSV function */
-function tm_chapters_download_csv($nid){
+function tm_chapters_download_csv(){
 
-  $chapternode = node_load($nid);
+  global $user;
+  global $conf;
+  $nid = _orig_nid();
+
+  if($nid == 0) {
+    print drupal_not_found();
+    return;
+  }
+
+  // Check that user is a chapter leader of this chapter
+  if ((!tm_users_is_chapter_leader($user->uid, $nid)) 
+    and (!(in_array("moderator", $user->roles))) 
+    and (!in_array("administrator", $user->roles)))
+ {
+    $output = drupal_access_denied();
+    print $output;
+    return;
+  }
+
+  // Get chapter
+  $chapter = node_load($nid);
+
   $oldzone = date_default_timezone_get();
   date_default_timezone_set(drupal_get_user_timezone());
-  $csvname = $chapternode->title.'_'.date('M_d_Y_Gi',time()) . ".csv";
+  $csvname = $chapter->title.'_'.date('M_d_Y_Gi',time()) . ".csv";
   date_default_timezone_set($oldzone);
 
   // csv header
@@ -252,8 +287,8 @@ function tm_chapters_download_csv($nid){
     ->condition('entity_id',$nid,'=')
     ->condition('entity_type','node','=')
     ->execute();
-  while ($user = $users->fetchAssoc()){
-    $account = user_load($user['uid']);
+  while ($load_user = $users->fetchAssoc()){
+    $account = user_load($load_user['uid']);
     if (empty($account->language)) $language = LANGUAGE_NONE;
     else $language = $account->language;
 
@@ -298,7 +333,7 @@ function tm_chapters_download_csv($nid){
       }
     }
     else $item[] = t('none');
-    $item[] = date('j M Y',$user['timestamp']);
+    $item[] = date('j M Y',$load_user['timestamp']);
 
     // approved or not
     if (!in_array("approved user", $account->roles)) { 
@@ -390,10 +425,10 @@ function tm_chapters_page_alter(&$page) {
   // /chapters/sort/title
   if (($url_parts[0] == "chapters") and ((sizeof($url_parts) == 1) or (sizeof($url_parts) == 3))) {
 
-
-    // don't show on chapter contact page ie: /chapters/contact/123
+    // don't show on special chapters page
+    // ie: invitations, contact, unapproved-members, insights, export
     if (sizeof($url_parts) == 3) {
-      if ($url_parts[1] == "contact") {
+      if (in_array($url_parts[2], array("invitations", "contact", "unapproved-members", "insights", "export"))) {
         return;
       }
     }
@@ -477,5 +512,14 @@ function _tm_chapters_check_moderator_delete($chapter_id) {
   return true; 
 }
 
+/* Modify views */
+function tm_chapters_views_pre_view(&$view, &$display_id, &$args) {
+  // unapproved-members page: set argument to node id (instead of chapter name slug)
+  if (($display_id == "unapproved_members_in_chapter") && ($view->name == "unapproved_users")) {
+    $nid = _orig_nid();
+    $args[0] = $nid;
+  }
+
+}
 
 

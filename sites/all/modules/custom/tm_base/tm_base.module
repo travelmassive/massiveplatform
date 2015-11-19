@@ -463,3 +463,18 @@ function tm_base_linkify($value, $protocols = array('http', 'mail'), array $attr
     // Insert all link
     return preg_replace_callback('/<(\d+)>/', function ($match) use (&$links) { return $links[$match[1] - 1]; }, $value);
 }
+
+/* The helper function to detect original nid for the current page. */
+function _orig_nid() {
+  $orig_path = _orig_path();
+  $node = menu_get_object('node', 1, $orig_path);
+  $nid = (isset($node) ? $node->nid : 0 );
+  return $nid;
+}
+
+/* The helper function to detect original path for the current page. */
+function _orig_path() {
+  $url = arg(0).'/'.arg(1);
+  $path = (drupal_lookup_path('source', $url));
+  return $path;
+}

@@ -2151,3 +2151,4 @@ function tm_users_get_num_registered_events($uid) {
   $result = db_query($query, array(':fid' => $flag->fid, ':uid' => $uid))->fetch();
   return $result->total;
 }
+

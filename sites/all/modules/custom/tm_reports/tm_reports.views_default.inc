@@ -772,6 +772,14 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['fields']['count']['relationship'] = 'flag_count_rel';
   $handler->display->display_options['fields']['count']['label'] = 'Total Members';
   /* Field: Global: Custom text */
+  $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
+  $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_1']['label'] = 'Chapter Insights';
+  $handler->display->display_options['fields']['nothing_1']['alter']['text'] = 'View';
+  $handler->display->display_options['fields']['nothing_1']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['nothing_1']['alter']['path'] = '/node/[nid]/chapter-insights';
+  /* Field: Global: Custom text */
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';

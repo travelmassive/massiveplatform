@@ -147,6 +147,7 @@ print l(t('Approve my account'), 'javascript:jq_request_approval(' . $loaded->ui
         <li><?php print l(t('Add chapter'), 'node/add/chapter'); ?></li>
         <li><?php print l(t('All unapproved members'), 'admin/unapproved-members'); ?></li>
         <li><?php print l(t('Community reports'), 'admin/tm_reports'); ?></li>
+        <li><?php print l(t('Global insights'), 'admin/global_insights'); ?></li>
       </ul>
   <?php endif; ?>
 

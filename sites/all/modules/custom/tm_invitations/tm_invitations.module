@@ -52,6 +52,7 @@ function tm_invitations_menu() {
     'class' => 'invite-header',
     'type' => MENU_CALLBACK,
   );
+ 
   return $items;
 }
 
@@ -62,49 +63,48 @@ function chapter_invitations_page() {
 
   global $user;
   global $conf;
-  $orig_path = _orig_path();
+  $nid = _orig_nid();
 
-  // Check: is current path correct?
-  if($orig_path) {
-    $form = drupal_get_form('tm_invitations_invite_form');
+  if($nid == 0) {
+    print drupal_not_found();
+    return;
+  }
 
-    $chapter_id = explode("/", $orig_path)[1];
-    $chapter = node_load($chapter_id);
-    $chapter_name = $chapter->title;
+  $chapter = node_load($nid);
+  $chapter_name = $chapter->title;
 
+  $form = drupal_get_form('tm_invitations_invite_form');
+
+  $output = l(t('Back to chapter page'), url('node/'.$nid, array('absolute' => TRUE)));
+
+  $output .=  t('<p style="font-size: 11pt;">Grow your chapter by inviting new members to your chapter with email invitations. Just use the form below to bulk add your invitation emails.</p>
+    <p style="font-size: 11pt;"><strong>How it works</strong>
+      <br>1. Members will be sent an invitation email to join your chapter (<i>subject: Your Invitation to ' . $conf['tm_site_name'] . " " . $chapter_name . '</i>)
+      <br>2. If they sign up using the email address you invited them with, they will automatically join your chapter.
+      <br>3. You will receive a notification when a new member joins your chapter so that you can approve them.
+    </p>
+    <p style="font-size: 11pt;">
+    <strong>Tips</strong>
+    <ul style="font-size: 11pt; margin-top: -1em;">
+      <li>Email addresses must be separated by comma, space or newline.</li>
+      <li>Users who already have an account will not be invited.</li>
+      <li>Only use email addresses that you have consent to contact.</li>
+      <li>Invitations may take a few minutes to arrive to the recipients.</li>
+    </ul>
+    </p>');
+  $output .= drupal_render($form);
+  $output .= views_embed_view('invitations', 'default');
+
+  // Check: has the user permission to access this page?
+  if(!user_access('tm invite all chapters')) {
     $nid = _orig_nid();
-    $output = l(t('Back to chapter page'), url('node/'.$nid, array('absolute' => TRUE)));
-
-    $output .=  t('<p style="font-size: 11pt;">Grow your chapter by inviting new members to your chapter with email invitations. Just use the form below to bulk add your invitation emails.</p>
-      <p style="font-size: 11pt;"><strong>How it works</strong>
-        <br>1. Members will be sent an invitation email to join your chapter (<i>subject: Your Invitation to ' . $conf['tm_site_name'] . " " . $chapter_name . '</i>)
-        <br>2. If they sign up using the email address you invited them with, they will automatically join your chapter.
-        <br>3. You will receive a notification when a new member joins your chapter so that you can approve them.
-      </p>
-      <p style="font-size: 11pt;">
-      <strong>Tips</strong>
-      <ul style="font-size: 11pt; margin-top: -1em;">
-        <li>Email addresses must be separated by comma, space or newline.</li>
-        <li>Users who already have an account will not be invited.</li>
-        <li>Only use email addresses that you have consent to contact.</li>
-        <li>Invitations may take a few minutes to arrive to the recipients.</li>
-      </ul>
-      </p>');
-    $output .= drupal_render($form);
-    $output .= views_embed_view('invitations', 'default');
-    // Check: has the user permission to access this page?
-    if(!user_access('tm invite all chapters')) {
-      $nid = _orig_nid();
-      if(!tm_users_is_chapter_leader($user->uid, $nid)) {
-        $output = drupal_access_denied();
-      }
+    if(!tm_users_is_chapter_leader($user->uid, $nid)) {
+      $output = drupal_access_denied();
     }
   }
-  // The current path is not correct.
-  else {
-    $output = drupal_not_found();
-  }
+
   return $output;
+
 }
 
 /* 
@@ -546,19 +546,4 @@ function tm_invitations_send_email($email, $inviter_name, $inviter_uid, $custom_
 
     // Send e-mail.
     $result = $system->mail($format_message);
-}
-
-/* The helper function to detect original nid for the current page. */
-function _orig_nid() {
-  $orig_path = _orig_path();
-  $node = menu_get_object('node', 1, $orig_path);
-  $nid = (isset($node) ? $node->nid : 0 );
-  return $nid;
-}
-
-/* The helper function to detect original path for the current page. */
-function _orig_path() {
-  $url = arg(0).'/'.arg(1);
-  $path = (drupal_lookup_path('source', $url));
-  return $path;
 }

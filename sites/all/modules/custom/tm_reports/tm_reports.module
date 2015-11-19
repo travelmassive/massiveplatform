@@ -255,8 +255,15 @@ function _tm_reports_views_pre_render_chapter_report(&$view) {
 
 /**
  * Calculate stats for chapter
+ * NOTE: Cached
  */
 function _tm_reports_get_chapter_insights($chapter_id) {
+
+  // check cache
+  $cache = cache_get('tm-reports-get-chapter-insights-' . $chapter_id, 'cache');
+  if (!empty($cache)) {
+    return $cache->data;
+  }
 
   $insights = array();
 
@@ -423,13 +430,22 @@ function _tm_reports_get_chapter_insights($chapter_id) {
 
   // RETURN DATA
   $data_labels = tm_reports_get_insights_labels();
-  return ["data_values" => $insights, "data_labels" => $data_labels];
+  $results = ["data_values" => $insights, "data_labels" => $data_labels];
+  cache_set('tm-reports-get-chapter-insights-' . $chapter_id, $results, 'cache', time() + 900); // 15 mins
+  return $results;
 }
 
 /**
  * Calculate global stats
+ * NOTE: Cached
  */
 function _tm_reports_get_global_insights() {
+
+  // check cache
+  $cache = cache_get('tm-reports-get-global-insights', 'cache');
+  if (!empty($cache)) {
+    return $cache->data;
+  }
 
   $insights = array();
 
@@ -528,7 +544,9 @@ function _tm_reports_get_global_insights() {
 
   // RETURN DATA
   $data_labels = tm_reports_get_insights_labels();
-  return ["data_values" => $insights, "data_labels" => $data_labels];
+  $results = ["data_values" => $insights, "data_labels" => $data_labels];
+  cache_set('tm-reports-get-global-insights', $results, 'cache', time() + 900); // 15 mins
+  return $results;
 }
 
 /**
@@ -782,7 +800,7 @@ function tm_reports_chapter_insights($nid) {
   $return_link = l(t('View chapter'), url('node/'.$nid, array('absolute' => TRUE)));
 
   // Generate HTML
-  $html = _tm_reports_insights_js_header();
+  $html = _tm_reports_insights_js_css_header();
 
   // Insights
   $html .= "<div class='column first'>";
@@ -831,7 +849,7 @@ function tm_reports_global_insights() {
   //$return_link = l(t('Community Reports'), url('admin/tm_reports', array('absolute' => TRUE)));
 
   // Generate HTML
-  $html = _tm_reports_insights_js_header();
+  $html = _tm_reports_insights_js_css_header();
 
   // Insights
   $html .= "<div class='column first'>";
@@ -962,7 +980,7 @@ EOT;
 /**
  * Load Google Chart API via JS
  */
-function _tm_reports_insights_js_header() {
+function _tm_reports_insights_js_css_header() {
 
   // Html to load Google chart data
   $html = <<<EOT
@@ -974,6 +992,9 @@ google.load('visualization', '1.1', {packages:['corechart', 'table', 'bar']});
 // hide drupal title
 document.getElementById("page-title").style.display = 'none';
 </script>
+<style>
+.google-visualization-table-tr-head { display: none; }
+</style>
 EOT;
 
   return $html;
@@ -1006,7 +1027,7 @@ EOT;
 
   $hide_values = [];
   if ($chapter_id != "") {
-    $hide_values = ["members_approved_with_segment", "members_approved_without_segment", "members_approved_total", "members_unapproved_total"];
+    $hide_values = ["members_approved_with_segment", "members_approved_without_segment", "members_unapproved_total"];
   }
   foreach ($chapter_insights as $key => $value) {
     if (!in_array($key, $hide_values)) {
@@ -1033,8 +1054,15 @@ EOT;
 
 /**
  * Get Industry Segment Data from a chapter or global (approved members)
+ * Note: CACHED
  */
 function _tm_reports_get_industry_segment_data($chapter_id = "") {
+
+  // check cache
+  $cache = cache_get('tm-reports-get-industry-segment-data-' . $chapter_id, 'cache');
+  if (!empty($cache)) {
+    return $cache->data;
+  }
 
   $approved_role = user_role_load_by_name("approved user");
 
@@ -1083,6 +1111,9 @@ function _tm_reports_get_industry_segment_data($chapter_id = "") {
     $segment_data[] = array("name" => $row->name, "total" => $row->total, "tid" => $row->segment_tid);
   }
 
+  // RETURN DATA
+  $data_labels = tm_reports_get_insights_labels();
+  cache_set('tm-reports-get-industry-segment-data-' . $chapter_id, $segment_data, 'cache', time() + 900); // 15 mins
   return $segment_data;
 }
 

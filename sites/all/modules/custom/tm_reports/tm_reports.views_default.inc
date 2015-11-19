@@ -779,6 +779,7 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['fields']['nothing_1']['alter']['text'] = 'View';
   $handler->display->display_options['fields']['nothing_1']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['nothing_1']['alter']['path'] = '/node/[nid]/chapter-insights';
+  $handler->display->display_options['fields']['nothing_1']['alter']['target'] = '_blank';
   /* Field: Global: Custom text */
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';

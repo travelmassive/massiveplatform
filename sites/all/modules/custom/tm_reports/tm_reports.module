@@ -830,7 +830,13 @@ function tm_reports_chapter_insights($nid) {
   $html .= "</section>";
   $html .= "</div>";
 
-  $form['html'] =  array(
+  // show tip?
+  if (isset($conf["tm_reports_chapter_insights_tip"])) {
+    $html .= "<style>.messages--status.messages { margin-left: 2rem; margin-right: 2rem; } </style>";
+    drupal_set_message($conf["tm_reports_chapter_insights_tip"]);
+  }
+
+   $form['html'] =  array(
     '#type' => 'markup',
     '#markup' => $html);
 

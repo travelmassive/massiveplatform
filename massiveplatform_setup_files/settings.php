@@ -760,5 +760,8 @@ $conf['tm_marketplace_feedme_url'] = '/marketplace/api/search/'; // url for sear
 $conf["tm_users_link_fields"] = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat');
 $conf["tm_organizations_link_fields"] = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo');
 
+/* Display a tip on chapter insights page */
+$conf["tm_reports_chapter_insights_tip"] = "Join our Facebook group to share tips with other members on growing your chapter and be part of our global founders team!";
+
 $conf['install_profile'] = 'tm';
 

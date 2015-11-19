@@ -253,109 +253,9 @@ function _tm_reports_views_pre_render_chapter_report(&$view) {
   }
 }
 
-function _tm_reports_get_global_insights() {
-
-  $insights = array();
-
-  $approved_role = user_role_load_by_name("approved user");
-  $days_ago_30 = time() - (60 * 60 * 24 * 30); // 30 days ago
-  $days_ago_90 = time() - (60 * 60 * 24 * 90); // 90 days ago
-  
-  // NUMBER OF FUTURE EVENTS
-  $query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 
-  WHERE e.entity_type = 'node' AND field_event_date_value >= NOW();";
-  $query = db_query($query_sql)->fetch();
-  $insights["num_events_upcoming"] = $query->total;
-
-  // NUMBER OF EVENTS PAST MONTH
-  $query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 
-  WHERE e.entity_type = 'node' AND field_event_date_value >= DATE_SUB(NOW(),INTERVAL 30 DAY);";
-  $query = db_query($query_sql)->fetch();
-  $insights["num_events_past_30_days"] = $query->total;
-
-  // NUMBER OF EVENTS PAST YEAR
-  $query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 
-  WHERE e.entity_type = 'node' AND field_event_date_value >= DATE_SUB(NOW(),INTERVAL 1 YEAR);";
-  $query = db_query($query_sql)->fetch();
-  $insights["num_events_past_12_months"] = $query->total;
-
-  // ALL NEW MEMBERS PAST 30 DAYS
-  $query_sql = "SELECT COUNT(*) total FROM {users} u WHERE created >= :time_ago";
-  $query = db_query($query_sql, array(':time_ago' => $days_ago_30))->fetch();
-  $members_30_days_total = $query->total;
-  $insights["members_30_days_total"] = $members_30_days_total;
-
-  // ALL NEW MEMBERS PAST 90 DAYS
-  $query_sql = "SELECT COUNT(*) total FROM {users} u WHERE created >= :time_ago";
-  $query = db_query($query_sql, array(':time_ago' => $days_ago_90))->fetch();
-  $members_90_days_total = $query->total;
-  $insights["members_90_days_total"] = $members_90_days_total;
-
-  // ALL MEMBERSHIP GROWTH % PAST 30 DAYS
-  $query_sql = "SELECT COUNT(*) total FROM {users} u WHERE created < :time_ago";
-  $query = db_query($query_sql, array(':time_ago' => $days_ago_30))->fetch();
-  $members_30_days_ago = $query->total;
-  $members_30_days_pct = 0;
-  if ($members_30_days_ago > 0) {      
-    $members_30_days_pct = round((($members_30_days_total / $members_30_days_ago) * 100), 0);
-  }
-  $insights["members_30_days_pct"] = $members_30_days_pct;
-
-  // ALL MEMBERSHIP GROWTH % PAST 90 DAYS
-  $query_sql = "SELECT COUNT(*) total FROM {users} u WHERE created < :time_ago";
-  $query = db_query($query_sql, array(':time_ago' => $days_ago_90))->fetch();
-  $members_90_days_ago = $query->total;
-  $members_90_days_pct = 0;
-  if ($members_90_days_ago > 0) {      
-    $members_90_days_pct = round((($members_90_days_total / $members_90_days_ago) * 100), 0);
-  }
-  $insights["members_90_days_pct"] = $members_90_days_pct;
-  
-  // ALL MEMBERS
-  $query_sql = "SELECT COUNT(*) total FROM {users} u";
-  $query = db_query($query_sql)->fetch();
-  $members_total = $query->total;
-  $insights["members_total"] = $members_total;
-
-  // ALL APPROVED MEMBERS
-  $query_sql = "SELECT COUNT(*) total FROM {users} u RIGHT JOIN users_roles ON users_roles.uid = u.uid WHERE users_roles.rid = :role_id";
-  $query = db_query($query_sql, array(':role_id' => $approved_role->rid))->fetch();
-  $members_approved_total = $query->total;
-  $insights["members_approved_total"] = $members_approved_total;
-
-  // TOTAL UNAPPROVED MEMBERS
-  $members_unapproved_total = $members_total - $members_approved_total;
-  $insights["members_unapproved_total"] = $members_unapproved_total;
-
-  // % UNAPPROVED MEMBERS
-  $members_unapproved_pct = round((($members_unapproved_total / $members_total) * 100), 0);
-  $insights["members_unapproved_pct"] = $members_unapproved_pct;
-
-  // NUM MEMBERS WITH A SEGMENT
-  $query_sql = "SELECT COUNT(*) total FROM users
-  LEFT JOIN users_roles ON users_roles.uid = users.uid 
-  RIGHT JOIN field_data_field_segment on users.uid = field_data_field_segment.entity_id 
-  WHERE field_data_field_segment.entity_id is not null
-  AND users_roles.rid = :role_id";
-  $query = db_query($query_sql, array(':role_id' => $approved_role->rid))->fetch();
-  $insights["members_approved_with_segment"] = $query->total;
-
-  // NUM MEMBERS WITHOUT A SEGMENT
-  $insights["members_approved_without_segment"] = $insights["members_approved_total"] - $insights["members_approved_with_segment"];
-
-  // % MEMBERS WITH AN INDUSTRY SEGMENT
-  $members_with_segment_pct = 0;
-  if (($insights["members_approved_with_segment"] > 0) && ($members_approved_total > 0)) {
-    $members_with_segment_pct = round((($insights["members_approved_with_segment"] / $members_approved_total) * 100), 0);
-  }
-  $insights["members_with_segment_pct"] = $members_with_segment_pct;
-
-  // RETURN DATA
-  $data_labels = tm_reports_get_insights_labels();
-  return ["data_values" => $insights, "data_labels" => $data_labels];
-}
-
-
+/**
+ * Calculate stats for chapter
+ */
 function _tm_reports_get_chapter_insights($chapter_id) {
 
   $insights = array();
@@ -478,7 +378,7 @@ function _tm_reports_get_chapter_insights($chapter_id) {
   $insights["members_total"] = $members_total;
 
   // TOTAL APPROVED MEMBERS
-  $query_sql = "SELECT COUNT(*) total FROM {flagging} f RIGHT JOIN users_roles ON users_roles.uid = f.uid WHERE users_roles.rid = :role_id AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
+  $query_sql = "SELECT COUNT(DISTINCT users_roles.uid) total FROM {flagging} f RIGHT JOIN users_roles ON users_roles.uid = f.uid WHERE users_roles.rid = :role_id AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
   $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
   $members_approved_total = $query->total;
   $insights["members_approved_total"] = $members_approved_total;
@@ -502,13 +402,118 @@ function _tm_reports_get_chapter_insights($chapter_id) {
   $insights["members_unapproved_pct"] = $members_unapproved_pct;
 
   // NUM MEMBERS WITH A SEGMENT
-  $query_sql = "SELECT COUNT(*) total FROM {flagging} f
+  $query_sql = "SELECT COUNT(DISTINCT users_roles.uid) total FROM {flagging} f
   LEFT JOIN users_roles ON users_roles.uid = f.uid 
   RIGHT JOIN field_data_field_segment on f.uid = field_data_field_segment.entity_id 
   WHERE field_data_field_segment.entity_id is not null
   AND users_roles.rid = :role_id
   AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
   $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
+  $insights["members_approved_with_segment"] = $query->total;
+
+  // NUM MEMBERS WITHOUT A SEGMENT
+  $insights["members_approved_without_segment"] = $insights["members_approved_total"] - $insights["members_approved_with_segment"];
+
+  // % MEMBERS WITH AN INDUSTRY SEGMENT
+  $members_with_segment_pct = 0;
+  if (($insights["members_approved_with_segment"] > 0) && ($members_approved_total > 0)) {
+    $members_with_segment_pct = round((($insights["members_approved_with_segment"] / $members_approved_total) * 100), 0);
+  }
+  $insights["members_with_segment_pct"] = $members_with_segment_pct;
+
+  // RETURN DATA
+  $data_labels = tm_reports_get_insights_labels();
+  return ["data_values" => $insights, "data_labels" => $data_labels];
+}
+
+/**
+ * Calculate global stats
+ */
+function _tm_reports_get_global_insights() {
+
+  $insights = array();
+
+  $approved_role = user_role_load_by_name("approved user");
+  $days_ago_30 = time() - (60 * 60 * 24 * 30); // 30 days ago
+  $days_ago_90 = time() - (60 * 60 * 24 * 90); // 90 days ago
+  
+  // NUMBER OF FUTURE EVENTS
+  $query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 
+  WHERE e.entity_type = 'node' AND field_event_date_value >= NOW();";
+  $query = db_query($query_sql)->fetch();
+  $insights["num_events_upcoming"] = $query->total;
+
+  // NUMBER OF EVENTS PAST MONTH
+  $query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 
+  WHERE e.entity_type = 'node' AND field_event_date_value >= DATE_SUB(NOW(),INTERVAL 30 DAY);";
+  $query = db_query($query_sql)->fetch();
+  $insights["num_events_past_30_days"] = $query->total;
+
+  // NUMBER OF EVENTS PAST YEAR
+  $query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 
+  WHERE e.entity_type = 'node' AND field_event_date_value >= DATE_SUB(NOW(),INTERVAL 1 YEAR);";
+  $query = db_query($query_sql)->fetch();
+  $insights["num_events_past_12_months"] = $query->total;
+
+  // ALL NEW MEMBERS PAST 30 DAYS
+  $query_sql = "SELECT COUNT(*) total FROM {users} u WHERE created >= :time_ago";
+  $query = db_query($query_sql, array(':time_ago' => $days_ago_30))->fetch();
+  $members_30_days_total = $query->total;
+  $insights["members_30_days_total"] = $members_30_days_total;
+
+  // ALL NEW MEMBERS PAST 90 DAYS
+  $query_sql = "SELECT COUNT(*) total FROM {users} u WHERE created >= :time_ago";
+  $query = db_query($query_sql, array(':time_ago' => $days_ago_90))->fetch();
+  $members_90_days_total = $query->total;
+  $insights["members_90_days_total"] = $members_90_days_total;
+
+  // ALL MEMBERSHIP GROWTH % PAST 30 DAYS
+  $query_sql = "SELECT COUNT(*) total FROM {users} u WHERE created < :time_ago";
+  $query = db_query($query_sql, array(':time_ago' => $days_ago_30))->fetch();
+  $members_30_days_ago = $query->total;
+  $members_30_days_pct = 0;
+  if ($members_30_days_ago > 0) {      
+    $members_30_days_pct = round((($members_30_days_total / $members_30_days_ago) * 100), 0);
+  }
+  $insights["members_30_days_pct"] = $members_30_days_pct;
+
+  // ALL MEMBERSHIP GROWTH % PAST 90 DAYS
+  $query_sql = "SELECT COUNT(*) total FROM {users} u WHERE created < :time_ago";
+  $query = db_query($query_sql, array(':time_ago' => $days_ago_90))->fetch();
+  $members_90_days_ago = $query->total;
+  $members_90_days_pct = 0;
+  if ($members_90_days_ago > 0) {      
+    $members_90_days_pct = round((($members_90_days_total / $members_90_days_ago) * 100), 0);
+  }
+  $insights["members_90_days_pct"] = $members_90_days_pct;
+  
+  // ALL MEMBERS
+  $query_sql = "SELECT COUNT(*) total FROM {users} u";
+  $query = db_query($query_sql)->fetch();
+  $members_total = $query->total;
+  $insights["members_total"] = $members_total;
+
+  // ALL APPROVED MEMBERS
+  $query_sql = "SELECT COUNT(DISTINCT u.uid) total FROM {users} u RIGHT JOIN users_roles ON users_roles.uid = u.uid WHERE users_roles.rid = :role_id";
+  $query = db_query($query_sql, array(':role_id' => $approved_role->rid))->fetch();
+  $members_approved_total = $query->total;
+  $insights["members_approved_total"] = $members_approved_total;
+
+  // TOTAL UNAPPROVED MEMBERS
+  $members_unapproved_total = $members_total - $members_approved_total;
+  $insights["members_unapproved_total"] = $members_unapproved_total;
+
+  // % UNAPPROVED MEMBERS
+  $members_unapproved_pct = round((($members_unapproved_total / $members_total) * 100), 0);
+  $insights["members_unapproved_pct"] = $members_unapproved_pct;
+
+  // NUM MEMBERS WITH A SEGMENT
+  $query_sql = "SELECT COUNT(DISTINCT users.uid) total FROM users
+  LEFT JOIN users_roles ON users_roles.uid = users.uid 
+  RIGHT JOIN field_data_field_segment on users.uid = field_data_field_segment.entity_id 
+  WHERE field_data_field_segment.entity_id is not null
+  AND users_roles.rid = :role_id";
+  $query = db_query($query_sql, array(':role_id' => $approved_role->rid))->fetch();
   $insights["members_approved_with_segment"] = $query->total;
 
   // NUM MEMBERS WITHOUT A SEGMENT
@@ -949,7 +954,7 @@ EOT;
   $html .= "\nchart.draw(data, options);";
   $html .= "\n}";
   $html .= "\n</script>";
-  $html .= '<div id="' . $div_id . '" style="width: 100%; height: 400px;">Loading...</div>';
+  $html .= '<div id="' . $div_id . '" style="width: 100%; height: 400px;"></div>';
 
   return $html;
 }
@@ -1020,7 +1025,7 @@ EOT;
   table.draw(data, {showRowNumber: false, sort: false, width: '100%'});
 }
 </script>
-<div id="insights_table" style="width: 100%;">Loading...</div>
+<div id="insights_table" style="width: 100%;"></div>
 EOT;
 
   return $html;
@@ -1195,7 +1200,7 @@ EOT;
   chart.draw(data, options);
 }
 </script>
-<div id="insights_segments" style="width: 100%; height: 500px;">Loading...</div>
+<div id="insights_segments" style="width: 100%; height: 500px;"></div>
 EOT;
 
   return $html;

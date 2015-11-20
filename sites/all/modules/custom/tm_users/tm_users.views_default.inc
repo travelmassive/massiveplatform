@@ -1312,7 +1312,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['arguments']['entity_id']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['entity_id']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['entity_id']['summary_options']['items_per_page'] = '25';
-  $handler->display->display_options['path'] = 'node/%/unapproved-members';
+  $handler->display->display_options['path'] = 'chapters/%/unapproved-members';
   $handler->display->display_options['menu']['title'] = 'Unapproved users';
   $handler->display->display_options['menu']['weight'] = '0';
   $handler->display->display_options['menu']['name'] = 'management';

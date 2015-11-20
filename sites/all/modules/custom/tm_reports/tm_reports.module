@@ -864,7 +864,7 @@ function tm_reports_global_insights() {
 
   // Generate HTML
   $html = _tm_reports_insights_js_css_header();
-  $redraw_functions = array("drawChart", "draw_new_signups", "draw_event_registrations", "follow_members", "follow_organizations");
+  $redraw_functions = array("drawChart", "draw_new_signups", "draw_event_registrations", "draw_follow_members", "draw_follow_organizations");
   $html .= _tm_reports_insights_js_redraw_function($redraw_functions);
 
   // Start artlce

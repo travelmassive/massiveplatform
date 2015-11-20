@@ -26,13 +26,18 @@ function tm_theme_image_default_styles() {
   $styles['avatar'] = array(
     'label' => 'Avatar',
     'effects' => array(
-      2 => array(
+      5 => array(
         'name' => 'image_scale_and_crop',
         'data' => array(
-          'width' => 256,
-          'height' => 256,
+          'width' => 512,
+          'height' => 512,
         ),
         'weight' => 1,
+      ),
+      6 => array(
+        'name' => 'image_hires',
+        'data' => array(),
+        'weight' => 2,
       ),
     ),
   );

@@ -801,6 +801,11 @@ function tm_reports_chapter_insights($nid) {
 
   // Generate HTML
   $html = _tm_reports_insights_js_css_header();
+  $redraw_functions = array("drawChart", "draw_insights_signups");
+  $html .= _tm_reports_insights_js_redraw_function($redraw_functions);
+
+  // Start article
+  $html .= "<article class='trilithon node view-mode-full node-by-viewer clearfix'>";
 
   // Insights
   $html .= "<div class='column first'>";
@@ -810,18 +815,18 @@ function tm_reports_chapter_insights($nid) {
             </header>";
   $html .= _tm_reports_insights_table_html($chapter->nid);
   $html .= "</section>";
-  $html .= "</div>";
 
   // Industry Segments
-  $html .= "<div class='column second'>";
   $html .= "<section class='contained contained-block'>";
   $html .= "<header class='contained-head'>
             <h1 class='prime-title'>Industry Segments - " . $chapter->title . "</h1>
             </header>";
   $html .= _tm_reports_insights_segments_html($chapter->nid);
   $html .= "</section>";
+  $html .= "</div>";
 
   // New Members
+  $html .= "<div class='column second'>";
   $html .= "<section class='contained contained-block'>";
   $html .= "<header class='contained-head'>
             <h1 class='prime-title'>New Members - " . $chapter->title . "</h1>
@@ -830,13 +835,16 @@ function tm_reports_chapter_insights($nid) {
   $html .= "</section>";
   $html .= "</div>";
 
+  // Close article
+  $html .= "</article>";
+
   // show tip?
   if (isset($conf["tm_reports_chapter_insights_tip"])) {
-    $html .= "<style>.messages--status.messages { margin-left: 2rem; margin-right: 2rem; } </style>";
+    $html .= "<style>.messages--status.messages { margin-left: 1rem; } </style>";
     drupal_set_message($conf["tm_reports_chapter_insights_tip"]);
   }
 
-   $form['html'] =  array(
+  $form['html'] =  array(
     '#type' => 'markup',
     '#markup' => $html);
 
@@ -856,6 +864,11 @@ function tm_reports_global_insights() {
 
   // Generate HTML
   $html = _tm_reports_insights_js_css_header();
+  $redraw_functions = array("drawChart", "draw_new_signups", "draw_event_registrations", "follow_members", "follow_organizations");
+  $html .= _tm_reports_insights_js_redraw_function($redraw_functions);
+
+  // Start artlce
+  $html .= "<article class='trilithon node view-mode-full node-by-viewer clearfix'>";
 
   // Insights
   $html .= "<div class='column first'>";
@@ -865,24 +878,54 @@ function tm_reports_global_insights() {
   $html .= "</header>";
   $html .= _tm_reports_insights_table_html();
   $html .= "</section>";
-  $html .= "</div>";
 
-  // Industry Segments
-  $html .= "<div class='column second'>";
+  // Segments
   $html .= "<section class='contained contained-block'>";
   $html .= "<header class='contained-head'>
             <h1 class='prime-title'>Industry Segments</h1>
             </header>";
   $html .= _tm_reports_insights_segments_html();
   $html .= "</section>";
+  $html .= "</div>";
 
   // New Members
+  $html .= "<div class='column second'>";
+
   $html .= "<section class='contained contained-block'>";
   $html .= "<header class='contained-head'>
             <h1 class='prime-title'>New Members</h1>
             </header>";
   $html .= _tm_reports_insights_all_signups_html();
   $html .= "</section>";
+
+  // Event Registrations
+  $html .= "<section class='contained contained-block'>";
+  $html .= "<header class='contained-head'>
+            <h1 class='prime-title'>Event Registrations</h1>
+            </header>";
+  $html .= _tm_reports_insights_all_event_registrations_html();
+  $html .= "</section>";
+
+  // Member Follows
+  $html .= "<section class='contained contained-block'>";
+  $html .= "<header class='contained-head'>
+            <h1 class='prime-title'>Member Connections</h1>
+            </header>";
+  $html .= _tm_reports_insights_all_member_connections_html();
+  $html .= "</section>";
+
+  // Organzation Follows
+  $html .= "<section class='contained contained-block'>";
+  $html .= "<header class='contained-head'>
+            <h1 class='prime-title'>Organization Connections</h1>
+            </header>";
+  $html .= _tm_reports_insights_all_organization_connections_html();
+  $html .= "</section>";
+
+  $html .= "</div>";
+
+  // End article
+  $html .= "</article>";
 
   $form['html'] =  array(
     '#type' => 'markup',
@@ -912,39 +955,58 @@ function _tm_reports_insights_all_signups_html() {
 
   // Step 1. Get chapter insight data
   $results = _tm_reports_new_users_time_series();
-
   // Step 2. Render chart
   $html = _tm_reports_insights_chart_html($results, "", "New Members", "Month", "new_signups");
-
   return $html;
 }
+
+/**
+ * Generate a chart of all event registrations
+ */
+function _tm_reports_insights_all_event_registrations_html() {
+
+  $follow_flag = flag_get_flag('event_register', NULL);
+  // Step 1. Get chapter insight data
+  $results = _tm_reports_flagging_time_series(NULL, $follow_flag->fid, "node");
+  // Step 2. Render chart
+  $html = _tm_reports_insights_chart_html($results, "", "Event Registrations", "Month", "event_registrations");
+  return $html;
+}
+
+/**
+ * Generate a chart of all member follows
+ */
+function _tm_reports_insights_all_member_connections_html() {
+
+  $follow_flag = flag_get_flag('follow_members', NULL);
+  // Step 1. Get chapter insight data
+  $results = _tm_reports_flagging_time_series(NULL, $follow_flag->fid, "user");
+  // Step 2. Render chart
+  $html = _tm_reports_insights_chart_html($results, "", "Follow Members", "Month", "follow_members");
+  return $html;
+}
+
+/**
+ * Generate a chart of all organisation follows
+ */
+function _tm_reports_insights_all_organization_connections_html() {
+
+  $follow_flag = flag_get_flag('follow_organizations', NULL);
+  // Step 1. Get chapter insight data
+  $results = _tm_reports_flagging_time_series(NULL, $follow_flag->fid, "node");
+  // Step 2. Render chart
+  $html = _tm_reports_insights_chart_html($results, "", "Follow Organization", "Month", "follow_organizations");
+  return $html;
+}
+
 
 /**
  * Generate Google Chart from a data series
  */
 function _tm_reports_insights_chart_html($results, $chart_title, $v_title, $h_title, $div_id) {
 
-  $div_id = "new_members";
-  $h_title = "Month";
-  $v_title = "New Members";
-  $chart_title = "";
-
   // Format in Google chart
-  $html = "<script>
-  window.onresize = function(e) {
-  delay(function(){
-    drawChart(); // workaround, as the drawchart listener is overridden here
-    draw_".$div_id."();
-  }, 250); 
-}
-
-var delay = (function(){
-  var timer = 0;
-  return function(callback, ms){
-    clearTimeout (timer);
-    timer = setTimeout(callback, ms);
-  };
-})();";
+  $html = "<script>";
 
   $html .= "\ngoogle.setOnLoadCallback(draw_" . $div_id . ");";
   $html .= "\nfunction draw_" . $div_id . "() {";
@@ -1002,6 +1064,36 @@ document.getElementById("page-title").style.display = 'none';
 .google-visualization-table-tr-head { display: none; }
 </style>
 EOT;
+
+  return $html;
+}
+ 
+/*
+ * Generate js redraw listener code to resize charts/graphs on window resize
+ */
+function _tm_reports_insights_js_redraw_function($redraw_functions) {
+
+  $html = "<script>\n";
+
+  $html .= "window.onresize = function(e) {
+  delay(function(){";
+
+  foreach ($redraw_functions as $fn) {
+    $html .= "\n" . $fn . "();";
+  }
+  
+  $html .= "}, 250); 
+}
+
+var delay = (function(){
+  var timer = 0;
+  return function(callback, ms){
+    clearTimeout (timer);
+    timer = setTimeout(callback, ms);
+  };
+})();
+
+</script>";
 
   return $html;
 }
@@ -1125,21 +1217,42 @@ function _tm_reports_get_industry_segment_data($chapter_id = "") {
 
 /**
  * Get monthly flagging data for a node and flag over time
+ * Note: CACHED
  */
-function _tm_reports_flagging_time_series($node_id, $flag_id, $timestamp_interval = "INTERVAL 1 YEAR") {
+function _tm_reports_flagging_time_series($node_id, $flag_id, $entity_type = "node", $timestamp_interval = "INTERVAL 1 YEAR") {
+
+  // check cache
+  $cache_key = "tm-reports-flagging-time-series-" . $node_id . "-" . $flag_id . "-" . $entity_type . "-" . $timestamp_interval;
+  $cache_key = str_replace(" ", "-", $cache_key);
+  $cache = cache_get($cache_key, 'cache');
+  if (!empty($cache)) {
+    return $cache->data;
+  }
 
   // SQL 
   $query = "select count(*) as total, YEAR(FROM_UNIXTIME(timestamp)) as group_year, MONTH(FROM_UNIXTIME(timestamp)) as group_month from flagging
-  where FROM_UNIXTIME(timestamp) >= DATE_SUB(NOW()," . $timestamp_interval . ")
-  and entity_id = :node_id 
-  and fid = :fid
-  and entity_type = 'node'
-  group by group_year, group_month order by group_year, group_month asc;";
+  where FROM_UNIXTIME(timestamp) >= DATE_SUB(NOW()," . $timestamp_interval . ")";
+
+  if ($node_id != NULL) {
+    $query .= " and entity_id = :node_id"; 
+  }
   
-  $rows = db_query($query, array(':node_id' => $node_id, ':fid' => $flag_id))->fetchAll();
+  $query .= " and fid = :fid
+  and entity_type = :entity_type
+  group by group_year, group_month order by group_year, group_month asc;";
+
+  $params = array(':node_id' => $node_id, ':fid' => $flag_id, ':entity_type' => $entity_type);
+  if ($node_id == NULL) {
+    $params = array(':fid' => $flag_id, ':entity_type' => $entity_type);
+  }
+
+  $rows = db_query($query, $params)->fetchAll();
 
   // pad the grouped data data
   $series = _tm_reports_helper_pad_monthly_grouped_data($rows);
+
+  // return data
+  cache_set($cache_key, $series, 'cache', time() + 900); // 15 mins
   return $series;
 }
 
@@ -1147,6 +1260,14 @@ function _tm_reports_flagging_time_series($node_id, $flag_id, $timestamp_interva
  * Get monthly new user signup data over time
  */
 function _tm_reports_new_users_time_series($timestamp_interval = "INTERVAL 1 YEAR") {
+
+   // check cache
+  $cache_key = "tm-reports-new-users-" . $timestamp_interval;
+  $cache_key = str_replace(" ", "-", $cache_key);
+  $cache = cache_get($cache_key, 'cache');
+  if (!empty($cache)) {
+    return $cache->data;
+  }
 
   // SQL 
   $query = "select count(*) as total, YEAR(FROM_UNIXTIME(created)) as group_year, MONTH(FROM_UNIXTIME(created)) as group_month from users
@@ -1157,6 +1278,9 @@ function _tm_reports_new_users_time_series($timestamp_interval = "INTERVAL 1 YEA
 
   // pad the grouped data data
   $series = _tm_reports_helper_pad_monthly_grouped_data($rows);
+
+  // return data
+  cache_set($cache_key, $series, 'cache', time() + 900); // 15 mins
   return $series;
 }
 
@@ -1206,20 +1330,6 @@ function _tm_reports_insights_segments_html($chapter_id = "") {
   $html = <<<EOT
 
 <script>
-window.onresize = function(e) {
-  delayChart(function(){
-    drawChart();
-  }, 250); 
-}
-
-var delayChart = (function(){
-  var timer = 0;
-  return function(callback, ms){
-    clearTimeout (timer);
-    timer = setTimeout(callback, ms);
-  };
-})();
-
 google.setOnLoadCallback(drawChart);
 function drawChart() {
   var data = google.visualization.arrayToDataTable([

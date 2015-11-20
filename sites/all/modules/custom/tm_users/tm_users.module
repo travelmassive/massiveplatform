@@ -1050,6 +1050,54 @@ function tm_users_preprocess_field(&$variables) {
   if ($variables['element']['#field_name'] == 'field_user_question_5') {
     $variables['label'] = $conf["tm_field_user_question_5_title"];
   }
+
+  // Replace default avatar image
+  if ($variables['element']['#field_name'] == 'field_avatar') {
+    if ($variables['items'][0]['#item']['uri'] == "public://default_images/avatar-default.png") {
+      // Replace default image with random image from folder
+      if (isset($conf["tm_default_avatars_path"])) {
+        $cover_files = file_scan_directory($conf["tm_default_avatars_path"], '/.*\.jpg$/i', array('recurse' => FALSE));
+        $image_uid = $variables['element']['#object']->uid;
+        $image_index = $image_uid % sizeof($cover_files);
+        $file_keys = array_keys($cover_files);
+        $cover_file = $cover_files[$file_keys[$image_index]]->uri;
+        $variables['items'][0]['#item']['uri'] = $cover_file;
+      }
+    }
+  }
+
+  // Replace default cover image with random image from folder
+  if ($variables['element']['#field_name'] == 'field_image') {
+    if ($variables['items'][0]['#item']['uri'] == "public://default_images/cover-default.png") {
+      
+      // Get element type
+      $element_type = "user";
+      if (isset($variables['element']['#object']->type) == "organization") {
+        $element_type = $variables['element']['#object']->type;
+      }
+
+      // Organization
+      if (($element_type == "organization") and (isset($conf["tm_default_organization_covers_path"]))) {
+        $cover_files = file_scan_directory($conf["tm_default_organization_covers_path"], '/.*\.jpg$/i', array('recurse' => FALSE));
+        $image_uid = $variables['element']['#object']->nid;
+        $image_index = $image_uid % sizeof($cover_files);
+        $file_keys = array_keys($cover_files);
+        $cover_file = $cover_files[$file_keys[$image_index]]->uri;
+        $variables['items'][0]['#item']['uri'] = $cover_file;
+      }
+     
+      // Member
+      if (($element_type == "user") and (isset($conf["tm_default_covers_path"]))) {
+        $cover_files = file_scan_directory($conf["tm_default_covers_path"], '/.*\.jpg$/i', array('recurse' => FALSE));
+        $image_uid = $variables['element']['#object']->uid;
+        $image_index = $image_uid % sizeof($cover_files);
+        $file_keys = array_keys($cover_files);
+        $cover_file = $cover_files[$file_keys[$image_index]]->uri;
+        $variables['items'][0]['#item']['uri'] = $cover_file;
+      }
+    }
+  }
+
 }
 
 function tm_users_form_alter(&$form, $form_state, $form_id) {

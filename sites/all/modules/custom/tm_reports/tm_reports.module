@@ -955,14 +955,6 @@ function tm_reports_global_insights() {
   $html .= _tm_reports_insights_segments_html();
   $html .= "</section>";
 
-  // API Data
-  $html .= "<section class='contained contained-block'>";
-  $html .= "<header class='contained-head'>
-            <h1 class='prime-title'>Global Insights</span></h1>"; // <!--&middot; <span style='color: #0068a8;'>" . $return_link . "</span></h1>
-  $html .= "</header>";
-  $html .= _tm_reports_insights_table_html();
-  $html .= "</section>";
-
   $html .= "</div>";
 
   // New Members

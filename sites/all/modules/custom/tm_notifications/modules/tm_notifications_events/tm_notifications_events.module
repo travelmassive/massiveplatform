@@ -189,13 +189,15 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
           $notify_ids[] = $chapter_leader['target_id'];
         }
       }
-      
     }
 
     // case 3: event with no organizers and no chapter -> event creator
-    if ((sizeof($event->field_organizer) == 0) and (sizeof($event->field_chapter == 0))) {
+    if ((sizeof($event->field_organizer) == 0) and (sizeof($event->field_chapter) == 0)) {
         $notify_ids[] = $event->uid;
     }
+
+    // in case duplicate organiser are set - remove duplicate notify_ids
+    $notify_ids = array_unique($notify_ids);
 
     // STEP 1
     // Notify the event organisers

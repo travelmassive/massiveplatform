@@ -542,6 +542,64 @@ function _tm_reports_get_global_insights() {
   }
   $insights["members_with_segment_pct"] = $members_with_segment_pct;
 
+  // NUM CHAPTERS
+  $query = "SELECT COUNT(*) amount FROM {node} n ".
+              "WHERE n.type = :type";
+  $num_chapters = db_query($query, array(':type' => "chapter"))->fetch();
+  $insights["num_chapters"] = $num_chapters->amount;
+
+  // NUMBER OF ORGANIZATIONS
+  $query = "SELECT COUNT(*) amount FROM {node} n ".
+              "WHERE n.type = :type";
+  $num_organizations = db_query($query, array(':type' => "organization"))->fetch();
+  $insights["num_organizations"] = $num_organizations->amount;
+
+  // NUMBER OF EVENTS
+  $query = "SELECT COUNT(*) amount FROM {node} n ".
+              "WHERE n.type = :type";
+  $num_events = db_query($query, array(':type' => "event"))->fetch();
+  $insights["num_events"] = $num_events->amount;
+ 
+  // NUMBER OF MEMBER COUNTRIES
+  $result = db_query("SELECT DISTINCT iso2, name from {field_data_field_country} f LEFT JOIN {countries_country} c ON f.field_country_iso2 = c.iso2 WHERE f.bundle = 'chapter' AND c.iso2 IS NOT NULL ORDER BY name ASC");
+  $chapter_countries = $result->fetchAllKeyed();
+  $num_chapter_countries = (sizeof($chapter_countries));
+  $insights["num_chapter_countries"] = $num_chapter_countries;
+
+  // NUMBER OF FOLLOWS
+  $flag = flag_get_flag('follow_members', NULL);
+  $query = "SELECT COUNT(*) amount FROM {flagging} f WHERE f.fid = :fid";
+  $num_member_followers = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $insights["num_member_followers"] = $num_member_followers->amount;
+
+  // NUMBER OF COMPANY FOLLOWS
+  $flag = flag_get_flag('follow_organizations', NULL);
+  $query = "SELECT COUNT(*) amount FROM {flagging} f WHERE f.fid = :fid";
+  $num_organization_followers = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $insights["num_organization_followers"] = $num_organization_followers->amount;
+
+  // NUMBER OF CONNECTIONS (member + organization follows)
+  $insights["num_connections"] = $insights["num_member_followers"] + $insights["num_organization_followers"];
+
+  // NUMBER OF MUTUAL FOLLOWS
+  $flag = flag_get_flag('follow_members', NULL);
+  $query = "select count(distinct flagging.uid, f2.uid) as amount from flagging inner join flagging as f2 on flagging.uid = f2.entity_id where flagging.fid = :fid and f2.fid = :fid order by flagging.uid";
+  $num_mutual_followers = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $insights["num_mutual_follows"] = $num_mutual_followers->amount;
+
+  // NUMBER OF EVENT REGISTRATIONS
+  $flag = flag_get_flag('event_register', NULL);
+  $query = "SELECT COUNT(*) amount FROM {flagging} f WHERE f.fid = :fid";
+  $num_registrations = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $insights["num_event_registrations"] = $num_registrations->amount;
+
+  // NUMBER OF WAITLISTS
+  $flag = flag_get_flag('event_waitlist', NULL);
+  $query = "SELECT COUNT(*) amount FROM {flagging} f WHERE f.fid = :fid";
+  $num_waitlists = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $insights["num_event_waitlists"] = $num_waitlists->amount;
+
+
   // RETURN DATA
   $data_labels = tm_reports_get_insights_labels();
   $results = ["data_values" => $insights, "data_labels" => $data_labels];
@@ -571,7 +629,17 @@ function tm_reports_get_insights_labels() {
   "members_unapproved_pct" => "% Unapproved Members",
   "members_approved_with_segment" => "Approved members with Industry Segment",
   "members_approved_without_segment" => "Approved members without Industry Segment",
-  "members_with_segment_pct" => "% Approved Members with Industry Segment"];
+  "members_with_segment_pct" => "% Approved Members with Industry Segment",
+  "num_event_waitlists" => "Total Event Waitlists",
+  "num_event_registrations" => "Total Event Registrations",
+  "num_mutual_follows" => "Total Mutual Connections",
+  "num_connections" => "Total Connections (All Followers)",
+  "num_organization_followers" => "Total Organization Followers",
+  "num_member_followers" => "Total Member Followers",
+  "num_chapter_countries" => "Chapter Countries",
+  "num_events" => "Total Number Events",
+  "num_organizations" => "Number of Organizations",
+  "num_chapters" => "Number of Chapters"];
 
   return $data_labels;
 }
@@ -886,6 +954,15 @@ function tm_reports_global_insights() {
             </header>";
   $html .= _tm_reports_insights_segments_html();
   $html .= "</section>";
+
+  // API Data
+  $html .= "<section class='contained contained-block'>";
+  $html .= "<header class='contained-head'>
+            <h1 class='prime-title'>Global Insights</span></h1>"; // <!--&middot; <span style='color: #0068a8;'>" . $return_link . "</span></h1>
+  $html .= "</header>";
+  $html .= _tm_reports_insights_table_html();
+  $html .= "</section>";
+
   $html .= "</div>";
 
   // New Members

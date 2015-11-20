@@ -56,6 +56,12 @@ function tm_api_test() {
 
 function tm_api_stats() {
 
+  // check cache
+  $cache = cache_get('tm-api-stats', 'cache');
+  if (!empty($cache)) {
+    tm_api_return_json($cache->data);
+  }
+
 	// initialize api data
 	$api_data = array("message" => null, "error" => null, "success" => true);
 
@@ -122,6 +128,7 @@ function tm_api_stats() {
   $api_data["num_event_waitlists"] = $num_waitlists->amount;
 
   // return api data in json format
+  cache_set('tm-api-stats', $api_data, 'cache', time() + 900); // 15 mins
   tm_api_return_json($api_data);
 }
 

@@ -41,13 +41,18 @@ function tm_theme_image_default_styles() {
   $styles['banner'] = array(
     'label' => 'Banner',
     'effects' => array(
-      1 => array(
+      3 => array(
         'name' => 'image_scale_and_crop',
         'data' => array(
-          'width' => 805,
-          'height' => 453,
+          'width' => 1610,
+          'height' => 906,
         ),
         'weight' => 1,
+      ),
+      4 => array(
+        'name' => 'image_hires',
+        'data' => array(),
+        'weight' => 2,
       ),
     ),
   );

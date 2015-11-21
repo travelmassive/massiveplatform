@@ -1054,15 +1054,16 @@ function tm_users_preprocess_field(&$variables) {
   // Replace default avatar image
   if ($variables['element']['#field_name'] == 'field_avatar') {
     if ($variables['items'][0]['#item']['uri'] == "public://default_images/avatar-default.png") {
+      
       // Replace default image with random image from folder
-      if (isset($conf["tm_default_avatars_path"])) {
-        $cover_files = file_scan_directory($conf["tm_default_avatars_path"], '/.*\.jpg$/i', array('recurse' => FALSE));
-        $image_uid = $variables['element']['#object']->uid;
-        $image_index = $image_uid % sizeof($cover_files);
-        $file_keys = array_keys($cover_files);
-        $cover_file = $cover_files[$file_keys[$image_index]]->uri;
+      if (isset($conf["tm_images_default_path"])) {
+        $image_id = $variables['element']['#object']->uid;
+        $cover_files = $conf["tm_images_default_avatar"];
+        $image_index = $image_id % sizeof($cover_files);
+        $cover_file = $conf["tm_images_default_path"] . $cover_files[$image_index];
         $variables['items'][0]['#item']['uri'] = $cover_file;
       }
+
     }
   }
 
@@ -1076,25 +1077,33 @@ function tm_users_preprocess_field(&$variables) {
         $element_type = $variables['element']['#object']->type;
       }
 
+      // Member
+      if (($element_type == "user") and (isset($conf["tm_images_default_path"]))) {
+        $image_id = $variables['element']['#object']->uid;
+        $cover_files = $conf["tm_images_default_cover_user"];
+        $image_index = $image_id % sizeof($cover_files);
+        $cover_file = $conf["tm_images_default_path"] . $cover_files[$image_index];
+        $variables['items'][0]['#item']['uri'] = $cover_file;
+      }
+
       // Organization
-      if (($element_type == "organization") and (isset($conf["tm_default_organization_covers_path"]))) {
-        $cover_files = file_scan_directory($conf["tm_default_organization_covers_path"], '/.*\.jpg$/i', array('recurse' => FALSE));
-        $image_uid = $variables['element']['#object']->nid;
-        $image_index = $image_uid % sizeof($cover_files);
-        $file_keys = array_keys($cover_files);
-        $cover_file = $cover_files[$file_keys[$image_index]]->uri;
+      if (($element_type == "organization") and (isset($conf["tm_images_default_path"]))) {
+        $image_id = $variables['element']['#object']->nid;
+        $cover_files = $conf["tm_images_default_cover_organization"];
+        $image_index = $image_id % sizeof($cover_files);
+        $cover_file = $conf["tm_images_default_path"] . $cover_files[$image_index];
+        $variables['items'][0]['#item']['uri'] = $cover_file;
+      }
+
+      // Event
+      if (($element_type == "event") and (isset($conf["tm_images_default_path"]))) {
+        $image_id = $variables['element']['#object']->nid;
+        $cover_files = $conf["tm_images_default_cover_event"];
+        $image_index = $image_id % sizeof($cover_files);
+        $cover_file = $conf["tm_images_default_path"] . $cover_files[$image_index];
         $variables['items'][0]['#item']['uri'] = $cover_file;
       }
      
-      // Member
-      if (($element_type == "user") and (isset($conf["tm_default_covers_path"]))) {
-        $cover_files = file_scan_directory($conf["tm_default_covers_path"], '/.*\.jpg$/i', array('recurse' => FALSE));
-        $image_uid = $variables['element']['#object']->uid;
-        $image_index = $image_uid % sizeof($cover_files);
-        $file_keys = array_keys($cover_files);
-        $cover_file = $cover_files[$file_keys[$image_index]]->uri;
-        $variables['items'][0]['#item']['uri'] = $cover_file;
-      }
     }
   }
 

@@ -764,8 +764,13 @@ $conf["tm_organizations_link_fields"] = array('website', 'twitter', 'facebook', 
 $conf["tm_reports_chapter_insights_tip"] = "Join our Facebook group to share tips with other members on growing your chapter and be part of our global founders team!";
 
 /* Randomize default images */
-$conf["tm_default_avatars_path"] = "public://default_avatars/";
-$conf["tm_default_covers_path"] = "public://default_covers/";
-$conf["tm_default_organization_covers_path"] = "public://default_organization_covers/";
+/* After editing, run drush image-flush */
+$conf["tm_images_default_path"] = "public://default_images/"; // Unset if you don't want to use random default images
+$conf["tm_images_default_avatar"] = array("default_avatar_1.jpg", "default_avatar_2.jpg", "default_avatar_3.jpg", "default_avatar_4.jpg", "default_avatar_5.jpg");
+$conf["tm_images_default_cover_user"] = array("default_cover_user_1.jpg", "default_cover_user_2.jpg", "default_cover_user_3.jpg", "default_cover_user_4.jpg", "default_cover_user_5.jpg");
+$conf["tm_images_default_cover_organization"] = array("default_cover_organization_1.jpg", "default_cover_organization_2.jpg", "default_cover_organization_3.jpg", "default_cover_organization_4.jpg");
+$conf["tm_images_default_cover_event"] = array("default_cover_event_1.jpg");
+
+
 $conf['install_profile'] = 'tm';
 

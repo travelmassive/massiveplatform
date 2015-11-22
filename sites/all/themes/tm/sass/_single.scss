@@ -784,3 +784,11 @@
 .tm_discuss .messages--error { margin: 24px; }
 .tm_discuss .messages--warning { margin: 24px; }
 
+/* Zoom Avatar and Logos */
+.tm_zoom_picture .jqi { width: auto; border: none; padding: 0px !important; background-color: transparent;}
+.tm_zoom_picture .jqi .jqimessage { padding: 0px; }
+.tm_zoom_picture .jqiclose { margin-right: -1.6rem; color: #fff !important; font-size: 38pt !important;}
+.tm_zoom_picture .zoom_picture_container { width: 400px; height: 400px; }
+.tm_zoom_picture img.zoom_picture { width: 400px; height: 400px; max-width: 400px; max-height: 400px; vertical-align: bottom; border-radius: 6px;}
+.tm_zoom_picture .jqi .jqistate { background-color: transparent; }
+

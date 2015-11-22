@@ -477,6 +477,14 @@
     $.prompt(message, {buttons: {}});
   }
 
+  // show full avatar or logo
+  jq_show_avatar = function() {
+    avatar_img = $(".badge-organization img, .badge-user img")[0];
+    img_html = "<div id='zoom_picture_container'><img class='zoom_picture' src='" + encodeURI(avatar_img.src) + "'></div>";
+    $.prompt(img_html, {title: null, persistent: false, classes: {box: 'tm_zoom_picture'}, buttons: {}});
+  }
+  $(".badge-organization.zoomable, .badge-user.zoomable").click(jq_show_avatar);
+
 });})(jQuery, Drupal, this, this.document);
 
 

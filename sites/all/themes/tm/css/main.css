@@ -7524,6 +7524,48 @@ a.cancel_account_link {
   margin: 24px;
 }
 
+/* Zoom Avatar and Logos */
+/* line 788, ../sass/_single.scss */
+.tm_zoom_picture .jqi {
+  width: auto;
+  border: none;
+  padding: 0px !important;
+  background-color: transparent;
+}
+
+/* line 789, ../sass/_single.scss */
+.tm_zoom_picture .jqi .jqimessage {
+  padding: 0px;
+}
+
+/* line 790, ../sass/_single.scss */
+.tm_zoom_picture .jqiclose {
+  margin-right: -1.6rem;
+  color: #fff !important;
+  font-size: 38pt !important;
+}
+
+/* line 791, ../sass/_single.scss */
+.tm_zoom_picture .zoom_picture_container {
+  width: 400px;
+  height: 400px;
+}
+
+/* line 792, ../sass/_single.scss */
+.tm_zoom_picture img.zoom_picture {
+  width: 400px;
+  height: 400px;
+  max-width: 400px;
+  max-height: 400px;
+  vertical-align: bottom;
+  border-radius: 6px;
+}
+
+/* line 793, ../sass/_single.scss */
+.tm_zoom_picture .jqi .jqistate {
+  background-color: transparent;
+}
+
 /* line 2, ../sass/_login.scss */
 #account-menu-blk .menu-blk-title {
   text-transform: uppercase;

@@ -205,7 +205,7 @@ function tm_users_ds_field_settings_info() {
           'ow-def-at' => FALSE,
           'fi' => TRUE,
           'fi-el' => 'span',
-          'fi-cl' => 'badge-user',
+          'fi-cl' => 'badge-user zoomable',
           'fi-at' => '',
           'fi-def-at' => FALSE,
           'fi-odd-even' => FALSE,
@@ -353,7 +353,7 @@ function tm_users_ds_field_settings_info() {
         ),
       ),
     ),
-    'field_link_youtube' => array(
+    'field_link_snapchat' => array(
       'formatter_settings' => array(
         'ft' => array(
           'func' => 'theme_ds_field_tm_default',
@@ -369,7 +369,7 @@ function tm_users_ds_field_settings_info() {
         ),
       ),
     ),
-    'field_link_snapchat' => array(
+    'field_link_youtube' => array(
       'formatter_settings' => array(
         'ft' => array(
           'func' => 'theme_ds_field_tm_default',

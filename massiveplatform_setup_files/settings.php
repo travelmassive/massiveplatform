@@ -766,11 +766,13 @@ $conf["tm_reports_chapter_insights_tip"] = "Join our Facebook group to share tip
 /* Randomize default images */
 /* After editing, run drush image-flush */
 $conf["tm_images_default_path"] = "public://default_images/"; // Unset if you don't want to use random default images
+$conf["tm_images_default_field_avatar"] = "public://default_images/avatar-default.png"; // The default image for field_avatar
+$conf["tm_images_default_field_image"] = "public://default_images/cover-default.png"; // The default image for field_image
 $conf["tm_images_default_avatar"] = array("default_avatar_1.jpg", "default_avatar_2.jpg", "default_avatar_3.jpg", "default_avatar_4.jpg", "default_avatar_5.jpg");
 $conf["tm_images_default_cover_user"] = array("default_cover_user_1.jpg", "default_cover_user_2.jpg", "default_cover_user_3.jpg", "default_cover_user_4.jpg", "default_cover_user_5.jpg");
 $conf["tm_images_default_cover_organization"] = array("default_cover_organization_1.jpg", "default_cover_organization_2.jpg", "default_cover_organization_3.jpg", "default_cover_organization_4.jpg");
-$conf["tm_images_default_cover_event"] = array("default_cover_event_1.jpg");
-
+$conf["tm_images_default_cover_event"] = array("default_cover_event_1.jpg", "default_cover_event_2.jpg", "default_cover_event_3.jpg");
+$conf["tm_images_default_cover_chapter"] = array("default_cover_chapter_1.jpg");
 
 $conf['install_profile'] = 'tm';
 

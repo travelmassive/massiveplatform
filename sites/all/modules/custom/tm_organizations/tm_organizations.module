@@ -418,3 +418,48 @@ function tm_organizations_node_view($node, $view_mode, $langcode) {
   }
 
 }
+
+/* Set default images */
+/* Refer to settings.php configuration */
+function tm_organizations_preprocess_field(&$variables) {
+
+  global $conf;
+
+  // Check element type
+  $element_type = null;
+  if (isset($variables['element']['#object']->type)) {
+    $element_type = $variables['element']['#object']->type;
+  }
+
+  // Only operate on event
+  if ($element_type != "organization") {
+    return;
+  }
+
+  // Replace default cover image
+  if ($variables['element']['#field_name'] == 'field_image') {
+    $variables['items'][0]['#item']['uri'] = _tm_organizations_get_default_image($variables['items'][0]['#item']['uri'], $variables['element']['#object']->nid);
+  }
+}
+
+/**
+ * Return default cover image
+ * If tm_images_default_path is set then return a random image based in node id
+ * URL must be in public:// format
+ */
+function _tm_organizations_get_default_image($default_image_uri, $nid) {
+
+  global $conf;
+
+  if (isset($conf["tm_images_default_path"])) {
+    if ($default_image_uri == $conf["tm_images_default_field_image"]) {
+      $cover_files = $conf["tm_images_default_cover_organization"];
+      $image_index = $nid % sizeof($cover_files);
+      $cover_file = $conf["tm_images_default_path"] . $cover_files[$image_index];
+      return $cover_file;
+    }
+  }
+
+  // no random image, return what we got
+  return $default_image_uri;
+}

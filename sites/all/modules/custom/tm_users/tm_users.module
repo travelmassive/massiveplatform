@@ -1041,6 +1041,17 @@ function tm_users_preprocess_field(&$variables) {
 
   global $conf;
 
+  // Get element type
+  $element_type = null;
+  if (!isset($variables['element']['#object']->type)) {
+    $element_type = "user";
+  }
+
+  // Only operate on user
+  if ($element_type != "user") {
+    return;
+  }
+
   if ($variables['element']['#field_name'] == 'field_user_question_1') {
     $variables['label'] = $conf["tm_field_user_question_1_title"];
   }
@@ -1063,62 +1074,64 @@ function tm_users_preprocess_field(&$variables) {
 
   // Replace default avatar image
   if ($variables['element']['#field_name'] == 'field_avatar') {
-    if ($variables['items'][0]['#item']['uri'] == "public://default_images/avatar-default.png") {
-      
-      // Replace default image with random image from folder
-      if (isset($conf["tm_images_default_path"])) {
-        $image_id = $variables['element']['#object']->uid;
-        $cover_files = $conf["tm_images_default_avatar"];
-        $image_index = $image_id % sizeof($cover_files);
-        $cover_file = $conf["tm_images_default_path"] . $cover_files[$image_index];
-        $variables['items'][0]['#item']['uri'] = $cover_file;
-      }
-
-    }
+    $variables['items'][0]['#item']['uri'] = _tm_users_get_default_avatar($variables['items'][0]['#item']['uri'], $variables['element']['#object']->uid);
   }
 
-  // Replace default cover image with random image from folder
+  // Replace default cover image
   if ($variables['element']['#field_name'] == 'field_image') {
-    if ($variables['items'][0]['#item']['uri'] == "public://default_images/cover-default.png") {
-      
-      // Get element type
-      $element_type = "user";
-      if (isset($variables['element']['#object']->type) == "organization") {
-        $element_type = $variables['element']['#object']->type;
-      }
-
-      // Member
-      if (($element_type == "user") and (isset($conf["tm_images_default_path"]))) {
-        $image_id = $variables['element']['#object']->uid;
-        $cover_files = $conf["tm_images_default_cover_user"];
-        $image_index = $image_id % sizeof($cover_files);
-        $cover_file = $conf["tm_images_default_path"] . $cover_files[$image_index];
-        $variables['items'][0]['#item']['uri'] = $cover_file;
-      }
-
-      // Organization
-      if (($element_type == "organization") and (isset($conf["tm_images_default_path"]))) {
-        $image_id = $variables['element']['#object']->nid;
-        $cover_files = $conf["tm_images_default_cover_organization"];
-        $image_index = $image_id % sizeof($cover_files);
-        $cover_file = $conf["tm_images_default_path"] . $cover_files[$image_index];
-        $variables['items'][0]['#item']['uri'] = $cover_file;
-      }
-
-      // Event
-      if (($element_type == "event") and (isset($conf["tm_images_default_path"]))) {
-        $image_id = $variables['element']['#object']->nid;
-        $cover_files = $conf["tm_images_default_cover_event"];
-        $image_index = $image_id % sizeof($cover_files);
-        $cover_file = $conf["tm_images_default_path"] . $cover_files[$image_index];
-        $variables['items'][0]['#item']['uri'] = $cover_file;
-      }
-     
-    }
+    $variables['items'][0]['#item']['uri'] = _tm_users_get_default_image($variables['items'][0]['#item']['uri'], $variables['element']['#object']->uid);
   }
 
 }
 
+/**
+ * Return default avatar image
+ * If tm_images_default_path is set then return a random image based in node id
+ * URL must be in public:// format
+ */
+function _tm_users_get_default_avatar($default_image_uri, $uid) {
+
+  global $conf;
+
+  if (isset($conf["tm_images_default_path"])) {
+    if ($default_image_uri == $conf["tm_images_default_field_avatar"]) {
+      $avatar_files = $conf["tm_images_default_avatar"];
+      $image_index = $uid % sizeof($avatar_files);
+      $avatar_file = $conf["tm_images_default_path"] . $avatar_files[$image_index];
+      return $avatar_file;
+    }
+  }
+
+  // no random image, return what we got
+  return $default_image_uri;
+}
+
+/**
+ * Return default cover image
+ * If tm_images_default_path is set then return a random image based in node id
+ * URL must be in public:// format
+ */
+function _tm_users_get_default_image($default_image_uri, $uid) {
+
+  global $conf;
+
+  if (isset($conf["tm_images_default_path"])) {
+    if ($default_image_uri == $conf["tm_images_default_field_image"]) {
+      $cover_files = $conf["tm_images_default_cover_user"];
+      $image_index = $uid % sizeof($cover_files);
+      $cover_file = $conf["tm_images_default_path"] . $cover_files[$image_index];
+      return $cover_file;
+    }
+  }
+
+  // no random image, return what we got
+  return $default_image_uri;
+}
+
+
+/**
+ * Modify user forms
+ */
 function tm_users_form_alter(&$form, $form_state, $form_id) {
 
   if ($form_id == 'user_login') {

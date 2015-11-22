@@ -7588,6 +7588,12 @@ a.cancel_account_link {
     display: none !important;
   }
 }
+@media only screen and (max-device-width: 640px) {
+  /* line 802, ../sass/_single.scss */
+  .tm_zoom_picture .jqiclose {
+    display: none !important;
+  }
+}
 /* line 2, ../sass/_login.scss */
 #account-menu-blk .menu-blk-title {
   text-transform: uppercase;

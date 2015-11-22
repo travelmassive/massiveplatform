@@ -7539,19 +7539,24 @@ a.cancel_account_link {
 }
 
 /* line 790, ../sass/_single.scss */
+.tm_zoom_picture .jqi .jqistate {
+  background-color: transparent;
+}
+
+/* line 791, ../sass/_single.scss */
 .tm_zoom_picture .jqiclose {
   margin-right: -1.6rem;
   color: #fff !important;
   font-size: 38pt !important;
 }
 
-/* line 791, ../sass/_single.scss */
+/* line 792, ../sass/_single.scss */
 .tm_zoom_picture .zoom_picture_container {
   width: 400px;
   height: 400px;
 }
 
-/* line 792, ../sass/_single.scss */
+/* line 793, ../sass/_single.scss */
 .tm_zoom_picture img.zoom_picture {
   width: 400px;
   height: 400px;
@@ -7561,11 +7566,28 @@ a.cancel_account_link {
   border-radius: 6px;
 }
 
-/* line 793, ../sass/_single.scss */
-.tm_zoom_picture .jqi .jqistate {
-  background-color: transparent;
-}
+@media only screen and (max-device-width: 480px) {
+  /* line 796, ../sass/_single.scss */
+  .tm_zoom_picture .zoom_picture_container {
+    width: 300px;
+    height: 300px;
+  }
 
+  /* line 797, ../sass/_single.scss */
+  .tm_zoom_picture img.zoom_picture {
+    width: 300px;
+    height: 300px;
+    max-width: 300px;
+    max-height: 300px;
+    vertical-align: bottom;
+    border-radius: 6px;
+  }
+
+  /* line 798, ../sass/_single.scss */
+  .tm_zoom_picture .jqiclose {
+    display: none !important;
+  }
+}
 /* line 2, ../sass/_login.scss */
 #account-menu-blk .menu-blk-title {
   text-transform: uppercase;

@@ -74,6 +74,7 @@ features[user_permission][] = view own unpublished content
 features[user_permission][] = view revisions
 features[variable][] = date_format_time_24h
 features[variable][] = field_bundle_settings_node__page
+features[variable][] = image_jpeg_quality
 features[variable][] = jquery_update_compression_type
 features[variable][] = jquery_update_jquery_admin_version
 features[variable][] = jquery_update_jquery_cdn

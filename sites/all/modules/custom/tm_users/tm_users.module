@@ -7,6 +7,16 @@
 include_once 'tm_users.features.inc';
 
 /**
+ * Init tm_users module
+ */
+function tm_users_init() {
+  global $user;
+  // access uid in js with:
+  // var id = Drupal.settings.currentUser;
+  drupal_add_js(array('currentUser' => $user->uid), 'setting');
+}
+
+/**
  * Implements hook_form_FORM_ID_alter()
  */
 function tm_users_form_user_login_block_alter(&$form, &$form_state) {

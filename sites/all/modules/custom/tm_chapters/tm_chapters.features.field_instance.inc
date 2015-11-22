@@ -584,7 +584,8 @@ function tm_chapters_field_default_field_instances() {
   $field_instances['node-chapter-field_image'] = array(
     'bundle' => 'chapter',
     'deleted' => 0,
-    'description' => 'Provide a banner image that is a good reflection of your city.',
+    'description' => 'Provide a banner image that is a good reflection of your chapter.
+<br>To support retina displays, upload your image sized to 1610x906',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -1045,7 +1046,8 @@ The message will be included in the notification email sent to the member when t
   t('Linkedin');
   t('Please enter a unique 3 letter shortcode for this city.');
   t('Please specify the country of the chapter.');
-  t('Provide a banner image that is a good reflection of your city.');
+  t('Provide a banner image that is a good reflection of your chapter.
+<br>To support retina displays, upload your image sized to 1610x906');
   t('Select a color that sets this city apart from the others. This color should have enough contrast with a white text layered on top.');
   t('The location of the chapter, to display on the map. You can look up the latitude and longitude from Google.
 <br>Remember that West (W) and South (S) values are negative values. (example: Latitude 42.8806 S (South) is -42.8806)');

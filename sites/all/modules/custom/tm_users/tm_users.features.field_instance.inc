@@ -15,9 +15,8 @@ function tm_users_field_default_field_instances() {
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Provide the other members with some more information about yourself. This information will be <strong>public</strong>.
-<br>
-<strong>Providing information about your company?</strong> Please add a <a href="/companies">company profile</a>.',
+    'description' => 'Tell the community about yourself. This information will be <strong>public</strong>.
+<br><strong>Providing information about your company?</strong> Please add a <a href="/companies">company profile</a>.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -70,7 +69,8 @@ function tm_users_field_default_field_instances() {
   $field_instances['user-user-field_avatar'] = array(
     'bundle' => 'user',
     'deleted' => 0,
-    'description' => 'A photo is preferred so other members can recognize you.
+    'description' => '<strong>Provide a photo so other members can recognize you.</strong>
+<br>Logos are not allowed here. You can add a <a href="/companies">company profile</a> once approved.
 <br>Your profile picture will be cropped to a square format.',
     'display' => array(
       'default' => array(
@@ -256,7 +256,7 @@ function tm_users_field_default_field_instances() {
     'bundle' => 'user',
     'deleted' => 0,
     'description' => 'Provide a cover image to be displayed behind your profile picture.
-<br>If you want to be pixel perfect, upload your image sized to 805x453',
+<br>If you want to be pixel perfect, upload your image sized to 1610x906',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -1589,7 +1589,8 @@ function tm_users_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('A photo is preferred so other members can recognize you.
+  t('<strong>Provide a photo so other members can recognize you.</strong>
+<br>Logos are not allowed here. You can add a <a href="/companies">company profile</a> once approved.
 <br>Your profile picture will be cropped to a square format.');
   t('About me');
   t('City');
@@ -1613,10 +1614,9 @@ function tm_users_field_default_field_instances() {
   t('Please select what you consider to be your home chapter.');
   t('Profile Picture');
   t('Provide a cover image to be displayed behind your profile picture.
-<br>If you want to be pixel perfect, upload your image sized to 805x453');
-  t('Provide the other members with some more information about yourself. This information will be <strong>public</strong>.
-<br>
-<strong>Providing information about your company?</strong> Please add a <a href="/companies">company profile</a>.');
+<br>If you want to be pixel perfect, upload your image sized to 1610x906');
+  t('Tell the community about yourself. This information will be <strong>public</strong>.
+<br><strong>Providing information about your company?</strong> Please add a <a href="/companies">company profile</a>.');
   t('Question 1');
   t('Question 2');
   t('Question 3');

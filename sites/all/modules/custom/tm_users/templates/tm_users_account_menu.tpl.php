@@ -1,16 +1,28 @@
 <?php global $user;
+global $conf;
 // Only a loaded user has values for the fields.
 $loaded = user_load($user->uid);
 $user_score = 0;
+
+// Set avatar
 if (empty($loaded->field_avatar)) {
-  // It is not possible to get an imagefield default value
-  // using the standard default function. Load the file instead.
+  // Use default image
   $field = field_info_field('field_avatar');
   $default = file_load($field['settings']['default_image']);
   $img_uri = $default->uri;
-}
-else {
+}  else {
+  // User's image
   $img_uri = $loaded->field_avatar[LANGUAGE_NONE][0]['uri'];
+}
+
+// If image is default, replace with random image from folder
+if (isset($conf["tm_images_default_path"])) {
+  if ($img_uri == "public://default_images/avatar-default.png") {
+    $image_id = $loaded->uid;
+    $cover_files = $conf["tm_images_default_avatar"];
+    $image_index = $image_id % sizeof($cover_files);
+    $img_uri = $conf["tm_images_default_path"] . $cover_files[$image_index];
+  }
 }
 
 $image = theme('image_style', array(
@@ -133,7 +145,6 @@ print l(t('Approve my account'), 'javascript:jq_request_approval(' . $loaded->ui
         <?php
         if (in_array("chapter leader", $loaded->roles)) { ?>
         <li><?php
-        global $conf;
         print l(t('Chapter leader resources'), $conf['tm_tips_chapter_leaders_link'], array('fragment' => '','external'=>true)); 
         } // end if ?></li>        
     </ul>
@@ -165,7 +176,6 @@ print l(t('Approve my account'), 'javascript:jq_request_approval(' . $loaded->ui
     <?php print render($login_form); ?>
 
     <?php if (variable_get('user_register', 1)) : ?>
-      <?php global $conf; ?>
       <h3 class="menu-blk-title">New to <?php print($conf["tm_site_name"]);?>?</h3>
       <p><?php print l(t('Sign up now'), 'user/register', array('attributes' => array('title' => 'Create account', 'class' => array('cta-inline')))); ?></p>
     <?php endif; ?>

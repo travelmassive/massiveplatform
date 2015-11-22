@@ -756,7 +756,7 @@ This will be added to the attendee count on the event page.',
     'bundle' => 'event',
     'deleted' => 0,
     'description' => 'This will be used as the main image for the event.
-<br>If you want to be pixel perfect, upload your image sized to 805x453',
+<br>To support retina displays, upload your image sized to 1610x906',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -1395,7 +1395,7 @@ This will be displayed to the member on the event page and included in the autom
   t('Sponsors');
   t('This will be displayed on the event page when it\'s a past event.');
   t('This will be used as the main image for the event.
-<br>If you want to be pixel perfect, upload your image sized to 805x453');
+<br>To support retina displays, upload your image sized to 1610x906');
   t('Venue name');
   t('When');
   t('Who is organizing this event? Organizers will be notified of all event registrations.

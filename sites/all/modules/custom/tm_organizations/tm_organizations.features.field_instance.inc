@@ -355,7 +355,7 @@ Displays a short message to followers on your company profile page.<br>',
     'bundle' => 'organization',
     'deleted' => 0,
     'description' => 'Provide a cover image to be displayed behind your company logo.
-<br>If you want to be pixel perfect, upload your image sized to 805x453',
+<br>To support retina displays, upload your image sized to 1610x906',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -1329,7 +1329,7 @@ Displays a short message to followers on your company profile page.<br>');
   t('Message for Followers (Optional)');
   t('Please provide the segment which identifies the company the best.');
   t('Provide a cover image to be displayed behind your company logo.
-<br>If you want to be pixel perfect, upload your image sized to 805x453');
+<br>To support retina displays, upload your image sized to 1610x906');
   t('Select the member that manages this account.');
   t('Snapchat');
   t('Tell us about your organization or company. Describe your business and the service or product that you provide.');

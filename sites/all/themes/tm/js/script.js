@@ -479,9 +479,14 @@
 
   // show full avatar or logo
   jq_show_avatar = function() {
-    avatar_img = $(".badge-organization img, .badge-user img")[0];
-    img_html = "<div id='zoom_picture_container'><img class='zoom_picture' src='" + avatar_img.src.replace(/'/g, "") + "'></div>";
-    $.prompt(img_html, {title: null, persistent: false, classes: {box: 'tm_zoom_picture'}, buttons: {}});
+    if (Drupal.settings.currentUser > 0) {
+      avatar_img = $(".badge-organization img, .badge-user img")[0];
+      img_html = "<div id='zoom_picture_container'><img class='zoom_picture' src='" + avatar_img.src.replace(/'/g, "") + "'></div>";
+      $.prompt(img_html, {title: null, persistent: false, classes: {box: 'tm_zoom_picture'}, buttons: {}});
+    } else {
+      // show login box if logged out
+      jq_login_signup_box();
+    }
   }
   $(".badge-organization.zoomable, .badge-user.zoomable").click(jq_show_avatar);
 

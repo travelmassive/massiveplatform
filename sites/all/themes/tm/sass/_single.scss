@@ -798,4 +798,8 @@
   .tm_zoom_picture .jqiclose { display: none !important;}
 }
 
+@media only screen and (max-device-width: 640px){
+  .tm_zoom_picture .jqiclose { display: none !important;}
+}
+
 

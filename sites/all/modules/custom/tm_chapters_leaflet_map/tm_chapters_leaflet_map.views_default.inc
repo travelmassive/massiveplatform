@@ -37,6 +37,7 @@ function tm_chapters_leaflet_map_views_default_views() {
   $handler->display->display_options['style_options']['description_field'] = 'title';
   $handler->display->display_options['style_options']['view_mode'] = 'teaser';
   $handler->display->display_options['style_options']['map'] = 'TM Chapters Map';
+  $handler->display->display_options['style_options']['hide_empty'] = 1;
   $handler->display->display_options['style_options']['zoom']['initialZoom'] = '-1';
   $handler->display->display_options['style_options']['zoom']['minZoom'] = '0';
   $handler->display->display_options['style_options']['zoom']['maxZoom'] = '18';
@@ -50,7 +51,7 @@ function tm_chapters_leaflet_map_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  /* Field: Content: GeoMapLocation */
+  /* Field: Content: Geo Map Location */
   $handler->display->display_options['fields']['field_geomaplocation']['id'] = 'field_geomaplocation';
   $handler->display->display_options['fields']['field_geomaplocation']['table'] = 'field_data_field_geomaplocation';
   $handler->display->display_options['fields']['field_geomaplocation']['field'] = 'field_geomaplocation';
@@ -79,6 +80,23 @@ function tm_chapters_leaflet_map_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'leaflet';
+  $handler->display->display_options['style_options']['entity_type'] = 'node';
+  $handler->display->display_options['style_options']['data_source'] = 'field_geomaplocation';
+  $handler->display->display_options['style_options']['name_field'] = 'title';
+  $handler->display->display_options['style_options']['view_mode'] = 'teaser';
+  $handler->display->display_options['style_options']['map'] = 'TM Chapters Map';
+  $handler->display->display_options['style_options']['hide_empty'] = 1;
+  $handler->display->display_options['style_options']['zoom']['initialZoom'] = '-1';
+  $handler->display->display_options['style_options']['zoom']['minZoom'] = '0';
+  $handler->display->display_options['style_options']['zoom']['maxZoom'] = '18';
+  $handler->display->display_options['style_options']['vector_display']['stroke'] = 0;
+  $handler->display->display_options['style_options']['vector_display']['fill'] = 0;
+  $handler->display->display_options['style_options']['vector_display']['clickable'] = 0;
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['path'] = 'chapters/map';
   $handler->display->display_options['menu']['type'] = 'tab';
   $handler->display->display_options['menu']['title'] = 'Chapters Map';

@@ -178,3 +178,4 @@ index 0ee05fc..4e1f3cf 100644
        $this->definition['extra'][] = array(
          'field' => 'uid',
          'value' => '***CURRENT_USER***',
+

@@ -1,5 +1,7 @@
 <?php global $user;
+
 global $conf;
+
 // Only a loaded user has values for the fields.
 $loaded = user_load($user->uid);
 $user_score = 0;
@@ -7,9 +9,9 @@ $user_score = 0;
 // Set avatar
 if (empty($loaded->field_avatar)) {
   // Use default image
-  $field = field_info_field('field_avatar');
-  $default = file_load($field['settings']['default_image']);
-  $img_uri = $default->uri;
+  // (old way) $field = field_info_field('field_avatar');
+  // (old way) $default = file_load($field['settings']['default_image']);
+  $img_uri = $conf["tm_images_default_field_avatar"]; // (old way) $default->uri;
 }  else {
   // User's image
   $img_uri = $loaded->field_avatar[LANGUAGE_NONE][0]['uri'];
@@ -17,7 +19,7 @@ if (empty($loaded->field_avatar)) {
 
 // If image is default, replace with random image from folder
 if (isset($conf["tm_images_default_path"])) {
-  if ($img_uri == "public://default_images/avatar-default.png") {
+  if ($img_uri == $conf["tm_images_default_field_avatar"]) {
     $image_id = $loaded->uid;
     $cover_files = $conf["tm_images_default_avatar"];
     $image_index = $image_id % sizeof($cover_files);

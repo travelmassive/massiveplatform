@@ -24,6 +24,11 @@ function tm_api_menu() {
       'access arguments' => array('access content')
    );
 
+   $items['api/public/events'] = array(
+      'page callback' => 'tm_api_events',
+      'access arguments' => array('access content')
+   );
+
    return $items;
 }
 
@@ -37,6 +42,7 @@ function tm_api_home() {
 		<br>api/public/test - API test page
 		<br>api/public/stats - basic stats
 		<br>api/public/chapters_lat_lon - chapters lat and lon
+    <br>api/public/events - upcoming events
 		<br>
 		<br>All results as returned as JSON. For JSONP append ?callback=myfunction to the URL.
 		<br>For help please email team@travelmassive.com</p>");
@@ -134,33 +140,107 @@ function tm_api_stats() {
 
 function tm_api_chapters_lat_lon() {
 
+  // check cache
+  $cache = cache_get('tm-api-lat-lon', 'cache');
+  if (!empty($cache)) {
+    tm_api_return_json($cache->data);
+  }
+
 	// initialize api data
 	$api_data = _get_empty_api_data();
 
 	// get chapters
 	$query = "SELECT nid FROM {node} n ".
               "WHERE n.type = :type";
-    $chapter_ids = db_query($query, array(':type' => "chapter"))->fetchAll();
+  $chapter_ids = db_query($query, array(':type' => "chapter"))->fetchAll();
 
-    $chapter_data = array();
-    foreach($chapter_ids as $result) {
-    	$chapter = node_load($result->nid);
-    	if (isset($chapter->field_geomaplocation['und'][0])) {
-    		$point = $chapter->field_geomaplocation['und'][0]['geom'];
-    		$point = str_replace("POINT (", "", $point); // remove POINT ( text
-    		$point = str_replace(")", "", $point); // remove ) text
-    		$parts = explode(" ", $point); // split lat, lon
-    		$lat = $parts[1];
-    		$lon = $parts[0];
-    	} else {
-    		$lat = null;
-    		$lon = null;
-    	}
-    	$chapter_data[] = array("title" => $chapter->title, "lat" => $lat, "lon" => $lon);
+  $chapter_data = array();
+  foreach($chapter_ids as $result) {
+  	$chapter = node_load($result->nid);
+  	if (isset($chapter->field_geomaplocation['und'][0])) {
+  		$point = $chapter->field_geomaplocation['und'][0]['geom'];
+  		$point = str_replace("POINT (", "", $point); // remove POINT ( text
+  		$point = str_replace(")", "", $point); // remove ) text
+  		$parts = explode(" ", $point); // split lat, lon
+  		$lat = $parts[1];
+  		$lon = $parts[0];
+  	} else {
+  		$lat = null;
+  		$lon = null;
+  	}
+  	$chapter_data[] = array("title" => $chapter->title, "lat" => $lat, "lon" => $lon);
+  }
+
+	$api_data["chapters"] = $chapter_data;
+  cache_set('tm-api-lat-lon', $api_data, 'cache', time() + 300); // 5 mins
+	tm_api_return_json($api_data);
+
+}
+
+function tm_api_events() {
+
+  // check cache
+  $cache = cache_get('tm-api-events', 'cache');
+  if (!empty($cache)) {
+    tm_api_return_json($cache->data);
+  }
+
+  global $conf;
+
+  // initialize api data
+  $api_data = _get_empty_api_data();
+
+  $query = "SELECT entity_id FROM field_data_field_event_date WHERE entity_type = 'node' and bundle = 'event' and field_event_date_value > DATE_SUB(NOW(), INTERVAL 1 DAY) order by field_event_date_value asc";
+
+  $chapter_ids = db_query($query)->fetchAll();
+  $event_data = array();
+  foreach($chapter_ids as $result) {
+
+    // get information about event
+    $event = node_load($result->entity_id);
+
+    // get chapter
+    $chapter_name = null;
+    if (sizeof($event->field_chapter) > 0) {
+      $chapter = node_load($event->field_chapter[LANGUAGE_NONE][0]['target_id']);
+      $chapter_name = $chapter->title;
     }
 
-	$api_data["chapters"] = $chapter_data; 
-	tm_api_return_json($api_data);
+    // event image
+    $event_image_url = $conf["tm_images_default_field_image"]; // default
+    if (sizeof($event->field_image) > 0) {
+      $event_image_url = $event->field_image[LANGUAGE_NONE][0]['uri'];
+    }
+    $event_image_url = image_style_url("banner", _tm_events_get_default_image($event_image_url, $event->nid));
+
+    // event location
+    $event_location = null;
+    if (isset($event->field_location[LANGUAGE_NONE][0]['safe_value'])) {
+      $event_location = $event->field_location[LANGUAGE_NONE][0]['safe_value'];
+    }
+
+    // event summary
+    $event_summary = null;
+    if (isset($event->body[LANGUAGE_NONE][0]['safe_value'])) {
+      $event_summary = $event->body[LANGUAGE_NONE][0]['safe_value'];
+    }
+
+    // event url
+    $event_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('node/' . $event->nid);
+
+    $event_data[] = array("title" => $event->title, 
+        "chapter_name" => $chapter_name,
+        "date_time" => $event->field_event_date[LANGUAGE_NONE][0]['value'],
+        "location" => $event_location,
+        "venue_name" => $event->field_event_venue_name[LANGUAGE_NONE][0]['safe_value'],
+        "summary" => $event_summary,
+        "image_url" => $event_image_url,
+        "url" => $event_url);
+  }
+
+  $api_data["events"] = $event_data; 
+  cache_set('tm-api-events', $api_data, 'cache', time() + 300); // 5 mins
+  tm_api_return_json($api_data);
 
 }
 

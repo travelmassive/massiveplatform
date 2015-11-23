@@ -32,4 +32,5 @@ features[variable][] = ds_extras_switch_view_mode
 features[variable][] = ds_extras_vd
 features[variable][] = ft-default
 features[variable][] = ft-kill-colon
+features[variable][] = image_jpeg_quality
 features[variable][] = theme_default

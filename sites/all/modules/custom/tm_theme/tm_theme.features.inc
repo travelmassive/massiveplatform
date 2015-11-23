@@ -26,18 +26,26 @@ function tm_theme_image_default_styles() {
   $styles['avatar'] = array(
     'label' => 'Avatar',
     'effects' => array(
-      5 => array(
+      7 => array(
+        'name' => 'coloractions_convert',
+        'data' => array(
+          'format' => 'image/jpeg',
+          'quality' => '',
+        ),
+        'weight' => -10,
+      ),
+      4 => array(
         'name' => 'image_scale_and_crop',
         'data' => array(
           'width' => 512,
           'height' => 512,
         ),
-        'weight' => 1,
+        'weight' => -9,
       ),
-      6 => array(
+      5 => array(
         'name' => 'image_hires',
         'data' => array(),
-        'weight' => 2,
+        'weight' => -8,
       ),
     ),
   );
@@ -47,17 +55,25 @@ function tm_theme_image_default_styles() {
     'label' => 'Banner',
     'effects' => array(
       3 => array(
+        'name' => 'coloractions_convert',
+        'data' => array(
+          'format' => 'image/jpeg',
+          'quality' => '',
+        ),
+        'weight' => -10,
+      ),
+      1 => array(
         'name' => 'image_scale_and_crop',
         'data' => array(
           'width' => 1610,
           'height' => 906,
         ),
-        'weight' => 1,
+        'weight' => -9,
       ),
-      4 => array(
+      2 => array(
         'name' => 'image_hires',
         'data' => array(),
-        'weight' => 2,
+        'weight' => -8,
       ),
     ),
   );

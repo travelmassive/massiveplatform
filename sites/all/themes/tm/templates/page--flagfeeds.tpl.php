@@ -116,7 +116,8 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 		    	if (isset($flagged_user->field_avatar[LANGUAGE_NONE][0]['uri'])) {
 		    		$image_url = image_style_url("avatar", $flagged_user->field_avatar[LANGUAGE_NONE][0]['uri']);
 		    	} else {
-		    		$image_url = image_style_url("avatar", "public://default_images/avatar-default.png");
+		    		$default_image_uri = _tm_users_get_default_avatar("", $flagged_user->uid);
+		    		$image_url = image_style_url("avatar", $default_image_uri);
 		    	}
 
 		    	if (isset($flagged_user->field_location_city[LANGUAGE_NONE][0]['value'])) {
@@ -137,7 +138,8 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 		    	if (isset($flagging_user->field_avatar[LANGUAGE_NONE][0]['uri'])) {
 		    		$image_url = image_style_url("avatar", $flagging_user->field_avatar[LANGUAGE_NONE][0]['uri']);
 		    	} else {
-		    		$image_url = image_style_url("avatar", "public://default_images/avatar-default.png");
+		    		$default_image_uri = _tm_users_get_default_avatar("", $flagging_user->uid);
+		    		$image_url = image_style_url("avatar", $default_image_uri);
 		    	}
 
 		    	// if event has chapter
@@ -159,7 +161,8 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 		    	if (isset($flagging_user->field_avatar[LANGUAGE_NONE][0]['uri'])) {
 		    		$image_url = image_style_url("avatar", $flagging_user->field_avatar[LANGUAGE_NONE][0]['uri']);
 		    	} else {
-		    		$image_url = image_style_url("avatar", "public://default_images/avatar-default.png");
+		    		$default_image_uri = _tm_users_get_default_avatar("", $flagging_user->uid);
+		    		$image_url = image_style_url("avatar", $default_image_uri);
 		    	}
 
 		    	// if event has chapter
@@ -181,7 +184,8 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 		    	if (isset($chapter->field_image[LANGUAGE_NONE][0]['uri'])) {
 		    		$image_url = image_style_url("banner", $chapter->field_image[LANGUAGE_NONE][0]['uri']);
 		    	} else {
-		    		$image_url = image_style_url("banner", "public://default_images/cover-default.png");
+		    		$default_image_uri = _tm_chapters_get_default_image("", $chapter->nid);
+		    		$image_url = image_style_url("banner", $default_image_uri);
 		    	}
 		    	$feed_info = "<span class='flagfeed_ago'>" . $flagged_time . "</span>";
 		    	$feed_title = l($flagging_user_name, $flagging_user_url) . " joined " . l($chapter->title . " " . $conf["tm_site_name"], $flagged_node_url);
@@ -194,7 +198,8 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 		    	if (isset($flagging_user->field_avatar[LANGUAGE_NONE][0]['uri'])) {
 		    		$image_url = image_style_url("avatar", $flagging_user->field_avatar[LANGUAGE_NONE][0]['uri']);
 		    	} else {
-		    		$image_url = image_style_url("avatar", "public://default_images/avatar-default.png");
+		    		$default_image_uri = _tm_users_get_default_avatar("", $flagging_user->uid);
+		    		$image_url = image_style_url("avatar", $default_image_uri);
 		    	}
 
 		    	$feed_info = "<span class='flagfeed_ago'>" . $flagged_time . "</span>";
@@ -209,7 +214,8 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 		    	if (isset($organization->field_avatar[LANGUAGE_NONE][0]['uri'])) {
 		    		$image_url = image_style_url("avatar", $organization->field_avatar[LANGUAGE_NONE][0]['uri']);
 		    	} else {
-		    		$image_url = image_style_url("avatar", "public://default_images/avatar-default.png");
+		    		// note: organization will always have a logo as it's mandatory field
+		    		$image_url = image_style_url("avatar", $conf["tm_images_default_field_avatar"]);
 		    	}
 
 		    	$feed_info = "<span class='flagfeed_ago'>" . $flagged_time . "</span>";
@@ -223,7 +229,8 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 		    	if (isset($organization->field_avatar[LANGUAGE_NONE][0]['uri'])) {
 		    		$image_url = image_style_url("avatar", $organization->field_avatar[LANGUAGE_NONE][0]['uri']);
 		    	} else {
-		    		$image_url = image_style_url("avatar", "public://default_images/avatar-default.png");
+		    		// note: organization will always have a logo as it's mandatory field
+		    		$image_url = image_style_url("avatar", $conf["tm_images_default_field_avatar"]);
 		    	}
 
 		    	$feed_info = "<span class='flagfeed_ago'>" . $flagged_time . "</span>";

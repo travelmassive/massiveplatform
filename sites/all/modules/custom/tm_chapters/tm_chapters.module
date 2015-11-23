@@ -557,7 +557,7 @@ function _tm_chapters_get_default_image($default_image_uri, $nid) {
   global $conf;
 
   if (isset($conf["tm_images_default_path"])) {
-    if ($default_image_uri == $conf["tm_images_default_field_image"]) {
+    if (($default_image_uri == $conf["tm_images_default_field_image"])or ($default_image_uri == "")) {
       $cover_files = $conf["tm_images_default_cover_chapter"];
       $image_index = $nid % sizeof($cover_files);
       $cover_file = $conf["tm_images_default_path"] . $cover_files[$image_index];

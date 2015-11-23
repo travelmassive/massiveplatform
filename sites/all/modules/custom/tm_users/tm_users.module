@@ -692,6 +692,7 @@ function tm_users_member_in_users_chapter($member_uid, $chapter_leader_uid, $ret
 */
 function tm_users_menu_chapters($uid){
  
+  global $conf;
   $markup = "";
   $MAX_ITEMS = 4;
 
@@ -733,13 +734,7 @@ function tm_users_menu_chapters($uid){
   foreach ($all_chapter_nids as $nid) {
 
     $count_chapters++;
-
-    //$img_url = 'public://images/chapters/Athens.jpg';  // the orig image uri
     $chapter = node_load($nid);
-
-    $img_url = @$chapter->field_image['und'][0]['uri'];
-    if ($img_url == "") { $img_url = "public://default_images/cover-default.jpg"; }
-    $style = 'thumbnail';  // or any other custom image style you've created via /admin/config/media/image-styles
 
     // add to chapter html
     if (!array_key_exists($chapter->title, $chapter_html)) {
@@ -750,7 +745,16 @@ function tm_users_menu_chapters($uid){
         $chapter_leader_text = " (Chapter Leader)";
       }
 
-      $html = "<li style='margin-bottom: 4px;'><img align='left' style='margin-left: 16px; margin-top: 4px; padding-right: 8px; width: 40px;' src='".image_style_url($style, $img_url) . "'>" . l($chapter->title . $chapter_leader_text,'node/'.$chapter->nid) . '</li>';
+      // get image
+      $img_url = $conf["tm_images_default_field_image"];
+      if (isset($chapter->field_image[LANGUAGE_NONE][0]['uri'])) {
+        $img_url = $chapter->field_image[LANGUAGE_NONE][0]['uri'];
+      }
+      $img_url = _tm_chapters_get_default_image($img_url, $nid);
+      $style = 'thumbnail';
+
+      $html = "<li style='margin-bottom: 4px;'><div style='width: 36px; max-height: 24px; overflow: hidden; float: left; margin-left: 1rem; margin-right: 0.5rem; margin-top: 2px;'>
+      <img align='left' class='tm_menu_chapter_image' src='" . image_style_url($style, $img_url) . "'></div>" . l($chapter->title . $chapter_leader_text,'node/'.$chapter->nid) . '</li>'; 
 
       // Put into either a chapter or chapter_leader array
       if (in_array($nid, $chapters_leader_nids)) { 
@@ -808,6 +812,8 @@ function tm_users_menu_chapters($uid){
 */
 function tm_users_menu_companies($uid){
 
+  global $conf;
+
   $query = new EntityFieldQuery();
   $markup = '';
   $query->entityCondition('entity_type', 'node')
@@ -821,10 +827,16 @@ function tm_users_menu_companies($uid){
     $companies_nids = array_keys($result['node']);
     foreach ($companies_nids as $nid) {
       $company = node_load($nid);
-      $img_url = @$company->field_image['und'][0]['uri'];
-      if ($img_url == "") { $img_url = "public://default_images/cover-default.jpg"; }
-      $style = 'thumbnail';  // or any other custom image style you've created via /admin/config/media/image-styles
-      $markup .= "<li style='margin-bottom: 4px;'><img align='left' style='margin-left: 16px; margin-top: 4px; padding-right: 8px; width: 40px;' src='".image_style_url($style, $img_url) . "'>". l($company->title,'node/'.$company->nid).'</li>'; 
+
+      // get image
+      $img_url = $conf["tm_images_default_field_image"];
+      if (isset($company->field_image[LANGUAGE_NONE][0]['uri'])) {
+        $img_url = $company->field_image[LANGUAGE_NONE][0]['uri'];
+      }
+      $img_url = _tm_organizations_get_default_image($img_url, $nid);
+      $style = 'thumbnail';
+      $markup .= "<li style='margin-bottom: 4px;'><div style='width: 36px; max-height: 24px; overflow: hidden; float: left; margin-left: 1rem; margin-right: 0.5rem; margin-top: 2px;'>
+      <img align='left' class='tm_menu_organization_image' src='" . image_style_url($style, $img_url) . "'></div>" . l($company->title,'node/'.$company->nid) . '</li>'; 
     }
   }
   return $markup;
@@ -1094,7 +1106,7 @@ function _tm_users_get_default_avatar($default_image_uri, $uid) {
   global $conf;
 
   if (isset($conf["tm_images_default_path"])) {
-    if ($default_image_uri == $conf["tm_images_default_field_avatar"]) {
+    if (($default_image_uri == $conf["tm_images_default_field_avatar"]) or ($default_image_uri == "")) {
       $avatar_files = $conf["tm_images_default_avatar"];
       $image_index = $uid % sizeof($avatar_files);
       $avatar_file = $conf["tm_images_default_path"] . $avatar_files[$image_index];
@@ -1116,7 +1128,7 @@ function _tm_users_get_default_image($default_image_uri, $uid) {
   global $conf;
 
   if (isset($conf["tm_images_default_path"])) {
-    if ($default_image_uri == $conf["tm_images_default_field_image"]) {
+    if (($default_image_uri == $conf["tm_images_default_field_image"]) or ($default_image_uri == "")) {
       $cover_files = $conf["tm_images_default_cover_user"];
       $image_index = $uid % sizeof($cover_files);
       $cover_file = $conf["tm_images_default_path"] . $cover_files[$image_index];

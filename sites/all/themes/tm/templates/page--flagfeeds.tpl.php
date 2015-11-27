@@ -116,7 +116,7 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 		    	if (isset($flagged_user->field_avatar[LANGUAGE_NONE][0]['uri'])) {
 		    		$image_url = image_style_url("avatar", $flagged_user->field_avatar[LANGUAGE_NONE][0]['uri']);
 		    	} else {
-		    		$default_image_uri = _tm_users_get_default_avatar("", $flagged_user->uid);
+		    		$default_image_uri = _tm_users_get_default_avatar($conf["tm_images_default_field_avatar"], $flagged_user->uid);
 		    		$image_url = image_style_url("avatar", $default_image_uri);
 		    	}
 
@@ -138,7 +138,7 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 		    	if (isset($flagging_user->field_avatar[LANGUAGE_NONE][0]['uri'])) {
 		    		$image_url = image_style_url("avatar", $flagging_user->field_avatar[LANGUAGE_NONE][0]['uri']);
 		    	} else {
-		    		$default_image_uri = _tm_users_get_default_avatar("", $flagging_user->uid);
+		    		$default_image_uri = _tm_users_get_default_avatar($conf["tm_images_default_field_avatar"], $flagging_user->uid);
 		    		$image_url = image_style_url("avatar", $default_image_uri);
 		    	}
 
@@ -161,7 +161,7 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 		    	if (isset($flagging_user->field_avatar[LANGUAGE_NONE][0]['uri'])) {
 		    		$image_url = image_style_url("avatar", $flagging_user->field_avatar[LANGUAGE_NONE][0]['uri']);
 		    	} else {
-		    		$default_image_uri = _tm_users_get_default_avatar("", $flagging_user->uid);
+		    		$default_image_uri = _tm_users_get_default_avatar($conf["tm_images_default_field_avatar"], $flagging_user->uid);
 		    		$image_url = image_style_url("avatar", $default_image_uri);
 		    	}
 
@@ -184,7 +184,7 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 		    	if (isset($chapter->field_image[LANGUAGE_NONE][0]['uri'])) {
 		    		$image_url = image_style_url("banner", $chapter->field_image[LANGUAGE_NONE][0]['uri']);
 		    	} else {
-		    		$default_image_uri = _tm_chapters_get_default_image("", $chapter->nid);
+		    		$default_image_uri = _tm_chapters_get_default_image($conf["tm_images_default_field_image"], $chapter->nid);
 		    		$image_url = image_style_url("banner", $default_image_uri);
 		    	}
 		    	$feed_info = "<span class='flagfeed_ago'>" . $flagged_time . "</span>";
@@ -198,7 +198,7 @@ function tm_show_flagfeeds($display_num_items = 5, $display_max_items = 20, $cac
 		    	if (isset($flagging_user->field_avatar[LANGUAGE_NONE][0]['uri'])) {
 		    		$image_url = image_style_url("avatar", $flagging_user->field_avatar[LANGUAGE_NONE][0]['uri']);
 		    	} else {
-		    		$default_image_uri = _tm_users_get_default_avatar("", $flagging_user->uid);
+		    		$default_image_uri = _tm_users_get_default_avatar($conf["tm_images_default_field_avatar"], $flagging_user->uid);
 		    		$image_url = image_style_url("avatar", $default_image_uri);
 		    	}
 

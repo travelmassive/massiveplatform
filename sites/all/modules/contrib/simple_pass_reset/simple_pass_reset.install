@@ -1,0 +1,25 @@
+<?php
+/**
+ * @file
+ * Drupal install and update hooks.
+ */
+
+/**
+ * On install, make our module's weight higher than system.module.
+ */
+function simple_pass_reset_install() {
+  db_update('system')
+    ->fields(array('weight' => 1))
+    ->condition('name', 'simple_pass_reset', '=')
+    ->execute();
+}
+
+/**
+ * Update our module's weight higher than system.module.
+ */
+function simple_pass_reset_update_7100() {
+  db_update('system')
+    ->fields(array('weight' => 1))
+    ->condition('name', 'simple_pass_reset', '=')
+    ->execute();
+}

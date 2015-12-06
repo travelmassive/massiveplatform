@@ -1,0 +1,262 @@
+<?php
+
+/**
+ * Implements hook_menu_alter().
+ */
+function simple_pass_reset_menu_alter(&$items) {
+  // Drupal's default behavior is to show the user a log-in form before
+  // their user profile.  We replace this item to skip the uneccesary step.
+  $items['user/reset/%/%/%'] = array(
+    'title' => 'Account settings',
+    'access callback' => 'simple_pass_reset_pass_reset_access',
+    'access arguments' => array(2, 3, 4),
+    'page callback' => 'simple_pass_reset_pass_reset_page',
+    'page arguments' => array(2, 3, 4),
+    'type' => MENU_CALLBACK,
+  );
+}
+
+/**
+ * Access callback for use with Drupal's menu API.
+ */
+function simple_pass_reset_pass_reset_access($uid, $timestamp, $hashed_pass) {
+
+  // IC
+  if (user_is_logged_in()) {
+    drupal_set_message(t('You\'ve already used this password reset link. If you want to reset your password again you can <a href="/user/password">request a new password</a>.'), 'warning', FALSE);
+    drupal_goto('user');
+    return;
+  }
+
+  // This timeout check imitates core logic in user_pass_reset(). The timeout
+  // number is expressed in seconds, with 86400 equal to one day. There is no
+  // UI to adjust this number, but sites can customize it in their settings.php.
+  $timeout = variable_get('user_password_reset_timeout', 86400);
+
+  // Ensure the user is not blocked.
+  $users = user_load_multiple(array($uid), array('status' => '1'));
+
+  if ($timestamp <= REQUEST_TIME && $account = reset($users)) {
+    // Bypass the timeout check if the user has not logged in before.
+    if ($account->login && REQUEST_TIME - $timestamp > $timeout) {
+      drupal_set_message(t('You have tried to use a password reset link that has expired. Please request a new one using the form below.'), 'status', FALSE);
+      drupal_goto('user/password');
+    }
+    elseif ($account->uid && $timestamp >= $account->login && $timestamp <= REQUEST_TIME && $hashed_pass == user_pass_rehash($account->pass, $timestamp, $account->login, $account->uid)) {
+      return TRUE;
+    }
+  }
+
+  // Invalid
+  drupal_set_message(t('Your password reset link has expired. Please request a new one using the form below.'), 'warning', FALSE);
+    drupal_goto('/user/password');
+    return;
+  return FALSE;
+}
+
+/**
+ * Page callback for use with Drupal's menu API.
+ *
+ * This page replaces core one-time login form provided by user_pass_reset().
+ */
+function simple_pass_reset_pass_reset_page($uid, $timestamp, $hashed_pass, $option = NULL) {
+  // Never cache this page.
+  drupal_page_is_cacheable(FALSE);
+
+  module_load_include('inc', 'user', 'user.pages');
+
+  // When $option is original or login, preserve original behavior.
+  if ($option == 'original') {
+    return drupal_get_form('user_pass_reset', $uid, $timestamp, $hashed_pass);
+  }
+  elseif ($option == 'login') {
+    return drupal_get_form('user_pass_reset', $uid, $timestamp, $hashed_pass, $option);
+  }
+  else {
+    // Show the user edit form instead of silly one-time login form.
+    $account = user_load($uid);
+    $form = drupal_get_form('user_profile_form', $account);
+    return $form;
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * @see user_profile_form()
+ */
+function simple_pass_reset_form_user_profile_form_alter(&$form, &$form_state) {
+  // Don't alter the normal profile edit form, but only the password reset form.
+  if (arg(0) == 'user' && arg(1) == 'reset' && !user_is_logged_in()) {
+    // Our submit handler will log the user in after form submit.
+    $form['#submit'][] = 'simple_pass_reset_pass_reset_submit';
+
+    $form['actions']['submit']['#value'] = t('Save and log in as !username', array('!username' => format_username($form['#user'])));
+
+    // Links provided by the Bakery module will not work because the user is not
+    // logged in yet.
+    if (!empty($form['bakery'])) {
+      $form['bakery']['#access'] = FALSE;
+
+      // Normally the Bakery module would make the following change to the
+      // user_pass_reset form.
+      if (!variable_get('bakery_is_master', FALSE)) {
+        // Set a submit handler for the pseudo-reset form.
+        $form['#submit'] = array('_bakery_reset_submit');
+      }
+    }
+
+    // Some third-party modules (like Bakery) might hide account elements.
+    if (!isset($form['account']['#access']) || $form['account']['#access']) {
+      // Require a new password.
+      $form['account']['pass']['#required'] = TRUE;
+
+      if (arg(5) == 'brief') {
+        drupal_set_title(t('Choose a new password')); // Instead of "Reset password".
+
+        // Hide "To change the current user password..."
+        unset($form['account']['pass']['#description']);
+
+        // The user is most interested in getting a working password, don't show their picture, timezone, etc.
+        foreach (element_children($form) as $key) {
+          if (isset($form[$key]['#type']) && in_array($form[$key]['#type'], array('hidden', 'actions', 'captcha'))) {
+            // Do not alter these elements.
+          }
+          else {
+            // Hide other elements.
+            $form[$key]['#access'] = FALSE;
+          }
+        }
+        // Except don't hide these.
+        $form['account']['#access'] = TRUE;
+        $form['actions']['#access'] = TRUE;
+
+        // But seriously do hide these.
+        $form['account']['mail']['#access'] = FALSE;
+      }
+    }
+
+    // This is to avoid a PHP Notice in user_profile_form_submit().  https://www.drupal.org/node/2111293#comment-9262499
+    if (empty($_SESSION)) {
+      $_SESSION = array('simple_pass_reset' => TRUE);
+    }
+  }
+}
+
+/**
+ * Submit callback for Drupal form API.
+ */
+function simple_pass_reset_pass_reset_submit($form, &$form_state) {
+  if (!user_is_logged_in()) { // Sanity check.
+    // Remove roles that were disabled in the form. Normally the User module
+    // will array_filter() these out for us.  But remember_me and possibly other
+    // modules have bugs that might prevent it from doing so.
+    if (!empty($form_state['user']->roles)) {
+      $form_state['user']->roles = array_filter($form_state['user']->roles);
+    }
+
+    // Load the user account afresh and finalize the login.
+    // @see user_login_submit()
+    global $user;
+    $user = user_load($form_state['user']->uid);
+    user_login_finalize();
+
+    // IC
+    drupal_get_messages(); // remove "Your changes have been saved."
+    drupal_set_message(t('Your password has been changed.'));
+
+    watchdog('user', 'User %name used one-time login link.', array('%name' => $user->name));
+
+    if(empty($form_state['redirect'])) {
+      $form_state['redirect'] = 'user';
+    }
+  }
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ *
+ * Asks Drupal to run our form_alter hooks after other modules.
+ */
+function simple_pass_reset_module_implements_alter(&$implementations, $hook) {
+  // The hook we're interested in is hook_form_FORM_ID_alter().  Yet, in this function we have to manipulate 'form_alter'.  Because Drupal is tricky like that.
+  if ($hook == 'form_alter' && isset($implementations['simple_pass_reset'])) {
+    // Make our form alters come last (so we act after other modules have already altered).
+    $group = $implementations['simple_pass_reset'];
+    unset($implementations['simple_pass_reset']);
+    $implementations['simple_pass_reset'] = $group;
+  }
+}
+
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * This is not about simplifying the text on the password reset form, but it's
+ * behavior.  If a logged in user resets her password, she's sent a link via
+ * email.  But will get access denied clicking that link, because she's already
+ * logged in!  This hook will log her out when resetting password.  This makes
+ * the password reset form behave more like the user edit form when a user
+ * changes their own password. (See where user_save() calls
+ * drupal_session_destroy_uid().)
+ */
+function simple_pass_reset_form_user_pass_alter(&$form, &$form_state) {
+  // If the user views the password reset form while logged in...
+  if (user_is_logged_in()) {
+    drupal_set_title(t('Reset my password'));
+
+    // Update the help text and button text to indicate that submitting the form
+    // will log them out.
+    $form['mail']['#markup'] = t('We will e-mail a password reset link for your account to %email. You will be logged out if you continue.', array('%email' => $form['name']['#value']));
+    $form['actions']['submit']['#value'] = t('E-mail reset link and log out');
+
+    // Add a form submit handler to log out upon submission.
+    $form['#submit'][] = 'simple_pass_reset_form_user_pass_submit';
+  } else {
+
+    // logged out user on 'Forgot password page'
+    if (arg(2) != "submitted")  {
+      drupal_set_message(t('Can\'t remember your password? Please enter the e-mail address that you signed up with and we\'ll send you a reset link.'), 'page_notice', FALSE);
+    }
+
+    $form['actions']['submit']['#value'] = 'Send me a password reset link';
+    $form['#submit'][] = 'simple_pass_reset_form_user_pass_submit';
+  }
+
+}
+
+
+/**
+ * Submit callback: log out when an authenticated user submits the password
+ * reset form.
+ */
+function simple_pass_reset_form_user_pass_submit($form, &$form_state) {
+
+  global $user;
+
+  if (user_is_logged_in()) {
+
+    drupal_session_destroy_uid($user->uid);
+
+    // Some code copied from user_logout(), which we cannot call here because it
+    // uses drupal_goto().
+    watchdog('user', 'Session closed for %name.', array('%name' => $user->name));
+
+    module_invoke_all('user_logout', $user);
+
+    // Destroy the current session, and reset $user to the anonymous user.
+    session_destroy();
+
+    // Note call drupal_set_message() AFTER session_destroy().
+    drupal_set_message(t('A password reset link has been sent to your e-mail address. You are now logged out.'));
+    $form_state['redirect'] = '<front>';
+  } else {
+
+    // User used the forgot password page
+    drupal_get_messages();
+    $email = $form['name']['#value'];
+    drupal_set_message(t('A password reset link has been sent to <i>' . $email . '</i>. Please allow a few minutes for it to arrive.'));
+    $form_state['redirect'] = '/user/password/submitted';
+  }
+}
+

@@ -34,6 +34,10 @@ function tm_users_form_user_login_block_alter(&$form, &$form_state) {
 
 function tm_users_form_user_profile_form_alter(&$form, &$form_state) {
 
+  // Only edit form if user is not logged in
+  // Needed for simple_pass_reset to work
+  if (!user_is_logged_in()) { return; }
+
   // Add an indication of the username, in case users are not allowed to edit 
   // their usernames.
   if (!user_access('change own username')) {
@@ -49,7 +53,7 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state) {
   unset($form['timezone']['#description']);
 
   // Redirect user to their profile page when they save profile
-  // http://drupal.stackexchange.com/questions/64171/redirect-user-to-their-profile-page-after-saving
+  // http://drupal.stackexchange.com/questions/64171/redirect-user-to-their-profile-page-after-savin
   $form['#submit'][] = 'tm_users_user_profile_form_submit';
 
   // Add javascript protection to prompt to save profile if its edited
@@ -1902,7 +1906,6 @@ function tm_users_mail_alter(&$mail_form) {
       $subject = "Confirm your " . $conf["tm_site_name"] . " account, " . $first_name . " " . $last_name;
 
     } elseif ($mail_form['id'] == 'user_password_reset') {
-      drupal_set_message("We've just sent an email to " . $email . " with a link to recover your account. Please allow a few minutes for the email to arrive.");
       $subject = "Recover your " . $conf["tm_site_name"] . " login";
     }
 
@@ -2251,4 +2254,3 @@ function tm_users_get_num_registered_events($uid) {
   $result = db_query($query, array(':fid' => $flag->fid, ':uid' => $uid))->fetch();
   return $result->total;
 }
-

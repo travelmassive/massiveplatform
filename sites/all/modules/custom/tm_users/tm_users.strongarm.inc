@@ -271,7 +271,7 @@ This link expires in one day and nothing will happen if it is not used.
 <br><div>
   <table cellspacing="0" cellpadding="0"> <tr> 
   <td align="center" width="300" height="40" bgcolor="#007db7" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block;">
-    <a href="[user:one-time-login-url]" style="font-size:16px; font-weight: bold; font-family:sans-serif; text-decoration: none; line-height:40px; width:100%; display:inline-block">
+    <a href="[user:one-time-login-url]/brief" style="font-size:16px; font-weight: bold; font-family:sans-serif; text-decoration: none; line-height:40px; width:100%; display:inline-block">
     <span style="color: #ffffff;">
       Reset password
     </span>
@@ -285,7 +285,7 @@ This link expires in one day and nothing will happen if it is not used.
 <br>__EMAIL_SIGNOFF__
 <br>
 <br>If you are unable to view the button, please use the recovery link below:
-<br>[user:one-time-login-url]
+<br>[user:one-time-login-url]/brief
 <br>';
   $export['user_mail_password_reset_body'] = $strongarm;
 

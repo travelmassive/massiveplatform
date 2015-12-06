@@ -278,7 +278,7 @@ function tm_chapters_download_csv(){
   fputs($fh,$message,strlen($message));
 
   // puts a header row across the top of the csv
-  $item = array(t('First name'),t('Last name'),t('Email'),t('SubscribeChapterNewsletter'),t('SubscribeGlobalNewsletter'),t('Country'),t('City'),t('Organization'),t('Role'),t('Website'),t('Segment'),t('MemberSince'),t('ApprovalStatus'));
+  $item = array(t('First name'),t('Last name'),t('Email'),t('SubscribeChapterNewsletter'),t('SubscribeGlobalNewsletter'),t('SubscribeChapterAnnouncements'),t('Country'),t('City'),t('Organization'),t('Role'),t('Website'),t('Segment'),t('MemberSince'),t('ApprovalStatus'));
   fputcsv($fh, $item);
 
   // list of users
@@ -300,6 +300,8 @@ function tm_chapters_download_csv(){
     $notif = new TMNotification("chapter_newsletters");
     $item[] = ($notif->isEnabled($account->uid) ? "yes" : "no");
     $notif = new TMNotification("global_newsletter");
+    $item[] = ($notif->isEnabled($account->uid) ? "yes" : "no");
+    $notif = new TMNotification("user_chapter_announcements");
     $item[] = ($notif->isEnabled($account->uid) ? "yes" : "no");
     if (isset($account->field_user_country[$language][0])){
       $item[] = $account->field_user_country[$language][0]['iso2'];

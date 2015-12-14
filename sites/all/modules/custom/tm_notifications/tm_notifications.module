@@ -71,7 +71,7 @@ function tm_notifications_form_user_profile_form_alter(&$form, &$form_state) {
   $notifications = module_invoke_all('tm_notif_info');
   
   if (!empty($notifications)) {
-    
+
     $form['tm_notifications'] = array(
       '#type' => 'fieldset',
       '#title' => t('Notification settings'),
@@ -90,6 +90,29 @@ function tm_notifications_form_user_profile_form_alter(&$form, &$form_state) {
     }
     array_multisort($notifications, SORT_DESC, SORT_NUMERIC, $sort);
     
+    // Special check if a featured member is set to recieve event notifications
+    $event_notifications = array("events_register_flag", "events_waitlist_flag", "events_register_unflag", "events_waitlist_unflag");
+
+    $change_overide = false;
+    $flag = flag_get_flag('featured_member');
+    if ($flag->is_flagged($user->uid)) {
+
+      // search for any events where this user has been featured and field_notify_featured_members = true 
+      $query = "SELECT count(*) AS num_rows
+                FROM field_data_field_event_featured_members 
+                LEFT JOIN field_data_field_notify_featured_members
+                ON field_data_field_event_featured_members.entity_id = field_data_field_notify_featured_members.entity_id 
+                WHERE field_notify_featured_members_value = 1 
+                AND field_event_featured_members_target_id = :uid limit 1";
+      $result = db_query($query, array(':uid' => $user->uid))->fetch();
+      $result->num_rows;
+
+      if ($result->num_rows > 0) {
+        $change_overide = true;
+      }
+    }
+
+
     foreach ($notifications as $name => $value) {
       $notif = new TMNotification($name);
 
@@ -98,7 +121,11 @@ function tm_notifications_form_user_profile_form_alter(&$form, &$form_state) {
       // Otherwise use value of change_allowed
       $change_allowed = false;
       $change_roles_allowed = $notif->getChangeAllowedRoles();
-      if ($notif->isChangeAllowed() && (sizeof($change_roles_allowed) > 0)) {
+
+      if ($change_overide && in_array($name, $event_notifications)) {
+        $change_allowed = true;
+      }
+      else if ($notif->isChangeAllowed() && (sizeof($change_roles_allowed) > 0)) {
         foreach($change_roles_allowed as $role) {
           if (in_array($role, $user->roles)) {
             $change_allowed = true;
@@ -108,10 +135,16 @@ function tm_notifications_form_user_profile_form_alter(&$form, &$form_state) {
         $change_allowed = $notif->isChangeAllowed();
       }
 
+      // format set title for non-chapter leaders
+      $title = $notif->getLabel($value['title']);
+      if ($change_overide) { 
+        $title = str_replace("[Chapter Leaders]", "Events &rarr; ", $title);
+      }
+
       if ($change_allowed) {
         $form['tm_notifications'][$name] = array(
           '#type' => 'checkbox',
-          '#title' => $notif->getLabel($value['title']),
+          '#title' => $title,
           '#default_value' => $notif->isEnabled($user->uid),
         );
       }

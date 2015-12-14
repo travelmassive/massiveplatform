@@ -10,7 +10,7 @@
 function tm_users_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'user-user-field_about_me'
+  // Exported field_instance: 'user-user-field_about_me'.
   $field_instances['user-user-field_about_me'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -23,7 +23,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 23,
+        'weight' => 24,
       ),
       'grid' => array(
         'label' => 'above',
@@ -65,7 +65,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_avatar'
+  // Exported field_instance: 'user-user-field_avatar'.
   $field_instances['user-user-field_avatar'] = array(
     'bundle' => 'user',
     'deleted' => 0,
@@ -144,7 +144,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_friendly_url'
+  // Exported field_instance: 'user-user-field_friendly_url'.
   $field_instances['user-user-field_friendly_url'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -196,7 +196,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_home_chapter'
+  // Exported field_instance: 'user-user-field_home_chapter'.
   $field_instances['user-user-field_home_chapter'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -251,7 +251,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_image'
+  // Exported field_instance: 'user-user-field_image'.
   $field_instances['user-user-field_image'] = array(
     'bundle' => 'user',
     'deleted' => 0,
@@ -325,7 +325,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_job_organization'
+  // Exported field_instance: 'user-user-field_job_organization'.
   $field_instances['user-user-field_job_organization'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -381,7 +381,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_job_role'
+  // Exported field_instance: 'user-user-field_job_role'.
   $field_instances['user-user-field_job_role'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -436,7 +436,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_link_facebook'
+  // Exported field_instance: 'user-user-field_link_facebook'.
   $field_instances['user-user-field_link_facebook'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -448,7 +448,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_facebook',
-        'weight' => 28,
+        'weight' => 29,
       ),
       'grid' => array(
         'label' => 'above',
@@ -507,7 +507,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_link_instagram'
+  // Exported field_instance: 'user-user-field_link_instagram'.
   $field_instances['user-user-field_link_instagram'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -519,7 +519,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_instagram',
-        'weight' => 30,
+        'weight' => 31,
       ),
       'grid' => array(
         'label' => 'above',
@@ -577,7 +577,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_link_linkedin'
+  // Exported field_instance: 'user-user-field_link_linkedin'.
   $field_instances['user-user-field_link_linkedin'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -589,7 +589,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_linkedin',
-        'weight' => 29,
+        'weight' => 30,
       ),
       'grid' => array(
         'label' => 'above',
@@ -648,7 +648,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_link_snapchat'
+  // Exported field_instance: 'user-user-field_link_snapchat'.
   $field_instances['user-user-field_link_snapchat'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -660,7 +660,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_snapchat',
-        'weight' => 33,
+        'weight' => 34,
       ),
       'grid' => array(
         'label' => 'above',
@@ -718,7 +718,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_link_twitter'
+  // Exported field_instance: 'user-user-field_link_twitter'.
   $field_instances['user-user-field_link_twitter'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -730,7 +730,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_twitter',
-        'weight' => 27,
+        'weight' => 28,
       ),
       'grid' => array(
         'label' => 'above',
@@ -789,7 +789,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_link_vimeo'
+  // Exported field_instance: 'user-user-field_link_vimeo'.
   $field_instances['user-user-field_link_vimeo'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -801,7 +801,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_vimeo',
-        'weight' => 32,
+        'weight' => 33,
       ),
       'grid' => array(
         'label' => 'above',
@@ -859,7 +859,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_link_website'
+  // Exported field_instance: 'user-user-field_link_website'.
   $field_instances['user-user-field_link_website'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -871,7 +871,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_link',
-        'weight' => 26,
+        'weight' => 27,
       ),
       'grid' => array(
         'label' => 'above',
@@ -930,7 +930,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_link_youtube'
+  // Exported field_instance: 'user-user-field_link_youtube'.
   $field_instances['user-user-field_link_youtube'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -942,7 +942,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_youtube',
-        'weight' => 31,
+        'weight' => 32,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1000,7 +1000,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_location_city'
+  // Exported field_instance: 'user-user-field_location_city'.
   $field_instances['user-user-field_location_city'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -1054,7 +1054,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_reason_for_joining'
+  // Exported field_instance: 'user-user-field_reason_for_joining'.
   $field_instances['user-user-field_reason_for_joining'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -1106,7 +1106,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_segment'
+  // Exported field_instance: 'user-user-field_segment'.
   $field_instances['user-user-field_segment'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -1118,7 +1118,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'hs_taxonomy',
         'settings' => array(),
         'type' => 'hs_taxonomy_term_reference_hierarchical_text',
-        'weight' => 25,
+        'weight' => 26,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1164,7 +1164,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_user_country'
+  // Exported field_instance: 'user-user-field_user_country'.
   $field_instances['user-user-field_user_country'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -1213,7 +1213,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_user_first_name'
+  // Exported field_instance: 'user-user-field_user_first_name'.
   $field_instances['user-user-field_user_first_name'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -1265,7 +1265,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_user_last_name'
+  // Exported field_instance: 'user-user-field_user_last_name'.
   $field_instances['user-user-field_user_last_name'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -1317,7 +1317,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_user_question_1'
+  // Exported field_instance: 'user-user-field_user_question_1'.
   $field_instances['user-user-field_user_question_1'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -1371,7 +1371,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_user_question_2'
+  // Exported field_instance: 'user-user-field_user_question_2'.
   $field_instances['user-user-field_user_question_2'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -1425,7 +1425,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_user_question_3'
+  // Exported field_instance: 'user-user-field_user_question_3'.
   $field_instances['user-user-field_user_question_3'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -1479,7 +1479,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_user_question_4'
+  // Exported field_instance: 'user-user-field_user_question_4'.
   $field_instances['user-user-field_user_question_4'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -1533,7 +1533,7 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_user_question_5'
+  // Exported field_instance: 'user-user-field_user_question_5'.
   $field_instances['user-user-field_user_question_5'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
@@ -1615,8 +1615,6 @@ function tm_users_field_default_field_instances() {
   t('Profile Picture');
   t('Provide a cover image to be displayed behind your profile picture.
 <br>If you want to be pixel perfect, upload your image sized to 1610x906');
-  t('Tell the community about yourself. This information will be <strong>public</strong>.
-<br><strong>Providing information about your company?</strong> Please add a <a href="/companies">company profile</a>.');
   t('Question 1');
   t('Question 2');
   t('Question 3');
@@ -1624,6 +1622,8 @@ function tm_users_field_default_field_instances() {
   t('Question 5');
   t('Reason for joining');
   t('Snapchat');
+  t('Tell the community about yourself. This information will be <strong>public</strong>.
+<br><strong>Providing information about your company?</strong> Please add a <a href="/companies">company profile</a>.');
   t('The name of your business, company, or organization.
 <br>Once your account is approved you can add a <a href="/companies">company profile</a>.');
   t('Twitter');

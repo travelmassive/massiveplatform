@@ -2172,12 +2172,13 @@ function tm_users_confirm_cancel_account($account) {
 
 }
 
-/* Add display suite field for follower stats */
+/* Add display suite field for follower stats and featured user */
 function tm_users_ds_fields_info($entity_type) {
   if ($entity_type != 'user') {
     return;
   }
 
+  // stats
   $fields = array();
   $fields['tm_ds_user_stats'] = array(
     'title' => t('Member Stats'),
@@ -2185,7 +2186,32 @@ function tm_users_ds_fields_info($entity_type) {
     'ui_limit' => array('user|*'),
     'function' => '_tm_ds_user_stats'
   );
+
+  // featured user badge
+  $fields['tm_ds_user_featured'] = array(
+    'title' => t('Featured Member Badge'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('user|*'),
+    'function' => '_tm_ds_user_featured'
+  );
   return array($entity_type => $fields);
+}
+
+/* Render if user is feature */
+function _tm_ds_user_featured($field, $title = NULL) {
+  global $conf;
+  $flag = flag_get_flag('featured_member');
+  $loaded = user_load($field['entity']->uid);
+
+  // show if chapter leader
+  if (in_array("chapter leader", $loaded->roles)) {
+    return t($conf['tm_site_name'] . " Chapter Leader");
+  }
+  
+  // show custom badge if featured
+  if ($flag->is_flagged($field['entity']->uid)) {
+    return t($conf["tm_featured_members_badge_text"]);
+  }
 }
 
 /* Render user's follower and following stats */
@@ -2251,4 +2277,17 @@ function tm_users_get_num_registered_events($uid) {
   $query = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.uid = :uid AND f.entity_type = 'node'";
   $result = db_query($query, array(':fid' => $flag->fid, ':uid' => $uid))->fetch();
   return $result->total;
+}
+
+/* 
+ * Use OR for contextual queruies in related_events
+ * This allows us to show signed up and featured events
+ * see: https://www.drupal.org/node/1451218#comment-6136692
+ */
+function tm_users_views_query_alter(&$view, &$query) {
+  if ($view->name == 'signups') {
+    if ($query->options['query_comment'] == 'block_joined_events') {
+      $query->where[0]['type'] = 'OR';
+    }
+  }
 }

@@ -331,11 +331,36 @@ function tm_events_views_default_views() {
 
   /* Display: Block */
   $handler = $view->new_display('block', 'Block', 'event_list');
+  $handler->display->display_options['defaults']['group_by'] = FALSE;
+  $handler->display->display_options['group_by'] = TRUE;
+  $handler->display->display_options['defaults']['query'] = FALSE;
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['query_comment'] = 'related_events';
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
   $handler->display->display_options['defaults']['sorts'] = FALSE;
   /* Sort criterion: Content: When -  start date (field_event_date) */
   $handler->display->display_options['sorts']['field_event_date_value']['id'] = 'field_event_date_value';
   $handler->display->display_options['sorts']['field_event_date_value']['table'] = 'field_data_field_event_date';
   $handler->display->display_options['sorts']['field_event_date_value']['field'] = 'field_event_date_value';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Content: Event Chapter (field_chapter) */
+  $handler->display->display_options['arguments']['field_chapter_target_id']['id'] = 'field_chapter_target_id';
+  $handler->display->display_options['arguments']['field_chapter_target_id']['table'] = 'field_data_field_chapter';
+  $handler->display->display_options['arguments']['field_chapter_target_id']['field'] = 'field_chapter_target_id';
+  $handler->display->display_options['arguments']['field_chapter_target_id']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['field_chapter_target_id']['default_argument_type'] = 'node';
+  $handler->display->display_options['arguments']['field_chapter_target_id']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_chapter_target_id']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_chapter_target_id']['summary_options']['items_per_page'] = '25';
+  /* Contextual filter: Content: Publish to Chapters (field_chapter_publish) */
+  $handler->display->display_options['arguments']['field_chapter_publish_target_id']['id'] = 'field_chapter_publish_target_id';
+  $handler->display->display_options['arguments']['field_chapter_publish_target_id']['table'] = 'field_data_field_chapter_publish';
+  $handler->display->display_options['arguments']['field_chapter_publish_target_id']['field'] = 'field_chapter_publish_target_id';
+  $handler->display->display_options['arguments']['field_chapter_publish_target_id']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['field_chapter_publish_target_id']['default_argument_type'] = 'node';
+  $handler->display->display_options['arguments']['field_chapter_publish_target_id']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_chapter_publish_target_id']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_chapter_publish_target_id']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Content: Published */
@@ -371,6 +396,11 @@ function tm_events_views_default_views() {
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['defaults']['use_more_text'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'View more';
+  $handler->display->display_options['defaults']['group_by'] = FALSE;
+  $handler->display->display_options['group_by'] = TRUE;
+  $handler->display->display_options['defaults']['query'] = FALSE;
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['query_comment'] = 'related_events';
   $handler->display->display_options['defaults']['pager'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'load_more';
   $handler->display->display_options['pager']['options']['items_per_page'] = '18';
@@ -391,6 +421,15 @@ function tm_events_views_default_views() {
   $handler->display->display_options['arguments']['field_chapter_target_id']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['field_chapter_target_id']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_chapter_target_id']['summary_options']['items_per_page'] = '25';
+  /* Contextual filter: Content: Publish to Chapters (field_chapter_publish) */
+  $handler->display->display_options['arguments']['field_chapter_publish_target_id']['id'] = 'field_chapter_publish_target_id';
+  $handler->display->display_options['arguments']['field_chapter_publish_target_id']['table'] = 'field_data_field_chapter_publish';
+  $handler->display->display_options['arguments']['field_chapter_publish_target_id']['field'] = 'field_chapter_publish_target_id';
+  $handler->display->display_options['arguments']['field_chapter_publish_target_id']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['field_chapter_publish_target_id']['default_argument_type'] = 'node';
+  $handler->display->display_options['arguments']['field_chapter_publish_target_id']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_chapter_publish_target_id']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_chapter_publish_target_id']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Content: Published */

@@ -382,9 +382,33 @@ function tm_base_field_group_pre_render(&$element, $group, &$form) {
         '#weight' => $group->weight,
       );
 
+      // default group label
+      $group_label = $group->label;
+
+      // if featured members, override
+      // ie: Speakers, Workshop Leaders, etc
+      global $conf;
+      if ($group->label == "Featured Members") {
+        if (isset($element['field_event_featured_members']['#object'])) {
+          $event = $element['field_event_featured_members']['#object']; //->nid;
+          $event_type = $event->field_event_type[LANGUAGE_NONE][0]['value'];
+
+          // fetch from event setting
+          $group_label = "";
+          if (sizeof($event->field_event_featured_label) > 0) {
+            $group_label = trim($event->field_event_featured_label[LANGUAGE_NONE][0]['value']);
+          }
+          // not specified
+          if ($group_label == "") {
+            $group_label = $conf["tm_featured_members_event_types"][$event_type];
+          }
+          
+        }
+      }
+     
       $add['#prefix'] = '<section class="contained contained-block">
         <header class="contained-head">
-          <h1 class="prime-title">' . check_plain(t($group->label)) . '</h1>
+          <h1 class="prime-title">' . check_plain(t($group_label)) . '</h1>
         </header>
         <div class="contained-body">';
       $add['#suffix'] = '</div></section>';

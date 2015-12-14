@@ -571,4 +571,16 @@ function _tm_chapters_get_default_image($default_image_uri, $nid) {
   return $default_image_uri;
 }
 
+/* 
+ * Use OR for contextual queruies in related_events
+ * This allows us to show chapter and published chapter events
+ * see: https://www.drupal.org/node/1451218#comment-6136692
+ */
+function tm_chapters_views_query_alter(&$view, &$query) {
+  if ($view->name == 'related_events') {
+    if ($query->options['query_comment'] == 'related_events') {
+      $query->where[0]['type'] = 'OR';
+    }
+  }
+}
 

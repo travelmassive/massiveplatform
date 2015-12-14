@@ -76,7 +76,6 @@ function _tm_ds_organization_stats($field, $title = NULL) {
  */
 function _tm_sponsor($field, $title = NULL) {
   global $conf;
-  //$flag = flag_get_flag('tm_sponsor') or die('no "bookmarks" flag defined');
   $flag = flag_get_flag('tm_sponsor');
   if ($flag->is_flagged($field['entity']->nid)) {
     return t('A ' . $conf['tm_site_name']) . ' ' . l('sponsor', 'sponsors') . '';

@@ -2890,7 +2890,7 @@ Icons
 
 /* line 25, ../sass/_type.scss */
 .icon, .icon-medal, .contained-block .detail-item.tm-ds-tm-sponsor:before, .icon-move, .draggable a.tabledrag-handle:before, .icon-briefcase, .contained-block .detail-item.field-segment:before, .icon-bubble, .contained-block .detail-item.field-qa:before, .contained-block .detail-item.qa:before, .icon-s-new-window, .bttn.external:before, .bttn-group a.external:before, .page-views .tabs-primary a.external:before, .page-search .tabs-primary a.external:before, .pager li a.external:before, .pager .external.pager-current:before, .views-exposed-form .external.form-type-select:before, .external.twitter-login:before,
-.form-submit.external:before, .icon-instagram, #foot-nav .instagram:before, .contained-block .detail-item.field-link-instagram:before, .icon-users, .contained-block .detail-item.tm-ds-user-stats:before, .contained-block .detail-item.tm-ds-organization-stats:before, .icon-user, #prime-nav .account-wrapper .toggle:before, .icon-twitter, #foot-nav .twitter:before, .contained-block .detail-item.field-link-twitter:before, .twitter-login:before, .icon-triangle-up, .dropd:before, .icon-triangle-right, .icon-triangle-left, .icon-triangle-down, .icon-trash-bin, .icon-tick, .icon-subtract, .icon-star, .icon-spinner, .icon-share, .icon-share-reg, .icon-search-r, #prime-nav .search-wrapper .toggle:before, .icon-search-l, .icon-s-triangle-up, .icon-s-triangle-right, .tm-frontpage-video-pause:before, .icon-s-triangle-left, .icon-s-triangle-down, .icon-s-tick, .bttn.follow.on:before, .bttn-group a.follow.on:before, .page-views .tabs-primary a.follow.on:before, .page-search .tabs-primary a.follow.on:before, .pager li a.follow.on:before, .pager .follow.on.pager-current:before, .views-exposed-form .follow.on.form-type-select:before, .follow.on.twitter-login:before, .bttn.follow.flagged:before, .bttn-group a.follow.flagged:before, .page-views .tabs-primary a.follow.flagged:before, .page-search .tabs-primary a.follow.flagged:before, .pager li a.follow.flagged:before, .pager .follow.flagged.pager-current:before, .views-exposed-form .follow.flagged.form-type-select:before, .follow.flagged.twitter-login:before,
+.form-submit.external:before, .icon-instagram, #foot-nav .instagram:before, .contained-block .detail-item.field-link-instagram:before, .icon-users, .contained-block .detail-item.tm-ds-user-stats:before, .contained-block .detail-item.tm-ds-organization-stats:before, .icon-user, #prime-nav .account-wrapper .toggle:before, .icon-twitter, #foot-nav .twitter:before, .contained-block .detail-item.field-link-twitter:before, .twitter-login:before, .icon-triangle-up, .dropd:before, .icon-triangle-right, .icon-triangle-left, .icon-triangle-down, .icon-trash-bin, .icon-tick, .icon-subtract, .icon-star, .contained-block .detail-item.tm-ds-user-featured:before, .icon-spinner, .icon-share, .icon-share-reg, .icon-search-r, #prime-nav .search-wrapper .toggle:before, .icon-search-l, .icon-s-triangle-up, .icon-s-triangle-right, .tm-frontpage-video-pause:before, .icon-s-triangle-left, .icon-s-triangle-down, .icon-s-tick, .bttn.follow.on:before, .bttn-group a.follow.on:before, .page-views .tabs-primary a.follow.on:before, .page-search .tabs-primary a.follow.on:before, .pager li a.follow.on:before, .pager .follow.on.pager-current:before, .views-exposed-form .follow.on.form-type-select:before, .follow.on.twitter-login:before, .bttn.follow.flagged:before, .bttn-group a.follow.flagged:before, .page-views .tabs-primary a.follow.flagged:before, .page-search .tabs-primary a.follow.flagged:before, .pager li a.follow.flagged:before, .pager .follow.flagged.pager-current:before, .views-exposed-form .follow.flagged.form-type-select:before, .follow.flagged.twitter-login:before,
 .form-submit.follow.on:before,
 .form-submit.follow.flagged:before, .form-submit:before, .messages.status:before, .status.messages--status:before, .status.messages--warning:before, .status.messages--error:before, .icon-s-subtract, .icon-s-cancel, .icon-s-arr-up, .icon-s-arr-right, .cta-inline:after, .contained-block .detail-item .detail-venue-link a:after, .contained-block .more-link a:after, #foot-nav a:before, .contained-block .detail-item.price:before, .icon-s-arr-left, .icon-s-arr-down, .bttn-dropdown:after, html.js .collapsible .fieldset-legend a:after, .views-exposed-form .form-type-select:after, .icon-s-add, .bttn.follow:before, .bttn-group a.follow:before, .page-views .tabs-primary a.follow:before, .page-search .tabs-primary a.follow:before, .pager li a.follow:before, .pager .follow.pager-current:before, .views-exposed-form .follow.form-type-select:before, .follow.twitter-login:before,
 .form-submit.follow:before, .icon-refresh, .icon-phone, .icon-pencil, .bttn.edit:before, .bttn-group a.edit:before, .page-views .tabs-primary a.edit:before, .page-search .tabs-primary a.edit:before, .pager li a.edit:before, .pager .edit.pager-current:before, .views-exposed-form .edit.form-type-select:before, .edit.twitter-login:before,
@@ -2990,7 +2990,7 @@ Icons
 }
 
 /* line 102, ../sass/_type.scss */
-.icon-star {
+.icon-star, .contained-block .detail-item.tm-ds-user-featured:before {
   content: "\e60b";
 }
 
@@ -5758,103 +5758,103 @@ a.cancel_account_link {
   font-weight: 800;
   display: block;
 }
-/* line 135, ../sass/_modules.scss */
+/* line 136, ../sass/_modules.scss */
 .contained-block .detail-item.tm-ds-organization-follow-message {
   display: none;
 }
-/* line 144, ../sass/_modules.scss */
+/* line 145, ../sass/_modules.scss */
 .contained-block .detail-item.field-link-facebook, .contained-block .detail-item.field-link-linkedin, .contained-block .detail-item.field-link-twitter, .contained-block .detail-item.field-link-instagram, .contained-block .detail-item.field-link-website {
   word-wrap: break-word;
 }
-/* line 148, ../sass/_modules.scss */
+/* line 149, ../sass/_modules.scss */
 .contained-block .detail-item .detail-venue-name {
   font-weight: 800;
 }
-/* line 152, ../sass/_modules.scss */
+/* line 153, ../sass/_modules.scss */
 .contained-block .detail-item .detail-venue-link {
   margin: 1rem 0 0 0;
 }
-/* line 160, ../sass/_modules.scss */
+/* line 161, ../sass/_modules.scss */
 .contained-block .detail-item p {
   margin: 0 0 1rem 0;
 }
-/* line 162, ../sass/_modules.scss */
+/* line 163, ../sass/_modules.scss */
 .contained-block .detail-item p:last-child {
   margin: 0;
 }
-/* line 166, ../sass/_modules.scss */
+/* line 167, ../sass/_modules.scss */
 .contained-block .detail-item dl {
   margin: 0;
   padding: 0;
 }
-/* line 169, ../sass/_modules.scss */
+/* line 170, ../sass/_modules.scss */
 .contained-block .detail-item dl dt {
   font-weight: 800;
   margin: 0;
 }
-/* line 173, ../sass/_modules.scss */
+/* line 174, ../sass/_modules.scss */
 .contained-block .detail-item dl dd {
   margin: 0 0 1rem 0;
 }
-/* line 175, ../sass/_modules.scss */
+/* line 176, ../sass/_modules.scss */
 .contained-block .detail-item dl dd:last-child {
   margin: 0;
 }
-/* line 182, ../sass/_modules.scss */
+/* line 183, ../sass/_modules.scss */
 .contained-block .more-link {
   padding: 0 1rem 1rem 2.5rem;
   margin: 0 0 1rem 0;
 }
-/* line 190, ../sass/_modules.scss */
+/* line 191, ../sass/_modules.scss */
 .contained-block .view-empty {
   padding: 0 1rem;
   margin: 0 0 1rem 0;
   color: #79828c;
 }
-/* line 194, ../sass/_modules.scss */
+/* line 195, ../sass/_modules.scss */
 .contained-block .view-empty p {
   margin: 0 0 1rem 0;
 }
-/* line 196, ../sass/_modules.scss */
+/* line 197, ../sass/_modules.scss */
 .contained-block .view-empty p:last-child {
   margin: 0;
 }
 @media only screen and (min-width: 69.063rem) {
-  /* line 203, ../sass/_modules.scss */
+  /* line 204, ../sass/_modules.scss */
   .contained-block .contained-head {
     padding: 2rem 2rem 1.5rem 2rem;
   }
-  /* line 206, ../sass/_modules.scss */
+  /* line 207, ../sass/_modules.scss */
   .contained-block .detail-item {
     padding: 0 2rem 1rem 3.5rem;
   }
-  /* line 208, ../sass/_modules.scss */
+  /* line 209, ../sass/_modules.scss */
   .contained-block .detail-item:before {
     left: 2rem;
   }
-  /* line 211, ../sass/_modules.scss */
+  /* line 212, ../sass/_modules.scss */
   .contained-block .detail-item:last-child {
     margin-bottom: 2rem;
   }
-  /* line 214, ../sass/_modules.scss */
+  /* line 215, ../sass/_modules.scss */
   .contained-block .detail-item .detail-venue-name {
     padding-right: 7rem;
   }
-  /* line 217, ../sass/_modules.scss */
+  /* line 218, ../sass/_modules.scss */
   .contained-block .detail-item .detail-venue-link {
     position: absolute;
     top: 0;
     right: 2rem;
     margin: 0;
   }
-  /* line 224, ../sass/_modules.scss */
+  /* line 225, ../sass/_modules.scss */
   .contained-block .view-empty {
     padding: 0 2rem;
     margin: 0 0 2rem 0;
   }
 }
 
-/* line 231, ../sass/_modules.scss */
+/* line 232, ../sass/_modules.scss */
 .card.contained, .node-form > div.card,
 #user-profile-form > div.card,
 #user-register-form > div.card, #content .card.search-form {
@@ -5862,7 +5862,7 @@ a.cancel_account_link {
   background: transparent;
   position: relative;
 }
-/* line 235, ../sass/_modules.scss */
+/* line 236, ../sass/_modules.scss */
 .card.contained > a, .node-form > div.card > a,
 #user-profile-form > div.card > a,
 #user-register-form > div.card > a, #content .card.search-form > a {
@@ -5870,20 +5870,20 @@ a.cancel_account_link {
   display: table;
   color: #213040;
 }
-/* line 240, ../sass/_modules.scss */
+/* line 241, ../sass/_modules.scss */
 .card.contained.node-event > a, .node-form > div.card.node-event > a,
 #user-profile-form > div.card.node-event > a,
 #user-register-form > div.card.node-event > a, #content .card.node-event.search-form > a {
   padding-right: 2.25rem;
 }
-/* line 243, ../sass/_modules.scss */
+/* line 244, ../sass/_modules.scss */
 .card.contained .media, .node-form > div.card .media,
 #user-profile-form > div.card .media,
 #user-register-form > div.card .media, #content .card.search-form .media {
   float: left;
   margin: 0 0.75rem 0 0;
 }
-/* line 247, ../sass/_modules.scss */
+/* line 248, ../sass/_modules.scss */
 .card.contained .cover, .node-form > div.card .cover,
 #user-profile-form > div.card .cover,
 #user-register-form > div.card .cover, #content .card.search-form .cover {
@@ -5891,14 +5891,14 @@ a.cancel_account_link {
   position: relative;
   z-index: 1;
 }
-/* line 251, ../sass/_modules.scss */
+/* line 252, ../sass/_modules.scss */
 .card.contained .cover img, .node-form > div.card .cover img,
 #user-profile-form > div.card .cover img,
 #user-register-form > div.card .cover img, #content .card.search-form .cover img {
   display: block;
   border-radius: 0.25rem 0.25rem 0 0;
 }
-/* line 256, ../sass/_modules.scss */
+/* line 257, ../sass/_modules.scss */
 .card.contained .avatar, .node-form > div.card .avatar,
 #user-profile-form > div.card .avatar,
 #user-register-form > div.card .avatar, #content .card.search-form .avatar {
@@ -5911,7 +5911,7 @@ a.cancel_account_link {
   text-transform: uppercase;
   font-weight: 800;
 }
-/* line 267, ../sass/_modules.scss */
+/* line 268, ../sass/_modules.scss */
 .card.contained .badge-chapter, .node-form > div.card .badge-chapter,
 #user-profile-form > div.card .badge-chapter,
 #user-register-form > div.card .badge-chapter, #content .card.search-form .badge-chapter {
@@ -5925,7 +5925,7 @@ a.cancel_account_link {
   display: inline-block;
   padding-bottom: 0.5rem;
 }
-/* line 277, ../sass/_modules.scss */
+/* line 278, ../sass/_modules.scss */
 .card.contained .badge-chapter:before, .node-form > div.card .badge-chapter:before,
 #user-profile-form > div.card .badge-chapter:before,
 #user-register-form > div.card .badge-chapter:before, #content .card.search-form .badge-chapter:before {
@@ -5935,7 +5935,7 @@ a.cancel_account_link {
   vertical-align: bottom;
   width: 0;
 }
-/* line 284, ../sass/_modules.scss */
+/* line 285, ../sass/_modules.scss */
 .card.contained .badge-chapter:after, .node-form > div.card .badge-chapter:after,
 #user-profile-form > div.card .badge-chapter:after,
 #user-register-form > div.card .badge-chapter:after, #content .card.search-form .badge-chapter:after {
@@ -5950,7 +5950,7 @@ a.cancel_account_link {
   background-size: cover;
   border-radius: 0.125rem 0 0 0;
 }
-/* line 297, ../sass/_modules.scss */
+/* line 298, ../sass/_modules.scss */
 .card.contained .badge-cal, .node-form > div.card .badge-cal,
 #user-profile-form > div.card .badge-cal,
 #user-register-form > div.card .badge-cal, #content .card.search-form .badge-cal {
@@ -5958,7 +5958,7 @@ a.cancel_account_link {
   width: 4rem;
   height: 4rem;
 }
-/* line 301, ../sass/_modules.scss */
+/* line 302, ../sass/_modules.scss */
 .card.contained .badge-cal .month, .node-form > div.card .badge-cal .month,
 #user-profile-form > div.card .badge-cal .month,
 #user-register-form > div.card .badge-cal .month, #content .card.search-form .badge-cal .month {
@@ -5969,7 +5969,7 @@ a.cancel_account_link {
   font-size: 0.875rem;
   line-height: 1.5rem;
 }
-/* line 309, ../sass/_modules.scss */
+/* line 310, ../sass/_modules.scss */
 .card.contained .badge-cal .day, .node-form > div.card .badge-cal .day,
 #user-profile-form > div.card .badge-cal .day,
 #user-register-form > div.card .badge-cal .day, #content .card.search-form .badge-cal .day {
@@ -5981,7 +5981,7 @@ a.cancel_account_link {
   padding-bottom: 0.25rem;
   letter-spacing: -0.0625rem;
 }
-/* line 323, ../sass/_modules.scss */
+/* line 324, ../sass/_modules.scss */
 .card.contained .badge-organization, .node-form > div.card .badge-organization,
 #user-profile-form > div.card .badge-organization,
 #user-register-form > div.card .badge-organization, #content .card.search-form .badge-organization,
@@ -5994,7 +5994,7 @@ a.cancel_account_link {
   height: 4rem;
   display: block;
 }
-/* line 327, ../sass/_modules.scss */
+/* line 328, ../sass/_modules.scss */
 .card.contained .badge-organization img, .node-form > div.card .badge-organization img,
 #user-profile-form > div.card .badge-organization img,
 #user-register-form > div.card .badge-organization img, #content .card.search-form .badge-organization img,
@@ -6007,7 +6007,7 @@ a.cancel_account_link {
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 333, ../sass/_modules.scss */
+/* line 334, ../sass/_modules.scss */
 .card.contained .badge-flagfeed, .node-form > div.card .badge-flagfeed,
 #user-profile-form > div.card .badge-flagfeed,
 #user-register-form > div.card .badge-flagfeed, #content .card.search-form .badge-flagfeed {
@@ -6015,7 +6015,7 @@ a.cancel_account_link {
   height: 4rem;
   display: block;
 }
-/* line 337, ../sass/_modules.scss */
+/* line 338, ../sass/_modules.scss */
 .card.contained .badge-flagfeed img, .node-form > div.card .badge-flagfeed img,
 #user-profile-form > div.card .badge-flagfeed img,
 #user-register-form > div.card .badge-flagfeed img, #content .card.search-form .badge-flagfeed img {
@@ -6023,7 +6023,7 @@ a.cancel_account_link {
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 343, ../sass/_modules.scss */
+/* line 344, ../sass/_modules.scss */
 .card.contained .badge-wordpress-feedme, .node-form > div.card .badge-wordpress-feedme,
 #user-profile-form > div.card .badge-wordpress-feedme,
 #user-register-form > div.card .badge-wordpress-feedme, #content .card.search-form .badge-wordpress-feedme {
@@ -6031,7 +6031,7 @@ a.cancel_account_link {
   height: 4rem;
   display: block;
 }
-/* line 347, ../sass/_modules.scss */
+/* line 348, ../sass/_modules.scss */
 .card.contained .badge-wordpress-feedme img, .node-form > div.card .badge-wordpress-feedme img,
 #user-profile-form > div.card .badge-wordpress-feedme img,
 #user-register-form > div.card .badge-wordpress-feedme img, #content .card.search-form .badge-wordpress-feedme img {
@@ -6039,7 +6039,7 @@ a.cancel_account_link {
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 353, ../sass/_modules.scss */
+/* line 354, ../sass/_modules.scss */
 .card.contained .badge-marketplace-feedme, .node-form > div.card .badge-marketplace-feedme,
 #user-profile-form > div.card .badge-marketplace-feedme,
 #user-register-form > div.card .badge-marketplace-feedme, #content .card.search-form .badge-marketplace-feedme {
@@ -6047,7 +6047,7 @@ a.cancel_account_link {
   height: 4rem;
   display: block;
 }
-/* line 357, ../sass/_modules.scss */
+/* line 358, ../sass/_modules.scss */
 .card.contained .badge-marketplace-feedme img, .node-form > div.card .badge-marketplace-feedme img,
 #user-profile-form > div.card .badge-marketplace-feedme img,
 #user-register-form > div.card .badge-marketplace-feedme img, #content .card.search-form .badge-marketplace-feedme img {
@@ -6055,7 +6055,7 @@ a.cancel_account_link {
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 363, ../sass/_modules.scss */
+/* line 364, ../sass/_modules.scss */
 .card.contained .teaser, .node-form > div.card .teaser,
 #user-profile-form > div.card .teaser,
 #user-register-form > div.card .teaser, #content .card.search-form .teaser {
@@ -6064,13 +6064,13 @@ a.cancel_account_link {
   vertical-align: middle;
   padding-right: 1.75rem;
 }
-/* line 368, ../sass/_modules.scss */
+/* line 369, ../sass/_modules.scss */
 .card.contained .teaser p, .node-form > div.card .teaser p,
 #user-profile-form > div.card .teaser p,
 #user-register-form > div.card .teaser p, #content .card.search-form .teaser p {
   margin: 0;
 }
-/* line 370, ../sass/_modules.scss */
+/* line 371, ../sass/_modules.scss */
 .card.contained .prime-title, .node-form > div.card .prime-title,
 #user-profile-form > div.card .prime-title,
 #user-register-form > div.card .prime-title, #content .card.search-form .prime-title {
@@ -6081,7 +6081,7 @@ a.cancel_account_link {
   padding: 0;
   letter-spacing: normal;
 }
-/* line 379, ../sass/_modules.scss */
+/* line 380, ../sass/_modules.scss */
 .card.contained .meta, .node-form > div.card .meta,
 #user-profile-form > div.card .meta,
 #user-register-form > div.card .meta, #content .card.search-form .meta {
@@ -6090,26 +6090,26 @@ a.cancel_account_link {
   line-height: 1.25rem;
   display: block;
 }
-/* line 385, ../sass/_modules.scss */
+/* line 386, ../sass/_modules.scss */
 .card.contained .meta span:after, .node-form > div.card .meta span:after,
 #user-profile-form > div.card .meta span:after,
 #user-register-form > div.card .meta span:after, #content .card.search-form .meta span:after {
   content: ', ';
 }
-/* line 390, ../sass/_modules.scss */
+/* line 391, ../sass/_modules.scss */
 .card.contained .meta span:last-of-type:after, .node-form > div.card .meta span:last-of-type:after,
 #user-profile-form > div.card .meta span:last-of-type:after,
 #user-register-form > div.card .meta span:last-of-type:after, #content .card.search-form .meta span:last-of-type:after {
   content: '';
 }
-/* line 395, ../sass/_modules.scss */
+/* line 396, ../sass/_modules.scss */
 .card.contained .extra, .node-form > div.card .extra,
 #user-profile-form > div.card .extra,
 #user-register-form > div.card .extra, #content .card.search-form .extra {
   position: absolute;
   top: 0.5rem;
 }
-/* line 399, ../sass/_modules.scss */
+/* line 400, ../sass/_modules.scss */
 .card.contained .chapter-sticker, .node-form > div.card .chapter-sticker,
 #user-profile-form > div.card .chapter-sticker,
 #user-register-form > div.card .chapter-sticker, #content .card.search-form .chapter-sticker {
@@ -6133,13 +6133,13 @@ a.cancel_account_link {
   -o-transform-origin: top right;
   transform-origin: top right;
 }
-/* line 418, ../sass/_modules.scss */
+/* line 419, ../sass/_modules.scss */
 .node-chapter .card.contained .extra, .node-chapter .node-form > div.card .extra,
 .node-chapter #user-profile-form > div.card .extra,
 .node-chapter #user-register-form > div.card .extra, .node-chapter #content .card.search-form .extra, #content .node-chapter .card.search-form .extra {
   display: none;
 }
-/* line 423, ../sass/_modules.scss */
+/* line 424, ../sass/_modules.scss */
 .team-list .card.contained, .team-list .node-form > div.card,
 .team-list #user-profile-form > div.card,
 .team-list #user-register-form > div.card, .team-list #content .card.search-form, #content .team-list .card.search-form, .related-list .card.contained, .related-list .node-form > div.card,
@@ -6148,7 +6148,7 @@ a.cancel_account_link {
   margin-bottom: 0;
   border-radius: 0;
 }
-/* line 428, ../sass/_modules.scss */
+/* line 429, ../sass/_modules.scss */
 .team-list .card.contained > a, .team-list .node-form > div.card > a,
 .team-list #user-profile-form > div.card > a,
 .team-list #user-register-form > div.card > a, .team-list #content .card.search-form > a, #content .team-list .card.search-form > a, .related-list .card.contained > a, .related-list .node-form > div.card > a,
@@ -6172,7 +6172,7 @@ a.cancel_account_link {
   -o-transition-delay: 0, 0, 0, 0;
   transition-delay: 0, 0, 0, 0;
 }
-/* line 435, ../sass/_modules.scss */
+/* line 436, ../sass/_modules.scss */
 .team-list .card.contained > a:hover, .team-list .node-form > div.card > a:hover,
 .team-list #user-profile-form > div.card > a:hover,
 .team-list #user-register-form > div.card > a:hover, .team-list #content .card.search-form > a:hover, #content .team-list .card.search-form > a:hover, .related-list .card.contained > a:hover, .related-list .node-form > div.card > a:hover,
@@ -6182,7 +6182,7 @@ a.cancel_account_link {
   background-color: rgba(127, 190, 218, 0.2);
   color: #007eb5;
 }
-/* line 442, ../sass/_modules.scss */
+/* line 443, ../sass/_modules.scss */
 .team-list .card.contained .extra, .team-list .node-form > div.card .extra,
 .team-list #user-profile-form > div.card .extra,
 .team-list #user-register-form > div.card .extra, .team-list #content .card.search-form .extra, #content .team-list .card.search-form .extra, .related-list .card.contained .extra, .related-list .node-form > div.card .extra,
@@ -6191,7 +6191,7 @@ a.cancel_account_link {
   right: 2.25rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 423, ../sass/_modules.scss */
+  /* line 424, ../sass/_modules.scss */
   .team-list .card.contained, .team-list .node-form > div.card,
   .team-list #user-profile-form > div.card,
   .team-list #user-register-form > div.card, .team-list #content .card.search-form, #content .team-list .card.search-form, .related-list .card.contained, .related-list .node-form > div.card,
@@ -6201,7 +6201,7 @@ a.cancel_account_link {
   }
 }
 @media only screen and (min-width: 69.063rem) {
-  /* line 451, ../sass/_modules.scss */
+  /* line 452, ../sass/_modules.scss */
   .team-list .card.contained > a, .team-list .node-form > div.card > a,
   .team-list #user-profile-form > div.card > a,
   .team-list #user-register-form > div.card > a, .team-list #content .card.search-form > a, #content .team-list .card.search-form > a, .related-list .card.contained > a, .related-list .node-form > div.card > a,
@@ -6210,7 +6210,7 @@ a.cancel_account_link {
     padding-left: 2rem;
     padding-right: 4rem;
   }
-  /* line 455, ../sass/_modules.scss */
+  /* line 456, ../sass/_modules.scss */
   .team-list .card.contained .extra, .team-list .node-form > div.card .extra,
   .team-list #user-profile-form > div.card .extra,
   .team-list #user-register-form > div.card .extra, .team-list #content .card.search-form .extra, #content .team-list .card.search-form .extra, .related-list .card.contained .extra, .related-list .node-form > div.card .extra,
@@ -6219,7 +6219,7 @@ a.cancel_account_link {
     right: 3.25rem;
   }
 }
-/* line 464, ../sass/_modules.scss */
+/* line 465, ../sass/_modules.scss */
 .grid .card.contained > a, .grid .node-form > div.card > a,
 .grid #user-profile-form > div.card > a,
 .grid #user-register-form > div.card > a, .grid #content .card.search-form > a, #content .grid .card.search-form > a {
@@ -6231,7 +6231,7 @@ a.cancel_account_link {
   -o-transition: -o-transform 0.1s ease-in-out;
   transition: transform 0.1s ease-in-out;
 }
-/* line 470, ../sass/_modules.scss */
+/* line 471, ../sass/_modules.scss */
 .grid .card.contained > a:hover, .grid .node-form > div.card > a:hover,
 .grid #user-profile-form > div.card > a:hover,
 .grid #user-register-form > div.card > a:hover, .grid #content .card.search-form > a:hover, #content .grid .card.search-form > a:hover {
@@ -6243,46 +6243,46 @@ a.cancel_account_link {
   -o-transform: scale(1.05);
   transform: scale(1.05);
 }
-/* line 476, ../sass/_modules.scss */
+/* line 477, ../sass/_modules.scss */
 .grid .card.contained .extra, .grid .node-form > div.card .extra,
 .grid #user-profile-form > div.card .extra,
 .grid #user-register-form > div.card .extra, .grid #content .card.search-form .extra, #content .grid .card.search-form .extra {
   right: 1.75rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 462, ../sass/_modules.scss */
+  /* line 463, ../sass/_modules.scss */
   .grid .card.contained, .grid .node-form > div.card,
   .grid #user-profile-form > div.card,
   .grid #user-register-form > div.card, .grid #content .card.search-form, #content .grid .card.search-form {
     text-align: center;
   }
-  /* line 482, ../sass/_modules.scss */
+  /* line 483, ../sass/_modules.scss */
   .grid .card.contained > a, .grid .node-form > div.card > a,
   .grid #user-profile-form > div.card > a,
   .grid #user-register-form > div.card > a, .grid #content .card.search-form > a, #content .grid .card.search-form > a {
     display: block;
     padding: 0 0 2rem 0;
   }
-  /* line 486, ../sass/_modules.scss */
+  /* line 487, ../sass/_modules.scss */
   .grid .card.contained.node-event > a, .grid .node-form > div.card.node-event > a,
   .grid #user-profile-form > div.card.node-event > a,
   .grid #user-register-form > div.card.node-event > a, .grid #content .card.node-event.search-form > a, #content .grid .card.node-event.search-form > a {
     padding-right: 0;
   }
-  /* line 489, ../sass/_modules.scss */
+  /* line 490, ../sass/_modules.scss */
   .grid .card.contained .media, .grid .node-form > div.card .media,
   .grid #user-profile-form > div.card .media,
   .grid #user-register-form > div.card .media, .grid #content .card.search-form .media, #content .grid .card.search-form .media {
     float: none;
     margin: 0 0 1rem 0;
   }
-  /* line 493, ../sass/_modules.scss */
+  /* line 494, ../sass/_modules.scss */
   .grid .card.contained .cover, .grid .node-form > div.card .cover,
   .grid #user-profile-form > div.card .cover,
   .grid #user-register-form > div.card .cover, .grid #content .card.search-form .cover, #content .grid .card.search-form .cover {
     display: block;
   }
-  /* line 496, ../sass/_modules.scss */
+  /* line 497, ../sass/_modules.scss */
   .grid .card.contained .avatar, .grid .node-form > div.card .avatar,
   .grid #user-profile-form > div.card .avatar,
   .grid #user-register-form > div.card .avatar, .grid #content .card.search-form .avatar, #content .grid .card.search-form .avatar {
@@ -6292,7 +6292,7 @@ a.cancel_account_link {
     background-color: #FFF;
     margin: -4rem auto 0 auto;
   }
-  /* line 503, ../sass/_modules.scss */
+  /* line 504, ../sass/_modules.scss */
   .grid .card.contained .badge-chapter, .grid .node-form > div.card .badge-chapter,
   .grid #user-profile-form > div.card .badge-chapter,
   .grid #user-register-form > div.card .badge-chapter, .grid #content .card.search-form .badge-chapter, #content .grid .card.search-form .badge-chapter {
@@ -6301,7 +6301,7 @@ a.cancel_account_link {
     font-size: 1.25rem;
     padding-bottom: 1rem;
   }
-  /* line 508, ../sass/_modules.scss */
+  /* line 509, ../sass/_modules.scss */
   .grid .card.contained .badge-chapter:after, .grid .node-form > div.card .badge-chapter:after,
   .grid #user-profile-form > div.card .badge-chapter:after,
   .grid #user-register-form > div.card .badge-chapter:after, .grid #content .card.search-form .badge-chapter:after, #content .grid .card.search-form .badge-chapter:after {
@@ -6309,21 +6309,21 @@ a.cancel_account_link {
     width: 1rem;
     border-radius: 0.25rem 0 0 0;
   }
-  /* line 514, ../sass/_modules.scss */
+  /* line 515, ../sass/_modules.scss */
   .grid .card.contained .badge-cal, .grid .node-form > div.card .badge-cal,
   .grid #user-profile-form > div.card .badge-cal,
   .grid #user-register-form > div.card .badge-cal, .grid #content .card.search-form .badge-cal, #content .grid .card.search-form .badge-cal {
     width: 6rem;
     height: 6rem;
   }
-  /* line 517, ../sass/_modules.scss */
+  /* line 518, ../sass/_modules.scss */
   .grid .card.contained .badge-cal .month, .grid .node-form > div.card .badge-cal .month,
   .grid #user-profile-form > div.card .badge-cal .month,
   .grid #user-register-form > div.card .badge-cal .month, .grid #content .card.search-form .badge-cal .month, #content .grid .card.search-form .badge-cal .month {
     font-size: 1.25rem;
     line-height: 2rem;
   }
-  /* line 521, ../sass/_modules.scss */
+  /* line 522, ../sass/_modules.scss */
   .grid .card.contained .badge-cal .day, .grid .node-form > div.card .badge-cal .day,
   .grid #user-profile-form > div.card .badge-cal .day,
   .grid #user-register-form > div.card .badge-cal .day, .grid #content .card.search-form .badge-cal .day, #content .grid .card.search-form .badge-cal .day {
@@ -6332,7 +6332,7 @@ a.cancel_account_link {
     padding-bottom: 0.5rem;
     letter-spacing: -0.125rem;
   }
-  /* line 529, ../sass/_modules.scss */
+  /* line 530, ../sass/_modules.scss */
   .grid .card.contained .badge-organization, .grid .node-form > div.card .badge-organization,
   .grid #user-profile-form > div.card .badge-organization,
   .grid #user-register-form > div.card .badge-organization, .grid #content .card.search-form .badge-organization, #content .grid .card.search-form .badge-organization,
@@ -6345,7 +6345,7 @@ a.cancel_account_link {
     width: 6rem;
     height: 6rem;
   }
-  /* line 533, ../sass/_modules.scss */
+  /* line 534, ../sass/_modules.scss */
   .grid .card.contained .teaser, .grid .node-form > div.card .teaser,
   .grid #user-profile-form > div.card .teaser,
   .grid #user-register-form > div.card .teaser, .grid #content .card.search-form .teaser, #content .grid .card.search-form .teaser {
@@ -6353,21 +6353,21 @@ a.cancel_account_link {
     width: auto;
     padding: 0 1rem;
   }
-  /* line 538, ../sass/_modules.scss */
+  /* line 539, ../sass/_modules.scss */
   .grid .card.contained .prime-title, .grid .node-form > div.card .prime-title,
   .grid #user-profile-form > div.card .prime-title,
   .grid #user-register-form > div.card .prime-title, .grid #content .card.search-form .prime-title, #content .grid .card.search-form .prime-title {
     font-size: 1.5rem;
     line-height: 1.16667;
   }
-  /* line 543, ../sass/_modules.scss */
+  /* line 544, ../sass/_modules.scss */
   .grid .card.contained .meta, .grid .node-form > div.card .meta,
   .grid #user-profile-form > div.card .meta,
   .grid #user-register-form > div.card .meta, .grid #content .card.search-form .meta, #content .grid .card.search-form .meta {
     font-size: 1rem;
     line-height: 1.5;
   }
-  /* line 547, ../sass/_modules.scss */
+  /* line 548, ../sass/_modules.scss */
   .grid .card.contained .extra, .grid .node-form > div.card .extra,
   .grid #user-profile-form > div.card .extra,
   .grid #user-register-form > div.card .extra, .grid #content .card.search-form .extra, #content .grid .card.search-form .extra {
@@ -6376,7 +6376,7 @@ a.cancel_account_link {
     left: 0.5rem;
     right: auto;
   }
-  /* line 553, ../sass/_modules.scss */
+  /* line 554, ../sass/_modules.scss */
   .grid .card.contained .chapter-sticker, .grid .node-form > div.card .chapter-sticker,
   .grid #user-profile-form > div.card .chapter-sticker,
   .grid #user-register-form > div.card .chapter-sticker, .grid #content .card.search-form .chapter-sticker, #content .grid .card.search-form .chapter-sticker {

@@ -119,6 +119,7 @@
     &.price:before { @extend .icon-s-arr-right; }
     &.tm-ds-event-refund-policy:before { @extend .icon-circle-question; }
     &.tm-ds-tm-sponsor:before { @extend .icon-medal; }
+    &.tm-ds-user-featured:before { @extend .icon-star; }
     &.tm-ds-event-message:before { @extend .icon-circle-info; }
     &.field-about-me:before, &.about-me:before, &.body:before { @extend .icon-description; }
     &.field-link-facebook:before { @extend .icon-facebook; }

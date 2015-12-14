@@ -104,7 +104,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 30,
+        'weight' => 31,
       ),
       'grid' => array(
         'label' => 'above',
@@ -165,7 +165,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 34,
+        'weight' => 35,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -261,6 +261,107 @@ function tm_events_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-event-field_chapter_publish'.
+  $field_instances['node-event-field_chapter_publish'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'default_value_function' => '',
+    'deleted' => 0,
+    'description' => 'Select additional chapters associated with the event.
+<br>The event will be published in these chapters also.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 34,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 13,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_chapter_publish',
+    'label' => 'Publish to Chapters',
+    'required' => 0,
+    'settings' => array(
+      'behaviors' => array(
+        'prepopulate' => array(
+          'status' => 0,
+        ),
+      ),
+      'nodeaccess_nodereference' => array(
+        'all' => array(
+          'view' => 0,
+        ),
+        'all_published' => 0,
+        'author' => array(
+          'delete' => 0,
+          'update' => 0,
+          'view' => 'view',
+        ),
+        'author_published' => 0,
+        'priority' => 0,
+        'referenced' => array(
+          'delete' => array(
+            'delete' => 0,
+            'update' => 0,
+            'view' => 0,
+          ),
+          'published' => 0,
+          'update' => array(
+            'delete' => 0,
+            'update' => 0,
+            'view' => 0,
+          ),
+          'view' => array(
+            'delete' => 0,
+            'update' => 0,
+            'view' => 'view',
+          ),
+        ),
+        'unused' => 1,
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'entityreference',
+      'settings' => array(
+        'match_operator' => 'CONTAINS',
+        'path' => '',
+        'size' => 60,
+      ),
+      'type' => 'entityreference_autocomplete',
+      'weight' => 31,
+    ),
+  );
+
   // Exported field_instance: 'node-event-field_event_date'.
   $field_instances['node-event-field_event_date'] = array(
     'bundle' => 'event',
@@ -285,7 +386,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 33,
+        'weight' => 34,
       ),
       'grid' => array(
         'label' => 'above',
@@ -358,7 +459,7 @@ This will be added to the attendee count on the event page.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 23,
+        'weight' => 24,
       ),
       'grid' => array(
         'label' => 'above',
@@ -396,7 +497,173 @@ This will be added to the attendee count on the event page.',
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 19,
+      'weight' => 32,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_featured_label'.
+  $field_instances['node-event-field_event_featured_label'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Assign a label for featured members on the event listing. Leave blank for default.
+<br>example: Keynote Speakers
+<br><br>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 37,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_featured_label',
+    'label' => 'Featured members label',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 55,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 35,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_featured_members'.
+  $field_instances['node-event-field_event_featured_members'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'default_value_function' => '',
+    'deleted' => 0,
+    'description' => 'Highlight members of this event such as speakers or workshops leaders',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 35,
+      ),
+      'full' => array(
+        'label' => 'hidden',
+        'module' => 'entityreference',
+        'settings' => array(
+          'links' => 0,
+          'view_mode' => 'grid',
+        ),
+        'type' => 'entityreference_entity_view',
+        'weight' => 18,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_featured_members',
+    'label' => 'Featured members',
+    'required' => 0,
+    'settings' => array(
+      'behaviors' => array(
+        'prepopulate' => array(
+          'status' => 0,
+        ),
+      ),
+      'nodeaccess_userreference' => array(
+        'all' => array(
+          'view' => 'view',
+        ),
+        'all_published' => 0,
+        'author' => array(
+          'delete' => 0,
+          'update' => 0,
+          'view' => 0,
+        ),
+        'author_published' => 0,
+        'create' => array(
+          'chapter' => 0,
+          'event' => 0,
+          'organization' => 0,
+          'page' => 0,
+        ),
+        'priority' => 0,
+        'referenced' => array(
+          'delete' => 0,
+          'deny_delete' => 0,
+          'deny_update' => 0,
+          'deny_view' => 0,
+          'update' => 0,
+          'view' => 'view',
+        ),
+        'referenced_published' => 0,
+        'unused' => 0,
+        'views' => array(
+          'view' => '',
+          'view_args' => '',
+        ),
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'entityreference',
+      'settings' => array(
+        'match_operator' => 'CONTAINS',
+        'path' => '',
+        'size' => 60,
+      ),
+      'type' => 'entityreference_autocomplete',
+      'weight' => 34,
     ),
   );
 
@@ -422,7 +689,7 @@ This will be added to the attendee count on the event page.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 25,
+        'weight' => 26,
       ),
       'grid' => array(
         'label' => 'above',
@@ -594,7 +861,7 @@ This will be added to the attendee count on the event page.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 24,
+        'weight' => 25,
       ),
       'grid' => array(
         'label' => 'above',
@@ -632,7 +899,7 @@ This will be added to the attendee count on the event page.',
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 20,
+      'weight' => 33,
     ),
   );
 
@@ -654,7 +921,7 @@ This will be added to the attendee count on the event page.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 26,
+        'weight' => 27,
       ),
       'grid' => array(
         'label' => 'above',
@@ -862,7 +1129,7 @@ This will be added to the attendee count on the event page.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 32,
+        'weight' => 33,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1050,6 +1317,69 @@ This will be added to the attendee count on the event page.',
     ),
   );
 
+  // Exported field_instance: 'node-event-field_notify_featured_members'.
+  $field_instances['node-event-field_notify_featured_members'] = array(
+    'bundle' => 'event',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Send event notifications when attendees register or unregister for this event
+',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 36,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_notify_featured_members',
+    'label' => 'Allow featured members to receive event notifications',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 36,
+    ),
+  );
+
   // Exported field_instance: 'node-event-field_organizer'.
   $field_instances['node-event-field_organizer'] = array(
     'bundle' => 'event',
@@ -1175,7 +1505,7 @@ This will be displayed to the member on the event page and included in the autom
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 29,
+        'weight' => 30,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1313,7 +1643,7 @@ This will be displayed to the member on the event page and included in the autom
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 28,
+        'weight' => 29,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1358,12 +1688,18 @@ This will be displayed to the member on the event page and included in the autom
   // Included for use with string extractors like potx.
   t('(Advanced Use Only) Check this to indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)');
   t('(Advanced Use Only) Specify the type of event for the event page listing.<br>');
+  t('Allow featured members to receive event notifications');
   t('Approved Members Only');
+  t('Assign a label for featured members on the event listing. Leave blank for default.
+<br>example: Keynote Speakers
+<br><br>');
   t('Check this box if you want to restrict registration and waitlist to members who are approved. Non-approved members won\'t be able to sign up. ');
   t('Check this option if you want to restrict displaying the event location to registered attendees only.');
   t('Description');
   t('Event Chapter');
   t('Event Type');
+  t('Featured members');
+  t('Featured members label');
   t('Got an event sponsor? Show their company profile <span style="color: #e93f33 !important;">♥</span> by listing them as a sponsor.<br>
 <ul>
 <li>To add a sponsor, search and select a company profile page from the dropdown.</li>
@@ -1371,6 +1707,7 @@ This will be displayed to the member on the event page and included in the autom
 <li>Sponsors will also be added to our world-wide <a target="_blank" href="/sponsors">sponsors page</a>.</li>
 </ul>');
   t('Help the attendees find the right location by providing a link to a map, for example <a href="http://maps.google.com/">Google Maps</a>.');
+  t('Highlight members of this event such as speakers or workshops leaders');
   t('How many non-registered guests are coming?<br>
 This will be added to the attendee count on the event page.');
   t('How many people attended?');
@@ -1391,8 +1728,13 @@ This will be displayed to the member on the event page and included in the autom
   t('Partner Event');
   t('Provide a link to the page with the RSVP (ie: http://www.eventbrite.com/e/your-event-url)');
   t('Provide the street address or physical location for this event.');
+  t('Publish to Chapters');
   t('RSVP link');
+  t('Select additional chapters associated with the event.
+<br>The event will be published in these chapters also.');
   t('Select the chapter associated with the event.');
+  t('Send event notifications when attendees register or unregister for this event
+');
   t('Sponsors');
   t('This will be displayed on the event page when it\'s a past event.');
   t('This will be used as the main image for the event.

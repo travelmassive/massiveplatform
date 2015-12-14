@@ -10,7 +10,7 @@
 function tm_users_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_about_me'
+  // Exported field_base: 'field_about_me'.
   $field_bases['field_about_me'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -29,7 +29,7 @@ function tm_users_field_default_field_bases() {
     'type' => 'text_long',
   );
 
-  // Exported field_base: 'field_home_chapter'
+  // Exported field_base: 'field_home_chapter'.
   $field_bases['field_home_chapter'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -66,7 +66,7 @@ function tm_users_field_default_field_bases() {
     'type' => 'entityreference',
   );
 
-  // Exported field_base: 'field_job_organization'
+  // Exported field_base: 'field_job_organization'.
   $field_bases['field_job_organization'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -87,7 +87,7 @@ function tm_users_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_job_role'
+  // Exported field_base: 'field_job_role'.
   $field_bases['field_job_role'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -108,7 +108,7 @@ function tm_users_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_reason_for_joining'
+  // Exported field_base: 'field_reason_for_joining'.
   $field_bases['field_reason_for_joining'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -129,7 +129,7 @@ function tm_users_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_user_country'
+  // Exported field_base: 'field_user_country'.
   $field_bases['field_user_country'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -153,7 +153,7 @@ function tm_users_field_default_field_bases() {
     'type' => 'country',
   );
 
-  // Exported field_base: 'field_user_first_name'
+  // Exported field_base: 'field_user_first_name'.
   $field_bases['field_user_first_name'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -174,7 +174,7 @@ function tm_users_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_user_last_name'
+  // Exported field_base: 'field_user_last_name'.
   $field_bases['field_user_last_name'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -195,7 +195,7 @@ function tm_users_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_user_question_1'
+  // Exported field_base: 'field_user_question_1'.
   $field_bases['field_user_question_1'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -216,7 +216,7 @@ function tm_users_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_user_question_2'
+  // Exported field_base: 'field_user_question_2'.
   $field_bases['field_user_question_2'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -237,7 +237,7 @@ function tm_users_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_user_question_3'
+  // Exported field_base: 'field_user_question_3'.
   $field_bases['field_user_question_3'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -258,7 +258,7 @@ function tm_users_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_user_question_4'
+  // Exported field_base: 'field_user_question_4'.
   $field_bases['field_user_question_4'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -279,7 +279,7 @@ function tm_users_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_user_question_5'
+  // Exported field_base: 'field_user_question_5'.
   $field_bases['field_user_question_5'] = array(
     'active' => 1,
     'cardinality' => 1,

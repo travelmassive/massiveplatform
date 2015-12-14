@@ -127,10 +127,24 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
   }
   $form['field_event_type'][LANGUAGE_NONE]['#default_value'] = $default_event_type;
 
-  // Only show event type to moderator and administrator 
+
+  // Restrict these fields to moderator and administrator
   if ((!in_array("moderator", $user->roles)) and (!in_array("administrator", $user->roles))) {
+
+    // Event type
     $form['field_event_type']['#access'] = FALSE;
+
+    // Publish to event chapters
+    field_group_hide_field_groups($form, array('group_event_chapters'));
+
+    // Notify featured members of event registrations
+    $form['field_notify_featured_members']['#access'] = FALSE;
+
+    // Mark as partner event
+    $form['field_is_partner_event']['#access'] = FALSE;
+
   }
+
 
   // STEP 6. Modify payment fields if tm_payments enabled
   if (module_exists("tm_payments")) {
@@ -495,6 +509,15 @@ function tm_events_node_presave($node) {
   if (isset($node->field_event_sponsors[LANGUAGE_NONE][0])) {
     $flag = flag_get_flag('tm_sponsor');
     foreach ($node->field_event_sponsors[LANGUAGE_NONE] as $arr) {
+      $flag->flag("flag", $arr['target_id']);        
+    }
+  }
+
+  // If featured members are set, flag them
+  // Note global flag comment above
+  if (isset($node->field_event_featured_members[LANGUAGE_NONE][0])) {
+    $flag = flag_get_flag('featured_member');
+    foreach ($node->field_event_featured_members[LANGUAGE_NONE] as $arr) {
       $flag->flag("flag", $arr['target_id']);        
     }
   }

@@ -198,6 +198,16 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
         $notify_ids[] = $event->uid;
     }
 
+    // case 4: featured members and field_notify_featured_members is checked
+    if ($event->field_notify_featured_members[LANGUAGE_NONE][0]['value'] == true) {
+      if (sizeof($event->field_event_featured_members) > 0) {
+        foreach ($event->field_event_featured_members['und'] as $featured_member) {
+          $notify_ids[] = $featured_member['target_id'];
+        }
+      }
+    }
+   
+
     // in case duplicate organiser are set - remove duplicate notify_ids
     $notify_ids = array_unique($notify_ids);
 

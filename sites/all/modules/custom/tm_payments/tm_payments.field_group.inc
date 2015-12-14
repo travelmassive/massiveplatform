@@ -21,7 +21,7 @@ function tm_payments_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Sell Tickets',
-    'weight' => '24',
+    'weight' => '10',
     'children' => array(
       0 => 'field_event_payment_amount',
       1 => 'field_event_payment_enabled',

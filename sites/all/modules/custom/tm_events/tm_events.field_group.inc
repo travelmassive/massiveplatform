@@ -85,7 +85,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Who\'s Going?',
-    'weight' => '9',
+    'weight' => '10',
     'children' => array(
       0 => 'members_signed_up',
     ),
@@ -124,6 +124,33 @@ function tm_events_field_group_info() {
     ),
   );
   $export['group_details_wrapper|node|event|full'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_event_chapters|node|event|form';
+  $field_group->group_name = 'group_event_chapters';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'event';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Event Chapters',
+    'weight' => '7',
+    'children' => array(
+      0 => 'field_chapter_publish',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'formatter' => 'collapsible',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-event-chapters field-group-fieldset',
+        'required_fields' => 1,
+      ),
+    ),
+  );
+  $export['group_event_chapters|node|event|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -191,7 +218,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Extra Stuff',
-    'weight' => '21',
+    'weight' => '9',
     'children' => array(
       0 => 'field_event_extra_guests',
       1 => 'field_event_total_attendance',
@@ -207,6 +234,60 @@ function tm_events_field_group_info() {
     ),
   );
   $export['group_extra_stuff|node|event|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_featured_members|node|event|form';
+  $field_group->group_name = 'group_featured_members';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'event';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Featured members',
+    'weight' => '8',
+    'children' => array(
+      0 => 'field_event_featured_members',
+      1 => 'field_notify_featured_members',
+      2 => 'field_event_featured_label',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'formatter' => 'collapsible',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-featured-members field-group-fieldset',
+        'required_fields' => 1,
+      ),
+    ),
+  );
+  $export['group_featured_members|node|event|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_featured_wrapper|node|event|full';
+  $field_group->group_name = 'group_featured_wrapper';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'event';
+  $field_group->mode = 'full';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Featured Members',
+    'weight' => '8',
+    'children' => array(
+      0 => 'field_event_featured_members',
+    ),
+    'format_type' => 'contained_block',
+    'format_settings' => array(
+      'formatter' => 'open',
+      'instance_settings' => array(
+        'classes' => 'group-featured-wrapper field-group-contained_block',
+      ),
+    ),
+  );
+  $export['group_featured_wrapper|node|event|full'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -285,7 +366,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '27',
+    'weight' => '28',
     'children' => array(
       0 => 'field_event_venue_name',
       1 => 'field_location',
@@ -316,7 +397,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Organizers',
-    'weight' => '8',
+    'weight' => '9',
     'children' => array(
       0 => 'field_organizer',
     ),

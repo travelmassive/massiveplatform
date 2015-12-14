@@ -171,9 +171,10 @@ function tm_users_field_group_info() {
       8 => 'field_link_vimeo',
       9 => 'field_link_youtube',
       10 => 'tm_ds_user_stats',
-      11 => 'tm_ds_connection_actions',
-      12 => 'group_location_wrapper',
-      13 => 'group_user_qa_wrapper',
+      11 => 'tm_ds_user_featured',
+      12 => 'tm_ds_connection_actions',
+      13 => 'group_location_wrapper',
+      14 => 'group_user_qa_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -462,7 +463,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '35',
+    'weight' => '36',
     'children' => array(
       0 => 'field_location_city',
     ),
@@ -638,7 +639,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'QA',
-    'weight' => '34',
+    'weight' => '35',
     'children' => array(
       0 => 'group_user_qa',
     ),

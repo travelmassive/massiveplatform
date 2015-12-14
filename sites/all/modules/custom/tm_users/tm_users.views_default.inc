@@ -642,6 +642,12 @@ function tm_users_views_default_views() {
 
   /* Display: Block - joined events */
   $handler = $view->new_display('block', 'Block - joined events', 'block_joined_events');
+  $handler->display->display_options['defaults']['group_by'] = FALSE;
+  $handler->display->display_options['group_by'] = TRUE;
+  $handler->display->display_options['defaults']['query'] = FALSE;
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['distinct'] = TRUE;
+  $handler->display->display_options['query']['options']['query_comment'] = 'block_joined_events';
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   /* Relationship: Flags: event_register */
   $handler->display->display_options['relationships']['flag_content_rel']['id'] = 'flag_content_rel';
@@ -649,6 +655,32 @@ function tm_users_views_default_views() {
   $handler->display->display_options['relationships']['flag_content_rel']['field'] = 'flag_content_rel';
   $handler->display->display_options['relationships']['flag_content_rel']['flag'] = 'event_register';
   $handler->display->display_options['relationships']['flag_content_rel']['user_scope'] = 'any';
+  /* Relationship: Entity Reference: Referenced Entity */
+  $handler->display->display_options['relationships']['field_event_featured_members_target_id']['id'] = 'field_event_featured_members_target_id';
+  $handler->display->display_options['relationships']['field_event_featured_members_target_id']['table'] = 'field_data_field_event_featured_members';
+  $handler->display->display_options['relationships']['field_event_featured_members_target_id']['field'] = 'field_event_featured_members_target_id';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Flags: User uid */
+  $handler->display->display_options['arguments']['uid']['id'] = 'uid';
+  $handler->display->display_options['arguments']['uid']['table'] = 'flagging';
+  $handler->display->display_options['arguments']['uid']['field'] = 'uid';
+  $handler->display->display_options['arguments']['uid']['relationship'] = 'flag_content_rel';
+  $handler->display->display_options['arguments']['uid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['uid']['default_argument_type'] = 'user';
+  $handler->display->display_options['arguments']['uid']['default_argument_options']['user'] = FALSE;
+  $handler->display->display_options['arguments']['uid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['uid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['uid']['summary_options']['items_per_page'] = '25';
+  /* Contextual filter: Content: Featured members (field_event_featured_members) */
+  $handler->display->display_options['arguments']['field_event_featured_members_target_id']['id'] = 'field_event_featured_members_target_id';
+  $handler->display->display_options['arguments']['field_event_featured_members_target_id']['table'] = 'field_data_field_event_featured_members';
+  $handler->display->display_options['arguments']['field_event_featured_members_target_id']['field'] = 'field_event_featured_members_target_id';
+  $handler->display->display_options['arguments']['field_event_featured_members_target_id']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['field_event_featured_members_target_id']['default_argument_type'] = 'user';
+  $handler->display->display_options['arguments']['field_event_featured_members_target_id']['default_argument_options']['user'] = FALSE;
+  $handler->display->display_options['arguments']['field_event_featured_members_target_id']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_event_featured_members_target_id']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_event_featured_members_target_id']['summary_options']['items_per_page'] = '25';
 
   /* Display: Block - joined chapters */
   $handler = $view->new_display('block', 'Block - joined chapters', 'block_joined_chapters');

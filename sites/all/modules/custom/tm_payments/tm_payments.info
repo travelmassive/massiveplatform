@@ -10,7 +10,6 @@ dependencies[] = flag
 dependencies[] = list
 dependencies[] = number
 dependencies[] = options
-dependencies[] = orchid
 dependencies[] = text
 dependencies[] = tm_users
 dependencies[] = views

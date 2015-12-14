@@ -784,7 +784,7 @@ $conf["tm_payments_currencies_default"] = "usd"; // default currency
 $conf["tm_payments_currency_symbols"] = array("usd" => "$", "aud" => "$", "cad" => "$", "eur" => "€", "gbp" => "£");
 $conf["tm_payments_refund_policy"] = "You can get a refund until 7 days before the event";
 $conf["tm_payments_refund_url"] = "https://travelmassive.com/blog/event-refund/";
-$conf["tm_payments_receipt_details"] = "<strong>TAX RECEIPT</strong><br>Travel Massive Global P.B.C.<br>639 Clay St, Suite #201, San Francisco CA 94111<br>Email: tickets@travelmassive.com";
+$conf["tm_payments_receipt_details"] = "<strong>TAX RECEIPT</strong><br>Your company name<br>Your company address<br>Email: your@receiptemail";
 
 $conf['install_profile'] = 'tm';
 

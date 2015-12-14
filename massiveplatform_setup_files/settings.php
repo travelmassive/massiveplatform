@@ -774,5 +774,17 @@ $conf["tm_images_default_cover_organization"] = array("default_cover_organizatio
 $conf["tm_images_default_cover_event"] = array("default_cover_event_1.jpg", "default_cover_event_2.jpg", "default_cover_event_3.jpg");
 $conf["tm_images_default_cover_chapter"] = array("default_cover_chapter_1.jpg");
 
+/* Event payments setting */
+$conf["tm_payments_stripe_publishable_key"] = "publishable"; // stripe publishable key
+$conf["tm_payments_stripe_image_url"] = '/sites/all/themes/tm/images/travel_massive_stripe_payment_icon.png'; // stripe image url
+$conf["tm_payments_process_url"] = "https://localdev.travelmassive.com/payments/process.php"; // external payment processor
+$conf["tm_payments_error_message"] = "A problem occured processing your payment, please contact support@travelmassive.com";
+$conf["tm_payments_currencies"] = array("usd" => "\$", "aud" => "AUD \$", "cad" => "CAD \$", "eur" => "€", "gbp" => "GBP £"); // available currencies (must be supported by stripe)
+$conf["tm_payments_currencies_default"] = "usd"; // default currency
+$conf["tm_payments_currency_symbols"] = array("usd" => "$", "aud" => "$", "cad" => "$", "eur" => "€", "gbp" => "£");
+$conf["tm_payments_refund_policy"] = "You can get a refund until 7 days before the event";
+$conf["tm_payments_refund_url"] = "https://travelmassive.com/blog/event-refund/";
+$conf["tm_payments_receipt_details"] = "<strong>TAX RECEIPT</strong><br>Travel Massive Global P.B.C.<br>639 Clay St, Suite #201, San Francisco CA 94111<br>Email: tickets@travelmassive.com";
+
 $conf['install_profile'] = 'tm';
 

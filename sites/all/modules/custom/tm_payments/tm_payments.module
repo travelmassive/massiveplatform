@@ -1,0 +1,663 @@
+<?php
+/**
+ * @file
+ * Code for the TM Payments feature.
+ */
+
+include_once 'tm_payments.features.inc';
+
+/* 
+Stripe Payments Module
+You will also need stripe-payments repository installed into /payments and hosted on another server.
+*/
+
+function tm_payments_menu() {
+
+	global $conf;
+
+	$items = array();
+	$items['payment/event/%node/%user'] = array(
+	    'title' => 'Send message',
+	    'page callback' => 'tm_payments_process_event_payment',
+	    'page arguments' => array(2,3),
+	    'access arguments' => array('access content'),
+	    'type' => MENU_CALLBACK,
+  	);
+  	$items['payments/%'] = array(
+		'title' => '',
+		'page callback' => 'tm_payments_placeholder',
+		'access arguments' => array('access content')
+	);
+
+	return $items;
+}
+
+
+/*
+ * Placeholder page to reserve the url
+ */
+function tm_payments_placeholder() {
+	// shouldn't get here
+	return "Payment gateway not installed.";
+}
+
+
+/**
+ * Implement hook_ds_field_info()
+ */
+// see: https://ohthehugemanatee.org/blog/2014/04/02/how-to-create-a-custom-display-suite-field/
+function tm_payments_ds_fields_info($entity_type) {
+  if ($entity_type != 'node') {
+    return;
+  }
+  $fields = array();
+
+  $fields['tm_ds_event_price'] = array(
+    'title' => t('Event price'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('event|full',),
+    'function' => '_tm_event_price'
+  );
+
+  $fields['tm_ds_event_refund_policy'] = array(
+    'title' => t('Event refund policy'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('event|full',),
+    'function' => '_tm_event_refund_policy'
+  );
+
+  return array($entity_type => $fields);
+}
+
+
+/* 
+ * Render payment field
+ */
+function _tm_event_price($field, $title = NULL) {
+
+	global $user;
+
+	// check if event is valid
+	$node = $field['entity'];
+	if ($node->type != "event") {
+		return;
+	}
+
+	// check if payment is enabled
+	if (!_tm_event_is_payment_enabled($node)) {
+		return;
+	}
+
+	// If logged in, check if registered or waitlisted
+	$registered_for_event = false; // default if not logged in
+	$waitlist_for_event = false; // default if not logged in
+	$paid_for_event = false;
+	if (user_is_logged_in()) {
+		$registered_flag = flag_get_flag('event_register');
+		$registered_for_event = ($registered_flag && $registered_flag->is_flagged($node->nid, $user->uid));
+		$waitlist_flag = flag_get_flag('event_waitlist');
+		$waitlist_for_event = ($waitlist_flag && $waitlist_flag->is_flagged($node->nid, $user->uid));
+		$paid_flag = flag_get_flag('event_paid');
+		$paid_for_event = ($paid_flag && $paid_flag->is_flagged($node->nid, $user->uid));
+	}
+
+	$pricing = _tm_event_get_registration_price($node);
+	$event_type = $node->field_event_type[LANGUAGE_NONE][0]['value'];
+	if ($event_type == "community") { $event_type = "event"; }
+
+	// Option 1. Paid and registered
+	if ($paid_for_event && $registered_for_event) {
+		$html = '<h2><span>Price</span></h2>';
+		$html .= '<div class="detail-price">You have purchased a ticket to this ' . t($event_type) . '</div>';
+		return $html;
+	}
+
+	// Option 2. Paid and not-registered (cancelled ticket)
+	if ($paid_for_event && !$registered_for_event) {
+		global $conf;
+		$html = '<h2><span>Price</span></h2>';
+		$html .= "<div class='detail-price'>Your ticket has been cancelled<br><a target='_blank' href='" . $conf["tm_payments_refund_url"] . "'>How to request a refund</a></div>";
+		return $html;
+	}
+
+	// Option 3. Not registered and not paid
+	if (!$paid_for_event && !$registered_for_event) {
+		$html = '<h2><span>Price</span></h2>';
+		$html .= '<div class="detail-price">Attend this ' . t($event_type) . ' for ' . $pricing["currency_prefix"] . str_replace(".00", "", $pricing["display_amount"]) . '</div>';
+		return $html;
+	}
+
+}
+
+/* 
+ * Render refund policy 
+ */
+function _tm_event_refund_policy($field, $title = NULL) {
+
+	global $conf;
+
+	// check if event is valid
+	$node = $field['entity'];
+	if ($node->type != "event") {
+		return;
+	}
+
+	// check if payment is enabled
+	if (!_tm_event_is_payment_enabled($node)) {
+		return;
+	}
+
+	// get refund policy
+	$policy = "";
+	if (isset($node->field_event_payment_refund_text[LANGUAGE_NONE][0]['safe_value'])) {
+		$policy = $node->field_event_payment_refund_text[LANGUAGE_NONE][0]['safe_value'];
+	}
+
+	// default policy
+	if (trim($policy) == "") {
+		$policy = $conf["tm_payments_refund_policy"];
+	}
+	
+	return $policy;
+}
+
+
+/*
+ * Process payment
+ */
+function tm_payments_process_event_payment($event, $member) {
+
+	global $conf;
+	global $user;
+
+	// STEP 1. VALIDATTION
+	if ($event == null) {
+		echo "Invalid event.";
+		return;
+	}
+
+	// validate event
+	if ($event->type != "event") {
+		echo "Invalid event type. ";
+		echo $conf["tm_payments_error_message"];
+		return;
+	}
+
+	// check user is logged in user
+	if ($user->uid != $member->uid) {
+		echo "Invalid user. ";
+		echo $conf["tm_payments_error_message"];
+		return;
+	}
+
+	if (!isset($_POST["stripe_token"])) {
+		echo "Invalid token id. ";
+		echo $conf["tm_payments_error_message"];
+		return;
+	}
+
+	if (!isset($_POST["stripe_email"])) {
+		echo "Invalid email. ";
+		echo $conf["tm_payments_error_message"];
+		return;
+	}
+
+	if (!isset($_POST["stripe_currency"])) {
+		echo "Invalid currency. ";
+		echo $conf["tm_payments_error_message"];
+		return;
+	}
+
+	if (!isset($_POST["stripe_amount"])) {
+		echo "Invalid amount. ";
+		echo $conf["tm_payments_error_message"];
+		return;
+	}
+
+	// STEP 2. CHECK PAYMENT AMOUNT
+	$pricing = _tm_event_get_registration_price($event);
+	if ($pricing["stripe_amount"] != $_POST["stripe_amount"]) {
+		echo "Invalid amount check. ";
+		echo $conf["tm_payments_error_message"];
+		return;
+	}
+
+	if ($pricing["stripe_currency"] != $_POST["stripe_currency"]) {
+		echo "Invalid currency check. ";
+		echo $conf["tm_payments_error_message"];
+		return;
+	}
+
+	// STEP 3. PROCESS PAYMENT
+	$url = $conf["tm_payments_process_url"] . "?event=" . $event->nid . "&user=" . $user->uid;
+
+	// stripe details
+	$stripe_token = $_POST["stripe_token"];
+	$stripe_email = $_POST["stripe_email"];
+	$stripe_currency = $_POST["stripe_currency"];
+	$stripe_amount = $_POST["stripe_amount"];
+
+	// event and user details
+	$display_amount = $pricing["display_amount"];
+	$event_id = $event->nid;
+	$event_title = $event->title;
+
+	$event_path_alias = drupal_get_path_alias("node/" . $event->nid);
+	$event_url = $profile_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . $event_path_alias;
+	$user_id = $user->uid;
+	$user_email = $user->mail;
+	$user_loaded = user_load($member->uid);
+	$user_first_name = $user_loaded->field_user_first_name[LANGUAGE_NONE][0]['value'];
+  	$user_last_name = $user_loaded->field_user_last_name[LANGUAGE_NONE][0]['value'];
+
+  	// log info
+  	$log_user_ip = $_SERVER["REMOTE_ADDR"];
+	$log_user_http_user_agent = "none";
+	if (isset($_SERVER['HTTP_USER_AGENT'])) {
+		$log_user_http_user_agent = $_SERVER['HTTP_USER_AGENT'];
+	}
+
+	// url-ify the data for the POST
+	$fields = array("stripe_token" => $stripe_token, "stripe_email" => $stripe_email, "stripe_currency" => $stripe_currency, "stripe_amount" => $stripe_amount, "event_id" => $event_id, "user_id" => $user_id, "user_email" => $user->mail, "log_user_ip" => $log_user_ip, "log_user_http_user_agent" => $log_user_http_user_agent, "user_first_name" => $user_first_name, "user_last_name" => $user_last_name, "event_title" => $event_title, "display_amount" => $display_amount, "event_url" => $event_url);
+
+	$fields_string = http_build_query($fields);
+	//foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
+	//rtrim($fields_string, '&');
+
+	//open connection
+	$ch = curl_init();
+
+	//set the url, number of POST vars, POST data
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_POST, count($fields));
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_VERBOSE, false);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); // todo: enable via config
+
+	//execute post
+	$result = curl_exec($ch);
+
+	if ($result === false) {
+		drupal_set_message("Payment gateway error. " . $conf["tm_payments_error_message"], 'error');
+        drupal_goto($event_path_alias);
+		return;
+	}
+
+	//close connection
+	curl_close($ch);
+
+	// STEP 4. GET PAYMENT RESULTS
+	$res = json_decode($result);
+
+	if ($res == null) {
+		drupal_set_message($conf["tm_payments_error_message"], 'warning');
+        drupal_goto($event_path_alias);
+		return;
+	}
+
+	// check for errors
+	if ($res->success == false) {
+		drupal_set_message($conf["tm_payments_error_message"], 'warning');
+		drupal_goto($event_path_alias);
+		return;
+	}
+
+	// STEP 5. IF SUCCESSFUL PAYMENT, REGISTER USER AND SET FLAGS
+	if ($res->success == true) {
+
+		// Get event flags
+	  	$rsvpflag = flag_get_flag('event_register', NULL);
+	  	$paidflag = flag_get_flag('event_paid', NULL);
+	  	$waitflag = flag_get_flag('event_waitlist', NULL);
+
+	  	// Add paid flag
+	  	// Note: We could send customer a receipt here or in the rsvpflag notification
+		$paidflag->flag('flag', $event->nid, $user, TRUE);
+
+		// Add to rsvp first, unflag waitlist second
+		// this will trigger a single rsvp notification
+		// (note: we don't expect people to waitlisted here)
+		$rsvpflag->flag('flag', $event->nid, $user, TRUE);
+		$waitflag->flag('unflag', $event->nid, $user, TRUE);
+
+		drupal_set_message("Thanks for your payment. You are now registered for this event.");
+		drupal_goto($event_path_alias);
+		return;
+	}
+
+	// Shouldn't get here
+	drupal_set_message($conf["tm_payments_error_message"], 'error');
+	drupal_goto($event_path_alias);
+
+}
+
+
+/**
+ * Implementation hook tm_payments_preprocess_flag
+ */
+function tm_payments_preprocess_flag(&$variables) {
+
+	$flag = &$variables['flag'];
+	$action = $variables['action'];
+
+	// Register flag
+	if (($flag->name == "event_register") && ($action == "flag")) {
+		return _tm_payments_preprocess_flag_register_flag($variables);
+	}
+
+	// Register unflag
+	if (($flag->name == "event_register") && ($action == "unflag")) {
+		return _tm_payments_preprocess_flag_register_unflag($variables);
+	}
+
+	// Waitlist flag
+	if (($flag->name == "event_waitlist") && ($action == "flag")) {
+		return _tm_payments_preprocess_flag_waitlist_flag($variables);
+	}
+
+}
+
+
+/*
+ * Check if an event has payments enabled
+ * Requires event object
+ */
+function _tm_event_is_payment_enabled($event) {
+
+	if (isset($event->field_event_payment_enabled[LANGUAGE_NONE][0]['value'])) {
+		return ($event->field_event_payment_enabled[LANGUAGE_NONE][0]['value'] == 1);
+	}
+
+	// not enabled
+	return false;
+
+}
+
+/* 
+ * Return registration price and currency of event
+ * Will return pricing even if payment is not enabled
+ * Requires event object
+ */
+function _tm_event_get_registration_price($event) {
+
+	global $conf;
+
+	// STEP 1. VALIDATE
+	// get currency
+	if (!isset($event->field_event_payment_currency[LANGUAGE_NONE][0]['value'])) {
+		return null;
+	}
+
+	// get amount
+	if (!isset($event->field_event_payment_amount[LANGUAGE_NONE][0]['value'])) {
+		return;
+	}
+
+	// STEP 2. GET REGISTRATION CURRENCY AND PRICE
+	$currency = $event->field_event_payment_currency[LANGUAGE_NONE][0]['value'];	
+	$display_amount = $event->field_event_payment_amount[LANGUAGE_NONE][0]['value'];
+	$stripe_amount = _tm_payments_get_api_amount($display_amount, $currency);
+	$currency_symbol = "$"; // default
+	$currency_prefix = "$"; // default
+	if (array_key_exists($currency, $conf["tm_payments_currency_symbols"])) {
+		$currency_symbol = $conf["tm_payments_currency_symbols"][$currency];
+		$currency_prefix = $conf["tm_payments_currencies"][$currency];
+	}
+
+	// return pricing array
+	return array("display_amount" => $display_amount, "stripe_currency" => $currency, "stripe_amount" => $stripe_amount, "currency_symbol" => $currency_symbol, "currency_prefix" => $currency_prefix);
+}
+
+/**
+ * Modify event waitlist flag
+ */
+function _tm_payments_preprocess_flag_waitlist_flag(&$variables) {
+
+	// Some typing shotcuts:
+	$flag = &$variables['flag'];
+	$action = $variables['action'];
+	$entity_id = $variables['entity_id'];
+	$flag_css_name = str_replace('_', '-', $flag->name);
+	$uid = $variables['user']->uid;
+
+	// check if payment is enabled
+	$event = node_load($entity_id);
+	if (!_tm_event_is_payment_enabled($event)) {
+		return;
+	}
+
+	// check if no seats left
+	if ((_tm_events_seats_left($event) != 0)) {
+		return; // seats available or external rsvp
+	}
+
+	// change button text
+	$variables['link_text'] = 'Sold out';
+
+	// show warning when unregistering
+	$event = node_load($entity_id);
+    $variables['flag_classes_array'][] = 'disabled';
+	$variables['link_href'] = '#';
+    drupal_add_js('
+    jQuery(document).ready(function($) {
+      $( ".flag" ).unbind("click");
+      $( ".flag" ).bind("click.confirm", function(event) {
+        jq_alert("This event is sold out", "There are no more tickets available for this event.");
+      });
+      $( ".js-tm-seats-count.meta").html("No tickets available");
+    });
+    ', 'inline');
+    return true;
+}
+
+/**
+ * Modify event register flag
+ */
+function _tm_payments_preprocess_flag_register_flag(&$variables) {
+
+	global $conf;
+
+	// Some typing shotcuts:
+	$flag = &$variables['flag'];
+	$action = $variables['action'];
+	$entity_id = $variables['entity_id'];
+	$flag_css_name = str_replace('_', '-', $flag->name);
+	$uid = $variables['user']->uid;
+
+	// Check if event is valid
+  	$event = node_load($entity_id);
+  	if ($event->type != "event") {
+    	return;
+  	}
+
+	// STEP 1. CHECK IF PAYMENT IS ENABLED
+	if (!_tm_event_is_payment_enabled($event)) {
+		return;
+	}
+
+	// CHECK IF APPROVED MEMBERS ONLY
+	if ($event->field_approved_members_only[LANGUAGE_NONE][0]['value'] == 1) {
+		$check_member = user_load($uid);
+		if (!in_array('approved user', $check_member->roles)) {
+			$variables['link_text'] = 'Buy Ticket';
+			return;
+		}
+    }
+
+	// STEP 2. GET PRICING
+	$member = user_load($uid);
+	$user_id = $member->uid;
+
+	$pricing = _tm_event_get_registration_price($event);
+	if ($pricing == null) {
+		// problem calculating pricing
+		return;
+	}
+
+	// STEP 3. CREATE STRIPE JS
+	$stripe_currency = $pricing["stripe_currency"];	
+	$stripe_amount = $pricing["stripe_amount"];
+	$user_email = $member->mail;
+	$stripe_pub_key = $conf["tm_payments_stripe_publishable_key"];
+	$stripe_bg_image = $conf["tm_payments_stripe_image_url"];
+
+	  $stripe_js = <<<EOT
+
+jQuery(document).ready(function($) {
+	
+	$('.payment-button').unbind('click');
+
+	var handler = StripeCheckout.configure({
+		key: '{$stripe_pub_key}',
+		image: '{$stripe_bg_image}',
+		locale: 'auto',	
+		token: function(token) {
+
+			$('.payment-button').addClass('disabled');
+
+			$('.payment-button').append('<form id="process-stripe-payment"></form>');
+			$('#process-stripe-payment').attr("action","/payment/event/{$entity_id}/{$user_id}");
+			$('#process-stripe-payment').attr("method","post");
+			$('#process-stripe-payment').append('<input type="hidden" name="stripe_token" id="stripe_token" value="">');
+			$('#process-stripe-payment').append('<input type="hidden" name="stripe_email" id="stripe_email" value="">');
+			$('#process-stripe-payment').append('<input type="hidden" name="stripe_amount" id="stripe_amount" value="{$stripe_amount}">');
+			$('#process-stripe-payment').append('<input type="hidden" name="stripe_currency" id="stripe_currency" value="{$stripe_currency}">');
+
+
+			$('#stripe_token').val(token.id);
+			$('#stripe_email').val(token.email);
+
+			$('#process-stripe-payment').submit();
+		}
+	});
+
+	$('.payment-button').on('click', function(e) {
+		// Open Checkout with further options
+		handler.open({
+			name: 'Travel Massive',
+			description: 'Event Registration',
+			amount: $stripe_amount,
+			currency: '{$stripe_currency}',
+			billingAddress: false,
+			email: '{$user_email}'
+		});
+		e.preventDefault();
+	});
+
+	// Close Checkout on page navigation
+	$(window).on('popstate', function() {
+		handler.close();
+	});
+
+	
+
+});
+
+EOT;
+
+	// STEP 4. MODIFY BUTTON AND INCLUDE STRIPE JS
+	$variables['flag_classes_array'][] = 'payment-button';
+	$variables['link_href'] = '#';
+	$variables['link_text'] = 'Buy Ticket';
+	drupal_add_js('https://checkout.stripe.com/checkout.js', 'external'); // add stripe library
+	drupal_add_js($stripe_js, 'inline'); // add inline js
+	return true;
+
+}
+
+
+/**
+ * Modify event register unflag
+ */
+function _tm_payments_preprocess_flag_register_unflag(&$variables) {
+
+	// Some typing shotcuts:
+	$flag = &$variables['flag'];
+	$action = $variables['action'];
+	$entity_id = $variables['entity_id'];
+	$flag_css_name = str_replace('_', '-', $flag->name);
+	$uid = $variables['user']->uid;
+
+
+	// change button text if paid for
+	$paid_flag = flag_get_flag('event_paid');
+	$paid_for_event = ($paid_flag && $paid_flag->is_flagged($entity_id, $uid));
+
+	if ($paid_for_event) {
+		$variables['link_text'] = 'Purchased';
+	}
+
+	// show warning when unregistering
+	$event = node_load($entity_id);
+    $variables['flag_button_class'] = 'flag-limit follow bttn bttn-secondary bttn-m';
+    drupal_add_js('
+    jQuery(document).ready(function($) {
+      $( ".flag" ).unbind("click");
+      $( ".flag" ).bind("click.confirm", function(event) {
+        jq_confirm_unregister_paid_event(\''.htmlentities($event->title, ENT_QUOTES | ENT_HTML5).'\');
+        return false;
+      });
+    });
+    ', 'inline');
+    return true;
+
+}
+
+/*
+ * Return amount to use with stripe api
+ */
+function _tm_payments_get_api_amount($amount, $currency) {
+
+	// zero-decimal currencies
+    // https://support.stripe.com/questions/which-zero-decimal-currencies-does-stripe-support
+    $zero_decimal_currencies = array("BIF", "CLP", "DJF", "GNF", "JPY", "KMF", "KRW", "MGA", "PYG", "RWF", "VND", "VUV", "XAF", "XOF", "XPF");
+
+    $stripe_amount = $amount;
+    if (!in_array($currency, $zero_decimal_currencies)) {
+    	$stripe_amount = $stripe_amount * 100; // add cents
+    }
+
+    return $stripe_amount;
+}
+
+/**
+ * Called from tm_events_form_event_node_form_alter
+ * (Note: can't get this hook to fire by itself, so we do it this way)
+ */
+function _tm_payments_form_event_node_form_alter(&$form, &$form_state) {
+
+	global $conf;
+  	global $user;
+
+	// Step 1. Only show to moderator and administrator
+    if ((!in_array("moderator", $user->roles)) and (!in_array("administrator", $user->roles))) {
+    	field_group_hide_field_groups($form, array('group_event_payment'));
+    }
+
+    // Step 2. Set available currencies
+    $currencies = array();
+    $default_currency = "";
+    if (isset($conf["tm_payments_currencies"])) {
+      foreach ($conf["tm_payments_currencies"] as $key => $val) {
+        $currencies[$key] = $conf["tm_payments_currency_symbols"][$key] . " " . strtoupper($key);
+      }
+    }
+    if (isset($conf["tm_payments_currencies_default"])) {
+      $default_currency = $conf["tm_payments_currencies"];
+    }
+
+    // set options
+    $form['field_event_payment_currency'][LANGUAGE_NONE]['#options'] = $currencies;
+
+    // if currency type saved, select it in the dropdown
+    $currency = $form['field_event_payment_currency'][LANGUAGE_NONE]['#entity'];
+    if (isset($event->field_event_payment_currency[LANGUAGE_NONE][0]['value'])) {
+      $default_currency = $event->field_event_payment_currency[LANGUAGE_NONE][0]['value'];
+    }
+    $form['field_event_payment_currency'][LANGUAGE_NONE]['#default_value'] = $default_currency;
+
+}
+
+
+?>

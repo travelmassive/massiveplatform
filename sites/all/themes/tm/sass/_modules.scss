@@ -116,6 +116,8 @@
       }
       &:before { @extend .icon-clock; }
     }
+    &.price:before { @extend .icon-s-arr-right; }
+    &.tm-ds-event-refund-policy:before { @extend .icon-circle-question; }
     &.tm-ds-tm-sponsor:before { @extend .icon-medal; }
     &.tm-ds-event-message:before { @extend .icon-circle-info; }
     &.field-about-me:before, &.about-me:before, &.body:before { @extend .icon-description; }

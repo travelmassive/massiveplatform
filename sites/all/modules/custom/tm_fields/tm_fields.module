@@ -1104,8 +1104,15 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
         
         // Show register
         if (($result == 'show_register') or ($result == 'show_not_approved')) {
+
+          $button_text = "Register";
+          if (module_exists("tm_payments")) {
+            if (_tm_event_is_payment_enabled($entity)) {
+              $button_text = "Buy Ticket";
+            }
+          }
           $css_classes .= ' disabled';
-          return l(t('Register'), 'javascript:jq_login_signup_box();', array(
+          return l(t($button_text), 'javascript:jq_login_signup_box();', array(
             'external' => true,
             'attributes' => array(
             'title' => t('Register for :event', array(':event' => $entity->title)),

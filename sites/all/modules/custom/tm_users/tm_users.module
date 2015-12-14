@@ -1342,10 +1342,8 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
     global $user;
     $loaded = user_load($user->uid);
     if (!in_array("moderator", $loaded->roles) and !in_array("administrator", $loaded->roles)) {
-      hide($form['field_chapter_leaders']);
-      hide($form['field_geomaplocation']);
-      unset($form['#fieldgroups']['group_community_management']);
-      unset($form['#groups']['group_community_management']);
+      field_group_hide_field_groups($form, array('group_chapter_location'));
+      field_group_hide_field_groups($form, array('group_community_management'));
     }
 
     // Hide row weights unless administrator or moderator

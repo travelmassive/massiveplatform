@@ -10,7 +10,7 @@
 function tm_events_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-event-body'
+  // Exported field_instance: 'node-event-body'.
   $field_instances['node-event-body'] = array(
     'bundle' => 'event',
     'default_value' => NULL,
@@ -29,7 +29,7 @@ function tm_events_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',
-        'weight' => 5,
+        'weight' => 4,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -82,7 +82,7 @@ function tm_events_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-event-field_approved_members_only'
+  // Exported field_instance: 'node-event-field_approved_members_only'.
   $field_instances['node-event-field_approved_members_only'] = array(
     'bundle' => 'event',
     'default_value' => array(
@@ -104,7 +104,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 18,
+        'weight' => 30,
       ),
       'grid' => array(
         'label' => 'above',
@@ -144,7 +144,7 @@ function tm_events_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-event-field_chapter'
+  // Exported field_instance: 'node-event-field_chapter'.
   $field_instances['node-event-field_chapter'] = array(
     'bundle' => 'event',
     'default_value' => array(),
@@ -165,7 +165,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 22,
+        'weight' => 34,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -261,7 +261,7 @@ function tm_events_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-event-field_event_date'
+  // Exported field_instance: 'node-event-field_event_date'.
   $field_instances['node-event-field_event_date'] = array(
     'bundle' => 'event',
     'deleted' => 0,
@@ -276,6 +276,7 @@ function tm_events_field_default_field_instances() {
           'multiple_from' => '',
           'multiple_number' => '',
           'multiple_to' => '',
+          'show_remaining_days' => FALSE,
         ),
         'type' => 'date_default',
         'weight' => 13,
@@ -284,7 +285,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 21,
+        'weight' => 33,
       ),
       'grid' => array(
         'label' => 'above',
@@ -333,7 +334,7 @@ function tm_events_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-event-field_event_extra_guests'
+  // Exported field_instance: 'node-event-field_event_extra_guests'.
   $field_instances['node-event-field_event_extra_guests'] = array(
     'bundle' => 'event',
     'default_value' => NULL,
@@ -357,7 +358,7 @@ This will be added to the attendee count on the event page.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 23,
       ),
       'grid' => array(
         'label' => 'above',
@@ -399,7 +400,7 @@ This will be added to the attendee count on the event page.',
     ),
   );
 
-  // Exported field_instance: 'node-event-field_event_hide_location'
+  // Exported field_instance: 'node-event-field_event_hide_location'.
   $field_instances['node-event-field_event_hide_location'] = array(
     'bundle' => 'event',
     'default_value' => array(
@@ -421,7 +422,7 @@ This will be added to the attendee count on the event page.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 25,
       ),
       'grid' => array(
         'label' => 'above',
@@ -461,7 +462,7 @@ This will be added to the attendee count on the event page.',
     ),
   );
 
-  // Exported field_instance: 'node-event-field_event_sponsors'
+  // Exported field_instance: 'node-event-field_event_sponsors'.
   $field_instances['node-event-field_event_sponsors'] = array(
     'bundle' => 'event',
     'default_value' => NULL,
@@ -570,7 +571,7 @@ This will be added to the attendee count on the event page.',
     ),
   );
 
-  // Exported field_instance: 'node-event-field_event_total_attendance'
+  // Exported field_instance: 'node-event-field_event_total_attendance'.
   $field_instances['node-event-field_event_total_attendance'] = array(
     'bundle' => 'event',
     'default_value' => NULL,
@@ -593,7 +594,7 @@ This will be added to the attendee count on the event page.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 24,
       ),
       'grid' => array(
         'label' => 'above',
@@ -635,7 +636,7 @@ This will be added to the attendee count on the event page.',
     ),
   );
 
-  // Exported field_instance: 'node-event-field_event_type'
+  // Exported field_instance: 'node-event-field_event_type'.
   $field_instances['node-event-field_event_type'] = array(
     'bundle' => 'event',
     'default_value' => NULL,
@@ -653,7 +654,7 @@ This will be added to the attendee count on the event page.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 26,
       ),
       'grid' => array(
         'label' => 'above',
@@ -691,7 +692,7 @@ This will be added to the attendee count on the event page.',
     ),
   );
 
-  // Exported field_instance: 'node-event-field_event_venue_name'
+  // Exported field_instance: 'node-event-field_event_venue_name'.
   $field_instances['node-event-field_event_venue_name'] = array(
     'bundle' => 'event',
     'default_value' => NULL,
@@ -751,7 +752,7 @@ This will be added to the attendee count on the event page.',
     ),
   );
 
-  // Exported field_instance: 'node-event-field_image'
+  // Exported field_instance: 'node-event-field_image'.
   $field_instances['node-event-field_image'] = array(
     'bundle' => 'event',
     'deleted' => 0,
@@ -839,7 +840,7 @@ This will be added to the attendee count on the event page.',
     ),
   );
 
-  // Exported field_instance: 'node-event-field_is_partner_event'
+  // Exported field_instance: 'node-event-field_is_partner_event'.
   $field_instances['node-event-field_is_partner_event'] = array(
     'bundle' => 'event',
     'default_value' => array(
@@ -861,7 +862,7 @@ This will be added to the attendee count on the event page.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 20,
+        'weight' => 32,
       ),
       'grid' => array(
         'label' => 'above',
@@ -901,7 +902,7 @@ This will be added to the attendee count on the event page.',
     ),
   );
 
-  // Exported field_instance: 'node-event-field_location'
+  // Exported field_instance: 'node-event-field_location'.
   $field_instances['node-event-field_location'] = array(
     'bundle' => 'event',
     'default_value' => NULL,
@@ -967,7 +968,7 @@ This will be added to the attendee count on the event page.',
     ),
   );
 
-  // Exported field_instance: 'node-event-field_map_link'
+  // Exported field_instance: 'node-event-field_map_link'.
   $field_instances['node-event-field_map_link'] = array(
     'bundle' => 'event',
     'default_value' => NULL,
@@ -1049,7 +1050,7 @@ This will be added to the attendee count on the event page.',
     ),
   );
 
-  // Exported field_instance: 'node-event-field_organizer'
+  // Exported field_instance: 'node-event-field_organizer'.
   $field_instances['node-event-field_organizer'] = array(
     'bundle' => 'event',
     'default_value' => NULL,
@@ -1154,7 +1155,7 @@ If set to none, then all chapter leaders will be notified of any registrations a
     ),
   );
 
-  // Exported field_instance: 'node-event-field_register_event_message'
+  // Exported field_instance: 'node-event-field_register_event_message'.
   $field_instances['node-event-field_register_event_message'] = array(
     'bundle' => 'event',
     'default_value' => NULL,
@@ -1174,7 +1175,7 @@ This will be displayed to the member on the event page and included in the autom
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 17,
+        'weight' => 29,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1215,7 +1216,7 @@ This will be displayed to the member on the event page and included in the autom
     ),
   );
 
-  // Exported field_instance: 'node-event-field_rsvp_link'
+  // Exported field_instance: 'node-event-field_rsvp_link'.
   $field_instances['node-event-field_rsvp_link'] = array(
     'bundle' => 'event',
     'default_value' => NULL,
@@ -1292,7 +1293,7 @@ This will be displayed to the member on the event page and included in the autom
     ),
   );
 
-  // Exported field_instance: 'node-event-field_waitlist_event_message'
+  // Exported field_instance: 'node-event-field_waitlist_event_message'.
   $field_instances['node-event-field_waitlist_event_message'] = array(
     'bundle' => 'event',
     'default_value' => NULL,
@@ -1312,7 +1313,7 @@ This will be displayed to the member on the event page and included in the autom
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 16,
+        'weight' => 28,
       ),
       'grid' => array(
         'label' => 'above',

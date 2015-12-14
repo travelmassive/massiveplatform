@@ -147,6 +147,8 @@ function tm_notifications_events_flag_unflag($flag, $entity_id, $account, $flagg
 
 function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity_id, $account, $flagging) {
 
+  global $conf;
+
   // only listen for register or waitlist
   if (($flag->name != 'event_register') and ($flag->name != 'event_waitlist')) {
     return;
@@ -202,6 +204,46 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
     // STEP 1
     // Notify the event organisers
     // Ok, now notify everyone we need to
+
+    // TM_PAYMENTS
+    // Check if member also paid for event via tm_payments
+    // NOTE: This method relies on static pricing.
+    // If we move to dynamic pricing (ie: early-bird, allotments) this will need to be revised.
+    $paid_for_event = false;
+    $event_pricing = null;
+    if (module_exists("tm_payments")) {
+
+      // Check pricing is enabled
+      if (_tm_event_is_payment_enabled($event)) {
+
+        // Check if we paid
+        $paid_flag = flag_get_flag('event_paid');
+        $paid_for_event = ($paid_flag && $paid_flag->is_flagged($event->nid, $who_flagged->uid));
+
+        // Get pricing
+        if ($paid_for_event) {
+          try {          
+            $event_pricing = _tm_event_get_registration_price($event);
+          } catch (Exception $e) {
+            // do nothing, we don't want to stop other actions in the middle of payment
+          }
+        }
+      }
+      
+    }
+
+    // Default text
+    $register_action_subject = "just registered for";
+    $register_action_body = "just signed up for your event";
+    $register_payment_note = "";
+
+    // Adjust text for paid ticket
+    if ($paid_for_event && $event_pricing != null) {
+      $register_action_subject = "purchased a ticket to";
+      $register_action_body = "just purchased a ticket to your event";
+      $register_payment_note = "<br><strong>Payment received:</strong> " . $event_pricing["currency_symbol"] . $event_pricing["display_amount"] . " (excludes processing fees)<br>";
+    }
+
     foreach ($notify_ids as $notify_id) {
 
       // load the user to notify
@@ -209,7 +251,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
 
       // events_register_flag
       if (($flag_or_unflag == "flag") && ($flag->name == 'event_register')) {
-        tm_notifications_notify('events_register_flag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url));
+        tm_notifications_notify('events_register_flag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url, '__REGISTER_ACTION_SUBJECT__' => $register_action_subject, '__REGISTER_ACTION_BODY__' => $register_action_body, '__REGISTER_PAYMENT_NOTE__' => $register_payment_note));
       }
 
        // events_register_unflag
@@ -256,7 +298,24 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
       }
     }
 
-    tm_notifications_notify('events_register_flag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url, '__MAP_LINK__' => $map_link_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time, '__REGISTER_EVENT_MESSAGE__' => $message));
+    // Adjust text for paid ticket
+    $member_register_subject = "You are now registered for";
+    $member_register_intro = "You are now signed up to attend the event";
+    $member_register_payment_note = "";
+    if ($paid_for_event && $event_pricing != null) {
+
+      $member_register_subject = "Your ticket to";
+      $member_register_intro = "You have purchased a ticket to the event";
+
+      // create payment note
+      $member_register_payment_note = "<br><div style='background-color: #eee; border-radius: 4px; padding: 4px;'>";
+      $member_register_payment_note .= $conf["tm_payments_receipt_details"];
+      $member_register_payment_note .= "<br><strong>Payment received:</strong> " . $event_pricing["currency_symbol"] . $event_pricing["display_amount"];
+      $member_register_payment_note .= "<br><strong>Payment date:</strong> " . date('d F Y') . "<br>";
+      $member_register_payment_note .= "</div>";
+    }
+
+    tm_notifications_notify('events_register_flag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url, '__MAP_LINK__' => $map_link_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time, '__REGISTER_EVENT_MESSAGE__' => $message, '__REGISTER_SUBJECT__' => $member_register_subject, '__REGISTER_INTRO__' => $member_register_intro, '__REGISTER_PAYMENT_NOTE__' => $member_register_payment_note));
   }
 
   // events_register_unflag

@@ -222,6 +222,21 @@
     });
   }
 
+  jq_confirm_unregister_paid_event = function(event_title) {
+    confirm_title = "Are you sure you want to cancel your ticket?";
+    message = "Please check the refund policy for this event as cancellation may not be refundable.";
+    $.prompt(message, { buttons: { "Yes, cancel my ticket": true, "I'm still going": false },
+      title: confirm_title,
+      submit: function(e,v,m,f){
+        if (v == true) {
+          //get the unflag url from the href and visit it
+          href = $( "a.unflag-action" ).attr('href');
+          window.location = href;
+        }
+      },
+    });
+  }
+
   jq_confirm_unregister_waitlist = function(event_title) {
     confirm_title = "Are you sure you want to leave the waitlist?";
     message = "If you leave the waitlist the event organizers will not be able to select you if a space becomes available.";

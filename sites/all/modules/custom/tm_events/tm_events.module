@@ -43,7 +43,7 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
     ),
   );
   
-  // /end field visibility based on RSVP.
+  // End field visibility based on RSVP.
   $form['field_chapter'][LANGUAGE_NONE][0]['target_id']['#ajax'] = array(
     'callback' => '_tm_events_field_organizer_ajax_cb',
     'wrapper' => 'organizer-wrapper',
@@ -105,7 +105,7 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
     }
   }*/
 
-  // Set Event types
+  // STEP 5. Modify event types
   global $conf;
   $event_types = array();
   $default_event_type = "";
@@ -126,6 +126,16 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
     $default_event_type = $event->field_event_type[LANGUAGE_NONE][0]['value'];
   }
   $form['field_event_type'][LANGUAGE_NONE]['#default_value'] = $default_event_type;
+
+  // Only show event type to moderator and administrator 
+  if ((!in_array("moderator", $user->roles)) and (!in_array("administrator", $user->roles))) {
+    $form['field_event_type']['#access'] = FALSE;
+  }
+
+  // STEP 6. Modify payment fields if tm_payments enabled
+  if (module_exists("tm_payments")) {
+    _tm_payments_form_event_node_form_alter($form, $form_state);
+  }
 
 }
 

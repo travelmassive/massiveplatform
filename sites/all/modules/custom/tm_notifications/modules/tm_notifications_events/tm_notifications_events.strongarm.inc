@@ -20,11 +20,11 @@ function tm_notifications_events_strongarm() {
     'change_allowed' => 1,
     'change_allowed_roles' => array("chapter leader"),
     'email' => array(
-      'subject' => '[current-user:field_user_first_name] [current-user:field_user_last_name] just registered for [node:title]',
+      'subject' => '[current-user:field_user_first_name] [current-user:field_user_last_name] __REGISTER_ACTION_SUBJECT__ [node:title]',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>[current-user:field_user_first_name] [current-user:field_user_last_name] just signed up for your event [node:title].
-<br>
+<br>[current-user:field_user_first_name] [current-user:field_user_last_name] __REGISTER_ACTION_BODY__ [node:title].
+<br>__REGISTER_PAYMENT_NOTE__
 <br>You can view their profile here:
 <br>
 <br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
@@ -139,10 +139,10 @@ function tm_notifications_events_strongarm() {
     'default_state' => '1',
     'change_allowed' => 0,
     'email' => array(
-      'subject' => 'You are now registered for [node:title]',
+      'subject' => '__REGISTER_SUBJECT__ [node:title]',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>You are now signed up to attend the event [node:title].
+<br>__REGISTER_INTRO__ [node:title].
 <br>
 <br>Here\'s the event details to keep handy:
 <br>
@@ -158,8 +158,8 @@ __REGISTER_EVENT_MESSAGE__
 <br><a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">__SERVER_NAME__/__EVENT_URL__</a>
 <br>
 <br>See you there!
-<br>
 <br>__EMAIL_SIGNOFF__
+<br>__REGISTER_PAYMENT_NOTE__
 ',
     ),
   );

@@ -10,7 +10,7 @@
 function tm_event_signup_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-event-field_external_rsvp'
+  // Exported field_instance: 'node-event-field_external_rsvp'.
   $field_instances['node-event-field_external_rsvp'] = array(
     'bundle' => 'event',
     'default_value' => array(
@@ -32,7 +32,7 @@ function tm_event_signup_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 23,
+        'weight' => 35,
       ),
       'grid' => array(
         'label' => 'above',
@@ -71,7 +71,7 @@ function tm_event_signup_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-event-field_signup_limit'
+  // Exported field_instance: 'node-event-field_signup_limit'.
   $field_instances['node-event-field_signup_limit'] = array(
     'bundle' => 'event',
     'default_value' => NULL,
@@ -94,7 +94,7 @@ function tm_event_signup_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 19,
+        'weight' => 31,
       ),
       'grid' => array(
         'label' => 'above',

@@ -10,14 +10,13 @@
 function tm_event_signup_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_external_rsvp'
+  // Exported field_base: 'field_external_rsvp'.
   $field_bases['field_external_rsvp'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_external_rsvp',
-    'foreign keys' => array(),
     'indexes' => array(
       'value' => array(
         0 => 'value',
@@ -36,14 +35,13 @@ function tm_event_signup_field_default_field_bases() {
     'type' => 'list_boolean',
   );
 
-  // Exported field_base: 'field_signup_limit'
+  // Exported field_base: 'field_signup_limit'.
   $field_bases['field_signup_limit'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_signup_limit',
-    'foreign keys' => array(),
     'indexes' => array(),
     'locked' => 0,
     'module' => 'number',

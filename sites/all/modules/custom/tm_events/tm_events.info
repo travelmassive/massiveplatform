@@ -19,6 +19,7 @@ dependencies[] = strongarm
 dependencies[] = text
 dependencies[] = tm_event_signup
 dependencies[] = tm_fields
+dependencies[] = tm_payments
 dependencies[] = views
 dependencies[] = views_load_more
 features[context][] = event_page

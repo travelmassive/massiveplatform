@@ -10,7 +10,7 @@
 function tm_events_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_approved_members_only'
+  // Exported field_base: 'field_approved_members_only'.
   $field_bases['field_approved_members_only'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -35,7 +35,7 @@ function tm_events_field_default_field_bases() {
     'type' => 'list_boolean',
   );
 
-  // Exported field_base: 'field_event_date'
+  // Exported field_base: 'field_event_date'.
   $field_bases['field_event_date'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -64,7 +64,7 @@ function tm_events_field_default_field_bases() {
     'type' => 'datetime',
   );
 
-  // Exported field_base: 'field_event_extra_guests'
+  // Exported field_base: 'field_event_extra_guests'.
   $field_bases['field_event_extra_guests'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -79,7 +79,7 @@ function tm_events_field_default_field_bases() {
     'type' => 'number_integer',
   );
 
-  // Exported field_base: 'field_event_hide_location'
+  // Exported field_base: 'field_event_hide_location'.
   $field_bases['field_event_hide_location'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -104,7 +104,7 @@ function tm_events_field_default_field_bases() {
     'type' => 'list_boolean',
   );
 
-  // Exported field_base: 'field_event_sponsors'
+  // Exported field_base: 'field_event_sponsors'.
   $field_bases['field_event_sponsors'] = array(
     'active' => 1,
     'cardinality' => -1,
@@ -139,7 +139,7 @@ function tm_events_field_default_field_bases() {
     'type' => 'entityreference',
   );
 
-  // Exported field_base: 'field_event_total_attendance'
+  // Exported field_base: 'field_event_total_attendance'.
   $field_bases['field_event_total_attendance'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -154,7 +154,7 @@ function tm_events_field_default_field_bases() {
     'type' => 'number_integer',
   );
 
-  // Exported field_base: 'field_event_type'
+  // Exported field_base: 'field_event_type'.
   $field_bases['field_event_type'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -176,7 +176,7 @@ function tm_events_field_default_field_bases() {
     'type' => 'list_text',
   );
 
-  // Exported field_base: 'field_is_partner_event'
+  // Exported field_base: 'field_is_partner_event'.
   $field_bases['field_is_partner_event'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -201,7 +201,7 @@ function tm_events_field_default_field_bases() {
     'type' => 'list_boolean',
   );
 
-  // Exported field_base: 'field_register_event_message'
+  // Exported field_base: 'field_register_event_message'.
   $field_bases['field_register_event_message'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -220,7 +220,7 @@ function tm_events_field_default_field_bases() {
     'type' => 'text_long',
   );
 
-  // Exported field_base: 'field_waitlist_event_message'
+  // Exported field_base: 'field_waitlist_event_message'.
   $field_bases['field_waitlist_event_message'] = array(
     'active' => 1,
     'cardinality' => 1,

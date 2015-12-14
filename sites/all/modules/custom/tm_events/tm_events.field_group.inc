@@ -54,8 +54,8 @@ function tm_events_field_group_info() {
     'weight' => '18',
     'children' => array(
       0 => 'field_rsvp_link',
-      1 => 'ds_flag_event_register',
-      2 => 'ds_flag_event_waitlist',
+      1 => 'ds_flag_event_waitlist',
+      2 => 'ds_flag_event_register',
       3 => 'tm_ds_more_actions',
       4 => 'tm_ds_anon_flag_placeholder',
     ),
@@ -111,9 +111,11 @@ function tm_events_field_group_info() {
     'weight' => '6',
     'children' => array(
       0 => 'body',
-      1 => 'tm_ds_fulldate_event',
-      2 => 'tm_ds_event_message',
-      3 => 'tm_ds_event_location',
+      1 => 'tm_ds_event_price',
+      2 => 'tm_ds_event_refund_policy',
+      3 => 'tm_ds_fulldate_event',
+      4 => 'tm_ds_event_message',
+      5 => 'tm_ds_event_location',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -283,7 +285,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '3',
+    'weight' => '27',
     'children' => array(
       0 => 'field_event_venue_name',
       1 => 'field_location',

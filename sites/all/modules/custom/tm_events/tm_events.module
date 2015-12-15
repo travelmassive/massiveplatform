@@ -553,7 +553,7 @@ function tm_events_menu() {
     'title' => t('Download RSVPs'),
     'page callback' => 'tm_events_download_csv',
     'page arguments' => array(2),
-    'access arguments' => array('approve users'),
+    'access callback' => 'tm_events_download_csv_check',
     'type' => MENU_CALLBACK,
   );
   $items['node/%node/test_email'] = array(
@@ -1151,15 +1151,15 @@ function tm_events_rsvp_form($event){
 
     $form['download'] = array(
       '#type' => 'markup',
-      '#value' => t('Download as CSV'),
-      '#markup' => '<p><a class="form-submit" href="/download/csv/'.$event->nid.'">'.t('Download as CSV').'</a></p>',
+      '#value' => t('Download attendee list (CSV)'),
+      '#markup' => '<p><a class="form-submit" href="/download/csv/'.$event->nid.'">'.t('Download attendee list (CSV)').'</a></p>',
       );
     $form['notes'] = array(
       '#markup' => '<hr>
         <p style="font-size: smaller;">
           <b>Notes</b>
           <br>1. Update attendee status (RSVP, Waitlist, Not Attending) by using the <b>Update</b> button to apply your changes to selected attendees. Members will automatically be notified of the change via email.</p>
-          <p style="font-size: smaller;">2. Click <b>Download as CSV</b> to download attendee information including name, email and company. 
+          <p style="font-size: smaller;">2. Click <b>Download attendee list</b> to download attendee information including name, email and company. 
 
           <br><i>Privacy Note - We care about privacy so please use CSV data in accordance with our members\' Privacy Terms.</i></p>
           <p style="font-size: smaller;">
@@ -1204,6 +1204,66 @@ function tm_events_rsvp_form_submit($form, &$form_state){
       }
     }
   }
+}
+
+/* Check if user can download RSVP list */
+function tm_events_download_csv_check(){
+
+  global $user;
+  $event_id = arg(2);
+  $node = node_load($event_id);
+
+  // need to be logged in
+  if (!user_is_logged_in()) {
+    return false;
+  }
+
+  // invalid node id
+  if ($node == null) {
+    return false;
+  }
+
+  // invalid event type
+  if ($node->type != "event") {
+    return false;
+  }
+
+  // if is chapter leader
+  if (isset($node->field_chapter[LANGUAGE_NONE][0])){
+    if (tm_users_is_chapter_leader($user->uid, $node->field_chapter[LANGUAGE_NONE][0]['target_id'])) { 
+        return true;
+      }
+  }
+
+  // for events without a chapter, if the user is an organizer of
+  if (isset($node->field_organizer[LANGUAGE_NONE])) {
+    foreach ($node->field_organizer[LANGUAGE_NONE] as $field_organizer) {  
+      if ($field_organizer["target_id"] == $user->uid) {
+        return true;
+      }
+    }
+  }
+
+  // for events with featured members and allowed to download rsvp list
+  // we check field_event_featured_access_rsvp is enabled
+  if (isset($node->field_event_featured_access_rsvp[LANGUAGE_NONE])) {
+    if ($node->field_event_featured_access_rsvp[LANGUAGE_NONE][0]['value'] == true) {
+      foreach ($node->field_event_featured_members[LANGUAGE_NONE] as $field_featured_member) {  
+        if ($field_featured_member["target_id"] == $user->uid) {
+          return true;
+        }
+      }
+    }
+  }
+  
+  // if is admin or moderator always show
+  if ((in_array('administrator', array_values($user->roles))) or (in_array('moderator', array_values($user->roles)))) {
+    return true;
+  }
+
+  // not valid
+  return false;
+
 }
 
 /* RSVP Download function */

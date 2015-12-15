@@ -373,6 +373,71 @@ function _tm_more_actions_process($field, $title = NULL) {
   }
   // END manage RSVPs
 
+  // START download RSVP list
+  if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
+    $node = menu_get_object();
+    if ($node->type == 'event') {
+      
+      $show_menu_item = false;
+
+      $targetuser = user_load($user->uid);
+      //if (!in_array("chapter leader", $targetuser->roles)){
+
+      // if is chapter leader
+      if (isset($node->field_chapter[LANGUAGE_NONE][0])){
+        if (tm_users_is_chapter_leader($user->uid, $node->field_chapter[LANGUAGE_NONE][0]['target_id'])) { 
+            $show_menu_item = true;
+          }
+      }
+
+      // for events without a chapter, if the user is an organizer of
+      if (isset($node->field_organizer[LANGUAGE_NONE])) {
+        foreach ($node->field_organizer[LANGUAGE_NONE] as $field_organizer) {  
+          if ($field_organizer["target_id"] == $user->uid) {
+            $show_menu_item = true;
+          }
+        }
+      }
+
+      // for events with featured members and allowed to download rsvp list
+      // we check field_event_featured_access_rsvp is enabled
+      if (isset($node->field_event_featured_access_rsvp[LANGUAGE_NONE][0]['value'])) {
+        if ($node->field_event_featured_access_rsvp[LANGUAGE_NONE][0]['value'] == true) {
+          if (isset($node->field_event_featured_members[LANGUAGE_NONE])) {
+            foreach ($node->field_event_featured_members[LANGUAGE_NONE] as $field_featured_member) {  
+              if ($field_featured_member["target_id"] == $user->uid) {
+                $show_menu_item = true;
+              }
+            }
+          }
+        }
+      }
+      
+      
+      // if is admin or moderator always show
+      if ((in_array('administrator', array_values($user->roles))) or (in_array('moderator', array_values($user->roles)))) {
+        $show_menu_item = true;
+      }
+
+      // if event is external rsvp, don't show
+      if ($node->field_external_rsvp['und'][0]['value']) {
+        $show_menu_item = false;
+      }
+
+      if ($show_menu_item) {
+        $links['manageattendees'][] = array(
+          'wrapper_class' => array('managersvp'),
+          'content' => l(t('Download attendee list'), 'download/csv/' . $nid, array(
+            'attributes' => array( 
+            'title' => t('Download attendee list')
+            )
+          ))
+        );
+      }
+    }
+  }
+  // END download RSVP list
+
   // START contact attendees.
   if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
     $node = menu_get_object();

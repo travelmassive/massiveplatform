@@ -501,6 +501,68 @@ This will be added to the attendee count on the event page.',
     ),
   );
 
+  // Exported field_instance: 'node-event-field_event_featured_access_rsvp'.
+  $field_instances['node-event-field_event_featured_access_rsvp'] = array(
+    'bundle' => 'event',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Featured members will be able to download the attendee list from the event settings menu',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 38,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_featured_access_rsvp',
+    'label' => 'Allow featured members to download the attendee list',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 37,
+    ),
+  );
+
   // Exported field_instance: 'node-event-field_event_featured_label'.
   $field_instances['node-event-field_event_featured_label'] = array(
     'bundle' => 'event',
@@ -1326,7 +1388,7 @@ This will be added to the attendee count on the event page.',
       ),
     ),
     'deleted' => 0,
-    'description' => 'Send event notifications when attendees register or unregister for this event
+    'description' => 'Send event notifications when attendees register or unregister for this event<br><br>
 ',
     'display' => array(
       'default' => array(
@@ -1688,6 +1750,7 @@ This will be displayed to the member on the event page and included in the autom
   // Included for use with string extractors like potx.
   t('(Advanced Use Only) Check this to indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)');
   t('(Advanced Use Only) Specify the type of event for the event page listing.<br>');
+  t('Allow featured members to download the attendee list');
   t('Allow featured members to receive event notifications');
   t('Approved Members Only');
   t('Assign a label for featured members on the event listing. Leave blank for default.
@@ -1700,6 +1763,7 @@ This will be displayed to the member on the event page and included in the autom
   t('Event Type');
   t('Featured members');
   t('Featured members label');
+  t('Featured members will be able to download the attendee list from the event settings menu');
   t('Got an event sponsor? Show their company profile <span style="color: #e93f33 !important;">♥</span> by listing them as a sponsor.<br>
 <ul>
 <li>To add a sponsor, search and select a company profile page from the dropdown.</li>
@@ -1733,7 +1797,7 @@ This will be displayed to the member on the event page and included in the autom
   t('Select additional chapters associated with the event.
 <br>The event will be published in these chapters also.');
   t('Select the chapter associated with the event.');
-  t('Send event notifications when attendees register or unregister for this event
+  t('Send event notifications when attendees register or unregister for this event<br><br>
 ');
   t('Sponsors');
   t('This will be displayed on the event page when it\'s a past event.');

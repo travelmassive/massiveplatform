@@ -251,6 +251,7 @@ function tm_events_field_group_info() {
       0 => 'field_event_featured_members',
       1 => 'field_notify_featured_members',
       2 => 'field_event_featured_label',
+      3 => 'field_event_featured_access_rsvp',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

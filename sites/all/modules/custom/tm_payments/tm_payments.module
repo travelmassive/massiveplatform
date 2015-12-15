@@ -579,6 +579,16 @@ function _tm_payments_preprocess_flag_register_unflag(&$variables) {
 	$flag_css_name = str_replace('_', '-', $flag->name);
 	$uid = $variables['user']->uid;
 
+	// Check if event is valid
+  	$event = node_load($entity_id);
+  	if ($event->type != "event") {
+    	return;
+  	}
+
+	// Check if payment is enabled
+	if (!_tm_event_is_payment_enabled($event)) {
+		return;
+	}
 
 	// change button text if paid for
 	$paid_flag = flag_get_flag('event_paid');

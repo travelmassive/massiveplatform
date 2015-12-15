@@ -140,6 +140,9 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
     // Notify featured members of event registrations
     $form['field_notify_featured_members']['#access'] = FALSE;
 
+    // Allow featured members to download rsvp list
+    $form['field_event_featured_access_rsvp']['#access'] = FALSE;
+
     // Mark as partner event
     $form['field_is_partner_event']['#access'] = FALSE;
 

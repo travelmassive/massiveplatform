@@ -505,6 +505,76 @@
   }
   $(".badge-organization.zoomable, .badge-user.zoomable").click(jq_show_avatar);
 
+
+  // allow member to send a short message on follow to recipient
+  jq_follow_message_member = function(uid) {
+    
+    countChar = function(val) {
+      var len = val.value.length;
+      if (len >= 150) {
+        val.value = val.value.substring(0, 150);
+      } else {
+        $('#charNum').text((150 - len) + " chars");
+      }
+    };
+
+    randomHello = function() {
+      var hellos = ["Hola!", "Bonjour!", "Konnichiwa!"];
+      return hellos[Math.floor(Math.random()*hellos.length)];
+    }
+
+    $.prompt({
+      state0: {
+        //title: 'Send a follow message',
+        html: "Why do you want to connect? <br><textarea id='form_follow_message' onkeyup='countChar(this);' value='' placeholder='" + randomHello() + " Send a short message. Links will be removed.' rows='2' cols='50'></textarea><div style='float: right;'><span id='charNum' style='font-size: 10pt; color: #888;'>150 chars</span></div><br>",
+        buttons: { Back: -1, Follow: true },
+        focus: 1,
+        submit:function(e,v,m,f){
+          if (v == true) {
+            // replace new lines with __NL__ as we moving this via regular GET and cant pass it via XHR
+            window.location = '/user/' + uid + '/follow?follow_message=' + document.getElementById('form_follow_message').value.replace(/\n/mg,"__NL__"); 
+          } 
+          $.prompt.close();
+        }
+      }
+    });
+  }
+
+  // allow member to send a short message on follow to organization owners
+  jq_follow_message_organization = function(nid) {
+    
+    countChar = function(val) {
+      var len = val.value.length;
+      if (len >= 150) {
+        val.value = val.value.substring(0, 150);
+      } else {
+        $('#charNum').text((150 - len) + " chars");
+      }
+    };
+
+    randomHello = function() {
+      var hellos = ["Hola!", "Bonjour!", "Konnichiwa!"];
+      return hellos[Math.floor(Math.random()*hellos.length)];
+    }
+
+    $.prompt({
+      state0: {
+        //title: 'Send a follow message',
+        html: "Why do you want to connect? <br><textarea id='form_follow_message' onkeyup='countChar(this);' value='' placeholder='" + randomHello() + " Send a short message. Links will be removed.' rows='2' cols='50'></textarea><div style='float: right;'><span id='charNum' style='font-size: 10pt; color: #888;'>150 chars</span></div><br>",
+        buttons: { Back: -1, Follow: true },
+        focus: 1,
+        submit:function(e,v,m,f){
+          if (v == true) {
+            // replace new lines with __NL__ as we moving this via regular GET and cant pass it via XHR
+            window.location = '/node/' + nid + '/follow_organization?follow_message=' + document.getElementById('form_follow_message').value.replace(/\n/mg,"__NL__"); 
+          } 
+          $.prompt.close();
+        }
+      }
+    });
+
+  }
+
 });})(jQuery, Drupal, this, this.document);
 
 

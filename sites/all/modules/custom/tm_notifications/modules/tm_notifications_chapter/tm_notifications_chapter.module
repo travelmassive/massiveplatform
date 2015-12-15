@@ -74,8 +74,8 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
 
       // get user first name and last name
       // we can't always rely on current-user token as user can sign up to chapters on signup
-      $first_name = $who_joined->field_user_first_name['und'][0]['value'];
-      $last_name = $who_joined->field_user_last_name['und'][0]['value'];
+      $first_name = strip_tags($who_joined->field_user_first_name['und'][0]['value']);
+      $last_name = strip_tags($who_joined->field_user_last_name['und'][0]['value']);
 
       // get welcome message
       $welcome_message = "";

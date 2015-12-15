@@ -84,6 +84,34 @@ function tm_flags_user_default_permissions() {
     'module' => 'flag',
   );
 
+  // Exported permission: 'flag follow_members_log'.
+  $permissions['flag follow_members_log'] = array(
+    'name' => 'flag follow_members_log',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'approved user' => 'approved user',
+      'authenticated user' => 'authenticated user',
+      'chapter leader' => 'chapter leader',
+      'moderator' => 'moderator',
+      'non-validated' => 'non-validated',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'flag follow_organizations_log'.
+  $permissions['flag follow_organizations_log'] = array(
+    'name' => 'flag follow_organizations_log',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'approved user' => 'approved user',
+      'authenticated user' => 'authenticated user',
+      'chapter leader' => 'chapter leader',
+      'moderator' => 'moderator',
+      'non-validated' => 'non-validated',
+    ),
+    'module' => 'flag',
+  );
+
   // Exported permission: 'flag moderate_non_community_profile'.
   $permissions['flag moderate_non_community_profile'] = array(
     'name' => 'flag moderate_non_community_profile',
@@ -185,6 +213,26 @@ function tm_flags_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'chapter leader' => 'chapter leader',
+      'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag follow_members_log'.
+  $permissions['unflag follow_members_log'] = array(
+    'name' => 'unflag follow_members_log',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag follow_organizations_log'.
+  $permissions['unflag follow_organizations_log'] = array(
+    'name' => 'unflag follow_organizations_log',
+    'roles' => array(
+      'administrator' => 'administrator',
       'moderator' => 'moderator',
     ),
     'module' => 'flag',

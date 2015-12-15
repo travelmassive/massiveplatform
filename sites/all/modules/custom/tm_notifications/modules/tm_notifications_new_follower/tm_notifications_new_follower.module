@@ -52,8 +52,18 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
 
   // You have a new follower
   if ($flag->name == 'follow_members' && $flag->entity_type == 'user') {
+
     $followed_user = user_load($entity_id);
     $who_followed = user_load($account->uid);
+
+    // Check and set follow_members_log
+    // If previously followed by this member, don't send another notification
+    $flag_log = flag_get_flag('follow_members_log', NULL);
+    $previously_followed_by_user = ($flag_log->is_flagged($followed_user->uid, $who_followed->uid));
+    if ($previously_followed_by_user) {
+      return;
+    }
+    $flag_log->flag('flag', $followed_user->uid, $who_followed, TRUE);
     
     // set profile url (either friendly url or community url)
     $profile_url = drupal_get_path_alias("user/" . $who_followed->uid);
@@ -66,12 +76,11 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
     }
 
     // notify the user that they have a new follower
-    $who_joined = user_load($account->uid);
 
     // get user first name and last name
     // we can't always rely on current-user token as user can follow on signup via tm_invitations
-    $first_name = $who_joined->field_user_first_name['und'][0]['value'];
-    $last_name = $who_joined->field_user_last_name['und'][0]['value'];
+    $first_name = strip_tags($who_followed->field_user_first_name['und'][0]['value']);
+    $last_name = strip_tags($who_followed->field_user_last_name['und'][0]['value']);
 
     $messaging_instructions = "";
     if ($conf["tm_messaging_enabled"]) {
@@ -98,13 +107,45 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
       }
     }
 
-    tm_notifications_notify('new_follower', $followed_user, array('user' => $followed_user, '__PROFILE_URL__' => $profile_url, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__MESSAGING_INSTRUCTIONS__' => $messaging_instructions));
+    // Get follower message from tm_users_follow_message via drupal_static
+    // Note: this variable should have already been sanitised
+    $follower_message = drupal_static("tm_notifications_new_follower_user_message");
+    drupal_static_reset("tm_notifications_new_follower_user_message");
+    if ($follower_message != "") {
+      $follower_message = "<br><strong>Message from " . strip_tags($first_name) . ":</strong> " . $follower_message . "<br>";
+    }
+
+    tm_notifications_notify('new_follower', $followed_user, array('user' => $followed_user, '__PROFILE_URL__' => $profile_url, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__MESSAGING_INSTRUCTIONS__' => $messaging_instructions, '__FOLLOWER_MESSAGE__' => $follower_message));
+
   }
 
   // Your organization has a new follower
   if ($flag->name == 'follow_organizations' && $flag->entity_type == 'node') {
+
     $followed_organization = node_load($entity_id);
     $who_followed = user_load($account->uid);
+
+    // Check and set follow_organizations_log
+    // If previously followed by this organization, don't send another notification
+    $flag_log = flag_get_flag('follow_organizations_log', NULL);
+    $previously_followed_by_user = ($flag_log->is_flagged($followed_organization->nid, $who_followed->uid));
+    if ($previously_followed_by_user) {
+      return;
+    }
+    $flag_log->flag('flag', $followed_organization->nid, $who_followed, TRUE);
+
+    // get user first name and last name
+    // we can't always rely on current-user token as user can follow on signup via tm_invitations
+    $first_name = strip_tags($who_followed->field_user_first_name['und'][0]['value']);
+    $last_name = strip_tags($who_followed->field_user_last_name['und'][0]['value']);
+
+    // Get follower message from tm_users_follow_message via drupal_static
+    // Note: this variable should have already been sanitised
+    $follower_message = drupal_static("tm_notifications_new_follower_organization_message");
+    drupal_static_reset("tm_notifications_new_follower_organization_message");
+    if ($follower_message != "") {
+      $follower_message = "<br><strong>Message from " . strip_tags($first_name) . ":</strong> " . $follower_message . "<br>";
+    }
 
     // notify each owner of the organizational profile that they have a new follower
     foreach ($followed_organization->field_owner['und'] as $owner) {
@@ -114,7 +155,7 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
       $profile_url = drupal_get_path_alias("user/" . $who_followed->uid);
 
       // notify the user that they have a new follower
-      tm_notifications_notify('new_organization_follower', $organizational_owner, array('user' => $organizational_owner, 'node' => $followed_organization, '__PROFILE_URL__' => $profile_url));
+      tm_notifications_notify('new_organization_follower', $organizational_owner, array('user' => $organizational_owner, 'node' => $followed_organization, '__PROFILE_URL__' => $profile_url, '__FOLLOWER_MESSAGE__' => $follower_message));
     }
 
   }

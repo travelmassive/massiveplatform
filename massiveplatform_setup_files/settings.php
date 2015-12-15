@@ -790,5 +790,9 @@ $conf["tm_payments_receipt_details"] = "<strong>TAX RECEIPT</strong><br>Your com
 $conf["tm_featured_members_event_types"] = array("all" => "Special Guests", "community" => "Special Guests", "workshop" => "Workshop Leaders", "conference" => "Speakers");
 $conf["tm_featured_members_badge_text"] = "A Travel Massive Rockstar!";
 
+/* Allow short message to be sent on follow */
+$conf["tm_following_enable_message_user"] = true;
+$conf["tm_following_enable_message_organization"] = true;
+
 $conf['install_profile'] = 'tm';
 

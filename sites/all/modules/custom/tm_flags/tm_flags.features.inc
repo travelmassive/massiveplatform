@@ -315,6 +315,41 @@ function tm_flags_flag_default_flags() {
     ),
     'api_version' => 3,
   );
+  // Exported flag: "Follow members log".
+  $flags['follow_members_log'] = array(
+    'entity_type' => 'user',
+    'title' => 'Follow members log',
+    'global' => 0,
+    'types' => array(),
+    'flag_short' => 'Follow',
+    'flag_long' => 'Follow [user:name]',
+    'flag_message' => 'You successfully followed [user:name]',
+    'unflag_short' => 'Following',
+    'unflag_long' => 'Unfollow [user:name]',
+    'unflag_message' => 'You successfuly unfollowed [user:name]',
+    'unflag_denied_text' => 'You cannot unflag this',
+    'link_type' => 'normal',
+    'weight' => 0,
+    'show_in_links' => array(
+      'full' => 0,
+      'diff_standard' => 0,
+      'token' => 0,
+      'search_result' => 0,
+      'grid' => 0,
+      'list' => 0,
+    ),
+    'show_as_field' => 0,
+    'show_on_form' => 0,
+    'access_author' => '',
+    'show_contextual_link' => 0,
+    'show_on_profile' => 0,
+    'access_uid' => '',
+    'api_version' => 3,
+    'module' => 'tm_flags',
+    'locked' => array(
+      0 => 'name',
+    ),
+  );
   // Exported flag: "Follow organizations".
   $flags['follow_organizations'] = array(
     'entity_type' => 'node',
@@ -354,6 +389,46 @@ function tm_flags_flag_default_flags() {
       0 => 'name',
     ),
     'api_version' => 3,
+  );
+  // Exported flag: "Follow organizations log".
+  $flags['follow_organizations_log'] = array(
+    'entity_type' => 'node',
+    'title' => 'Follow organizations log',
+    'global' => 0,
+    'types' => array(
+      0 => 'organization',
+    ),
+    'flag_short' => 'Follow',
+    'flag_long' => 'Follow [node:title]',
+    'flag_message' => 'You are now following [node:title]',
+    'unflag_short' => 'Following',
+    'unflag_long' => 'Unfollow [node:title]',
+    'unflag_message' => 'You are no longer following [node:title]',
+    'unflag_denied_text' => 'Not allowed to unflag',
+    'link_type' => 'normal',
+    'weight' => 0,
+    'show_in_links' => array(
+      'full' => 0,
+      'teaser' => 0,
+      'rss' => 0,
+      'search_index' => 0,
+      'search_result' => 0,
+      'diff_standard' => 0,
+      'token' => 0,
+      'grid' => 0,
+      'list' => 0,
+      'revision' => 0,
+    ),
+    'show_as_field' => 0,
+    'show_on_form' => 0,
+    'access_author' => '',
+    'show_contextual_link' => 0,
+    'i18n' => 0,
+    'api_version' => 3,
+    'module' => 'tm_flags',
+    'locked' => array(
+      0 => 'name',
+    ),
   );
   // Exported flag: "Profile does not meet community guidelines".
   $flags['moderate_non_community_profile'] = array(

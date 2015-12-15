@@ -242,8 +242,8 @@ function tm_messaging_send_message_ajax() {
   $profile_url = drupal_get_path_alias("user/" . $sending_user->uid);
 
   // First and last name of sending user
-  $first_name = $sending_user->field_user_first_name['und'][0]['value'];
-  $last_name = $sending_user->field_user_last_name['und'][0]['value'];
+  $first_name = strip_tags($sending_user->field_user_first_name['und'][0]['value']);
+  $last_name = strip_tags($sending_user->field_user_last_name['und'][0]['value']);
 
   // Reply address
   $reply_to = $first_name . " " . $last_name . " <" . $sending_user->mail . ">";
@@ -281,7 +281,7 @@ function tm_messaging_make_send_message_link($my_user, $their_user) {
   $my_uid = $my_user->uid;
   $their_uid = $their_user->uid;
   $their_name = $their_user->realname;
-  $first_name = $their_user->field_user_first_name[LANGUAGE_NONE][0]['value'];
+  $first_name = strip_tags($their_user->field_user_first_name[LANGUAGE_NONE][0]['value']);
 
   // check if looking at self
   if ($my_uid == $their_uid) {

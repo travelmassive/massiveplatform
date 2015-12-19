@@ -781,7 +781,13 @@ function _tm_more_actions_process($field, $title = NULL) {
       $targetuser = user_load($uid);
       if ((!in_array("approved user", $targetuser->roles) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid, true))) or (in_array("moderator", $user->roles))) {
 
-        $menu_text = "<div style='font-size: smaller; font-style: italic; padding-left: 2em; background-color: #efefef;'>Signup email:<br><span style='color: #888; font-style: normal;'>" . $targetuser->mail . "</span></div>";
+        $verified_text = "not-verified";
+        if (!in_array('non-validated', $targetuser->roles)) {
+          $verified_text = "verified";
+        }
+
+
+        $menu_text = "<div style='font-size: smaller; font-style: italic; padding-left: 2em; background-color: #efefef;'>Signup email:<br><span style='color: #888; font-style: normal;'>" . $targetuser->mail . " (" . $verified_text . ")</span></div>";
 
         $links['approve'][] = array(
           'wrapper_class' => array('approve'),

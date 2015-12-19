@@ -146,6 +146,9 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
     // Mark as partner event
     $form['field_is_partner_event']['#access'] = FALSE;
 
+    // Event timezone
+    $form['field_event_timezone']['#access'] = FALSE;
+
   }
 
 
@@ -380,29 +383,37 @@ function _tm_event_time_elapsed($elapsed) {
 
 /**
  * Fetch the timezone of an event.
- * Returns UTC if no timezone.
+ * Return values in this order:
+ * 1. Returns the event's field_event_timezone is set (by moderator)
+ * 2. Returns the chapter's timezone if event has a chapter
+ * 3. Returns UTC if no timezone set (no chapter, no timezone set)
+ *
  * Note: Due to known bugs in the "date's timezone" handling we use "none" timezone handling
  * when saving field_event_date. For this reason we use the chapter's timezone.
- * In the future if events need their own timezone (ie: without a chapter) then we need
- * to do one of the following options:
- * 1. Add a new "field_event_timezone" field (set default on new event) and refer to this
- * 2. Wait for a fix for "date's timezone" and we can refer to this value instead.
  * see: https://www.drupal.org/node/1455578 (Date Locale & Time Zone settings)
  * see: https://www.drupal.org/node/1707122 (Bug)
  */
 function _tm_get_event_timezone($event) {
-    $chapter_timezone = 'UTC';
+
+    // default timezone
+    $event_timezone = 'UTC';
+
+    // check if event has timezone enabled
+    if (isset($event->field_event_timezone[LANGUAGE_NONE][0]['value'])) {
+      $event_timezone = $event->field_event_timezone[LANGUAGE_NONE][0]['value'];
+      return $event_timezone;
+    }
+
+    // otherwise we use use the chapter timezone of the event (if has a chapter)
     if (isset($event->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
       $chapter = node_load($event->field_chapter[LANGUAGE_NONE][0]['target_id']);
       // If chapter has timezone set
       if ($chapter->field_chapter_timezone != null) {
-        $chapter_timezone = $chapter->field_chapter_timezone[LANGUAGE_NONE][0]['value'];
-      } else {
-        // no timezone for chapter, so use UTC
-        $chapter_timezone = 'UTC';
+        $event_timezone = $chapter->field_chapter_timezone[LANGUAGE_NONE][0]['value'];
       }
     }
-    return $chapter_timezone;
+
+    return $event_timezone;
 }
 
 /**

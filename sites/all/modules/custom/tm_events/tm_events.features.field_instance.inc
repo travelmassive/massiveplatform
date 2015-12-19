@@ -900,6 +900,63 @@ This will be added to the attendee count on the event page.',
     ),
   );
 
+  // Exported field_instance: 'node-event-field_event_timezone'.
+  $field_instances['node-event-field_event_timezone'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Leave blank to use the chapter\'s timezone (or UTC if no chapter for event)
+<br><br>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'tzfield',
+        'settings' => array(),
+        'type' => 'tzfield_default',
+        'weight' => 43,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_timezone',
+    'label' => 'Event Timezone',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 2,
+    ),
+  );
+
   // Exported field_instance: 'node-event-field_event_total_attendance'.
   $field_instances['node-event-field_event_total_attendance'] = array(
     'bundle' => 'event',
@@ -1760,6 +1817,7 @@ This will be displayed to the member on the event page and included in the autom
   t('Check this option if you want to restrict displaying the event location to registered attendees only.');
   t('Description');
   t('Event Chapter');
+  t('Event Timezone');
   t('Event Type');
   t('Featured members');
   t('Featured members label');
@@ -1782,6 +1840,8 @@ This will be displayed to the member on the event page and included in the autom
   t('Include any additional information you want to provide to members only when they register.<br>
 This will be displayed to the member on the event page and included in the automatic registration notification email.
 ');
+  t('Leave blank to use the chapter\'s timezone (or UTC if no chapter for event)
+<br><br>');
   t('Location');
   t('Map link');
   t('Message When Registered');

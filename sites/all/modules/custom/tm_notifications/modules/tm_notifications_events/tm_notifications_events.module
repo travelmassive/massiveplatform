@@ -225,7 +225,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
     if (module_exists("tm_payments")) {
 
       // Check pricing is enabled
-      if (_tm_event_is_payment_enabled($event)) {
+      if (_tm_payments_is_payment_enabled($event)) {
 
         // Check if we paid
         $paid_flag = flag_get_flag('event_paid');
@@ -234,7 +234,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
         // Get pricing
         if ($paid_for_event) {
           try {          
-            $event_pricing = _tm_event_get_registration_price($event);
+            $event_pricing = _tm_payments_get_registration_price($event);
           } catch (Exception $e) {
             // do nothing, we don't want to stop other actions in the middle of payment
           }

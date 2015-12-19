@@ -77,10 +77,10 @@ function tm_events_strongarm() {
           'weight' => '10',
         ),
         'redirect' => array(
-          'weight' => '5',
+          'weight' => '6',
         ),
         'metatags' => array(
-          'weight' => '6',
+          'weight' => '7',
         ),
       ),
       'display' => array(),

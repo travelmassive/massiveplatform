@@ -1174,7 +1174,7 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
 
           $button_text = "Register";
           if (module_exists("tm_payments")) {
-            if (_tm_event_is_payment_enabled($entity)) {
+            if (_tm_payments_is_payment_enabled($entity)) {
               $button_text = "Buy Ticket";
             }
           }

@@ -255,6 +255,27 @@ function tm_events_field_default_field_bases() {
     'type' => 'entityreference',
   );
 
+  // Exported field_base: 'field_event_timezone'.
+  $field_bases['field_event_timezone'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_event_timezone',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'tzfield',
+    'settings' => array(
+      'exclude' => array(),
+    ),
+    'translatable' => 0,
+    'type' => 'tzfield',
+  );
+
   // Exported field_base: 'field_event_total_attendance'.
   $field_bases['field_event_total_attendance'] = array(
     'active' => 1,

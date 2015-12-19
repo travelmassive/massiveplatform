@@ -136,7 +136,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Event Chapters',
-    'weight' => '7',
+    'weight' => '8',
     'children' => array(
       0 => 'field_chapter_publish',
     ),
@@ -163,7 +163,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Event Settings',
-    'weight' => '4',
+    'weight' => '5',
     'children' => array(
       0 => 'field_is_partner_event',
       1 => 'field_approved_members_only',
@@ -218,7 +218,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Extra Stuff',
-    'weight' => '9',
+    'weight' => '10',
     'children' => array(
       0 => 'field_event_extra_guests',
       1 => 'field_event_total_attendance',
@@ -246,7 +246,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Featured members',
-    'weight' => '8',
+    'weight' => '9',
     'children' => array(
       0 => 'field_event_featured_members',
       1 => 'field_notify_featured_members',
@@ -421,7 +421,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Event Sponsors',
-    'weight' => '3',
+    'weight' => '4',
     'children' => array(
       0 => 'field_event_sponsors',
     ),

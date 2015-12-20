@@ -91,6 +91,9 @@ function simple_pass_reset_form_user_profile_form_alter(&$form, &$form_state) {
     // Our submit handler will log the user in after form submit.
     $form['#submit'][] = 'simple_pass_reset_pass_reset_submit';
 
+    // tm - don't save friendly url
+    unset($form['field_friendly_url']);
+
     $form['actions']['submit']['#value'] = t('Save and log in as !username', array('!username' => format_username($form['#user'])));
 
     // Links provided by the Bakery module will not work because the user is not

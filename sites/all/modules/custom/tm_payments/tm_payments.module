@@ -926,7 +926,7 @@ function _tm_payments_form_event_node_form_alter(&$form, &$form_state) {
       }
     }
     if (isset($conf["tm_payments_currencies_default"])) {
-      $default_currency = $conf["tm_payments_currencies"];
+      $default_currency = $conf["tm_payments_currencies_default"];
     }
 
     // set options

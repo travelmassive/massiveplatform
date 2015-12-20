@@ -7594,6 +7594,12 @@ a.cancel_account_link {
     display: none !important;
   }
 }
+/* Hide hidden tabs */
+/* line 806, ../sass/_single.scss */
+.horizontal-tabs .horizontal-tab-hidden {
+  display: none;
+}
+
 /* line 2, ../sass/_login.scss */
 #account-menu-blk .menu-blk-title {
   text-transform: uppercase;

@@ -153,7 +153,6 @@ Drupal.horizontalTab.prototype = {
    * Hides a horizontal tab pane.
    */
   tabHide: function () {
-    console.log("hide...");
     // Hide this tab.
     this.item.addClass('horizontal-tab-hidden');
     // Update .first marker for items. We need recurse from parent to retain the

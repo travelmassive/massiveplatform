@@ -162,6 +162,33 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
   $who_flagged = user_load($GLOBALS['user']->uid);
   $profile_url = drupal_get_path_alias("user/" . $who_flagged->uid);
 
+  // TM_PAYMENTS
+  // Check if member also paid for event via tm_payments
+  // NOTE: This method relies on static pricing.
+  // If we move to dynamic pricing (ie: early-bird, allotments) this will need to be revised.
+  $paid_for_event = false;
+  $event_pricing = null;
+  if (module_exists("tm_payments")) {
+
+    // Check pricing is enabled
+    if (_tm_payments_is_payment_enabled($event)) {
+
+      // Check if we paid
+      $paid_flag = flag_get_flag('event_paid');
+      $paid_for_event = ($paid_flag && $paid_flag->is_flagged($event->nid, $who_flagged->uid));
+
+      // Get pricing
+      if ($paid_for_event) {
+        try {          
+          $event_pricing = _tm_payments_get_registration_price($event);
+        } catch (Exception $e) {
+          // do nothing, we don't want to stop other actions in the middle of payment
+        }
+      }
+    }
+      
+  }
+
   // User Registered for Event
   if (($GLOBALS['user']->uid == $flagging->uid)) {
 
@@ -215,33 +242,6 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
     // STEP 1
     // Notify the event organisers
     // Ok, now notify everyone we need to
-
-    // TM_PAYMENTS
-    // Check if member also paid for event via tm_payments
-    // NOTE: This method relies on static pricing.
-    // If we move to dynamic pricing (ie: early-bird, allotments) this will need to be revised.
-    $paid_for_event = false;
-    $event_pricing = null;
-    if (module_exists("tm_payments")) {
-
-      // Check pricing is enabled
-      if (_tm_payments_is_payment_enabled($event)) {
-
-        // Check if we paid
-        $paid_flag = flag_get_flag('event_paid');
-        $paid_for_event = ($paid_flag && $paid_flag->is_flagged($event->nid, $who_flagged->uid));
-
-        // Get pricing
-        if ($paid_for_event) {
-          try {          
-            $event_pricing = _tm_payments_get_registration_price($event);
-          } catch (Exception $e) {
-            // do nothing, we don't want to stop other actions in the middle of payment
-          }
-        }
-      }
-      
-    }
 
     // Default text
     $register_action_subject = "just registered for";

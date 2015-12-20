@@ -1137,12 +1137,15 @@ function tm_events_rsvp_form($event){
   if ($event){
 
     // list of users, each with checkbox
-    $users = db_select('flagging', 'f')
+    $query = db_select('flagging', 'f')
           ->fields('f')
           ->condition('entity_id',$event->nid,'=')
           ->condition('entity_type','node','=')
           ->orderBy('f.timestamp', 'ASC') //ORDER BY flagging time
-          ->execute();
+          ->groupBy('uid');
+    $query->addExpression('GROUP_CONCAT(DISTINCT fid)', 'flag_list');
+    $users = $query->execute();
+
     $useroptions = array();
     while ($user = $users->fetchAssoc()){
       $account = user_load($user['uid']);
@@ -1152,9 +1155,10 @@ function tm_events_rsvp_form($event){
       $difference = time() - $user['timestamp'];
       $flagged_time = format_interval($difference, 1) . " ago";
 
+      $flag_list = explode(",", $user['flag_list']); // get flag list
       $useroptions[$user['uid']] = 
         '<span class="tmeventuser">'.tm_events_username($account).'</span>'.
-        '<span class="tmeventstatus">'.tm_events_status($user['fid']).' <span class="tmeventstime">'.$flagged_time.'</span> | <span class="tmeventslink"><a target="_blank" href="/' . $profile_url . '">view profile</a></span></span>';
+        '<span class="tmeventstatus">'.tm_events_status($flag_list).' <span class="tmeventstime">'.$flagged_time.'</span> | <span class="tmeventslink"><a target="_blank" href="/' . $profile_url . '">view profile</a></span></span>';
     }
 
     $form['userlist'] = array(
@@ -1193,6 +1197,11 @@ function tm_events_rsvp_form_submit($form, &$form_state){
   $rsvpflag = flag_get_flag('event_register', NULL);
   $waitflag = flag_get_flag('event_waitlist', NULL);
 
+  // tm_payments - paid flag
+  if (module_exists("tm_payments")) {
+    $paidflag = flag_get_flag('event_paid', NULL);
+  }
+
   $action = $form_state['values']['status'];
   $event  = $form_state['values']['eventid'];
 
@@ -1205,6 +1214,10 @@ function tm_events_rsvp_form_submit($form, &$form_state){
       if ($action == 'remove'){
         $rsvpflag->flag('unflag', $event, $account, TRUE);
         $waitflag->flag('unflag', $event, $account, TRUE);
+        // tm_payments - paid flag
+        if (module_exists("tm_payments")) {
+          $paidflag->flag('unflag', $event, $account, TRUE);
+        }
       }
       else if ($action == 'waitlist'){
         $rsvpflag->flag('unflag', $event, $account, TRUE);
@@ -1283,17 +1296,17 @@ function tm_events_download_csv_check(){
 /* RSVP Download function */
 function tm_events_download_csv($nid){
 
-  $chapternode = node_load($nid);
+  $event = node_load($nid);
   $oldzone = date_default_timezone_get();
   date_default_timezone_set(drupal_get_user_timezone());
-  $csvname = $chapternode->title.'_'.date('M_d_Y_Gi',time()) . ".csv";
+  $csvname = $event->title.'_'.date('M_d_Y_Gi',time()) . ".csv";
   $csvname = str_replace(array(","," "), "_", $csvname); // replace spaces and ,
   date_default_timezone_set($oldzone);
 
   // csv header
   drupal_add_http_header('Content-Type', 'text/csv; utf-8');
   drupal_add_http_header('Content-Disposition', 'attachment; filename = '.$csvname);
-  
+
   $fh = fopen('php://output', 'w');
 
   // put information use reminder
@@ -1306,15 +1319,19 @@ function tm_events_download_csv($nid){
 
   // puts a header row across the top of the csv
   $item = array(t('First name'),t('Last name'),t('Email'),t('RSVP Type'),t('SubscribeEventAnnouncements'),t('Country'),t('City'),t('Organization'),t('Role'),t('Website'),t('Segment'),t('MemberSince'));
+
   fputcsv($fh, $item);
 
   // list of users
-  $users = db_select('flagging', 'f')
+  $query = db_select('flagging', 'f')
     ->fields('f')
     ->condition('entity_id',$nid,'=')
     ->condition('entity_type','node','=')
-    ->execute();
+    ->groupBy('uid');
+  $query->addExpression('GROUP_CONCAT(DISTINCT fid)', 'flag_list');
+  $users = $query->execute();
   while ($user = $users->fetchAssoc()){
+
     $account = user_load($user['uid']);
     if (empty($account->language)) $language = LANGUAGE_NONE;
     else $language = $account->language;
@@ -1324,7 +1341,8 @@ function tm_events_download_csv($nid){
     $item[] = $account->field_user_first_name[$language][0]['value'];
     $item[] = $account->field_user_last_name[$language][0]['value'];
     $item[] = $account->mail;
-    $item[] = tm_events_status($user['fid']);
+    $flag_list = explode(",", $user['flag_list']); // get flag list 
+    $item[] = tm_events_status($flag_list);
     $notif = new TMNotification("user_chapter_announcements");
     $item[] = ($notif->isEnabled($account->uid) ? "yes" : "no");
     if (isset($account->field_user_country[$language][0])){
@@ -1374,11 +1392,41 @@ function tm_events_download_csv($nid){
 }
 
 /* Converts the flag ID to the flag name */
-function tm_events_status($fid){
-  $flag = flag_get_flag(NULL, $fid);
-  if ($flag->name == 'event_register') return t('RSVP');
-  if ($flag->name == 'event_waitlist') return t('Waitlist');
+/* Takes array of flag_ids */
+function tm_events_status($flag_ids){
+
+  $event_register = false;
+  $event_waitlist = false;
+  $event_paid = false;
+
+  foreach ($flag_ids as $fid) {
+    $flag = flag_get_flag(NULL, $fid);
+    if ($flag->name == 'event_register') $event_register = true;
+    if ($flag->name == 'event_waitlist') $event_waitlist = true;
+    if ($flag->name == 'event_paid') $event_paid = true;
+  }
+
+  // If paid but not registered, user has cancelled
+  if (module_exists("tm_payments")) {
+    if ($event_paid) { 
+      if ($event_register || $event_waitlist) {
+        return 'Paid';
+      } else {
+        return 'Cancelled';
+      }
+    }
+  }
+
+  if ($event_register) {
+    return 'RSVP';
+  }
+
+  if ($event_waitlist) {
+    return 'Waitlist';
+  }
+
   return '';
+  
 }
 
 /* Formats the user's name */

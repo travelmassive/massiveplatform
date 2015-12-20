@@ -239,6 +239,25 @@ function tm_payments_process_event_payment($event, $member) {
 		return;
 	}
 
+	// check seats still available
+	// note: will not prevent concurrenct purchase of last ticket
+	$num_seats_left = _tm_events_seats_left($event);
+	if ($num_seats_left == 0) {
+
+		// Send a message anyway so we can track how often this happens
+		// ie: two people try to purchase the last ticket
+		$error_message = "No more seats available.";
+		$error_message .= "<br>Note: The user was redirected back to the event page.";
+		tm_payments_notify_payment_error($error_message);
+
+		// Redirect user back to event
+		$event_path_alias = drupal_get_path_alias("node/" . $event->nid);
+		drupal_set_message("Sorry, this event has sold out.", 'warning');
+        drupal_goto($event_path_alias);
+
+		return;
+	}
+
 	// STEP 2. CHECK PAYMENT AMOUNT
 	$pricing = _tm_payments_get_registration_price($event);
 
@@ -255,7 +274,7 @@ function tm_payments_process_event_payment($event, $member) {
 		// 1. concurrent purchase of early bird ticket, 
 		// 2. changing price while a customer is in the middle of purchase.
 
-		// Sent a message anyway so we can track how often this happens
+		// Send a message anyway so we can track how often this happens
 		$error_message = "Check payment amount failed: stripe_amount=" . $pricing["stripe_amount"] . ", post_amount=" . $_POST["stripe_amount"];
 		$error_message .= "<br>Note: The user was redirected back to the event page.";
 		tm_payments_notify_payment_error($error_message);
@@ -663,12 +682,28 @@ function _tm_payments_preprocess_flag_waitlist_flag(&$variables) {
 	}
 
 	// check if no seats left
-	if ((_tm_events_seats_left($event) != 0)) {
+	$num_seats_left = _tm_events_seats_left($event);
+	if ($num_seats_left != 0) {
 		return; // seats available or external rsvp
 	}
 
 	// change button text
 	$variables['link_text'] = 'Sold out';
+
+	// get attendance count
+	$flag = flag_get_flag('event_register');
+	$count = $flag->get_count($event->nid);
+
+	// Extra stuff. Add non-registered guests to count
+	$extra_guests_count = 0;
+	if (isset($event->field_event_extra_guests[LANGUAGE_NONE][0]['value'])) {
+		$extra_guests_count = $event->field_event_extra_guests[LANGUAGE_NONE][0]['value'];
+		$count = $count + $extra_guests_count;
+	}
+	$count_text = $count . " people are going";
+	if ($count == 1) {
+		$count_text = "1 person is going";
+	}
 
 	// show warning when unregistering
 	$event = node_load($entity_id);
@@ -680,7 +715,7 @@ function _tm_payments_preprocess_flag_waitlist_flag(&$variables) {
       $( ".flag" ).bind("click.confirm", function(event) {
         jq_alert("This event is sold out", "There are no more tickets available for this event.");
       });
-      $( ".js-tm-seats-count.meta").html("No tickets available");
+      $( ".js-tm-seats-count.meta").html("' . $count_text . '<br>No tickets available");
     });
     ', 'inline');
     return true;

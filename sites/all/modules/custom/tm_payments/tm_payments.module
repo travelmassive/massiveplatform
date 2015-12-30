@@ -933,6 +933,7 @@ function _tm_payments_form_event_node_form_alter(&$form, &$form_state) {
     $form['field_event_payment_currency'][LANGUAGE_NONE]['#options'] = $currencies;
 
     // if currency type saved, select it in the dropdown
+    $event = $form['#entity'];
     $currency = $form['field_event_payment_currency'][LANGUAGE_NONE]['#entity'];
     if (isset($event->field_event_payment_currency[LANGUAGE_NONE][0]['value'])) {
       $default_currency = $event->field_event_payment_currency[LANGUAGE_NONE][0]['value'];

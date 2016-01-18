@@ -49,13 +49,13 @@ $image = theme('image_style', array(
     <ul class="dropd-menu">
       <li>
         <div class="media-obj">
-          <a href="<?php print url('user/' . $loaded->uid . '/edit', array('fragment' => 'user-profile-options')); ?>">
+          <a href="<?php print url('user/' . $loaded->uid); ?>">
             <div class="media-fig">
               <span class="avatar"><?php print $image; ?></span>
             </div>
             <div class="media-bd">
               <strong><?php print check_plain($loaded->realname); ?></strong>
-              <?php print t('Edit profile'); ?>
+              <?php print t('View profile'); ?>
               <?php 
 // show score
 $user_score = tm_users_signup_score();
@@ -64,6 +64,7 @@ $user_score = tm_users_signup_score();
 ?>
 <input style='display: none;' id='current_user_score' value='<?php print($user_score); ?>'>
 <input style='display: none;' id='current_user_uid' value='<?php print($loaded->uid); ?>'>
+
 <?php
 if ($user_score >= 100) { ?>
 <span style='padding-left: 0.2em; font-size: smaller; font-style: normal; background-color: green; color: #fff; border-radius: 2px; padding: 2px;'><?php print($user_score); ?>% complete</span>
@@ -78,7 +79,7 @@ if ($user_score < 20) {
   $css_color = "orange"; // could be red but we don't want to alarm
 }
 ?>
-<span style='padding-left: 0.2em; font-size: smaller; font-style: normal; background-color: <?php print($css_color); ?>; color: #fff; border-radius: 2px; padding: 2px;'><?php print($user_score); ?>% complete</span>
+<span style='padding-left: 0.2em; font-size: smaller; font-style: normal; background-color: <?php print($css_color); ?>; color: #fff; border-radius: 2px; padding: 2px; padding-left: 4px; padding-right: 4px;'><?php print($user_score); ?>% complete</span>
 <?php
 } // end user score display
 ?>
@@ -88,6 +89,9 @@ if ($user_score < 20) {
       </li>
     </ul>
     <ul class="dropd-menu">
+      <li><?php print l(t('Edit profile'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-profile-options')); ?>
+
+      </li>
       <li><?php print l(t('Public profile'), 'user/' . $loaded->uid); ?></li>
       <li><?php print l(t('Account settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-account-options')); ?></li>
       <li><?php print l(t('Notification settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-notifications-options')); ?></li>

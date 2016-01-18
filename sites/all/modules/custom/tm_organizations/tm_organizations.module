@@ -281,6 +281,52 @@ function tm_organizations_preprocess_page(&$variables, $hook) {
     }
   }
 
+  // Add photo edit js
+  if (isset($variables['node'])) {
+    tm_organizations_add_photo_edit_js($variables['node']);
+  }
+
+}
+
+// Add javascript to show edit photo buttons
+function tm_organizations_add_photo_edit_js($node) {
+
+  global $user;
+
+  // If viewing company profile, 
+  if (!(arg(0) == 'node' and is_numeric(arg(1)) and arg(2) == FALSE)) {
+    return;
+  }
+
+  // Check node type
+  if (!isset($node->type)) {
+    return;
+  }
+
+  // Check node is organization
+  if ($node->type != "organization") {
+    return;
+  }
+
+  // Check if company is managed by user
+  // Allow moderators to see edit links
+  $users_companies = tm_users_get_companies($user->uid);
+  if (!in_array($node->nid, $users_companies) && (!(in_array("moderator", $user->roles)))) {
+    return;
+  }
+
+  // check if organization has logo and cover images
+  $has_profile_image = true;
+  $has_cover_image = false;
+
+  // add js vars
+  drupal_add_js(array('tm_organizations' => array('nid' => $node->nid)), array('type' => 'setting'));
+  drupal_add_js(array('tm_organizations' => array('has_profile_image' => $has_profile_image)), array('type' => 'setting'));
+  drupal_add_js(array('tm_organizations' => array('has_cover_image' => $has_cover_image)), array('type' => 'setting'));
+
+  // add edit photo js to page
+  drupal_add_js(drupal_get_path('module', 'tm_organizations') . '/js/organization-edit-photos.js');
+
 }
 
 // Add a link to sponsors from the companies page
@@ -651,3 +697,4 @@ function tm_organizations_follow_message($following_organization) {
   drupal_goto(drupal_get_path_alias('node/' . $following_organization->nid));
 
 }
+

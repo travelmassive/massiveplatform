@@ -89,8 +89,9 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state) {
 // Modify users account content before being displayed
 function tm_users_user_view($account, $view_mode, $langcode) {
 
-  // Show additional link fields based on $conf['tm_users_link_fields']
   global $conf;
+
+  // Show additional link fields based on $conf['tm_users_link_fields']
   $all_fields = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat');
   if (isset($conf["tm_users_link_fields"])) {
     $show_link_fields = $conf["tm_users_link_fields"];
@@ -100,6 +101,46 @@ function tm_users_user_view($account, $view_mode, $langcode) {
       }
     }
   }
+
+  // Add javascript to show edit photo buttons
+  tm_users_add_photo_edit_js($account);
+
+}
+
+// Add javascript to show edit photo buttons 
+function tm_users_add_photo_edit_js($account) {
+
+  global $user;
+  global $conf;
+
+  // check we are viewing user account
+  if (!(arg(0) == 'user' and is_numeric(arg(1)) and arg(2) == FALSE)) {
+    return;
+  }
+
+  // Check we are looking at own account
+  if ($user->uid != $account->uid) {
+    return;
+  }
+
+  // check if user has profile and cover images
+  $has_profile_image = false;
+  if (isset($account->field_avatar[LANGUAGE_NONE][0]['uri'])) {
+    $has_profile_image = ($account->field_avatar[LANGUAGE_NONE][0]['uri'] != $conf["tm_images_default_field_avatar"]);
+  }
+
+  $has_cover_image = false;
+  if (isset($account->field_image[LANGUAGE_NONE][0]['uri'])) {
+    $has_cover_image = ($account->field_image[LANGUAGE_NONE][0]['uri'] != $conf["tm_images_default_field_image"]);
+  }
+
+  // add js variables
+  drupal_add_js(array('tm_users' => array('current_user_uid' => $user->uid)), array('type' => 'setting'));
+  drupal_add_js(array('tm_users' => array('has_profile_image' => $has_profile_image)), array('type' => 'setting'));
+  drupal_add_js(array('tm_users' => array('has_cover_image' => $has_cover_image)), array('type' => 'setting'));
+
+  // add edit photos script to page
+  drupal_add_js(drupal_get_path('module', 'tm_users') . '/js/user-edit-photos.js');
 
 }
 

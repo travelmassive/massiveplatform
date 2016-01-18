@@ -798,5 +798,8 @@ $conf["tm_featured_members_badge_text"] = "A Travel Massive Rockstar!";
 $conf["tm_following_enable_message_user"] = true;
 $conf["tm_following_enable_message_organization"] = true;
 
+/* Allow chapter leaders to edit leaders for their own chapter (default false) */
+$conf["tm_chapters_allow_edit_chapter_leaders"] = false;
+
 $conf['install_profile'] = 'tm';
 

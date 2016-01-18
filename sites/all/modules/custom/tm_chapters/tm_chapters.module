@@ -466,14 +466,31 @@ function tm_chapters_page_alter(&$page) {
 }
 
 /**
- * Prevent moderators to delete chapters that have members
+ * Chapters form alter hook
  */
 function tm_chapters_form_alter(&$form, &$form_state, $form_id) {
+  //print_r($form_state);
+
   if ($form_id == "chapter_node_form") {
+
+    // Prevent moderators to delete chapters that have members
     $chapter_id = $form['nid']['#value'];
     if (!_tm_chapters_check_moderator_delete($chapter_id)) {
       unset($form['actions']['delete']);
     }
+
+    // Only allow moderators and administrators to edit chapter leaders
+    // settingg: tm_chapters_allow_edit_chapter_leaders
+    global $conf;
+    global $user;
+    if ((!in_array("moderator", $user->roles)) and (!in_array("administrator", $user->roles))) {
+      if (isset($conf["tm_chapters_allow_edit_chapter_leaders"])) {
+        if (!$conf["tm_chapters_allow_edit_chapter_leaders"]) {
+          unset($form['field_chapter_leaders']);
+        }
+      }
+    }
+    
   }
 }
 

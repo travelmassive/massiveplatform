@@ -275,7 +275,7 @@ function tm_api_members_in_country_count() {
   // check cache
   $cache = cache_get($cache_key, 'cache');
   if (!empty($cache)) {
-    //tm_api_return_json($cache->data);
+    tm_api_return_json($cache->data);
   }
 
   // Case 1. If countries=ALL then return total number of members
@@ -333,7 +333,7 @@ function tm_api_organizations_in_country_count() {
   // check cache
   $cache = cache_get($cache_key, 'cache');
   if (!empty($cache)) {
-    //tm_api_return_json($cache->data);
+    tm_api_return_json($cache->data);
   }
 
   // Case 1. If countries=ALL then return total number of members

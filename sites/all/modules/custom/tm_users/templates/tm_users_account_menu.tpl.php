@@ -89,10 +89,10 @@ if ($user_score < 20) {
       </li>
     </ul>
     <ul class="dropd-menu">
-      <li><?php print l(t('Edit profile'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-profile-options')); ?>
+      <!--<li><?php print l(t('Edit profile'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-profile-options')); ?>
 
-      </li>
-      <li><?php print l(t('Public profile'), 'user/' . $loaded->uid); ?></li>
+      </li>-->
+      <!--<li><?php print l(t('Public profile'), 'user/' . $loaded->uid); ?></li>-->
       <li><?php print l(t('Account settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-account-options')); ?></li>
       <li><?php print l(t('Notification settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-notifications-options')); ?></li>
       <li><?php print l(t('Invite members'), 'invite'); ?></li>

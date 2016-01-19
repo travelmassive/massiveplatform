@@ -29,23 +29,34 @@ function tm_api_menu() {
       'access arguments' => array('access content')
    );
 
+   $items['api/public/members_in_country'] = array(
+      'page callback' => 'tm_api_members_in_country_count',
+      'access arguments' => array('access content')
+   );
+
+    $items['api/public/organizations_in_country'] = array(
+      'page callback' => 'tm_api_organizations_in_country_count',
+      'access arguments' => array('access content')
+   );
+
    return $items;
 }
 
 function tm_api_home() {
 
    // initialize api data
-	global $conf;
-	print("<p><h1>" . $conf["tm_site_name"] . " API</h1>
-		Welcome! Here's a list of what you can do so far:
-		<br>
-		<br>api/public/test - API test page
-		<br>api/public/stats - basic stats
-		<br>api/public/chapters_lat_lon - chapters lat and lon
+  global $conf;
+  print("<p><h1>" . $conf["tm_site_name"] . " API</h1>
+    Welcome! Here's a list of what you can do so far:
+    <br>
+    <br>api/public/test - API test page
+    <br>api/public/stats - basic stats
+    <br>api/public/chapters_lat_lon - chapters lat and lon
     <br>api/public/events - upcoming events
-		<br>
-		<br>All results as returned as JSON. For JSONP append ?callback=myfunction to the URL.
-		<br>For help please email team@travelmassive.com</p>");
+    <br>api/public/members_in_country - member count in country (example: ?country=US,UK)
+    <br>
+    <br>All results as returned as JSON. For JSONP append ?callback=myfunction to the URL.
+    <br>For help please email team@travelmassive.com</p>");
    drupal_exit();
 }
 
@@ -68,33 +79,33 @@ function tm_api_stats() {
     tm_api_return_json($cache->data);
   }
 
-	// initialize api data
-	$api_data = array("message" => null, "error" => null, "success" => true);
+  // initialize api data
+  $api_data = array("message" => null, "error" => null, "success" => true);
 
-	// number of chapters
-	$query = "SELECT COUNT(*) amount FROM {node} n ".
+  // number of chapters
+  $query = "SELECT COUNT(*) amount FROM {node} n ".
               "WHERE n.type = :type";
   $num_chapters = db_query($query, array(':type' => "chapter"))->fetch();
   $api_data["num_chapters"] = $num_chapters->amount;
 
   // number of organizations
-	$query = "SELECT COUNT(*) amount FROM {node} n ".
+  $query = "SELECT COUNT(*) amount FROM {node} n ".
               "WHERE n.type = :type";
   $num_organizations = db_query($query, array(':type' => "organization"))->fetch();
   $api_data["num_organizations"] = $num_organizations->amount;
 
   // number of events
-	$query = "SELECT COUNT(*) amount FROM {node} n ".
+  $query = "SELECT COUNT(*) amount FROM {node} n ".
               "WHERE n.type = :type";
   $num_events = db_query($query, array(':type' => "event"))->fetch();
   $api_data["num_events"] = $num_events->amount;
 
   // number of members
-	$query = "SELECT COUNT(*) amount FROM {users} u";
+  $query = "SELECT COUNT(*) amount FROM {users} u";
   $num_members = db_query($query)->fetch();
   $api_data["num_members"] = $num_members->amount;
  
-	// number of chapter countries
+  // number of chapter countries
   $result = db_query("SELECT DISTINCT iso2, name from {field_data_field_country} f LEFT JOIN {countries_country} c ON f.field_country_iso2 = c.iso2 WHERE f.bundle = 'chapter' AND c.iso2 IS NOT NULL ORDER BY name ASC");
   $chapter_countries = $result->fetchAllKeyed();
   $num_chapter_countries = (sizeof($chapter_countries));
@@ -146,34 +157,34 @@ function tm_api_chapters_lat_lon() {
     tm_api_return_json($cache->data);
   }
 
-	// initialize api data
-	$api_data = _get_empty_api_data();
+  // initialize api data
+  $api_data = _get_empty_api_data();
 
-	// get chapters
-	$query = "SELECT nid FROM {node} n ".
+  // get chapters
+  $query = "SELECT nid FROM {node} n ".
               "WHERE n.type = :type";
   $chapter_ids = db_query($query, array(':type' => "chapter"))->fetchAll();
 
   $chapter_data = array();
   foreach($chapter_ids as $result) {
-  	$chapter = node_load($result->nid);
-  	if (isset($chapter->field_geomaplocation['und'][0])) {
-  		$point = $chapter->field_geomaplocation['und'][0]['geom'];
-  		$point = str_replace("POINT (", "", $point); // remove POINT ( text
-  		$point = str_replace(")", "", $point); // remove ) text
-  		$parts = explode(" ", $point); // split lat, lon
-  		$lat = $parts[1];
-  		$lon = $parts[0];
-  	} else {
-  		$lat = null;
-  		$lon = null;
-  	}
-  	$chapter_data[] = array("title" => $chapter->title, "lat" => $lat, "lon" => $lon);
+    $chapter = node_load($result->nid);
+    if (isset($chapter->field_geomaplocation['und'][0])) {
+      $point = $chapter->field_geomaplocation['und'][0]['geom'];
+      $point = str_replace("POINT (", "", $point); // remove POINT ( text
+      $point = str_replace(")", "", $point); // remove ) text
+      $parts = explode(" ", $point); // split lat, lon
+      $lat = $parts[1];
+      $lon = $parts[0];
+    } else {
+      $lat = null;
+      $lon = null;
+    }
+    $chapter_data[] = array("title" => $chapter->title, "lat" => $lat, "lon" => $lon);
   }
 
-	$api_data["chapters"] = $chapter_data;
+  $api_data["chapters"] = $chapter_data;
   cache_set('tm-api-lat-lon', $api_data, 'cache', time() + 300); // 5 mins
-	tm_api_return_json($api_data);
+  tm_api_return_json($api_data);
 
 }
 
@@ -244,26 +255,145 @@ function tm_api_events() {
 
 }
 
+function tm_api_members_in_country_count() {
+
+  // initialize api data
+  $api_data = array("message" => null, "error" => null, "success" => true);
+
+  // check we got country codes
+  if (!isset($_GET["countries"])) {
+    $api_data["error"] = "Need to provide country code. Example: ?countries=US,CA";
+    $api_data["success"] = false;
+    tm_api_return_json($api_data);
+  }
+
+  // country code 
+  $country_codes = explode(",", urldecode($_GET["countries"]));
+  sort($country_codes);
+  $cache_key = 'tm-api-member-count-' . strtolower(implode("-", $country_codes)); // ie: tm-api-member-count-US-CA
+
+  // check cache
+  $cache = cache_get($cache_key, 'cache');
+  if (!empty($cache)) {
+    //tm_api_return_json($cache->data);
+  }
+
+  // Case 1. If countries=ALL then return total number of members
+  if (strtolower($_GET["countries"]) == "all") {
+    $query = "SELECT COUNT(*) amount FROM {users} u";
+    $num_members = db_query($query)->fetch();
+    $api_data["country_count"] = array("ALL" => $num_members->amount);
+    $api_data["total_count"] = $num_members->amount;
+    cache_set($cache_key, $api_data, 'cache', time() + 3600); // 1 hr
+    tm_api_return_json($api_data);
+    return;
+  } 
+  
+  // Case 2. Calculate reach in each city
+  $signup_flag = flag_get_flag('signup');
+
+  // country count (grouped)
+  $sql_query = "SELECT COUNT(*) member_count, country_iso2 FROM (SELECT DISTINCT(uid) as user_uid, field_country_iso2 AS country_iso2 FROM field_data_field_country c LEFT JOIN flagging f ON f.entity_id = c.entity_id WHERE f.fid = :fid AND c.bundle = 'chapter' AND c.field_country_iso2 IN (:country_codes) UNION SELECT DISTINCT(entity_id) AS user_uid, field_user_country_iso2 AS country_iso2 FROM field_data_field_user_country WHERE entity_type = 'user' AND field_user_country_iso2 in (:country_codes)) AS uids GROUP BY country_iso2";
+  $result = db_query($sql_query, array(':fid' => $signup_flag->fid, ':country_codes' => $country_codes))->fetchAll();
+
+  $counts = array();
+  foreach($result as $row) {
+    $counts[$row->country_iso2] = $row->member_count;
+  }
+  $api_data["country_count"] = $counts; 
+
+  // total count (non grouped)
+  $sql_query = "SELECT COUNT(*) member_count FROM (SELECT DISTINCT(uid) as user_uid FROM field_data_field_country c LEFT JOIN flagging f ON f.entity_id = c.entity_id WHERE f.fid = :fid AND c.bundle = 'chapter' AND c.field_country_iso2 IN (:country_codes) UNION SELECT DISTINCT(entity_id) AS user_uid FROM field_data_field_user_country WHERE entity_type = 'user' AND field_user_country_iso2 in (:country_codes)) AS uids";
+  $result = db_query($sql_query, array(':fid' => $signup_flag->fid, ':country_codes' => $country_codes))->fetch();
+  $api_data["total_count"] = $result->member_count;
+
+  // set cache and return results
+  cache_set($cache_key, $api_data, 'cache', time() + 3600); // 1 hr
+  tm_api_return_json($api_data);
+
+}
+
+function tm_api_organizations_in_country_count() {
+
+  // initialize api data
+  $api_data = array("message" => null, "error" => null, "success" => true);
+
+  // check we got country codes
+  if (!isset($_GET["countries"])) {
+    $api_data["error"] = "Need to provide country code. Example: ?countries=US,CA";
+    $api_data["success"] = false;
+    tm_api_return_json($api_data);
+  }
+
+  // country code 
+  $country_codes = explode(",", urldecode($_GET["countries"]));
+  sort($country_codes);
+  $cache_key = 'tm-api-company-count-' . strtolower(implode("-", $country_codes)); // ie: tm-api-member-count-US-CA
+
+  // check cache
+  $cache = cache_get($cache_key, 'cache');
+  if (!empty($cache)) {
+    //tm_api_return_json($cache->data);
+  }
+
+  // Case 1. If countries=ALL then return total number of members
+  if (strtolower($_GET["countries"]) == "all") {
+    $query = "SELECT COUNT(*) amount FROM {node} n ".
+              "WHERE n.type = :type";
+    $num_organizations = db_query($query, array(':type' => "organization"))->fetch();
+    $api_data["country_count"] = array("ALL" => $num_organizations->amount);
+    $api_data["total_count"] = $num_organizations->amount;
+    // set cache and return results
+    cache_set($cache_key, $api_data, 'cache', time() + 3600); // 1 hr
+    tm_api_return_json($api_data);
+    return;
+  }
+
+  // Case 2. Calulate reach in each city
+  $signup_flag = flag_get_flag('signup');
+
+  // country count (grouped)
+  $sql_query = "SELECT COUNT(*) AS organization_count, field_country_iso2 AS country_iso2 FROM  field_data_field_country WHERE bundle = 'organization' AND field_country_iso2 in (:country_codes) GROUP BY country_iso2";
+
+  $result = db_query($sql_query, array(':country_codes' => $country_codes))->fetchAll();
+
+  $counts = array();
+  foreach($result as $row) {
+    $counts[$row->country_iso2] = $row->organization_count;
+  }
+  $api_data["country_count"] = $counts; 
+
+  // total count (non grouped)
+  $sql_query = "SELECT COUNT(*) AS organization_count FROM  field_data_field_country WHERE bundle = 'organization' AND field_country_iso2 in (:country_codes)";
+  $result = db_query($sql_query, array(':country_codes' => $country_codes))->fetch();
+  $api_data["total_count"] = $result->organization_count; 
+
+  // set cache and return results
+  cache_set($cache_key, $api_data, 'cache', time() + 3600); // 1 hr
+  tm_api_return_json($api_data);
+
+}
+
 // Initial API data
 function _get_empty_api_data() {
-	return array("message" => null, "error" => null, "success" => true);
+  return array("message" => null, "error" => null, "success" => true);
 }
 
 // print api data as JSON object
 function tm_api_return_json($api_data) {
 
-	// check if we are embedding in a jsonp callback
-	$query = drupal_get_query_parameters();
-	if (isset($query["callback"])) {
-		// jsonp callback
-		// ie: mycallback({json_data});
-		print($query["callback"] . "(" . json_encode($api_data) . ");");
-	} else {
-		// standard json
-		// ie: {json_data}
-		print(json_encode($api_data));
-	}
-	drupal_exit();
+  // check if we are embedding in a jsonp callback
+  $query = drupal_get_query_parameters();
+  if (isset($query["callback"])) {
+    // jsonp callback
+    // ie: mycallback({json_data});
+    print($query["callback"] . "(" . json_encode($api_data) . ");");
+  } else {
+    // standard json
+    // ie: {json_data}
+    print(json_encode($api_data));
+  }
+  drupal_exit();
 }
 
 

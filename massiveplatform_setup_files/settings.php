@@ -789,6 +789,7 @@ $conf["tm_payments_refund_policy"] = "You can get a refund until 7 days before t
 $conf["tm_payments_refund_url"] = "https://travelmassive.com/blog/event-refund/";
 $conf["tm_payments_receipt_details"] = "<strong>TAX RECEIPT</strong><br>Your company name<br>Your company address<br>Email: your@receiptemail";
 $conf["tm_payments_early_bird_label"] = "Early Bird Ticket"; // default label for early bird ticket
+$conf["tm_payments_stripe_logo"] = "<a target='_blank' href='https://stripe.com/gallery'><img style='width: 119px; height: 26px;' width='119' height='26' src='/sites/all/themes/tm/images/stripe_logo_solid@2x.png'></a><br>Secure payment gateway trusted by <a target='_blank' href='https://stripe.com/gallery'>global brands</a>"; // displayed when payment is enabled
 
 /* Featured members settings */
 $conf["tm_featured_members_event_types"] = array("all" => "Special Guests", "community" => "Special Guests", "workshop" => "Workshop Leaders", "conference" => "Speakers");

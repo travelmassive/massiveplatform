@@ -1183,6 +1183,21 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
             if (_tm_payments_is_payment_enabled($entity)) {
               $button_text = "Buy Ticket";
             }
+
+            global $conf;
+            $tm_payments_stripe_logo = $conf["tm_payments_stripe_logo"];
+            $stripe_js = <<<EOT
+
+            jQuery(document).ready(function($) {
+
+              // Add stripe logo to information panel
+              $('.detail-item.price').after("<div class='detail-item tm-payment-gateway-logo'>{$tm_payments_stripe_logo}</div>");
+
+            });
+EOT;
+
+            drupal_add_js($stripe_js, 'inline'); // add inline js
+
           }
           $css_classes .= ' disabled';
           return l(t($button_text), 'javascript:jq_login_signup_box();', array(

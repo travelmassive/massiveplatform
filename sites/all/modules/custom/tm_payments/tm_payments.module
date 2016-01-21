@@ -772,6 +772,8 @@ function _tm_payments_preprocess_flag_register_flag(&$variables) {
 	$stripe_pub_key = $conf["tm_payments_stripe_publishable_key"];
 	$stripe_bg_image = $conf["tm_payments_stripe_image_url"];
 
+	$tm_payments_stripe_logo = $conf["tm_payments_stripe_logo"];
+
 	  $stripe_js = <<<EOT
 
 jQuery(document).ready(function($) {
@@ -821,7 +823,8 @@ jQuery(document).ready(function($) {
 	});
 
 	// Add stripe logo to information panel
-	$('.detail-item.price').after('<div class="detail-item tm-payment-gateway-logo"><a target="_blank" href="https://stripe.com/gallery"><img style="width: 119px; height: 26px;" width="119" height="26" src="/sites/all/themes/tm/images/stripe_logo_solid@2x.png"></a><br>Secure payment gateway trusted by <a target="_blank" href="https://stripe.com/gallery">global brands</a></div>');
+	$('.detail-item.price').after("<div class='detail-item tm-payment-gateway-logo'>{$tm_payments_stripe_logo}</div>");
+	
 
 });
 

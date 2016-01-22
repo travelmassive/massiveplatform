@@ -292,6 +292,7 @@ function tm_organizations_preprocess_page(&$variables, $hook) {
 function tm_organizations_add_photo_edit_js($node) {
 
   global $user;
+  global $conf;
 
   // If viewing company profile, 
   if (!(arg(0) == 'node' and is_numeric(arg(1)) and arg(2) == FALSE)) {
@@ -316,8 +317,11 @@ function tm_organizations_add_photo_edit_js($node) {
   }
 
   // check if organization has logo and cover images
-  $has_profile_image = true;
+  $has_profile_image = true; // mandatory field
   $has_cover_image = false;
+  if (isset($node->field_image[LANGUAGE_NONE][0]['uri'])) {
+    $has_cover_image = ($node->field_image[LANGUAGE_NONE][0]['uri'] != $conf["tm_images_default_field_image"]);
+  }
 
   // add js vars
   drupal_add_js(array('tm_organizations' => array('nid' => $node->nid)), array('type' => 'setting'));

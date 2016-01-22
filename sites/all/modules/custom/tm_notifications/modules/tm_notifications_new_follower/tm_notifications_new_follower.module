@@ -82,6 +82,14 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
     $first_name = strip_tags($who_followed->field_user_first_name['und'][0]['value']);
     $last_name = strip_tags($who_followed->field_user_last_name['und'][0]['value']);
 
+    // Get follower message from tm_users_follow_message via drupal_static
+    // Note: this variable should have already been sanitised
+    $follower_message = drupal_static("tm_notifications_new_follower_user_message");
+    drupal_static_reset("tm_notifications_new_follower_user_message");
+    if ($follower_message != "") {
+      $follower_message = "<br><strong>Message from " . strip_tags($first_name) . ":</strong> " . $follower_message . "<br>";
+    }
+
     $messaging_instructions = "";
     if ($conf["tm_messaging_enabled"]) {
 
@@ -102,17 +110,13 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
         // not already following
         // check person who followed has notification setting enabled
         if ($notification->isEnabled($who_followed->uid)) {
-          $messaging_instructions = "<br>You can send " . $first_name . " a message if you follow them back.<br>";
+          if ($follower_message != "") {
+            $messaging_instructions = "<br>To reply to " . $first_name . ", follow them back to send a message.<br>";
+          } else {
+            $messaging_instructions = "<br>You can send " . $first_name . " a message if you follow them back.<br>";
+          }
         }
       }
-    }
-
-    // Get follower message from tm_users_follow_message via drupal_static
-    // Note: this variable should have already been sanitised
-    $follower_message = drupal_static("tm_notifications_new_follower_user_message");
-    drupal_static_reset("tm_notifications_new_follower_user_message");
-    if ($follower_message != "") {
-      $follower_message = "<br><strong>Message from " . strip_tags($first_name) . ":</strong> " . $follower_message . "<br>";
     }
 
     tm_notifications_notify('new_follower', $followed_user, array('user' => $followed_user, '__PROFILE_URL__' => $profile_url, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__MESSAGING_INSTRUCTIONS__' => $messaging_instructions, '__FOLLOWER_MESSAGE__' => $follower_message));

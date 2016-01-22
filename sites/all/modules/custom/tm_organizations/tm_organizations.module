@@ -251,7 +251,7 @@ function tm_organizations_preprocess_page(&$variables, $hook) {
 
     // Create a message
     if ($job_organization != null) {
-      $message = "Is <strong>" . t($job_organization)  . "</strong> a professional organization? Get discovered by adding a " . $add_profile_html . ".";
+      $message = "Is <strong>" . t($job_organization)  . "</strong> a company or organization? Get discovered by adding a " . $add_profile_html . ".";
     }
     elseif ($job_role != null) {
       $message = "Get your company discovered by adding a " . $add_profile_html . ".";

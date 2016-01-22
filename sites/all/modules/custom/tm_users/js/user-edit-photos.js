@@ -10,8 +10,8 @@
   		var has_profile_image = Drupal.settings.tm_users.has_profile_image;
 
   		// set text of buttons
-  		var change_cover_image_text = "Change cover";
-    	var change_profile_image_text = "Change";
+  		var change_cover_image_text = "Edit cover";
+    	var change_profile_image_text = "Edit";
 
   		if (!has_cover_image) {
   			change_cover_image_text = "Add your own cover";

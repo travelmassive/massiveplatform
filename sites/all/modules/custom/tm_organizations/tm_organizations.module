@@ -310,9 +310,8 @@ function tm_organizations_add_photo_edit_js($node) {
   }
 
   // Check if company is managed by user
-  // Allow moderators to see edit links
   $users_companies = tm_users_get_companies($user->uid);
-  if (!in_array($node->nid, $users_companies) && (!(in_array("moderator", $user->roles)))) {
+  if (!in_array($node->nid, $users_companies)) {
     return;
   }
 

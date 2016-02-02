@@ -744,6 +744,7 @@ $conf['tm_discuss_meta_og_image'] = "https://localdev.travelmassive.com/discussi
 $conf['tm_discuss_meta_description'] = "Travel Massive Discuss is the place to ask questions and get answers about the tourism and travel industry from members of our community.";
 $conf['tm_discuss_menu_path'] = "discuss"; // page where vanilla will be embedded
 $conf['tm_discuss_full_path'] = "discussions"; // where vanilla is installed
+// $conf['tm_discuss_signup_message'] = ""; // customise the signup message. leave unset for default
 
 /** Marketplace settings **/
 $conf['tm_marketplace_menu_hide'] = true; // hide the marketplace unless you access /marketplace

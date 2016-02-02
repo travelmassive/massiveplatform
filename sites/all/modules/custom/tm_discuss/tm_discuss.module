@@ -167,7 +167,7 @@ function tm_discuss_embed_vanilla() {
 		if (isset($conf["tm_discuss_signup_message"])) {
 			$signup_message = $conf["tm_discuss_signup_message"];
 		}
-		drupal_set_message($welcome_message . "<a href='/user/register'>Sign up now</a> or <a href='javascript:jq_login_signup_box();'>Log In</a>.");
+		drupal_set_message($signup_message . "<a href='/user/register'>Sign up now</a> or <a href='javascript:jq_login_signup_box();'>Log In</a>.");
 	} else {
 		// welcome message
 		//drupal_get_messages();

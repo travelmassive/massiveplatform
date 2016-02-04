@@ -100,11 +100,11 @@ function tm_api_stats() {
   $num_organizations = db_query($query, array(':type' => "organization"))->fetch();
   $api_data["num_organizations"] = $num_organizations->amount;
 
-  // number of events
-  $query = "SELECT COUNT(*) amount FROM {node} n ".
-              "WHERE n.type = :type";
-  $num_events = db_query($query, array(':type' => "event"))->fetch();
-  $api_data["num_events"] = $num_events->amount;
+  // number of events in past
+  $query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 
+  WHERE e.entity_type = 'node' AND field_event_date_value <= NOW();";
+  $num_events = db_query($query_sql)->fetch();
+  $api_data["num_events"] = $num_events->total;
 
   // number of members
   $query = "SELECT COUNT(*) amount FROM {users} u";

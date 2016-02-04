@@ -34,8 +34,13 @@ function tm_api_menu() {
       'access arguments' => array('access content')
    );
 
-    $items['api/public/organizations_in_country'] = array(
+   $items['api/public/organizations_in_country'] = array(
       'page callback' => 'tm_api_organizations_in_country_count',
+      'access arguments' => array('access content')
+   );
+
+   $items['api/public/chapter_leaders'] = array(
+      'page callback' => 'tm_api_chapter_leaders',
       'access arguments' => array('access content')
    );
 
@@ -52,8 +57,9 @@ function tm_api_home() {
     <br>api/public/test - API test page
     <br>api/public/stats - basic stats
     <br>api/public/chapters_lat_lon - chapters lat and lon
-    <br>api/public/events - upcoming events
+    <br>api/public/events - upcoming events (optional: ?limit=10 to set limit)
     <br>api/public/members_in_country - member count in country (example: ?country=US,UK)
+    <br>api/public/chapter_leaders - list of chapter leaders
     <br>
     <br>All results as returned as JSON. For JSONP append ?callback=myfunction to the URL.
     <br>For help please email team@travelmassive.com</p>");
@@ -144,6 +150,11 @@ function tm_api_stats() {
   $num_waitlists = db_query($query, array(':fid' => $flag->fid))->fetch();
   $api_data["num_event_waitlists"] = $num_waitlists->amount;
 
+  // number of chapter leaders
+  $query = "SELECT COUNT(DISTINCT(field_chapter_leaders_target_id)) AS amount FROM field_data_field_chapter_leaders fd WHERE fd.bundle = 'chapter' AND fd.deleted = 0";
+  $num_chapter_leaders = db_query($query)->fetch();
+  $api_data["num_chapter_leaders"] = $num_chapter_leaders->amount;
+
   // return api data in json format
   cache_set('tm-api-stats', $api_data, 'cache', time() + 900); // 15 mins
   tm_api_return_json($api_data);
@@ -162,7 +173,7 @@ function tm_api_chapters_lat_lon() {
 
   // get chapters
   $query = "SELECT nid FROM {node} n ".
-              "WHERE n.type = :type";
+              "WHERE n.type = :type ORDER BY n.title ASC";
   $chapter_ids = db_query($query, array(':type' => "chapter"))->fetchAll();
 
   $chapter_data = array();
@@ -179,7 +190,12 @@ function tm_api_chapters_lat_lon() {
       $lat = null;
       $lon = null;
     }
-    $chapter_data[] = array("title" => $chapter->title, "lat" => $lat, "lon" => $lon);
+
+    $shortcode = $chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['safe_value'];
+    $color = $chapter->field_chapter_color[LANGUAGE_NONE][0]['rgb'];
+    $path = drupal_get_path_alias("node/" . $chapter->nid);
+
+    $chapter_data[] = array("title" => $chapter->title, "lat" => $lat, "lon" => $lon, "shortcode" => $shortcode, "color" => $color, "path" => $path);
   }
 
   $api_data["chapters"] = $chapter_data;
@@ -190,8 +206,12 @@ function tm_api_chapters_lat_lon() {
 
 function tm_api_events() {
 
-  // check cache
-  $cache = cache_get('tm-api-events', 'cache');
+  $limit = 1000; // default limit
+  if (isset($_GET["limit"])) {
+    $limit = intval($_GET["limit"]);
+  }
+
+  $cache = cache_get('tm-api-events-' . $limit, 'cache');
   if (!empty($cache)) {
     tm_api_return_json($cache->data);
   }
@@ -201,9 +221,9 @@ function tm_api_events() {
   // initialize api data
   $api_data = _get_empty_api_data();
 
-  $query = "SELECT entity_id FROM field_data_field_event_date WHERE entity_type = 'node' and bundle = 'event' and field_event_date_value > DATE_SUB(NOW(), INTERVAL 1 DAY) order by field_event_date_value asc";
+  $query = "SELECT entity_id FROM field_data_field_event_date WHERE entity_type = 'node' and bundle = 'event' and field_event_date_value > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY field_event_date_value ASC";
 
-  $chapter_ids = db_query($query)->fetchAll();
+  $chapter_ids = db_query_range($query, 0, $limit)->fetchAll();
   $event_data = array();
   foreach($chapter_ids as $result) {
 
@@ -250,7 +270,7 @@ function tm_api_events() {
   }
 
   $api_data["events"] = $event_data; 
-  cache_set('tm-api-events', $api_data, 'cache', time() + 300); // 5 mins
+  cache_set('tm-api-events-' . $limit, $api_data, 'cache', time() + 300); // 5 mins
   tm_api_return_json($api_data);
 
 }
@@ -370,6 +390,56 @@ function tm_api_organizations_in_country_count() {
 
   // set cache and return results
   cache_set($cache_key, $api_data, 'cache', time() + 3600); // 1 hr
+  tm_api_return_json($api_data);
+
+}
+
+function tm_api_chapter_leaders() {
+
+  // check cache
+  $cache = cache_get('tm-api-chapter-leaders', 'cache');
+  if (!empty($cache)) {
+    tm_api_return_json($cache->data);
+  }
+
+  // initialize api data
+  $api_data = _get_empty_api_data();
+
+  // get leaders chapters, ordered by number of followers
+  $query = "SELECT field_chapter_leaders_target_id AS uid, n.nid, n.title FROM field_data_field_chapter_leaders fd LEFT JOIN node n ON fd.entity_id = n.nid WHERE fd.bundle = 'chapter' AND fd.deleted = 0 ORDER BY uid DESC";
+  $chapter_leaders = db_query($query)->fetchAll();
+
+  global $conf;
+  $leader_data = array();
+  $uids = array();
+  foreach($chapter_leaders as $result) {
+
+    // distinct uids
+    if (in_array($result->uid, $uids)) {
+      continue;
+    }
+    $uids[] = $result->uid;
+
+    $leader = user_load($result->uid);
+
+    // get profile url
+    if (isset($leader->field_avatar[LANGUAGE_NONE][0]['uri'])) {
+      $image_url = image_style_url("avatar", $leader->field_avatar[LANGUAGE_NONE][0]['uri']);
+    } else {
+      $default_image_uri = _tm_users_get_default_avatar($conf["tm_images_default_field_avatar"], $leader->uid);
+      $image_url = image_style_url("avatar", $default_image_uri);
+    }
+
+    // other details
+    $first_name = $leader->field_user_first_name['und'][0]['value'];
+    $last_name = $leader->field_user_last_name['und'][0]['value'];
+    $profile_path = drupal_get_path_alias("user/" . $leader->uid);
+
+    $leader_data[] = array("name" => $first_name . " " . $last_name, "chapter_title" => $result->title, "avatar_url" => $image_url, "profile_path" => $profile_path);
+  }
+
+  $api_data["chapter_leaders"] = $leader_data;
+  cache_set('tm-api-chapter-leaders', $api_data, 'cache', time() + 900); // 15 mins
   tm_api_return_json($api_data);
 
 }

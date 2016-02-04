@@ -387,6 +387,7 @@ function tm_api_return_json($api_data) {
   if (isset($query["callback"])) {
     // jsonp callback
     // ie: mycallback({json_data});
+    drupal_add_http_header('Content-Type', 'application/javascript');
     print($query["callback"] . "(" . json_encode($api_data) . ");");
   } else {
     // standard json

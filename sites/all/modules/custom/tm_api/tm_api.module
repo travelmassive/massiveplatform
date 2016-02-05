@@ -430,12 +430,20 @@ function tm_api_chapter_leaders() {
       $image_url = image_style_url("avatar", $default_image_uri);
     }
 
+    // set chapter from result, or home chapter if user has one
+    $chapter_title = $result->title; // default
+    if (sizeof($leader->field_home_chapter) > 0) {
+      $home_chapter_id = $leader->field_home_chapter[LANGUAGE_NONE][0]['target_id'];
+      $home_chapter = node_load($home_chapter_id);
+      $chapter_title = $home_chapter->title;
+    }
+
     // other details
     $first_name = $leader->field_user_first_name['und'][0]['value'];
     $last_name = $leader->field_user_last_name['und'][0]['value'];
     $profile_path = drupal_get_path_alias("user/" . $leader->uid);
 
-    $leader_data[] = array("name" => $first_name . " " . $last_name, "chapter_title" => $result->title, "avatar_url" => $image_url, "profile_path" => $profile_path);
+    $leader_data[] = array("name" => $first_name . " " . $last_name, "chapter_title" => $chapter_title, "avatar_url" => $image_url, "profile_path" => $profile_path);
   }
 
   $api_data["chapter_leaders"] = $leader_data;

@@ -4263,6 +4263,16 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   background: transparent url("../images/load-more-ajax-loader.gif") no-repeat 0px 0px;
 }
 
+/* Blur filter for jq_alert */
+/* line 560, ../sass/_base.scss */
+.tm-blur-filter {
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -o-filter: blur(2px);
+  -ms-filter: blur(2px);
+  filter: blur(2px);
+}
+
 /* line 3, ../sass/_buttons.scss */
 button:hover, button:focus {
   outline: none;

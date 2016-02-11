@@ -166,10 +166,15 @@
 (function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){
 
   // set default classes for impromptu
-  $.prompt.setDefaults({classes: {
-    button: 'pure-button',
-    defaultButton: 'pure-button-primary',
-  }});
+  $.prompt.setDefaults({
+    classes: {
+      button: 'pure-button',
+      defaultButton: 'pure-button-primary',
+    }, 
+    overlayspeed: 'fast',
+    loaded: function() { $("#page").addClass("tm-blur-filter"); },
+    close: function() { $("#page").removeClass("tm-blur-filter"); },
+    });
 
   // wrapper for alert
   jq_alert = function(alert_title, message) {

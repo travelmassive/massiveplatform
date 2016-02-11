@@ -111,7 +111,7 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
         // check person who followed has notification setting enabled
         if ($notification->isEnabled($who_followed->uid)) {
           if ($follower_message != "") {
-            $messaging_instructions = "<br>To reply to " . $first_name . ", follow them back to send a message.<br>";
+            $messaging_instructions = "<br><strong>To reply to " . $first_name . ", follow them back to send a message.</strong><br>";
           } else {
             $messaging_instructions = "<br>You can send " . $first_name . " a message if you follow them back.<br>";
           }

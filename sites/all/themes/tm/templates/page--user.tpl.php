@@ -22,6 +22,20 @@
   }
 ?>
 
+<?php
+// Redirect /user/uid paths to canonical URL
+// Check canonical URL is not current URL
+$request_uri_parts = explode("/", request_uri());
+if (sizeof($request_uri_parts) == 3) {
+  if (($request_uri_parts[1] == "user") and (is_numeric($request_uri_parts[2]))) {
+    $profile_url = drupal_get_path_alias("user/" . $request_uri_parts[2]);
+    if ("/" . $profile_url != request_uri()) {
+      drupal_goto($profile_url); // Redirect to canonical URL
+    }
+  }
+}
+?>
+
 <div id="page">
 
   <header class="header" id="header" role="banner">

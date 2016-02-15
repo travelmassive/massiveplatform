@@ -179,8 +179,11 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
 
       // Get pricing
       if ($paid_for_event) {
-        try {          
-          $event_pricing = _tm_payments_get_registration_price($event);
+        try {
+          // fetch pricing from static variable set in tm_payments_process_event_payment
+          $event_pricing = drupal_static("tm_payments_pricing");
+          drupal_static_reset("tm_payments_pricing");
+          // $event_pricing = _tm_payments_get_registration_price($event); // old way
         } catch (Exception $e) {
           // do nothing, we don't want to stop other actions in the middle of payment
         }

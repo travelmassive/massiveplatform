@@ -373,6 +373,10 @@ function tm_payments_process_event_payment($event, $member) {
 	// STEP 5. IF SUCCESSFUL PAYMENT, REGISTER USER AND SET FLAGS
 	if ($res->success == true) {
 
+		// Set pricing into static variable so we can pick it up in the notifications hook
+  		$hook_static_var_pricing = &drupal_static("tm_payments_pricing");
+  		$hook_static_var_pricing = $pricing;
+
 		// Get event flags
 	  	$rsvpflag = flag_get_flag('event_register', NULL);
 	  	$paidflag = flag_get_flag('event_paid', NULL);

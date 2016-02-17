@@ -103,7 +103,9 @@ function tm_users_user_view($account, $view_mode, $langcode) {
   }
 
   // Add javascript to show edit photo buttons
-  tm_users_add_photo_edit_js($account);
+  if ($view_mode == "full") {
+    tm_users_add_photo_edit_js($account);
+  }
 
 }
 

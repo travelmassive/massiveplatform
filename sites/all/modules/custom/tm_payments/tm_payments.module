@@ -364,7 +364,7 @@ function tm_payments_process_event_payment($event, $member) {
 
 	// check for errors
 	if ($res->success == false) {
-		drupal_set_message($conf["tm_payments_error_message"], 'warning');
+		drupal_set_message($res->error . " " . $conf["tm_payments_error_message"], 'warning');
 		tm_payments_notify_payment_error("CURL json return false: " . print_r($res, true));
 		drupal_goto($event_path_alias);
 		return;

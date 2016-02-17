@@ -170,10 +170,7 @@
     classes: {
       button: 'pure-button',
       defaultButton: 'pure-button-primary',
-    }, 
-    overlayspeed: 'fast',
-    loaded: function() { $("#page").addClass("tm-blur-filter"); },
-    close: function() { $("#page").removeClass("tm-blur-filter"); },
+    },
     });
 
   // wrapper for alert
@@ -503,7 +500,15 @@
       avatar_img = $(".badge-organization img, .badge-user img")[0];
       if ($(".badge-organization, .badge-user").hasClass("zoomable")) {
         img_html = "<div id='zoom_picture_container'><img class='zoom_picture' src='" + avatar_img.src.replace(/'/g, "") + "'></div>";
-        $.prompt(img_html, {title: null, persistent: false, classes: {box: 'tm_zoom_picture'}, buttons: {}});
+        $.prompt(img_html, {
+          title: null, 
+          persistent: false, 
+          classes: { box: 'tm_zoom_picture'}, 
+          buttons: {}, 
+          overlayspeed: 'fast',
+          loaded: function() { $("#page").addClass("tm-blur-filter"); },
+          close: function() { $("#page").removeClass("tm-blur-filter"); },
+        });
       }
     } else {
       // show login box if logged out

@@ -805,5 +805,8 @@ $conf["tm_following_enable_message_organization"] = true;
 /* Allow chapter leaders to edit leaders for their own chapter (default false) */
 $conf["tm_chapters_allow_edit_chapter_leaders"] = false;
 
+/* Set the theme color for mobile Android, iOS */
+$conf["tm_theme_meta_color"] = "#007DB7"; 
+
 $conf['install_profile'] = 'tm';
 

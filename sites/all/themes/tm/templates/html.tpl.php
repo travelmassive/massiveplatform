@@ -23,6 +23,11 @@
     <?php endif; ?>
     <meta http-equiv="cleartype" content="on" />
     
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="<?php print($conf['tm_meta_theme_color']);?>">
+    <meta name="msapplication-navbutton-color" content="<?php print($conf['tm_meta_theme_color']);?>">
+    <meta name="apple-mobile-web-app-status-bar-style" content="<?php print($conf['tm_meta_theme_color']);?>">
+
     <link rel="shortcut icon" href="<?php print $base_path . path_to_theme(); ?>/images/meta/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon" href="<?php print $base_path . path_to_theme(); ?>/images/meta/apple-touch-icon.png" />
     <link rel="apple-touch-icon" sizes="57x57" href="<?php print $base_path . path_to_theme(); ?>/images/meta/apple-touch-icon-57x57.png" />

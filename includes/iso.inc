@@ -268,6 +268,7 @@ function _country_get_predefined_list() {
     'VU' => $t('Vanuatu'),
     'WF' => $t('Wallis and Futuna'),
     'WS' => $t('Samoa'),
+    'XK' => $t('Kosovo'),
     'YE' => $t('Yemen'),
     'YT' => $t('Mayotte'),
     'ZA' => $t('South Africa'),

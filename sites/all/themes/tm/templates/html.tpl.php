@@ -22,10 +22,6 @@
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
     <?php endif; ?>
     <meta http-equiv="cleartype" content="on" />
-    
-    <meta name="theme-color" content="<?php print($conf['tm_theme_meta_color']);?>">
-    <meta name="msapplication-navbutton-color" content="<?php print($conf['tm_theme_meta_color']);?>">
-    <meta name="apple-mobile-web-app-status-bar-style" content="<?php print($conf['tm_theme_meta_color']);?>">
 
     <link rel="shortcut icon" href="<?php print $base_path . path_to_theme(); ?>/images/meta/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon" href="<?php print $base_path . path_to_theme(); ?>/images/meta/apple-touch-icon.png" />

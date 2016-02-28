@@ -37,6 +37,44 @@ function tm_preprocess_maintenance_page(&$variables, $hook) {
 function tm_preprocess_html(&$variables, $hook) {
 
   global $conf;
+
+  // Add meta tags for theme-color for mobile Android, iOS
+  // see: http://stackoverflow.com/questions/26960703/how-to-change-the-color-of-header-bar-and-address-bar-in-newest-android-chrome-v
+  if (isset($conf["tm_theme_meta_color"])) {
+
+    // Android, Firefox OS
+    $meta = array(
+      '#tag' => 'meta', 
+      '#attributes' => array(
+        'name' => 'theme-color', 
+        'content' => $conf['tm_theme_meta_color'],
+      ),
+    );
+    drupal_add_html_head($meta, 'theme-color');
+
+    // Microsoft
+    $meta = array(
+      '#tag' => 'meta', 
+      '#attributes' => array(
+        'name' => 'msapplication-navbutton-color', 
+        'content' => $conf['tm_theme_meta_color'],
+      ),
+    );
+    drupal_add_html_head($meta, 'msapplication-navbutton-color');
+
+    // iOS
+    $meta = array(
+      '#tag' => 'meta', 
+      '#attributes' => array(
+        'name' => 'apple-mobile-web-app-status-bar-style', 
+        'content' => $conf['tm_theme_meta_color'],
+      ),
+    );
+    drupal_add_html_head($meta, 'apple-mobile-web-app-status-bar-style');
+
+  }
+ 
+  // Add meta tags for tm_discuss 
   $discuss_menu_path = "discuss"; // default
   if (isset($conf["tm_discuss_menu_path"])) {
     $discuss_menu_path = $conf["tm_discuss_menu_path"];

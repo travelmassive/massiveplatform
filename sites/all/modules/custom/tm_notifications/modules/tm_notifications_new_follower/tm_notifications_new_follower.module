@@ -91,6 +91,7 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
     }
 
     $messaging_instructions = "";
+    $reply_to = "";
     if ($conf["tm_messaging_enabled"]) {
 
       // check following
@@ -102,9 +103,29 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
 
       // check if we are following them already
       if ($you_are_following_them) {
+
         // check if we can send messages
         if (tm_messaging_check_send_message($followed_user->uid, $who_followed->uid, true, false)) {
-          $messaging_instructions = "<br>You are now connected. You can send " . $first_name . " a message by visiting their profile.<br>";
+
+          // Allow reply via email if follower sent a message and we are now connected
+          if ($follower_message != "") {
+
+            // Reply address
+            $reply_to = $first_name . " " . $last_name . " <" . $who_followed->mail . ">";
+
+            // From address
+            // ie: John Travels <communication@yourcommunity.com>
+            $from = $first_name . " " . $last_name . "<" . $conf["tm_messaging_from_email"] . ">";
+
+            $messaging_instructions = "<br><strong>You are now connected. You can respond to " . $first_name . " by replying directly to this email.</strong>";
+
+
+          } else {
+
+            // No message in this follow
+            $messaging_instructions = "<br>You are now connected. You can send " . $first_name . " a message by visiting their profile.<br>";
+
+          }
         }
       } else {
         // not already following
@@ -119,7 +140,17 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
       }
     }
 
-    tm_notifications_notify('new_follower', $followed_user, array('user' => $followed_user, '__PROFILE_URL__' => $profile_url, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__MESSAGING_INSTRUCTIONS__' => $messaging_instructions, '__FOLLOWER_MESSAGE__' => $follower_message));
+    // Notification options
+    $notification_options = array('user' => $followed_user, '__PROFILE_URL__' => $profile_url, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__MESSAGING_INSTRUCTIONS__' => $messaging_instructions, '__FOLLOWER_MESSAGE__' => $follower_message);
+
+    // If reply_to is set
+    if ($reply_to != "") {
+      $notification_options["__REPLY_TO__"] = $reply_to;
+      tm_notifications_notify('new_follower', $followed_user, $notification_options, $from);
+    } else {
+      tm_notifications_notify('new_follower', $followed_user, $notification_options);
+    }
+    
 
   }
 

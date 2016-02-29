@@ -800,7 +800,7 @@ This will be added to the attendee count on the event page.',
       ),
     ),
     'deleted' => 0,
-    'description' => 'Check this box if you want to hide the list of organizers on the event page',
+    'description' => 'Check this box if you want to hide the list of organizers on the event page.',
     'display' => array(
       'default' => array(
         'label' => 'above',

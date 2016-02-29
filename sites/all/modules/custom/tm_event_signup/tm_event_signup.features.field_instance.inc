@@ -67,7 +67,7 @@ function tm_event_signup_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 5,
+      'weight' => 6,
     ),
   );
 
@@ -143,7 +143,7 @@ function tm_event_signup_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 7,
+      'weight' => 8,
     ),
   );
 

@@ -249,10 +249,10 @@ function tm_events_field_group_info() {
     'label' => 'Featured members',
     'weight' => '9',
     'children' => array(
-      0 => 'field_event_featured_members',
-      1 => 'field_notify_featured_members',
-      2 => 'field_event_featured_label',
-      3 => 'field_event_featured_access_rsvp',
+      0 => 'field_event_featured_access_rsvp',
+      1 => 'field_event_featured_label',
+      2 => 'field_event_featured_members',
+      3 => 'field_notify_featured_members',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -311,8 +311,9 @@ function tm_events_field_group_info() {
       4 => 'field_organizer',
       5 => 'field_rsvp_link',
       6 => 'field_chapter',
-      7 => 'title',
-      8 => 'path',
+      7 => 'field_event_hide_organizers',
+      8 => 'title',
+      9 => 'path',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

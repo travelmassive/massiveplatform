@@ -78,7 +78,7 @@ function tm_events_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 4,
+      'weight' => 5,
     ),
   );
 
@@ -257,7 +257,7 @@ function tm_events_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 2,
+      'weight' => 3,
     ),
   );
 
@@ -791,6 +791,68 @@ This will be added to the attendee count on the event page.',
     ),
   );
 
+  // Exported field_instance: 'node-event-field_event_hide_organizers'.
+  $field_instances['node-event-field_event_hide_organizers'] = array(
+    'bundle' => 'event',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Check this box if you want to hide the list of organizers on the event page',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 47,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_hide_organizers',
+    'label' => 'Hide Organizers',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 2,
+    ),
+  );
+
   // Exported field_instance: 'node-event-field_event_sponsors'.
   $field_instances['node-event-field_event_sponsors'] = array(
     'bundle' => 'event',
@@ -1222,7 +1284,7 @@ This will be added to the attendee count on the event page.',
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 6,
+      'weight' => 7,
     ),
   );
 
@@ -1813,6 +1875,7 @@ This will be displayed to the member on the event page and included in the autom
   t('Assign a label for featured members on the event listing. Leave blank for default.
 <br>example: Keynote Speakers
 <br><br>');
+  t('Check this box if you want to hide the list of organizers on the event page');
   t('Check this box if you want to restrict registration and waitlist to members who are approved. Non-approved members won\'t be able to sign up. ');
   t('Check this option if you want to restrict displaying the event location to registered attendees only.');
   t('Description');
@@ -1829,6 +1892,7 @@ This will be displayed to the member on the event page and included in the autom
 <li>Sponsors will also be added to our world-wide <a target="_blank" href="/sponsors">sponsors page</a>.</li>
 </ul>');
   t('Help the attendees find the right location by providing a link to a map, for example <a href="http://maps.google.com/">Google Maps</a>.');
+  t('Hide Organizers');
   t('Highlight members of this event such as speakers or workshops leaders');
   t('How many non-registered guests are coming?<br>
 This will be added to the attendee count on the event page.');

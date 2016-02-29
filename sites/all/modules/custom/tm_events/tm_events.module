@@ -2083,3 +2083,26 @@ function tm_events_send_contact_email($email, $subject, $body, $user, $event){
 }
 
 
+/* Alter event node */
+/* Hide organizers if field_event_hide_organizers set */
+function tm_events_node_view($node, $view_mode, $langcode) {
+
+  // Check event
+  if ($node->type != 'event') {
+    return;
+  }
+
+  if ($view_mode == 'full') {
+    if (isset($node->field_event_hide_organizers[LANGUAGE_NONE][0])) {
+      if ($node->field_event_hide_organizers[LANGUAGE_NONE][0]['value']) {
+
+        // http://timonweb.com/posts/programmatically-hiding-a-fieldgroup-on-a-node-display-in-drupal-7/
+        $node->content['#groups']['group_organizers_wrapper']->format_type = 'hidden';
+        hide($node->content['field_organizer']);  
+      }
+    }
+  }
+  
+}
+
+

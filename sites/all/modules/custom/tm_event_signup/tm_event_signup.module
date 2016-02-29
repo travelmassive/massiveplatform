@@ -80,6 +80,15 @@ function _tm_event_seats_count($field, $title = NULL) {
   }
 
   if ($count == 0) {
+
+    // Hide count message if event is ticketed
+    if (module_exists("tm_payments")) {
+      if (_tm_payments_is_payment_enabled($event)) {
+        return t('Buy a ticket to this event');
+      }
+    }
+
+    // No Payment
     if (isset($event->field_signup_limit[LANGUAGE_NONE][0]['value'])) {
       $limit = $event->field_signup_limit[LANGUAGE_NONE][0]['value'];
       $waitlist_flag = flag_get_flag('event_waitlist');

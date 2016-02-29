@@ -269,9 +269,6 @@ function _tm_communication_actions_process($field, $title = NULL) {
       if ($dest) {
         $show_menu = true;
 
-        $current_uri = request_uri();
-        $current_uri = substr($current_uri, 1); // delete first slash
-
         // chapter invitations
         $link_path = 'events/message/' . $node->nid;
 

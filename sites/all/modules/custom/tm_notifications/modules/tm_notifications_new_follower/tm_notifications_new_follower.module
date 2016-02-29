@@ -117,7 +117,7 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
             // ie: John Travels <communication@yourcommunity.com>
             $from = $first_name . " " . $last_name . "<" . $conf["tm_messaging_from_email"] . ">";
 
-            $messaging_instructions = "<br><strong>You are now connected. You can respond to " . $first_name . " by replying directly to this email.</strong>";
+            $messaging_instructions = "<br><strong>You are now connected. You can respond to " . $first_name . " by replying directly to this email.</strong><br>";
 
 
           } else {

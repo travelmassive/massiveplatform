@@ -149,6 +149,9 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
     // Event timezone
     $form['field_event_timezone']['#access'] = FALSE;
 
+    // Hide organizers
+    $form['field_event_hide_organizers']['#access'] = FALSE;
+
   }
 
 

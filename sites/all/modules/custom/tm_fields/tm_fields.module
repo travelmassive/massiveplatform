@@ -209,7 +209,7 @@ function _tm_communication_actions_process($field, $title = NULL) {
   $menu_item = menu_get_item();
 
   // START Contact chapter owners.
-  if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
+  if (isset($menu_item['page_arguments'][0]->nid)) {
     $node = menu_get_object();
     if ($node->type == 'event' || $node->type == 'chapter') {
       $dest = 0;
@@ -230,16 +230,46 @@ function _tm_communication_actions_process($field, $title = NULL) {
         // chapter invitations
         $link_path = $current_uri.'/contact';
 
-        $links['contactleaders'][] = array(
-          'wrapper_class' => array('contactleaders'),
-          'content' => l(t('Contact Chapter Leaders'), $link_path, array(
-            'attributes' => array(
-            'title' => t('Contact Chapter Leaders')
-            )
-          ))
-        );
+        // check if user logged in
+        if ($user->uid > 0) {
+
+          // show contact leaders form
+          $links['contactleaders'][] = array(
+            'wrapper_class' => array('contactleaders'),
+            'content' => l(t('Contact Chapter Leaders'), $link_path, array(
+              'attributes' => array(
+              'title' => t('Contact Chapter Leaders')
+              )
+            ))
+          );
+
+        } else {
+
+          // show login box
+          $links['contactleaders'][] = array(
+            'wrapper_class' => array('contactleaders'),
+            'content' => l(t('Contact Chapter Leaders'), 'javascript:jq_login_signup_box();', array(
+              'external' => true,
+              'attributes' => array(
+              'title' => t('Contact Chapter Leaders')
+              )
+            ))
+          );
+
+        } // end if
+
       }
     }
+  } else if (isset($menu_item['page_arguments'][0]->nid) && $user->uid == 0) {
+
+    return l(t('Follow'), 'javascript:jq_login_signup_box();', array(
+        'external' => true,
+        'attributes' => array(
+          'title' => t('Follow :user', array(':user' => $entity->realname)),
+          'class' => array($css_classes)
+        )
+      ));
+
   }
   // END contact chapter owners
 

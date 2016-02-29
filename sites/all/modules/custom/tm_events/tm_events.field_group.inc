@@ -57,7 +57,8 @@ function tm_events_field_group_info() {
       1 => 'ds_flag_event_waitlist',
       2 => 'ds_flag_event_register',
       3 => 'tm_ds_more_actions',
-      4 => 'tm_ds_anon_flag_placeholder',
+      4 => 'tm_ds_communication_actions',
+      5 => 'tm_ds_anon_flag_placeholder',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(

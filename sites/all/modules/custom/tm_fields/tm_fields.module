@@ -210,17 +210,13 @@ function _tm_communication_actions_process($field, $title = NULL) {
 
   // START Contact chapter owners.
   if (isset($menu_item['page_arguments'][0]->nid)) {
+    
     $node = menu_get_object();
-    if ($node->type == 'event' || $node->type == 'chapter') {
-      $dest = 0;
-      if ($node->type == 'event') {
-        if (isset($node->field_chapter[$node->language])){
-          $dest = $node->field_chapter[$node->language][0]['target_id'];
-        }
-      }
-      if ($node->type == 'chapter') {
-        $dest = $node->nid;
-      }
+
+    if ($node->type == 'chapter') {
+      
+      $dest = $node->nid;
+     
       if ($dest) {
         $show_menu = true;
 
@@ -228,7 +224,7 @@ function _tm_communication_actions_process($field, $title = NULL) {
         $current_uri = substr($current_uri, 1); // delete first slash
 
         // chapter invitations
-        $link_path = $current_uri.'/contact';
+        $link_path = $current_uri.'/message';
 
         // check if user logged in
         if ($user->uid > 0) {
@@ -236,9 +232,9 @@ function _tm_communication_actions_process($field, $title = NULL) {
           // show contact leaders form
           $links['contactleaders'][] = array(
             'wrapper_class' => array('contactleaders'),
-            'content' => l(t('Contact Chapter Leaders'), $link_path, array(
+            'content' => l(t('Message chapter leaders'), $link_path, array(
               'attributes' => array(
-              'title' => t('Contact Chapter Leaders')
+              'title' => t('Message chapter leaders')
               )
             ))
           );
@@ -248,30 +244,67 @@ function _tm_communication_actions_process($field, $title = NULL) {
           // show login box
           $links['contactleaders'][] = array(
             'wrapper_class' => array('contactleaders'),
-            'content' => l(t('Contact Chapter Leaders'), 'javascript:jq_login_signup_box();', array(
+            'content' => l(t('Message chapter leaders'), 'javascript:jq_login_signup_box();', array(
               'external' => true,
               'attributes' => array(
-              'title' => t('Contact Chapter Leaders')
+              'title' => t('Message chapter leaders')
+              )
+            ))
+          );
+        }
+      }
+    }
+  }
+  // END contact chapter owners
+
+  // START Contact event organizers.
+  if (isset($menu_item['page_arguments'][0]->nid)) {
+    
+    $node = menu_get_object();
+    
+    if ($node->type == 'event') {
+
+      $dest = $node->nid;
+     
+      if ($dest) {
+        $show_menu = true;
+
+        $current_uri = request_uri();
+        $current_uri = substr($current_uri, 1); // delete first slash
+
+        // chapter invitations
+        $link_path = 'events/message/' . $node->nid;
+
+        // check if user logged in
+        if ($user->uid > 0) {
+
+          // show contact leaders form
+          $links['contactleaders'][] = array(
+            'wrapper_class' => array('contactorganizers'),
+            'content' => l(t('Message event organizers'), $link_path, array(
+              'attributes' => array(
+              'title' => t('Message event organizers')
               )
             ))
           );
 
-        } // end if
+        } else {
 
+          // show login box
+          $links['contactleaders'][] = array(
+            'wrapper_class' => array('contactleaders'),
+            'content' => l(t('Message event organizers'), 'javascript:jq_login_signup_box();', array(
+              'external' => true,
+              'attributes' => array(
+              'title' => t('Message event organizers')
+              )
+            ))
+          );
+        }
       }
     }
-  } else if (isset($menu_item['page_arguments'][0]->nid) && $user->uid == 0) {
-
-    return l(t('Follow'), 'javascript:jq_login_signup_box();', array(
-        'external' => true,
-        'attributes' => array(
-          'title' => t('Follow :user', array(':user' => $entity->realname)),
-          'class' => array($css_classes)
-        )
-      ));
-
   }
-  // END contact chapter owners
+  // END contact event organizers
 
   // START message member link
   if ($menu_item['path'] == 'user/%') {

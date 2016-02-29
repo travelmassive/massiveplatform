@@ -29,8 +29,8 @@ function tm_chapters_ds_fields_info($entity_type) {
 * Implements hook_menu()
 */
 function tm_chapters_menu() {
-  $items['chapters/%/contact'] = array(
-    'title' => t('Contact chapter leaders'),
+  $items['chapters/%/message'] = array(
+    'title' => t('Message chapter leaders'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('tm_chapters_contact_form',1),
     'access arguments' => array('flag follow_members'),
@@ -119,7 +119,7 @@ function tm_chapters_contact_form(){
     );
   $form['submit_button'] = array(
     '#type' => 'submit',
-    '#value' => t('Contact chapter leaders'),
+    '#value' => t('Send message'),
     '#id' => 'edit-submit'  
   );
   return $form;
@@ -143,7 +143,7 @@ function tm_chapters_contact_form_submit($form, &$form_state) {
   if ($chapter) {
     foreach($chapter->field_chapter_leaders[$chapter->language] as $leader){
       $chapterleader = user_load($leader['target_id']);
-      tm_chapters_send_email($chapterleader->mail, $form_state['values']['subject'], $form_state['values']['body'], $account);
+      tm_chapters_send_email($chapterleader->mail, $form_state['values']['subject'], $form_state['values']['body'], $account, $chapter);
     }
 
     drupal_set_message(t('Your message has been sent.'));
@@ -152,7 +152,9 @@ function tm_chapters_contact_form_submit($form, &$form_state) {
 }
 
 /* Email sending function */
-function tm_chapters_send_email($email, $subject, $body, $user){
+function tm_chapters_send_email($email, $subject, $body, $user, $chapter){
+
+    global $conf;
 
     // Get Users Name
     if (empty($user->language)) $language = LANGUAGE_NONE;
@@ -177,7 +179,11 @@ function tm_chapters_send_email($email, $subject, $body, $user){
 
     // CONSTRUCT MESSAGE
     $member_url = url('user/'.$user->uid, array('absolute'=>TRUE));
+    $chapter_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('node/' . $chapter->nid);
+
     $message = "Hi, a member just sent a message via your Chapter contact form:";
+    $message .= "<br>";
+    $message .= "<br><i>Chapter: <a href='" . $chapter_url . "'>" . $chapter->title . "</a></i>";
     $message .= "<br>";
     $message .= "<br>Name: " . $name;
     $message .= "<br>Subject: " . check_plain($subject);
@@ -185,7 +191,7 @@ function tm_chapters_send_email($email, $subject, $body, $user){
     $message .= "<br>Member's profile: <a href='" . $member_url . "'>" . $member_url . "</a>";
     $message .= "<br>Member's email: " . $reply;
     $message .= "<br>";
-    $message .= "<br>To reply directly, just reply to this email.";
+    $message .= "<br>To respond, just reply to this email.";
     $message .= "<br>";
     $message .= "<br>__EMAIL_SIGNOFF__";
 
@@ -206,7 +212,6 @@ function tm_chapters_send_email($email, $subject, $body, $user){
 
     // STEP 4. REPLACE BODY AND FOOTER IN HTML TEMPLATE
     $template = str_replace("__EMAIL_BODY__", $message, $template);
-    global $conf;
     $footer = $conf["tm_email_default_footer"];
     if (isset ($params['footer'])) {
       $footer = $params['footer'];
@@ -430,7 +435,7 @@ function tm_chapters_page_alter(&$page) {
     // don't show on special chapters page
     // ie: invitations, contact, unapproved-members, insights, export
     if (sizeof($url_parts) == 3) {
-      if (in_array($url_parts[2], array("invitations", "contact", "unapproved-members", "insights", "export"))) {
+      if (in_array($url_parts[2], array("invitations", "message", "unapproved-members", "insights", "export"))) {
         return;
       }
     }

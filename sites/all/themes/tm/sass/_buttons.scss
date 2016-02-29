@@ -54,7 +54,7 @@ button {
   &.communication {
     width: 3rem;
     &:before {
-      @extend .icon-email;
+      @extend .icon-bubble;
     }
   }
   &.follow,

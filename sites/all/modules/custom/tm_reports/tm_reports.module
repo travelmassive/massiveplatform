@@ -1461,8 +1461,13 @@ function _tm_reports_helper_pad_monthly_grouped_data($rows) {
   $start_month = 1;
   $series = array();
   $started_data = false;
+  $at_current_month = false;
   for ($i=$start_year; $i <= intval(date("Y")); $i++) {
-    for ($j=$start_month; ($j <= 12 || ($i == intval(date("Y")) && $j == intval(date("m")))); $j++) { 
+    for ($j=$start_month; (($j <= 12) && !$at_current_month); $j++) { 
+
+      // check if we are at current month
+      $at_current_month = ($i == intval(date("Y")) && ($j == intval(date("n"))));
+
       $key = $i . "_" . $j;
       if (array_key_exists($key, $results)) {
         $started_data = true;

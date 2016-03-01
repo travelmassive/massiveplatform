@@ -1405,7 +1405,7 @@ function _tm_reports_monthly_chapters_time_series($timestamp_interval = "INTERVA
   $cache_key = str_replace(" ", "-", $cache_key);
   $cache = cache_get($cache_key, 'cache');
   if (!empty($cache)) {
-    // return $cache->data;
+    return $cache->data;
   } 
 
   // SQL 

@@ -461,15 +461,35 @@ function _tm_reports_get_global_insights() {
 
   // NUMBER OF EVENTS PAST MONTH
   $query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 
-  WHERE e.entity_type = 'node' AND field_event_date_value >= DATE_SUB(NOW(),INTERVAL 30 DAY);";
+  LEFT JOIN field_revision_field_is_partner_event p on e.entity_id = p.entity_id
+  WHERE p.entity_type = 'node' AND field_is_partner_event_value = 0
+  AND e.entity_type = 'node' AND field_event_date_value >= DATE_SUB(NOW(),INTERVAL 30 DAY);";
   $query = db_query($query_sql)->fetch();
   $insights["num_events_past_30_days"] = $query->total;
 
   // NUMBER OF EVENTS PAST YEAR
   $query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 
-  WHERE e.entity_type = 'node' AND field_event_date_value >= DATE_SUB(NOW(),INTERVAL 1 YEAR);";
+  LEFT JOIN field_revision_field_is_partner_event p on e.entity_id = p.entity_id
+  WHERE p.entity_type = 'node' AND field_is_partner_event_value = 0
+  AND e.entity_type = 'node' AND field_event_date_value >= DATE_SUB(NOW(),INTERVAL 1 YEAR);";
   $query = db_query($query_sql)->fetch();
   $insights["num_events_past_12_months"] = $query->total;
+
+  // NUMBER OF PARTNER EVENTS PAST MONTH
+  $query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 
+  LEFT JOIN field_revision_field_is_partner_event p on e.entity_id = p.entity_id
+  WHERE p.entity_type = 'node' AND field_is_partner_event_value = 1
+  AND e.entity_type = 'node' AND field_event_date_value >= DATE_SUB(NOW(),INTERVAL 30 DAY);";
+  $query = db_query($query_sql)->fetch();
+  $insights["num_partner_events_past_30_days"] = $query->total;
+
+  // NUMBER OF PARTNER EVENTS PAST YEAR
+  $query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 
+  LEFT JOIN field_revision_field_is_partner_event p on e.entity_id = p.entity_id
+  WHERE p.entity_type = 'node' AND field_is_partner_event_value = 1
+  AND e.entity_type = 'node' AND field_event_date_value >= DATE_SUB(NOW(),INTERVAL 1 YEAR);";
+  $query = db_query($query_sql)->fetch();
+  $insights["num_partner_events_past_12_months"] = $query->total;
 
   // ALL NEW MEMBERS PAST 30 DAYS
   $query_sql = "SELECT COUNT(*) total FROM {users} u WHERE created >= :time_ago";
@@ -618,6 +638,8 @@ function tm_reports_get_insights_labels() {
   "num_events_upcoming" => "Future Events",
   "num_events_past_30_days" => "Events in past 30 days",
   "num_events_past_12_months" => "Events in past 12 Months",
+  "num_partner_events_past_30_days" => "Partner Events in past 30 days",
+  "num_partner_events_past_12_months" => "Partner Events in past 12 Months",
   "members_30_days_total" => "New Members (30 days)",
   "members_90_days_total" => "New Members (90 days)",
   "members_30_days_pct" => "% Growth (30 days)",
@@ -991,6 +1013,14 @@ function tm_reports_global_insights() {
   $html .= _tm_reports_insights_all_organization_connections_html();
   $html .= "</section>";
 
+  // New Chapters
+  $html .= "<section class='contained contained-block'>";
+  $html .= "<header class='contained-head'>
+            <h1 class='prime-title'>Chapter Growth</h1>
+            </header>";
+  $html .= _tm_reports_insights_monthly_chapters_html();
+  $html .= "</section>";
+
   $html .= "</div>";
 
   // End article
@@ -1065,6 +1095,18 @@ function _tm_reports_insights_all_organization_connections_html() {
   $results = _tm_reports_flagging_time_series(NULL, $follow_flag->fid, "node");
   // Step 2. Render chart
   $html = _tm_reports_insights_chart_html($results, "", "Follow Organization", "Month", "follow_organizations");
+  return $html;
+}
+
+/**
+ * Generate a chart of number of chapters over time
+ */
+function _tm_reports_insights_monthly_chapters_html() {
+
+  // Step 1. Get chapter insight data
+  $results = _tm_reports_monthly_chapters_time_series("INTERVAL 1 YEAR");
+  // Step 2. Render chart
+  $html = _tm_reports_insights_chart_html($results, "", "Total Chapters", "Month", "monthly_chapters");
   return $html;
 }
 
@@ -1350,6 +1392,35 @@ function _tm_reports_new_users_time_series($timestamp_interval = "INTERVAL 1 YEA
 
   // return data
   cache_set($cache_key, $series, 'cache', time() + 900); // 15 mins
+  return $series;
+}
+
+/**
+ * Get total chapters over time
+ */
+function _tm_reports_monthly_chapters_time_series($timestamp_interval = "INTERVAL 1 YEAR") {
+
+   // check cache
+  $cache_key = "tm-reports-monthly-chapters-" . $timestamp_interval;
+  $cache_key = str_replace(" ", "-", $cache_key);
+  $cache = cache_get($cache_key, 'cache');
+  if (!empty($cache)) {
+    return $cache->data;
+  } 
+
+  // SQL 
+  $query = "select count(*) as total, YEAR(FROM_UNIXTIME(created)) as group_year, MONTH(FROM_UNIXTIME(created)) as group_month from node
+  where type = 'chapter' and status = 1 
+  and FROM_UNIXTIME(created) >= DATE_SUB(NOW()," . $timestamp_interval . ")
+  group by group_year, group_month order by group_year, group_month asc;";
+  
+  $rows = db_query($query)->fetchAll();
+
+  // pad the grouped data data
+  $series = _tm_reports_helper_pad_monthly_grouped_data($rows);
+
+  // return data
+  cache_set($cache_key, $series, 'cache', time() + 300); // 5 mins
   return $series;
 }
 

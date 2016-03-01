@@ -101,8 +101,11 @@ function tm_api_stats() {
   $api_data["num_organizations"] = $num_organizations->amount;
 
   // number of events in past
+  // don't include partner events
   $query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 
-  WHERE e.entity_type = 'node' AND field_event_date_value <= NOW();";
+  LEFT JOIN field_revision_field_is_partner_event p on e.entity_id = p.entity_id
+  WHERE p.entity_type = 'node' AND field_is_partner_event_value = 0
+  AND e.entity_type = 'node' AND field_event_date_value <= NOW();";
   $num_events = db_query($query_sql)->fetch();
   $api_data["num_events"] = $num_events->total;
 

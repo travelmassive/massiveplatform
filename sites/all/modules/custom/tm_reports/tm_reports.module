@@ -1405,7 +1405,7 @@ function _tm_reports_monthly_chapters_time_series($timestamp_interval = "INTERVA
   $cache_key = str_replace(" ", "-", $cache_key);
   $cache = cache_get($cache_key, 'cache');
   if (!empty($cache)) {
-    return $cache->data;
+    //return $cache->data;
   } 
 
   // SQL 
@@ -1419,13 +1419,21 @@ function _tm_reports_monthly_chapters_time_series($timestamp_interval = "INTERVA
   // pad the grouped data data
   $series = _tm_reports_helper_pad_monthly_grouped_data($rows);
 
+  // calculate series total
+  $series_total = 0;
+  for ($i = 0; $i < sizeof($series); $i++) {
+    $series_total = $series_total + $series[$i]["total"];
+  }
+
   // get total number of chapters
   $query = "SELECT COUNT(*) amount FROM {node} n ".
               "WHERE n.type = :type";
   $num_chapters = db_query($query, array(':type' => "chapter"))->fetch()->amount;
 
+  // starting total
+  $total = $num_chapters - $series_total;
+
   // aggregate monthly totals
-  $total = $num_chapters - $series[0]["total"]; // calculate starting total
   for ($i = 0; $i < sizeof($series); $i++) {
     $total = $series[$i]["total"] + $total;
     $series[$i]["total"] = $total;

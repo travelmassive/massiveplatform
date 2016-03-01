@@ -1016,7 +1016,7 @@ function tm_reports_global_insights() {
   // New Chapters
   $html .= "<section class='contained contained-block'>";
   $html .= "<header class='contained-head'>
-            <h1 class='prime-title'>Chapter Growth</h1>
+            <h1 class='prime-title'>Total Chapters</h1>
             </header>";
   $html .= _tm_reports_insights_monthly_chapters_html();
   $html .= "</section>";
@@ -1405,7 +1405,7 @@ function _tm_reports_monthly_chapters_time_series($timestamp_interval = "INTERVA
   $cache_key = str_replace(" ", "-", $cache_key);
   $cache = cache_get($cache_key, 'cache');
   if (!empty($cache)) {
-    return $cache->data;
+    // return $cache->data;
   } 
 
   // SQL 
@@ -1418,6 +1418,13 @@ function _tm_reports_monthly_chapters_time_series($timestamp_interval = "INTERVA
 
   // pad the grouped data data
   $series = _tm_reports_helper_pad_monthly_grouped_data($rows);
+
+  // aggregate monthly totals
+  $total = 0;
+  for ($i = 0; $i < sizeof($series); $i++) {
+    $total = $series[$i]["total"] + $total;
+    $series[$i]["total"] = $total;
+  }
 
   // return data
   cache_set($cache_key, $series, 'cache', time() + 300); // 5 mins

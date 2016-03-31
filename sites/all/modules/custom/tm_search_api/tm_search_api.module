@@ -223,7 +223,7 @@ function tm_search_api_fetch_results($query_array) {
 	global $user;
 
 	// Check cache first
-	$cache_key = "tm-search-api" + md5($query_array["search_query"] . "_" . $query_array["filter_people"] . "_" . $query_array["filter_events"] . "_" . $query_array["filter_chapters"] . "_" . $query_array["filter_companies"] . "_" . $query_array["page"] . $query_array["filter_past_events"]);
+	$cache_key = "tm-search-api" . md5($query_array["search_query"] . "_" . (int)$query_array["filter_people"] . "_" . (int)$query_array["filter_events"] . "_" . (int)$query_array["filter_chapters"] . "_" . (int)$query_array["filter_companies"] . "_" . (int)$query_array["page"] . (int)$query_array["filter_past_events"]);
 	if ($conf['tm_search_cache_results_seconds'] > 0) {
 	  	$cache = cache_get($cache_key, 'cache');
 	  	if (!empty($cache)) {

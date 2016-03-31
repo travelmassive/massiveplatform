@@ -266,13 +266,6 @@ function tm_search_api_fetch_results($query_array) {
 	$query = search_api_query('tm_search_multi_index');
 
 	// Step 4. Create filters
-	$query_filter_type = $query->createFilter('OR');
-	$query_filter_people = $query->createFilter('OR');
-	$query_filter_events = $query->createFilter('AND'); // two-part filter
-	$query_filter_chapters = $query->createFilter('OR');
-	$query_filter_companies = $query->createFilter('OR');
-
-	$query_filter_events_date = $query->createFilter('OR');
 	$query_filter_in = $query->createFilter('OR'); // ie: in:Japan
 	$query_filter_segment = $query->createFilter('OR'); // ie: segment:marketing
 	$query_filter_has = $query->createFilter('OR'); // ie: has:snapchat
@@ -282,7 +275,12 @@ function tm_search_api_fetch_results($query_array) {
 	// PEOPLE FILTER
 	if ($filter_people) {
 
-		$query_filter_type->condition('item_type', 'user');
+		// Create base and keywor filters
+		$query_filter_people_base = $query->createFilter('AND');
+		$query_filter_people = $query->createFilter('OR');
+
+		// User type
+		$query_filter_people_base->condition('item_type', 'user');
 
 		// Special case: If only two search terms, attempt first and last name match
 		if (sizeof($search_terms) == 2) {
@@ -331,6 +329,9 @@ function tm_search_api_fetch_results($query_array) {
 					$query_filter_people->condition('user:mail', $search_term);
 				}
 			}
+
+			// add keyword filters to base filter
+			$query_filter_people_base->filter($query_filter_people);
 		}
 
 		// in:field
@@ -386,38 +387,51 @@ function tm_search_api_fetch_results($query_array) {
 	}
 
 	// EVENTS FILTER
+	// Note: Won't filter by date without a keyword. ie: "in:Sydney" returns all results
 	if ($filter_events || $filter_past_events) {
 
-		$query_filter_type->condition('node:type', 'event');
+		// Create base and keyword filters
+		$query_filter_events_base = $query->createFilter('AND');
+		$query_filter_events = $query->createFilter('OR');
+
+		// Event type
+		$query_filter_events_base->condition('node:type', 'event');
 
 		foreach ($search_terms as $search_term) {
-			$query_filter_events_keywords = $query->createFilter('OR');
-			$query_filter_events_keywords->condition('node:title', $search_term);
-			$query_filter_events_keywords->condition('node:body:value', $search_term);
-			$query_filter_events_keywords->condition('node:field_location', $search_term);
-			$query_filter_events_keywords->condition('node:field_chapter:title', $search_term);
-			$query_filter_events->filter($query_filter_events_keywords);
-
+			$query_filter_events->condition('node:title', $search_term);
+			$query_filter_events->condition('node:body:value', $search_term);
+			$query_filter_events->condition('node:field_location', $search_term);
+			$query_filter_events->condition('node:field_chapter:title', $search_term);
 		}
 
 		// Only search future events unless filter_past_events enabled
-		if (!$filter_past_events) {
+		$query_filter_events_date = $query->createFilter('OR');
+
+		if ($filter_events) {
 			$yesterday = new DateTime('yesterday');
-			$query_filter_events_date->condition('node:field_event_date:value', $yesterday->getTimestamp(), '>=');
-			$query_filter_events->filter($query_filter_events_date);
+			$query_filter_events_date->condition('node:field_event_date:value', $yesterday->getTimeStamp(), '>=');
+
 		}
-		if (!$filter_events) {
+		if ($filter_past_events) {
 			$today = new DateTime('today');
 			$query_filter_events_date->condition('node:field_event_date:value', $today->getTimestamp(), '<=');
-			$query_filter_events->filter($query_filter_events_date);
 		}
+
+		// add keyword filters to base filter
+		$query_filter_events_base->filter($query_filter_events);
+		$query_filter_events_base->filter($query_filter_events_date);
 
 	}
 
 	// CHAPTERS FILTER
 	if ($filter_chapters) {
 
-		$query_filter_type->condition('node:type', 'chapter');
+		// Create base and keywor filters
+		$query_filter_chapters_base = $query->createFilter('AND');
+		$query_filter_chapters = $query->createFilter('OR');
+
+		// Chapter type
+		$query_filter_chapters_base->condition('node:type', 'chapter');
 
 		foreach ($search_terms as $search_term) {
 
@@ -427,6 +441,9 @@ function tm_search_api_fetch_results($query_array) {
 			$query_filter_chapters->condition('node:field_country:name', $search_term);
 			$query_filter_chapters->condition('node:field_country:official_name', $search_term);
 		}
+
+		// add keyword filters to base filter
+		$query_filter_chapters_base->filter($query_filter_chapters);
 
 		// in:field
 		foreach ($in_queries as $in_query) {
@@ -439,7 +456,12 @@ function tm_search_api_fetch_results($query_array) {
 	// COMPANIES FILTER
 	if ($filter_companies) {
 
-		$query_filter_type->condition('node:type', 'organization');
+		// Create base and keywor filters
+		$query_filter_companies_base = $query->createFilter('AND');
+		$query_filter_companies = $query->createFilter('OR');
+
+		// Organization type
+		$query_filter_companies_base->condition('node:type', 'organization');
 
 		foreach ($search_terms as $search_term) {
 			$query_filter_companies->condition('node:title', $search_term);
@@ -500,6 +522,9 @@ function tm_search_api_fetch_results($query_array) {
 		if (in_array("vimeo", $has_queries)) {
 			$query_filter_has->condition('node:field_link_vimeo:url', null, '<>');
 		}
+
+		// add keyword filters to base filter
+		$query_filter_companies_base->filter($query_filter_companies);
 	}
 
 	// Step 5. Attach filters
@@ -508,15 +533,40 @@ function tm_search_api_fetch_results($query_array) {
     // keyword filters
     if (sizeof($search_terms) > 0) {
 		$keyword_filter = $query->createFilter('OR'); // keyword search, ie: Sydney
-		$keyword_filter->filter($query_filter_people);
-    	$keyword_filter->filter($query_filter_events);
-    	$keyword_filter->filter($query_filter_chapters);
-    	$keyword_filter->filter($query_filter_companies);
+		if ($filter_people) {
+			$keyword_filter->filter($query_filter_people_base);
+		}
+		if ($filter_events || $filter_past_events) {
+			$keyword_filter->filter($query_filter_events_base);
+		}
+		if ($filter_chapters) {	
+			$keyword_filter->filter($query_filter_chapters_base);
+		}
+		if ($filter_companies) {
+			$keyword_filter->filter($query_filter_companies_base);
+		}
 	}
-   
+
     // option filters
     $options_filter = $query->createFilter('AND'); // option search, ie: in:Thailand
+    $options_filter_types = $query->createFilter('OR');
 
+    // set types on options filter
+	if ($filter_people) {
+		$options_filter_types->condition('item_type', 'user');
+	}
+	if ($filter_events || $filter_past_events) {
+		$options_filter_types->condition('node:type', 'event');
+	}
+	if ($filter_chapters) {	
+		$options_filter_types->condition('node:type', 'chapter');
+	}
+	if ($filter_companies) {
+		$options_filter_types->condition('node:type', 'organization');
+	}
+	$options_filter->filter($options_filter_types);
+
+	// add different option
 	if (sizeof($in_queries) > 0) {
 		$options_filter->filter($query_filter_in);
 	}
@@ -534,7 +584,6 @@ function tm_search_api_fetch_results($query_array) {
 	}
 
 	// attach type, keyword, option filters to main search filter
-	$search_filter->filter($query_filter_type);
 	if (sizeof($search_terms) > 0) {
 		$search_filter->filter($keyword_filter);
 	}
@@ -614,6 +663,15 @@ function tm_search_api_ajax() {
 	}
 	if (isset($_GET["filter_companies"])) {
 		$filter_companies = ($_GET["filter_companies"] == "true");
+	}
+
+	// Check we have at least one filter
+	if (!$filter_people 
+		&& !$filter_events 
+		&& !$filter_past_events 
+		&& !$filter_chapters
+		&& !$filter_companies) {
+		return;
 	}
 
 	// Step 4. Construct query array

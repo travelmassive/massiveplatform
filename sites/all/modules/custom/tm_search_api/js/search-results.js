@@ -37,12 +37,11 @@
 			}
 			return;
 		}
-
-		// hide no search results
-		$(".search.noresults").hide();
-
+		
 		// UI setup
 		//$(".search.tips").hide();
+		hideError(); // hide if there was an error message
+		$(".search.noresults").hide(); // hide no search results
 		$(".search.timeout").hide();
 		$(".pager.pager-load-more").hide();
 		$(".search.welcome").hide();
@@ -392,13 +391,13 @@
 		// Show timeout message
 		hideEverything();
 		enableAllFilters();
-		$(".search.error").show();
+		$(".search.error-message").show();
 		return;
 	}
 
 	// hide the error message
 	hideError = function() {
-		$(".search.error").hide();
+		$(".search.error-message").hide();
 	}
 
 	// show an timeout message

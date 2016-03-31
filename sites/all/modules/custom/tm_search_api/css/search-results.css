@@ -6,6 +6,7 @@
 .search.tips { text-align: center;}
 .search.welcome { text-align: center; font-size: 10pt;}
 .search.spinner { text-align: center;}
+.search.load-more-spinner { text-align: center;}
 .search.empty_query { text-align: center; font-size: 10pt;}
 .search.container { position: relative; margin: .5em;}
 .search.filters {  padding: 0.25em; margin-bottom: .5em; display: none;}

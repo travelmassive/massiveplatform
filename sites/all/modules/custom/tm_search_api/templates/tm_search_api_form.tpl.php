@@ -99,7 +99,11 @@
 	<ul class="pager pager-load-more" style="display:none;">
 		<li class="pager-next first last">
 			<a href="javascript:void(0);" id="search-load-more">Show more</a>
+			<div style="min-height: 20px; margin-top: 4px;">A
+				<img class="search load-more-spinner" style="display: none;"src='/sites/all/themes/tm/images/load-more-ajax-loader.gif'>
+			</span>
 		</li>
 	</ul>
 </div>
+
 

@@ -61,6 +61,7 @@
 		} else {
 			// Loading an extra page of search result
 			$(".pager.pager-load-more").show();
+			$(".search.load-more-spinner").show();
 			$("#search-load-more").text("Loading...");
 		}
 
@@ -104,6 +105,7 @@
 				showSearchTip();
 				tm_global_search_load_more_clicked = false;
 				$(".search.spinner").hide();
+				$(".search.load-more-spinner").hide();
 				$("#search-results").append(response);
 				$(".search.results").show();
 				$(".search.filters").show();
@@ -128,8 +130,7 @@
 				
 			},
 			error: function(xhr) {
-				// Let's try not to go here
-				showError();
+				// This is also reached when we cancel the xhr request
 			}
 		});
 
@@ -152,8 +153,9 @@
 		$(".search.timeout").hide();
 		$("#search-submit").text("Search");
 		$(".search.spinner").hide();
+		$(".search.load-more-spinner").hide();
 		$(".search.tips").hide();
-		$("#search-results").hide();
+		$("#search-results").html("");
 		$(".search.filters").hide();
 		$(".pager.pager-load-more").hide();
 		$("#search-results-text").hide();

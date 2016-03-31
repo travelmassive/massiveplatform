@@ -227,7 +227,7 @@ function tm_search_api_fetch_results($query_array) {
 	if ($conf['tm_search_cache_results_seconds'] > 0) {
 	  	$cache = cache_get($cache_key, 'cache');
 	  	if (!empty($cache)) {
-	  		$cache->data['performance']['complete'] = 1.01; // since we got it from cache
+	  		$cache->data['performance']['complete'] = 0.01; // since we got it from cache
 	    	return($cache->data);
   		}
 	}
@@ -547,7 +547,7 @@ function tm_search_api_fetch_results($query_array) {
 	// Step 7. Run query
 	$results = $query->execute();
 
-	// Step 8. Add extra meta date
+	// Step 8. Add extra meta data
 
 	// Check last page
 	$results['last page'] = "false";

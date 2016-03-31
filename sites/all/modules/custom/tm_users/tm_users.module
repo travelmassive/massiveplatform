@@ -225,6 +225,13 @@ function tm_users_preprocess_page(&$variables) {
     return;
   }
 
+  // Show search tips
+  if (($url_parts[0] == "search") and (sizeof($url_parts) == 1)) {  
+    // show signup tips if less than < 70% complete
+    //tm_users_signup_tips(false, null, 70);
+    return;
+  }
+
   // Show user signup tips if < 80% complete
   tm_users_signup_tips(false, null, 80);
 
@@ -1682,7 +1689,7 @@ function tm_users_signup_tips($return_score = false, $uid = null, $show_threshol
   // Option 2. Display the tips
   // Only show on the following pages
   // Only show on up to two levels deep (ie: /chapters and /chapters/london)
-  $target_pages = array("events", "community", "leaders", "discuss");
+  $target_pages = array("events", "community", "leaders", "discuss", "search");
   $url_parts = explode('/', request_path());
   if ((!in_array($url_parts[0], $target_pages)) or (sizeof($url_parts) > 2)) {
     return;

@@ -54,9 +54,24 @@
               <!-- https://localdev.travelmassive.com/discuss/#/search?Search=foo -->
 
             <?php } else { ?>
-              <?php $sf = drupal_get_form('search_form'); print render($sf); ?>
-              <p class="helper"><?php print t('Search chapters, events, members or companies.'); ?></p>
-            </div>
+
+              <?php if (module_exists("tm_search_api")) { ?>
+                <form class="search-form" action="/search" method="GET" id="search-form" accept-charset="UTF-8">
+                  <div>
+                    <div class="container-inline form-wrapper" id="edit-basic">
+                      <div class="form-item form-type-textfield form-item-keys">
+                        <label for="edit-keys">Enter your keywords </label>
+                        <input type="text" id="edit-keys" name="query" value="" size="40" maxlength="255" class="form-text">
+                      </div>
+                    <input type="submit" id="edit-submit" value="Search" class="form-submit"></div>
+                  </div>
+                </form>
+              <?php } elseif (module_exists("tm_search")) { 
+              // standard search form
+              $sf = drupal_get_form('search_form'); print render($sf);
+               } else { ?>
+               <p>Site search disabled</p>
+               <?php } // end if ?>
             <?php } ?>
           </li>
           <li class="account-wrapper" data-dropd-wrapper>

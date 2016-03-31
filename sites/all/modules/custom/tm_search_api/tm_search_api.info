@@ -1,0 +1,13 @@
+name = TM Search API
+description = Travel Massive search using search_api
+core = 7.x
+package = TM Features
+version = 7.x-1.0-dev
+project = tm_search_api
+dependencies[] = entity
+dependencies[] = search_api
+dependencies[] = search_api_db
+dependencies[] = search_api_multi
+features[features_api][] = api:2
+features[search_api_index][] = tm_search_multi_index
+features[search_api_server][] = search_db

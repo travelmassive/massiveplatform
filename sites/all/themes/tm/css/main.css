@@ -6085,6 +6085,22 @@ a.cancel_account_link {
   border-radius: 0.25rem;
 }
 /* line 365, ../sass/_modules.scss */
+.card.contained .badge-search-result, .node-form > div.card .badge-search-result,
+#user-profile-form > div.card .badge-search-result,
+#user-register-form > div.card .badge-search-result, #content .card.search-form .badge-search-result {
+  width: 4rem;
+  height: 4rem;
+  display: block;
+}
+/* line 369, ../sass/_modules.scss */
+.card.contained .badge-search-result img, .node-form > div.card .badge-search-result img,
+#user-profile-form > div.card .badge-search-result img,
+#user-register-form > div.card .badge-search-result img, #content .card.search-form .badge-search-result img {
+  display: block;
+  max-width: 100%;
+  border-radius: 0.25rem;
+}
+/* line 375, ../sass/_modules.scss */
 .card.contained .teaser, .node-form > div.card .teaser,
 #user-profile-form > div.card .teaser,
 #user-register-form > div.card .teaser, #content .card.search-form .teaser {
@@ -6093,13 +6109,13 @@ a.cancel_account_link {
   vertical-align: middle;
   padding-right: 1.75rem;
 }
-/* line 370, ../sass/_modules.scss */
+/* line 380, ../sass/_modules.scss */
 .card.contained .teaser p, .node-form > div.card .teaser p,
 #user-profile-form > div.card .teaser p,
 #user-register-form > div.card .teaser p, #content .card.search-form .teaser p {
   margin: 0;
 }
-/* line 372, ../sass/_modules.scss */
+/* line 382, ../sass/_modules.scss */
 .card.contained .prime-title, .node-form > div.card .prime-title,
 #user-profile-form > div.card .prime-title,
 #user-register-form > div.card .prime-title, #content .card.search-form .prime-title {
@@ -6110,7 +6126,7 @@ a.cancel_account_link {
   padding: 0;
   letter-spacing: normal;
 }
-/* line 381, ../sass/_modules.scss */
+/* line 391, ../sass/_modules.scss */
 .card.contained .meta, .node-form > div.card .meta,
 #user-profile-form > div.card .meta,
 #user-register-form > div.card .meta, #content .card.search-form .meta {
@@ -6119,26 +6135,26 @@ a.cancel_account_link {
   line-height: 1.25rem;
   display: block;
 }
-/* line 387, ../sass/_modules.scss */
+/* line 397, ../sass/_modules.scss */
 .card.contained .meta span:after, .node-form > div.card .meta span:after,
 #user-profile-form > div.card .meta span:after,
 #user-register-form > div.card .meta span:after, #content .card.search-form .meta span:after {
   content: ', ';
 }
-/* line 392, ../sass/_modules.scss */
+/* line 402, ../sass/_modules.scss */
 .card.contained .meta span:last-of-type:after, .node-form > div.card .meta span:last-of-type:after,
 #user-profile-form > div.card .meta span:last-of-type:after,
 #user-register-form > div.card .meta span:last-of-type:after, #content .card.search-form .meta span:last-of-type:after {
   content: '';
 }
-/* line 397, ../sass/_modules.scss */
+/* line 407, ../sass/_modules.scss */
 .card.contained .extra, .node-form > div.card .extra,
 #user-profile-form > div.card .extra,
 #user-register-form > div.card .extra, #content .card.search-form .extra {
   position: absolute;
   top: 0.5rem;
 }
-/* line 401, ../sass/_modules.scss */
+/* line 411, ../sass/_modules.scss */
 .card.contained .chapter-sticker, .node-form > div.card .chapter-sticker,
 #user-profile-form > div.card .chapter-sticker,
 #user-register-form > div.card .chapter-sticker, #content .card.search-form .chapter-sticker {
@@ -6162,13 +6178,13 @@ a.cancel_account_link {
   -o-transform-origin: top right;
   transform-origin: top right;
 }
-/* line 420, ../sass/_modules.scss */
+/* line 430, ../sass/_modules.scss */
 .node-chapter .card.contained .extra, .node-chapter .node-form > div.card .extra,
 .node-chapter #user-profile-form > div.card .extra,
 .node-chapter #user-register-form > div.card .extra, .node-chapter #content .card.search-form .extra, #content .node-chapter .card.search-form .extra {
   display: none;
 }
-/* line 425, ../sass/_modules.scss */
+/* line 435, ../sass/_modules.scss */
 .team-list .card.contained, .team-list .node-form > div.card,
 .team-list #user-profile-form > div.card,
 .team-list #user-register-form > div.card, .team-list #content .card.search-form, #content .team-list .card.search-form, .related-list .card.contained, .related-list .node-form > div.card,
@@ -6177,7 +6193,7 @@ a.cancel_account_link {
   margin-bottom: 0;
   border-radius: 0;
 }
-/* line 430, ../sass/_modules.scss */
+/* line 440, ../sass/_modules.scss */
 .team-list .card.contained > a, .team-list .node-form > div.card > a,
 .team-list #user-profile-form > div.card > a,
 .team-list #user-register-form > div.card > a, .team-list #content .card.search-form > a, #content .team-list .card.search-form > a, .related-list .card.contained > a, .related-list .node-form > div.card > a,
@@ -6201,7 +6217,7 @@ a.cancel_account_link {
   -o-transition-delay: 0, 0, 0, 0;
   transition-delay: 0, 0, 0, 0;
 }
-/* line 437, ../sass/_modules.scss */
+/* line 447, ../sass/_modules.scss */
 .team-list .card.contained > a:hover, .team-list .node-form > div.card > a:hover,
 .team-list #user-profile-form > div.card > a:hover,
 .team-list #user-register-form > div.card > a:hover, .team-list #content .card.search-form > a:hover, #content .team-list .card.search-form > a:hover, .related-list .card.contained > a:hover, .related-list .node-form > div.card > a:hover,
@@ -6211,7 +6227,7 @@ a.cancel_account_link {
   background-color: rgba(127, 190, 218, 0.2);
   color: #007eb5;
 }
-/* line 444, ../sass/_modules.scss */
+/* line 454, ../sass/_modules.scss */
 .team-list .card.contained .extra, .team-list .node-form > div.card .extra,
 .team-list #user-profile-form > div.card .extra,
 .team-list #user-register-form > div.card .extra, .team-list #content .card.search-form .extra, #content .team-list .card.search-form .extra, .related-list .card.contained .extra, .related-list .node-form > div.card .extra,
@@ -6220,7 +6236,7 @@ a.cancel_account_link {
   right: 2.25rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 425, ../sass/_modules.scss */
+  /* line 435, ../sass/_modules.scss */
   .team-list .card.contained, .team-list .node-form > div.card,
   .team-list #user-profile-form > div.card,
   .team-list #user-register-form > div.card, .team-list #content .card.search-form, #content .team-list .card.search-form, .related-list .card.contained, .related-list .node-form > div.card,
@@ -6230,7 +6246,7 @@ a.cancel_account_link {
   }
 }
 @media only screen and (min-width: 69.063rem) {
-  /* line 453, ../sass/_modules.scss */
+  /* line 463, ../sass/_modules.scss */
   .team-list .card.contained > a, .team-list .node-form > div.card > a,
   .team-list #user-profile-form > div.card > a,
   .team-list #user-register-form > div.card > a, .team-list #content .card.search-form > a, #content .team-list .card.search-form > a, .related-list .card.contained > a, .related-list .node-form > div.card > a,
@@ -6239,7 +6255,7 @@ a.cancel_account_link {
     padding-left: 2rem;
     padding-right: 4rem;
   }
-  /* line 457, ../sass/_modules.scss */
+  /* line 467, ../sass/_modules.scss */
   .team-list .card.contained .extra, .team-list .node-form > div.card .extra,
   .team-list #user-profile-form > div.card .extra,
   .team-list #user-register-form > div.card .extra, .team-list #content .card.search-form .extra, #content .team-list .card.search-form .extra, .related-list .card.contained .extra, .related-list .node-form > div.card .extra,
@@ -6248,7 +6264,7 @@ a.cancel_account_link {
     right: 3.25rem;
   }
 }
-/* line 466, ../sass/_modules.scss */
+/* line 476, ../sass/_modules.scss */
 .grid .card.contained > a, .grid .node-form > div.card > a,
 .grid #user-profile-form > div.card > a,
 .grid #user-register-form > div.card > a, .grid #content .card.search-form > a, #content .grid .card.search-form > a {
@@ -6260,7 +6276,7 @@ a.cancel_account_link {
   -o-transition: -o-transform 0.1s ease-in-out;
   transition: transform 0.1s ease-in-out;
 }
-/* line 472, ../sass/_modules.scss */
+/* line 482, ../sass/_modules.scss */
 .grid .card.contained > a:hover, .grid .node-form > div.card > a:hover,
 .grid #user-profile-form > div.card > a:hover,
 .grid #user-register-form > div.card > a:hover, .grid #content .card.search-form > a:hover, #content .grid .card.search-form > a:hover {
@@ -6272,46 +6288,46 @@ a.cancel_account_link {
   -o-transform: scale(1.05);
   transform: scale(1.05);
 }
-/* line 478, ../sass/_modules.scss */
+/* line 488, ../sass/_modules.scss */
 .grid .card.contained .extra, .grid .node-form > div.card .extra,
 .grid #user-profile-form > div.card .extra,
 .grid #user-register-form > div.card .extra, .grid #content .card.search-form .extra, #content .grid .card.search-form .extra {
   right: 1.75rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 464, ../sass/_modules.scss */
+  /* line 474, ../sass/_modules.scss */
   .grid .card.contained, .grid .node-form > div.card,
   .grid #user-profile-form > div.card,
   .grid #user-register-form > div.card, .grid #content .card.search-form, #content .grid .card.search-form {
     text-align: center;
   }
-  /* line 484, ../sass/_modules.scss */
+  /* line 494, ../sass/_modules.scss */
   .grid .card.contained > a, .grid .node-form > div.card > a,
   .grid #user-profile-form > div.card > a,
   .grid #user-register-form > div.card > a, .grid #content .card.search-form > a, #content .grid .card.search-form > a {
     display: block;
     padding: 0 0 2rem 0;
   }
-  /* line 488, ../sass/_modules.scss */
+  /* line 498, ../sass/_modules.scss */
   .grid .card.contained.node-event > a, .grid .node-form > div.card.node-event > a,
   .grid #user-profile-form > div.card.node-event > a,
   .grid #user-register-form > div.card.node-event > a, .grid #content .card.node-event.search-form > a, #content .grid .card.node-event.search-form > a {
     padding-right: 0;
   }
-  /* line 491, ../sass/_modules.scss */
+  /* line 501, ../sass/_modules.scss */
   .grid .card.contained .media, .grid .node-form > div.card .media,
   .grid #user-profile-form > div.card .media,
   .grid #user-register-form > div.card .media, .grid #content .card.search-form .media, #content .grid .card.search-form .media {
     float: none;
     margin: 0 0 1rem 0;
   }
-  /* line 495, ../sass/_modules.scss */
+  /* line 505, ../sass/_modules.scss */
   .grid .card.contained .cover, .grid .node-form > div.card .cover,
   .grid #user-profile-form > div.card .cover,
   .grid #user-register-form > div.card .cover, .grid #content .card.search-form .cover, #content .grid .card.search-form .cover {
     display: block;
   }
-  /* line 498, ../sass/_modules.scss */
+  /* line 508, ../sass/_modules.scss */
   .grid .card.contained .avatar, .grid .node-form > div.card .avatar,
   .grid #user-profile-form > div.card .avatar,
   .grid #user-register-form > div.card .avatar, .grid #content .card.search-form .avatar, #content .grid .card.search-form .avatar {
@@ -6321,7 +6337,7 @@ a.cancel_account_link {
     background-color: #FFF;
     margin: -4rem auto 0 auto;
   }
-  /* line 505, ../sass/_modules.scss */
+  /* line 515, ../sass/_modules.scss */
   .grid .card.contained .badge-chapter, .grid .node-form > div.card .badge-chapter,
   .grid #user-profile-form > div.card .badge-chapter,
   .grid #user-register-form > div.card .badge-chapter, .grid #content .card.search-form .badge-chapter, #content .grid .card.search-form .badge-chapter {
@@ -6330,7 +6346,7 @@ a.cancel_account_link {
     font-size: 1.25rem;
     padding-bottom: 1rem;
   }
-  /* line 510, ../sass/_modules.scss */
+  /* line 520, ../sass/_modules.scss */
   .grid .card.contained .badge-chapter:after, .grid .node-form > div.card .badge-chapter:after,
   .grid #user-profile-form > div.card .badge-chapter:after,
   .grid #user-register-form > div.card .badge-chapter:after, .grid #content .card.search-form .badge-chapter:after, #content .grid .card.search-form .badge-chapter:after {
@@ -6338,21 +6354,21 @@ a.cancel_account_link {
     width: 1rem;
     border-radius: 0.25rem 0 0 0;
   }
-  /* line 516, ../sass/_modules.scss */
+  /* line 526, ../sass/_modules.scss */
   .grid .card.contained .badge-cal, .grid .node-form > div.card .badge-cal,
   .grid #user-profile-form > div.card .badge-cal,
   .grid #user-register-form > div.card .badge-cal, .grid #content .card.search-form .badge-cal, #content .grid .card.search-form .badge-cal {
     width: 6rem;
     height: 6rem;
   }
-  /* line 519, ../sass/_modules.scss */
+  /* line 529, ../sass/_modules.scss */
   .grid .card.contained .badge-cal .month, .grid .node-form > div.card .badge-cal .month,
   .grid #user-profile-form > div.card .badge-cal .month,
   .grid #user-register-form > div.card .badge-cal .month, .grid #content .card.search-form .badge-cal .month, #content .grid .card.search-form .badge-cal .month {
     font-size: 1.25rem;
     line-height: 2rem;
   }
-  /* line 523, ../sass/_modules.scss */
+  /* line 533, ../sass/_modules.scss */
   .grid .card.contained .badge-cal .day, .grid .node-form > div.card .badge-cal .day,
   .grid #user-profile-form > div.card .badge-cal .day,
   .grid #user-register-form > div.card .badge-cal .day, .grid #content .card.search-form .badge-cal .day, #content .grid .card.search-form .badge-cal .day {
@@ -6361,7 +6377,7 @@ a.cancel_account_link {
     padding-bottom: 0.5rem;
     letter-spacing: -0.125rem;
   }
-  /* line 531, ../sass/_modules.scss */
+  /* line 541, ../sass/_modules.scss */
   .grid .card.contained .badge-organization, .grid .node-form > div.card .badge-organization,
   .grid #user-profile-form > div.card .badge-organization,
   .grid #user-register-form > div.card .badge-organization, .grid #content .card.search-form .badge-organization, #content .grid .card.search-form .badge-organization,
@@ -6374,7 +6390,7 @@ a.cancel_account_link {
     width: 6rem;
     height: 6rem;
   }
-  /* line 535, ../sass/_modules.scss */
+  /* line 545, ../sass/_modules.scss */
   .grid .card.contained .teaser, .grid .node-form > div.card .teaser,
   .grid #user-profile-form > div.card .teaser,
   .grid #user-register-form > div.card .teaser, .grid #content .card.search-form .teaser, #content .grid .card.search-form .teaser {
@@ -6382,21 +6398,21 @@ a.cancel_account_link {
     width: auto;
     padding: 0 1rem;
   }
-  /* line 540, ../sass/_modules.scss */
+  /* line 550, ../sass/_modules.scss */
   .grid .card.contained .prime-title, .grid .node-form > div.card .prime-title,
   .grid #user-profile-form > div.card .prime-title,
   .grid #user-register-form > div.card .prime-title, .grid #content .card.search-form .prime-title, #content .grid .card.search-form .prime-title {
     font-size: 1.5rem;
     line-height: 1.16667;
   }
-  /* line 545, ../sass/_modules.scss */
+  /* line 555, ../sass/_modules.scss */
   .grid .card.contained .meta, .grid .node-form > div.card .meta,
   .grid #user-profile-form > div.card .meta,
   .grid #user-register-form > div.card .meta, .grid #content .card.search-form .meta, #content .grid .card.search-form .meta {
     font-size: 1rem;
     line-height: 1.5;
   }
-  /* line 549, ../sass/_modules.scss */
+  /* line 559, ../sass/_modules.scss */
   .grid .card.contained .extra, .grid .node-form > div.card .extra,
   .grid #user-profile-form > div.card .extra,
   .grid #user-register-form > div.card .extra, .grid #content .card.search-form .extra, #content .grid .card.search-form .extra {
@@ -6405,7 +6421,7 @@ a.cancel_account_link {
     left: 0.5rem;
     right: auto;
   }
-  /* line 555, ../sass/_modules.scss */
+  /* line 565, ../sass/_modules.scss */
   .grid .card.contained .chapter-sticker, .grid .node-form > div.card .chapter-sticker,
   .grid #user-profile-form > div.card .chapter-sticker,
   .grid #user-register-form > div.card .chapter-sticker, .grid #content .card.search-form .chapter-sticker, #content .grid .card.search-form .chapter-sticker {
@@ -7166,38 +7182,50 @@ a.cancel_account_link {
   border-radius: 0.25rem;
 }
 /* line 545, ../sass/_single.scss */
+.trilithon-header .badge-search-result {
+  width: 4rem;
+  height: 4rem;
+  display: block;
+}
+/* line 549, ../sass/_single.scss */
+.trilithon-header .badge-search-result img {
+  display: block;
+  max-width: 100%;
+  border-radius: 0.25rem;
+}
+/* line 555, ../sass/_single.scss */
 .trilithon-header .bd {
   padding: 0 1rem 6rem 1rem;
   text-align: center;
 }
-/* line 549, ../sass/_single.scss */
+/* line 559, ../sass/_single.scss */
 .trilithon-header .prime-title {
   font-size: 1.5rem;
   line-height: 1.16667;
   margin: 0;
 }
-/* line 555, ../sass/_single.scss */
+/* line 565, ../sass/_single.scss */
 .trilithon-header .meta {
   margin: 0;
   color: #79828c;
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
-/* line 561, ../sass/_single.scss */
+/* line 571, ../sass/_single.scss */
 .trilithon-header .meta span:after {
   content: ', ';
 }
-/* line 566, ../sass/_single.scss */
+/* line 576, ../sass/_single.scss */
 .trilithon-header .meta span:last-of-type:after {
   content: '';
 }
-/* line 571, ../sass/_single.scss */
+/* line 581, ../sass/_single.scss */
 .trilithon-header .extra {
   position: absolute;
   top: 0.5rem;
   left: 0.5rem;
 }
-/* line 576, ../sass/_single.scss */
+/* line 586, ../sass/_single.scss */
 .trilithon-header .chapter-sticker {
   border-radius: 0.25rem;
   display: block;
@@ -7209,7 +7237,7 @@ a.cancel_account_link {
   font-size: 0.875rem;
   width: 4rem;
 }
-/* line 589, ../sass/_single.scss */
+/* line 599, ../sass/_single.scss */
 .trilithon-header .actions {
   position: absolute;
   right: 0;
@@ -7219,7 +7247,7 @@ a.cancel_account_link {
   padding: 1rem;
   border-top: 1px #e8eaeb solid;
 }
-/* line 599, ../sass/_single.scss */
+/* line 609, ../sass/_single.scss */
 .trilithon-header .actions-menu {
   list-style: none;
   margin: 0;
@@ -7228,7 +7256,7 @@ a.cancel_account_link {
   vertical-align: bottom;
   text-align: left;
 }
-/* line 606, ../sass/_single.scss */
+/* line 616, ../sass/_single.scss */
 .trilithon-header .actions-menu > li {
   float: left;
   position: relative;
@@ -7239,66 +7267,66 @@ a.cancel_account_link {
   .trilithon-header {
     margin-bottom: 2rem;
   }
-  /* line 615, ../sass/_single.scss */
+  /* line 625, ../sass/_single.scss */
   .trilithon-header .media {
     margin-bottom: -4rem;
   }
-  /* line 618, ../sass/_single.scss */
+  /* line 628, ../sass/_single.scss */
   .trilithon-header .badge-chapter {
     width: 6rem;
     height: 6rem;
     font-size: 1.25rem;
     padding-bottom: 1rem;
   }
-  /* line 623, ../sass/_single.scss */
+  /* line 633, ../sass/_single.scss */
   .trilithon-header .badge-chapter:after {
     height: 1rem;
     width: 1rem;
     border-radius: 0.25rem 0 0 0;
   }
-  /* line 629, ../sass/_single.scss */
+  /* line 639, ../sass/_single.scss */
   .trilithon-header .badge-cal {
     width: 6rem;
     height: 6rem;
   }
-  /* line 632, ../sass/_single.scss */
+  /* line 642, ../sass/_single.scss */
   .trilithon-header .badge-cal .month {
     font-size: 1.25rem;
     line-height: 2rem;
   }
-  /* line 636, ../sass/_single.scss */
+  /* line 646, ../sass/_single.scss */
   .trilithon-header .badge-cal .day {
     line-height: 3.5rem;
     font-size: 2.5rem;
     padding-bottom: 0.5rem;
     letter-spacing: -0.125rem;
   }
-  /* line 644, ../sass/_single.scss */
+  /* line 654, ../sass/_single.scss */
   .trilithon-header .badge-organization,
   .trilithon-header .badge-user {
     width: 6rem;
     height: 6rem;
   }
-  /* line 648, ../sass/_single.scss */
+  /* line 658, ../sass/_single.scss */
   .trilithon-header .prime-title {
     font-size: 1.75rem;
     line-height: 1.14286;
   }
-  /* line 653, ../sass/_single.scss */
+  /* line 663, ../sass/_single.scss */
   .trilithon-header .meta {
     font-size: 1rem;
     line-height: 1.5;
   }
 }
 @media only screen and (min-width: 65.063rem) {
-  /* line 660, ../sass/_single.scss */
+  /* line 670, ../sass/_single.scss */
   .trilithon-header .media {
     display: table-cell;
     width: 58%;
     margin-bottom: 0;
     border-radius: 0.25rem 0 0 0.25rem;
   }
-  /* line 666, ../sass/_single.scss */
+  /* line 676, ../sass/_single.scss */
   .trilithon-header .cover {
     position: relative;
     width: 150%;
@@ -7306,51 +7334,51 @@ a.cancel_account_link {
     margin-left: -70%;
     max-height: none;
   }
-  /* line 673, ../sass/_single.scss */
+  /* line 683, ../sass/_single.scss */
   .trilithon-header .bd {
     vertical-align: middle;
     display: table-cell;
     padding: 1rem 1rem 5rem 1rem;
   }
-  /* line 678, ../sass/_single.scss */
+  /* line 688, ../sass/_single.scss */
   .trilithon-header .extra {
     top: 1rem;
     left: 1rem;
   }
-  /* line 682, ../sass/_single.scss */
+  /* line 692, ../sass/_single.scss */
   .trilithon-header .actions {
     width: 42%;
   }
 }
 @media only screen and (min-width: 69.063rem) {
-  /* line 688, ../sass/_single.scss */
+  /* line 698, ../sass/_single.scss */
   .trilithon-header .media {
     width: 68%;
   }
-  /* line 691, ../sass/_single.scss */
+  /* line 701, ../sass/_single.scss */
   .trilithon-header .cover {
     width: 100%;
     margin-left: 0;
     left: 0;
   }
-  /* line 696, ../sass/_single.scss */
+  /* line 706, ../sass/_single.scss */
   .trilithon-header .bd {
     padding: 2rem 2rem 5rem 2rem;
   }
-  /* line 699, ../sass/_single.scss */
+  /* line 709, ../sass/_single.scss */
   .trilithon-header .chapter-sticker {
     line-height: 3rem;
     font-size: 1.5rem;
     width: 7rem;
   }
-  /* line 704, ../sass/_single.scss */
+  /* line 714, ../sass/_single.scss */
   .trilithon-header .actions {
     width: 32%;
     padding: 1rem 2rem;
   }
 }
 
-/* line 713, ../sass/_single.scss */
+/* line 723, ../sass/_single.scss */
 .team-list,
 .related-list,
 .related-list ul {
@@ -7358,20 +7386,20 @@ a.cancel_account_link {
   padding: 0;
   margin: -0.5rem 0 1rem 0;
 }
-/* line 717, ../sass/_single.scss */
+/* line 727, ../sass/_single.scss */
 .team-list li,
 .related-list li,
 .related-list ul li {
   padding: 0.5rem 0;
   box-shadow: 0 1px 0 0 rgba(33, 48, 64, 0.1);
 }
-/* line 720, ../sass/_single.scss */
+/* line 730, ../sass/_single.scss */
 .team-list li:first-child,
 .related-list li:first-child,
 .related-list ul li:first-child {
   padding-top: 0;
 }
-/* line 723, ../sass/_single.scss */
+/* line 733, ../sass/_single.scss */
 .team-list li:last-child,
 .related-list li:last-child,
 .related-list ul li:last-child {
@@ -7379,7 +7407,7 @@ a.cancel_account_link {
   padding-bottom: 0;
 }
 
-/* line 730, ../sass/_single.scss */
+/* line 740, ../sass/_single.scss */
 .ds-organization-follow-message-insert {
   border-left: 4px solid #4382af;
   padding-left: 0.5rem;
@@ -7387,7 +7415,7 @@ a.cancel_account_link {
 }
 
 /* Front page video controls */
-/* line 737, ../sass/_single.scss */
+/* line 747, ../sass/_single.scss */
 #tm-frontpage-video-controls {
   padding-top: 2px;
   position: absolute;
@@ -7402,18 +7430,18 @@ a.cancel_account_link {
   display: none;
 }
 
-/* line 750, ../sass/_single.scss */
+/* line 760, ../sass/_single.scss */
 #tm-frontpage-video-info {
   margin-top: -1px;
   float: right;
 }
 
-/* line 754, ../sass/_single.scss */
+/* line 764, ../sass/_single.scss */
 #tm-frontpage-video-buttons {
   float: left;
 }
 
-/* line 757, ../sass/_single.scss */
+/* line 767, ../sass/_single.scss */
 .tm-frontpage-video-play {
   display: inline-block;
   padding-left: 4px;
@@ -7421,24 +7449,24 @@ a.cancel_account_link {
   display: none;
 }
 
-/* line 758, ../sass/_single.scss */
+/* line 768, ../sass/_single.scss */
 .tm-frontpage-video-pause {
   display: inline-block;
   padding-left: 4px;
   padding-right: 4px;
 }
 
-/* line 759, ../sass/_single.scss */
+/* line 769, ../sass/_single.scss */
 .tm-frontpage-video-play:hover {
   color: #888;
 }
 
-/* line 760, ../sass/_single.scss */
+/* line 770, ../sass/_single.scss */
 .tm-frontpage-video-pause:hover {
   color: #888;
 }
 
-/* line 764, ../sass/_single.scss */
+/* line 774, ../sass/_single.scss */
 .tm_community_values_validation_message {
   display: none;
   background-color: #eee;
@@ -7450,13 +7478,13 @@ a.cancel_account_link {
   margin-left: 1rem;
 }
 
-/* line 766, ../sass/_single.scss */
+/* line 776, ../sass/_single.scss */
 .tm_stats_container {
   margin-bottom: -0.2rem;
   overflow: auto;
 }
 
-/* line 767, ../sass/_single.scss */
+/* line 777, ../sass/_single.scss */
 .tm_stats {
   margin-left: 0.4rem;
   padding-left: 0.4rem;
@@ -7471,90 +7499,90 @@ a.cancel_account_link {
   margin-bottom: 0.2rem;
 }
 
-/* line 768, ../sass/_single.scss */
+/* line 778, ../sass/_single.scss */
 .tm_stats_followers {
   background-color: #007eb5;
 }
 
-/* line 769, ../sass/_single.scss */
+/* line 779, ../sass/_single.scss */
 .tm_stats_following {
   background-color: #bd0053;
 }
 
-/* line 770, ../sass/_single.scss */
+/* line 780, ../sass/_single.scss */
 .tm_stats_events {
   background-color: #88ac00;
 }
 
-/* line 771, ../sass/_single.scss */
+/* line 781, ../sass/_single.scss */
 .tm_stats_followers_divider {
   color: #48a4cd;
 }
 
-/* line 772, ../sass/_single.scss */
+/* line 782, ../sass/_single.scss */
 .tm_stats_following_divider {
   color: #d34a47;
 }
 
-/* line 773, ../sass/_single.scss */
+/* line 783, ../sass/_single.scss */
 .tm_stats_events_divider {
   color: #acc743;
 }
 
-/* line 774, ../sass/_single.scss */
+/* line 784, ../sass/_single.scss */
 .tm_nowrap {
   white-space: nowrap;
 }
 
-/* line 775, ../sass/_single.scss */
+/* line 785, ../sass/_single.scss */
 #edit-submit-reports {
   margin-top: 52px;
   margin-left: 8px;
 }
 
 /* Discussions */
-/* line 778, ../sass/_single.scss */
+/* line 788, ../sass/_single.scss */
 .tm_discuss #main {
   padding: 0px;
 }
 
-/* line 779, ../sass/_single.scss */
+/* line 789, ../sass/_single.scss */
 .tm_discuss #main .row {
   padding: 0px;
 }
 
-/* line 780, ../sass/_single.scss */
+/* line 790, ../sass/_single.scss */
 .tm_discuss #main .column {
   padding: 0px;
 }
 
-/* line 781, ../sass/_single.scss */
+/* line 791, ../sass/_single.scss */
 .tm_discuss #content {
   padding: 0px;
 }
 
-/* line 782, ../sass/_single.scss */
+/* line 792, ../sass/_single.scss */
 .tm_discuss .page_notice {
   margin: 24px;
 }
 
-/* line 783, ../sass/_single.scss */
+/* line 793, ../sass/_single.scss */
 .tm_discuss .messages.status, .tm_discuss .status.messages--status, .tm_discuss .status.messages--warning, .tm_discuss .status.messages--error {
   margin: 24px;
 }
 
-/* line 784, ../sass/_single.scss */
+/* line 794, ../sass/_single.scss */
 .tm_discuss .messages--error {
   margin: 24px;
 }
 
-/* line 785, ../sass/_single.scss */
+/* line 795, ../sass/_single.scss */
 .tm_discuss .messages--warning {
   margin: 24px;
 }
 
 /* Zoom Avatar and Logos */
-/* line 788, ../sass/_single.scss */
+/* line 798, ../sass/_single.scss */
 .tm_zoom_picture .jqi {
   width: auto;
   border: none;
@@ -7562,30 +7590,30 @@ a.cancel_account_link {
   background-color: transparent;
 }
 
-/* line 789, ../sass/_single.scss */
+/* line 799, ../sass/_single.scss */
 .tm_zoom_picture .jqi .jqimessage {
   padding: 0px;
 }
 
-/* line 790, ../sass/_single.scss */
+/* line 800, ../sass/_single.scss */
 .tm_zoom_picture .jqi .jqistate {
   background-color: transparent;
 }
 
-/* line 791, ../sass/_single.scss */
+/* line 801, ../sass/_single.scss */
 .tm_zoom_picture .jqiclose {
   margin-right: -1.6rem;
   color: #fff !important;
   font-size: 38pt !important;
 }
 
-/* line 792, ../sass/_single.scss */
+/* line 802, ../sass/_single.scss */
 .tm_zoom_picture .zoom_picture_container {
   width: 400px;
   height: 400px;
 }
 
-/* line 793, ../sass/_single.scss */
+/* line 803, ../sass/_single.scss */
 .tm_zoom_picture img.zoom_picture {
   width: 400px;
   height: 400px;
@@ -7596,13 +7624,13 @@ a.cancel_account_link {
 }
 
 @media only screen and (max-device-width: 480px) {
-  /* line 796, ../sass/_single.scss */
+  /* line 806, ../sass/_single.scss */
   .tm_zoom_picture .zoom_picture_container {
     width: 300px;
     height: 300px;
   }
 
-  /* line 797, ../sass/_single.scss */
+  /* line 807, ../sass/_single.scss */
   .tm_zoom_picture img.zoom_picture {
     width: 300px;
     height: 300px;
@@ -7612,19 +7640,19 @@ a.cancel_account_link {
     border-radius: 6px;
   }
 
-  /* line 798, ../sass/_single.scss */
+  /* line 808, ../sass/_single.scss */
   .tm_zoom_picture .jqiclose {
     display: none !important;
   }
 }
 @media only screen and (max-device-width: 640px) {
-  /* line 802, ../sass/_single.scss */
+  /* line 812, ../sass/_single.scss */
   .tm_zoom_picture .jqiclose {
     display: none !important;
   }
 }
 /* Hide hidden tabs */
-/* line 806, ../sass/_single.scss */
+/* line 816, ../sass/_single.scss */
 .horizontal-tabs .horizontal-tab-hidden {
   display: none;
 }

@@ -111,6 +111,9 @@ dependencies[] = tm_invitations
 dependencies[] = tm_api
 dependencies[] = tm_messaging
 dependencies[] = tm_discuss
+dependencies[] = tm_reports
+dependencies[] = tm_payments
+dependencies[] = tm_search_api
 
 ; TM - notifications
 dependencies[] = tm_notifications

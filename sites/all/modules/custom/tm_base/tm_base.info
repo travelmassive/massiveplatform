@@ -25,7 +25,6 @@ dependencies[] = strongarm
 dependencies[] = taxonomy
 dependencies[] = text
 dependencies[] = tm_fields
-dependencies[] = tm_search
 dependencies[] = ultimate_cron
 dependencies[] = variable
 dependencies[] = variable_admin

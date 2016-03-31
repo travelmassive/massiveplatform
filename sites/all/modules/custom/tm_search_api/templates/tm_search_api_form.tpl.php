@@ -31,6 +31,10 @@
 </div>
 
 <div class="search timeout" style="display: none;">
+	<p>Hang on, I'm still finding your results...</p>
+</div>
+
+<div class="search error" style="display: none;">
 	<p>Sorry, this search encountered a problem. Try again later.</p>
 </div>
 

@@ -24,14 +24,49 @@
 		tm_page_first_load = false;
 	}
 
-	// abort all existing xhr queries user might have caused
-	cancelAllSearches = function() {
-		for(i = 0; i < tm_global_search_query_stack.length; i++) {
-			tm_global_search_query_stack[i].abort();
+	// perform the search
+	doSearch = function() {
+
+		// ignore empty search
+		if ($("#search-query").val().trim() == "") {
+			if (!tm_page_first_load) {
+				$(".search.welcome").hide();
+				$(".search.tips").hide();
+				$(".search.empty_query").fadeIn();
+			}
+			return;
 		}
-		tm_global_search_query_stack = Array();
-		clearTimeout(tm_global_search_query_timeout);
-	}
+
+		// hide no search results
+		$(".search.noresults").hide();
+
+		// UI setup
+		//$(".search.tips").hide();
+		$(".search.timeout").hide();
+		$(".pager.pager-load-more").hide();
+		$(".search.welcome").hide();
+		$(".search.empty_query").hide();
+		if (!tm_global_search_from_filter) {
+			$(".search.tips").hide();
+			$(".search.spinner").show();
+			$("#search-results-text").hide();
+			$(".search.filters").hide();
+			$(".search.results").hide();
+			$("#search-results").html("");
+		}
+		
+		// reset page count
+		tm_global_search_page_number = 1;
+
+		// set the browser URL from the UI state
+		if (!tm_global_search_from_back_button) {
+			window.history.pushState(null, null, makeSearchQueryString());
+		}
+
+		// fetch the search results
+		loadSearchResults();
+
+	};
 
 	// load the search results
 	loadSearchResults = function() {
@@ -123,6 +158,8 @@
 				// We search for meta data field, since we're inserting html
 				if (!($("#search-results-total").length)) {
 					showError();
+				} else { 
+					hideTimeout();
 				}
 
 				// blur results if user not logged in
@@ -137,28 +174,6 @@
 		// Step 6 (note: this is async). Push xhr request to stack
 		tm_global_search_query_stack.push(xhr)	;
 
-	}
-
-	// show an error message
-	showError = function() {
-		// Show timeout message
-		hideEverything();
-		enableAllFilters();
-		$(".search.timeout").show();
-		return;
-	}
-
-	// shortcut to hide UI elements
-	hideEverything = function() {
-		$(".search.timeout").hide();
-		$("#search-submit").text("Search");
-		$(".search.spinner").hide();
-		$(".search.load-more-spinner").hide();
-		$(".search.tips").hide();
-		$("#search-results").html("");
-		$(".search.filters").hide();
-		$(".pager.pager-load-more").hide();
-		$("#search-results-text").hide();
 	}
 
 	// show number of search results
@@ -265,6 +280,15 @@
 
 	}
 
+	// abort all existing xhr queries user might have caused
+	cancelAllSearches = function() {
+		for(i = 0; i < tm_global_search_query_stack.length; i++) {
+			tm_global_search_query_stack[i].abort();
+		}
+		tm_global_search_query_stack = Array();
+		clearTimeout(tm_global_search_query_timeout);
+	}
+
 	// enable all the filters
 	enableAllFilters = function() {
 		setAllFilters(true);
@@ -347,55 +371,13 @@
     	}
 	}
 
-	// perform the search
-	doSearch = function() {
-
-		// ignore empty search
-		if ($("#search-query").val().trim() == "") {
-			if (!tm_page_first_load) {
-				$(".search.welcome").hide();
-				$(".search.tips").hide();
-				$(".search.empty_query").fadeIn();
-			}
-			return;
-		}
-
-		// hide no search results
-		$(".search.noresults").hide();
-
-		// UI setup
-		//$(".search.tips").hide();
-		$(".search.timeout").hide();
-		$(".pager.pager-load-more").hide();
-		$(".search.welcome").hide();
-		$(".search.empty_query").hide();
-		if (!tm_global_search_from_filter) {
-			$(".search.tips").hide();
-			$(".search.spinner").show();
-			$("#search-results-text").hide();
-			$(".search.filters").hide();
-			$(".search.results").hide();
-			$("#search-results").html("");
-		}
-		
-		// reset page count
-		tm_global_search_page_number = 1;
-
-		// set the browser URL from the UI state
-		if (!tm_global_search_from_back_button) {
-			window.history.pushState(null, null, makeSearchQueryString());
-		}
-
-		// fetch the search results
-		loadSearchResults();
-
-	};
-
 	// timeout handler
 	searchTimeout = function() {
 		$(".search.spinner").hide();
+		$(".search.tips").hide();
 		$(".search.timeout").show();
 		$("#search-submit").text("Search");
+		showTimeout();
 	}
 
 	// get search keywords from search meta data
@@ -403,6 +385,46 @@
 		var keywords = JSON.parse($("#search-results-keywords").val());
 		return keywords.join(" ");
 	}
+
+	// show an error message
+	showError = function() {
+		// Show timeout message
+		hideEverything();
+		enableAllFilters();
+		$(".search.error").show();
+		return;
+	}
+
+	// hide the error message
+	hideError = function() {
+		$(".search.error").hide();
+	}
+
+	// show an timeout message
+	showTimeout = function() {
+		// Show timeout message
+		$(".search.timeout").show();
+		return;
+	}
+
+	// hide the error message
+	hideTimeout = function() {
+		$(".search.timeout").hide();
+	}
+
+	// shortcut to hide UI elements
+	hideEverything = function() {
+		$(".search.timeout").hide();
+		$("#search-submit").text("Search");
+		$(".search.spinner").hide();
+		$(".search.load-more-spinner").hide();
+		$(".search.tips").hide();
+		$("#search-results").html("");
+		$(".search.filters").hide();
+		$(".pager.pager-load-more").hide();
+		$("#search-results-text").hide();
+	}
+
 	// handle going back
 	window.onpopstate = function(event) {
     	initSearchQuery();

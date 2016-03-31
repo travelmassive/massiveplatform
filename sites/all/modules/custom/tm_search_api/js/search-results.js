@@ -374,10 +374,10 @@
 
 	// timeout handler
 	searchTimeout = function() {
-		$(".search.spinner").hide();
+		//$(".search.spinner").hide();
 		$(".search.tips").hide();
 		$(".search.timeout").show();
-		$("#search-submit").text("Search");
+		//$("#search-submit").text("Search");
 		showTimeout();
 	}
 

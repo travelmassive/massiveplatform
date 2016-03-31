@@ -10,7 +10,7 @@
 	var tm_global_search_load_more_clicked = false;
 	var tm_global_search_query_timer;
 	var tm_global_search_query_timeout;
-	var tm_global_search_query_timeout_seconds = 20000; // 20 seconds
+	var tm_global_search_query_timeout_seconds = 10000; // 20 seconds
 	var tm_page_first_load = true;
 	var tm_page_last_search_tip = null;
 

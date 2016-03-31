@@ -10,9 +10,10 @@
 	var tm_global_search_load_more_clicked = false;
 	var tm_global_search_query_timer;
 	var tm_global_search_query_timeout;
-	var tm_global_search_query_timeout_seconds = 10000; // 20 seconds
+	var tm_global_search_query_timeout_seconds = 10000; // 10 seconds
 	var tm_page_first_load = true;
 	var tm_page_last_search_tip = null;
+	var tm_page_last_search_query = null;
 
 	// make it happen
 	onPageLoad = function() {
@@ -448,9 +449,21 @@
 
 	// event handler for click search button
 	$("#search-submit").click(function() {
+
+		// check we aren't in the middle of a search
+		// todo: set a state so we can check if we are searching
+		if ($("#search-submit").text() == "Searching...") {
+			if (tm_page_last_search_query == $("#search-query").val()) {
+				return;
+			}
+		}
+
 		tm_global_search_from_filter = false;
 		tm_global_search_page_number = 1;
 		doSearch();
+
+		// record last search
+		tm_page_last_search_query = $("#search-query").val();
 
 	});
 

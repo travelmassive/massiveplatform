@@ -830,7 +830,7 @@ $conf["tm_search_api_tips"] = array(
   "Filter by segment. Example: <i><a href='#' class='search-example' data-search-example='segment:marketing'>segment:marketing</a></i>",
   "Filter by role. Example: <i><a href='#' class='search-example' data-search-example='role:manager'>role:manager</a></i>",
   "Filter by company. Example: <i><a href='#' class='search-example' data-search-example='at:Airbnb'>at:Airbnb</a></i>",
-  "Find person by name. Example: <i><a href='#' class='search-example' data-search-example='Lauren Nicholl'>\"Lauren Nicholl\"</a></i>",
+  "Find person by name. Example: <i><a href='#' class='search-example' data-search-example='\"Lauren Nicholl\"'>\"Lauren Nicholl\"</a></i>",
   "Find a company. Example: <i><a href='#' class='search-example' data-search-example='\"Urban Adventures\"'>\"Urban Adventures\"</a></i>",
   "Help us improve search. Send us <i><a href='/contact'>feedback</a></i>."
 );
@@ -849,6 +849,17 @@ $conf["tm_search_api_help_text"] = "<strong>More places</strong>
           <li><a class='search-external-qa' target='_blank' href='#'>Search community Q&amp;A</a>.</li>
           <li>Or, try a <a id='search-external-google' target='_blank' href='javascript:void(0);'>Google Search</a>.</li>
         </ul>";
+$conf["tm_search_api_help_text"] = "<p style='font-size: 16px;'><strong>More places</strong></p>
+        <ul>
+          <li><a class='search-external-blog' target='_blank' href='#'>Search on our blog</a></li>
+          <li><a class='search-external-jobs' target='_blank' href='#'>Search jobs</a></li>
+          <li><a class='search-external-qa' target='_blank' href='#'>Search community Q&amp;A</a></li>
+          <li>Or, try a <a id='search-external-google' target='_blank' href='#'>Google Search</a></li>
+        </ul>
+<p style='border-top: 1px solid #eee; padding-top: 1rem; margin-right: 1.2rem; font-size: 10pt; color: #79828c;'>
+Welcome to Travel Massive Search - the largest open database of the travel industry. Help us keep this up to date by adding your <a href='/companies'>company profile</a>.
+<br>PS: This product is made with <span style='color: #e93f33 !important;'>♥</span> for the benefit of our community. Keep building the future of travel! - <a href='/ian'>Ian</a>.</p>
+";
 
 $conf['install_profile'] = 'tm';
 

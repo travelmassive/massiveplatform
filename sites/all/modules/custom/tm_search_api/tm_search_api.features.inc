@@ -266,7 +266,7 @@ function tm_search_api_default_search_api_server() {
     "options" : {
       "database" : "default:default",
       "min_chars" : "3",
-      "partial_matches" : 1,
+      "partial_matches" : 0,
       "indexes" : { "tm_search_multi_index" : {
           "item_type" : {
             "table" : "search_api_db_tm_search_multi_index",

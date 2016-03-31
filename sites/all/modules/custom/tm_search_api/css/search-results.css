@@ -29,6 +29,7 @@ li.filter { list-style: none;}
 img.search-result-image { max-height: 64px;}
 .search-result p { color: #79828c;}
 .search.highlight { background-color: #ffff00;}
+.search-help { font-size: 10pt;}
 .search-help ul { padding-left: 1.2rem;}
 
 /* Local overrides */

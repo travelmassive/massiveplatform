@@ -192,10 +192,10 @@ function tm_search_parse_search_query($search_query) {
 		$search_terms[] = trim($keyword);
 	}
 
-	// Step 4. Remove single letters from search
+	// Step 4. Remove one and two letter words from search
 	$allowed_words = array();
 	foreach ($search_terms as $search_term) {
-		if (strlen($search_term) > 1) {
+		if (strlen($search_term) > 2) {
 			$allowed_words[] = $search_term;
 		}
 	}

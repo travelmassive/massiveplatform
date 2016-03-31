@@ -84,7 +84,8 @@ function tm_search_api_default_search_api_index() {
         "user:field_user_question_4" : { "type" : "text" },
         "user:field_user_question_5" : { "type" : "text" },
         "user:flag_featured_member" : { "type" : "boolean" },
-        "user:mail" : { "type" : "text" }
+        "user:mail" : { "type" : "text" },
+        "user:name" : { "type" : "text", "boost" : "5.0" }
       },
       "data_alter_callbacks" : {
         "search_api_alter_bundle_filter" : {
@@ -628,6 +629,11 @@ function tm_search_api_default_search_api_server() {
             "column" : "node_field_event_date_value",
             "type" : "date",
             "boost" : "1.0"
+          },
+          "user:name" : {
+            "table" : "search_api_db_tm_search_multi_index_text",
+            "type" : "text",
+            "boost" : "5.0"
           }
         }
       }

@@ -54,7 +54,6 @@
               <!-- https://localdev.travelmassive.com/discuss/#/search?Search=foo -->
 
             <?php } else { ?>
-
               <?php if (module_exists("tm_search_api")) { ?>
                 <form class="search-form" action="/search" method="GET" id="search-form" accept-charset="UTF-8">
                   <div>
@@ -66,7 +65,7 @@
                     <input type="submit" id="edit-submit" value="Search" class="form-submit"></div>
                   </div>
                 </form>
-              <?php } elseif (module_exists("tm_search")) { 
+              <?php } elseif (module_exists("search")) { 
               // standard search form
               $sf = drupal_get_form('search_form'); print render($sf);
                } else { ?>

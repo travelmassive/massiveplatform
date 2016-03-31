@@ -256,15 +256,6 @@ function tm_search_api_fetch_results($query_array) {
 	$search_query_no_options = $parsed["search_query_no_options"];
 	$query_options = $parsed["query_options"];
 
-	// (Testing)
-	// Use the whole search query as a single query (if no quotes detected)
-	// ie: "travel massive" (without quotes) will search each word and the whole string
-	if (sizeof($search_terms) > 1) {
-		if ((strpos($search_query_no_options, "'") === false) && (strpos($search_query_no_options, "\"") === false)) {
-			array_unshift($search_terms, $search_query_no_options);
-		}
-	}
-
 	// initialise option arrays
 	$in_queries = tm_search_api_init_option($query_options, "in"); // in:Australia
 	$segment_queries = tm_search_api_init_option($query_options, "segment"); // segment:marketing
@@ -288,7 +279,7 @@ function tm_search_api_fetch_results($query_array) {
 		// Create base and keywor filters
 		$query_filter_people_base = $query->createFilter('AND');
 		$query_filter_people = $query->createFilter('OR');
-
+		
 		// User type
 		$query_filter_people_base->condition('item_type', 'user');
 
@@ -296,6 +287,10 @@ function tm_search_api_fetch_results($query_array) {
 		if (sizeof($search_terms) == 2) {
 			$query_filter_people->condition('user:field_user_first_name', $search_terms[0]);
 			$query_filter_people->condition('user:field_user_last_name', $search_terms[1]);
+
+			// also match username as it's created with first and last name
+			$query_filter_people->condition('user:name', $search_terms[0] . $search_terms[1]);
+
 		} else {
 			foreach ($search_terms as $search_term) {
 				$query_filter_people->condition('user:field_user_first_name', $search_term);
@@ -793,7 +788,7 @@ function tm_search_api_render_result_user($result, $results_user, $search_query,
 	// set render fields
 	$result_url = drupal_get_path_alias("user/" . $results_user->uid);
 	$result_image_url = $image_url;
-	$result_title = l("People > " . $results_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . " " . $results_user->field_user_last_name[LANGUAGE_NONE][0]['value'], $result_url);
+	$result_title = l("People > " . $results_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . " " . $results_user->field_user_last_name[LANGUAGE_NONE][0]['value'], $result_url, array('attributes' => array('target'=>'_blank')));
 
 	// about
 	$result_text = $results_user->field_about_me[LANGUAGE_NONE][0]['safe_value'];
@@ -890,7 +885,7 @@ function tm_search_api_render_result_chapter($result, $chapter, $search_query, $
 	// set render fields
 	$result_url = drupal_get_path_alias("node/" . $chapter->nid);
 	$result_image_url = $image_url;
-	$result_title = l("Chapter > " . $chapter->title . " " . $conf["tm_site_name"], $result_url);
+	$result_title = l("Chapter > " . $chapter->title . " " . $conf["tm_site_name"], $result_url, array('attributes' => array('target'=>'_blank')));
 	$result_text = $chapter->body[LANGUAGE_NONE][0]['safe_value'];
 
 	// country
@@ -932,7 +927,7 @@ function tm_search_api_render_result_event($result, $event, $search_query, $resu
 	// set render fields
 	$result_url = drupal_get_path_alias("node/" . $event->nid);
 	$result_image_url = $image_url;
-	$result_title = l("Event > " . $event->title, $result_url);
+	$result_title = l("Event > " . $event->title, $result_url, array('attributes' => array('target'=>'_blank')));
 
 	// show when event is
 	$current_date = new DateTime('now', new DateTimeZone('UTC'));
@@ -985,7 +980,7 @@ function tm_search_api_render_result_organization($result, $organization, $searc
 	// set render fields
 	$result_url = drupal_get_path_alias("node/" . $organization->nid);
 	$result_image_url = $image_url;
-	$result_title = l("Companies > " . $organization->title, $result_url);
+	$result_title = l("Companies > " . $organization->title, $result_url, array('attributes' => array('target'=>'_blank')));
 	$result_text = $organization->body[LANGUAGE_NONE][0]['safe_value'];
 
 	// country
@@ -1080,7 +1075,7 @@ $tm_search_api_result_template = <<<EOT
 	        <div class="media">
 		        <div class="avatar">
 		        	<span class="badge-search-result">
-		        		 <a href="__RESULT_URL__" class="search-result"><img class="seach-result-image" typeof="foaf:Image" src="__RESULT_IMAGE_URL__" width="256" height="256" alt=""></a>
+		        		 <a href="__RESULT_URL__" class="search-result" target="_blank"><img class="seach-result-image" typeof="foaf:Image" src="__RESULT_IMAGE_URL__" width="256" height="256" alt=""></a>
 		        	</span>
 		        </div>
 	        </div>

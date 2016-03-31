@@ -814,27 +814,40 @@ $conf["tm_search_api_max_search_terms"] = 8; // max terms allowed in search
 $conf["tm_search_cache_results_seconds"] = 60; // set to 0 to disable cache and rely on search_api_db cache
 $conf["tm_search_api_catch_exceptions"] = true; // will display friendly error message if error occurs
 $conf["tm_search_api_tips"] = array(
-  "Instagrammers in Prague: <i><a href='#' class='search-example' data-search-example='has:instagram in:Prague'>has:instagram in:Prague</i></a>",
-  "Snapchatters in Amsterdam: <i><a href='#' class='search-example' data-search-example='has:snapchat in:Amsterdam'>has:snapchat in:Amsterdam</i></a>",
+  "Founders in Italy: <i><a href='#' class='search-example' data-search-example='role:founder in:Italy'>role:founder in:Italy</i></a>",
+  "Snapchatters in Brazil: <i><a href='#' class='search-example' data-search-example='has:snapchat in:Brazil'>has:snapchat in:Brazil</i></a>",
   "Video creators in Europe: <i><a href='#' class='search-example' data-search-example='has:vimeo in:Europe'>has:vimeo in:Europe</i></a>",
-  "Startup Founders in Aviation: <i><a href='#' class='search-example' data-search-example='role:Founder segment:aviation'>role:Founder segment:aviation</i></a>",
-  "Find photographers: <i><a href='#' class='search-example' data-search-example='photographer'>photographer</a></i>",
+  "Startups in San Francisco: <i><a href='#' class='search-example' data-search-example='startup in:\"San Francisco\"'>startup in:\"San Francisco\"</i></a>",
+  "Tour companies in Africa: <i><a href='#' class='search-example' data-search-example='segment:tour in:Africa'>segment:tour in:Africa</a></i>",
+  "Content creators in India: <i><a href='#' class='search-example' data-search-example='segment:content in:India'>segment:content in:India</a></i>",
+  "Digital Nomads: <i><a href='#' class='search-example' data-search-example='coworking nomad'>nomad</a></i>",
+  "Tourism students: <i><a href='#' class='search-example' data-search-example='segment:education student'>segment:education student</a></i>",
+  "Marketing in Miami: <i><a href='#' class='search-example' data-search-example='segment:marketing in:Miami'>segment:marketing in:Miami</a></i>",
+  "Hospitality: <i><a href='#' class='search-example' data-search-example='segment:marketing in:Miami'>segment:hospitality</a></i>",
+  "Aviation: <i><a href='#' class='search-example' data-search-example='segment:marketing in:Miami'>airline aviation airfare</a></i>",
+  "Filter by topic. Example <i><a href='#' class='search-example' data-search-example='photographer'>photographer</a></i>",
   "Filter by location. Example: <i><a href='#' class='search-example' data-search-example='in:Tokyo'>in:Tokyo</a></i>",
   "Filter by segment. Example: <i><a href='#' class='search-example' data-search-example='segment:marketing'>segment:marketing</a></i>",
   "Filter by role. Example: <i><a href='#' class='search-example' data-search-example='role:manager'>role:manager</a></i>",
-  "Filter by company. Example: <i><a href='#' class='search-example' data-search-example='at:Expedia'>at:Expedia</a></i>",
-  "Combine filters. Example: <i><a href='#' class='search-example' data-search-example='segment:media in:\"New York\"'>segment:media in:\"New York\"</a></i>",
+  "Filter by company. Example: <i><a href='#' class='search-example' data-search-example='at:Airbnb'>at:Airbnb</a></i>",
   "Find person by name. Example: <i><a href='#' class='search-example' data-search-example='Lauren Nicholl'>\"Lauren Nicholl\"</a></i>",
-  "Find a company. Example: <i><a href='#' class='search-example' data-search-example='Travelstart'>Travelstart</a></i>",
+  "Find a company. Example: <i><a href='#' class='search-example' data-search-example='\"Urban Adventures\"'>\"Urban Adventures\"</a></i>",
   "Help us improve search. Send us <i><a href='/contact'>feedback</a></i>."
 );
 $conf["tm_search_api_no_results_text"] = "<strong>There's more places we can help you search...</strong>
         <ul>
-          <li><a id='search-external-blog' target='_blank' href='javascript:void(0);'>Search on our blog</a> for news articles and interviews.</li>
-          <li><a id='search-external-jobs' target='_blank' href='javascript:void(0);'>Search jobs</a> for new opportunities.</li>
-          <li><a id='search-external-qa' target='_blank' href='javascript:void(0);'>Search our community Q&amp;A</a>.</li>
-          <li>Or, try a <a id='search-external-google' target='_blank' href='javascript:void(0);'>Google Search</a> on our site.</li>
+          <li><a class='search-external-blog' target='_blank' href='#'>Search on our blog</a> for news articles and interviews.</li>
+          <li><a class='search-external-jobs' target='_blank' href='#'>Search jobs</a> for new opportunities.</li>
+          <li><a class='search-external-qa' target='_blank' href='#'>Search our community Q&amp;A</a>.</li>
+          <li>Or, try a <a class='search-external-google' target='_blank' href='#'>Google Search</a> on our site.</li>
           <li>Still can't find it? Get in <a target='_blank' href='/contact'>contact with us</a>.</li>
+        </ul>";
+$conf["tm_search_api_help_text"] = "<strong>More places</strong>
+        <ul>
+          <li><a class='search-external-blog' target='_blank' href='#'>Search on our blog</a>.</li>
+          <li><a class='search-external-jobs' target='_blank' href='#'>Search jobs</a>.</li>
+          <li><a class='search-external-qa' target='_blank' href='#'>Search community Q&amp;A</a>.</li>
+          <li>Or, try a <a id='search-external-google' target='_blank' href='javascript:void(0);'>Google Search</a>.</li>
         </ul>";
 
 $conf['install_profile'] = 'tm';

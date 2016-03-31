@@ -87,6 +87,7 @@ function tm_search_api_view() {
 	$template = str_replace("__SEARCH_TIPS__", $search_tips, $template);
 	$template = str_replace("__NO_RESULTS_TEXT__", $conf["tm_search_api_no_results_text"], $template);
 	$template = str_replace("__SEARCH_WELCOME_MESSAGE__", tm_search_api_welcome_message(), $template);
+	$template = str_replace("__SEARCH_HELP_TEXT__", $conf["tm_search_api_help_text"], $template);
 
 	// create form
 	$form['html'] = array(
@@ -254,6 +255,15 @@ function tm_search_api_fetch_results($query_array) {
 	$search_terms = $parsed["search_terms"];
 	$search_query_no_options = $parsed["search_query_no_options"];
 	$query_options = $parsed["query_options"];
+
+	// (Testing)
+	// Use the whole search query as a single query (if no quotes detected)
+	// ie: "travel massive" (without quotes) will search each word and the whole string
+	if (sizeof($search_terms) > 1) {
+		if ((strpos($search_query_no_options, "'") === false) && (strpos($search_query_no_options, "\"") === false)) {
+			array_unshift($search_terms, $search_query_no_options);
+		}
+	}
 
 	// initialise option arrays
 	$in_queries = tm_search_api_init_option($query_options, "in"); // in:Australia

@@ -48,7 +48,7 @@
 
 	<div class="search filters">
 		<section style="padding-left: 1.5rem;" class="contained contained-block">
-			<p>Filter results</p>
+			<p><strong>Filter results</strong></p>
 			<ul class="filter">
 				
 				<li class="filter">
@@ -75,6 +75,12 @@
 			</ul>
 
 		</section>
+
+		<section style="padding-left: 1.5rem;" class="contained contained-block search-help">
+			__SEARCH_HELP_TEXT__
+		</section>
+
+
 	</div>
 
 	<div class="search placeholder">

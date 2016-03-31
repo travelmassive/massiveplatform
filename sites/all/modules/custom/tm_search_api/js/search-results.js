@@ -37,7 +37,7 @@
 			}
 			return;
 		}
-		
+
 		// UI setup
 		//$(".search.tips").hide();
 		hideError(); // hide if there was an error message
@@ -143,7 +143,9 @@
 				$(".search.load-more-spinner").hide();
 				$("#search-results").append(response);
 				$(".search.results").show();
+				$(".search.placeholder").addClass("has-results");
 				$(".search.filters").show();
+				$(".search-help").show();
 				$("#search-results-loading-more").hide();
 				$("#search-load-more").text("Show more");
 				$("#search-submit").text("Search");
@@ -202,6 +204,7 @@
 			//$(".search.tips").hide();
 			$(".search.results").hide();
 			$(".search.noresults").show();
+			$(".search-help").hide();
 		}
 	}
 
@@ -486,30 +489,29 @@
 	});
 
 	// search external blog
-	$("#search-external-blog").click(function(e) {
+	$(".search-external-blog").click(function(e) {
 		e.preventDefault();
 		// /blog/?s=example
 		window.location  = "/blog/?s=" + encodeURI(getSearchKeywordsFromResults());
 	});
 
 	// search external jobs
-	$("#search-external-jobs").click(function(e) {
+	$(".search-external-jobs").click(function(e) {
 		e.preventDefault();
 		// /jobs/search/example
 		window.location  = "/jobs/search/" + encodeURI(getSearchKeywordsFromResults());
 	});
 
 	// search external discussions
-	$("#search-external-qa").click(function(e) {
+	$(".search-external-qa").click(function(e) {
 		e.preventDefault();
 		// /discuss/#search?Search=example
 		window.location  = "/discuss/#search?Search=" + encodeURI(getSearchKeywordsFromResults());
 	});
 
 	// search external google
-	$("#search-external-google").click(function(e) {
+	$(".search-external-google").click(function(e) {
 		e.preventDefault();
-		console.log("here");
 		// /https://www.google.com/#q=travelmassive%20
 		window.location  = "https://www.google.com/#q=travelmassive%20" + encodeURI(getSearchKeywordsFromResults());
 	});			

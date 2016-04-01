@@ -302,9 +302,9 @@ function tm_search_api_fetch_results($query_array) {
 
 		// Special case: If only two search terms, attempt first and last name match
 		
-		// Note: If tm_search_api_pluralize_keywords is enabled, we will actually have four search terms
 		$sizeof_terms = 2;
 		if ($conf["tm_search_api_pluralize_keywords"]) {
+			// Note: Adjust if tm_search_api_pluralize_keywords is enabled
 			$sizeof_terms = 4;
 		}
 
@@ -320,6 +320,22 @@ function tm_search_api_fetch_results($query_array) {
 				$query_filter_people->condition('user:field_user_first_name', $search_term);
 				$query_filter_people->condition('user:field_user_last_name', $search_term);
 			}
+		}
+
+		// If single query and in quotes, split into two parts and try search_terms
+		$sizeof_terms = 1;
+		if ($conf["tm_search_api_pluralize_keywords"]) {
+			// Note: Adjust if tm_search_api_pluralize_keywords is enabled
+			$sizeof_terms = 2;
+		}
+		if ((sizeof($search_terms) == $sizeof_terms) && (strpos($search_terms[0], " ") !== false)) {
+
+			$parts = split(" ", $search_terms[0]);
+			$query_filter_people->condition('user:field_user_first_name', $parts[0]);
+			$query_filter_people->condition('user:field_user_last_name', $parts[1]);
+
+			// also match username as it's created with first and last name
+			$query_filter_people->condition('user:name', $search_terms[0] . $parts[1]);
 		}
 
 		// Other user fields
@@ -1030,7 +1046,9 @@ function tm_search_api_render_result_organization($result, $organization, $searc
 		if ($taxonomy_parent) {
 			$result_text .= " | " . array_values($taxonomy_parent)[0]->name . " > " . $taxonomy_term->name;
 		} else {
-			$result_text .= " | " . $taxonomy_term->name;
+			if (isset($taxonomy_term->name)) {
+				$result_text .= " | " . $taxonomy_term->name;
+			}
 		}
 	}
 
@@ -1136,5 +1154,6 @@ $tm_search_api_form_template = <<<EOT
     <input type="submit" id="edit-submit" value="Search" class="form-submit"></div>
   </div>
 </form>
+<p style='font-size: 0.85rem; line-height: 1.25rem; color: #636e79; margin-bottom: 0;'>Find members, companies, events or chapters. Or, visit our <a href='/search'>Search page</a>.</p>
 EOT;
 

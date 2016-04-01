@@ -369,7 +369,7 @@
           			$(".search.results").hide();
           			$(".search.filters").hide();
           			$(".search.login_message").show();
-          		},
+          		}
           	});
     	}
 	}

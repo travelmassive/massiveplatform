@@ -211,6 +211,21 @@ function tm_search_parse_search_query($search_query) {
 		$search_terms = array_slice($search_terms, 0, $max_search_terms);
 	}
 
+	// (Testing) Step 7. Pluralize search terms
+	// If partial matching is turned off on search server, this might help get some extra results
+	// Also de-pluralize. ie: nomads = "nomads", "nomad"
+	if ($conf["tm_search_api_pluralize_keywords"]) {
+		foreach($search_terms as $search_term) {
+			if (strtolower((substr($search_term, -1) == "s"))) {
+				// remove an s
+				$search_terms[] = rtrim($search_term, "s");
+			} else {
+				// add an s
+				$search_terms[] = $search_term . "s";
+			}
+		}
+	}
+
 	return array("search_terms" => $search_terms, 
 				 "search_query_no_options" => $search_query_no_options, 
 				 "query_options" => $query_options);
@@ -262,6 +277,7 @@ function tm_search_api_fetch_results($query_array) {
 	$has_queries = tm_search_api_init_option($query_options, "has"); // has:Snapchat
 	$role_queries = tm_search_api_init_option($query_options, "role"); // role:CEO
 	$at_queries = tm_search_api_init_option($query_options, "at"); // at:Skyscanner
+	$flag_queries = tm_search_api_init_option($query_options, "flag"); // flag:sponsor
 
 	// Step 3. Initialise search api query
 	$query = search_api_query('tm_search_multi_index');
@@ -272,6 +288,7 @@ function tm_search_api_fetch_results($query_array) {
 	$query_filter_has = $query->createFilter('OR'); // ie: has:snapchat
 	$query_filter_role = $query->createFilter('OR'); // ie: role:founder
 	$query_filter_at = $query->createFilter('OR'); // ie: at:expedia
+	$query_filter_flag = $query->createFilter('OR'); // ie: flag:sponsor
 
 	// PEOPLE FILTER
 	if ($filter_people) {
@@ -284,7 +301,14 @@ function tm_search_api_fetch_results($query_array) {
 		$query_filter_people_base->condition('item_type', 'user');
 
 		// Special case: If only two search terms, attempt first and last name match
-		if (sizeof($search_terms) == 2) {
+		
+		// Note: If tm_search_api_pluralize_keywords is enabled, we will actually have four search terms
+		$sizeof_terms = 2;
+		if ($conf["tm_search_api_pluralize_keywords"]) {
+			$sizeof_terms = 4;
+		}
+
+		if (sizeof($search_terms) == $sizeof_terms) {
 			$query_filter_people->condition('user:field_user_first_name', $search_terms[0]);
 			$query_filter_people->condition('user:field_user_last_name', $search_terms[1]);
 
@@ -528,6 +552,11 @@ function tm_search_api_fetch_results($query_array) {
 			$query_filter_has->condition('node:field_link_vimeo:url', null, '<>');
 		}
 
+		// flag:sponsor
+		if (in_array("sponsor", $flag_queries)) {
+			$query_filter_flag->condition('node:flag_tm_sponsor', true);
+		}
+
 		// add keyword filters to base filter
 		$query_filter_companies_base->filter($query_filter_companies);
 	}
@@ -586,6 +615,9 @@ function tm_search_api_fetch_results($query_array) {
 	}
 	if (sizeof($at_queries) > 0) {
 		$options_filter->filter($query_filter_at);
+	}
+	if (sizeof($flag_queries) > 0) {
+		$options_filter->filter($query_filter_flag);
 	}
 
 	// attach type, keyword, option filters to main search filter
@@ -1090,3 +1122,19 @@ $tm_search_api_result_template = <<<EOT
 	</article>
 </li>
 EOT;
+
+// sorry, not the drupal way here...
+global $tm_search_api_form_template;
+$tm_search_api_form_template = <<<EOT
+ <form class="search-form" action="/search" method="GET" id="search-form" accept-charset="UTF-8">
+  <div>
+    <div class="container-inline form-wrapper" id="edit-basic">
+      <div class="form-item form-type-textfield form-item-keys">
+        <label for="edit-keys">Enter your keywords </label>
+        <input type="text" id="edit-keys" name="query" value="" size="40" maxlength="255" class="form-text">
+      </div>
+    <input type="submit" id="edit-submit" value="Search" class="form-submit"></div>
+  </div>
+</form>
+EOT;
+

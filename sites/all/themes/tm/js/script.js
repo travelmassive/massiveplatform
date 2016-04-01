@@ -152,7 +152,7 @@
             if (v==true) {
               window.location = profile_edit_url;
             }
-          },
+          }
         }
       );
 
@@ -169,8 +169,8 @@
   $.prompt.setDefaults({
     classes: {
       button: 'pure-button',
-      defaultButton: 'pure-button-primary',
-    },
+      defaultButton: 'pure-button-primary'
+    }
     });
 
   // wrapper for alert
@@ -186,7 +186,7 @@
         if (v == true) {
           window.location = ok_url;
         }
-      },
+      }
     });
   }
 
@@ -205,7 +205,7 @@
           href = $( "a.unflag-action" ).attr('href');
           window.location = href;
         }
-      },
+      }
     });
   }
 
@@ -220,7 +220,7 @@
           href = $( "a.unflag-action" ).attr('href');
           window.location = href;
         }
-      },
+      }
     });
   }
 
@@ -235,7 +235,7 @@
           href = $( "a.unflag-action" ).attr('href');
           window.location = href;
         }
-      },
+      }
     });
   }
 
@@ -250,7 +250,7 @@
           href = $( "a.unflag-action" ).attr('href');
           window.location = href;
         }
-      },
+      }
     });
   }
 
@@ -277,7 +277,7 @@
         if (v == true) {
           window.location = '/user/' + uid + '/request_approval?reason_for_joining=' + $("#form_reason_for_approval").val();
         }
-      },
+      }
     });
   }
 
@@ -481,7 +481,7 @@
         if (v == true) {
           window.location = '/user/' + uid + '/confirm_cancel_account?feedback=' + $("#cancel_account_feedback").val();
         }
-      },
+      }
     });
   }
 
@@ -489,9 +489,21 @@
   // called from _tm_anon_flag_placeholder
   // this method copies the account-menu-blk rendered in tm_users_account_menu for anon users
   jq_login_signup_box = function() {
-    html_wrapper = '<div id="account-menu-blk">';
-    message = html_wrapper + ($("#account-menu-blk")).html() + "</div>";
-    $.prompt(message, {buttons: {}});
+
+    // improvements for IE support
+    // clone the form and update ids
+    // add event listener to login button to submit the form via js
+    html = $("#account-menu-blk").clone(false).find("*[id]").andSelf().each(function() { $(this).attr("id", $(this).attr("id") + "-cloned"); }).html();
+    message = '<div id="account-menu-blk">' + html + '</div>';
+    $.prompt(message, {
+        buttons: {},
+        loaded: function() { $("#edit-submit-cloned").click(function(e) {
+          e.preventDefault();
+          $("#user-login-form-cloned")[0].submit();
+        });
+      }
+    });
+  
   }
 
   // show full avatar or logo
@@ -507,7 +519,7 @@
           buttons: {}, 
           overlayspeed: 'fast',
           loaded: function() { $("#page").addClass("tm-blur-filter"); },
-          close: function() { $("#page").removeClass("tm-blur-filter"); },
+          close: function() { $("#page").removeClass("tm-blur-filter"); }
         });
       }
     } else {

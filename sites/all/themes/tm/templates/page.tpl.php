@@ -6,6 +6,8 @@
  * Complete documentation for this file is available online.
  * @see https://drupal.org/node/1728148
  */
+
+ global $conf;
 ?>
 
 <div id="page">
@@ -37,7 +39,7 @@
           <li class="search-wrapper" data-dropd-wrapper>
             <h2><a class="toggle" href="#search-menu-blk" data-dropd-toggle><span class="hide"><?= t('Search'); ?></span></a></h2>
               <div id="search-menu-blk" class="inner dropd dropd-right" data-dropd>
-            <?php if (module_exists("tm_discuss") && (current_path() == "discuss")) { ?>
+            <?php if (module_exists("tm_discuss") && (current_path() == $conf['tm_discuss_menu_path'])) { ?>
               
                 <form class="search-form" action="/discuss/#/search" method="get" id="search-form" accept-charset="UTF-8">
                   <div>
@@ -54,24 +56,19 @@
               <!-- https://localdev.travelmassive.com/discuss/#/search?Search=foo -->
 
             <?php } else { ?>
-              <?php if (module_exists("tm_search_api")) { ?>
-                <form class="search-form" action="/search" method="GET" id="search-form" accept-charset="UTF-8">
-                  <div>
-                    <div class="container-inline form-wrapper" id="edit-basic">
-                      <div class="form-item form-type-textfield form-item-keys">
-                        <label for="edit-keys">Enter your keywords </label>
-                        <input type="text" id="edit-keys" name="query" value="" size="40" maxlength="255" class="form-text">
-                      </div>
-                    <input type="submit" id="edit-submit" value="Search" class="form-submit"></div>
-                  </div>
-                </form>
-              <?php } elseif (module_exists("search")) { 
-              // standard search form
-              $sf = drupal_get_form('search_form'); print render($sf);
-               } else { ?>
-               <p>Site search disabled</p>
-               <?php } // end if ?>
-            <?php } ?>
+              <?php
+                // display search form in menu
+                $search_form ="<p>Site search disabled</p>";
+                if (module_exists("tm_search_api")) {
+                  global $tm_search_api_form_template;
+                  $search_form = $tm_search_api_form_template;
+                } elseif (module_exists("search")) { 
+                  $sf = drupal_get_form('search_form');
+                  $search_form = render($sf);
+                }
+                print $search_form;
+              ?>
+              <?php } // end else  ?>
           </li>
           <li class="account-wrapper" data-dropd-wrapper>
             <?php print($page['account_menu']); ?>

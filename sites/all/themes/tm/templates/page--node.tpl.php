@@ -60,7 +60,18 @@
           <li class="search-wrapper" data-dropd-wrapper>
             <h2><a class="toggle" href="#search-menu-blk" data-dropd-toggle><span class="hide"><?= t('Search'); ?></span></a></h2>
             <div id="search-menu-blk" class="inner dropd dropd-right" data-dropd>
-              <?php $sf = drupal_get_form('search_form'); print render($sf); ?>
+              <?php
+                // display search form in menu
+                $search_form ="<p>Site search disabled</p>";
+                if (module_exists("tm_search_api")) {
+                  global $tm_search_api_form_template;
+                  $search_form = $tm_search_api_form_template;
+                } elseif (module_exists("search")) { 
+                  $sf = drupal_get_form('search_form');
+                  $search_form = render($sf);
+                }
+                print $search_form;
+              ?>
             </div>
           </li>
           <li class="account-wrapper" data-dropd-wrapper>

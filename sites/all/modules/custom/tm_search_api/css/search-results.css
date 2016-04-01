@@ -46,8 +46,15 @@ img.search-result-image { max-height: 64px;}
 /* Media query search box */
 @media screen and (min-width: 500px ) {
 	#search-query { max-width: 400px !important; }
-    .contained-block.search-help { display: block;}
 }
+
+/* Media query help box */
+@media screen and (max-width: 500px ) {
+    .search-help { display: none !important;}
+}
+
+
+
 
 /* Search button */
 .post-button-blue { 

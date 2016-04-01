@@ -813,6 +813,7 @@ $conf["tm_search_api_results_per_page"] = 10; // how many results to show per pa
 $conf["tm_search_api_max_search_terms"] = 8; // max terms allowed in search
 $conf["tm_search_cache_results_seconds"] = 60; // set to 0 to disable cache and rely on search_api_db cache
 $conf["tm_search_api_catch_exceptions"] = true; // will display friendly error message if error occurs
+$conf["tm_search_api_pluralize_keywords"] = true; // search for keyword plurals - ie: nomad = "nomad", "nomads"
 $conf["tm_search_api_tips"] = array(
   "Founders in Italy: <i><a href='#' class='search-example' data-search-example='role:founder in:Italy'>role:founder in:Italy</i></a>",
   "Snapchatters in Brazil: <i><a href='#' class='search-example' data-search-example='has:snapchat in:Brazil'>has:snapchat in:Brazil</i></a>",
@@ -823,6 +824,7 @@ $conf["tm_search_api_tips"] = array(
   "Digital Nomads: <i><a href='#' class='search-example' data-search-example='coworking nomad'>nomad</a></i>",
   "Tourism students: <i><a href='#' class='search-example' data-search-example='segment:education student'>segment:education student</a></i>",
   "Marketing in Miami: <i><a href='#' class='search-example' data-search-example='segment:marketing in:Miami'>segment:marketing in:Miami</a></i>",
+  "Event Sponsors in United States: <i><a href='#' class='search-example' data-search-example='flag:sponsor in:\"United States\"'>flag:sponsor in:\"United States\"</a></i>",
   "Hospitality: <i><a href='#' class='search-example' data-search-example='segment:marketing in:Miami'>segment:hospitality</a></i>",
   "Aviation: <i><a href='#' class='search-example' data-search-example='segment:marketing in:Miami'>airline aviation airfare</a></i>",
   "Filter by topic. Example <i><a href='#' class='search-example' data-search-example='photographer'>photographer</a></i>",

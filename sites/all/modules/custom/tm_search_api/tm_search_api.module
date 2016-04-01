@@ -951,7 +951,7 @@ function tm_search_api_render_result_chapter($result, $chapter, $search_query, $
 	// set render fields
 	$result_url = drupal_get_path_alias("node/" . $chapter->nid);
 	$result_image_url = $image_url;
-	$result_title = l("Chapter > " . $chapter->title . " " . $conf["tm_site_name"], $result_url, array('attributes' => array('target'=>'_blank')));
+	$result_title = l("Chapters > " . $chapter->title . " " . $conf["tm_site_name"], $result_url, array('attributes' => array('target'=>'_blank')));
 	$result_text = $chapter->body[LANGUAGE_NONE][0]['safe_value'];
 
 	// country
@@ -993,7 +993,7 @@ function tm_search_api_render_result_event($result, $event, $search_query, $resu
 	// set render fields
 	$result_url = drupal_get_path_alias("node/" . $event->nid);
 	$result_image_url = $image_url;
-	$result_title = l("Event > " . $event->title, $result_url, array('attributes' => array('target'=>'_blank')));
+	$result_title = l("Events > " . $event->title, $result_url, array('attributes' => array('target'=>'_blank')));
 
 	// show when event is
 	$current_date = new DateTime('now', new DateTimeZone('UTC'));

@@ -318,7 +318,14 @@
 	initSearchQuery = function() {
 		var query = window.location.search.trim();
 		if (query != "") {
-			var query_string = decodeURIComponent(query).match("/\?query=(.*)")[1].split('|')[0];
+
+			var query_string = "";
+			var query_parts = decodeURIComponent(query).match("/\?query=(.*)");
+			if (query_parts != null) {
+				query_string = query_parts[1].split('|')[0];
+			}
+
+			//var query_string = decodeURIComponent(query).match("/\?query=(.*)")[1].split('|')[0];
 			var query_string_clean = query_string.replace(/<(?:.|\n)*?>/gm, '');
 			var query_string_clean = query_string.replace(/\+/g,' ');
 			$("#search-query").val(query_string_clean);

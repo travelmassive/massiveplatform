@@ -263,6 +263,10 @@ function tm_search_api_fetch_results($query_array) {
 		$num_results_per_page = $conf["tm_search_api_results_per_page"];
 	}
 	$offset = ($page - 1) * $num_results_per_page;
+	if (isset($query_array["limit_num_results"])) {
+		$offset = 0;
+		$num_results_per_page = $query["limit_num_results"];
+	}
 
 	// Step 2. Parse search query 
 	// Break into into search terms and options, and create option arrays
@@ -661,7 +665,7 @@ function tm_search_api_fetch_results($query_array) {
 
 	// Step 6. Set Range
 	$query->range($offset, $num_results_per_page);
-	
+
 	// Step 7. Run query
 	$results = $query->execute();
 
@@ -759,7 +763,51 @@ function tm_search_api_ajax() {
 	// Step 5. Run query
 	// Catch excections if they occur
 	try {
+
+		// If query is not single word and not in quotes, perform additional query
+		// Perform exact match query and put this at the top
+		// This helps to bring exact match names to the top: ie: Travel Massive, etc
+		// Only operate on first page
+		$insert_top_results = array(); // results to insert
+		$performance_time = 0; // keep track of performance time
+		$num_top_matches = 5; // up to five top matches
+		$top_results = array();
+		if ((strpos($query["search_query"], '"') === false)
+			&& (strpos($query["search_query"], ' ') !== false)) {
+
+			$search_exact_query = $query;
+			$search_exact_query["page"] = 1;
+			$search_exact_query["search_query"] = '"' . $query["search_query"] . '"';
+			$search_exact_query["limit_num_results"] = $num_top_matches; // how many exact matches to insert to top
+			
+			// Perform search for top matches
+			$results = tm_search_api_fetch_results($search_exact_query);
+			$top_results = $results['results'];
+
+			// Insert top results for quote match and insert at top
+			$performance_time = $results['performance']['complete']; // keep track of performance time
+		}
+		
+		// Search general search terms
 		$results = tm_search_api_fetch_results($query);
+
+		// Merge top_results and results
+		if ($query["page"] == 1) {
+			// first page, top_results go at top
+			$all_results = array_merge($top_results, $results['results']);
+		} else {
+			// subsequent pages, hide any top_results
+			$all_results = array();
+			foreach($results['results'] as $result) {
+				if (!array_key_exists($result['id'], $top_results)) {
+					$all_results[$result['id']] = $result;
+				}
+			}
+		}
+
+		$results['results'] = $all_results;
+		$results['performance']['complete'] = $results['performance']['complete'] + $performance_time;
+
 	} catch (Exception $e) {
 		if ($conf["tm_search_api_catch_exceptions"]) {
 			$html = "Sorry, a search error occured.";

@@ -826,7 +826,7 @@ $conf["tm_search_api_tips"] = array(
   "Marketing in Miami: <i><a href='#' class='search-example' data-search-example='segment:marketing in:Miami'>segment:marketing in:Miami</a></i>",
   "Event Sponsors in United States: <i><a href='#' class='search-example' data-search-example='flag:sponsor in:\"United States\"'>flag:sponsor in:\"United States\"</a></i>",
   "Hospitality: <i><a href='#' class='search-example' data-search-example='segment:hospitality'>segment:hospitality</a></i>",
-  "Aviation: <i><a href='#' class='search-example' data-search-example='airline aviation airfare'>airline aviation airfare</a></i>",
+  "Aviation: <i><a href='#' class='search-example' data-search-example='aviation airfare'>aviation airfare</a></i>",
   "TV hosts: <i><a href='#' class='search-example' data-search-example='role:host segment:media'>role:host segment:media</a></i>",
   "Filter by topic. Example <i><a href='#' class='search-example' data-search-example='photographer'>photographer</a></i>",
   "Filter by location. Example: <i><a href='#' class='search-example' data-search-example='in:Tokyo'>in:Tokyo</a></i>",

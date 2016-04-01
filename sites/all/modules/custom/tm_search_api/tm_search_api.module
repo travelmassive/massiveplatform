@@ -300,42 +300,58 @@ function tm_search_api_fetch_results($query_array) {
 		// User type
 		$query_filter_people_base->condition('item_type', 'user');
 
-		// Special case: If only two search terms, attempt first and last name match
+		// Match first and last name
+		// We try in this order:
+		// Case 1. If single query is in quotes, try to match first and last name from word parts
+		// Case 2. If query is two words, try to match first and last name
+		// Case 3. Else, try first and last name on all keywords
+
+		// Case 1. If single query and in quotes, split into two parts and try search_terms
 		
-		$sizeof_terms = 2;
-		if ($conf["tm_search_api_pluralize_keywords"]) {
-			// Note: Adjust if tm_search_api_pluralize_keywords is enabled
-			$sizeof_terms = 4;
-		}
-
-		if (sizeof($search_terms) == $sizeof_terms) {
-			$query_filter_people->condition('user:field_user_first_name', $search_terms[0]);
-			$query_filter_people->condition('user:field_user_last_name', $search_terms[1]);
-
-			// also match username as it's created with first and last name
-			$query_filter_people->condition('user:name', $search_terms[0] . $search_terms[1]);
-
-		} else {
-			foreach ($search_terms as $search_term) {
-				$query_filter_people->condition('user:field_user_first_name', $search_term);
-				$query_filter_people->condition('user:field_user_last_name', $search_term);
-			}
-		}
-
-		// If single query and in quotes, split into two parts and try search_terms
+		// Adjust if tm_search_api_pluralize_keywords is enabled
 		$sizeof_terms = 1;
 		if ($conf["tm_search_api_pluralize_keywords"]) {
-			// Note: Adjust if tm_search_api_pluralize_keywords is enabled
 			$sizeof_terms = 2;
 		}
 		if ((sizeof($search_terms) == $sizeof_terms) && (strpos($search_terms[0], " ") !== false)) {
 
-			$parts = split(" ", $search_terms[0]);
+			$parts = explode(" ", $search_terms[0]);
+			$query_filter_people_name = $query->createFilter('AND');
+			$query_filter_people_name->condition('user:field_user_first_name', $parts[0]);
+			$query_filter_people_name->condition('user:field_user_last_name', $parts[1]);
+			$query_filter_people_base->filter($query_filter_people_name);
+	
 			$query_filter_people->condition('user:field_user_first_name', $parts[0]);
 			$query_filter_people->condition('user:field_user_last_name', $parts[1]);
 
 			// also match username as it's created with first and last name
 			$query_filter_people->condition('user:name', $search_terms[0] . $parts[1]);
+
+		} else {
+
+			// Adjust if tm_search_api_pluralize_keywords is enabled
+			$sizeof_terms = 2;
+			if ($conf["tm_search_api_pluralize_keywords"]) {
+				$sizeof_terms = 4;
+			}
+
+			// Case 2. If only two search terms, attempt first and last name match
+			if (sizeof($search_terms) == $sizeof_terms) {
+				$query_filter_people->condition('user:field_user_first_name', $search_terms[0]);
+				$query_filter_people->condition('user:field_user_last_name', $search_terms[1]);
+
+				// also match username as it's created with first and last name
+				$query_filter_people->condition('user:name', $search_terms[0] . $search_terms[1]);
+
+			} else {
+
+				//Case 3. Try first and last name on all keywords
+				foreach ($search_terms as $search_term) {
+					$query_filter_people->condition('user:field_user_first_name', $search_term);
+					$query_filter_people->condition('user:field_user_last_name', $search_term);
+				}
+			}
+
 		}
 
 		// Other user fields

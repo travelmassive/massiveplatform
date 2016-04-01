@@ -679,8 +679,10 @@ function tm_search_api_fetch_results($query_array) {
 	$results['tm_debug_search_options'] = $query_options;
 
 	// Step 9. Cache result
-	cache_set($cache_key, $results, 'cache', time() + $conf['tm_search_cache_results_seconds']);
-
+	if ($conf['tm_search_cache_results_seconds'] > 0) {
+		cache_set($cache_key, $results, 'cache', time() + $conf['tm_search_cache_results_seconds']);
+	}
+	
 	// Step 10. Return result set
 	return $results;
 }

@@ -832,7 +832,7 @@ $conf["tm_search_api_tips"] = array(
   "Filter by segment. Example: <i><a href='#' class='search-example' data-search-example='segment:marketing'>segment:marketing</a></i>",
   "Filter by role. Example: <i><a href='#' class='search-example' data-search-example='role:manager'>role:manager</a></i>",
   "Filter by company. Example: <i><a href='#' class='search-example' data-search-example='at:Airbnb'>at:Airbnb</a></i>",
-  "Find person by name. Example: <i><a href='#' class='search-example' data-search-example='\"Lauren Nicholl\"'>\"Lauren Nicholl\"</a></i>",
+  "Exact match a name. Example: <i><a href='#' class='search-example' data-search-example='\"Lauren Nicholl\"'>\"Lauren Nicholl\"</a></i>",
   "Find a company. Example: <i><a href='#' class='search-example' data-search-example='\"Urban Adventures\"'>\"Urban Adventures\"</a></i>",
   "Help us improve search. Send us <i><a href='/contact'>feedback</a></i>."
 );

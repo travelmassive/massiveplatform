@@ -50,6 +50,7 @@ function tm_search_api_default_search_api_index() {
         "node:field_segment:name" : { "type" : "text" },
         "node:field_segment:parent:name" : { "type" : "list\\u003Ctext\\u003E" },
         "node:flag_tm_sponsor" : { "type" : "boolean" },
+        "node:nid" : { "type" : "integer" },
         "node:title" : { "type" : "text", "boost" : "5.0" },
         "node:type" : { "type" : "string" },
         "search_api_language" : { "type" : "string" },
@@ -85,7 +86,8 @@ function tm_search_api_default_search_api_index() {
         "user:field_user_question_5" : { "type" : "text" },
         "user:flag_featured_member" : { "type" : "boolean" },
         "user:mail" : { "type" : "text" },
-        "user:name" : { "type" : "text", "boost" : "5.0" }
+        "user:name" : { "type" : "text", "boost" : "5.0" },
+        "user:uid" : { "type" : "integer" }
       },
       "data_alter_callbacks" : {
         "search_api_alter_bundle_filter" : {
@@ -634,6 +636,18 @@ function tm_search_api_default_search_api_server() {
             "table" : "search_api_db_tm_search_multi_index_text",
             "type" : "text",
             "boost" : "5.0"
+          },
+          "node:nid" : {
+            "table" : "search_api_db_tm_search_multi_index",
+            "column" : "node_nid",
+            "type" : "integer",
+            "boost" : "1.0"
+          },
+          "user:uid" : {
+            "table" : "search_api_db_tm_search_multi_index",
+            "column" : "user_uid",
+            "type" : "integer",
+            "boost" : "1.0"
           }
         }
       }

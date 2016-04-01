@@ -529,7 +529,7 @@
 	$(".search-external-google").click(function(e) {
 		e.preventDefault();
 		// /https://www.google.com/#q=travelmassive%20
-		window.location  = "https://www.google.com/#q=travelmassive%20" + encodeURI(getSearchKeywordsFromResults());
+		window.location  = "https://www.google.com/#q=travel%20massive%20" + encodeURI(getSearchKeywordsFromResults());
 	});			
 
 	// example searches

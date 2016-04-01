@@ -354,13 +354,22 @@
 	checkAnonymousUser = function() {
 		// show login box if logged out
 		if (Drupal.settings.currentUser == 0) {
-      		html_wrapper = '<div id="account-menu-blk">';
-    		message = html_wrapper + ($("#account-menu-blk")).html() + "</div>";
+      		
+    		// improvements for IE support
+		    // clone the form and update ids
+		    // add event listener to login button to submit the form via js
+		    html = $("#account-menu-blk").clone(false).find("*[id]").andSelf().each(function() { $(this).attr("id", $(this).attr("id") + "-cloned"); }).html();
+		    message = '<div id="account-menu-blk">' + html + '</div>';
+		    
     		$.prompt(message, {
     			buttons: {}, 
-    			loaded: function() { 
-    				$("#main").addClass("tm-blur-filter");
-    			},
+    			 loaded: function() { 
+    			 	$("#main").addClass("tm-blur-filter");
+    			 	$("#edit-submit-cloned").click(function(e) {
+    			 		e.preventDefault();
+		          		$("#user-login-form-cloned")[0].submit();
+		        	});
+		        },
           		close: function() { 
           			$("#main").removeClass("tm-blur-filter");
           			$(".pager.pager-load-more").hide();

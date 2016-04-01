@@ -497,11 +497,12 @@
     message = '<div id="account-menu-blk">' + html + '</div>';
     $.prompt(message, {
         buttons: {},
-        loaded: function() { $("#edit-submit-cloned").click(function(e) {
-          e.preventDefault();
-          $("#user-login-form-cloned")[0].submit();
-        });
-      }
+        loaded: function() { 
+          $("#edit-submit-cloned").click(function(e) {
+            e.preventDefault();
+            $("#user-login-form-cloned")[0].submit();
+          });
+        }
     });
   
   }

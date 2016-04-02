@@ -907,7 +907,7 @@ function tm_search_api_ajax() {
 			}
 		}
 
-		$results['results'] = $top_results; //$all_results;
+		$results['results'] = $all_results;
 		$results['performance']['complete'] = $results['performance']['complete'] + $performance_time;
 
 	} catch (Exception $e) {

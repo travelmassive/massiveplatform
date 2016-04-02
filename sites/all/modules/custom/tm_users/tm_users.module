@@ -1865,6 +1865,10 @@ function tm_users_community_tips() {
   global $user;
   $user_tip = "Discover and follow other members in the " . $conf["tm_site_name"] . " community. Looking for an organization? Check out our " . l(t("company listings"), "companies") . ".";
 
+  if (module_exists("tm_search_api")) {
+    $user_tip = "Discover and follow other members and companies in our community with <a href='/search'>" . $conf["tm_site_name"] . " Search</a>.";
+  }
+
   // Shower user tip
   if ($user_tip != "") {
     drupal_get_messages('page_notice');

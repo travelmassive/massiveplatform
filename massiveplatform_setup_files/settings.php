@@ -879,6 +879,7 @@ $conf["tm_search_api_help_tips"] = "<p style='font-size: 16px;'><strong>Example 
 Add options to your search text to filter your results. Here's some examples.
   <ul>
     <li><a href='#' class='search-example' data-search-example='in: \"New York\"'>in: "New York"</a></li>
+    <li><a href='#' class='search-example' data-search-example='in: Thailand'>in: Thailand</a></li>
     <li><a href='#' class='search-example' data-search-example='segment: marketing'>segment: marketing</a></li>
     <li><a href='#' class='search-example' data-search-example='role: manager'>role: manager</a></li>
     <li><a href='#' class='search-example' data-search-example='at: Expedia'>at: Expedia</a></li>

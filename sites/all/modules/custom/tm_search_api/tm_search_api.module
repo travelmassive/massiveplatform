@@ -1410,8 +1410,6 @@ function tm_search_api_check_option_applicable($option_name, $option_enabled, $f
 	// filters that support in:
 	if ($option_name == "in") {
 		if ($filter_people) { return true; }
-		if ($filter_events) { return true; }
-		if ($filter_past_events) { return true; }
 		if ($filter_chapters) { return true; }
 		if ($filter_companies) { return true; }
 	}

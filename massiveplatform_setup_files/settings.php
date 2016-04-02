@@ -815,10 +815,10 @@ $conf["tm_search_api_num_top_results"] = 5; // perform a quote search first, and
 $conf["tm_search_cache_results_seconds"] = 60; // set to 0 to disable cache and rely on search_api_db cache
 $conf["tm_search_api_catch_exceptions"] = true; // will display friendly error message if error occurs
 $conf["tm_search_api_pluralize_keywords"] = true; // search for keyword plurals - ie: nomad = "nomad", "nomads"
-$conf["tm_search_api_filter_people_ignore_keywords"] = array(); // ignore these keywords when searching people
-$conf["tm_search_api_filter_events_ignore_keywords"] = array(); // ignore these keywords when searching events
-$conf["tm_search_api_filter_chapters_ignore_keywords"] = array("travel", "massive", "travel massive"); // ignore these keywords when searching chapters
-$conf["tm_search_api_filter_companies_ignore_keywords"] = array(); // ignore thesee keywords when searching companies
+$conf["tm_search_api_ignore_keywords_people"] = array(); // ignore these keywords when searching people
+$conf["tm_search_api_ignore_keywords_events"] = array(); // ignore these keywords when searching events
+$conf["tm_search_api_ignore_keywords_chapters"] = array("travel", "massive", "travel massive"); // ignore these keywords when searching chapters
+$conf["tm_search_api_ignore_keywords_companies"] = array(); // ignore thesee keywords when searching companies
 
 // example search tips
 $conf["tm_search_api_tips"] = array(
@@ -864,7 +864,7 @@ $conf["tm_search_api_help_text"] = "<p style='font-size: 16px;'><strong>More pla
           <li><a class='search-external-blog' target='_blank' href='#'>Search on our blog</a></li>
           <li><a class='search-external-jobs' target='_blank' href='#'>Search jobs</a></li>
           <li><a class='search-external-qa' target='_blank' href='#'>Search community Q&amp;A</a></li>
-          <li>Or, try a <a id='search-external-google' target='_blank' href='#'>Google Search</a></li>
+          <li>Or, try a <a class='search-external-google' target='_blank' href='#'>Google Search</a></li>
         </ul>
 <p style='border-top: 1px solid #eee; padding-top: 1rem; margin-right: 1.2rem; font-size: 10pt; color: #79828c;'>
 Welcome to Travel Massive Search - the largest open database of the travel industry. Help us keep this up to date by adding your <a href='/companies'>company profile</a>.
@@ -880,7 +880,7 @@ Add options to your search text to filter your results. Here's some examples.
     <li><a href='#' class='search-example' data-search-example='segment: marketing'>segment: marketing</a></li>
     <li><a href='#' class='search-example' data-search-example='role: CEO'>role: CEO</a></li>
     <li><a href='#' class='search-example' data-search-example='at: Expedia'>at: Expedia</a></li>
-    <li><a href='#' class='search-example' data-search-example='has: youtube'>has: youtube</a></li>
+    <li><a href='#' class='search-example' data-search-example='has: snapchat'>has: snapchat</a></li>
   </ul>
 </p>";
 

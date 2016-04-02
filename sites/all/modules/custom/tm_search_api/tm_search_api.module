@@ -228,7 +228,7 @@ function tm_search_parse_search_query($search_query) {
 		}
 	}
 
-	return array("search_terms" => $search_terms, 
+	return array("search_terms" => $search_terms,
 				 "search_query_no_options" => $search_query_no_options, 
 				 "query_options" => $query_options);
 }
@@ -274,7 +274,7 @@ function tm_search_api_fetch_results($query_array) {
 	$offset = ($page - 1) * $num_results_per_page;
 	if (isset($query_array["limit_num_results"])) {
 		if ($query_array["limit_num_results"] == 0) {
-			return tm_search_api_empty_results_array();
+			return tm_search_api_empty_results_array($search_query, null, null);
 		}
 		$offset = 0;
 		$num_results_per_page = $query_array["limit_num_results"];
@@ -336,7 +336,7 @@ function tm_search_api_fetch_results($query_array) {
 		&& (sizeof($flag_queries) == 0)) {
 
 		// return empty results
-		return tm_search_api_empty_results_array();
+		return tm_search_api_empty_results_array($search_query, $search_terms, $query_options);
 	}
 
 	// PEOPLE FILTER
@@ -767,6 +767,7 @@ function tm_search_api_fetch_results($query_array) {
 	// Debugging information
 	$results['tm_debug_search_raw_query'] = $query_array["search_query"];
 	$results['tm_debug_search_keywords'] = $search_terms;
+	$results['tm_debug_search_query_no_options'] = $search_query_no_options;
 	$results['tm_debug_search_options'] = $query_options;
 	$results['tm_debug_results_cached'] = false;
 
@@ -921,6 +922,7 @@ function tm_search_api_ajax() {
 	$html .= "<input type='hidden' id='search-results-raw-query' value='" . json_encode($results['tm_debug_search_raw_query']) . "'>";
 	$html .= "<input type='hidden' id='search-results-keywords' value='" . json_encode($results['tm_debug_search_keywords']) . "'>";
 	$html .= "<input type='hidden' id='search-results-options' value='" . json_encode($results['tm_debug_search_options']) . "'>";
+	$html .= "<input type='hidden' id='search-results-query-no-options' value='" . json_encode($results['tm_debug_search_query_no_options']) . "'>";
 	$html .= "<input type='hidden' id='search-results-cached' value='" . json_encode($results['tm_debug_results_cached']) . "'>";
 
 
@@ -1334,16 +1336,18 @@ function check_filter_enabled($search_terms, $filter_enabled, $filter_type) {
 }
 
 /* Return empty results array */
-function tm_search_api_empty_results_array() {
+function tm_search_api_empty_results_array($search_query, $search_terms, $query_options) {
 	$results = array();
 	$results['results'] = array();
 	$results['last page'] = true;
 	$results['results count'] = 0;
 	$results['performance'] = array();
 	$results['performance']['complete'] = 0;
-	$results['tm_debug_search_raw_query'] = $query_array["search_query"];
+	$results['tm_debug_search_raw_query'] = $search_query;
 	$results['tm_debug_search_keywords'] = $search_terms;
 	$results['tm_debug_search_options'] = $query_options;
+	$results['tm_debug_search_query_no_options'] = $search_query;
+
 	return $results;
 }
 

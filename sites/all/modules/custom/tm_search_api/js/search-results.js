@@ -402,8 +402,7 @@
 
 	// get search keywords from search meta data
 	getSearchKeywordsFromResults = function() {
-		var keywords = JSON.parse($("#search-results-keywords").val());
-		return keywords.join(" ");
+		return JSON.parse($("#search-results-query-no-options").val());
 	}
 
 	// show an error message

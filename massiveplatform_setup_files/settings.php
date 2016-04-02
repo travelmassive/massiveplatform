@@ -811,7 +811,8 @@ $conf["tm_theme_meta_color"] = "#007DB7";
 /* Search settings */
 $conf["tm_search_api_results_per_page"] = 10; // how many results to show per page
 $conf["tm_search_api_max_search_terms"] = 8; // max terms allowed in search
-$conf["tm_search_api_num_top_results"] = 5; // perform a quote search first, and insert N results at top
+$conf["tm_search_api_top_results_display"] = 5; // perform a quote search first, and insert N results at top
+$conf["tm_search_api_top_results_strip_spaces"] = true; // if enabled, will also search for string with no spaces in top results
 $conf["tm_search_cache_results_seconds"] = 60; // set to 0 to disable cache and rely on search_api_db cache
 $conf["tm_search_api_catch_exceptions"] = true; // will display friendly error message if error occurs
 $conf["tm_search_api_pluralize_keywords"] = true; // search for keyword plurals - ie: nomad = "nomad", "nomads"

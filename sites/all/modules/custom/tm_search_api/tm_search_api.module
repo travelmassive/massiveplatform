@@ -862,15 +862,25 @@ function tm_search_api_ajax() {
 
 		$insert_top_results = array(); // results to insert
 		$performance_time = 0; // keep track of performance time
-		$num_top_matches = $conf["tm_search_api_num_top_results"];
+		$num_top_matches = $conf["tm_search_api_top_results_display"];
 		$top_results = array();
 		if ((strpos($query["search_query"], '"') === false)
 			&& (strpos($query["search_query"], ' ') !== false)) {
 
 			$search_exact_query = $query;
 			$search_exact_query["page"] = 1;
-			$search_exact_query["search_query"] = '"' . $query["search_query"] . '"';
-			$search_exact_query["limit_num_results"] = $num_top_matches; // how many exact matches to insert to top
+			$top_search_query = '"' . $query["search_query"] . '"';
+
+			// Optional, strip spaces
+			// ie: Travel Massive = travelmassive
+			if ($conf["tm_search_api_top_results_strip_spaces"]) {
+				$top_search_query .= ' ' . str_replace(" ", "", $query["search_query"]);
+			}
+
+			$search_exact_query["search_query"] = $top_search_query;
+
+			// How many exact matches to insert to top
+			$search_exact_query["limit_num_results"] = $num_top_matches; 
 			
 			// Perform search for top matches
 			$results = tm_search_api_fetch_results($search_exact_query);
@@ -897,7 +907,7 @@ function tm_search_api_ajax() {
 			}
 		}
 
-		$results['results'] = $all_results;
+		$results['results'] = $top_results; //$all_results;
 		$results['performance']['complete'] = $results['performance']['complete'] + $performance_time;
 
 	} catch (Exception $e) {

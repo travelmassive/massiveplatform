@@ -304,11 +304,11 @@ function tm_search_api_fetch_results($query_array) {
 		&& (sizeof($at_queries) == 0)
 		&& (sizeof($flag_queries) == 0)) {
 
-		$filter_people = check_filter_enabled($search_terms, $filter_people, "people");
-		$filter_events = check_filter_enabled($search_terms, $filter_events, "events");
-		$filter_past_events = check_filter_enabled($search_terms, $filter_past_events, "events");
-		$filter_chapters = check_filter_enabled($search_terms, $filter_chapters, "chapters");
-		$filter_companies = check_filter_enabled($search_terms, $filter_companies, "companies");
+		$filter_people = tm_api_search_check_filter_enabled($search_terms, $filter_people, "people");
+		$filter_events = tm_api_search_check_filter_enabled($search_terms, $filter_events, "events");
+		$filter_past_events = tm_api_search_check_filter_enabled($search_terms, $filter_past_events, "events");
+		$filter_chapters = tm_api_search_check_filter_enabled($search_terms, $filter_chapters, "chapters");
+		$filter_companies = tm_api_search_check_filter_enabled($search_terms, $filter_companies, "companies");
 	}
 	
 	// Step 3. Initialise search api query
@@ -322,18 +322,13 @@ function tm_search_api_fetch_results($query_array) {
 	$query_filter_at = $query->createFilter('OR'); // ie: at:expedia
 	$query_filter_flag = $query->createFilter('OR'); // ie: flag:sponsor
 
-	// Check we have at least one filter
-	if (!$filter_people 
-		&& !$filter_events 
-		&& !$filter_past_events 
-		&& !$filter_chapters
-		&& !$filter_companies
-		&& (sizeof($in_queries) == 0)
-		&& (sizeof($segment_queries) == 0)
-		&& (sizeof($has_queries) == 0)
-		&& (sizeof($role_queries) == 0)
-		&& (sizeof($at_queries) == 0)
-		&& (sizeof($flag_queries) == 0)) {
+	// Check we have at least one filter that can be applied to the type filters
+	if ((!tm_search_api_check_option_applicable("in", $in_queries, $filter_people, $filter_events, $filter_past_events, $filter_chapters, $filter_companies))
+		&& (!tm_search_api_check_option_applicable("segment", $segment_queries, $filter_people, $filter_events, $filter_past_events, $filter_chapters, $filter_companies))
+		&& (!tm_search_api_check_option_applicable("has", $has_queries, $filter_people, $filter_events, $filter_past_events, $filter_chapters, $filter_companies))
+		&& (!tm_search_api_check_option_applicable("role", $role_queries, $filter_people, $filter_events, $filter_past_events, $filter_chapters, $filter_companies))
+		&& (!tm_search_api_check_option_applicable("at", $at_queries, $filter_people, $filter_events, $filter_past_events, $filter_chapters, $filter_companies))
+		&& (!tm_search_api_check_option_applicable("flag", $flag_queries, $filter_people, $filter_events, $filter_past_events, $filter_chapters, $filter_companies))) {
 
 		// return empty results
 		return tm_search_api_empty_results_array($search_query, $search_terms, $query_options);
@@ -407,7 +402,7 @@ function tm_search_api_fetch_results($query_array) {
 		foreach ($search_terms as $search_term) {
 
 			// ignore specific keywords
-			if (check_is_ignored_keyword($search_term, "people")) { continue; }
+			if (tm_search_api_check_is_ignored_keyword($search_term, "people")) { continue; }
 
 			$query_filter_people->condition('user:field_about_me', $search_term);
 
@@ -451,7 +446,7 @@ function tm_search_api_fetch_results($query_array) {
 		foreach ($in_queries as $in_query) {
 
 			// ignore specific keywords
-			if (check_is_ignored_keyword($in_query, "people")) { continue; }
+			if (tm_search_api_check_is_ignored_keyword($in_query, "people")) { continue; }
 
 			$query_filter_in->condition('user:field_location_city', $in_query);
 			$query_filter_in->condition('user:field_user_country:name', $in_query);
@@ -463,7 +458,7 @@ function tm_search_api_fetch_results($query_array) {
 		foreach ($segment_queries as $segment_query) {
 
 			// ignore specific keywords
-			if (check_is_ignored_keyword($segment_query, "people")) { continue; }
+			if (tm_search_api_check_is_ignored_keyword($segment_query, "people")) { continue; }
 
 			$query_filter_segment->condition('user:field_segment:name', $segment_query);
 			$query_filter_segment->condition('user:field_segment:parent:name', $segment_query);
@@ -499,7 +494,7 @@ function tm_search_api_fetch_results($query_array) {
 		foreach ($role_queries as $role_query) {
 
 			// ignore specific keywords
-			if (check_is_ignored_keyword($role_query, "people")) { continue; }
+			if (tm_search_api_check_is_ignored_keyword($role_query, "people")) { continue; }
 
 			$query_filter_role->condition('user:field_job_role', $role_query);
 		}
@@ -508,7 +503,7 @@ function tm_search_api_fetch_results($query_array) {
 		foreach ($at_queries as $at_query) {
 
 			// ignore specific keywords
-			if (check_is_ignored_keyword($at_query, "people")) { continue; }
+			if (tm_search_api_check_is_ignored_keyword($at_query, "people")) { continue; }
 
 			$query_filter_at->condition('user:field_job_organization', $at_query);
 		}
@@ -529,7 +524,7 @@ function tm_search_api_fetch_results($query_array) {
 		foreach ($search_terms as $search_term) {
 
 			// ignore specific keywords
-			if (check_is_ignored_keyword($search_term, "events")) { continue; }
+			if (tm_search_api_check_is_ignored_keyword($search_term, "events")) { continue; }
 
 			$query_filter_events->condition('node:title', $search_term);
 			$query_filter_events->condition('node:body:value', $search_term);
@@ -569,7 +564,7 @@ function tm_search_api_fetch_results($query_array) {
 		foreach ($search_terms as $search_term) {
 
 			// ignore specific keywords
-			if (check_is_ignored_keyword($search_term, "chapters")) { continue; }
+			if (tm_search_api_check_is_ignored_keyword($search_term, "chapters")) { continue; }
 
 			$query_filter_chapters->condition('node:title', $search_term);
 			$query_filter_chapters->condition('node:body:value', $search_term);
@@ -585,7 +580,7 @@ function tm_search_api_fetch_results($query_array) {
 		foreach ($in_queries as $in_query) {
 
 			// ignore specific keywords
-			if (check_is_ignored_keyword($in_query, "chapters")) { continue; }
+			if (tm_search_api_check_is_ignored_keyword($in_query, "chapters")) { continue; }
 
 			$query_filter_in->condition('node:field_country:name', $in_query);
 			$query_filter_in->condition('node:field_country:official_name', $in_query);
@@ -606,7 +601,7 @@ function tm_search_api_fetch_results($query_array) {
 		foreach ($search_terms as $search_term) {
 
 			// ignore specific keywords
-			if (check_is_ignored_keyword($search_term, "companies")) { continue; }
+			if (tm_search_api_check_is_ignored_keyword($search_term, "companies")) { continue; }
 
 			$query_filter_companies->condition('node:title', $search_term);
 			$query_filter_companies->condition('node:body:value', $search_term);
@@ -632,7 +627,7 @@ function tm_search_api_fetch_results($query_array) {
 		foreach ($in_queries as $in_query) {
 
 			// ignore specific keywords
-			if (check_is_ignored_keyword($in_query, "companies")) { continue; }
+			if (tm_search_api_check_is_ignored_keyword($in_query, "companies")) { continue; }
 
 			$query_filter_in->condition('node:field_country:name', $in_query);
 			$query_filter_in->condition('node:field_country:official_name', $in_query);
@@ -643,7 +638,7 @@ function tm_search_api_fetch_results($query_array) {
 		foreach ($segment_queries as $segment_query) {
 
 			// ignore specific keywords
-			if (check_is_ignored_keyword($segment_query, "companies")) { continue; }
+			if (tm_search_api_check_is_ignored_keyword($segment_query, "companies")) { continue; }
 
 			$query_filter_segment->condition('node:field_segment:name', $segment_query);
 			$query_filter_segment->condition('node:field_segment:parent:name', $segment_query);
@@ -1286,7 +1281,7 @@ function tm_search_api_render_search_result($result_url, $result_image_url, $res
 }
 
 /* Check if a keyword for a filter type should be ignored */
-function check_is_ignored_keyword($keyword, $filter_type) {
+function tm_search_api_tm_search_api_check_is_ignored_keyword($keyword, $filter_type) {
 
 	global $conf;
 
@@ -1325,14 +1320,14 @@ function check_is_ignored_keyword($keyword, $filter_type) {
    Return false if all search terms for filter are ignored
    Return false if filter disabled
    */
-function check_filter_enabled($search_terms, $filter_enabled, $filter_type) {
+function tm_api_search_check_filter_enabled($search_terms, $filter_enabled, $filter_type) {
 
 	// if filter enabled
 	if ($filter_enabled) {
 
 		$filter_status = false;
 		foreach($search_terms as $search_term) {
-			if (!check_is_ignored_keyword($search_term, $filter_type)) {
+			if (!tm_search_api_tm_search_api_check_is_ignored_keyword($search_term, $filter_type)) {
 				$filter_status = true;
 			}
 			if ($filter_status) {
@@ -1359,6 +1354,53 @@ function tm_search_api_empty_results_array($search_query, $search_terms, $query_
 	$results['tm_debug_search_query_no_options'] = $search_query;
 
 	return $results;
+}
+
+/* Helper method to check if option filter is applicable to any enabled filters */
+function tm_search_api_check_option_applicable($option_name, $option_enabled, $filter_people, $filter_events, $filter_past_events, $filter_chapters, $filter_companies) {
+
+	// not applicable if disabled
+	if (!$option_enabled) { return false; }
+
+	// filters that support in:
+	if ($option_name == "in") {
+		if ($filter_people) { return true; }
+		if ($filter_events) { return true; }
+		if ($filter_past_events) { return true; }
+		if ($filter_chapters) { return true; }
+		if ($filter_companies) { return true; }
+	}
+
+	// filters that support segment:
+	if ($option_name == "segment") {
+		if ($filter_people) { return true; }
+		if ($filter_companies) { return true; }
+	}
+
+	// filters that support has:
+	if ($option_name == "has") {
+		if ($filter_people) { return true; }
+		if ($filter_chapters) { return true; }
+		if ($filter_companies) { return true; }
+	}
+
+	// filters that support role:
+	if ($option_name == "role") {
+		if ($filter_people) { return true; }
+	}
+
+	// filters that support at:
+	if ($option_name == "at") {
+		if ($filter_people) { return true; }
+	}
+
+	// filters that support flag:
+	if ($option_name == "flag") {
+		if ($filter_companies) { return true; }
+	}
+
+	// option filter is not applicable to any enabled filter
+	return false;
 }
 
 /* html templates */

@@ -828,6 +828,7 @@ $conf["tm_search_api_tips"] = array(
   "Instagrammers in Kenya: <i><a href='#' class='search-example' data-search-example='has:instagram in:Kenya  '>has:instagram in:Kenya</i></a>",
   "Video creators in Europe: <i><a href='#' class='search-example' data-search-example='has:vimeo in:Europe'>has:vimeo in:Europe</i></a>",
   "Startups in San Francisco: <i><a href='#' class='search-example' data-search-example='startup in:\"San Francisco\"'>startup in:\"San Francisco\"</i></a>",
+  "Travel Startups in Europe: <i><a href='#' class='search-example' data-search-example='startups in:Europe'>startups in:Europe</i></a>",
   "Tour companies in Africa: <i><a href='#' class='search-example' data-search-example='segment:tour in:Africa'>segment:tour in:Africa</a></i>",
   "Content creators in India: <i><a href='#' class='search-example' data-search-example='segment:content in:India'>segment:content in:India</a></i>",
   "Digital Nomads: <i><a href='#' class='search-example' data-search-example='coworking nomad'>nomad</a></i>",
@@ -837,9 +838,9 @@ $conf["tm_search_api_tips"] = array(
   "Event Sponsors in United States: <i><a href='#' class='search-example' data-search-example='flag:sponsor in:\"United States\"'>flag:sponsor in:\"United States\"</a></i>",
   "Investors: <i><a href='#' class='search-example' data-search-example='investors'>investors</a></i>",
   "Hospitality: <i><a href='#' class='search-example' data-search-example='segment:hospitality'>segment:hospitality</a></i>",
-  "Aviation: <i><a href='#' class='search-example' data-search-example='aviation airfare'>aviation airfare</a></i>",
+  "Aviation: <i><a href='#' class='search-example' data-search-example='segment:aviation'>segment:aviation</a></i>",
   "TV hosts: <i><a href='#' class='search-example' data-search-example='role:host segment:media'>role:host segment:media</a></i>",
-  "Filter by topic. Example <i><a href='#' class='search-example' data-search-example='photographer'>photographer</a></i>",
+  "Search by topic. Example <i><a href='#' class='search-example' data-search-example='photographer'>photographer</a></i>",
   "Filter by location. Example: <i><a href='#' class='search-example' data-search-example='in:Tokyo'>in:Tokyo</a></i>",
   "Filter by segment. Example: <i><a href='#' class='search-example' data-search-example='segment:marketing'>segment:marketing</a></i>",
   "Filter by role. Example: <i><a href='#' class='search-example' data-search-example='role:manager'>role:manager</a></i>",
@@ -879,7 +880,7 @@ Add options to your search text to filter your results. Here's some examples.
   <ul>
     <li><a href='#' class='search-example' data-search-example='in: \"New York\"'>in: "New York"</a></li>
     <li><a href='#' class='search-example' data-search-example='segment: marketing'>segment: marketing</a></li>
-    <li><a href='#' class='search-example' data-search-example='role: CEO'>role: CEO</a></li>
+    <li><a href='#' class='search-example' data-search-example='role: manager'>role: manager</a></li>
     <li><a href='#' class='search-example' data-search-example='at: Expedia'>at: Expedia</a></li>
     <li><a href='#' class='search-example' data-search-example='has: snapchat'>has: snapchat</a></li>
   </ul>

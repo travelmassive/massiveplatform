@@ -304,11 +304,11 @@ function tm_search_api_fetch_results($query_array) {
 		&& (sizeof($at_queries) == 0)
 		&& (sizeof($flag_queries) == 0)) {
 
-		$filter_people = tm_api_search_check_filter_enabled($search_terms, $filter_people, "people");
-		$filter_events = tm_api_search_check_filter_enabled($search_terms, $filter_events, "events");
-		$filter_past_events = tm_api_search_check_filter_enabled($search_terms, $filter_past_events, "events");
-		$filter_chapters = tm_api_search_check_filter_enabled($search_terms, $filter_chapters, "chapters");
-		$filter_companies = tm_api_search_check_filter_enabled($search_terms, $filter_companies, "companies");
+		$filter_people = tm_search_api_check_filter_enabled($search_terms, $filter_people, "people");
+		$filter_events = tm_search_api_check_filter_enabled($search_terms, $filter_events, "events");
+		$filter_past_events = tm_search_api_check_filter_enabled($search_terms, $filter_past_events, "events");
+		$filter_chapters = tm_search_api_check_filter_enabled($search_terms, $filter_chapters, "chapters");
+		$filter_companies = tm_search_api_check_filter_enabled($search_terms, $filter_companies, "companies");
 	}
 	
 	// Step 3. Initialise search api query
@@ -322,8 +322,22 @@ function tm_search_api_fetch_results($query_array) {
 	$query_filter_at = $query->createFilter('OR'); // ie: at:expedia
 	$query_filter_flag = $query->createFilter('OR'); // ie: flag:sponsor
 
-	// Check we have at least one filter that can be applied to the type filters
-	if ((!tm_search_api_check_option_applicable("in", $in_queries, $filter_people, $filter_events, $filter_past_events, $filter_chapters, $filter_companies))
+	// Step 5. Check for cases where we won't have any results
+
+	// Check if we don't have any filters enabled
+	if (!$filter_people 
+		&& !$filter_events 
+		&& !$filter_past_events 
+		&& !$filter_chapters 
+		&& !$filter_companies) {
+
+		// return empty results
+		return tm_search_api_empty_results_array($search_query, $search_terms, $query_options);
+	}
+
+	// No search terms and no applicable option filters
+	if ((sizeof($search_terms) == 0)
+		&& (!tm_search_api_check_option_applicable("in", $in_queries, $filter_people, $filter_events, $filter_past_events, $filter_chapters, $filter_companies))
 		&& (!tm_search_api_check_option_applicable("segment", $segment_queries, $filter_people, $filter_events, $filter_past_events, $filter_chapters, $filter_companies))
 		&& (!tm_search_api_check_option_applicable("has", $has_queries, $filter_people, $filter_events, $filter_past_events, $filter_chapters, $filter_companies))
 		&& (!tm_search_api_check_option_applicable("role", $role_queries, $filter_people, $filter_events, $filter_past_events, $filter_chapters, $filter_companies))
@@ -333,6 +347,8 @@ function tm_search_api_fetch_results($query_array) {
 		// return empty results
 		return tm_search_api_empty_results_array($search_query, $search_terms, $query_options);
 	}
+
+	// Step 6. Set up filters
 
 	// PEOPLE FILTER
 	if ($filter_people) {
@@ -679,7 +695,7 @@ function tm_search_api_fetch_results($query_array) {
 		$query_filter_companies_base->filter($query_filter_companies);
 	}
 
-	// Step 5. Attach filters
+	// Step 7. Attach filters
 	$search_filter = $query->createFilter('AND'); // main search filter
 	
     // keyword filters
@@ -745,13 +761,13 @@ function tm_search_api_fetch_results($query_array) {
 	$search_filter->filter($options_filter);
 	$query->filter($search_filter);
 
-	// Step 6. Set Range
+	// Step 8. Set Range
 	$query->range($offset, $num_results_per_page);
 
-	// Step 7. Run query
+	// Step 9. Run query
 	$results = $query->execute();
 
-	// Step 8. Add extra meta data
+	// Step 10. Add extra meta data
 
 	// Check last page
 	$results['last page'] = "false";
@@ -766,12 +782,12 @@ function tm_search_api_fetch_results($query_array) {
 	$results['tm_debug_search_options'] = $query_options;
 	$results['tm_debug_results_cached'] = false;
 
-	// Step 9. Cache result
+	// Step 11. Cache result
 	if ($conf['tm_search_cache_results_seconds'] > 0) {
 		cache_set($cache_key, $results, 'cache', time() + $conf['tm_search_cache_results_seconds']);
 	}
 
-	// Step 10. Return result set
+	// Step 12. Return result set
 	return $results;
 }
 
@@ -1281,7 +1297,7 @@ function tm_search_api_render_search_result($result_url, $result_image_url, $res
 }
 
 /* Check if a keyword for a filter type should be ignored */
-function tm_search_api_tm_search_api_check_is_ignored_keyword($keyword, $filter_type) {
+function tm_search_api_check_is_ignored_keyword($keyword, $filter_type) {
 
 	global $conf;
 
@@ -1320,14 +1336,14 @@ function tm_search_api_tm_search_api_check_is_ignored_keyword($keyword, $filter_
    Return false if all search terms for filter are ignored
    Return false if filter disabled
    */
-function tm_api_search_check_filter_enabled($search_terms, $filter_enabled, $filter_type) {
+function tm_search_api_check_filter_enabled($search_terms, $filter_enabled, $filter_type) {
 
 	// if filter enabled
 	if ($filter_enabled) {
 
 		$filter_status = false;
 		foreach($search_terms as $search_term) {
-			if (!tm_search_api_tm_search_api_check_is_ignored_keyword($search_term, $filter_type)) {
+			if (!tm_search_api_check_is_ignored_keyword($search_term, $filter_type)) {
 				$filter_status = true;
 			}
 			if ($filter_status) {

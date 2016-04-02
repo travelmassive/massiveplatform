@@ -89,6 +89,7 @@ function tm_search_api_view() {
 	$template = str_replace("__NO_RESULTS_TEXT__", $conf["tm_search_api_no_results_text"], $template);
 	$template = str_replace("__SEARCH_WELCOME_MESSAGE__", tm_search_api_welcome_message(), $template);
 	$template = str_replace("__SEARCH_HELP_TEXT__", $conf["tm_search_api_help_text"], $template);
+	$template = str_replace("__SEARCH_HELP_TIPS__", $conf["tm_search_api_help_tips"], $template);
 
 	// create form
 	$form['html'] = array(
@@ -855,6 +856,9 @@ function tm_search_api_ajax() {
 		// Perform exact match query and put this at the top
 		// This helps to bring exact match names to the top: ie: Travel Massive, etc
 		// Only operate on first page
+		// Note: search_api_db does not perform exact matching so this may not work exactly as expected
+		// see: https://www.drupal.org/node/2043339#comment-7654017
+
 		$insert_top_results = array(); // results to insert
 		$performance_time = 0; // keep track of performance time
 		$num_top_matches = $conf["tm_search_api_num_top_results"];

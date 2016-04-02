@@ -81,17 +81,7 @@
 		</section>
 
 		<section style="padding-left: 1.5rem;" class="contained contained-block search-help">
-			<p style='font-size: 16px;'><strong>Example filters</strong></p>
-			<p style='border-top: 1px solid #eee; padding-top: 1rem; margin-right: 1.2rem; font-size: 10pt; color: #79828c;'>
-			Want to get advanced? Add options to your search text to narrow your results.
-				<ul>
-					<li>in: "New York"</li>
-					<li>segment: marketing</li>
-					<li>role: CEO</li>
-					<li>at: company</li>
-					<li>has: twitter</li>
-				</ul>
-			</p>
+			__SEARCH_HELP_TIPS__
 		</section>
 
 	</div>

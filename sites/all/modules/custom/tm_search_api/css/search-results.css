@@ -14,7 +14,7 @@
 .search.results { padding: 0.25em; }
 .search.info { padding-left: 1rem; margin-bottom: -0.5rem; margin-top: 3rem;}
 .search.placeholder { min-height: 200px; }
-.has-results { min-height: 600px !important;}
+.has-results { min-height: 900px !important;}
 .search.timeout { text-align: center; display: none; font-size: 10pt; font-weight: bold;}
 .search.error-message { text-align: center; display: none; font-size: 10pt; font-weight: bold;}
 .label-filter { display: inline;}

@@ -820,6 +820,7 @@ $conf["tm_search_api_filter_events_ignore_keywords"] = array(); // ignore these 
 $conf["tm_search_api_filter_chapters_ignore_keywords"] = array("travel", "massive", "travel massive"); // ignore these keywords when searching chapters
 $conf["tm_search_api_filter_companies_ignore_keywords"] = array(); // ignore thesee keywords when searching companies
 
+// example search tips
 $conf["tm_search_api_tips"] = array(
   "Founders in Italy: <i><a href='#' class='search-example' data-search-example='role:founder in:Italy'>role:founder in:Italy</i></a>",
   "Snapchatters in Brazil: <i><a href='#' class='search-example' data-search-example='has:snapchat in:Brazil'>has:snapchat in:Brazil</i></a>",
@@ -846,6 +847,8 @@ $conf["tm_search_api_tips"] = array(
   "Find a company. Example: <i><a href='#' class='search-example' data-search-example='\"Urban Adventures\"'>\"Urban Adventures\"</a></i>",
   "Help us improve search. Send us <i><a href='/contact'>feedback</a></i>."
 );
+
+// what to show if no results
 $conf["tm_search_api_no_results_text"] = "<strong>There's more places we can help you search...</strong>
         <ul>
           <li><a class='search-external-blog' target='_blank' href='#'>Search on our blog</a> for news articles and interviews.</li>
@@ -854,13 +857,8 @@ $conf["tm_search_api_no_results_text"] = "<strong>There's more places we can hel
           <li>Or, try a <a class='search-external-google' target='_blank' href='#'>Google Search</a> on our site.</li>
           <li>Still can't find it? Get in <a target='_blank' href='/contact'>contact with us</a>.</li>
         </ul>";
-$conf["tm_search_api_help_text"] = "<strong>More places</strong>
-        <ul>
-          <li><a class='search-external-blog' target='_blank' href='#'>Search on our blog</a>.</li>
-          <li><a class='search-external-jobs' target='_blank' href='#'>Search jobs</a>.</li>
-          <li><a class='search-external-qa' target='_blank' href='#'>Search community Q&amp;A</a>.</li>
-          <li>Or, try a <a id='search-external-google' target='_blank' href='javascript:void(0);'>Google Search</a>.</li>
-        </ul>";
+
+// help text to show
 $conf["tm_search_api_help_text"] = "<p style='font-size: 16px;'><strong>More places</strong></p>
         <ul>
           <li><a class='search-external-blog' target='_blank' href='#'>Search on our blog</a></li>
@@ -872,6 +870,19 @@ $conf["tm_search_api_help_text"] = "<p style='font-size: 16px;'><strong>More pla
 Welcome to Travel Massive Search - the largest open database of the travel industry. Help us keep this up to date by adding your <a href='/companies'>company profile</a>.
 <br>PS: This product is made with <span style='color: #e93f33 !important;'>♥</span> for the benefit of our community. Keep building the future of travel! - <a href='/ian'>Ian</a>.</p>
 ";
+
+// search tips to show
+$conf["tm_search_api_help_tips"] = "<p style='font-size: 16px;'><strong>Example filters</strong></p>
+<p style='border-top: 1px solid #eee; padding-top: 1rem; margin-right: 1.2rem; font-size: 10pt; color: #79828c;'>
+Add options to your search text to filter your results. Here's some examples.
+  <ul>
+    <li><a href='#' class='search-example' data-search-example='in: \"New York\"'>in: "New York"</a></li>
+    <li><a href='#' class='search-example' data-search-example='segment: marketing'>segment: marketing</a></li>
+    <li><a href='#' class='search-example' data-search-example='role: CEO'>role: CEO</a></li>
+    <li><a href='#' class='search-example' data-search-example='at: Expedia'>at: Expedia</a></li>
+    <li><a href='#' class='search-example' data-search-example='has: youtube'>has: youtube</a></li>
+  </ul>
+</p>";
 
 $conf['install_profile'] = 'tm';
 

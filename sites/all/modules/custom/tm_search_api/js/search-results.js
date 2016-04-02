@@ -540,6 +540,7 @@
 		var example_text = $(this).data("search-example");
 		$('#search-query').val(example_text);
 		doSearch();
+		window.scrollTo(0, 0);
 	});
 
 	// paged loaded

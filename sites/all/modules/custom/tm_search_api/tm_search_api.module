@@ -132,14 +132,6 @@ function tm_search_api_welcome_message() {
 	return $welcome_message;
 }
 
-/* Helper method to init query options array */
-function tm_search_api_init_option($query_options, $key) {
-	if (isset($query_options[$key])) {
-		return $query_options[$key];
-	}
-	return array(); // empty array if no options
-}
-
 /* 
 	Split query into options and keywords
 	Returns an array with the following:
@@ -1370,6 +1362,43 @@ function tm_search_api_empty_results_array($search_query, $search_terms, $query_
 	$results['tm_debug_search_query_no_options'] = $search_query;
 
 	return $results;
+}
+
+/* Helper method to init query options array */
+function tm_search_api_init_option($query_options, $key) {
+
+	if (isset($query_options[$key])) {
+
+		// has:
+		if ($key == "has") {
+			if (array_key_exists("website", strtolower($query_options[$key]))) { return $query_options[$key]; }
+			if (array_key_exists("snapchat", strtolower($query_options[$key]))) { return $query_options[$key]; }
+			if (array_key_exists("twitter", strtolower($query_options[$key]))) { return $query_options[$key]; }
+			if (array_key_exists("instagram", strtolower($query_options[$key]))) { return $query_options[$key]; }
+			if (array_key_exists("facebook", strtolower($query_options[$key]))) { return $query_options[$key]; }
+			if (array_key_exists("linkedin", strtolower($query_options[$key]))) { return $query_options[$key]; }
+			if (array_key_exists("youtube", strtolower($query_options[$key]))) { return $query_options[$key]; }
+			if (array_key_exists("vimeo", strtolower($query_options[$key]))) { return $query_options[$key]; }
+
+			// not supported
+			return array();
+		}
+
+		// flag:
+		if ($key == "flag") {
+			if (array_key_exists("sponsor", strtolower($query_options[$key]))) { return $query_options[$key]; }
+
+			// not supported
+			return array();
+		}
+
+		// other options, return true
+		return $query_options[$key];
+
+	}
+
+	// not supported
+	return array();
 }
 
 /* Helper method to check if option filter is applicable to any enabled filters */

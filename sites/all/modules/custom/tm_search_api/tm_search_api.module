@@ -18,6 +18,7 @@ http://enzolutions.com/articles/2015/06/10/how-to-customize-a-search-api-filters
 https://www.drupal.org/project/search_api_multi
 http://drupal.stackexchange.com/questions/118282/how-to-search-both-users-and-nodes-simultaneously-in-drupal-7
 https://www.phase2technology.com/blog/expanding-indexed-content-with-search-api-data-alterations/
+https://www.drupal.org/node/2043339#comment-7654017 (search_api_db doesn't support phrase searches)
 
 */
 
@@ -238,11 +239,18 @@ function tm_search_api_fetch_results($query_array) {
 	global $conf;
 	global $user;
 
-	// Check cache first
-	$cache_key = "tm-search-api" . md5($query_array["search_query"] . "_" .(int)(user_is_logged_in()) . "_" . (int)$query_array["filter_people"] . "_" . (int)$query_array["filter_events"] . "_" . (int)$query_array["filter_chapters"] . "_" . (int)$query_array["filter_companies"] . "_" . (int)$query_array["page"] . (int)$query_array["filter_past_events"]);
+	// Create cache key using md5 sum of unique string of the search
+	$cache_key_unique_string = $query_array["search_query"] . "_" .(int)(user_is_logged_in()) . "_" . (int)$query_array["filter_people"] . "_" . (int)$query_array["filter_events"] . "_" . (int)$query_array["filter_past_events"] . "_" . (int)$query_array["filter_chapters"] . "_" . (int)$query_array["filter_companies"] . "_" . (int)$query_array["page"];
+	if (isset($query_array["limit_num_results"])) {
+		$cache_key_unique_string .= "_" . $query_array["limit_num_results"];
+	}
+	$cache_key = "tm-search-api-" . md5($cache_key_unique_string);
+
+	// Check cache_key
 	if ($conf['tm_search_cache_results_seconds'] > 0) {
 	  	$cache = cache_get($cache_key, 'cache');
 	  	if (!empty($cache)) {
+	  		$cache->data['tm_debug_results_cached'] = true;
 	  		$cache->data['performance']['complete'] = 0.01; // since we got it from cache
 	    	return($cache->data);
   		}
@@ -255,7 +263,7 @@ function tm_search_api_fetch_results($query_array) {
 	$filter_past_events = $query_array["filter_past_events"];
 	$filter_chapters = $query_array["filter_chapters"];
 	$filter_companies = $query_array["filter_companies"];
-	$page = $query_array["page"];
+	$page = $query_array["page"];	
 
 	// page offset
 	$num_results_per_page = 10; // default
@@ -264,8 +272,11 @@ function tm_search_api_fetch_results($query_array) {
 	}
 	$offset = ($page - 1) * $num_results_per_page;
 	if (isset($query_array["limit_num_results"])) {
+		if ($query_array["limit_num_results"] == 0) {
+			return tm_search_api_empty_results_array();
+		}
 		$offset = 0;
-		$num_results_per_page = $query["limit_num_results"];
+		$num_results_per_page = $query_array["limit_num_results"];
 	}
 
 	// Step 2. Parse search query 
@@ -283,16 +294,49 @@ function tm_search_api_fetch_results($query_array) {
 	$at_queries = tm_search_api_init_option($query_options, "at"); // at:Skyscanner
 	$flag_queries = tm_search_api_init_option($query_options, "flag"); // flag:sponsor
 
+	// If no options enabled
+	// then turn any filters off if all keywords are ignored by filter
+	if ((sizeof($in_queries) == 0)
+		&& (sizeof($segment_queries) == 0)
+		&& (sizeof($has_queries) == 0)
+		&& (sizeof($role_queries) == 0)
+		&& (sizeof($at_queries) == 0)
+		&& (sizeof($flag_queries) == 0)) {
+
+		$filter_people = check_filter_enabled($search_terms, $filter_people, "people");
+		$filter_events = check_filter_enabled($search_terms, $filter_events, "events");
+		$filter_past_events = check_filter_enabled($search_terms, $filter_past_events, "events");
+		$filter_chapters = check_filter_enabled($search_terms, $filter_chapters, "chapters");
+		$filter_companies = check_filter_enabled($search_terms, $filter_companies, "companies");
+	}
+	
 	// Step 3. Initialise search api query
 	$query = search_api_query('tm_search_multi_index');
 
-	// Step 4. Create filters
+	// Step 4. Create option filters
 	$query_filter_in = $query->createFilter('OR'); // ie: in:Japan
 	$query_filter_segment = $query->createFilter('OR'); // ie: segment:marketing
 	$query_filter_has = $query->createFilter('OR'); // ie: has:snapchat
 	$query_filter_role = $query->createFilter('OR'); // ie: role:founder
 	$query_filter_at = $query->createFilter('OR'); // ie: at:expedia
 	$query_filter_flag = $query->createFilter('OR'); // ie: flag:sponsor
+
+	// Check we have at least one filter
+	if (!$filter_people 
+		&& !$filter_events 
+		&& !$filter_past_events 
+		&& !$filter_chapters
+		&& !$filter_companies
+		&& (sizeof($in_queries) == 0)
+		&& (sizeof($segment_queries) == 0)
+		&& (sizeof($has_queries) == 0)
+		&& (sizeof($role_queries) == 0)
+		&& (sizeof($at_queries) == 0)
+		&& (sizeof($flag_queries) == 0)) {
+
+		// return empty results
+		return tm_search_api_empty_results_array();
+	}
 
 	// PEOPLE FILTER
 	if ($filter_people) {
@@ -361,6 +405,9 @@ function tm_search_api_fetch_results($query_array) {
 		// Other user fields
 		foreach ($search_terms as $search_term) {
 
+			// ignore specific keywords
+			if (check_is_ignored_keyword($search_term, "people")) { continue; }
+
 			$query_filter_people->condition('user:field_about_me', $search_term);
 
 			$query_filter_people->condition('user:field_location_city', $search_term);
@@ -401,6 +448,10 @@ function tm_search_api_fetch_results($query_array) {
 
 		// in:field
 		foreach ($in_queries as $in_query) {
+
+			// ignore specific keywords
+			if (check_is_ignored_keyword($in_query, "people")) { continue; }
+
 			$query_filter_in->condition('user:field_location_city', $in_query);
 			$query_filter_in->condition('user:field_user_country:name', $in_query);
 			$query_filter_in->condition('user:field_user_country:official_name', $in_query);
@@ -409,6 +460,10 @@ function tm_search_api_fetch_results($query_array) {
 
 		// segment:field
 		foreach ($segment_queries as $segment_query) {
+
+			// ignore specific keywords
+			if (check_is_ignored_keyword($segment_query, "people")) { continue; }
+
 			$query_filter_segment->condition('user:field_segment:name', $segment_query);
 			$query_filter_segment->condition('user:field_segment:parent:name', $segment_query);
 		}
@@ -441,11 +496,19 @@ function tm_search_api_fetch_results($query_array) {
 
 		// role:field
 		foreach ($role_queries as $role_query) {
+
+			// ignore specific keywords
+			if (check_is_ignored_keyword($role_query, "people")) { continue; }
+
 			$query_filter_role->condition('user:field_job_role', $role_query);
 		}
 
 		// at:field
 		foreach ($at_queries as $at_query) {
+
+			// ignore specific keywords
+			if (check_is_ignored_keyword($at_query, "people")) { continue; }
+
 			$query_filter_at->condition('user:field_job_organization', $at_query);
 		}
 		
@@ -463,6 +526,10 @@ function tm_search_api_fetch_results($query_array) {
 		$query_filter_events_base->condition('node:type', 'event');
 
 		foreach ($search_terms as $search_term) {
+
+			// ignore specific keywords
+			if (check_is_ignored_keyword($search_term, "events")) { continue; }
+
 			$query_filter_events->condition('node:title', $search_term);
 			$query_filter_events->condition('node:body:value', $search_term);
 			$query_filter_events->condition('node:field_location', $search_term);
@@ -500,6 +567,9 @@ function tm_search_api_fetch_results($query_array) {
 
 		foreach ($search_terms as $search_term) {
 
+			// ignore specific keywords
+			if (check_is_ignored_keyword($search_term, "chapters")) { continue; }
+
 			$query_filter_chapters->condition('node:title', $search_term);
 			$query_filter_chapters->condition('node:body:value', $search_term);
 
@@ -512,6 +582,10 @@ function tm_search_api_fetch_results($query_array) {
 
 		// in:field
 		foreach ($in_queries as $in_query) {
+
+			// ignore specific keywords
+			if (check_is_ignored_keyword($in_query, "chapters")) { continue; }
+
 			$query_filter_in->condition('node:field_country:name', $in_query);
 			$query_filter_in->condition('node:field_country:official_name', $in_query);
 			$query_filter_in->condition('node:field_country:continent_name', $in_query);
@@ -521,7 +595,7 @@ function tm_search_api_fetch_results($query_array) {
 	// COMPANIES FILTER
 	if ($filter_companies) {
 
-		// Create base and keywor filters
+		// Create base and keyword filters
 		$query_filter_companies_base = $query->createFilter('AND');
 		$query_filter_companies = $query->createFilter('OR');
 
@@ -529,6 +603,10 @@ function tm_search_api_fetch_results($query_array) {
 		$query_filter_companies_base->condition('node:type', 'organization');
 
 		foreach ($search_terms as $search_term) {
+
+			// ignore specific keywords
+			if (check_is_ignored_keyword($search_term, "companies")) { continue; }
+
 			$query_filter_companies->condition('node:title', $search_term);
 			$query_filter_companies->condition('node:body:value', $search_term);
 
@@ -551,6 +629,10 @@ function tm_search_api_fetch_results($query_array) {
 
 		// in:field
 		foreach ($in_queries as $in_query) {
+
+			// ignore specific keywords
+			if (check_is_ignored_keyword($in_query, "companies")) { continue; }
+
 			$query_filter_in->condition('node:field_country:name', $in_query);
 			$query_filter_in->condition('node:field_country:official_name', $in_query);
 			$query_filter_in->condition('node:field_country:continent_name', $in_query);
@@ -558,6 +640,10 @@ function tm_search_api_fetch_results($query_array) {
 
 		// segment:field
 		foreach ($segment_queries as $segment_query) {
+
+			// ignore specific keywords
+			if (check_is_ignored_keyword($segment_query, "companies")) { continue; }
+
 			$query_filter_segment->condition('node:field_segment:name', $segment_query);
 			$query_filter_segment->condition('node:field_segment:parent:name', $segment_query);
 		}
@@ -681,6 +767,7 @@ function tm_search_api_fetch_results($query_array) {
 	$results['tm_debug_search_raw_query'] = $query_array["search_query"];
 	$results['tm_debug_search_keywords'] = $search_terms;
 	$results['tm_debug_search_options'] = $query_options;
+	$results['tm_debug_results_cached'] = false;
 
 	// Step 9. Cache result
 	if ($conf['tm_search_cache_results_seconds'] > 0) {
@@ -770,7 +857,7 @@ function tm_search_api_ajax() {
 		// Only operate on first page
 		$insert_top_results = array(); // results to insert
 		$performance_time = 0; // keep track of performance time
-		$num_top_matches = 5; // up to five top matches
+		$num_top_matches = $conf["tm_search_api_num_top_results"];
 		$top_results = array();
 		if ((strpos($query["search_query"], '"') === false)
 			&& (strpos($query["search_query"], ' ') !== false)) {
@@ -830,6 +917,8 @@ function tm_search_api_ajax() {
 	$html .= "<input type='hidden' id='search-results-raw-query' value='" . json_encode($results['tm_debug_search_raw_query']) . "'>";
 	$html .= "<input type='hidden' id='search-results-keywords' value='" . json_encode($results['tm_debug_search_keywords']) . "'>";
 	$html .= "<input type='hidden' id='search-results-options' value='" . json_encode($results['tm_debug_search_options']) . "'>";
+	$html .= "<input type='hidden' id='search-results-cached' value='" . json_encode($results['tm_debug_results_cached']) . "'>";
+
 
 	$html .= "</div>";
 
@@ -1178,6 +1267,80 @@ function tm_search_api_render_search_result($result_url, $result_image_url, $res
 	$html = str_replace("__RESULT_INFO__", $result_info, $html);
 	$html = str_replace("__RESULT_LI_CLASS__", "search-result-item-" . $result_item_count, $html);
 	return $html;
+}
+
+/* Check if a keyword for a filter type should be ignored */
+function check_is_ignored_keyword($keyword, $filter_type) {
+
+	global $conf;
+
+	$ignore_keywords = array();
+	if ($filter_type == "people") {
+		$ignore_keywords = $conf["tm_search_api_ignore_keywords_people"];
+	}
+	if ($filter_type == "events") {
+		$ignore_keywords = $conf["tm_search_api_ignore_keywords_events"];
+	}
+	if ($filter_type == "chapters") {
+		$ignore_keywords = $conf["tm_search_api_ignore_keywords_chapters"];
+	}
+	if ($filter_type == "companies") {
+		$ignore_keywords = $conf["tm_search_api_ignore_keywords_companies"];
+	}
+
+	// check keyword against ignored keywords
+	if (in_array(strtolower($keyword), $ignore_keywords)) {
+		return true;
+	}
+
+	// if pluralize keywords, perform check against depluralized value
+	if ($conf["tm_search_api_pluralize_keywords"]) {
+		if (in_array(strtolower(rtrim($keyword, "s")), $ignore_keywords)) {
+			return true;
+		}
+	}
+
+	// not found
+	return false;
+}
+
+/* Check if a filter should be enabled based on ignored keywords
+   Return true if filter enabled and not all terms are ignored
+   Return false if all search terms for filter are ignored
+   Return false if filter disabled
+   */
+function check_filter_enabled($search_terms, $filter_enabled, $filter_type) {
+
+	// if filter enabled
+	if ($filter_enabled) {
+
+		$filter_status = false;
+		foreach($search_terms as $search_term) {
+			if (!check_is_ignored_keyword($search_term, $filter_type)) {
+				$filter_status = true;
+			}
+			if ($filter_status) {
+				return true;
+			}
+		}
+	}
+
+	// filter is not enabled or all words are ignored
+	return false;
+}
+
+/* Return empty results array */
+function tm_search_api_empty_results_array() {
+	$results = array();
+	$results['results'] = array();
+	$results['last page'] = true;
+	$results['results count'] = 0;
+	$results['performance'] = array();
+	$results['performance']['complete'] = 0;
+	$results['tm_debug_search_raw_query'] = $query_array["search_query"];
+	$results['tm_debug_search_keywords'] = $search_terms;
+	$results['tm_debug_search_options'] = $query_options;
+	return $results;
 }
 
 /* html templates */

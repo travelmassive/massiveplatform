@@ -11,6 +11,7 @@
 	var tm_global_search_query_timer;
 	var tm_global_search_query_timeout;
 	var tm_global_search_query_timeout_seconds = 10000; // 10 seconds
+	var tm_global_search_query_delay_seconds = 500; // delay filter search
 	var tm_page_first_load = true;
 	var tm_page_last_search_tip = null;
 	var tm_page_last_search_query = null;
@@ -335,7 +336,7 @@
 	// delay the search (useful for UI actions that might fire multiple events)
 	doSearchDelayed = function() {
 	  clearTimeout(tm_global_search_query_timer);
-	  tm_global_search_query_timer = setTimeout(doSearch, 500);
+	  tm_global_search_query_timer = setTimeout(doSearch, tm_global_search_query_delay_seconds);
 	};
 
 	// show a random search tip

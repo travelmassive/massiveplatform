@@ -811,12 +811,19 @@ $conf["tm_theme_meta_color"] = "#007DB7";
 /* Search settings */
 $conf["tm_search_api_results_per_page"] = 10; // how many results to show per page
 $conf["tm_search_api_max_search_terms"] = 8; // max terms allowed in search
+$conf["tm_search_api_num_top_results"] = 5; // perform a quote search first, and insert N results at top
 $conf["tm_search_cache_results_seconds"] = 60; // set to 0 to disable cache and rely on search_api_db cache
 $conf["tm_search_api_catch_exceptions"] = true; // will display friendly error message if error occurs
 $conf["tm_search_api_pluralize_keywords"] = true; // search for keyword plurals - ie: nomad = "nomad", "nomads"
+$conf["tm_search_api_filter_people_ignore_keywords"] = array(); // ignore these keywords when searching people
+$conf["tm_search_api_filter_events_ignore_keywords"] = array(); // ignore these keywords when searching events
+$conf["tm_search_api_filter_chapters_ignore_keywords"] = array("travel", "massive", "travel massive"); // ignore these keywords when searching chapters
+$conf["tm_search_api_filter_companies_ignore_keywords"] = array(); // ignore thesee keywords when searching companies
+
 $conf["tm_search_api_tips"] = array(
   "Founders in Italy: <i><a href='#' class='search-example' data-search-example='role:founder in:Italy'>role:founder in:Italy</i></a>",
   "Snapchatters in Brazil: <i><a href='#' class='search-example' data-search-example='has:snapchat in:Brazil'>has:snapchat in:Brazil</i></a>",
+  "Instagrammers in Kenya: <i><a href='#' class='search-example' data-search-example='has:instagram in:Kenya  '>has:instagram in:Kenya</i></a>",
   "Video creators in Europe: <i><a href='#' class='search-example' data-search-example='has:vimeo in:Europe'>has:vimeo in:Europe</i></a>",
   "Startups in San Francisco: <i><a href='#' class='search-example' data-search-example='startup in:\"San Francisco\"'>startup in:\"San Francisco\"</i></a>",
   "Tour companies in Africa: <i><a href='#' class='search-example' data-search-example='segment:tour in:Africa'>segment:tour in:Africa</a></i>",
@@ -824,7 +831,9 @@ $conf["tm_search_api_tips"] = array(
   "Digital Nomads: <i><a href='#' class='search-example' data-search-example='coworking nomad'>nomad</a></i>",
   "Tourism students: <i><a href='#' class='search-example' data-search-example='segment:education student'>segment:education student</a></i>",
   "Marketing in Miami: <i><a href='#' class='search-example' data-search-example='segment:marketing in:Miami'>segment:marketing in:Miami</a></i>",
+  "Luxury travel in Asia: <i><a href='#' class='search-example' data-search-example='luxury in:Asia'>luxury in:Asia</a></i>",
   "Event Sponsors in United States: <i><a href='#' class='search-example' data-search-example='flag:sponsor in:\"United States\"'>flag:sponsor in:\"United States\"</a></i>",
+  "Investors: <i><a href='#' class='search-example' data-search-example='investors'>investors</a></i>",
   "Hospitality: <i><a href='#' class='search-example' data-search-example='segment:hospitality'>segment:hospitality</a></i>",
   "Aviation: <i><a href='#' class='search-example' data-search-example='aviation airfare'>aviation airfare</a></i>",
   "TV hosts: <i><a href='#' class='search-example' data-search-example='role:host segment:media'>role:host segment:media</a></i>",

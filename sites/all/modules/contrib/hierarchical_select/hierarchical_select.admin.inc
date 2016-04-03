@@ -249,9 +249,9 @@ function hierarchical_select_admin_import_submit($form, &$form_state) {
 /**
  * Given a config array, create the export code for it.
  *
- * @param $config
+ * @param array $config
  *   A Hierarchical Select config array, as described in API.txt
- * @return
+ * @return string
  *   The code as it would appear in an editor.
  */
 function _hierarchical_select_create_export_code($config) {

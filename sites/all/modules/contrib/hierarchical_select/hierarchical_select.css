@@ -79,6 +79,7 @@
 /* Child level indicator. */
 .hierarchical-select-wrapper .hierarchical-select option.has-children {
   background: url(images/arrow.png) no-repeat right center;
+  padding-right: 20px;
 }
 
 

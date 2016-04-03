@@ -30,7 +30,9 @@ function hs_menu_menu() {
  * Alter the node form's menu form.
  */
 function hs_menu_form_node_form_alter(&$form, &$form_state) {
-  if (isset($form['menu']['link']['parent']) && isset($form['menu']['#access']) && $form['menu']['#access']) {
+  $active_types = array_filter(variable_get('hs_menu_content_types', array()));
+  $active = empty($active_types) || in_array($form_state['node']->type, $active_types);
+  if ($active && isset($form['menu']['link']['parent']) && isset($form['menu']['#access']) && $form['menu']['#access']) {
     unset($form['menu']['link']['parent']['#options']);
     $form['menu']['link']['parent']['#type'] = 'hierarchical_select';
     _hs_menu_apply_config($form['menu']['link']['parent'], array('type' => $form['type']['#value']));
@@ -102,6 +104,14 @@ function hs_menu_admin_settings() {
       1 => t('Enabled'),
     ),
     '#default_value' => variable_get('hs_menu_resizable', 1),
+  );
+
+  $form['hs_menu_content_types'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Content types'),
+    '#description' => t("Select the content types to use Hierarchical Select Menu on. If no content types are selected, then it will apply to all content types."),
+    '#options' => node_type_get_names(),
+    '#default_value' => variable_get('hs_menu_content_types', array()),
   );
 
   return system_settings_form($form);

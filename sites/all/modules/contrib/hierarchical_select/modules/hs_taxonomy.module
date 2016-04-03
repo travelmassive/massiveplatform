@@ -1067,7 +1067,7 @@ function _hs_taxonomy_hierarchical_select_get_tree($vid, $parent = 0, $depth = -
   // vocabulary uses translated term names we want output those terms with their
   // translated version. Therefore a full taxonomy term entity load is required,
   // similar to taxonomy_get_tree().
-  if (module_exists('title')) {
+  if (!empty($terms) && module_exists('title')) {
     $vocabulary = taxonomy_vocabulary_load($vid);
     if (title_field_replacement_enabled('taxonomy_term', $vocabulary->machine_name, 'name')) {
       $term_entities = taxonomy_term_load_multiple(array_keys($terms[$vid]));
@@ -1077,7 +1077,8 @@ function _hs_taxonomy_hierarchical_select_get_tree($vid, $parent = 0, $depth = -
   $next_parent = array();
   foreach ($parent as $single_parent) {
     foreach ($children[$vid][$single_parent] as $child) {
-      $term = clone($terms[$vid][$child]);
+      $term = isset($term_entities[$child]) ? $term_entities[$child] : $terms[$vid][$child];
+      $term = clone $term;
       $term->depth = $depth;
       // The "parent" attribute is not useful, as it would show one parent only.
       unset($term->parent);

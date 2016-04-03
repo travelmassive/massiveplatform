@@ -15,6 +15,9 @@
  *   "taxonomy-field_name".
  * @param $defaults_override
  *   Optionally override the defaults.
+ *
+ * @return array
+ *   An array of default config.
  */
 function hierarchical_select_common_config_get($config_id, $defaults_override = array()) {
   $config = variable_get('hs_config_' . $config_id, array());

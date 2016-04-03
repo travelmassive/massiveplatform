@@ -969,9 +969,9 @@ function _hierarchical_select_validate(&$element, &$form_state) {
  * This selection is updatable by the user, because the values are retrieved
  * from the selects in $element['hierarchical_select']['selects'].
  *
- * @param $element
+ * @param array $element
  *   A hierarchical_select form element.
- * @return
+ * @return array
  *   An array (bag) containing the ids of the selected items in the
  *   hierarchical select.
  */
@@ -1182,8 +1182,8 @@ function _hierarchical_select_process_calculate_selections(&$element, $hsid, &$f
   }
 
   // Prevent doubles in either array.
-  $hs_selection = array_unique($hs_selection);
-  $db_selection = array_unique($db_selection);
+  $hs_selection = array_unique($hs_selection, SORT_REGULAR);
+  $db_selection = array_unique($db_selection, SORT_REGULAR);
 
   return array($hs_selection, $db_selection);
 }

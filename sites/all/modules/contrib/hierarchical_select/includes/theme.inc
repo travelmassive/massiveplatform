@@ -14,12 +14,11 @@
 /**
  * Return a themed Hierarchical Select form element.
  *
- * @param element
+ * @param array $variables
  *   An associative array containing the properties of the element.
  *   Properties used: title, description, id, required
- * @param $value
- *   The form element's data.
- * @return
+ *
+ * @return string
  *   A string representing the form element.
  *
  * @ingroup themeable
@@ -59,9 +58,9 @@ function theme_hierarchical_select_form_element($variables) {
 /**
  * Format a hierarchical select.
  *
- * @param $element
+ * @param array $variables
  *   An associative array containing the properties of the element.
- * @return
+ * @return string
  *   A themed HTML string representing the form element.
  */
 function theme_hierarchical_select($variables) {
@@ -93,9 +92,9 @@ function theme_hierarchical_select($variables) {
 /**
  * Format the container for all selects in the hierarchical select.
  *
- * @param $element
+ * @param array $variables
  *   An associative array containing the properties of the element.
- * @return
+ * @return string
  *   A themed HTML string representing the form element.
  */
 function theme_hierarchical_select_selects_container($variables) {
@@ -111,9 +110,9 @@ function theme_hierarchical_select_selects_container($variables) {
  * Format a select in the .hierarchial-select div: prevent it from being
  * wrapped in a div. This simplifies the CSS and JS code.
  *
- * @param $element
+ * @param array $variables
  *   An associative array containing the properties of the element.
- * @return
+ * @return string
  *   A themed HTML string representing the form element.
  */
 function theme_hierarchical_select_select($variables) {  
@@ -140,9 +139,9 @@ function theme_hierarchical_select_item_separator($variables) {
  * "none" option or the "create new item" option. This theme function allows
  * you to change how a special option is indicated textually.
  *
- * @param $option
+ * @param array $variables
  *   A special option.
- * @return
+ * @return string
  *   A textually indicated special option.
  */
 function theme_hierarchical_select_special_option($variables) {
@@ -153,9 +152,9 @@ function theme_hierarchical_select_special_option($variables) {
 /**
  * Forms API theming callback for the dropbox. Renders the dropbox as a table.
  *
- * @param $element
+ * @param array $variables
  *   An element for which the #theme property was set to this function.
- * @return
+ * @return string
  *   A themed HTML string.
  */
 function theme_hierarchical_select_dropbox_table($variables) {

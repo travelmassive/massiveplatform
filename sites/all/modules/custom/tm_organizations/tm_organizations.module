@@ -603,8 +603,8 @@ function _tm_organizations_preprocess_follow_flag(&$variables) {
     $variables['flag_button_class'] = 'flag-limit follow bttn bttn-secondary bttn-m';
     drupal_add_js('
     jQuery(document).ready(function($) {
-      $( ".flag" ).unbind("click");
-      $( ".flag" ).bind("click.confirm", function(event) {
+      $( ".flag-follow-organizations a.flag" ).unbind("click");
+      $( ".flag-follow-organizations a.flag" ).bind("click.confirm", function(event) {
         jq_follow_message_organization(' . $entity_id . ');
         return false;
       });

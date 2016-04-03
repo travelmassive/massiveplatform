@@ -2420,8 +2420,8 @@ function _tm_users_preprocess_follow_flag(&$variables) {
     $variables['flag_button_class'] = 'flag-limit follow bttn bttn-secondary bttn-m';
     drupal_add_js('
     jQuery(document).ready(function($) {
-      $( ".flag" ).unbind("click");
-      $( ".flag" ).bind("click.confirm", function(event) {
+      $( ".flag-follow-members a.flag" ).unbind("click");
+      $( ".flag-follow-members a.flag" ).bind("click.confirm", function(event) {
         jq_follow_message_member(' . $entity_id . ');
         return false;
       });

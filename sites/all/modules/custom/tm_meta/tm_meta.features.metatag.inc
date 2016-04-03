@@ -245,9 +245,6 @@ function tm_meta_metatag_export_default() {
       'book:tag' => array(
         'value' => '',
       ),
-      'og:video' => array(
-        'value' => '',
-      ),
       'og:video:secure_url' => array(
         'value' => '',
       ),
@@ -291,6 +288,9 @@ function tm_meta_metatag_export_default() {
         'value' => '',
       ),
       'og:country_name' => array(
+        'value' => '',
+      ),
+      'og:video:url' => array(
         'value' => '',
       ),
     ),
@@ -424,9 +424,6 @@ function tm_meta_metatag_export_default() {
       'image_src' => array(
         'value' => '[node:field_image]',
       ),
-      'shortlink' => array(
-        'value' => '',
-      ),
       'dcterms.title' => array(
         'value' => '[site:name] [node:title]',
       ),
@@ -442,11 +439,26 @@ function tm_meta_metatag_export_default() {
       'og:image' => array(
         'value' => '[node:field_image]',
       ),
+      'og:country_name' => array(
+        'value' => '[node:field_country]',
+      ),
       'article:tag' => array(
         'value' => 'chapter, group',
       ),
-      'og:country_name' => array(
-        'value' => '[node:field_country]',
+      'twitter:card' => array(
+        'value' => 'summary',
+      ),
+      'twitter:url' => array(
+        'value' => '[current-page:url:absolute]',
+      ),
+      'twitter:title' => array(
+        'value' => '[site:name] [node:title]',
+      ),
+      'twitter:description' => array(
+        'value' => '[node:summary]',
+      ),
+      'twitter:image' => array(
+        'value' => '[node:field_image]',
       ),
     ),
   );
@@ -457,9 +469,6 @@ function tm_meta_metatag_export_default() {
     'config' => array(
       'image_src' => array(
         'value' => '[node:field_image]',
-      ),
-      'shortlink' => array(
-        'value' => '',
       ),
       'dcterms.subject' => array(
         'value' => 'event',
@@ -472,6 +481,21 @@ function tm_meta_metatag_export_default() {
       ),
       'og:street_address' => array(
         'value' => '[node:field_location]',
+      ),
+      'twitter:card' => array(
+        'value' => 'summary',
+      ),
+      'twitter:url' => array(
+        'value' => '[current-page:url:absolute]',
+      ),
+      'twitter:title' => array(
+        'value' => '[node:title]',
+      ),
+      'twitter:description' => array(
+        'value' => '[node:summary]',
+      ),
+      'twitter:image' => array(
+        'value' => '[node:field_image]',
       ),
     ),
   );
@@ -492,11 +516,26 @@ function tm_meta_metatag_export_default() {
       'og:image' => array(
         'value' => '[node:field_image]',
       ),
+      'og:country_name' => array(
+        'value' => '[node:field_country]',
+      ),
       'article:tag' => array(
         'value' => 'organization, company',
       ),
-      'og:country_name' => array(
-        'value' => '[node:field_country]',
+      'twitter:card' => array(
+        'value' => 'summary',
+      ),
+      'twitter:url' => array(
+        'value' => '[current-page:url:absolute]',
+      ),
+      'twitter:title' => array(
+        'value' => '[node:title]',
+      ),
+      'twitter:description' => array(
+        'value' => '[node:summary]',
+      ),
+      'twitter:image' => array(
+        'value' => '[node:field_image]',
       ),
     ),
   );
@@ -552,9 +591,6 @@ function tm_meta_metatag_export_default() {
       'image_src' => array(
         'value' => '[user:field_avatar]',
       ),
-      'shortlink' => array(
-        'value' => '',
-      ),
       'dcterms.title' => array(
         'value' => '[user:name] | [site:name]',
       ),
@@ -570,6 +606,9 @@ function tm_meta_metatag_export_default() {
       'og:image' => array(
         'value' => '[user:field_avatar]',
       ),
+      'og:country_name' => array(
+        'value' => '[user:field_user_country]',
+      ),
       'profile:first_name' => array(
         'value' => '[user:field_user_first_name]',
       ),
@@ -579,8 +618,20 @@ function tm_meta_metatag_export_default() {
       'profile:username' => array(
         'value' => '[user:friendly_url_user]',
       ),
-      'og:country_name' => array(
-        'value' => '[user:field_user_country]',
+      'twitter:card' => array(
+        'value' => 'summary',
+      ),
+      'twitter:url' => array(
+        'value' => '[current-page:url:absolute]',
+      ),
+      'twitter:title' => array(
+        'value' => '[user:field_user_first_name] [user:field_user_last_name]',
+      ),
+      'twitter:description' => array(
+        'value' => '[user:field_about_me]',
+      ),
+      'twitter:image' => array(
+        'value' => '[user:field_avatar]',
       ),
     ),
   );

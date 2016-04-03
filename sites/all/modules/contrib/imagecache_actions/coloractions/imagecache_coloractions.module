@@ -22,7 +22,7 @@ module_load_include('inc', 'imagecache_actions', 'utility-color');
 
 // There is no way to specify a file in hook_image_effect_info,
 // so placing this here for the time being.
-module_load_include('inc', 'imagecache_coloractions', 'transparency');
+include_once dirname(__FILE__) . '/transparency.inc';
 
 /**
  * Implements hook_image_effect_info().
@@ -154,6 +154,41 @@ function imagecache_coloractions_theme() {
   );
 }
 
+/**
+ * Implements hook_image_style_flush().
+ *
+ * This hook checks if the style contains a change format image effect and, if
+ * so, creates an .htaccess file in the root of the derivative folder that
+ * forces the correct Content-Type header on images served from that folder.
+ *
+ * @param array $style
+ */
+function imagecache_coloractions_image_style_flush($style) {
+  if (!is_array($style)) {
+    // See [#2190759].
+    return;
+  }
+  // Error in core: the old style + set of effects is passed in. This means
+  // that when a convert effect is added or deleted we won't notice. So we
+  // "change" the order of execution by duplicating these lines from
+  // image_style_flush():
+  // Clear image style and effect caches.
+  cache_clear_all('image_styles', 'cache');
+  cache_clear_all('image_effects:', 'cache', TRUE);
+  drupal_static_reset('image_styles');
+  drupal_static_reset('image_effects');
+
+  // Now load the current state of our style.
+  $new_style = image_style_load(isset($style['name']) ? $style['name'] : NULL, isset($style['isid']) ? $style['isid'] : NULL);
+
+  // If the style is flushed because it is being deleted it might be gone.
+  if (is_array($new_style)) {
+    // Now back to our actual work: determine if we have to crate an .htaccess
+    // file.
+    include_once dirname(__FILE__) . '/imagecache_coloractions.htaccess_creator.inc';
+    imagecache_coloractions_create_htaccess_for_style($new_style);
+  }
+}
 
 /**
  * Image effect form callback for the color shift effect.
@@ -721,7 +756,7 @@ function theme_coloractions_posterize_summary(array $variables) {
  */
 function coloractions_posterize_effect(stdClass $image, array $data) {
   if (!image_toolkit_invoke('posterize', $image, array($data['colors']))) {
-    watchdog('image_posterize', 'Image posterize failed using the %toolkit toolkit on %path (%mimetype, %dimensions)', array(
+    watchdog('imagecache_actions', 'Image posterize failed using the %toolkit toolkit on %path (%mimetype, %dimensions)', array(
       '%toolkit' => $image->toolkit,
       '%path' => $image->source,
       '%mimetype' => $image->info['mime_type'],

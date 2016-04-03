@@ -148,7 +148,6 @@ function image_imagemagick_imagemask(stdClass $image, stdClass $mask) {
   return TRUE;
 }
 
-
 /**
  * Image effect form callback for the define canvas effect.
  *
@@ -661,13 +660,14 @@ function canvasactions_file2canvas_form(array $data) {
     'xpos' => '',
     'ypos' => '',
     'alpha' => '100',
+    'scale' => '',
     'path' => '',
   );
   $data = array_merge($defaults, (array) $data);
 
   $form = array(
     'help' => array(
-      '#markup' => t('Note that using a transparent overlay that is larger than the source image may result in unwanted results - a solid background.'),
+      '#markup' => t('Note that using a non transparent overlay that is larger than the source image may result in unwanted results - a solid background.'),
     ),
   );
   $form += imagecache_actions_pos_form($data);
@@ -675,8 +675,19 @@ function canvasactions_file2canvas_form(array $data) {
     '#type' => 'textfield',
     '#title' => t('opacity'),
     '#default_value' => $data['alpha'],
+    '#field_suffix' => t('%'),
     '#size' => 6,
     '#description' => t('Opacity: 0-100. <b>Warning:</b> Due to a limitation in the GD toolkit, using an opacity other than 100% requires the system to use an algorithm that\'s much slower than the built-in functions. If you want partial transparency, you are better to use an already-transparent png as the overlay source image.'),
+    '#element_validate' => array('imagecache_actions_validate_number_non_negative'),
+  );
+  $form['scale'] = array(
+    '#type' => 'textfield',
+    '#title' => t('scale'),
+    '#default_value' => $data['scale'],
+    '#field_suffix' => t('%'),
+    '#size' => 6,
+    '#description' => t('Scales the overlay with respect to the source, thus not its own dimensions. Leave empty to use the original size of overlay image.'),
+    '#element_validate' => array('imagecache_actions_validate_number_positive'),
   );
   $form['path'] = array(
     '#type' => 'textfield',
@@ -701,7 +712,7 @@ function canvasactions_file2canvas_form(array $data) {
  */
 function theme_canvasactions_file2canvas_summary(array $variables) {
   $data = $variables['data'];
-  return '<strong>' . $data['path'] . '</strong> x:' . $data['xpos'] . ', y:' . $data['ypos'] . ' alpha:' . (@$data['alpha'] ? $data['alpha'] : 100) . '%';
+  return '<strong>' . $data['path'] . '</strong>, x:' . $data['xpos'] . ', y:' . $data['ypos'] . ', alpha:' . (!empty($data['alpha']) ? $data['alpha'] : 100) . '%' . ', scale:' . (!empty($data['scale']) ? $data['scale'].'%' : '-');
 }
 
 /**
@@ -716,6 +727,14 @@ function theme_canvasactions_file2canvas_summary(array $variables) {
 function canvasactions_file2canvas_effect(stdClass $image, array $data) {
   $overlay = imagecache_actions_image_load($data['path']);
   if ($overlay) {
+    if (!empty($data['scale']) && $data['scale'] > 0) {
+      // Scale the overlay with respect to the dimensions of the source being
+      // overlaid. To maintain the aspect ratio, only the width of the overlay
+      // is scaled like that, the height of the overlay follows the aspect
+      // ratio (that is why we use image_scale instead of image_resize).
+      $overlay_w = $image->info['width'] * $data['scale'] / 100;
+      image_scale($overlay, $overlay_w, NULL, TRUE);
+    }
     if (!isset($data['alpha'])) {
       $data['alpha'] = 100;
     }
@@ -895,7 +914,7 @@ function canvasactions_aspect_effect(stdClass $image, array $data) {
 
   if (empty($style)) {
     // Required preset has gone missing?
-    watchdog('imagecache_canvasactions', "When running 'aspect' action, I was unable to load sub-action %style_name. Either it's been deleted or the DB needs an update", array('%style_name' => $style_name), WATCHDOG_ERROR);
+    watchdog('imagecache_actions', "When running 'aspect' action, I was unable to load sub-action %style_name. Either it's been deleted or the DB needs an update", array('%style_name' => $style_name), WATCHDOG_ERROR);
     return FALSE;
   }
 
@@ -958,7 +977,7 @@ function canvasactions_resizepercent_form(array $data) {
   $form['width'] = array(
     '#type' => 'textfield',
     '#title' => t('Width'),
-    '#default_value' => isset($data['width']) ? (float) $data['width'] : '',
+    '#default_value' => !empty($data['width']) ? (float) $data['width'] : '',
     '#field_suffix' => ' ' . t('percent'),
     '#required' => FALSE,
     '#size' => 10,
@@ -968,7 +987,7 @@ function canvasactions_resizepercent_form(array $data) {
   $form['height'] = array(
     '#type' => 'textfield',
     '#title' => t('Height'),
-    '#default_value' => isset($data['height']) ? (float) $data['height'] : '',
+    '#default_value' => !empty($data['height']) ? (float) $data['height'] : '',
     '#field_suffix' => ' ' . t('percent'),
     '#required' => FALSE,
     '#size' => 10,
@@ -992,21 +1011,27 @@ function canvasactions_resizepercent_validate($element, &$form_state) {
   }
 }
 /**
- * Calculate percent based on input, fallback if only one value is
- * provided.
+ * Calculate percent based on input, fallback if only one value is provided.
+ *
+ * @param array $data
+ *
+ * @return float[]|FALSE
  */
-function _canvasactions_resizepercent_calculate_percent($data) {
+function _canvasactions_resizepercent_calculate_percent(array $data) {
   // Fallback if only one value is provided.
-  if (!$data['height']) {
+  if (empty($data['height'])) {
+    if (empty($data['width'])) {
+      return FALSE;
+    }
     $data['height'] = $data['width'];
   }
-  else if (!$data['width']) {
+  else if (empty($data['width'])) {
     $data['width'] = $data['height'];
   }
 
   // Get percentage values in decimal values.
-  $data['width'] = $data['width'] / 100;
-  $data['height'] = $data['height'] / 100;
+  $data['width'] = (float) $data['width'] / 100;
+  $data['height'] = (float) $data['height'] / 100;
 
   return $data;
 }
@@ -1023,13 +1048,15 @@ function _canvasactions_resizepercent_calculate_percent($data) {
  * @ingroup themeable
  */
 function theme_canvasactions_resizepercent_summary(array $variables) {
-  $data = $variables['data'];
-  $is_resize = $data['width'] && $data['height'] && $data['width'] != $data['height'];
-  if ($is_resize) {
-    return t('@width%x@height%', array('@width' => (float) $data['width'], '@height' => (float) $data['height']));
+  $data = _canvasactions_resizepercent_calculate_percent($variables['data']);
+  if (!$data) {
+    return t('Invalid effect data');
+  }
+  if ($data['width'] != $data['height']) {
+    return t('@width%x@height%', array('@width' => 100 * $data['width'], '@height' => 100 * $data['height']));
   }
   else {
-    return t('scale to @percent%', array('@percent' => (float) $data['height']));
+    return t('scale to @percent%', array('@percent' => (float) 100 * $data['height']));
   }
 }
 
@@ -1065,4 +1092,158 @@ function canvasactions_resizepercent_dimensions(array &$dimensions, array $data)
 
   $dimensions['width'] = (int) round($dimensions['width'] * $data['width']);
   $dimensions['height'] = (int) round($dimensions['height'] * $data['height']);
+}
+
+/**
+ * Image effect form callback for the blur effect.
+ *
+ * @param array $data
+ *   The current configuration for this image effect.
+ *
+ * @return array
+ *   The form definition for this effect.
+ */
+function canvasactions_blur_form(array $data) {
+  $form['intensity'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Blur intensity'),
+    '#description' => t('A higher intensity results in more blur. The larger the image, the larger value you need to get a really blurred image, think 50 to 100 for 600x400 images.'),
+    '#size' => 5,
+    '#default_value' => isset($data['intensity']) ? (int) $data['intensity'] : 2,
+    '#element_validate' => array('element_validate_integer_positive'),
+  );
+  return $form;
+}
+
+/**
+ * Implements theme_hook() for the underlay (background) effect summary.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - data: The current configuration for this image effect.
+ *
+ * @return string
+ *   The HTML for the summary of this image effect.
+ * @ingroup themeable
+ */
+function theme_canvasactions_blur_summary($variables) {
+  return t('Intensity: @intensity', array('@intensity' => $variables['data']['intensity']));
+}
+
+/**
+ * Image effect callback for the resize percent effect.
+ *
+ * @param stdClass $image
+ * @param array $data
+ *
+ * @return boolean
+ *   true on success, false otherwise.
+ */
+function canvasactions_blur_effect(stdClass $image, array $data) {
+  return image_toolkit_invoke('blur', $image, $data);
+}
+
+/**
+ * GD toolkit specific implementation of the blur effect.
+ *
+ * @param stdClass $image
+ * @param int $intensity
+ *   The number of times to apply the blur filter.
+ *
+ * @return boolean
+ *   True on success, false otherwise.
+ */
+function image_gd_blur(stdClass $image, $intensity) {
+  $intensity = (int) $intensity;
+  $result = TRUE;
+  $i = 0;
+  while ($result && $i++ < $intensity) {
+    $result = imagefilter($image->resource, IMG_FILTER_GAUSSIAN_BLUR);
+  }
+  return $result;
+}
+
+/**
+ * Imagemagick toolkit specific implementation of the blur effect.
+ *
+ * See http://www.imagemagick.org/Usage/blur/.
+ *
+ * @param stdClass $image
+ * @param int $intensity
+ *   The "intensity" of the blur effect.
+ *
+ * @return boolean
+ *   True on success, false otherwise.
+ */
+function image_imagemagick_blur(stdClass $image, $intensity) {
+  // To get similar results asd with the GD factor, we use a formula to alter
+  // the intensity into the sigma value that is passed to IM.
+  $sigma = 4.0 + 0.8 * $intensity;
+  $image->ops[] = '-blur ' . escapeshellarg(sprintf('0x%f', $sigma));
+  return TRUE;
+}
+
+/**
+ * Builds the interlace form.
+ *
+ * This effect has no options, only some help text, so the form is displayed
+ * anyway.
+ */
+function canvasactions_interlace_form() {
+  $form = array();
+  $form['help'] = array(
+    '#markup' => '<p><strong>There are no user-configurable options for this process.</strong></p>
+      <p>This effect will save the derivative image in an interlace / progressive way
+      which might improve perceived performance, especially for large images.
+      File size and loading speed will not change, but the user will pretty quickly
+      see a "degraded" copy of the entire image instead of a clear copy of the upper
+      part of the image.</p>
+      <p>Wikipedia: <a href="https://en.wikipedia.org/wiki/Interlacing_(bitmaps)">Interlacing (bitmaps)</a></p>',
+  );
+  return $form;
+}
+
+/**
+ * Image effect callback for the Interlace / Progressive effect.
+ *
+ * @param stdClass $image
+ * @param array $data
+ *
+ * @return bool
+ *   true on success, false otherwise.
+ */
+function canvasactions_interlace_effect(stdClass $image, array $data) {
+  return image_toolkit_invoke('interlace', $image, array($data));
+}
+
+/**
+ * GD toolkit specific implementation of the image interlace effect.
+ *
+ * @param stdClass $image
+ *   Image object containing the GD image resource to operate on.
+ * param array $data
+ *   The current configuration for this image effect.
+ *
+ * @return bool
+ *   true on success, false otherwise.
+ */
+function image_gd_interlace($image/*, array $data*/) {
+  imageinterlace($image->resource, 1);
+  return TRUE;
+}
+
+/**
+ * Imagemagick toolkit specific implementation of the image interlace effect.
+ *
+ * @param stdClass $image
+ *   Image object containing the image resource to operate on.
+ * param array $data
+ *   The current configuration for this image effect.
+ *
+ * @return bool
+ *   true on success, false otherwise.
+ */
+function image_imagemagick_interlace($image/*, array $data*/) {
+  $image->ops[] = '-interlace Plane';
+  return TRUE;
 }

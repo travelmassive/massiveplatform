@@ -8,9 +8,9 @@ dependencies[] = system_stream_wrapper
 
 features[image][] = 'corners_combo'
 
-; Information added by Drupal.org packaging script on 2014-11-29
-version = "7.x-1.5"
+; Information added by Drupal.org packaging script on 2016-02-19
+version = "7.x-1.7"
 core = "7.x"
 project = "imagecache_actions"
-datestamp = "1417256282"
+datestamp = "1455872655"
 

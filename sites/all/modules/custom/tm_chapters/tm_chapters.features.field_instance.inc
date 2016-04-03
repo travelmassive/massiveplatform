@@ -10,7 +10,7 @@
 function tm_chapters_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-chapter-body'
+  // Exported field_instance: 'node-chapter-body'.
   $field_instances['node-chapter-body'] = array(
     'bundle' => 'chapter',
     'default_value' => NULL,
@@ -82,7 +82,7 @@ function tm_chapters_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-chapter-field_chapter_color'
+  // Exported field_instance: 'node-chapter-field_chapter_color'.
   $field_instances['node-chapter-field_chapter_color'] = array(
     'bundle' => 'chapter',
     'default_value' => NULL,
@@ -137,7 +137,7 @@ function tm_chapters_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-chapter-field_chapter_leaders'
+  // Exported field_instance: 'node-chapter-field_chapter_leaders'.
   $field_instances['node-chapter-field_chapter_leaders'] = array(
     'bundle' => 'chapter',
     'default_value' => NULL,
@@ -253,7 +253,7 @@ function tm_chapters_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-chapter-field_chapter_shortcode'
+  // Exported field_instance: 'node-chapter-field_chapter_shortcode'.
   $field_instances['node-chapter-field_chapter_shortcode'] = array(
     'bundle' => 'chapter',
     'default_value' => NULL,
@@ -311,7 +311,7 @@ function tm_chapters_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-chapter-field_chapter_timezone'
+  // Exported field_instance: 'node-chapter-field_chapter_timezone'.
   $field_instances['node-chapter-field_chapter_timezone'] = array(
     'bundle' => 'chapter',
     'default_value' => NULL,
@@ -366,7 +366,7 @@ function tm_chapters_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-chapter-field_community_managers'
+  // Exported field_instance: 'node-chapter-field_community_managers'.
   $field_instances['node-chapter-field_community_managers'] = array(
     'bundle' => 'chapter',
     'default_value' => NULL,
@@ -467,7 +467,7 @@ function tm_chapters_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-chapter-field_country'
+  // Exported field_instance: 'node-chapter-field_country'.
   $field_instances['node-chapter-field_country'] = array(
     'bundle' => 'chapter',
     'default_value' => NULL,
@@ -522,7 +522,7 @@ function tm_chapters_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-chapter-field_geomaplocation'
+  // Exported field_instance: 'node-chapter-field_geomaplocation'.
   $field_instances['node-chapter-field_geomaplocation'] = array(
     'bundle' => 'chapter',
     'default_value' => NULL,
@@ -580,7 +580,7 @@ function tm_chapters_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-chapter-field_image'
+  // Exported field_instance: 'node-chapter-field_image'.
   $field_instances['node-chapter-field_image'] = array(
     'bundle' => 'chapter',
     'deleted' => 0,
@@ -664,7 +664,7 @@ function tm_chapters_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-chapter-field_join_chapter_message'
+  // Exported field_instance: 'node-chapter-field_join_chapter_message'.
   $field_instances['node-chapter-field_join_chapter_message'] = array(
     'bundle' => 'chapter',
     'default_value' => NULL,
@@ -724,7 +724,7 @@ The message will be included in the notification email sent to the member when t
     ),
   );
 
-  // Exported field_instance: 'node-chapter-field_link_facebook'
+  // Exported field_instance: 'node-chapter-field_link_facebook'.
   $field_instances['node-chapter-field_link_facebook'] = array(
     'bundle' => 'chapter',
     'default_value' => NULL,
@@ -800,7 +800,7 @@ The message will be included in the notification email sent to the member when t
     ),
   );
 
-  // Exported field_instance: 'node-chapter-field_link_linkedin'
+  // Exported field_instance: 'node-chapter-field_link_linkedin'.
   $field_instances['node-chapter-field_link_linkedin'] = array(
     'bundle' => 'chapter',
     'default_value' => NULL,
@@ -876,7 +876,7 @@ The message will be included in the notification email sent to the member when t
     ),
   );
 
-  // Exported field_instance: 'node-chapter-field_link_twitter'
+  // Exported field_instance: 'node-chapter-field_link_twitter'.
   $field_instances['node-chapter-field_link_twitter'] = array(
     'bundle' => 'chapter',
     'default_value' => NULL,
@@ -921,7 +921,7 @@ The message will be included in the notification email sent to the member when t
     'label' => 'Twitter',
     'required' => 0,
     'settings' => array(
-      'absolute_url' => 1,
+      'absolute_url' => 0,
       'attributes' => array(
         'class' => '',
         'configurable_class' => 0,
@@ -952,7 +952,7 @@ The message will be included in the notification email sent to the member when t
     ),
   );
 
-  // Exported field_instance: 'node-chapter-field_link_website'
+  // Exported field_instance: 'node-chapter-field_link_website'.
   $field_instances['node-chapter-field_link_website'] = array(
     'bundle' => 'chapter',
     'default_value' => NULL,

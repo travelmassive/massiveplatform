@@ -10,7 +10,7 @@
 function tm_base_menu_default_menu_links() {
   $menu_links = array();
 
-  // Exported menu link: main-menu_chapters:chapters
+  // Exported menu link: main-menu_chapters:chapters.
   $menu_links['main-menu_chapters:chapters'] = array(
     'menu_name' => 'main-menu',
     'link_path' => 'chapters',
@@ -27,7 +27,7 @@ function tm_base_menu_default_menu_links() {
     'weight' => -50,
     'customized' => 1,
   );
-  // Exported menu link: main-menu_companies:companies
+  // Exported menu link: main-menu_companies:companies.
   $menu_links['main-menu_companies:companies'] = array(
     'menu_name' => 'main-menu',
     'link_path' => 'companies',
@@ -44,34 +44,7 @@ function tm_base_menu_default_menu_links() {
     'weight' => -46,
     'customized' => 1,
   );
-  // Exported menu link: main-menu_discuss:discuss/
-  $menu_links['main-menu_discuss:discuss/'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'discuss/',
-    'router_path' => 'discuss',
-    'link_title' => 'Discuss',
-    'options' => array(
-      'identifier' => 'main-menu_discuss:discuss/',
-      'attributes' => array(
-        'class' => array(
-          0 => 'tm-menu-discuss',
-        ),
-      ),
-      'item_attributes' => array(
-        'id' => '',
-        'class' => '',
-        'style' => '',
-      ),
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => -45,
-    'customized' => 1,
-  );
-  // Exported menu link: main-menu_events:events
+  // Exported menu link: main-menu_events:events.
   $menu_links['main-menu_events:events'] = array(
     'menu_name' => 'main-menu',
     'link_path' => 'events',
@@ -88,7 +61,7 @@ function tm_base_menu_default_menu_links() {
     'weight' => -49,
     'customized' => 1,
   );
-  // Exported menu link: main-menu_leaders:leaders
+  // Exported menu link: main-menu_leaders:leaders.
   $menu_links['main-menu_leaders:leaders'] = array(
     'menu_name' => 'main-menu',
     'link_path' => 'leaders',
@@ -105,7 +78,7 @@ function tm_base_menu_default_menu_links() {
     'weight' => -47,
     'customized' => 1,
   );
-  // Exported menu link: main-menu_news:blog/
+  // Exported menu link: main-menu_news:blog/.
   $menu_links['main-menu_news:blog/'] = array(
     'menu_name' => 'main-menu',
     'link_path' => 'blog/',
@@ -128,7 +101,7 @@ function tm_base_menu_default_menu_links() {
     'weight' => -43,
     'customized' => 1,
   );
-  // Exported menu link: main-menu_people:community
+  // Exported menu link: main-menu_people:community.
   $menu_links['main-menu_people:community'] = array(
     'menu_name' => 'main-menu',
     'link_path' => 'community',
@@ -151,7 +124,34 @@ function tm_base_menu_default_menu_links() {
     'weight' => -48,
     'customized' => 1,
   );
-  // Exported menu link: menu-social-links_facebook:https://www.facebook.com/travelmassive
+  // Exported menu link: main-menu_qa:discuss/.
+  $menu_links['main-menu_qa:discuss/'] = array(
+    'menu_name' => 'main-menu',
+    'link_path' => 'discuss/',
+    'router_path' => 'discuss',
+    'link_title' => 'Q&A',
+    'options' => array(
+      'identifier' => 'main-menu_qa:discuss/',
+      'attributes' => array(
+        'class' => array(
+          0 => 'tm-menu-discuss',
+        ),
+      ),
+      'item_attributes' => array(
+        'id' => '',
+        'class' => '',
+        'style' => '',
+      ),
+    ),
+    'module' => 'menu',
+    'hidden' => 0,
+    'external' => 0,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => -45,
+    'customized' => 1,
+  );
+  // Exported menu link: menu-social-links_facebook:https://www.facebook.com/travelmassive.
   $menu_links['menu-social-links_facebook:https://www.facebook.com/travelmassive'] = array(
     'menu_name' => 'menu-social-links',
     'link_path' => 'https://www.facebook.com/travelmassive',
@@ -175,7 +175,7 @@ function tm_base_menu_default_menu_links() {
     'weight' => -49,
     'customized' => 1,
   );
-  // Exported menu link: menu-social-links_instagram:http://instagram.com/travelmassive
+  // Exported menu link: menu-social-links_instagram:http://instagram.com/travelmassive.
   $menu_links['menu-social-links_instagram:http://instagram.com/travelmassive'] = array(
     'menu_name' => 'menu-social-links',
     'link_path' => 'http://instagram.com/travelmassive',
@@ -199,7 +199,7 @@ function tm_base_menu_default_menu_links() {
     'weight' => -48,
     'customized' => 1,
   );
-  // Exported menu link: menu-social-links_linkedin:http://www.linkedin.com/company/travel-massive
+  // Exported menu link: menu-social-links_linkedin:http://www.linkedin.com/company/travel-massive.
   $menu_links['menu-social-links_linkedin:http://www.linkedin.com/company/travel-massive'] = array(
     'menu_name' => 'menu-social-links',
     'link_path' => 'http://www.linkedin.com/company/travel-massive',
@@ -223,7 +223,7 @@ function tm_base_menu_default_menu_links() {
     'weight' => -47,
     'customized' => 1,
   );
-  // Exported menu link: menu-social-links_snapchat:https://www.snapchat.com/
+  // Exported menu link: menu-social-links_snapchat:https://www.snapchat.com/.
   $menu_links['menu-social-links_snapchat:https://www.snapchat.com/'] = array(
     'menu_name' => 'menu-social-links',
     'link_path' => 'https://www.snapchat.com/',
@@ -252,7 +252,7 @@ function tm_base_menu_default_menu_links() {
     'weight' => -44,
     'customized' => 1,
   );
-  // Exported menu link: menu-social-links_twitter:http://twitter.com/travelmassive
+  // Exported menu link: menu-social-links_twitter:http://twitter.com/travelmassive.
   $menu_links['menu-social-links_twitter:http://twitter.com/travelmassive'] = array(
     'menu_name' => 'menu-social-links',
     'link_path' => 'http://twitter.com/travelmassive',
@@ -276,7 +276,7 @@ function tm_base_menu_default_menu_links() {
     'weight' => -50,
     'customized' => 1,
   );
-  // Exported menu link: menu-social-links_vimeo:https://vimeo.com/travelmassive
+  // Exported menu link: menu-social-links_vimeo:https://vimeo.com/travelmassive.
   $menu_links['menu-social-links_vimeo:https://vimeo.com/travelmassive'] = array(
     'menu_name' => 'menu-social-links',
     'link_path' => 'https://vimeo.com/travelmassive',
@@ -300,7 +300,7 @@ function tm_base_menu_default_menu_links() {
     'weight' => -45,
     'customized' => 1,
   );
-  // Exported menu link: menu-social-links_youtube:https://www.youtube.com/user/travelmassive/videos
+  // Exported menu link: menu-social-links_youtube:https://www.youtube.com/user/travelmassive/videos.
   $menu_links['menu-social-links_youtube:https://www.youtube.com/user/travelmassive/videos'] = array(
     'menu_name' => 'menu-social-links',
     'link_path' => 'https://www.youtube.com/user/travelmassive/videos',
@@ -329,7 +329,6 @@ function tm_base_menu_default_menu_links() {
   // Included for use with string extractors like potx.
   t('Chapters');
   t('Companies');
-  t('Discuss');
   t('Events');
   t('Facebook');
   t('Instagram');
@@ -337,6 +336,7 @@ function tm_base_menu_default_menu_links() {
   t('Linkedin');
   t('News');
   t('People');
+  t('Q&A');
   t('Snapchat');
   t('Twitter');
   t('Vimeo');

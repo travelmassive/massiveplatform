@@ -10,7 +10,7 @@
 function tm_organizations_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_follower_message'
+  // Exported field_base: 'field_follower_message'.
   $field_bases['field_follower_message'] = array(
     'active' => 1,
     'cardinality' => 1,

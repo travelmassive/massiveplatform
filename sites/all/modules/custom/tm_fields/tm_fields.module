@@ -1455,13 +1455,38 @@ function tm_fields_field_formatter_info() {
 
 /* 
  * Helper method return full URL
+ * Note: you should sanitize urls returned from this method before displaying them
  */
-function _tm_fields_full_url($item) {
+function _tm_fields_full_url($item, $allow_queries = true) {
 
+  // Note: as of link-7.x-1.4:
+  // - the full url is in the item
+  // - non-http links have a leading / added
+  // - social links are htmlentities ie: @ = %40
+
+  $full_url = $item['url'];
+  
+  // replace %40 with @ symbol (for social links)
+  $full_url = str_replace("%40", "@", $full_url);
+
+  // remove any leading / or ?
+  $full_url = ltrim($full_url, "/");
+
+  // Remove ? query string
+  if (!$allow_queries) {
+    $full_url = ltrim($full_url, "?");
+    $parts = explode("?", $full_url);
+    $full_url = $parts[0];
+  }
+
+  return $full_url;
+
+  // For link-7.x-1.3
   // $item['url'] is cut off at argument list
   // so we need to construct the full url from the query array
   // ie: ?options=abc
-  $full_url = $item['url'];
+  /*$full_url = $item['url'];
+  print_r($item);
   $arg_seperator = "?";
   if (sizeof($item['query']) > 0) {
     foreach($item['query'] as $key => $val) {
@@ -1473,12 +1498,13 @@ function _tm_fields_full_url($item) {
       $arg_seperator = "&"; 
     }
   }
-  return $full_url;
+  return $full_url;*/
 }
 
 /**
 * Implements hook_field_formatter_view()
 * see: See more at: http://www.whenwhowhere.com/tech-blog/create-custom-field-formatter-drupal-7#sthash.pf9Fsjzp.dpuf
+* Note: It's the renderer's responsibility to run check_url() and check_plain() when displaying
 */
 function tm_fields_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $element = array();
@@ -1499,8 +1525,6 @@ function tm_fields_field_formatter_view($entity_type, $entity, $field, $instance
         if(preg_match($url_regex, $full_url)) {
 
           // sanitize for output
-          $full_url = htmlentities($full_url);
-
           $element[$delta] = array(
             '#theme' => 'tm_fields_link', 
             '#title' => $item['title'], 
@@ -1515,16 +1539,17 @@ function tm_fields_field_formatter_view($entity_type, $entity, $field, $instance
         $element[$delta] = array(
           '#theme' => 'tm_fields_twitter', 
           '#title' => $item['title'], 
-          '#url' => $item['url'], 
+          '#url' => _tm_fields_full_url($item, false), // remove ? arguments
         );
      }
+
     break;
     case 'tm_fields_facebook':
       foreach ($items as $delta => $item) {
         $element[$delta] = array(
           '#theme' => 'tm_fields_facebook', 
           '#title' => $item['title'], 
-          '#url' => $item['url'], // remove ? arguments
+          '#url' => _tm_fields_full_url($item, false), // remove ? arguments
         );
      }
     break;
@@ -1542,7 +1567,7 @@ function tm_fields_field_formatter_view($entity_type, $entity, $field, $instance
         $element[$delta] = array(
           '#theme' => 'tm_fields_instagram', 
           '#title' => $item['title'], 
-          '#url' => $item['url'], 
+          '#url' => _tm_fields_full_url($item, false), // remove ? arguments
         );
      }
     break;
@@ -1560,7 +1585,7 @@ function tm_fields_field_formatter_view($entity_type, $entity, $field, $instance
         $element[$delta] = array(
           '#theme' => 'tm_fields_vimeo', 
           '#title' => $item['title'], 
-          '#url' => $item['url'], 
+          '#url' => _tm_fields_full_url($item, false), // remove ? arguments
         );
      }
     break;
@@ -1569,7 +1594,7 @@ function tm_fields_field_formatter_view($entity_type, $entity, $field, $instance
         $element[$delta] = array(
           '#theme' => 'tm_fields_snapchat', 
           '#title' => $item['title'], 
-          '#url' => $item['url'], 
+          '#url' => _tm_fields_full_url($item, false), // remove ? arguments
         );
      }
     break;

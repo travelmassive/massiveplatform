@@ -75,7 +75,7 @@ if ($display_url == "") {
 $twitter_url = check_url($twitter_url);
 $display_url = check_plain($display_url);
 
-if ($twitter_url != "") { ?>
+if (($twitter_url != "") && ($url != "")) { ?>
 <a href="<?php print $twitter_url; ?>" rel="nofollow" target="_blank"><?php print $display_url; ?></a>
 <?php } else { ?>
 <script>try { document.getElementsByClassName("field-link-twitter")[0].style.display = 'none'; } catch(err) {};</script>

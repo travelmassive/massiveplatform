@@ -8,7 +8,7 @@
  * Implements hook_field_group_info().
  */
 function tm_chapters_field_group_info() {
-  $export = array();
+  $field_groups = array();
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -38,7 +38,7 @@ function tm_chapters_field_group_info() {
       ),
     ),
   );
-  $export['group_action_menu_wrapper|node|chapter|full'] = $field_group;
+  $field_groups['group_action_menu_wrapper|node|chapter|full'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -71,7 +71,7 @@ function tm_chapters_field_group_info() {
       ),
     ),
   );
-  $export['group_action_menu|node|chapter|full'] = $field_group;
+  $field_groups['group_action_menu|node|chapter|full'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -99,7 +99,7 @@ function tm_chapters_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_chapter_location|node|chapter|form'] = $field_group;
+  $field_groups['group_chapter_location|node|chapter|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -127,7 +127,7 @@ function tm_chapters_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_community_management|node|chapter|form'] = $field_group;
+  $field_groups['group_community_management|node|chapter|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -150,7 +150,7 @@ function tm_chapters_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_community_wrapper|node|chapter|full'] = $field_group;
+  $field_groups['group_community_wrapper|node|chapter|full'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -177,7 +177,7 @@ function tm_chapters_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_details_wrapper|node|chapter|full'] = $field_group;
+  $field_groups['group_details_wrapper|node|chapter|full'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -214,7 +214,7 @@ function tm_chapters_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_form_about|node|chapter|form'] = $field_group;
+  $field_groups['group_form_about|node|chapter|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -245,7 +245,7 @@ function tm_chapters_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_form_elsewhere|node|chapter|form'] = $field_group;
+  $field_groups['group_form_elsewhere|node|chapter|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -274,7 +274,7 @@ function tm_chapters_field_group_info() {
       ),
     ),
   );
-  $export['group_summary_wrapper|node|chapter|search_result'] = $field_group;
+  $field_groups['group_summary_wrapper|node|chapter|search_result'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -297,7 +297,19 @@ function tm_chapters_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_team_wrapper|node|chapter|full'] = $field_group;
+  $field_groups['group_team_wrapper|node|chapter|full'] = $field_group;
 
-  return $export;
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('About');
+  t('Action menu');
+  t('Action menu wrapper');
+  t('Chapter leaders');
+  t('Community');
+  t('Community Management');
+  t('Elsewhere');
+  t('Location');
+  t('Summary');
+
+  return $field_groups;
 }

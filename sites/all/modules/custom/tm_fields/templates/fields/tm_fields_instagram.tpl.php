@@ -73,7 +73,7 @@ if ($display_url == "") {
 $instagram_url = check_url($instagram_url);
 $display_url = check_plain($display_url);
 
-if ($instagram_url != "") { ?>
+if (($instagram_url != "") && ($url != "")) { ?>
 <a href="<?php print $instagram_url; ?>" rel="nofollow" target="_blank"><?php print $display_url; ?></a>
 <?php } else { ?>
 <script>try { document.getElementsByClassName("field-link-instagram")[0].style.display = 'none'; } catch(err) {};</script>

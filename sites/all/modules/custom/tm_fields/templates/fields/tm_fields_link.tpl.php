@@ -42,5 +42,5 @@ if ($render_url) {
 ?>
 <a href="<?php print $url; ?>" rel="nofollow" target="_blank"><?php print $display_url; ?></a>
 <?php } else { ?>
-&nbsp;
+<script>try { document.getElementsByClassName("field-link-website")[0].style.display = 'none'; } catch(err) {};</script>
 <?php } ?>

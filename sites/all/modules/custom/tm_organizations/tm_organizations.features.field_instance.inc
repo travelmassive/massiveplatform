@@ -10,7 +10,7 @@
 function tm_organizations_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-organization-body'
+  // Exported field_instance: 'node-organization-body'.
   $field_instances['node-organization-body'] = array(
     'bundle' => 'organization',
     'default_value' => NULL,
@@ -83,7 +83,7 @@ function tm_organizations_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-organization-field_avatar'
+  // Exported field_instance: 'node-organization-field_avatar'.
   $field_instances['node-organization-field_avatar'] = array(
     'bundle' => 'organization',
     'deleted' => 0,
@@ -166,7 +166,7 @@ function tm_organizations_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-organization-field_country'
+  // Exported field_instance: 'node-organization-field_country'.
   $field_instances['node-organization-field_country'] = array(
     'bundle' => 'organization',
     'default_value' => NULL,
@@ -223,7 +223,7 @@ function tm_organizations_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-organization-field_follower_message'
+  // Exported field_instance: 'node-organization-field_follower_message'.
   $field_instances['node-organization-field_follower_message'] = array(
     'bundle' => 'organization',
     'default_value' => NULL,
@@ -283,7 +283,7 @@ Displays a short message to followers on your company profile page.<br>',
     ),
   );
 
-  // Exported field_instance: 'node-organization-field_friendly_url'
+  // Exported field_instance: 'node-organization-field_friendly_url'.
   $field_instances['node-organization-field_friendly_url'] = array(
     'bundle' => 'organization',
     'default_value' => NULL,
@@ -350,7 +350,7 @@ Displays a short message to followers on your company profile page.<br>',
     ),
   );
 
-  // Exported field_instance: 'node-organization-field_image'
+  // Exported field_instance: 'node-organization-field_image'.
   $field_instances['node-organization-field_image'] = array(
     'bundle' => 'organization',
     'deleted' => 0,
@@ -443,7 +443,7 @@ Displays a short message to followers on your company profile page.<br>',
     ),
   );
 
-  // Exported field_instance: 'node-organization-field_link_facebook'
+  // Exported field_instance: 'node-organization-field_link_facebook'.
   $field_instances['node-organization-field_link_facebook'] = array(
     'bundle' => 'organization',
     'default_value' => NULL,
@@ -521,7 +521,7 @@ Displays a short message to followers on your company profile page.<br>',
     ),
   );
 
-  // Exported field_instance: 'node-organization-field_link_instagram'
+  // Exported field_instance: 'node-organization-field_link_instagram'.
   $field_instances['node-organization-field_link_instagram'] = array(
     'bundle' => 'organization',
     'default_value' => NULL,
@@ -598,7 +598,7 @@ Displays a short message to followers on your company profile page.<br>',
     ),
   );
 
-  // Exported field_instance: 'node-organization-field_link_linkedin'
+  // Exported field_instance: 'node-organization-field_link_linkedin'.
   $field_instances['node-organization-field_link_linkedin'] = array(
     'bundle' => 'organization',
     'default_value' => NULL,
@@ -676,7 +676,7 @@ Displays a short message to followers on your company profile page.<br>',
     ),
   );
 
-  // Exported field_instance: 'node-organization-field_link_snapchat'
+  // Exported field_instance: 'node-organization-field_link_snapchat'.
   $field_instances['node-organization-field_link_snapchat'] = array(
     'bundle' => 'organization',
     'default_value' => NULL,
@@ -753,7 +753,7 @@ Displays a short message to followers on your company profile page.<br>',
     ),
   );
 
-  // Exported field_instance: 'node-organization-field_link_twitter'
+  // Exported field_instance: 'node-organization-field_link_twitter'.
   $field_instances['node-organization-field_link_twitter'] = array(
     'bundle' => 'organization',
     'default_value' => NULL,
@@ -800,7 +800,7 @@ Displays a short message to followers on your company profile page.<br>',
     'label' => 'Twitter',
     'required' => 0,
     'settings' => array(
-      'absolute_url' => 1,
+      'absolute_url' => 0,
       'attributes' => array(
         'class' => '',
         'configurable_class' => 0,
@@ -831,7 +831,7 @@ Displays a short message to followers on your company profile page.<br>',
     ),
   );
 
-  // Exported field_instance: 'node-organization-field_link_vimeo'
+  // Exported field_instance: 'node-organization-field_link_vimeo'.
   $field_instances['node-organization-field_link_vimeo'] = array(
     'bundle' => 'organization',
     'default_value' => NULL,
@@ -908,7 +908,7 @@ Displays a short message to followers on your company profile page.<br>',
     ),
   );
 
-  // Exported field_instance: 'node-organization-field_link_website'
+  // Exported field_instance: 'node-organization-field_link_website'.
   $field_instances['node-organization-field_link_website'] = array(
     'bundle' => 'organization',
     'default_value' => NULL,
@@ -986,7 +986,7 @@ Displays a short message to followers on your company profile page.<br>',
     ),
   );
 
-  // Exported field_instance: 'node-organization-field_link_youtube'
+  // Exported field_instance: 'node-organization-field_link_youtube'.
   $field_instances['node-organization-field_link_youtube'] = array(
     'bundle' => 'organization',
     'default_value' => NULL,
@@ -1063,7 +1063,7 @@ Displays a short message to followers on your company profile page.<br>',
     ),
   );
 
-  // Exported field_instance: 'node-organization-field_location_city'
+  // Exported field_instance: 'node-organization-field_location_city'.
   $field_instances['node-organization-field_location_city'] = array(
     'bundle' => 'organization',
     'default_value' => NULL,
@@ -1124,7 +1124,7 @@ Displays a short message to followers on your company profile page.<br>',
     ),
   );
 
-  // Exported field_instance: 'node-organization-field_owner'
+  // Exported field_instance: 'node-organization-field_owner'.
   $field_instances['node-organization-field_owner'] = array(
     'bundle' => 'organization',
     'default_value' => NULL,
@@ -1241,7 +1241,7 @@ Displays a short message to followers on your company profile page.<br>',
     ),
   );
 
-  // Exported field_instance: 'node-organization-field_segment'
+  // Exported field_instance: 'node-organization-field_segment'.
   $field_instances['node-organization-field_segment'] = array(
     'bundle' => 'organization',
     'default_value' => array(),

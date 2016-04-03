@@ -8,7 +8,7 @@
  * Implements hook_field_group_info().
  */
 function tm_users_field_group_info() {
-  $export = array();
+  $field_groups = array();
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -38,7 +38,7 @@ function tm_users_field_group_info() {
       ),
     ),
   );
-  $export['group_action_menu_wrapper|user|user|default'] = $field_group;
+  $field_groups['group_action_menu_wrapper|user|user|default'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -72,7 +72,7 @@ function tm_users_field_group_info() {
       ),
     ),
   );
-  $export['group_action_menu|user|user|default'] = $field_group;
+  $field_groups['group_action_menu|user|user|default'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -99,7 +99,7 @@ function tm_users_field_group_info() {
       ),
     ),
   );
-  $export['group_chapter_list_wrapper|user|user|default'] = $field_group;
+  $field_groups['group_chapter_list_wrapper|user|user|default'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -122,7 +122,7 @@ function tm_users_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_community_wrapper|user|user|default'] = $field_group;
+  $field_groups['group_community_wrapper|user|user|default'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -145,7 +145,7 @@ function tm_users_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_companies_list_wrapper|user|user|default'] = $field_group;
+  $field_groups['group_companies_list_wrapper|user|user|default'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -182,7 +182,7 @@ function tm_users_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_details_wrapper|user|user|default'] = $field_group;
+  $field_groups['group_details_wrapper|user|user|default'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -205,7 +205,7 @@ function tm_users_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_event_list_wrapper|user|user|default'] = $field_group;
+  $field_groups['group_event_list_wrapper|user|user|default'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -230,7 +230,7 @@ function tm_users_field_group_info() {
       ),
     ),
   );
-  $export['group_following_organizations|user|user|default'] = $field_group;
+  $field_groups['group_following_organizations|user|user|default'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -255,7 +255,7 @@ function tm_users_field_group_info() {
       ),
     ),
   );
-  $export['group_following_wrapper|user|user|default'] = $field_group;
+  $field_groups['group_following_wrapper|user|user|default'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -291,7 +291,7 @@ function tm_users_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_form_about|user|user|form'] = $field_group;
+  $field_groups['group_form_about|user|user|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -323,7 +323,7 @@ function tm_users_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_form_basic_settings|user|user|form'] = $field_group;
+  $field_groups['group_form_basic_settings|user|user|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -358,7 +358,7 @@ function tm_users_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_form_elsewhere|user|user|form'] = $field_group;
+  $field_groups['group_form_elsewhere|user|user|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -390,7 +390,7 @@ function tm_users_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_form_qa|user|user|form'] = $field_group;
+  $field_groups['group_form_qa|user|user|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -420,7 +420,7 @@ function tm_users_field_group_info() {
       ),
     ),
   );
-  $export['group_job_wrapper|user|user|default'] = $field_group;
+  $field_groups['group_job_wrapper|user|user|default'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -450,7 +450,7 @@ function tm_users_field_group_info() {
       ),
     ),
   );
-  $export['group_job_wrapper|user|user|grid'] = $field_group;
+  $field_groups['group_job_wrapper|user|user|grid'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -479,7 +479,7 @@ function tm_users_field_group_info() {
       ),
     ),
   );
-  $export['group_location_wrapper|user|user|default'] = $field_group;
+  $field_groups['group_location_wrapper|user|user|default'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -508,7 +508,7 @@ function tm_users_field_group_info() {
       ),
     ),
   );
-  $export['group_summary_wrapper|user|user|search_result'] = $field_group;
+  $field_groups['group_summary_wrapper|user|user|search_result'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -538,7 +538,7 @@ function tm_users_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_user_account|user|user|form'] = $field_group;
+  $field_groups['group_user_account|user|user|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -566,7 +566,7 @@ function tm_users_field_group_info() {
       ),
     ),
   );
-  $export['group_user_edit|user|user|form'] = $field_group;
+  $field_groups['group_user_edit|user|user|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -595,7 +595,7 @@ function tm_users_field_group_info() {
       'formatter' => 'closed',
     ),
   );
-  $export['group_user_notifications|user|user|form'] = $field_group;
+  $field_groups['group_user_notifications|user|user|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -626,7 +626,7 @@ function tm_users_field_group_info() {
       'formatter' => 'closed',
     ),
   );
-  $export['group_user_profile|user|user|form'] = $field_group;
+  $field_groups['group_user_profile|user|user|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -655,7 +655,7 @@ function tm_users_field_group_info() {
       ),
     ),
   );
-  $export['group_user_qa_wrapper|user|user|default'] = $field_group;
+  $field_groups['group_user_qa_wrapper|user|user|default'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -688,7 +688,7 @@ function tm_users_field_group_info() {
       ),
     ),
   );
-  $export['group_user_qa|user|user|default'] = $field_group;
+  $field_groups['group_user_qa|user|user|default'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -717,7 +717,31 @@ function tm_users_field_group_info() {
       'formatter' => 'closed',
     ),
   );
-  $export['group_user_twitter_settings|user|user|form'] = $field_group;
+  $field_groups['group_user_twitter_settings|user|user|form'] = $field_group;
 
-  return $export;
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('A little more about you');
+  t('About');
+  t('Account');
+  t('Action menu');
+  t('Action menu wrapper');
+  t('Basic settings');
+  t('Chapters joined');
+  t('Company Profiles');
+  t('Elsewhere');
+  t('Events joined');
+  t('Followers');
+  t('Following');
+  t('Following Organizations');
+  t('Job wrapper');
+  t('Location');
+  t('Notifications');
+  t('Profile');
+  t('QA');
+  t('Summary');
+  t('Twitter');
+  t('User edit');
+
+  return $field_groups;
 }

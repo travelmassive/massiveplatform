@@ -10,7 +10,7 @@
 function tm_chapters_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_chapter_color'
+  // Exported field_base: 'field_chapter_color'.
   $field_bases['field_chapter_color'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -35,7 +35,7 @@ function tm_chapters_field_default_field_bases() {
     'type' => 'color_field_rgb',
   );
 
-  // Exported field_base: 'field_chapter_leaders'
+  // Exported field_base: 'field_chapter_leaders'.
   $field_bases['field_chapter_leaders'] = array(
     'active' => 1,
     'cardinality' => -1,
@@ -68,7 +68,7 @@ function tm_chapters_field_default_field_bases() {
     'type' => 'entityreference',
   );
 
-  // Exported field_base: 'field_chapter_shortcode'
+  // Exported field_base: 'field_chapter_shortcode'.
   $field_bases['field_chapter_shortcode'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -89,7 +89,7 @@ function tm_chapters_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_chapter_timezone'
+  // Exported field_base: 'field_chapter_timezone'.
   $field_bases['field_chapter_timezone'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -110,7 +110,7 @@ function tm_chapters_field_default_field_bases() {
     'type' => 'tzfield',
   );
 
-  // Exported field_base: 'field_community_managers'
+  // Exported field_base: 'field_community_managers'.
   $field_bases['field_community_managers'] = array(
     'active' => 1,
     'cardinality' => -1,
@@ -143,7 +143,7 @@ function tm_chapters_field_default_field_bases() {
     'type' => 'entityreference',
   );
 
-  // Exported field_base: 'field_geomaplocation'
+  // Exported field_base: 'field_geomaplocation'.
   $field_bases['field_geomaplocation'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -193,7 +193,7 @@ function tm_chapters_field_default_field_bases() {
     'type' => 'geofield',
   );
 
-  // Exported field_base: 'field_join_chapter_message'
+  // Exported field_base: 'field_join_chapter_message'.
   $field_bases['field_join_chapter_message'] = array(
     'active' => 1,
     'cardinality' => 1,

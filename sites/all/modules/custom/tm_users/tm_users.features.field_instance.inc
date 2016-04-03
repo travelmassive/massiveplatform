@@ -582,7 +582,8 @@ function tm_users_field_default_field_instances() {
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'ie: https://linkedin.com/in/myname',
+    'description' => 'ie: https://linkedin.com/in/myname
+<br>Need help finding your LinkedIn URL? Watch this <a target=\'_blank\' href=\'https://www.youtube.com/watch?v=iioFPii_Pb8\'>quick tutorial video</a>.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -758,7 +759,7 @@ function tm_users_field_default_field_instances() {
     'label' => 'Twitter',
     'required' => 0,
     'settings' => array(
-      'absolute_url' => 1,
+      'absolute_url' => 0,
       'attributes' => array(
         'class' => '',
         'configurable_class' => 0,
@@ -1637,7 +1638,8 @@ function tm_users_field_default_field_instances() {
   t('ie: @yourname or https://instagram.com/yourname');
   t('ie: http://www.mywebsite.com');
   t('ie: https://facebook.com/myname');
-  t('ie: https://linkedin.com/in/myname');
+  t('ie: https://linkedin.com/in/myname
+<br>Need help finding your LinkedIn URL? Watch this <a target=\'_blank\' href=\'https://www.youtube.com/watch?v=iioFPii_Pb8\'>quick tutorial video</a>.');
   t('ie: https://vimeo.com/yourname');
   t('ie: https://www.youtube.com/user/username');
 

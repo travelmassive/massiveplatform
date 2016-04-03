@@ -8,7 +8,7 @@
  * Implements hook_field_group_info().
  */
 function tm_organizations_field_group_info() {
-  $export = array();
+  $field_groups = array();
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -38,7 +38,7 @@ function tm_organizations_field_group_info() {
       ),
     ),
   );
-  $export['group_action_menu_wrapper|node|organization|full'] = $field_group;
+  $field_groups['group_action_menu_wrapper|node|organization|full'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -70,7 +70,7 @@ function tm_organizations_field_group_info() {
       ),
     ),
   );
-  $export['group_action_menu|node|organization|full'] = $field_group;
+  $field_groups['group_action_menu|node|organization|full'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -93,7 +93,7 @@ function tm_organizations_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_community_wrapper|node|organization|full'] = $field_group;
+  $field_groups['group_community_wrapper|node|organization|full'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -128,7 +128,7 @@ function tm_organizations_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_details_wrapper|node|organization|full'] = $field_group;
+  $field_groups['group_details_wrapper|node|organization|full'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -165,7 +165,7 @@ function tm_organizations_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_form_about|node|organization|form'] = $field_group;
+  $field_groups['group_form_about|node|organization|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -200,7 +200,7 @@ function tm_organizations_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_form_elsewhere|node|organization|form'] = $field_group;
+  $field_groups['group_form_elsewhere|node|organization|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -230,7 +230,7 @@ function tm_organizations_field_group_info() {
       ),
     ),
   );
-  $export['group_location_wrapper|node|organization|full'] = $field_group;
+  $field_groups['group_location_wrapper|node|organization|full'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -253,7 +253,7 @@ function tm_organizations_field_group_info() {
       'formatter' => 'open',
     ),
   );
-  $export['group_managed_by_wrapper|node|organization|full'] = $field_group;
+  $field_groups['group_managed_by_wrapper|node|organization|full'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -282,7 +282,18 @@ function tm_organizations_field_group_info() {
       ),
     ),
   );
-  $export['group_summary_wrapper|node|organization|search_result'] = $field_group;
+  $field_groups['group_summary_wrapper|node|organization|search_result'] = $field_group;
 
-  return $export;
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('About');
+  t('Action menu');
+  t('Action menu wrapper');
+  t('Elsewhere');
+  t('Followers');
+  t('Location');
+  t('Profile managed by');
+  t('Summary');
+
+  return $field_groups;
 }

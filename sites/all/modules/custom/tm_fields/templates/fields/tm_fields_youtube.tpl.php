@@ -52,7 +52,7 @@ if ($display_url == "") {
 $youtube_url = check_url($youtube_url);
 $display_url = check_plain($display_url);
 
-if ($youtube_url != "") { ?>
+if (($youtube_url != "") && ($url != "")) { ?>
 <a href="<?php print $youtube_url; ?>" rel="nofollow" target="_blank"><?php print $display_url; ?></a>
 <?php } else { ?>
 <script>try { document.getElementsByClassName("field-link-youtube")[0].style.display = 'none'; } catch(err) {};</script>

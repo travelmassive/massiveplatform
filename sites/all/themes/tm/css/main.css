@@ -4353,6 +4353,11 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   margin-top: 1.0rem !important;
 }
 
+/* line 617, ../sass/_base.scss */
+.page-node-add .form-type-checkbox {
+  margin-top: 1.0rem !important;
+}
+
 /* line 3, ../sass/_buttons.scss */
 button:hover, button:focus {
   outline: none;

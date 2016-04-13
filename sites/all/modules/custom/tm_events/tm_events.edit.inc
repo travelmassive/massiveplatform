@@ -295,9 +295,9 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
 
   // STEP 6. Modify payment fields if tm_payments enabled
   //////////
-  /*if (module_exists("tm_payments")) {
+  if (module_exists("tm_payments")) {
     _tm_payments_form_event_node_form_alter($form, $form_state);
-  }*/
+  }
 
 }
 

@@ -224,13 +224,13 @@ function tm_base_menu_default_menu_links() {
     'customized' => 1,
   );
   // Exported menu link: menu-social-links_snapchat:https://www.snapchat.com/.
-  $menu_links['menu-social-links_snapchat:https://www.snapchat.com/'] = array(
+  $menu_links['menu-social-links_snapchat:https://www.snapchat.com/add/travelmassive'] = array(
     'menu_name' => 'menu-social-links',
-    'link_path' => 'https://www.snapchat.com/',
+    'link_path' => 'https://www.snapchat.com/add/travelmassive',
     'router_path' => '',
     'link_title' => 'Snapchat',
     'options' => array(
-      'identifier' => 'menu-social-links_snapchat:https://www.snapchat.com/',
+      'identifier' => 'menu-social-links_snapchat:https://www.snapchat.com/add/travelmassive',
       'attributes' => array(
         'title' => 'Follow Travel Massive on Snapchat',
         'class' => array(

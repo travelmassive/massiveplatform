@@ -25,6 +25,7 @@ function tm_events_user_default_permissions() {
     'name' => 'create event content',
     'roles' => array(
       'administrator' => 'administrator',
+      'approved user' => 'approved user',
       'moderator' => 'moderator',
     ),
     'module' => 'node',
@@ -45,6 +46,7 @@ function tm_events_user_default_permissions() {
     'name' => 'delete own event content',
     'roles' => array(
       'administrator' => 'administrator',
+      'approved user' => 'approved user',
       'moderator' => 'moderator',
     ),
     'module' => 'node',
@@ -65,6 +67,7 @@ function tm_events_user_default_permissions() {
     'name' => 'edit own event content',
     'roles' => array(
       'administrator' => 'administrator',
+      'approved user' => 'approved user',
       'authenticated user' => 'authenticated user',
     ),
     'module' => 'node',

@@ -334,7 +334,6 @@ function tm_events_views_default_views() {
   $handler->display->display_options['defaults']['use_ajax'] = FALSE;
   $handler->display->display_options['use_ajax'] = TRUE;
   $handler->display->display_options['defaults']['group_by'] = FALSE;
-  $handler->display->display_options['group_by'] = TRUE;
   $handler->display->display_options['defaults']['query'] = FALSE;
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = 'related_events';
@@ -372,6 +371,15 @@ function tm_events_views_default_views() {
   $handler->display->display_options['arguments']['field_chapter_publish_target_id']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['field_chapter_publish_target_id']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_chapter_publish_target_id']['summary_options']['items_per_page'] = '25';
+  /* Contextual filter: Content: Event Company (field_event_company) */
+  $handler->display->display_options['arguments']['field_event_company_target_id']['id'] = 'field_event_company_target_id';
+  $handler->display->display_options['arguments']['field_event_company_target_id']['table'] = 'field_data_field_event_company';
+  $handler->display->display_options['arguments']['field_event_company_target_id']['field'] = 'field_event_company_target_id';
+  $handler->display->display_options['arguments']['field_event_company_target_id']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['field_event_company_target_id']['default_argument_type'] = 'node';
+  $handler->display->display_options['arguments']['field_event_company_target_id']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_event_company_target_id']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_event_company_target_id']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Content: Published */
@@ -420,6 +428,14 @@ function tm_events_views_default_views() {
   $handler->display->display_options['pager']['options']['quantity'] = '9';
   $handler->display->display_options['pager']['options']['waypoint']['infinite'] = 1;
   $handler->display->display_options['pager']['options']['effects']['speed'] = 'slow';
+  $handler->display->display_options['defaults']['empty'] = FALSE;
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'No past events.';
+  $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Content: Event Chapter (field_chapter) */
   $handler->display->display_options['arguments']['field_chapter_target_id']['id'] = 'field_chapter_target_id';

@@ -122,6 +122,11 @@ function tm_chapters_contact_form(){
     '#value' => t('Send message'),
     '#id' => 'edit-submit'  
   );
+
+  global $conf;
+  $contact_form_message = "Get in touch with your chapter leaders to provide feedback, ideas or questions.<br>Please follow our <a target='_blank' href='" . $conf["tm_community_values_url"] ."'>community guidelines</a> and use this contact page responsibly.";
+  drupal_set_message($contact_form_message, "help-tip");
+
   return $form;
 }
 
@@ -594,7 +599,7 @@ function _tm_chapters_get_default_image($default_image_uri, $nid) {
 }
 
 /* 
- * Use OR for contextual queruies in related_events
+ * Use OR for contextual queries in related_events
  * This allows us to show chapter and published chapter events
  * see: https://www.drupal.org/node/1451218#comment-6136692
  */
@@ -602,7 +607,17 @@ function tm_chapters_views_query_alter(&$view, &$query) {
   if ($view->name == 'related_events') {
     if ($query->options['query_comment'] == 'related_events') {
       $query->where[0]['type'] = 'OR';
+      dpq($view->build_info['query']);
     }
   }
 }
+
+/* Helper method get the number of members in a chapter 
+ *  Will include non-approved members in the count
+ */
+function _tm_chapters_get_num_members($chapter_id) {
+    $flag = flag_get_flag('signup');
+    return $flag->get_count($chapter_id);
+}
+
 

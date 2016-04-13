@@ -50,6 +50,9 @@
   .form-item {
     margin-bottom: 0.5rem;
   }
+  .form-download {
+    @extend .bttn-tertiary, .bttn-blk;
+  }
   .form-submit {
     @extend .bttn-tertiary, .bttn-blk;
   }

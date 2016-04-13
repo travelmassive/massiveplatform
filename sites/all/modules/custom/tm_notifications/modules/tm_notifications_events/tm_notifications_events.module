@@ -211,7 +211,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
     }
 
     // case 2: event with no organizers and a chapter -> chapter leaders
-    if ((sizeof($event->field_organizer) == 0) and (sizeof($event->field_chapter > 0))) {
+    if ((sizeof($event->field_organizer) == 0) and (sizeof($event->field_chapter) > 0)) {
 
       if (isset($event->field_chapter['und'])) {
         $chapter_id = $event->field_chapter['und'][0]['target_id'];
@@ -235,6 +235,19 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
           foreach ($event->field_event_featured_members['und'] as $featured_member) {
             $notify_ids[] = $featured_member['target_id'];
           }
+        }
+      }
+    }
+
+    // case 5: event with no organizers and a company -> company managers
+    if ((sizeof($event->field_organizer) == 0) and (sizeof($event->field_event_company) > 0)) {
+
+      if (isset($event->field_event_company['und'])) {
+        $company_id = $event->field_event_company['und'][0]['target_id'];
+        $company = node_load($company_id);
+      
+        foreach ($company->field_owner[LANGUAGE_NONE] as $profile_owner) {
+          $notify_ids[] = $profile_owner['target_id'];
         }
       }
     }

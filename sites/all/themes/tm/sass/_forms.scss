@@ -59,6 +59,14 @@ html.js .form-text.form-autocomplete {
   }
 }
 
+.form-download {
+  margin-top: 10px;
+  @extend .bttn-tertiary, .bttn-m;
+  &:before {
+    @extend .icon-download;
+  }
+}
+
 #edit-submit {
   @extend .bttn-success, .bttn-m;
 }
@@ -84,7 +92,7 @@ label {
 //   margin-bottom: -1rem;
 //   text-transform: uppercase;
 // }
-#tm-events-rsvp-form,
+#tm-events-manage-registrations-form,
 #tm-events-communication-form,
 .vbo-views-form{
   padding: 2rem;
@@ -449,7 +457,7 @@ select {
 
 // Messages
 
-.messages, .messages--status, .messages--warning, .messages--error {
+.messages, .messages--status, .messages--warning, .messages--error, .messages--help-tip {
   position: relative;
   border-radius: $global-radius;
   border: none;
@@ -497,6 +505,12 @@ select {
   &:before { @extend .icon-circle-error; }
 }
 
+.messages.help-tip {
+  background: #007db7;
+  color: #FFF;
+  &:before { @extend .icon-circle-info; }
+}
+
 // Color picker
 .sp-replacer,
 .sp-replacer:hover,
@@ -527,6 +541,7 @@ select {
     display: inline-block;
   }
   .tmeventstatus{
+    white-space: nowrap;
     width: 50%;
   }
   .tmeventstime{

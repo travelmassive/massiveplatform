@@ -71,16 +71,16 @@ function tm_events_strongarm() {
     'extra_fields' => array(
       'form' => array(
         'title' => array(
-          'weight' => '4',
-        ),
-        'path' => array(
           'weight' => '10',
         ),
+        'path' => array(
+          'weight' => '16',
+        ),
         'redirect' => array(
-          'weight' => '6',
+          'weight' => '7',
         ),
         'metatags' => array(
-          'weight' => '7',
+          'weight' => '8',
         ),
       ),
       'display' => array(),

@@ -1,30 +1,39 @@
-<?php global $user;
+<?php 
 
+// account user menu template
+
+global $user;
 global $conf;
 
 // Only a loaded user has values for the fields.
 $loaded = user_load($user->uid);
 $user_score = 0;
 
-// Set avatar
-if (empty($loaded->field_avatar)) {
-  // Use default image
-  // (old way) $field = field_info_field('field_avatar');
-  // (old way) $default = file_load($field['settings']['default_image']);
-  $img_uri = $conf["tm_images_default_field_avatar"]; // (old way) $default->uri;
-}  else {
-  // User's image
-  $img_uri = $loaded->field_avatar[LANGUAGE_NONE][0]['uri'];
+// Set hidden fields
+$reason_for_joining = "";
+if (isset($loaded->field_reason_for_joining[LANGUAGE_NONE][0]['value'])) {
+  $reason_for_joining = $loaded->field_reason_for_joining[LANGUAGE_NONE][0]['value'];
 }
+$user_score = tm_users_signup_score();
+?>
+<div id='tm-user-hidden-fields' style='display: none;'>
+<input style='display: none;' id='reason_for_joining' value='<?php print urlencode($reason_for_joining);?>'>
+<input style='display: none;' id='current_user_score' value='<?php print($user_score); ?>'>
+<input style='display: none;' id='current_user_uid' value='<?php print($loaded->uid); ?>'>
+</div>
 
-// If image is default, replace with random image from folder
-if (isset($conf["tm_images_default_path"])) {
-  if ($img_uri == $conf["tm_images_default_field_avatar"]) {
-    $image_id = $loaded->uid;
-    $cover_files = $conf["tm_images_default_avatar"];
-    $image_index = $image_id % sizeof($cover_files);
-    $img_uri = $conf["tm_images_default_path"] . $cover_files[$image_index];
-  }
+<?php
+
+// Set create member event message as js var
+// We use this in jq_create_member_event_message()
+$member_event_message = _tm_events_check_create_member_event_message($loaded);
+drupal_add_js(array('tm_events' => array('create_member_event_message' => $member_event_message)), array('type' => 'setting'));
+
+// Set avatar
+if (!empty($loaded->field_avatar)) {
+  $img_uri = $loaded->field_avatar[LANGUAGE_NONE][0]['uri'];
+} else {
+  $img_uri = _tm_users_get_default_avatar($conf["tm_images_default_field_avatar"], $loaded->uid);
 }
 
 $image = theme('image_style', array(
@@ -56,83 +65,68 @@ $image = theme('image_style', array(
             <div class="media-bd">
               <strong><?php print check_plain($loaded->realname); ?></strong>
               <?php print t('View profile'); ?>
-              <?php 
-// show score
-$user_score = tm_users_signup_score();
-
-// store user score and uid in form fields to access via js
-?>
-<input style='display: none;' id='current_user_score' value='<?php print($user_score); ?>'>
-<input style='display: none;' id='current_user_uid' value='<?php print($loaded->uid); ?>'>
-
-<?php
-if ($user_score >= 100) { ?>
-<span style='padding-left: 0.2em; font-size: smaller; font-style: normal; background-color: green; color: #fff; border-radius: 2px; padding: 2px;'><?php print($user_score); ?>% complete</span>
-<?php } else {
-if ($user_score < 100) {
-  $css_color = "green";
-}
-if ($user_score < 50) {
-  $css_color = "orange";
-}
-if ($user_score < 20) {
-  $css_color = "orange"; // could be red but we don't want to alarm
-}
-?>
-<span style='padding-left: 0.2em; font-size: smaller; font-style: normal; background-color: <?php print($css_color); ?>; color: #fff; border-radius: 2px; padding: 2px; padding-left: 4px; padding-right: 4px;'><?php print($user_score); ?>% complete</span>
-<?php
-} // end user score display
-?>
+                <?php
+                if ($user_score >= 100): ?>
+                <span style='padding-left: 0.2em; font-size: smaller; font-style: normal; background-color: green; color: #fff; border-radius: 2px; padding: 2px;'><?php print($user_score); ?>% complete</span>
+                <?php endif;?>
+                <?php if ($user_score < 100) {
+                  $css_color = "green";
+                }
+                if ($user_score < 50) {
+                  $css_color = "orange";
+                }
+                if ($user_score < 20) {
+                  $css_color = "orange"; // could be red but we don't want to alarm
+                }
+                ?>
+                <span style='padding-left: 0.2em; font-size: smaller; font-style: normal; background-color: <?php print($css_color); ?>; color: #fff; border-radius: 2px; padding: 2px; padding-left: 4px; padding-right: 4px;'><?php print($user_score); ?>% complete</span>
             </div>
           </a>
         </div>
       </li>
     </ul>
-    <ul class="dropd-menu">
-      <!--<li><?php print l(t('Edit profile'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-profile-options')); ?>
 
-      </li>-->
-      <!--<li><?php print l(t('Public profile'), 'user/' . $loaded->uid); ?></li>-->
+    <ul class="dropd-menu">
       <li><?php print l(t('Account settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-account-options')); ?></li>
       <li><?php print l(t('Notification settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-notifications-options')); ?></li>
       <li><?php print l(t('Invite members'), 'invite'); ?></li>
-<?php
-$twitter_data = tm_twitter_account_load($loaded->uid);
-if (!$twitter_data) { 
-?>
+      <?php $twitter_data = tm_twitter_account_load($loaded->uid);
+      if (!$twitter_data): ?>
       <li><?php print l(t('Connect with Twitter'), 'tm_twitter/oauth'); ?></li>
-<?php
-} // end if
-?>
+      <?php endif; ?>
 
-<?php if (!in_array("approved user", $loaded->roles)) { 
-    // show last time request info was flagged
-    $who_flagged = flag_get_entity_flags("user", $loaded->uid, "approval_requested_by_user");
-    if (sizeof($who_flagged) > 0) {
-      foreach ($who_flagged as $flagger) {
-        $difference = time() - $flagger->timestamp;
-      }
-      $flagged_time = format_interval($difference, 1) . " ago";
-?>
-<li><?php print l(t('Approval requested (' . $flagged_time . ')'), 'javascript:jq_approval_already_requested();', array('fragment' => '','external'=>true)); ?></li>
-<?php } else { ?>
-<li><?php
-$reason_for_joining = "";
-if (isset($loaded->field_reason_for_joining[LANGUAGE_NONE][0]['value'])) {
-  $reason_for_joining = $loaded->field_reason_for_joining[LANGUAGE_NONE][0]['value'];
-}
-print ("<input style='display: none;' id='reason_for_joining' value='" . urlencode($reason_for_joining) . "'>");
-print l(t('Approve my account'), 'javascript:jq_request_approval(' . $loaded->uid . ')', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('approval-link')))); ?></li>
-<?php
-} // end if flagged
-} // end if not approved
-?>
+      <?php if ($conf['tm_event_member_events_enabled'] == true) { ?>
+        <?php if (_tm_events_check_create_member_event($loaded)) { ?>
+        <li><?php print l(t('Add member event'), 'node/add/event'); ?></li>
+        <?php } else {
+          if ($member_event_message != "") { ?>
+            <li><?php print l(t('Add member event'), 'javascript:jq_create_member_event_message();', array('fragment' => '','external'=>true)); ?></li>
+          <?php } // end if teaser_message ?>
+        <?php } // end else ?>
+      <?php } // ense if tm_event_member_events_enabled?>
 
+      <?php if (!in_array("approved user", $loaded->roles)) { 
+      // show last time request info was flagged
+      $who_flagged = flag_get_entity_flags("user", $loaded->uid, "approval_requested_by_user");
+      if (sizeof($who_flagged) > 0) {
+        foreach ($who_flagged as $flagger) {
+          $difference = time() - $flagger->timestamp;
+        }
+        $flagged_time = format_interval($difference, 1) . " ago";
+      ?>
+      <li><?php print l(t('Approval requested (' . $flagged_time . ')'), 'javascript:jq_approval_already_requested();', array('fragment' => '','external'=>true)); ?></li>
+      <?php } else { ?>
+      <li><?php
+        print l(t('Approve my account'), 'javascript:jq_request_approval(' . $loaded->uid . ')', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('approval-link')))); ?></li>
+      <?php
+      } // end if flagged
+      } // end if not approved
+      ?>
     </ul>
+
   <?php if (in_array("approved user", $loaded->roles)) : ?>
     <ul class="dropd-menu">
       <?php print tm_users_menu_companies($loaded->uid); ?>
-      <!--<li><?php print l(t('My companies'), 'user/' . $loaded->uid . '/companies', array('fragment' => 'user-notifications-options')); ?></li>-->
       <?php if (tm_organizations_check_user_can_create_company($loaded->uid)): ?>
       <li><?php print l(t('Add company profile'), 'node/add/organization'); ?></li>
       <?php endif; ?>
@@ -145,14 +139,16 @@ print l(t('Approve my account'), 'javascript:jq_request_approval(' . $loaded->ui
     </ul>
   <?php endif; ?>
 
-  <!-- Link to chapters the user has joined -->
     <ul class="dropd-menu">
         <?php print tm_users_menu_chapters($loaded->uid); ?>
         <?php
-        if (in_array("chapter leader", $loaded->roles)) { ?>
-        <li><?php
-        print l(t('Chapter leader resources'), $conf['tm_tips_chapter_leaders_link'], array('fragment' => '','external'=>true)); 
-        } // end if ?></li>        
+        if (in_array("chapter leader", $loaded->roles)): ?>
+        <li>
+          <?php
+          print l(t('Chapter leader resources'), $conf['tm_tips_chapter_leaders_link'], array('fragment' => '','external'=>true)); 
+          ?>
+        </li> 
+        <?php endif; ?>       
     </ul>
 
   <?php if ((in_array("moderator", $loaded->roles)) or (in_array("administrator", $loaded->roles))) : ?>

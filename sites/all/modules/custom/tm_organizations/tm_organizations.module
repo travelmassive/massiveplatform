@@ -491,6 +491,11 @@ function tm_organizations_node_view($node, $view_mode, $langcode) {
     return;
   }
 
+  // Add javascript for chapter display
+  if ($view_mode == 'full') {
+    drupal_add_js(drupal_get_path('module', 'tm_organizations') . '/js/tm_organizations.js');
+  }
+
   // Show additional link fields based on $conf['tm_users_link_fields']
   global $conf;
   $all_fields = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat');
@@ -703,5 +708,23 @@ function tm_organizations_follow_message($following_organization) {
   drupal_set_message("You are now following " . t($following_organization->title));
   drupal_goto(drupal_get_path_alias('node/' . $following_organization->nid));
 
+}
+
+/* Checks if a user a manager of a company profile */
+function tm_organizations_is_company_profile_manager($uid, $company_nid) {
+  
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'organization')
+    ->propertyCondition('nid', $company_nid)
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->fieldCondition('field_owner', 'target_id', $uid, '=');
+
+  $result = $query->execute();
+
+  if (isset($result['node'])) {
+    return TRUE;
+  }
+  return FALSE;
 }
 

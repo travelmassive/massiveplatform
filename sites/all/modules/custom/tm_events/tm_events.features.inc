@@ -40,7 +40,7 @@ function tm_events_node_info() {
     'event' => array(
       'name' => t('Event'),
       'base' => 'node_content',
-      'description' => t('A Travel Massive event organized by one of the chapters.'),
+      'description' => t('An event organized by a chapter, company, or individual'),
       'has_title' => '1',
       'title_label' => t('Title'),
       'help' => '',

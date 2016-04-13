@@ -78,7 +78,7 @@ function tm_events_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 5,
+      'weight' => 11,
     ),
   );
 
@@ -91,7 +91,7 @@ function tm_events_field_default_field_instances() {
       ),
     ),
     'deleted' => 0,
-    'description' => 'Check this box if you want to restrict registration and waitlist to members who are approved. Non-approved members won\'t be able to sign up. ',
+    'description' => 'Check this box if you want to restrict registration and waitlist to members who are approved. Non-approved members won\'t be able to sign up.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -147,10 +147,10 @@ function tm_events_field_default_field_instances() {
   // Exported field_instance: 'node-event-field_chapter'.
   $field_instances['node-event-field_chapter'] = array(
     'bundle' => 'event',
-    'default_value' => array(),
+    'default_value' => NULL,
     'default_value_function' => 'entityreference_prepopulate_field_default_value',
     'deleted' => 0,
-    'description' => 'Select the chapter associated with the event.',
+    'description' => 'The chapter hosting this event.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -203,14 +203,14 @@ function tm_events_field_default_field_instances() {
     'settings' => array(
       'behaviors' => array(
         'prepopulate' => array(
-          'action' => 'disable',
+          'action' => 'none',
           'action_on_edit' => 1,
-          'fallback' => 'redirect',
+          'fallback' => 'none',
           'providers' => array(
             'og_context' => FALSE,
             'url' => 1,
           ),
-          'skip_perm' => 'add event to any chapter',
+          'skip_perm' => 0,
           'status' => 1,
         ),
       ),
@@ -235,16 +235,16 @@ function tm_events_field_default_field_instances() {
           'published' => 0,
           'update' => array(
             'delete' => 0,
-            'update' => 'update',
+            'update' => 0,
             'view' => 0,
           ),
           'view' => array(
             'delete' => 0,
             'update' => 0,
-            'view' => 'view',
+            'view' => 0,
           ),
         ),
-        'unused' => 1,
+        'unused' => 0,
       ),
       'user_register_form' => FALSE,
     ),
@@ -257,7 +257,7 @@ function tm_events_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 3,
+      'weight' => 7,
     ),
   );
 
@@ -362,6 +362,108 @@ function tm_events_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-event-field_event_company'.
+  $field_instances['node-event-field_event_company'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'default_value_function' => 'entityreference_prepopulate_field_default_value',
+    'deleted' => 0,
+    'description' => '<span id=\'tm-event-edit-company-description\'>The company hosting this event.</span>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 50,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_company',
+    'label' => 'Event Company',
+    'required' => 0,
+    'settings' => array(
+      'behaviors' => array(
+        'prepopulate' => array(
+          'action' => 'none',
+          'action_on_edit' => 1,
+          'fallback' => 'none',
+          'providers' => array(
+            'og_context' => FALSE,
+            'url' => 1,
+          ),
+          'skip_perm' => 0,
+          'status' => 1,
+        ),
+      ),
+      'nodeaccess_nodereference' => array(
+        'all' => array(
+          'view' => 'view',
+        ),
+        'all_published' => 0,
+        'author' => array(
+          'delete' => 0,
+          'update' => 0,
+          'view' => 0,
+        ),
+        'author_published' => 0,
+        'priority' => 0,
+        'referenced' => array(
+          'delete' => array(
+            'delete' => 0,
+            'update' => 0,
+            'view' => 0,
+          ),
+          'published' => 0,
+          'update' => array(
+            'delete' => 0,
+            'update' => 0,
+            'view' => 0,
+          ),
+          'view' => array(
+            'delete' => 0,
+            'update' => 0,
+            'view' => 'view',
+          ),
+        ),
+        'unused' => 0,
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'entityreference',
+      'settings' => array(
+        'match_operator' => 'CONTAINS',
+        'path' => '',
+        'size' => 60,
+      ),
+      'type' => 'entityreference_autocomplete',
+      'weight' => 8,
+    ),
+  );
+
   // Exported field_instance: 'node-event-field_event_date'.
   $field_instances['node-event-field_event_date'] = array(
     'bundle' => 'event',
@@ -431,7 +533,7 @@ function tm_events_field_default_field_instances() {
         'year_range' => '-0:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 2,
+      'weight' => 4,
     ),
   );
 
@@ -559,7 +661,7 @@ This will be added to the attendee count on the event page.',
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 37,
+      'weight' => 38,
     ),
   );
 
@@ -620,7 +722,7 @@ This will be added to the attendee count on the event page.',
         'size' => 55,
       ),
       'type' => 'text_textfield',
-      'weight' => 35,
+      'weight' => 36,
     ),
   );
 
@@ -800,7 +902,7 @@ This will be added to the attendee count on the event page.',
       ),
     ),
     'deleted' => 0,
-    'description' => 'Check this box if you want to hide the list of organizers on the event page.',
+    'description' => 'Hide the list of organizers on the event page.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -849,7 +951,257 @@ This will be added to the attendee count on the event page.',
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 2,
+      'weight' => 10,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_payment_commission'.
+  $field_instances['node-event-field_event_payment_commission'] = array(
+    'bundle' => 'event',
+    'default_value' => array(
+      0 => array(
+        'value' => 75,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'The percentage of total event revenue to payout
+<br>Note: Does not include bank fees, forex or other charges.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 2,
+          'thousand_separator' => '',
+        ),
+        'type' => 'number_decimal',
+        'weight' => 49,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_payment_commission',
+    'label' => 'Payment commission (%)',
+    'required' => 0,
+    'settings' => array(
+      'max' => 100,
+      'min' => 0,
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 17,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_payment_payout_to'.
+  $field_instances['node-event-field_event_payment_payout_to'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'default_value_function' => '',
+    'deleted' => 0,
+    'description' => 'Who will we send the event payout to?',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 48,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_payment_payout_to',
+    'label' => 'Send payout to',
+    'required' => 0,
+    'settings' => array(
+      'behaviors' => array(
+        'prepopulate' => array(
+          'status' => 0,
+        ),
+      ),
+      'nodeaccess_userreference' => array(
+        'all' => array(
+          'view' => 0,
+        ),
+        'all_published' => 0,
+        'author' => array(
+          'delete' => 0,
+          'update' => 0,
+          'view' => 0,
+        ),
+        'author_published' => 0,
+        'create' => array(
+          'chapter' => 0,
+          'event' => 0,
+          'organization' => 0,
+          'page' => 0,
+        ),
+        'priority' => 0,
+        'referenced' => array(
+          'delete' => 0,
+          'deny_delete' => 0,
+          'deny_update' => 0,
+          'deny_view' => 0,
+          'update' => 0,
+          'view' => 0,
+        ),
+        'referenced_published' => 0,
+        'unused' => 0,
+        'views' => array(
+          'view' => '',
+          'view_args' => '',
+        ),
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 16,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_reassign_owner'.
+  $field_instances['node-event-field_event_reassign_owner'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'default_value_function' => '',
+    'deleted' => 0,
+    'description' => 'Change the owner of the event.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 51,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_reassign_owner',
+    'label' => 'Change Owner',
+    'required' => 0,
+    'settings' => array(
+      'behaviors' => array(
+        'prepopulate' => array(
+          'status' => 0,
+        ),
+      ),
+      'nodeaccess_userreference' => array(
+        'all' => array(
+          'view' => 0,
+        ),
+        'all_published' => 0,
+        'author' => array(
+          'delete' => 0,
+          'update' => 0,
+          'view' => 0,
+        ),
+        'author_published' => 0,
+        'create' => array(
+          'chapter' => 0,
+          'event' => 0,
+          'organization' => 0,
+          'page' => 0,
+        ),
+        'priority' => 0,
+        'referenced' => array(
+          'delete' => 0,
+          'deny_delete' => 0,
+          'deny_update' => 0,
+          'deny_view' => 0,
+          'update' => 0,
+          'view' => 0,
+        ),
+        'referenced_published' => 0,
+        'unused' => 0,
+        'views' => array(
+          'view' => '',
+          'view_args' => '',
+        ),
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'entityreference',
+      'settings' => array(
+        'match_operator' => 'CONTAINS',
+        'path' => '',
+        'size' => 60,
+      ),
+      'type' => 'entityreference_autocomplete',
+      'weight' => 6,
     ),
   );
 
@@ -1015,7 +1367,7 @@ This will be added to the attendee count on the event page.',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 2,
+      'weight' => 3,
     ),
   );
 
@@ -1080,7 +1432,7 @@ This will be added to the attendee count on the event page.',
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 33,
+      'weight' => 34,
     ),
   );
 
@@ -1089,7 +1441,7 @@ This will be added to the attendee count on the event page.',
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '(Advanced Use Only) Specify the type of event for the event page listing.<br>',
+    'description' => 'The type of event for the event page listing.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -1136,7 +1488,7 @@ This will be added to the attendee count on the event page.',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 17,
+      'weight' => 5,
     ),
   );
 
@@ -1196,7 +1548,7 @@ This will be added to the attendee count on the event page.',
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 4,
+      'weight' => 20,
     ),
   );
 
@@ -1284,7 +1636,7 @@ This will be added to the attendee count on the event page.',
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 7,
+      'weight' => 13,
     ),
   );
 
@@ -1297,7 +1649,7 @@ This will be added to the attendee count on the event page.',
       ),
     ),
     'deleted' => 0,
-    'description' => '(Advanced Use Only) Check this to indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)',
+    'description' => 'Check this to indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -1346,7 +1698,7 @@ This will be added to the attendee count on the event page.',
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 16,
+      'weight' => 9,
     ),
   );
 
@@ -1412,7 +1764,7 @@ This will be added to the attendee count on the event page.',
         'rows' => 4,
       ),
       'type' => 'text_textarea',
-      'weight' => 5,
+      'weight' => 21,
     ),
   );
 
@@ -1494,7 +1846,7 @@ This will be added to the attendee count on the event page.',
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 7,
+      'weight' => 22,
     ),
   );
 
@@ -1557,7 +1909,7 @@ This will be added to the attendee count on the event page.',
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 36,
+      'weight' => 37,
     ),
   );
 
@@ -1568,7 +1920,7 @@ This will be added to the attendee count on the event page.',
     'default_value_function' => '',
     'deleted' => 0,
     'description' => 'Who is organizing this event? Organizers will be notified of all event registrations.
-If set to none, then all chapter leaders will be notified of any registrations and waitlists.',
+<br>If set to none, then all organizers will be notified of any registrations and waitlists.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -1614,7 +1966,7 @@ If set to none, then all chapter leaders will be notified of any registrations a
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_organizer',
-    'label' => 'Organizer',
+    'label' => 'Organizers',
     'required' => 0,
     'settings' => array(
       'behaviors' => array(
@@ -1662,7 +2014,7 @@ If set to none, then all chapter leaders will be notified of any registrations a
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 1,
+      'weight' => 9,
     ),
   );
 
@@ -1800,7 +2152,7 @@ This will be displayed to the member on the event page and included in the autom
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 9,
+      'weight' => 15,
     ),
   );
 
@@ -1867,19 +2219,21 @@ This will be displayed to the member on the event page and included in the autom
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('(Advanced Use Only) Check this to indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)');
-  t('(Advanced Use Only) Specify the type of event for the event page listing.<br>');
+  t('<span id=\'tm-event-edit-company-description\'>The company hosting this event.</span>');
   t('Allow featured members to download the attendee list');
   t('Allow featured members to receive event notifications');
   t('Approved Members Only');
   t('Assign a label for featured members on the event listing. Leave blank for default.
 <br>example: Keynote Speakers
 <br><br>');
-  t('Check this box if you want to hide the list of organizers on the event page');
-  t('Check this box if you want to restrict registration and waitlist to members who are approved. Non-approved members won\'t be able to sign up. ');
+  t('Change Owner');
+  t('Change the owner of the event.');
+  t('Check this box if you want to restrict registration and waitlist to members who are approved. Non-approved members won\'t be able to sign up.');
   t('Check this option if you want to restrict displaying the event location to registered attendees only.');
+  t('Check this to indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)');
   t('Description');
   t('Event Chapter');
+  t('Event Company');
   t('Event Timezone');
   t('Event Type');
   t('Featured members');
@@ -1893,6 +2247,7 @@ This will be displayed to the member on the event page and included in the autom
 </ul>');
   t('Help the attendees find the right location by providing a link to a map, for example <a href="http://maps.google.com/">Google Maps</a>.');
   t('Hide Organizers');
+  t('Hide the list of organizers on the event page.');
   t('Highlight members of this event such as speakers or workshops leaders');
   t('How many non-registered guests are coming?<br>
 This will be added to the attendee count on the event page.');
@@ -1912,25 +2267,31 @@ This will be displayed to the member on the event page and included in the autom
   t('Message When Waitlisted');
   t('Non-registered Guests');
   t('Only show location to registered attendees');
-  t('Organizer');
+  t('Organizers');
   t('Partner Event');
+  t('Payment commission (%)');
   t('Provide a link to the page with the RSVP (ie: http://www.eventbrite.com/e/your-event-url)');
   t('Provide the street address or physical location for this event.');
   t('Publish to Chapters');
   t('RSVP link');
   t('Select additional chapters associated with the event.
 <br>The event will be published in these chapters also.');
-  t('Select the chapter associated with the event.');
   t('Send event notifications when attendees register or unregister for this event<br><br>
 ');
+  t('Send payout to');
   t('Sponsors');
+  t('The chapter hosting this event.');
+  t('The percentage of total event revenue to payout
+<br>Note: Does not include bank fees, forex or other charges.');
+  t('The type of event for the event page listing.');
   t('This will be displayed on the event page when it\'s a past event.');
   t('This will be used as the main image for the event.
 <br>To support retina displays, upload your image sized to 1610x906');
   t('Venue name');
   t('When');
   t('Who is organizing this event? Organizers will be notified of all event registrations.
-If set to none, then all chapter leaders will be notified of any registrations and waitlists.');
+<br>If set to none, then all organizers will be notified of any registrations and waitlists.');
+  t('Who will we send the event payout to?');
 
   return $field_instances;
 }

@@ -654,6 +654,13 @@ $conf['tm_messaging_from_email'] = "communications@travelmassive.com"; // from a
 /** Event Options **/
 $conf['tm_event_show_spots_left'] = 20; // show number of free seats when less than this number
 $conf['tm_event_auto_register_waitlist'] = true; // if a member unregisters, automatically add next person from waitlist if there are free spots
+$conf['tm_event_chapter_events_enabled'] = true; // allow chapters to create their own events
+$conf['tm_event_company_events_enabled'] = true; // allow companies to create their own events
+$conf['tm_event_member_events_enabled'] = true; // allow members to create their own events
+$conf['tm_event_company_event_min_followers'] = 10; // how many followers a company needs to create an event. Set to 0 to disable.
+$conf['tm_event_member_event_min_followers'] = 0; // how many followers a member needs to create an event. Set to 0 to disable.
+$conf['tm_event_send_announcements_intro'] = "Get more people to your event by sending a great announcement. See our guide below."; // tip
+$conf['tm_event_announcement_enable_cover_image'] = true; // enable including event cover image in announcement email
 
 /** Provides a list of validated options on the signup page to indicate how the user connects with the community **/
 /** These options are not saved to the user account **/
@@ -728,10 +735,17 @@ $conf["tm_notification_moderation_non_community_message"] = 'To be a member of t
 $conf['tm_frontpage_show_anon_stats'] = array('members', 'chapters', 'connections');
 
 /** Event types **/
-$conf['tm_event_types'] = array("community" => "Community", "workshop" => "Workshop", "conference" => "Conference");
-$conf['tm_event_types_display'] = array("all" => "All Events", "community" => "Community", "workshop" => "Workshops", "conference" => "Conferences");
+$conf['tm_event_types_system'] = array("community" => "Chapter Event", "member" => "Member Event", "company" => "Company Event"); // system event types - don't alter
+$conf['tm_event_types_custom'] = array("workshop" => "Workshop", "conference" => "Conference"); // add your own custom events here
+$conf['tm_event_types'] = array_merge($conf['tm_event_types_system'], $conf['tm_event_types_custom']);
+$conf['tm_event_types_display'] = array("all" => "All Events", "community" => "Community", "workshop" => "Workshops", "conference" => "Conferences", "member" => "Member Events", "company" => "Company Events");
 $conf['tm_event_types_tips'] = array("workshop" => "Learn and share with other members around the world. have an idea for a workshop you would like to attend or host? Please <a href='/contact'>let us know</a>.", "conference" => "We're proud community partners with the world's leading travel industry conferences and exhibitions. <a href='/blog/about-travel-massive'>Learn more</a>");
 $conf['tm_event_types_default'] = "all";
+$conf['tm_event_types_sticker_icon_color'] = "#000000"; // color of sticker for non-chapter events
+$conf['tm_event_types_edit_tips'] = array();
+$conf['tm_event_types_edit_tips']['community'] = "Make your event stand out. Here's a few <a target='_blank' href='#'>tips</a>.";
+$conf['tm_event_types_edit_tips']['company'] = "Create a company event in our community.<br>Please follow our <a target='_blank' href='" . $conf['tm_community_values_url'] . "'>community guidelines</a>.";
+$conf['tm_event_types_edit_tips']['member'] = "Create a member event in our community.<br>Please follow our <a target='_blank' href='" . $conf['tm_community_values_url'] . "'>community guidelines</a>.";
 
 /** If user removes their account, who do we notify? */
 $conf['tm_user_remove_own_account_notify'] = 'community@travelmassive.com';
@@ -793,6 +807,8 @@ $conf["tm_payments_early_bird_label"] = "Early Bird Ticket"; // default label fo
 $conf["tm_payments_stripe_logo"] = "<a target='_blank' href='https://stripe.com/gallery'><img style='width: 119px; height: 26px;' width='119' height='26' src='/sites/all/themes/tm/images/stripe_logo_solid@2x.png'></a><br>Secure payment gateway trusted by <a target='_blank' href='https://stripe.com/gallery'>global brands</a>"; // displayed when payment is enabled
 $conf["tm_payments_handler_name"] = "Travel Massive"; // merchant name to display on payment screen
 $conf["tm_payments_handler_description"] = "Event Registration"; // default description to display on payment screen
+$conf["tm_payments_enable_chapter_min_members"] = 100; // enable payments if event chapter has minimum member count (set to 0 to disable)
+$conf["tm_payments_enable_help_text"] = "Congratulations, you can accept payments for events.";
 
 /* Featured members settings */
 $conf["tm_featured_members_event_types"] = array("all" => "Special Guests", "community" => "Special Guests", "workshop" => "Workshop Leaders", "conference" => "Speakers");
@@ -878,7 +894,7 @@ $conf["tm_search_api_help_tips"] = "<p style='font-size: 16px;'><strong>Example 
 <p style='border-top: 1px solid #eee; padding-top: 1rem; margin-right: 1.2rem; font-size: 10pt; color: #79828c;'>
 Add options to your search text to filter your results. Here's some examples.
   <ul>
-    <li><a href='#' class='search-example' data-search-example='in: \"New York\"'>in: "New York"</a></li>
+    <li><a href='#' class='search-example' data-search-example='in: \"New York\"'>in: \"New York\"</a></li>
     <li><a href='#' class='search-example' data-search-example='in: Thailand'>in: Thailand</a></li>
     <li><a href='#' class='search-example' data-search-example='segment: marketing'>segment: marketing</a></li>
     <li><a href='#' class='search-example' data-search-example='role: manager'>role: manager</a></li>

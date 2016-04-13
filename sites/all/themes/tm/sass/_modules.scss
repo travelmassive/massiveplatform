@@ -1,5 +1,5 @@
 #tm-events-communication-form,
-#tm-events-rsvp-form,
+#tm-events-manage-registrations-form,
 .vbo-views-form,
 .contained {
   background-color: #FFF;
@@ -426,6 +426,9 @@
     -o-transform-origin: top right;
     transform-origin: top right;
   }
+  .chapter-sticker-icon-text {
+    display:none;
+  }
   .node-chapter & {
     .extra {
       display: none;
@@ -567,6 +570,9 @@
         font-size: 0.875rem;
         width: 4rem;
         @include transform(rotate(0));
+      }
+      .chapter-sticker-icon-text {
+        display:inline;
       }
     }
 

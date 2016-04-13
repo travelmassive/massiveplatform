@@ -123,6 +123,7 @@ function _tm_content_type_process($field, $title = NULL) {
  */
 function _tm_chapter_sticker_process($field, $title = NULL) {
 
+  global $conf;
   $id = null;
 
   // field_chapter
@@ -139,11 +140,62 @@ function _tm_chapter_sticker_process($field, $title = NULL) {
     $related_chapter = node_load($id);
     if ($related_chapter){
       return theme('tm_chapter_sticker', array(
+        'custom_url' => null,
         'chapter_id' => $related_chapter->nid,
         'shortcode' => $related_chapter->field_chapter_shortcode['und'][0]['value'],
-        'color' => $related_chapter->field_chapter_color['und'][0]['rgb']
+        'color' => $related_chapter->field_chapter_color['und'][0]['rgb'],
       ));
     }
+  }
+
+  if ($id == null) {
+
+    // defaults
+    $event_type = null;
+    $event_type_name = "Member Event";
+    $url = url("events");
+
+    // get event type name
+    if (isset($field['entity']->field_event_type['und'][0]['value'])) {
+      $event_type = $field['entity']->field_event_type['und'][0]['value'];
+      if (isset($conf['tm_event_types'][$event_type])) {
+         $event_type_name = $conf['tm_event_types'][$event_type];
+      } 
+    }
+
+    // member event
+    if ($event_type == "member" || $event_type == "all") {
+      $url = url("user/" . $field['entity']->uid);
+    }
+
+    // company event
+    if ($event_type == "company") {
+      $url = url("events/list/company");
+      if (isset($field['entity']->field_event_company['und'][0]['target_id'])) {
+        $company_id = $field['entity']->field_event_company['und'][0]['target_id'];
+        $url = url("node/" . $company_id);
+      }
+    }
+
+    // conference event
+    if ($event_type == "conference") {
+      $url = url("events/list/conference");
+    }
+
+    // don't show community (chapter) event badge
+    if ($event_type == "community") {
+      $event_type = null;
+    }
+   
+    if ($event_type != null) {
+      return theme('tm_chapter_sticker', array(
+        'custom_url' => $url,
+        'chapter_id' => null,
+        'shortcode' => $event_type_name,
+        'color' => $conf["tm_event_types_sticker_icon_color"]
+      ));
+    }
+
   }
 }
 
@@ -354,8 +406,17 @@ function _tm_more_actions_process($field, $title = NULL) {
   // Is it a node?
   if (isset($menu_item['page_arguments'][0]->nid)) {
     $nid = $menu_item['page_arguments'][0]->nid;
-    $edit_menu = menu_get_item('node/' . $nid . '/edit');
-    if ($edit_menu['access']) {
+
+    $allowed_to_edit = false;
+    if (isset($field['entity']->type) && $field['entity']->type == 'event') {
+      // use our own permission method for events
+      $allowed_to_edit = tm_events_check_permission_edit_event($user, $field['entity']);
+    } else {
+      $edit_menu = menu_get_item('node/' . $nid . '/edit');
+      $allowed_to_edit = $edit_menu['access'];
+    }
+
+    if ($allowed_to_edit) {
       $links['edition'][] = array(
         'wrapper_class' => array('edit'),
         'content' => l(t('Edit'), 'node/' . $nid . '/edit', array(
@@ -366,6 +427,7 @@ function _tm_more_actions_process($field, $title = NULL) {
       );
     }
   }
+
   // Is it a user?
   else if (isset($menu_item['page_arguments'][0]->uid)) {
     $uid = $menu_item['page_arguments'][0]->uid;
@@ -390,30 +452,9 @@ function _tm_more_actions_process($field, $title = NULL) {
       
       $show_menu_item = false;
 
-      $targetuser = user_load($user->uid);
-      //if (!in_array("chapter leader", $targetuser->roles)){
-
-      // if is chapter leader
-      if (isset($node->field_chapter[LANGUAGE_NONE][0])){
-        if (tm_users_is_chapter_leader($user->uid, $node->field_chapter[LANGUAGE_NONE][0]['target_id'])) { 
-            $show_menu_item = true;
-          }
-      }
-
-      // for events without a chapter, if the user is an organizer of
-      if (isset($node->field_organizer[LANGUAGE_NONE])) {
-        foreach ($node->field_organizer[LANGUAGE_NONE] as $field_organizer) {  
-          if ($field_organizer["target_id"] == $user->uid) {
-            $show_menu_item = true;
-          }
-        }
-      }
-      
-      // if is admin or moderator always show
-      if ((in_array('administrator', array_values($user->roles))) or (in_array('moderator', array_values($user->roles)))) {
-        $show_menu_item = true;
-      }
-
+      // check permission
+      $show_menu_item = tm_events_check_permission_edit_event($user, $field['entity']);
+    
       // if event is external rsvp, don't show
       if ($node->field_external_rsvp['und'][0]['value']) {
         $show_menu_item = false;
@@ -422,9 +463,9 @@ function _tm_more_actions_process($field, $title = NULL) {
       if ($show_menu_item) {
         $links['manageattendees'][] = array(
           'wrapper_class' => array('managersvp'),
-          'content' => l(t('Manage RSVPs'), 'node/' . $nid . '/rsvp', array(
+          'content' => l(t('Manage registrations'), 'events/manage-registrations/' . $nid, array(
             'attributes' => array( 
-            'title' => t('Manage RSVPs')
+            'title' => t('Manage registrations')
             )
           ))
         );
@@ -438,45 +479,12 @@ function _tm_more_actions_process($field, $title = NULL) {
     $node = menu_get_object();
     if ($node->type == 'event') {
       
-      $show_menu_item = false;
-
-      $targetuser = user_load($user->uid);
-      //if (!in_array("chapter leader", $targetuser->roles)){
-
-      // if is chapter leader
-      if (isset($node->field_chapter[LANGUAGE_NONE][0])){
-        if (tm_users_is_chapter_leader($user->uid, $node->field_chapter[LANGUAGE_NONE][0]['target_id'])) { 
-            $show_menu_item = true;
-          }
-      }
-
-      // for events without a chapter, if the user is an organizer of
-      if (isset($node->field_organizer[LANGUAGE_NONE])) {
-        foreach ($node->field_organizer[LANGUAGE_NONE] as $field_organizer) {  
-          if ($field_organizer["target_id"] == $user->uid) {
-            $show_menu_item = true;
-          }
-        }
-      }
-
-      // for events with featured members and allowed to download rsvp list
-      // we check field_event_featured_access_rsvp is enabled
-      if (isset($node->field_event_featured_access_rsvp[LANGUAGE_NONE][0]['value'])) {
-        if ($node->field_event_featured_access_rsvp[LANGUAGE_NONE][0]['value'] == true) {
-          if (isset($node->field_event_featured_members[LANGUAGE_NONE])) {
-            foreach ($node->field_event_featured_members[LANGUAGE_NONE] as $field_featured_member) {  
-              if ($field_featured_member["target_id"] == $user->uid) {
-                $show_menu_item = true;
-              }
-            }
-          }
-        }
-      }
-      
-      
-      // if is admin or moderator always show
-      if ((in_array('administrator', array_values($user->roles))) or (in_array('moderator', array_values($user->roles)))) {
-        $show_menu_item = true;
+      // check permission
+      $show_menu_item = tm_events_check_permission_edit_event($user, $field['entity']);
+    
+      // also see if user is featured and has access to download csv
+      if (!$show_menu_item) {
+        $show_menu_item = tm_events_check_featured_member_download_csv($user, $field['entity']);
       }
 
       // if event is external rsvp, don't show
@@ -487,7 +495,7 @@ function _tm_more_actions_process($field, $title = NULL) {
       if ($show_menu_item) {
         $links['manageattendees'][] = array(
           'wrapper_class' => array('managersvp'),
-          'content' => l(t('Download attendee list'), 'download/csv/' . $nid, array(
+          'content' => l(t('Download attendee list'), 'events/download-csv/' . $nid, array(
             'attributes' => array( 
             'title' => t('Download attendee list')
             )
@@ -503,29 +511,8 @@ function _tm_more_actions_process($field, $title = NULL) {
     $node = menu_get_object();
     if ($node->type == 'event') {
 
-      $show_menu_item = false;
-
-      $targetuser = user_load($user->uid);
-      //if (in_array("chapter leader", $targetuser->roles)){
-      if (isset($node->field_chapter[LANGUAGE_NONE][0])){
-        if (tm_users_is_chapter_leader($user->uid, $node->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
-          $show_menu_item = true;
-        }
-      }
-
-      // for events without a chapter, if the user is an organizer of
-      if (isset($node->field_organizer[LANGUAGE_NONE])) {
-        foreach ($node->field_organizer[LANGUAGE_NONE] as $field_organizer) {  
-          if ($field_organizer["target_id"] == $user->uid) {
-            $show_menu_item = true;
-          }
-        }
-      }
-
-      // if is admin or moderator always show
-      if ((in_array('administrator', array_values($user->roles))) or (in_array('moderator', array_values($user->roles)))) {
-        $show_menu_item = true;
-      }
+      // check permission
+      $show_menu_item = tm_events_check_permission_edit_event($user, $field['entity']);
 
       // if event is external rsvp, don't show
       if ($node->field_external_rsvp['und'][0]['value']) {
@@ -535,9 +522,9 @@ function _tm_more_actions_process($field, $title = NULL) {
       if ($show_menu_item) {
         $links['manageattendees'][] = array(
           'wrapper_class' => array('contactattendees'),
-          'content' => l(t('Send Announcement'), 'node/' . $nid . '/announcement', array(
+          'content' => l(t('Send announcement'), 'events/send-announcement/' . $nid, array(
             'attributes' => array( 
-            'title' => t('Send Announcement')
+            'title' => t('Send announcement')
             )
           ))
         );
@@ -1018,51 +1005,64 @@ function _tm_more_actions_process($field, $title = NULL) {
     }
   }
   // END moderate community values link
-
-  // START Add event Link
-  // The 'Add event' link should be available to the leaders of the city, moderators and admins.
-  $control = FALSE;
-  $path = 'node/add/event';
-
-  if (user_access('add event to any chapter') && isset($field['entity']->type) && $field['entity']->type == 'chapter') {
-    $control = TRUE;
-  }
-  else if (isset($field['entity']->type) && $field['entity']->type == 'chapter') {
-    // Does the user have access.
-    $router_item = menu_get_item($path);
-    if ($router_item['access']) {
-      if (isset($field['entity']->field_chapter_leaders[LANGUAGE_NONE]) && !empty($field['entity']->field_chapter_leaders[LANGUAGE_NONE])) {
-        // Check if the current user is a chapter leader.
-        dsm($user);
-        foreach ($field['entity']->field_chapter_leaders[LANGUAGE_NONE] as $chapter_leader) {
-          if ($chapter_leader['target_id'] == $user->uid) {
-            // Found chapter leader.
-            $control = TRUE;
-            break;
-          }
-        }
-      }
-    }
-  }
-
-  if ($control) {
-    $links['edition'][] = array(
+ 
+  // START Add chapter event Link
+  if (isset($field['entity']->type) && $field['entity']->type == 'chapter') {
+    if (_tm_events_check_create_chapter_event($user, $field['entity']->nid)) {
+      $links['edition'][] = array(
       'wrapper_class' => array('add'),
-      'content' => l(t('Add event'), $path, array(
+      'content' => l(t('Add event'), '/node/add/event', array(
         'query' => array(
           'field_chapter' => $field['entity']->nid
         ),
         'attributes' => array(
           'title' => t('Add event for @chapter', array('@chapter' => $field['entity']->title))
         )
-      ))
-    );    
+      )));
+    }
   }
-  // END Add event Link
+  // END Add chapter event Link
+
+  // START Add company event Link
+  if (isset($field['entity']->type) && $field['entity']->type == 'organization') {
+
+    // Check if can create company event
+    if (_tm_events_check_create_company_event($user, $field['entity']->nid)) {
+      $links['edition'][] = array(
+      'wrapper_class' => array('add'),
+      'content' => l(t('Add event'), '/node/add/event', array(
+        'query' => array(
+          'field_event_company' => $field['entity']->nid
+        ),
+        'attributes' => array(
+          'title' => t('Add event for @organization', array('@organizations' => $field['entity']->title))
+        )
+      )));
+
+    } else {
+
+      // If events enabled, show user a message
+      if ($conf['tm_event_company_events_enabled'] == true) {
+
+        // Set create member event message as js var
+        // We use this in jq_create_company_event_message()
+        $company_event_message = _tm_events_check_create_company_event_message($user, $field['entity']->nid);
+        drupal_add_js(array('tm_events' => array('create_company_event_message' => $company_event_message)), array('type' => 'setting'));
+
+        if ($company_event_message != "") {
+          $links['edition'][] = array(
+            'wrapper_class' => array('add'),
+            'content' => l(t('Add event'), 'javascript:jq_create_company_event_message();',
+            array('fragment' => '','external'=>true)
+          ));
+        }
+      }
+    }
+  }
+  // END Add company event Link
   
   // START Set as sponsor link
   if (isset($field['entity']->nid) && $flag_link = flag_create_link('tm_sponsor', $field['entity']->nid)) {
-
 
       // 1. Show Flag / Unflag link
       // only show for admin and moderator

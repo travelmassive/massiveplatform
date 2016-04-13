@@ -111,7 +111,28 @@ function tm_notifications_form_user_profile_form_alter(&$form, &$form_state) {
         $change_overide = true;
       }
     }
+  
+    // check if this user owns any events (member events) 
+    $query = "SELECT count(*) AS num_rows
+              FROM node
+              WHERE `type` = 'event' 
+              AND uid = :uid limit 1";
+    $result = db_query($query, array(':uid' => $user->uid))->fetch();
+    $result->num_rows;
+    if ($result->num_rows > 0) {
+      $change_overide = true;
+    }
 
+    // check if this user is an organizer of any events 
+    $query = "SELECT count(*) AS num_rows
+              FROM field_data_field_organizer
+              WHERE bundle = 'event' 
+              AND field_organizer_target_id = :uid limit 1";
+    $result = db_query($query, array(':uid' => $user->uid))->fetch();
+    $result->num_rows;
+    if ($result->num_rows > 0) {
+      $change_overide = true;
+    }
 
     foreach ($notifications as $name => $value) {
       $notif = new TMNotification($name);

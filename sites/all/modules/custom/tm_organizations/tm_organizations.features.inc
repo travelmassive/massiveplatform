@@ -89,7 +89,7 @@ function tm_organizations_node_info() {
     'organization' => array(
       'name' => t('Company'),
       'base' => 'node_content',
-      'description' => t('Companies can have a presence on Travel Massive and are managed by members.'),
+      'description' => t('Companies can have a profile and are managed by members.'),
       'has_title' => '1',
       'title_label' => t('Name'),
       'help' => '',

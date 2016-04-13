@@ -904,7 +904,7 @@ function tm_users_menu_companies($uid){
 }
 
 /* Checks if a user is a chapter leader of a chapter */
-function tm_users_is_chapter_leader($uid, $chapterid){
+function tm_users_is_chapter_leader($uid, $chapterid) {
   $query = new EntityFieldQuery();
   $query->entityCondition('entity_type', 'node')
     ->entityCondition('bundle', 'chapter')
@@ -1344,11 +1344,11 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
     }
   }
 
+  // Contact form tip
   if($form_id == "contact_site_form") {
     global $conf;
-    $form['intro'] = array(
-      '#markup' => "<p>Get in touch with " . $conf["tm_site_name"] . " and send us your ideas, comments or feedback.</p>",
-      '#weight' => -10);
+    $contact_form_message = "Get in touch with " . $conf["tm_site_name"] . " and send us your ideas, comments or feedback.";
+    drupal_set_message($contact_form_message, "help-tip");
   }
 
   // disable user from choosing own contact form
@@ -2341,7 +2341,7 @@ function tm_users_get_num_registered_events($uid) {
 }
 
 /* 
- * Use OR for contextual queries in related_events
+ * Use OR for contextual queries in block_joined_events
  * This allows us to show signed up and featured events
  * see: https://www.drupal.org/node/1451218#comment-6136692
  * 

@@ -480,7 +480,8 @@ function tm_events_ds_custom_fields_info() {
   $ds_field->entities = array(
     'node' => 'node',
   );
-  $ds_field->ui_limit = 'chapter|full';
+  $ds_field->ui_limit = 'chapter|full
+organization|full';
   $ds_field->properties = array(
     'block' => 'views|related_events-event_list',
     'block_render' => '3',

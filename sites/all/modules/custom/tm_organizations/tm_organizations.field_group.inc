@@ -83,7 +83,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Followers',
-    'weight' => '7',
+    'weight' => '8',
     'children' => array(
       0 => 'members_following',
     ),
@@ -243,7 +243,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Profile managed by',
-    'weight' => '6',
+    'weight' => '7',
     'children' => array(
       0 => 'field_owner',
     ),

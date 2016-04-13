@@ -16,14 +16,11 @@ function tm_fields_strongarm() {
   $strongarm->name = 'nodeaccess_nodereference';
   $strongarm->value = array(
     'event' => array(
-      'field_chapter' => array(
-        'all' => array(
+      'field_chapter_publish' => array(
+        'author' => array(
           'view' => 'view',
         ),
         'referenced' => array(
-          'update' => array(
-            'update' => 'update',
-          ),
           'view' => array(
             'view' => 'view',
           ),
@@ -31,16 +28,15 @@ function tm_fields_strongarm() {
         'unused' => 1,
         'field_type' => 'entityreference',
       ),
-      'field_chapter_publish' => array(
+      'field_event_company' => array(
         'referenced' => array(
           'view' => array(
             'view' => 'view',
           ),
         ),
-        'author' => array(
+        'all' => array(
           'view' => 'view',
         ),
-        'unused' => '1',
         'field_type' => 'entityreference',
       ),
     ),

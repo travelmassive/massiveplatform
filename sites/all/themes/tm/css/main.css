@@ -2840,6 +2840,7 @@ tr.selected td {
    ========================================================================== */
 /* line 9, ../sass/_helpers.scss */
 .visually-hidden, #site-title span, #prime-nav h1, #prime-nav h2 .hide, #prime-nav .search-wrapper .search-form label, #foot-credits .logo span, .bttn.hide-txt span, .bttn-group a.hide-txt span, .page-views .tabs-primary a.hide-txt span, .page-search .tabs-primary a.hide-txt span, .pager li a.hide-txt span, .pager .hide-txt.pager-current span, .views-exposed-form .hide-txt.form-type-select span, .hide-txt.twitter-login span,
+.form-download.hide-txt span,
 .form-submit.hide-txt span, .contained-block .detail-item h2, .card.contained .badge-cal .year, .node-form > div.card .badge-cal .year,
 #user-profile-form > div.card .badge-cal .year,
 #user-register-form > div.card .badge-cal .year, #content .card.search-form .badge-cal .year, #content .search-form label, #welcome .bd ul small, .trilithon-header .badge-cal .year, #account-menu-blk form label {
@@ -2855,7 +2856,7 @@ tr.selected td {
 
 /* line 33, ../sass/_helpers.scss */
 .bttn-primary, .bttn-group a, .page-views .tabs-primary a, .page-search .tabs-primary a, .pager li a, .views-exposed-form .form-type-select, .bttn-secondary, #prime-nav .search-wrapper .search-form #edit-submit,
-#prime-nav .search-wrapper .search-form #edit-submit--2, #content .search-form #edit-submit, .twitter-login, .bttn-tertiary, .form-submit, #account-menu-blk .form-submit, .bttn-danger, #edit-delete, .bttn-success, #edit-submit, .pager, .views-exposed-form .form-type-select select, .card.contained .avatar, .node-form > div.card .avatar,
+#prime-nav .search-wrapper .search-form #edit-submit--2, #content .search-form #edit-submit, .twitter-login, .bttn-tertiary, .form-submit, .form-download, #account-menu-blk .form-download, #account-menu-blk .form-submit, .bttn-danger, #edit-delete, .bttn-success, #edit-submit, .pager, .views-exposed-form .form-type-select select, .card.contained .avatar, .node-form > div.card .avatar,
 #user-profile-form > div.card .avatar,
 #user-register-form > div.card .avatar, #content .card.search-form .avatar, .card.contained .chapter-sticker, .node-form > div.card .chapter-sticker,
 #user-profile-form > div.card .chapter-sticker,
@@ -2890,13 +2891,20 @@ Icons
 
 /* line 25, ../sass/_type.scss */
 .icon, .icon-medal, .contained-block .detail-item.tm-ds-tm-sponsor:before, .icon-move, .draggable a.tabledrag-handle:before, .icon-briefcase, .contained-block .detail-item.field-segment:before, .icon-bubble, .bttn.communication:before, .bttn-group a.communication:before, .page-views .tabs-primary a.communication:before, .page-search .tabs-primary a.communication:before, .pager li a.communication:before, .pager .communication.pager-current:before, .views-exposed-form .communication.form-type-select:before, .communication.twitter-login:before,
+.form-download.communication:before,
 .form-submit.communication:before, .contained-block .detail-item.field-qa:before, .contained-block .detail-item.qa:before, .icon-s-new-window, .bttn.external:before, .bttn-group a.external:before, .page-views .tabs-primary a.external:before, .page-search .tabs-primary a.external:before, .pager li a.external:before, .pager .external.pager-current:before, .views-exposed-form .external.form-type-select:before, .external.twitter-login:before,
-.form-submit.external:before, .icon-instagram, #foot-nav .instagram:before, .contained-block .detail-item.field-link-instagram:before, .icon-users, .contained-block .detail-item.tm-ds-user-stats:before, .contained-block .detail-item.tm-ds-organization-stats:before, .icon-user, #prime-nav .account-wrapper .toggle:before, .icon-twitter, #foot-nav .twitter:before, .contained-block .detail-item.field-link-twitter:before, .twitter-login:before, .icon-triangle-up, .dropd:before, .icon-triangle-right, .icon-triangle-left, .icon-triangle-down, .icon-trash-bin, .icon-tick, .contained-block .detail-item.tm-payment-gateway-logo:before, .icon-subtract, .icon-star, .contained-block .detail-item.tm-ds-user-featured:before, .icon-spinner, .icon-share, .icon-share-reg, .icon-search-r, #prime-nav .search-wrapper .toggle:before, .icon-search-l, .icon-s-triangle-up, .icon-s-triangle-right, .tm-frontpage-video-pause:before, .icon-s-triangle-left, .icon-s-triangle-down, .icon-s-tick, .bttn.follow.on:before, .bttn-group a.follow.on:before, .page-views .tabs-primary a.follow.on:before, .page-search .tabs-primary a.follow.on:before, .pager li a.follow.on:before, .pager .follow.on.pager-current:before, .views-exposed-form .follow.on.form-type-select:before, .follow.on.twitter-login:before, .bttn.follow.flagged:before, .bttn-group a.follow.flagged:before, .page-views .tabs-primary a.follow.flagged:before, .page-search .tabs-primary a.follow.flagged:before, .pager li a.follow.flagged:before, .pager .follow.flagged.pager-current:before, .views-exposed-form .follow.flagged.form-type-select:before, .follow.flagged.twitter-login:before,
+.form-download.external:before,
+.form-submit.external:before, .icon-instagram, #foot-nav .instagram:before, .contained-block .detail-item.field-link-instagram:before, .icon-users, .contained-block .detail-item.tm-ds-user-stats:before, .contained-block .detail-item.tm-ds-organization-stats:before, .icon-user, #prime-nav .account-wrapper .toggle:before, .icon-twitter, #foot-nav .twitter:before, .contained-block .detail-item.field-link-twitter:before, .twitter-login:before, .icon-triangle-up, .dropd:before, .icon-triangle-right, .icon-triangle-left, .icon-triangle-down, .icon-trash-bin, .icon-tick, .contained-block .detail-item.tm-payment-gateway-logo:before, .icon-subtract, .icon-star, .contained-block .detail-item.tm-ds-user-featured:before, .icon-spinner, .icon-share, .chapter-sticker-icon:before, .icon-share-reg, .icon-search-r, #prime-nav .search-wrapper .toggle:before, .icon-search-l, .icon-s-triangle-up, .icon-s-triangle-right, .tm-frontpage-video-pause:before, .icon-s-triangle-left, .icon-s-triangle-down, .icon-s-tick, .bttn.follow.on:before, .bttn-group a.follow.on:before, .page-views .tabs-primary a.follow.on:before, .page-search .tabs-primary a.follow.on:before, .pager li a.follow.on:before, .pager .follow.on.pager-current:before, .views-exposed-form .follow.on.form-type-select:before, .follow.on.twitter-login:before, .bttn.follow.flagged:before, .bttn-group a.follow.flagged:before, .page-views .tabs-primary a.follow.flagged:before, .page-search .tabs-primary a.follow.flagged:before, .pager li a.follow.flagged:before, .pager .follow.flagged.pager-current:before, .views-exposed-form .follow.flagged.form-type-select:before, .follow.flagged.twitter-login:before,
+.form-download.follow.on:before,
+.form-download.follow.flagged:before,
 .form-submit.follow.on:before,
 .form-submit.follow.flagged:before, .form-submit:before, .messages.status:before, .status.messages--status:before, .status.messages--warning:before, .status.messages--error:before, .icon-s-subtract, .icon-s-cancel, .icon-s-arr-up, .icon-s-arr-right, .cta-inline:after, .contained-block .detail-item .detail-venue-link a:after, .contained-block .more-link a:after, #foot-nav a:before, .contained-block .detail-item.price:before, .icon-s-arr-left, .icon-s-arr-down, .bttn-dropdown:after, html.js .collapsible .fieldset-legend a:after, .views-exposed-form .form-type-select:after, .icon-s-add, .bttn.follow:before, .bttn-group a.follow:before, .page-views .tabs-primary a.follow:before, .page-search .tabs-primary a.follow:before, .pager li a.follow:before, .pager .follow.pager-current:before, .views-exposed-form .follow.form-type-select:before, .follow.twitter-login:before,
+.form-download.follow:before,
 .form-submit.follow:before, .icon-refresh, .icon-phone, .icon-pencil, .bttn.edit:before, .bttn-group a.edit:before, .page-views .tabs-primary a.edit:before, .page-search .tabs-primary a.edit:before, .pager li a.edit:before, .pager .edit.pager-current:before, .views-exposed-form .edit.form-type-select:before, .edit.twitter-login:before,
-.form-submit.edit:before, .image-edit-button:before, .icon-my-location, .icon-mobile, .icon-menu, #prime-nav .browse-wrapper .toggle:before, .icon-map, .icon-map-marker, .contained-block .detail-item.field-location:before, .contained-block .detail-item.location:before, .icon-list, .icon-linkedin, #foot-nav .linkedin:before, .contained-block .detail-item.field-link-linkedin:before, .icon-image, .icon-home, .icon-history, .icon-grid, .icon-google-plus, .icon-globe, .contained-block .detail-item.field-link-website:before, .icon-github, .icon-flickr, .icon-feed, .icon-facebook, #foot-nav .facebook:before, .contained-block .detail-item.field-link-facebook:before, .icon-expand, .icon-email, .icon-download, .icon-disc-cancel, .icon-description, .contained-block .detail-item.field-about-me:before, .contained-block .detail-item.about-me:before, .contained-block .detail-item.body:before, .icon-cog, .bttn.settings:before, .bttn-group a.settings:before, .page-views .tabs-primary a.settings:before, .page-search .tabs-primary a.settings:before, .pager li a.settings:before, .pager .settings.pager-current:before, .views-exposed-form .settings.form-type-select:before, .settings.twitter-login:before,
-.form-submit.settings:before, .icon-clock, .contained-block .detail-item.field-date-event:before, .icon-circle-warning, .messages.warning:before, .warning.messages--status:before, .warning.messages--warning:before, .warning.messages--error:before, .icon-circle-success, .icon-circle-question, .contained-block .detail-item.tm-ds-event-refund-policy:before, .icon-circle-play, .tm-frontpage-video-play:before, .icon-circle-info, .contained-block .detail-item.tm-ds-event-message:before, .icon-circle-error, .messages.error:before, .error.messages--status:before, .error.messages--warning:before, .error.messages--error:before, .icon-cancel, .icon-arr-up, .icon-arr-tail-up, .icon-arr-tail-right, .icon-arr-tail-left, .icon-arr-tail-down, .icon-arr-right, .icon-arr-right-last, .icon-arr-left, .icon-arr-left-first, .icon-arr-down, .icon-add, .icon-connection, .contained-block .detail-item.tm-ds-connection-actions:before, .contained-block .detail-item.tm-ds-organization-follow-message:before, .icon-youtube, #foot-nav .youtube:before, .contained-block .detail-item.field-link-youtube:before, .icon-vimeo, #foot-nav .vimeo:before, .contained-block .detail-item.field-link-vimeo:before, .icon-snapchat, #foot-nav .snapchat:before, .contained-block .detail-item.field-link-snapchat:before, .social .icon-snapchat, .social #foot-nav .snapchat:before, #foot-nav .social .snapchat:before, .social .contained-block .detail-item.field-link-snapchat:before, .contained-block .social .detail-item.field-link-snapchat:before, [class^="icon-"], [class*=" icon-"] {
+.form-download.edit:before,
+.form-submit.edit:before, .image-edit-button:before, .icon-my-location, .icon-mobile, .icon-menu, #prime-nav .browse-wrapper .toggle:before, .icon-map, .icon-map-marker, .contained-block .detail-item.field-location:before, .contained-block .detail-item.location:before, .icon-list, .icon-linkedin, #foot-nav .linkedin:before, .contained-block .detail-item.field-link-linkedin:before, .icon-image, .icon-home, .icon-history, .icon-grid, .icon-google-plus, .icon-globe, .contained-block .detail-item.field-link-website:before, .icon-github, .icon-flickr, .icon-feed, .icon-facebook, #foot-nav .facebook:before, .contained-block .detail-item.field-link-facebook:before, .icon-expand, .icon-email, .icon-download, .form-download:before, .icon-disc-cancel, .icon-description, .contained-block .detail-item.field-about-me:before, .contained-block .detail-item.about-me:before, .contained-block .detail-item.body:before, .icon-cog, .bttn.settings:before, .bttn-group a.settings:before, .page-views .tabs-primary a.settings:before, .page-search .tabs-primary a.settings:before, .pager li a.settings:before, .pager .settings.pager-current:before, .views-exposed-form .settings.form-type-select:before, .settings.twitter-login:before,
+.form-download.settings:before,
+.form-submit.settings:before, .icon-clock, .contained-block .detail-item.field-date-event:before, .icon-circle-warning, .messages.warning:before, .warning.messages--status:before, .warning.messages--warning:before, .warning.messages--error:before, .icon-circle-success, .icon-circle-question, .contained-block .detail-item.tm-ds-event-refund-policy:before, .icon-circle-play, .tm-frontpage-video-play:before, .icon-circle-info, .messages.help-tip:before, .help-tip.messages--status:before, .help-tip.messages--warning:before, .help-tip.messages--error:before, .contained-block .detail-item.tm-ds-event-message:before, .icon-circle-error, .messages.error:before, .error.messages--status:before, .error.messages--warning:before, .error.messages--error:before, .icon-cancel, .icon-arr-up, .icon-arr-tail-up, .icon-arr-tail-right, .icon-arr-tail-left, .icon-arr-tail-down, .icon-arr-right, .icon-arr-right-last, .icon-arr-left, .icon-arr-left-first, .icon-arr-down, .icon-add, .icon-connection, .contained-block .detail-item.tm-ds-connection-actions:before, .contained-block .detail-item.tm-ds-organization-follow-message:before, .icon-youtube, #foot-nav .youtube:before, .contained-block .detail-item.field-link-youtube:before, .icon-vimeo, #foot-nav .vimeo:before, .contained-block .detail-item.field-link-vimeo:before, .icon-snapchat, #foot-nav .snapchat:before, .contained-block .detail-item.field-link-snapchat:before, .social .icon-snapchat, .social #foot-nav .snapchat:before, #foot-nav .social .snapchat:before, .social .contained-block .detail-item.field-link-snapchat:before, .contained-block .social .detail-item.field-link-snapchat:before, [class^="icon-"], [class*=" icon-"] {
   font-family: 'tm-icons';
   speak: none;
   font-style: normal;
@@ -2925,12 +2933,14 @@ Icons
 
 /* line 50, ../sass/_type.scss */
 .icon-bubble, .bttn.communication:before, .bttn-group a.communication:before, .page-views .tabs-primary a.communication:before, .page-search .tabs-primary a.communication:before, .pager li a.communication:before, .pager .communication.pager-current:before, .views-exposed-form .communication.form-type-select:before, .communication.twitter-login:before,
+.form-download.communication:before,
 .form-submit.communication:before, .contained-block .detail-item.field-qa:before, .contained-block .detail-item.qa:before {
   content: "\e64c";
 }
 
 /* line 54, ../sass/_type.scss */
 .icon-s-new-window, .bttn.external:before, .bttn-group a.external:before, .page-views .tabs-primary a.external:before, .page-search .tabs-primary a.external:before, .pager li a.external:before, .pager .external.pager-current:before, .views-exposed-form .external.form-type-select:before, .external.twitter-login:before,
+.form-download.external:before,
 .form-submit.external:before {
   content: "\e64a";
 }
@@ -3001,7 +3011,7 @@ Icons
 }
 
 /* line 110, ../sass/_type.scss */
-.icon-share {
+.icon-share, .chapter-sticker-icon:before {
   content: "\e60d";
 }
 
@@ -3042,6 +3052,8 @@ Icons
 
 /* line 142, ../sass/_type.scss */
 .icon-s-tick, .bttn.follow.on:before, .bttn-group a.follow.on:before, .page-views .tabs-primary a.follow.on:before, .page-search .tabs-primary a.follow.on:before, .pager li a.follow.on:before, .pager .follow.on.pager-current:before, .views-exposed-form .follow.on.form-type-select:before, .follow.on.twitter-login:before, .bttn.follow.flagged:before, .bttn-group a.follow.flagged:before, .page-views .tabs-primary a.follow.flagged:before, .page-search .tabs-primary a.follow.flagged:before, .pager li a.follow.flagged:before, .pager .follow.flagged.pager-current:before, .views-exposed-form .follow.flagged.form-type-select:before, .follow.flagged.twitter-login:before,
+.form-download.follow.on:before,
+.form-download.follow.flagged:before,
 .form-submit.follow.on:before,
 .form-submit.follow.flagged:before, .form-submit:before, .messages.status:before, .status.messages--status:before, .status.messages--warning:before, .status.messages--error:before {
   content: "\e615";
@@ -3079,6 +3091,7 @@ Icons
 
 /* line 170, ../sass/_type.scss */
 .icon-s-add, .bttn.follow:before, .bttn-group a.follow:before, .page-views .tabs-primary a.follow:before, .page-search .tabs-primary a.follow:before, .pager li a.follow:before, .pager .follow.pager-current:before, .views-exposed-form .follow.form-type-select:before, .follow.twitter-login:before,
+.form-download.follow:before,
 .form-submit.follow:before {
   content: "\e61c";
 }
@@ -3095,6 +3108,7 @@ Icons
 
 /* line 182, ../sass/_type.scss */
 .icon-pencil, .bttn.edit:before, .bttn-group a.edit:before, .page-views .tabs-primary a.edit:before, .page-search .tabs-primary a.edit:before, .pager li a.edit:before, .pager .edit.pager-current:before, .views-exposed-form .edit.form-type-select:before, .edit.twitter-login:before,
+.form-download.edit:before,
 .form-submit.edit:before, .image-edit-button:before {
   content: "\e61f";
 }
@@ -3195,7 +3209,7 @@ Icons
 }
 
 /* line 262, ../sass/_type.scss */
-.icon-download {
+.icon-download, .form-download:before {
   content: "\e633";
 }
 
@@ -3211,6 +3225,7 @@ Icons
 
 /* line 274, ../sass/_type.scss */
 .icon-cog, .bttn.settings:before, .bttn-group a.settings:before, .page-views .tabs-primary a.settings:before, .page-search .tabs-primary a.settings:before, .pager li a.settings:before, .pager .settings.pager-current:before, .views-exposed-form .settings.form-type-select:before, .settings.twitter-login:before,
+.form-download.settings:before,
 .form-submit.settings:before {
   content: "\e636";
 }
@@ -3241,7 +3256,7 @@ Icons
 }
 
 /* line 298, ../sass/_type.scss */
-.icon-circle-info, .contained-block .detail-item.tm-ds-event-message:before {
+.icon-circle-info, .messages.help-tip:before, .help-tip.messages--status:before, .help-tip.messages--warning:before, .help-tip.messages--error:before, .contained-block .detail-item.tm-ds-event-message:before {
   content: "\e63c";
 }
 
@@ -3389,8 +3404,13 @@ h1, .hd-xl {
 }
 
 /* line 422, ../sass/_type.scss */
-h2, .hd-l, .page-node-rsvp #page-title,
+h2, .hd-l, .page-events-send-announcement #page-title,
+.page-events-manage-registrations #page-title,
+.page-node-add #page-title,
+.page-node-rsvp #page-title,
 .page-node-communicate #page-title,
+.page-events-message #page-title,
+.page-contact #page-title,
 .page-views #page-title,
 .page-node-edit #page-title,
 .page-user-edit #page-title,
@@ -3405,8 +3425,13 @@ h2, .hd-l, .page-node-rsvp #page-title,
 }
 @media only screen and (min-width: 34.063rem) {
   /* line 422, ../sass/_type.scss */
-  h2, .hd-l, .page-node-rsvp #page-title,
+  h2, .hd-l, .page-events-send-announcement #page-title,
+  .page-events-manage-registrations #page-title,
+  .page-node-add #page-title,
+  .page-node-rsvp #page-title,
   .page-node-communicate #page-title,
+  .page-events-message #page-title,
+  .page-contact #page-title,
   .page-views #page-title,
   .page-node-edit #page-title,
   .page-user-edit #page-title,
@@ -3420,8 +3445,8 @@ h2, .hd-l, .page-node-rsvp #page-title,
 
 /* line 437, ../sass/_type.scss */
 h3, .hd-m, #tm-events-communication-form.block .prime-title, #tm-events-communication-form.modal .prime-title,
-#tm-events-rsvp-form.block .prime-title,
-#tm-events-rsvp-form.modal .prime-title,
+#tm-events-manage-registrations-form.block .prime-title,
+#tm-events-manage-registrations-form.modal .prime-title,
 .vbo-views-form.block .prime-title,
 .vbo-views-form.modal .prime-title,
 .contained.block .prime-title,
@@ -3443,8 +3468,8 @@ h3, .hd-m, #tm-events-communication-form.block .prime-title, #tm-events-communic
 @media only screen and (min-width: 34.063rem) {
   /* line 437, ../sass/_type.scss */
   h3, .hd-m, #tm-events-communication-form.block .prime-title, #tm-events-communication-form.modal .prime-title,
-  #tm-events-rsvp-form.block .prime-title,
-  #tm-events-rsvp-form.modal .prime-title,
+  #tm-events-manage-registrations-form.block .prime-title,
+  #tm-events-manage-registrations-form.modal .prime-title,
   .vbo-views-form.block .prime-title,
   .vbo-views-form.modal .prime-title,
   .contained.block .prime-title,
@@ -3475,8 +3500,8 @@ h4, .hd-s {
 
 /* line 460, ../sass/_type.scss */
 h5, .hd-xs, #foot-nav h2, #tm-events-communication-form h2, #tm-events-communication-form h3,
-#tm-events-rsvp-form h2,
-#tm-events-rsvp-form h3,
+#tm-events-manage-registrations-form h2,
+#tm-events-manage-registrations-form h3,
 .vbo-views-form h2,
 .vbo-views-form h3,
 .contained h2,
@@ -3558,10 +3583,11 @@ body {
   }
 }
 
-/* line 36, ../sass/_base.scss */
+/* line 37, ../sass/_base.scss */
 a:link,
 a:visited,
 button,
+.form-download,
 .form-submit {
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
@@ -3589,66 +3615,68 @@ button,
   text-decoration: none;
 }
 
-/* line 50, ../sass/_base.scss */
+/* line 52, ../sass/_base.scss */
 a:hover,
 a:focus,
 button:hover,
+.form-download:hover,
 .form-submit:hover {
   outline: none;
   opacity: 0.7;
 }
 
-/* line 57, ../sass/_base.scss */
+/* line 60, ../sass/_base.scss */
 a:active,
 button:active,
+.form-download:active,
 .form-submit:active {
   position: relative;
   top: 2px;
 }
 
-/* line 62, ../sass/_base.scss */
-a.disabled, .bttn.disabled, .bttn-group a.disabled, .page-views .tabs-primary a.disabled, .page-search .tabs-primary a.disabled, .pager li a.disabled, .pager .disabled.pager-current, .views-exposed-form .disabled.form-type-select, .disabled.twitter-login, .form-submit.disabled {
+/* line 65, ../sass/_base.scss */
+a.disabled, .bttn.disabled, .bttn-group a.disabled, .page-views .tabs-primary a.disabled, .page-search .tabs-primary a.disabled, .pager li a.disabled, .pager .disabled.pager-current, .views-exposed-form .disabled.form-type-select, .disabled.twitter-login, .form-submit.disabled, .form-download.disabled {
   opacity: 0.4;
   cursor: default;
 }
-/* line 65, ../sass/_base.scss */
-a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled:hover, .page-views .tabs-primary a.disabled:hover, .page-search .tabs-primary a.disabled:hover, .pager li a.disabled:hover, .pager .disabled.pager-current:hover, .views-exposed-form .disabled.form-type-select:hover, .disabled.twitter-login:hover, .bttn.disabled:focus, .bttn-group a.disabled:focus, .page-views .tabs-primary a.disabled:focus, .page-search .tabs-primary a.disabled:focus, .pager li a.disabled:focus, .pager .disabled.pager-current:focus, .views-exposed-form .disabled.form-type-select:focus, .disabled.twitter-login:focus, .form-submit.disabled:hover, .form-submit.disabled:focus {
+/* line 68, ../sass/_base.scss */
+a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled:hover, .page-views .tabs-primary a.disabled:hover, .page-search .tabs-primary a.disabled:hover, .pager li a.disabled:hover, .pager .disabled.pager-current:hover, .views-exposed-form .disabled.form-type-select:hover, .disabled.twitter-login:hover, .bttn.disabled:focus, .bttn-group a.disabled:focus, .page-views .tabs-primary a.disabled:focus, .page-search .tabs-primary a.disabled:focus, .pager li a.disabled:focus, .pager .disabled.pager-current:focus, .views-exposed-form .disabled.form-type-select:focus, .disabled.twitter-login:focus, .form-submit.disabled:hover, .form-submit.disabled:focus, .form-download.disabled:hover, .form-download.disabled:focus {
   opacity: 0.4;
 }
 
-/* line 70, ../sass/_base.scss */
+/* line 73, ../sass/_base.scss */
 .cta-inline, .contained-block .detail-item .detail-venue-link a, .contained-block .more-link a {
   font-weight: 800;
 }
-/* line 72, ../sass/_base.scss */
+/* line 75, ../sass/_base.scss */
 .cta-inline:after, .contained-block .detail-item .detail-venue-link a:after, .contained-block .more-link a:after {
   vertical-align: bottom;
   font-weight: normal;
 }
 
-/* line 79, ../sass/_base.scss */
+/* line 82, ../sass/_base.scss */
 .item-list {
   text-align: center;
   font-size: 0;
 }
 
-/* line 84, ../sass/_base.scss */
+/* line 87, ../sass/_base.scss */
 #page, #site-canvas {
   background: #f3f4f5;
 }
 
-/* line 88, ../sass/_base.scss */
+/* line 91, ../sass/_base.scss */
 #main {
   padding: 2rem 0;
 }
 @media only screen and (min-width: 65.063rem) {
-  /* line 88, ../sass/_base.scss */
+  /* line 91, ../sass/_base.scss */
   #main {
     padding: 3rem 0;
   }
 }
 
-/* line 95, ../sass/_base.scss */
+/* line 98, ../sass/_base.scss */
 #header {
   position: relative;
   z-index: 10;
@@ -3658,7 +3686,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   overflow: visible !important;
 }
 
-/* line 104, ../sass/_base.scss */
+/* line 107, ../sass/_base.scss */
 #site-title {
   position: relative;
   padding-left: 1rem;
@@ -3667,21 +3695,21 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   float: left;
   margin: 0;
 }
-/* line 107, ../sass/_base.scss */
+/* line 110, ../sass/_base.scss */
 #site-title a {
   float: left;
 }
-/* line 110, ../sass/_base.scss */
+/* line 113, ../sass/_base.scss */
 #site-title span {
   background-color: red;
 }
-/* line 114, ../sass/_base.scss */
+/* line 117, ../sass/_base.scss */
 #site-title img {
   display: block;
   height: 3rem;
 }
 @media only screen and (min-width: 65.063rem) {
-  /* line 104, ../sass/_base.scss */
+  /* line 107, ../sass/_base.scss */
   #site-title {
     position: relative;
     padding-left: 1rem;
@@ -3689,13 +3717,13 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
     width: 16.66667%;
     float: left;
   }
-  /* line 120, ../sass/_base.scss */
+  /* line 123, ../sass/_base.scss */
   #site-title img {
     height: 3rem;
   }
 }
 
-/* line 126, ../sass/_base.scss */
+/* line 129, ../sass/_base.scss */
 #prime-nav {
   position: relative;
   padding-left: 1rem;
@@ -3703,69 +3731,69 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   width: 58.33333%;
   float: left;
 }
-/* line 129, ../sass/_base.scss */
+/* line 132, ../sass/_base.scss */
 #prime-nav h2 {
   float: left;
   margin: 0;
 }
-/* line 133, ../sass/_base.scss */
+/* line 136, ../sass/_base.scss */
 #prime-nav > ul {
   float: right;
   list-style: none;
   padding: 0;
   margin: 0;
 }
-/* line 136, ../sass/_base.scss */
+/* line 139, ../sass/_base.scss */
 #prime-nav > ul > li {
   position: relative;
   float: left;
   margin-left: 1rem;
 }
-/* line 140, ../sass/_base.scss */
+/* line 143, ../sass/_base.scss */
 #prime-nav > ul > li:first-child {
   margin-left: 0;
 }
-/* line 145, ../sass/_base.scss */
+/* line 148, ../sass/_base.scss */
 #prime-nav .prime-nav-wrappers {
   padding-top: 0.5rem;
 }
-/* line 148, ../sass/_base.scss */
+/* line 151, ../sass/_base.scss */
 #prime-nav .toggle {
   display: block;
   color: #213040;
   text-align: center;
   line-height: 2rem;
 }
-/* line 153, ../sass/_base.scss */
+/* line 156, ../sass/_base.scss */
 #prime-nav .toggle:before {
   display: block;
   font-size: 1.5rem;
   height: 2rem;
   width: 2rem;
 }
-/* line 159, ../sass/_base.scss */
+/* line 162, ../sass/_base.scss */
 #prime-nav .toggle.on {
   color: #007eb5;
 }
-/* line 163, ../sass/_base.scss */
+/* line 166, ../sass/_base.scss */
 #prime-nav .inner {
   min-width: 19rem;
 }
-/* line 170, ../sass/_base.scss */
+/* line 173, ../sass/_base.scss */
 #prime-nav .browse-wrapper .inner {
   right: -6.5rem;
 }
-/* line 172, ../sass/_base.scss */
+/* line 175, ../sass/_base.scss */
 #prime-nav .browse-wrapper .inner:before {
   right: 7rem;
 }
-/* line 176, ../sass/_base.scss */
+/* line 179, ../sass/_base.scss */
 #prime-nav .browse-wrapper ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-/* line 180, ../sass/_base.scss */
+/* line 183, ../sass/_base.scss */
 #prime-nav .browse-wrapper ul a {
   display: block;
   color: #213040;
@@ -3774,28 +3802,28 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   font-size: 1rem;
   line-height: 2rem;
 }
-/* line 194, ../sass/_base.scss */
+/* line 197, ../sass/_base.scss */
 #prime-nav .search-wrapper .inner {
   right: -3.5rem;
 }
-/* line 196, ../sass/_base.scss */
+/* line 199, ../sass/_base.scss */
 #prime-nav .search-wrapper .inner:before {
   right: 4rem;
 }
-/* line 205, ../sass/_base.scss */
+/* line 208, ../sass/_base.scss */
 #prime-nav .search-wrapper .search-form #edit-submit,
 #prime-nav .search-wrapper .search-form #edit-submit--2 {
   width: 100%;
   margin: 0.5rem 0 0 0;
 }
-/* line 211, ../sass/_base.scss */
+/* line 214, ../sass/_base.scss */
 #prime-nav .search-wrapper .helper {
   font-size: 0.85rem;
   line-height: 1.25rem;
   color: #636e79;
   margin: 0;
 }
-/* line 220, ../sass/_base.scss */
+/* line 223, ../sass/_base.scss */
 #prime-nav .account-wrapper .toggle .avatar {
   display: block;
   padding: 0.25rem;
@@ -3804,22 +3832,22 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   border-radius: 0.125rem;
   background: #FFF;
 }
-/* line 229, ../sass/_base.scss */
+/* line 232, ../sass/_base.scss */
 #prime-nav .account-wrapper .toggle img {
   display: block;
   border-radius: 0.125rem;
   max-width: 100%;
 }
-/* line 238, ../sass/_base.scss */
+/* line 241, ../sass/_base.scss */
 #prime-nav .account-wrapper .inner {
   right: -0.5rem;
 }
-/* line 248, ../sass/_base.scss */
+/* line 251, ../sass/_base.scss */
 .logged-in #prime-nav .account-wrapper .toggle:before {
   display: none;
 }
 @media only screen and (min-width: 65.063rem) {
-  /* line 126, ../sass/_base.scss */
+  /* line 129, ../sass/_base.scss */
   #prime-nav {
     position: relative;
     padding-left: 1rem;
@@ -3827,15 +3855,15 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
     width: 83.33333%;
     float: left;
   }
-  /* line 256, ../sass/_base.scss */
+  /* line 259, ../sass/_base.scss */
   #prime-nav > ul {
     padding: 0.5rem 0;
   }
-  /* line 262, ../sass/_base.scss */
+  /* line 265, ../sass/_base.scss */
   #prime-nav .browse-wrapper .toggle:before {
     display: none;
   }
-  /* line 265, ../sass/_base.scss */
+  /* line 268, ../sass/_base.scss */
   #prime-nav .browse-wrapper .inner {
     position: static;
     top: auto;
@@ -3846,22 +3874,22 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
     visibility: visible;
     box-shadow: none;
   }
-  /* line 275, ../sass/_base.scss */
+  /* line 278, ../sass/_base.scss */
   #prime-nav .browse-wrapper .inner:before {
     display: none;
   }
-  /* line 279, ../sass/_base.scss */
+  /* line 282, ../sass/_base.scss */
   #prime-nav .browse-wrapper li {
     float: left;
     margin-left: 1.5rem;
   }
-  /* line 284, ../sass/_base.scss */
+  /* line 287, ../sass/_base.scss */
   #prime-nav .search-wrapper {
     margin-left: 2rem;
   }
 }
 
-/* line 294, ../sass/_base.scss */
+/* line 297, ../sass/_base.scss */
 #content {
   position: relative;
   padding-left: 1rem;
@@ -3869,7 +3897,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   width: 100%;
   float: left;
 }
-/* line 298, ../sass/_base.scss */
+/* line 301, ../sass/_base.scss */
 #content .trilithon {
   width: auto;
   margin-left: -1rem;
@@ -3888,7 +3916,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 #content .trilithon:after {
   clear: both;
 }
-/* line 301, ../sass/_base.scss */
+/* line 304, ../sass/_base.scss */
 #content .trilithon .banner,
 #content .trilithon .column {
   position: relative;
@@ -3898,7 +3926,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   float: left;
 }
 @media only screen and (min-width: 65.063rem) {
-  /* line 305, ../sass/_base.scss */
+  /* line 308, ../sass/_base.scss */
   #content .trilithon .column {
     position: relative;
     padding-left: 1rem;
@@ -3907,7 +3935,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
     float: left;
   }
 }
-/* line 313, ../sass/_base.scss */
+/* line 316, ../sass/_base.scss */
 #content .grid .view-content ul {
   width: auto;
   margin-left: -1rem;
@@ -3927,7 +3955,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 #content .grid .view-content ul:after {
   clear: both;
 }
-/* line 317, ../sass/_base.scss */
+/* line 320, ../sass/_base.scss */
 #content .grid .view-content li {
   position: relative;
   padding-left: 1rem;
@@ -3937,7 +3965,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   list-style: none;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 322, ../sass/_base.scss */
+  /* line 325, ../sass/_base.scss */
   #content .grid .view-content li {
     position: relative;
     padding-left: 1rem;
@@ -3945,13 +3973,13 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
     width: 50%;
     float: left;
   }
-  /* line 324, ../sass/_base.scss */
+  /* line 327, ../sass/_base.scss */
   #content .grid .view-content li:nth-child(2n+1) {
     clear: left;
   }
 }
 @media only screen and (min-width: 69.063rem) {
-  /* line 330, ../sass/_base.scss */
+  /* line 333, ../sass/_base.scss */
   #content .grid .view-content li {
     position: relative;
     padding-left: 1rem;
@@ -3959,19 +3987,22 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
     width: 33.33333%;
     float: left;
   }
-  /* line 332, ../sass/_base.scss */
+  /* line 335, ../sass/_base.scss */
   #content .grid .view-content li:nth-child(2n+1) {
     clear: none;
   }
-  /* line 335, ../sass/_base.scss */
+  /* line 338, ../sass/_base.scss */
   #content .grid .view-content li:nth-child(3n+1) {
     clear: left;
   }
 }
 
 @media only screen and (min-width: 65.063rem) {
-  /* line 348, ../sass/_base.scss */
+  /* line 354, ../sass/_base.scss */
+  .page-node-add #content,
   .page-node-communicate #content,
+  .page-events-message #content,
+  .page-contact #content,
   .page-node-rsvp #content,
   .page-user-edit #content,
   .page-user-register #content,
@@ -3985,8 +4016,11 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   }
 }
 @media only screen and (min-width: 69.063rem) {
-  /* line 348, ../sass/_base.scss */
+  /* line 354, ../sass/_base.scss */
+  .page-node-add #content,
   .page-node-communicate #content,
+  .page-events-message #content,
+  .page-contact #content,
   .page-node-rsvp #content,
   .page-user-edit #content,
   .page-user-register #content,
@@ -4000,19 +4034,19 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   }
 }
 
-/* line 357, ../sass/_base.scss */
+/* line 363, ../sass/_base.scss */
 #footer {
   position: relative;
   background: #121212;
   padding: 2rem 0 1rem 0;
   color: #efefef;
 }
-/* line 362, ../sass/_base.scss */
+/* line 368, ../sass/_base.scss */
 #footer a {
   color: #ffffff;
 }
 
-/* line 367, ../sass/_base.scss */
+/* line 373, ../sass/_base.scss */
 #foot-nav {
   position: relative;
   padding-left: 1rem;
@@ -4020,7 +4054,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   width: 100%;
   float: left;
 }
-/* line 369, ../sass/_base.scss */
+/* line 375, ../sass/_base.scss */
 #foot-nav .inner {
   width: auto;
   margin-left: -1rem;
@@ -4039,11 +4073,11 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 #foot-nav .inner:after {
   clear: both;
 }
-/* line 372, ../sass/_base.scss */
+/* line 378, ../sass/_base.scss */
 #foot-nav h2 {
   text-transform: uppercase;
 }
-/* line 376, ../sass/_base.scss */
+/* line 382, ../sass/_base.scss */
 #foot-nav section {
   position: relative;
   padding-left: 1rem;
@@ -4051,7 +4085,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   width: 50%;
   float: left;
 }
-/* line 379, ../sass/_base.scss */
+/* line 385, ../sass/_base.scss */
 #foot-nav ul {
   list-style: none;
   padding: 0;
@@ -4059,18 +4093,18 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
-/* line 385, ../sass/_base.scss */
+/* line 391, ../sass/_base.scss */
 #foot-nav ul li {
   overflow: hidden;
   margin-bottom: 0.25rem;
 }
-/* line 390, ../sass/_base.scss */
+/* line 396, ../sass/_base.scss */
 #foot-nav a {
   float: left;
   position: relative;
   padding-left: 1.375rem;
 }
-/* line 394, ../sass/_base.scss */
+/* line 400, ../sass/_base.scss */
 #foot-nav a:before {
   position: absolute;
   top: 0;
@@ -4079,7 +4113,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   color: #79828c;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 367, ../sass/_base.scss */
+  /* line 373, ../sass/_base.scss */
   #foot-nav {
     position: relative;
     padding-left: 1rem;
@@ -4089,7 +4123,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   }
 }
 @media only screen and (min-width: 65.063rem) {
-  /* line 415, ../sass/_base.scss */
+  /* line 421, ../sass/_base.scss */
   #foot-nav section {
     position: relative;
     padding-left: 1rem;
@@ -4099,7 +4133,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   }
 }
 
-/* line 422, ../sass/_base.scss */
+/* line 428, ../sass/_base.scss */
 #foot-credits {
   position: relative;
   padding-left: 1rem;
@@ -4109,39 +4143,39 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   border-top: 1px solid #bcc0c5;
   padding-top: 2rem;
 }
-/* line 426, ../sass/_base.scss */
+/* line 432, ../sass/_base.scss */
 #foot-credits p {
   overflow: hidden;
   margin: 0 0 0.75rem 0;
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
-/* line 432, ../sass/_base.scss */
+/* line 438, ../sass/_base.scss */
 #foot-credits .logo {
   float: left;
 }
-/* line 434, ../sass/_base.scss */
+/* line 440, ../sass/_base.scss */
 #foot-credits .logo img {
   opacity: 0.8;
   height: 2rem;
 }
-/* line 438, ../sass/_base.scss */
+/* line 444, ../sass/_base.scss */
 #foot-credits .logo a {
   padding: 0.25rem 0;
   float: left;
   margin: 0 1rem 0.5rem 0;
 }
-/* line 447, ../sass/_base.scss */
+/* line 453, ../sass/_base.scss */
 #foot-credits small {
   float: left;
   font-size: inherit;
 }
-/* line 451, ../sass/_base.scss */
+/* line 457, ../sass/_base.scss */
 #foot-credits time {
   display: block;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 422, ../sass/_base.scss */
+  /* line 428, ../sass/_base.scss */
   #foot-credits {
     position: relative;
     padding-left: 1rem;
@@ -4153,66 +4187,66 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   }
 }
 @media only screen and (min-width: 65.063rem) {
-  /* line 460, ../sass/_base.scss */
+  /* line 466, ../sass/_base.scss */
   #foot-credits .logo {
     float: none;
     display: block;
     overflow: hidden;
   }
-  /* line 464, ../sass/_base.scss */
+  /* line 470, ../sass/_base.scss */
   #foot-credits .logo a {
     clear: both;
   }
-  /* line 468, ../sass/_base.scss */
+  /* line 474, ../sass/_base.scss */
   #foot-credits small {
     float: none;
     display: block;
   }
 }
 
-/* line 476, ../sass/_base.scss */
+/* line 482, ../sass/_base.scss */
 .media-obj,
 .media-obj > a {
   display: table;
   width: 100%;
 }
 
-/* line 483, ../sass/_base.scss */
+/* line 489, ../sass/_base.scss */
 .media-obj .media-fig,
 .media-obj .media-bd {
   display: table-cell;
   vertical-align: middle;
 }
-/* line 487, ../sass/_base.scss */
+/* line 493, ../sass/_base.scss */
 .media-top .media-obj .media-fig, .media-top
 .media-obj .media-bd {
   vertical-align: top;
 }
-/* line 490, ../sass/_base.scss */
+/* line 496, ../sass/_base.scss */
 .media-bottom .media-obj .media-fig, .media-bottom
 .media-obj .media-bd {
   vertical-align: bottom;
 }
-/* line 495, ../sass/_base.scss */
+/* line 501, ../sass/_base.scss */
 .media-obj .media-fig {
   padding-right: 1rem;
 }
-/* line 498, ../sass/_base.scss */
+/* line 504, ../sass/_base.scss */
 .media-obj .media-fig img {
   display: block;
   max-width: none;
 }
-/* line 502, ../sass/_base.scss */
+/* line 508, ../sass/_base.scss */
 .media-rev .media-obj .media-fig {
   padding-right: 0;
   padding-left: 1rem;
 }
-/* line 508, ../sass/_base.scss */
+/* line 514, ../sass/_base.scss */
 .media-obj .media-bd {
   width: 100%;
 }
 
-/* line 513, ../sass/_base.scss */
+/* line 519, ../sass/_base.scss */
 #footer-sponsors {
   height: 3rem;
   padding-left: 1rem;
@@ -4220,7 +4254,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   border-top: 1px solid #4d5966;
 }
 
-/* line 520, ../sass/_base.scss */
+/* line 526, ../sass/_base.scss */
 .sponsors-headline {
   font-size: 12pt;
   font-weight: bold;
@@ -4228,21 +4262,21 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 }
 
 /* IE<9 */
-/* line 529, ../sass/_base.scss */
+/* line 535, ../sass/_base.scss */
 .lt-ie9 body {
   background: #e8eaeb;
 }
-/* line 532, ../sass/_base.scss */
+/* line 538, ../sass/_base.scss */
 .lt-ie9 #page, .lt-ie9 #site-canvas {
   display: none;
 }
-/* line 535, ../sass/_base.scss */
+/* line 541, ../sass/_base.scss */
 .lt-ie9 #nocando {
   margin: 200px auto;
   padding: 0 20px;
   width: 440px;
 }
-/* line 539, ../sass/_base.scss */
+/* line 545, ../sass/_base.scss */
 .lt-ie9 #nocando h1 {
   color: inherit;
   line-height: 1.1;
@@ -4250,21 +4284,21 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 }
 
 /* Views load more pager */
-/* line 548, ../sass/_base.scss */
+/* line 554, ../sass/_base.scss */
 .pager-load-more .ajax-progress-throbber {
   position: absolute;
   margin-left: 16px;
   margin-top: 8px;
 }
 
-/* line 554, ../sass/_base.scss */
+/* line 560, ../sass/_base.scss */
 .pager-load-more .ajax-progress-throbber .throbber {
   width: 16px;
   background: transparent url("../images/load-more-ajax-loader.gif") no-repeat 0px 0px;
 }
 
 /* Blur filter for jq_alert */
-/* line 560, ../sass/_base.scss */
+/* line 566, ../sass/_base.scss */
 .tm-blur-filter {
   -webkit-filter: blur(2px);
   -moz-filter: blur(2px);
@@ -4273,14 +4307,61 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   filter: blur(2px);
 }
 
+/* Payments form message */
+/* line 575, ../sass/_base.scss */
+.tm-payments-edit-form-message {
+  border-radius: 4px;
+  max-width: 400px;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Event registration and announcement tips */
+/* line 584, ../sass/_base.scss */
+.tm-event-send-announcement-tips,
+.tm-event-manage-registrations-tips {
+  padding-left: 2rem;
+  margin-top: 2rem;
+  color: #51616e;
+  background-color: #eee;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 10pt;
+}
+
+/* Event announcement steps */
+/* line 595, ../sass/_base.scss */
+.tm-event-send-announcement-step {
+  color: #51616e;
+  font-weight: bold;
+  font-style: italic;
+  padding-top: 0.5rem;
+}
+
+/* Chapter sticker for external events */
+/* line 603, ../sass/_base.scss */
+.chapter-sticker-icon {
+  width: auto !important;
+  white-space: nowrap;
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+}
+
+/* Checkboxes in forms */
+/* line 614, ../sass/_base.scss */
+.page-node-edit .form-type-checkbox {
+  margin-top: 1.0rem !important;
+}
+
 /* line 3, ../sass/_buttons.scss */
 button:hover, button:focus {
   outline: none;
 }
 
 /* Base button style */
-/* line 10, ../sass/_buttons.scss */
+/* line 11, ../sass/_buttons.scss */
 .bttn, .bttn-group a, .page-views .tabs-primary a, .page-search .tabs-primary a, .pager li a, .pager .pager-current, .views-exposed-form .form-type-select, .twitter-login,
+.form-download,
 .form-submit {
   display: inline-block;
   border-radius: 0.25rem;
@@ -4294,89 +4375,108 @@ button:hover, button:focus {
   background: #FFF;
   border: 0;
 }
-/* line 25, ../sass/_buttons.scss */
+/* line 26, ../sass/_buttons.scss */
 .bttn:link, .bttn-group a:link, .page-views .tabs-primary a:link, .page-search .tabs-primary a:link, .pager li a:link, .pager .pager-current:link, .views-exposed-form .form-type-select:link, .twitter-login:link, .bttn:active, .bttn-group a:active, .page-views .tabs-primary a:active, .page-search .tabs-primary a:active, .pager li a:active, .pager .pager-current:active, .views-exposed-form .form-type-select:active, .twitter-login:active, .bttn:visited, .bttn-group a:visited, .page-views .tabs-primary a:visited, .page-search .tabs-primary a:visited, .pager li a:visited, .pager .pager-current:visited, .views-exposed-form .form-type-select:visited, .twitter-login:visited,
+.form-download:link,
+.form-download:active,
+.form-download:visited,
 .form-submit:link,
 .form-submit:active,
 .form-submit:visited {
   position: static;
   top: 0;
 }
-/* line 29, ../sass/_buttons.scss */
+/* line 30, ../sass/_buttons.scss */
 .bttn:active, .bttn-group a:active, .page-views .tabs-primary a:active, .page-search .tabs-primary a:active, .pager li a:active, .pager .pager-current:active, .views-exposed-form .form-type-select:active, .twitter-login:active,
+.form-download:active,
 .form-submit:active {
   opacity: 1;
 }
-/* line 33, ../sass/_buttons.scss */
+/* line 34, ../sass/_buttons.scss */
 .bttn:hover, .bttn-group a:hover, .page-views .tabs-primary a:hover, .page-search .tabs-primary a:hover, .pager li a:hover, .pager .pager-current:hover, .views-exposed-form .form-type-select:hover, .twitter-login:hover, .bttn:focus, .bttn-group a:focus, .page-views .tabs-primary a:focus, .page-search .tabs-primary a:focus, .pager li a:focus, .pager .pager-current:focus, .views-exposed-form .form-type-select:focus, .twitter-login:focus,
+.form-download:hover,
+.form-download:focus,
 .form-submit:hover,
 .form-submit:focus {
   outline: none;
 }
-/* line 36, ../sass/_buttons.scss */
+/* line 37, ../sass/_buttons.scss */
 .bttn:before, .bttn-group a:before, .page-views .tabs-primary a:before, .page-search .tabs-primary a:before, .pager li a:before, .pager .pager-current:before, .views-exposed-form .form-type-select:before, .twitter-login:before, .bttn:after, .bttn-group a:after, .page-views .tabs-primary a:after, .page-search .tabs-primary a:after, .pager li a:after, .pager .pager-current:after, .views-exposed-form .form-type-select:after, .twitter-login:after,
+.form-download:before,
+.form-download:after,
 .form-submit:before,
 .form-submit:after {
   font-weight: normal;
   font-size: 1rem;
   vertical-align: bottom !important;
 }
-/* line 41, ../sass/_buttons.scss */
+/* line 42, ../sass/_buttons.scss */
 .bttn:before, .bttn-group a:before, .page-views .tabs-primary a:before, .page-search .tabs-primary a:before, .pager li a:before, .pager .pager-current:before, .views-exposed-form .form-type-select:before, .twitter-login:before,
+.form-download:before,
 .form-submit:before {
   margin-right: 0.375rem;
 }
-/* line 44, ../sass/_buttons.scss */
+/* line 45, ../sass/_buttons.scss */
 .bttn:after, .bttn-group a:after, .page-views .tabs-primary a:after, .page-search .tabs-primary a:after, .pager li a:after, .pager .pager-current:after, .views-exposed-form .form-type-select:after, .twitter-login:after,
+.form-download:after,
 .form-submit:after {
   margin-left: 0.375rem;
   opacity: 0.4;
 }
-/* line 48, ../sass/_buttons.scss */
+/* line 49, ../sass/_buttons.scss */
 .bttn.settings, .bttn-group a.settings, .page-views .tabs-primary a.settings, .page-search .tabs-primary a.settings, .pager li a.settings, .pager .settings.pager-current, .views-exposed-form .settings.form-type-select, .settings.twitter-login,
+.form-download.settings,
 .form-submit.settings {
   width: 3rem;
 }
-/* line 54, ../sass/_buttons.scss */
+/* line 55, ../sass/_buttons.scss */
 .bttn.communication, .bttn-group a.communication, .page-views .tabs-primary a.communication, .page-search .tabs-primary a.communication, .pager li a.communication, .pager .communication.pager-current, .views-exposed-form .communication.form-type-select, .communication.twitter-login,
+.form-download.communication,
 .form-submit.communication {
   width: 3rem;
 }
-/* line 62, ../sass/_buttons.scss */
+/* line 63, ../sass/_buttons.scss */
 .bttn.follow, .bttn-group a.follow, .page-views .tabs-primary a.follow, .page-search .tabs-primary a.follow, .pager li a.follow, .pager .follow.pager-current, .views-exposed-form .follow.form-type-select, .follow.twitter-login, .bttn.external, .bttn-group a.external, .page-views .tabs-primary a.external, .page-search .tabs-primary a.external, .pager li a.external, .pager .external.pager-current, .views-exposed-form .external.form-type-select, .external.twitter-login, .bttn.edit, .bttn-group a.edit, .page-views .tabs-primary a.edit, .page-search .tabs-primary a.edit, .pager li a.edit, .pager .edit.pager-current, .views-exposed-form .edit.form-type-select, .edit.twitter-login,
+.form-download.follow,
+.form-download.external,
+.form-download.edit,
 .form-submit.follow,
 .form-submit.external,
 .form-submit.edit {
   width: 9rem;
 }
-/* line 64, ../sass/_buttons.scss */
+/* line 65, ../sass/_buttons.scss */
 .bttn.follow:before, .bttn-group a.follow:before, .page-views .tabs-primary a.follow:before, .page-search .tabs-primary a.follow:before, .pager li a.follow:before, .pager .follow.pager-current:before, .views-exposed-form .follow.form-type-select:before, .follow.twitter-login:before, .bttn.external:before, .bttn-group a.external:before, .page-views .tabs-primary a.external:before, .page-search .tabs-primary a.external:before, .pager li a.external:before, .pager .external.pager-current:before, .views-exposed-form .external.form-type-select:before, .external.twitter-login:before, .bttn.edit:before, .bttn-group a.edit:before, .page-views .tabs-primary a.edit:before, .page-search .tabs-primary a.edit:before, .pager li a.edit:before, .pager .edit.pager-current:before, .views-exposed-form .edit.form-type-select:before, .edit.twitter-login:before,
+.form-download.follow:before,
+.form-download.external:before,
+.form-download.edit:before,
 .form-submit.follow:before,
 .form-submit.external:before,
 .form-submit.edit:before {
   margin-left: -0.5rem;
 }
-/* line 76, ../sass/_buttons.scss */
+/* line 77, ../sass/_buttons.scss */
 .bttn.hide-txt:before, .bttn-group a.hide-txt:before, .page-views .tabs-primary a.hide-txt:before, .page-search .tabs-primary a.hide-txt:before, .pager li a.hide-txt:before, .pager .hide-txt.pager-current:before, .views-exposed-form .hide-txt.form-type-select:before, .hide-txt.twitter-login:before,
+.form-download.hide-txt:before,
 .form-submit.hide-txt:before {
   margin-right: 0;
 }
 
-/* line 86, ../sass/_buttons.scss */
+/* line 87, ../sass/_buttons.scss */
 .bttn-dropdown:after {
   margin-left: 0.25rem;
   opacity: 0.6;
 }
 
-/* line 93, ../sass/_buttons.scss */
-.bttn-blk, #account-menu-blk .form-submit, .twitter-login {
+/* line 94, ../sass/_buttons.scss */
+.bttn-blk, #account-menu-blk .form-download, #account-menu-blk .form-submit, .twitter-login {
   display: block;
   width: 100%;
 }
 
 /* Button sizes */
 /* 24px */
-/* line 101, ../sass/_buttons.scss */
+/* line 102, ../sass/_buttons.scss */
 .bttn-s, .node-form .image-widget-data #edit-field-image-und-0-remove-button,
 .node-form .image-widget-data #edit-field-avatar-und-0-remove-button,
 #user-profile-form .image-widget-data #edit-field-image-und-0-remove-button,
@@ -4390,8 +4490,8 @@ button:hover, button:focus {
 }
 
 /* 32px */
-/* line 109, ../sass/_buttons.scss */
-.bttn-m, .bttn-group a, .page-views .tabs-primary a, .page-search .tabs-primary a, .pager li a, .pager .pager-current, .form-submit, #edit-submit, #edit-delete, .views-exposed-form .form-type-select, .twitter-login {
+/* line 110, ../sass/_buttons.scss */
+.bttn-m, .bttn-group a, .page-views .tabs-primary a, .page-search .tabs-primary a, .pager li a, .pager .pager-current, .form-submit, .form-download, #edit-submit, #edit-delete, .views-exposed-form .form-type-select, .twitter-login {
   line-height: 1.5rem !important;
   font-size: 1rem;
   padding: 0.25rem 0.75rem !important;
@@ -4399,7 +4499,7 @@ button:hover, button:focus {
 }
 
 /* 40px */
-/* line 117, ../sass/_buttons.scss */
+/* line 118, ../sass/_buttons.scss */
 .bttn-l {
   line-height: 1.75rem;
   font-size: 1.25rem;
@@ -4408,7 +4508,7 @@ button:hover, button:focus {
 }
 
 /* 44px */
-/* line 125, ../sass/_buttons.scss */
+/* line 126, ../sass/_buttons.scss */
 .bttn-xl {
   line-height: 1.75rem;
   font-size: 1.25rem;
@@ -4417,57 +4517,57 @@ button:hover, button:focus {
 }
 
 /* Button colors */
-/* line 135, ../sass/_buttons.scss */
+/* line 136, ../sass/_buttons.scss */
 .bttn-default {
   color: #213040;
   background: #FFF;
   border-color: #c7cbcf;
 }
-/* line 139, ../sass/_buttons.scss */
+/* line 140, ../sass/_buttons.scss */
 .bttn-default:before {
   color: #007eb5;
 }
-/* line 142, ../sass/_buttons.scss */
+/* line 143, ../sass/_buttons.scss */
 .bttn-default:hover, .bttn-default:focus {
   color: #213040;
 }
-/* line 145, ../sass/_buttons.scss */
+/* line 146, ../sass/_buttons.scss */
 .bttn-default:active, .bttn-default.on, .bttn-default.flagged {
   color: #213040;
   box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.5), inset 0 2px 0 0 rgba(33, 48, 64, 0.1);
 }
 
-/* line 152, ../sass/_buttons.scss */
+/* line 153, ../sass/_buttons.scss */
 .bttn-primary, .bttn-group a, .page-views .tabs-primary a, .page-search .tabs-primary a, .pager li a, .views-exposed-form .form-type-select {
   color: #FFF !important;
   background: #636e79 !important;
   box-shadow: inset 0 -2px 0 0 #374453;
 }
-/* line 157, ../sass/_buttons.scss */
+/* line 158, ../sass/_buttons.scss */
 .bttn-primary:hover, .bttn-group a:hover, .page-views .tabs-primary a:hover, .page-search .tabs-primary a:hover, .pager li a:hover, .views-exposed-form .form-type-select:hover, .bttn-primary:focus, .bttn-group a:focus, .page-views .tabs-primary a:focus, .page-search .tabs-primary a:focus, .pager li a:focus, .views-exposed-form .form-type-select:focus {
   color: #FFF !important;
 }
-/* line 160, ../sass/_buttons.scss */
+/* line 161, ../sass/_buttons.scss */
 .bttn-primary:active, .bttn-group a:active, .page-views .tabs-primary a:active, .page-search .tabs-primary a:active, .pager li a:active, .views-exposed-form .form-type-select:active, .bttn-primary.on, .bttn-group a.on, .page-views .tabs-primary a.on, .page-search .tabs-primary a.on, .bttn-group a.is-active, .page-views .tabs-primary a.is-active, .page-search .tabs-primary a.is-active, .pager li a.on, .pager .pager-current, .views-exposed-form .on.form-type-select, .bttn-primary.flagged, .bttn-group a.flagged, .page-views .tabs-primary a.flagged, .page-search .tabs-primary a.flagged, .pager li a.flagged, .views-exposed-form .flagged.form-type-select {
   background: #374453 !important;
   box-shadow: inset 0 2px 0 0 #1a2633;
   color: #FFF !important;
 }
 
-/* line 168, ../sass/_buttons.scss */
+/* line 169, ../sass/_buttons.scss */
 .bttn-secondary, #prime-nav .search-wrapper .search-form #edit-submit,
 #prime-nav .search-wrapper .search-form #edit-submit--2, #content .search-form #edit-submit, .twitter-login {
   color: #FFF !important;
   background: #007eb5 !important;
   box-shadow: inset 0 -2px 0 0 #00587e;
 }
-/* line 173, ../sass/_buttons.scss */
+/* line 174, ../sass/_buttons.scss */
 .bttn-secondary:hover, #prime-nav .search-wrapper .search-form #edit-submit:hover,
 #prime-nav .search-wrapper .search-form #edit-submit--2:hover, #content .search-form #edit-submit:hover, .twitter-login:hover, .bttn-secondary:focus, #prime-nav .search-wrapper .search-form #edit-submit:focus,
 #prime-nav .search-wrapper .search-form #edit-submit--2:focus, #content .search-form #edit-submit:focus, .twitter-login:focus {
   color: #FFF !important;
 }
-/* line 176, ../sass/_buttons.scss */
+/* line 177, ../sass/_buttons.scss */
 .bttn-secondary:active, #prime-nav .search-wrapper .search-form #edit-submit:active,
 #prime-nav .search-wrapper .search-form #edit-submit--2:active, #content .search-form #edit-submit:active, .twitter-login:active, .bttn-secondary.on, #prime-nav .search-wrapper .search-form .on#edit-submit,
 #prime-nav .search-wrapper .search-form .on#edit-submit--2, #content .search-form .on#edit-submit, .on.twitter-login, .bttn-secondary.flagged, #prime-nav .search-wrapper .search-form .flagged#edit-submit,
@@ -4477,63 +4577,63 @@ button:hover, button:focus {
   color: #FFF !important;
 }
 
-/* line 184, ../sass/_buttons.scss */
-.bttn-tertiary, .form-submit, #account-menu-blk .form-submit {
+/* line 185, ../sass/_buttons.scss */
+.bttn-tertiary, .form-submit, .form-download, #account-menu-blk .form-download, #account-menu-blk .form-submit {
   color: #4d5966 !important;
   background: #e8eaeb;
   box-shadow: inset 0 -2px 0 0 #d2d5d8;
 }
-/* line 189, ../sass/_buttons.scss */
-.bttn-tertiary:hover, .form-submit:hover, #account-menu-blk .form-submit:hover, .bttn-tertiary:focus, .form-submit:focus, #account-menu-blk .form-submit:focus {
+/* line 190, ../sass/_buttons.scss */
+.bttn-tertiary:hover, .form-submit:hover, .form-download:hover, #account-menu-blk .form-download:hover, #account-menu-blk .form-submit:hover, .bttn-tertiary:focus, .form-submit:focus, .form-download:focus, #account-menu-blk .form-download:focus, #account-menu-blk .form-submit:focus {
   color: #4d5966 !important;
 }
-/* line 192, ../sass/_buttons.scss */
-.bttn-tertiary:active, .form-submit:active, #account-menu-blk .form-submit:active, .bttn-tertiary.on, .on.form-submit, #account-menu-blk .on.form-submit, .bttn-tertiary.flagged, .flagged.form-submit, #account-menu-blk .flagged.form-submit {
+/* line 193, ../sass/_buttons.scss */
+.bttn-tertiary:active, .form-submit:active, .form-download:active, #account-menu-blk .form-download:active, #account-menu-blk .form-submit:active, .bttn-tertiary.on, .on.form-submit, .on.form-download, #account-menu-blk .on.form-download, #account-menu-blk .on.form-submit, .bttn-tertiary.flagged, .flagged.form-submit, .flagged.form-download, #account-menu-blk .flagged.form-download, #account-menu-blk .flagged.form-submit {
   background: #d2d5d8;
   box-shadow: inset 0 2px 0 0 #bcc0c5;
   color: #4d5966 !important;
 }
 
-/* line 200, ../sass/_buttons.scss */
+/* line 201, ../sass/_buttons.scss */
 .bttn-danger, #edit-delete {
   color: #FFF !important;
   background: #e74c3c;
   box-shadow: inset 0 -2px 0 0 #a1352a;
 }
-/* line 205, ../sass/_buttons.scss */
+/* line 206, ../sass/_buttons.scss */
 .bttn-danger:hover, #edit-delete:hover, .bttn-danger:focus, #edit-delete:focus {
   color: #FFF !important;
 }
-/* line 208, ../sass/_buttons.scss */
+/* line 209, ../sass/_buttons.scss */
 .bttn-danger:active, #edit-delete:active, .bttn-danger.on, .on#edit-delete, .bttn-danger.flagged, .flagged#edit-delete {
   background: #a1352a;
   box-shadow: inset 0 2px 0 0 #73261e;
   color: #FFF !important;
 }
 
-/* line 216, ../sass/_buttons.scss */
+/* line 217, ../sass/_buttons.scss */
 .bttn-success, #edit-submit {
   color: #FFF !important;
   background: #1abc9c;
   box-shadow: inset 0 -2px 0 0 #12836d;
 }
-/* line 221, ../sass/_buttons.scss */
+/* line 222, ../sass/_buttons.scss */
 .bttn-success:hover, #edit-submit:hover, .bttn-success:focus, #edit-submit:focus {
   color: #FFF !important;
 }
-/* line 224, ../sass/_buttons.scss */
+/* line 225, ../sass/_buttons.scss */
 .bttn-success:active, #edit-submit:active, .bttn-success.on, .on#edit-submit, .bttn-success.flagged, .flagged#edit-submit {
   background: #12836d;
   box-shadow: inset 0 2px 0 0 #0d5e4e;
   color: #FFF !important;
 }
 
-/* line 232, ../sass/_buttons.scss */
+/* line 233, ../sass/_buttons.scss */
 .bttn.disabled, .bttn-group a.disabled, .page-views .tabs-primary a.disabled, .page-search .tabs-primary a.disabled, .pager li a.disabled, .pager .disabled.pager-current, .views-exposed-form .disabled.form-type-select, .disabled.twitter-login, button.disabled {
   opacity: 0.4;
   cursor: default;
 }
-/* line 236, ../sass/_buttons.scss */
+/* line 237, ../sass/_buttons.scss */
 .bttn.disabled:active, .bttn-group a.disabled:active, .page-views .tabs-primary a.disabled:active, .page-search .tabs-primary a.disabled:active, .pager li a.disabled:active, .pager .disabled.pager-current:active, .views-exposed-form .disabled.form-type-select:active, .disabled.twitter-login:active, button.disabled:active {
   position: static;
   top: 0;
@@ -4541,7 +4641,7 @@ button:hover, button:focus {
 }
 
 /* Button group */
-/* line 246, ../sass/_buttons.scss */
+/* line 247, ../sass/_buttons.scss */
 .bttn-group, .page-views .tabs-primary, .page-search .tabs-primary {
   border: 0;
   padding: 0;
@@ -4549,7 +4649,7 @@ button:hover, button:focus {
   list-style: none;
   background: none;
 }
-/* line 253, ../sass/_buttons.scss */
+/* line 254, ../sass/_buttons.scss */
 .bttn-group > *, .page-views .tabs-primary > *, .page-search .tabs-primary > *,
 .bttn-group > .is-active,
 .page-views .tabs-primary > .is-active,
@@ -4560,14 +4660,14 @@ button:hover, button:focus {
   text-shadow: none;
   border-radius: 0;
 }
-/* line 259, ../sass/_buttons.scss */
+/* line 260, ../sass/_buttons.scss */
 .bttn-group > * a, .page-views .tabs-primary > * a, .page-search .tabs-primary > * a,
 .bttn-group > .is-active a,
 .page-views .tabs-primary > .is-active a,
 .page-search .tabs-primary > .is-active a {
   border-radius: 0;
 }
-/* line 263, ../sass/_buttons.scss */
+/* line 264, ../sass/_buttons.scss */
 .bttn-group > *:first-child a, .page-views .tabs-primary > *:first-child a, .page-search .tabs-primary > *:first-child a,
 .bttn-group > .is-active:first-child a,
 .page-views .tabs-primary > .is-active:first-child a,
@@ -4575,7 +4675,7 @@ button:hover, button:focus {
   border-top-left-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
 }
-/* line 269, ../sass/_buttons.scss */
+/* line 270, ../sass/_buttons.scss */
 .bttn-group > *:last-child a, .page-views .tabs-primary > *:last-child a, .page-search .tabs-primary > *:last-child a,
 .bttn-group > .is-active:last-child a,
 .page-views .tabs-primary > .is-active:last-child a,
@@ -4583,35 +4683,35 @@ button:hover, button:focus {
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
 }
-/* line 275, ../sass/_buttons.scss */
+/* line 276, ../sass/_buttons.scss */
 .bttn-group a, .page-views .tabs-primary a, .page-search .tabs-primary a {
   letter-spacing: inherit;
 }
-/* line 278, ../sass/_buttons.scss */
+/* line 279, ../sass/_buttons.scss */
 .bttn-group a:hover, .page-views .tabs-primary a:hover, .page-search .tabs-primary a:hover {
   background-color: inherit;
 }
-/* line 282, ../sass/_buttons.scss */
+/* line 283, ../sass/_buttons.scss */
 .bttn-group a.is-active, .page-views .tabs-primary a.is-active, .page-search .tabs-primary a.is-active {
   border: 0;
   letter-spacing: inherit;
 }
 
-/* line 289, ../sass/_buttons.scss */
+/* line 290, ../sass/_buttons.scss */
 .pager {
   display: inline-block;
 }
-/* line 298, ../sass/_buttons.scss */
+/* line 299, ../sass/_buttons.scss */
 .pager li a, .pager .pager-current {
   border-radius: 0;
 }
-/* line 302, ../sass/_buttons.scss */
+/* line 303, ../sass/_buttons.scss */
 .pager li:first-child,
 .pager li:first-child a {
   border-top-left-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
 }
-/* line 307, ../sass/_buttons.scss */
+/* line 308, ../sass/_buttons.scss */
 .pager li:last-child,
 .pager li:last-child a {
   border-top-right-radius: 0.25rem;
@@ -4619,7 +4719,7 @@ button:hover, button:focus {
 }
 
 /* Dropdown */
-/* line 314, ../sass/_buttons.scss */
+/* line 315, ../sass/_buttons.scss */
 .dropd {
   min-width: 12.5rem;
   position: absolute;
@@ -4649,7 +4749,7 @@ button:hover, button:focus {
   -o-transition-delay: 0, 0, 0;
   transition-delay: 0, 0, 0;
 }
-/* line 332, ../sass/_buttons.scss */
+/* line 333, ../sass/_buttons.scss */
 .dropd:before {
   position: absolute;
   z-index: 15;
@@ -4662,33 +4762,33 @@ button:hover, button:focus {
   height: 1rem;
   width: 1rem;
 }
-/* line 346, ../sass/_buttons.scss */
+/* line 347, ../sass/_buttons.scss */
 .dropd.dropd-right {
   left: auto;
   right: 0;
 }
-/* line 349, ../sass/_buttons.scss */
+/* line 350, ../sass/_buttons.scss */
 .dropd.dropd-right:before {
   left: auto;
   right: 1rem;
 }
-/* line 355, ../sass/_buttons.scss */
+/* line 356, ../sass/_buttons.scss */
 .dropd.dropd-center {
   left: 50%;
   margin-left: -6.25rem;
 }
-/* line 358, ../sass/_buttons.scss */
+/* line 359, ../sass/_buttons.scss */
 .dropd.dropd-center:before {
   left: 50%;
   margin-left: -0.5rem;
 }
-/* line 364, ../sass/_buttons.scss */
+/* line 365, ../sass/_buttons.scss */
 .dropd.on {
   opacity: 1;
   margin-top: 0.75rem;
   visibility: visible;
 }
-/* line 370, ../sass/_buttons.scss */
+/* line 371, ../sass/_buttons.scss */
 .dropd .dropd-menu {
   list-style: none;
   padding: 0.5rem 0;
@@ -4697,22 +4797,22 @@ button:hover, button:focus {
   line-height: 1.25rem;
   border-bottom: 1px solid #e8eaeb;
 }
-/* line 378, ../sass/_buttons.scss */
+/* line 379, ../sass/_buttons.scss */
 .dropd .dropd-menu:first-child {
   margin-top: -0.75rem;
 }
-/* line 382, ../sass/_buttons.scss */
+/* line 383, ../sass/_buttons.scss */
 .dropd .dropd-menu:last-child {
   margin-bottom: -0.75rem;
   border: none;
 }
-/* line 386, ../sass/_buttons.scss */
+/* line 387, ../sass/_buttons.scss */
 .dropd .dropd-menu li {
   position: relative;
   z-index: 20;
   margin: 0;
 }
-/* line 390, ../sass/_buttons.scss */
+/* line 391, ../sass/_buttons.scss */
 .dropd .dropd-menu li a {
   display: block;
   padding: 0.25rem 1rem;
@@ -4735,13 +4835,13 @@ button:hover, button:focus {
   -o-transition-delay: 0, 0, 0, 0;
   transition-delay: 0, 0, 0, 0;
 }
-/* line 401, ../sass/_buttons.scss */
+/* line 402, ../sass/_buttons.scss */
 .dropd .dropd-menu li a:hover {
   opacity: 1;
   background-color: rgba(127, 190, 218, 0.2);
   color: #007eb5;
 }
-/* line 407, ../sass/_buttons.scss */
+/* line 408, ../sass/_buttons.scss */
 .dropd .dropd-menu li a:before {
   vertical-align: bottom !important;
   font-weight: normal;
@@ -4750,7 +4850,7 @@ button:hover, button:focus {
 }
 
 /* Approval status */
-/* line 418, ../sass/_buttons.scss */
+/* line 419, ../sass/_buttons.scss */
 .approval {
   text-align: center;
   color: #1b2430;
@@ -4759,24 +4859,24 @@ button:hover, button:focus {
   margin-bottom: 0px;
 }
 
-/* line 425, ../sass/_buttons.scss */
+/* line 426, ../sass/_buttons.scss */
 .approval img {
   margin-bottom: -3px;
   padding-right: 4px;
 }
 
-/* line 429, ../sass/_buttons.scss */
+/* line 430, ../sass/_buttons.scss */
 .text_approved {
   font-size: 0.8em;
 }
 
-/* line 432, ../sass/_buttons.scss */
+/* line 433, ../sass/_buttons.scss */
 .text_notapproved {
   font-size: 0.8em;
 }
 
 /* Edit image buttons */
-/* line 437, ../sass/_buttons.scss */
+/* line 438, ../sass/_buttons.scss */
 .image-edit-button {
   color: #4d5767;
   background-color: #fff;
@@ -4789,7 +4889,7 @@ button:hover, button:focus {
   border-bottom: 2px #888 solid;
 }
 
-/* line 438, ../sass/_buttons.scss */
+/* line 439, ../sass/_buttons.scss */
 .image-edit-button:hover {
   opacity: 1.0 !important;
 }
@@ -4871,7 +4971,12 @@ html.js .form-text.form-autocomplete.throbbing {
   margin-top: 10px;
 }
 
-/* line 70, ../sass/_forms.scss */
+/* line 62, ../sass/_forms.scss */
+.form-download {
+  margin-top: 10px;
+}
+
+/* line 78, ../sass/_forms.scss */
 label {
   font-size: 0.85rem;
   line-height: 1.25rem;
@@ -4881,19 +4986,19 @@ label {
   margin-top: 1.5rem;
 }
 
-/* line 79, ../sass/_forms.scss */
+/* line 87, ../sass/_forms.scss */
 #edit-tm-notifications .fieldset-wrapper {
   margin-top: 1.5rem;
 }
 
-/* line 89, ../sass/_forms.scss */
-#tm-events-rsvp-form,
+/* line 97, ../sass/_forms.scss */
+#tm-events-manage-registrations-form,
 #tm-events-communication-form,
 .vbo-views-form {
   padding: 2rem;
 }
 
-/* line 95, ../sass/_forms.scss */
+/* line 103, ../sass/_forms.scss */
 .node-form .image-preview,
 #user-profile-form .image-preview,
 #user-register-form .image-preview {
@@ -4902,7 +5007,7 @@ label {
   border-radius: 0.25rem;
   margin: 0 0.5rem 0 0;
 }
-/* line 100, ../sass/_forms.scss */
+/* line 108, ../sass/_forms.scss */
 .node-form .image-preview img,
 #user-profile-form .image-preview img,
 #user-register-form .image-preview img {
@@ -4910,13 +5015,13 @@ label {
   border-radius: 0.25rem;
   width: 6rem;
 }
-/* line 106, ../sass/_forms.scss */
+/* line 114, ../sass/_forms.scss */
 .node-form .image-widget-data,
 #user-profile-form .image-widget-data,
 #user-register-form .image-widget-data {
   padding-top: 0.25rem;
 }
-/* line 108, ../sass/_forms.scss */
+/* line 116, ../sass/_forms.scss */
 .node-form .image-widget-data .file, .node-form .image-widget-data .file-size,
 #user-profile-form .image-widget-data .file,
 #user-profile-form .image-widget-data .file-size,
@@ -4925,7 +5030,7 @@ label {
   font-size: 0.85rem;
   line-height: 1.25rem;
 }
-/* line 111, ../sass/_forms.scss */
+/* line 119, ../sass/_forms.scss */
 .node-form .image-widget-data .file img, .node-form .image-widget-data .file-size img,
 #user-profile-form .image-widget-data .file img,
 #user-profile-form .image-widget-data .file-size img,
@@ -4933,7 +5038,7 @@ label {
 #user-register-form .image-widget-data .file-size img {
   display: none;
 }
-/* line 115, ../sass/_forms.scss */
+/* line 123, ../sass/_forms.scss */
 .node-form .image-widget-data .file,
 #user-profile-form .image-widget-data .file,
 #user-register-form .image-widget-data .file {
@@ -4944,7 +5049,7 @@ label {
   text-overflow: ellipsis;
   margin-right: 0.25rem;
 }
-/* line 124, ../sass/_forms.scss */
+/* line 132, ../sass/_forms.scss */
 .node-form .image-widget-data #edit-field-image-und-0-remove-button,
 .node-form .image-widget-data #edit-field-avatar-und-0-remove-button,
 #user-profile-form .image-widget-data #edit-field-image-und-0-remove-button,
@@ -4954,26 +5059,26 @@ label {
   display: block;
   margin-top: 0.25rem !important;
 }
-/* line 130, ../sass/_forms.scss */
+/* line 138, ../sass/_forms.scss */
 .node-form .link-field-column,
 #user-profile-form .link-field-column,
 #user-register-form .link-field-column {
   width: 100%;
   margin-top: -1rem;
 }
-/* line 133, ../sass/_forms.scss */
+/* line 141, ../sass/_forms.scss */
 .node-form .link-field-column .form-text,
 #user-profile-form .link-field-column .form-text,
 #user-register-form .link-field-column .form-text {
   width: 100%;
 }
-/* line 137, ../sass/_forms.scss */
+/* line 145, ../sass/_forms.scss */
 .node-form .filter-wrapper,
 #user-profile-form .filter-wrapper,
 #user-register-form .filter-wrapper {
   display: none;
 }
-/* line 140, ../sass/_forms.scss */
+/* line 148, ../sass/_forms.scss */
 .node-form .description,
 #user-profile-form .description,
 #user-register-form .description {
@@ -4982,7 +5087,7 @@ label {
   line-height: 1.25rem;
   margin: 0.5rem 0 0 0;
 }
-/* line 146, ../sass/_forms.scss */
+/* line 154, ../sass/_forms.scss */
 .node-form .fieldset-legend,
 #user-profile-form .fieldset-legend,
 #user-register-form .fieldset-legend {
@@ -4993,26 +5098,26 @@ label {
   padding: 0;
   text-transform: uppercase;
 }
-/* line 154, ../sass/_forms.scss */
+/* line 162, ../sass/_forms.scss */
 .node-form .field-multiple-table,
 #user-profile-form .field-multiple-table,
 #user-register-form .field-multiple-table {
   width: 100%;
 }
-/* line 156, ../sass/_forms.scss */
+/* line 164, ../sass/_forms.scss */
 .node-form .field-multiple-table td,
 #user-profile-form .field-multiple-table td,
 #user-register-form .field-multiple-table td {
   padding: 1rem;
 }
-/* line 160, ../sass/_forms.scss */
+/* line 168, ../sass/_forms.scss */
 .node-form .container-inline-date .date-padding,
 #user-profile-form .container-inline-date .date-padding,
 #user-register-form .container-inline-date .date-padding {
   padding-left: 0;
   padding-top: 0;
 }
-/* line 164, ../sass/_forms.scss */
+/* line 172, ../sass/_forms.scss */
 .node-form .password-parent, .node-form .confirm-parent,
 #user-profile-form .password-parent,
 #user-profile-form .confirm-parent,
@@ -5022,7 +5127,7 @@ label {
   position: relative;
   padding-bottom: 2rem;
 }
-/* line 170, ../sass/_forms.scss */
+/* line 178, ../sass/_forms.scss */
 .node-form .password-strength,
 .node-form div.password-confirm,
 #user-profile-form .password-strength,
@@ -5039,14 +5144,14 @@ label {
   line-height: 1.5rem;
   visibility: visible !important;
 }
-/* line 181, ../sass/_forms.scss */
+/* line 189, ../sass/_forms.scss */
 .node-form .password-strength-text,
 #user-profile-form .password-strength-text,
 #user-register-form .password-strength-text {
   font-weight: 800;
   color: #79828c;
 }
-/* line 185, ../sass/_forms.scss */
+/* line 193, ../sass/_forms.scss */
 .node-form .password-suggestions,
 #user-profile-form .password-suggestions,
 #user-register-form .password-suggestions {
@@ -5059,14 +5164,14 @@ label {
   width: auto;
   border: none;
 }
-/* line 194, ../sass/_forms.scss */
+/* line 202, ../sass/_forms.scss */
 .node-form .password-suggestions ul,
 #user-profile-form .password-suggestions ul,
 #user-register-form .password-suggestions ul {
   padding: 0 0 0 2rem;
   margin: 0.5rem 0 0 0;
 }
-/* line 199, ../sass/_forms.scss */
+/* line 207, ../sass/_forms.scss */
 .node-form .password-indicator,
 #user-profile-form .password-indicator,
 #user-register-form .password-indicator {
@@ -5074,39 +5179,39 @@ label {
   background: #d2d5d8;
   border-radius: 0.25rem;
 }
-/* line 203, ../sass/_forms.scss */
+/* line 211, ../sass/_forms.scss */
 .node-form .password-indicator div,
 #user-profile-form .password-indicator div,
 #user-register-form .password-indicator div {
   background: #1abc9c;
   border-radius: 0.25rem;
 }
-/* line 208, ../sass/_forms.scss */
+/* line 216, ../sass/_forms.scss */
 .node-form select,
 #user-profile-form select,
 #user-register-form select {
   width: 100%;
   font-size: 0.85rem;
 }
-/* line 213, ../sass/_forms.scss */
+/* line 221, ../sass/_forms.scss */
 .node-form .selects select,
 #user-profile-form .selects select,
 #user-register-form .selects select {
   margin: 0 0 0.5rem 0;
 }
-/* line 216, ../sass/_forms.scss */
+/* line 224, ../sass/_forms.scss */
 .node-form .selects .grippie,
 #user-profile-form .selects .grippie,
 #user-register-form .selects .grippie {
   margin: -0.25rem 0 0 0;
 }
-/* line 220, ../sass/_forms.scss */
+/* line 228, ../sass/_forms.scss */
 .node-form > div,
 #user-profile-form > div,
 #user-register-form > div {
   padding: 1rem;
 }
-/* line 226, ../sass/_forms.scss */
+/* line 234, ../sass/_forms.scss */
 .node-form .field-group-fieldset,
 .node-form .form-field-type-datetime fieldset,
 .node-form #edit-timezone,
@@ -5121,7 +5226,7 @@ label {
   padding: 0 1rem 1.5rem 1rem;
   margin: 0 -1rem 1rem -1rem;
 }
-/* line 232, ../sass/_forms.scss */
+/* line 240, ../sass/_forms.scss */
 .node-form .form-actions,
 #user-profile-form .form-actions,
 #user-register-form .form-actions {
@@ -5129,26 +5234,26 @@ label {
   padding: 0 1rem;
   margin: 0 -1rem 0 -1rem !important;
 }
-/* line 236, ../sass/_forms.scss */
+/* line 244, ../sass/_forms.scss */
 .node-form .form-actions *,
 #user-profile-form .form-actions *,
 #user-register-form .form-actions * {
   margin: 0 0.25rem;
 }
 @media only screen and (min-width: 65.063rem) {
-  /* line 242, ../sass/_forms.scss */
+  /* line 250, ../sass/_forms.scss */
   .node-form .link-field-column,
   #user-profile-form .link-field-column,
   #user-register-form .link-field-column {
     width: 50%;
   }
-  /* line 244, ../sass/_forms.scss */
+  /* line 252, ../sass/_forms.scss */
   .node-form .link-field-column:first-child,
   #user-profile-form .link-field-column:first-child,
   #user-register-form .link-field-column:first-child {
     padding-right: 0.5rem;
   }
-  /* line 245, ../sass/_forms.scss */
+  /* line 253, ../sass/_forms.scss */
   .node-form .link-field-column:last-child,
   #user-profile-form .link-field-column:last-child,
   #user-register-form .link-field-column:last-child {
@@ -5156,20 +5261,20 @@ label {
   }
 }
 @media only screen and (min-width: 69.063rem) {
-  /* line 249, ../sass/_forms.scss */
+  /* line 257, ../sass/_forms.scss */
   .node-form > div,
   #user-profile-form > div,
   #user-register-form > div {
     padding: 2rem;
   }
-  /* line 252, ../sass/_forms.scss */
+  /* line 260, ../sass/_forms.scss */
   .node-form .form-actions,
   #user-profile-form .form-actions,
   #user-register-form .form-actions {
     padding: 0 2rem;
     margin: 0 -2rem 0 -2rem !important;
   }
-  /* line 258, ../sass/_forms.scss */
+  /* line 266, ../sass/_forms.scss */
   .node-form .field-group-fieldset,
   .node-form .form-field-type-datetime fieldset,
   .node-form #edit-timezone,
@@ -5184,19 +5289,19 @@ label {
   }
 }
 
-/* line 265, ../sass/_forms.scss */
+/* line 273, ../sass/_forms.scss */
 .hierarchical-select-wrapper .nojs .help-text {
   display: none;
 }
 
-/* line 273, ../sass/_forms.scss */
+/* line 281, ../sass/_forms.scss */
 #user-profile-form .horizontal-tabs,
 #user-register-form .horizontal-tabs {
   border: none;
   padding: 0;
   margin: -1rem -1rem 0 -1rem;
 }
-/* line 277, ../sass/_forms.scss */
+/* line 285, ../sass/_forms.scss */
 #user-profile-form .horizontal-tabs .horizontal-tabs-list,
 #user-register-form .horizontal-tabs .horizontal-tabs-list {
   border: none;
@@ -5204,7 +5309,7 @@ label {
   border-radius: 0.25rem 0.25rem 0 0;
   margin: 0 0 1rem 0;
 }
-/* line 282, ../sass/_forms.scss */
+/* line 290, ../sass/_forms.scss */
 #user-profile-form .horizontal-tabs .horizontal-tabs-list li, #user-profile-form .horizontal-tabs .horizontal-tabs-list li.selected,
 #user-register-form .horizontal-tabs .horizontal-tabs-list li,
 #user-register-form .horizontal-tabs .horizontal-tabs-list li.selected {
@@ -5212,43 +5317,43 @@ label {
   background: none;
   padding: 0;
 }
-/* line 286, ../sass/_forms.scss */
+/* line 294, ../sass/_forms.scss */
 #user-profile-form .horizontal-tabs .horizontal-tabs-list li a, #user-profile-form .horizontal-tabs .horizontal-tabs-list li.selected a,
 #user-register-form .horizontal-tabs .horizontal-tabs-list li a,
 #user-register-form .horizontal-tabs .horizontal-tabs-list li.selected a {
   padding: 0.5rem 1rem;
   color: #213040;
 }
-/* line 289, ../sass/_forms.scss */
+/* line 297, ../sass/_forms.scss */
 #user-profile-form .horizontal-tabs .horizontal-tabs-list li a:focus, #user-profile-form .horizontal-tabs .horizontal-tabs-list li.selected a:focus,
 #user-register-form .horizontal-tabs .horizontal-tabs-list li a:focus,
 #user-register-form .horizontal-tabs .horizontal-tabs-list li.selected a:focus {
   opacity: 1;
 }
-/* line 292, ../sass/_forms.scss */
+/* line 300, ../sass/_forms.scss */
 #user-profile-form .horizontal-tabs .horizontal-tabs-list li a:hover, #user-profile-form .horizontal-tabs .horizontal-tabs-list li.selected a:hover,
 #user-register-form .horizontal-tabs .horizontal-tabs-list li a:hover,
 #user-register-form .horizontal-tabs .horizontal-tabs-list li.selected a:hover {
   background: inherit;
 }
-/* line 297, ../sass/_forms.scss */
+/* line 305, ../sass/_forms.scss */
 #user-profile-form .horizontal-tabs .horizontal-tabs-list li.selected a,
 #user-register-form .horizontal-tabs .horizontal-tabs-list li.selected a {
   background: #FFF;
 }
-/* line 299, ../sass/_forms.scss */
+/* line 307, ../sass/_forms.scss */
 #user-profile-form .horizontal-tabs .horizontal-tabs-list li.selected a:hover,
 #user-register-form .horizontal-tabs .horizontal-tabs-list li.selected a:hover {
   background: #FFF;
 }
-/* line 304, ../sass/_forms.scss */
+/* line 312, ../sass/_forms.scss */
 #user-profile-form .horizontal-tabs .horizontal-tabs-list li:first-child,
 #user-profile-form .horizontal-tabs .horizontal-tabs-list li:first-child a,
 #user-register-form .horizontal-tabs .horizontal-tabs-list li:first-child,
 #user-register-form .horizontal-tabs .horizontal-tabs-list li:first-child a {
   border-radius: 0.25rem 0 0 0;
 }
-/* line 308, ../sass/_forms.scss */
+/* line 316, ../sass/_forms.scss */
 #user-profile-form .horizontal-tabs .horizontal-tabs-pane,
 #user-register-form .horizontal-tabs .horizontal-tabs-pane {
   padding: 0 1rem;
@@ -5272,7 +5377,7 @@ label {
   transition-delay: 0, 0;
   overflow: visible;
 }
-/* line 317, ../sass/_forms.scss */
+/* line 325, ../sass/_forms.scss */
 #user-profile-form .horizontal-tabs .horizontal-tabs-pane.horizontal-tab-hidden,
 #user-register-form .horizontal-tabs .horizontal-tabs-pane.horizontal-tab-hidden {
   position: static;
@@ -5282,22 +5387,22 @@ label {
   overflow: hidden;
 }
 @media only screen and (min-width: 69.063rem) {
-  /* line 327, ../sass/_forms.scss */
+  /* line 335, ../sass/_forms.scss */
   #user-profile-form .horizontal-tabs,
   #user-register-form .horizontal-tabs {
     margin: -2rem -2rem 0 -2rem;
   }
-  /* line 329, ../sass/_forms.scss */
+  /* line 337, ../sass/_forms.scss */
   #user-profile-form .horizontal-tabs .horizontal-tabs-pane,
   #user-register-form .horizontal-tabs .horizontal-tabs-pane {
     padding: 0 2rem;
   }
-  /* line 332, ../sass/_forms.scss */
+  /* line 340, ../sass/_forms.scss */
   #user-profile-form .horizontal-tabs .horizontal-tabs-list,
   #user-register-form .horizontal-tabs .horizontal-tabs-list {
     margin: 0 0 2rem 0;
   }
-  /* line 335, ../sass/_forms.scss */
+  /* line 343, ../sass/_forms.scss */
   #user-profile-form .horizontal-tabs .horizontal-tabs-list li a, #user-profile-form .horizontal-tabs .horizontal-tabs-list li.selected a,
   #user-register-form .horizontal-tabs .horizontal-tabs-list li a,
   #user-register-form .horizontal-tabs .horizontal-tabs-list li.selected a {
@@ -5305,25 +5410,25 @@ label {
   }
 }
 
-/* line 346, ../sass/_forms.scss */
+/* line 354, ../sass/_forms.scss */
 html.js .collapsible .fieldset-legend {
   background: none;
 }
-/* line 349, ../sass/_forms.scss */
+/* line 357, ../sass/_forms.scss */
 html.js .collapsible .fieldset-legend a:after {
   margin-left: 0.25rem;
 }
 
-/* line 359, ../sass/_forms.scss */
+/* line 367, ../sass/_forms.scss */
 select:disabled {
   opacity: 0.6;
 }
 
-/* line 368, ../sass/_forms.scss */
+/* line 376, ../sass/_forms.scss */
 .views-exposed-form .views-exposed-widget {
   padding: 0;
 }
-/* line 372, ../sass/_forms.scss */
+/* line 380, ../sass/_forms.scss */
 .views-exposed-form .form-type-select {
   width: 10rem;
   overflow: hidden;
@@ -5339,17 +5444,17 @@ select:disabled {
   -o-transition: opacity 0.2s ease 0;
   transition: opacity 0.2s ease 0;
 }
-/* line 381, ../sass/_forms.scss */
+/* line 389, ../sass/_forms.scss */
 .views-exposed-form .form-type-select:after {
   font-size: 1rem;
   float: right;
   margin-top: -1.5rem;
 }
-/* line 388, ../sass/_forms.scss */
+/* line 396, ../sass/_forms.scss */
 .views-exposed-form .form-type-select:hover {
   opacity: 0.7;
 }
-/* line 392, ../sass/_forms.scss */
+/* line 400, ../sass/_forms.scss */
 .views-exposed-form .form-type-select select {
   color: #FFF;
   font-weight: 800;
@@ -5366,24 +5471,24 @@ select:disabled {
   -moz-appearance: none;
   appearance: none;
 }
-/* line 408, ../sass/_forms.scss */
+/* line 416, ../sass/_forms.scss */
 .views-exposed-form .form-type-select select:focus {
   outline: none;
 }
-/* line 411, ../sass/_forms.scss */
+/* line 419, ../sass/_forms.scss */
 .views-exposed-form .form-type-select select option {
   background-color: #FFF;
   color: #213040;
   font-weight: normal;
 }
 @media only screen and (min-width: 65.063rem) {
-  /* line 419, ../sass/_forms.scss */
+  /* line 427, ../sass/_forms.scss */
   .views-exposed-form .form-type-select {
     margin-right: 0;
   }
 }
 
-/* line 430, ../sass/_forms.scss */
+/* line 438, ../sass/_forms.scss */
 .draggable a.tabledrag-handle {
   margin: 0 !important;
   padding: 0 !important;
@@ -5395,18 +5500,18 @@ select:disabled {
   text-align: center;
   color: #213040;
 }
-/* line 441, ../sass/_forms.scss */
+/* line 449, ../sass/_forms.scss */
 .draggable a.tabledrag-handle .handle {
   display: none;
 }
 
-/* line 446, ../sass/_forms.scss */
+/* line 454, ../sass/_forms.scss */
 .warning.tabledrag-changed {
   display: none;
 }
 
-/* line 452, ../sass/_forms.scss */
-.messages, .messages--status, .messages--warning, .messages--error, .messages--status, .messages--warning, .messages--error {
+/* line 460, ../sass/_forms.scss */
+.messages, .messages--status, .messages--warning, .messages--error, .messages--status, .messages--warning, .messages--error, .messages--help-tip {
   position: relative;
   border-radius: 0.25rem;
   border: none;
@@ -5419,8 +5524,8 @@ select:disabled {
   color: #FFF;
   clear: both;
 }
-/* line 464, ../sass/_forms.scss */
-.messages:before, .messages--status:before, .messages--warning:before, .messages--error:before, .messages--status:before, .messages--warning:before, .messages--error:before {
+/* line 472, ../sass/_forms.scss */
+.messages:before, .messages--status:before, .messages--warning:before, .messages--error:before, .messages--status:before, .messages--warning:before, .messages--error:before, .messages--help-tip:before {
   font-size: 1rem;
   position: absolute;
   top: 1rem;
@@ -5431,33 +5536,39 @@ select:disabled {
   border-radius: 12rem;
   text-align: center;
 }
-/* line 475, ../sass/_forms.scss */
-.messages a, .messages--status a, .messages--warning a, .messages--error a, .messages a:visited, .messages--status a:visited, .messages--warning a:visited, .messages--error a:visited, .messages a:hover, .messages--status a:hover, .messages--warning a:hover, .messages--error a:hover, .messages--status a, .messages--status a:visited, .messages--status a:hover, .messages--warning a, .messages--warning a:visited, .messages--warning a:hover, .messages--error a, .messages--error a:visited, .messages--error a:hover {
+/* line 483, ../sass/_forms.scss */
+.messages a, .messages--status a, .messages--warning a, .messages--error a, .messages a:visited, .messages--status a:visited, .messages--warning a:visited, .messages--error a:visited, .messages a:hover, .messages--status a:hover, .messages--warning a:hover, .messages--error a:hover, .messages--status a, .messages--status a:visited, .messages--status a:hover, .messages--warning a, .messages--warning a:visited, .messages--warning a:hover, .messages--error a, .messages--error a:visited, .messages--error a:hover, .messages--help-tip a, .messages--help-tip a:visited, .messages--help-tip a:hover {
   color: #FFF;
   text-decoration: underline;
 }
-/* line 479, ../sass/_forms.scss */
-.messages .messages__list, .messages--status .messages__list, .messages--warning .messages__list, .messages--error .messages__list, .messages--status .messages__list, .messages--warning .messages__list, .messages--error .messages__list {
+/* line 487, ../sass/_forms.scss */
+.messages .messages__list, .messages--status .messages__list, .messages--warning .messages__list, .messages--error .messages__list, .messages--status .messages__list, .messages--warning .messages__list, .messages--error .messages__list, .messages--help-tip .messages__list {
   margin: 0 0 0 1rem;
   padding: 0;
 }
 
-/* line 485, ../sass/_forms.scss */
+/* line 493, ../sass/_forms.scss */
 .messages.status, .status.messages--status, .status.messages--warning, .status.messages--error {
   background: #1abc9c;
 }
 
-/* line 490, ../sass/_forms.scss */
+/* line 498, ../sass/_forms.scss */
 .messages.warning, .warning.messages--status, .warning.messages--warning, .warning.messages--error {
   background: #f39c12;
 }
 
-/* line 495, ../sass/_forms.scss */
+/* line 503, ../sass/_forms.scss */
 .messages.error, .error.messages--status, .error.messages--warning, .error.messages--error {
   background: #e74c3c;
 }
 
-/* line 506, ../sass/_forms.scss */
+/* line 508, ../sass/_forms.scss */
+.messages.help-tip, .help-tip.messages--status, .help-tip.messages--warning, .help-tip.messages--error {
+  background: #007db7;
+  color: #FFF;
+}
+
+/* line 520, ../sass/_forms.scss */
 .sp-replacer,
 .sp-replacer:hover,
 .sp-replacer.sp-active,
@@ -5468,100 +5579,101 @@ select:disabled {
   border-radius: 0.25rem;
 }
 
-/* line 511, ../sass/_forms.scss */
+/* line 525, ../sass/_forms.scss */
 #edit-revalidate {
   margin-bottom: 48px;
 }
 
-/* line 518, ../sass/_forms.scss */
+/* line 532, ../sass/_forms.scss */
 #edit-userlist {
   border-top: 1px solid #e8e8e8;
   width: 80%;
 }
-/* line 521, ../sass/_forms.scss */
+/* line 535, ../sass/_forms.scss */
 #edit-userlist .form-item {
   padding: 5px;
   border: 1px solid #e8e8e8;
   border-top: none;
 }
-/* line 525, ../sass/_forms.scss */
+/* line 539, ../sass/_forms.scss */
 #edit-userlist .form-item .tmeventuser {
   width: 50%;
   display: inline-block;
 }
-/* line 529, ../sass/_forms.scss */
+/* line 543, ../sass/_forms.scss */
 #edit-userlist .form-item .tmeventstatus {
+  white-space: nowrap;
   width: 50%;
 }
-/* line 532, ../sass/_forms.scss */
+/* line 547, ../sass/_forms.scss */
 #edit-userlist .form-item .tmeventstime {
   font-size: smaller;
   color: #888;
 }
 
 /* Signup page */
-/* line 542, ../sass/_forms.scss */
+/* line 557, ../sass/_forms.scss */
 .signup_notice {
   background-color: #D2D5D8;
 }
 
-/* line 546, ../sass/_forms.scss */
+/* line 561, ../sass/_forms.scss */
 .form-item-is-company {
   margin-top: -24px;
   padding-bottom: 16px;
 }
 
-/* line 551, ../sass/_forms.scss */
+/* line 566, ../sass/_forms.scss */
 .form-item-chapter-list {
   padding-bottom: 16px;
 }
 
 /* Company page */
-/* line 556, ../sass/_forms.scss */
+/* line 571, ../sass/_forms.scss */
 .page_notice {
   background-color: #fff;
   color: #4d5966;
   padding-left: 16px;
 }
 
-/* line 562, ../sass/_forms.scss */
+/* line 577, ../sass/_forms.scss */
 .page_notice a {
   color: #213040;
 }
 
-/* line 566, ../sass/_forms.scss */
+/* line 581, ../sass/_forms.scss */
 .page_notice a:hover {
   color: #213040;
 }
 
-/* line 570, ../sass/_forms.scss */
+/* line 585, ../sass/_forms.scss */
 .page_notice a:visited {
   color: #213040;
 }
 
-/* line 574, ../sass/_forms.scss */
+/* line 589, ../sass/_forms.scss */
 .view-content tbody {
   font-size: 0.85rem;
 }
 
-/* line 578, ../sass/_forms.scss */
+/* line 593, ../sass/_forms.scss */
 .view-content td {
   padding-left: 1rem;
 }
 
-/* line 582, ../sass/_forms.scss */
+/* line 597, ../sass/_forms.scss */
 #user-cancel-confirm-form #edit-cancel {
   padding-left: 16px;
 }
 
-/* line 586, ../sass/_forms.scss */
+/* line 601, ../sass/_forms.scss */
 .cancel_account_link {
   float: right;
   padding-bottom: 0.5rem;
   font-size: 10pt;
 }
 
-/* line 592, ../sass/_forms.scss */
+/* line 607, ../sass/_forms.scss */
 a.cancel_account_link {
   margin-top: -0.5rem;
   color: #888;
@@ -5569,7 +5681,7 @@ a.cancel_account_link {
 
 /* line 4, ../sass/_modules.scss */
 #tm-events-communication-form,
-#tm-events-rsvp-form,
+#tm-events-manage-registrations-form,
 .vbo-views-form,
 .contained,
 .node-form > div,
@@ -5583,7 +5695,7 @@ a.cancel_account_link {
 }
 /* line 10, ../sass/_modules.scss */
 #tm-events-communication-form .contained-row,
-#tm-events-rsvp-form .contained-row,
+#tm-events-manage-registrations-form .contained-row,
 .vbo-views-form .contained-row,
 .contained .contained-row,
 .node-form > div .contained-row,
@@ -5596,7 +5708,7 @@ a.cancel_account_link {
 }
 /* line 15, ../sass/_modules.scss */
 #tm-events-communication-form .contained-row > *:last-child,
-#tm-events-rsvp-form .contained-row > *:last-child,
+#tm-events-manage-registrations-form .contained-row > *:last-child,
 .vbo-views-form .contained-row > *:last-child,
 .contained .contained-row > *:last-child,
 .node-form > div .contained-row > *:last-child,
@@ -5607,7 +5719,7 @@ a.cancel_account_link {
 }
 /* line 19, ../sass/_modules.scss */
 #tm-events-communication-form .contained-row:last-child,
-#tm-events-rsvp-form .contained-row:last-child,
+#tm-events-manage-registrations-form .contained-row:last-child,
 .vbo-views-form .contained-row:last-child,
 .contained .contained-row:last-child,
 .node-form > div .contained-row:last-child,
@@ -5620,8 +5732,8 @@ a.cancel_account_link {
 }
 /* line 26, ../sass/_modules.scss */
 #tm-events-communication-form h2, #tm-events-communication-form h3,
-#tm-events-rsvp-form h2,
-#tm-events-rsvp-form h3,
+#tm-events-manage-registrations-form h2,
+#tm-events-manage-registrations-form h3,
 .vbo-views-form h2,
 .vbo-views-form h3,
 .contained h2,
@@ -5638,7 +5750,7 @@ a.cancel_account_link {
 }
 /* line 31, ../sass/_modules.scss */
 #tm-events-communication-form .prime-title a,
-#tm-events-rsvp-form .prime-title a,
+#tm-events-manage-registrations-form .prime-title a,
 .vbo-views-form .prime-title a,
 .contained .prime-title a,
 .node-form > div .prime-title a,
@@ -5649,8 +5761,8 @@ a.cancel_account_link {
 }
 /* line 36, ../sass/_modules.scss */
 #tm-events-communication-form.block .prime-title, #tm-events-communication-form.modal .prime-title,
-#tm-events-rsvp-form.block .prime-title,
-#tm-events-rsvp-form.modal .prime-title,
+#tm-events-manage-registrations-form.block .prime-title,
+#tm-events-manage-registrations-form.modal .prime-title,
 .vbo-views-form.block .prime-title,
 .vbo-views-form.modal .prime-title,
 .contained.block .prime-title,
@@ -5668,7 +5780,7 @@ a.cancel_account_link {
 @media only screen and (min-width: 34.063rem) {
   /* line 4, ../sass/_modules.scss */
   #tm-events-communication-form,
-  #tm-events-rsvp-form,
+  #tm-events-manage-registrations-form,
   .vbo-views-form,
   .contained,
   .node-form > div,
@@ -5681,8 +5793,8 @@ a.cancel_account_link {
 @media only screen and (min-width: 69.063rem) {
   /* line 48, ../sass/_modules.scss */
   #tm-events-communication-form.block .contained-head, #tm-events-communication-form.modal .contained-head,
-  #tm-events-rsvp-form.block .contained-head,
-  #tm-events-rsvp-form.modal .contained-head,
+  #tm-events-manage-registrations-form.block .contained-head,
+  #tm-events-manage-registrations-form.modal .contained-head,
   .vbo-views-form.block .contained-head,
   .vbo-views-form.modal .contained-head,
   .contained.block .contained-head,
@@ -5699,8 +5811,8 @@ a.cancel_account_link {
   }
   /* line 51, ../sass/_modules.scss */
   #tm-events-communication-form.block .contained-body, #tm-events-communication-form.modal .contained-body,
-  #tm-events-rsvp-form.block .contained-body,
-  #tm-events-rsvp-form.modal .contained-body,
+  #tm-events-manage-registrations-form.block .contained-body,
+  #tm-events-manage-registrations-form.modal .contained-body,
   .vbo-views-form.block .contained-body,
   .vbo-views-form.modal .contained-body,
   .contained.block .contained-body,
@@ -5717,8 +5829,8 @@ a.cancel_account_link {
   }
   /* line 55, ../sass/_modules.scss */
   #tm-events-communication-form.block .contained-foot .go-link, #tm-events-communication-form.modal .contained-foot .go-link,
-  #tm-events-rsvp-form.block .contained-foot .go-link,
-  #tm-events-rsvp-form.modal .contained-foot .go-link,
+  #tm-events-manage-registrations-form.block .contained-foot .go-link,
+  #tm-events-manage-registrations-form.modal .contained-foot .go-link,
   .vbo-views-form.block .contained-foot .go-link,
   .vbo-views-form.modal .contained-foot .go-link,
   .contained.block .contained-foot .go-link,
@@ -6178,13 +6290,19 @@ a.cancel_account_link {
   -o-transform-origin: top right;
   transform-origin: top right;
 }
-/* line 430, ../sass/_modules.scss */
+/* line 429, ../sass/_modules.scss */
+.card.contained .chapter-sticker-icon-text, .node-form > div.card .chapter-sticker-icon-text,
+#user-profile-form > div.card .chapter-sticker-icon-text,
+#user-register-form > div.card .chapter-sticker-icon-text, #content .card.search-form .chapter-sticker-icon-text {
+  display: none;
+}
+/* line 433, ../sass/_modules.scss */
 .node-chapter .card.contained .extra, .node-chapter .node-form > div.card .extra,
 .node-chapter #user-profile-form > div.card .extra,
 .node-chapter #user-register-form > div.card .extra, .node-chapter #content .card.search-form .extra, #content .node-chapter .card.search-form .extra {
   display: none;
 }
-/* line 435, ../sass/_modules.scss */
+/* line 438, ../sass/_modules.scss */
 .team-list .card.contained, .team-list .node-form > div.card,
 .team-list #user-profile-form > div.card,
 .team-list #user-register-form > div.card, .team-list #content .card.search-form, #content .team-list .card.search-form, .related-list .card.contained, .related-list .node-form > div.card,
@@ -6193,7 +6311,7 @@ a.cancel_account_link {
   margin-bottom: 0;
   border-radius: 0;
 }
-/* line 440, ../sass/_modules.scss */
+/* line 443, ../sass/_modules.scss */
 .team-list .card.contained > a, .team-list .node-form > div.card > a,
 .team-list #user-profile-form > div.card > a,
 .team-list #user-register-form > div.card > a, .team-list #content .card.search-form > a, #content .team-list .card.search-form > a, .related-list .card.contained > a, .related-list .node-form > div.card > a,
@@ -6217,7 +6335,7 @@ a.cancel_account_link {
   -o-transition-delay: 0, 0, 0, 0;
   transition-delay: 0, 0, 0, 0;
 }
-/* line 447, ../sass/_modules.scss */
+/* line 450, ../sass/_modules.scss */
 .team-list .card.contained > a:hover, .team-list .node-form > div.card > a:hover,
 .team-list #user-profile-form > div.card > a:hover,
 .team-list #user-register-form > div.card > a:hover, .team-list #content .card.search-form > a:hover, #content .team-list .card.search-form > a:hover, .related-list .card.contained > a:hover, .related-list .node-form > div.card > a:hover,
@@ -6227,7 +6345,7 @@ a.cancel_account_link {
   background-color: rgba(127, 190, 218, 0.2);
   color: #007eb5;
 }
-/* line 454, ../sass/_modules.scss */
+/* line 457, ../sass/_modules.scss */
 .team-list .card.contained .extra, .team-list .node-form > div.card .extra,
 .team-list #user-profile-form > div.card .extra,
 .team-list #user-register-form > div.card .extra, .team-list #content .card.search-form .extra, #content .team-list .card.search-form .extra, .related-list .card.contained .extra, .related-list .node-form > div.card .extra,
@@ -6236,7 +6354,7 @@ a.cancel_account_link {
   right: 2.25rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 435, ../sass/_modules.scss */
+  /* line 438, ../sass/_modules.scss */
   .team-list .card.contained, .team-list .node-form > div.card,
   .team-list #user-profile-form > div.card,
   .team-list #user-register-form > div.card, .team-list #content .card.search-form, #content .team-list .card.search-form, .related-list .card.contained, .related-list .node-form > div.card,
@@ -6246,7 +6364,7 @@ a.cancel_account_link {
   }
 }
 @media only screen and (min-width: 69.063rem) {
-  /* line 463, ../sass/_modules.scss */
+  /* line 466, ../sass/_modules.scss */
   .team-list .card.contained > a, .team-list .node-form > div.card > a,
   .team-list #user-profile-form > div.card > a,
   .team-list #user-register-form > div.card > a, .team-list #content .card.search-form > a, #content .team-list .card.search-form > a, .related-list .card.contained > a, .related-list .node-form > div.card > a,
@@ -6255,7 +6373,7 @@ a.cancel_account_link {
     padding-left: 2rem;
     padding-right: 4rem;
   }
-  /* line 467, ../sass/_modules.scss */
+  /* line 470, ../sass/_modules.scss */
   .team-list .card.contained .extra, .team-list .node-form > div.card .extra,
   .team-list #user-profile-form > div.card .extra,
   .team-list #user-register-form > div.card .extra, .team-list #content .card.search-form .extra, #content .team-list .card.search-form .extra, .related-list .card.contained .extra, .related-list .node-form > div.card .extra,
@@ -6264,7 +6382,7 @@ a.cancel_account_link {
     right: 3.25rem;
   }
 }
-/* line 476, ../sass/_modules.scss */
+/* line 479, ../sass/_modules.scss */
 .grid .card.contained > a, .grid .node-form > div.card > a,
 .grid #user-profile-form > div.card > a,
 .grid #user-register-form > div.card > a, .grid #content .card.search-form > a, #content .grid .card.search-form > a {
@@ -6276,7 +6394,7 @@ a.cancel_account_link {
   -o-transition: -o-transform 0.1s ease-in-out;
   transition: transform 0.1s ease-in-out;
 }
-/* line 482, ../sass/_modules.scss */
+/* line 485, ../sass/_modules.scss */
 .grid .card.contained > a:hover, .grid .node-form > div.card > a:hover,
 .grid #user-profile-form > div.card > a:hover,
 .grid #user-register-form > div.card > a:hover, .grid #content .card.search-form > a:hover, #content .grid .card.search-form > a:hover {
@@ -6288,46 +6406,46 @@ a.cancel_account_link {
   -o-transform: scale(1.05);
   transform: scale(1.05);
 }
-/* line 488, ../sass/_modules.scss */
+/* line 491, ../sass/_modules.scss */
 .grid .card.contained .extra, .grid .node-form > div.card .extra,
 .grid #user-profile-form > div.card .extra,
 .grid #user-register-form > div.card .extra, .grid #content .card.search-form .extra, #content .grid .card.search-form .extra {
   right: 1.75rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 474, ../sass/_modules.scss */
+  /* line 477, ../sass/_modules.scss */
   .grid .card.contained, .grid .node-form > div.card,
   .grid #user-profile-form > div.card,
   .grid #user-register-form > div.card, .grid #content .card.search-form, #content .grid .card.search-form {
     text-align: center;
   }
-  /* line 494, ../sass/_modules.scss */
+  /* line 497, ../sass/_modules.scss */
   .grid .card.contained > a, .grid .node-form > div.card > a,
   .grid #user-profile-form > div.card > a,
   .grid #user-register-form > div.card > a, .grid #content .card.search-form > a, #content .grid .card.search-form > a {
     display: block;
     padding: 0 0 2rem 0;
   }
-  /* line 498, ../sass/_modules.scss */
+  /* line 501, ../sass/_modules.scss */
   .grid .card.contained.node-event > a, .grid .node-form > div.card.node-event > a,
   .grid #user-profile-form > div.card.node-event > a,
   .grid #user-register-form > div.card.node-event > a, .grid #content .card.node-event.search-form > a, #content .grid .card.node-event.search-form > a {
     padding-right: 0;
   }
-  /* line 501, ../sass/_modules.scss */
+  /* line 504, ../sass/_modules.scss */
   .grid .card.contained .media, .grid .node-form > div.card .media,
   .grid #user-profile-form > div.card .media,
   .grid #user-register-form > div.card .media, .grid #content .card.search-form .media, #content .grid .card.search-form .media {
     float: none;
     margin: 0 0 1rem 0;
   }
-  /* line 505, ../sass/_modules.scss */
+  /* line 508, ../sass/_modules.scss */
   .grid .card.contained .cover, .grid .node-form > div.card .cover,
   .grid #user-profile-form > div.card .cover,
   .grid #user-register-form > div.card .cover, .grid #content .card.search-form .cover, #content .grid .card.search-form .cover {
     display: block;
   }
-  /* line 508, ../sass/_modules.scss */
+  /* line 511, ../sass/_modules.scss */
   .grid .card.contained .avatar, .grid .node-form > div.card .avatar,
   .grid #user-profile-form > div.card .avatar,
   .grid #user-register-form > div.card .avatar, .grid #content .card.search-form .avatar, #content .grid .card.search-form .avatar {
@@ -6337,7 +6455,7 @@ a.cancel_account_link {
     background-color: #FFF;
     margin: -4rem auto 0 auto;
   }
-  /* line 515, ../sass/_modules.scss */
+  /* line 518, ../sass/_modules.scss */
   .grid .card.contained .badge-chapter, .grid .node-form > div.card .badge-chapter,
   .grid #user-profile-form > div.card .badge-chapter,
   .grid #user-register-form > div.card .badge-chapter, .grid #content .card.search-form .badge-chapter, #content .grid .card.search-form .badge-chapter {
@@ -6346,7 +6464,7 @@ a.cancel_account_link {
     font-size: 1.25rem;
     padding-bottom: 1rem;
   }
-  /* line 520, ../sass/_modules.scss */
+  /* line 523, ../sass/_modules.scss */
   .grid .card.contained .badge-chapter:after, .grid .node-form > div.card .badge-chapter:after,
   .grid #user-profile-form > div.card .badge-chapter:after,
   .grid #user-register-form > div.card .badge-chapter:after, .grid #content .card.search-form .badge-chapter:after, #content .grid .card.search-form .badge-chapter:after {
@@ -6354,21 +6472,21 @@ a.cancel_account_link {
     width: 1rem;
     border-radius: 0.25rem 0 0 0;
   }
-  /* line 526, ../sass/_modules.scss */
+  /* line 529, ../sass/_modules.scss */
   .grid .card.contained .badge-cal, .grid .node-form > div.card .badge-cal,
   .grid #user-profile-form > div.card .badge-cal,
   .grid #user-register-form > div.card .badge-cal, .grid #content .card.search-form .badge-cal, #content .grid .card.search-form .badge-cal {
     width: 6rem;
     height: 6rem;
   }
-  /* line 529, ../sass/_modules.scss */
+  /* line 532, ../sass/_modules.scss */
   .grid .card.contained .badge-cal .month, .grid .node-form > div.card .badge-cal .month,
   .grid #user-profile-form > div.card .badge-cal .month,
   .grid #user-register-form > div.card .badge-cal .month, .grid #content .card.search-form .badge-cal .month, #content .grid .card.search-form .badge-cal .month {
     font-size: 1.25rem;
     line-height: 2rem;
   }
-  /* line 533, ../sass/_modules.scss */
+  /* line 536, ../sass/_modules.scss */
   .grid .card.contained .badge-cal .day, .grid .node-form > div.card .badge-cal .day,
   .grid #user-profile-form > div.card .badge-cal .day,
   .grid #user-register-form > div.card .badge-cal .day, .grid #content .card.search-form .badge-cal .day, #content .grid .card.search-form .badge-cal .day {
@@ -6377,7 +6495,7 @@ a.cancel_account_link {
     padding-bottom: 0.5rem;
     letter-spacing: -0.125rem;
   }
-  /* line 541, ../sass/_modules.scss */
+  /* line 544, ../sass/_modules.scss */
   .grid .card.contained .badge-organization, .grid .node-form > div.card .badge-organization,
   .grid #user-profile-form > div.card .badge-organization,
   .grid #user-register-form > div.card .badge-organization, .grid #content .card.search-form .badge-organization, #content .grid .card.search-form .badge-organization,
@@ -6390,7 +6508,7 @@ a.cancel_account_link {
     width: 6rem;
     height: 6rem;
   }
-  /* line 545, ../sass/_modules.scss */
+  /* line 548, ../sass/_modules.scss */
   .grid .card.contained .teaser, .grid .node-form > div.card .teaser,
   .grid #user-profile-form > div.card .teaser,
   .grid #user-register-form > div.card .teaser, .grid #content .card.search-form .teaser, #content .grid .card.search-form .teaser {
@@ -6398,21 +6516,21 @@ a.cancel_account_link {
     width: auto;
     padding: 0 1rem;
   }
-  /* line 550, ../sass/_modules.scss */
+  /* line 553, ../sass/_modules.scss */
   .grid .card.contained .prime-title, .grid .node-form > div.card .prime-title,
   .grid #user-profile-form > div.card .prime-title,
   .grid #user-register-form > div.card .prime-title, .grid #content .card.search-form .prime-title, #content .grid .card.search-form .prime-title {
     font-size: 1.5rem;
     line-height: 1.16667;
   }
-  /* line 555, ../sass/_modules.scss */
+  /* line 558, ../sass/_modules.scss */
   .grid .card.contained .meta, .grid .node-form > div.card .meta,
   .grid #user-profile-form > div.card .meta,
   .grid #user-register-form > div.card .meta, .grid #content .card.search-form .meta, #content .grid .card.search-form .meta {
     font-size: 1rem;
     line-height: 1.5;
   }
-  /* line 559, ../sass/_modules.scss */
+  /* line 562, ../sass/_modules.scss */
   .grid .card.contained .extra, .grid .node-form > div.card .extra,
   .grid #user-profile-form > div.card .extra,
   .grid #user-register-form > div.card .extra, .grid #content .card.search-form .extra, #content .grid .card.search-form .extra {
@@ -6421,7 +6539,7 @@ a.cancel_account_link {
     left: 0.5rem;
     right: auto;
   }
-  /* line 565, ../sass/_modules.scss */
+  /* line 568, ../sass/_modules.scss */
   .grid .card.contained .chapter-sticker, .grid .node-form > div.card .chapter-sticker,
   .grid #user-profile-form > div.card .chapter-sticker,
   .grid #user-register-form > div.card .chapter-sticker, .grid #content .card.search-form .chapter-sticker, #content .grid .card.search-form .chapter-sticker {
@@ -6433,6 +6551,12 @@ a.cancel_account_link {
     -ms-transform: rotate(0);
     -o-transform: rotate(0);
     transform: rotate(0);
+  }
+  /* line 574, ../sass/_modules.scss */
+  .grid .card.contained .chapter-sticker-icon-text, .grid .node-form > div.card .chapter-sticker-icon-text,
+  .grid #user-profile-form > div.card .chapter-sticker-icon-text,
+  .grid #user-register-form > div.card .chapter-sticker-icon-text, .grid #content .card.search-form .chapter-sticker-icon-text, #content .grid .card.search-form .chapter-sticker-icon-text {
+    display: inline;
   }
 }
 
@@ -6541,9 +6665,14 @@ a.cancel_account_link {
   }
 }
 
-/* line 53, ../sass/_single.scss */
+/* line 58, ../sass/_single.scss */
+.page-events-send-announcement .column,
+.page-events-manage-registrations .column,
+.page-node-add .column,
 .page-node-rsvp .column,
 .page-node-communicate .column,
+.page-events-message .column,
+.page-contact .column,
 .page-views .column,
 .page-node-edit .column,
 .page-user-edit .column,
@@ -6551,9 +6680,14 @@ a.cancel_account_link {
 .page-search .column {
   padding: 0 !important;
 }
-/* line 56, ../sass/_single.scss */
+/* line 61, ../sass/_single.scss */
+.page-events-send-announcement #page-title,
+.page-events-manage-registrations #page-title,
+.page-node-add #page-title,
 .page-node-rsvp #page-title,
 .page-node-communicate #page-title,
+.page-events-message #page-title,
+.page-contact #page-title,
 .page-views #page-title,
 .page-node-edit #page-title,
 .page-user-edit #page-title,
@@ -6562,9 +6696,14 @@ a.cancel_account_link {
   text-align: center;
   margin-bottom: 2rem;
 }
-/* line 60, ../sass/_single.scss */
+/* line 65, ../sass/_single.scss */
+.page-events-send-announcement #page-title em,
+.page-events-manage-registrations #page-title em,
+.page-node-add #page-title em,
 .page-node-rsvp #page-title em,
 .page-node-communicate #page-title em,
+.page-events-message #page-title em,
+.page-contact #page-title em,
 .page-views #page-title em,
 .page-node-edit #page-title em,
 .page-user-edit #page-title em,
@@ -6577,11 +6716,21 @@ a.cancel_account_link {
   color: #79828c;
   text-transform: uppercase;
 }
-/* line 70, ../sass/_single.scss */
+/* line 75, ../sass/_single.scss */
+.page-events-send-announcement .node-form,
+.page-events-send-announcement #user-profile-form,
+.page-events-manage-registrations .node-form,
+.page-events-manage-registrations #user-profile-form,
+.page-node-add .node-form,
+.page-node-add #user-profile-form,
 .page-node-rsvp .node-form,
 .page-node-rsvp #user-profile-form,
 .page-node-communicate .node-form,
 .page-node-communicate #user-profile-form,
+.page-events-message .node-form,
+.page-events-message #user-profile-form,
+.page-contact .node-form,
+.page-contact #user-profile-form,
 .page-views .node-form,
 .page-views #user-profile-form,
 .page-node-edit .node-form,
@@ -6595,9 +6744,14 @@ a.cancel_account_link {
   padding: 0 !important;
 }
 @media only screen and (min-width: 65.063rem) {
-  /* line 75, ../sass/_single.scss */
+  /* line 80, ../sass/_single.scss */
+  .page-events-send-announcement #page-title,
+  .page-events-manage-registrations #page-title,
+  .page-node-add #page-title,
   .page-node-rsvp #page-title,
   .page-node-communicate #page-title,
+  .page-events-message #page-title,
+  .page-contact #page-title,
   .page-views #page-title,
   .page-node-edit #page-title,
   .page-user-edit #page-title,
@@ -6609,39 +6763,39 @@ a.cancel_account_link {
 }
 
 /* Added by Iab C - style tab buttons on other views */
-/* line 84, ../sass/_single.scss */
+/* line 89, ../sass/_single.scss */
 .page-views .tabs-primary {
   margin-bottom: 1rem;
   font-size: 0;
 }
-/* line 89, ../sass/_single.scss */
+/* line 94, ../sass/_single.scss */
 .page-views .tabs-primary li,
 .page-views .tabs-primary li.is-active {
   float: none;
   display: inline-block;
 }
 
-/* line 97, ../sass/_single.scss */
+/* line 102, ../sass/_single.scss */
 .page-search .tabs-primary {
   margin-bottom: 1rem;
   font-size: 0;
 }
-/* line 102, ../sass/_single.scss */
+/* line 107, ../sass/_single.scss */
 .page-search .tabs-primary li,
 .page-search .tabs-primary li.is-active {
   float: none;
   display: inline-block;
 }
-/* line 107, ../sass/_single.scss */
+/* line 112, ../sass/_single.scss */
 .page-search .contained-block {
   padding: 1rem;
 }
-/* line 109, ../sass/_single.scss */
+/* line 114, ../sass/_single.scss */
 .page-search .contained-block > h2 {
   text-transform: uppercase;
   margin: 0;
 }
-/* line 115, ../sass/_single.scss */
+/* line 120, ../sass/_single.scss */
 .page-search .search-list {
   margin: 0 -1rem;
   padding: 0;
@@ -6649,22 +6803,22 @@ a.cancel_account_link {
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
-/* line 121, ../sass/_single.scss */
+/* line 126, ../sass/_single.scss */
 .page-search .search-list li {
   padding: 0.5rem 0;
   box-shadow: 0 1px 0 0 rgba(33, 48, 64, 0.1);
 }
-/* line 124, ../sass/_single.scss */
+/* line 129, ../sass/_single.scss */
 .page-search .search-list li:first-child {
   margin-top: 1rem;
   padding-top: 0;
 }
-/* line 128, ../sass/_single.scss */
+/* line 133, ../sass/_single.scss */
 .page-search .search-list li:last-child {
   box-shadow: none;
   padding-bottom: 0;
 }
-/* line 135, ../sass/_single.scss */
+/* line 140, ../sass/_single.scss */
 .page-search .view-mode-search_result .prime-title {
   font-size: 0.875rem;
   line-height: 1.42857;
@@ -6673,7 +6827,7 @@ a.cancel_account_link {
   padding: 0;
   letter-spacing: normal;
 }
-/* line 144, ../sass/_single.scss */
+/* line 149, ../sass/_single.scss */
 .page-search .view-mode-search_result .meta {
   opacity: 0.6;
   font-size: 0.875rem;
@@ -6681,15 +6835,15 @@ a.cancel_account_link {
   display: block;
   margin: 0 0 0.5rem 0;
 }
-/* line 152, ../sass/_single.scss */
+/* line 157, ../sass/_single.scss */
 .page-search .view-mode-search_result .summary p {
   margin: 0 0 0.5rem;
 }
-/* line 155, ../sass/_single.scss */
+/* line 160, ../sass/_single.scss */
 .page-search .view-mode-search_result .summary > *:last-child {
   margin-bottom: 0;
 }
-/* line 159, ../sass/_single.scss */
+/* line 164, ../sass/_single.scss */
 .page-search .view-mode-search_result > a {
   display: block;
   padding: 0.5rem 3rem 0.5rem 1rem;
@@ -6711,86 +6865,86 @@ a.cancel_account_link {
   transition-delay: 0, 0, 0, 0;
   color: #213040;
 }
-/* line 168, ../sass/_single.scss */
+/* line 173, ../sass/_single.scss */
 .page-search .view-mode-search_result > a:hover {
   opacity: 1;
   background-color: rgba(127, 190, 218, 0.2);
   color: #007eb5;
 }
-/* line 175, ../sass/_single.scss */
+/* line 180, ../sass/_single.scss */
 .page-search .item-list {
   margin: 0.5rem -1rem 0 -1rem;
   padding: 1rem 1rem 0 1rem;
   box-shadow: 0 -1px 0 0 rgba(33, 48, 64, 0.1);
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 181, ../sass/_single.scss */
+  /* line 186, ../sass/_single.scss */
   .page-search .tabs-primary {
     margin-bottom: 2rem;
   }
 }
 @media only screen and (min-width: 65.063rem) {
-  /* line 186, ../sass/_single.scss */
+  /* line 191, ../sass/_single.scss */
   .page-search .contained-block {
     padding: 2rem;
   }
-  /* line 189, ../sass/_single.scss */
+  /* line 194, ../sass/_single.scss */
   .page-search .search-list {
     margin: 0 -2rem;
   }
-  /* line 193, ../sass/_single.scss */
+  /* line 198, ../sass/_single.scss */
   .page-search .view-mode-search_result > a {
     padding-left: 2rem;
     padding-right: 4rem;
   }
-  /* line 197, ../sass/_single.scss */
+  /* line 202, ../sass/_single.scss */
   .page-search .view-mode-search_result .prime-title {
     font-size: 1.25rem;
     line-height: 1.4;
   }
-  /* line 203, ../sass/_single.scss */
+  /* line 208, ../sass/_single.scss */
   .page-search .item-list {
     margin: 0.5rem -2rem 0 -2rem;
     padding: 2rem 2rem 0 2rem;
   }
 }
 
-/* line 212, ../sass/_single.scss */
+/* line 217, ../sass/_single.scss */
 #content .search-form > div {
   padding: 1rem;
   overflow: hidden;
 }
-/* line 219, ../sass/_single.scss */
+/* line 224, ../sass/_single.scss */
 #content .search-form .form-type-textfield {
   width: 100%;
   float: left;
   margin-bottom: 0.5rem;
 }
-/* line 224, ../sass/_single.scss */
+/* line 229, ../sass/_single.scss */
 #content .search-form #edit-submit {
   width: 100%;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 229, ../sass/_single.scss */
+  /* line 234, ../sass/_single.scss */
   #content .search-form .form-type-textfield {
     width: 80%;
     padding-right: 1rem;
     margin-bottom: 0;
   }
-  /* line 234, ../sass/_single.scss */
+  /* line 239, ../sass/_single.scss */
   #content .search-form #edit-submit {
     float: right;
     width: 20%;
   }
 }
 @media only screen and (min-width: 65.063rem) {
-  /* line 240, ../sass/_single.scss */
+  /* line 245, ../sass/_single.scss */
   #content .search-form > div {
     padding: 2rem;
   }
 }
 
-/* line 246, ../sass/_single.scss */
+/* line 251, ../sass/_single.scss */
 .front {
   /*@include background(linear-gradient(rgba($primary-color, 0), rgba($primary-color, 0), $primary-color), image-url("../videos/frontpage/tm_background_video.jpg"));
   background-repeat: no-repeat, no-repeat;
@@ -6799,38 +6953,38 @@ a.cancel_account_link {
   background-color: #000;
   /*$primary-color;*/
 }
-/* line 253, ../sass/_single.scss */
+/* line 258, ../sass/_single.scss */
 .front #page, .front #site-canvas {
   background: none;
 }
-/* line 256, ../sass/_single.scss */
+/* line 261, ../sass/_single.scss */
 .front .column {
   padding: 0;
 }
-/* line 259, ../sass/_single.scss */
+/* line 264, ../sass/_single.scss */
 .front #footer {
   background: rgba(255, 255, 255, 0.1);
   color: #FFF;
 }
-/* line 262, ../sass/_single.scss */
+/* line 267, ../sass/_single.scss */
 .front #footer a {
   color: #FFF;
 }
-/* line 266, ../sass/_single.scss */
+/* line 271, ../sass/_single.scss */
 .front #foot-nav {
   opacity: 0.5;
 }
-/* line 268, ../sass/_single.scss */
+/* line 273, ../sass/_single.scss */
 .front #foot-nav a:before {
   color: #FFF;
 }
-/* line 272, ../sass/_single.scss */
+/* line 277, ../sass/_single.scss */
 .front #foot-credits {
   opacity: 0.5;
   border-top-color: rgba(255, 255, 255, 0.2);
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 246, ../sass/_single.scss */
+  /* line 251, ../sass/_single.scss */
   .front {
     -webkit-background-size: cover, cover;
     -moz-background-size: cover, cover;
@@ -6840,38 +6994,38 @@ a.cancel_account_link {
   }
 }
 
-/* line 282, ../sass/_single.scss */
+/* line 287, ../sass/_single.scss */
 #block-tm-base-tm-homepage-stats {
   margin: 0;
 }
 
-/* line 286, ../sass/_single.scss */
+/* line 291, ../sass/_single.scss */
 #block-tm-base-tm-homepage-stats li:after {
   display: none;
 }
 
-/* line 289, ../sass/_single.scss */
+/* line 294, ../sass/_single.scss */
 #upcoming-events .hd {
   margin-bottom: 2rem;
   text-shadow: 0 2px 0 rgba(33, 48, 64, 0.4);
 }
-/* line 293, ../sass/_single.scss */
+/* line 298, ../sass/_single.scss */
 #upcoming-events .hd .prime-title {
   color: #FFF;
   text-align: center;
   margin-bottom: 0;
 }
-/* line 300, ../sass/_single.scss */
+/* line 305, ../sass/_single.scss */
 #upcoming-events .more-link {
   text-align: center;
   margin: 1rem 0 0 0;
 }
-/* line 304, ../sass/_single.scss */
+/* line 309, ../sass/_single.scss */
 #upcoming-events .more-link .bttn, #upcoming-events .more-link .bttn-group a, .bttn-group #upcoming-events .more-link a, #upcoming-events .more-link .page-views .tabs-primary a, .page-views .tabs-primary #upcoming-events .more-link a, #upcoming-events .more-link .page-search .tabs-primary a, .page-search .tabs-primary #upcoming-events .more-link a, #upcoming-events .more-link .pager li a, .pager li #upcoming-events .more-link a, #upcoming-events .more-link .pager .pager-current, .pager #upcoming-events .more-link .pager-current, #upcoming-events .more-link .views-exposed-form .form-type-select, .views-exposed-form #upcoming-events .more-link .form-type-select, #upcoming-events .more-link .twitter-login {
   width: 14rem;
 }
 
-/* line 310, ../sass/_single.scss */
+/* line 315, ../sass/_single.scss */
 #welcome {
   width: auto;
   margin-left: -1rem;
@@ -6894,7 +7048,7 @@ a.cancel_account_link {
 #welcome:after {
   clear: both;
 }
-/* line 317, ../sass/_single.scss */
+/* line 322, ../sass/_single.scss */
 #welcome .hd {
   position: relative;
   padding-left: 1rem;
@@ -6904,16 +7058,16 @@ a.cancel_account_link {
   clear: both;
   margin-bottom: 2rem;
 }
-/* line 324, ../sass/_single.scss */
+/* line 329, ../sass/_single.scss */
 #welcome .hd .subtitle {
   margin-bottom: 0;
 }
-/* line 329, ../sass/_single.scss */
+/* line 334, ../sass/_single.scss */
 #welcome .bd {
   float: left;
   width: 100%;
 }
-/* line 332, ../sass/_single.scss */
+/* line 337, ../sass/_single.scss */
 #welcome .bd ul {
   width: auto;
   margin-left: -1rem;
@@ -6935,7 +7089,7 @@ a.cancel_account_link {
 #welcome .bd ul:after {
   clear: both;
 }
-/* line 337, ../sass/_single.scss */
+/* line 342, ../sass/_single.scss */
 #welcome .bd ul li {
   overflow: hidden;
   position: relative;
@@ -6946,7 +7100,7 @@ a.cancel_account_link {
   display: inline-block;
   float: none !important;
 }
-/* line 342, ../sass/_single.scss */
+/* line 347, ../sass/_single.scss */
 #welcome .bd ul li:after {
   position: absolute;
   right: 0;
@@ -6957,18 +7111,18 @@ a.cancel_account_link {
   background: rgba(255, 255, 255, 0.2);
   text-shadow: none;
 }
-/* line 352, ../sass/_single.scss */
+/* line 357, ../sass/_single.scss */
 #welcome .bd ul li:last-child:after {
   display: none;
 }
-/* line 356, ../sass/_single.scss */
+/* line 361, ../sass/_single.scss */
 #welcome .bd ul a {
   position: relative;
   display: block;
   color: #FFF;
   padding-bottom: 1.5rem;
 }
-/* line 362, ../sass/_single.scss */
+/* line 367, ../sass/_single.scss */
 #welcome .bd ul .key {
   position: absolute;
   bottom: 0;
@@ -6977,28 +7131,28 @@ a.cancel_account_link {
   text-transform: uppercase;
   margin: 0;
 }
-/* line 371, ../sass/_single.scss */
+/* line 376, ../sass/_single.scss */
 #welcome .bd ul .value {
   font-size: 2.75rem;
   line-height: 1;
 }
-/* line 380, ../sass/_single.scss */
+/* line 385, ../sass/_single.scss */
 #welcome .cta-wrapper {
   margin: 2rem 0 0 0;
 }
-/* line 382, ../sass/_single.scss */
+/* line 387, ../sass/_single.scss */
 #welcome .cta-wrapper .bttn, #welcome .cta-wrapper .bttn-group a, .bttn-group #welcome .cta-wrapper a, #welcome .cta-wrapper .page-views .tabs-primary a, .page-views .tabs-primary #welcome .cta-wrapper a, #welcome .cta-wrapper .page-search .tabs-primary a, .page-search .tabs-primary #welcome .cta-wrapper a, #welcome .cta-wrapper .pager li a, .pager li #welcome .cta-wrapper a, #welcome .cta-wrapper .pager .pager-current, .pager #welcome .cta-wrapper .pager-current, #welcome .cta-wrapper .views-exposed-form .form-type-select, .views-exposed-form #welcome .cta-wrapper .form-type-select, #welcome .cta-wrapper .twitter-login {
   text-shadow: none;
   width: 14rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 310, ../sass/_single.scss */
+  /* line 315, ../sass/_single.scss */
   #welcome {
     margin-bottom: 4rem;
   }
 }
 @media only screen and (min-width: 65.063rem) {
-  /* line 393, ../sass/_single.scss */
+  /* line 398, ../sass/_single.scss */
   #welcome .hd {
     position: relative;
     padding-left: 1rem;
@@ -7008,7 +7162,7 @@ a.cancel_account_link {
     right: auto;
     float: left;
   }
-  /* line 398, ../sass/_single.scss */
+  /* line 403, ../sass/_single.scss */
   #welcome .bd ul li {
     position: relative;
     padding-left: 1rem;
@@ -7018,7 +7172,7 @@ a.cancel_account_link {
   }
 }
 @media only screen and (min-width: 69.063rem) {
-  /* line 405, ../sass/_single.scss */
+  /* line 410, ../sass/_single.scss */
   #welcome .hd {
     position: relative;
     padding-left: 1rem;
@@ -7028,7 +7182,7 @@ a.cancel_account_link {
     right: auto;
     float: left;
   }
-  /* line 410, ../sass/_single.scss */
+  /* line 415, ../sass/_single.scss */
   #welcome .bd ul li {
     position: relative;
     padding-left: 1rem;
@@ -7038,27 +7192,27 @@ a.cancel_account_link {
   }
 }
 
-/* line 418, ../sass/_single.scss */
+/* line 423, ../sass/_single.scss */
 .trilithon-header {
   margin: 0 1rem 1rem 1rem;
   position: relative;
 }
-/* line 422, ../sass/_single.scss */
+/* line 427, ../sass/_single.scss */
 .trilithon-header .media {
   margin-bottom: -3rem;
   overflow: hidden;
   border-radius: 0.25rem 0.25rem 0 0;
 }
-/* line 427, ../sass/_single.scss */
+/* line 432, ../sass/_single.scss */
 .trilithon-header .cover {
   max-height: 16rem;
 }
-/* line 429, ../sass/_single.scss */
+/* line 434, ../sass/_single.scss */
 .trilithon-header .cover img {
   display: block;
   width: 100%;
 }
-/* line 434, ../sass/_single.scss */
+/* line 439, ../sass/_single.scss */
 .trilithon-header .avatar {
   text-align: center;
   position: relative;
@@ -7073,7 +7227,7 @@ a.cancel_account_link {
   background-color: #FFF;
   margin: 0 auto 1rem auto;
 }
-/* line 449, ../sass/_single.scss */
+/* line 454, ../sass/_single.scss */
 .trilithon-header .badge-chapter {
   position: relative;
   display: block;
@@ -7085,7 +7239,7 @@ a.cancel_account_link {
   display: inline-block;
   padding-bottom: 0.5rem;
 }
-/* line 459, ../sass/_single.scss */
+/* line 464, ../sass/_single.scss */
 .trilithon-header .badge-chapter:before {
   content: '';
   display: inline-block;
@@ -7093,7 +7247,7 @@ a.cancel_account_link {
   vertical-align: bottom;
   width: 0;
 }
-/* line 466, ../sass/_single.scss */
+/* line 471, ../sass/_single.scss */
 .trilithon-header .badge-chapter:after {
   position: absolute;
   display: block;
@@ -7106,13 +7260,13 @@ a.cancel_account_link {
   background-size: cover;
   border-radius: 0.125rem 0 0 0;
 }
-/* line 479, ../sass/_single.scss */
+/* line 484, ../sass/_single.scss */
 .trilithon-header .badge-cal {
   display: block;
   width: 4rem;
   height: 4rem;
 }
-/* line 483, ../sass/_single.scss */
+/* line 488, ../sass/_single.scss */
 .trilithon-header .badge-cal .month {
   display: block;
   border-radius: 0.25rem 0.25rem 0 0;
@@ -7121,7 +7275,7 @@ a.cancel_account_link {
   font-size: 0.875rem;
   line-height: 1.5rem;
 }
-/* line 491, ../sass/_single.scss */
+/* line 496, ../sass/_single.scss */
 .trilithon-header .badge-cal .day {
   display: block;
   border-radius: 0 0 0.25rem 0.25rem;
@@ -7131,101 +7285,101 @@ a.cancel_account_link {
   padding-bottom: 0.25rem;
   letter-spacing: -0.0625rem;
 }
-/* line 505, ../sass/_single.scss */
+/* line 510, ../sass/_single.scss */
 .trilithon-header .badge-organization,
 .trilithon-header .badge-user {
   width: 4rem;
   height: 4rem;
   display: block;
 }
-/* line 509, ../sass/_single.scss */
+/* line 514, ../sass/_single.scss */
 .trilithon-header .badge-organization img,
 .trilithon-header .badge-user img {
   display: block;
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 515, ../sass/_single.scss */
+/* line 520, ../sass/_single.scss */
 .trilithon-header .badge-flagfeed {
   width: 4rem;
   height: 4rem;
   display: block;
 }
-/* line 519, ../sass/_single.scss */
+/* line 524, ../sass/_single.scss */
 .trilithon-header .badge-flagfeed img {
   display: block;
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 525, ../sass/_single.scss */
+/* line 530, ../sass/_single.scss */
 .trilithon-header .badge-wordpress-feedme {
   width: 4rem;
   height: 4rem;
   display: block;
 }
-/* line 529, ../sass/_single.scss */
+/* line 534, ../sass/_single.scss */
 .trilithon-header .badge-wordpress-feedme img {
   display: block;
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 535, ../sass/_single.scss */
+/* line 540, ../sass/_single.scss */
 .trilithon-header .badge-marketplace-feedme {
   width: 4rem;
   height: 4rem;
   display: block;
 }
-/* line 539, ../sass/_single.scss */
+/* line 544, ../sass/_single.scss */
 .trilithon-header .badge-marketplace-feedme img {
   display: block;
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 545, ../sass/_single.scss */
+/* line 550, ../sass/_single.scss */
 .trilithon-header .badge-search-result {
   width: 4rem;
   height: 4rem;
   display: block;
 }
-/* line 549, ../sass/_single.scss */
+/* line 554, ../sass/_single.scss */
 .trilithon-header .badge-search-result img {
   display: block;
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 555, ../sass/_single.scss */
+/* line 560, ../sass/_single.scss */
 .trilithon-header .bd {
   padding: 0 1rem 6rem 1rem;
   text-align: center;
 }
-/* line 559, ../sass/_single.scss */
+/* line 564, ../sass/_single.scss */
 .trilithon-header .prime-title {
   font-size: 1.5rem;
   line-height: 1.16667;
   margin: 0;
 }
-/* line 565, ../sass/_single.scss */
+/* line 570, ../sass/_single.scss */
 .trilithon-header .meta {
   margin: 0;
   color: #79828c;
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
-/* line 571, ../sass/_single.scss */
+/* line 576, ../sass/_single.scss */
 .trilithon-header .meta span:after {
   content: ', ';
 }
-/* line 576, ../sass/_single.scss */
+/* line 581, ../sass/_single.scss */
 .trilithon-header .meta span:last-of-type:after {
   content: '';
 }
-/* line 581, ../sass/_single.scss */
+/* line 586, ../sass/_single.scss */
 .trilithon-header .extra {
   position: absolute;
   top: 0.5rem;
   left: 0.5rem;
 }
-/* line 586, ../sass/_single.scss */
+/* line 591, ../sass/_single.scss */
 .trilithon-header .chapter-sticker {
   border-radius: 0.25rem;
   display: block;
@@ -7237,7 +7391,7 @@ a.cancel_account_link {
   font-size: 0.875rem;
   width: 4rem;
 }
-/* line 599, ../sass/_single.scss */
+/* line 604, ../sass/_single.scss */
 .trilithon-header .actions {
   position: absolute;
   right: 0;
@@ -7247,7 +7401,7 @@ a.cancel_account_link {
   padding: 1rem;
   border-top: 1px #e8eaeb solid;
 }
-/* line 609, ../sass/_single.scss */
+/* line 614, ../sass/_single.scss */
 .trilithon-header .actions-menu {
   list-style: none;
   margin: 0;
@@ -7256,77 +7410,77 @@ a.cancel_account_link {
   vertical-align: bottom;
   text-align: left;
 }
-/* line 616, ../sass/_single.scss */
+/* line 621, ../sass/_single.scss */
 .trilithon-header .actions-menu > li {
   float: left;
   position: relative;
   margin: 0 0.25rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 418, ../sass/_single.scss */
+  /* line 423, ../sass/_single.scss */
   .trilithon-header {
     margin-bottom: 2rem;
   }
-  /* line 625, ../sass/_single.scss */
+  /* line 630, ../sass/_single.scss */
   .trilithon-header .media {
     margin-bottom: -4rem;
   }
-  /* line 628, ../sass/_single.scss */
+  /* line 633, ../sass/_single.scss */
   .trilithon-header .badge-chapter {
     width: 6rem;
     height: 6rem;
     font-size: 1.25rem;
     padding-bottom: 1rem;
   }
-  /* line 633, ../sass/_single.scss */
+  /* line 638, ../sass/_single.scss */
   .trilithon-header .badge-chapter:after {
     height: 1rem;
     width: 1rem;
     border-radius: 0.25rem 0 0 0;
   }
-  /* line 639, ../sass/_single.scss */
+  /* line 644, ../sass/_single.scss */
   .trilithon-header .badge-cal {
     width: 6rem;
     height: 6rem;
   }
-  /* line 642, ../sass/_single.scss */
+  /* line 647, ../sass/_single.scss */
   .trilithon-header .badge-cal .month {
     font-size: 1.25rem;
     line-height: 2rem;
   }
-  /* line 646, ../sass/_single.scss */
+  /* line 651, ../sass/_single.scss */
   .trilithon-header .badge-cal .day {
     line-height: 3.5rem;
     font-size: 2.5rem;
     padding-bottom: 0.5rem;
     letter-spacing: -0.125rem;
   }
-  /* line 654, ../sass/_single.scss */
+  /* line 659, ../sass/_single.scss */
   .trilithon-header .badge-organization,
   .trilithon-header .badge-user {
     width: 6rem;
     height: 6rem;
   }
-  /* line 658, ../sass/_single.scss */
+  /* line 663, ../sass/_single.scss */
   .trilithon-header .prime-title {
     font-size: 1.75rem;
     line-height: 1.14286;
   }
-  /* line 663, ../sass/_single.scss */
+  /* line 668, ../sass/_single.scss */
   .trilithon-header .meta {
     font-size: 1rem;
     line-height: 1.5;
   }
 }
 @media only screen and (min-width: 65.063rem) {
-  /* line 670, ../sass/_single.scss */
+  /* line 675, ../sass/_single.scss */
   .trilithon-header .media {
     display: table-cell;
     width: 58%;
     margin-bottom: 0;
     border-radius: 0.25rem 0 0 0.25rem;
   }
-  /* line 676, ../sass/_single.scss */
+  /* line 681, ../sass/_single.scss */
   .trilithon-header .cover {
     position: relative;
     width: 150%;
@@ -7334,51 +7488,51 @@ a.cancel_account_link {
     margin-left: -70%;
     max-height: none;
   }
-  /* line 683, ../sass/_single.scss */
+  /* line 688, ../sass/_single.scss */
   .trilithon-header .bd {
     vertical-align: middle;
     display: table-cell;
     padding: 1rem 1rem 5rem 1rem;
   }
-  /* line 688, ../sass/_single.scss */
+  /* line 693, ../sass/_single.scss */
   .trilithon-header .extra {
     top: 1rem;
     left: 1rem;
   }
-  /* line 692, ../sass/_single.scss */
+  /* line 697, ../sass/_single.scss */
   .trilithon-header .actions {
     width: 42%;
   }
 }
 @media only screen and (min-width: 69.063rem) {
-  /* line 698, ../sass/_single.scss */
+  /* line 703, ../sass/_single.scss */
   .trilithon-header .media {
     width: 68%;
   }
-  /* line 701, ../sass/_single.scss */
+  /* line 706, ../sass/_single.scss */
   .trilithon-header .cover {
     width: 100%;
     margin-left: 0;
     left: 0;
   }
-  /* line 706, ../sass/_single.scss */
+  /* line 711, ../sass/_single.scss */
   .trilithon-header .bd {
     padding: 2rem 2rem 5rem 2rem;
   }
-  /* line 709, ../sass/_single.scss */
+  /* line 714, ../sass/_single.scss */
   .trilithon-header .chapter-sticker {
     line-height: 3rem;
     font-size: 1.5rem;
     width: 7rem;
   }
-  /* line 714, ../sass/_single.scss */
+  /* line 719, ../sass/_single.scss */
   .trilithon-header .actions {
     width: 32%;
     padding: 1rem 2rem;
   }
 }
 
-/* line 723, ../sass/_single.scss */
+/* line 728, ../sass/_single.scss */
 .team-list,
 .related-list,
 .related-list ul {
@@ -7386,20 +7540,20 @@ a.cancel_account_link {
   padding: 0;
   margin: -0.5rem 0 1rem 0;
 }
-/* line 727, ../sass/_single.scss */
+/* line 732, ../sass/_single.scss */
 .team-list li,
 .related-list li,
 .related-list ul li {
   padding: 0.5rem 0;
   box-shadow: 0 1px 0 0 rgba(33, 48, 64, 0.1);
 }
-/* line 730, ../sass/_single.scss */
+/* line 735, ../sass/_single.scss */
 .team-list li:first-child,
 .related-list li:first-child,
 .related-list ul li:first-child {
   padding-top: 0;
 }
-/* line 733, ../sass/_single.scss */
+/* line 738, ../sass/_single.scss */
 .team-list li:last-child,
 .related-list li:last-child,
 .related-list ul li:last-child {
@@ -7407,7 +7561,7 @@ a.cancel_account_link {
   padding-bottom: 0;
 }
 
-/* line 740, ../sass/_single.scss */
+/* line 745, ../sass/_single.scss */
 .ds-organization-follow-message-insert {
   border-left: 4px solid #4382af;
   padding-left: 0.5rem;
@@ -7415,7 +7569,7 @@ a.cancel_account_link {
 }
 
 /* Front page video controls */
-/* line 747, ../sass/_single.scss */
+/* line 752, ../sass/_single.scss */
 #tm-frontpage-video-controls {
   padding-top: 2px;
   position: absolute;
@@ -7430,18 +7584,18 @@ a.cancel_account_link {
   display: none;
 }
 
-/* line 760, ../sass/_single.scss */
+/* line 765, ../sass/_single.scss */
 #tm-frontpage-video-info {
   margin-top: -1px;
   float: right;
 }
 
-/* line 764, ../sass/_single.scss */
+/* line 769, ../sass/_single.scss */
 #tm-frontpage-video-buttons {
   float: left;
 }
 
-/* line 767, ../sass/_single.scss */
+/* line 772, ../sass/_single.scss */
 .tm-frontpage-video-play {
   display: inline-block;
   padding-left: 4px;
@@ -7449,24 +7603,24 @@ a.cancel_account_link {
   display: none;
 }
 
-/* line 768, ../sass/_single.scss */
+/* line 773, ../sass/_single.scss */
 .tm-frontpage-video-pause {
   display: inline-block;
   padding-left: 4px;
   padding-right: 4px;
 }
 
-/* line 769, ../sass/_single.scss */
+/* line 774, ../sass/_single.scss */
 .tm-frontpage-video-play:hover {
   color: #888;
 }
 
-/* line 770, ../sass/_single.scss */
+/* line 775, ../sass/_single.scss */
 .tm-frontpage-video-pause:hover {
   color: #888;
 }
 
-/* line 774, ../sass/_single.scss */
+/* line 779, ../sass/_single.scss */
 .tm_community_values_validation_message {
   display: none;
   background-color: #eee;
@@ -7478,13 +7632,13 @@ a.cancel_account_link {
   margin-left: 1rem;
 }
 
-/* line 776, ../sass/_single.scss */
+/* line 781, ../sass/_single.scss */
 .tm_stats_container {
   margin-bottom: -0.2rem;
   overflow: auto;
 }
 
-/* line 777, ../sass/_single.scss */
+/* line 782, ../sass/_single.scss */
 .tm_stats {
   margin-left: 0.4rem;
   padding-left: 0.4rem;
@@ -7499,90 +7653,90 @@ a.cancel_account_link {
   margin-bottom: 0.2rem;
 }
 
-/* line 778, ../sass/_single.scss */
+/* line 783, ../sass/_single.scss */
 .tm_stats_followers {
   background-color: #007eb5;
 }
 
-/* line 779, ../sass/_single.scss */
+/* line 784, ../sass/_single.scss */
 .tm_stats_following {
   background-color: #bd0053;
 }
 
-/* line 780, ../sass/_single.scss */
+/* line 785, ../sass/_single.scss */
 .tm_stats_events {
   background-color: #88ac00;
 }
 
-/* line 781, ../sass/_single.scss */
+/* line 786, ../sass/_single.scss */
 .tm_stats_followers_divider {
   color: #48a4cd;
 }
 
-/* line 782, ../sass/_single.scss */
+/* line 787, ../sass/_single.scss */
 .tm_stats_following_divider {
   color: #d34a47;
 }
 
-/* line 783, ../sass/_single.scss */
+/* line 788, ../sass/_single.scss */
 .tm_stats_events_divider {
   color: #acc743;
 }
 
-/* line 784, ../sass/_single.scss */
+/* line 789, ../sass/_single.scss */
 .tm_nowrap {
   white-space: nowrap;
 }
 
-/* line 785, ../sass/_single.scss */
+/* line 790, ../sass/_single.scss */
 #edit-submit-reports {
   margin-top: 52px;
   margin-left: 8px;
 }
 
 /* Discussions */
-/* line 788, ../sass/_single.scss */
+/* line 793, ../sass/_single.scss */
 .tm_discuss #main {
   padding: 0px;
 }
 
-/* line 789, ../sass/_single.scss */
+/* line 794, ../sass/_single.scss */
 .tm_discuss #main .row {
   padding: 0px;
 }
 
-/* line 790, ../sass/_single.scss */
+/* line 795, ../sass/_single.scss */
 .tm_discuss #main .column {
   padding: 0px;
 }
 
-/* line 791, ../sass/_single.scss */
+/* line 796, ../sass/_single.scss */
 .tm_discuss #content {
   padding: 0px;
 }
 
-/* line 792, ../sass/_single.scss */
+/* line 797, ../sass/_single.scss */
 .tm_discuss .page_notice {
   margin: 24px;
 }
 
-/* line 793, ../sass/_single.scss */
+/* line 798, ../sass/_single.scss */
 .tm_discuss .messages.status, .tm_discuss .status.messages--status, .tm_discuss .status.messages--warning, .tm_discuss .status.messages--error {
   margin: 24px;
 }
 
-/* line 794, ../sass/_single.scss */
+/* line 799, ../sass/_single.scss */
 .tm_discuss .messages--error {
   margin: 24px;
 }
 
-/* line 795, ../sass/_single.scss */
+/* line 800, ../sass/_single.scss */
 .tm_discuss .messages--warning {
   margin: 24px;
 }
 
 /* Zoom Avatar and Logos */
-/* line 798, ../sass/_single.scss */
+/* line 803, ../sass/_single.scss */
 .tm_zoom_picture .jqi {
   width: auto;
   border: none;
@@ -7590,30 +7744,30 @@ a.cancel_account_link {
   background-color: transparent;
 }
 
-/* line 799, ../sass/_single.scss */
+/* line 804, ../sass/_single.scss */
 .tm_zoom_picture .jqi .jqimessage {
   padding: 0px;
 }
 
-/* line 800, ../sass/_single.scss */
+/* line 805, ../sass/_single.scss */
 .tm_zoom_picture .jqi .jqistate {
   background-color: transparent;
 }
 
-/* line 801, ../sass/_single.scss */
+/* line 806, ../sass/_single.scss */
 .tm_zoom_picture .jqiclose {
   margin-right: -1.6rem;
   color: #fff !important;
   font-size: 38pt !important;
 }
 
-/* line 802, ../sass/_single.scss */
+/* line 807, ../sass/_single.scss */
 .tm_zoom_picture .zoom_picture_container {
   width: 400px;
   height: 400px;
 }
 
-/* line 803, ../sass/_single.scss */
+/* line 808, ../sass/_single.scss */
 .tm_zoom_picture img.zoom_picture {
   width: 400px;
   height: 400px;
@@ -7624,13 +7778,13 @@ a.cancel_account_link {
 }
 
 @media only screen and (max-device-width: 480px) {
-  /* line 806, ../sass/_single.scss */
+  /* line 811, ../sass/_single.scss */
   .tm_zoom_picture .zoom_picture_container {
     width: 300px;
     height: 300px;
   }
 
-  /* line 807, ../sass/_single.scss */
+  /* line 812, ../sass/_single.scss */
   .tm_zoom_picture img.zoom_picture {
     width: 300px;
     height: 300px;
@@ -7640,19 +7794,19 @@ a.cancel_account_link {
     border-radius: 6px;
   }
 
-  /* line 808, ../sass/_single.scss */
+  /* line 813, ../sass/_single.scss */
   .tm_zoom_picture .jqiclose {
     display: none !important;
   }
 }
 @media only screen and (max-device-width: 640px) {
-  /* line 812, ../sass/_single.scss */
+  /* line 817, ../sass/_single.scss */
   .tm_zoom_picture .jqiclose {
     display: none !important;
   }
 }
 /* Hide hidden tabs */
-/* line 816, ../sass/_single.scss */
+/* line 821, ../sass/_single.scss */
 .horizontal-tabs .horizontal-tab-hidden {
   display: none;
 }
@@ -7712,16 +7866,16 @@ a.cancel_account_link {
 #account-menu-blk .form-item {
   margin-bottom: 0.5rem;
 }
-/* line 58, ../sass/_login.scss */
+/* line 61, ../sass/_login.scss */
 #account-menu-blk .media-obj .media-fig img {
   border-radius: 0.25rem;
   max-width: 100%;
 }
-/* line 62, ../sass/_login.scss */
+/* line 65, ../sass/_login.scss */
 #account-menu-blk .media-obj .media-fig {
   padding-right: 0.75rem;
 }
-/* line 65, ../sass/_login.scss */
+/* line 68, ../sass/_login.scss */
 #account-menu-blk .media-obj .avatar {
   display: block;
   width: 4rem;
@@ -7730,7 +7884,7 @@ a.cancel_account_link {
   padding: 0.25rem;
   background-color: #FFF;
 }
-/* line 73, ../sass/_login.scss */
+/* line 76, ../sass/_login.scss */
 #account-menu-blk .media-obj strong {
   display: block;
 }

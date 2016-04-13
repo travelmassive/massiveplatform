@@ -176,7 +176,31 @@
   // wrapper for alert
   jq_alert = function(alert_title, message) {
     $.prompt(message, {title: alert_title});
-  } 
+  }
+
+  // show create member event message
+  jq_create_member_event_message = function() {
+    if (typeof Drupal.settings.tm_events !== 'undefined') {
+      if (typeof Drupal.settings.tm_events.create_member_event_message !== 'undefined') {
+        var message = Drupal.settings.tm_events.create_member_event_message;
+        if ((message != null) && (message != "")) {
+          $.prompt(message, {title: null});
+        }
+      }
+    }
+  }
+
+  // show create company event message
+  jq_create_company_event_message = function() {
+    if (typeof Drupal.settings.tm_events !== 'undefined') {
+      if (typeof Drupal.settings.tm_events.create_company_event_message !== 'undefined') {
+        var message = Drupal.settings.tm_events.create_company_event_message;
+        if ((message != null) && (message != "")) {
+          $.prompt(message, {title: null});
+        }
+      }
+    }
+  }
 
   // wrapper for confirm
   jq_confirm_url = function(confirm_title, message, ok_url) {
@@ -631,7 +655,6 @@
     if (typeof($(".header").sticky) == "function") {
       $(".header").sticky({topSpacing:0, className: 'sticky'});
 
-      //console.log($(".header").width());
       $('.prime-nav-wrappers').css({'margin-top': '0rem'});
 
       // animate if non-IE

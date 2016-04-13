@@ -919,14 +919,22 @@ function _tm_payments_get_api_amount($amount, $currency) {
 function _tm_payments_form_event_node_form_alter(&$form, &$form_state) {
 
 	global $conf;
-  	global $user;
 
-	// Step 1. Only show to moderator and administrator
-    if ((!in_array("moderator", $user->roles)) and (!in_array("administrator", $user->roles))) {
-    	field_group_hide_field_groups($form, array('group_event_payment'));
-    	field_group_hide_field_groups($form, array('group_event_early_bird'));
-    	$form["field_event_payment_early_date"]['#access'] = FALSE; // outside of fieldgroup
-    }
+  	// Step 1. Check if payments are enabled for this event
+  	$chapter_id = _tm_event_get_chapter_from_edit_form($form);
+  	$event_id = null;
+  	if (isset($form['#entity']->nid))  {
+  		$event_id = $form['#entity']->nid;
+  	}
+  	
+  	$enable_payments = _tm_payments_check_enable_payments($event_id, $chapter_id);
+
+	if (!$enable_payments) {
+		field_group_hide_field_groups($form, array('group_event_payment'));
+		field_group_hide_field_groups($form, array('group_event_early_bird'));
+		$form["field_event_payment_early_date"]['#access'] = FALSE; // outside of fieldgroup
+		return;
+	}
 
     // Step 2. Set available currencies
     $currencies = array();
@@ -950,6 +958,152 @@ function _tm_payments_form_event_node_form_alter(&$form, &$form_state) {
       $default_currency = $event->field_event_payment_currency[LANGUAGE_NONE][0]['value'];
     }
     $form['field_event_payment_currency'][LANGUAGE_NONE]['#default_value'] = $default_currency;
+
+    // Step 3. Set custom help text
+    // Todo:
+    $field_description = $form['field_event_payment_enabled'][LANGUAGE_NONE]['#description'];
+    $payments_help_text = "<div class='tm-payments-edit-form-message'>" . $conf["tm_payments_enable_help_text"] . "</div>" . $field_description;
+
+    // update description
+    $form['field_event_payment_enabled'][LANGUAGE_NONE]['#description'] = $payments_help_text;
+    // todo: see if we can use placeholder text to show the current refund policy
+
+}
+
+/* Helper method to determine whether an event can have payments enabled 
+ * Checks the following: 
+ * - Moderator or adminstrator user
+ * - If event has a chapter and chapter has reached threshold of members
+ * - If event has a company and company has reached threshold of followers (todo)
+ * - If enable_payments option is set for event chapter or company (todo)
+ */
+function _tm_payments_check_enable_payments($event_id = null, $chapter_id = null, $company_id = null) {
+
+	global $conf;
+	global $user;
+
+	// By default, don't enable payment options
+  	$enable_payments = false;
+
+  	// Enable payment options to moderator and administrator
+	if ((in_array("moderator", $user->roles)) || (in_array("administrator", $user->roles))) {
+		$enable_payments = true;
+	}
+
+	// Check if event has chapter and if that chapter has enough members
+	if ($chapter_id != null) {
+
+		$chapter = node_load($chapter_id);
+
+		// Get chapter payment setting
+		// default - check if number of members meets minimum
+		// enabled - always enable payments
+		// disabled - always disable payments
+		$chapter_payments_setting = "default";
+		$enable_payments = false;
+		if (sizeof($chapter->field_chapter_payments_enabled[LANGUAGE_NONE]) > 0) {
+			$chapter_payments_setting =  $chapter->field_chapter_payments_enabled[LANGUAGE_NONE][0]['value'];
+		}
+
+		// Case 1 - default - check if number of members meets minimum
+		if ($chapter_payments_setting == 'default') {
+			$num_members = _tm_chapters_get_num_members($chapter_id);
+			$min_members = $conf["tm_payments_enable_chapter_min_members"];
+			if ($min_members != 0) {
+				$enable_payments = ($num_members >= $min_members);
+			}
+		}
+
+		// Case 2 - enabled - always enable payments
+		if ($chapter_payments_setting == 'enabled') {
+			$enable_payments = true;
+		}
+
+		// Case 3 - disabled - always disable payments
+		if ($chapter_payments_setting == 'disabled') {
+			$enable_payments = false;
+		}
+		
+	}
+
+	// Todo: Check if company can create event 
+
+	// Payments not enabled
+	return $enable_payments;
+}
+
+/**
+ * Form alter hook
+ * Modify forms if payments are enbled
+ */
+function tm_payments_form_alter(&$form, &$form_state, $form_id) {
+
+	global $conf;
+    global $user;
+
+	// Chapter Payment Settings
+  	if ($form_id == "chapter_node_form") {  
+  		
+  		// Only allow moderators to change payment settings
+		if (true) { //((in_array("moderator", $user->roles)) || (in_array("administrator", $user->roles))) {
+
+			// Default text
+			$default_text = "When " . $conf["tm_payments_enable_chapter_min_members"] . " members join this Chapter (Default)";
+  			$form['field_chapter_payments_enabled'][LANGUAGE_NONE]['#options']['default'] = $default_text;
+  		
+	  		// Set Default text
+	  		if (!isset($form['#entity']->field_chapter_payments_enabled[LANGUAGE_NONE])) {
+	  			$form['field_chapter_payments_enabled'][LANGUAGE_NONE]['#options']['_none'] = "Choose default setting";
+	  			unset($form['field_chapter_payments_enabled'][LANGUAGE_NONE]['#options']['default']);
+	  		} else {
+	  			unset($form['field_chapter_payments_enabled'][LANGUAGE_NONE]['#options']['_none']);
+	  		}
+				
+		} else {
+
+			// Hide fields
+			field_group_hide_field_groups($form, array('group_chapter_payments'));
+			unset($form['field_chapter_payments_enabled']);
+
+		}
+
+	}
+
+	// Event Payment settings
+	if ($form_id == "event_node_form") { 
+
+		// hide
+		field_group_hide_field_groups($form, array('group_event_payout'));
+		field_group_hide_field_groups($form, array('group_event_early_bird'));
+		field_group_hide_field_groups($form, array('group_event_payment'));
+		return;
+
+		$chapter_id = _tm_event_get_chapter_from_edit_form($form);
+
+		// Event does not have a chapter
+		if ($chapter_id == null) {
+
+		}
+
+		// Event has a chapter
+		if ($chapter_id != null) {
+
+			// Populate payout dropdown
+	  		$opts = array('_none' => t('- None -'))  + _load_organizers_per_chapter($chapter_id);
+	  		foreach ($opts as $uid => $name) {
+	  			if ($uid == "_none") {
+	  				$option_label = "- Please select a recipient -";
+	  			} else {
+	  				$loaded = user_load($uid);
+	  				$option_label = $loaded->field_user_first_name[LANGUAGE_NONE][0]['safe_value'] . " " . $loaded->field_user_last_name[LANGUAGE_NONE][0]['safe_value'] . " (" . $uid . ")";
+	  				
+	  			}
+	  			$opts[$uid] = $option_label;
+	  		}
+	  		$form['field_event_payment_payout_to'][LANGUAGE_NONE]['#options'] = $opts;
+		}
+		
+  	}
 
 }
 

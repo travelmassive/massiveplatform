@@ -55,3 +55,12 @@ Disallow: /?q=user/password/
 Disallow: /?q=user/register/
 Disallow: /?q=user/login/
 Disallow: /?q=user/logout/
+# Node (clean urls only)
+Disallow: /node/
+# Taxonomy
+Disallow: /industry-segment/
+# Jobs
+Disallow: /jobs/admin/
+Disallow: /jobs/apply/
+Disallow: /jobs/assets/
+Disallow: /jobs/attachments/

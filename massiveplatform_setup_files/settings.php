@@ -306,14 +306,15 @@ ini_set('session.gc_divisor', 100);
  * a session is deleted, authenticated users are logged out, and the contents
  * of the user's $_SESSION variable is discarded.
  */
-ini_set('session.gc_maxlifetime', 200000);
+ini_set('session.gc_maxlifetime', (60 * 60 * 24 * 90)); // 90 days
 
 /**
  * Set session cookie lifetime (in seconds), i.e. the time from the session is
  * created to the cookie expires, i.e. when the browser is expected to discard
  * the cookie. The value 0 means "until the browser is closed".
  */
-ini_set('session.cookie_lifetime', 2000000);
+ini_set('session.cookie_lifetime', (60 * 60 * 24 * 90)); // 90 days
+
 
 /**
  * If you encounter a situation where users post a large amount of text, and
@@ -661,6 +662,7 @@ $conf['tm_event_company_event_min_followers'] = 10; // how many followers a comp
 $conf['tm_event_member_event_min_followers'] = 0; // how many followers a member needs to create an event. Set to 0 to disable.
 $conf['tm_event_send_announcements_intro'] = "Get more people to your event by sending a great announcement. See our guide below."; // tip
 $conf['tm_event_announcement_enable_cover_image'] = true; // enable including event cover image in announcement email
+$conf['tm_event_online_timezones'] = array("America/Los_Angeles" => "Los Angeles", "America/New_York" => "New York", "Europe/London" => "London", "Europe/Athens" => "Athens", "Asia/Singapore" => "Singapore", "Australia/Sydney" => "Sydney"); // display online event date in these timezones
 
 /** Provides a list of validated options on the signup page to indicate how the user connects with the community **/
 /** These options are not saved to the user account **/
@@ -808,7 +810,13 @@ $conf["tm_payments_stripe_logo"] = "<a target='_blank' href='https://stripe.com/
 $conf["tm_payments_handler_name"] = "Travel Massive"; // merchant name to display on payment screen
 $conf["tm_payments_handler_description"] = "Event Registration"; // default description to display on payment screen
 $conf["tm_payments_enable_chapter_min_members"] = 100; // enable payments if event chapter has minimum member count (set to 0 to disable)
-$conf["tm_payments_enable_help_text"] = "Congratulations, you can accept payments for events.";
+$conf["tm_payments_enable_help_text"] = "Congratulations, you can accept payments for events.<br>By accepting payments you agree to our event <a target='_blank' href='#'>terms and conditions</a>.";
+$conf["tm_payments_commission_default_chapter"] = "80"; // default commission % for chapter event 
+$conf["tm_payments_commission_default_company"] = "75"; // default commission % for company event
+$conf["tm_payments_commission_default_member"] = "70"; // default commission % for member event
+$conf["tm_payments_process_url"] = "https://localdev.travelmassive.com/payments/reports.php"; // external payment reports
+$conf["tm_payments_reports_secret_token"] = "randomstring123"; // secret token to verify payment report 
+$conf["tm_payments_reports_help_message"] = "Here's your ticket sales for this event."; // message to show user
 
 /* Featured members settings */
 $conf["tm_featured_members_event_types"] = array("all" => "Special Guests", "community" => "Special Guests", "workshop" => "Workshop Leaders", "conference" => "Speakers");
@@ -902,6 +910,11 @@ Add options to your search text to filter your results. Here's some examples.
     <li><a href='#' class='search-example' data-search-example='has: snapchat'>has: snapchat</a></li>
   </ul>
 </p>";
+
+// enable cookie consent
+$conf["tm_cookieconsent_enable"] = true; // enable EU cookie consent notice
+$conf["tm_cookieconsent_privacy_url"] = ""; // link to privacy policy
+
 
 $conf['install_profile'] = 'tm';
 

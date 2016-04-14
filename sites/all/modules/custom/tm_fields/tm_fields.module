@@ -533,6 +533,43 @@ function _tm_more_actions_process($field, $title = NULL) {
   }
   // END contact attendees
 
+  // START ticket sales
+  if (module_exists("tm_payments")) {
+    if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
+      $node = menu_get_object();
+      if ($node->type == 'event') {
+
+        // check permission
+        $show_menu_item = false;
+        $allowed_manage_event = tm_events_check_permission_edit_event($user, $field['entity']);
+        if ($allowed_manage_event) {
+
+          // check payments are enabled
+          if (_tm_payments_is_payment_enabled($field['entity'])) {
+             $show_menu_item = true;
+          }
+        }
+
+        // if event is external rsvp, don't show
+        if ($node->field_external_rsvp['und'][0]['value']) {
+          $show_menu_item = false;
+        }
+
+        if ($show_menu_item) {
+          $links['manageattendees'][] = array(
+            'wrapper_class' => array('ticketsales'),
+            'content' => l(t('Ticket sales'), 'payment/reports/event-sales/' . $nid, array(
+              'attributes' => array( 
+              'title' => t('Ticket sales')
+              )
+            ))
+          );
+        }
+      }
+    }
+  }
+  // END ticket sales
+
   // START download chapter members.
   if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
     $node = menu_get_object();

@@ -12,6 +12,9 @@ include_once 'tm_payments.process.inc';
 include_once 'tm_payments.helpers.inc';
 include_once 'tm_payments.pricing.inc';
 include_once 'tm_payments.flags.inc';
+include_once 'tm_payments.commission.inc';
+include_once 'tm_payments.reports.inc';
+
 
 /* 
 Stripe Payments Module
@@ -24,21 +27,36 @@ function tm_payments_menu() {
 
 	$items = array();
 	$items['payment/event/%node/%user'] = array(
-	    'title' => 'Send message',
-	    'page callback' => 'tm_payments_process_event_payment',
-	    'page arguments' => array(2,3),
-	    'access arguments' => array('access content'),
-	    'type' => MENU_CALLBACK,
-  	);
-  	$items['payments/%'] = array(
-		'title' => '',
-		'page callback' => 'tm_payments_placeholder',
-		'access arguments' => array('access content')
+    'title' => 'Event payment',
+    'page callback' => 'tm_payments_process_event_payment',
+    'page arguments' => array(2,3),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['payment/reports/event-sales/%node'] = array(
+    'title' => 'Event sales',
+    'page callback' => 'tm_payments_reports_event_sales',
+    'page arguments' => array(3),
+    'access callback' => array('tm_payments_access_sales_check'),
+    'access arguments' => array(3),
+    'type' => MENU_CALLBACK,
+  );
+  $items['payments/%'] = array(
+    'title' => '',
+    'page callback' => 'tm_payments_placeholder',
+    'access arguments' => array('access content')
 	);
 
 	return $items;
 }
 
+/**
+ * Permission callback. Check if user can access sales data of event
+ */
+function tm_payments_access_sales_check($node) {
+  global $user;
+  return tm_events_check_permission_edit_event($user, $node);
+}
 
 /*
  * Placeholder page to reserve the url

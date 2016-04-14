@@ -104,6 +104,36 @@ function tm_chapters_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_chapter_payments|node|chapter|form';
+  $field_group->group_name = 'group_chapter_payments';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'chapter';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Payments',
+    'weight' => '46',
+    'children' => array(
+      0 => 'field_chapter_payments_enabled',
+      1 => 'field_chapter_payment_commission',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'label' => 'Payments',
+      'instance_settings' => array(
+        'required_fields' => 1,
+        'id' => '',
+        'classes' => 'group-chapter-payments field-group-fieldset',
+        'description' => '',
+      ),
+      'formatter' => 'open',
+    ),
+  );
+  $field_groups['group_chapter_payments|node|chapter|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_community_management|node|chapter|form';
   $field_group->group_name = 'group_community_management';
   $field_group->entity_type = 'node';
@@ -309,6 +339,7 @@ function tm_chapters_field_group_info() {
   t('Community Management');
   t('Elsewhere');
   t('Location');
+  t('Payments');
   t('Summary');
 
   return $field_groups;

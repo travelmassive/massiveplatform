@@ -223,59 +223,6 @@ function _tm_get_event_timezone($event) {
 }
 
 /**
- * Custom function to return the full date and time of an event
- */
-function _tm_fulldate_event($field, $title = NULL) {
-
-  if (isset($field['entity']->field_event_date['und'][0]['value'])) {
-
-    // Use the timezone of the event
-    $event_timezone = _tm_get_event_timezone($field['entity']);
-    
-    $event_date = new DateTime($field['entity']->field_event_date['und'][0]['value'], new DateTimeZone($event_timezone));
-    $event_date2 = new DateTime($field['entity']->field_event_date['und'][0]['value2'], new DateTimeZone($event_timezone));
-
-    // Set default time format
-    // Either 24hr or 12hr
-    // see: http://en.wikipedia.org/wiki/Date_and_time_representation_by_country
-    // default time format is 24 hour
-    $time_format = "G:i"; // ie: 14:00
-    $country_codes_with_12_hours = array("US", "AU", "CA", "UK", "PH", "ZA", "GB");
-    $chapter_country_code = "US"; // default
-    if (isset($field['entity']->field_chapter['und'][0]['target_id'])) {
-      $chapter_id = $field['entity']->field_chapter['und'][0]['target_id'];
-      $chapter = node_load($chapter_id);
-      $chapter_country_code = $chapter->field_country['und'][0]['iso2'];
-      if (in_array($chapter_country_code, $country_codes_with_12_hours)) {
-        $time_format = "g:i a"; // ie: 2:00 pm
-      }
-    }
-
-    // If user has county set, override timezone format based on their country
-    global $user;
-    $account = user_load($user->uid);
-    if (sizeof($account->field_user_country) > 0) {
-      // get user's country code if it's set
-      if (isset($account->field_user_country['und'][0]['iso2'])) {
-        $field_user_country = $account->field_user_country['und'][0]['iso2']; // ie: AU, US
-        if (in_array($field_user_country, $country_codes_with_12_hours)) {
-          $time_format = "g:i a"; // ie: 2:00 pm
-        } else {
-          $time_format = "G:i"; // ie: 14:00
-        }
-      }
-    }
-
-    if ($event_date != $event_date2) {
-      return '<span class="date">' . $event_date->format('l, F j, Y') . '</span><span class="time">' . t('From') . ' ' . $event_date->format($time_format) . ' ' . t('to') . ' ' . $event_date2->format($time_format) . '</span>';      
-    }
-    else {
-      return '<span class="date">' . $event_date->format('l, F j, Y') . '</span><span class="time">' . $event_date->format($time_format) . '</span>';
-    }
-  } 
-}
-
-/**
  * Display how long until an event 
  */
 function _tm_event_time_elapsed($elapsed) {
@@ -331,9 +278,50 @@ function _tm_event_get_chapter_from_edit_form($form) {
   // New event
   // ie: /node/add/event?field_chapter=12832
   if (strpos("/" . $url_request, "node/add/event") == 1) {
-    if (isset($_GET["chapter"])) {
-      $chapter_id = $_GET["chapter"];
+    if (isset($_GET["field_chapter"])) {
+      $chapter_id = $_GET["field_chapter"];
       return $chapter_id;
+    } else {
+      return null;
+    }
+  }
+
+  // No chapter
+  return null;
+
+}
+
+/** 
+ * Helper method to get company object from edit form 
+ */
+function _tm_event_get_company_from_edit_form($form) {
+  
+  // Split url parts
+  $url_request = request_path();
+
+  // Get chapter from existing form
+  // - /node/12832/edit
+  $parts = explode("/", $url_request);
+  if (sizeof($parts) == 3) {
+    if (($parts[0] == "node") && ($parts[2] == "edit")) {
+      $event = $form['#entity'];
+      $event_id = $event->nid;
+      $event = node_load($event_id);
+      if (isset($event->field_event_company[LANGUAGE_NONE][0]['target_id'])) {
+        $company_id = $event->field_event_company[LANGUAGE_NONE][0]['target_id'];
+        return $company_id;
+      } else {
+        return null;
+      }
+    }
+  }
+
+  // New event
+  // ie: /node/add/event?field_event_company=12832
+  if (strpos("/" . $url_request, "node/add/event") == 1) {
+    if (isset($_GET["field_event_company"])) {
+      $company_id = $_GET["field_event_company"];
+      return $company_id;
     } else {
       return null;
     }
@@ -366,14 +354,3 @@ function tm_events_pluralize_members($num_members) {
   }
   return $num_members . " members";
 }
-
-
-// to be removed
-
-/**
- * AJAX callback for field organizer.
- * Triggered by field chapter.
- */
-/*function _tm_events_field_organizer_ajax_cb($form, $form_state) {
-  return $form['field_organizer'];
-}*/

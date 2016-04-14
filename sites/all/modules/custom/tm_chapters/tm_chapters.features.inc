@@ -37,7 +37,7 @@ function tm_chapters_node_info() {
     'chapter' => array(
       'name' => t('Chapter'),
       'base' => 'node_content',
-      'description' => t('A Travel Massive chapter'),
+      'description' => t('A community chapter'),
       'has_title' => '1',
       'title_label' => t('Chapter'),
       'help' => '',

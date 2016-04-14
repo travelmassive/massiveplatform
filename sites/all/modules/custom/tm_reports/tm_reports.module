@@ -580,11 +580,17 @@ function _tm_reports_get_global_insights() {
   $num_events = db_query($query, array(':type' => "event"))->fetch();
   $insights["num_events"] = $num_events->amount;
  
-  // NUMBER OF MEMBER COUNTRIES
+  // NUMBER OF CHAPTER COUNTRIES
   $result = db_query("SELECT DISTINCT iso2, name from {field_data_field_country} f LEFT JOIN {countries_country} c ON f.field_country_iso2 = c.iso2 WHERE f.bundle = 'chapter' AND c.iso2 IS NOT NULL ORDER BY name ASC");
   $chapter_countries = $result->fetchAllKeyed();
   $num_chapter_countries = (sizeof($chapter_countries));
   $insights["num_chapter_countries"] = $num_chapter_countries;
+
+  // NUMBER OF MEMBER COUNTRIES
+  $result = db_query("SELECT DISTINCT field_user_country_iso2 from {field_data_field_user_country} ORDER BY field_user_country_iso2 ASC");
+  $member_countries = $result->fetchAll();
+  $num_member_countries = (sizeof($member_countries));
+  $insights["num_member_countries"] = $num_member_countries;
 
   // NUMBER OF FOLLOWS
   $flag = flag_get_flag('follow_members', NULL);
@@ -619,6 +625,35 @@ function _tm_reports_get_global_insights() {
   $num_waitlists = db_query($query, array(':fid' => $flag->fid))->fetch();
   $insights["num_event_waitlists"] = $num_waitlists->amount;
 
+   // NUMBER OF EVENT PAYMENTS
+  $flag = flag_get_flag('event_paid', NULL);
+  $query = "SELECT COUNT(*) amount FROM {flagging} f WHERE f.fid = :fid";
+  $num_registrations = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $insights["num_event_payments"] = $num_registrations->amount;
+
+  // NUMBER OF UNIQUE EVENT REGISTRATIONS
+  $flag = flag_get_flag('event_register', NULL);
+  $query = "SELECT COUNT(DISTINCT uid) amount FROM {flagging} f WHERE f.fid = :fid";
+  $num_registrations = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $insights["num_unique_event_registrations"] = $num_registrations->amount;
+
+  // NUMBER OF UNIQUE WAITLISTS
+  $flag = flag_get_flag('event_waitlist', NULL);
+  $query = "SELECT COUNT(DISTINCT uid) amount FROM {flagging} f WHERE f.fid = :fid";
+  $num_waitlists = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $insights["num_unique_event_waitlists"] = $num_waitlists->amount;
+
+   // NUMBER OF UNIQUE EVENT PAYMENTS
+  $flag = flag_get_flag('event_paid', NULL);
+  $query = "SELECT COUNT(DISTINCT uid) amount FROM {flagging} f WHERE f.fid = :fid";
+  $num_registrations = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $insights["num_unique_event_payments"] = $num_registrations->amount;
+
+  // NUMBER OF PEOPLE WHO HAVE SENT MESSAGES
+  $flag = flag_get_flag('message_sent', NULL);
+  $query = "SELECT COUNT(DISTINCT uid) amount FROM {flagging} f WHERE f.fid = :fid";
+  $num_waitlists = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $insights["num_members_sent_messages"] = $num_waitlists->amount;
 
   // RETURN DATA
   $data_labels = tm_reports_get_insights_labels();
@@ -654,13 +689,19 @@ function tm_reports_get_insights_labels() {
   "members_with_segment_pct" => "% Approved Members with Industry Segment",
   "num_event_waitlists" => "Total Event Waitlists",
   "num_event_registrations" => "Total Event Registrations",
+  "num_event_payments" => "Total Event Payments",
+  "num_unique_event_waitlists" => "Total Unique Event Waitlists",
+  "num_unique_event_registrations" => "Total Unique Event Registrations",
+  "num_unique_event_payments" => "Total Unique Event Payments",
   "num_mutual_follows" => "Total Mutual Connections",
   "num_connections" => "Total Connections (All Followers)",
   "num_organization_followers" => "Total Organization Followers",
   "num_member_followers" => "Total Member Followers",
   "num_chapter_countries" => "Chapter Countries",
+  "num_member_countries" => "Member Countries",
   "num_events" => "Total Number Events",
   "num_organizations" => "Number of Organizations",
+  "num_members_sent_messages" => "Members who have sent Messages",
   "num_chapters" => "Number of Chapters"];
 
   return $data_labels;

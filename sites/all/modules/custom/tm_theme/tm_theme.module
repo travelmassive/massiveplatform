@@ -11,6 +11,8 @@ include_once 'tm_theme.features.inc';
 // from: https://gist.github.com/Dreamseer/3865185
 function tm_theme_html_head_alter(&$head_elements) {
   
+  global $conf;
+
   // remove unneeded shortlink url
   $remove = array(
     '/^drupal_add_html_head_link:shortlink:/',     // Shortlink
@@ -56,13 +58,19 @@ function tm_theme_html_head_alter(&$head_elements) {
   // if not front page add sticky header
   // also ignore node or user edit pages as account menu is obscured when using sticky header
   if (!drupal_is_front_page()) {
-  // && !(((arg(0) == 'node' || (arg(0) == 'user')) && arg(2) == 'edit')))  {
     drupal_add_js(drupal_get_path('theme', 'tm') . '/js/jquery.sticky.js', array('group' => JS_THEME));
   }
 
   // add EU cookie consent
   // https://silktide.com/tools/cookie-consent
-  drupal_add_js(drupal_get_path('theme', 'tm') . '/js/cookieconsent.latest.min.js', array('group' => JS_THEME));
-  drupal_add_js('window.cookieconsent_options = {"message":"We use cookies to ensure you get the best experience on our website.","dismiss":"Got it!","learnMore":"More info","link":"https://travelmassive.com/content/privacy-policy","theme":"dark-bottom"};', 'inline');
+  if (isset($conf["tm_cookieconsent_enable"])) {
+    if ($conf["tm_cookieconsent_enable"] == true) {
+
+      $privacy_url = $conf["tm_cookieconsent_privacy_url"];
+      drupal_add_js(drupal_get_path('theme', 'tm') . '/js/cookieconsent.v2.min.js', array('group' => JS_THEME));
+      drupal_add_js('window.cookieconsent_options = {"message":"We use cookies to ensure you get the best experience on our website. ","dismiss":"Ok","learnMore":"Learn more","link":"' . $privacy_url . '","theme":"dark-bottom"};', 'inline');
+    }
+  }
+
 
 }

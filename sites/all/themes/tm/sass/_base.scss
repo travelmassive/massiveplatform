@@ -347,6 +347,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
 .page-node-add #content,
 .page-node-communicate #content,
 .page-events-message #content,
+.page-payment-reports #content,
 .page-contact #content,
 .page-node-rsvp #content,
 .page-user-edit #content,
@@ -573,10 +574,17 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
 
 /* Payments form message */
 .tm-payments-edit-form-message {
+  background-color: #1ABC9C;
+  color: #fff;
   border-radius: 4px;
-  max-width: 400px;
   padding: 1rem;
   margin-bottom: 0.5rem;
+}
+
+.tm-payments-edit-form-message a {
+  color: #fff;
+  font-weight: bold;
+  text-decoration: underline;
 }
 
 /* Event registration and announcement tips */
@@ -618,6 +626,76 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
   margin-top: 1.0rem !important;
 }
 
+/* Alternative dates for online event */
+.date-alternative {
+  color: #51616e;
+  border-left: 2px solid #EEE;
+  margin-left: -6px;
+  padding-left: 4px;
+}
 
+/* Payment reports */
+.tm-payments-report-table { 
+  width: 100%;
+  margin-top: 0px;
+  padding: 1rem;
+  border-radius: 4px !important;
+  background-color: #FFF;
+}
 
+.tm-payments-report-table table {
+  cellspacing: 4px;
+}
+
+.tm-payments-report-table th { 
+  border-bottom: 1px solid #888;
+  background-color: #fff;
+}
+
+.tm-payments-report-table tr { 
+  border-radius: 2px;
+  background-color: #fff;
+}
+
+.tm-payments-report-table td { 
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  font-size: smaller;
+}
+
+.tm-payments-report-extra {
+  white-space:nowrap;
+}
+
+.tm-payments-report-status {
+  border-radius: 4px;
+}
+
+.tm-payments-report-status {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  white-space: nowrap;
+}
+
+.tm-payments-report-status.paid {
+  background-color: #007CB9;
+  color: #fff;
+}
+
+.tm-payments-report-status.refunded {
+  /* background-color: #E94B35; */
+  background-color: #888;
+  color: #fff;
+}
+
+.tm-payments-report-status.paid_out {
+  background-color: #00BD9C;
+  color: #fff;
+}
+
+@media only screen and (max-width: 500px) {
+  .tm-payments-report-extra {
+    display: none;
+  }
+}
 

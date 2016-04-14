@@ -133,6 +133,29 @@ function tm_organizations_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_events_wrapper|node|organization|full';
+  $field_group->group_name = 'group_events_wrapper';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'organization';
+  $field_group->mode = 'full';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Events',
+    'weight' => '6',
+    'children' => array(
+      0 => 'event_list',
+    ),
+    'format_type' => 'contained_block',
+    'format_settings' => array(
+      'label' => 'Events',
+      'formatter' => 'open',
+    ),
+  );
+  $field_groups['group_events_wrapper|node|organization|full'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_form_about|node|organization|form';
   $field_group->group_name = 'group_form_about';
   $field_group->entity_type = 'node';
@@ -185,9 +208,9 @@ function tm_organizations_field_group_info() {
       2 => 'field_link_twitter',
       3 => 'field_link_website',
       4 => 'field_link_instagram',
-      5 => 'field_link_youtube',
+      5 => 'field_link_snapchat',
       6 => 'field_link_vimeo',
-      7 => 'field_link_snapchat',
+      7 => 'field_link_youtube',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -290,6 +313,7 @@ function tm_organizations_field_group_info() {
   t('Action menu');
   t('Action menu wrapper');
   t('Elsewhere');
+  t('Events');
   t('Followers');
   t('Location');
   t('Profile managed by');

@@ -137,7 +137,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Event Chapters',
-    'weight' => '9',
+    'weight' => '10',
     'children' => array(
       0 => 'field_chapter_publish',
     ),
@@ -166,7 +166,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Payout',
-    'weight' => '14',
+    'weight' => '16',
     'children' => array(
       0 => 'field_event_payment_payout_to',
       1 => 'field_event_payment_commission',
@@ -196,7 +196,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Event Settings',
-    'weight' => '6',
+    'weight' => '7',
     'children' => array(
       0 => 'field_approved_members_only',
       1 => 'field_register_event_message',
@@ -251,7 +251,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Extra Stuff',
-    'weight' => '11',
+    'weight' => '12',
     'children' => array(
       0 => 'field_event_extra_guests',
       1 => 'field_event_total_attendance',
@@ -281,7 +281,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Featured members',
-    'weight' => '10',
+    'weight' => '11',
     'children' => array(
       0 => 'field_event_featured_access_rsvp',
       1 => 'field_event_featured_label',
@@ -491,7 +491,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Event Sponsors',
-    'weight' => '5',
+    'weight' => '6',
     'children' => array(
       0 => 'field_event_sponsors',
     ),

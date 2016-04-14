@@ -192,7 +192,7 @@ function tm_payments_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 39,
+      'weight' => 44,
     ),
   );
 
@@ -267,7 +267,7 @@ function tm_payments_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 13,
+      'weight' => 15,
     ),
   );
 
@@ -329,7 +329,7 @@ function tm_payments_field_default_field_instances() {
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 38,
+      'weight' => 43,
     ),
   );
 
@@ -389,7 +389,7 @@ function tm_payments_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 41,
+      'weight' => 46,
     ),
   );
 
@@ -455,7 +455,7 @@ function tm_payments_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 40,
+      'weight' => 45,
     ),
   );
 
@@ -582,8 +582,125 @@ function tm_payments_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance:
+  // 'node-organization-field_company_payment_commission'.
+  $field_instances['node-organization-field_company_payment_commission'] = array(
+    'bundle' => 'organization',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Fix the default commission percentage for events created by this company.
+<br>Note: Does not include bank fees, forex or other charges.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 2,
+          'thousand_separator' => '',
+        ),
+        'type' => 'number_decimal',
+        'weight' => 20,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_company_payment_commission',
+    'label' => 'Company payment commission (%)',
+    'required' => 0,
+    'settings' => array(
+      'max' => 100,
+      'min' => 0,
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 56,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-organization-field_company_payments_enabled'.
+  $field_instances['node-organization-field_company_payments_enabled'] = array(
+    'bundle' => 'organization',
+    'default_value' => array(
+      0 => array(
+        'value' => 'disabled',
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Set whether company can create paid events.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 19,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_company_payments_enabled',
+    'label' => 'Enable Event Payments',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 55,
+    ),
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
+  t('Company payment commission (%)');
   t('Customize the label for the Early Bird ticket. ie: "Rush Tickets"
 <br>Leave blank to use default');
   t('Early Bird End Date');
@@ -591,13 +708,17 @@ function tm_payments_field_default_field_instances() {
   t('Early Bird Registration Price');
   t('Early Bird Seats');
   t('Enable Early Bird Price');
+  t('Enable Event Payments');
   t('Enable Registration Payment');
   t('Explain the refund policy for this event. It will be shown on the event page.
 <br>If you leave this blank, the default refund policy will be displayed.');
+  t('Fix the default commission percentage for events created by this company.
+<br>Note: Does not include bank fees, forex or other charges.');
   t('Payment Currency');
   t('Price will be displayed and members will be charged in the selected currency');
   t('Refund Policy');
   t('Registration Price');
+  t('Set whether company can create paid events.');
   t('The number of seats available for early bird pricing
 <br>Leave blank for no limit');
   t('The price of early bird ticket (ie: for $15 enter 15.00)');

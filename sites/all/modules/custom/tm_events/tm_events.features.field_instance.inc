@@ -533,7 +533,7 @@ function tm_events_field_default_field_instances() {
         'year_range' => '-0:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 4,
+      'weight' => 5,
     ),
   );
 
@@ -955,16 +955,69 @@ This will be added to the attendee count on the event page.',
     ),
   );
 
-  // Exported field_instance: 'node-event-field_event_payment_commission'.
-  $field_instances['node-event-field_event_payment_commission'] = array(
+  // Exported field_instance: 'node-event-field_event_is_online'.
+  $field_instances['node-event-field_event_is_online'] = array(
     'bundle' => 'event',
     'default_value' => array(
       0 => array(
-        'value' => 75,
+        'value' => 0,
       ),
     ),
     'deleted' => 0,
-    'description' => 'The percentage of total event revenue to payout
+    'description' => 'Members can join online (ie: Twitter chat, video stream)
+<br><br>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 52,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_is_online',
+    'label' => 'This is an online event',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_payment_commission'.
+  $field_instances['node-event-field_event_payment_commission'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'The percentage of total event revenue to payout.
 <br>Note: Does not include bank fees, forex or other charges.',
     'display' => array(
       'default' => array(
@@ -1319,8 +1372,7 @@ This will be added to the attendee count on the event page.',
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Leave blank to use the chapter\'s timezone (or UTC if no chapter for event)
-<br><br>',
+    'description' => 'Leave blank to use the chapter\'s timezone (or UTC if no chapter for event)',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -2259,10 +2311,11 @@ This will be displayed to the member on the event page and included in the autom
   t('Include any additional information you want to provide to members only when they register.<br>
 This will be displayed to the member on the event page and included in the automatic registration notification email.
 ');
-  t('Leave blank to use the chapter\'s timezone (or UTC if no chapter for event)
-<br><br>');
+  t('Leave blank to use the chapter\'s timezone (or UTC if no chapter for event)');
   t('Location');
   t('Map link');
+  t('Members can join online (ie: Twitter chat, video stream)
+<br><br>');
   t('Message When Registered');
   t('Message When Waitlisted');
   t('Non-registered Guests');
@@ -2281,9 +2334,10 @@ This will be displayed to the member on the event page and included in the autom
   t('Send payout to');
   t('Sponsors');
   t('The chapter hosting this event.');
-  t('The percentage of total event revenue to payout
+  t('The percentage of total event revenue to payout.
 <br>Note: Does not include bank fees, forex or other charges.');
   t('The type of event for the event page listing.');
+  t('This is an online event');
   t('This will be displayed on the event page when it\'s a past event.');
   t('This will be used as the main image for the event.
 <br>To support retina displays, upload your image sized to 1610x906');

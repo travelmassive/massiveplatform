@@ -607,7 +607,6 @@ function tm_chapters_views_query_alter(&$view, &$query) {
   if ($view->name == 'related_events') {
     if ($query->options['query_comment'] == 'related_events') {
       $query->where[0]['type'] = 'OR';
-      dpq($view->build_info['query']);
     }
   }
 }

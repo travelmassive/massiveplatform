@@ -6,7 +6,7 @@
  * Hook - modify event edit form
  * Note: create and update permission granted by tm_events_node_access
  */
-function tm_events_form_event_node_form_alter(&$form, &$form_state) {
+function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
 
   global $user;
   global $conf;
@@ -39,6 +39,7 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
       $company_id = $_GET["field_event_company"];
     } else {
       $typeof_event = "member_event";
+      $event_owner_uid = $user->uid;
     }
   }
 
@@ -53,6 +54,7 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
       $company_id = $event->field_event_company[LANGUAGE_NONE][0]['target_id'];
     } else {
       $typeof_event = "member_event";
+      $event_owner_uid = $event->uid;
     }
   } 
 
@@ -296,7 +298,7 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state) {
   // STEP 6. Modify payment fields if tm_payments enabled
   //////////
   if (module_exists("tm_payments")) {
-    _tm_payments_form_event_node_form_alter($form, $form_state);
+    _tm_payments_form_alter_event_form($form, $form_state, $form_id);
   }
 
 }

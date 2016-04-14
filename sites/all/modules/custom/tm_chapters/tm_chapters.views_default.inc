@@ -58,10 +58,11 @@ function tm_chapters_views_default_views() {
     7 => '7',
   );
 
-  /* Display: Chapter Leaders Entity Reference */
-  $handler = $view->new_display('entityreference', 'Chapter Leaders Entity Reference', 'entityreference_chapter_leaders');
+  /* Display: Placeholder for Person Entity Reference */
+  $handler = $view->new_display('entityreference', 'Placeholder for Person Entity Reference', 'entityreference_chapter_leaders');
   $handler->display->display_options['defaults']['title'] = FALSE;
-  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '1';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'entityreference_style';
@@ -79,6 +80,22 @@ function tm_chapters_views_default_views() {
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'entityreference_fields';
   $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: User: Active */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'users';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = '1';
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: User: Roles */
+  $handler->display->display_options['filters']['rid']['id'] = 'rid';
+  $handler->display->display_options['filters']['rid']['table'] = 'users_roles';
+  $handler->display->display_options['filters']['rid']['field'] = 'rid';
+  $handler->display->display_options['filters']['rid']['value'] = array(
+    4 => '4',
+  );
   $export['chapter_leaders_list'] = $view;
 
   $view = new view();

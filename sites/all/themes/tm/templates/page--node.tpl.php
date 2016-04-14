@@ -31,6 +31,20 @@
   }
 ?>
 
+<?php
+// Redirect /node/nid paths to canonical URL
+// Check canonical URL is not current URL
+$request_uri_parts = explode("/", request_uri());
+if (sizeof($request_uri_parts) == 3) {
+  if (($request_uri_parts[1] == "node") and (is_numeric($request_uri_parts[2]))) {
+    $clean_url = drupal_get_path_alias("node/" . $request_uri_parts[2]);
+    if ("/" . $clean_url != request_uri()) {
+      drupal_goto($clean_url); // Redirect to canonical URL
+    }
+  }
+}
+?>
+
 <div id="page">
 
   <header class="header" id="header" role="banner">

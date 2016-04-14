@@ -120,6 +120,12 @@ function tm_api_stats() {
   $num_chapter_countries = (sizeof($chapter_countries));
   $api_data["num_chapter_countries"] = $num_chapter_countries;
 
+  // number of member countries
+  $result = db_query("SELECT DISTINCT field_user_country_iso2 from {field_data_field_user_country} ORDER BY field_user_country_iso2 ASC");
+  $member_countries = $result->fetchAllKeyed();
+  $num_member_countries = (sizeof($member_countries));
+  $api_data["num_member_countries"] = $num_member_countries;
+
   // number of follows
   $flag = flag_get_flag('follow_members', NULL);
   $query = "SELECT COUNT(*) amount FROM {flagging} f WHERE f.fid = :fid";

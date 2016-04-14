@@ -253,6 +253,120 @@ function tm_chapters_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-chapter-field_chapter_payment_commission'.
+  $field_instances['node-chapter-field_chapter_payment_commission'] = array(
+    'bundle' => 'chapter',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Fix the default commission percentage for events created by this chapter.
+<br>Note: Does not include bank fees, forex or other charges.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 2,
+          'thousand_separator' => '',
+        ),
+        'type' => 'number_decimal',
+        'weight' => 15,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_chapter_payment_commission',
+    'label' => 'Chapter payment commission (%)',
+    'required' => 0,
+    'settings' => array(
+      'max' => 100,
+      'min' => 0,
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 44,
+    ),
+  );
+
+  // Exported field_instance: 'node-chapter-field_chapter_payments_enabled'.
+  $field_instances['node-chapter-field_chapter_payments_enabled'] = array(
+    'bundle' => 'chapter',
+    'default_value' => array(
+      0 => array(
+        'value' => 'default',
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Set whether Chaper Leaders can create paid events.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 14,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_chapter_payments_enabled',
+    'label' => 'Enable Event Payments',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 43,
+    ),
+  );
+
   // Exported field_instance: 'node-chapter-field_chapter_shortcode'.
   $field_instances['node-chapter-field_chapter_shortcode'] = array(
     'bundle' => 'chapter',
@@ -1035,12 +1149,16 @@ The message will be included in the notification email sent to the member when t
   t('Assign a community manager to the chapter. Currently this will be used in the chapter report.');
   t('Chapter color');
   t('Chapter leaders');
+  t('Chapter payment commission (%)');
   t('Chapter shortcode');
   t('Chapter timezone');
   t('Community Managers');
   t('Country');
   t('Description');
+  t('Enable Event Payments');
   t('Facebook');
+  t('Fix the default commission percentage for events created by this chapter.
+<br>Note: Does not include bank fees, forex or other charges.');
   t('Geo Map Location');
   t('Image');
   t('Linkedin');
@@ -1049,6 +1167,7 @@ The message will be included in the notification email sent to the member when t
   t('Provide a banner image that is a good reflection of your chapter.
 <br>To support retina displays, upload your image sized to 1610x906');
   t('Select a color that sets this city apart from the others. This color should have enough contrast with a white text layered on top.');
+  t('Set whether Chaper Leaders can create paid events.');
   t('The location of the chapter, to display on the map. You can look up the latitude and longitude from Google.
 <br>Remember that West (W) and South (S) values are negative values. (example: Latitude 42.8806 S (South) is -42.8806)');
   t('Twitter');

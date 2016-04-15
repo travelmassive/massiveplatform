@@ -35,6 +35,31 @@ function tm_chapters_field_default_field_bases() {
     'type' => 'color_field_rgb',
   );
 
+  // Exported field_base: 'field_chapter_is_group'.
+  $field_bases['field_chapter_is_group'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_chapter_is_group',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        0 => '',
+        1 => '',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_boolean',
+  );
+
   // Exported field_base: 'field_chapter_leaders'.
   $field_bases['field_chapter_leaders'] = array(
     'active' => 1,

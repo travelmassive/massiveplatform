@@ -230,8 +230,9 @@ function tm_chapters_field_group_info() {
       5 => 'field_chapter_timezone',
       6 => 'field_country',
       7 => 'field_join_chapter_message',
-      8 => 'title',
-      9 => 'path',
+      8 => 'field_chapter_is_group',
+      9 => 'title',
+      10 => 'path',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

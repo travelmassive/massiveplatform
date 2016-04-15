@@ -78,7 +78,7 @@ function tm_chapters_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 2,
+      'weight' => 3,
     ),
   );
 
@@ -133,7 +133,63 @@ function tm_chapters_field_default_field_instances() {
       'module' => 'color_field',
       'settings' => array(),
       'type' => 'color_field_spectrum_widget',
-      'weight' => 5,
+      'weight' => 6,
+    ),
+  );
+
+  // Exported field_instance: 'node-chapter-field_chapter_is_group'.
+  $field_instances['node-chapter-field_chapter_is_group'] = array(
+    'bundle' => 'chapter',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'This chapter is a group (ie: topic or theme based)',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 16,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_chapter_is_group',
+    'label' => 'Chapter is a group',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 2,
     ),
   );
 
@@ -249,7 +305,7 @@ function tm_chapters_field_default_field_instances() {
         'size' => 40,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 7,
+      'weight' => 8,
     ),
   );
 
@@ -421,7 +477,7 @@ function tm_chapters_field_default_field_instances() {
         'size' => 10,
       ),
       'type' => 'text_textfield',
-      'weight' => 4,
+      'weight' => 5,
     ),
   );
 
@@ -476,7 +532,7 @@ function tm_chapters_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 9,
+      'weight' => 10,
     ),
   );
 
@@ -632,7 +688,7 @@ function tm_chapters_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 8,
+      'weight' => 9,
     ),
   );
 
@@ -774,7 +830,7 @@ function tm_chapters_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 6,
+      'weight' => 7,
     ),
   );
 
@@ -834,7 +890,7 @@ The message will be included in the notification email sent to the member when t
         'rows' => 4,
       ),
       'type' => 'text_textarea',
-      'weight' => 3,
+      'weight' => 4,
     ),
   );
 
@@ -1148,6 +1204,7 @@ The message will be included in the notification email sent to the member when t
 The message will be included in the notification email sent to the member when they join.');
   t('Assign a community manager to the chapter. Currently this will be used in the chapter report.');
   t('Chapter color');
+  t('Chapter is a group');
   t('Chapter leaders');
   t('Chapter payment commission (%)');
   t('Chapter shortcode');
@@ -1170,6 +1227,7 @@ The message will be included in the notification email sent to the member when t
   t('Set whether Chaper Leaders can create paid events.');
   t('The location of the chapter, to display on the map. You can look up the latitude and longitude from Google.
 <br>Remember that West (W) and South (S) values are negative values. (example: Latitude 42.8806 S (South) is -42.8806)');
+  t('This chapter is a group (ie: topic or theme based)');
   t('Twitter');
   t('Website');
   t('Welcome message');

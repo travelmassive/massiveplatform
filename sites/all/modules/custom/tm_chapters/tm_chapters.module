@@ -435,7 +435,9 @@ function tm_chapters_page_alter(&$page) {
   // catch either:
   // /chapters
   // /chapters/sort/title
-  if (($url_parts[0] == "chapters") and ((sizeof($url_parts) == 1) or (sizeof($url_parts) == 3))) {
+  // /groups
+  if ((($url_parts[0] == "chapters") and ((sizeof($url_parts) == 1) or (sizeof($url_parts) == 3)))
+    or (($url_parts[0] == "groups") and (sizeof($url_parts) == 1))) {
 
     // don't show on special chapters page
     // ie: invitations, contact, unapproved-members, insights, export
@@ -449,17 +451,26 @@ function tm_chapters_page_alter(&$page) {
     if (sizeof($url_parts) == 3) {
       $sort = $url_parts[2]; // ie: title for /chapters/sort/title
     }
+
+    // groups
+    if ($url_parts[0] == "groups") {
+      $sort = "groups";
+    }
    
     // create css classes
     if ($sort == "members") { $members_active = "is-active active"; } else { $members_active = ""; }
     if ($sort == "title") { $title_active = "is-active active"; } else { $title_active = ""; }
     if ($sort == "created") { $created_active = "is-active active"; } else { $created_active = ""; }
+    if ($sort == "groups") { $groups_active = "is-active active"; } else { $groups_active = ""; }
 
     // create button css
     $html = '
     <ul class="tabs-primary tabs primary">
       <li class="tabs-primary__tab ' . $members_active . '">
-        <a href="/chapters" class="tabs-primary__tab-link '.$members_active.'">Members</a>
+        <a href="/chapters" class="tabs-primary__tab-link '.$members_active.'">Chapters</a>
+      </li>
+      <li class="tabs-primary__tab ' . $groups_active . '">
+        <a href="/groups" class="tabs-primary__tab-link '.$groups_active.'">Groups</a>
       </li>
       <li class="tabs-primary__tab ' . $title_active . '">
         <a href="/chapters/sort/title" class="tabs-primary__tab-link '.$title_active.'">A &rarr; Z</a>
@@ -481,27 +492,45 @@ function tm_chapters_page_alter(&$page) {
 function tm_chapters_form_alter(&$form, &$form_state, $form_id) {
   //print_r($form_state);
 
-  if ($form_id == "chapter_node_form") {
+  global $conf;
+  global $user;
 
-    // Prevent moderators to delete chapters that have members
-    $chapter_id = $form['nid']['#value'];
-    if (!_tm_chapters_check_moderator_delete($chapter_id)) {
-      unset($form['actions']['delete']);
-    }
+  if ($form_id != "chapter_node_form") {
+    return;
+  }
 
-    // Only allow moderators and administrators to edit chapter leaders
-    // settingg: tm_chapters_allow_edit_chapter_leaders
-    global $conf;
-    global $user;
-    if ((!in_array("moderator", $user->roles)) and (!in_array("administrator", $user->roles))) {
-      if (isset($conf["tm_chapters_allow_edit_chapter_leaders"])) {
-        if (!$conf["tm_chapters_allow_edit_chapter_leaders"]) {
-          unset($form['field_chapter_leaders']);
-        }
+  // Prevent moderators to delete chapters that have members
+  $chapter_id = $form['nid']['#value'];
+  if (!_tm_chapters_check_moderator_delete($chapter_id)) {
+    unset($form['actions']['delete']);
+  }
+
+  // Permission var
+  $perm_is_moderator_or_admin = ((in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles)));
+
+  // Only allow moderators and administrators to edit chapter leaders
+  // setting: tm_chapters_allow_edit_chapter_leaders
+  if ((!$perm_is_moderator_or_admin)) {
+    if (isset($conf["tm_chapters_allow_edit_chapter_leaders"])) {
+      if (!$conf["tm_chapters_allow_edit_chapter_leaders"]) {
+        unset($form['field_chapter_leaders']);
       }
+    }
+  }
+
+  // Only allow moderators and administrators to edit group setting
+  if ((!$perm_is_moderator_or_admin)) {
+    
+    // if value is set, show and disable the field
+    if (isset($form['#entity']->field_chapter_is_group[LANGUAGE_NONE][0]['value'])) {
+      $form['field_chapter_is_group']['#disabled'] = true;
+    } else {
+      // hide the field
+      unset($form['field_chapter_is_group']);
     }
     
   }
+    
 }
 
 /**

@@ -22,7 +22,7 @@ function tm_base_menu_default_menu_links() {
     'module' => 'system',
     'hidden' => 0,
     'external' => 0,
-    'has_children' => 0,
+    'has_children' => 1,
     'expanded' => 0,
     'weight' => -50,
     'customized' => 1,
@@ -223,7 +223,7 @@ function tm_base_menu_default_menu_links() {
     'weight' => -47,
     'customized' => 1,
   );
-  // Exported menu link: menu-social-links_snapchat:https://www.snapchat.com/.
+  // Exported menu link: menu-social-links_snapchat:https://www.snapchat.com/add/travelmassive.
   $menu_links['menu-social-links_snapchat:https://www.snapchat.com/add/travelmassive'] = array(
     'menu_name' => 'menu-social-links',
     'link_path' => 'https://www.snapchat.com/add/travelmassive',

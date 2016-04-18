@@ -5,29 +5,16 @@
  */
 
 include_once 'tm_chapters.features.inc';
+include_once 'tm_chapters.contact.inc';
+include_once 'tm_chapters.csv.inc';
+include_once 'tm_chapters.display.inc';
+include_once 'tm_chapters.edit.inc';
+include_once 'tm_chapters.helpers.inc';
+
 
 /**
- * Implement hook_ds_field_info()
+ * Implements hook_menu()
  */
-function tm_chapters_ds_fields_info($entity_type) {
-  if ($entity_type != 'node') {
-    return;
-  }
-  $fields = array();
-
-  $fields['tm_ds_members_chapter'] = array(
-    'title' => t('Amount chapter members'),
-    'field_type' => DS_FIELD_TYPE_FUNCTION,
-    'ui_limit' => array('chapter|full'),
-    'function' => '_tm_members_chapter'
-  );
-
-  return array($entity_type => $fields);
-}
-
-/*
-* Implements hook_menu()
-*/
 function tm_chapters_menu() {
   $items['chapters/%/message'] = array(
     'title' => t('Message chapter leaders'),
@@ -47,326 +34,9 @@ function tm_chapters_menu() {
 }
 
 /**
- * Custom function to print the amount of members belonging to a chapter
+ * Joining first chapter sets home chapter 
+ * https://github.com/travelmassive/massiveplatform/issues/28
  */
-function _tm_members_chapter($field, $title = NULL) {
-  global $conf;
-  $member_label = $conf["tm_member_label"];
-  $members_label = $conf["tm_members_label"];
-
-  $flag = flag_get_flag('signup');
-  $amount_members = $flag->get_count($field['entity']->nid);
-  return $amount_members ? format_plural($amount_members, '1 ' . $member_label,'@members '.$members_label, array('@members' => $amount_members)) : t('No members yet');
-}
-
-/* 
- * Alters a node on saving to make sure the leaders have the correct role
- */
-function tm_chapters_node_presave($node){
-  $role_name = 'chapter leader';
-  
-  // make sure we are working on a chapter node
-  if ($node->type != "chapter") { return; }
-
-  if ($role = user_role_load_by_name($role_name)) {
-    foreach ($node->field_chapter_leaders[LANGUAGE_NONE] as $target){
-      $user = user_load($target['target_id']);
-      // make sure all chapter leaders have the right role set
-      user_multiple_role_edit(array($user->uid), 'add_role', $role->rid);
-    }
-    // should also check $node->original for users being *removed*
-    if (isset($node->original->field_chapter_leaders)){
-      $original = flatten_chapter_leaders($node->original->field_chapter_leaders[LANGUAGE_NONE]);
-      $new = flatten_chapter_leaders($node->field_chapter_leaders[LANGUAGE_NONE]);
-      $removed = array_diff($original, $new);
-      foreach ($removed as $rem){
-        // check first that leader is not in other chapters
-          $chapters = db_select('field_data_field_chapter_leaders', 'd')
-          ->fields('d')
-          ->condition('field_chapter_leaders_target_id',$rem,'=')
-          ->condition('deleted',0,'=')
-          ->execute();
-        if ($chapters->rowCount() == 1){
-          user_multiple_role_edit(array($rem), 'remove_role', $role->rid);
-        }
-      }
-    }
-  }
-}
-
-// array diff didn't like 2 dimensional arrays
-function flatten_chapter_leaders($array){
-  $newarray = array();
-  foreach ($array as $item){
-    $newarray[] = $item['target_id'];
-  }
-  return $newarray;
-}
-
-/* Form for chapter contact form */
-function tm_chapters_contact_form(){
-
-  $form['subject'] = array(
-    '#title' => t('Subject'),
-    '#type' =>'textfield',
-    '#required' => TRUE,
-    );
-  $form['body'] = array(
-    '#type' =>'textarea',
-    '#title' => t('Message'),
-    '#rows' => 10,
-    '#required' => TRUE,
-    );
-  $form['submit_button'] = array(
-    '#type' => 'submit',
-    '#value' => t('Send message'),
-    '#id' => 'edit-submit'  
-  );
-
-  global $conf;
-  $contact_form_message = "Get in touch with your chapter leaders to provide feedback, ideas or questions.<br>Please follow our <a target='_blank' href='" . $conf["tm_community_values_url"] ."'>community guidelines</a> and use this contact page responsibly.";
-  drupal_set_message($contact_form_message, "help-tip");
-
-  return $form;
-}
-
-/* Contact chapter leaders form submit */
-function tm_chapters_contact_form_submit($form, &$form_state) {
-
-  global $user;
-  global $conf;
-  $nid = _orig_nid();
-
-  if ($nid == 0) {
-    print drupal_not_found();
-    return;
-  }
-
-  $chapter = node_load($nid);
-  $account = user_load($user->uid);
-
-  if ($chapter) {
-    foreach($chapter->field_chapter_leaders[$chapter->language] as $leader){
-      $chapterleader = user_load($leader['target_id']);
-      tm_chapters_send_email($chapterleader->mail, $form_state['values']['subject'], $form_state['values']['body'], $account, $chapter);
-    }
-
-    drupal_set_message(t('Your message has been sent.'));
-    drupal_goto('node/'.$chapter->nid);
-  }
-}
-
-/* Email sending function */
-function tm_chapters_send_email($email, $subject, $body, $user, $chapter){
-
-    global $conf;
-
-    // Get Users Name
-    if (empty($user->language)) $language = LANGUAGE_NONE;
-    else $language = $user->language;
-    $name = $user->name;
-    if (isset($user->field_user_first_name[$language])){
-      $name = $user->field_user_first_name[$language][0]['value'];
-      if (isset($user->field_user_first_name[$language])){
-        $name .= ' '.$user->field_user_last_name[$language][0]['value'];
-      }
-    }
-
-    // SEND EMAIL
-    $module = 'tm_chapters';
-    $key = 'key';
-    $language = language_default();
-    $params = array();
-    $from = NULL;
-    $reply = $user->mail;
-    $send = FALSE;
-    
-
-    // CONSTRUCT MESSAGE
-    $member_url = url('user/'.$user->uid, array('absolute'=>TRUE));
-    $chapter_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('node/' . $chapter->nid);
-
-    $message = "Hi, a member just sent a message via your Chapter contact form:";
-    $message .= "<br>";
-    $message .= "<br><i>Chapter: <a href='" . $chapter_url . "'>" . $chapter->title . "</a></i>";
-    $message .= "<br>";
-    $message .= "<br>Name: " . $name;
-    $message .= "<br>Subject: " . check_plain($subject);
-    $message .= "<br>Message: " . check_plain($body);
-    $message .= "<br>Member's profile: <a href='" . $member_url . "'>" . $member_url . "</a>";
-    $message .= "<br>Member's email: " . $reply;
-    $message .= "<br>";
-    $message .= "<br>To respond, just reply to this email.";
-    $message .= "<br>";
-    $message .= "<br>__EMAIL_SIGNOFF__";
-
-    // STEP 1. LOAD HTML TEMPLATE
-    $template_file = drupal_get_path('module', 'tm_notifications') . '/templates/tm_notifications-email_template.tpl.php';
-    $template = file_get_contents($template_file);
-
-
-    // STEP 2. SET MAIL HTML HEADERS
-    $email_message = drupal_mail($module, $key, $email, $language, $params, NULL, $send);
-    $email_message['headers']['MIME-Version'] = '1.0';
-    $email_message['headers']['Content-Type'] = 'multipart/mixed;';
-    $email_message['headers']['Content-Type'] = 'text/html;';
-    $email_message['headers']['Reply-to'] = $reply; // set reply-to to the user
-
-    // STEP 3. SET SUBJECT 
-    $email_message['subject'] = "Contact Form: " . check_plain($subject);
-
-    // STEP 4. REPLACE BODY AND FOOTER IN HTML TEMPLATE
-    $template = str_replace("__EMAIL_BODY__", $message, $template);
-    $footer = $conf["tm_email_default_footer"];
-    if (isset ($params['footer'])) {
-      $footer = $params['footer'];
-    }
-    $template = str_replace("__EMAIL_FOOTER__", $footer, $template);
-
-    // Other vars
-    $template = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $template); 
-    $template = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $template);  
-    $template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
-    $template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template); 
-
-    // STEP 5. LOAD HTML TEMPLATE INTO EMAIL BODY
-    $email_message['body'] = $template;
-
-    // STEP 6. SEND EMAIL
-    // Retrieve the responsible implementation for this message.
-    $system = drupal_mail_system($module, $key);
-
-    // Format the message body.
-    $format_message = $system->format($email_message);
-
-    // Send e-mail.
-    $result = $system->mail($format_message);
-}
-
-/* Download Chapter CSV function */
-function tm_chapters_download_csv(){
-
-  global $user;
-  global $conf;
-  $nid = _orig_nid();
-
-  if($nid == 0) {
-    print drupal_not_found();
-    return;
-  }
-
-  // Check that user is a chapter leader of this chapter
-  if ((!tm_users_is_chapter_leader($user->uid, $nid)) 
-    and (!(in_array("moderator", $user->roles))) 
-    and (!in_array("administrator", $user->roles)))
- {
-    $output = drupal_access_denied();
-    print $output;
-    return;
-  }
-
-  // Get chapter
-  $chapter = node_load($nid);
-
-  $oldzone = date_default_timezone_get();
-  date_default_timezone_set(drupal_get_user_timezone());
-  $csvname = $chapter->title.'_'.date('M_d_Y_Gi',time()) . ".csv";
-  date_default_timezone_set($oldzone);
-
-  // csv header
-  drupal_add_http_header('Content-Type', 'text/csv; utf-8');
-  drupal_add_http_header('Content-Disposition', 'attachment; filename = '.$csvname);
-  
-  $fh = fopen('php://output', 'w');
-
-  // put information use reminder
-  global $conf;
-  $message = "# IMPORTANT: Please care about our members' privacy.";
-  $message .= "\n# Under the " . $conf['tm_site_name'] . " Privacy Terms you cannot transfer personal data (name or email) to sponsors or 3rd parties.";
-  $message .= "\n# Please use the SubscribeChapterNewsletter field to manage external email newsletter subscriptions.\n\n";
-
-  fputs($fh,$message,strlen($message));
-
-  // puts a header row across the top of the csv
-  $item = array(t('First name'),t('Last name'),t('Email'),t('SubscribeChapterNewsletter'),t('SubscribeGlobalNewsletter'),t('SubscribeChapterAnnouncements'),t('Country'),t('City'),t('Organization'),t('Role'),t('Website'),t('Segment'),t('MemberSince'),t('ApprovalStatus'));
-  fputcsv($fh, $item);
-
-  // list of users
-  $users = db_select('flagging', 'f')
-    ->fields('f')
-    ->condition('entity_id',$nid,'=')
-    ->condition('entity_type','node','=')
-    ->execute();
-  while ($load_user = $users->fetchAssoc()){
-    $account = user_load($load_user['uid']);
-    if (empty($account->language)) $language = LANGUAGE_NONE;
-    else $language = $account->language;
-
-    $item = array();
-    // columns in same order as the header array above
-    $item[] = $account->field_user_first_name[$language][0]['value'];
-    $item[] = $account->field_user_last_name[$language][0]['value'];
-    $item[] = $account->mail;
-    $notif = new TMNotification("chapter_newsletters");
-    $item[] = ($notif->isEnabled($account->uid) ? "yes" : "no");
-    $notif = new TMNotification("global_newsletter");
-    $item[] = ($notif->isEnabled($account->uid) ? "yes" : "no");
-    $notif = new TMNotification("user_chapter_announcements");
-    $item[] = ($notif->isEnabled($account->uid) ? "yes" : "no");
-    if (isset($account->field_user_country[$language][0])){
-      $item[] = $account->field_user_country[$language][0]['iso2'];
-    }
-    else $item[] = t('none');
-    if (isset($account->field_location_city[$language][0]['value'])){
-      $item[] = $account->field_location_city[$language][0]['value'];
-    }
-    else $item[] = t('none');
-    if (isset($account->field_job_organization[$language][0]['value'])){
-      $item[] = $account->field_job_organization[$language][0]['value'];
-    }
-    else $item[] = t('none');
-    if (isset($account->field_job_role[$language][0]['value'])){
-      $item[] = $account->field_job_role[$language][0]['value'];
-    }
-    else $item[] = t('none');
-    if (isset($account->field_link_website[$language][0]['url'])){
-      $item[] = $account->field_link_website[$language][0]['url'];
-    }
-    else $item[] = t('none');
-    if (isset($account->field_segment[$language][0]['tid'])){
-      $term = taxonomy_term_load($account->field_segment[$language][0]['tid']);
-      // load parent term
-      $parent_terms = taxonomy_get_parents($term->tid);
-      if (sizeof($parent_terms > 0)) {
-        $parent_term = current($parent_terms);
-        $item[] = $parent_term->name. " > " . $term->name;
-      } else {
-        $item[] = $term->name;
-      }
-    }
-    else $item[] = t('none');
-    $item[] = date('j M Y',$load_user['timestamp']);
-
-    // approved or not
-    if (!in_array("approved user", $account->roles)) { 
-      $item[] = "not approved";
-    } else {
-      $item[] = "approved";
-    }
-
-    // remove commas from any input data
-    $new_item = array();
-    foreach($item as $col => $val) {
-      $new_item[$col] = str_replace(",", "", $val);
-    }
-
-    fputcsv($fh, $new_item);
-  } 
-  fclose($fh);
-}
-
-// Joining first chapter sets home chapter 
-// https://github.com/travelmassive/massiveplatform/issues/28
 function tm_chapters_flag_flag($flag, $entity_id, $account, $flagging) {
 
   // only listen for signup to chapter
@@ -384,7 +54,9 @@ function tm_chapters_flag_flag($flag, $entity_id, $account, $flagging) {
   }
 }
 
-// If leaving home chapter, also remove home chapter from profile
+/**
+ * If leaving home chapter, also remove home chapter from profile
+ */
 function tm_chapters_flag_unflag($flag, $entity_id, $account, $flagging) {
 
   // only listen for signup to chapter
@@ -426,8 +98,12 @@ function tm_chapters_flag_unflag($flag, $entity_id, $account, $flagging) {
 
 }
 
-// Add sort toggles to chapters page
+/**
+ * Add sort toggles to chapters page
+ */
 function tm_chapters_page_alter(&$page) {
+
+  global $conf;
 
   // Split url parts
   $url_parts = explode("/", request_path());
@@ -468,11 +144,15 @@ function tm_chapters_page_alter(&$page) {
     <ul class="tabs-primary tabs primary">
       <li class="tabs-primary__tab ' . $members_active . '">
         <a href="/chapters" class="tabs-primary__tab-link '.$members_active.'">Chapters</a>
-      </li>
-      <li class="tabs-primary__tab ' . $groups_active . '">
+      </li>';
+
+    if ($conf["tm_chapters_groups_enabled"] == true) {
+      $html .= '<li class="tabs-primary__tab ' . $groups_active . '">
         <a href="/groups" class="tabs-primary__tab-link '.$groups_active.'">Groups</a>
-      </li>
-      <li class="tabs-primary__tab ' . $title_active . '">
+      </li>';
+    }
+
+    $html .= '<li class="tabs-primary__tab ' . $title_active . '">
         <a href="/chapters/sort/title" class="tabs-primary__tab-link '.$title_active.'">A &rarr; Z</a>
       </li>
       <li class="tabs-primary__tab ' . $created_active . '">
@@ -487,50 +167,28 @@ function tm_chapters_page_alter(&$page) {
 }
 
 /**
- * Chapters form alter hook
+ * Modify views 
  */
-function tm_chapters_form_alter(&$form, &$form_state, $form_id) {
-  //print_r($form_state);
-
-  global $conf;
-  global $user;
-
-  if ($form_id != "chapter_node_form") {
-    return;
+function tm_chapters_views_pre_view(&$view, &$display_id, &$args) {
+  // unapproved-members page: set argument to node id (instead of chapter name slug)
+  if (($display_id == "unapproved_members_in_chapter") && ($view->name == "unapproved_users")) {
+    $nid = _orig_nid();
+    $args[0] = $nid;
   }
 
-  // Prevent moderators to delete chapters that have members
-  $chapter_id = $form['nid']['#value'];
-  if (!_tm_chapters_check_moderator_delete($chapter_id)) {
-    unset($form['actions']['delete']);
-  }
+}
 
-  // Permission var
-  $perm_is_moderator_or_admin = ((in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles)));
-
-  // Only allow moderators and administrators to edit chapter leaders
-  // setting: tm_chapters_allow_edit_chapter_leaders
-  if ((!$perm_is_moderator_or_admin)) {
-    if (isset($conf["tm_chapters_allow_edit_chapter_leaders"])) {
-      if (!$conf["tm_chapters_allow_edit_chapter_leaders"]) {
-        unset($form['field_chapter_leaders']);
-      }
+/* 
+ * Use OR for contextual queries in related_events
+ * This allows us to show chapter and published chapter events
+ * see: https://www.drupal.org/node/1451218#comment-6136692
+ */
+function tm_chapters_views_query_alter(&$view, &$query) {
+  if ($view->name == 'related_events') {
+    if ($query->options['query_comment'] == 'related_events') {
+      $query->where[0]['type'] = 'OR';
     }
   }
-
-  // Only allow moderators and administrators to edit group setting
-  if ((!$perm_is_moderator_or_admin)) {
-    
-    // if value is set, show and disable the field
-    if (isset($form['#entity']->field_chapter_is_group[LANGUAGE_NONE][0]['value'])) {
-      $form['field_chapter_is_group']['#disabled'] = true;
-    } else {
-      // hide the field
-      unset($form['field_chapter_is_group']);
-    }
-    
-  }
-    
 }
 
 /**
@@ -569,83 +227,4 @@ function _tm_chapters_check_moderator_delete($chapter_id) {
 
   return true; 
 }
-
-/* Modify views */
-function tm_chapters_views_pre_view(&$view, &$display_id, &$args) {
-  // unapproved-members page: set argument to node id (instead of chapter name slug)
-  if (($display_id == "unapproved_members_in_chapter") && ($view->name == "unapproved_users")) {
-    $nid = _orig_nid();
-    $args[0] = $nid;
-  }
-
-}
-
-/* Set default images */
-/* Refer to settings.php configuration */
-function tm_chapters_preprocess_field(&$variables) {
-  
-  global $conf;
-
-  // Check element type
-  $element_type = null;
-  if (isset($variables['element']['#object']->type)) {
-    $element_type = $variables['element']['#object']->type;
-  }
-
-  // Only operate on event
-  if ($element_type != "chapter") {
-    return;
-  }
-
-
-  // Replace default cover image
-  if ($variables['element']['#field_name'] == 'field_image') {
-    $variables['items'][0]['#item']['uri'] = _tm_chapters_get_default_image($variables['items'][0]['#item']['uri'], $variables['element']['#object']->nid);
-  }
-
-}
-
-/**
- * Return default cover image
- * If tm_images_default_path is set then return a random image based in node id
- * URL must be in public:// format
- */
-function _tm_chapters_get_default_image($default_image_uri, $nid) {
-
-  global $conf;
-
-  if (isset($conf["tm_images_default_path"])) {
-    if (($default_image_uri == $conf["tm_images_default_field_image"])or ($default_image_uri == "")) {
-      $cover_files = $conf["tm_images_default_cover_chapter"];
-      $image_index = $nid % sizeof($cover_files);
-      $cover_file = $conf["tm_images_default_path"] . $cover_files[$image_index];
-      return $cover_file;
-    }
-  }
-
-  // no random image, return what we got
-  return $default_image_uri;
-}
-
-/* 
- * Use OR for contextual queries in related_events
- * This allows us to show chapter and published chapter events
- * see: https://www.drupal.org/node/1451218#comment-6136692
- */
-function tm_chapters_views_query_alter(&$view, &$query) {
-  if ($view->name == 'related_events') {
-    if ($query->options['query_comment'] == 'related_events') {
-      $query->where[0]['type'] = 'OR';
-    }
-  }
-}
-
-/* Helper method get the number of members in a chapter 
- *  Will include non-approved members in the count
- */
-function _tm_chapters_get_num_members($chapter_id) {
-    $flag = flag_get_flag('signup');
-    return $flag->get_count($chapter_id);
-}
-
 

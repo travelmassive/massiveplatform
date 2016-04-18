@@ -99,7 +99,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'inline',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 18,
+        'weight' => 26,
       ),
       'grid' => array(
         'label' => 'above',
@@ -159,7 +159,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 18,
       ),
       'grid' => array(
         'label' => 'above',
@@ -333,7 +333,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 19,
       ),
       'grid' => array(
         'label' => 'above',
@@ -391,7 +391,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 25,
       ),
       'grid' => array(
         'label' => 'above',
@@ -440,7 +440,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 19,
+        'weight' => 27,
       ),
       'grid' => array(
         'label' => 'above',
@@ -481,6 +481,109 @@ function tm_chapters_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-chapter-field_chapter_sponsors'.
+  $field_instances['node-chapter-field_chapter_sponsors'] = array(
+    'bundle' => 'chapter',
+    'default_value' => NULL,
+    'default_value_function' => '',
+    'deleted' => 0,
+    'description' => 'Recognize a company as a sponsor of your chapter.<br>
+<ul>
+<li>To add a sponsor, search and select a company profile page from the dropdown.</li>
+<li>A sponsor must have a company profile in order to be listed as a sponsor.</li>
+<li>Sponsors will also be added to our world-wide <a target="_blank" href="/sponsors">sponsors page</a>.</li>
+</ul>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 17,
+      ),
+      'full' => array(
+        'label' => 'hidden',
+        'module' => 'entityreference',
+        'settings' => array(
+          'links' => 0,
+          'view_mode' => 'grid',
+        ),
+        'type' => 'entityreference_entity_view',
+        'weight' => 8,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_chapter_sponsors',
+    'label' => 'Chapter Sponsors',
+    'required' => 0,
+    'settings' => array(
+      'behaviors' => array(
+        'prepopulate' => array(
+          'status' => 0,
+        ),
+      ),
+      'nodeaccess_nodereference' => array(
+        'all' => array(
+          'view' => 0,
+        ),
+        'all_published' => 0,
+        'author' => array(
+          'delete' => 0,
+          'update' => 0,
+          'view' => 0,
+        ),
+        'author_published' => 0,
+        'priority' => 0,
+        'referenced' => array(
+          'delete' => array(
+            'delete' => 0,
+            'update' => 0,
+            'view' => 0,
+          ),
+          'published' => 0,
+          'update' => array(
+            'delete' => 0,
+            'update' => 0,
+            'view' => 0,
+          ),
+          'view' => array(
+            'delete' => 0,
+            'update' => 0,
+            'view' => 0,
+          ),
+        ),
+        'unused' => 0,
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'entityreference',
+      'settings' => array(
+        'match_operator' => 'CONTAINS',
+        'path' => '',
+        'size' => 60,
+      ),
+      'type' => 'entityreference_autocomplete',
+      'weight' => 45,
+    ),
+  );
+
   // Exported field_instance: 'node-chapter-field_chapter_timezone'.
   $field_instances['node-chapter-field_chapter_timezone'] = array(
     'bundle' => 'chapter',
@@ -498,7 +601,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 21,
       ),
       'grid' => array(
         'label' => 'above',
@@ -557,7 +660,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 24,
       ),
       'grid' => array(
         'label' => 'above',
@@ -654,7 +757,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 20,
       ),
       'grid' => array(
         'label' => 'above',
@@ -710,7 +813,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 23,
       ),
       'grid' => array(
         'label' => 'above',
@@ -853,7 +956,7 @@ The message will be included in the notification email sent to the member when t
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 22,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1203,6 +1306,7 @@ The message will be included in the notification email sent to the member when t
   t('Add a welcome message to new members when they join your chapter.<br>
 The message will be included in the notification email sent to the member when they join.');
   t('Assign a community manager to the chapter. Currently this will be used in the chapter report.');
+  t('Chapter Sponsors');
   t('Chapter color');
   t('Chapter is a group');
   t('Chapter leaders');
@@ -1223,6 +1327,12 @@ The message will be included in the notification email sent to the member when t
   t('Please specify the country of the chapter.');
   t('Provide a banner image that is a good reflection of your chapter.
 <br>To support retina displays, upload your image sized to 1610x906');
+  t('Recognize a company as a sponsor of your chapter.<br>
+<ul>
+<li>To add a sponsor, search and select a company profile page from the dropdown.</li>
+<li>A sponsor must have a company profile in order to be listed as a sponsor.</li>
+<li>Sponsors will also be added to our world-wide <a target="_blank" href="/sponsors">sponsors page</a>.</li>
+</ul>');
   t('Select a color that sets this city apart from the others. This color should have enough contrast with a white text layered on top.');
   t('Set whether Chaper Leaders can create paid events.');
   t('The location of the chapter, to display on the map. You can look up the latitude and longitude from Google.

@@ -84,7 +84,7 @@ function tm_chapters_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '2',
+    'weight' => '3',
     'children' => array(
       0 => 'field_geomaplocation',
     ),
@@ -112,7 +112,7 @@ function tm_chapters_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Payments',
-    'weight' => '46',
+    'weight' => '7',
     'children' => array(
       0 => 'field_chapter_payments_enabled',
       1 => 'field_chapter_payment_commission',
@@ -134,6 +134,60 @@ function tm_chapters_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_chapter_sponsors|node|chapter|form';
+  $field_group->group_name = 'group_chapter_sponsors';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'chapter';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Chapter Sponsors',
+    'weight' => '2',
+    'children' => array(
+      0 => 'field_chapter_sponsors',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'label' => 'Chapter Sponsors',
+      'instance_settings' => array(
+        'required_fields' => 1,
+        'id' => '',
+        'classes' => 'group-chapter-sponsors field-group-fieldset',
+        'description' => '',
+      ),
+      'formatter' => 'open',
+    ),
+  );
+  $field_groups['group_chapter_sponsors|node|chapter|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_chapter_sponsors|node|chapter|full';
+  $field_group->group_name = 'group_chapter_sponsors';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'chapter';
+  $field_group->mode = 'full';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Chapter Sponsors',
+    'weight' => '7',
+    'children' => array(
+      0 => 'field_chapter_sponsors',
+    ),
+    'format_type' => 'contained_block',
+    'format_settings' => array(
+      'formatter' => 'open',
+      'instance_settings' => array(
+        'classes' => 'group-chapter-sponsors field-group-contained_block',
+      ),
+    ),
+  );
+  $field_groups['group_chapter_sponsors|node|chapter|full'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_community_management|node|chapter|form';
   $field_group->group_name = 'group_community_management';
   $field_group->entity_type = 'node';
@@ -142,7 +196,7 @@ function tm_chapters_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Community Management',
-    'weight' => '3',
+    'weight' => '4',
     'children' => array(
       0 => 'field_community_managers',
     ),
@@ -170,7 +224,7 @@ function tm_chapters_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Community',
-    'weight' => '8',
+    'weight' => '10',
     'children' => array(
       0 => 'chapter_members',
     ),
@@ -318,7 +372,7 @@ function tm_chapters_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Chapter leaders',
-    'weight' => '7',
+    'weight' => '9',
     'children' => array(
       0 => 'field_chapter_leaders',
     ),
@@ -335,6 +389,7 @@ function tm_chapters_field_group_info() {
   t('About');
   t('Action menu');
   t('Action menu wrapper');
+  t('Chapter Sponsors');
   t('Chapter leaders');
   t('Community');
   t('Community Management');

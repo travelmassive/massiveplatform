@@ -26,7 +26,7 @@ function tm_payments_form_alter(&$form, &$form_state, $form_id) {
 function _tm_payments_form_alter_chapter_form(&$form, &$form_state, $form_id) {
 
 	global $conf;
-  global $user;
+  	global $user;
 
 	// Permission variables
 	$perm_is_moderator_or_admin = ((in_array("moderator", $user->roles)) || (in_array("administrator", $user->roles)));
@@ -53,8 +53,8 @@ function _tm_payments_form_alter_chapter_form(&$form, &$form_state, $form_id) {
 	}
 
 	// Set placeholder (default) commission
-	$default_commission = _tm_payments_get_default_commission("company_event");
-	$form['field_company_payment_commission'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = $default_commission;
+	$default_commission = _tm_payments_get_default_commission("chapter_event");
+	$form['field_chapter_payment_commission'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = ($default_commission + 0); // remove .00
 
 }
 
@@ -88,7 +88,7 @@ function _tm_payments_form_alter_company_form(&$form, &$form_state, $form_id) {
 
 	// Set placeholder (default) commission
 	$default_commission = _tm_payments_get_default_commission("company_event");
-	$form['field_company_payment_commission'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = $default_commission;
+	$form['field_company_payment_commission'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = ($default_commission + 0); // remove .00
 
 }
 

@@ -1,0 +1,32 @@
+<?php
+/**
+ * @file
+ * Code for the TM Notifications Moderation feature.
+ */
+
+include_once 'tm_notifications_moderation.features.inc';
+
+/**
+ * Implements hook_tm_notif_info()
+ */
+function tm_notifications_moderation_tm_notif_info() {
+  $notification = array();
+
+  $notification['user_report_member'] = array(
+    'title' => 'Report a member',
+    'description' => '[Moderation] Send the moderation team an email with the reported issue.',
+    'use_cron' => FALSE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('reporting-user', 'reported-user'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+  
+  return $notification;
+}
+
+// note: no hook here as we perform it inside tm_users_moderate_report_member (modules/custom/tm_users/tm_users.moderate.inc)

@@ -344,11 +344,11 @@ function tm_flags_flag_default_flags() {
     'show_contextual_link' => 0,
     'show_on_profile' => 0,
     'access_uid' => '',
-    'api_version' => 3,
     'module' => 'tm_flags',
     'locked' => array(
       0 => 'name',
     ),
+    'api_version' => 3,
   );
   // Exported flag: "Follow organizations".
   $flags['follow_organizations'] = array(
@@ -424,11 +424,11 @@ function tm_flags_flag_default_flags() {
     'access_author' => '',
     'show_contextual_link' => 0,
     'i18n' => 0,
-    'api_version' => 3,
     'module' => 'tm_flags',
     'locked' => array(
       0 => 'name',
     ),
+    'api_version' => 3,
   );
   // Exported flag: "Profile does not meet community guidelines".
   $flags['moderate_non_community_profile'] = array(
@@ -450,6 +450,40 @@ function tm_flags_flag_default_flags() {
       'diff_standard' => 0,
       'token' => 0,
       'search_result' => 0,
+      'grid' => 0,
+      'list' => 0,
+    ),
+    'show_as_field' => 0,
+    'show_on_form' => 0,
+    'access_author' => '',
+    'show_contextual_link' => 0,
+    'show_on_profile' => 0,
+    'access_uid' => 'others',
+    'module' => 'tm_flags',
+    'locked' => array(
+      0 => 'name',
+    ),
+    'api_version' => 3,
+  );
+  // Exported flag: "Report member to moderators".
+  $flags['moderate_report_member'] = array(
+    'entity_type' => 'user',
+    'title' => 'Report member to moderators',
+    'global' => 0,
+    'types' => array(),
+    'flag_short' => 'Flag this member',
+    'flag_long' => '',
+    'flag_message' => '',
+    'unflag_short' => 'Unflag this member',
+    'unflag_long' => '',
+    'unflag_message' => '',
+    'unflag_denied_text' => 'You cannot unflag this member',
+    'link_type' => 'toggle',
+    'weight' => 0,
+    'show_in_links' => array(
+      'full' => 0,
+      'diff_standard' => 0,
+      'token' => 0,
       'grid' => 0,
       'list' => 0,
     ),

@@ -999,6 +999,13 @@ function tm_search_api_render_result_user($result, $results_user, $search_query,
 
 	global $conf;
 
+	// open in new window
+	// set via tm_search_open_external
+	$href_target = null;
+	if ($conf["tm_search_open_external"] == true) {
+		$href_target = "_blank";
+	}
+
 	// user image
 	if (isset($results_user->field_avatar[LANGUAGE_NONE][0]['uri'])) {
 		$image_url = image_style_url("avatar", $results_user->field_avatar[LANGUAGE_NONE][0]['uri']);
@@ -1010,7 +1017,7 @@ function tm_search_api_render_result_user($result, $results_user, $search_query,
 	// set render fields
 	$result_url = drupal_get_path_alias("user/" . $results_user->uid);
 	$result_image_url = $image_url;
-	$result_title = l("People > " . $results_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . " " . $results_user->field_user_last_name[LANGUAGE_NONE][0]['value'], $result_url, array('attributes' => array('target'=>'_blank')));
+	$result_title = l("People > " . $results_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . " " . $results_user->field_user_last_name[LANGUAGE_NONE][0]['value'], $result_url, array('attributes' => array('target'=>$href_target)));
 
 	// about
 	$result_text = $results_user->field_about_me[LANGUAGE_NONE][0]['safe_value'];
@@ -1096,6 +1103,13 @@ function tm_search_api_render_result_chapter($result, $chapter, $search_query, $
 
 	global $conf;
 
+	// open in new window
+	// set via tm_search_open_external
+	$href_target = null;
+	if ($conf["tm_search_open_external"] == true) {
+		$href_target = "_blank";
+	}
+
 	// chapter image
 	if (isset($chapter->field_image[LANGUAGE_NONE][0]['uri'])) {
 		$image_url = image_style_url("banner", $chapter->field_image[LANGUAGE_NONE][0]['uri']);
@@ -1107,7 +1121,7 @@ function tm_search_api_render_result_chapter($result, $chapter, $search_query, $
 	// set render fields
 	$result_url = drupal_get_path_alias("node/" . $chapter->nid);
 	$result_image_url = $image_url;
-	$result_title = l("Chapters > " . $chapter->title . " " . $conf["tm_site_name"], $result_url, array('attributes' => array('target'=>'_blank')));
+	$result_title = l("Chapters > " . $chapter->title . " " . $conf["tm_site_name"], $result_url, array('attributes' => array('target'=>$href_target)));
 	$result_text = $chapter->body[LANGUAGE_NONE][0]['safe_value'];
 
 	// country
@@ -1132,6 +1146,13 @@ function tm_search_api_render_result_event($result, $event, $search_query, $resu
 
 	global $conf;
 
+	// open in new window
+	// set via tm_search_open_external
+	$href_target = null;
+	if ($conf["tm_search_open_external"] == true) {
+		$href_target = "_blank";
+	}
+
 	// chapter image
 	if (isset($event->field_image[LANGUAGE_NONE][0]['uri'])) {
 		$image_url = image_style_url("banner", $event->field_image[LANGUAGE_NONE][0]['uri']);
@@ -1149,7 +1170,7 @@ function tm_search_api_render_result_event($result, $event, $search_query, $resu
 	// set render fields
 	$result_url = drupal_get_path_alias("node/" . $event->nid);
 	$result_image_url = $image_url;
-	$result_title = l("Events > " . $event->title, $result_url, array('attributes' => array('target'=>'_blank')));
+	$result_title = l("Events > " . $event->title, $result_url, array('attributes' => array('target'=>$href_target)));
 
 	// show when event is
 	$current_date = new DateTime('now', new DateTimeZone('UTC'));
@@ -1191,6 +1212,13 @@ function tm_search_api_render_result_organization($result, $organization, $searc
 
 	global $conf;
 
+	// open in new window
+	// set via tm_search_open_external
+	$href_target = null;
+	if ($conf["tm_search_open_external"] == true) {
+		$href_target = "_blank";
+	}
+	
 	// organization image
 	if (isset($organization->field_avatar[LANGUAGE_NONE][0]['uri'])) {
 		$image_url = image_style_url("avatar", $organization->field_avatar[LANGUAGE_NONE][0]['uri']);
@@ -1202,7 +1230,7 @@ function tm_search_api_render_result_organization($result, $organization, $searc
 	// set render fields
 	$result_url = drupal_get_path_alias("node/" . $organization->nid);
 	$result_image_url = $image_url;
-	$result_title = l("Companies > " . $organization->title, $result_url, array('attributes' => array('target'=>'_blank')));
+	$result_title = l("Companies > " . $organization->title, $result_url, array('attributes' => array('target'=>$href_target)));
 	$result_text = $organization->body[LANGUAGE_NONE][0]['safe_value'];
 
 	// country

@@ -178,3 +178,24 @@ function tm_users_get_num_registered_events($uid) {
   $result = db_query($query, array(':fid' => $flag->fid, ':uid' => $uid))->fetch();
   return $result->total;
 }
+
+/**
+ * Helper method to get all moderators
+ */
+function tm_users_get_all_moderators() {
+
+  $moderator_role = user_role_load_by_name("moderator");
+
+  $query_sql = "SELECT DISTINCT users.uid FROM users
+    LEFT JOIN users_roles ON users_roles.uid = users.uid 
+    WHERE users_roles.rid = :role_id";
+  $query = db_query($query_sql, array(':role_id' => $moderator_role->rid));
+  $results = $query->fetchAll();
+
+  $moderator_ids = array();
+  foreach ($results as $result) {
+    $moderator_ids[] = $result->uid;
+  }
+
+  return $moderator_ids;
+}

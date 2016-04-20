@@ -125,6 +125,7 @@ dependencies[] = tm_notifications_approval
 dependencies[] = tm_notifications_welcome
 dependencies[] = tm_notifications_events
 dependencies[] = tm_notifications_messaging
+dependencies[] = tm_notifications_moderation
 
 ; TM - meta
 dependencies[] = tm_meta

@@ -70,9 +70,26 @@ function tm_users_approve($user) {
     // Remove approval request flag
     flag('unflag', 'approval_requested_by_user', $user->uid, $user);
 
+    // Remove all report flags
+    $report_flag = flag_get_flag('moderate_report_member', NULL);
+    flag_reset_flag($report_flag, $user->uid);
+
     // Keep track of who approved with approval_approved_by flag
     flag('flag', 'approval_approved_by', $user->uid, $approving_user);
 
+  }
+
+  drupal_goto(drupal_get_path_alias("user/$user->uid"));
+}
+
+/**
+ * Un-approval callback 
+ */
+function tm_users_unapprove($user){
+  
+  $role_name = 'approved user'; // The name of the role to remove.
+  if ($role = user_role_load_by_name($role_name)) {
+    user_multiple_role_edit(array($user->uid), 'remove_role', $role->rid);
   }
 
   drupal_goto(drupal_get_path_alias("user/$user->uid"));
@@ -271,77 +288,5 @@ function tm_users_approval_is_company_or_brand($user){
   drupal_goto(drupal_get_path_alias("user/$user->uid"));
 }
 
-/**
- * Profile does not meet community criteria
- */
-function tm_users_moderate_non_community_profile($user){
 
-  global $conf;
-  $approving_user = $GLOBALS['user'];
 
-  // Permission check in addition to access arguments
-  // Don't allow flagging of admin account
-  if (((in_array('administrator', $user->roles)) 
-    or (in_array('moderator', $user->roles))) 
-    or (in_array('chapter leader', $user->roles))) {
-    drupal_set_message("Unable to flag this account as non-community.");
-    return;
-  }
-
-  // Send notification message to user that their account doesn't meet community guidelines
-  // there doesn't seem to be a hook that can detect we are applying a new role, so do it here
-  $approving_user = user_uid_optional_load();
-  // set profile url (either friendly url or community url)
-  $profile_url = drupal_get_path_alias("user/" . $user->uid);
-
-  $moderator_first_name = $approving_user->field_user_first_name['und'][0]['value'];
-
-  // get moderator message to send to member
-  // add line breaks
-  $moderator_message = trim($_GET["moderator_message"]);
-  $moderator_message_safe = "";
-  if ($moderator_message != "") {
-      $moderator_message_safe = "<br><strong>Message from " . $moderator_first_name . ":</strong> " . check_plain($moderator_message) . "<br>";
-      $moderator_message_safe = str_replace("__NL__", "<br>", $moderator_message_safe); 
-  }
-
-  // Set moderator's reply-to address if they have allowed in their notification settings
-  $reply_to = null;
-  $notif = new TMNotification("user_approval_allow_reply_to");
-  if ($notif->isEnabled($approving_user->uid)) {
-    $reply_to = $approving_user->mail;
-  }
-
-  $community_values_url = $conf["tm_community_values_url"];
-  $membership_criteria_message = $conf["tm_notification_moderation_non_community_message"];
-
-  tm_notifications_notify('user_approval_non_community', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe, '__COMMUNITY_VALUES_URL__' => $community_values_url, '__REPLY_TO__' => $reply_to, '__MODERATION_MEMBERSHIP_CRITERIA__' => $membership_criteria_message));
-
-  // flag the user their profile does not meet community values
-  flag('unflag', 'moderate_non_community_profile', $user->uid, $approving_user);
-  flag('flag', 'moderate_non_community_profile', $user->uid, $approving_user); 
-
-  // set the user to unapproved
-  $role_name = 'approved user'; // The name of the role to remove.
-  if ($role = user_role_load_by_name($role_name)) {
-    user_multiple_role_edit(array($user->uid), 'remove_role', $role->rid);
-  }
-
-  // unflag requested approval (so they can re-request if they already did)
-  flag('unflag', 'approval_requested_by_user', $user->uid, $user);
-
-  // Notify user
-  drupal_set_message("An email has been sent to " . $user->mail . " requesting they address the membership guidelines of the community.");
-
-  drupal_goto(drupal_get_path_alias("user/$user->uid"));
-}
-
-/* Un-approval callback */
-function tm_users_unapprove($user){
-  $role_name = 'approved user'; // The name of the role to remove.
-  if ($role = user_role_load_by_name($role_name)) {
-    user_multiple_role_edit(array($user->uid), 'remove_role', $role->rid);
-  }
-
-  drupal_goto(drupal_get_path_alias("user/$user->uid"));
-}

@@ -15,6 +15,7 @@ include_once 'tm_users.follow.inc';
 include_once 'tm_users.forms.inc';
 include_once 'tm_users.helpers.inc';
 include_once 'tm_users.mail.inc';
+include_once 'tm_users.moderate.inc';
 include_once 'tm_users.register.inc';
 include_once 'tm_users.tips.inc';
 
@@ -86,7 +87,7 @@ function tm_users_menu() {
     'type' => MENU_CALLBACK,
   );
   $items['user/%user/moderate_non_community_profile'] = array(
-    'title' => 'Request approval',
+    'title' => 'Moderate profile',
     'page callback' => 'tm_users_moderate_non_community_profile',
     'page arguments' => array(1),
     'access arguments' => array('approve users'),
@@ -105,6 +106,20 @@ function tm_users_menu() {
     'page callback' => 'tm_users_follow_message',
     'page arguments' => array(1),
     'access callback' => 'user_is_logged_in',
+    'type' => MENU_CALLBACK,
+  );
+  $items['user/%user/moderate_report_member'] = array(
+    'title' => 'Report profile',
+    'page callback' => 'tm_users_moderate_report_member',
+    'page arguments' => array(1),
+    'access callback' => 'tm_users_moderate_report_member_check',
+    'type' => MENU_CALLBACK,
+  );
+  $items['user/%user/moderate_report_member_resolved'] = array(
+    'title' => 'Report profile',
+    'page callback' => 'tm_users_moderate_report_member_resolved',
+    'page arguments' => array(1),
+    'access callback' => 'tm_users_moderate_report_member_resolved_check',
     'type' => MENU_CALLBACK,
   );
 

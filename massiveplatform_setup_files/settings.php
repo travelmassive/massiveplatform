@@ -845,6 +845,7 @@ $conf["tm_search_api_ignore_keywords_people"] = array(); // ignore these keyword
 $conf["tm_search_api_ignore_keywords_events"] = array(); // ignore these keywords when searching events
 $conf["tm_search_api_ignore_keywords_chapters"] = array("travel", "massive", "travel massive"); // ignore these keywords when searching chapters
 $conf["tm_search_api_ignore_keywords_companies"] = array(); // ignore thesee keywords when searching companies
+$conf["tm_search_open_external"] = true; // open search result in new window
 
 // example search tips
 $conf["tm_search_api_tips"] = array(

@@ -7919,6 +7919,14 @@ a.cancel_account_link {
   display: none;
 }
 
+/* Report links */
+/* line 825, ../sass/_single.scss */
+.report-flagged-link {
+  display: inline !important;
+  padding: 0px !important;
+  color: #007DB7 !important;
+}
+
 /* line 2, ../sass/_login.scss */
 #account-menu-blk .menu-blk-title {
   text-transform: uppercase;

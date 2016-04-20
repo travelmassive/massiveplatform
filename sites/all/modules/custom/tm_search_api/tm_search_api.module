@@ -67,6 +67,18 @@ function tm_search_api_page_access() {
 	return true;
 }
 
+function tm_search_api_metatag_metatags_view_alter(&$output, $instance) {
+
+	global $conf;
+
+	// remove following metatags as we create them in tm_preprocess_html
+	if (current_path() == "search") {
+		unset($output['canonical']);
+		unset($output['og:url']);
+		unset($output['og:title']);
+	}
+}
+
 /* Search view */
 function tm_search_api_view() {
 
@@ -1472,6 +1484,78 @@ function tm_search_api_check_option_applicable($option_name, $option_enabled, $f
 
 	// option filter is not applicable to any enabled filter
 	return false;
+}
+
+/**
+ * Add html meta tags
+ * Called from tm/themes/template.php
+ */
+function tm_search_api_preprocess_html(&$variables, $hook) {
+
+	global $conf;
+	
+	// add tag
+	$variables['classes_array'][] = "tm_search_api";
+
+	// gererate canonical url
+	$canonical = url('/' . $search_path, array('absolute' => TRUE)) . "/";
+
+	// canonical url
+	$meta = array(
+	  '#tag' => 'link', 
+	  '#attributes' => array(
+	    'rel' => 'canonical', 
+	    'href' => $canonical,
+	  ),
+	);
+	drupal_add_html_head($meta, 'canonical');
+
+	// og:url
+	$meta = array(
+	  '#tag' => 'meta', 
+	  '#attributes' => array(
+	    'name' => 'og:url', 
+	    'content' => $canonical,
+	  ),
+	);
+	drupal_add_html_head($meta, 'og:url');
+
+	// og:title
+	if (isset($conf['tm_search_meta_og_title'])) {
+	  $meta = array(
+	    '#tag' => 'meta', 
+	    '#attributes' => array(
+	      'name' => 'og:title', 
+	      'content' => $conf['tm_search_meta_og_title'],
+	    ),
+	  );
+	  drupal_add_html_head($meta, 'og:title');
+	}
+
+	// og:image
+	if (isset($conf['tm_search_meta_og_image'])) {
+	  $meta = array(
+	    '#tag' => 'meta', 
+	    '#attributes' => array(
+	      'name' => 'og:image', 
+	      'content' => $conf['tm_search_meta_og_image'],
+	    ),
+	  );
+	  drupal_add_html_head($meta, 'og:image');
+	}
+
+	// description
+	if (isset($conf['tm_search_meta_description'])) {
+	  $meta = array(
+	    '#tag' => 'meta', 
+	    '#attributes' => array(
+	      'name' => 'description',
+	      'property' => 'og:description',
+	      'content' => $conf['tm_search_meta_description'],
+	    ),
+	  );
+	  drupal_add_html_head($meta, 'description');
+	}
 }
 
 /* html templates */

@@ -56,12 +56,20 @@ function tm_discuss_init() {
 
 // Update meta tags for /discuss page
 function tm_discuss_metatag_metatags_view_alter(&$output, $instance) {
+
+	global $conf;
+
+	$discuss_menu_path = "discuss"; // default
+	if (isset($conf["tm_discuss_menu_path"])) {
+		$discuss_menu_path = $conf["tm_discuss_menu_path"];
+	}
+
 	// remove following metatags as we create them in tm_preprocess_html
-    if (current_path() == "discuss") {
-  		unset($output['canonical']);
-  		unset($output['og:url']);
-  		unset($output['og:title']);
-  	}
+	if (current_path() == $discuss_menu_path) {
+		unset($output['canonical']);
+		unset($output['og:url']);
+		unset($output['og:title']);
+	}
 }
 
 function tm_discuss_menu() {
@@ -178,5 +186,78 @@ function tm_discuss_embed_vanilla() {
 	return $embed_script;
 
 }
+
+/**
+ * Add html meta tags
+ * Called from tm/themes/template.php
+ */
+function tm_discuss_preprocess_html(&$variables, $hook) {
+
+	global $conf;
+	
+	// add tag
+	$variables['classes_array'][] = "tm_discuss";
+
+	// gererate canonical url
+	$canonical = url('/' . $discuss_menu_path, array('absolute' => TRUE)) . "/";
+
+	// canonical url
+	$meta = array(
+	  '#tag' => 'link', 
+	  '#attributes' => array(
+	    'rel' => 'canonical', 
+	    'href' => $canonical,
+	  ),
+	);
+	drupal_add_html_head($meta, 'canonical');
+
+	// og:url
+	$meta = array(
+	  '#tag' => 'meta', 
+	  '#attributes' => array(
+	    'name' => 'og:url', 
+	    'content' => $canonical,
+	  ),
+	);
+	drupal_add_html_head($meta, 'og:url');
+
+	// og:title
+	if (isset($conf['tm_discuss_meta_og_title'])) {
+	  $meta = array(
+	    '#tag' => 'meta', 
+	    '#attributes' => array(
+	      'name' => 'og:title', 
+	      'content' => $conf['tm_discuss_meta_og_title'],
+	    ),
+	  );
+	  drupal_add_html_head($meta, 'og:title');
+	}
+
+	// og:image
+	if (isset($conf['tm_discuss_meta_og_image'])) {
+	  $meta = array(
+	    '#tag' => 'meta', 
+	    '#attributes' => array(
+	      'name' => 'og:image', 
+	      'content' => $conf['tm_discuss_meta_og_image'],
+	    ),
+	  );
+	  drupal_add_html_head($meta, 'og:image');
+	}
+
+	// description
+	if (isset($conf['tm_discuss_meta_description'])) {
+	  $meta = array(
+	    '#tag' => 'meta', 
+	    '#attributes' => array(
+	      'name' => 'description',
+	      'property' => 'og:description',
+	      'content' => $conf['tm_discuss_meta_description'],
+	    ),
+	  );
+	  drupal_add_html_head($meta, 'description');
+	}
+}
+
 
 ?>

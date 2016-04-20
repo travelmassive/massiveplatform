@@ -79,74 +79,15 @@ function tm_preprocess_html(&$variables, $hook) {
   if (isset($conf["tm_discuss_menu_path"])) {
     $discuss_menu_path = $conf["tm_discuss_menu_path"];
   }
-
-  // The body tag's classes are controlled by the $classes_array variable.
   if ((module_exists("tm_discuss") and (current_path() == $discuss_menu_path))) {
+    tm_discuss_preprocess_html($variables, $hook);
+  }
 
-    // add tag
-    $variables['classes_array'][] = "tm_discuss";
- 
-    // gererate canonical url
-    $canonical = url('/' . $discuss_menu_path, array('absolute' => TRUE)) . "/";
-   
-    // canonical url
-    $meta = array(
-      '#tag' => 'link', 
-      '#attributes' => array(
-        'rel' => 'canonical', 
-        'href' => $canonical,
-      ),
-    );
-    drupal_add_html_head($meta, 'canonical');
-
-    // og:url
-    $meta = array(
-      '#tag' => 'meta', 
-      '#attributes' => array(
-        'name' => 'og:url', 
-        'content' => $canonical,
-      ),
-    );
-    drupal_add_html_head($meta, 'og:url');
-
-    // og:title
-    if (isset($conf['tm_discuss_meta_og_title'])) {
-      $meta = array(
-        '#tag' => 'meta', 
-        '#attributes' => array(
-          'name' => 'og:title', 
-          'content' => $conf['tm_discuss_meta_og_title'],
-        ),
-      );
-      drupal_add_html_head($meta, 'og:title');
-    }
-
-    // og:image
-    if (isset($conf['tm_discuss_meta_og_image'])) {
-      $meta = array(
-        '#tag' => 'meta', 
-        '#attributes' => array(
-          'name' => 'og:image', 
-          'content' => $conf['tm_discuss_meta_og_image'],
-        ),
-      );
-      drupal_add_html_head($meta, 'og:image');
-    }
-
-    // description
-    if (isset($conf['tm_discuss_meta_description'])) {
-      $meta = array(
-        '#tag' => 'meta', 
-        '#attributes' => array(
-          'name' => 'description',
-          'property' => 'og:description',
-          'content' => $conf['tm_discuss_meta_description'],
-        ),
-      );
-      drupal_add_html_head($meta, 'description');
-    }
-
-  } // end if tm_discuss and /discuss page
+  // Search og tags
+  $search_path = "search";
+  if ((module_exists("tm_search_api") and (current_path() == $search_path))) {
+    tm_search_api_preprocess_html($variables, $hook);
+  }
 
 }
 

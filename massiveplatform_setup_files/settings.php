@@ -846,6 +846,9 @@ $conf["tm_search_api_ignore_keywords_events"] = array(); // ignore these keyword
 $conf["tm_search_api_ignore_keywords_chapters"] = array("travel", "massive", "travel massive"); // ignore these keywords when searching chapters
 $conf["tm_search_api_ignore_keywords_companies"] = array(); // ignore thesee keywords when searching companies
 $conf["tm_search_open_external"] = true; // open search result in new window
+$conf['tm_search_meta_og_title'] = "Travel Massive Search";
+//$conf['tm_search_meta_og_image'] = ""; // url of search
+$conf['tm_search_meta_description'] = "Search our community.";
 
 // example search tips
 $conf["tm_search_api_tips"] = array(

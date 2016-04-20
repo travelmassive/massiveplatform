@@ -523,7 +523,7 @@
         submit:function(e,v,m,f){
           if (v == true) {
             var report_reason = $('input[name=form_report_reason]:checked').val();
-            if (report_reason === 'undefined') {
+            if (report_reason == undefined) {
               report_reason = 'other';
             }
             // replace new lines with __NL__ as we moving this via regular GET and cant pass it via XHR
@@ -538,17 +538,81 @@
 
   }
 
-  jq_confirm_unreport_member = function(uid) {
+  jq_confirm_report_member_resolved = function(uid) {
 
     $.prompt({
       state0: {
-        title: 'Remove report flags',
+        title: 'Remove reports',
         html: 'Has the reported issue been resolved?',
         buttons: { No: false, Yes: true },
         focus: 1,
         submit:function(e,v,m,f){
           if (v == true) {
             window.location = '/user/' + uid + '/moderate_report_member_resolved'; 
+          } 
+          $.prompt.close();
+        }
+      }
+    });
+
+  }
+
+  jq_confirm_report_organization = function(nid, community_values_url) {
+
+    $.prompt({
+      state0: {
+        title: 'Report an issue',
+        html: 'Help us understand the issue with this organization.'
+        + '<p><input type="radio" id="reason_1" name="form_report_reason" value="spam"> <label style="display: inline;" for="reason_1">Posting spam<br>'
+        + '<input type="radio" id="reason_2" name="form_report_reason" value="incorrect"> <label style="display: inline;" for="reason_2">Information is incorrect<br>'
+        + '<input type="radio" id="reason_3" name="form_report_reason" value="non-community"> <label style="display: inline;" for="reason_3">It doesn\'t meet our <a target="_blank" href="' + community_values_url + '">community values</a><br>'
+        + '<input type="radio" id="reason_4" name="form_report_reason" value="other"> <label style="display: inline;" for="reason_4">Other reason'
+        + '</p>',
+        buttons: { Cancel: false, Next: true },
+        focus: 1,
+        submit:function(e,v,m,f){
+          if(v){
+            e.preventDefault();
+            $.prompt.goToState('state1');
+            return false;
+          }
+          $.prompt.close();
+        }
+      },
+      state1: {
+        title: 'Report an issue',
+        html: "Additional information (optional) <textarea id='form_report_message' value='' placeholder='Provide any additional information that will help us review this issue.' rows='3' cols='50'></textarea>",
+        buttons: { Back: -1, OK: true },
+        focus: 1,
+        submit:function(e,v,m,f){
+          if (v == true) {
+            var report_reason = $('input[name=form_report_reason]:checked').val();
+            if (report_reason === undefined) {
+              report_reason = 'other';
+            }
+            // replace new lines with __NL__ as we moving this via regular GET and cant pass it via XHR
+            window.location = '/node/' + nid + '/moderate_report_organization?reason=' + report_reason + '&report_message=' + document.getElementById('form_report_message').value.replace(/\n/mg,"__NL__"); 
+          } 
+          else if(v==-1) {
+            $.prompt.goToState('state0');
+          }
+        }
+      }
+    });
+
+  }
+
+  jq_confirm_report_organization_resolved = function(nid) {
+
+    $.prompt({
+      state0: {
+        title: 'Remove reports',
+        html: 'Has the reported issue been resolved?',
+        buttons: { No: false, Yes: true },
+        focus: 1,
+        submit:function(e,v,m,f){
+          if (v == true) {
+            window.location = '/node/' + nid + '/moderate_report_organization_resolved'; 
           } 
           $.prompt.close();
         }

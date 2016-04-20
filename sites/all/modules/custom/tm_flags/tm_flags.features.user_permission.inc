@@ -135,6 +135,18 @@ function tm_flags_user_default_permissions() {
     'module' => 'flag',
   );
 
+  // Exported permission: 'flag moderate_report_organization'.
+  $permissions['flag moderate_report_organization'] = array(
+    'name' => 'flag moderate_report_organization',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'approved user' => 'approved user',
+      'chapter leader' => 'chapter leader',
+      'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
   // Exported permission: 'flag signup'.
   $permissions['flag signup'] = array(
     'name' => 'flag signup',
@@ -266,8 +278,16 @@ function tm_flags_user_default_permissions() {
     'name' => 'unflag moderate_report_member',
     'roles' => array(
       'administrator' => 'administrator',
-      'approved user' => 'approved user',
-      'chapter leader' => 'chapter leader',
+      'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag moderate_report_organization'.
+  $permissions['unflag moderate_report_organization'] = array(
+    'name' => 'unflag moderate_report_organization',
+    'roles' => array(
+      'administrator' => 'administrator',
       'moderator' => 'moderator',
     ),
     'module' => 'flag',

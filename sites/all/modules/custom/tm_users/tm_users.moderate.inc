@@ -119,7 +119,7 @@ function tm_users_moderate_report_member($reported_user) {
       // load the user to notify
       $moderator_user = user_load($moderator_id);
 
-      tm_notifications_notify('user_report_member', $moderator_user, array('reporting_user' => $reported_user, 'reported_user' => $reported_user, '__REPORTING_PROFILE_URL__' => $reporting_profile_url, '__REPORTED_PROFILE_URL__' => $reported_profile_url, '__REPORT_REASON__' => $report_reason_safe, '__REPORT_MESSAGE__' => $report_message_safe, '__COMMUNITY_VALUES_URL__' => $community_values_url, '__REPLY_TO__' => $reply_to, '__REPORTING_FULL_NAME__' => $reporting_full_name, '__REPORTED_FULL_NAME__' => $reported_full_name, '__REPORTING_EMAIL__' => $reporting_user_mail));
+      tm_notifications_notify('user_report_member', $moderator_user, array('reporting_user' => $reporting_user, 'reported_user' => $reported_user, '__REPORTING_PROFILE_URL__' => $reporting_profile_url, '__REPORTED_PROFILE_URL__' => $reported_profile_url, '__REPORT_REASON__' => $report_reason_safe, '__REPORT_MESSAGE__' => $report_message_safe, '__COMMUNITY_VALUES_URL__' => $community_values_url, '__REPLY_TO__' => $reply_to, '__REPORTING_FULL_NAME__' => $reporting_full_name, '__REPORTED_FULL_NAME__' => $reported_full_name, '__REPORTING_EMAIL__' => $reporting_user_mail));
   }
 
   // flag user
@@ -127,7 +127,7 @@ function tm_users_moderate_report_member($reported_user) {
 	flag('flag', 'moderate_report_member', $reported_user->uid, $reporting_user); 
 
   // Notify user
-  drupal_set_message("Thanks for reporting an issue. Our moderation team will take a look as soon as posssible.");
+  drupal_set_message("Thanks for reporting an issue. Our moderation team will take a look as soon as possible.");
 
   // Redirect to user's profile
   drupal_goto(drupal_get_path_alias("user/$reported_user->uid"));
@@ -153,13 +153,13 @@ function tm_users_moderate_report_member_resolved($reported_user) {
 /**
  * Access callback for reporting a member
  */
-function tm_users_moderate_report_member_check() {
+function tm_users_moderate_report_check() {
 
-	global $user;
+  global $user;
 
-	// Only allow approved members to flag
+  // Only allow approved members to flag
   if (!in_array('approved user', $user->roles) and !in_array('administrator', $user->roles)) {
-  	return false;
+    return false;
   }
 
   // ok
@@ -169,7 +169,7 @@ function tm_users_moderate_report_member_check() {
 /**
  * Access callback for resolving reporting a member
  */
-function tm_users_moderate_report_member_resolved_check() {
+function tm_users_moderate_report_resolved_check() {
 
   global $user;
 

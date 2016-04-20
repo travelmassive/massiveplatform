@@ -2,4 +2,5 @@
 
 function tm_notifications_moderation_uninstall() {
   tm_notifications_preferences_purge_bulk(array('user_report_member'));
+  tm_notifications_preferences_purge_bulk(array('user_report_organization'));
 }

@@ -109,20 +109,20 @@ function tm_users_menu() {
     'type' => MENU_CALLBACK,
   );
   $items['user/%user/moderate_report_member'] = array(
-    'title' => 'Report profile',
+    'title' => 'Report member profile',
     'page callback' => 'tm_users_moderate_report_member',
     'page arguments' => array(1),
-    'access callback' => 'tm_users_moderate_report_member_check',
+    'access callback' => 'tm_users_moderate_report_check',
     'type' => MENU_CALLBACK,
   );
   $items['user/%user/moderate_report_member_resolved'] = array(
-    'title' => 'Report profile',
+    'title' => 'Report member profile',
     'page callback' => 'tm_users_moderate_report_member_resolved',
     'page arguments' => array(1),
-    'access callback' => 'tm_users_moderate_report_member_resolved_check',
+    'access callback' => 'tm_users_moderate_report_resolved_check',
     'type' => MENU_CALLBACK,
   );
-
+  
   return $items;
 }
 

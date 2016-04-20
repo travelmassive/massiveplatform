@@ -46,7 +46,7 @@ __REPORT_MESSAGE__
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'tm_notifications__user_report_member';
+  $strongarm->name = 'tm_notifications__user_report_organization';
   $strongarm->value = array(
     'user_label' => '[Moderation] Notify when an organization is reported',
     'default_state' => '1',
@@ -74,7 +74,7 @@ __REPORT_MESSAGE__
 ',
     ),
   );
-  $export['tm_notifications__user_report_member'] = $strongarm;
+  $export['tm_notifications__user_report_organization'] = $strongarm;
 
   return $export;
 }

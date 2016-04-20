@@ -144,7 +144,7 @@ function tm_users_moderate_report_member_resolved($reported_user) {
   flag_reset_flag($report_flag, $reported_user->uid);
 
   // Notify user
-  drupal_set_message("This account is no longer flagged for report.");
+  drupal_set_message("This account is no longer reported for moderation.");
 
   // Redirect to user's profile
   drupal_goto(drupal_get_path_alias("user/$reported_user->uid"));

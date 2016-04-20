@@ -47,7 +47,7 @@ function tm_organizations_moderate_report_organization($reported_organization) {
       // load the user to notify
       $moderator_user = user_load($moderator_id);
 
-      tm_notifications_notify('user_report_member', $moderator_user, array('reporting_user' => $reporting_user, 'reported_organization' => $reported_organization, '__REPORTING_PROFILE_URL__' => $reporting_profile_url, '__REPORTED_PROFILE_URL__' => $reported_profile_url, '__REPORT_REASON__' => $report_reason_safe, '__REPORT_MESSAGE__' => $report_message_safe, '__COMMUNITY_VALUES_URL__' => $community_values_url, '__REPLY_TO__' => $reply_to, '__REPORTING_FULL_NAME__' => $reporting_full_name, '__REPORTED_ORGANIZATION_NAME__' => $reported_organization_name, '__REPORTING_EMAIL__' => $reporting_user_mail));
+      tm_notifications_notify('user_report_organization', $moderator_user, array('reporting_user' => $reporting_user, 'reported_organization' => $reported_organization, '__REPORTING_PROFILE_URL__' => $reporting_profile_url, '__REPORTED_PROFILE_URL__' => $reported_profile_url, '__REPORT_REASON__' => $report_reason_safe, '__REPORT_MESSAGE__' => $report_message_safe, '__COMMUNITY_VALUES_URL__' => $community_values_url, '__REPLY_TO__' => $reply_to, '__REPORTING_FULL_NAME__' => $reporting_full_name, '__REPORTED_ORGANIZATION_NAME__' => $reported_organization_name, '__REPORTING_EMAIL__' => $reporting_user_mail));
   }
 
   // flag user
@@ -72,7 +72,7 @@ function tm_organizations_moderate_report_organization_resolved($reported_organi
   flag_reset_flag($report_flag, $reported_organization->nid);
 
   // Notify user
-  drupal_set_message("This organization profile is no longer flagged for report.");
+  drupal_set_message("This organization profile is no longer reported for moderation.");
 
   // Redirect to user's profile
   drupal_goto(drupal_get_path_alias("node/$reported_organization->nid"));

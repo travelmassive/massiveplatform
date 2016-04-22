@@ -220,6 +220,31 @@ function tm_search_api_ajax() {
 		}	
 	}
 	
+	// If moderator or chapter leader, then search for unapproved member by email address
+	// (For performance the search index doesn't index unapproved members)
+	if (($filter_people) and (strpos($search_query, "@") !== false)) {
+		if ((in_array("administrator", $user->roles)) or (in_array("moderator", $user->roles)) 
+			or (in_array("chapter leader", $user->roles))) {
+
+			// Find first email address
+			preg_match("/[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})/i", $search_query, $email_matches);
+
+			if (sizeof($email_matches) > 0) {
+
+				// Search for user
+				$unapproved_user = tm_search_api_find_unapproved_user_by_mail($email_matches[0]);
+
+				// If user is found, insert to top of result set
+				if ($unapproved_user != null) {
+
+					$insert_result = array("user/".$unapproved_user->uid => array("id" => "user/".$unapproved_user->uid, "score" => 1));
+					$results['results'] = array_merge($insert_result, $all_results);
+					$results['result count'] = $results['result count'] + 1;
+				}
+			}
+		}
+	}
+
 	// Step 6. Render results
 	$html = tm_search_api_render_results_html($results, $search_query);
 
@@ -684,6 +709,23 @@ function tm_search_api_preprocess_html(&$variables, $hook) {
 	  );
 	  drupal_add_html_head($meta, 'description');
 	}
+}
+
+/* Find unapproved user by email */
+function tm_search_api_find_unapproved_user_by_mail($mail) {
+
+	$query = "SELECT uid FROM {users} u WHERE u.mail = :mail";
+	$uid = db_query($query, array(':mail' => $mail))->fetch();
+
+	if ($uid != null) {
+		$user = user_load($uid->uid);
+		if (!in_array("approved user", $user->roles)) {
+			return $user;
+		}
+	}
+
+	// not found
+	return false;
 }
 
 /* html templates */

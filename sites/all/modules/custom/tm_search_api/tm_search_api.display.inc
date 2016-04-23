@@ -646,6 +646,12 @@ function tm_search_api_render_search_result($result_url, $result_image_url, $res
 function tm_search_api_preprocess_html(&$variables, $hook) {
 
 	global $conf;
+
+	// Check we are on search page
+  	$search_path = "search";
+  	if (current_path() != $search_path) {
+    	return;
+  	}
 	
 	// add tag
 	$variables['classes_array'][] = "tm_search_api";

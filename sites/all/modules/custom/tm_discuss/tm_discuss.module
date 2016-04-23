@@ -195,7 +195,15 @@ function tm_discuss_preprocess_html(&$variables, $hook) {
 
 	global $conf;
 
-	$discuss_menu_path = $conf["tm_discuss_menu_path"];
+	// Check that we are on discuss page
+	$discuss_menu_path = "discuss"; // default
+	if (isset($conf["tm_discuss_menu_path"])) {
+		$discuss_menu_path = $conf["tm_discuss_menu_path"];
+	}
+
+	if (current_path() != $discuss_menu_path) {
+		return;
+	}
 	
 	// add tag
 	$variables['classes_array'][] = "tm_discuss";

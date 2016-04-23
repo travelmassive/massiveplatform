@@ -73,21 +73,6 @@ function tm_preprocess_html(&$variables, $hook) {
     drupal_add_html_head($meta, 'apple-mobile-web-app-status-bar-style');
 
   }
- 
-  // Add meta tags for tm_discuss 
-  $discuss_menu_path = "discuss"; // default
-  if (isset($conf["tm_discuss_menu_path"])) {
-    $discuss_menu_path = $conf["tm_discuss_menu_path"];
-  }
-  if ((module_exists("tm_discuss") and (current_path() == $discuss_menu_path))) {
-    tm_discuss_preprocess_html($variables, $hook);
-  }
-
-  // Search og tags
-  $search_path = "search";
-  if ((module_exists("tm_search_api") and (current_path() == $search_path))) {
-    tm_search_api_preprocess_html($variables, $hook);
-  }
 
 }
 

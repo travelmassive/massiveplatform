@@ -222,6 +222,7 @@ function tm_search_api_ajax() {
 	
 	// If moderator or chapter leader, then search for unapproved member by email address
 	// (For performance the search index doesn't index unapproved members)
+	// Note: this doesn't need to be cached as we are inserting it live
 	if (($filter_people) and (strpos($search_query, "@") !== false)) {
 		if ((in_array("administrator", $user->roles)) or (in_array("moderator", $user->roles)) 
 			or (in_array("chapter leader", $user->roles))) {

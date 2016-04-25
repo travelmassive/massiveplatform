@@ -1214,6 +1214,54 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'user-user-field_user_cover_video'.
+  $field_instances['user-user-field_user_cover_video'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Increase your exposure with a cover video.
+<br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 35,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'user',
+    'field_name' => 'field_user_cover_video',
+    'label' => 'Cover Video',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 39,
+    ),
+  );
+
   // Exported field_instance: 'user-user-field_user_first_name'.
   $field_instances['user-user-field_user_first_name'] = array(
     'bundle' => 'user',
@@ -1598,11 +1646,14 @@ function tm_users_field_default_field_instances() {
   t('Claim your own URL');
   t('Country');
   t('Cover Image');
+  t('Cover Video');
   t('Facebook');
   t('First name');
   t('Friendly URL');
   t('Home Chapter');
   t('In a few short words, tell us why you\\\'d like to join the community.');
+  t('Increase your exposure with a cover video.
+<br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM');
   t('Industry Segment');
   t('Instagram');
   t('Job Role');

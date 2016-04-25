@@ -279,6 +279,7 @@ function tm_users_field_group_info() {
       6 => 'field_segment',
       7 => 'field_user_country',
       8 => 'field_home_chapter',
+      9 => 'field_user_cover_video',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -343,9 +344,9 @@ function tm_users_field_group_info() {
       2 => 'field_link_twitter',
       3 => 'field_link_website',
       4 => 'field_link_instagram',
-      5 => 'field_link_youtube',
+      5 => 'field_link_snapchat',
       6 => 'field_link_vimeo',
-      7 => 'field_link_snapchat',
+      7 => 'field_link_youtube',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

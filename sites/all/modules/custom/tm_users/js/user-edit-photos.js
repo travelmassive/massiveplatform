@@ -5,7 +5,7 @@
     attach : function(context) {
 
     	// get js variables
-      	var current_user_uid = Drupal.settings.tm_users.current_user_uid;
+      var current_user_uid = Drupal.settings.tm_users.current_user_uid;
     	var has_cover_image = Drupal.settings.tm_users.has_cover_image;
   		var has_profile_image = Drupal.settings.tm_users.has_profile_image;
 

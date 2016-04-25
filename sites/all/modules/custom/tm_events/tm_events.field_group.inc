@@ -348,8 +348,9 @@ function tm_events_field_group_info() {
       5 => 'field_rsvp_link',
       6 => 'field_chapter',
       7 => 'field_event_company',
-      8 => 'title',
-      9 => 'path',
+      8 => 'field_event_cover_video',
+      9 => 'title',
+      10 => 'path',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

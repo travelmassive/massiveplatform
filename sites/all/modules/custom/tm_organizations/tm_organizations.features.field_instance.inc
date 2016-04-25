@@ -162,7 +162,61 @@ function tm_organizations_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 7,
+      'weight' => 6,
+    ),
+  );
+
+  // Exported field_instance: 'node-organization-field_company_cover_video'.
+  $field_instances['node-organization-field_company_cover_video'] = array(
+    'bundle' => 'organization',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Increase your exposure with a cover video. 
+<br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 21,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_company_cover_video',
+    'label' => 'Cover Video',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 8,
     ),
   );
 
@@ -219,7 +273,7 @@ function tm_organizations_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 6,
+      'weight' => 5,
     ),
   );
 
@@ -439,7 +493,7 @@ Displays a short message to followers on your company profile page.<br>',
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 8,
+      'weight' => 7,
     ),
   );
 
@@ -1315,11 +1369,14 @@ Displays a short message to followers on your company profile page.<br>',
   t('City');
   t('Country');
   t('Cover Image');
+  t('Cover Video');
   t('Description');
   t('Facebook');
   t('Friendly URL');
   t('Give something back to members who follow your company profile.<br>
 Displays a short message to followers on your company profile page.<br>');
+  t('Increase your exposure with a cover video. 
+<br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM');
   t('Industry Segment');
   t('Instagram');
   t('Linkedin');

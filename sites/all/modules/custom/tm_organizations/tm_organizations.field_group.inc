@@ -174,8 +174,9 @@ function tm_organizations_field_group_info() {
       5 => 'field_owner',
       6 => 'field_segment',
       7 => 'field_country',
-      8 => 'title',
-      9 => 'path',
+      8 => 'field_company_cover_video',
+      9 => 'title',
+      10 => 'path',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

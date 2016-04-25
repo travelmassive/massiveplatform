@@ -247,21 +247,28 @@ function tm_organizations_form_alter(&$form, $form_state, $form_id) {
   global $conf;
 
   // Modify company edit form
-  if ($form_id == 'organization_node_form') {
-    // friendly url
-    $form['field_friendly_url'][LANGUAGE_NONE][0]['value']['#title'] = $conf["tm_field_company_friendly_url_title"];
-    $form['field_friendly_url'][LANGUAGE_NONE][0]['value']['#description'] = $conf["tm_field_company_friendly_url_description"];
+  if ($form_id != 'organization_node_form') {
+    return;
+  }
 
-    // Show additional link fields based on $conf['tm_users_link_fields']
-    $all_fields = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat');
-    if (isset($conf["tm_organizations_link_fields"])) {
-      $show_link_fields = $conf["tm_organizations_link_fields"];
-      foreach ($all_fields as $field) {
-        if (!in_array($field, $show_link_fields)) {
-          unset($form['field_link_' . $field]); // hide field
-        }
+  // friendly url
+  $form['field_friendly_url'][LANGUAGE_NONE][0]['value']['#title'] = $conf["tm_field_company_friendly_url_title"];
+  $form['field_friendly_url'][LANGUAGE_NONE][0]['value']['#description'] = $conf["tm_field_company_friendly_url_description"];
+
+  // Show additional link fields based on $conf['tm_users_link_fields']
+  $all_fields = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat');
+  if (isset($conf["tm_organizations_link_fields"])) {
+    $show_link_fields = $conf["tm_organizations_link_fields"];
+    foreach ($all_fields as $field) {
+      if (!in_array($field, $show_link_fields)) {
+        unset($form['field_link_' . $field]); // hide field
       }
     }
+  }
+
+  // hide cover video field if not enabled
+  if (!$conf["tm_cover_videos_enabled"]) {
+    unset($form['field_company_cover_video']);
   }
   
 }

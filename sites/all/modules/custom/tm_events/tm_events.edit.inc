@@ -293,7 +293,11 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
 			}
   	}
   }
-  
+
+  // hide cover video field if not enabled
+  if (!$conf["tm_cover_videos_enabled"]) {
+    unset($form['field_event_cover_video']);
+  }
 
   // STEP 6. Modify payment fields if tm_payments enabled
   //////////

@@ -464,6 +464,60 @@ function tm_events_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-event-field_event_cover_video'.
+  $field_instances['node-event-field_event_cover_video'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Increase your event\'s exposure with a cover video. 
+<br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 53,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_cover_video',
+    'label' => 'Cover Video',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 14,
+    ),
+  );
+
   // Exported field_instance: 'node-event-field_event_date'.
   $field_instances['node-event-field_event_date'] = array(
     'bundle' => 'event',
@@ -2204,7 +2258,7 @@ This will be displayed to the member on the event page and included in the autom
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 15,
+      'weight' => 16,
     ),
   );
 
@@ -2283,6 +2337,7 @@ This will be displayed to the member on the event page and included in the autom
   t('Check this box if you want to restrict registration and waitlist to members who are approved. Non-approved members won\'t be able to sign up.');
   t('Check this option if you want to restrict displaying the event location to registered attendees only.');
   t('Check this to indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)');
+  t('Cover Video');
   t('Description');
   t('Event Chapter');
   t('Event Company');
@@ -2311,6 +2366,8 @@ This will be displayed to the member on the event page and included in the autom
   t('Include any additional information you want to provide to members only when they register.<br>
 This will be displayed to the member on the event page and included in the automatic registration notification email.
 ');
+  t('Increase your event\'s exposure with a cover video. 
+<br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM');
   t('Leave blank to use the chapter\'s timezone (or UTC if no chapter for event)');
   t('Location');
   t('Map link');

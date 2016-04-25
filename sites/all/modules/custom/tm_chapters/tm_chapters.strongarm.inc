@@ -74,7 +74,7 @@ function tm_chapters_strongarm() {
           'weight' => '1',
         ),
         'path' => array(
-          'weight' => '12',
+          'weight' => '13',
         ),
         'metatags' => array(
           'weight' => '6',

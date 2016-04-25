@@ -118,6 +118,11 @@ function tm_chapters_form_alter(&$form, &$form_state, $form_id) {
   if ((!$perm_is_moderator_or_admin)) {
     unset($form['field_discuss_category_id']);
   }
+
+  // hide cover video field if not enabled
+  if (!$conf["tm_cover_videos_enabled"]) {
+    unset($form['field_chapter_cover_video']);
+  }
   
     
 }

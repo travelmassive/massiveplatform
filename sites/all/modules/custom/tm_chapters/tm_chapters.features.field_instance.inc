@@ -137,6 +137,60 @@ function tm_chapters_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-chapter-field_chapter_cover_video'.
+  $field_instances['node-chapter-field_chapter_cover_video'] = array(
+    'bundle' => 'chapter',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Increase your exposure with a cover video. 
+<br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 19,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_chapter_cover_video',
+    'label' => 'Cover Video',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 9,
+    ),
+  );
+
   // Exported field_instance: 'node-chapter-field_chapter_is_group'.
   $field_instances['node-chapter-field_chapter_is_group'] = array(
     'bundle' => 'chapter',
@@ -305,7 +359,7 @@ function tm_chapters_field_default_field_instances() {
         'size' => 40,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 9,
+      'weight' => 10,
     ),
   );
 
@@ -635,7 +689,7 @@ function tm_chapters_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 11,
+      'weight' => 12,
     ),
   );
 
@@ -791,7 +845,7 @@ function tm_chapters_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 10,
+      'weight' => 11,
     ),
   );
 
@@ -1315,6 +1369,7 @@ The message will be included in the notification email sent to the member when t
   t('Chapter timezone');
   t('Community Managers');
   t('Country');
+  t('Cover Video');
   t('Description');
   t('Enable Event Payments');
   t('Facebook');
@@ -1322,6 +1377,8 @@ The message will be included in the notification email sent to the member when t
 <br>Note: Does not include bank fees, forex or other charges.');
   t('Geo Map Location');
   t('Image');
+  t('Increase your exposure with a cover video. 
+<br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM');
   t('Linkedin');
   t('Please enter a unique 3 letter shortcode for this city.');
   t('Please specify the country of the chapter.');

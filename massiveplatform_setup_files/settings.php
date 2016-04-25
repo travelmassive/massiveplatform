@@ -925,6 +925,8 @@ Add options to your search text to filter your results. Here's some examples.
 $conf["tm_cookieconsent_enable"] = true; // enable EU cookie consent notice
 $conf["tm_cookieconsent_privacy_url"] = ""; // link to privacy policy
 
+// cover videos
+$conf["tm_cover_videos_enabled"] = true; // enable cover video
 
 $conf['install_profile'] = 'tm';
 

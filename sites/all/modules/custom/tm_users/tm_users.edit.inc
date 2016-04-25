@@ -57,6 +57,11 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state) {
     }
   }
 
+  // hide cover video field if not enabled
+  if (!$conf["tm_cover_videos_enabled"]) {
+    unset($form['field_user_cover_video']);
+  }
+
 }
 
 /**

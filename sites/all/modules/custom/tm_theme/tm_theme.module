@@ -151,3 +151,125 @@ function tm_theme_preprocess_html(&$variables, $hook) {
     drupal_add_html_head($meta, 'description');
   }
 }
+
+/**
+ * Add javascript to show cover video
+ */
+
+/**
+ * Add cover vide to user profile
+ */
+function tm_theme_user_view($account, $view_mode, $langcode) {
+
+  global $conf;
+
+  // Check full view mode
+  if ($view_mode != "full") {
+    return;
+  }
+
+  // check we are viewing user account
+  if (!(arg(0) == 'user' and is_numeric(arg(1)) and arg(2) == FALSE)) {
+    return;
+  }
+
+  // Check cover videos enabled
+  if ($conf["tm_cover_videos_enabled"]) {
+    tm_theme_add_cover_video_js($account, null);
+  }  
+
+}
+
+/**
+ * Add cover vide to node profile
+ */
+function tm_theme_node_view($node, $view_mode, $langcode) {
+
+  global $conf;
+
+  // Check full view mode
+  if ($view_mode != "full") {
+    return;
+  }
+
+  // check we are viewing node
+  if (!(arg(0) == 'node' and is_numeric(arg(1)) and arg(2) == FALSE)) {
+    return;
+  }
+
+  // add video cover
+  if ($conf["tm_cover_videos_enabled"]) {
+    tm_theme_add_cover_video_js(null, $node);
+  }
+
+}
+
+/**
+ * Check for valid cover video url and apply js
+ */
+function tm_theme_add_cover_video_js($account, $node) {
+
+  // check if user has cover video
+  $cover_video_id = null;
+  $cover_video_value = null;
+
+  // account
+  if ($account != null) {
+    if (isset($account->field_user_cover_video[LANGUAGE_NONE][0]['value'])) {
+      $cover_video_value = $account->field_user_cover_video[LANGUAGE_NONE][0]['value'];
+    }
+  }
+  
+  // node (event, chapter, company)
+  if ($node != null) {
+    if ($node->type == "chapter") {
+      if (isset($node->field_chapter_cover_video[LANGUAGE_NONE][0]['value'])) {
+        $cover_video_value = $node->field_chapter_cover_video[LANGUAGE_NONE][0]['value'];
+      }
+    }
+
+    if ($node->type == "organization") {
+      if (isset($node->field_company_cover_video[LANGUAGE_NONE][0]['value'])) {
+        $cover_video_value = $node->field_company_cover_video[LANGUAGE_NONE][0]['value'];
+      }
+    }
+
+    if ($node->type == "event") {
+      if (isset($node->field_event_cover_video[LANGUAGE_NONE][0]['value'])) {
+        $cover_video_value = $node->field_event_cover_video[LANGUAGE_NONE][0]['value'];
+      }
+    }
+  }
+  
+  // validate video url
+  if ($cover_video_value != null) {
+    
+    // match youtube url
+    // http://stackoverflow.com/questions/3392993/php-regex-to-get-youtube-video-id
+    preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", $cover_video_value, $matches);
+
+    if (sizeof($matches) != 0 ) {
+      $cover_video_id = $matches[1];
+    } else {
+      // check if its just id
+      if ((strlen($cover_video_value < 20) && (strpos($cover_video_value, ".") === false))) {
+        $cover_video_id = $cover_video_value;
+      }
+    }
+  }
+
+  // testing
+  // $cover_video_id = "jhFDyDgMVUI"; // "rbtv2zxhufM"
+
+  // add js if user has a cover video
+  if ($cover_video_id != null) {
+
+    // add cover video to play
+    drupal_add_js(array('tm_theme' => array('cover_video_id' => $cover_video_id)), array('type' => 'setting'));
+
+    // add edit photos script to page
+    drupal_add_js(drupal_get_path('module', 'tm_theme') . '/js/tm_theme_cover_video.js');
+
+  }
+
+}

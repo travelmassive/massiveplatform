@@ -8,6 +8,7 @@
 define('JS_TIMEOUT', 24 * 60);
 
 function WriteJsConnect($User, $Request, $ClientID, $Secret, $Secure = TRUE) {
+   
    $User = array_change_key_case($User);
    
    // Error checking.

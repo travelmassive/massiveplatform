@@ -12,6 +12,16 @@
 ?>
 
 <?php
+
+  // Enable discussion feedme plugin
+  // Show recent discussion posts
+  global $conf;
+  if (@isset($conf["tm_discuss_enable_feedme"])) {
+    if ($conf["tm_discuss_enable_feedme"]) {
+      include './'. path_to_theme() .'/templates/page--discuss-feedme.tpl.php';
+    }
+  }
+
   // Enable wordpress feedme plugin
   // Show recent blog posts and more
   global $conf;
@@ -29,6 +39,7 @@
       include './'. path_to_theme() .'/templates/page--marketplace-feedme.tpl.php';
     }
   }
+
 ?>
 
 <?php

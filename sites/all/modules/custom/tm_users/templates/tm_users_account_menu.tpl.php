@@ -30,10 +30,20 @@ $member_event_message = _tm_events_check_create_member_event_message($loaded);
 drupal_add_js(array('tm_events' => array('create_member_event_message' => $member_event_message)), array('type' => 'setting'));
 
 // Set avatar
-if (!empty($loaded->field_avatar)) {
+if (empty($loaded->field_avatar)) {
+  $img_uri = $conf["tm_images_default_field_avatar"];
+}  else {
   $img_uri = $loaded->field_avatar[LANGUAGE_NONE][0]['uri'];
-} else {
-  $img_uri = _tm_users_get_default_avatar($conf["tm_images_default_field_avatar"], $loaded->uid);
+}
+
+// If image is default, replace with random image from folder
+if (isset($conf["tm_images_default_path"])) {
+  if ($img_uri == $conf["tm_images_default_field_avatar"]) {
+    $image_id = $loaded->uid;
+    $cover_files = $conf["tm_images_default_avatar"];
+    $image_index = $image_id % sizeof($cover_files);
+    $img_uri = $conf["tm_images_default_path"] . $cover_files[$image_index];
+  }
 }
 
 $image = theme('image_style', array(
@@ -42,6 +52,7 @@ $image = theme('image_style', array(
   'alt' => 'user image',
   'title' => 'The user image',
 ));
+
 ?>
 
 <h2>

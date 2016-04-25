@@ -199,3 +199,43 @@ function tm_users_get_all_moderators() {
 
   return $moderator_ids;
 }
+
+/**
+ * Helper method to get all chapters user is a member of
+ */
+function tm_users_get_chapters($user) {
+
+  $flags = flag_get_user_flags("node", null, $user->uid);
+  $chapters_nids = array();
+  foreach ($flags as $flag_name => $flag) {
+    if ($flag_name == "signup") {
+      foreach($flag as $f) {
+        $chapters_nids[] = $f->entity_id;
+      }
+    }
+  }
+
+  return $chapters_nids;
+}
+
+/**
+ * Helper method to get all chapters user is a leader of
+ */
+function tm_users_get_chapters_leading($user) {
+
+  // Step 2. Fetch list of chapters the user is a leader of
+  $chapters_leader_nids = array();
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'chapter')
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->fieldCondition('field_chapter_leaders', 'target_id', $user->uid, '=');
+
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    $chapters_leader_nids = array_keys($result['node']);
+  }
+
+  return $chapters_leader_nids;
+}
+

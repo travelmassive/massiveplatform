@@ -117,6 +117,8 @@ function tm_discussions_placeholder() {
 function tm_discuss_embed_vanilla() {
 
 	global $conf;
+	global $user;
+
 	$discuss_menu_path = "discuss"; // default
 	if (isset($conf["tm_discuss_menu_path"])) {
 		$discuss_menu_path = $conf["tm_discuss_menu_path"];
@@ -133,7 +135,6 @@ function tm_discuss_embed_vanilla() {
 		return;
 	}
 
-	global $conf;
 	if (isset($conf["tm_discuss_menu_hide"])) {
 		if ($conf["tm_discuss_menu_hide"]) {
 			// set cookie so we can show the menu item
@@ -141,8 +142,7 @@ function tm_discuss_embed_vanilla() {
 		}
 	}
 
-	global $conf;
-	global $user;
+	// load user
 	$loaded = user_load($user->uid);
 
 	$embed_script = '<script type="text/javascript" src="/' . $discuss_full_path . '/js/embed.js"></script>';

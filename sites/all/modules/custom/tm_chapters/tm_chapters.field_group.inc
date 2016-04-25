@@ -285,8 +285,9 @@ function tm_chapters_field_group_info() {
       6 => 'field_country',
       7 => 'field_join_chapter_message',
       8 => 'field_chapter_is_group',
-      9 => 'title',
-      10 => 'path',
+      9 => 'field_discuss_category_id',
+      10 => 'title',
+      11 => 'path',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

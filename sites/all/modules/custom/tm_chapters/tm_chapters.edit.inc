@@ -113,6 +113,12 @@ function tm_chapters_form_alter(&$form, &$form_state, $form_id) {
   if ($conf["tm_chapters_groups_enabled"] != true) {
     unset($form['field_chapter_is_group']);
   }
+
+  // Only allow moderators and administrators to link to discussion category
+  if ((!$perm_is_moderator_or_admin)) {
+    unset($form['field_discuss_category_id']);
+  }
+  
     
 }
 

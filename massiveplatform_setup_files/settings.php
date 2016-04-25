@@ -761,6 +761,7 @@ $conf['tm_discuss_meta_description'] = "Travel Massive Discuss is the place to a
 $conf['tm_discuss_menu_path'] = "discuss"; // page where vanilla will be embedded
 $conf['tm_discuss_full_path'] = "discussions"; // where vanilla is installed
 // $conf['tm_discuss_signup_message'] = ""; // customise the signup message. leave unset for default
+$conf['tm_discuss_enable_feedme'] = true; // show recent discussions for a chapter or member
 
 /** Marketplace settings **/
 $conf['tm_marketplace_menu_hide'] = true; // hide the marketplace unless you access /marketplace

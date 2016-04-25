@@ -74,12 +74,11 @@ function load_marketplace_feedme() {
 
     feedme_url = feedme_url + "&limit=" + feedme_num_items;
     
-    //console.log(feedme_url);
     $.get(feedme_url, function(data) {
         $("#marketplace_feedme").replaceWith(data);
         // if marketplace_feedme_loaded() function defined, call it
         // this can be used to display a div when the feed loads
-        if (typeof(feedme_loaded) == "function") {
+        if (typeof(marketplace_feedme_loaded) == "function") {
             marketplace_feedme_loaded();
         }
     });

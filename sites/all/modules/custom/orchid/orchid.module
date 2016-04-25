@@ -155,11 +155,26 @@ function orchid_jsconnect_auth(){
      if($avatar_shared) {
        $account['photourl'] = $image_url; //($user->picture && $user->picture->uri) ? file_create_url(image_style_path($avatar_size,$user->picture->uri)) : '';
      }
-     // IC - send user roles
+
+     // IC - add user roles
      $roles = array("member"); // member is default
      foreach ($user->roles as $rid => $rolename) {
       $roles[] = $rolename;
      }
+
+     // IC - add nids of chapters joined
+     $chapter_nids = tm_users_get_chapters($user);
+     foreach ($chapter_nids as $chapter_nid) {
+      $roles[] = "chapter-" . $chapter_nid;
+     }
+
+     // IC - add nids of chapters leading
+     $chapter_leading_nids = tm_users_get_chapters_leading($user);
+     foreach ($chapter_leading_nids as $chapter_nid) {
+      $roles[] = "chapter-leader-" . $chapter_nid;
+     }
+
+     // set account roles
      $account['roles'] = implode(",", $roles); // ie: member,moderator,chapter leader;
 
      // IC - add extra fields

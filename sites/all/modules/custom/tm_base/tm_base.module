@@ -278,7 +278,7 @@ function _tm_base_frontpage() {
   }
 
   return theme('_tm_homepage', array(
-    'homepage_title' => $homepage_title,
+    'homepage_title' => html_entity_decode($homepage_title, ENT_QUOTES),
     'homepage_description' => $homepage_description,
     'homepage_stats_block' => $homepage_stats_block,
     'homepage_upcoming_events' => $homepage_upcoming_events

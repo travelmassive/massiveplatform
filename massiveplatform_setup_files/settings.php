@@ -854,6 +854,7 @@ $conf["tm_search_open_external"] = true; // open search result in new window
 $conf['tm_search_meta_og_title'] = "Travel Massive Search";
 //$conf['tm_search_meta_og_image'] = ""; // url of search
 $conf['tm_search_meta_description'] = "Search our community.";
+$conf['tm_search_meta_opensearch_title'] = "travelmassive.com"; // title for opensearch header link
 
 // example search tips
 $conf["tm_search_api_tips"] = array(

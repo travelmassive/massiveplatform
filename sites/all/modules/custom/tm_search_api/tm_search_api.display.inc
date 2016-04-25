@@ -641,12 +641,31 @@ function tm_search_api_render_search_result($result_url, $result_image_url, $res
 
 /**
  * Add html meta tags
+ * Add omnisearch tag
  * Called from tm/themes/template.php
  */
 function tm_search_api_preprocess_html(&$variables, $hook) {
 
 	global $conf;
 
+	// omnisearch
+	// ie: <link rel="search" type="application/opensearchdescription+xml" title="ZitSeng.com" href="/opensearch.xml" />
+	// see: https://zitseng.com/archives/10130
+	if (current_path() == "frontpage") {
+		if (module_exists("tm_search_api")) {
+			$meta = array(
+				'#tag' => 'link', 
+				'#attributes' => array(
+					'rel' => 'search',
+					'type' => 'application/opensearchdescription+xml',
+					'title' => $conf['tm_search_meta_opensearch_title'],
+					'href' => "/opensearch.xml"
+				),
+			);
+			drupal_add_html_head($meta, 'tm_search_api_opensearch_tag');
+		}
+	}
+	
 	// Check we are on search page
   	$search_path = "search";
   	if (current_path() != $search_path) {
@@ -716,6 +735,7 @@ function tm_search_api_preprocess_html(&$variables, $hook) {
 	  );
 	  drupal_add_html_head($meta, 'description');
 	}
+
 }
 
 /* Find unapproved user by email */

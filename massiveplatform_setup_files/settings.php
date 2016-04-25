@@ -819,7 +819,7 @@ $conf["tm_payments_enable_help_text"] = "Congratulations, you can accept payment
 $conf["tm_payments_commission_default_chapter"] = "80"; // default commission % for chapter event 
 $conf["tm_payments_commission_default_company"] = "75"; // default commission % for company event
 $conf["tm_payments_commission_default_member"] = "70"; // default commission % for member event
-$conf["tm_payments_process_url"] = "https://localdev.travelmassive.com/payments/reports.php"; // external payment reports
+$conf["tm_payments_reports_url"] = "https://localdev.travelmassive.com/payments/reports.php"; // external payment reports
 $conf["tm_payments_reports_secret_token"] = "randomstring123"; // secret token to verify payment report 
 $conf["tm_payments_reports_help_message"] = "Here's your ticket sales for this event."; // message to show user
 

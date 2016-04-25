@@ -995,7 +995,7 @@ function tm_reports_global_insights() {
 
   // Generate HTML
   $html = _tm_reports_insights_js_css_header();
-  $redraw_functions = array("drawChart", "draw_new_signups", "draw_event_registrations", "draw_follow_members", "draw_follow_organizations", "draw_monthly_chapters");
+  $redraw_functions = array("drawChart", "draw_new_signups", "draw_event_registrations", "draw_event_payments", "draw_follow_members", "draw_follow_organizations", "draw_monthly_chapters");
   $html .= _tm_reports_insights_js_redraw_function($redraw_functions);
 
   // Start artlce
@@ -1036,6 +1036,14 @@ function tm_reports_global_insights() {
             <h1 class='prime-title'>Event Registrations</h1>
             </header>";
   $html .= _tm_reports_insights_all_event_registrations_html();
+  $html .= "</section>";
+
+  // Event Payments
+  $html .= "<section class='contained contained-block'>";
+  $html .= "<header class='contained-head'>
+            <h1 class='prime-title'>Event Payments</h1>
+            </header>";
+  $html .= _tm_reports_insights_all_event_payments_html();
   $html .= "</section>";
 
   // Member Follows
@@ -1105,11 +1113,24 @@ function _tm_reports_insights_all_signups_html() {
  */
 function _tm_reports_insights_all_event_registrations_html() {
 
-  $follow_flag = flag_get_flag('event_register', NULL);
+  $flag = flag_get_flag('event_register', NULL);
   // Step 1. Get chapter insight data
-  $results = _tm_reports_flagging_time_series(NULL, $follow_flag->fid, "node");
+  $results = _tm_reports_flagging_time_series(NULL, $flag->fid, "node");
   // Step 2. Render chart
   $html = _tm_reports_insights_chart_html($results, "", "Event Registrations", "Month", "event_registrations");
+  return $html;
+}
+
+/**
+ * Generate a chart of all event payments
+ */
+function _tm_reports_insights_all_event_payments_html() {
+
+  $flag = flag_get_flag('event_paid', NULL);
+  // Step 1. Get chapter insight data
+  $results = _tm_reports_flagging_time_series(NULL, $flag->fid, "node");
+  // Step 2. Render chart
+  $html = _tm_reports_insights_chart_html($results, "", "Event Payments", "Month", "event_payments");
   return $html;
 }
 
@@ -1118,9 +1139,9 @@ function _tm_reports_insights_all_event_registrations_html() {
  */
 function _tm_reports_insights_all_member_connections_html() {
 
-  $follow_flag = flag_get_flag('follow_members', NULL);
+  $flag = flag_get_flag('follow_members', NULL);
   // Step 1. Get chapter insight data
-  $results = _tm_reports_flagging_time_series(NULL, $follow_flag->fid, "user");
+  $results = _tm_reports_flagging_time_series(NULL, $flag->fid, "user");
   // Step 2. Render chart
   $html = _tm_reports_insights_chart_html($results, "", "Follow Members", "Month", "follow_members");
   return $html;
@@ -1131,9 +1152,9 @@ function _tm_reports_insights_all_member_connections_html() {
  */
 function _tm_reports_insights_all_organization_connections_html() {
 
-  $follow_flag = flag_get_flag('follow_organizations', NULL);
+  $flag = flag_get_flag('follow_organizations', NULL);
   // Step 1. Get chapter insight data
-  $results = _tm_reports_flagging_time_series(NULL, $follow_flag->fid, "node");
+  $results = _tm_reports_flagging_time_series(NULL, $flag->fid, "node");
   // Step 2. Render chart
   $html = _tm_reports_insights_chart_html($results, "", "Follow Organization", "Month", "follow_organizations");
   return $html;

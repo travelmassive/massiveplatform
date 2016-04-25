@@ -86,9 +86,6 @@ function tm_theme_preprocess_html(&$variables, $hook) {
     return;
   }
   
-  // add tag
-  $variables['classes_array'][] = "tm_discuss";
-
   // gererate canonical url
   $canonical = url('/', array('absolute' => TRUE)) . "/";
 

@@ -74,3 +74,80 @@ function tm_theme_html_head_alter(&$head_elements) {
 
 
 }
+
+/**
+ * Add html meta tags
+ */
+function tm_theme_preprocess_html(&$variables, $hook) {
+
+  global $conf;
+
+  if (!drupal_is_front_page()) {
+    return;
+  }
+  
+  // add tag
+  $variables['classes_array'][] = "tm_discuss";
+
+  // gererate canonical url
+  $canonical = url('/', array('absolute' => TRUE)) . "/";
+
+  // canonical url
+  $meta = array(
+    '#tag' => 'link', 
+    '#attributes' => array(
+      'rel' => 'canonical', 
+      'href' => $canonical,
+    ),
+  );
+  drupal_add_html_head($meta, 'canonical');
+
+  // og:url
+  $meta = array(
+    '#tag' => 'meta', 
+    '#attributes' => array(
+      'name' => 'og:url', 
+      'content' => $canonical,
+    ),
+  );
+  drupal_add_html_head($meta, 'og:url');
+
+  // og:title
+  if (isset($conf['tm_frontpage_meta_og_title'])) {
+    $meta = array(
+      '#tag' => 'meta', 
+      '#attributes' => array(
+        'name' => 'og:title', 
+        'content' => $conf['tm_frontpage_meta_og_title'],
+      ),
+    );
+    drupal_add_html_head($meta, 'og:title');
+  }
+
+  // og:image
+  if (isset($conf['tm_frontpage_meta_og_image'])) {
+    if ($conf['tm_frontpage_meta_og_image'] != "") {
+        $meta = array(
+        '#tag' => 'meta', 
+        '#attributes' => array(
+          'name' => 'og:image', 
+          'content' => $conf['tm_frontpage_meta_og_image'],
+        ),
+      );
+      drupal_add_html_head($meta, 'og:image');
+    }
+  }
+
+  // description
+  if (isset($conf['tm_frontpage_meta_description'])) {
+    $meta = array(
+      '#tag' => 'meta', 
+      '#attributes' => array(
+        'name' => 'description',
+        'property' => 'og:description',
+        'content' => $conf['tm_frontpage_meta_description'],
+      ),
+    );
+    drupal_add_html_head($meta, 'description');
+  }
+}

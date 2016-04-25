@@ -735,6 +735,10 @@ $conf["tm_notification_moderation_non_community_message"] = 'To be a member of t
 /* Stats option for front page */
 /* Options: members, chapters, organizations, connections, mutual_follows */
 $conf['tm_frontpage_show_anon_stats'] = array('members', 'chapters', 'connections');
+$conf['tm_frontpage_meta_og_title'] = "Travel Massive";
+$conf['tm_frontpage_meta_og_image'] = "";
+$conf['tm_frontpage_meta_description'] = "Travel Massive connects thousands of travel insiders to meet, learn and collaborate at free events all around the world. We are a global community of travel industry insiders, leaders, and innovators.
+.";
 
 /** Event types **/
 $conf['tm_event_types_system'] = array("community" => "Chapter Event", "member" => "Member Event", "company" => "Company Event"); // system event types - don't alter

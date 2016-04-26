@@ -1,7 +1,5 @@
 (function($) {
 
-	// Play a cover video
-
 	// video id
 	var cover_video_id = null;
 	var cover_image_height = 453;
@@ -15,6 +13,9 @@
 	};
 
 	$(document).ready(function() {
+
+		// Play a cover video
+		$('.trilithon-header .media .cover img').fadeTo('slow', 0.5);
 
 		// Get cover video id
 		if (Drupal.settings.tm_theme.cover_video_id !== 'undefined') {

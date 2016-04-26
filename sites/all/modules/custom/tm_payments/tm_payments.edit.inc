@@ -237,11 +237,10 @@ function _tm_payments_form_alter_event_form(&$form, &$form_state, $form_id) {
 	$organizer_opts = array_unique($organizer_opts, SORT_REGULAR);
 
 	// Add "- Please select a recipient -" at top
-	if (isset($organizer_opts["_none"])) {
-		unset($organizer_opts["_none"]);
-		$organizer_opts = array_merge(array("_none" => "- Please select a recipient -"), $organizer_opts);
-	}
-	
+	unset($organizer_opts["_none"]);
+	$organizer_opts = array("_none" => "- Please select a recipient -") +  $organizer_opts;
+
+	// Set options
 	$form['field_event_payment_payout_to'][LANGUAGE_NONE]['#options'] = $organizer_opts;
 
 	// Step 7. Display Commission
@@ -299,8 +298,4 @@ function tm_payments_node_presave($node) {
   }
 
 }
-
-
-
-
 

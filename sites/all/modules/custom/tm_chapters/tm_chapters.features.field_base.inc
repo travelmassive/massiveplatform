@@ -183,7 +183,7 @@ function tm_chapters_field_default_field_bases() {
   // Exported field_base: 'field_chapter_sponsors'.
   $field_bases['field_chapter_sponsors'] = array(
     'active' => 1,
-    'cardinality' => 1,
+    'cardinality' => 10,
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_chapter_sponsors',

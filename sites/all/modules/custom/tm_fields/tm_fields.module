@@ -555,11 +555,6 @@ function _tm_more_actions_process($field, $title = NULL) {
           $show_menu_item = false;
         }
 
-        // don't report yourself
-        if ($user->uid == $field['entity']->uid) {
-          $show_menu_item = false;
-        }
-
         if ($show_menu_item) {
           $links['manageattendees'][] = array(
             'wrapper_class' => array('ticketsales'),

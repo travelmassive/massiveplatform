@@ -360,7 +360,7 @@ function tm_events_field_default_field_bases() {
     'locked' => 0,
     'module' => 'entityreference',
     'settings' => array(
-      'handler' => 'base',
+      'handler' => 'base_no_options',
       'handler_settings' => array(
         'behaviors' => array(
           'views-select-list' => array(

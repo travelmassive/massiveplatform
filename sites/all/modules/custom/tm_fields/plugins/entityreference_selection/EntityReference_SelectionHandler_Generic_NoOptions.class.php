@@ -4,6 +4,8 @@
  * A generic Entity handler.
  * 
  * Does not return any options (to avoid out of memory errors)
+ * This is needed if we want a dropdown or select list instead of autocomplete
+ * We then fill out the options in form_alter
  *
  * Cloned from EntityReference_SelectionHandler_Generic
  * Modified getReferencableEntities() to return empty array.
@@ -157,11 +159,15 @@ class EntityReference_SelectionHandler_Generic_NoOptions implements EntityRefere
 
   /**
    * Implements EntityReferenceHandler::getReferencableEntities().
+   * Return empty array.
+   * You must populate the options array in form_alter
    */
   public function getReferencableEntities($match = NULL, $match_operator = 'CONTAINS', $limit = 0) {
-    // return no options
-    $options = array("_none" => "No options");
+   
+    // return array(null) so that select list is rendered
+    $options = array("user" => array(null)); 
     return $options;
+
   }
 
   /**

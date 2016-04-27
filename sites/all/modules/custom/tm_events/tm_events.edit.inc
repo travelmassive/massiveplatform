@@ -39,8 +39,8 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
       $company_id = $_GET["field_event_company"];
     } else {
       $typeof_event = "member_event";
-      $event_owner_uid = $user->uid;
     }
+    $event_owner_uid = $user->uid;
   }
 
   // Existing event
@@ -54,8 +54,8 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
       $company_id = $event->field_event_company[LANGUAGE_NONE][0]['target_id'];
     } else {
       $typeof_event = "member_event";
-      $event_owner_uid = $event->uid;
     }
+    $event_owner_uid = $event->uid;
   } 
 
   // Step 3. Modify form
@@ -89,6 +89,7 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
 			}
 		}
 		$form['field_organizer'][LANGUAGE_NONE]['#options'] = $opts;
+    $form['field_organizer'][LANGUAGE_NONE]['#multiple'] = true; // multiple select
 
 		// Disable fields
   	$form['field_chapter']['#disabled'] = true;

@@ -77,10 +77,10 @@ $image = theme('image_style', array(
               <strong><?php print check_plain($loaded->realname); ?></strong>
               <?php print t('View profile'); ?>
                 <?php
-                if ($user_score >= 100): ?>
-                <span style='padding-left: 0.2em; font-size: smaller; font-style: normal; background-color: green; color: #fff; border-radius: 2px; padding: 2px;'><?php print($user_score); ?>% complete</span>
-                <?php endif;?>
-                <?php if ($user_score < 100) {
+                if ($user_score >= 100) {
+                  $css_color = "green";
+                }
+                if ($user_score < 100) {
                   $css_color = "green";
                 }
                 if ($user_score < 50) {

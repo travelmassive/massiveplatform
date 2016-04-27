@@ -16,9 +16,10 @@ if (arg(0) == 'user' and is_numeric(arg(1)) and arg(2) == FALSE) {
    	$feedme_off = false;
 }
 
-// chapter
+// chapter or event
 if (arg(0) == 'node' and is_numeric(arg(1)) and arg(2) == FALSE) {
 
+    // chapter
 	if ($node->type == "chapter") {
 		$node = node_load(arg(1));
 		$feedme_mode = "category";
@@ -28,7 +29,7 @@ if (arg(0) == 'node' and is_numeric(arg(1)) and arg(2) == FALSE) {
 		// 1. a vanilla forum category (ie: category_id=30)
 		// 2. a comma delimeted list of classes to search (ie: chapter-berlin,country-germany,continent-eu)
 		if (isset($node->field_discuss_category_id[LANGUAGE_NONE][0]['value'])) {
-			$feedme_category_id = $node->field_discuss_category_id[LANGUAGE_NONE][0]['value'];
+			$feedme_category_id = trim($node->field_discuss_category_id[LANGUAGE_NONE][0]['value']);
 		} else {
 			// ie: chapter-berlin
 			$feedme_category_id = "chapter-" . strtolower(str_replace(" ", "_", $node->title));
@@ -49,6 +50,21 @@ if (arg(0) == 'node' and is_numeric(arg(1)) and arg(2) == FALSE) {
 		$feedme_append = ".column.first";
 		$feedme_off = false;
 	}
+
+    // event
+    if ($node->type == "event") {
+        $node = node_load(arg(1));
+        $feedme_mode = "category";
+        
+        // category_id is either
+        // 1. a vanilla forum category (ie: category_id=30)
+        // 2. a comma delimeted list of classes to search
+        if (isset($node->field_event_discuss_category_id[LANGUAGE_NONE][0]['value'])) {
+            $feedme_category_id = trim($node->field_event_discuss_category_id[LANGUAGE_NONE][0]['value']);
+            $feedme_append = ".column.first";
+            $feedme_off = false;
+        }
+    }
 	
 }
 

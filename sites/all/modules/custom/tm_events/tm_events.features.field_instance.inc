@@ -1005,7 +1005,7 @@ This will be added to the attendee count on the event page.',
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 10,
+      'weight' => 8,
     ),
   );
 
@@ -1804,7 +1804,7 @@ This will be added to the attendee count on the event page.',
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 9,
+      'weight' => 7,
     ),
   );
 

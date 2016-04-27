@@ -1592,6 +1592,9 @@ function tm_fields_ctools_plugin_directory($module, $plugin) {
   if ($module == 'field_validation' && $plugin == 'validator') {
     return 'plugins/' . $plugin;
   }
+  if ($module == 'entityreference') {
+    return 'plugins/entityreference_' . $plugin;
+  }
 }
 
 /**

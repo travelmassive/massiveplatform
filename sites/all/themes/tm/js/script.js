@@ -827,6 +827,9 @@
 (function ($, Drupal, window, document, undefined) {jQuery(document).ready(function() {
 
   tm_show_account_menu_moderator_actions = function() {
+    $(".dropdown-account-settings").hide();
+    $(".dropdown-company-profiles").hide();
+    $(".dropdown-chapter-leader-resources").hide();
     $("#account_menu_moderator_actions_show").hide();
     $("#account_menu_moderator_actions_items").show();
   }

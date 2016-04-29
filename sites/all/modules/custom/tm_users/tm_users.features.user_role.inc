@@ -22,6 +22,12 @@ function tm_users_user_default_roles() {
     'weight' => 3,
   );
 
+  // Exported role: export-global-newsletter-csv.
+  $roles['export-global-newsletter-csv'] = array(
+    'name' => 'export-global-newsletter-csv',
+    'weight' => 8,
+  );
+
   // Exported role: moderator.
   $roles['moderator'] = array(
     'name' => 'moderator',

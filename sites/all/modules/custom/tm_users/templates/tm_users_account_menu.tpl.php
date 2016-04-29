@@ -97,7 +97,7 @@ $image = theme('image_style', array(
       </li>
     </ul>
 
-    <ul class="dropd-menu">
+    <ul class="dropd-menu dropdown-account-settings">
       <li><?php print l(t('Account settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-account-options')); ?></li>
       <li><?php print l(t('Notification settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-notifications-options')); ?></li>
       <li><?php print l(t('Invite members'), 'invite'); ?></li>
@@ -136,7 +136,7 @@ $image = theme('image_style', array(
     </ul>
 
   <?php if (in_array("approved user", $loaded->roles)) : ?>
-    <ul class="dropd-menu">
+    <ul class="dropd-menu dropdown-company-profiles">
       <?php print tm_users_menu_companies($loaded->uid); ?>
       <?php if (tm_organizations_check_user_can_create_company($loaded->uid)): ?>
       <li><?php print l(t('Add company profile'), 'node/add/organization'); ?></li>
@@ -150,7 +150,7 @@ $image = theme('image_style', array(
     </ul>
   <?php endif; ?>
 
-    <ul class="dropd-menu">
+    <ul class="dropd-menu dropdown-chapter-leader-resources">
         <?php print tm_users_menu_chapters($loaded->uid); ?>
         <?php
         if (in_array("chapter leader", $loaded->roles)): ?>
@@ -166,12 +166,18 @@ $image = theme('image_style', array(
       <ul class="dropd-menu" id="account_menu_moderator_actions_show">
         <li><?php print l(t('Moderator tools'), 'javascript:tm_show_account_menu_moderator_actions();', array('fragment' => '','external'=>true)); ?></li>
       </ul>
-      <ul class="dropd-menu" id="account_menu_moderator_actions_items" style="display: none;">
+      <ul class="dropd-menu dropdown-moderator-tools" id="account_menu_moderator_actions_items" style="display: none;">
         <li><?php print l(t('Add event'), 'node/add/event'); ?></li>
         <li><?php print l(t('Add chapter'), 'node/add/chapter'); ?></li>
         <li><?php print l(t('All unapproved members'), 'admin/unapproved-members'); ?></li>
         <li><?php print l(t('Community reports'), 'admin/tm_reports'); ?></li>
         <li><?php print l(t('Global insights'), 'admin/global_insights'); ?></li>
+        <?php if (tm_users_download_global_newsletter_csv_check()): ?>
+        <li><?php print l(t('Export newsletter subscribers'), 'admin/export_global_newsletter'); ?></li>
+        <?php endif; ?>
+         <?php if (tm_users_download_chapter_leaders_csv_check()): ?>
+        <li><?php print l(t('Export chapter leaders'), 'admin/export_chapter_leaders'); ?></li>
+        <?php endif; ?>
       </ul>
   <?php endif; ?>
 

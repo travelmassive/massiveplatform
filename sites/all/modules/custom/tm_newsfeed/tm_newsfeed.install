@@ -1,0 +1,25 @@
+<?php
+
+/* tm_status_updates table */
+/* 
+
+drop table tm_newsfeed_status_updates;
+CREATE TABLE IF NOT EXISTS `tm_newsfeed_status_updates` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `entity_id` int(11) NOT NULL,
+  `entity_type` varchar(255) NOT NULL,
+  `status_update` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `created` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `edited` timestamp NULL,
+  `latitude` decimal(18,12) NOT NULL DEFAULT '0.00',
+  `longitude` decimal(18,12) NOT NULL DEFAULT '0.00',
+  `poster_uid` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (entity_id);
+ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (entity_type);
+ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (created);
+ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (latitude);
+ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (longitude);
+
+*/

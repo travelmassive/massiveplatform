@@ -1,0 +1,14 @@
+name = TM Notifications Newsfeed
+description = Travel Massive news feed and network updates.
+core = 7.x
+package = TM Notifications
+version = 7.x-1.0-dev
+project = tm_notifications
+dependencies[] = ctools
+dependencies[] = features
+dependencies[] = strongarm
+dependencies[] = tm_notifications
+dependencies[] = tm_newsfeed
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:2
+features[variable][] = tm_notifications__weekly_newsfeed

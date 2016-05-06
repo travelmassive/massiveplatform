@@ -1,0 +1,30 @@
+<?php
+/**
+ * @file
+ * Code for the TM Notifications Newsfeed feature.
+ */
+
+include_once 'tm_notifications_newsfeed.features.inc';
+
+/**
+ * Implements hook_tm_notif_info()
+ */
+function tm_notifications_newsfeed_tm_notif_info() {
+  $notification = array();
+  $notification['weekly_newsfeed'] = array(
+    'title' => 'Weekly Newsfeed',
+    'description' => 'Send a weekly update to members.',
+    'use_cron' => TRUE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('node', 'current-user'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+  
+  return $notification;
+}
+

@@ -21,7 +21,9 @@ function tm_newsfeed_display_callback() {
 function tm_newsfeed_display() {
  
  	global $user;
+ 	global $conf;
  	global $tm_newsfeeds_template;
+ 	global $tm_newsfeed_css;
 
  	// Add js for posting update
 	drupal_add_js(drupal_get_path('module', 'tm_newsfeed') . '/js/tm_newsfeed.js');
@@ -64,7 +66,7 @@ function tm_newsfeed_display() {
 			$image_url = image_style_url("avatar", $posting_user->field_avatar[LANGUAGE_NONE][0]['uri']);
 		} else {
 			$default_image_uri = _tm_users_get_default_avatar($conf["tm_images_default_field_avatar"], $posting_user->uid);
-			$image_url = image_style_url("avatar", $posting_user);
+			$image_url = image_style_url("avatar", $default_image_uri);
 		}
 	
 		$feed_info = "<span class='newsfeed_update'>" . strip_tags($result->status_update) . " <span class='newsfeed_ago'>" . $posted_time . "</span>";
@@ -83,7 +85,7 @@ function tm_newsfeed_display() {
 	$html = str_replace("__FEED_VIEW_MORE_URL__", "/newsfeed", $html);
 	$html = str_replace("__FEED_VIEW_MORE_TEXT__", "View more", $html);
 
-	return $help_html . "<br>" . $html;
+	return $tm_newsfeed_css . $help_html . "<br>" . $html;
 
 }
 
@@ -146,4 +148,15 @@ $tm_newsfeed_template = <<<EOT
       	
 	</article>
 </li>
+EOT;
+
+global $tm_newsfeed_css;
+$tm_newsfeed_css = <<<EOT
+<style>
+.prime-title.newsfeed a:hover { color: #3080b2;}
+.prime-title.newsfeed a { text-decoration: underline;}
+.card.newsfeed { padding-top: 0.5rem; padding-bottom: 0.5rem;}
+.card.newsfeed:hover { background-color: #e7f2f7;}
+img.newsfeed-image { max-height: 64px; max-width: 64px;}
+</style>
 EOT;

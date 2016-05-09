@@ -78,12 +78,29 @@ function tm_newsfeed_display() {
 
 	}
 
+	// example of fetching marketplace items
+	$marketplace_feed = tm_newsfeed_marketplace_fetch("united states");
+	foreach($marketplace_feed as $result) {
+		
+		$marketplace_url = $result->url;
+		$posted_time = format_interval($result->seconds_ago, 1) . " ago";
+		$image_url = $result->logo_url;
+		$feed_info = "<span class='newsfeed_update'>" . substr(strip_tags($result->clean_description), 0, 100) . "... <span class='newsfeed_ago'>" . $posted_time . "</span>";
+		$feed_title = l($result->title, $marketplace_url);
+		$feed_html = tm_newsfeed_render_feed($marketplace_url, $image_url, $feed_title, $feed_info, $feed_item_count, 100);
+
+		$html_items[] = $feed_html;
+		$feed_item_count++;
+	}
+
 	// render items into feed
 	$feed_html = implode("\n", $html_items);
 	$html = str_replace("__FEED_ITEMS__", $feed_html, $tm_newsfeeds_template);
 	$html = str_replace("__FEED_TITLE__", "Newsfeed", $html);
 	$html = str_replace("__FEED_VIEW_MORE_URL__", "/newsfeed", $html);
 	$html = str_replace("__FEED_VIEW_MORE_TEXT__", "View more", $html);
+
+
 
 	return $tm_newsfeed_css . $help_html . "<br>" . $html;
 

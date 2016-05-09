@@ -932,5 +932,13 @@ $conf["tm_notifications_subscription_secret_key"] = "randomstring123"; // random
 // cover videos
 $conf["tm_cover_videos_enabled"] = true; // enable cover video
 
+// newsfeed
+$conf["tm_newsfeed_curl_timeout"] = 2; // seconds for curl timeout
+$conf["tm_newsfeed_curl_check_certificate"] = false; // check ssl certificate
+$conf["tm_newsfeed_marketplace_enabled"] = true; // enable marketplace newsfeed
+$conf["tm_newsfeed_marketplace_api_url"] = ""; // url for marketplace api
+$conf["tm_newsfeed_marketplace_cache"] = 60; // how long to cache results in seconds
+// $conf["tm_newsfeed_marketplace_api_userpass"] = "user:pass"; // uncomment to use basic httpauth 
+
 $conf['install_profile'] = 'tm';
 

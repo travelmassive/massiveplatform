@@ -392,6 +392,7 @@ function tm_notifications_notify($notification_name, $account, $tokens = array()
 
     // Add unsubscribe link if notification change allowed
     // Note: Hide one-click subscription link if reply-to: another member
+    $reply_to_member = false;
     if (isset($tokens['reply_to_member'])) {
         $reply_to_member = $tokens['reply_to_member'];
     }

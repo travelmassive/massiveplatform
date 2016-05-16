@@ -943,6 +943,10 @@ $conf["tm_newsfeed_blog_enabled"] = true; // enable blog newsfeed
 $conf["tm_newsfeed_blog_api_url"] = ""; // url for blog api
 $conf["tm_newsfeed_blog_cache"] = 60; // how long to cache results in seconds
 // $conf["tm_newsfeed_blog_api_userpass"] = "user:pass"; // uncomment to use basic httpauth 
+$conf["tm_newsfeed_discuss_enabled"] = true; // enable discussions newsfeed
+$conf["tm_newsfeed_discuss_api_url"] = ""; // url for discussions api
+$conf["tm_newsfeed_discuss_cache"] = 60; // how long to cache results in seconds
+// $conf["tm_newsfeed_discuss_api_userpass"] = "user:pass"; // uncomment to use basic httpauth 
 
 
 $conf['install_profile'] = 'tm';

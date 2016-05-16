@@ -603,7 +603,7 @@ $conf['tm_add_company_limit'] = '8'; // maximum number of companies a user can a
 $conf['tm_site_name'] = "Travel Massive"; // used by emails and in templates to refer to the site
 $conf['tm_email_server_http'] = "https"; // http or https depending on your setup. Will be used in email settings
 $conf['tm_email_signoff'] = "Cheers,<br>- The Travel Massive Team"; // default email sign off at bottom of emails
-$conf['tm_email_default_footer'] = "Update Your Notification Settings at <a href='__SERVER_HTTP__://__SERVER_NAME__'>__SERVER_NAME__</a><br>
+$conf['tm_email_default_footer'] = "__UNSUBSCRIBE_LINK__<br>
 Travel Massive P.B.C. 385 Grove St, San Francisco CA 94102<br> Phone +1 779-999-0042 &middot; community@travelmassive.com"; // used by emails and in templates to refer to the site
 
 /** Send a copy of any announcement to this address **/
@@ -926,6 +926,9 @@ Add options to your search text to filter your results. Here's some examples.
 $conf["tm_cookieconsent_enable"] = true; // enable EU cookie consent notice
 $conf["tm_cookieconsent_privacy_url"] = ""; // link to privacy policy
 
+// notifications unsubscribe link
+$conf["tm_notifications_subscription_secret_key"] = "randomstring123"; // random string
+
 // cover videos
 $conf["tm_cover_videos_enabled"] = true; // enable cover video
 
@@ -940,6 +943,10 @@ $conf["tm_newsfeed_blog_enabled"] = true; // enable blog newsfeed
 $conf["tm_newsfeed_blog_api_url"] = ""; // url for blog api
 $conf["tm_newsfeed_blog_cache"] = 60; // how long to cache results in seconds
 // $conf["tm_newsfeed_blog_api_userpass"] = "user:pass"; // uncomment to use basic httpauth 
+$conf["tm_newsfeed_discuss_enabled"] = true; // enable discussions newsfeed
+$conf["tm_newsfeed_discuss_api_url"] = ""; // url for discussions api
+$conf["tm_newsfeed_discuss_cache"] = 60; // how long to cache results in seconds
+// $conf["tm_newsfeed_discuss_api_userpass"] = "user:pass"; // uncomment to use basic httpauth 
 
 
 $conf['install_profile'] = 'tm';

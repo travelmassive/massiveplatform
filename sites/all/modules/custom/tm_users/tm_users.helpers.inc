@@ -239,3 +239,21 @@ function tm_users_get_chapters_leading($user) {
   return $chapters_leader_nids;
 }
 
+/**
+ * Helper method to get events a member has registered for
+ */
+function tm_users_get_users_events($user) {
+
+  $flags = flag_get_user_flags("node", null, $user->uid);
+  $event_nids = array();
+  foreach ($flags as $flag_name => $flag) {
+    if ($flag_name == "event_register") {
+      foreach($flag as $f) {
+        $event_nids[] = $f->entity_id;
+      }
+    }
+  }
+
+  return $event_nids;
+}
+

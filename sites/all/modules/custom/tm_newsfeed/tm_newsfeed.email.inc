@@ -64,13 +64,10 @@ function tm_newsfeed_email() {
 	return $response;
 }
 
+
 function tm_newsfeed_generate_email($user_id, $start_date, $end_date) {
 
-	// globals
-	global $tm_newsfeed_email_template;
-	global $tm_newsfeed_email_greetings;
-	global $tm_newsfeed_email_opening_lines;
-	global $tm_newsfeed_email_quotes;
+	global $conf;
 
 	// process inputs
 	$account = user_load($user_id);
@@ -78,14 +75,16 @@ function tm_newsfeed_generate_email($user_id, $start_date, $end_date) {
 	$search_country = tm_newsfeed_get_search_country($account);
 
 	// start building email
-	$email = $tm_newsfeed_email_template;
+	$email = TmNewsfeedEmailTemplates::$tm_newsfeed_email_template;
 
-	$greeting = $tm_newsfeed_email_greetings[array_rand($tm_newsfeed_email_greetings)];
+	$greeting = TmNewsfeedEmailTemplates::$tm_newsfeed_email_greetings[
+		array_rand(TmNewsfeedEmailTemplates::$tm_newsfeed_email_greetings)];
 	$email = str_replace("__GREETING__", $greeting, $email);
 
 	$email = str_replace("__USER_FIRST_NAME__", $user_name, $email);
 
-	$opening_line = $tm_newsfeed_email_opening_lines[array_rand($tm_newsfeed_email_opening_lines)];
+	$opening_line = TmNewsfeedEmailTemplates::$tm_newsfeed_email_opening_lines[
+		array_rand(TmNewsfeedEmailTemplates::$tm_newsfeed_email_opening_lines)];
 	$email = str_replace("__OPENING_LINE__", $opening_line, $email);
 
 	$tip = tm_newsfeed_email_get_tip($user_id);
@@ -94,12 +93,18 @@ function tm_newsfeed_generate_email($user_id, $start_date, $end_date) {
 	$content = tm_newsfeed_email_populate_section_content($user_id, $search_country, $start_date, $end_date);
 	$email = str_replace("__EMAIL_CONTENT__", $content, $email);
 
-	$quote = $tm_newsfeed_email_quotes[array_rand($tm_newsfeed_email_quotes)];
+	$quote = TmNewsfeedEmailTemplates::$tm_newsfeed_email_quotes[
+		array_rand(TmNewsfeedEmailTemplates::$tm_newsfeed_email_quotes)];
 	$email = str_replace("__QUOTE_OF_THE_DAY__", $quote['text'], $email);
 	$email = str_replace("__QUOTE_OF_THE_DAY_AUTHOR__", $quote['author'], $email);
 
+	$email = str_replace("__LET_US_KNOW_FEEDBACK__", "Feedback? Suggestions? <a href='".$tm_domain."/contact'>Let us know</a>", $email);
+
 	$email = str_replace("__THANK_YOU_PHRASE__", "Cheers", $email);
-	$email = str_replace("__PLATFORM_NAME__", "Travel Massive", $email);
+	$email = str_replace("__PLATFORM_NAME__", $conf['tm_site_name'], $email);
+
+	// strip all exclamation marks as they trigger spam filters
+	$email = str_replace("!", "", $email);
 
 	return $email;
 }
@@ -116,29 +121,49 @@ function tm_newsfeed_email_get_tip($user_id) {
 
 function tm_newsfeed_email_populate_section_content($user_id, $search_country, $start_date, $end_date) {
 	
+	global $conf;
 	global $debug_timer;
 
 	$content = "";
+
+	// note: this is startdate for testing
+	//       TODO: it should be end_date, or the current date, in order to get upcoming events
 	$debug_timer['11_start_events'] = time();
-	$content = $content . tm_newsfeed_email_populate_events($user_id, $end_date);
+	$content = $content . tm_newsfeed_email_populate_events($user_id, $start_date);
+
 	$debug_timer['12_start_updates'] = time();
 	$content = $content . tm_newsfeed_email_populate_updates($user_id, $start_date, $end_date);
+
 	$debug_timer['13_start_new_members'] = time();
 	$content = $content . tm_newsfeed_email_populate_new_members($user_id, $start_date, $end_date);
+
 	$debug_timer['14_start_new_companies'] = time();
 	$content = $content . tm_newsfeed_email_populate_new_companies($user_id, $start_date, $end_date);
-	$debug_timer['15_start_jobs'] = time();
-	$content = $content . tm_newsfeed_email_populate_jobs($search_country, $start_date, $end_date);
-	$debug_timer['16_start_discussions'] = time();
-	$content = $content . tm_newsfeed_email_populate_discussions($user_id, $start_date, $end_date);
-	$debug_timer['17_start_blog_posts'] = time();
-	$content = $content . tm_newsfeed_email_populate_blog_posts($user_id, $start_date, $end_date);
+
+	if ($conf['tm_newsfeed_marketplace_enabled']) {
+		$debug_timer['15_start_jobs'] = time();
+		$content = $content . tm_newsfeed_email_populate_jobs($search_country, $start_date, $end_date);
+	}
+
+	if (false) { // ($conf['tm_newsfeed_discussions_enabled']) {
+		$debug_timer['16_start_discussions'] = time();
+		$content = $content . tm_newsfeed_email_populate_discussions($user_id, $start_date, $end_date);
+	}
+	
+	if ($conf['tm_newsfeed_blog_enabled']) {
+		$debug_timer['17_start_blog_posts'] = time();
+		$content = $content . tm_newsfeed_email_populate_blog_posts($user_id, $start_date, $end_date);
+		# code...
+	}
+
 	$debug_timer['20_done_content'] = time();
 
 	return $content;
 }
 
 function tm_newsfeed_email_populate_updates($user_id, $start_date, $end_date) {
+	global $conf;
+		
 	$items = array();
 	$results = tm_newsfeed_get_updates($user_id, $start_date, $end_date);
 
@@ -154,7 +179,20 @@ function tm_newsfeed_email_populate_updates($user_id, $start_date, $end_date) {
 			$href = $tm_domain . "/node/" . $result->entity_id;
 		}
 
-		$link = $result->entity_name;
+		$link = "";
+		if ($result->entity_type == 'user') {
+			$link = $result->entity_name;
+		} elseif ($result->entity_type == 'chapter') {
+			// add site name to chapter link text, but only if it doesn't already exist
+			if (strpos(strtolower($result->entity_name), strtolower($conf['tm_site_name'])) !== false) {
+				$link = $result->entity_name;
+			} else {
+				$link = $result->entity_name . ' Travel Massive';
+			}
+		} else {
+			$link = $result->entity_name;
+		}
+
 		$time = time_elapsed_string($result->created);
 		$text = " posted an update $time";
 
@@ -172,10 +210,13 @@ function tm_newsfeed_email_populate_events($user_id, $from_date) {
 
 	if (count($results) < 1) return "";
 
+	// sort results purely by date; query will be sorted by relevance columns first
+	usort($results, 'sort_event_date');
+
 	foreach($results as $result) {
-		$href = $tm_domain . "/node/" . $result->e_id;
-		$link = $result->event;
-		$text = ', '. date_format(new DateTime($result->date), 'l, F j');
+		$href = $tm_domain . "/node/" . $result->event_id;
+		$link = $result->event_title;
+		$text = ', '. date_format(new DateTime($result->event_date), 'l, F j');
 
 		$items[] = array("href" => $href, "link" => $link, "text" => $text);
 	}
@@ -248,8 +289,8 @@ function tm_newsfeed_email_populate_jobs($search_country, $start_date, $end_date
 	if (count($results) < 1) return "";
 
 	// process results
-	// usort($results, 'cmp');
-	// $results = array_slice($results, 0, 3);
+	usort($results, 'sort_seconds_ago');
+	$results = array_slice($results, 0, 3);
 
 	foreach($results as $result) {
 		$href = $url;
@@ -274,10 +315,24 @@ function tm_newsfeed_email_populate_discussions($user_id, $start_date, $end_date
 
 	if (count($results) < 1) return "";
 
+	// process results
+	usort($results, 'sort_discussions');
+	$results = array_slice($results, 0, 3);
+
 	foreach($results as $result) {
 		$href = $result->url;
 		$link = $result->title;
 		$text = "";
+
+		$num_replies = $result->num_replies;
+
+		if ($num_replies > 1) {
+			$text = " ($num_replies replies)";
+		} elseif ($num_replies == 1) {
+			$text = " (1 reply)";
+		} else {
+			$text = " (Be the first to reply)";
+		}
 
 		$items[] = array("href" => $href, "link" => $link, "text" => $text);
 	}
@@ -309,22 +364,19 @@ function tm_newsfeed_email_populate_blog_posts($user_id, $start_date, $end_date)
 
 
 function tm_newsfeed_email_populate_section($section_name, $items) {
-	global $tm_newsfeed_email_section_headers;
-	global $tm_newsfeed_email_section;
-	global $tm_newsfeed_email_section_row;
 
-	$section = $tm_newsfeed_email_section;
+	$section = TmNewsfeedEmailTemplates::$tm_newsfeed_email_section;
 	$section_contents = "";
 
 	foreach($items as $item) {
-		$row = $tm_newsfeed_email_section_row;
+		$row = TmNewsfeedEmailTemplates::$tm_newsfeed_email_section_row;
 		$row = str_replace("__EMAIL_ITEM_LINK__", $item['href'], $row);
 		$row = str_replace("__EMAIL_ITEM_LINK_TEXT__", $item['link'], $row);
 		$row = str_replace("__EMAIL_ITEM_EXTRA_TEXT__", $item['text'], $row);
 		$section_contents = $section_contents . $row;
 	}
 
-	$section = str_replace("__EMAIL_SECTION_HEADER__", $tm_newsfeed_email_section_headers[$section_name], $section);
+	$section = str_replace("__EMAIL_SECTION_HEADER__", TmNewsfeedEmailTemplates::$tm_newsfeed_email_section_headers[$section_name], $section);
 	$section = str_replace("__EMAIL_SECTION_ROWS__", $section_contents, $section);
 
 	return $section;
@@ -333,10 +385,11 @@ function tm_newsfeed_email_populate_section($section_name, $items) {
 
 
 
-/* Templates */
+class TmNewsfeedEmailTemplates
+{
 
-global $tm_newsfeed_email_template;
-$tm_newsfeed_email_template = <<<EOT
+	/* Templates */
+	public static $tm_newsfeed_email_template = <<<EOT
 <hr>
 <div class="email-intro">
 	<p>__GREETING__, __USER_FIRST_NAME__</p>
@@ -352,12 +405,12 @@ $tm_newsfeed_email_template = <<<EOT
 	<p>Quote of the day:<br>
 	"__QUOTE_OF_THE_DAY__" – <em>__QUOTE_OF_THE_DAY_AUTHOR__</em>
 	</p>
+	<p>__LET_US_KNOW_FEEDBACK__</p>
 	<p>__THANK_YOU_PHRASE__,<br>The __PLATFORM_NAME__ Team</p>
 </div>
 EOT;
 
-global $tm_newsfeed_email_section;
-$tm_newsfeed_email_section = <<<EOT
+	public static $tm_newsfeed_email_section = <<<EOT
 <div class="email-section">
 	<strong>__EMAIL_SECTION_HEADER__</strong><br>
 	__EMAIL_SECTION_ROWS__
@@ -365,55 +418,49 @@ $tm_newsfeed_email_section = <<<EOT
 <br>
 EOT;
 
-global $tm_newsfeed_email_section_row;
-$tm_newsfeed_email_section_row = <<<EOT
+	public static $tm_newsfeed_email_section_row = <<<EOT
 <a href="__EMAIL_ITEM_LINK__">__EMAIL_ITEM_LINK_TEXT__</a>__EMAIL_ITEM_EXTRA_TEXT__<br>
 EOT;
 
-global $tm_newsfeed_css;
-$tm_newsfeed_css = <<<EOT
+	public static $tm_newsfeed_css = <<<EOT
 <style>
 </style>
 EOT;
 
 
-/* Lookups */
-global $tm_newsfeed_email_section_headers;
-$tm_newsfeed_email_section_headers = array(
-	'blog_posts' => 'Most popular on the blog',
-	'discussions' => 'Recent discussions',
-	'jobs' => 'Jobs and opportunities',
-	'new_members' => 'New members in your network',
-	'new_companies' => 'New companies in your network',
-	'updates' => 'Latest status updates',
-	'events' => 'Upcoming events'
-	);
+	/* Lookups */
+	public static $tm_newsfeed_email_section_headers = array(
+		'blog_posts' => 'New blog posts',
+		'discussions' => 'Trending discussions',
+		'jobs' => 'Jobs and opportunities',
+		'new_members' => 'New members in your network',
+		'new_companies' => 'New companies in your network',
+		'updates' => 'Latest status updates',
+		'events' => 'Upcoming events'
+		);
 
 
-global $tm_newsfeed_email_greetings;
-$tm_newsfeed_email_greetings = array(
-	"Hello",
-	"Hey",
-	"Hola",
-	"Konnichiwa"
-	);
+	public static $tm_newsfeed_email_greetings = array(
+		"Hello",
+		"Hey",
+		"Hola",
+		"Konnichiwa"
+		);
 
-global $tm_newsfeed_email_opening_lines;
-$tm_newsfeed_email_opening_lines = array(
-	"Here’s what’s been happening at Travel Massive this week.",
-	"Check out what’s been happening at Travel Massive this week."
-	);
+	public static $tm_newsfeed_email_opening_lines = array(
+		"Here’s what’s been happening at Travel Massive this week.",
+		"Check out what’s been happening at Travel Massive this week."
+		);
 
-global $tm_newsfeed_email_quotes;
-$tm_newsfeed_email_quotes = array(
-	array("text" => "Travel makes one modest, you see what a tiny place you occupy in the world.",
-				"author" => "Gustave Flaubert"),
-	array("text" => "Oh the places you’ll go!",
-				"author" => "Dr. Seuss"),
-	array("text" => "Investment in travel is an investment in yourself.",
-				"author" => "Matthew Karsten")
-	);
-
+	public static $tm_newsfeed_email_quotes = array(
+		array("text" => "Travel makes one modest, you see what a tiny place you occupy in the world.",
+					"author" => "Gustave Flaubert"),
+		array("text" => "Oh the places you’ll go!",
+					"author" => "Dr. Seuss"),
+		array("text" => "Investment in travel is an investment in yourself.",
+					"author" => "Matthew Karsten")
+		);
+}
 
 
 
@@ -449,10 +496,23 @@ function time_elapsed_string($datetime, $full = false) {
 }
 
 // use to sort an array of objects by 'seconds_ago' attribute
-function cmp($a, $b)
+function sort_seconds_ago($a, $b)
 {
   return strcmp($a->seconds_ago, $b->seconds_ago);
 }
+
+// use to sort an array of objects returned from dicussions fetch
+function sort_discussions($a, $b)
+{
+  return strcmp($a->seconds_ago, $b->seconds_ago);
+}
+
+// use to sort an array of objects by 'seconds_ago' attribute
+function sort_event_date($a, $b)
+{
+  return strcmp($a->event_date, $b->event_date);
+}
+
 
 function tm_newsfeed_get_search_country($account)
 {

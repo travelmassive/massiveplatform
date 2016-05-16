@@ -12,7 +12,7 @@ function tm_newsfeed_blog_fetch() {
 		$cache = cache_get($cache_key, 'cache');
 		if (!empty($cache)) {
 			try {
-				return json_encode($cache->data);
+				return json_decode($cache->data);
 			} catch (Exception $e) {
 				return array();
 			}

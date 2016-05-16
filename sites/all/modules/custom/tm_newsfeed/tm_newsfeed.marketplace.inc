@@ -12,7 +12,7 @@ function tm_newsfeed_marketplace_fetch($country) {
 		$cache = cache_get($cache_key, 'cache');
 		if (!empty($cache)) {
 			try {
-				return json_encode($cache->data);
+				return json_decode($cache->data);
 			} catch (Exception $e) {
 				return array();
 			}

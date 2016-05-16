@@ -11,7 +11,7 @@ function tm_newsfeed_marketplace_fetch($country) {
 	if ($conf["tm_newsfeed_marketplace_cache"] > 0) {
 		$cache = cache_get($cache_key, 'cache');
 		if (!empty($cache)) {
-			return ($cache->data);
+			return (json_decode($cache->data));
 		}
 	}
 

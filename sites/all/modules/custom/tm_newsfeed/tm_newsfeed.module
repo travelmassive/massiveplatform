@@ -31,6 +31,14 @@ function tm_notifications_newsfeed_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  $items['newsfeed_email_test'] = array(
+    'title' => 'Notification Email Test',
+    'page callback' => 'tm_newsfeed_email',
+    'page arguments' => array(2),
+    'access callback' => 'tm_newsfeed_email_callback',
+    'type' => MENU_CALLBACK,
+  );
+
   return $items;
 }
 

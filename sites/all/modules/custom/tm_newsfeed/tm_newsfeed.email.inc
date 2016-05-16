@@ -32,9 +32,9 @@ function tm_newsfeed_email() {
 
 	// params
 	// $user_id = 29540;
-	$user_ids = array(29540,29538,29537,29536,29535,29534,29533,29532,29531,29530,29529,29528,29527,29526,29525,29524,29523,29522,29521,29520,29519,29518,29517,29516,29515,29514,29513,29512,29511,29510,29509,29508,29507,29506,29505,29504,29503,29502,29501,29500,29499,29498,29497,29496,29495,29494,29493,29492,29491,29490,29489,29488,29487,29486,29485,29484,29483,29482,29481,29480,29479,29478,29477,29476,29475,29474,29473,29472,29471,29470,29468,29467,29466,29465,29464,29463,29462,29461,29460,29459,29458,29457,29456,29455,29454,29453,29452,29451,29450,29449,29447,29446,29445,29444,29443,29442,29441,29440,29439,29438);
+	// $user_ids = array(29540,29538,29537,29536,29535,29534,29533,29532,29531,29530,29529,29528,29527,29526,29525,29524,29523,29522,29521,29520,29519,29518,29517,29516,29515,29514,29513,29512,29511,29510,29509,29508,29507,29506,29505,29504,29503,29502,29501,29500,29499,29498,29497,29496,29495,29494,29493,29492,29491,29490,29489,29488,29487,29486,29485,29484,29483,29482,29481,29480,29479,29478,29477,29476,29475,29474,29473,29472,29471,29470,29468,29467,29466,29465,29464,29463,29462,29461,29460,29459,29458,29457,29456,29455,29454,29453,29452,29451,29450,29449,29447,29446,29445,29444,29443,29442,29441,29440,29439,29438);
 	// $user_ids = array(29540,29538,29537,29536,29535);
-	// $user_ids = array(29540);
+	$user_ids = array(29540);
 
 	$start_date = new DateTime('2016-05-01');
 	$end_date = new DateTime();
@@ -248,8 +248,8 @@ function tm_newsfeed_email_populate_jobs($search_country, $start_date, $end_date
 	if (count($results) < 1) return "";
 
 	// process results
-	usort($results, 'cmp');
-	$results = array_slice($results, 0, 3);
+	// usort($results, 'cmp');
+	// $results = array_slice($results, 0, 3);
 
 	foreach($results as $result) {
 		$href = $url;
@@ -275,9 +275,9 @@ function tm_newsfeed_email_populate_discussions($user_id, $start_date, $end_date
 	if (count($results) < 1) return "";
 
 	foreach($results as $result) {
-		$href = "A";
-		$link = "A";
-		$text = "A";
+		$href = $result->url;
+		$link = $result->title;
+		$text = "";
 
 		$items[] = array("href" => $href, "link" => $link, "text" => $text);
 	}
@@ -288,14 +288,17 @@ function tm_newsfeed_email_populate_discussions($user_id, $start_date, $end_date
 
 function tm_newsfeed_email_populate_blog_posts($user_id, $start_date, $end_date) {
 	$items = array();
-	$results = array(); // tm_newsfeed_blog_posts_fetch($user_id, $start_date, $end_date);
+	$results = tm_newsfeed_blog_fetch();
 
 	if (count($results) < 1) return "";
 
-	foreach($results as $result) {
-		$href = "A";
-		$link = "A";
-		$text = "A";
+	// only add first 3
+	for ($i=0; $i < 3; $i++) { 
+		$result = $results[$i];
+
+		$href = $result->url;
+		$link = $result->title;
+		$text = "";
 
 		$items[] = array("href" => $href, "link" => $link, "text" => $text);
 	}

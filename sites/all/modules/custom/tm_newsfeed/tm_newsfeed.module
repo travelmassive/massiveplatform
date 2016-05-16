@@ -9,7 +9,7 @@ include "tm_newsfeed.email.inc";
 include "tm_newsfeed.builder.inc";
 include "tm_newsfeed.update.inc";
 include "tm_newsfeed.marketplace.inc";
-
+include "tm_newsfeed.blog.inc";
 
 /*
 * Implements hook_menu()

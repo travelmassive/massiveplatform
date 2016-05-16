@@ -90,12 +90,12 @@ left join field_data_field_chapter_timezone chapter_tz on chapter_tz.entity_id=c
 left join flagging have_joined_chapter
 on have_joined_chapter.entity_id = event_chapter.field_chapter_target_id
 and have_joined_chapter.fid = 3
-and have_joined_chapter.uid = @user_id
+and have_joined_chapter.uid = :user_id
 
 -- left join field_data_field_home_chapter my_home_chapter on event_chapter.field_chapter_target_id = my_home_chapter.field_home_chapter_target_id
 
 left join flagging following_event_creater on event.uid = following_event_creater.entity_id
-and following_event_creater.uid = @user_id and following_event_creater.fid=1
+and following_event_creater.uid = :user_id and following_event_creater.fid=1
 
 -- left join flagging already_going on event.nid = already_going.entity_id
 -- left join flagging event_register on event.nid = event_register.entity_id
@@ -106,25 +106,25 @@ event.type = 'event'
 -- and event_chapter.bundle = 'event' and event_type.bundle = 'event'
 
 -- and my_home_chapter.entity_type='user'
--- and my_home_chapter.entity_id = @user_id
+-- and my_home_chapter.entity_id = :user_id
 
 -- and already_going.fid=8
--- and already_going.uid = @user_id
+-- and already_going.uid = :user_id
 
 -- and event_register.fid=8
 
--- and following.uid = @user_id
+-- and following.uid = :user_id
 -- and following.fid=1
 
 -- get events taking place after the from date
--- and UNIX_TIMESTAMP(ed.field_event_date_value) > :from_date
+and UNIX_TIMESTAMP(ed.field_event_date_value) > :from_date
 -- but give a grace period of 1 hour before a result appears here
--- and UNIX_TIMESTAMP() > (event.created + 3600)
+and UNIX_TIMESTAMP() > (event.created + 3600)
 
 group by event.nid
 -- TODO relevance sort
 order by date
--- limit 3
+limit 3
 SQL;
 
 

@@ -936,6 +936,11 @@ $conf["tm_newsfeed_marketplace_enabled"] = true; // enable marketplace newsfeed
 $conf["tm_newsfeed_marketplace_api_url"] = ""; // url for marketplace api
 $conf["tm_newsfeed_marketplace_cache"] = 60; // how long to cache results in seconds
 // $conf["tm_newsfeed_marketplace_api_userpass"] = "user:pass"; // uncomment to use basic httpauth 
+$conf["tm_newsfeed_blog_enabled"] = true; // enable blog newsfeed
+$conf["tm_newsfeed_blog_api_url"] = ""; // url for blog api
+$conf["tm_newsfeed_blog_cache"] = 60; // how long to cache results in seconds
+// $conf["tm_newsfeed_blog_api_userpass"] = "user:pass"; // uncomment to use basic httpauth 
+
 
 $conf['install_profile'] = 'tm';
 

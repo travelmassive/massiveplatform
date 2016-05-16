@@ -79,31 +79,22 @@ function tm_newsfeed_discuss_fetch_for_user($account) {
 	$search_category_classes = array();
 
 	// add discussion categories from user's chapters
-	// ie: continent-europe, country-germany
+	// ie: country-germany
 	$users_chapters = tm_users_get_chapters($account);
 	foreach($users_chapters as $chapter_nid) {
 
 	  $node = node_load($chapter_nid);
 
+	  // custom category class
 	  if (isset($node->field_discuss_category_id[LANGUAGE_NONE][0]['value'])) {
 	    $search_category_classes[] = trim($node->field_discuss_category_id[LANGUAGE_NONE][0]['value']);
 	  } else {
-
-	    // Uncomment if you want to search in chapter discussions
-	    // ie: chapter-berlin
-	    // $search_category_classes[] = "chapter-" . strtolower(str_replace(" ", "_", $node->title));
-
-	    // lookup country and continent
+	    // lookup country
 	    if (isset($node->field_country[LANGUAGE_NONE][0]['iso2'])) {
 	      $country_code = $node->field_country[LANGUAGE_NONE][0]['iso2'];
 	      $country = country_load($country_code);
 	      if ($country != null) {
-
-	        // ie: country-germany
 	        $search_category_classes[] = "country-" . strtolower($country_code);
-
-	        // ie: continent-europe
-	        $search_category_classes[] = "continent-" . strtolower($country->continent);
 	      }
 	    }
 
@@ -127,7 +118,7 @@ function tm_newsfeed_discuss_fetch_for_user($account) {
 
 	// Remove duplicate classes
 	$search_category_classes = array_unique($search_category_classes);
-	
+
 	// Fetch results for user
 	$results = tm_newsfeed_discuss_fetch($search_category_classes);
 	return $results;

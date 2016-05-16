@@ -12,7 +12,6 @@ include "tm_newsfeed.marketplace.inc";
 include "tm_newsfeed.blog.inc";
 include "tm_newsfeed.discuss.inc";
 
-
 /*
 * Implements hook_menu()
 */

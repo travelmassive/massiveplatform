@@ -145,9 +145,9 @@ function tm_newsfeed_email_populate_section_content($user_id, $search_country, $
 		$content = $content . tm_newsfeed_email_populate_jobs($search_country, $start_date, $end_date);
 	}
 
-	if (false) { // ($conf['tm_newsfeed_discussions_enabled']) {
+	if ($conf['tm_newsfeed_discuss_enabled']) {
 		$debug_timer['16_start_discussions'] = time();
-		$content = $content . tm_newsfeed_email_populate_discussions($user_id, $start_date, $end_date);
+		$content = $content . tm_newsfeed_email_populate_discussions($user_id);
 	}
 	
 	if ($conf['tm_newsfeed_blog_enabled']) {
@@ -163,7 +163,7 @@ function tm_newsfeed_email_populate_section_content($user_id, $search_country, $
 
 function tm_newsfeed_email_populate_updates($user_id, $start_date, $end_date) {
 	global $conf;
-		
+
 	$items = array();
 	$results = tm_newsfeed_get_updates($user_id, $start_date, $end_date);
 
@@ -309,21 +309,21 @@ function tm_newsfeed_email_populate_jobs($search_country, $start_date, $end_date
 }
 
 
-function tm_newsfeed_email_populate_discussions($user_id, $start_date, $end_date) {
+function tm_newsfeed_email_populate_discussions($user_id) {
 	$items = array();
-	$results = array(); // tm_newsfeed_discussions_fetch($user_id, $start_date, $end_date);
+	$results = tm_newsfeed_discuss_fetch_for_user($user_id);
 
 	if (count($results) < 1) return "";
 
 	// process results
-	usort($results, 'sort_discussions');
+	// usort($results, 'sort_discussions');
 	$results = array_slice($results, 0, 3);
 
 	foreach($results as $result) {
 		$href = $result->url;
-		$link = $result->title;
-		$text = "";
+		$link = $result->discussion_name;
 
+		$text = "";
 		$num_replies = $result->num_replies;
 
 		if ($num_replies > 1) {

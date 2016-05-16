@@ -2,7 +2,7 @@
 
 // tm_newsfeed.discuss.inc - discussions methods
 
-function tm_newsfeed_discuss_fetch($search_category_classes = "all") {
+function tm_newsfeed_discuss_fetch($search_category_classes = array("all")) {
 
 	global $conf;
 
@@ -73,7 +73,13 @@ function tm_newsfeed_discuss_fetch($search_category_classes = "all") {
 
 // fetch discussion newsfeed for a user
 // prepare category_id classes based on user's chapters and events
-function tm_newsfeed_discuss_fetch_for_user($account) {
+function tm_newsfeed_discuss_fetch_for_user($user_id) {
+
+	// load user
+	$account = user_load($user_id);
+	if ($account == null) {
+		return array();
+	}
 
 	// discussion categories to search
 	$search_category_classes = array();

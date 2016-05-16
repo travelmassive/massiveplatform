@@ -329,9 +329,7 @@ function tm_events_node_presave($node) {
 	if ($perm_is_moderator_or_admin) { 
 		if (isset($node->field_event_reassign_owner[LANGUAGE_NONE][0])) {
 			$new_owner_uid = $node->field_event_reassign_owner[LANGUAGE_NONE][0]['target_id'];
-			if ($new_owner_uid != $user->uid) {
-				$node->uid = $new_owner_uid;
-			}
+			$node->uid = $new_owner_uid;
 		}
 	}
 

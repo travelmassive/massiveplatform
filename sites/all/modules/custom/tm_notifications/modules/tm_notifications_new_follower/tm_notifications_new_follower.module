@@ -101,6 +101,9 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
       // get notificaton setting
       $notification = new TMNotification("member_message");
 
+      // keep track of if we are allow reply-to to be another member
+      $reply_to_member = false;
+
       // check if we are following them already
       if ($you_are_following_them) {
 
@@ -118,7 +121,7 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
             $from = $first_name . " " . $last_name . "<" . $conf["tm_messaging_from_email"] . ">";
 
             $messaging_instructions = "<br><strong>You are now connected. You can respond to " . $first_name . " by replying directly to this email.</strong><br>";
-
+            $reply_to_member = true;
 
           } else {
 
@@ -141,7 +144,7 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
     }
 
     // Notification options
-    $notification_options = array('user' => $followed_user, '__PROFILE_URL__' => $profile_url, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__MESSAGING_INSTRUCTIONS__' => $messaging_instructions, '__FOLLOWER_MESSAGE__' => $follower_message);
+    $notification_options = array('user' => $followed_user, '__PROFILE_URL__' => $profile_url, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__MESSAGING_INSTRUCTIONS__' => $messaging_instructions, '__FOLLOWER_MESSAGE__' => $follower_message, 'reply_to_member' => $reply_to_member);
 
     // If reply_to is set
     if ($reply_to != "") {

@@ -37,7 +37,7 @@ function tm_events_download_csv($nid){
   $event = node_load($nid);
   $oldzone = date_default_timezone_get();
   date_default_timezone_set(drupal_get_user_timezone());
-  $csvname = $event->title.'_'.date('M_d_Y_Gi',time()) . ".csv";
+  $csvname = $event->title.'_'.date('M_d_Y_Hi',time()) . ".csv";
   $csvname = str_replace(array(","," "), "_", $csvname); // replace spaces and ,
   date_default_timezone_set($oldzone);
 

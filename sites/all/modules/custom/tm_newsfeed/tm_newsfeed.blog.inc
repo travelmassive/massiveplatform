@@ -1,14 +1,14 @@
 <?php
 
-// tm_newsfeed.marketplace.inc - marketplace methods
+// tm_newsfeed.blog.inc - blog methods
 
-function tm_newsfeed_marketplace_fetch($country) {
+function tm_newsfeed_blog_fetch() {
 
 	global $conf;
 
 	// check cache
-	$cache_key = 'tm-newsfeed-marketplace-' . str_replace(" ", "-", strtolower($country));
-	if ($conf["tm_newsfeed_marketplace_cache"] > 0) {
+	$cache_key = 'tm-newsfeed-blog';
+	if ($conf["tm_newsfeed_blog_cache"] > 0) {
 		$cache = cache_get($cache_key, 'cache');
 		if (!empty($cache)) {
 			try {
@@ -26,7 +26,7 @@ function tm_newsfeed_marketplace_fetch($country) {
 	$curl_timeout = $conf["tm_newsfeed_curl_timeout"];
 
 	// url
-	$url = $conf["tm_newsfeed_marketplace_api_url"] . "?country=" . $country;
+	$url = $conf["tm_newsfeed_blog_api_url"];
 
 	//set the url, number of POST vars, POST data
 	$CURLOPT_SSL_VERIFYHOST = 0; 
@@ -37,8 +37,8 @@ function tm_newsfeed_marketplace_fetch($country) {
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 	// basic http auth
-	if (isset($conf["tm_newsfeed_marketplace_api_userpass"])) {
-		curl_setopt($ch, CURLOPT_USERPWD, $conf["tm_newsfeed_marketplace_api_userpass"]);
+	if (isset($conf["tm_newsfeed_blog_api_userpass"])) {
+		curl_setopt($ch, CURLOPT_USERPWD, $conf["tm_newsfeed_blog_api_userpass"]);
 	}
 	curl_setopt($ch, CURLOPT_VERBOSE, false);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $CURLOPT_SSL_VERIFYHOST);
@@ -57,7 +57,7 @@ function tm_newsfeed_marketplace_fetch($country) {
 	curl_close($ch);
 
 	// return api data in json format
-	cache_set($cache_key, $result, 'cache', time() + $conf["tm_newsfeed_marketplace_cache"]);
+	cache_set($cache_key, $result, 'cache', time() + $conf["tm_newsfeed_blog_cache"]);
 
 	// return result
 	try {
@@ -67,4 +67,3 @@ function tm_newsfeed_marketplace_fetch($country) {
 	}
 	
 }
-

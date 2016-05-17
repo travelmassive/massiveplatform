@@ -49,11 +49,19 @@ function tm_chapters_contact_form_submit($form, &$form_state) {
   $account = user_load($user->uid);
 
   if ($chapter) {
+
+    // get chapter leaders emails
+    $chapter_leader_emails = array();
     foreach($chapter->field_chapter_leaders[$chapter->language] as $leader){
       $chapterleader = user_load($leader['target_id']);
-      tm_chapters_send_email($chapterleader->mail, $form_state['values']['subject'], $form_state['values']['body'], $account, $chapter);
+      $chapter_leader_emails[] = $chapterleader->mail;
     }
+    $chapter_leader_emails = array_unique($chapter_leader_emails);
 
+    // send to all chapter leaders in one email
+    tm_chapters_send_email($chapter_leader_emails, $form_state['values']['subject'], $form_state['values']['body'], $account, $chapter);
+
+    drupal_get_messages("help-tip");
     drupal_set_message(t('Your message has been sent.'));
     drupal_goto('node/'.$chapter->nid);
   }
@@ -62,7 +70,7 @@ function tm_chapters_contact_form_submit($form, &$form_state) {
 /**
  * Email sending function
  */
-function tm_chapters_send_email($email, $subject, $body, $user, $chapter){
+function tm_chapters_send_email($chapter_leader_emails, $subject, $body, $user, $chapter){
 
     global $conf;
 
@@ -109,6 +117,8 @@ function tm_chapters_send_email($email, $subject, $body, $user, $chapter){
     $template_file = drupal_get_path('module', 'tm_notifications') . '/templates/tm_notifications-email_template.tpl.php';
     $template = file_get_contents($template_file);
 
+    // delimit chapter leader emails
+    $email = implode(",", $chapter_leader_emails);
 
     // STEP 2. SET MAIL HTML HEADERS
     $email_message = drupal_mail($module, $key, $email, $language, $params, NULL, $send);
@@ -129,6 +139,8 @@ function tm_chapters_send_email($email, $subject, $body, $user, $chapter){
     $template = str_replace("__EMAIL_FOOTER__", $footer, $template);
 
     // Other vars
+    $unsubscribe_link = "Update Your Notification Settings at <a href='__SERVER_HTTP__://__SERVER_NAME__'>__SERVER_NAME__</a>"; 
+    $template = str_replace("__UNSUBSCRIBE_LINK__", $unsubscribe_link, $template);
     $template = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $template); 
     $template = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $template);  
     $template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  

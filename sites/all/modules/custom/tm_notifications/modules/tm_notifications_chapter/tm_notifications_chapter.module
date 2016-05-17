@@ -87,7 +87,10 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
         }
       }
 
-      tm_notifications_notify('user_chapter_join_welcome_member', $account, array('node' => $node, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__WELCOME_MESSAGE__' => $welcome_message));
+      // get formal chapter name
+      $chapter_name = tm_chapters_formal_name($node);
+
+      tm_notifications_notify('user_chapter_join_welcome_member', $account, array('node' => $node, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__WELCOME_MESSAGE__' => $welcome_message, '__CHAPTER_NAME__' => $chapter_name));
 
       // notify each owner of the organizational profile that they have a new follower
       foreach ($node->field_chapter_leaders['und'] as $leader) {

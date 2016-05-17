@@ -5,7 +5,7 @@
 // all queries in here
 
 function tm_newsfeed_get_updates($user_id, $start_date, $end_date) {
-	$results = db_query_range(TmSqlLibrary::$tm_sql_updates, 0, 3,
+	$results = db_query_range(TmSqlLibrary::$tm_sql_updates, 0, 10,
 		array(":user_id" => $user_id, ":start_date" => strtotime($start_date), ":end_date" => strtotime($end_date))
 		);
 
@@ -38,6 +38,13 @@ function tm_newsfeed_get_new_companies($user_id, $start_date, $end_date) {
 	return $results->fetchAll();
 }
 
+function tm_newsfeed_select_tip($user_id, $start_date, $end_date) {
+	$results = db_query_range(TmSqlLibrary::$tm_sql_select_tip, 0, 1,
+		array(":user_id" => $user_id, ":start_date" => strtotime($start_date), ":end_date" => strtotime($end_date))
+		);
+
+	return $results->fetchAll();
+}
 
 /**
 * 
@@ -289,6 +296,10 @@ where
   users.uid <> :user_id  -- dont include me
   and users.created > :start_date and users.created < :end_date
 
+group by
+	-- mysql hack; to only have one item per home chapter
+	users_home_chapter.field_home_chapter_target_id
+
 order by
   same_location_as_me desc,
   same_home_chapter_as_me desc,
@@ -353,10 +364,34 @@ node.type = 'organization'
 and node.created > :start_date and node.created < :end_date
 
 order by
-  same_location_as_me desc, same_country_as_my_home_chapter desc, num_followers desc
+  same_location_as_me desc,
+  same_country_as_my_home_chapter desc,
+  num_followers desc
 
 SQL;
 
+
+	public static $tm_sql_select_tip = <<<SQL
+select
+	users.uid,
+	users_roles.rid,
+	org.field_job_organization_value,
+	company_match.title,
+	num_companies.count as 'num_companies'
+from users
+left join users_roles on users.uid = users_roles.uid and users_roles.rid = 6
+left join field_data_field_job_organization org on users.uid = org.entity_id and org.entity_type = 'user'
+left join node company_match on company_match.type='organization'
+and
+LOWER(REPLACE(REPLACE(company_match.title,' ',''),',','')) =
+LOWER(REPLACE(REPLACE(org.field_job_organization_value,' ',''),',',''))
+
+left join (select count(*) as 'count' from node where node.type='organization') num_companies on 1=1
+-- TODO profile stats columns
+where
+	users.uid = :user_id
+	and :start_date < :end_date  -- temp
+SQL;
 
 
 // public static $tm_sql_chapter_signups = <<<SQL

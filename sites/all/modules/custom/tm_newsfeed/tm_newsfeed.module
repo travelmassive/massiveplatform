@@ -42,5 +42,3 @@ function tm_notifications_newsfeed_menu() {
 
   return $items;
 }
-
-?>

@@ -31,10 +31,9 @@ function tm_newsfeed_email() {
 	$debug_timer['01start'] = time();
 
 	// params
-	// $user_id = 29540;
 	// $user_ids = array(29540,29538,29537,29536,29535,29534,29533,29532,29531,29530,29529,29528,29527,29526,29525,29524,29523,29522,29521,29520,29519,29518,29517,29516,29515,29514,29513,29512,29511,29510,29509,29508,29507,29506,29505,29504,29503,29502,29501,29500,29499,29498,29497,29496,29495,29494,29493,29492,29491,29490,29489,29488,29487,29486,29485,29484,29483,29482,29481,29480,29479,29478,29477,29476,29475,29474,29473,29472,29471,29470,29468,29467,29466,29465,29464,29463,29462,29461,29460,29459,29458,29457,29456,29455,29454,29453,29452,29451,29450,29449,29447,29446,29445,29444,29443,29442,29441,29440,29439,29438);
-	// $user_ids = array(29540,29538,29537,29536,29535);
-	$user_ids = array(29540);
+	$user_ids = array(29540,29538,29537,29536,29535);
+	// $user_ids = array(29540);
 
 	$start_date = new DateTime('2016-05-01');
 	$end_date = new DateTime();
@@ -87,7 +86,7 @@ function tm_newsfeed_generate_email($user_id, $start_date, $end_date) {
 		array_rand(TmNewsfeedEmailTemplates::$tm_newsfeed_email_opening_lines)];
 	$email = str_replace("__OPENING_LINE__", $opening_line, $email);
 
-	$tip = tm_newsfeed_email_get_tip($user_id);
+	$tip = tm_newsfeed_email_get_tip($account, $start_date, $end_date);
 	$email = str_replace("__EMAIL_TIP__", $tip, $email);
 
 	$content = tm_newsfeed_email_populate_section_content($user_id, $search_country, $start_date, $end_date);
@@ -110,13 +109,56 @@ function tm_newsfeed_generate_email($user_id, $start_date, $end_date) {
 }
 
 
-function tm_newsfeed_email_get_tip($user_id) {
+function tm_newsfeed_email_get_tip($account, $start_date, $end_date) {
+
+	$uid = $account->uid;
+  $edit_url = "user/" . $uid . "/edit";
+
+
+	// important tips
+	// these will always be shown in order of importance if applicable
+
+  if (!in_array("approved user", $account->roles)){
+  	return "[Tip: you aren't approved yet text TODO]";
+  }
+
+
+  // 
 	// [Tip: Create a free company profile for Rock Climb Travel and join more than 1,300 other companies on our network.]
+  $field_job_organization = $account->field_job_organization;
+  if (sizeof($field_job_organization) == 0) {
+    "Share the organization " . l(t('where you work'), $edit_url, array('fragment' => 'edit-field-job-organization')) . ", except if you are a top secret agent.";
+	}
 
-	// for no tip:
-	// return "";
 
-	return "[Tip: ensure your profile is up to date. BLAH BLAH]";
+  // cycle tips
+  // create an array of other tips that apply to the user
+  // and select a random one for inclusion in the email
+  $tips = array();
+
+  if (sizeof($account->field_about_me) == 0) {
+    $tips[] = "Share a little bit " . l(t('about yourself'), $edit_url, array('fragment' => 'edit-field-about-me')) . " and your story with the community.";
+  }
+
+  if ((sizeof($account->field_location_city) == 0) or (sizeof($account->field_user_country) == 0)) {
+		$tips[] = "Tell us " . l(t('where you are located'), $edit_url, array('fragment' => 'edit-field-location-city')) . " so other members can discover you.";
+  }
+
+  if (sizeof($account->field_job_role) == 0) {
+    $tips[] = "Share your " . l(t('job role'), $edit_url, array('fragment' => 'edit-field-job-role')) . " so like-minded members can connect with you.";
+  }
+
+
+  // select random tip
+  if (sizeof($tips) > 0) {
+		$rand = $tips[array_rand($tips)];
+		$tip = "[Tip: $rand]";
+  } else {
+  	// general fall back tips if no other tips were selected based on user conditions
+  	$tip = "[Tip: ensure your profile is up to date if you relocate so that you can meet other people in the Travel Massive community]";
+  }
+
+	return $tip;
 }
 
 function tm_newsfeed_email_populate_section_content($user_id, $search_country, $start_date, $end_date) {
@@ -184,8 +226,8 @@ function tm_newsfeed_email_populate_updates($user_id, $start_date, $end_date) {
 			$link = $result->entity_name;
 		} elseif ($result->entity_type == 'chapter') {
 			// add site name to chapter link text, but only if it doesn't already exist
-			if (strpos(strtolower($result->entity_name), strtolower($conf['tm_site_name'])) !== false) {
-				$link = $result->entity_name;
+			if (strpos(strtolower($result->entity_name), strtolower($conf['tm_site_name'])) !== sample) {
+				$link = $result->entity_name;;
 			} else {
 				$link = $result->entity_name . ' Travel Massive';
 			}
@@ -324,7 +366,7 @@ function tm_newsfeed_email_populate_discussions($user_id) {
 		$link = $result->discussion_name;
 
 		$text = "";
-		$num_replies = $result->num_replies;
+		$num_replies = $result->count_comments;
 
 		if ($num_replies > 1) {
 			$text = " ($num_replies replies)";

@@ -1056,12 +1056,13 @@ function _tm_more_actions_process($field, $title = NULL) {
 
         $links['approve'][] = array(
           'wrapper_class' => array('approve'),
-          'content' => l(t('Report'), 'javascript:jq_confirm_report_member(' . $uid . ', \'' . $community_values_url . '\')',
+          'content' => l(t('Report'), 'javascript:void(0);',
             array(
             'fragment' => '',
             'external'=> true,
             'attributes' => array(
-              'title' => t('Report')
+              'title' => t('Report'),
+              'onClick' => 'javascript:jq_confirm_report_member(' . $uid . ', \'' . $community_values_url . '\')'
             )
           ))
         );
@@ -1102,8 +1103,8 @@ function _tm_more_actions_process($field, $title = NULL) {
 
         if (in_array("moderator", $user->roles) or user_access('administer')) {
 
-          $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>" . l("Issue resolved", 'javascript:jq_confirm_report_member_resolved(' . $uid . ');',
-              array('fragment' => '','external'=>true, 'attributes' => array('class' => array('report-flagged-link')))) . "</span><br>";
+          $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>" . l("Issue resolved", 'javascript:void(0);',
+              array('fragment' => '','external'=>true, 'attributes' => array('onClick' => 'javascript:jq_confirm_report_member_resolved(' . $uid . ');', 'class' => array('report-flagged-link')))) . "</span><br>";
 
            $links['approve'][] = array(
             'wrapper_class' => array('approve'),
@@ -1132,12 +1133,13 @@ function _tm_more_actions_process($field, $title = NULL) {
 
         $links['approve'][] = array(
           'wrapper_class' => array('approve'),
-          'content' => l(t('Report'), 'javascript:jq_confirm_report_organization(' . $organization_nid . ', \'' . $community_values_url . '\')',
+          'content' => l(t('Report'), 'javascript:void(0);',
             array(
             'fragment' => '',
             'external'=> true,
             'attributes' => array(
-              'title' => t('Report')
+              'title' => t('Report'),
+              'onClick' => 'javascript:jq_confirm_report_organization(' . $organization_nid . ', \'' . $community_values_url . '\')'
             )
           ))
         );
@@ -1178,8 +1180,8 @@ function _tm_more_actions_process($field, $title = NULL) {
 
         if (in_array("moderator", $user->roles) or user_access('administer')) {
 
-          $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>" . l("Issue resolved", 'javascript:jq_confirm_report_organization_resolved(' . $organization_nid . ');',
-              array('fragment' => '','external'=>true, 'attributes' => array('class' => array('report-flagged-link')))) . "</span><br>";
+          $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>" . l("Issue resolved", '',
+              array('fragment' => 'javascript:void(0);','external'=>true, 'attributes' => array('onClick' => 'javascript:jq_confirm_report_organization_resolved(' . $organization_nid . ');', 'class' => array('report-flagged-link')))) . "</span><br>";
 
            $links['approve'][] = array(
             'wrapper_class' => array('approve'),

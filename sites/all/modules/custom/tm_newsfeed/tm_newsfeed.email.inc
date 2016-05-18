@@ -59,6 +59,8 @@ class TmNewsfeedEmailGenerator
 		print_r("loop start: $loop_start");
 		print_r('</pre>');
 
+		$response = "";
+
 		for ($i=0; $i < count($user_ids); $i++) {
 
 			$user_id = $user_ids[$i];
@@ -428,7 +430,7 @@ class TmNewsfeedEmail
 		$results = array_slice($results, 0, 3);
 
 		foreach($results as $result) {
-			$href = $url;
+			$href = $result->url;
 			$link = $result->title;
 			$text = ", ".$result->location;
 
@@ -597,8 +599,20 @@ class TmNewsfeedEmail
 
 	private static function tm_newsfeed_get_search_country($account)
 	{
-		$user_home_chapter = $account->field_home_chapter[LANGUAGE_NONE][0]['target_id'];
-		$user_country = $account->field_user_country[LANGUAGE_NONE][0]['iso2'];
+		print_r('<pre>');
+		var_dump($account->field_home_chapter);
+		print_r('</pre>');
+
+
+		$user_home_chapter = null;
+		if (isset($account->field_home_chapter[LANGUAGE_NONE][0]['target_id'])) {
+			$user_home_chapter = $account->field_home_chapter[LANGUAGE_NONE][0]['target_id'];
+		}
+
+		$user_country = null;
+		if (isset($account->field_user_country[LANGUAGE_NONE][0]['iso2'])) {
+			$user_country = $account->field_user_country[LANGUAGE_NONE][0]['iso2'];
+		}
 
 		// if country in profile is set, use that
 		// if home chapter is set, use country of home chapter
@@ -607,11 +621,15 @@ class TmNewsfeedEmail
 
 		if (is_null($user_country)) {
 			if (is_null($user_home_chapter)) {
-				// use ""
+				// use "" as search country
 			} else {
 				$chapter = node_load($user_home_chapter);
-				$country_code = $chapter->field_country[LANGUAGE_NONE][0]['iso2'];
-				$search_country = country_load($country_code)->name;
+
+				// use chapter country if it exists, otherwise search with ""
+				if (isset($account->field_country[LANGUAGE_NONE][0]['iso2'])) {
+					$country_code = $chapter->field_country[LANGUAGE_NONE][0]['iso2'];
+					$search_country = country_load($country_code)->name;
+				}
 			}
 		} else {
 			$search_country = $user_country;

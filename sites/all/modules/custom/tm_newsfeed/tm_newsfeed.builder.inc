@@ -211,10 +211,17 @@ on  chapter_followers.fid = 3  -- signup
 and updates.entity_type = 'chapter'
 and chapter_followers.entity_id = updates.entity_id
 
+left join users_roles
+on  updates.entity_id = users_roles.uid
+and updates.entity_type = 'user'
+and users_roles.rid = 6  -- approved_member
+
 where
 	following.fid in (1,2,3)  -- follow_members, follow_organizations, signup
 	and UNIX_TIMESTAMP(updates.created) >= :start_date
 	and UNIX_TIMESTAMP(updates.created) <= :end_date
+	-- exclude members that aren't approved
+	and ( (users_roles.uid is not null and updates.entity_type = 'user') or updates.entity_type <> 'user' )
 group by
 	-- mysql cheat, so entities only appear once (can't use distinct because 'created' values are different)
 	updates.entity_id
@@ -282,7 +289,7 @@ on my_home_country.bundle='user' and my_home_country.entity_id=:user_id
 
 left join
 (
-	-- can't use flag_counts here because we need to look for signups in a certain time period
+	-- cant use flag_counts here because we need to look for signups in a certain time period
 	select chapter.nid, chapter.title, count(flagging.uid) as signup_count
 	from flagging
 	inner join node chapter on flagging.entity_id=chapter.nid
@@ -292,12 +299,18 @@ left join
 ) chapter_signups
 on chapter_signups.nid = users_home_chapter.field_home_chapter_target_id
 
+left join users_roles
+on  users.uid = users_roles.uid
+and users_roles.rid = 6  -- approved_member
+
 where
   users.uid <> :user_id  -- dont include me
   and users.created > :start_date and users.created < :end_date
+	-- exclude members that arent approved
+	and users_roles.uid is not null
 
 group by
-	-- mysql hack; to only have one item per home chapter
+	-- mysql hack - to only have one item per home chapter
 	users_home_chapter.field_home_chapter_target_id
 
 order by

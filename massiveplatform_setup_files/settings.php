@@ -949,5 +949,59 @@ $conf["tm_newsfeed_discuss_cache"] = 60; // how long to cache results in seconds
 // $conf["tm_newsfeed_discuss_api_userpass"] = "user:pass"; // uncomment to use basic httpauth 
 
 
+// newsfeed notifications
+$conf['tm_newsfeed_send_emails_enabled'] = true;
+
+// base email subject line
+$conf['tm_newsfeed_subject_base'] = "What's happening in Travel Massive this week";
+
+// subject extra text if no updates available to customise with
+$conf['tm_newsfeed_subject_extra_fallbacks'] = array(
+  "(Events to attend + more)",
+  "(Blog posts not to be missed + more)",
+  "(Discussions to catch up on + more)",
+  "(New users to follow + more)"
+  );
+
+// the headers for the email sections
+$conf['tm_newsfeed_email_section_headers'] = array(
+  'blog_posts' => 'New blog posts',
+  'discussions' => 'Trending discussions',
+  'jobs' => 'Jobs and opportunities',
+  'new_members' => 'New members in your network',
+  'new_companies' => 'New companies in your network',
+  'updates' => 'Latest status updates',
+  'events' => 'Upcoming events'
+  );
+
+// greetings to cycle through
+$conf['tm_newsfeed_email_greetings'] = array(
+  "Hello",
+  "Hey",
+  "Hola",
+  "Konnichiwa"
+  );
+
+// opening lines to cycle through
+$conf['tm_newsfeed_email_opening_lines'] = array(
+  "Here’s what’s been happening at Travel Massive this week.",
+  "Check out what’s been happening at Travel Massive this week."
+  );
+
+// closing lines to cycle through
+$conf['tm_newsfeed_email_quotes'] = array(
+  array("text" => "Travel makes one modest, you see what a tiny place you occupy in the world.",
+        "author" => "Gustave Flaubert"),
+  array("text" => "Oh the places you'll go!",
+        "author" => "Dr. Seuss"),
+  array("text" => "Investment in travel is an investment in yourself.",
+        "author" => "Matthew Karsten")
+  );
+
+// start of feedback line and text of link
+$conf['tm_newsfeed_feedback_base'] = 'Feedback? Suggestions?';
+$conf['tm_newsfeed_feedback_link_text'] = 'Let us know';
+
+
 $conf['install_profile'] = 'tm';
 

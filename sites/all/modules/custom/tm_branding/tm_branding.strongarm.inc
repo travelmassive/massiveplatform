@@ -21,12 +21,12 @@ function tm_branding_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'diff_show_preview_changes_node_site_brand';
-  $strongarm->value = 1;
+  $strongarm->value = 0;
   $export['diff_show_preview_changes_node_site_brand'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
+  $strongarm->api_version = 0;
   $strongarm->name = 'diff_view_mode_preview_node_site_brand';
   $strongarm->value = 'full';
   $export['diff_view_mode_preview_node_site_brand'] = $strongarm;

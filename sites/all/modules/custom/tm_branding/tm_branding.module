@@ -33,6 +33,7 @@ function tm_branding_get_site_brands($account) {
 
 /**
  * Check if brand matches visitor or user criteria
+ * For performance, work from least expensive to most expensive operations.
  */
 function tm_branding_check_brand($site_brand, $account) {
 
@@ -219,45 +220,49 @@ function tm_branding_check_brand($site_brand, $account) {
 
 	// Step 7. Check "user_country"
 	// Match against the user's profile setting
-	if ($account->uid > 0) {
+	if (in_array("user_country", $match_methods)) {
+		if ($account->uid > 0) {
 
-		if (isset($site_brand->field_brand_match_country[LANGUAGE_NONE])) {
+			if (isset($site_brand->field_brand_match_country[LANGUAGE_NONE])) {
 
-			// get user's country
-			$users_country = null;
-			if (isset($account->field_user_country[LANGUAGE_NONE][0]['iso2'])) {
-				$users_country = $account->field_user_country[LANGUAGE_NONE][0]['iso2'];
-			}
+				// get user's country
+				$users_country = null;
+				if (isset($account->field_user_country[LANGUAGE_NONE][0]['iso2'])) {
+					$users_country = $account->field_user_country[LANGUAGE_NONE][0]['iso2'];
+				}
 
-			// check list of countries to match
-			if ($users_country != null) {
-				if (sizeof($site_brand->field_brand_match_country[LANGUAGE_NONE]) > 0) {
-					foreach ($site_brand->field_brand_match_country[LANGUAGE_NONE] as $item) {
-						if ($item['iso2'] == $users_country) {
-							return true;
+				// check list of countries to match
+				if ($users_country != null) {
+					if (sizeof($site_brand->field_brand_match_country[LANGUAGE_NONE]) > 0) {
+						foreach ($site_brand->field_brand_match_country[LANGUAGE_NONE] as $item) {
+							if ($item['iso2'] == $users_country) {
+								return true;
+							}
 						}
 					}
-				}
-			}	
+				}	
+			}
 		}
 	}
 
 	// Step 8. Match "user_home_chapter"
-	if ($account->uid > 0) {
+	if (in_array("user_home_chapter", $match_methods)) {
+		if ($account->uid > 0) {
 
-		// get users's home chapter
-		$users_home_chapter = null;
-		if (isset($account->field_home_chapter[LANGUAGE_NONE][0]['target_id'])) {
-			$users_home_chapter = $account->field_home_chapter[LANGUAGE_NONE][0]['target_id'];
-		}
+			// get users's home chapter
+			$users_home_chapter = null;
+			if (isset($account->field_home_chapter[LANGUAGE_NONE][0]['target_id'])) {
+				$users_home_chapter = $account->field_home_chapter[LANGUAGE_NONE][0]['target_id'];
+			}
 
-		// get member chapters
-		if ($users_home_chapter != null) {
-			if (isset($site_brand->field_brand_match_user_chapter[LANGUAGE_NONE])) {
-				foreach ($site_brand->field_brand_match_user_chapter[LANGUAGE_NONE] as $item) {
-					if ($item['target_id'] == $users_home_chapter) {
-						return true;
-					} 
+			// get member chapters
+			if ($users_home_chapter != null) {
+				if (isset($site_brand->field_brand_match_user_chapter[LANGUAGE_NONE])) {
+					foreach ($site_brand->field_brand_match_user_chapter[LANGUAGE_NONE] as $item) {
+						if ($item['target_id'] == $users_home_chapter) {
+							return true;
+						} 
+					}
 				}
 			}
 		}
@@ -265,18 +270,40 @@ function tm_branding_check_brand($site_brand, $account) {
 
 
 	// Step 9. Match "user_in_chapter"
-	if ($account->uid > 0) {
+	if (in_array("user_in_chapter", $match_methods)) {
+		if ($account->uid > 0) {
 
-		// get users chapters
-		$users_chapters = tm_users_get_chapters($account);
+			// get users chapters
+			$users_chapters = tm_users_get_chapters($account);
 
-		// get member chapters
-		if (sizeof($users_chapters) > 0) {
-			if (isset($site_brand->field_brand_match_user_chapter[LANGUAGE_NONE])) {
-				foreach ($site_brand->field_brand_match_user_chapter[LANGUAGE_NONE] as $item) {
-					if (in_array($item['target_id'], $users_chapters)) {
-						return true;
-					} 
+			// get member chapters
+			if (sizeof($users_chapters) > 0) {
+				if (isset($site_brand->field_brand_match_user_chapter[LANGUAGE_NONE])) {
+					foreach ($site_brand->field_brand_match_user_chapter[LANGUAGE_NONE] as $item) {
+						if (in_array($item['target_id'], $users_chapters)) {
+							return true;
+						} 
+					}
+				}
+			}
+		}
+	}
+
+	// Step 10. Match "user_in_segment"
+	if (in_array("user_in_segment", $match_methods)) {
+		if ($account->uid > 0) {
+
+			$user_tid = null;
+			if (sizeof($account->field_segment) > 0) {
+				$user_tid = $account->field_segment[LANGUAGE_NONE][0]['tid'];
+						
+				// check industry segments
+				if (isset($site_brand->field_brand_match_user_industry[LANGUAGE_NONE])) {
+					foreach ($site_brand->field_brand_match_user_industry[LANGUAGE_NONE] as $item) {
+						if ($item['tid'] == $user_tid) {
+							return true;
+						} 
+					}
 				}
 			}
 		}

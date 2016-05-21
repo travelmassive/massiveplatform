@@ -8,6 +8,11 @@
 // Set path to $conf['tm_geoip_maxmind_db']
 // Check /admin/geoip_test to verify installation
 
+// Lite database
+// You can download a lite database for free here:
+// https://dev.maxmind.com/geoip/geoip2/geolite2/
+// (Please refer to license for use)
+
 // For production environments, install the php5 extension for faster lookups
 // Instructions for ubuntu:
 // https://tuxinthefastlane.wordpress.com/2015/04/24/getting-maxminds-geoip2-to-work-with-nginx-and-php-on-ubuntu/

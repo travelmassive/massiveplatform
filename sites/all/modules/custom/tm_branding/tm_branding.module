@@ -127,10 +127,10 @@ function tm_branding_check_brand($site_brand, $account) {
 	}
 
 	// Step 5. Match "anonymous_user"
-	// Will match any anonymous visitor
+	// Must be anonymous visitor to proceeed
 	if (in_array("anonymous_user", $match_methods)) {
-		if ($account->uid == 0) {
-			return true;
+		if ($account->uid > 0) {
+			return false;
 		}
 	}
 

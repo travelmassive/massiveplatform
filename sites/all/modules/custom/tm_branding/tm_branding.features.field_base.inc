@@ -482,12 +482,12 @@ function tm_branding_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        'geoip' => 'GeoIP of visitor',
-        'user_country' => 'Users\'s country setting',
+        'geoip' => 'GeoIP of visitor or member',
+        'user_country' => 'User\'s country setting',
         'user_home_chapter' => 'User\'s home chapter',
         'user_in_chapter' => 'User is a member of a chapter',
         'user_in_segment' => 'User is in industry segment',
-        'anonymous_user' => 'Match all logged out users',
+        'anonymous_user' => 'Only match when logged out',
         'match_all' => 'Match all visitors and users',
       ),
       'allowed_values_function' => '',

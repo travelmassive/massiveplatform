@@ -52,7 +52,7 @@ if (sizeof($request_uri_parts) == 3) {
     <div class="row">
       <h1 id="site-title">
         <a title="<?php print t('Home'); ?>" rel="home" href="<?php print $front_page; ?>">
-          <img class="header-logo" src="<?php print $base_path . path_to_theme(); ?>/images/layout/tm-logo.svg" alt="<?php print t('Home'); ?>" width="104" height="48" />
+          <img class="header-logo" src="<?php echo tm_branding_get_element("header_logo");?>" alt="<?php print t('Home'); ?>" width="104" height="48" />
           <span><?php print $site_name; ?></span>
         </a>
       </h1>
@@ -63,12 +63,7 @@ if (sizeof($request_uri_parts) == 3) {
           <li class="browse-wrapper" data-dropd-wrapper>
             <h2><a class="toggle" href="#browse-menu-blk" data-dropd-toggle><span class="hide"><?= t('Browse'); ?></span></a></h2>
             <div id="browse-menu-blk" class="inner dropd dropd-right" data-dropd>
-              <?php
-              print theme('links__system_main_menu', array(
-                'links' => $main_menu,
-                'attributes' => array(
-                  'class' => array('links'),
-                ),)); ?>
+              <?php echo tm_branding_get_element("menu_html"); ?>
             </div>
           </li>
           <?php endif; ?>
@@ -122,41 +117,7 @@ if (sizeof($request_uri_parts) == 3) {
   </main>
 
   <footer id="footer" role="contentinfo">
-    <div class="row">
-      <nav id="foot-nav" role="navigation">
-        <div class="inner">
-
-        <?php include './'. path_to_theme() .'/templates/block--footer-links.tpl.php';?>
-
-        <!--<?php if ($foot_menu['links']): ?>
-          <section class="foot">
-          <?php
-            print theme('links', array(
-              'links' => $foot_menu['links'],
-              'heading' => array(
-                'text' => $foot_menu['title'],
-                'level' => 'h2',
-              ),
-            )); 
-          ?>
-          </section>
-        <?php endif; ?>-->
-        <?php if ($social_menu['links']): ?>
-          <section class="social">
-          <?php
-            print theme('links', array(
-              'links' => $social_menu['links'],
-              'heading' => array(
-                'text' => $social_menu['title'],
-                'level' => 'h2',
-              ),
-            )); 
-          ?>
-          </section>
-        <?php endif ?>
-        </div>
-      </nav>
-      <?php include './'. path_to_theme() .'/templates/block--footer-credits.tpl.php';?>
-    </div>
+    <?php echo tm_branding_get_element("footer_html"); ?>
+    <?php echo tm_branding_get_element("footer_level2_html"); ?>
   </footer>
 </div>

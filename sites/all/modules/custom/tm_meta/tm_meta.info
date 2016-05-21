@@ -32,6 +32,7 @@ features[variable][] = metatag_enable_node__chapter
 features[variable][] = metatag_enable_node__event
 features[variable][] = metatag_enable_node__organization
 features[variable][] = metatag_enable_node__page
+features[variable][] = metatag_enable_node__site_brand
 features[variable][] = metatag_enable_taxonomy_term
 features[variable][] = metatag_enable_taxonomy_term__tm_segments
 features[variable][] = metatag_enable_user

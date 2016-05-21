@@ -95,10 +95,15 @@ function tm_events_contact_form_submit($form, &$form_state) {
     // in case duplicate organiser are set - remove duplicate notify_ids
     $notify_ids = array_unique($notify_ids);
 
+    // get event organizer emails
+    $event_organizer_emails = array();
     foreach($notify_ids as $notify_id){
       $event_organizer = user_load($notify_id);
-      tm_events_send_contact_email($event_organizer->mail, $form_state['values']['subject'], $form_state['values']['body'], $account, $event);
+      $event_organizer_emails[] = $event_organizer->mail;
     }
+
+    // send to all event organizers in one email
+    tm_events_send_contact_email($event_organizer_emails, $form_state['values']['subject'], $form_state['values']['body'], $account, $event);
 
     drupal_set_message(t('Your message has been sent.'));
     drupal_goto('node/'.$event->nid);
@@ -108,7 +113,7 @@ function tm_events_contact_form_submit($form, &$form_state) {
 /** 
  * Email sending function 
  */
-function tm_events_send_contact_email($email, $subject, $body, $user, $event){
+function tm_events_send_contact_email($event_organizer_emails, $subject, $body, $user, $event){
 
   global $conf;
 
@@ -155,6 +160,8 @@ function tm_events_send_contact_email($email, $subject, $body, $user, $event){
   $template_file = drupal_get_path('module', 'tm_notifications') . '/templates/tm_notifications-email_template.tpl.php';
   $template = file_get_contents($template_file);
 
+  // delimit event organizer emails
+  $email = implode(",", $event_organizer_emails);
 
   // STEP 2. SET MAIL HTML HEADERS
   $email_message = drupal_mail($module, $key, $email, $language, $params, NULL, $send);
@@ -175,10 +182,13 @@ function tm_events_send_contact_email($email, $subject, $body, $user, $event){
   $template = str_replace("__EMAIL_FOOTER__", $footer, $template);
 
   // Other vars
+  $unsubscribe_link = "Update Your Notification Settings at <a href='__SERVER_HTTP__://__SERVER_NAME__'>__SERVER_NAME__</a>"; 
+  $template = str_replace("__UNSUBSCRIBE_LINK__", $unsubscribe_link, $template);
   $template = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $template); 
   $template = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $template);  
   $template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
-  $template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template); 
+  $template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template);
+  $template = str_replace("__EMAIL_BRAND_MESSAGE__", "", $template); // disable brand message
 
   // STEP 5. LOAD HTML TEMPLATE INTO EMAIL BODY
   $email_message['body'] = $template;

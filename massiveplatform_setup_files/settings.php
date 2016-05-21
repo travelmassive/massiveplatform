@@ -580,18 +580,18 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
 $conf['tm_twitter_consumer_key'] = '';
 $conf['tm_twitter_consumer_secret'] = '';
 
-/** ENABLE FEEDME **/
+/** WORDPRESS FEEDME **/
 /** This calls a module hosted on wordpress to embed blog (plus other) content based on current page **/
 /** You will need this wordpress plugin: https://github.com/travelmassive/massiveplatform-wordpress-feedme **/
 $conf['tm_enable_wordpress_feedme'] = false;
 $conf['tm_wordpress_feedme_url'] = "/blog/wp-content/plugins/tm-feeds/feedme.php";
 $conf['tm_wordpress_feedme_frontpage_id'] = "1831";
 
-/** ENABLE FLAG FEEDS **/
+/** FLAG FEEDS **/
 /** This will display a feed of recent actions on the front page, such as signup, new members, and following **/
 $conf['tm_enable_flags_feed'] = true;
 
-/** Limit Follow and Join **/
+/** LIMIT FOLLOW AND JOIN **/
 /** NOTE: Administrator and chapter leaders do not have limits **/
 $conf['tm_following_ratio_limit'] = '100'; // difference between following/followers (for approved members)
 $conf['tm_following_ratio_limit_unapproved'] = '20'; // difference between following/followers (unapproved members)
@@ -599,51 +599,34 @@ $conf['tm_following_ratio_limit_daily'] = '0.5'; // number of followers added to
 $conf['tm_chapter_join_limit'] = '16'; // "join" limit for the non chapter leaders
 $conf['tm_add_company_limit'] = '8'; // maximum number of companies a user can add (no limit for chapter leaders, moderators)
 
-/** Settings for Email Templates **/
+/** SETTINGS FOR EMAIL TEMPLATES **/
 $conf['tm_site_name'] = "Travel Massive"; // used by emails and in templates to refer to the site
 $conf['tm_email_server_http'] = "https"; // http or https depending on your setup. Will be used in email settings
 $conf['tm_email_signoff'] = "Cheers,<br>- The Travel Massive Team"; // default email sign off at bottom of emails
 $conf['tm_email_default_footer'] = "__UNSUBSCRIBE_LINK__<br>
 Travel Massive P.B.C. 385 Grove St, San Francisco CA 94102<br> Phone +1 779-999-0042 &middot; community@travelmassive.com"; // used by emails and in templates to refer to the site
+$conf['tm_announcement_copy_email'] = "commmunity@travelmassive.com"; // Send a copy of any announcement to this address
+$conf['tm_announcement_reply_email'] = "commmunity@travelmassive.com"; // Default reply_to address if left blank
+$conf['tm_invitations_custom_message'] = "I'd like to invite you to Travel Massive, a global community that connects travel industry insiders, leaders and innovators to collaborate and share ideas at locally organized events."; // tm_invitations_custom_message
 
-/** Send a copy of any announcement to this address **/
-$conf['tm_announcement_copy_email'] = "commmunity@travelmassive.com";
+/** TIP SETTINGS **/
+$conf['tm_tips_start_chapter_link'] = "https://travelmassive.com/blog/start-a-chapter-guide/"; // tm_tips_start_chapter_link
+$conf['tm_tips_sponsor_page_link'] = "https://travelmassive.com/blog/sponsors-guide/"; // tm_tips_start_chapter_link
+$conf['tm_tips_chapter_leaders_link'] = "https://travelmassive.com/blog/chapter-leader-resources/"; // tm_tips_chapter_leaders_guide
+$conf["tm_reports_chapter_insights_tip"] = "Join our Facebook group to share tips with other members on growing your chapter and be part of our global founders team!"; // Display a tip on chapter insights page
 
-/** Default reply_to address if left blank **/
-$conf['tm_announcement_reply_email'] = "commmunity@travelmassive.com";
+/** COMMUNITY VALUES URL **/
+$conf['tm_community_values_url'] = "https://travelmassive.com/blog/community-values/"; // tm_community_values_url
 
-/** tm_invitations_custom_message **/
-$conf['tm_invitations_custom_message'] = "I'd like to invite you to Travel Massive, a global community that connects travel industry insiders, leaders and innovators to collaborate and share ideas at locally organized events.";
+/** CONTACT AND NOTIFICATION EMAILS **/
+$conf['tm_contact_page_email'] = "hello@travelmassive.com"; // Where to send contact form emails to
+$conf['tm_user_remove_own_account_notify'] = 'community@travelmassive.com'; // If user removes their account, who do we notify?
 
-/** tm_tips_start_chapter_link **/
-$conf['tm_tips_start_chapter_link'] = "https://travelmassive.com/blog/start-a-chapter-guide/";
-
-/** tm_tips_start_chapter_link **/
-$conf['tm_tips_sponsor_page_link'] = "https://travelmassive.com/blog/sponsors-guide/";
-
-/** tm_tips_chapter_leaders_guide **/
-$conf['tm_tips_chapter_leaders_link'] = "https://travelmassive.com/blog/chapter-leader-resources/";
-
-/** tm_community_values_url **/
-$conf['tm_community_values_url'] = "https://travelmassive.com/blog/community-values/";
-
-/** Where to send contact form emails to **/
-$conf['tm_contact_page_email'] = "hello@travelmassive.com";
-
-/** Member label for displaying membership counts **/
+/** MEMBER LABELS **/
 $conf["tm_member_label"] = "travel insider"; // singular
 $conf["tm_members_label"] = "travel insiders"; // plural
 
-/** Background video on front page **/
-/** Set to true to enable. Set external url if you want mp4 to be delivered from external url (ie: vimeo) **/
-/** Save your videos in tm/themes/videos/frontpage/background_video.mp4,ogv,webm,jpg **/
-$conf['tm_background_bg'] = true;
-$conf['tm_background_bg_title'] = "NYC Travel Massive";
-$conf['tm_background_bg_link_url'] = "/chapters/new-york-city";
-$conf['tm_background_bg_link_ext'] = false; // load external
-$conf['tm_background_bg_mp4_external_url'] = "https://player.vimeo.com/external/129766268.hd.mp4?s=759daa867154be27e52a57d4d147073f&profile_id=113";
-
-/** MESSAGING Options **/
+/** MESSAGING OPTIONS **/
 /** Allow approved members to message each other via email if they follow each other **/
 /** Emails will be sent by notification system and reply-to set to the sender's email address **/
 $conf['tm_messaging_enabled'] = true; // turn on or off email messaging if following each other
@@ -652,7 +635,7 @@ $conf['tm_messaging_limit_days'] = 14; // number of days to check for rate limit
 $conf['tm_messaging_limit_max'] = 30; // limit of messages you can send to different people within period
 $conf['tm_messaging_from_email'] = "communications@travelmassive.com"; // from address. reply-to will be senders.
 
-/** Event Options **/
+/** EVENT OPTIONS **/
 $conf['tm_event_show_spots_left'] = 20; // show number of free seats when less than this number
 $conf['tm_event_auto_register_waitlist'] = true; // if a member unregisters, automatically add next person from waitlist if there are free spots
 $conf['tm_event_chapter_events_enabled'] = true; // allow chapters to create their own events
@@ -664,6 +647,7 @@ $conf['tm_event_send_announcements_intro'] = "Get more people to your event by s
 $conf['tm_event_announcement_enable_cover_image'] = true; // enable including event cover image in announcement email
 $conf['tm_event_online_timezones'] = array("America/Los_Angeles" => "Los Angeles", "America/New_York" => "New York", "Europe/London" => "London", "Europe/Athens" => "Athens", "Asia/Singapore" => "Singapore", "Australia/Sydney" => "Sydney"); // display online event date in these timezones
 
+/** SIGNUP PAGE SETTINGS **/
 /** Provides a list of validated options on the signup page to indicate how the user connects with the community **/
 /** These options are not saved to the user account **/
 $conf["tm_community_values_description"] = "Our community is for travel industry insiders, leaders, and innovators.";
@@ -682,6 +666,7 @@ $conf["tm_community_values_options_validate"] = array(
     4 => array("valid" => false, "message" => "<strong>Travel Massive accounts are for individuals.</strong> Please choose a community connection that applies to you personally. Once your account is approved you can create a company profile."),
     5 => array("valid" => false, "message" => "<strong>Why can't I join?</strong> Our community provides professional networking and development for members of the travel and tourism industry. We wish you safe travels and instead please become a <a href='https://travelmassive.com/blog/i-love-travel/'>friend of our community</a>."));
 
+/** PROFILE QUESTIONS **/
 /** Specify the 5 questions users are asked in their profile **/
 /** Note: Once you launch, you can't change these **/
 $conf["tm_field_user_question_1_title"] = "What is your favorite travel destination?";
@@ -690,14 +675,14 @@ $conf["tm_field_user_question_3_title"] = "What was your first travel job?";
 $conf["tm_field_user_question_4_title"] = "What do you want to learn more about?";
 $conf["tm_field_user_question_5_title"] = "Three words that describe why we should travel?";
 
-/** Site specific title and descriptions in profile and node edit **/
+/** SITE SPECIFIC TITLE AND DESCRIPTIONS IN PROFILE AND NODE EDIT **/
 $conf["tm_field_job_role_description"] = "examples: Founder, CEO, VP Marketing, Social Media Manager, Chief Explorer";
 $conf["tm_field_friendly_url_title"] = "Travel Massive URL (travelmassive.com/your-name)";
 $conf["tm_field_friendly_url_description"] = "Make your profile available through a friendly URL such as https://travelmassive.com/your-name.<br>Example: \"your-name\"";
 $conf["tm_field_company_friendly_url_title"] = "Travel Massive URL (travelmassive.com/your-company)";
 $conf["tm_field_company_friendly_url_description"] = "Make your company profile available through a friendly URL such as https://travelmassive.com/your-company.<br>Example: \"your-company\"";
 
-/** Approval welcome message when approved **/
+/** WELCOME MESSAGE WHEN APPROVED **/
 $conf["tm_notification_approval_welcome_message"] = '<strong>ARE YOU READY TO CHANGE TRAVEL?</strong>
 <br>
 <br>Our mission is to connect travel insiders in every city in the world in order to empower change in travel.
@@ -716,7 +701,7 @@ $conf["tm_notification_approval_welcome_message"] = '<strong>ARE YOU READY TO CH
 <br>
 <br>If there\'s a chapter in your city, then please join it and attend our events to connect with like-minded travel industry professionals. If you can\'t find a chapter, why don\'t you consider starting a Travel Massive chapter? Get in touch with us to find out more.';
 
-/** Membership criteria provided if member flagged as non-community member **/
+/** MEMBERSHIP CRITERIA PROVIDED IF MEMBER FLAGGED AS NON-COMMUNITY MEMBER **/
 $conf["tm_notification_moderation_non_community_message"] = 'To be a member of the Travel Massive community, you must demonstrate one of the following:
 <br>* You are active in the travel industry (example: tour operator, travel brand, DMO)
 <br>* You are active in a field closely related to the travel industry (example: Tourism PR)
@@ -729,18 +714,20 @@ $conf["tm_notification_moderation_non_community_message"] = 'To be a member of t
 <br><strong>But I love travel, can I join still?</strong>
 <br>Our community provides professional networking and development for members of the travel and tourism industry. If you are an expert or avid traveler, then thanks for stopping by and we wish you all the best on your journeys.';
 
-/** Set a front page launch message and hide the stats. Comment out to disable **/
-//$conf['tm_frontpage_launch_message'] = "We've just launched our new community platform. Read our <a style='color: #fff; text-decoration: underline;' href='/blog/'>announcement</a>.";
-
-/* Stats option for front page */
-/* Options: members, chapters, organizations, connections, mutual_follows */
-$conf['tm_frontpage_show_anon_stats'] = array('members', 'chapters', 'connections');
+/** FRONTPAGE CONFIGURATION VARIABLES **/
+//$conf['tm_frontpage_launch_message'] = "We've just launched our new community platform. Read our <a style='color: #fff; text-decoration: underline;' href='/blog/'>announcement</a>."; // launch message (comment out to disable)
+$conf['tm_frontpage_show_anon_stats'] = array('members', 'chapters', 'connections'); // Options: members, chapters, organizations, connections, mutual_follows
+$conf['tm_frontpage_title_anon'] = 'Be Part Of Something Massive.';
+$conf['tm_frontpage_title_members'] = 'Welcome back, [current-user:name].';
+$conf['tm_frontpage_description_anon'] = 'Travel Massive connects thousands of travel insiders to meet, learn and collaborate at free events all around the world. We are a global community of travel industry insiders, leaders, and innovators.';
+$conf['tm_frontpage_description_members'] = 'Welcome to the Travel Massive Community. We are the world\'s largest community of travel industry insiders, lea
+ders, and innovators. Join your local chapter, connect with other members, or apply to start a chapter in your city.';
 $conf['tm_frontpage_meta_og_title'] = "Travel Massive";
 $conf['tm_frontpage_meta_og_image'] = "";
-$conf['tm_frontpage_meta_description'] = "Travel Massive connects thousands of travel insiders to meet, learn and collaborate at free events all around the world. We are a global community of travel industry insiders, leaders, and innovators.
-.";
+$conf['tm_frontpage_meta_description'] = "Travel Massive connects thousands of travel insiders to meet, learn and collaborate at free events all around the 
+world. We are a global community of travel industry insiders, leaders, and innovators.";
 
-/** Event types **/
+/** EVENT TYPES **/
 $conf['tm_event_types_system'] = array("community" => "Chapter Event", "member" => "Member Event", "company" => "Company Event"); // system event types - don't alter
 $conf['tm_event_types_custom'] = array("workshop" => "Workshop", "conference" => "Conference"); // add your own custom events here
 $conf['tm_event_types'] = array_merge($conf['tm_event_types_system'], $conf['tm_event_types_custom']);
@@ -753,10 +740,7 @@ $conf['tm_event_types_edit_tips']['community'] = "Make your event stand out. Her
 $conf['tm_event_types_edit_tips']['company'] = "Create a company event in our community.<br>Please follow our <a target='_blank' href='" . $conf['tm_community_values_url'] . "'>community guidelines</a>.";
 $conf['tm_event_types_edit_tips']['member'] = "Create a member event in our community.<br>Please follow our <a target='_blank' href='" . $conf['tm_community_values_url'] . "'>community guidelines</a>.";
 
-/** If user removes their account, who do we notify? */
-$conf['tm_user_remove_own_account_notify'] = 'community@travelmassive.com';
-
-/** Discussion settings **/
+/** DISCUSSION SETTINGS **/
 $conf['tm_discuss_menu_hide'] = true; // hide the discussions unless you access /discuss
 $conf['tm_discuss_menu_class'] = 'menu-1458'; // class of the menu item to hide
 $conf['tm_discuss_meta_og_title'] = "Travel Massive Discuss";
@@ -767,7 +751,7 @@ $conf['tm_discuss_full_path'] = "discussions"; // where vanilla is installed
 // $conf['tm_discuss_signup_message'] = ""; // customise the signup message. leave unset for default
 $conf['tm_discuss_enable_feedme'] = true; // show recent discussions for a chapter or member
 
-/** Marketplace settings **/
+/** MARKETPLACE/JOBS SETTINGS **/
 $conf['tm_marketplace_menu_hide'] = true; // hide the marketplace unless you access /marketplace
 $conf['tm_marketplace_menu_class'] = 'menu-1510'; // class of the menu item to hide
 $conf['tm_marketplace_menu_path'] = "marketplace"; // where jobskee is installed
@@ -777,15 +761,12 @@ $conf['tm_marketplace_cookie_secret_iv'] = 'randomstring123'; // must match jobs
 $conf['tm_marketplace_enable_feedme'] = true; // embed marketplace jobs into chapter and company pages
 $conf['tm_marketplace_feedme_url'] = '/marketplace/api/search/'; // url for search
 
-/* Profile and company link fields */
+/* PROFILE AND COMPANY LINK FIELDS */
 /* Options available: website, twitter, facebook, linkedin, instagram, youtube, vimeo, snapchat */
 $conf["tm_users_link_fields"] = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat');
 $conf["tm_organizations_link_fields"] = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo');
 
-/* Display a tip on chapter insights page */
-$conf["tm_reports_chapter_insights_tip"] = "Join our Facebook group to share tips with other members on growing your chapter and be part of our global founders team!";
-
-/* Randomize default images */
+/* RANDOMIZE DEFAULT IMAGES */
 /* After editing, run drush image-flush */
 $conf["tm_images_default_path"] = "public://default_images/"; // Unset if you don't want to use random default images
 $conf["tm_images_default_field_avatar"] = "public://default_images/avatar-default.png"; // The default image for field_avatar
@@ -796,7 +777,7 @@ $conf["tm_images_default_cover_organization"] = array("default_cover_organizatio
 $conf["tm_images_default_cover_event"] = array("default_cover_event_1.jpg", "default_cover_event_2.jpg", "default_cover_event_3.jpg");
 $conf["tm_images_default_cover_chapter"] = array("default_cover_chapter_1.jpg");
 
-/* Event payments setting */
+/* EVENT PAYMENT SETTINGS */
 $conf["tm_payments_stripe_publishable_key"] = "publishable"; // stripe publishable key
 $conf["tm_payments_stripe_image_url"] = '/sites/all/themes/tm/images/travel_massive_stripe_payment_icon.png'; // stripe image url
 $conf["tm_payments_process_url"] = "https://localdev.travelmassive.com/payments/process.php"; // external payment processor
@@ -823,22 +804,22 @@ $conf["tm_payments_reports_url"] = "https://localdev.travelmassive.com/payments/
 $conf["tm_payments_reports_secret_token"] = "randomstring123"; // secret token to verify payment report 
 $conf["tm_payments_reports_help_message"] = "Here's your ticket sales for this event."; // message to show user
 
-/* Featured members settings */
+/* FEATURED MEMBER SETTING */
 $conf["tm_featured_members_event_types"] = array("all" => "Special Guests", "community" => "Special Guests", "workshop" => "Workshop Leaders", "conference" => "Speakers");
 $conf["tm_featured_members_badge_text"] = "A Travel Massive Rockstar!";
 
-/* Allow short message to be sent on follow */
+/* ALLOW SHORT MESSAGE TO BE SENT ON FOLLOW */
 $conf["tm_following_enable_message_user"] = true;
 $conf["tm_following_enable_message_organization"] = true;
 
-/* Chapter settings */
+/* CHAPTER SETTINGS */
 $conf["tm_chapters_allow_edit_chapter_leaders"] = false; // Allow chapter leaders to edit leaders for their own chapter (default false)
 $conf["tm_chapters_groups_enabled"] = true; // Allow group chapters. Exposes the /groups url.
 
-/* Set the theme color for mobile Android, iOS */
-$conf["tm_theme_meta_color"] = "#007DB7"; 
+/* THEME SETTINGS */
+$conf["tm_theme_meta_color"] = "#007DB7"; // Set the theme color for mobile Android, iOS 
 
-/* Search settings */
+/* SEARCH SETTINGS */
 $conf["tm_search_api_results_per_page"] = 10; // how many results to show per page
 $conf["tm_search_api_max_search_terms"] = 8; // max terms allowed in search
 $conf["tm_search_api_top_results_display"] = 5; // perform a quote search first, and insert N results at top
@@ -922,19 +903,126 @@ Add options to your search text to filter your results. Here's some examples.
   </ul>
 </p>";
 
-// enable cookie consent
+/** EU COOKIE CONSENT **/
 $conf["tm_cookieconsent_enable"] = true; // enable EU cookie consent notice
 $conf["tm_cookieconsent_privacy_url"] = ""; // link to privacy policy
 
-// notifications unsubscribe link
+/** NOTIFICATION UNSUBSCRIBE LINK **/
 $conf["tm_notifications_subscription_secret_key"] = "randomstring123"; // random string
 
-// cover videos
+/** COVER VIDEOS **/
 $conf["tm_cover_videos_enabled"] = true; // enable cover video
 
+/** GOOGLE ANALYTICS REPORT **/
 // Base path to Google Analytics drilldown report
 // Replace GOOGLE_ANALYTICS_HASH from your own GA report URL
 $conf["tm_google_analytics_report_path"] = "https://analytics.google.com/analytics/web/?authuser=1#report/content-drilldown/GOOGLE_ANALYTICS_HASH/%3F_u.dateOption%3Dlast30days%26explorer-table.plotKeys%3D%5B%5D%26_r.drilldown%3D";
 
+/** GEO IP MODULE **/
+// Geoip settings
+$conf['tm_geoip_maxmind_db'] = '/usr/local/share/GeoIP/GeoIP2-City_20160517/GeoIP2-City.mmdb'; // path to maxmind geoip datbase
+//$conf['tm_geoip_fake_ip'] = '183.108.246.31'; // simulate a visitor ip address for testing geoip module
+
+/** SITE BRANDING **/
+// Base site branding
+$conf['tm_branding_enabled'] = true; // set to false to disable brand processing and only use config variables
+$conf['tm_branding_frontpage_url'] = '/'; // link to frontpage url
+$conf['tm_branding_assets_base_path'] = '/sites/default/files/site_branding'; // path to site_branding assets 
+$conf['tm_branding_favicon'] = '/sites/default/files/site_branding/favicon/default_favicon.ico'; // default favicon (ico)
+$conf['tm_branding_apple_touch_icon_path'] = '/sites/default/files/site_branding/apple_touch_icons/'; // path to apple_touch_icons 
+$conf['tm_branding_frontpage_image'] = '/sites/default/files/site_branding/frontpage_image/default_frontpage_image.jpg'; // frontpage image (jpg)
+$conf['tm_branding_frontpage_video_url'] = ''; // frontpage video url (ie: 720p mp4 stream url from vimeo). Leave blank to disable
+$conf['tm_branding_frontpage_video_text'] = 'Check out our awesome events'; // label for frontpage video
+$conf['tm_branding_frontpage_video_link'] = '/events'; // link for frontpage video
+$conf['tm_branding_frontpage_block_html'] = '<div style="padding: 2rem; color: #fff;">This is a custom frontpage block</div>'; // front page block html
+$conf['tm_branding_header_logo'] = '/sites/default/files/site_branding/header_logo/default_header_logo.svg'; // default header logo (svg)
+$conf['tm_branding_footer_logo'] = '/sites/default/files/site_branding/footer_logo/default_footer_logo.svg'; // default footer logo (svg)
+$conf['tm_branding_search_page_banner'] = '/sites/default/files/site_branding/search_banner/default_search_banner.png'; // banner image to show on search page
+$conf['tm_branding_search_page_link'] = 'https://travelmassive.com/events'; // link for search page banner
+$conf['tm_branding_email_footer_html'] = ''; // insert text into email notification (excluding event announcements) 
+
+// site navigation links
+$conf["tm_branding_menu_html"] = "
+<ul class='links'>
+  <li class='menu-1383 first'><a href='/chapters'>Chapters</a></li>
+  <li class='menu-368'><a href='/events'>Events</a></li>
+  <li class='menu-1456'><a href='/community'>People</a></li>
+  <li class='menu-1363'><a href='/companies'>Companies</a></li>
+  <li class='menu-1458'><a href='/discuss/' class='tm-menu-discuss'>Q&amp;A</a></li>
+  <li class='menu-1457'><a href='/blog/'>News</a></li>
+  <li class='menu-1606 last'><a href='/groups'>Chapters</a></li>
+</ul>";
+
+// footer html 
+$conf['tm_branding_footer_html'] = "
+<div class='row'>
+  <nav id='foot-nav' role='navigation'>
+    <div class='inner'>
+
+      <section class='foot'>
+        <h2>More Massive</h2>
+          <ul class='links'>
+          <li class='menu first'><a href='/blog/about-travel-massive/'>About</a></li>
+          <li class='menu-770'><a href='/contact' class='active-trail active'>Contact</a></li>
+          <li class='menu-770'><a href='/blog/community-values/' class='active-trail active'>Community Values</a></li>
+          <li class='menu-770'><a href='/blog/start-a-chapter-guide/'>Start A Chapter</a></li>
+          <li class='menu-770'><a href='/blog/media-kit/'>Media kit</a></li>
+          <li class='menu-770'><a href='/sponsors'>Sponsors</a></li>
+          <li class='menu-770 last'><a href='/blog'>Blog</a></li>
+        </ul>
+      </section>
+
+      <section class='social'>
+        <h2>Follow us</h2>
+        <ul class='links'>
+          <li class='menu-339 first'><a href='http://twitter.com/travelmassive' title='Travel Massive on Twitter' class='twitter' target='_blank'>Twitter</a></li>
+          <li class='menu-340'><a href='https://www.facebook.com/travelmassive' title='Travel Massive on Facebook' class='facebook' target='_blank'>Facebook</a></li>
+          <li class='menu-337'><a href='http://instagram.com/travelmassive' title='See Travel Massive on Instagram' class='instagram' target='_blank'>Instagram</a></li>
+          <li class='menu-338'><a href='http://www.linkedin.com/company/travel-massive' title='Travel Massive on Linkedin' class='linkedin' target='_blank'>Linkedin</a></li>
+          <li class='menu-1478'><a href='https://www.youtube.com/user/travelmassive/videos' title='See Travel Massive on YouTube' class='youtube' target='_blank'>YouTube</a></li>
+          <li class='menu-1479'><a href='https://vimeo.com/travelmassive' title='See Travel Massive on Vimeo' class='vimeo' target='_blank'>Vimeo</a></li>
+          <li class='menu-1603 last'><a href='https://www.snapchat.com/add/travelmassive' title='Follow Travel Massive on Snapchat' class='snapchat' target='_blank'>Snapchat</a></li>
+        </ul>
+      </section>
+
+    </div>
+  </nav>
+
+  <div id='foot-credits'>
+    <p>
+      <strong class='logo'>
+      <a title='Home' rel='home' href='__FRONTPAGE_URL__'>
+      <img src='__FOOTER_LOGO_URL__' alt='Home' width='104' height='48' />
+      <span>__SITE_NAME__</span>
+      </a>
+      </strong>
+      <small><time datetime='2011/__CURRENT_YEAR__'>&copy; 2011-__CURRENT_YEAR__ All Rights Reserved</time>Travel Massive Global P.B.C.</small>
+      </p>
+      <p>Powered by <a href='http://massiveplatform.com'>Massive Platform</a><br>
+      Made with <span style='color: #e93f33 !important;'>&hearts;</span> around the world
+      <br><span style='font-size: 9pt;'><a href='/content/terms-use'>Terms</a> &middot; <a href='/content/privacy-policy'>Privacy</a>
+      </span>
+    </p>
+  </div>
+
+</div>";
+
+// front page sub-footer html
+$conf["tm_branding_footer_level1_html"] = "
+<section id='footer-sponsors'>
+  <span class='sponsors-headline' style='float: left;'>COMMUNITY SPONSORS</span>
+  <span style='float: left; padding-left: 1.2rem;'><a href='https://joviam.com'><img alt='Joviam cloud hosting' style='height: 25px;' src='__ASSETS_BASE_PATH__/assets/joviam_logo.png'></span>
+</section>";
+
+// secondary level sub-footer html (ie: non frontpage)
+$conf["tm_branding_footer_level2_html"] = "";
+
+// include custom css for branding (do not include <style> tag)
+$conf["tm_branding_include_css"] = "";
+
+// include custom js for branding ( do not include <script> tag)
+$conf["tm_branding_include_js"] = "";
+
 $conf['install_profile'] = 'tm';
+$conf['suppress_itok_output'] = true; // supress ?itok so email images can be loaded by gmail
 

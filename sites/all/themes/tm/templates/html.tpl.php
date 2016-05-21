@@ -23,16 +23,15 @@
     <?php endif; ?>
     <meta http-equiv="cleartype" content="on" />
 
-    <link rel="shortcut icon" href="<?php print $base_path . path_to_theme(); ?>/images/meta/favicon.ico" type="image/x-icon" />
-    <link rel="apple-touch-icon" href="<?php print $base_path . path_to_theme(); ?>/images/meta/apple-touch-icon.png" />
-    <link rel="apple-touch-icon" sizes="57x57" href="<?php print $base_path . path_to_theme(); ?>/images/meta/apple-touch-icon-57x57.png" />
-    <link rel="apple-touch-icon" sizes="60x60" href="<?php print $base_path . path_to_theme(); ?>/images/meta/apple-touch-icon-60x60.png" />
-    <link rel="apple-touch-icon" sizes="72x72" href="<?php print $base_path . path_to_theme(); ?>/images/meta/apple-touch-icon-72x72.png" />
-    <link rel="apple-touch-icon" sizes="76x76" href="<?php print $base_path . path_to_theme(); ?>/images/meta/apple-touch-icon-76x76.png" />
-    <link rel="apple-touch-icon" sizes="114x114" href="<?php print $base_path . path_to_theme(); ?>/images/meta/apple-touch-icon-114x114.png" />
-    <link rel="apple-touch-icon" sizes="120x120" href="<?php print $base_path . path_to_theme(); ?>/images/meta/apple-touch-icon-120x120.png" />
-    <link rel="apple-touch-icon" sizes="144x144" href="<?php print $base_path . path_to_theme(); ?>/images/meta/apple-touch-icon-144x144.png" />
-    <link rel="apple-touch-icon" sizes="152x152" href="<?php print $base_path . path_to_theme(); ?>/images/meta/apple-touch-icon-152x152.png" />
+    <link rel="shortcut icon" href="<?php echo tm_branding_get_element("favicon");?>" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="<?php echo tm_branding_get_base_element("apple_touch_icon", "apple-touch-icon.png");?>"/>
+    <link rel="apple-touch-icon" sizes="57x57" href="<?php echo tm_branding_get_base_element("apple_touch_icon", "apple-touch-icon-57x57.png");?>"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="<?php echo tm_branding_get_base_element("apple_touch_icon", "apple-touch-icon-72x72.png");?>"/>
+    <link rel="apple-touch-icon" sizes="76x76" href="<?php echo tm_branding_get_base_element("apple_touch_icon", "apple-touch-icon-76x76.png");?>"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="<?php echo tm_branding_get_base_element("apple_touch_icon", "apple-touch-icon-114x114.png");?>"/>
+    <link rel="apple-touch-icon" sizes="120x120" href="<?php echo tm_branding_get_base_element("apple_touch_icon", "apple-touch-icon-120x120.png");?>"/>
+    <link rel="apple-touch-icon" sizes="144x144" href="<?php echo tm_branding_get_base_element("apple_touch_icon", "apple-touch-icon-144x144.png");?>"/>
+    <link rel="apple-touch-icon" sizes="152x152" href="<?php echo tm_branding_get_base_element("apple_touch_icon", "apple-touch-icon-152x152.png");?>"/>
     
     <link type="text/plain" rel="author" href="<?php print $base_path . path_to_theme(); ?>/humans.txt" />
     <link href="//fonts.googleapis.com/css?family=Raleway:400,800" rel="stylesheet" type="text/css" />
@@ -51,41 +50,55 @@
       <script src="<?php print $base_path . $path_to_zen; ?>/js/respond.js"></script>
       <![endif]-->
     <?php endif; ?>
-    <style>
-    .sticky-wrapper.sticky .header { height: border: 0px solid red;}
-    </style>
+
+    <?php
+      // include brand css
+      $tm_branding_css = tm_branding_get_element("include_css");
+      if ($tm_branding_css) {
+        echo "<style>" . $tm_branding_css . "</style>";
+      }
+    ?>
+
+    <?php
+      // include brand js
+      $tm_branding_js = tm_branding_get_element("include_js");
+      if ($tm_branding_js) {
+        echo "<script>" . $tm_branding_js . "</script>";
+      }
+    ?>
+
   </head>
   <?php
-    // https://github.com/VodkaBears/Vide#readme
     global $conf;
+    // https://github.com/VodkaBears/Vide#readme
     $bg_video_body_attributes = "";
-    if (@isset($conf["tm_background_bg"])) {
-      if (($is_front) && ($conf["tm_background_bg"] == True)) {
-        $bg_video = $base_path . path_to_theme() . "/videos/frontpage/background_video";
-        // host mp4 externally to make use of CDN
-        if (@isset($conf["tm_background_bg_mp4_external_url"])) {
-          $bg_video_mp4 = $conf["tm_background_bg_mp4_external_url"];
-        }
-        else {
-          $bg_video_mp4 = $base_path . path_to_theme() . "/videos/frontpage/background_video.mp4";
-        }
-        $bg_video_webm = $base_path . path_to_theme() . "/videos/frontpage/background_video.webm";
-        $bg_video_ogv = $base_path . path_to_theme() . "/videos/frontpage/background_video.ogv";
-        $bg_video_poster = $base_path . path_to_theme() . "/videos/frontpage/background_video.poster";
+    if ($is_front) {
 
-        $bg_video_body_attributes = "data-vide-bg=\"mp4: $bg_video_mp4, webm: $bg_video_webm, ogv: $bg_video_ogv, poster: $bg_video_poster\" data-vide-options=\"posterType: jpg, playbackRate: 1\"";
-        }
-    }
+      $frontpage_video_url = tm_branding_get_element("frontpage_video_url");
+      $frontpage_image = tm_branding_get_element("frontpage_image");
+      if ($frontpage_video_url != "") {
+        $bg_video_body_attributes = "data-vide-bg=\"mp4: $frontpage_video_url, poster: $frontpage_image\" data-vide-options=\"posterType: jpg, playbackRate: 1\"";
+      } else {
+        $bg_video_body_attributes = "data-vide-bg=\"poster: $frontpage_image\" data-vide-options=\"posterType: jpg, playbackRate: 1\"";
+      }
+
+    } // end if frront page
   ?>
   <body class="<?php print $classes; ?>" <?php print $attributes;?> <?php if ($is_front) { print($bg_video_body_attributes); } ?>>
     
-  <?php if (($is_front) && (@isset($conf["tm_background_bg_title"]))) { ?>
+  <?php 
+    if ($is_front) { 
+      if ($frontpage_video_url != "") { 
+  ?>
     <div id="tm-frontpage-video-controls" style="display:none;">
       <div id="tm-frontpage-video-buttons"><span class="tm-frontpage-video-pause"></span><span class="tm-frontpage-video-play"></span></div>
-      <div id="tm-frontpage-video-info">Now playing: <a <?php if ($conf["tm_background_bg_link_ext"]) {?>target="_blank" <?php }?> href="<?php print($conf["tm_background_bg_link_url"]);?>"><?php print($conf["tm_background_bg_title"]);?></a>
+      <div id="tm-frontpage-video-info">Now playing: <a href="<?php echo tm_branding_get_element("frontpage_video_link"); ?>"><?php echo tm_branding_get_element("frontpage_video_text");?></a>
       </div>
     </div>
-  <?php } ?>
+  <?php 
+      } // end front page video
+    } // end if front page
+  ?>
 
     <!--[if lt IE 9]>
       <div id="nocando">

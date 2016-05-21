@@ -1,0 +1,142 @@
+<?php
+
+// This module provides geoip lookup using the maxmind GeoIP2 database
+// http://dev.maxmind.com/geoip/
+
+// Installation:
+// Download maxmind database and install to path accessible by server.
+// Set path to $conf['tm_geoip_maxmind_db']
+// Check /admin/geoip_test to verify installation
+
+// For production environments, install the php5 extension for faster lookups
+// Instructions for ubuntu:
+// https://tuxinthefastlane.wordpress.com/2015/04/24/getting-maxminds-geoip2-to-work-with-nginx-and-php-on-ubuntu/
+
+// if maxminddb php extension is not enabled, load library
+if (!extension_loaded("maxminddb")) {
+	include_once 'includes/geoip2.phar';
+}
+use MaxMind\Db\Reader;
+
+/**
+ * Implements hook_menu()
+ */
+function tm_geoip_menu() {
+  $items['admin/geoip_test'] = array(
+    'title' => 'Geoip test',
+    'page callback' => 'tm_geoip_test',
+    'access callback' => 'tm_geoip_test_check',
+    'type' => MENU_CALLBACK
+  );
+  return $items;
+}
+
+/**
+ * Test your ip
+ */
+function tm_geoip_test() {
+
+	print "<h1>Geoip test.</h1>";
+	print "Use ?ip= to test another ip.<br>";
+
+	$ip = $_SERVER['REMOTE_ADDR'];
+	if (isset($_GET["ip"])) {
+		$ip = $_GET["ip"];
+	}
+	print "ip: " . $ip;
+	$test_your_ip = tm_geoip_lookup($ip);
+
+	if ($test_your_ip == null) {
+		print "<br>No match found (local ip?)";
+	} else {
+		print "<br>Matched ip:";
+		print "<pre>";
+		print_r($test_your_ip);
+		print "</pre>";
+	}
+
+}
+
+/**
+ * Test your ip access callback
+ */
+function tm_geoip_test_check() {
+
+	global $user;
+
+	if ((in_array("administrator", $user->roles)) or (in_array("moderator", $user->roles))) {
+		return true;
+	}
+
+	// not allowed
+	return false;
+}
+
+/**
+ * Lookup details from an ip address
+ */
+function tm_geoip_lookup($ip) {
+
+	global $conf;
+
+	// don't look up empty addresses
+	if ($ip == "") {
+		return null;
+	}
+
+	// test fake ip if tm_geoip_fake_ip set
+	if (isset($conf['tm_geoip_fake_ip'])) {
+		if ($conf['tm_geoip_fake_ip'] != '') {
+			$ip = $conf['tm_geoip_fake_ip'];
+		}
+	}
+
+	// lookup ip address
+	try {
+		$maxmind_db_file = $conf['tm_geoip_maxmind_db'];
+		$reader = new Reader($maxmind_db_file);
+		$ip_lookup = $reader->get($ip);
+		return $ip_lookup;
+	} catch (Exception $e) {
+		return null;
+	}
+	
+}
+
+/**
+ * Get users's last known ip address
+ * Stored by ip module
+ */
+function tm_geoip_get_users_last_ip($uid) {
+
+	$query = "SELECT ip FROM ip_tracker WHERE uid = :uid ORDER BY last_visit DESC LIMIT 1";
+	$row = db_query($query, array(':uid' => $uid))->fetch();
+
+	// get result
+	$ip = null;
+	if ($row != null) {
+		$ip = $row->ip;
+	}
+
+	return tm_geoip_get_ip_from_int($ip);
+}
+
+/**
+ * Helper method get IP from ip_number
+ * from: http://www.brandonchecketts.com/archives/php-conversion-between-and-ip-address-and-an-integer
+ */
+function tm_geoip_get_ip_from_int($ip_number)
+{
+    if(! is_numeric($ip_number)) {
+        return $ip_number;
+    }
+    ## PHP doesn't support unsigned int's, so we'll use a double
+    $ip_number = doubleval($ip_number);
+    $octet1 = $ip_number >> 24 & 255;
+    $octet2 = $ip_number >> 16 & 255;
+    $octet3 = $ip_number >> 8 & 255;
+    $octet4 = $ip_number & 255;
+    $ip_address = $octet1 .'.'. $octet2 .'.'. $octet3 .'.'. $octet4 ;
+    return $ip_address;
+}
+

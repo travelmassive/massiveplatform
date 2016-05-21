@@ -19,53 +19,57 @@ if (arg(0) == 'user' and is_numeric(arg(1)) and arg(2) == FALSE) {
 // chapter or event
 if (arg(0) == 'node' and is_numeric(arg(1)) and arg(2) == FALSE) {
 
+    $node = node_load(arg(1));
+    
     // chapter
-	if ($node->type == "chapter") {
-		$node = node_load(arg(1));
-		$feedme_mode = "category";
-		$feedme_category_id = "all"; // default is all
+    if ($node != null) {
 
-		// category_id is either
-		// 1. a vanilla forum category (ie: category_id=30)
-		// 2. a comma delimeted list of classes to search (ie: chapter-berlin,country-germany,continent-eu)
-		if (isset($node->field_discuss_category_id[LANGUAGE_NONE][0]['value'])) {
-			$feedme_category_id = trim($node->field_discuss_category_id[LANGUAGE_NONE][0]['value']);
-		} else {
-			// ie: chapter-berlin
-			$feedme_category_id = "chapter-" . strtolower(str_replace(" ", "_", $node->title));
+    	if ($node->type == "chapter") {
+    		$node = node_load(arg(1));
+    		$feedme_mode = "category";
+    		$feedme_category_id = "all"; // default is all
 
-			// lookup country and continent
-            if (isset($node->field_country[LANGUAGE_NONE][0]['iso2'])) {
-                $country_code = $node->field_country[LANGUAGE_NONE][0]['iso2'];
-                $country = country_load($country_code);
-                if ($country != null) {
-                	// ie: country-germany
-                	$feedme_category_id .= ",country-" . strtolower($country_code);
+    		// category_id is either
+    		// 1. a vanilla forum category (ie: category_id=30)
+    		// 2. a comma delimeted list of classes to search (ie: chapter-berlin,country-germany,continent-eu)
+    		if (isset($node->field_discuss_category_id[LANGUAGE_NONE][0]['value'])) {
+    			$feedme_category_id = trim($node->field_discuss_category_id[LANGUAGE_NONE][0]['value']);
+    		} else {
+    			// ie: chapter-berlin
+    			$feedme_category_id = "chapter-" . strtolower(str_replace(" ", "_", $node->title));
 
-                	// ie: continent-europe
-                	$feedme_category_id .= ",continent-" . strtolower($country->continent);
+    			// lookup country and continent
+                if (isset($node->field_country[LANGUAGE_NONE][0]['iso2'])) {
+                    $country_code = $node->field_country[LANGUAGE_NONE][0]['iso2'];
+                    $country = country_load($country_code);
+                    if ($country != null) {
+                    	// ie: country-germany
+                    	$feedme_category_id .= ",country-" . strtolower($country_code);
+
+                    	// ie: continent-europe
+                    	$feedme_category_id .= ",continent-" . strtolower($country->continent);
+                    }
                 }
-            }
-		}
-		$feedme_append = ".column.first";
-		$feedme_off = false;
-	}
+    		}
+    		$feedme_append = ".column.first";
+    		$feedme_off = false;
+    	}
 
-    // event
-    if ($node->type == "event") {
-        $node = node_load(arg(1));
-        $feedme_mode = "category";
-        
-        // category_id is either
-        // 1. a vanilla forum category (ie: category_id=30)
-        // 2. a comma delimeted list of classes to search
-        if (isset($node->field_event_discuss_category_id[LANGUAGE_NONE][0]['value'])) {
-            $feedme_category_id = trim($node->field_event_discuss_category_id[LANGUAGE_NONE][0]['value']);
-            $feedme_append = ".column.first";
-            $feedme_off = false;
+        // event
+        if ($node->type == "event") {
+            $node = node_load(arg(1));
+            $feedme_mode = "category";
+            
+            // category_id is either
+            // 1. a vanilla forum category (ie: category_id=30)
+            // 2. a comma delimeted list of classes to search
+            if (isset($node->field_event_discuss_category_id[LANGUAGE_NONE][0]['value'])) {
+                $feedme_category_id = trim($node->field_event_discuss_category_id[LANGUAGE_NONE][0]['value']);
+                $feedme_append = ".column.first";
+                $feedme_off = false;
+            }
         }
     }
-	
 }
 
 if (!$feedme_off) {

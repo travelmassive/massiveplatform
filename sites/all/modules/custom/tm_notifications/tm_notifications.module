@@ -287,11 +287,34 @@ function tm_notifications_mail($key, &$message, $params) {
   $template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template);
   $template = str_replace("__MEMBERS_LABEL__", $conf["tm_members_label"], $template);
 
-  // STEP 6. LOAD HTML TEMPLATE INTO EMAIL BODY
+  // STEP 7. ADD BRANDING MESSAGE TO FOOTER
+  $show_branding = true;
+
+  // hide branding for event notifications and approval flagging
+  if (array_search($key, array('events_register_flag', 'events_register_unflag', 'events_waitlist_flag', 'events_waitlist_unflag', 'events_register_flag_user', 'events_register_unflag_user', 'events_waitlist_flag_user', 'events_waitlist_unflag_user', 'user_approval_need_more_info', 'user_approval_is_company_or_brand', 'user_requested_approval', 'user_approval_non_community'))) {
+    $show_branding = false;
+  }
+
+  // allow notifications to specify if they want to turn off branding via token 'hide_branding_message'
+  if (isset($params['tokens']['hide_branding_message'])) {
+    if ($params['tokens']['hide_branding_message']) {
+      $show_branding = false;
+    }
+  }
+
+  // display branding
+  if (($show_branding) and (isset($params['tokens']['branding_account_uid']))) {
+    $branding_account = user_load($params['tokens']['branding_account_uid']);
+    $branding_email_footer_html = tm_branding_get_element("email_footer_html", $branding_account);
+    $template = str_replace("__EMAIL_BRAND_MESSAGE__", $branding_email_footer_html, $template);
+  } else {
+    $template = str_replace("__EMAIL_BRAND_MESSAGE__", "", $template);
+  }
+ 
+  // STEP 8. LOAD HTML TEMPLATE INTO EMAIL BODY
   $message['body'] = $template;
 
-
-  // STEP 7. Cron Flag
+  // STEP 9. Cron Flag
   // TODO: This is untested with mimemail
   // Notifications that are likely to be sent to multiple user at the
   // same time should be put in a queue and sent through cron.
@@ -401,6 +424,10 @@ function tm_notifications_notify($notification_name, $account, $tokens = array()
       $secret_hash = tm_notifications_generate_secret_hash($account->uid, $notification_name);
       $tokens["UNSUBSCRIBE_NOTIFICATION_LINK"] = "user/" . $account->uid . "/unsubscribe/" . $notification_name . "/" . $secret_hash;
     }
+
+    // add account we are branding to list of tokens
+    // we can then pick it up in tm_notifications_mail
+    $tokens['branding_account_uid'] = $account->uid;
 
     // send mail
     drupal_mail('tm_notifications', $notification->getName(), $account->mail, user_preferred_language($account), array('tokens' => $tokens), $from);

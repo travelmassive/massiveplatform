@@ -845,7 +845,7 @@ Default is $conf[\'tm_branding_include_css\']',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => 'Include site-wide custom javascript.<br>
-Default is $conf[\'tm_branding_include_js\']',
+Default is $conf[\'tm_branding_include_js\']<br>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -1536,7 +1536,7 @@ Default is $conf[\'tm_branding_frontpage_image\']');
   t('Include site-wide custom css.<br>
 Default is $conf[\'tm_branding_include_css\']');
   t('Include site-wide custom javascript.<br>
-Default is $conf[\'tm_branding_include_js\']');
+Default is $conf[\'tm_branding_include_js\']<br>');
   t('Insert a branding message into the footer of email notifications.<br>
 Use basic html formatting suitable for emails.<br>
 Test by triggering a notification such as following or user message.<br>

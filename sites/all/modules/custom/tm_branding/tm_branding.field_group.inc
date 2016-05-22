@@ -100,6 +100,7 @@ function tm_branding_field_group_info() {
       10 => 'field_brand_favicon',
       11 => 'field_brand_frontpage_block_html',
       12 => 'field_brand_search_page_link',
+      13 => 'field_brand_asset_files',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

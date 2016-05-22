@@ -10,6 +10,50 @@
 function tm_branding_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance: 'node-site_brand-field_brand_asset_files'.
+  $field_instances['node-site_brand-field_brand_asset_files'] = array(
+    'bundle' => 'site_brand',
+    'deleted' => 0,
+    'description' => 'Additional file assets for html branding elements to reference.<br>
+You can reference __ASSETS_BASE_PATH__/assets/filename.ext in html template<br>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'file',
+        'settings' => array(),
+        'type' => 'file_default',
+        'weight' => 37,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_brand_asset_files',
+    'label' => 'Asset files',
+    'required' => 0,
+    'settings' => array(
+      'description_field' => 0,
+      'file_directory' => 'site_branding/assets',
+      'file_extensions' => 'jpg jpeg gif png txt pdf svg css js mp4',
+      'max_filesize' => '8 MB',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'file',
+      'settings' => array(
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'file_generic',
+      'weight' => 27,
+    ),
+  );
+
   // Exported field_instance: 'node-site_brand-field_brand_description'.
   $field_instances['node-site_brand-field_brand_description'] = array(
     'bundle' => 'site_brand',
@@ -92,7 +136,7 @@ Default is $conf[\'tm_branding_email_footer_html\']',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 22,
+      'weight' => 21,
     ),
   );
 
@@ -280,7 +324,7 @@ Default is $conf[\'tm_branding_favicon\']',
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 17,
+      'weight' => 16,
     ),
   );
 
@@ -322,7 +366,7 @@ Default is $conf[\'tm_branding_footer_html\']',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 19,
+      'weight' => 18,
     ),
   );
 
@@ -365,7 +409,7 @@ Default is $conf[\'tm_branding_footer_level1_html\']',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 20,
+      'weight' => 19,
     ),
   );
 
@@ -408,7 +452,7 @@ Default is $conf[\'tm_branding_footer_level2_html\']',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 21,
+      'weight' => 20,
     ),
   );
 
@@ -496,7 +540,7 @@ Default is $conf[\'tm_branding_frontpage_block_html\']',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 25,
+      'weight' => 24,
     ),
   );
 
@@ -791,7 +835,7 @@ Default is $conf[\'tm_branding_include_css\']',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 26,
+      'weight' => 25,
     ),
   );
 
@@ -833,7 +877,7 @@ Default is $conf[\'tm_branding_include_js\']',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 27,
+      'weight' => 26,
     ),
   );
 
@@ -1113,7 +1157,7 @@ Default is $conf[\'tm_branding_menu_html\']',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 18,
+      'weight' => 17,
     ),
   );
 
@@ -1211,7 +1255,7 @@ Default is $conf[\'tm_branding_search_page_banner\']',
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 23,
+      'weight' => 22,
     ),
   );
 
@@ -1270,7 +1314,7 @@ Default is $conf[\'tm_branding_search_page_link\']',
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 24,
+      'weight' => 23,
     ),
   );
 
@@ -1450,6 +1494,9 @@ This will override any match criteria.',
   // Translatables
   // Included for use with string extractors like potx.
   t('Activated');
+  t('Additional file assets for html branding elements to reference.<br>
+You can reference __ASSETS_BASE_PATH__/assets/filename.ext in html template<br>');
+  t('Asset files');
   t('Brand Description');
   t('Check this to activate the branding.');
   t('Check this to enable branding for a period of time.<br>');

@@ -1,0 +1,13 @@
+name = TM Status Updates
+core = 7.x
+package = TM Status Updates
+version = 7.x-1.0-dev
+project = tm_status_updates
+dependencies[] = features
+dependencies[] = flag
+features[features_api][] = api:2
+features[flag][] = user_status_updated
+features[user_permission][] = flag user_status_updated
+features[user_permission][] = unflag user_status_updated
+files[] = tm_status_updates.module
+project path = sites/all/modules/custom

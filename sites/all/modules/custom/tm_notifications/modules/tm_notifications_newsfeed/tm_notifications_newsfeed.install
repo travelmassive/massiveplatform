@@ -1,6 +1,6 @@
 <?php
 
 function tm_notifications_newsfeed_uninstall() {
-  // tm_notifications_preferences_purge_bulk(array('weekly_newsfeed'));
-  // tm_notifications_preferences_purge_bulk(array('daily_newsfeed'));
+  tm_notifications_preferences_purge_bulk(array('daily_newsfeed'));
+  tm_notifications_preferences_purge_bulk(array('weekly_newsfeed'));
 }

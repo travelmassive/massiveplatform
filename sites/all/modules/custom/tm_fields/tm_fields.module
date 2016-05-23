@@ -1296,6 +1296,28 @@ function _tm_more_actions_process($field, $title = NULL) {
   }
   // END Set as sponsor link
 
+  // START preview notification link
+  if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
+
+    // Only show to administrator or moderator
+    if (in_array("administrator", $user->roles) or in_array("moderator", $user->roles)) {
+
+      if ($conf["tm_newsfeed_moderator_preview"]) {
+        $links['moderator_tools'][] = array(
+          'wrapper_class' => array('moderator_tools'),
+          'content' => l(t('Preview newsfeed email'), '/admin/newsfeed/notification_preview?uid=' . $targetuser->uid,
+            array(
+            'external' => true,
+            'attributes' => array(
+              'target' => '_blank',
+            )
+          ))
+        );
+      }
+      
+    }
+  }
+  // END preview notification link
 
   // START sharing links
   $links['share'][] = array(

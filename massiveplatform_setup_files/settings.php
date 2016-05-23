@@ -602,6 +602,7 @@ $conf['tm_add_company_limit'] = '8'; // maximum number of companies a user can a
 /** Settings for Email Templates **/
 $conf['tm_site_name'] = "Travel Massive"; // used by emails and in templates to refer to the site
 $conf['tm_email_server_http'] = "https"; // http or https depending on your setup. Will be used in email settings
+$conf['tm_email_server_url_domain'] = "localdev.travelmassive.com"; // domain to use for links to site in emails
 $conf['tm_email_signoff'] = "Cheers,<br>- The Travel Massive Team"; // default email sign off at bottom of emails
 $conf['tm_email_default_footer'] = "__UNSUBSCRIBE_LINK__<br>
 Travel Massive P.B.C. 385 Grove St, San Francisco CA 94102<br> Phone +1 779-999-0042 &middot; community@travelmassive.com"; // used by emails and in templates to refer to the site
@@ -933,6 +934,7 @@ $conf["tm_notifications_subscription_secret_key"] = "randomstring123"; // random
 $conf["tm_cover_videos_enabled"] = true; // enable cover video
 
 // newsfeed
+$conf["tm_newsfeed_send_notifications"] = true; // enable sending newsfeed notifications
 $conf["tm_newsfeed_curl_timeout"] = 2; // seconds for curl timeout
 $conf["tm_newsfeed_curl_check_certificate"] = false; // check ssl certificate
 $conf["tm_newsfeed_marketplace_enabled"] = true; // enable marketplace newsfeed
@@ -1002,6 +1004,8 @@ $conf['tm_newsfeed_email_quotes'] = array(
 $conf['tm_newsfeed_feedback_base'] = 'Feedback? Suggestions?';
 $conf['tm_newsfeed_feedback_link_text'] = 'Let us know';
 
+// show user's notification preview for moderators
+$conf['tm_newsfeed_moderator_preview'] = true;
 
 $conf['install_profile'] = 'tm';
 

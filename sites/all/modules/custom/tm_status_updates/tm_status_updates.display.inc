@@ -1,11 +1,11 @@
 <?php
 
-// tm_newsfeed.display.inc - display methods
+// tm_status_updates.display.inc - status update display methods
 
 /**
  * Approval callback for test callback
  */
-function tm_newsfeed_display_callback() {
+function tm_status_updates_display_callback() {
 
 	// need to be logged in
 	if (user_is_logged_in()) {
@@ -16,21 +16,21 @@ function tm_newsfeed_display_callback() {
 }
 
 /**
- * Newsfeed render
+ * Status updates render
  */
-function tm_newsfeed_display() {
+function tm_status_updates_display() {
  
  	global $user;
  	global $conf;
- 	global $tm_newsfeeds_template;
- 	global $tm_newsfeed_css;
+ 	global $tm_status_updates_template;
+ 	global $tm_status_updates_css;
 
  	// Add js for posting update
-	drupal_add_js(drupal_get_path('module', 'tm_newsfeed') . '/js/tm_newsfeed.js');
+	drupal_add_js(drupal_get_path('module', 'tm_status_updates') . '/js/tm_status_updates.js');
 
 	// Help text
 	$help_html = "";
-	$help_html .= "<li><a href='javascript:jq_newsfeed_user_status_update(" . $user->uid . ");'>Post update</a></li>";
+	$help_html .= "<li><a href='javascript:jq_user_status_update(" . $user->uid . ");'>Post update</a></li>";
 	$help_html .= "<li>Your profile stats";
 	$help_html .= "<li>Upcoming events in chapters that you are a member of (and conferences)";
 	$help_html .= "<li>Recent blog articles (via API)";
@@ -69,46 +69,29 @@ function tm_newsfeed_display() {
 			$image_url = image_style_url("avatar", $default_image_uri);
 		}
 	
-		$feed_info = "<span class='newsfeed_update'>" . strip_tags($result->status_update) . " <span class='newsfeed_ago'>" . $posted_time . "</span>";
+		$feed_info = "<span class='status_update'>" . strip_tags($result->status_update) . " <span class='status_update_ago'>" . $posted_time . "</span>";
 		$feed_title = l($posting_user_name, $posting_user_url) . " posted an update.";
-		$feed_html = tm_newsfeed_render_feed($posting_user_url, $image_url, $feed_title, $feed_info, $feed_item_count, 100);
+		$feed_html = tm_status_updates_render_feed($posting_user_url, $image_url, $feed_title, $feed_info, $feed_item_count, 100);
 
 		$html_items[] = $feed_html;
 		$feed_item_count++;
 
-	}
-
-	// example of fetching marketplace items
-	$marketplace_feed = tm_newsfeed_marketplace_fetch("united states");
-	foreach($marketplace_feed as $result) {
-		
-		$marketplace_url = $result->url;
-		$posted_time = format_interval($result->seconds_ago, 1) . " ago";
-		$image_url = $result->logo_url;
-		$feed_info = "<span class='newsfeed_update'>" . substr(strip_tags($result->clean_description), 0, 100) . "... <span class='newsfeed_ago'>" . $posted_time . "</span>";
-		$feed_title = l($result->title, $marketplace_url);
-		$feed_html = tm_newsfeed_render_feed($marketplace_url, $image_url, $feed_title, $feed_info, $feed_item_count, 100);
-
-		$html_items[] = $feed_html;
-		$feed_item_count++;
 	}
 
 	// render items into feed
 	$feed_html = implode("\n", $html_items);
-	$html = str_replace("__FEED_ITEMS__", $feed_html, $tm_newsfeeds_template);
-	$html = str_replace("__FEED_TITLE__", "Newsfeed", $html);
+	$html = str_replace("__FEED_ITEMS__", $feed_html, $tm_status_updates_template);
+	$html = str_replace("__FEED_TITLE__", "Status updates", $html);
 	$html = str_replace("__FEED_VIEW_MORE_URL__", "/newsfeed", $html);
 	$html = str_replace("__FEED_VIEW_MORE_TEXT__", "View more", $html);
 
-
-
-	return $tm_newsfeed_css . $help_html . "<br>" . $html;
+	return $tm_status_updates_css . $help_html . "<br>" . $html;
 
 }
 
-function tm_newsfeed_render_feed($feed_url, $feed_image_url, $feed_title, $feed_info, $feed_item_count, $display_num_items) {
-	global $tm_newsfeed_template;
-	$html = str_replace("__FEED_URL__", $feed_url, $tm_newsfeed_template);
+function tm_status_updates_render_feed($feed_url, $feed_image_url, $feed_title, $feed_info, $feed_item_count, $display_num_items) {
+	global $tm_status_update_template;
+	$html = str_replace("__FEED_URL__", $feed_url, $tm_status_update_template);
 	$html = str_replace("__FEED_IMAGE_URL__", $feed_image_url, $html);
 	$html = str_replace("__FEED_TITLE__", $feed_title, $html);
 	$html = str_replace("__FEED_INFO__", $feed_info, $html);
@@ -124,14 +107,14 @@ function tm_newsfeed_render_feed($feed_url, $feed_image_url, $feed_title, $feed_
 
 
 /* Templates */
-global $tm_newsfeeds_template;
-$tm_newsfeeds_template = <<<EOT
+global $tm_status_updates_template;
+$tm_status_updates_template = <<<EOT
 
-<section class="contained contained-block newsfeed">
+<section class="contained contained-block status-update">
 	<header class="contained-head">
-		<h1 class="prime-title newsfeed top">__FEED_TITLE__</h1>
+		<h1 class="prime-title status_update top">__FEED_TITLE__</h1>
 	</header>
-	<div class="contained-body newsfeed">
+	<div class="contained-body status-update">
 		<ul class="user-list related-list">
 			__FEED_ITEMS__
 		</ul>
@@ -142,23 +125,23 @@ $tm_newsfeeds_template = <<<EOT
 </section>
 EOT;
 
-global $tm_newsfeed_template;
-$tm_newsfeed_template = <<<EOT
-<li class="newsfeed __FEED_LI_CLASS__" style="__FEED_LI_STYLE__">
-   <article class="card contained view-mode-grid newsfeed clearfix">
+global $tm_status_update_template;
+$tm_status_update_template = <<<EOT
+<li class="status-update __FEED_LI_CLASS__" style="__FEED_LI_STYLE__">
+   <article class="card contained view-mode-grid status-update clearfix">
     	<div style="padding-left: 2em; padding-right: 4em;">
     	
 	        <div class="media">
 		        <div class="avatar">
-		        	<span class="badge-newsfeed">
-		        		 <a href="__FEED_URL__" class="newsfeed"><img class="newsfeed-image" typeof="foaf:Image" src="__FEED_IMAGE_URL__" width="256" height="256" alt=""></a>
+		        	<span class="badge-status-update">
+		        		 <a href="__FEED_URL__" class="status-update"><img class="status-update-image" typeof="foaf:Image" src="__FEED_IMAGE_URL__" width="256" height="256" alt=""></a>
 		        	</span>
 		        </div>
 	        </div>
 
 	    	<div class="teaser">
-	      		<span class="prime-title newsfeed">__FEED_TITLE__</span>
-	      		<p class="meta newsfeed"><span class="role">__FEED_INFO__</span>
+	      		<span class="prime-title status-update">__FEED_TITLE__</span>
+	      		<p class="meta status-update"><span class="role">__FEED_INFO__</span>
 	      	</div>
 	     
       	</div>
@@ -167,13 +150,13 @@ $tm_newsfeed_template = <<<EOT
 </li>
 EOT;
 
-global $tm_newsfeed_css;
-$tm_newsfeed_css = <<<EOT
+global $tm_status_updates_css;
+$tm_status_updates_css = <<<EOT
 <style>
-.prime-title.newsfeed a:hover { color: #3080b2;}
-.prime-title.newsfeed a { text-decoration: underline;}
-.card.newsfeed { padding-top: 0.5rem; padding-bottom: 0.5rem;}
-.card.newsfeed:hover { background-color: #e7f2f7;}
-img.newsfeed-image { max-height: 64px; max-width: 64px;}
+.prime-title.status-update a:hover { color: #3080b2;}
+.prime-title.status-update a { text-decoration: underline;}
+.card.status-update { padding-top: 0.5rem; padding-bottom: 0.5rem;}
+.card.status-update:hover { background-color: #e7f2f7;}
+img.status-update-image { max-height: 64px; max-width: 64px;}
 </style>
 EOT;

@@ -639,7 +639,7 @@ function tm_events_send_email($uid, $email, $subject, $message, $eventid, $reply
 
 
 	// Other vars
-	$template = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $template); 
+  $template = str_replace("__SERVER_NAME__", $conf["tm_email_server_url_domain"], $template); 
 	$template = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $template);  
 	$template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
 	$template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template);  

@@ -2,41 +2,35 @@
 /**
  * @file
  * Code for the tm_newsfeed feature.
+ *
+ * Installation:
+ * To schedule notifications you must run the following command daily:
+ * drush newsfeed-schedule-deliveries
+ *
+ * Drush tests
+ * drush newsfeed-test --member-email=user@example --date-range=weekly
+ * drush newsfeed-test-worker --member-email=user@example --type=weekly
+ * 
  */
 
-include "tm_newsfeed.display.inc";
+include "tm_newsfeed.class.inc";
 include "tm_newsfeed.email.inc";
 include "tm_newsfeed.builder.inc";
-include "tm_newsfeed.update.inc";
 include "tm_newsfeed.marketplace.inc";
 include "tm_newsfeed.blog.inc";
 include "tm_newsfeed.discuss.inc";
+include "tm_newsfeed.preview.inc";
 
 /*
 * Implements hook_menu()
 */
-function tm_notifications_newsfeed_menu() {
-  $items['newsfeed'] = array(
-    'title' => 'Network Updates',
-    'page callback' => 'tm_newsfeed_display',
-    'page arguments' => array(1),
-    'access callback' => 'tm_newsfeed_display_callback',
-    'type' => MENU_CALLBACK,
-  );
+function tm_newsfeed_menu() {
 
-  $items['user/%user/update_status'] = array(
-    'title' => 'Send message',
-    'page callback' => 'tm_newsfeed_post_user_update_ajax',
-    'page arguments' => array(1),
-    'access callback' => 'tm_newsfeed_check_user_post_update',
-    'type' => MENU_CALLBACK,
-  );
-
-  $items['newsfeed_email_test'] = array(
+  $items['admin/newsfeed/notification_preview'] = array(
     'title' => 'Notification Email Test',
-    'page callback' => 'tm_newsfeed_email',
+    'page callback' => 'tm_newsfeed_admin_notification_preview',
     'page arguments' => array(2),
-    'access callback' => 'tm_newsfeed_email_callback',
+    'access callback' => 'tm_newsfeed_admin_notification_preview_callback',
     'type' => MENU_CALLBACK,
   );
 

@@ -60,8 +60,10 @@ function tm_newsfeed_discuss_fetch($search_category_classes = array("all")) {
 	curl_close($ch);
 
 	// return api data in json format
-	cache_set($cache_key, $result, 'cache', time() + $conf["tm_newsfeed_discuss_cache"]);
-
+	if ($conf["tm_newsfeed_discuss_cache"] > 0) {
+		cache_set($cache_key, $result, 'cache', time() + $conf["tm_newsfeed_discuss_cache"]);
+	}
+	
 	// return result
 	try {
 		return json_decode($result);

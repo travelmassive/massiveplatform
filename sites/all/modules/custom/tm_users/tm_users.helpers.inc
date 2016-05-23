@@ -257,3 +257,22 @@ function tm_users_get_users_events($user) {
   return $event_nids;
 }
 
+/**
+ * Return uid of a user by email
+ * Return null if user email does not exist
+ */
+function tm_users_get_userid_by_email($email) {
+
+  // check db
+  $query = "SELECT uid, mail FROM {users} u WHERE mail = :email LIMIT 1";
+  $result = db_query($query, array(':email' => $email))->fetch();
+
+  // found a match
+  if (isset($result->uid)) {
+    return $result->uid;
+  }
+
+  // no match
+  return null;
+}
+

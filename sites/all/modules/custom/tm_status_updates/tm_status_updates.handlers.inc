@@ -1,11 +1,11 @@
 <?php
 
-// tm_newsfeed.update.inc - post update methods
+// tm_status_updates.handlers.inc - ajax handlers for posting and updating status updates
 
 /**
  * Check if its possible for user to post an update
  */
-function tm_newsfeed_check_user_post_update($uid) {
+function tm_status_updates_check_user_post_update($uid) {
 
   return true;
 
@@ -41,7 +41,7 @@ function tm_newsfeed_check_user_post_update($uid) {
  * tm_newsfeed_check_post_user_update should be called first to ensure they can send a message
  * returns array. ie: array("result" => false, "error_message" => "something"); 
  */
-function tm_newsfeed_post_user_update_ajax() {
+function tm_status_updates_post_user_update_ajax() {
 
   global $conf;
 

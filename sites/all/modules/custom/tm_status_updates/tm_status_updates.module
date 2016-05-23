@@ -1,0 +1,30 @@
+<?php
+
+// tm_status_updates.module - status updates
+
+include 'tm_status_updates.display.inc';
+include 'tm_status_updates.handlers.inc';
+
+/*
+* Implements hook_menu()
+*/
+function tm_status_updates_menu() {
+
+  $items['newsfeed'] = array(
+    'title' => 'Network Updates',
+    'page callback' => 'tm_status_updates_display',
+    'page arguments' => array(1),
+    'access callback' => 'tm_status_updates_display_callback',
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['user/%user/update_status'] = array(
+    'title' => 'Send message',
+    'page callback' => 'tm_status_updates_post_user_update_ajax',
+    'page arguments' => array(1),
+    'access callback' => 'tm_status_updates_check_user_post_update',
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}

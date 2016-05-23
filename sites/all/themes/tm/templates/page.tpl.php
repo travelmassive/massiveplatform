@@ -175,13 +175,13 @@
         <!--<?php if ($foot_menu['links']): ?>
           <section class="foot">
           <?php
-            print theme('links', array(
+            /*print theme('links', array(
               'links' => $foot_menu['links'],
               'heading' => array(
                 'text' => $foot_menu['title'],
                 'level' => 'h2',
               ),
-            ));
+            ));*/
           ?>
           </section>
         <?php endif; ?>-->

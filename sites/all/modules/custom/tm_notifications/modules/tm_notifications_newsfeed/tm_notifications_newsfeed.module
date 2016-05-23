@@ -11,6 +11,19 @@ include_once 'tm_notifications_newsfeed.features.inc';
  */
 function tm_notifications_newsfeed_tm_notif_info() {
   $notification = array();
+  $notification['daily_newsfeed'] = array(
+    'title' => 'Daily Newsfeed',
+    'description' => 'Send a daily update to members.',
+    'use_cron' => TRUE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('node', 'current-user'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
   $notification['weekly_newsfeed'] = array(
     'title' => 'Weekly Newsfeed',
     'description' => 'Send a weekly update to members.',
@@ -28,3 +41,92 @@ function tm_notifications_newsfeed_tm_notif_info() {
   return $notification;
 }
 
+/**
+ *Implement worker method for schedule notification
+ */
+function tm_notifications_newsfeed_worker($data, $notif_type) {
+
+  global $conf;
+
+  // ensure that newsfeed is enabled
+  if (!$conf["tm_newsfeed_send_notifications"]) {
+    return;
+  }
+
+  // check we have user_id
+  if (!isset($data['user_id'])) {
+    return;
+  }
+
+  // check valid type
+  if (($notif_type != "daily") and ($notif_type != "weekly")) {
+    return;
+  }
+
+  // prepare variables for query
+  $user_id = $data['user_id'];
+  $account = user_load($user_id);
+ 
+  if ($notif_type == "daily") {
+    $start_date_obj = new DateTime('-1 day', new DateTimeZone('UTC'));
+    $end_date_obj = new DateTime(null, new DateTimeZone('UTC'));
+  }
+
+  if ($notif_type == "weekly") {
+    $start_date_obj = new DateTime('-7 day', new DateTimeZone('UTC'));
+    $end_date_obj = new DateTime(null, new DateTimeZone('UTC'));
+  }
+
+  $start_date = $start_date_obj->format('Y-m-d H:i:s');
+  $end_date = $end_date_obj->format('Y-m-d H:i:s');
+
+  // generate notification for user
+  $gen = new TmNewsfeedEmailGenerator();
+  $notifications = $gen->start(array($user_id), $start_date, $end_date);
+
+  // check we got a notification
+  if (sizeof($notifications) == 0) {
+    watchdog('Empty newsfeed generated', "Empty newsfeed generated for user " . $user_id);
+    return;
+  }
+
+  // get notification
+  $notification = $notifications[0];
+  $subject = $notification['subject'];
+  $body = $notification['body'];
+
+  // if weekly notification, show daily subscribe link
+  if ($notif_type == "weekly") {
+    $notification = new TMNotification("daily_newsfeed");
+    if (!$notification->isEnabled($user_id)) {
+      $secret_hash = tm_notifications_generate_secret_hash($user_id, "daily_newsfeed");
+      $subscribe_link = "user/" . $user_id . "/subscribe/daily_newsfeed/" . $secret_hash;
+      $subscribe_html = "<p>Want to receive these updates daily? <a href='__SERVER_HTTP__://__SERVER_NAME__/" . $subscribe_link . "'>Turn on daily updates</a>.</p>";
+      $body = $body . $subscribe_html; 
+    }
+  }
+
+  // send notification
+  if ($notif_type == "daily") {
+    tm_notifications_notify('daily_newsfeed', $account, array('__NEWSFEED_SUBJECT__' => $subject, '__NEWSFEED_BODY__' => $body));
+  }
+
+  if ($notif_type == "weekly") {
+    tm_notifications_notify('weekly_newsfeed', $account, array('__NEWSFEED_SUBJECT__' => $subject, '__NEWSFEED_BODY__' => $body));
+  }
+
+}
+
+/**
+ * Implement worker method for schedule notification
+ */
+function tm_notifications_newsfeed_daily_worker($data) {
+  tm_notifications_newsfeed_worker($data, "daily");
+}
+
+/**
+ * Implement worker method for schedule notification
+ */
+function tm_notifications_newsfeed_weekly_worker($data) {
+  tm_notifications_newsfeed_worker($data, "weekly");
+}

@@ -57,7 +57,9 @@ function tm_newsfeed_marketplace_fetch($country) {
 	curl_close($ch);
 
 	// return api data in json format
-	cache_set($cache_key, $result, 'cache', time() + $conf["tm_newsfeed_marketplace_cache"]);
+	if ($conf["tm_newsfeed_marketplace_cache"] > 0) {
+		cache_set($cache_key, $result, 'cache', time() + $conf["tm_newsfeed_marketplace_cache"]);
+	}
 
 	// return result
 	try {

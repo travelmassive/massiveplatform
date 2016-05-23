@@ -7927,6 +7927,12 @@ a.cancel_account_link {
   color: #007DB7 !important;
 }
 
+/* Preview notification */
+/* line 828, ../sass/_single.scss */
+.tm_preview_notification .jqi {
+  width: auto;
+}
+
 /* line 2, ../sass/_login.scss */
 #account-menu-blk .menu-blk-title {
   text-transform: uppercase;

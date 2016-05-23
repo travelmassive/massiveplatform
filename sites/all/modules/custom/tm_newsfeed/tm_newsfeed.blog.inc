@@ -57,7 +57,9 @@ function tm_newsfeed_blog_fetch() {
 	curl_close($ch);
 
 	// return api data in json format
-	cache_set($cache_key, $result, 'cache', time() + $conf["tm_newsfeed_blog_cache"]);
+	if ($conf["tm_newsfeed_blog_cache"] > 0) {
+		cache_set($cache_key, $result, 'cache', time() + $conf["tm_newsfeed_blog_cache"]);
+	}
 
 	// return result
 	try {

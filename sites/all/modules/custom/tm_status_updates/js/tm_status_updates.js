@@ -1,7 +1,7 @@
 (function ($, Drupal, window, document, undefined) {jQuery(document).ready(function() {
 
   // allow member to send a short message on follow to recipient
-  jq_newsfeed_user_status_update = function(uid) {
+  jq_user_status_update = function(uid) {
     
     countChar = function(val) {
       var len = val.value.length;

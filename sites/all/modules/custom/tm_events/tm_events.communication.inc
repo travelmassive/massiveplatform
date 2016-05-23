@@ -334,7 +334,7 @@ function tm_events_test_email_ajax(){
     }
   }
   
-  $sendcount = tm_events_send_email($email, $subject, $message, $eventid, $replyto);
+  $sendcount = tm_events_send_email(null, $email, $subject, $message, $eventid, $replyto);
 
   // indicate success to the js ajax handler
   print(json_encode(array("sent" => $sendcount)));
@@ -538,14 +538,15 @@ function tm_events_send_emails($recipients, $subject, $message, $eventid, $reply
       $sendcount++;
 
       // add to user_chapter_announcements cron queue
-      $queue->createItem(["email" => $user_account->mail, 
+      $queue->createItem(["uid" => $user_account->uid,
+                        "email" => $user_account->mail, 
                         "subject" => $subject, 
                         "message" => $message,
                         "replyto" => $replyto,
                         "eventid" => $eventid]);
       
       // below is the non queue method
-      //tm_events_send_email($user_account->mail, $subject, $message, $eventid);
+      //tm_events_send_email($user_account->uid, $user_account->mail, $subject, $message, $eventid);
     }
 
   }
@@ -572,14 +573,14 @@ function tm_events_cron_queue_info() {
  *
  */
 function tm_events_send_email_cron($item) {
-  tm_events_send_email($item["email"], $item["subject"], $item["message"], $item["eventid"], $item["replyto"]);
+  tm_events_send_email($item["uid"], $item["email"], $item["subject"], $item["message"], $item["eventid"], $item["replyto"]);
 }
 
 
 /**
  * Sends out a single email
  */
-function tm_events_send_email($email, $subject, $message, $eventid, $replyto="") {
+function tm_events_send_email($uid, $email, $subject, $message, $eventid, $replyto="") {
 
 	global $conf;
 
@@ -619,12 +620,29 @@ function tm_events_send_email($email, $subject, $message, $eventid, $replyto="")
 	}
 	$template = str_replace("__EMAIL_FOOTER__", $footer, $template);
 
+  // STEP 5. ADD UNSUBSCRIBE LINK
+  if ($uid != null) {
+     $secret_hash = tm_notifications_generate_secret_hash($uid, "user_chapter_announcements");
+     $unsubscribe_url = "user/" . $uid . "/unsubscribe/" . "user_chapter_announcements" . "/" . $secret_hash;
+     $unsubscribe_link = "<a href='__SERVER_HTTP__://__SERVER_NAME__/" . $unsubscribe_url . "'>Unsubscribe from event announcements</a>";
+  } else {
+    $unsubscribe_link = "Update Your Notification Settings at <a href='__SERVER_HTTP__://__SERVER_NAME__'>__SERVER_NAME__</a>"; 
+  }
+  $template = str_replace("__UNSUBSCRIBE_LINK__", $unsubscribe_link, $template);
+
+
+  $secret_hash = tm_notifications_generate_secret_hash($account->uid, $notification_name); 
+  $tokens["UNSUBSCRIBE_NOTIFICATION_LINK"] = "user/" . $account->uid . "/unsubscribe/" . $notification_name . "/" . $secret_hash;
+ 
+  $unsubscribe_link = "<a href='__SERVER_HTTP__://__SERVER_NAME__/" . $params['tokens']['UNSUBSCRIBE_NOTIFICATION_LINK'] . "'>Unsubscribe from this notification</a>";
+  $template = str_replace("__UNSUBSCRIBE_LINK__", $unsubscribe_link, $template);
+
 	// Other vars
 	$template = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $template); 
 	$template = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $template);  
 	$template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
 	$template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template);  
-
+  $template = str_replace("__EMAIL_BRAND_MESSAGE__", "", $template); // disable brand message
 
 	// STEP 5. LOAD HTML TEMPLATE INTO EMAIL BODY
 	$email_message['body'] = $template;
@@ -697,7 +715,7 @@ function tm_events_send_emails_ajax() {
 
   // copy announcement email to a specific address
   if (isset($conf["tm_announcement_copy_email"])) {
-      tm_events_send_email($conf["tm_announcement_copy_email"], "[Copy] " . $subject, $message, $eventid, $replyto);
+      tm_events_send_email(null, $conf["tm_announcement_copy_email"], "[Copy] " . $subject, $message, $eventid, $replyto);
   }
 
   $sendcount = tm_events_send_emails($recipients, $subject, $message, $eventid, $replyto, $approved_members);

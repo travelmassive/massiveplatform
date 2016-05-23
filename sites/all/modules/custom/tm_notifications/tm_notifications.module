@@ -5,6 +5,8 @@
  */
 
 include_once 'tm_notifications.features.inc';
+include_once 'tm_notifications.subscription_link.inc';
+
 /**
  * @file tm_notifications.module
  * 
@@ -18,6 +20,7 @@ module_load_include('inc', 'tm_notifications', 'tm_notifications_TMNotification'
  * Implements hook_menu()
  */
 function tm_notifications_menu() {
+
   $items['admin/config/tm/tm_notifications'] = array(
     'title' => 'Notifications',
     'description' => 'Settings for Travel Massive notifications.',
@@ -26,6 +29,22 @@ function tm_notifications_menu() {
     'access arguments' => array('manage tm notifications'),
     'file' => 'tm_notifications.admin.pages.inc',
     'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['user/%user/subscribe/%/%'] = array(
+    'title' => 'Confirm subscription',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('tm_notifications_confirm_subscription_form'),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['user/%user/unsubscribe/%/%'] = array(
+    'title' => 'Confirm unsubscription',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('tm_notifications_confirm_subscription_form'),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
   );
   return $items;
 }
@@ -229,7 +248,7 @@ function tm_notifications_mail($key, &$message, $params) {
   // STEP 3. SET MAIL HTML HEADERS
   $module = 'tm_notifications';
   $language = language_default();
-  $params = array();
+  //$params = array();
   $send = FALSE;
   //$email_message = drupal_mail($module, $key, $email, $language, $params, NULL, $send);
   $message['headers']['MIME-Version'] = '1.0';
@@ -253,18 +272,49 @@ function tm_notifications_mail($key, &$message, $params) {
   }
   $template = str_replace("__EMAIL_FOOTER__", $footer, $template);
 
+  // STEP 6. ADD UNSUBSCRIBE LINK
+  if (isset($params['tokens']['UNSUBSCRIBE_NOTIFICATION_LINK'])) {
+    $unsubscribe_link = "<a href='__SERVER_HTTP__://__SERVER_NAME__/" . $params['tokens']['UNSUBSCRIBE_NOTIFICATION_LINK'] . "'>Unsubscribe from this notification</a>";
+  } else {
+    $unsubscribe_link = "Update Your Notification Settings at <a href='__SERVER_HTTP__://__SERVER_NAME__'>__SERVER_NAME__</a>";   
+  }
+  $template = str_replace("__UNSUBSCRIBE_LINK__", $unsubscribe_link, $template);
+
   // Other vars
   $template = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $template); 
   $template = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $template);  
   $template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
   $template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template);
-  $template = str_replace("__MEMBERS_LABEL__", $conf["tm_members_label"], $template); 
+  $template = str_replace("__MEMBERS_LABEL__", $conf["tm_members_label"], $template);
 
-  // STEP 6. LOAD HTML TEMPLATE INTO EMAIL BODY
+  // STEP 7. ADD BRANDING MESSAGE TO FOOTER
+  $show_branding = true;
+
+  // hide branding for event notifications and approval flagging
+  if (array_search($key, array('events_register_flag', 'events_register_unflag', 'events_waitlist_flag', 'events_waitlist_unflag', 'events_register_flag_user', 'events_register_unflag_user', 'events_waitlist_flag_user', 'events_waitlist_unflag_user', 'user_approval_need_more_info', 'user_approval_is_company_or_brand', 'user_requested_approval', 'user_approval_non_community'))) {
+    $show_branding = false;
+  }
+
+  // allow notifications to specify if they want to turn off branding via token 'hide_branding_message'
+  if (isset($params['tokens']['hide_branding_message'])) {
+    if ($params['tokens']['hide_branding_message']) {
+      $show_branding = false;
+    }
+  }
+
+  // display branding
+  if (($show_branding) and (isset($params['tokens']['branding_account_uid']))) {
+    $branding_account = user_load($params['tokens']['branding_account_uid']);
+    $branding_email_footer_html = tm_branding_get_element("email_footer_html", $branding_account);
+    $template = str_replace("__EMAIL_BRAND_MESSAGE__", $branding_email_footer_html, $template);
+  } else {
+    $template = str_replace("__EMAIL_BRAND_MESSAGE__", "", $template);
+  }
+ 
+  // STEP 8. LOAD HTML TEMPLATE INTO EMAIL BODY
   $message['body'] = $template;
 
-
-  // STEP 7. Cron Flag
+  // STEP 9. Cron Flag
   // TODO: This is untested with mimemail
   // Notifications that are likely to be sent to multiple user at the
   // same time should be put in a queue and sent through cron.
@@ -340,32 +390,66 @@ function tm_notifications_scheduled_worker_run() {
  * @return boolean
  *   TRUE if the notification is enabled for the user and it was scheduled.
  */
-function tm_notifications_notify($notification, $account, $tokens = array(), $from = null) {
+function tm_notifications_notify($notification_name, $account, $tokens = array(), $from = null) {
+
+  global $conf;
 
   // You can go one step further and disable any outbound notifications triggered by a non-validated member
   // Just uncomment below.
   /*global $user;
   if (in_array('non-validated', $user->roles)) {
-    watchdog('Not sending email trigged by non-verified user ', $notification . ", " . $account->mail);
+    watchdog('Not sending email trigged by non-verified user ', $notification_name . ", " . $account->mail);
     return;
   }*/
 
   // if notified user is not validated, then don't trigger any notifications
   // allow the user_approved and related notification to be sent
   $allow_unverified_notifications = array("user_approved", "user_approval_need_more_info", "user_approval_is_company_or_brand", "user_approval_non_community");
-  if (in_array('non-validated', $account->roles) && !in_array($notification, $allow_unverified_notifications)) {
-    watchdog('Not sending email to a non-verified user ', $notification . ", " . $account->mail);
+  if (in_array('non-validated', $account->roles) && !in_array($notification_name, $allow_unverified_notifications)) {
+    watchdog('Not sending email to a non-verified user ', $notification_name . ", " . $account->mail);
     return;
   }
 
-  $notification = new TMNotification($notification);
+  $notification = new TMNotification($notification_name);
   if ($notification->isEnabled($account->uid) && $account->status) {
+
+    // Add unsubscribe link if notification change allowed
+    // Note: Hide one-click subscription link if reply-to: another member
+    $reply_to_member = false;
+    if (isset($tokens['reply_to_member'])) {
+        $reply_to_member = $tokens['reply_to_member'];
+    }
+
+    if ($notification->isChangeAllowed() and (!$reply_to_member)) {
+      $secret_hash = tm_notifications_generate_secret_hash($account->uid, $notification_name);
+      $tokens["UNSUBSCRIBE_NOTIFICATION_LINK"] = "user/" . $account->uid . "/unsubscribe/" . $notification_name . "/" . $secret_hash;
+    }
+
+    // add account we are branding to list of tokens
+    // we can then pick it up in tm_notifications_mail
+    $tokens['branding_account_uid'] = $account->uid;
+
+    // send mail
     drupal_mail('tm_notifications', $notification->getName(), $account->mail, user_preferred_language($account), array('tokens' => $tokens), $from);
     return TRUE;
+
   }
   
   return FALSE;
 }
+
+
+/**
+ * Generate secret hash to create unsubscribe urls
+ */
+function tm_notifications_generate_secret_hash($uid, $notification_name) {
+
+  global $conf;
+  $secret_hash = md5($conf["tm_notifications_subscription_secret_key"] . "_" . $uid  . "_" . $notification_name);
+  return $secret_hash;
+
+}
+
 
 /**
  * Schedules a worker to run at a given date.

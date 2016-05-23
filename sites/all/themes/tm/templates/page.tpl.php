@@ -16,7 +16,7 @@
     <div class="row">
       <h1 id="site-title">
         <a title="<?php print t('Home'); ?>" rel="home" href="<?php print $front_page; ?>">
-          <img class='header-logo' src="<?php print $base_path . path_to_theme(); ?>/images/layout/tm-logo.svg" alt="<?php print t('Home'); ?>" width="104" height="48" />
+          <img class='header-logo' src="<?php echo tm_branding_get_element("header_logo");?>" alt="<?php print t('Home'); ?>" width="104" height="48" />
           <span><?php print $site_name; ?></span>
         </a>
       </h1>
@@ -27,12 +27,7 @@
           <li class="browse-wrapper" data-dropd-wrapper>
             <h2><a class="toggle" href="#browse-menu-blk" data-dropd-toggle><span class="hide"><?= t('Browse'); ?></span></a></h2>
             <div id="browse-menu-blk" class="inner dropd dropd-right" data-dropd>
-              <?php
-              print theme('links__system_main_menu', array(
-                'links' => $main_menu,
-                'attributes' => array(
-                  'class' => array('links'),
-                ),)); ?>
+              <?php echo tm_branding_get_element("menu_html"); ?>
             </div>
           </li>
           <?php endif; ?>
@@ -100,43 +95,35 @@
           <div class="column">
             <?php print render($page['content']); ?>
 
+
+            <?php
+            // frontpage block
+            if ($is_front) {
+            $frontpage_block_html = tm_branding_get_element("frontpage_block_html");
+            if ($frontpage_block_html != "") { ?>
+            <div class="column first" style='margin: auto; text-align: center;' id="frontpage_block" style="float: left;">
+              <?php echo $frontpage_block_html; ?>
+            </div>
+            <?php 
+              } // end if frontpage_block_html
+            } // end if is front
+            ?>
+
+            <div class="trilithon" id="frontpage_feed" style="margin-top: 64px;">
+
             <?php
             // Enable wordpress feedme plugin
             // Show recent blog posts and more
-            global $conf;
             $tm_enable_wordpress_feedme = false;
             if (@isset($conf["tm_enable_wordpress_feedme"])) {
               if ($conf["tm_enable_wordpress_feedme"]) {
                 $tm_enable_wordpress_feedme = true;
-
             ?>
-            <div id="frontpage_wordpress_content" style="margin-top: 64px; display: none;"></div>
-            <?php } // end if
-            } // end if
-            ?>
-
-            <div class="trilithon" id="frontpage_feed" style="margin-top: 64px;">
-            
+              <div class="column first" id="frontpage_wordpress_feed" style="float: left;"></div>
             <?php
-              if ($tm_enable_wordpress_feedme) {
-            ?>
-            <div class="column first" id="frontpage_wordpress_feed" style="float: left;"></div>
-              <script type="text/javascript">
-                // hide frontpage feed until it's loaded
-                document.getElementById('frontpage_feed').style.display = 'none';
-                feedme_loaded = function() {
-
-                  // show the font page feed
-                  document.getElementById('frontpage_feed').style.display = 'block';
-
-                  // show the front page content
-                  document.getElementById('frontpage_wordpress_content').innerHTML = document.getElementById('feedme_frontpage_content').innerHTML;
-                  document.getElementById('frontpage_wordpress_content').style.display = 'block';                  
-                }
-              </script>
-            <?php include './'. path_to_theme() .'/templates/page--wordpress-feedme.tpl.php'; ?>
-            <?php 
+                include './'. path_to_theme() .'/templates/page--wordpress-feedme.tpl.php';
               } // end if
+            } // end if
             ?>
 
             <?php
@@ -166,43 +153,13 @@
   </main>
 
   <footer id="footer" role="contentinfo">
-    <div class="row">
-      <nav id="foot-nav" role="navigation">
-        <div class="inner">
-
-        <?php include './'. path_to_theme() .'/templates/block--footer-links.tpl.php';?>
-
-        <!--<?php if ($foot_menu['links']): ?>
-          <section class="foot">
-          <?php
-            print theme('links', array(
-              'links' => $foot_menu['links'],
-              'heading' => array(
-                'text' => $foot_menu['title'],
-                'level' => 'h2',
-              ),
-            ));
-          ?>
-          </section>
-        <?php endif; ?>-->
-
-        <?php if ($social_menu['links']): ?>
-          <section class="social">
-          <?php
-            print theme('links', array(
-              'links' => $social_menu['links'],
-              'heading' => array(
-                'text' => $social_menu['title'],
-                'level' => 'h2',
-              ),
-            ));
-          ?>
-          </section>
-        <?php endif ?>
-        </div>
-      </nav>
-      <?php include './'. path_to_theme() .'/templates/block--footer-credits.tpl.php';?>
-    </div>
-    <?php include './'. path_to_theme() .'/templates/block--footer-sponsors.tpl.php';?>
+    <?php 
+    echo tm_branding_get_element("footer_html");
+    if ($is_front) {
+      echo tm_branding_get_element("footer_level1_html");
+    } else {
+      echo tm_branding_get_element("footer_level2_html");
+    }
+    ?>
   </footer>
 </div>

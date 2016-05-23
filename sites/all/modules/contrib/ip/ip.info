@@ -1,0 +1,17 @@
+name = IP address manager
+description = Manage user IP addresses.
+core = 7.x
+
+dependencies[] = views
+
+files[] = src/Plugin/views/argument/Ip2LongArguemnt.php
+files[] = src/Plugin/views/field/Long2IpField.php
+files[] = src/Plugin/views/field/IpUserCountField.php
+files[] = src/Plugin/views/filter/Ip2LongFilter.php
+
+; Information added by Drupal.org packaging script on 2015-12-29
+version = "7.x-2.0-beta1"
+core = "7.x"
+project = "ip"
+datestamp = "1451413440"
+

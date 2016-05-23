@@ -212,8 +212,10 @@ function tm_users_preprocess_page(&$variables) {
 
   // Show chapter page tips
   // ie /node/12833/members
-  if (($url_parts[0] == "node") and ($url_parts[2] == "members") and (sizeof($url_parts) == 3)) {
-    tm_users_in_chapter_tips();
+  if (isset($url_parts[2])) {
+    if (($url_parts[0] == "node") and ($url_parts[2] == "members") and (sizeof($url_parts) == 3)) {
+      tm_users_in_chapter_tips();
+    }
   }
 
   // Show leaders page tips

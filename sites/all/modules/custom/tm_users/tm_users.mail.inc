@@ -115,10 +115,13 @@ function tm_users_send_html_mail($module, $key, $email, $language, $params, $sub
   $template = str_replace("__EMAIL_FOOTER__", $footer, $template);
 
   // Other vars
+  $unsubscribe_link = "Update Your Notification Settings at <a href='__SERVER_HTTP__://__SERVER_NAME__'>__SERVER_NAME__</a>"; 
+  $template = str_replace("__UNSUBSCRIBE_LINK__", $unsubscribe_link, $template);
   $template = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $template); 
   $template = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $template);  
   $template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
   $template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template); 
+  $template = str_replace("__EMAIL_BRAND_MESSAGE__", "", $template); // disable brand message
 
   // STEP 5. LOAD HTML TEMPLATE INTO EMAIL BODY
   $email_message['body'] = $template;

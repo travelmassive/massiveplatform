@@ -10,3 +10,32 @@ function _tm_chapters_get_num_members($chapter_id) {
     return $flag->get_count($chapter_id);
 }
 
+/**
+ * Helper method to return formal name of chapter
+ * If chapter is a group, omit the site name
+ */
+function tm_chapters_formal_name($chapter) {
+
+  global $conf;
+
+  $chapter_name = "";
+
+  if (isset($chapter->field_chapter_is_group[LANGUAGE_NONE][0]['value'])) {
+    if ($chapter->field_chapter_is_group[LANGUAGE_NONE][0]['value']) {
+      // ie: Responsible Tourism Networking
+      $chapter_name = $chapter->title;
+    } 
+  }
+
+  if ($chapter_name == "") {
+    if (stripos($chapter->title, $conf["tm_site_name"]) === false) {
+      // New York Travel Massive
+      $chapter_name =  $conf["tm_site_name"] . " " . $chapter->title;
+    } else {
+      // Travel Massive Live
+      $chapter_name = $chapter->title;
+    }
+  }
+
+  return $chapter_name;
+}

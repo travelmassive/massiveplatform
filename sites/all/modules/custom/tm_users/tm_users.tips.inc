@@ -204,9 +204,16 @@ function tm_users_in_chapter_tips() {
     }
     $node = menu_get_object();
     $nodeid = 0;
+
+    // make sure we have a valid chapter
+    if ($node == null) {
+      return;
+    }
+
     if ($node->type == "chapter") {
       $nodeid = $node->nid;
     }
+    
   }
 
   // /node/12833/members

@@ -24,17 +24,20 @@ if (arg(0) == 'node' and is_numeric(arg(1)) and arg(2) == FALSE) {
 	$feedme_theme = "light";
 	$feedme_append = ".column.first";
 
-	if ($node->type == "chapter") {
-		$feedme_mode = "chapter";
-		$feedme_query = $node->title; // ie: Sydney
-		$feedme_off = false;
-	}
+    if ($node != null) {
+        if ($node->type == "chapter") {
+            $feedme_mode = "chapter";
+            $feedme_query = $node->title; // ie: Sydney
+            $feedme_off = false;
+        }
 
-	if ($node->type == "organization") {
-		$feedme_mode = "company";
-		$feedme_query = $node->title; // ie: GoEuro
-		$feedme_off = false;
-	}
+        if ($node->type == "organization") {
+            $feedme_mode = "company";
+            $feedme_query = $node->title; // ie: GoEuro
+            $feedme_off = false;
+        }
+    }
+	
 }
 
 // front page

@@ -205,14 +205,15 @@ function tm_users_get_all_moderators() {
  */
 function tm_users_get_chapters($user) {
 
-  $flags = flag_get_user_flags("node", null, $user->uid);
+  // query flagging table for signup flag with user
+  $signup_flag = flag_get_flag("signup", NULL);
+  $query = "SELECT entity_id FROM {flagging} f WHERE f.fid = :fid AND f.entity_type='node' AND f.uid=:uid";
+  $rows = db_query($query, array(':fid' => $signup_flag->fid, ':uid' => $user->uid))->fetchAll();
+
+  // add to chapters_nids
   $chapters_nids = array();
-  foreach ($flags as $flag_name => $flag) {
-    if ($flag_name == "signup") {
-      foreach($flag as $f) {
-        $chapters_nids[] = $f->entity_id;
-      }
-    }
+  foreach ($rows as $row) {
+    $chapters_nids[] = $row->entity_id;
   }
 
   return $chapters_nids;

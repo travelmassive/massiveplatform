@@ -46,12 +46,12 @@ function tm_notifications_chapter_strongarm() {
     'default_state' => '1',
     'change_allowed' => 0,
     'email' => array(
-      'subject' => 'Welcome to __SITE_NAME__ [node:title]',
+      'subject' => 'Welcome to __CHAPTER_NAME__',
       'message' => 'Hi __USER_FIRST_NAME__,
 <br>
 <br>You\'re in!
 <br>
-<br>Thanks for joining the __SITE_NAME__ [node:title] Chapter.
+<br>Thanks for joining the __CHAPTER_NAME__ Chapter.
 <br>
 __WELCOME_MESSAGE__
 <br>We hope you can learn, share, and connect with other like-minded __MEMBERS_LABEL__ through local chapter events in [node:title].

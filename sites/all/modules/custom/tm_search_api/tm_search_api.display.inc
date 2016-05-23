@@ -26,6 +26,14 @@ function tm_search_api_view() {
 	$template = str_replace("__SEARCH_HELP_TEXT__", $conf["tm_search_api_help_text"], $template);
 	$template = str_replace("__SEARCH_HELP_TIPS__", $conf["tm_search_api_help_tips"], $template);
 
+	// include branded search banner
+	$search_page_banner = tm_branding_get_element("search_page_banner");
+	$search_page_link = tm_branding_get_element("search_page_link");
+	if (($search_page_banner != "") and ($search_page_link != "")) {
+		$search_banner_html = "<div style='margin: auto; text-align: center;'><a target='_blank' href='" . $search_page_link . "'><img style='width: 85%; height: 85%; max-width: 500px;' src='" . $search_page_banner . "'></a></div>";
+		$template = $search_banner_html . $template;
+	}
+
 	// create form
 	$form['html'] = array(
     	'#type' => 'item',

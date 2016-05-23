@@ -46,7 +46,7 @@ function tm_users_download_global_newsletter_csv(){
 
 	$oldzone = date_default_timezone_get();
 	date_default_timezone_set(drupal_get_user_timezone());
-	$csvname = strtolower(str_replace(" ", "_", $conf['tm_site_name'])) . '_global_newsletter_'.date('M_d_Y_Gi',time()) . ".csv";
+	$csvname = strtolower(str_replace(" ", "_", $conf['tm_site_name'])) . '_global_newsletter_'.date('M_d_Y_Hi',time()) . ".csv";
 	$csvname = str_replace(array(","," "), "_", $csvname); // replace spaces and ,
 	date_default_timezone_set($oldzone);
 
@@ -95,7 +95,7 @@ function tm_users_download_chapter_leaders_csv(){
 
 	$oldzone = date_default_timezone_get();
 	date_default_timezone_set(drupal_get_user_timezone());
-	$csvname = strtolower(str_replace(" ", "_", $conf['tm_site_name'])) . '_chapter_leaders_'.date('M_d_Y_Gi',time()) . ".csv";
+	$csvname = strtolower(str_replace(" ", "_", $conf['tm_site_name'])) . '_chapter_leaders_'.date('M_d_Y_Hi',time()) . ".csv";
 	$csvname = str_replace(array(","," "), "_", $csvname); // replace spaces and ,
 	date_default_timezone_set($oldzone);
 
@@ -107,18 +107,28 @@ function tm_users_download_chapter_leaders_csv(){
 
 	// put privacy information in the header
 	$message = "# IMPORTANT: This information is confidential and may not be transmitted to any 3rd party.";
-	$message .= "\n# You may only use this data in compliance with the " . $conf['tm_site_name'] . " Privacy Terms.\n\n";
+	$message .= "\n# You may only use this data in compliance with the " . $conf['tm_site_name'] . " Privacy Terms.";
+	$message .= "\n# Note: Chapter leaders of more than one chapter will be listed in multiple rows.\n\n";
 	fputs($fh,$message,strlen($message));
 
 	// puts a header row across the top of the csv
-	$item = array(t('First name'),t('Last name'),t('Email'));
+	$item = array(t('First name'),t('Last name'),t('Country Code'),t('Location'),t('Chapter'),t('Chapter Country'),t('Email'));
+
 	fputcsv($fh, $item);
 
-	// fetch newsletter subscribers
-	$global_newsletter_sql = "select distinct field_user_first_name_value, field_user_last_name_value, mail from (select field_user_first_name_value, field_user_last_name_value, mail, uid from users u, field_data_field_user_first_name fn, field_data_field_user_last_name ln where u.uid = fn.entity_id and u.uid = ln.entity_id) as ud, field_data_field_chapter_leaders where ud.uid = field_chapter_leaders_target_id";
-	
+	// fetch chapter leaders details
+	$chapter_leaders_list_sql = "select distinct field_user_first_name_value, field_user_last_name_value, field_user_country_iso2 as country, field_location_city_value as location_field, chapter.title as chapter, field_data_field_country.field_country_iso2 as chapter_country, mail 
+	from 
+	(select field_user_first_name_value, field_user_last_name_value, mail, uid from users u, field_data_field_user_first_name fn, field_data_field_user_last_name ln where u.uid = fn.entity_id and u.uid = ln.entity_id) as ud 
+	left join field_data_field_chapter_leaders cl on cl.field_chapter_leaders_target_id = ud.uid 
+	left join field_data_field_user_country uc on uc.entity_id = ud.uid and uc.entity_type = 'user'
+	left join field_data_field_location_city uloc on uloc.entity_id = ud.uid and uloc.entity_type = 'user'
+	left join node chapter on chapter.nid = cl.entity_id
+	left join field_data_field_country on field_data_field_country.entity_id = chapter.nid and field_data_field_country.bundle = 'chapter'
+	where field_chapter_leaders_target_id is not null";
+
 	// perform query
-	$query = db_query($global_newsletter_sql);
+	$query = db_query($chapter_leaders_list_sql);
 	while ($row = $query->fetchAssoc()) {
 		fputcsv($fh, $row);
 	}

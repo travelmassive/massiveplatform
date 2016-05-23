@@ -329,6 +329,11 @@ function tm_branding_get_element($element_name, $account = null) {
 		return tm_branding_get_base_element($element_name);
 	}
 
+	// Return base branding if on branding admin page
+	if (current_path() == "admin/branding") {
+		return tm_branding_get_base_element($element_name);
+	}
+
 	// Get user
 	if ($account == null) {
 		$account = user_load($user->uid);

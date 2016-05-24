@@ -172,6 +172,9 @@ $image = theme('image_style', array(
         <li><?php print l(t('All unapproved members'), 'admin/unapproved-members'); ?></li>
         <li><?php print l(t('Community reports'), 'admin/tm_reports'); ?></li>
         <li><?php print l(t('Global insights'), 'admin/global_insights'); ?></li>
+        <?php if (in_array("brand-editor", $loaded->roles) or in_array("administrator", $loaded->roles)): ?>
+          <li><?php print l(t('Manage branding'), 'admin/branding'); ?></li>
+        <?php endif; ?>
         <?php if (tm_users_download_global_newsletter_csv_check()): ?>
         <li><?php print l(t('Export newsletter subscribers'), 'admin/export_global_newsletter'); ?></li>
         <?php endif; ?>

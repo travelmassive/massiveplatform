@@ -10,6 +10,12 @@
 function tm_users_user_default_roles() {
   $roles = array();
 
+  // Exported role: access-google-analytics-report.
+  $roles['access-google-analytics-report'] = array(
+    'name' => 'access-google-analytics-report',
+    'weight' => 9,
+  );
+
   // Exported role: approved user.
   $roles['approved user'] = array(
     'name' => 'approved user',

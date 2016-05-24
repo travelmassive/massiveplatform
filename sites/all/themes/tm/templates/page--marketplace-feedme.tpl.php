@@ -16,32 +16,36 @@ if (arg(0) == 'node' and is_numeric(arg(1)) and arg(2) == FALSE) {
 	$feedme_theme = "light";
 	$feedme_append = ".column.first";
 
-	if ($node->type == "chapter") {
-		$feedme_mode = "chapter";
-
-		$feedme_chapter = $node->title; // ie: Sydney
+    if ($node != null) {
         
-        // lookup country
-        try {
-            if (@isset($node->field_country['und'][0]['iso2'])) {
-                $country_code = $node->field_country['und'][0]['iso2'];
-                $country = country_load($country_code);
-                if ($country != null) {
-                    $feedme_country = $country->name;
+        if ($node->type == "chapter") {
+            $feedme_mode = "chapter";
+
+            $feedme_chapter = $node->title; // ie: Sydney
+            
+            // lookup country
+            try {
+                if (@isset($node->field_country['und'][0]['iso2'])) {
+                    $country_code = $node->field_country['und'][0]['iso2'];
+                    $country = country_load($country_code);
+                    if ($country != null) {
+                        $feedme_country = $country->name;
+                    }
                 }
+            } catch (Exception $e) {
+                // can't find country code
             }
-        } catch (Exception $e) {
-            // can't find country code
+
+            $feedme_off = false;
         }
 
-		$feedme_off = false;
-	}
-
-	if ($node->type == "organization") {
-		$feedme_mode = "company";
-		$feedme_company = $node->title; // ie: GoEuro
-		$feedme_off = false;
-	}
+        if ($node->type == "organization") {
+            $feedme_mode = "company";
+            $feedme_company = $node->title; // ie: GoEuro
+            $feedme_off = false;
+        }
+    }
+	
 }
 
 if (!$feedme_off) {

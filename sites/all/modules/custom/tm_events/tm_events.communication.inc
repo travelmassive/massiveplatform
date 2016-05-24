@@ -637,13 +637,12 @@ function tm_events_send_email($uid, $email, $subject, $message, $eventid, $reply
   $unsubscribe_link = "<a href='__SERVER_HTTP__://__SERVER_NAME__/" . $params['tokens']['UNSUBSCRIBE_NOTIFICATION_LINK'] . "'>Unsubscribe from this notification</a>";
   $template = str_replace("__UNSUBSCRIBE_LINK__", $unsubscribe_link, $template);
 
-
 	// Other vars
   $template = str_replace("__SERVER_NAME__", $conf["tm_email_server_url_domain"], $template); 
 	$template = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $template);  
 	$template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
 	$template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template);  
-
+  $template = str_replace("__EMAIL_BRAND_MESSAGE__", "", $template); // disable brand message
 
 	// STEP 5. LOAD HTML TEMPLATE INTO EMAIL BODY
 	$email_message['body'] = $template;

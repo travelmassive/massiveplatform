@@ -30,13 +30,6 @@ function tm_base_menu() {
     'file path' => drupal_get_path('module', 'system'),
   );
 
-  // Fake blog item so we can add a menu item
-  $items['blog'] = array(
-      'title' => '',
-      'page callback' => 'tm_base_blog',
-      'access arguments' => array('access content')
-   );
-
   return $items;
 }
 
@@ -238,18 +231,20 @@ function tm_base_theme() {
  * Custom function to build the frontpage
  */
 function _tm_base_frontpage() {
+
+  global $conf;
   global $user;
 
   // Remove the title.
   drupal_set_title('');
 
   if ($user->uid) {
-    $homepage_title = variable_get('tm_base_homepage_title_members', NULL);
-    $homepage_description = variable_get('tm_base_homepage_description_members', NULL);
+    $homepage_title = $conf['tm_frontpage_title_members'];
+    $homepage_description = $conf['tm_frontpage_description_members'];
   }
   else {
-    $homepage_title = variable_get('tm_base_homepage_title_anon', NULL);
-    $homepage_description = variable_get('tm_base_homepage_description_anon', NULL);
+    $homepage_title = $conf['tm_frontpage_title_anon'];
+    $homepage_description = $conf['tm_frontpage_description_anon'];
   }
 
   // Replace tokens.

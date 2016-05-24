@@ -1043,6 +1043,7 @@ function _tm_more_actions_process($field, $title = NULL) {
   }
   // END moderate community values link
 
+
   // START report member profile link
   if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
 
@@ -1359,6 +1360,39 @@ function _tm_more_actions_process($field, $title = NULL) {
     ))
   );
   // END sharing links
+
+  // BEGIN google analytics report link
+  if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'node/%')) {
+
+    global $user;
+    
+    if (in_array("access-google-analytics-report", $user->roles)) {
+
+      // get report path
+      if ($menu_item['path'] == 'user/%') {
+        $report_path = drupal_get_path_alias("user/" . $field['entity']->uid);
+      } else {
+        $report_path = drupal_get_path_alias("node/" . $field['entity']->nid);
+      }      
+      $google_analytics_report_link = tm_fields_google_analytics_report_link($report_path);
+
+      // create link
+      $links['ga_report'][] = array(
+        'wrapper_class' => array('approve'),
+        'content' => l(t('View analytics'), $google_analytics_report_link,
+          array(
+          'fragment' => '',
+          'external'=> true,
+          'attributes' => array(
+            'title' => t('View analytics'),
+            'target' => '_blank'
+          )
+        ))
+      );
+
+    }
+  }
+  // END google analytics report link
   
   return theme('more_actions', array('links' => $links));
 }
@@ -1876,5 +1910,58 @@ function tm_fields_connection_actions($field) {
     }
   }
 }
+
+/**
+ * Helper method to generate google analytics report link
+ */
+function tm_fields_google_analytics_report_link($path) {
+
+  global $conf;
+
+  // Construct a link to google analytics report drilldown
+
+  // Example:
+  // Original url:
+  // /events/2016/08/example-event-name/
+  // 
+  // Is converted to:
+  // https://analytics.google.com/analytics/web/?authuser=1#report/content-drilldown/GOOGLE_AUTH_KEY/%3F_u.dateOption%3Dlast30days%26explorer-table.plotKeys%3D%5B%5D%26_r.drilldown%3Danalytics.pagePathLevel1%3A%2Fevents%2F%2Canalytics.pagePathLevel2%3A%2F2016%2F%2Canalytics.pagePathLevel3%3A%2F08%2F%2Canalytics.pagePath%3A%2Fevents%2F2016%2F08%2Fexample-event-name/
+
+  // Part 1. Report base path
+  // https://analytics.google.com/analytics/web/?authuser=1#report/content-drilldown/GOOGLE_ANALYTICS_HASH/%3F_u.dateOption%3Dlast30days%26explorer-table.plotKeys%3D%5B%5D%26_r.drilldown%3D
+  $report_base_path = $conf["tm_google_analytics_report_path"];
+
+  // Part 2. Add paths
+  $parts = explode("/", $path);
+  $path_levels = array();
+  for ($i = 0; $i < sizeof($parts); $i++) {
+
+      // construct path level
+      // ie: Level 1 = /events
+      // ie: Level 2 = /events/2016
+      // ie: Level 3 = /events/2016/08/ etc
+      $path_level = implode("%2F", array_slice($parts, 0, $i+1));
+
+      // construct path_prefix
+      // ie: analytics.pagePathLevel for all levels except last
+      // ie: analytics.pagePath for last level
+      if ($i == (sizeof($parts)-1)) {
+        $path_prefix = "analytics.pagePath";
+      } else {
+        $path_prefix = "analytics.pagePathLevel" . ($i+1);
+      }
+
+      $path_levels[] = $path_prefix . "%3A%2F" . $path_level;
+  }
+
+  $path_levels_string = implode("%2F%2C", $path_levels);
+
+  // Part 3. Join report base path and path levels string
+  $google_analytics_report_link = $report_base_path . $path_levels_string;
+
+  return $google_analytics_report_link;
+}
+
+
 
 

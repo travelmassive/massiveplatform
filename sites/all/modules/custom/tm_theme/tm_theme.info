@@ -9,6 +9,7 @@ dependencies[] = ds
 dependencies[] = image
 dependencies[] = strongarm
 dependencies[] = tm_base
+dependencies[] = tm_branding
 features[ctools][] = ds:ds:1
 features[ctools][] = strongarm:strongarm:1
 features[ds_view_modes][] = grid

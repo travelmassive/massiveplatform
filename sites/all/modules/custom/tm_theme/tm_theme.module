@@ -12,6 +12,7 @@ include_once 'tm_theme.features.inc';
 function tm_theme_html_head_alter(&$head_elements) {
   
   global $conf;
+  global $user;
 
   // remove unneeded shortlink url
   $remove = array(
@@ -72,6 +73,10 @@ function tm_theme_html_head_alter(&$head_elements) {
     }
   }
 
+  // fix css for administrator on edit page
+  if (in_array("administrator", $user->roles)) {
+    drupal_add_css ('.fieldset-legend { position: relative !important; }', 'inline');
+  }
 
 }
 

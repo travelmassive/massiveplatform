@@ -127,6 +127,7 @@ features[user_permission][] = cancel account
 features[user_permission][] = flag follow_members
 features[user_permission][] = unapprove users
 features[user_permission][] = unflag follow_members
+features[user_role][] = access-google-analytics-report
 features[user_role][] = approved user
 features[user_role][] = chapter leader
 features[user_role][] = export-global-newsletter-csv

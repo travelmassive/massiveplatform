@@ -28,6 +28,12 @@ function tm_newsfeed_admin_notification_preview() {
 		$date_range = "weekly";
 	}
 
+	// check valid date range
+	if (($date_range != "daily") and ($date_range != "weekly") and ($date_range != "custom")) {
+		echo "Invalid date range (daily, weekly, or custom)";
+		return;
+	}
+
 	// set start and end date
 	if ($date_range == "daily") {
 		$start_date = new DateTime('-1 day', new DateTimeZone('UTC'));

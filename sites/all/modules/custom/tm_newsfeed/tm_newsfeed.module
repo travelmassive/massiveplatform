@@ -5,12 +5,13 @@
  *
  * Installation:
  * To schedule notifications you must run the following command daily:
- * drush newsfeed-schedule-deliveries
+ * drush newsfeed-schedule-deliveries (--test-mode=true)
  *
- * Drush tests
- * drush newsfeed-test --member-email=user@example --date-range=weekly
- * drush newsfeed-test-worker --member-email=user@example --type=weekly
- * 
+ * Drush tests/helpers
+ * drush newsfeed-test --member-email=user@example --date-range=weekly (or daily)
+ * drush newsfeed-test --member-email=user@example --date-range=custom --date-start=2016-01-01 --date-end=2016-06-01
+ * drush newsfeed-test-worker --member-email=user@example --type=weekly (or daily)
+ * drush newsfeed-clear-schedule (to clear db schedule)
  */
 
 include "tm_newsfeed.class.inc";

@@ -122,10 +122,18 @@ class TmNewsfeedEmail
 		$email = str_replace("!", "", $email);
 		$email = str_replace("$", "", $email);
 
-
+		// set the subject base text
 		$subject_base = $conf['tm_newsfeed_subject_base'];
-		$subject_extra = "";
+		$date_interval = date_diff(date_create($start_date), date_create($end_date));
+		if ($date_interval->days <= 1) {
+			$subject_base = $conf['tm_newsfeed_subject_base_daily'];
+		}
+		if ($date_interval->days > 5) {
+			$subject_base = $conf['tm_newsfeed_subject_base_weekly'];
+		}
 
+		// add extra text
+		$subject_extra = "";
 		if (strlen($this->first_update_from) > 0) {
 			$subject_extra = "(Updates from $this->first_update_from + more)";
 		} else {

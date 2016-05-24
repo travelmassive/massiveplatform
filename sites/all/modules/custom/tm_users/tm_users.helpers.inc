@@ -276,3 +276,31 @@ function tm_users_get_userid_by_email($email) {
   return null;
 }
 
+/**
+ * Return day of the week that a user signed up
+ * Takes into account user timezone. If not record found return null
+ */
+function tm_users_get_signup_day_of_week($uid) {
+
+  // check db
+  $query = "SELECT uid, created, timezone FROM {users} u WHERE uid = :uid LIMIT 1";
+  $result = db_query($query, array(':uid' => $uid))->fetch();
+
+  // create datetime object using timezone and created
+  if (isset($result->uid)) {
+    
+    // create datetime object
+    try {
+      $dt = new DateTime($result->timezone); 
+    } catch (Exception $e) {
+      $dt = new DateTime("UTC"); 
+    }
+    
+    $created_time = $dt->setTimestamp($result->created);
+    return $created_time->format("l"); // day of week
+  }
+
+  // no match
+  return null;
+}
+

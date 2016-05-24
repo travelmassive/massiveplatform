@@ -953,9 +953,13 @@ $conf["tm_newsfeed_discuss_cache"] = 60; // how long to cache results in seconds
 
 // newsfeed notifications
 $conf['tm_newsfeed_send_emails_enabled'] = true;
+$conf['tm_newsfeed_daily_notification_time'] = "10:00:00"; // time of day to send daily notifications
+$conf['tm_newsfeed_weekly_notification_time'] = "11:00:00"; // time of day to send weekly notifications
 
 // base email subject line
-$conf['tm_newsfeed_subject_base'] = "What's happening in Travel Massive this week";
+$conf['tm_newsfeed_subject_base'] = "What's happening in Travel Massive";
+$conf['tm_newsfeed_subject_base_daily'] = "Your daily Travel Massive update";
+$conf['tm_newsfeed_subject_base_weekly'] = "This week in Travel Massive";
 
 // subject extra text if no updates available to customise with
 $conf['tm_newsfeed_subject_extra_fallbacks'] = array(

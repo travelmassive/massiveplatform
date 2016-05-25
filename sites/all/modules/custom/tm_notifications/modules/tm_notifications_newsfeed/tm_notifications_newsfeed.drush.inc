@@ -1,11 +1,11 @@
 <?php
 
-// tm_notificiations_newsfeed.drush.inc
+// tm_notifications_newsfeed.drush.inc
 
 /**
  * Implements hook_drush_command().
  */
-function tm_notificiations_newsfeed_drush_command() {
+function tm_notifications_newsfeed_drush_command() {
 
 	$items['newsfeed-schedule-deliveries'] = array(
 	  'description' => 'Schedule notification deliveries.',
@@ -84,7 +84,7 @@ function tm_notifications_newsfeed_schedule_deliveries() {
 		drush_print("Existing schedules will be removed then updated for each user.");
 	}
 
-	// time of day to schedule daily and weekly notificiations
+	// time of day to schedule daily and weekly notifications
 	$scheduled_daily_time = $conf["tm_newsfeed_daily_notification_time"]; // ie: 10:00:00;
 	$scheduled_weekly_time = $conf["tm_newsfeed_weekly_notification_time"]; // ie 11:00:00;
 	drush_print("Scheduled daily time: " . $scheduled_daily_time);
@@ -213,13 +213,15 @@ function tm_notifications_newsfeed_schedule_deliveries() {
 function tm_notifications_get_users_timezone($user_id, $fallback_timezone) {
 
 	// Option 1. From user's last login location (tm_geoip)
-	/*if (module_exists("tm_geoip")) {
+	if (module_exists("tm_geoip")) {
 		$last_ip = tm_geoip_get_users_last_ip($user_id);
 		$geoip = tm_geoip_lookup($last_ip);
 		if ($geoip != null) {
-			// get timezone...
+			if (isset($geoip['location']['time_zone'])) {
+				return $geoip['location']['time_zone'];
+			}
 		}
-	}*/
+	}
 
 	// Option 2. Timezone of home chapter
 	// get users's home chapter

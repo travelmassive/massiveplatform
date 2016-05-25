@@ -30,17 +30,8 @@ function tm_status_updates_display() {
 
 	// Help text
 	$help_html = "";
-	$help_html .= "<li><a href='javascript:jq_user_status_update(" . $user->uid . ");'>Post update</a></li>";
-	$help_html .= "<li>Your profile stats";
-	$help_html .= "<li>Upcoming events in chapters that you are a member of (and conferences)";
-	$help_html .= "<li>Recent blog articles (via API)";
-	$help_html .= "<li>Popular discussion articles (via API)";
-	$help_html .= "<li>Members who followed you";
-	$help_html .= "<li>New members in your chapter(s)";
-	$help_html .= "<li>New companies created by members in your chapter(s)";
-	$help_html .= "<li>If you have a company then show new followers of company (or separate company report..?)";
-	$help_html .= "<li>Top members in your chapter (by number of followers)";
-
+	$help_html .= "<a href='javascript:jq_user_status_update(" . $user->uid . ");'>Post update</a>";
+	$help_html .= "<br>Your newsfeed:";
 
 	// get recent flag items
 	$result = db_query("select * from tm_newsfeed_status_updates where entity_type = 'user' order by created desc limit 20");

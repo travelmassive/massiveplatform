@@ -310,7 +310,8 @@ class TmNewsfeedEmail
 			$items[] = array("href" => $href, "link" => strip_tags($link), "text" => $text);
 		}
 
-		return $this->tm_newsfeed_email_populate_section('updates', $items);
+		$read_more = "<a href='" . tm_newfeed_absolute_url("newsfeed") . "'>View your news feed</a><br>";
+		return $this->tm_newsfeed_email_populate_section('updates', $items, $read_more);
 	}
 
 
@@ -473,7 +474,7 @@ class TmNewsfeedEmail
 	}
 
 
-	public function tm_newsfeed_email_populate_section($section_name, $items) {
+	public function tm_newsfeed_email_populate_section($section_name, $items, $read_more = "") {
 
 		global $conf;
 
@@ -490,6 +491,12 @@ class TmNewsfeedEmail
 
 		$section = str_replace("__EMAIL_SECTION_HEADER__", $conf['tm_newsfeed_email_section_headers'][$section_name], $section);
 		$section = str_replace("__EMAIL_SECTION_ROWS__", $section_contents, $section);
+
+		if ($read_more != "") {
+			$section = str_replace("__EMAIL_READ_MORE__", $read_more, $section);
+		} else {
+			$section = str_replace("__EMAIL_READ_MORE__", "", $section);
+		}
 
 		return $section;
 	}
@@ -561,6 +568,7 @@ EOT;
 <div class="email-section">
 	<strong>__EMAIL_SECTION_HEADER__</strong><br>
 	__EMAIL_SECTION_ROWS__
+	__EMAIL_READ_MORE__
 </div>
 <br>
 EOT;

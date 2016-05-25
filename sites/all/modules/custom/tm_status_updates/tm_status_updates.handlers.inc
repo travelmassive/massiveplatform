@@ -88,7 +88,7 @@ function tm_status_updates_post_user_update_ajax() {
     ->execute();
 
   // Flag user as having updated status
-  $flag = flag_get_flag('newsfeed_user_status_updated');
+  $flag = flag_get_flag('user_status_updated');
   $flag->flag("unflag", $posting_user->uid); // unflag so we can flag again
   $flag->flag("flag", $posting_user->uid);
 

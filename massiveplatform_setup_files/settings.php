@@ -732,7 +732,7 @@ $conf['tm_event_types_system'] = array("community" => "Chapter Event", "member" 
 $conf['tm_event_types_custom'] = array("workshop" => "Workshop", "conference" => "Conference"); // add your own custom events here
 $conf['tm_event_types'] = array_merge($conf['tm_event_types_system'], $conf['tm_event_types_custom']);
 $conf['tm_event_types_display'] = array("all" => "All Events", "community" => "Community", "workshop" => "Workshops", "conference" => "Conferences", "member" => "Member Events", "company" => "Company Events");
-$conf['tm_event_types_tips'] = array("workshop" => "Learn and share with other members around the world. have an idea for a workshop you would like to attend or host? Please <a href='/contact'>let us know</a>.", "conference" => "We're proud community partners with the world's leading travel industry conferences and exhibitions. <a href='/blog/about-travel-massive'>Learn more</a>");
+$conf['tm_event_types_tips'] = array("workshop" => "Learn and share with other members around the world. Do you have an idea for a workshop you would like to attend or host? Please <a href='/contact'>let us know</a>.", "conference" => "We're proud community partners with the world's leading travel industry conferences and exhibitions. <a href='/blog/about-travel-massive'>Learn more</a>");
 $conf['tm_event_types_default'] = "all";
 $conf['tm_event_types_sticker_icon_color'] = "#000000"; // color of sticker for non-chapter events
 $conf['tm_event_types_edit_tips'] = array();
@@ -741,8 +741,6 @@ $conf['tm_event_types_edit_tips']['company'] = "Create a company event in our co
 $conf['tm_event_types_edit_tips']['member'] = "Create a member event in our community.<br>Please follow our <a target='_blank' href='" . $conf['tm_community_values_url'] . "'>community guidelines</a>.";
 
 /** DISCUSSION SETTINGS **/
-$conf['tm_discuss_menu_hide'] = true; // hide the discussions unless you access /discuss
-$conf['tm_discuss_menu_class'] = 'menu-1458'; // class of the menu item to hide
 $conf['tm_discuss_meta_og_title'] = "Travel Massive Discuss";
 $conf['tm_discuss_meta_og_image'] = "https://localdev.travelmassive.com/discussions/uploads/0O56BOQETSB2.png";
 $conf['tm_discuss_meta_description'] = "Travel Massive Discuss is the place to ask questions and get answers about the tourism and travel industry from members of our community.";
@@ -752,8 +750,6 @@ $conf['tm_discuss_full_path'] = "discussions"; // where vanilla is installed
 $conf['tm_discuss_enable_feedme'] = true; // show recent discussions for a chapter or member
 
 /** MARKETPLACE/JOBS SETTINGS **/
-$conf['tm_marketplace_menu_hide'] = true; // hide the marketplace unless you access /marketplace
-$conf['tm_marketplace_menu_class'] = 'menu-1510'; // class of the menu item to hide
 $conf['tm_marketplace_menu_path'] = "marketplace"; // where jobskee is installed
 $conf['tm_marketplace_cookie_enable'] = true; // for marketplace subscription email field
 $conf['tm_marketplace_cookie_secret_key'] = 'randomstringabc'; // must match jobskee config

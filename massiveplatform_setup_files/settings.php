@@ -918,6 +918,7 @@ $conf["tm_google_analytics_report_path"] = "https://analytics.google.com/analyti
 // Geoip settings
 $conf['tm_geoip_maxmind_db'] = '/usr/local/share/GeoIP/GeoIP2-City.mmd'; // path to maxmind geoip datbase
 //$conf['tm_geoip_fake_ip'] = '183.108.246.31'; // simulate a visitor ip address for testing geoip module
+//$conf['tm_geoip_server_header'] = 'HTTP_X_REAL_IP'; // server header to use (overrides REMOTE_ADDR)
 
 /** SITE BRANDING **/
 // Base site branding

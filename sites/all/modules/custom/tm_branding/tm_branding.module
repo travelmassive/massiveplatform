@@ -51,7 +51,7 @@ function tm_branding_get_site_brands($account) {
 function tm_branding_check_brand($site_brand, $account) {
 
 	global $conf;
-	
+
 	// Step 1. Check if testing is enabled
 	$testing_enabled = false;
 	if (isset($site_brand->field_brand_test_enabled[LANGUAGE_NONE][0]['value'])) {
@@ -83,8 +83,8 @@ function tm_branding_check_brand($site_brand, $account) {
 					}
 				}
 
-				if (isset($conf["reverse_proxy_header"])) {
-					$reverse_proxy_header = $conf["reverse_proxy_header"];
+				if (isset($conf["tm_geoip_server_header"])) {
+					$reverse_proxy_header = $conf["tm_geoip_server_header"];
 					if (isset($_SERVER[$reverse_proxy_header])) {
 						if (array_search($_SERVER[$reverse_proxy_header], $match_ips)) {
 							return true;
@@ -241,8 +241,8 @@ function tm_branding_check_brand($site_brand, $account) {
 			}
 
 			// next, use reverse_proxy_header
-			if (isset($conf["reverse_proxy_header"])) {
-				$reverse_proxy_header = $conf["reverse_proxy_header"];
+			if (isset($conf["tm_geoip_server_header"])) {
+				$reverse_proxy_header = $conf["tm_geoip_server_header"];
 				if (isset($_SERVER[$reverse_proxy_header])) {
 					$match_ip = $_SERVER[$conf["reverse_proxy_header"]];
 				}

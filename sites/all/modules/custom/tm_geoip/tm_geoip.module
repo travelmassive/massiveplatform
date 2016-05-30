@@ -42,15 +42,15 @@ function tm_geoip_menu() {
 function tm_geoip_test() {
 
 	global $conf;
-	
+
 	print "<h1>Geoip test.</h1>";
 	print "Use ?ip= to test another ip.<br>";
 
 	$ip = $_SERVER['REMOTE_ADDR'];
-	if (isset($conf["reverse_proxy_header"])) {
-		$reverse_proxy_header = $conf["reverse_proxy_header"];
+	if (isset($conf["tm_geoip_server_header"])) {
+		$reverse_proxy_header = $conf["tm_geoip_server_header"];
 		if (isset($_SERVER[$reverse_proxy_header])) {
-			$ip = $_SERVER[$conf["reverse_proxy_header"]];
+			$ip = $_SERVER[$reverse_proxy_header];
 		}
 	}
 

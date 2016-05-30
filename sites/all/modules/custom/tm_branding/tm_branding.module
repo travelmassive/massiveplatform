@@ -244,7 +244,7 @@ function tm_branding_check_brand($site_brand, $account) {
 			if (isset($conf["tm_geoip_server_header"])) {
 				$reverse_proxy_header = $conf["tm_geoip_server_header"];
 				if (isset($_SERVER[$reverse_proxy_header])) {
-					$match_ip = $_SERVER[$conf["reverse_proxy_header"]];
+					$match_ip = $_SERVER[$reverse_proxy_header];
 				}
 			}
 
@@ -291,7 +291,7 @@ function tm_branding_check_brand($site_brand, $account) {
 					if (sizeof($site_brand->field_brand_match_continent[LANGUAGE_NONE]) > 0) {
 						foreach ($site_brand->field_brand_match_continent[LANGUAGE_NONE] as $item) {
 							if ($item['value'] == $geoip_continent) {
-								//return (rand(1,100) <= $match_probability);
+								return (rand(1,100) <= $match_probability);
 							}
 						}
 					}

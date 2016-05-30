@@ -1377,7 +1377,7 @@ function _tm_more_actions_process($field, $title = NULL) {
       $google_analytics_report_link = tm_fields_google_analytics_report_link($report_path);
 
       // create link
-      $links['ga_report'][] = array(
+      $links['moderator_tools'][] = array(
         'wrapper_class' => array('approve'),
         'content' => l(t('View analytics'), $google_analytics_report_link,
           array(

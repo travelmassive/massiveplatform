@@ -76,12 +76,22 @@
 
       $frontpage_video_url = tm_branding_get_element("frontpage_video_url");
       $frontpage_image = tm_branding_get_element("frontpage_image");
-      if ($frontpage_video_url != "") {
+
+      // background video and background image
+      if (($frontpage_video_url != "") and ($frontpage_image != "")) {
         $bg_video_body_attributes = "data-vide-bg=\"mp4: $frontpage_video_url, poster: $frontpage_image\" data-vide-options=\"posterType: jpg, playbackRate: 1\"";
-      } else {
-        $bg_video_body_attributes = "data-vide-bg=\"poster: $frontpage_image\" data-vide-options=\"posterType: jpg, playbackRate: 1\"";
       }
 
+      // background video only
+      if (($frontpage_video_url != "") and ($frontpage_image == "")) {
+        $bg_video_body_attributes = "data-vide-bg=\"mp4: $frontpage_video_url\" data-vide-options=\"playbackRate: 1\"";
+      }
+
+      // background image only
+      if (($frontpage_video_url == "") and ($frontpage_image != "")) {
+        $bg_video_body_attributes = "data-vide-bg=\"poster: $frontpage_image\" data-vide-options=\"posterType: jpg, playbackRate: 1\"";
+      }
+      
     } // end if frront page
   ?>
   <body class="<?php print $classes; ?>" <?php print $attributes;?> <?php if ($is_front) { print($bg_video_body_attributes); } ?>>

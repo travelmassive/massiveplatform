@@ -755,7 +755,7 @@ $conf['tm_marketplace_cookie_enable'] = true; // for marketplace subscription em
 $conf['tm_marketplace_cookie_secret_key'] = 'randomstringabc'; // must match jobskee config
 $conf['tm_marketplace_cookie_secret_iv'] = 'randomstring123'; // must match jobskee config
 $conf['tm_marketplace_enable_feedme'] = true; // embed marketplace jobs into chapter and company pages
-$conf['tm_marketplace_feedme_url'] = '/marketplace/api/search/'; // url for search
+$conf['tm_marketplace_feedme_url'] = '/jobs/api/search/'; // url for search
 
 /* PROFILE AND COMPANY LINK FIELDS */
 /* Options available: website, twitter, facebook, linkedin, instagram, youtube, vimeo, snapchat */
@@ -916,7 +916,7 @@ $conf["tm_google_analytics_report_path"] = "https://analytics.google.com/analyti
 
 /** GEO IP MODULE **/
 // Geoip settings
-$conf['tm_geoip_maxmind_db'] = '/usr/local/share/GeoIP/GeoIP2-City_20160517/GeoIP2-City.mmdb'; // path to maxmind geoip datbase
+$conf['tm_geoip_maxmind_db'] = '/usr/local/share/GeoIP/GeoIP2-City.mmd'; // path to maxmind geoip datbase
 //$conf['tm_geoip_fake_ip'] = '183.108.246.31'; // simulate a visitor ip address for testing geoip module
 
 /** SITE BRANDING **/
@@ -945,8 +945,7 @@ $conf["tm_branding_menu_html"] = "
   <li class='menu-1456'><a href='/community'>People</a></li>
   <li class='menu-1363'><a href='/companies'>Companies</a></li>
   <li class='menu-1458'><a href='/discuss/' class='tm-menu-discuss'>Q&amp;A</a></li>
-  <li class='menu-1457'><a href='/blog/'>News</a></li>
-  <li class='menu-1606 last'><a href='/groups'>Chapters</a></li>
+  <li class='menu-1457 last'><a href='/blog/'>News</a></li>
 </ul>";
 
 // footer html 

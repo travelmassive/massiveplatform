@@ -63,11 +63,9 @@ function tm_branding_strongarm() {
   $strongarm->name = 'hs_config_taxonomy-field_brand_match_user_industry';
   $strongarm->value = array(
     'config_id' => 'taxonomy-field_brand_match_user_industry',
-    'save_lineage' => 0,
-    'enforce_deepest' => 0,
-    'entity_count' => 0,
-    'require_entity' => 0,
-    'resizable' => 1,
+    'save_lineage' => '0',
+    'enforce_deepest' => '0',
+    'resizable' => '1',
     'level_labels' => array(
       'status' => 0,
       'labels' => array(
@@ -78,8 +76,8 @@ function tm_branding_strongarm() {
     'dropbox' => array(
       'status' => 1,
       'title' => 'All selections',
-      'limit' => 0,
-      'reset_hs' => 1,
+      'limit' => '0',
+      'reset_hs' => '1',
     ),
     'editability' => array(
       'status' => 0,
@@ -92,7 +90,7 @@ function tm_branding_strongarm() {
         1 => 1,
       ),
       'allow_new_levels' => 0,
-      'max_levels' => 1,
+      'max_levels' => '1',
     ),
   );
   $export['hs_config_taxonomy-field_brand_match_user_industry'] = $strongarm;

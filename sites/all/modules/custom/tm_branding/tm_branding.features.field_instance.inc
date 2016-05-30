@@ -999,6 +999,54 @@ Default is $conf[\'tm_branding_include_js\']<br><br>',
     ),
   );
 
+  // Exported field_instance: 'node-site_brand-field_brand_match_probability'.
+  $field_instances['node-site_brand-field_brand_match_probability'] = array(
+    'bundle' => 'site_brand',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Define a probability of returning a valid match if the rule matches a criteria.<br>
+This is helpful if you want to match only 50% of visitors with a rule.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 0,
+          'thousand_separator' => '',
+        ),
+        'type' => 'number_integer',
+        'weight' => 38,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_brand_match_probability',
+    'label' => 'Match probability',
+    'required' => 0,
+    'settings' => array(
+      'max' => 100,
+      'min' => 0,
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 18,
+    ),
+  );
+
   // Exported field_instance: 'node-site_brand-field_brand_match_user_chapter'.
   $field_instances['node-site_brand-field_brand_match_user_chapter'] = array(
     'bundle' => 'site_brand',
@@ -1491,8 +1539,145 @@ This will override any match criteria.',
     ),
   );
 
+  // Exported field_instance: 'node-site_brand-field_match_partner_cookie'.
+  $field_instances['node-site_brand-field_match_partner_cookie'] = array(
+    'bundle' => 'site_brand',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'A comma separated list of parter codes to match.<br>
+Set a partner code by visiting the URL https://yourdomain.com/?partner=mypartner<br>
+This will set a cookie called "site_branding_partner" and redirect to the home page.<br>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 42,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_match_partner_cookie',
+    'label' => 'Match partner cookie',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 15,
+    ),
+  );
+
+  // Exported field_instance: 'node-site_brand-field_match_referer_domain'.
+  $field_instances['node-site_brand-field_match_referer_domain'] = array(
+    'bundle' => 'site_brand',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'A comma separated list of domains (excluding www) to match.<br>
+The referrer domain is set in site_branding_referrer_domain cookie.<br>
+ie: techcrunch.com, thenextweb.com',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 43,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_match_referer_domain',
+    'label' => 'Match referer domain',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 16,
+    ),
+  );
+
+  // Exported field_instance: 'node-site_brand-field_match_stop_rule'.
+  $field_instances['node-site_brand-field_match_stop_rule'] = array(
+    'bundle' => 'site_brand',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'If this rule matched, don\'t process any more rules.<br>
+This will prevent subsequent rules from branding other elements.<br>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 41,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_match_stop_rule',
+    'label' => 'Stop rules (don\'t process any more rules)',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 19,
+    ),
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
+  t('A comma separated list of domains (excluding www) to match.<br>
+The referrer domain is set in site_branding_referrer_domain cookie.<br>
+ie: techcrunch.com, thenextweb.com');
+  t('A comma separated list of parter codes to match.<br>
+Set a partner code by visiting the URL https://yourdomain.com/?partner=mypartner<br>
+This will set a cookie called "site_branding_partner" and redirect to the home page.<br>');
   t('Activated');
   t('Additional file assets for html branding elements to reference.<br>
 You can reference __ASSETS_BASE_PATH__/assets/filename.ext in html template<br>');
@@ -1508,6 +1693,8 @@ This will be enabled even if the branding is not activated.');
 Will be displayed above the newsfeeds.<br>
 Default is $conf[\'tm_branding_frontpage_block_html\']');
   t('Custom js');
+  t('Define a probability of returning a valid match if the rule matches a criteria.<br>
+This is helpful if you want to match only 50% of visitors with a rule.');
   t('Description and notes for brand (not displayed)');
   t('Display an image at the top of the search page.<br>
 Will be scaled based on width of screen.<br>
@@ -1533,6 +1720,8 @@ Default is $conf[\'tm_branding_frontpage_image\']');
   t('Frontpage video mp4 url');
   t('Frontpage video text');
   t('Header logo');
+  t('If this rule matched, don\'t process any more rules.<br>
+This will prevent subsequent rules from branding other elements.<br>');
   t('Include site-wide custom css.<br>
 Default is $conf[\'tm_branding_include_css\']');
   t('Include site-wide custom javascript.<br>
@@ -1555,6 +1744,9 @@ This will override any match criteria.');
   t('Match industry segment');
   t('Match industry segment of member');
   t('Match method');
+  t('Match partner cookie');
+  t('Match probability');
+  t('Match referer domain');
   t('Match user chapter');
   t('Match user\'s chapters.<br>');
   t('Menu html');
@@ -1567,6 +1759,7 @@ Default is $conf[\'tm_branding_frontpage_video_url\']');
   t('Search page banner');
   t('Search page link');
   t('Start and end date');
+  t('Stop rules (don\'t process any more rules)');
   t('Test branding on member accounts.<br>
 This will override any match criteria.');
   t('Test on IP addresses');

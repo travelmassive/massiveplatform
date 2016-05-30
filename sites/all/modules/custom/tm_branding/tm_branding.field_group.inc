@@ -29,6 +29,10 @@ function tm_branding_field_group_info() {
       3 => 'field_brand_match_continent',
       4 => 'field_brand_match_country',
       5 => 'field_brand_match_user_chapter',
+      6 => 'field_brand_match_probability',
+      7 => 'field_match_stop_rule',
+      8 => 'field_match_partner_cookie',
+      9 => 'field_match_referer_domain',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

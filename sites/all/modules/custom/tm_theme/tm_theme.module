@@ -78,6 +78,33 @@ function tm_theme_html_head_alter(&$head_elements) {
     drupal_add_css ('.fieldset-legend { position: relative !important; }', 'inline');
   }
 
+  // tm_branding methods
+
+  // if front page check for partner branding link
+  if (drupal_is_front_page()) {
+
+    // set site_branding_partner cookie
+    if (isset($_GET["partner"])) {
+      if (trim($_GET["partner"]) != "") {
+        user_cookie_save(array('site_branding_partner'=>strtolower(trim($_GET["partner"]))));
+        drupal_goto("/");
+      }
+    }
+  }
+
+  // set site_branding_referrer_domain cookie
+  if (isset($_SERVER["HTTP_REFERER"])) {
+    if ($_SERVER["HTTP_REFERER"] != "") {
+      try {
+        $referer_domain = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
+        $referer_domain = str_replace("www.", "", $referer_domain); // remove www
+        user_cookie_save(array('site_branding_referer_domain'=>strtolower($referer_domain)));
+      } catch (Exception $e) {
+        // continue
+      }
+    }
+  }
+
 }
 
 /**

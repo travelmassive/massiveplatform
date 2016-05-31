@@ -823,7 +823,7 @@ function tm_render_html_email_event_image($eventid) {
   }
 
   // get event image src
-  $event_image_src = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . $image_url;
+  $event_image_src = $image_url;
 
   // html template
   // http://stackoverflow.com/questions/30485328/how-to-make-a-fluid-width-email-with-a-max-width

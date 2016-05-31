@@ -409,6 +409,14 @@ function tm_branding_get_element($element_name, $account = null) {
 		return tm_branding_get_base_element($element_name);
 	}
 
+	// Return base branding if editing a brand
+	// ie: /node/13772/edit?destination=admin/branding
+	if (isset($_GET["destination"])) {
+		if ($_GET["destination"] == "admin/branding") {
+			return tm_branding_get_base_element($element_name);
+		}
+	}
+
 	// Get user
 	if ($account == null) {
 		$account = user_load($user->uid);

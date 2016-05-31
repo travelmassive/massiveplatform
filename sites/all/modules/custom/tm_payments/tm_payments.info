@@ -15,6 +15,7 @@ dependencies[] = text
 dependencies[] = tm_events
 dependencies[] = tm_users
 dependencies[] = views
+dependencies[] = tm_geoip
 features[ctools][] = field_group:field_group:1
 features[features_api][] = api:2
 features[field_base][] = field_company_payment_commission

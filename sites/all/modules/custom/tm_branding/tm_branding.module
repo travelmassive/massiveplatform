@@ -77,20 +77,11 @@ function tm_branding_check_brand($site_brand, $account) {
 			$match_ips = explode(" ", $site_brand->field_brand_test_ips[LANGUAGE_NONE][0]['value']);
 			if ($account->uid > 0) {
 
-				if (isset($_SERVER['REMOTE_ADDR'])) {
-					if (array_search($_SERVER['REMOTE_ADDR'], $match_ips)) {
-						return true;
-					}
+				$real_ip = tm_geoip_get_real_visitor_ip();
+				if (array_search($real_ip, $match_ips)) {
+					return true;
 				}
 
-				if (isset($conf["tm_geoip_server_header"])) {
-					$reverse_proxy_header = $conf["tm_geoip_server_header"];
-					if (isset($_SERVER[$reverse_proxy_header])) {
-						if (array_search($_SERVER[$reverse_proxy_header], $match_ips)) {
-							return true;
-						}
-					}
-				}
 			}
 		}
 	}
@@ -233,20 +224,7 @@ function tm_branding_check_brand($site_brand, $account) {
 
 		if (module_exists("tm_geoip")) {
 
-			$match_ip = null;
-
-			// first, use remote address
-			if (isset($_SERVER['REMOTE_ADDR'])) {
-				$match_ip = $_SERVER['REMOTE_ADDR'];
-			}
-
-			// next, use reverse_proxy_header
-			if (isset($conf["tm_geoip_server_header"])) {
-				$reverse_proxy_header = $conf["tm_geoip_server_header"];
-				if (isset($_SERVER[$reverse_proxy_header])) {
-					$match_ip = $_SERVER[$reverse_proxy_header];
-				}
-			}
+			$match_ip = tm_geoip_get_real_visitor_ip();
 
 			// if no ip, lookup from user's last ip
 			if ($match_ip == null) {

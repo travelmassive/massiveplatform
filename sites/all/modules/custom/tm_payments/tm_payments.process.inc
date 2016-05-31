@@ -126,7 +126,7 @@ function tm_payments_process_event_payment($event, $member) {
   	$user_last_name = $user_loaded->field_user_last_name[LANGUAGE_NONE][0]['value'];
 
   	// log info
-  	$log_user_ip = $_SERVER["REMOTE_ADDR"];
+  	$log_user_ip = tm_geoip_get_real_visitor_ip(); // $_SERVER["REMOTE_ADDR"];
 	$log_user_http_user_agent = "none";
 	if (isset($_SERVER['HTTP_USER_AGENT'])) {
 		$log_user_http_user_agent = $_SERVER['HTTP_USER_AGENT'];

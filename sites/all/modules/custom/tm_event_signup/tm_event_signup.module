@@ -29,11 +29,12 @@ function tm_event_signup_ds_fields_info($entity_type) {
 
 /**
  * Custom function to get the seats count.
- * Since the join process is done through AJAX there needs to
- * be an equivalent theming function on the javascript side.
- * It can be found in this module's event_signup_flag.js file.
+ * Todo: Refactor this some day.
  */
 function _tm_event_seats_count($field, $title = NULL) {
+
+  global $conf;
+
   $event = $field['entity'];
   $flag = flag_get_flag('event_register');
 
@@ -70,6 +71,11 @@ function _tm_event_seats_count($field, $title = NULL) {
       return t("Past event");
     }
 
+    // Lonely event :(
+    if ($count == 1) {
+      return t("1 person went");
+    }
+
     // No total attendance specified
     return t($count . " people went");
   }
@@ -104,16 +110,13 @@ function _tm_event_seats_count($field, $title = NULL) {
     }
   }
   
+  // Show how many peoplare going
   $count_text = "people are going";
   if ($count == 1) {
     $count_text = "person is going";
   }
 
-  // If extra guests show them
-  /*if ($extra_guests_count > 0) {
-    $count_text .= " (" . $extra_guests_count . ' guests)';
-  }*/
-
+  // If signup limit, show seats left
   if (isset($event->field_signup_limit[LANGUAGE_NONE][0]['value'])) {
     $limit = $event->field_signup_limit[LANGUAGE_NONE][0]['value'];
     
@@ -146,7 +149,6 @@ function _tm_event_seats_count($field, $title = NULL) {
     $show_text = $count . ' ' . $count_text;
 
     // show spots
-    global $conf;
     $tm_event_show_spots_left = 0;
     if (isset($conf['tm_event_show_spots_left'])) {
       $tm_event_show_spots_left = $conf['tm_event_show_spots_left'];
@@ -166,7 +168,7 @@ function _tm_event_seats_count($field, $title = NULL) {
 /**
  * Implements hook_flag_validate()
  * When flagging an entity with the signup flag, check if the
- * signup imit was reached.
+ * signup limit was reached.
  */
 function tm_event_signup_flag_validate($action, $flag, $entity_id, $account, $skip_permission_check, $flagging) {
   $flagged_entity = node_load($entity_id);
@@ -174,8 +176,10 @@ function tm_event_signup_flag_validate($action, $flag, $entity_id, $account, $sk
   // Only validate the 'signup' flag whenever an 'event' is flagged. Users may always unflag.
   if ($flag->name == 'event_register' && $action == 'flag' && $flagged_entity->type == 'event') {
     $result = _tm_event_display_flag($entity_id);
-    if ($result == "display_waitlist") {
-      return(array('access-denied' => t('Signup limit reached.')));
+    if ($result == "show_waitlist") {
+      drupal_set_message("Sorry, this event is now full.", "warning");
+      drupal_goto("node/" . $entity_id);
+      return(array('access-denied' => t('Sorry, the signup limit reached.')));
     }
   }
 }
@@ -262,6 +266,8 @@ function tm_event_signup_preprocess_flag(&$variables) {
  */
 function _tm_event_display_flag($nid) {
 
+  global $user;
+
   $flag = flag_get_flag('event_register');
 
   $limit = 0;
@@ -279,7 +285,6 @@ function _tm_event_display_flag($nid) {
   }
 
   // Check if we are approved
-  global $user;
   $approved_members_only = $event->field_approved_members_only[LANGUAGE_NONE][0]['value'];
   $approved_member = in_array("approved user", $user->roles);
   if ($approved_members_only and !$approved_member) {
@@ -304,7 +309,6 @@ function _tm_event_display_flag($nid) {
   // Signup limit
   if ($flag->get_count($nid) >= $limit) {
     // Show waitlist, event booked out
-    global $user;
     if ($flag->is_flagged($nid, $user->uid)) {
       return 'show_register';
     } else {

@@ -139,7 +139,7 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
   	$form['field_event_company']['#disabled'] = true;
 
 		// Hide fields
-    $form['field_event_hide_organizers']['#access'] = false;
+    //$form['field_event_hide_organizers']['#access'] = false;
     $form['field_chapter']['#access'] = false;
     $form['field_event_hide_location']['#access'] = false;
 
@@ -180,7 +180,7 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
 		$form['field_chapter']['#access'] = false;
     $form['field_event_company']['#access'] = false;
     $form['field_organizer']['#access'] = false;
-    $form['field_event_hide_organizers']['#access'] = false;
+    //$form['field_event_hide_organizers']['#access'] = false;
     $form['field_event_hide_location']['#access'] = false;
 
     // Hide fields for non-moderators

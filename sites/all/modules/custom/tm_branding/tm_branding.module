@@ -737,6 +737,7 @@ function tm_branding_replace_vars($element) {
 	$element = str_replace("__FRONTPAGE_URL__", $conf["tm_branding_frontpage_url"], $element);
 	$element = str_replace("__ASSETS_BASE_PATH__", $conf["tm_branding_assets_base_path"], $element);
 	$element = str_replace("__CURRENT_YEAR__", date("Y"), $element);
+	$element = str_replace("__FOOTER_LOGO_URL__", tm_branding_get_conf("tm_branding_footer_logo"), $element);
 	
 	return $element;
 }

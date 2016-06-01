@@ -8,6 +8,29 @@
 include_once 'tm_branding.features.inc';
 
 /**
+ * Hook node_access
+ * Only allow brand-editors or administrators to view the node
+ */
+function tm_branding_node_access($node, $op, $account) {
+
+	if (is_string($node)) {
+		return NODE_ACCESS_IGNORE;
+	}
+
+	// only allow brand editor to view
+	if ($node->type == 'site_brand' && $op == 'view') {
+		$allowed_roles = array('brand-editor', 'administrator');
+		$access_allow = array_intersect($allowed_roles, array_values($account->roles));
+		if ($access_allow) {
+			return NODE_ACCESS_ALLOW;
+		} else {
+			return NODE_ACCESS_DENY;
+		}
+	}
+	return NODE_ACCESS_IGNORE;
+}
+
+/**
  * Return a list of matching site brands in order or processing priority
  */
 function tm_branding_get_site_brands($account) {

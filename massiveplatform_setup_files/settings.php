@@ -945,7 +945,7 @@ $conf["tm_branding_menu_html"] = "
   <li class='menu-368'><a href='/events'>Events</a></li>
   <li class='menu-1456'><a href='/community'>People</a></li>
   <li class='menu-1363'><a href='/companies'>Companies</a></li>
-  <li class='menu-1458'><a href='/discuss/' class='tm-menu-discuss'>Q&amp;A</a></li>
+  <li class='menu-1458'><a href='/discuss/'>Q&amp;A</a></li>
   <li class='menu-1457 last'><a href='/blog/'>News</a></li>
 </ul>";
 

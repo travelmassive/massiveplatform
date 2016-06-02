@@ -157,6 +157,10 @@ function tm_events_manage_registrations_form_submit($form, &$form_state) {
       }
     }
   }
+
+  // let user know we've made changes
+  drupal_set_message("Attendee list has been updated.");
+
 }
 
 /**

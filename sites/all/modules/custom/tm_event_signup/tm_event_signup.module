@@ -171,6 +171,13 @@ function _tm_event_seats_count($field, $title = NULL) {
  * signup limit was reached.
  */
 function tm_event_signup_flag_validate($action, $flag, $entity_id, $account, $skip_permission_check, $flagging) {
+
+  // skip if permission check set
+  if ($skip_permission_check) {
+    return;
+  }
+
+  // get flagged entity
   $flagged_entity = node_load($entity_id);
 
   // Only validate the 'signup' flag whenever an 'event' is flagged. Users may always unflag.

@@ -96,7 +96,7 @@ function tm_preprocess_page(&$variables, $hook) {
     $request_uri = $_SERVER["REQUEST_URI"];
     if (strpos($request_uri, "/sites/default/files/styles/banner/public/images/events/") === 0) {
       if (strpos($request_uri, "+") !== false) {
-        drupal_goto(str_replace("+", "%20", $request_uri));
+        drupal_goto(str_replace("+", "%20", $request_uri), array(), '301');
         return;
       }
     }

@@ -10,10 +10,12 @@ $feedme_style = "";
 // user
 if (arg(0) == 'user' and is_numeric(arg(1)) and arg(2) == FALSE) {
 	$profile = user_load(arg(1));
-	$feedme_mode = "user";
-	$feedme_user_id = $profile->uid;
-   	$feedme_append = ".column.first";
-   	$feedme_off = false;
+    if ($profile != null) {
+        $feedme_mode = "user";
+        $feedme_user_id = $profile->uid;
+        $feedme_append = ".column.first";
+        $feedme_off = false;
+    }
 }
 
 // chapter or event

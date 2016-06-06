@@ -823,6 +823,7 @@ function tm_render_html_email_event_image($eventid) {
   }
 
   // get event image src
+  // note: gmail image proxy will rewrite %20 to +
   $event_image_src = $image_url;
 
   // html template

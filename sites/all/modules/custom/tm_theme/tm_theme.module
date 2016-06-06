@@ -93,12 +93,16 @@ function tm_theme_html_head_alter(&$head_elements) {
   }
 
   // set site_branding_referrer_domain cookie
+  // don't match own domain
   if (isset($_SERVER["HTTP_REFERER"])) {
     if ($_SERVER["HTTP_REFERER"] != "") {
       try {
         $referer_domain = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
-        $referer_domain = str_replace("www.", "", $referer_domain); // remove www
-        user_cookie_save(array('site_branding_referer_domain'=>strtolower($referer_domain)));
+        if (strtolower($referer_domain) != strtolower($_SERVER['HTTP_HOST'])) {
+          $referer_domain = str_replace("www.", "", $referer_domain); // remove www
+          user_cookie_save(array('site_branding_referer_domain'=>strtolower($referer_domain)));
+        }
+        
       } catch (Exception $e) {
         // continue
       }

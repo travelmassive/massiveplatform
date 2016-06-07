@@ -259,11 +259,29 @@ function tm_search_api_fetch_results($query_array) {
 
 			// Case 2. If only two search terms, attempt first and last name match
 			if (sizeof($search_terms) == $sizeof_terms) {
-				$query_filter_people->condition('user:field_user_first_name', $search_terms[0]);
-				$query_filter_people->condition('user:field_user_last_name', $search_terms[1]);
 
-				// also match username as it's created with first and last name
-				$query_filter_people->condition('user:name', $search_terms[0] . $search_terms[1]);
+				if ($conf["tm_search_api_top_results_strip_spaces"]) {
+
+					// search_terms[0] will contain the first name
+					$name_parts = explode(" ", $search_terms[0]);
+					if (sizeof($name_parts) >= 2) {
+
+						$query_filter_people->condition('user:field_user_first_name', $name_parts[0]);
+						$query_filter_people->condition('user:field_user_last_name', $name_parts[1]);
+
+						// also match username as it's created with first and last name
+						$query_filter_people->condition('user:name', $name_parts[0] . $name_parts[1]);
+					}
+					
+				} else {
+
+					$query_filter_people->condition('user:field_user_first_name', $search_terms[0]);
+					$query_filter_people->condition('user:field_user_last_name', $search_terms[1]);
+
+					// also match username as it's created with first and last name
+					$query_filter_people->condition('user:name', $search_terms[0] . $search_terms[1]);
+					
+				}				
 
 			} else {
 
@@ -366,6 +384,9 @@ function tm_search_api_fetch_results($query_array) {
 		}
 		if (in_array("vimeo", $has_queries)) {
 			$query_filter_has->condition('user:field_link_vimeo:url', null, '<>');
+		}
+		if (in_array("cover_video", $has_queries)) {
+			$query_filter_has->condition('user:field_user_cover_video', null, '<>');
 		}
 
 		// role:field
@@ -546,6 +567,9 @@ function tm_search_api_fetch_results($query_array) {
 		}
 		if (in_array("vimeo", $has_queries)) {
 			$query_filter_has->condition('node:field_link_vimeo:url', null, '<>');
+		}
+		if (in_array("cover_video", $has_queries)) {
+			$query_filter_has->condition('node:field_company_cover_video', null, '<>');
 		}
 
 		// flag:sponsor
@@ -744,6 +768,7 @@ function tm_search_api_init_option($query_options, $key) {
 			if (array_search("linkedin", $query_options[$key]) !== false) { return $query_options[$key]; }
 			if (array_search("youtube", $query_options[$key]) !== false) { return $query_options[$key]; }
 			if (array_search("vimeo", $query_options[$key]) !== false) { return $query_options[$key]; }
+			if (array_search("cover_video", $query_options[$key]) !== false) { return $query_options[$key]; }
 
 			// not supported
 			return array();

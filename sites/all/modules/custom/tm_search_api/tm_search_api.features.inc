@@ -27,6 +27,7 @@ function tm_search_api_default_search_api_index() {
         "node:created" : { "type" : "date" },
         "node:field_chapter" : { "type" : "integer", "entity_type" : "node" },
         "node:field_chapter:title" : { "type" : "text" },
+        "node:field_company_cover_video" : { "type" : "string" },
         "node:field_country" : { "type" : "string", "entity_type" : "country" },
         "node:field_country:continent" : { "type" : "text" },
         "node:field_country:continent_name" : { "type" : "string" },
@@ -77,6 +78,7 @@ function tm_search_api_default_search_api_index() {
         "user:field_user_country:continent_name" : { "type" : "text" },
         "user:field_user_country:name" : { "type" : "text" },
         "user:field_user_country:official_name" : { "type" : "text" },
+        "user:field_user_cover_video" : { "type" : "string" },
         "user:field_user_first_name" : { "type" : "text" },
         "user:field_user_last_name" : { "type" : "text", "boost" : "3.0" },
         "user:field_user_question_1" : { "type" : "text" },
@@ -648,6 +650,18 @@ function tm_search_api_default_search_api_server() {
             "column" : "user_uid",
             "type" : "integer",
             "boost" : "1.0"
+          },
+          "user:field_user_cover_video" : {
+            "table" : "search_api_db_tm_search_multi_index",
+            "type" : "string",
+            "boost" : "1.0",
+            "column" : "user_field_user_cover_video"
+          },
+          "node:field_company_cover_video" : {
+            "table" : "search_api_db_tm_search_multi_index",
+            "type" : "string",
+            "boost" : "1.0",
+            "column" : "node_field_company_cover_video"
           }
         }
       }

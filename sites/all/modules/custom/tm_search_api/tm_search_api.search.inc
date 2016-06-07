@@ -235,9 +235,14 @@ function tm_search_api_fetch_results($query_array) {
 		if ($conf["tm_search_api_pluralize_keywords"]) {
 			$sizeof_terms = 2;
 		}
+		if ($conf["tm_search_api_top_results_strip_spaces"]) {
+			$sizeof_terms = $sizeof_terms * 2;
+		}
+	
 		if ((sizeof($search_terms) == $sizeof_terms) && (strpos($search_terms[0], " ") !== false)) {
 
 			$parts = explode(" ", $search_terms[0]);
+
 			$query_filter_people_name = $query->createFilter('AND');
 			$query_filter_people_name->condition('user:field_user_first_name', $parts[0]);
 			$query_filter_people_name->condition('user:field_user_last_name', $parts[1]);
@@ -260,28 +265,12 @@ function tm_search_api_fetch_results($query_array) {
 			// Case 2. If only two search terms, attempt first and last name match
 			if (sizeof($search_terms) == $sizeof_terms) {
 
-				if ($conf["tm_search_api_top_results_strip_spaces"]) {
+				$query_filter_people->condition('user:field_user_first_name', $search_terms[0]);
+				$query_filter_people->condition('user:field_user_last_name', $search_terms[1]);
 
-					// search_terms[0] will contain the first name
-					$name_parts = explode(" ", $search_terms[0]);
-					if (sizeof($name_parts) >= 2) {
-
-						$query_filter_people->condition('user:field_user_first_name', $name_parts[0]);
-						$query_filter_people->condition('user:field_user_last_name', $name_parts[1]);
-
-						// also match username as it's created with first and last name
-						$query_filter_people->condition('user:name', $name_parts[0] . $name_parts[1]);
-					}
-					
-				} else {
-
-					$query_filter_people->condition('user:field_user_first_name', $search_terms[0]);
-					$query_filter_people->condition('user:field_user_last_name', $search_terms[1]);
-
-					// also match username as it's created with first and last name
-					$query_filter_people->condition('user:name', $search_terms[0] . $search_terms[1]);
-					
-				}				
+				// also match username as it's created with first and last name
+				$query_filter_people->condition('user:name', $search_terms[0] . $search_terms[1]);
+							
 
 			} else {
 

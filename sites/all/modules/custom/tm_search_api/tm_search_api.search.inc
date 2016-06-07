@@ -252,7 +252,7 @@ function tm_search_api_fetch_results($query_array) {
 			$query_filter_people->condition('user:field_user_last_name', $parts[1]);
 
 			// also match username as it's created with first and last name
-			$query_filter_people->condition('user:name', $search_terms[0] . $parts[1]);
+			$query_filter_people->condition('user:name', $parts[0] . $parts[1]);
 
 		} else {
 
@@ -271,7 +271,6 @@ function tm_search_api_fetch_results($query_array) {
 				// also match username as it's created with first and last name
 				$query_filter_people->condition('user:name', $search_terms[0] . $search_terms[1]);
 							
-
 			} else {
 
 				//Case 3. Try first and last name on all keywords

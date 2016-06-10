@@ -5,7 +5,7 @@
 /**
  * Modify profile form
  */
-function tm_users_form_user_profile_form_alter(&$form, &$form_state) {
+function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
 
   // Only edit form if user is not logged in
   // Needed for simple_pass_reset to work
@@ -62,6 +62,31 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state) {
     unset($form['field_user_cover_video']);
   }
 
+  // Disable autocomplete on mail
+  // see: http://www.jeffgeerling.com/blogs/jeff-geerling/disabling-autocomplete-forms 
+  $form['account']['mail']['#attributes']['autocomplete'] = 'off';
+
+  // Disable autocomplete on confirm password fields
+  // see: https://www.drupal.org/node/540340
+  // Get default process function array:
+  $element_info = element_info('password_confirm');
+  $process = $element_info['#process'];
+  $process[] = 'tm_users_process_password_confirm';
+  $form['account']['pass']['#process'] = $process;
+
+}
+
+/**
+ * Hook for password confirm
+ * Set to not autocomplete by browser
+ */
+function tm_users_process_password_confirm($element) {
+  // see: https://bugs.chromium.org/p/chromium/issues/detail?id=370363#c7
+  $element['pass1']['#title'] = t('New Password');
+  $element['pass2']['#title'] = t('Confirm New Password');
+  $element['pass1']['#attributes']['autocomplete'] = 'new-password';
+  $element['pass2']['#attributes']['autocomplete'] = 'new-password';
+  return $element;
 }
 
 /**

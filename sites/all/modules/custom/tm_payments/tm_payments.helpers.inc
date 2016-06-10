@@ -37,10 +37,10 @@ function _tm_payments_get_api_amount($amount, $currency) {
 
 	// zero-decimal currencies
     // https://support.stripe.com/questions/which-zero-decimal-currencies-does-stripe-support
-    $zero_decimal_currencies = array("BIF", "CLP", "DJF", "GNF", "JPY", "KMF", "KRW", "MGA", "PYG", "RWF", "VND", "VUV", "XAF", "XOF", "XPF");
+    $zero_decimal_currencies = array("bif", "clp", "djf", "gnf", "jpy", "kmf", "krw", "mga", "pyg", "rwf", "vnd", "vuv", "xaf", "xof", "xpf");
 
-    $stripe_amount = $amount;
-    if (!in_array($currency, $zero_decimal_currencies)) {
+    $stripe_amount = (int)$amount; // integer
+    if (!in_array(strtolower($currency), $zero_decimal_currencies)) {
     	$stripe_amount = $stripe_amount * 100; // add cents
     }
 

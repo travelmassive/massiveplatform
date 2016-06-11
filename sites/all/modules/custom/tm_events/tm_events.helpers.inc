@@ -354,3 +354,63 @@ function tm_events_pluralize_members($num_members) {
   }
   return $num_members . " members";
 }
+
+/**
+ * Helper method to get the last event for a chapter
+ */
+function tm_events_get_last_event($chapter_id) {
+
+  // Fetch the current and make sure it's UTC and user-defined timezone.
+  $current_date = new DateTime('now', new DateTimeZone('UTC'));
+
+  // Fetch the most recent event that references a particular chapter.
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'event')
+    ->propertyCondition('status', 1)
+    ->fieldCondition('field_chapter', 'target_id', $chapter_id)
+    ->fieldCondition('field_event_date', 'value2', $current_date->format('Y-m-d H:i:s'), '<=')
+    ->fieldOrderBy('field_event_date', 'value2', 'DESC')
+    ->range(0,1);
+  $result = $query->execute();
+
+  // Past event found
+  if (isset($result['node'])) {
+    $past_event_array = array_keys($result['node']);
+    $past_event = node_load($past_event_array[0]);
+    return $past_event;
+  }
+
+  // No past event
+  return null;
+}
+
+/**
+ * Helper method to get the next event for a chapter
+ */
+function tm_events_get_next_event($chapter_id) {
+
+  // Fetch the current and make sure it's UTC and user-defined timezone.
+  $current_date = new DateTime('now', new DateTimeZone('UTC'));
+
+  // Fetch the nearest upcoming event that references a particular chapter.
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'event')
+    ->propertyCondition('status', 1)
+    ->fieldCondition('field_chapter', 'target_id', $chapter_id)
+    ->fieldCondition('field_event_date', 'value2', $current_date->format('Y-m-d H:i:s'), '>=')
+    ->fieldOrderBy('field_event_date', 'value2', 'ASC')
+    ->range(0,1);
+  $result = $query->execute();
+
+  // Upcoming event found
+  if (isset($result['node'])) {
+    $next_event_array = array_keys($result['node']);
+    $next_event = node_load($next_event_array[0]);
+    return $next_event;
+  }
+
+  // No upcoming event
+  return null;
+}

@@ -29,7 +29,7 @@ if (arg(0) == 'node' and is_numeric(arg(1)) and arg(2) == FALSE) {
                     $country_code = $node->field_country['und'][0]['iso2'];
                     $country = country_load($country_code);
                     if ($country != null) {
-                        $feedme_country = $country->name;
+                        $feedme_country = $country_code; // $country->name;
                     }
                 }
             } catch (Exception $e) {

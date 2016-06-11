@@ -19,19 +19,7 @@ Additional references:
 function tm_marketplace_init() {
 
 	global $conf;
-
-	// hide for logged in user
-	if (isset($conf["tm_marketplace_menu_hide"])) {
-		if ($conf["tm_marketplace_menu_hide"]) {
-
-			// check cookie
-			$css_class = $conf["tm_marketplace_menu_class"];
-			if (!isset($_COOKIE['Drupal_visitor_show_marketplace_menu'])) {
-				drupal_add_css('.' . $css_class . ' { display: none;}', 'inline');
-			}
-		}
-	}
-
+	
 	// Store encrypted user's email to Drupal_visitor_marketplace_subscription_field
 	if ($conf["tm_marketplace_cookie_enable"]) {
 

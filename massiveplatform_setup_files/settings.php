@@ -733,7 +733,7 @@ $conf['tm_event_types_system'] = array("community" => "Chapter Event", "member" 
 $conf['tm_event_types_custom'] = array("workshop" => "Workshop", "conference" => "Conference"); // add your own custom events here
 $conf['tm_event_types'] = array_merge($conf['tm_event_types_system'], $conf['tm_event_types_custom']);
 $conf['tm_event_types_display'] = array("all" => "All Events", "community" => "Community", "workshop" => "Workshops", "conference" => "Conferences", "member" => "Member Events", "company" => "Company Events");
-$conf['tm_event_types_tips'] = array("workshop" => "Learn and share with other members around the world. have an idea for a workshop you would like to attend or host? Please <a href='/contact'>let us know</a>.", "conference" => "We're proud community partners with the world's leading travel industry conferences and exhibitions. <a href='/blog/about-travel-massive'>Learn more</a>");
+$conf['tm_event_types_tips'] = array("workshop" => "Learn and share with other members around the world. Do you have an idea for a workshop you would like to attend or host? Please <a href='/contact'>let us know</a>.", "conference" => "We're proud community partners with the world's leading travel industry conferences and exhibitions. <a href='/blog/about-travel-massive'>Learn more</a>");
 $conf['tm_event_types_default'] = "all";
 $conf['tm_event_types_sticker_icon_color'] = "#000000"; // color of sticker for non-chapter events
 $conf['tm_event_types_edit_tips'] = array();
@@ -742,8 +742,6 @@ $conf['tm_event_types_edit_tips']['company'] = "Create a company event in our co
 $conf['tm_event_types_edit_tips']['member'] = "Create a member event in our community.<br>Please follow our <a target='_blank' href='" . $conf['tm_community_values_url'] . "'>community guidelines</a>.";
 
 /** DISCUSSION SETTINGS **/
-$conf['tm_discuss_menu_hide'] = true; // hide the discussions unless you access /discuss
-$conf['tm_discuss_menu_class'] = 'menu-1458'; // class of the menu item to hide
 $conf['tm_discuss_meta_og_title'] = "Travel Massive Discuss";
 $conf['tm_discuss_meta_og_image'] = "https://localdev.travelmassive.com/discussions/uploads/0O56BOQETSB2.png";
 $conf['tm_discuss_meta_description'] = "Travel Massive Discuss is the place to ask questions and get answers about the tourism and travel industry from members of our community.";
@@ -753,14 +751,12 @@ $conf['tm_discuss_full_path'] = "discussions"; // where vanilla is installed
 $conf['tm_discuss_enable_feedme'] = true; // show recent discussions for a chapter or member
 
 /** MARKETPLACE/JOBS SETTINGS **/
-$conf['tm_marketplace_menu_hide'] = true; // hide the marketplace unless you access /marketplace
-$conf['tm_marketplace_menu_class'] = 'menu-1510'; // class of the menu item to hide
 $conf['tm_marketplace_menu_path'] = "marketplace"; // where jobskee is installed
 $conf['tm_marketplace_cookie_enable'] = true; // for marketplace subscription email field
 $conf['tm_marketplace_cookie_secret_key'] = 'randomstringabc'; // must match jobskee config
 $conf['tm_marketplace_cookie_secret_iv'] = 'randomstring123'; // must match jobskee config
 $conf['tm_marketplace_enable_feedme'] = true; // embed marketplace jobs into chapter and company pages
-$conf['tm_marketplace_feedme_url'] = '/marketplace/api/search/'; // url for search
+$conf['tm_marketplace_feedme_url'] = '/jobs/api/search/'; // url for search
 
 /* PROFILE AND COMPANY LINK FIELDS */
 /* Options available: website, twitter, facebook, linkedin, instagram, youtube, vimeo, snapchat */
@@ -816,6 +812,8 @@ $conf["tm_following_enable_message_organization"] = true;
 /* CHAPTER SETTINGS */
 $conf["tm_chapters_allow_edit_chapter_leaders"] = false; // Allow chapter leaders to edit leaders for their own chapter (default false)
 $conf["tm_chapters_groups_enabled"] = true; // Allow group chapters. Exposes the /groups url.
+$conf["tm_chapters_leaders_needed_max_days_since_event"] = 180; // show the help needed message if no events since this many days
+$conf["tm_chapters_leaders_needed_message"] = "We're looking for Chapter Leaders to help organize regular events for this chapter. Is that you? <a href='/contact'>Apply to lead this chapter</a>."; // message to display if chapter leader needed
 
 /* THEME SETTINGS */
 $conf["tm_theme_meta_color"] = "#007DB7"; // Set the theme color for mobile Android, iOS 
@@ -995,8 +993,9 @@ $conf["tm_google_analytics_report_path"] = "https://analytics.google.com/analyti
 
 /** GEO IP MODULE **/
 // Geoip settings
-$conf['tm_geoip_maxmind_db'] = '/usr/local/share/GeoIP/GeoIP2-City_20160517/GeoIP2-City.mmdb'; // path to maxmind geoip datbase
+$conf['tm_geoip_maxmind_db'] = '/usr/local/share/GeoIP/GeoIP2-City.mmd'; // path to maxmind geoip datbase
 //$conf['tm_geoip_fake_ip'] = '183.108.246.31'; // simulate a visitor ip address for testing geoip module
+//$conf['tm_geoip_server_header'] = 'HTTP_X_REAL_IP'; // server header to use (overrides REMOTE_ADDR)
 
 /** SITE BRANDING **/
 // Base site branding
@@ -1024,8 +1023,7 @@ $conf["tm_branding_menu_html"] = "
   <li class='menu-1456'><a href='/community'>People</a></li>
   <li class='menu-1363'><a href='/companies'>Companies</a></li>
   <li class='menu-1458'><a href='/discuss/' class='tm-menu-discuss'>Q&amp;A</a></li>
-  <li class='menu-1457'><a href='/blog/'>News</a></li>
-  <li class='menu-1606 last'><a href='/groups'>Chapters</a></li>
+  <li class='menu-1457 last'><a href='/blog/'>News</a></li>
 </ul>";
 
 // footer html 

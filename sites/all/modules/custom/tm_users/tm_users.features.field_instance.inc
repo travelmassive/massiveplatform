@@ -16,7 +16,7 @@ function tm_users_field_default_field_instances() {
     'default_value' => NULL,
     'deleted' => 0,
     'description' => 'Tell the community about yourself. This information will be <strong>public</strong>.
-<br><strong>Providing information about your company?</strong> Please add a <a href="/companies">company profile</a>.',
+<br><strong>Providing information about your company?</strong> Please add a <a target=\'_blank\' class=\'cancel\' href="/companies">company profile</a>.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -331,7 +331,7 @@ function tm_users_field_default_field_instances() {
     'default_value' => NULL,
     'deleted' => 0,
     'description' => 'The name of your business, company, or organization.
-<br>Once your account is approved you can add a <a href="/companies">company profile</a>.',
+<br>Once your account is approved you can add a <a target=\'_blank\' class=\'cancel\' href="/companies">company profile</a>.',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -583,7 +583,7 @@ function tm_users_field_default_field_instances() {
     'default_value' => NULL,
     'deleted' => 0,
     'description' => 'ie: https://linkedin.com/in/myname
-<br>Need help finding your LinkedIn URL? Watch this <a target=\'_blank\' href=\'https://www.youtube.com/watch?v=iioFPii_Pb8\'>quick tutorial video</a>.',
+<br>Need help finding your LinkedIn URL? Watch this <a target=\'_blank\' class=\'cancel\' href=\'https://www.youtube.com/watch?v=iioFPii_Pb8\'>quick tutorial video</a>.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -1675,9 +1675,9 @@ function tm_users_field_default_field_instances() {
   t('Reason for joining');
   t('Snapchat');
   t('Tell the community about yourself. This information will be <strong>public</strong>.
-<br><strong>Providing information about your company?</strong> Please add a <a href="/companies">company profile</a>.');
+<br><strong>Providing information about your company?</strong> Please add a <a target=\'_blank\' class=\'cancel\' href="/companies">company profile</a>.');
   t('The name of your business, company, or organization.
-<br>Once your account is approved you can add a <a href="/companies">company profile</a>.');
+<br>Once your account is approved you can add a <a target=\'_blank\' class=\'cancel\' href="/companies">company profile</a>.');
   t('Twitter');
   t('Vimeo');
   t('Website');
@@ -1690,7 +1690,7 @@ function tm_users_field_default_field_instances() {
   t('ie: http://www.mywebsite.com');
   t('ie: https://facebook.com/myname');
   t('ie: https://linkedin.com/in/myname
-<br>Need help finding your LinkedIn URL? Watch this <a target=\'_blank\' href=\'https://www.youtube.com/watch?v=iioFPii_Pb8\'>quick tutorial video</a>.');
+<br>Need help finding your LinkedIn URL? Watch this <a target=\'_blank\' class=\'cancel\' href=\'https://www.youtube.com/watch?v=iioFPii_Pb8\'>quick tutorial video</a>.');
   t('ie: https://vimeo.com/yourname');
   t('ie: https://www.youtube.com/user/username');
 

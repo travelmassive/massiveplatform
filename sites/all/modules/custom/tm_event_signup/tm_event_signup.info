@@ -20,5 +20,4 @@ features[field_base][] = field_external_rsvp
 features[field_base][] = field_signup_limit
 features[field_instance][] = node-event-field_external_rsvp
 features[field_instance][] = node-event-field_signup_limit
-files[] = tests/tm_event_signup.test
 project path = sites/all/modules/custom

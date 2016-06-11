@@ -139,7 +139,7 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
   	$form['field_event_company']['#disabled'] = true;
 
 		// Hide fields
-    $form['field_event_hide_organizers']['#access'] = false;
+    //$form['field_event_hide_organizers']['#access'] = false;
     $form['field_chapter']['#access'] = false;
     $form['field_event_hide_location']['#access'] = false;
 
@@ -180,7 +180,7 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
 		$form['field_chapter']['#access'] = false;
     $form['field_event_company']['#access'] = false;
     $form['field_organizer']['#access'] = false;
-    $form['field_event_hide_organizers']['#access'] = false;
+    //$form['field_event_hide_organizers']['#access'] = false;
     $form['field_event_hide_location']['#access'] = false;
 
     // Hide fields for non-moderators
@@ -309,6 +309,20 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
   //////////
   if (module_exists("tm_payments")) {
     _tm_payments_form_alter_event_form($form, $form_state, $form_id);
+  }
+
+  // STEP 7. Hide any help tips for ajax requests
+  // Hide any help tips for ajax requests
+  // Determine if this call is from an ajax request
+  $is_ajax_request = false;
+  if (isset($form_state['triggering_element']['#name'])) {
+    if (($form_state['triggering_element']['#name'] == 'field_image_und_0_remove_button') or
+      ($form_state['triggering_element']['#name'] == 'field_image_und_0_upload_button')) {
+      $is_ajax_request = true;
+    }
+  }
+  if ($is_ajax_request) {
+    drupal_get_messages("help-tip");
   }
 
 }

@@ -36,24 +36,6 @@ Additional references:
 
 */
 
-// hide the discuss menu if configured to to so
-function tm_discuss_init() {
-	global $conf;
-
-	// hide for logged in user
-	if (isset($conf["tm_discuss_menu_hide"])) {
-		if ($conf["tm_discuss_menu_hide"]) {
-
-			// check cookie
-			$css_class = $conf["tm_discuss_menu_class"];
-			if (!isset($_COOKIE['Drupal_visitor_show_discuss_menu'])) {
-				drupal_add_css('.' . $css_class . ' { display: none; }', 'inline');
-			}
-		}
-	}
-}
-
-
 // Update meta tags for /discuss page
 function tm_discuss_metatag_metatags_view_alter(&$output, $instance) {
 

@@ -201,6 +201,12 @@ function tm_branding_views_default_views() {
     'multiple_to' => '',
     'show_remaining_days' => 0,
   );
+  /* Field: Content: Stop rules (don't process any more rules) */
+  $handler->display->display_options['fields']['field_match_stop_rule']['id'] = 'field_match_stop_rule';
+  $handler->display->display_options['fields']['field_match_stop_rule']['table'] = 'field_data_field_match_stop_rule';
+  $handler->display->display_options['fields']['field_match_stop_rule']['field'] = 'field_match_stop_rule';
+  $handler->display->display_options['fields']['field_match_stop_rule']['label'] = 'Stop rules';
+  $handler->display->display_options['fields']['field_match_stop_rule']['type'] = 'list_key';
   /* Field: Content: Enable testing */
   $handler->display->display_options['fields']['field_brand_test_enabled']['id'] = 'field_brand_test_enabled';
   $handler->display->display_options['fields']['field_brand_test_enabled']['table'] = 'field_data_field_brand_test_enabled';

@@ -46,7 +46,7 @@ function _tm_payments_price($field, $title = NULL) {
 	// Option 1. Paid and registered
 	if ($paid_for_event && $registered_for_event) {
 		$html = '<h2><span>Price</span></h2>';
-		$html .= '<div class="detail-price">You have purchased a ticket to this ' . t($event_type) . '</div>';
+		$html .= '<div class="detail-price">You have purchased a ticket to this ' . t($event_type) . ' event</div>';
 		return $html;
 	}
 

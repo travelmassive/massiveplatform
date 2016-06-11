@@ -86,8 +86,22 @@ function tm_preprocess_html(&$variables, $hook) {
  */
 
 function tm_preprocess_page(&$variables, $hook) {
-
+  
   global $user;
+
+  // Workaround for gmail image proxy
+  // Gmail uses a + sign for spaces, which causes a a 404
+  $header = drupal_get_http_header("status");
+  if($header == "403 Forbidden") {
+    $request_uri = $_SERVER["REQUEST_URI"];
+    if (strpos($request_uri, "/sites/default/files/styles/banner/public/images/events/") === 0) {
+      if (strpos($request_uri, "+") !== false) {
+        drupal_goto(str_replace("+", "%20", $request_uri), array(), '301');
+        return;
+      }
+    }
+  }
+
   // Only a loaded user has values for the fields.
   $loaded = user_load($user->uid);
 
@@ -95,13 +109,6 @@ function tm_preprocess_page(&$variables, $hook) {
   if (isset($variables['page']['content']['system_main']['#entity_type']) && $variables['page']['content']['system_main']['#entity_type'] == 'user' && isset($variables['page']['content']['system_main']['#view_mode']) && $variables['page']['content']['system_main']['#view_mode'] == 'full') {
     drupal_set_title('');
   }
-
-  // Pass the footer and social menu to the page template
-  $variables['foot_menu'] = menu_load('menu-footer-menu');
-  $variables['foot_menu']['links'] = menu_navigation_links('menu-footer-menu');
-
-  $variables['social_menu'] = menu_load('menu-social-links');
-  $variables['social_menu']['links'] = menu_navigation_links('menu-social-links');
 
   // On registration page put a twitter link
   if (current_path() == "user/register") {
@@ -125,20 +132,20 @@ function tm_preprocess_page(&$variables, $hook) {
   // customize account page titles
   if (!$user->uid) {
 
-      global $conf;
+    global $conf;
 
-      if (arg(0) == 'user' && arg(1) == 'login') {
-          drupal_set_title(t('Sign in'));
-      }
-
-      if (arg(0) == 'user' && arg(1) == 'password') {
-          drupal_set_title(t('Forgot password'));
-      }
-
-      if (arg(0) == 'user' && arg(1) == 'register') {
-          drupal_set_title(t('Join ' . $conf["tm_site_name"] ));
-      }
+    if (arg(0) == 'user' && arg(1) == 'login') {
+        drupal_set_title(t('Sign in'));
     }
+
+    if (arg(0) == 'user' && arg(1) == 'password') {
+        drupal_set_title(t('Forgot password'));
+    }
+
+    if (arg(0) == 'user' && arg(1) == 'register') {
+        drupal_set_title(t('Join ' . $conf["tm_site_name"] ));
+    }
+  }
   
 }
 

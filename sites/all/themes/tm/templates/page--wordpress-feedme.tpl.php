@@ -10,11 +10,13 @@ $feedme_num_items = 5; // number of items to display
 // user
 if (arg(0) == 'user' and is_numeric(arg(1)) and arg(2) == FALSE) {
 	$profile = user_load(arg(1));
-	$feedme_mode = "member";
-    $feedme_query = check_plain($profile->realname);
-    $feedme_theme = "light";
-    $feedme_off = false;
-   	$feedme_append = ".column.first";
+    if ($profile != null) {
+    	$feedme_mode = "member";
+        $feedme_query = check_plain($profile->realname);
+        $feedme_theme = "light";
+        $feedme_off = false;
+       	$feedme_append = ".column.first";
+   }
 }
 
 // node (chapter or company)

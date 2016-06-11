@@ -157,6 +157,10 @@ function tm_events_manage_registrations_form_submit($form, &$form_state) {
       }
     }
   }
+
+  // let user know we've made changes
+  drupal_set_message("Attendee list has been updated.");
+
 }
 
 /**
@@ -211,6 +215,10 @@ function _tm_events_auto_register_from_waitlist($event) {
   }
 
   $waitlist_user = user_load($firstrow['uid']);
+
+  // set a static variable so the notification will know the member was registered automatically
+  $tm_flagged_by_auto_register_waitlist = &drupal_static("tm_flagged_by_auto_register_waitlist");
+  $tm_flagged_by_auto_register_waitlist = true;
 
   // Add to rsvp first, unflag waitlist second
   // this will trigger a single rsvp notification

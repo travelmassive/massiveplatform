@@ -8,6 +8,29 @@
 include_once 'tm_branding.features.inc';
 
 /**
+ * Hook node_access
+ * Only allow brand-editors or administrators to view the node
+ */
+function tm_branding_node_access($node, $op, $account) {
+
+	if (is_string($node)) {
+		return NODE_ACCESS_IGNORE;
+	}
+
+	// only allow brand editor to view
+	if ($node->type == 'site_brand' && $op == 'view') {
+		$allowed_roles = array('brand-editor', 'administrator');
+		$access_allow = array_intersect($allowed_roles, array_values($account->roles));
+		if ($access_allow) {
+			return NODE_ACCESS_ALLOW;
+		} else {
+			return NODE_ACCESS_DENY;
+		}
+	}
+	return NODE_ACCESS_IGNORE;
+}
+
+/**
  * Return a list of matching site brands in order or processing priority
  */
 function tm_branding_get_site_brands($account) {
@@ -18,12 +41,25 @@ function tm_branding_get_site_brands($account) {
 	// Create array of matching site brands
 	$site_brands = array();
 	$rows = db_query($query)->fetchAll();
+	$reached_stop_rule = false;
 	foreach ($rows as $row) {
 		$site_brand = node_load($row->nid);
 
 		// Check if brand matches visitor or user criteria
 		if (tm_branding_check_brand($site_brand, $account)) {
-			$site_brands[] = $site_brand;
+
+			// Add rule if we haven't reached a stop rule
+			if (!($reached_stop_rule)) {
+				$site_brands[] = $site_brand;
+
+				// Check if this brand is a stop rule
+				if (isset($site_brand->field_match_stop_rule[LANGUAGE_NONE][0]['value'])) {
+					if ($site_brand->field_match_stop_rule[LANGUAGE_NONE][0]['value'] == 1) {
+						$reached_stop_rule = true;
+					}
+				}
+			}
+			
 		}
 	}
 
@@ -36,6 +72,8 @@ function tm_branding_get_site_brands($account) {
  * For performance, work from least expensive to most expensive operations.
  */
 function tm_branding_check_brand($site_brand, $account) {
+
+	global $conf;
 
 	// Step 1. Check if testing is enabled
 	$testing_enabled = false;
@@ -62,17 +100,11 @@ function tm_branding_check_brand($site_brand, $account) {
 			$match_ips = explode(" ", $site_brand->field_brand_test_ips[LANGUAGE_NONE][0]['value']);
 			if ($account->uid > 0) {
 
-				if (isset($_SERVER['REMOTE_ADDR'])) {
-					if (array_search($_SERVER['REMOTE_ADDR'], $match_ips)) {
-						return true;
-					}
+				$real_ip = tm_geoip_get_real_visitor_ip();
+				if (array_search($real_ip, $match_ips)) {
+					return true;
 				}
 
-				if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-					if (array_search($_SERVER['HTTP_X_FORWARDED_FOR'], $match_ips)) {
-						return true;
-					}
-				}
 			}
 		}
 	}
@@ -120,10 +152,20 @@ function tm_branding_check_brand($site_brand, $account) {
 		return false;
 	}
 
+	// Get match probability
+	// Any matching criteria should return with this probability.
+	// ie: return (rand(1,100) <= $match_probability);
+	$match_probability = 100;
+	if (in_array("match_probability", $match_methods)) {
+		if (isset($site_brand->field_brand_match_probability[LANGUAGE_NONE][0]['value'])) {
+			$match_probability = $site_brand->field_brand_match_probability[LANGUAGE_NONE][0]['value'];
+		}
+	}
+
 	// Step 4. Match "match_all"
 	// Will match any visitor or member
 	if (in_array("match_all", $match_methods)) {
-		return true;
+		return (rand(1,100) <= $match_probability);
 	}
 
 	// Step 5. Match "anonymous_user"
@@ -134,22 +176,78 @@ function tm_branding_check_brand($site_brand, $account) {
 		}
 	}
 
-	// Step 6. Match "geoip"
+	// Step 7. Match brand partner cookie
+	if (in_array("match_partner_cookie", $match_methods)) {
+
+		if (isset($_COOKIE['Drupal_visitor_site_branding_partner'])) {
+
+			// Get partner codes
+			if (isset($site_brand->field_match_partner_cookie[LANGUAGE_NONE][0]['value'])) {
+
+				// get list of partners to match
+				// ie: mybrand,myotherbrand
+				$parts = explode(",", $site_brand->field_match_partner_cookie[LANGUAGE_NONE][0]['value']);
+				$match_partners = array();
+				foreach($parts as $part) {
+					$match_partners[] = trim(strtolower($part));
+				}
+
+				// check if partner code matches
+				if (in_array(strtolower($_COOKIE['Drupal_visitor_site_branding_partner']), $match_partners)) {
+					return (rand(1,100) <= $match_probability);
+				}
+			}
+		}
+	}
+
+	// Step 7. Match referrer domain
+	if (in_array("match_referer_domain", $match_methods)) {
+
+		$referer_domain = "";
+
+		// check cookie value
+		if (isset($_COOKIE['Drupal_visitor_site_branding_referer_domain'])) {
+			$referer_domain = $_COOKIE['Drupal_visitor_site_branding_referer_domain'];
+		}
+
+		// check HTTP_REFERER in case cookie has been set in this page load
+		if(isset($_SERVER['HTTP_REFERER'])) {
+			try {
+				$referer_domain = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
+				$referer_domain = trim(str_replace("www.", "", $referer_domain)); // remove www
+				
+			} catch (Exception $e) {
+				// continue
+			}
+		}
+
+		if ($referer_domain != "") {
+
+			// Get partner codes
+			if (isset($site_brand->field_match_referer_domain[LANGUAGE_NONE][0]['value'])) {
+
+				// get list of domains to match
+				// ie: massiveplatform.com
+				$parts = explode(",", $site_brand->field_match_referer_domain[LANGUAGE_NONE][0]['value']);
+				$match_domains = array();
+				foreach($parts as $part) {
+					$match_domains[] = trim(strtolower($part));
+				}
+
+				// check if referrer domain matches
+				if (in_array(strtolower($referer_domain), $match_domains)) {
+					return (rand(1,100) <= $match_probability);
+				}
+			}
+		}
+	}
+
+	// Step 8. Match "geoip"
 	if (in_array("geoip", $match_methods)) {
 
 		if (module_exists("tm_geoip")) {
 
-			$match_ip = null;
-
-			// first, use remote address
-			if (isset($_SERVER['REMOTE_ADDR'])) {
-				$match_ip = $_SERVER['REMOTE_ADDR'];
-			}
-
-			// next, use forwarded for
-			if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-				$match_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-			}
+			$match_ip = tm_geoip_get_real_visitor_ip();
 
 			// if no ip, lookup from user's last ip
 			if ($match_ip == null) {
@@ -194,7 +292,7 @@ function tm_branding_check_brand($site_brand, $account) {
 					if (sizeof($site_brand->field_brand_match_continent[LANGUAGE_NONE]) > 0) {
 						foreach ($site_brand->field_brand_match_continent[LANGUAGE_NONE] as $item) {
 							if ($item['value'] == $geoip_continent) {
-								//return true;
+								return (rand(1,100) <= $match_probability);
 							}
 						}
 					}
@@ -208,7 +306,7 @@ function tm_branding_check_brand($site_brand, $account) {
 					if (sizeof($site_brand->field_brand_match_country[LANGUAGE_NONE]) > 0) {
 						foreach ($site_brand->field_brand_match_country[LANGUAGE_NONE] as $item) {
 							if ($item['iso2'] == $geoip_country) {
-								return true;
+								return (rand(1,100) <= $match_probability);
 							}
 						}
 					}
@@ -218,7 +316,7 @@ function tm_branding_check_brand($site_brand, $account) {
 	}
 	
 
-	// Step 7. Check "user_country"
+	// Step 9. Check "user_country"
 	// Match against the user's profile setting
 	if (in_array("user_country", $match_methods)) {
 		if ($account->uid > 0) {
@@ -236,7 +334,7 @@ function tm_branding_check_brand($site_brand, $account) {
 					if (sizeof($site_brand->field_brand_match_country[LANGUAGE_NONE]) > 0) {
 						foreach ($site_brand->field_brand_match_country[LANGUAGE_NONE] as $item) {
 							if ($item['iso2'] == $users_country) {
-								return true;
+								return (rand(1,100) <= $match_probability);
 							}
 						}
 					}
@@ -245,7 +343,7 @@ function tm_branding_check_brand($site_brand, $account) {
 		}
 	}
 
-	// Step 8. Match "user_home_chapter"
+	// Step 10. Match "user_home_chapter"
 	if (in_array("user_home_chapter", $match_methods)) {
 		if ($account->uid > 0) {
 
@@ -260,7 +358,7 @@ function tm_branding_check_brand($site_brand, $account) {
 				if (isset($site_brand->field_brand_match_user_chapter[LANGUAGE_NONE])) {
 					foreach ($site_brand->field_brand_match_user_chapter[LANGUAGE_NONE] as $item) {
 						if ($item['target_id'] == $users_home_chapter) {
-							return true;
+							return (rand(1,100) <= $match_probability);
 						} 
 					}
 				}
@@ -269,7 +367,7 @@ function tm_branding_check_brand($site_brand, $account) {
 	}
 
 
-	// Step 9. Match "user_in_chapter"
+	// Step 11. Match "user_in_chapter"
 	if (in_array("user_in_chapter", $match_methods)) {
 		if ($account->uid > 0) {
 
@@ -281,7 +379,7 @@ function tm_branding_check_brand($site_brand, $account) {
 				if (isset($site_brand->field_brand_match_user_chapter[LANGUAGE_NONE])) {
 					foreach ($site_brand->field_brand_match_user_chapter[LANGUAGE_NONE] as $item) {
 						if (in_array($item['target_id'], $users_chapters)) {
-							return true;
+							return (rand(1,100) <= $match_probability);
 						} 
 					}
 				}
@@ -289,7 +387,7 @@ function tm_branding_check_brand($site_brand, $account) {
 		}
 	}
 
-	// Step 10. Match "user_in_segment"
+	// Step 12. Match "user_in_segment"
 	if (in_array("user_in_segment", $match_methods)) {
 		if ($account->uid > 0) {
 
@@ -301,7 +399,7 @@ function tm_branding_check_brand($site_brand, $account) {
 				if (isset($site_brand->field_brand_match_user_industry[LANGUAGE_NONE])) {
 					foreach ($site_brand->field_brand_match_user_industry[LANGUAGE_NONE] as $item) {
 						if ($item['tid'] == $user_tid) {
-							return true;
+							return (rand(1,100) <= $match_probability);
 						} 
 					}
 				}
@@ -332,6 +430,14 @@ function tm_branding_get_element($element_name, $account = null) {
 	// Return base branding if on branding admin page
 	if (current_path() == "admin/branding") {
 		return tm_branding_get_base_element($element_name);
+	}
+
+	// Return base branding if editing a brand
+	// ie: /node/13772/edit?destination=admin/branding
+	if (isset($_GET["destination"])) {
+		if ($_GET["destination"] == "admin/branding") {
+			return tm_branding_get_base_element($element_name);
+		}
 	}
 
 	// Get user
@@ -631,6 +737,7 @@ function tm_branding_replace_vars($element) {
 	$element = str_replace("__FRONTPAGE_URL__", $conf["tm_branding_frontpage_url"], $element);
 	$element = str_replace("__ASSETS_BASE_PATH__", $conf["tm_branding_assets_base_path"], $element);
 	$element = str_replace("__CURRENT_YEAR__", date("Y"), $element);
+	$element = str_replace("__FOOTER_LOGO_URL__", tm_branding_get_conf("tm_branding_footer_logo"), $element);
 	
 	return $element;
 }

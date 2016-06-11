@@ -1937,21 +1937,23 @@ function tm_fields_google_analytics_report_link($path) {
   for ($i = 0; $i < sizeof($parts); $i++) {
 
       // construct path level
-      // ie: Level 1 = /events
-      // ie: Level 2 = /events/2016
-      // ie: Level 3 = /events/2016/08/ etc
-      $path_level = implode("%2F", array_slice($parts, 0, $i+1));
+      // ie: Level 1 = /events/
+      // ie: Level 2 = /2016/
+      // ie: Level 3 = /08/ etc
+      $path_level = $parts[$i]; //
 
       // construct path_prefix
       // ie: analytics.pagePathLevel for all levels except last
       // ie: analytics.pagePath for last level
       if ($i == (sizeof($parts)-1)) {
         $path_prefix = "analytics.pagePath";
+        $path_levels[] = $path_prefix . "%3A%2F" . implode("%2F", $parts);
       } else {
         $path_prefix = "analytics.pagePathLevel" . ($i+1);
+        $path_levels[] = $path_prefix . "%3A%2F" . $path_level;
       }
 
-      $path_levels[] = $path_prefix . "%3A%2F" . $path_level;
+      
   }
 
   $path_levels_string = implode("%2F%2C", $path_levels);

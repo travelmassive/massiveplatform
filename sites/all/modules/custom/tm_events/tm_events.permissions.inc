@@ -291,6 +291,11 @@ function _tm_events_check_create_member_event($check_user) {
     return false;
   }
 
+  // allow moderators and administrators to create member event
+  if (in_array("moderator", $check_user->roles) || in_array("administrator", $check_user->roles) ) { 
+    return true;
+  }
+
   // check tm_event_chapter_event_enabled is enabled
   if ($conf["tm_event_member_events_enabled"] != true) {
     return false;
@@ -304,11 +309,6 @@ function _tm_events_check_create_member_event($check_user) {
   // must be approved user
   if (!in_array("approved user", $check_user->roles)) {
     return false;
-  }
-
-  // allow moderators and administrators to create member event
-  if (in_array("moderator", $check_user->roles) || in_array("administrator", $check_user->roles) ) { 
-    return true;
   }
 
   // allow chapter leaders to create member events

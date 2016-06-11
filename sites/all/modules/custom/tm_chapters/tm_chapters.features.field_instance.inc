@@ -363,6 +363,58 @@ function tm_chapters_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-chapter-field_chapter_leaders_needed'.
+  $field_instances['node-chapter-field_chapter_leaders_needed'] = array(
+    'bundle' => 'chapter',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 20,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_chapter_leaders_needed',
+    'label' => 'Display chapter leaders needed message',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 6,
+    ),
+  );
+
   // Exported field_instance: 'node-chapter-field_chapter_payment_commission'.
   $field_instances['node-chapter-field_chapter_payment_commission'] = array(
     'bundle' => 'chapter',
@@ -1371,6 +1423,7 @@ The message will be included in the notification email sent to the member when t
   t('Country');
   t('Cover Video');
   t('Description');
+  t('Display chapter leaders needed message');
   t('Enable Event Payments');
   t('Facebook');
   t('Fix the default commission percentage for events created by this chapter.

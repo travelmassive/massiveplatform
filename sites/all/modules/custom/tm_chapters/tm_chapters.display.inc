@@ -81,3 +81,84 @@ function _tm_chapters_get_default_image($default_image_uri, $nid) {
   // no random image, return what we got
   return $default_image_uri;
 }
+
+/**
+ * Implement hook node_view
+ */
+function tm_chapters_node_view($node, $view_mode) {
+
+  if (($node->type == "chapter") && ($view_mode == "full")) {
+    tm_chapters_show_help_needed_message($node);
+  }
+}
+
+/**
+ * Display chapter leader needed message
+ */
+function tm_chapters_show_help_needed_message($chapter) {
+
+  global $conf; 
+
+  $display_message = false;
+
+  // Case 1. No chapter leaders
+  if (!isset($chapter->field_chapter_leaders[LANGUAGE_NONE])) {
+    $display_message = true;
+  }
+
+  // Case 2. Chapter leaders option is set
+  if (!$display_message) {
+    if (isset($chapter->field_chapter_leaders_needed[LANGUAGE_NONE])) {
+      $display_message = ($chapter->field_chapter_leaders_needed[LANGUAGE_NONE][0]['value']);
+    }
+  }
+
+  // Case 3. No events in mimimum timeframe
+  // Note: this excludes events that are published to the chapter
+  if (!$display_message) {
+
+    // Check chapter age is older than minimum days
+    $max_days_since_event = $conf["tm_chapters_leaders_needed_max_days_since_event"];
+    $max_date = new DateTime('NOW -' . $max_days_since_event . " DAYS", new DateTimeZone('UTC'));
+    $chapter_created = new DateTime('NOW', new DateTimeZone('UTC'));
+    $chapter_created->setTimeStamp($chapter->created);
+    if ($max_date > $chapter_created) {
+
+      // Check that there are no upcoming events
+      $next_event = tm_events_get_next_event($chapter->nid);
+      if ($next_event == null) {
+
+        // If no past events, show message
+        $last_event = tm_events_get_last_event($chapter->nid);
+        if ($last_event == null) {
+          $display_message = true;
+        } else {
+          // If there are past events, show message if they are older than minimum days
+          $current_date = new DateTime('now', new DateTimeZone('UTC')); // current date
+          $event_timezone = _tm_get_event_timezone($last_event); // get event timezone
+          $event_date = $last_event->field_event_date[LANGUAGE_NONE]; // get last event date
+          $event_datetime = new DateTime($event_date[0]['value'], new DateTimeZone($event_timezone));
+          $time_since_event = ($current_date->format('U') - $event_datetime->format('U'));
+          if (($time_since_event / (60 * 60 * 24)) > $max_days_since_event) {
+            $display_message = true;
+          }
+        }
+
+      } // end if check no upcoming events
+    } // end if check chapter is older than minimum days
+  } // end case 3
+
+  // Display message
+  if ($display_message) {
+    // Check when last event was
+    drupal_add_js(array('tm_chapters' => array('leaders_needed_message' => $conf["tm_chapters_leaders_needed_message"])), array('type' => 'setting'));
+
+    // Add javascript to form
+    drupal_add_js(drupal_get_path('module', 'tm_chapters') . '/js/tm_chapters_leaders_needed.js');
+
+    drupal_get_messages("help-tip");
+    drupal_set_message($conf["tm_chapters_leaders_needed_message"], "help-tip");
+
+  }
+ 
+}

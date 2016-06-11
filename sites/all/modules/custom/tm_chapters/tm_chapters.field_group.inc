@@ -199,6 +199,7 @@ function tm_chapters_field_group_info() {
     'weight' => '4',
     'children' => array(
       0 => 'field_community_managers',
+      1 => 'field_chapter_leaders_needed',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

@@ -36,35 +36,36 @@ function tm_chapters_contact_form(){
  */
 function tm_chapters_contact_form_submit($form, &$form_state) {
 
-  global $user;
-  global $conf;
-  $nid = _orig_nid();
+    global $user;
+    global $conf;
+    $nid = _orig_nid();
 
-  if ($nid == 0) {
-    print drupal_not_found();
-    return;
-  }
-
-  $chapter = node_load($nid);
-  $account = user_load($user->uid);
-
-  if ($chapter) {
-
-    // get chapter leaders emails
-    $chapter_leader_emails = array();
-    foreach($chapter->field_chapter_leaders[$chapter->language] as $leader){
-      $chapterleader = user_load($leader['target_id']);
-      $chapter_leader_emails[] = $chapterleader->mail;
+    if ($nid == 0) {
+        print drupal_not_found();
+        return;
     }
-    $chapter_leader_emails = array_unique($chapter_leader_emails);
 
-    // send to all chapter leaders in one email
-    tm_chapters_send_email($chapter_leader_emails, $form_state['values']['subject'], $form_state['values']['body'], $account, $chapter);
+    $chapter = node_load($nid);
+    $account = user_load($user->uid);
 
+    if ($chapter and isset($chapter->field_chapter_leaders[$chapter->language])) {
+
+        // get chapter leaders emails
+        $chapter_leader_emails = array();
+        foreach($chapter->field_chapter_leaders[$chapter->language] as $leader){
+            $chapterleader = user_load($leader['target_id']);
+            $chapter_leader_emails[] = $chapterleader->mail;
+        }
+        $chapter_leader_emails = array_unique($chapter_leader_emails);
+
+        // send to all chapter leaders in one email
+        tm_chapters_send_email($chapter_leader_emails, $form_state['values']['subject'], $form_state['values']['body'], $account, $chapter);
+    }
+    
     drupal_get_messages("help-tip");
     drupal_set_message(t('Your message has been sent.'));
     drupal_goto('node/'.$chapter->nid);
-  }
+
 }
 
 /**

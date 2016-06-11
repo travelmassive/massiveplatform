@@ -811,6 +811,8 @@ $conf["tm_following_enable_message_organization"] = true;
 /* CHAPTER SETTINGS */
 $conf["tm_chapters_allow_edit_chapter_leaders"] = false; // Allow chapter leaders to edit leaders for their own chapter (default false)
 $conf["tm_chapters_groups_enabled"] = true; // Allow group chapters. Exposes the /groups url.
+$conf["tm_chapters_leaders_needed_max_days_since_event"] = 180; // show the help needed message if no events since this many days
+$conf["tm_chapters_leaders_needed_message"] = "We're looking for Chapter Leaders to help organize regular events for this chapter. Is that you? <a href='/contact'>Apply to lead this chapter</a>."; // message to display if chapter leader needed
 
 /* THEME SETTINGS */
 $conf["tm_theme_meta_color"] = "#007DB7"; // Set the theme color for mobile Android, iOS 

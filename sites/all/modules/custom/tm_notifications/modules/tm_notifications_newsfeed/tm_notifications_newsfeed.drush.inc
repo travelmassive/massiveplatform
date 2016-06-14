@@ -137,10 +137,10 @@ function tm_notifications_newsfeed_schedule_deliveries() {
 
 			// Don't send on weekends
 			if ($scheduled_day == "Saturday") {
-				$scheduled_day == "Friday";
+				$scheduled_day = "Friday";
 			}
 			if ($scheduled_day == "Sunday") {
-				$scheduled_day == "Monday";
+				$scheduled_day = "Monday";
 			}
 
 			// schedule time on 

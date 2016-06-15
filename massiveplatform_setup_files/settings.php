@@ -1100,6 +1100,7 @@ $conf["tm_branding_include_js"] = "";
 // status updates
 $conf["tm_status_updates_placeholders"] = array("Post a news update...", "Where is your next destination?", "Share an achievement with the community...");
 $conf["tm_status_updates_silence_uids"] = array(); // silence any spamming members
+$conf["tm_recommended_members_silence_uids"] = array(); // exclude members from recommended members lists
 
 $conf['install_profile'] = 'tm';
 $conf['suppress_itok_output'] = true; // supress ?itok so email images can be loaded by gmail

@@ -57,7 +57,7 @@ function tm_status_updates_people_suggestions_global($limit = 5) {
 
 	// get user ids and remove users silenced from recommended users
 	$user_ids = array_map(function($o) { return $o->uid; }, $users);
-	$user_ids = array_diff($user_ids, $conf["tm_recommended_members_silence_uids"]);
+	$user_ids = array_diff($user_ids, $conf["tm_status_updates_hide_recommended_uids"]);
 
 	if ($limit > count($user_ids)) {
 		// array_rand() throws error if $limit > length of array
@@ -95,9 +95,9 @@ function tm_status_updates_people_suggestions($uid, $limit = 5) {
 	$user_ids_job_role = array_map(function($o) { return $o->uid; }, $users_job_role);
 	$user_ids_industry = array_map(function($o) { return $o->uid; }, $users_industry);
 
-	$user_ids_location = array_diff($user_ids_location, $conf["tm_recommended_members_silence_uids"]);
-	$user_ids_job_role = array_diff($user_ids_job_role, $conf["tm_recommended_members_silence_uids"]);
-	$user_ids_industry = array_diff($user_ids_industry, $conf["tm_recommended_members_silence_uids"]);
+	$user_ids_location = array_diff($user_ids_location, $conf["tm_status_updates_hide_recommended_uids"]);
+	$user_ids_job_role = array_diff($user_ids_job_role, $conf["tm_status_updates_hide_recommended_uids"]);
+	$user_ids_industry = array_diff($user_ids_industry, $conf["tm_status_updates_hide_recommended_uids"]);
 
 	// random keys from each
 	// TODO: spread this around if the limit changes from 5

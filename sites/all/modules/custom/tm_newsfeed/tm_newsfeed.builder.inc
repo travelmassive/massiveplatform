@@ -49,8 +49,20 @@ function tm_newsfeed_select_tip($user_id, $start_date, $end_date) {
 
 // people suggestions
 
+function tm_people_suggest_global() {
+	// get a pool of results to randomly select from
+	$pool = 25;
+
+	$results = db_query_range(TmSqlLibrary::$tm_sql_people_suggest_global, 0, $pool);
+
+	return $results->fetchAll();
+}
+
 function tm_people_suggest_chapters_and_locations($user_id) {
-	$results = db_query_range(TmSqlLibrary::$tm_sql_people_suggest_chapters_and_locations, 0, 10,
+	// get a pool of results to randomly select from
+	$pool = 15;
+
+	$results = db_query_range(TmSqlLibrary::$tm_sql_people_suggest_chapters_and_locations, 0, $pool,
 		array(":user_id" => $user_id)
 		);
 
@@ -58,7 +70,10 @@ function tm_people_suggest_chapters_and_locations($user_id) {
 }
 
 function tm_people_suggest_job_roles($user_id) {
-	$results = db_query_range(TmSqlLibrary::$tm_sql_people_suggest_job_roles, 0, 10,
+	// get a pool of results to randomly select from
+	$pool = 15;
+
+	$results = db_query_range(TmSqlLibrary::$tm_sql_people_suggest_job_roles, 0, $pool,
 		array(":user_id" => $user_id)
 		);
 
@@ -66,7 +81,10 @@ function tm_people_suggest_job_roles($user_id) {
 }
 
 function tm_people_suggest_industry_segments($user_id) {
-	$results = db_query_range(TmSqlLibrary::$tm_sql_people_suggest_industry_segments, 0, 10,
+	// get a pool of results to randomly select from
+	$pool = 15;
+
+	$results = db_query_range(TmSqlLibrary::$tm_sql_people_suggest_industry_segments, 0, $pool,
 		array(":user_id" => $user_id)
 		);
 
@@ -438,6 +456,42 @@ SQL;
 //
 // Suggestions of members to follow
 //
+
+// global suggestions for users not logging in
+public static $tm_sql_people_suggest_global = <<<SQL
+
+select
+		users.uid,
+		IFNULL(user_follower_count.count, 0) as 'user_follower_count',
+		IFNULL(user_chapter_count.count, 0) as 'user_chapter_count'
+
+from users
+
+left join flag_counts user_follower_count
+on  user_follower_count.fid=1
+and user_follower_count.entity_id = users.uid
+and user_follower_count.entity_type='user'
+
+left join flag_counts user_chapter_count
+on  user_chapter_count.fid=3
+and user_chapter_count.entity_id = users.uid
+and user_chapter_count.entity_type='user'
+
+left join users_roles
+on  users.uid = users_roles.uid
+and users_roles.rid = 6  -- approved_member
+
+where
+	-- exclude members that arent approved
+	users_roles.uid is not null
+
+order by
+	-- matching hierarchy
+	user_follower_count desc,
+	users.created desc
+
+SQL;
+
 
 // suggestions based on similar chapters and locations
 public static $tm_sql_people_suggest_chapters_and_locations = <<<SQL

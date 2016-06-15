@@ -6,6 +6,7 @@
 
 // tm_status_updates.module - status updates
 
+include_once 'tm_status_updates.builder.inc';
 include_once 'tm_status_updates.features.inc';
 include_once 'tm_status_updates.display.inc';
 include_once 'tm_status_updates.handlers.inc';

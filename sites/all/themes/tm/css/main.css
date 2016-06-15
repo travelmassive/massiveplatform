@@ -2890,7 +2890,7 @@ Icons
 }
 
 /* line 25, ../sass/_type.scss */
-.icon, .icon-medal, .contained-block .detail-item.tm-ds-tm-sponsor:before, .icon-move, .draggable a.tabledrag-handle:before, .icon-briefcase, .contained-block .detail-item.field-segment:before, .icon-bubble, .bttn.communication:before, .bttn-group a.communication:before, .page-views .tabs-primary a.communication:before, .page-search .tabs-primary a.communication:before, .pager li a.communication:before, .pager .communication.pager-current:before, .views-exposed-form .communication.form-type-select:before, .communication.twitter-login:before,
+.icon, .icon-medal, .contained-block .detail-item.tm-ds-tm-sponsor:before, .icon-move, .draggable a.tabledrag-handle:before, .icon-briefcase, .contained-block .detail-item.field-segment:before, .icon-bubble, #prime-nav .newsfeed-wrapper .toggle:before, .bttn.communication:before, .bttn-group a.communication:before, .page-views .tabs-primary a.communication:before, .page-search .tabs-primary a.communication:before, .pager li a.communication:before, .pager .communication.pager-current:before, .views-exposed-form .communication.form-type-select:before, .communication.twitter-login:before,
 .form-download.communication:before,
 .form-submit.communication:before, .contained-block .detail-item.field-qa:before, .contained-block .detail-item.qa:before, .icon-s-new-window, .bttn.external:before, .bttn-group a.external:before, .page-views .tabs-primary a.external:before, .page-search .tabs-primary a.external:before, .pager li a.external:before, .pager .external.pager-current:before, .views-exposed-form .external.form-type-select:before, .external.twitter-login:before,
 .form-download.external:before,
@@ -2932,7 +2932,7 @@ Icons
 }
 
 /* line 50, ../sass/_type.scss */
-.icon-bubble, .bttn.communication:before, .bttn-group a.communication:before, .page-views .tabs-primary a.communication:before, .page-search .tabs-primary a.communication:before, .pager li a.communication:before, .pager .communication.pager-current:before, .views-exposed-form .communication.form-type-select:before, .communication.twitter-login:before,
+.icon-bubble, #prime-nav .newsfeed-wrapper .toggle:before, .bttn.communication:before, .bttn-group a.communication:before, .page-views .tabs-primary a.communication:before, .page-search .tabs-primary a.communication:before, .pager li a.communication:before, .pager .communication.pager-current:before, .views-exposed-form .communication.form-type-select:before, .communication.twitter-login:before,
 .form-download.communication:before,
 .form-submit.communication:before, .contained-block .detail-item.field-qa:before, .contained-block .detail-item.qa:before {
   content: "\e64c";
@@ -3804,28 +3804,32 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   font-size: 1rem;
   line-height: 2rem;
 }
-/* line 197, ../sass/_base.scss */
+/* line 194, ../sass/_base.scss */
+#prime-nav .newsfeed-wrapper .toggle:before {
+  color: #007DB7;
+}
+/* line 203, ../sass/_base.scss */
 #prime-nav .search-wrapper .inner {
   right: -3.5rem;
 }
-/* line 199, ../sass/_base.scss */
+/* line 205, ../sass/_base.scss */
 #prime-nav .search-wrapper .inner:before {
   right: 4rem;
 }
-/* line 208, ../sass/_base.scss */
+/* line 214, ../sass/_base.scss */
 #prime-nav .search-wrapper .search-form #edit-submit,
 #prime-nav .search-wrapper .search-form #edit-submit--2 {
   width: 100%;
   margin: 0.5rem 0 0 0;
 }
-/* line 214, ../sass/_base.scss */
+/* line 220, ../sass/_base.scss */
 #prime-nav .search-wrapper .helper {
   font-size: 0.85rem;
   line-height: 1.25rem;
   color: #636e79;
   margin: 0;
 }
-/* line 223, ../sass/_base.scss */
+/* line 229, ../sass/_base.scss */
 #prime-nav .account-wrapper .toggle .avatar {
   display: block;
   padding: 0.25rem;
@@ -3834,17 +3838,17 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   border-radius: 0.125rem;
   background: #FFF;
 }
-/* line 232, ../sass/_base.scss */
+/* line 238, ../sass/_base.scss */
 #prime-nav .account-wrapper .toggle img {
   display: block;
   border-radius: 0.125rem;
   max-width: 100%;
 }
-/* line 241, ../sass/_base.scss */
+/* line 247, ../sass/_base.scss */
 #prime-nav .account-wrapper .inner {
   right: -0.5rem;
 }
-/* line 251, ../sass/_base.scss */
+/* line 257, ../sass/_base.scss */
 .logged-in #prime-nav .account-wrapper .toggle:before {
   display: none;
 }
@@ -3857,15 +3861,15 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
     width: 83.33333%;
     float: left;
   }
-  /* line 259, ../sass/_base.scss */
+  /* line 265, ../sass/_base.scss */
   #prime-nav > ul {
     padding: 0.5rem 0;
   }
-  /* line 265, ../sass/_base.scss */
+  /* line 271, ../sass/_base.scss */
   #prime-nav .browse-wrapper .toggle:before {
     display: none;
   }
-  /* line 268, ../sass/_base.scss */
+  /* line 274, ../sass/_base.scss */
   #prime-nav .browse-wrapper .inner {
     position: static;
     top: auto;
@@ -3876,22 +3880,30 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
     visibility: visible;
     box-shadow: none;
   }
-  /* line 278, ../sass/_base.scss */
+  /* line 284, ../sass/_base.scss */
   #prime-nav .browse-wrapper .inner:before {
     display: none;
   }
-  /* line 282, ../sass/_base.scss */
+  /* line 288, ../sass/_base.scss */
+  #prime-nav .browse-wrapper ul {
+    margin-right: 1.5rem;
+  }
+  /* line 291, ../sass/_base.scss */
   #prime-nav .browse-wrapper li {
     float: left;
     margin-left: 1.5rem;
   }
-  /* line 287, ../sass/_base.scss */
+  /* line 296, ../sass/_base.scss */
+  #prime-nav .newsfeed-wrapper {
+    margin-left: 0.5rem;
+  }
+  /* line 299, ../sass/_base.scss */
   #prime-nav .search-wrapper {
-    margin-left: 2rem;
+    margin-left: 0.5rem;
   }
 }
 
-/* line 297, ../sass/_base.scss */
+/* line 309, ../sass/_base.scss */
 #content {
   position: relative;
   padding-left: 1rem;
@@ -3899,7 +3911,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   width: 100%;
   float: left;
 }
-/* line 301, ../sass/_base.scss */
+/* line 313, ../sass/_base.scss */
 #content .trilithon {
   width: auto;
   margin-left: -1rem;
@@ -3918,7 +3930,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 #content .trilithon:after {
   clear: both;
 }
-/* line 304, ../sass/_base.scss */
+/* line 316, ../sass/_base.scss */
 #content .trilithon .banner,
 #content .trilithon .column {
   position: relative;
@@ -3928,7 +3940,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   float: left;
 }
 @media only screen and (min-width: 65.063rem) {
-  /* line 308, ../sass/_base.scss */
+  /* line 320, ../sass/_base.scss */
   #content .trilithon .column {
     position: relative;
     padding-left: 1rem;
@@ -3937,7 +3949,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
     float: left;
   }
 }
-/* line 316, ../sass/_base.scss */
+/* line 328, ../sass/_base.scss */
 #content .grid .view-content ul {
   width: auto;
   margin-left: -1rem;
@@ -3957,7 +3969,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 #content .grid .view-content ul:after {
   clear: both;
 }
-/* line 320, ../sass/_base.scss */
+/* line 332, ../sass/_base.scss */
 #content .grid .view-content li {
   position: relative;
   padding-left: 1rem;
@@ -3967,7 +3979,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   list-style: none;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 325, ../sass/_base.scss */
+  /* line 337, ../sass/_base.scss */
   #content .grid .view-content li {
     position: relative;
     padding-left: 1rem;
@@ -3975,13 +3987,13 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
     width: 50%;
     float: left;
   }
-  /* line 327, ../sass/_base.scss */
+  /* line 339, ../sass/_base.scss */
   #content .grid .view-content li:nth-child(2n+1) {
     clear: left;
   }
 }
 @media only screen and (min-width: 69.063rem) {
-  /* line 333, ../sass/_base.scss */
+  /* line 345, ../sass/_base.scss */
   #content .grid .view-content li {
     position: relative;
     padding-left: 1rem;
@@ -3989,18 +4001,18 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
     width: 33.33333%;
     float: left;
   }
-  /* line 335, ../sass/_base.scss */
+  /* line 347, ../sass/_base.scss */
   #content .grid .view-content li:nth-child(2n+1) {
     clear: none;
   }
-  /* line 338, ../sass/_base.scss */
+  /* line 350, ../sass/_base.scss */
   #content .grid .view-content li:nth-child(3n+1) {
     clear: left;
   }
 }
 
 @media only screen and (min-width: 65.063rem) {
-  /* line 355, ../sass/_base.scss */
+  /* line 367, ../sass/_base.scss */
   .page-node-add #content,
   .page-node-communicate #content,
   .page-events-message #content,
@@ -4019,7 +4031,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   }
 }
 @media only screen and (min-width: 69.063rem) {
-  /* line 355, ../sass/_base.scss */
+  /* line 367, ../sass/_base.scss */
   .page-node-add #content,
   .page-node-communicate #content,
   .page-events-message #content,
@@ -4038,19 +4050,19 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   }
 }
 
-/* line 364, ../sass/_base.scss */
+/* line 376, ../sass/_base.scss */
 #footer {
   position: relative;
   background: #121212;
   padding: 2rem 0 1rem 0;
   color: #efefef;
 }
-/* line 369, ../sass/_base.scss */
+/* line 381, ../sass/_base.scss */
 #footer a {
   color: #ffffff;
 }
 
-/* line 374, ../sass/_base.scss */
+/* line 386, ../sass/_base.scss */
 #foot-nav {
   position: relative;
   padding-left: 1rem;
@@ -4058,7 +4070,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   width: 100%;
   float: left;
 }
-/* line 376, ../sass/_base.scss */
+/* line 388, ../sass/_base.scss */
 #foot-nav .inner {
   width: auto;
   margin-left: -1rem;
@@ -4077,11 +4089,11 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 #foot-nav .inner:after {
   clear: both;
 }
-/* line 379, ../sass/_base.scss */
+/* line 391, ../sass/_base.scss */
 #foot-nav h2 {
   text-transform: uppercase;
 }
-/* line 383, ../sass/_base.scss */
+/* line 395, ../sass/_base.scss */
 #foot-nav section {
   position: relative;
   padding-left: 1rem;
@@ -4089,7 +4101,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   width: 50%;
   float: left;
 }
-/* line 386, ../sass/_base.scss */
+/* line 398, ../sass/_base.scss */
 #foot-nav ul {
   list-style: none;
   padding: 0;
@@ -4097,18 +4109,18 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
-/* line 392, ../sass/_base.scss */
+/* line 404, ../sass/_base.scss */
 #foot-nav ul li {
   overflow: hidden;
   margin-bottom: 0.25rem;
 }
-/* line 397, ../sass/_base.scss */
+/* line 409, ../sass/_base.scss */
 #foot-nav a {
   float: left;
   position: relative;
   padding-left: 1.375rem;
 }
-/* line 401, ../sass/_base.scss */
+/* line 413, ../sass/_base.scss */
 #foot-nav a:before {
   position: absolute;
   top: 0;
@@ -4117,7 +4129,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   color: #79828c;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 374, ../sass/_base.scss */
+  /* line 386, ../sass/_base.scss */
   #foot-nav {
     position: relative;
     padding-left: 1rem;
@@ -4127,7 +4139,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   }
 }
 @media only screen and (min-width: 65.063rem) {
-  /* line 422, ../sass/_base.scss */
+  /* line 434, ../sass/_base.scss */
   #foot-nav section {
     position: relative;
     padding-left: 1rem;
@@ -4137,7 +4149,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   }
 }
 
-/* line 429, ../sass/_base.scss */
+/* line 441, ../sass/_base.scss */
 #foot-credits {
   position: relative;
   padding-left: 1rem;
@@ -4147,39 +4159,39 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   border-top: 1px solid #bcc0c5;
   padding-top: 2rem;
 }
-/* line 433, ../sass/_base.scss */
+/* line 445, ../sass/_base.scss */
 #foot-credits p {
   overflow: hidden;
   margin: 0 0 0.75rem 0;
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
-/* line 439, ../sass/_base.scss */
+/* line 451, ../sass/_base.scss */
 #foot-credits .logo {
   float: left;
 }
-/* line 441, ../sass/_base.scss */
+/* line 453, ../sass/_base.scss */
 #foot-credits .logo img {
   opacity: 0.8;
   height: 2rem;
 }
-/* line 445, ../sass/_base.scss */
+/* line 457, ../sass/_base.scss */
 #foot-credits .logo a {
   padding: 0.25rem 0;
   float: left;
   margin: 0 1rem 0.5rem 0;
 }
-/* line 454, ../sass/_base.scss */
+/* line 466, ../sass/_base.scss */
 #foot-credits small {
   float: left;
   font-size: inherit;
 }
-/* line 458, ../sass/_base.scss */
+/* line 470, ../sass/_base.scss */
 #foot-credits time {
   display: block;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 429, ../sass/_base.scss */
+  /* line 441, ../sass/_base.scss */
   #foot-credits {
     position: relative;
     padding-left: 1rem;
@@ -4191,66 +4203,66 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   }
 }
 @media only screen and (min-width: 65.063rem) {
-  /* line 467, ../sass/_base.scss */
+  /* line 479, ../sass/_base.scss */
   #foot-credits .logo {
     float: none;
     display: block;
     overflow: hidden;
   }
-  /* line 471, ../sass/_base.scss */
+  /* line 483, ../sass/_base.scss */
   #foot-credits .logo a {
     clear: both;
   }
-  /* line 475, ../sass/_base.scss */
+  /* line 487, ../sass/_base.scss */
   #foot-credits small {
     float: none;
     display: block;
   }
 }
 
-/* line 483, ../sass/_base.scss */
+/* line 495, ../sass/_base.scss */
 .media-obj,
 .media-obj > a {
   display: table;
   width: 100%;
 }
 
-/* line 490, ../sass/_base.scss */
+/* line 502, ../sass/_base.scss */
 .media-obj .media-fig,
 .media-obj .media-bd {
   display: table-cell;
   vertical-align: middle;
 }
-/* line 494, ../sass/_base.scss */
+/* line 506, ../sass/_base.scss */
 .media-top .media-obj .media-fig, .media-top
 .media-obj .media-bd {
   vertical-align: top;
 }
-/* line 497, ../sass/_base.scss */
+/* line 509, ../sass/_base.scss */
 .media-bottom .media-obj .media-fig, .media-bottom
 .media-obj .media-bd {
   vertical-align: bottom;
 }
-/* line 502, ../sass/_base.scss */
+/* line 514, ../sass/_base.scss */
 .media-obj .media-fig {
   padding-right: 1rem;
 }
-/* line 505, ../sass/_base.scss */
+/* line 517, ../sass/_base.scss */
 .media-obj .media-fig img {
   display: block;
   max-width: none;
 }
-/* line 509, ../sass/_base.scss */
+/* line 521, ../sass/_base.scss */
 .media-rev .media-obj .media-fig {
   padding-right: 0;
   padding-left: 1rem;
 }
-/* line 515, ../sass/_base.scss */
+/* line 527, ../sass/_base.scss */
 .media-obj .media-bd {
   width: 100%;
 }
 
-/* line 520, ../sass/_base.scss */
+/* line 532, ../sass/_base.scss */
 #footer-sponsors {
   height: 3rem;
   padding-left: 1rem;
@@ -4258,7 +4270,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   border-top: 1px solid #4d5966;
 }
 
-/* line 527, ../sass/_base.scss */
+/* line 539, ../sass/_base.scss */
 .sponsors-headline {
   font-size: 12pt;
   font-weight: bold;
@@ -4266,21 +4278,21 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 }
 
 /* IE<9 */
-/* line 536, ../sass/_base.scss */
+/* line 548, ../sass/_base.scss */
 .lt-ie9 body {
   background: #e8eaeb;
 }
-/* line 539, ../sass/_base.scss */
+/* line 551, ../sass/_base.scss */
 .lt-ie9 #page, .lt-ie9 #site-canvas {
   display: none;
 }
-/* line 542, ../sass/_base.scss */
+/* line 554, ../sass/_base.scss */
 .lt-ie9 #nocando {
   margin: 200px auto;
   padding: 0 20px;
   width: 440px;
 }
-/* line 546, ../sass/_base.scss */
+/* line 558, ../sass/_base.scss */
 .lt-ie9 #nocando h1 {
   color: inherit;
   line-height: 1.1;
@@ -4288,21 +4300,21 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 }
 
 /* Views load more pager */
-/* line 555, ../sass/_base.scss */
+/* line 567, ../sass/_base.scss */
 .pager-load-more .ajax-progress-throbber {
   position: absolute;
   margin-left: 16px;
   margin-top: 8px;
 }
 
-/* line 561, ../sass/_base.scss */
+/* line 573, ../sass/_base.scss */
 .pager-load-more .ajax-progress-throbber .throbber {
   width: 16px;
   background: transparent url("../images/load-more-ajax-loader.gif") no-repeat 0px 0px;
 }
 
 /* Blur filter for jq_alert */
-/* line 567, ../sass/_base.scss */
+/* line 579, ../sass/_base.scss */
 .tm-blur-filter {
   -webkit-filter: blur(2px);
   -moz-filter: blur(2px);
@@ -4312,7 +4324,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 }
 
 /* Payments form message */
-/* line 576, ../sass/_base.scss */
+/* line 588, ../sass/_base.scss */
 .tm-payments-edit-form-message {
   background-color: #1ABC9C;
   color: #fff;
@@ -4321,7 +4333,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   margin-bottom: 0.5rem;
 }
 
-/* line 584, ../sass/_base.scss */
+/* line 596, ../sass/_base.scss */
 .tm-payments-edit-form-message a {
   color: #fff;
   font-weight: bold;
@@ -4329,7 +4341,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 }
 
 /* Event registration and announcement tips */
-/* line 592, ../sass/_base.scss */
+/* line 604, ../sass/_base.scss */
 .tm-event-send-announcement-tips,
 .tm-event-manage-registrations-tips {
   padding-left: 2rem;
@@ -4342,7 +4354,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 }
 
 /* Event announcement steps */
-/* line 603, ../sass/_base.scss */
+/* line 615, ../sass/_base.scss */
 .tm-event-send-announcement-step {
   color: #51616e;
   font-weight: bold;
@@ -4351,7 +4363,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 }
 
 /* Chapter sticker for external events */
-/* line 611, ../sass/_base.scss */
+/* line 623, ../sass/_base.scss */
 .chapter-sticker-icon {
   width: auto !important;
   white-space: nowrap;
@@ -4360,18 +4372,18 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 }
 
 /* Checkboxes in forms */
-/* line 622, ../sass/_base.scss */
+/* line 634, ../sass/_base.scss */
 .page-node-edit .form-type-checkbox {
   margin-top: 1.0rem !important;
 }
 
-/* line 625, ../sass/_base.scss */
+/* line 637, ../sass/_base.scss */
 .page-node-add .form-type-checkbox {
   margin-top: 1.0rem !important;
 }
 
 /* Alternative dates for online event */
-/* line 630, ../sass/_base.scss */
+/* line 642, ../sass/_base.scss */
 .date-alternative {
   color: #51616e;
   border-left: 2px solid #EEE;
@@ -4380,7 +4392,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 }
 
 /* Payment reports */
-/* line 638, ../sass/_base.scss */
+/* line 650, ../sass/_base.scss */
 .tm-payments-report-table {
   width: 100%;
   margin-top: 0px;
@@ -4389,68 +4401,68 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   background-color: #FFF;
 }
 
-/* line 646, ../sass/_base.scss */
+/* line 658, ../sass/_base.scss */
 .tm-payments-report-table table {
   cellspacing: 4px;
 }
 
-/* line 650, ../sass/_base.scss */
+/* line 662, ../sass/_base.scss */
 .tm-payments-report-table th {
   border-bottom: 1px solid #888;
   background-color: #fff;
 }
 
-/* line 655, ../sass/_base.scss */
+/* line 667, ../sass/_base.scss */
 .tm-payments-report-table tr {
   border-radius: 2px;
   background-color: #fff;
 }
 
-/* line 660, ../sass/_base.scss */
+/* line 672, ../sass/_base.scss */
 .tm-payments-report-table td {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   font-size: smaller;
 }
 
-/* line 666, ../sass/_base.scss */
+/* line 678, ../sass/_base.scss */
 .tm-payments-report-extra {
   white-space: nowrap;
 }
 
-/* line 670, ../sass/_base.scss */
+/* line 682, ../sass/_base.scss */
 .tm-payments-report-status {
   border-radius: 4px;
 }
 
-/* line 674, ../sass/_base.scss */
+/* line 686, ../sass/_base.scss */
 .tm-payments-report-status {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
   white-space: nowrap;
 }
 
-/* line 680, ../sass/_base.scss */
+/* line 692, ../sass/_base.scss */
 .tm-payments-report-status.paid {
   background-color: #007CB9;
   color: #fff;
 }
 
-/* line 685, ../sass/_base.scss */
+/* line 697, ../sass/_base.scss */
 .tm-payments-report-status.refunded {
   /* background-color: #E94B35; */
   background-color: #888;
   color: #fff;
 }
 
-/* line 691, ../sass/_base.scss */
+/* line 703, ../sass/_base.scss */
 .tm-payments-report-status.paid_out {
   background-color: #00BD9C;
   color: #fff;
 }
 
 @media only screen and (max-width: 500px) {
-  /* line 697, ../sass/_base.scss */
+  /* line 709, ../sass/_base.scss */
   .tm-payments-report-extra {
     display: none;
   }

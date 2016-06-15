@@ -108,6 +108,35 @@ function tm_users_field_default_field_bases() {
     'type' => 'text',
   );
 
+  // Exported field_base: 'field_last_modified_timestamp'.
+  $field_bases['field_last_modified_timestamp'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_last_modified_timestamp',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'date',
+    'settings' => array(
+      'cache_count' => 4,
+      'cache_enabled' => 0,
+      'granularity' => array(
+        'day' => 'day',
+        'hour' => 'hour',
+        'minute' => 'minute',
+        'month' => 'month',
+        'second' => 0,
+        'year' => 'year',
+      ),
+      'timezone_db' => 'UTC',
+      'todate' => '',
+      'tz_handling' => 'utc',
+    ),
+    'translatable' => 0,
+    'type' => 'datestamp',
+  );
+
   // Exported field_base: 'field_reason_for_joining'.
   $field_bases['field_reason_for_joining'] = array(
     'active' => 1,

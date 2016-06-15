@@ -19,7 +19,7 @@
 </div>
 
 <div class="search empty_query" style="display: none;">
-	<p>Please enter keywords to search. Example: <a href='#' class='search-example' data-search-example='Prague'>Prague</a></p>
+	<p>Please enter keywords to search. Example: <a href='#' class='search-example' data-search-example='__EXAMPLE_SEARCH__'>__EXAMPLE_SEARCH__</a></p>
 </div>
 
 <div class="search spinner" style="display: none;">

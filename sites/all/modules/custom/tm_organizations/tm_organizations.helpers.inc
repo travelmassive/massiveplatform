@@ -32,3 +32,26 @@ function tm_organizations_is_company_profile_manager($uid, $company_nid) {
   }
   return FALSE;
 }
+
+/* 
+ * Return an array of organization profiles the member is managing
+ */
+function tm_organizations_get_users_companies($uid) {
+
+  $query = new EntityFieldQuery();
+  $markup = '';
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'organization')
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->fieldCondition('field_owner', 'target_id', $uid, '=');
+
+  $result = $query->execute();
+
+  if (isset($result['node'])) {
+    $companies_nids = array_keys($result['node']);
+    return $companies_nids;
+  }
+
+  // no companies
+  return array();
+}

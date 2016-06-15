@@ -14,6 +14,7 @@ function tm_search_api_view() {
 
 	// load template
 	$template = file_get_contents(drupal_get_path('module', 'tm_search_api') .'/templates/tm_search_api_form.tpl.php');
+	$template = str_replace("__EXAMPLE_SEARCH__", $conf["tm_search_api_example_search"], $template);
 
 	// add search tips and no results text from conf
 	$search_tips = "";
@@ -65,6 +66,16 @@ function tm_search_api_welcome_message() {
 
 	$members_rounded = floor($num_members / 100) * 100;
 	$organizations_rounded = floor($num_organizations / 100) * 100;
+
+	// in case we don't yet have over 100 members
+	if ($members_rounded == 0) {
+		$members_rounded = $num_members;
+	}
+
+	// in case we don't yet have over 100 organizations
+	if ($organizations_rounded == 0) {
+		$organizations_rounded = $num_organizations;
+	}
 
 	// example:
 	// Discover over 18,000 members and 1,200 companies

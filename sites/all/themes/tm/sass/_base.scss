@@ -190,6 +190,12 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
       }
     }
   }
+  .newsfeed-wrapper {
+    .toggle:before {
+      @extend .icon-bubble;
+      color: #007DB7;
+    }
+  }
   .search-wrapper {
     .toggle:before {
       @extend .icon-search-r;
@@ -279,13 +285,19 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
           display: none;
         }
       }
+      ul {
+        margin-right: 1.5rem;
+      }
       li {
         float: left;
         margin-left: 1.5rem;
       }
     }
+    .newsfeed-wrapper {
+      margin-left: 0.5rem;
+    }
     .search-wrapper {
-      margin-left: 2rem;
+      margin-left: 0.5rem;
     }
   }
 }

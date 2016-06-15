@@ -381,38 +381,29 @@ function tm_meta_metatag_export_default() {
       'description' => array(
         'value' => '[node:summary]',
       ),
+      'dcterms.title' => array(
+        'value' => '[node:title]',
+      ),
       'dcterms.creator' => array(
         'value' => '[node:author]',
-      ),
-      'dcterms.date' => array(
-        'value' => '[node:created:custom:Y-m-d\\TH:iP]',
-      ),
-      'dcterms.modified' => array(
-        'value' => '[node:changed:custom:Y-m-d\\TH:iP]',
       ),
       'dcterms.description' => array(
         'value' => '[node:summary]',
       ),
+      'dcterms.date' => array(
+        'value' => '[node:created:custom:Y-m-d\\TH:iP]',
+      ),
       'dcterms.language' => array(
         'value' => '[node:language]',
-      ),
-      'dcterms.title' => array(
-        'value' => '[node:title]',
-      ),
-      'article:modified_time' => array(
-        'value' => '[node:changed:custom:c]',
-      ),
-      'article:published_time' => array(
-        'value' => '[node:created:custom:c]',
-      ),
-      'og:description' => array(
-        'value' => '[node:summary]',
       ),
       'og:title' => array(
         'value' => '[node:title]',
       ),
-      'og:updated_time' => array(
-        'value' => '[node:changed:custom:c]',
+      'og:description' => array(
+        'value' => '[node:summary]',
+      ),
+      'article:published_time' => array(
+        'value' => '[node:created:custom:c]',
       ),
     ),
   );
@@ -444,6 +435,9 @@ function tm_meta_metatag_export_default() {
       ),
       'article:tag' => array(
         'value' => 'chapter, group',
+      ),
+      'og:video:url' => array(
+        'value' => '[node:field_chapter_cover_video]',
       ),
       'twitter:card' => array(
         'value' => 'summary',
@@ -481,6 +475,9 @@ function tm_meta_metatag_export_default() {
       ),
       'og:street_address' => array(
         'value' => '[node:field_location]',
+      ),
+      'og:video:url' => array(
+        'value' => '[node:field_event_cover_video]',
       ),
       'twitter:card' => array(
         'value' => 'summary',
@@ -521,6 +518,9 @@ function tm_meta_metatag_export_default() {
       ),
       'article:tag' => array(
         'value' => 'organization, company',
+      ),
+      'og:video:url' => array(
+        'value' => '[node:field_company_cover_video]',
       ),
       'twitter:card' => array(
         'value' => 'summary',
@@ -617,6 +617,9 @@ function tm_meta_metatag_export_default() {
       ),
       'profile:username' => array(
         'value' => '[user:friendly_url_user]',
+      ),
+      'og:video:url' => array(
+        'value' => '[user:field_user_cover_video]',
       ),
       'twitter:card' => array(
         'value' => 'summary',

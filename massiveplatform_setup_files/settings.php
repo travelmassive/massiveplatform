@@ -835,6 +835,7 @@ $conf['tm_search_meta_og_title'] = "Travel Massive Search";
 //$conf['tm_search_meta_og_image'] = ""; // url of search
 $conf['tm_search_meta_description'] = "Search our community.";
 $conf['tm_search_meta_opensearch_title'] = "travelmassive.com"; // title for opensearch header link
+$conf['tm_search_api_example_search'] = "Prague"; // example search option is user tries empty search
 
 // example search tips
 $conf["tm_search_api_tips"] = array(
@@ -989,7 +990,7 @@ $conf['tm_newsfeed_feedback_link_text'] = 'Let us know';
 /** GOOGLE ANALYTICS REPORT **/
 // Base path to Google Analytics drilldown report
 // Replace GOOGLE_ANALYTICS_HASH from your own GA report URL
-$conf["tm_google_analytics_report_path"] = "https://analytics.google.com/analytics/web/?authuser=1#report/content-drilldown/GOOGLE_ANALYTICS_HASH/%3F_u.dateOption%3Dlast30days%26explorer-table.plotKeys%3D%5B%5D%26_r.drilldown%3D";
+$conf["tm_google_analytics_report_path"] = "https://analytics.google.com/analytics/web/#report/content-drilldown/GOOGLE_ANALYTICS_HASH/%3F_u.dateOption%3Dlast30days%26explorer-table.plotKeys%3D%5B%5D%26_r.drilldown%3D";
 
 /** GEO IP MODULE **/
 // Geoip settings

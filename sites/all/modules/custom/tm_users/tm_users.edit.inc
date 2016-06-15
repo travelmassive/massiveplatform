@@ -74,6 +74,9 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   $process[] = 'tm_users_process_password_confirm';
   $form['account']['pass']['#process'] = $process;
 
+  // Hide last modified timestamp
+  unset($form['field_last_modified_timestamp']);
+
 }
 
 /**

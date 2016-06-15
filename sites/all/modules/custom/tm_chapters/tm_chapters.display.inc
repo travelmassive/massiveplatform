@@ -83,6 +83,26 @@ function _tm_chapters_get_default_image($default_image_uri, $nid) {
 }
 
 /**
+ * Helper method to return chapter cover uri
+ * If chapter has default cover, use _tm_chapters_get_default_image() to return random image
+ * Otherwise, return chapter image
+ */
+function _tm_chapters_get_image_uri($chapter) {
+
+  global $conf;
+
+  // Return avatar if it's not the default avatar
+  if (isset($chapter->field_image[LANGUAGE_NONE][0]['uri'])) {
+    if ($chapter->field_image[LANGUAGE_NONE][0]['uri'] != $conf["tm_images_default_field_image"]) {
+      return $chapter->field_image[LANGUAGE_NONE][0]['uri'];
+    }
+  }
+
+  // Return random avatar
+  return _tm_chapters_get_default_image($conf["tm_images_default_field_image"], $chapter->nid);
+}
+
+/**
  * Implement hook node_view
  */
 function tm_chapters_node_view($node, $view_mode) {

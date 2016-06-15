@@ -77,6 +77,11 @@ if (sizeof($request_uri_parts) == 3) {
             </div>
           </li>
           <?php endif; ?>
+          <?php if (module_exists("tm_status_updates") and user_is_logged_in()) : ?>
+          <li class="newsfeed-wrapper">
+            <h2><a class="toggle" href="/newsfeed"><span class="hide"><?= t('Newsfeed'); ?></span></a></h2>
+          </li>
+          <?php endif; ?>
           <li class="search-wrapper" data-dropd-wrapper>
             <h2><a class="toggle" href="#search-menu-blk" data-dropd-toggle><span class="hide"><?= t('Search'); ?></span></a></h2>
             <div id="search-menu-blk" class="inner dropd dropd-right" data-dropd>
@@ -114,6 +119,7 @@ if (sizeof($request_uri_parts) == 3) {
           <?php print render($title_suffix); ?>
           <?php print render($page['header']); ?>
           <?php print $messages; ?>
+          <?php print tm_status_updates_render_theme(); ?>
           <?php //print render($tabs); ?>
           <?php print render($page['help']); ?>
           <?php if ($action_links): ?>

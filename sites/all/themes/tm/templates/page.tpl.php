@@ -31,19 +31,24 @@
             </div>
           </li>
           <?php endif; ?>
+          <?php if (module_exists("tm_status_updates") and user_is_logged_in()) : ?>
+          <li class="newsfeed-wrapper">
+            <h2><a class="toggle" href="/newsfeed"><span class="hide"><?= t('Newsfeed'); ?></span></a></h2>
+          </li>
+          <?php endif; ?>
           <li class="search-wrapper" data-dropd-wrapper>
             <h2><a class="toggle" href="#search-menu-blk" data-dropd-toggle><span class="hide"><?= t('Search'); ?></span></a></h2>
               <div id="search-menu-blk" class="inner dropd dropd-right" data-dropd>
             <?php if (module_exists("tm_discuss") && (current_path() == $conf['tm_discuss_menu_path'])) { ?>
               
-                <form class="search-form" action="/discuss/#/search" method="get" id="search-form" accept-charset="UTF-8">
+                <form class="search-form" action="/<?php print($conf["tm_discuss_menu_path"]);?>/#/search" method="get" id="search-form" accept-charset="UTF-8">
                   <div>
                     <div class="container-inline form-wrapper" id="edit-basic">
                       <div class="form-item form-type-textfield form-item-keys">
                         <label for="edit-keys">Enter your keywords </label>
                         <input type="text" id="Search" name="Search" value="" size="40" maxlength="255" class="form-text">
                       </div>
-                      <input type="submit" id="edit-submit--2" value="Search" class="form-submit" onClick="javascript:document.location.href='/discuss/#search?Search='+document.getElementById('Search').value; return false;">
+                      <input type="submit" id="edit-submit--2" value="Search" class="form-submit" onClick="javascript:document.location.href='/<?php print($conf["tm_discuss_menu_path"]);?>/#search?Search='+document.getElementById('Search').value; return false;">
                     </div>
                   </div>
                 </form>
@@ -139,7 +144,7 @@
             ?>
               <div class="<?php if($tm_enable_wordpress_feedme) { print("column second"); }?>" id="frontpage_flag_feed" style="float: right;">
                 
-            <?php include './'. path_to_theme() .'/templates/page--flagfeeds.tpl.php'; ?>
+            <?php print(tm_status_updates_show_frontpage_updates()); ?>
               </div> <!-- close second column -->
             <?php
               } // end if show flag feeds

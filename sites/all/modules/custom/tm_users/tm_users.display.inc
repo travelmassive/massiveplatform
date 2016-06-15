@@ -279,30 +279,22 @@ function tm_users_menu_companies($uid){
 
   global $conf;
 
-  $query = new EntityFieldQuery();
-  $markup = '';
-  $query->entityCondition('entity_type', 'node')
-    ->entityCondition('bundle', 'organization')
-    ->propertyCondition('status', NODE_PUBLISHED)
-    ->fieldCondition('field_owner', 'target_id', $uid, '=');
+  // get list of company profiles managed by user
+  $companies_nids = tm_organizations_get_users_companies($uid);
 
-  $result = $query->execute();
+  $markup = "";
+  foreach ($companies_nids as $nid) {
+    $company = node_load($nid);
 
-  if (isset($result['node'])) {
-    $companies_nids = array_keys($result['node']);
-    foreach ($companies_nids as $nid) {
-      $company = node_load($nid);
-
-      // get image
-      $img_url = $conf["tm_images_default_field_image"];
-      if (isset($company->field_image[LANGUAGE_NONE][0]['uri'])) {
-        $img_url = $company->field_image[LANGUAGE_NONE][0]['uri'];
-      }
-      $img_url = _tm_organizations_get_default_image($img_url, $nid);
-      $style = 'thumbnail';
-      $markup .= "<li style='margin-bottom: 4px;'><div style='width: 36px; max-height: 24px; overflow: hidden; float: left; margin-left: 1rem; margin-right: 0.5rem; margin-top: 2px;'>
-      <img align='left' class='tm_menu_organization_image' src='" . image_style_url($style, $img_url) . "'></div>" . l($company->title,'node/'.$company->nid) . '</li>'; 
+    // get image
+    $img_url = $conf["tm_images_default_field_image"];
+    if (isset($company->field_image[LANGUAGE_NONE][0]['uri'])) {
+      $img_url = $company->field_image[LANGUAGE_NONE][0]['uri'];
     }
+    $img_url = _tm_organizations_get_default_image($img_url, $nid);
+    $style = 'thumbnail';
+    $markup .= "<li style='margin-bottom: 4px;'><div style='width: 36px; max-height: 24px; overflow: hidden; float: left; margin-left: 1rem; margin-right: 0.5rem; margin-top: 2px;'>
+    <img align='left' class='tm_menu_organization_image' src='" . image_style_url($style, $img_url) . "'></div>" . l($company->title,'node/'.$company->nid) . '</li>'; 
   }
   return $markup;
 }
@@ -327,4 +319,24 @@ function _tm_users_get_default_avatar($default_image_uri, $uid) {
 
   // no random image, return what we got
   return $default_image_uri;
+}
+
+/**
+ * Helper method to return user's avatar uri
+ * If user has default image, use _tm_users_get_default_avatar() to return random avatar
+ * Otherwise, return user image
+ */
+function _tm_users_get_avatar_uri($account) {
+
+  global $conf;
+
+  // Return avatar
+  if (isset($account->field_avatar[LANGUAGE_NONE][0]['uri'])) {
+    if ($account->field_avatar[LANGUAGE_NONE][0]['uri'] != $conf["tm_images_default_field_avatar"]) {
+      return $account->field_avatar[LANGUAGE_NONE][0]['uri'];
+    }
+  }
+
+  // Return random avatar
+  return _tm_users_get_default_avatar($conf["tm_images_default_field_avatar"], $account->uid);
 }

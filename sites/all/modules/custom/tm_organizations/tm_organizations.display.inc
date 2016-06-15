@@ -188,3 +188,39 @@ function _tm_organizations_get_default_image($default_image_uri, $nid) {
   return $default_image_uri;
 }
 
+/**
+ * Helper method to return organization cover uri
+ * If organization has default cover, use _tm_organizations_get_default_image() to return random image
+ * Otherwise, return organization image
+ */
+function _tm_organizations_get_image_uri($organization) {
+
+  global $conf;
+
+  // Return avatar if it's not the default avatar
+  if (isset($organization->field_image[LANGUAGE_NONE][0]['uri'])) {
+    if ($organization->field_image[LANGUAGE_NONE][0]['uri'] != $conf["tm_images_default_field_image"]) {
+      return $organization->field_image[LANGUAGE_NONE][0]['uri'];
+    }
+  }
+
+  // Return random avatar
+  return _tm_chapters_get_default_image($conf["tm_images_default_field_image"], $organization->nid);
+}
+
+/**
+ * Helper method to return avatar uri
+ * note: organization will always have a logo as it's mandatory field
+ */
+function _tm_organizations_get_avatar_uri($organization) {
+
+  global $conf;
+  
+  $image_uri = $conf["tm_images_default_field_avatar"];
+  if (isset($organization->field_avatar[LANGUAGE_NONE][0]['uri'])) {
+    $image_uri = $organization->field_avatar[LANGUAGE_NONE][0]['uri'];
+  }
+
+  return $image_uri;
+}
+

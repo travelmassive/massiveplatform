@@ -1,18 +1,37 @@
 <?php
+/**
+ * @file
+ * Code for the TM Status Updates feature.
+ */
 
 // tm_status_updates.module - status updates
 
-include 'tm_status_updates.display.inc';
-include 'tm_status_updates.handlers.inc';
+include_once 'tm_status_updates.features.inc';
+include_once 'tm_status_updates.display.inc';
+include_once 'tm_status_updates.handlers.inc';
+include_once 'tm_status_updates.render.inc';
+include_once 'tm_status_updates.frontpage.inc';
+include_once 'tm_status_updates.helpers.inc';
+include_once 'tm_status_updates.post_form.inc';
+include_once 'tm_status_updates.recommended.inc';
 
-/*
-* Implements hook_menu()
-*/
+
+/**
+ * Implements hook_menu()
+ */
 function tm_status_updates_menu() {
 
   $items['newsfeed'] = array(
-    'title' => 'Network Updates',
-    'page callback' => 'tm_status_updates_display',
+    'title' => 'News feed',
+    'page callback' => 'tm_status_updates_display_newsfeed',
+    'page arguments' => array(1),
+    'access callback' => 'tm_status_updates_display_callback',
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['newsfeed/global'] = array(
+    'title' => 'Global news feed',
+    'page callback' => 'tm_status_updates_display_global',
     'page arguments' => array(1),
     'access callback' => 'tm_status_updates_display_callback',
     'type' => MENU_CALLBACK,
@@ -28,3 +47,74 @@ function tm_status_updates_menu() {
 
   return $items;
 }
+
+/**
+ * Approval callback for viewing newsfeed
+ */
+function tm_status_updates_display_callback() {
+  return true;
+}
+
+/**
+ * Determine whether a user can edit a particular status update
+ */
+function tm_status_updates_check_permission($entity_type, $entity_id, $action, $check_uid) {
+
+  // check valid action
+  $valid_actions = array("create", "edit", "delete", "moderate");
+  if (!in_array($action, $valid_actions)) {
+    return false;
+  }
+
+  // use static cache as we look this up a lot per page load
+  $check_value = &drupal_static("tm_status_updates_check_can_edit_" . $entity_type . "_" . $entity_id . "_" . $action . "_" . $check_uid);
+  if ($check_value != null) {
+    return $check_value;
+  }
+
+  // allow moderator or administrator to modererate posts
+  $account = user_load($check_uid);
+  if (($action == "edit") or ($action == "moderate") or ($action == "delete")) {
+    if (in_array("moderator", $account->roles) or in_array("administrator", $account->roles)) {
+      return true;
+    }
+  }
+
+  // personal posts can only be edited by the owner
+  if ($entity_type == "user") {
+    return ($entity_id == $check_uid);
+  }
+
+  // company posts
+  if ($entity_type == "organization") {
+    $companies_nids = tm_organizations_get_users_companies($account->uid);
+    foreach ($companies_nids as $company_nid) {
+      if ($company_nid == $entity_id) {
+        $check_value = true;
+        return true; // this is a manager of the company profile
+      }
+    }
+  }
+
+  // chapter posts
+  if ($entity_type == "chapter") {
+    if ($account == null) { 
+      $check_value = false;
+      return false;
+    }
+    $chapters_nids = tm_users_get_chapters_leading($account);
+    foreach ($chapters_nids as $chapter_nid) {
+      if ($chapter_nid == $entity_id) {
+        $check_value = true;
+        return true; // this user is a chapter leader 
+      }
+    }
+  }
+
+  // not allowed to edit
+  $check_value = false;
+  return false;
+
+}
+
+

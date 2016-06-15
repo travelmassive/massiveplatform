@@ -118,10 +118,18 @@ function tm_theme_preprocess_html(&$variables, $hook) {
 
   global $conf;
 
-  if (!drupal_is_front_page()) {
-    return;
+  if (drupal_is_front_page()) {
+    tm_theme_add_meta_tags_front_page();
   }
-  
+}
+
+/**
+ * Add meta tags for front page
+ */
+function tm_theme_add_meta_tags_front_page() {
+
+  global $conf;
+
   // gererate canonical url
   $canonical = url('/', array('absolute' => TRUE)) . "/";
 
@@ -150,7 +158,7 @@ function tm_theme_preprocess_html(&$variables, $hook) {
     $meta = array(
       '#tag' => 'meta', 
       '#attributes' => array(
-        'name' => 'og:title', 
+        'property' => 'og:title', 
         'content' => $conf['tm_frontpage_meta_og_title'],
       ),
     );
@@ -163,7 +171,7 @@ function tm_theme_preprocess_html(&$variables, $hook) {
         $meta = array(
         '#tag' => 'meta', 
         '#attributes' => array(
-          'name' => 'og:image', 
+          'property' => 'og:image', 
           'content' => $conf['tm_frontpage_meta_og_image'],
         ),
       );
@@ -186,11 +194,154 @@ function tm_theme_preprocess_html(&$variables, $hook) {
 }
 
 /**
- * Add javascript to show cover video
+ * Add meta tags for user
  */
+function tm_theme_add_meta_tags_user($uid) {
+
+  global $conf;
+
+  // load user account
+  $account = user_load($uid);
+  if ($account == null) {
+    return;
+  }
+
+  // date published and edited
+  /* ie: 
+  <meta property="article:published_time" content="2014-12-09T20:46:24-08:00" />
+  <meta property="article:modified_time" content="2016-01-19T10:38:35-08:00" />
+  <meta property="og:updated_time" content="2016-01-19T10:38:35-08:00" />*/
+
+  $time_format = "Y-m-d\TH:i:s-00:00";
+  $published_dt = new Datetime(null, new DateTimeZone('UTC'));
+  $published_dt->setTimestamp($account->created);
+  $published_time = $published_dt->format($time_format); //"2016-01-19T10:38:35-08:00";
+
+  // article:published_time
+  $meta = array(
+    '#tag' => 'meta', 
+    '#attributes' => array(
+      'property' => 'article:published_time', 
+      'content' => $published_time,
+    ),
+  );
+  drupal_add_html_head($meta, 'article:published_time');
+
+  // check last update time
+  $last_update = tm_users_get_update_timestamp($uid);
+  if ($last_update == null) {
+    return; // no last update to display
+  }
+
+  $updated_dt = new Datetime(null, new DateTimeZone('UTC'));
+  $updated_dt->setTimestamp($last_update);
+  $updated_time = $updated_dt->format($time_format); //"2016-01-19T10:38:35-08:00";
+
+  // article:modified_time
+  $meta = array(
+    '#tag' => 'meta', 
+    '#attributes' => array(
+      'property' => 'article:modified_time', 
+      'content' => $updated_time,
+    ),
+  );
+  drupal_add_html_head($meta, 'article:modified_time');
+
+  // og:updated_time
+  $meta = array(
+    '#tag' => 'meta', 
+    '#attributes' => array(
+      'property' => 'og:updated_time', 
+      'content' => $updated_time,
+    ),
+  );
+  drupal_add_html_head($meta, 'og:updated_time');
+
+}
 
 /**
- * Add cover vide to user profile
+ * Add meta tags for node
+ */
+function tm_theme_add_meta_tags_node($nid) {
+
+  global $conf;
+
+  // load node
+  $node = node_load($nid);
+  if ($node == null) {
+    return;
+  }
+
+  // only support organization, chapter and events
+  if (!in_array($node->type, array("organization", "chapter", "event"))) {
+    return;
+  }
+
+  // date edited
+  /* ie: 
+  <meta property="article:modified_time" content="2016-01-19T10:38:35-08:00" />
+  <meta property="og:updated_time" content="2016-01-19T10:38:35-08:00" />*/
+
+  // check last update time from status update
+  $last_update = null;
+  if (module_exists("tm_status_updates")) {
+    $last_update = tm_status_updates_get_last_update_timestamp($node->type, $node->nid);
+  }
+
+  // get when node was last changed
+  $last_changed = $node->changed;
+
+  // get most recent update between status update and last changed
+  $most_recent = max(array($last_update, $last_changed));
+   
+  $time_format = "Y-m-d\TH:i:s-00:00";
+
+  // published
+  $published_dt = new Datetime(null, new DateTimeZone('UTC'));
+  $published_dt->setTimestamp($node->created);
+  $published_time = $published_dt->format($time_format); //"2016-01-19T10:38:35-08:00";
+
+  // modified
+  $updated_dt = new Datetime(null, new DateTimeZone('UTC'));
+  $updated_dt->setTimestamp($most_recent);
+  $updated_time = $updated_dt->format($time_format); //"2016-01-19T10:38:35-08:00";
+
+
+  // article:published_time
+  /*$meta = array(
+    '#tag' => 'meta', 
+    '#attributes' => array(
+      'property' => 'article:published_time', 
+      'content' => $published_time,
+    ),
+  );
+  drupal_add_html_head($meta, 'article:published_time');*/
+
+  // article:modified_time
+  $meta = array(
+    '#tag' => 'meta', 
+    '#attributes' => array(
+      'property' => 'article:modified_time', 
+      'content' => $updated_time,
+    ),
+  );
+  drupal_add_html_head($meta, 'article:modified_time', true);
+
+  // og:updated_time
+  $meta = array(
+    '#tag' => 'meta', 
+    '#attributes' => array(
+      'property' => 'og:updated_time', 
+      'content' => $updated_time,
+    ),
+  );
+  drupal_add_html_head($meta, 'og:updated_time');
+
+}
+
+/**
+ * Add cover video to user profile
+ * Add meta tags to user profile
  */
 function tm_theme_user_view($account, $view_mode, $langcode) {
 
@@ -209,12 +360,15 @@ function tm_theme_user_view($account, $view_mode, $langcode) {
   // Check cover videos enabled
   if ($conf["tm_cover_videos_enabled"]) {
     tm_theme_add_cover_video_js($account, null);
-  }  
+  }
+
+  // Add additional user meta tags
+  tm_theme_add_meta_tags_user(arg(1));
 
 }
 
 /**
- * Add cover vide to node profile
+ * Add cover video to node profile
  */
 function tm_theme_node_view($node, $view_mode, $langcode) {
 
@@ -234,6 +388,9 @@ function tm_theme_node_view($node, $view_mode, $langcode) {
   if ($conf["tm_cover_videos_enabled"]) {
     tm_theme_add_cover_video_js(null, $node);
   }
+
+  // Add additional node meta tags
+  tm_theme_add_meta_tags_node(arg(1));
 
 }
 

@@ -305,3 +305,59 @@ function tm_users_get_signup_day_of_week($uid) {
   return null;
 }
 
+/**
+ * Helper method to get when user last performed a public flagging action
+ * ie: signing up for an event, joining a chapter, etc
+ */
+function tm_users_get_last_public_flag_timestamp($uid) {
+
+  // get list of flags which perform public actions
+  $fids = array();
+  $fids[] = flag_get_flag('featured_member')->fid;
+  $fids[] = flag_get_flag('follow_members')->fid;
+  $fids[] = flag_get_flag('follow_organizations')->fid;
+  $fids[] = flag_get_flag('signup')->fid;
+
+  // If tm_status_updates module enabled, look at member status update
+  if (module_exists("tm_status_updates")) {
+    $fids[] = flag_get_flag('status_updated_by_member')->fid;
+  }
+
+  // get timestamp of users's most recent flagging action
+  $query = "SELECT timestamp FROM flagging WHERE uid = :uid AND fid IN (" . implode(",", $fids) . ") ORDER BY timestamp DESC LIMIT 1";
+  $result = db_query($query, array(":uid" => $uid))->fetch();
+
+  // get timestamp of last flag update
+  if (isset($result->timestamp)) {
+    return $result->timestamp;
+  }
+
+  // no flag updates
+  return null;
+}
+
+/**
+ * Return when users profile was last updated
+ * Compare account and flagging timestamps
+ */
+function tm_users_get_update_timestamp($uid) {
+
+  // check account
+  $account = user_load($uid);
+  if ($account == null) {
+    return null;
+  }
+
+  // Step 1. Get account update timestamp
+  $timestamp_account = null;
+  if (isset($account->field_last_modified_timestamp[LANGUAGE_NONE][0]['value'])) {
+    $timestamp_account = $account->field_last_modified_timestamp[LANGUAGE_NONE][0]['value'];
+  }
+
+  // Step 2. Get last public flagged action
+  $timestamp_flag = tm_users_get_last_public_flag_timestamp($uid);  
+
+  // Get most recent timestamp
+  return max(array($timestamp_account, $timestamp_flag));
+}
+

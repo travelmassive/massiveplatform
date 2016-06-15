@@ -44,6 +44,16 @@ function tm_people_suggest_industry_segments($user_id) {
     return $results->fetchAll();
 }
 
+function tm_people_suggest_prolific_posters() {
+    // get a pool of results to randomly select from
+    $pool = 15;
+
+    $results = db_query_range(TmStatusUpdatesSqlLibrary::$tm_sql_people_suggest_prolific_posters, 0, $pool);
+
+    return $results->fetchAll();
+}
+
+
 class TmStatusUpdatesSqlLibrary
 {
 
@@ -358,6 +368,35 @@ order by
     -- same_industry_second_level desc,  -- too specific, restricts diversity of results
     user_follower_count desc,
     users.created desc
+
+SQL;
+
+
+// suggestions based on prolific posters
+public static $tm_sql_people_suggest_prolific_posters = <<<SQL
+
+select
+    updates.entity_id as 'uid',
+    count(id) as 'num_updates'
+
+from tm_newsfeed_status_updates updates
+
+left join users_roles
+on  updates.entity_id = users_roles.uid
+and updates.entity_type = 'user'
+and users_roles.rid = 6  -- approved_member
+
+where
+    -- only users that update
+    updates.entity_type = 'user'
+    -- exclude members that aren't approved
+    and users_roles.uid is not null
+
+group by
+    updates.entity_id
+
+order by
+    num_updates desc
 
 SQL;
 

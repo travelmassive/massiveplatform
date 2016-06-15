@@ -89,40 +89,36 @@ function tm_status_updates_people_suggestions($uid, $limit = 5) {
 	$users_location = tm_people_suggest_chapters_and_locations($uid);
 	$users_job_role = tm_people_suggest_job_roles($uid);
 	$users_industry = tm_people_suggest_industry_segments($uid);
+	$users_prolific = tm_people_suggest_prolific_posters();
 
-	// get user ids and remove users silenced from recommended users
+	// get user ids and remove users silenced from recommended users (and status updates)
 	$user_ids_location = array_map(function($o) { return $o->uid; }, $users_location);
 	$user_ids_job_role = array_map(function($o) { return $o->uid; }, $users_job_role);
 	$user_ids_industry = array_map(function($o) { return $o->uid; }, $users_industry);
+	$user_ids_prolific = array_map(function($o) { return $o->uid; }, $users_prolific);
 
 	$user_ids_location = array_diff($user_ids_location, $conf["tm_status_updates_hide_recommended_uids"]);
+	$user_ids_location = array_diff($user_ids_location, $conf["tm_status_updates_silence_uids"]);
 	$user_ids_job_role = array_diff($user_ids_job_role, $conf["tm_status_updates_hide_recommended_uids"]);
+	$user_ids_job_role = array_diff($user_ids_job_role, $conf["tm_status_updates_silence_uids"]);
 	$user_ids_industry = array_diff($user_ids_industry, $conf["tm_status_updates_hide_recommended_uids"]);
+	$user_ids_industry = array_diff($user_ids_industry, $conf["tm_status_updates_silence_uids"]);
+	$user_ids_prolific = array_diff($user_ids_prolific, $conf["tm_status_updates_hide_recommended_uids"]);
+	$user_ids_prolific = array_diff($user_ids_prolific, $conf["tm_status_updates_silence_uids"]);
 
-	// random keys from each
-	// TODO: spread this around if the limit changes from 5
-	$keys_loc = array_rand($user_ids_location, 2);
-	$keys_job = array_rand($user_ids_job_role);
-	$keys_ind = array_rand($user_ids_industry, 2);
+	// collection of all users from queries, ensuring that we don't have duplicates
+	$collection = array_unique(array_merge($user_ids_location, $user_ids_job_role, $user_ids_industry, $user_ids_prolific));
+	$keys = array_rand($collection, $limit);
 
-	// is someone in the location result in other lists? if so, add them above others
-	$ids = array_merge(array_intersect($user_ids_location, $user_ids_job_role), array_intersect($user_ids_location, $user_ids_industry));
-
-	foreach ($ids as $id) {
-		$users[] = $id;
+	foreach ($keys as $index) {
+		$users[] = $collection[$index];
 	}
 
-	// add 2 people from location query, 1 from job_role query, 2 from industry query
-	// TODO: spread this around if the limit changes from 5
-	$users[] = $user_ids_location[$keys_loc[0]];
-	$users[] = $user_ids_location[$keys_loc[1]];
-	$users[] = $user_ids_job_role[$keys_job];
-	$users[] = $user_ids_industry[$keys_ind[0]];
-	$users[] = $user_ids_industry[$keys_ind[1]];
+	// array_rand returns 'sequentially random' keys
+	// this gives the results a shuffle to totally change the order
+	shuffle($users);
 
-	// ensure we don't have duplicates and enforce $limit
-	// (array can also have more due to adding ids common to multiple source queries)
-	return array_slice(array_unique($users), 0, $limit);
+	return $users;
 }
 
 /**

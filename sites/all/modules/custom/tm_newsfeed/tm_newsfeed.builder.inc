@@ -5,7 +5,7 @@
 // all queries in here
 
 function tm_newsfeed_get_updates($user_id, $start_date, $end_date) {
-	$results = db_query_range(TmNewsFeedSqlLibrary::$tm_sql_updates, 0, 10,
+	$results = db_query_range(TmNewsFeedSqlLibrary::sql('tm_sql_updates'), 0, 10,
 		array(":user_id" => $user_id, ":start_date" => strtotime($start_date), ":end_date" => strtotime($end_date))
 		);
 
@@ -14,7 +14,7 @@ function tm_newsfeed_get_updates($user_id, $start_date, $end_date) {
 
 
 function tm_newsfeed_get_events($user_id, $from_date) {
-	$results = db_query_range(TmNewsFeedSqlLibrary::$tm_sql_events, 0, 3,
+	$results = db_query_range(TmNewsFeedSqlLibrary::sql('tm_sql_events'), 0, 3,
 		array(":user_id" => $user_id, ":from_date" => strtotime($from_date))
 		);
 
@@ -23,7 +23,7 @@ function tm_newsfeed_get_events($user_id, $from_date) {
 
 
 function tm_newsfeed_get_new_members($user_id, $start_date, $end_date) {
-	$results = db_query_range(TmNewsFeedSqlLibrary::$tm_sql_new_members, 0, 3,
+	$results = db_query_range(TmNewsFeedSqlLibrary::sql('tm_sql_new_members'), 0, 3,
 		array(":user_id" => $user_id, ":start_date" => strtotime($start_date), ":end_date" => strtotime($end_date))
 		);
 
@@ -31,7 +31,7 @@ function tm_newsfeed_get_new_members($user_id, $start_date, $end_date) {
 }
 
 function tm_newsfeed_get_new_companies($user_id, $start_date, $end_date) {
-	$results = db_query_range(TmNewsFeedSqlLibrary::$tm_sql_new_companies, 0, 3,
+	$results = db_query_range(TmNewsFeedSqlLibrary::sql('tm_sql_new_companies'), 0, 3,
 		array(":user_id" => $user_id, ":start_date" => strtotime($start_date), ":end_date" => strtotime($end_date))
 		);
 
@@ -39,7 +39,7 @@ function tm_newsfeed_get_new_companies($user_id, $start_date, $end_date) {
 }
 
 function tm_newsfeed_select_tip($user_id, $start_date, $end_date) {
-	$results = db_query_range(TmNewsFeedSqlLibrary::$tm_sql_select_tip, 0, 1,
+	$results = db_query_range(TmNewsFeedSqlLibrary::sql('tm_sql_select_tip'), 0, 1,
 		array(":user_id" => $user_id, ":start_date" => strtotime($start_date), ":end_date" => strtotime($end_date))
 		);
 
@@ -52,6 +52,18 @@ function tm_newsfeed_select_tip($user_id, $start_date, $end_date) {
 */
 class TmNewsFeedSqlLibrary
 {
+	// same as in TmStatusUpdatesSqlLibrary
+	public static function sql($var_name)
+	{
+		$sql = TmNewsFeedSqlLibrary::$$var_name;
+		$sql = str_replace('__FID_FOLLOW_MEMBERS__', flag_get_flag('follow_members')->fid, $sql);
+		$sql = str_replace('__FID_FOLLOW_ORGANIZATIONS__', flag_get_flag('follow_organizations')->fid, $sql);
+		$sql = str_replace('__FID_SIGNUP__', flag_get_flag('signup')->fid, $sql);
+		$sql = str_replace('__FID_EVENT_REGISTER__', flag_get_flag('event_register')->fid, $sql);
+		$sql = str_replace('__RID_APPROVED_MEMBER__', user_role_load_by_name('approved user')->rid, $sql);
+
+		return $sql;
+	}
 
 public static $tm_sql_events = <<<SQL
 
@@ -109,7 +121,7 @@ left join field_data_field_chapter_timezone chapter_tz on chapter_tz.entity_id=c
 
 left join flagging have_joined_chapter
 on have_joined_chapter.entity_id = event_chapter.field_chapter_target_id
-and have_joined_chapter.fid = 3  -- signup (join chapter)
+and have_joined_chapter.fid = __FID_SIGNUP__  -- signup (join chapter)
 and have_joined_chapter.uid = :user_id
 
 left join field_data_field_home_chapter is_my_home_chapter
@@ -119,7 +131,7 @@ and is_my_home_chapter.entity_id = :user_id
 
 left join flagging following_event_creator
 on event.uid = following_event_creator.entity_id
-and following_event_creator.fid = 1  -- follow_members
+and following_event_creator.fid = __FID_FOLLOW_MEMBERS__  -- follow_members
 and following_event_creator.uid = :user_id
 
 left join field_data_field_event_company event_company
@@ -127,11 +139,11 @@ on event.nid = event_company.entity_id
 
 left join flagging following_event_company
 on event_company.field_event_company_target_id = following_event_company.entity_id
-and following_event_company.fid = 2  -- follow_organizations
+and following_event_company.fid = __FID_FOLLOW_ORGANIZATIONS__  -- follow_organizations
 and following_event_company.uid = :user_id
 
 left join flagging already_going on event.nid = already_going.entity_id
-and already_going.fid = 8  -- event_register
+and already_going.fid = __FID_EVENT_REGISTER__  -- event_register
 and already_going.uid = :user_id
 
 where
@@ -198,27 +210,27 @@ left join field_data_field_user_last_name users_last_name
 on users_last_name.entity_id=users.uid and users_last_name.bundle='user'
 
 left join flag_counts user_followers
-on  user_followers.fid = 1  -- follow_members
+on  user_followers.fid = __FID_FOLLOW_MEMBERS__  -- follow_members
 and updates.entity_type = 'user'
 and user_followers.entity_id = updates.entity_id
 
 left join flag_counts organization_followers
-on  organization_followers.fid = 2  -- follow_organizations
+on  organization_followers.fid = __FID_FOLLOW_ORGANIZATIONS__  -- follow_organizations
 and updates.entity_type = 'organization'
 and organization_followers.entity_id = updates.entity_id
 
 left join flag_counts chapter_followers
-on  chapter_followers.fid = 3  -- signup
+on  chapter_followers.fid = __FID_SIGNUP__  -- signup
 and updates.entity_type = 'chapter'
 and chapter_followers.entity_id = updates.entity_id
 
 left join users_roles
 on  updates.entity_id = users_roles.uid
 and updates.entity_type = 'user'
-and users_roles.rid = 6  -- approved_member
+and users_roles.rid = __RID_APPROVED_MEMBER__  -- approved_member
 
 where
-	following.fid in (1,2,3)  -- follow_members, follow_organizations, signup
+	following.fid in (__FID_FOLLOW_MEMBERS__,__FID_FOLLOW_ORGANIZATIONS__,__FID_SIGNUP__)  -- follow_members, follow_organizations, signup
 	and UNIX_TIMESTAMP(updates.created) >= :start_date
 	and UNIX_TIMESTAMP(updates.created) <= :end_date
 	-- exclude members that aren't approved
@@ -294,7 +306,7 @@ left join
 	select chapter.nid, chapter.title, count(flagging.uid) as signup_count
 	from flagging
 	inner join node chapter on flagging.entity_id=chapter.nid
-	where flagging.fid=3 and chapter.type='chapter'
+	where flagging.fid=__FID_SIGNUP__ and chapter.type='chapter'
 	and flagging.timestamp > :start_date and flagging.timestamp < :end_date
 	group by chapter.nid, chapter.title
 ) chapter_signups
@@ -302,7 +314,7 @@ on chapter_signups.nid = users_home_chapter.field_home_chapter_target_id
 
 left join users_roles
 on  users.uid = users_roles.uid
-and users_roles.rid = 6  -- approved_member
+and users_roles.rid = __RID_APPROVED_MEMBER__  -- approved_member
 
 where
 	users.uid <> :user_id  -- dont include me
@@ -358,7 +370,7 @@ left join field_data_field_country company_country
 on company_country.bundle='organization' and company_country.entity_id=node.nid
 
 -- left join flag_counts organization_followers
--- on  organization_followers.fid = 2  -- follow_organizations
+-- on  organization_followers.fid = __FID_FOLLOW_ORGANIZATIONS__  -- follow_organizations
 -- and node.type = 'organization'
 -- and organization_followers.entity_id = node.nid
 
@@ -367,7 +379,7 @@ left join
 select users2.uid, count(followers.entity_id) as 'count'
 from users users2
 left join flagging followers on followers.entity_id=users2.uid
-where followers.fid=2
+where followers.fid=__FID_FOLLOW_ORGANIZATIONS__
 group by users2.uid
 ) num_followers
 on node.nid = num_followers.uid
@@ -393,7 +405,7 @@ select
 	company_match.title,
 	num_companies.count as 'num_companies'
 from users
-left join users_roles on users.uid = users_roles.uid and users_roles.rid = 6
+left join users_roles on users.uid = users_roles.uid and users_roles.rid = __RID_APPROVED_MEMBER__
 left join field_data_field_job_organization org on users.uid = org.entity_id and org.entity_type = 'user'
 left join node company_match on company_match.type='organization'
 and

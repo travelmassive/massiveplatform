@@ -6,7 +6,7 @@ function tm_people_suggest_global() {
     // get a pool of results to randomly select from
     $pool = 25;
 
-    $results = db_query_range(TmStatusUpdatesSqlLibrary::$tm_sql_people_suggest_global, 0, $pool);
+    $results = db_query_range(TmStatusUpdatesSqlLibrary::sql('tm_sql_people_suggest_global'), 0, $pool);
 
     return $results->fetchAll();
 }
@@ -15,7 +15,7 @@ function tm_people_suggest_chapters_and_locations($user_id) {
     // get a pool of results to randomly select from
     $pool = 15;
 
-    $results = db_query_range(TmStatusUpdatesSqlLibrary::$tm_sql_people_suggest_chapters_and_locations, 0, $pool,
+    $results = db_query_range(TmStatusUpdatesSqlLibrary::sql('tm_sql_people_suggest_chapters_and_locations'), 0, $pool,
         array(":user_id" => $user_id)
         );
 
@@ -26,7 +26,7 @@ function tm_people_suggest_job_roles($user_id) {
     // get a pool of results to randomly select from
     $pool = 15;
 
-    $results = db_query_range(TmStatusUpdatesSqlLibrary::$tm_sql_people_suggest_job_roles, 0, $pool,
+    $results = db_query_range(TmStatusUpdatesSqlLibrary::sql('tm_sql_people_suggest_job_roles'), 0, $pool,
         array(":user_id" => $user_id)
         );
 
@@ -37,7 +37,7 @@ function tm_people_suggest_industry_segments($user_id) {
     // get a pool of results to randomly select from
     $pool = 15;
 
-    $results = db_query_range(TmStatusUpdatesSqlLibrary::$tm_sql_people_suggest_industry_segments, 0, $pool,
+    $results = db_query_range(TmStatusUpdatesSqlLibrary::sql('tm_sql_people_suggest_industry_segments'), 0, $pool,
         array(":user_id" => $user_id)
         );
 
@@ -48,7 +48,7 @@ function tm_people_suggest_prolific_posters() {
     // get a pool of results to randomly select from
     $pool = 15;
 
-    $results = db_query_range(TmStatusUpdatesSqlLibrary::$tm_sql_people_suggest_prolific_posters, 0, $pool);
+    $results = db_query_range(TmStatusUpdatesSqlLibrary::sql('tm_sql_people_suggest_prolific_posters'), 0, $pool);
 
     return $results->fetchAll();
 }
@@ -56,6 +56,18 @@ function tm_people_suggest_prolific_posters() {
 
 class TmStatusUpdatesSqlLibrary
 {
+    // same as in TmNewsFeedSqlLibrary
+    public static function sql($var_name)
+    {
+        $sql = TmStatusUpdatesSqlLibrary::$$var_name;
+        $sql = str_replace('__FID_FOLLOW_MEMBERS__', flag_get_flag('follow_members')->fid, $sql);
+        $sql = str_replace('__FID_FOLLOW_ORGANIZATIONS__', flag_get_flag('follow_organizations')->fid, $sql);
+        $sql = str_replace('__FID_SIGNUP__', flag_get_flag('signup')->fid, $sql);
+        $sql = str_replace('__FID_EVENT_REGISTER__', flag_get_flag('event_register')->fid, $sql);
+        $sql = str_replace('__RID_APPROVED_MEMBER__', user_role_load_by_name('approved user')->rid, $sql);
+
+        return $sql;
+    }
 
 //
 // Suggestions of members to follow
@@ -72,18 +84,18 @@ select
 from users
 
 left join flag_counts user_follower_count
-on  user_follower_count.fid=1
+on  user_follower_count.fid=__FID_FOLLOW_MEMBERS__
 and user_follower_count.entity_id = users.uid
 and user_follower_count.entity_type='user'
 
 left join flag_counts user_chapter_count
-on  user_chapter_count.fid=3
+on  user_chapter_count.fid=__FID_SIGNUP__
 and user_chapter_count.entity_id = users.uid
 and user_chapter_count.entity_type='user'
 
 left join users_roles
 on  users.uid = users_roles.uid
-and users_roles.rid = 6  -- approved_member
+and users_roles.rid = __RID_APPROVED_MEMBER__  -- approved_member
 
 where
     -- exclude members that arent approved
@@ -154,18 +166,18 @@ left join field_data_field_user_country my_home_country
 on my_home_country.bundle='user' and my_home_country.entity_id=:user_id
 
 left join flag_counts user_follower_count
-on  user_follower_count.fid=1
+on  user_follower_count.fid=__FID_FOLLOW_MEMBERS__
 and user_follower_count.entity_id = users.uid
 and user_follower_count.entity_type='user'
 
 left join flagging already_following
-on  already_following.fid=1
+on  already_following.fid=__FID_FOLLOW_MEMBERS__
 and already_following.uid = :user_id
 and already_following.entity_id = users.uid
 
 left join users_roles
 on  users.uid = users_roles.uid
-and users_roles.rid = 6  -- approved_member
+and users_roles.rid = __RID_APPROVED_MEMBER__  -- approved_member
 
 where
     -- dont include me
@@ -218,18 +230,18 @@ left join field_data_field_user_last_name users_last_name
 on users_last_name.entity_id=users.uid and users_last_name.bundle='user'
 
 left join flag_counts user_follower_count
-on  user_follower_count.fid=1
+on  user_follower_count.fid=__FID_FOLLOW_MEMBERS__
 and user_follower_count.entity_id = users.uid
 and user_follower_count.entity_type='user'
 
 left join flagging already_following
-on  already_following.fid=1
+on  already_following.fid=__FID_FOLLOW_MEMBERS__
 and already_following.uid = :user_id
 and already_following.entity_id = users.uid
 
 left join users_roles
 on  users.uid = users_roles.uid
-and users_roles.rid = 6  -- approved_member
+and users_roles.rid = __RID_APPROVED_MEMBER__  -- approved_member
 
 left join field_data_field_job_role my_job_role
 on  my_job_role.entity_id = :user_id
@@ -331,18 +343,18 @@ left join field_data_field_user_last_name users_last_name
 on users_last_name.entity_id=users.uid and users_last_name.bundle='user'
 
 left join flag_counts user_follower_count
-on  user_follower_count.fid=1
+on  user_follower_count.fid=__FID_FOLLOW_MEMBERS__
 and user_follower_count.entity_id = users.uid
 and user_follower_count.entity_type='user'
 
 left join flagging already_following
-on  already_following.fid=1
+on  already_following.fid=__FID_FOLLOW_MEMBERS__
 and already_following.uid = :user_id
 and already_following.entity_id = users.uid
 
 left join users_roles
 on  users.uid = users_roles.uid
-and users_roles.rid = 6  -- approved_member
+and users_roles.rid = __RID_APPROVED_MEMBER__  -- approved_member
 
 left join taxonomy_entity_index user_tei on user_tei.entity_id = users.uid and user_tei.entity_type = 'user'
 left join taxonomy_term_data user_ttd_child on user_tei.tid = user_ttd_child.tid
@@ -384,7 +396,7 @@ from tm_newsfeed_status_updates updates
 left join users_roles
 on  updates.entity_id = users_roles.uid
 and updates.entity_type = 'user'
-and users_roles.rid = 6  -- approved_member
+and users_roles.rid = __RID_APPROVED_MEMBER__  -- approved_member
 
 where
     -- only users that update

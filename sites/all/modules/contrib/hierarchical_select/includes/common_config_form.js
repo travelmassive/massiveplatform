@@ -107,6 +107,23 @@ cfg.editability = function(configId) {
   showHide(0);
 };
 
+cfg.entityCount = function(configId) {
+  var $status = $('.entity-count-enabled', cfg.context(configId));
+
+  var showHide = function(speed) {
+    var $affected = $('.entity-count-settings', cfg.context(configId));
+    if ($status.is(':checked')) {
+      $affected.show(speed);
+    }
+    else {
+      $affected.hide(speed);
+    }
+  };
+
+  $status.click(function() { showHide(200); });
+  showHide(0);
+};
+
 cfg.livePreview = function(configId) {
   // React on changes to any input, except the ones in the live preview.
   $updateLivePreview = $('input', cfg.context(configId))
@@ -123,6 +140,7 @@ $(document).ready(function() {
     cfg.levelLabels(configId);
     cfg.dropbox(configId);
     cfg.editability(configId);
+    cfg.entityCount(configId);
     //cfg.livePreview(configId);
   }
 });

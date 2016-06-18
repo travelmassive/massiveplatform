@@ -28,11 +28,14 @@ function tm_status_updates_display_global() {
 	// get sorted list of status update and flag results
 	$all_results = tm_status_updates_get_combined_feed_global($limit_from, $limit_to);
 
+	// get viewer ip
+	$viewer_ip = tm_geoip_get_real_visitor_ip();
+
 	// render item html from results
-	$results_html = tm_status_updates_render_results_items($all_results);
+	$results_html = tm_status_updates_render_results_items($all_results, $viewer_ip);
 
 	// render newsfeed section
-	$newsfeed_html = tm_status_updates_render_results_feed($results_html);
+	$newsfeed_html = tm_status_updates_render_results_feed($results_html, true);
 
 	// recommended members
 	$recommended_html = tm_status_updated_render_recommended_members($user);
@@ -74,8 +77,11 @@ function tm_status_updates_display_newsfeed() {
 	// get sorted list of status update and flag results
 	$all_results = tm_status_updates_get_combined_feed($account, $limit_from, $limit_to);
 
+	// get viewer ip
+	$viewer_ip = tm_geoip_get_real_visitor_ip();
+
 	// render item html from results
-	$results_html = tm_status_updates_render_results_items($all_results);
+	$results_html = tm_status_updates_render_results_items($all_results, $viewer_ip);
 
 	// render newsfeed section
 	$newsfeed_html = tm_status_updates_render_results_feed($results_html);
@@ -91,5 +97,4 @@ function tm_status_updates_display_newsfeed() {
 
 	return $html;
 }
-
 

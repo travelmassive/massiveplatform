@@ -54,8 +54,14 @@ function tm_status_updates_render_theme() {
 
 	// check past X days (need conf)
 
-	// render status update
-	$html = tm_status_updates_render_update($result);
+	// Increment view
+	tm_status_updates_increment_daily_view_count($result->id);
+
+	// Get viewer IP
+	$count_viewer_ip = tm_geoip_get_real_visitor_ip();
+
+	// Render status update
+	$html = tm_status_updates_render_update($result, $count_viewer_ip);
 
 	// add profile css
 	global $tm_status_updates_feed_template_profile_css;
@@ -66,7 +72,7 @@ function tm_status_updates_render_theme() {
 /**
  * Render a status update
  */
-function tm_status_updates_render_update($result, $show_repeat_user = false, $show_unapproved = false, &$last_flagging_user_uid = null) {
+function tm_status_updates_render_update($result, $count_viewer_ip = null, $show_repeat_user = false, $show_unapproved = false, &$last_flagging_user_uid = null) {
 
 	global $user;
 	global $conf;
@@ -148,16 +154,20 @@ function tm_status_updates_render_update($result, $show_repeat_user = false, $sh
 		return "";
 	}
 
-	// show actions if it's your post
-	$actions_display = "none";
-	$actions_html = "<span class='status_update_ago'>" . $posted_time . "</span>";
-	if (tm_status_updates_check_permission($result->entity_type, $result->entity_id, "edit", $user->uid)) {
-		$actions_display = "block";
-		$actions_html .= " <a href='' style='color: #888; text-decoration: underline;'>edit</a>";
+	// show details
+	$details_display = "block";
+	$details_html = "<span class='status_update_ago'>" . $posted_time . "</span>";
+	$view_count = tm_status_updates_get_view_count($result->id);
+	$details_html = "<span class='view_count'>" . $view_count . " views</span>";
+	$details_html .= "<a href='' style='color: #888; text-decoration: underline;'>edit</a>";
+
+	// Record visitor ip if set
+	if ($count_viewer_ip != null) {
+		tm_status_updates_increment_daily_view_count($result->id, $count_viewer_ip);
 	}
 
 	// render
-	$html = tm_status_updates_render_flag_feed($entity_url, $image_url, $feed_title, $feed_info, $actions_display, $actions_html);
+	$html = tm_status_updates_render_flag_feed($entity_url, $image_url, $feed_title, $feed_info, $details_display, $details_html);
 
 	return $html;
 
@@ -359,7 +369,7 @@ function tm_status_updates_render_flagged_item($result, $show_repeat_user = fals
 /**
  * Helper method to render results list
  */
-function tm_status_updates_render_results_items($results, $display_limit = 1000) {
+function tm_status_updates_render_results_items($results, $count_viewer_ip, $display_limit = 1000) {
 
 	global $conf;
 
@@ -380,7 +390,7 @@ function tm_status_updates_render_results_items($results, $display_limit = 1000)
 				continue;
 			}
 
-			$html = tm_status_updates_render_update($result);
+			$html = tm_status_updates_render_update($result, $count_viewer_ip);
 		}
 
 		// flagged item
@@ -409,7 +419,7 @@ function tm_status_updates_render_results_items($results, $display_limit = 1000)
 /**
  * Render flag feed from template
  */
-function tm_status_updates_render_flag_feed($feed_url, $feed_image_url, $feed_title, $feed_info, $actions_display = "none", $actions_html = "") {
+function tm_status_updates_render_flag_feed($feed_url, $feed_image_url, $feed_title, $feed_info, $details_display = "none", $details_html = "") {
 	global $tm_status_updates_feed_template;
 	$html = str_replace("__FEED_URL__", $feed_url, $tm_status_updates_feed_template);
 	$html = str_replace("__FEED_IMAGE_URL__", $feed_image_url, $html);
@@ -417,8 +427,8 @@ function tm_status_updates_render_flag_feed($feed_url, $feed_image_url, $feed_ti
 	$html = str_replace("__FEED_INFO__", $feed_info, $html);
 	$html = str_replace("__FEED_LI_STYLE__", "display: block;", $html);	
 	$html = str_replace("__FEED_LI_CLASS__", "feeditem", $html);
-	$html = str_replace("__ACTIONS_DISPLAY__", $actions_display, $html);
-	$html = str_replace("__ACTIONS_HTML__", $actions_html, $html);
+	$html = str_replace("__DETAILS_DISPLAY__", $details_display, $html);
+	$html = str_replace("__DETAILS_HTML__", $details_html, $html);
 
 	return $html;
 }
@@ -495,8 +505,8 @@ $tm_status_updates_feed_template = <<<EOT
 	      		<p class="meta status-updates"><span class="role">__FEED_INFO__</span>
 	      	</div>
 
-	      	<div class="actions" style="display: __ACTIONS_DISPLAY__; float: right; font-size: smaller;">
-	      		__ACTIONS_HTML__
+	      	<div class="details" style="display: __DETAILS_DISPLAY__; float: right; font-size: smaller;">
+	      		__DETAILS_HTML__
 	      	</div>
 	     
       	</div>

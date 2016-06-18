@@ -15,6 +15,9 @@ include_once 'tm_status_updates.frontpage.inc';
 include_once 'tm_status_updates.helpers.inc';
 include_once 'tm_status_updates.post_form.inc';
 include_once 'tm_status_updates.recommended.inc';
+include_once 'tm_status_updates.link_preview.inc';
+include_once 'tm_status_updates.view_count.inc';
+include_once 'tm_status_updates.drush.inc';
 
 
 /**
@@ -118,4 +121,40 @@ function tm_status_updates_check_permission($entity_type, $entity_id, $action, $
 
 }
 
+/**
+ * Create a status update
+ */
+function tm_status_updates_create_update($entity_id, $entity_type, $status_update, $posting_user, $posting_user_ip) {
+
+  global $conf;
+  
+  // Update status in database
+  $status_update_id = $invite = db_insert('tm_newsfeed_status_updates')
+    ->fields(array(
+      'entity_id' => $entity_id,
+      'entity_type' => $entity_type, // user, chapter, organization
+      'status_update' => trim($status_update),
+      //'created' => 'NOW',
+      //'latitude' => '',
+      //'longitude' => '',
+      'poster_uid' => $posting_user->uid,
+      'poster_ip' => $posting_user_ip
+    ))
+    ->execute();
+
+  // Flag user as having updated status
+  $flag = flag_get_flag('status_updated_by_member');
+  $flag->flag("unflag", $posting_user->uid); // unflag so we can flag again
+  $flag->flag("flag", $posting_user->uid);
+
+  // Initialize the view counter
+  tm_status_updates_init_total_view_count($status_update_id);
+
+  // Update view counters
+  if ($conf["tm_status_updates_view_counter_no_cron"]) {
+    tm_status_updates_update_total_view_counts();
+  }
+
+  return true;
+}
 

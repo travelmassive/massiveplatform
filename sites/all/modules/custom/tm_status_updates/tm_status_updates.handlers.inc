@@ -139,24 +139,14 @@ function tm_status_updates_post_user_create($entity_type, $entity_id, $status_up
     return;
   }
 
-  // Update status in database
-  $invite = db_insert('tm_newsfeed_status_updates')
-    ->fields(array(
-      'entity_id' => $entity_id,
-      'entity_type' => $entity_type, // user, chapter, organization
-      'status_update' => trim($status_update),
-      //'created' => 'NOW',
-      //'latitude' => '',
-      //'longitude' => '',
-      'poster_uid' => $posting_user->uid,
-      'poster_ip' => tm_geoip_get_real_visitor_ip()
-    ))
-    ->execute();
+  // Get IP of posting user
+  $posting_user_ip = tm_geoip_get_real_visitor_ip();
 
-  // Flag user as having updated status
-  $flag = flag_get_flag('status_updated_by_member');
-  $flag->flag("unflag", $posting_user->uid); // unflag so we can flag again
-  $flag->flag("flag", $posting_user->uid);
+  // Create status update
+  $ret = tm_status_updates_create_update($entity_id, $entity_type, $status_update, $posting_user, $posting_user_ip);
+  if (!$ret) {
+    $ret = array("result" => false, "error_message" => "Error saving status update", "redirect" => null);
+  }
 
   // Updated successfully
   if ($entity_type == "user") {
@@ -168,6 +158,8 @@ function tm_status_updates_post_user_create($entity_type, $entity_id, $status_up
   drupal_json_output($ret);
   return;
 }
+
+
 
 /**
  * Helper method to parse post_as field

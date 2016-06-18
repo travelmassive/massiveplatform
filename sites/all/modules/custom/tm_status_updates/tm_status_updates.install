@@ -16,10 +16,6 @@ CREATE TABLE IF NOT EXISTS `tm_newsfeed_status_updates` (
   `location_text` varchar(255) NULL,
   `poster_uid` int(11) NOT NULL,
   `poster_ip` varchar(255) NOT NULL,
-  `link_url` varchar(255) NULL,
-  `link_og_title` varchar(255) NULL,
-  `link_og_description` varchar(255) NULL,
-  `link_og_image` varchar(255) NULL,
   `moderator_uid` int(11) NULL,
   `moderator_hide` tinyint(3) DEFAULT 0,
   `moderator_note` varchar(255) NULL,
@@ -30,5 +26,44 @@ ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (entity_type);
 ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (created);
 ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (latitude);
 ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (longitude);
+
+
+drop table tm_newsfeed_link_details;
+CREATE TABLE IF NOT EXISTS `tm_newsfeed_link_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `status_update_id` int(11) NOT NULL,
+  `link_url` varchar(255) NULL,
+  `link_og_title` varchar(255) NULL,
+  `link_og_description` varchar(255) NULL,
+  `link_og_image` varchar(255) NULL,
+  `image_file` varchar(255) NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+ALTER TABLE `tm_newsfeed_link_details` ADD INDEX (status_update_id);
+
+
+drop table tm_newsfeed_view_count_daily;
+CREATE TABLE IF NOT EXISTS `tm_newsfeed_view_count_daily` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `status_update_id` int(11) NOT NULL,
+  `view_count` int(11) NOT NULL,
+  `viewer_ip` varchar(55) NOT NULL,
+  `created` timestamp DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+ALTER TABLE `tm_newsfeed_view_count_daily` ADD INDEX (status_update_id);
+ALTER TABLE `tm_newsfeed_view_count_daily` ADD INDEX (viewer_ip);
+ALTER TABLE `tm_newsfeed_view_count_daily` ADD INDEX (created);
+
+
+drop table tm_newsfeed_view_count_total;
+CREATE TABLE IF NOT EXISTS `tm_newsfeed_view_count_total` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `status_update_id` int(11) NOT NULL,
+  `total_view_count` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+ALTER TABLE `tm_newsfeed_view_count_total` ADD INDEX (status_update_id);
+
 
 */

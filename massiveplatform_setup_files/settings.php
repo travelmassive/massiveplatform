@@ -1101,6 +1101,7 @@ $conf["tm_branding_include_js"] = "";
 $conf["tm_status_updates_placeholders"] = array("Post a news update...", "Where is your next destination?", "Share an achievement with the community...");
 $conf["tm_status_updates_silence_uids"] = array(); // silence any spamming members
 $conf["tm_status_updates_hide_recommended_uids"] = array(); // hide members from recommended members lists
+$conf["tm_status_updates_view_counter_no_cron"] = true; // for larger sites, set to fale and run "drush status-updates-index-view-counter" daily
 
 $conf['install_profile'] = 'tm';
 $conf['suppress_itok_output'] = true; // supress ?itok so email images can be loaded by gmail

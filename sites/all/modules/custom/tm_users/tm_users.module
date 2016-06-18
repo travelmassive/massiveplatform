@@ -20,7 +20,6 @@ include_once 'tm_users.moderate.inc';
 include_once 'tm_users.register.inc';
 include_once 'tm_users.tips.inc';
 
-
 /**
  * Init tm_users module
  */

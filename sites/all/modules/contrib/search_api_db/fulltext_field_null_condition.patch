@@ -1,0 +1,44 @@
+diff --git a/search_api_db.test b/search_api_db.test
+index d0e5e5b..cd7ddba 100644
+--- a/search_api_db.test
++++ b/search_api_db.test
+@@ -964,6 +964,25 @@ protected function regressionTests2() {
+     $this->assertEqual($results['result count'], 0, 'Search for unknown word with 29 multi-byte characters returned no results.');
+     $this->assertEqual($results['ignored'], array(), 'No keys were ignored.');
+     $this->assertEqual($results['warnings'], array(), 'No warnings were displayed.');
++
++    // Regression tests for #2745655.
++    $results = $this->buildSearch()
++      ->condition('title', NULL)
++      ->execute();
++    // "Minimum chars" is 3 at this point, so all items with no longer words in
++    // their titles will be returned, too.
++    $this->assertEqual($results['result count'], 4, 'Search for items without title returned correct number of results.');
++    $this->assertEqual(array_keys($results['results']), array(3, 4, 5, 6), 'Search for items without title returned correct result.');
++    $this->assertEqual($results['ignored'], array(), 'No keys were ignored.');
++    $this->assertEqual($results['warnings'], array(), 'No warnings were displayed.');
++
++    $results = $this->buildSearch()
++      ->condition('title', NULL, '<>')
++      ->execute();
++    $this->assertEqual($results['result count'], 2, 'Search for items with title returned correct number of results.');
++    $this->assertEqual(array_keys($results['results']), array(1, 2), 'Search for items with title returned correct result.');
++    $this->assertEqual($results['ignored'], array(), 'No keys were ignored.');
++    $this->assertEqual($results['warnings'], array(), 'No warnings were displayed.');
+   }
+ 
+   /**
+diff --git a/service.inc b/service.inc
+index 38befe6..0f638d2 100644
+--- a/service.inc
++++ b/service.inc
+@@ -1679,6 +1679,9 @@ protected function createFilterCondition(SearchApiQueryFilterInterface $filter,
+         if ($f[1] === NULL && $field['column'] === 'value') {
+           $query = $this->connection->select($field['table'], 't')
+             ->fields('t', array('item_id'));
++          if (search_api_is_text_type($field['type'])) {
++            $query->condition('t.field_name', $f[0]);
++          }
+           $cond->condition('t.item_id', $query, $not_equals ? 'IN' : 'NOT IN');
+           continue;
+         }

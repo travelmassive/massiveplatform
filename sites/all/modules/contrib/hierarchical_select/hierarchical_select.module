@@ -13,6 +13,16 @@ define('HS_DEVELOPER_MODE', 0);
 
 //----------------------------------------------------------------------------
 // Drupal core hooks.
+/**
+ * Implements hook_help().
+ */
+function hierarchical_select_help($path, $arg) {
+  switch ($path) {
+    // Displaying help text on help page.
+    case 'admin/help#hierarchical_select':
+      return t("Hierarchical Select has the ability to save the entire lineage of a selection or only the 'deepest' selection. You can configure it to force the user to make a selection as deep as possible in the tree, or allow the user to select an item anywhere in the tree. Levels can be labeled, you can configure limit the number of items that can be selected, configure a title for the dropbox, choose a site-wide animation delay, and so on. You can even create new items and levels through Hierarchical Select!");
+  }
+}
 
 /**
  * Implements hook_menu().
@@ -92,8 +102,6 @@ function hierarchical_select_element_info() {
       'params' => array(),
       'save_lineage'    => 0,
       'enforce_deepest' => 0,
-      'entity_count'    => 0,
-      'require_entity'  => 0,
       'resizable'       => 1,
       'level_labels' => array(
         'status' => 0,
@@ -104,6 +112,7 @@ function hierarchical_select_element_info() {
         'title'    => t('All selections'),
         'limit'    => 0,
         'reset_hs' => 1,
+        'sort'     => 1,
       ),
       'editability' => array(
         'status'           => 0,
@@ -111,6 +120,14 @@ function hierarchical_select_element_info() {
         'allowed_levels'   => array(),
         'allow_new_levels' => 0,
         'max_levels'       => 3,
+      ),
+      'entity_count'    => array(
+        'enabled' => 0,
+        'require_entity' => 0,
+        'settings' => array(
+          'count_children' => 0,
+          'entity_types' => array(),
+        ),
       ),
       'animation_delay'    => variable_get('hierarchical_select_animation_delay', 400),
       'special_items'      => array(),
@@ -366,6 +383,7 @@ function _hs_process_attach_css_js($element, $hsid, &$form_state, $complete_form
   global $language;
   // Set up Javascript and add settings specifically for the current
   // hierarchical select.
+  $element['#attached']['library'][] = array('system', 'ui');
   $element['#attached']['library'][] = array('system', 'drupal.ajax');
   $element['#attached']['library'][] = array('system', 'jquery.form');
   $element['#attached']['library'][] = array('system', 'effects');
@@ -1035,7 +1053,11 @@ function _hierarchical_select_process_get_db_selection($element, $hsid, &$form_s
           // we make sure that on a form rebuild the same remove checkbox,
           // which is accessed by index, is not set, preventing a double removal.
           // @see https://www.drupal.org/node/1566878#comment-9226261
-          unset($form_state['input']['parent']['dropbox']['visible']['lineages'][$x]['remove']);
+          $elm = &$form_state['input'];
+          foreach ($element['#parents'] as $parent) {
+            $elm = &$elm[$parent];
+          }
+          unset($elm['dropbox']['visible']['lineages'][$x]['remove']);
         }
       }
     }
@@ -1953,13 +1975,22 @@ function _hierarchical_select_apply_entity_settings($level, $config) {
   // settings are enabled.
   // NOTE: this uses the optional "hierarchical_select_entity_count" hook, so
   // we also check if it's implemented.
-  if (($config['entity_count'] || $config['require_entity']) && module_hook($config['module'], 'hierarchical_select_entity_count')) {
+  if (isset($config['entity_count']['enabled']) && ($config['entity_count']['enabled'] || $config['entity_count']['require_entity']) && module_hook($config['module'], 'hierarchical_select_entity_count')) {
     foreach ($level as $item => $label) {
       // We don't want to alter internal or special items.
       if (!preg_match('/(none|label_\d+|create_new_item)/', $item)
             && !in_array($item, $special_items['exclusive'])
             && !in_array($item, $special_items['none'])
          ) {
+        // Add our entity count settings to the parameters.
+        $config['params'] += array(
+          'entity_count' => array(
+            'settings' => array(
+              'count_children' => $config['entity_count']['settings']['count_children'],
+              'entity_types' => $config['entity_count']['settings']['entity_types'],
+            ),
+          ),
+        );
         $entity_count = module_invoke($config['module'], 'hierarchical_select_entity_count', $item, $config['params']);
 
         // When the require_entity setting is enabled and the entity count is
@@ -1967,10 +1998,10 @@ function _hierarchical_select_apply_entity_settings($level, $config) {
         // When the item is not removed from the level due to the above and
         // the entity_count setting is enabled, update the label of the item
         // to include the entity count.
-        if ($config['require_entity'] && $entity_count == 0) {
+        if ($config['entity_count']['require_entity'] && $entity_count == 0) {
           unset($level[$item]);
         }
-        elseif ($config['entity_count']) {
+        elseif ($config['entity_count']['enabled']) {
           $level[$item] = "$label ($entity_count)";
         }
       }
@@ -2147,7 +2178,9 @@ function _hierarchical_select_dropbox_generate($config, $selection) {
       }
     }
 
-    usort($dropbox->lineages, '_hierarchical_select_dropbox_sort');
+    if (!isset($config['dropbox']['sort']) || $config['dropbox']['sort']){
+      usort($dropbox->lineages, '_hierarchical_select_dropbox_sort');
+    }
 
     // Now store each lineage's selection too. This is needed on the client side
     // to enable the remove button to let the server know which selected items

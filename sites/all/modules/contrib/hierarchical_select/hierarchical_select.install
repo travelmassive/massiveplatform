@@ -39,3 +39,46 @@ function hierarchical_select_update_7001() {
   ->condition('name', 'hierarchical_select')
   ->execute();
 }
+
+/**
+ * Update Hierarchical Select config to support improved "entity count".
+ */
+function hierarchical_select_update_7002() {
+  module_load_include('inc', 'hierarchical_select', 'includes/common');
+  // Retrieve all information items.
+  $info_items = array();
+  foreach (module_implements('hierarchical_select_config_info') as $module) {
+    $info_items = array_merge_recursive($info_items, module_invoke($module, 'hierarchical_select_config_info'));
+  }
+  foreach ($info_items as $info_item) {
+    // Load config.
+    $config = hierarchical_select_common_config_get($info_item['config_id']);
+
+    // Move old settings to new location.
+    $config['entity_count'] = array(
+      'enabled' => $config['entity_count'],
+      'require_entity' => $config['require_entity'],
+    );
+
+    // Remove old setting.
+    unset($config['require_entity']);
+
+    // Add entity types settings.
+    $entity_info = entity_get_info();
+    foreach ($entity_info as $entity => $entity_info) {
+      if (!empty($entity_info['bundles']) && $entity_info['fieldable'] === TRUE) {
+        foreach ($entity_info['bundles'] as $bundle => $bundle_info) {
+          if ($entity == 'node') {
+            $config['entity_count']['settings']['entity_types'][$entity]['count_' . $entity][$bundle] = $bundle;
+          }
+          else {
+            $config['entity_count']['settings']['entity_types'][$entity]['count_' . $entity][$bundle] = 0;
+          }
+        }
+      }
+    }
+
+    // Save new config.
+    hierarchical_select_common_config_set($info_item['config_id'], $config);
+  }
+}

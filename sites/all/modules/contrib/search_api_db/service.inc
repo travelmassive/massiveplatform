@@ -1674,6 +1674,9 @@ class SearchApiDbService extends SearchApiAbstractService {
         if ($f[1] === NULL && $field['column'] === 'value') {
           $query = $this->connection->select($field['table'], 't')
             ->fields('t', array('item_id'));
+          if (search_api_is_text_type($field['type'])) {
+            $query->condition('t.field_name', $f[0]);
+          }
           $cond->condition('t.item_id', $query, $not_equals ? 'IN' : 'NOT IN');
           continue;
         }

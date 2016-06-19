@@ -235,6 +235,8 @@ where
 	and UNIX_TIMESTAMP(updates.created) <= :end_date
 	-- exclude members that aren't approved
 	and ( (users_roles.uid is not null and updates.entity_type = 'user') or updates.entity_type <> 'user' )
+	-- exclude status updates that users have removed themselves, or moderators have hidden (i.e. spam)
+	and updates.is_removed = 0 and updates.moderator_hide = 0
 group by
 	-- mysql cheat, so entities only appear once (can't use distinct because 'created' values are different)
 	updates.entity_id

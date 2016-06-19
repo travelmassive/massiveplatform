@@ -11,24 +11,24 @@ CREATE TABLE IF NOT EXISTS `tm_newsfeed_status_updates` (
   `status_update` longtext COLLATE utf8_unicode_ci NOT NULL,
   `created` timestamp DEFAULT CURRENT_TIMESTAMP,
   `edited` timestamp NULL,
-  `latitude` decimal(18,12) NULL,
-  `longitude` decimal(18,12) NULL,
   `location_text` varchar(255) NULL,
+  `location_latitude` decimal(18,12) NULL,
+  `location_longitude` decimal(18,12) NULL,
+  `preview_link_id` int(11) NULL,
   `poster_uid` int(11) NOT NULL,
   `poster_ip` varchar(255) NOT NULL,
-  `link_url` varchar(255) NULL,
-  `link_og_title` varchar(255) NULL,
-  `link_og_description` varchar(255) NULL,
-  `link_og_image` varchar(255) NULL,
   `moderator_uid` int(11) NULL,
   `moderator_hide` tinyint(3) DEFAULT 0,
   `moderator_note` varchar(255) NULL,
+  `moderator_timestamp` timestamp NULL,
+  `is_removed` tinyint(3) DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (entity_id);
 ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (entity_type);
 ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (created);
-ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (latitude);
-ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (longitude);
+ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (location_latitude);
+ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (location_longitude);
+
 
 */

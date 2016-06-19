@@ -15,7 +15,7 @@ function tm_status_updates_get_combined_feed($account, $limit_from = 0, $limit_t
 	$follow_flags[] = flag_get_flag('event_register')->fid;
 
 	// get recent status update items
-	$query = "SELECT *, UNIX_TIMESTAMP(`created`) AS `timestamp` FROM tm_newsfeed_status_updates WHERE (entity_id IN (SELECT entity_id FROM flagging WHERE uid = :uid AND fid IN (" . implode(",", $follow_flags) . ")) OR entity_id = :uid) ORDER BY created DESC LIMIT " . (int)$limit_from . ", " . (int)$limit_to;
+	$query = "SELECT *, UNIX_TIMESTAMP(`created`) AS `timestamp` FROM tm_newsfeed_status_updates WHERE (entity_id IN (SELECT entity_id FROM flagging WHERE uid = :uid AND fid IN (" . implode(",", $follow_flags) . ")) OR entity_id = :uid) AND is_removed=0 AND moderator_hide=0 ORDER BY created DESC LIMIT " . (int)$limit_from . ", " . (int)$limit_to;
 	$status_updates = db_query($query, array(':uid' => $account->uid))->fetchAll();
 
 	// get recent flag items
@@ -50,7 +50,7 @@ function tm_status_updates_get_combined_feed_global($limit_from = 0, $limit_to =
 	$follow_flags[] = flag_get_flag('event_register')->fid;
 
 	// get recent status update items
-	$query = "SELECT *, UNIX_TIMESTAMP(`created`) AS `timestamp` FROM tm_newsfeed_status_updates WHERE (entity_id IN (SELECT entity_id FROM flagging WHERE fid IN (" . implode(",", $follow_flags) . "))) ORDER BY created DESC LIMIT " . (int)$limit_from . ", " . (int)$limit_to;
+	$query = "SELECT *, UNIX_TIMESTAMP(`created`) AS `timestamp` FROM tm_newsfeed_status_updates WHERE (entity_id IN (SELECT entity_id FROM flagging WHERE fid IN (" . implode(",", $follow_flags) . "))) AND is_removed=0 AND moderator_hide=0 ORDER BY created DESC LIMIT " . (int)$limit_from . ", " . (int)$limit_to;
 	$status_updates = db_query($query)->fetchAll();
 
 	// get recent flag items
@@ -78,7 +78,7 @@ function tm_status_updates_get_combined_feed_global($limit_from = 0, $limit_to =
 function tm_status_updates_get_last_update_timestamp($entity_type, $entity_id) {
 
 	// fetch the timestamp of the user's most recent status update
-	$query = "SELECT CONVERT_TZ(`created`, @@session.time_zone, '+00:00') AS `created_utc`  FROM tm_newsfeed_status_updates WHERE entity_type = :entity_type AND entity_id = :entity_id ORDER BY created DESC LIMIT 1";
+	$query = "SELECT CONVERT_TZ(`created`, @@session.time_zone, '+00:00') AS `created_utc`  FROM tm_newsfeed_status_updates WHERE entity_type = :entity_type AND entity_id = :entity_id AND is_removed=0 AND moderator_hide=0 ORDER BY created DESC LIMIT 1";
 	$result = db_query($query, array(":entity_type" => $entity_type, ":entity_id" => $entity_id))->fetch();
 
 	// get timestamp of last status update
@@ -98,7 +98,7 @@ function tm_status_updates_get_last_update_timestamp($entity_type, $entity_id) {
  */
 function tm_status_updates_get_latest_update($entity_id, $entity_type) {
 
-	$query = "SELECT *, UNIX_TIMESTAMP(`created`) AS `timestamp` FROM tm_newsfeed_status_updates WHERE entity_id = :entity_id AND entity_type = :entity_type AND moderator_hide = 0 ORDER BY created DESC LIMIT 1";
+	$query = "SELECT *, UNIX_TIMESTAMP(`created`) AS `timestamp` FROM tm_newsfeed_status_updates WHERE entity_id = :entity_id AND entity_type = :entity_type AND is_removed=0 AND moderator_hide=0 ORDER BY created DESC LIMIT 1";
 
 	$results = db_query($query, array(':entity_type' => $entity_type, ':entity_id' => $entity_id))->fetchAll();
 

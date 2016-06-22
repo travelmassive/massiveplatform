@@ -239,7 +239,7 @@
       success: function(data) {
 
         // add data
-        $(".status-update-list").append(data);
+        $(".status-update-list:first").append(data);
 
         // add dropdown handlers
         tm_status_update_init_dropdown_handlers();

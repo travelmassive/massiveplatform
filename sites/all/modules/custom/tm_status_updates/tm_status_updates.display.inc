@@ -5,34 +5,57 @@
 /**
  * Display global news feed
  */
-function tm_status_updates_display_global() {
+function tm_status_updates_display_feed($feed_type) {
 
 	global $user;
 	global $conf;
 
 	$display_from = 0;
 	$display_to = $conf["tm_status_updates_items_per_load"];
+	$account = user_load($user->uid);
 
 	// hide title
 	drupal_add_css('#page-title { display: none; }', 'inline');
 
-	// if user is not signed in, show them call to action
-	if ($user->uid == 0) {
-		// instead of status update form, show sign in and call to action
-		$tm_status_update_form = "Sign up to post and update!";
-	} else {
-	
-		// load js libraries
-		tm_status_updates_display_include_js(true, true, true);
+	// global feed
+	if ($feed_type == "global") {
+		$feed_title = "Global feed";
+		if ($user->uid == 0) {
+			$tm_status_update_form = tm_status_updates_render_login_form();
+		} else {
+			$tm_status_update_form = tm_status_updates_render_update_form($account);
+		}
+		$all_results = tm_status_updates_get_combined_feed_global($display_from, $display_to);
+	}
 
-		// load update form
-		$account = user_load($user->uid);
+	// newsfeed
+	if ($feed_type == "newsfeed") {
+		$feed_title = "News feed";
+		$all_results = tm_status_updates_get_combined_feed($account, $display_from, $display_to);
 		$tm_status_update_form = tm_status_updates_render_update_form($account);
 	}
 
-	// get sorted list of status update and flag results
-	$all_results = tm_status_updates_get_combined_feed_global($display_from, $display_to);
+	// tags
+	if ($feed_type == "tags") {
+		$feed_title = "Tagged updates";
+		$all_results = tm_status_updates_get_combined_feed($account, $display_from, $display_to);
+		$tm_status_update_form = "<h2>Updates tagged #123</h2>";
+	}
 
+	// nearby
+	if ($feed_type == "nearby") {
+		$feed_title = "Nearby updates";
+		$all_results = tm_status_updates_get_combined_feed($account, $display_from, $display_to);
+		$tm_status_update_form = "<h2>Nearby updates</h2>";
+	}
+
+	// // load js libraries
+	if ($user->uid == 0) {
+		tm_status_updates_display_include_js(true, false, false);
+	} else {
+		tm_status_updates_display_include_js(true, true, true);
+	}
+	
 	// get viewer ip
 	$viewer_ip = tm_geoip_get_real_visitor_ip();
 
@@ -40,78 +63,71 @@ function tm_status_updates_display_global() {
 	$results_html = tm_status_updates_render_results_items($all_results, $viewer_ip);
 
 	// render newsfeed section
-	$newsfeed_html = tm_status_updates_render_results_feed($results_html, "Global Updates");
+	$newsfeed_html = tm_status_updates_render_results_feed($results_html, $feed_title, "newsfeed");
 
 	// add loader
-	$loader_html = tm_status_updates_render_loader("global", $display_from, $display_to);
+	$loader_html = tm_status_updates_render_loader($feed_type, $display_from, $display_to);
 	$newsfeed_html .= $loader_html;
+
+	// promoted updates
+	$promoted_html = tm_status_updates_render_promoted(7, $conf["tm_status_updates_show_featured"]);
 
 	// recommended members
 	$recommended_html = tm_status_updated_render_recommended_members($user);
+
+	// custom message
+	$message_html = "";
+	if (isset($conf["tm_status_updates_custom_message"][$feed_type])) {
+		$message_html = tm_status_update_render_custom_message($conf["tm_status_updates_custom_message"][$feed_type]);
+	}
 
 	// construct page from rendered items
 	$html = file_get_contents(drupal_get_path('module', 'tm_status_updates') .'/templates/tm_status_updates_newsfeed.tpl.php');
 	$html = str_replace("__STATUS_UPDATE_FORM__", $tm_status_update_form, $html);
 	$html = str_replace("__NEWSFEED_RESULTS__", $newsfeed_html, $html);
+	$html = str_replace("__PROMOTED_UPDATES__", $promoted_html, $html);
 	$html = str_replace("__RECOMMENDED_MEMBERS__", $recommended_html, $html);
+	$html = str_replace("__CUSTOM_MESSAGE__", $message_html, $html);
 
 	return $html;
 }
 
 /**
+ * Global feed render
+ * Wrapper for tm_status_updates_display_feed()
+ */
+function tm_status_updates_display_global() {
+	return tm_status_updates_display_feed("global");
+}
+
+/**
  * Status updates render
+ * Wrapper for tm_status_updates_display_feed()
  */
 function tm_status_updates_display_newsfeed() {
  
  	global $user;
- 	global $conf;
- 
- 	$display_from = 0;
- 	$display_to = $conf["tm_status_updates_items_per_load"];
 
- 	// render global newsfeed if not logged in
- 	if (!user_is_logged_in()) {
- 		return tm_status_updates_display_global();
+ 	if ($user->uid == 0) {
+ 		return tm_status_updates_display_feed("global");
  	}
+ 	return tm_status_updates_display_feed("newsfeed");
+}
 
- 	// load user account
- 	$account = user_load($user->uid);
+/**
+ * Tags feed render
+ * Wrapper for tm_status_updates_display_feed()
+ */
+function tm_status_updates_display_tags() {
+	return tm_status_updates_display_feed("tags");
+}
 
-	// hide title
-	drupal_add_css('#page-title { display: none; }', 'inline');
-
-	// load js libraries
-	tm_status_updates_display_include_js(true, true, true);
-
-	// render update form
-	$tm_status_update_form = tm_status_updates_render_update_form($account);
-
-	// get sorted list of status update and flag results
-	$all_results = tm_status_updates_get_combined_feed($account, $display_from, $display_to);
-
-	// get viewer ip
-	$viewer_ip = tm_geoip_get_real_visitor_ip();
-
-	// render item html from results
-	$results_html = tm_status_updates_render_results_items($all_results, $viewer_ip);
-
-	// render newsfeed section
-	$newsfeed_html = tm_status_updates_render_results_feed($results_html, "Latest Updates");
-	
-	// add loader
-	$loader_html = tm_status_updates_render_loader("newsfeed", $display_from, $display_to);
-	$newsfeed_html .= $loader_html;
-
-	// recommended members
-	$recommended_html = tm_status_updated_render_recommended_members($user);
-
-	// construct page from rendered items
-	$html = file_get_contents(drupal_get_path('module', 'tm_status_updates') .'/templates/tm_status_updates_newsfeed.tpl.php');
-	$html = str_replace("__STATUS_UPDATE_FORM__", $tm_status_update_form, $html);
-	$html = str_replace("__NEWSFEED_RESULTS__", $newsfeed_html, $html);
-	$html = str_replace("__RECOMMENDED_MEMBERS__", $recommended_html, $html);
-
-	return $html;
+/**
+ * Nearby feed render
+ * Wrapper for tm_status_updates_display_feed()
+ */
+function tm_status_updates_display_nearby() {
+	return tm_status_updates_display_feed("nearby");
 }
 
 /**

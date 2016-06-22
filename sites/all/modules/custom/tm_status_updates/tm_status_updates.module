@@ -47,6 +47,22 @@ function tm_status_updates_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  $items['newsfeed/tags/%'] = array(
+    'title' => 'Tagged status updates',
+    'page callback' => 'tm_status_updates_display_tags',
+    'page arguments' => array(1),
+    'access callback' => 'tm_status_updates_display_callback',
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['newsfeed/nearby/%'] = array(
+    'title' => 'Nearby status updates',
+    'page callback' => 'tm_status_updates_display_nearby',
+    'page arguments' => array(1),
+    'access callback' => 'tm_status_updates_display_callback',
+    'type' => MENU_CALLBACK,
+  );
+
   $items['newsfeed/load'] = array(
     'title' => 'Load more news feed',
     'page callback' => 'tm_status_updates_display_ajax',

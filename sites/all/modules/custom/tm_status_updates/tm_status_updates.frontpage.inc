@@ -33,7 +33,7 @@ function tm_status_updates_show_frontpage_updates($display_num_items = 5, $displ
 
 	// render newsfeed section
 	global $tm_status_updates_feed_template_frontpage_css;
-	$newsfeed_html = tm_status_updates_render_results_feed($results_html, "Latest Updates", "/newsfeed", "View more", $tm_status_updates_feed_template_frontpage_css);
+	$newsfeed_html = tm_status_updates_render_results_feed($results_html, "Latest Updates", "frontpage", "/newsfeed", "View more", $tm_status_updates_feed_template_frontpage_css);
 
 	// store in cache
 	// for public users
@@ -45,7 +45,7 @@ function tm_status_updates_show_frontpage_updates($display_num_items = 5, $displ
 
 	// load js libraries
 	tm_status_updates_display_include_js(true, false, false);
-	
+
 	// return html
 	return $newsfeed_html;
 }

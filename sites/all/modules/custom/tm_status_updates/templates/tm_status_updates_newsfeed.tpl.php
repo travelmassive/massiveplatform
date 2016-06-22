@@ -8,13 +8,8 @@ __STATUS_UPDATE_FORM__
 
 	<div class="column second" id="newsfeed-sidebar">
 
-		<!--<section class="contained contained-block newsfeed">
-			<div class="contained-body newsfeed">
-			<p style="margin-left: 16px;">
-				Let the community know what you've been up to with a short status update.<br>
-			</p>
-		</section>-->
-
+		__PROMOTED_UPDATES__
+		__CUSTOM_MESSAGE__
 		__RECOMMENDED_MEMBERS__
 
 	</div>

@@ -667,7 +667,7 @@ function tm_status_updates_render_details($details) {
  * Helper method to render results feed into template
  * Will include the css
  */
-function tm_status_updates_render_results_feed($result_html, $title, $more_url = "", $more_text = "", $include_css = "") {
+function tm_status_updates_render_results_feed($result_html, $title, $css_class = "", $more_url = "", $more_text = "", $include_css = "") {
 
 	global $tm_status_updates_feeds_template;
 
@@ -689,6 +689,10 @@ function tm_status_updates_render_results_feed($result_html, $title, $more_url =
 		global $tm_status_updates_feed_template_css;
 		$include_css = $tm_status_updates_feed_template_css;
 	}
+
+	// css class
+	$newsfeed_html = str_replace("__CSS_CLASS__", $css_class, $newsfeed_html);
+
 
 	return $include_css . "\n" . $newsfeed_html;
 }
@@ -763,6 +767,44 @@ function tm_status_updates_render_loader($loader_feed_type, $loader_from, $loade
 }
 
 /**
+ * Render promoted updates
+ */
+function tm_status_updates_render_promoted($num_days = 7, $display_limit = 3) {
+
+	// promoted updates
+	$promoted_html = "";
+	$promoted_updates = tm_status_updates_get_promoted_updates($num_days);
+	if (sizeof($promoted_updates) == 0) {
+		return "";
+	}
+	shuffle($promoted_updates);
+	$promoted_updates = array_slice($promoted_updates, 0, $display_limit);
+	if (sizeof($promoted_updates) > 0) {
+		$promoted_items_html = tm_status_updates_render_results_items($promoted_updates, null, false, false, false);
+		$promoted_html = tm_status_updates_render_results_feed($promoted_items_html, "Featured Posts", "promoted");
+	}
+
+	return $promoted_html;
+}
+
+/**
+ * Render a custom message for the newsfeed
+ */
+function tm_status_update_render_custom_message($message) {
+
+	global $tm_status_update_custom_message_template;
+	$html = str_replace("__MESSAGE__", $message, $tm_status_update_custom_message_template);
+	return $html;
+}
+
+/**
+ * Render login form for the newsfeed
+ */
+function tm_status_updates_render_login_form() {
+	return "Please sign in!";
+}
+
+/**
  * Helper method to render text to max length
  */
 function tm_status_updates_render_max_length($text, $max_length) {
@@ -777,7 +819,7 @@ function tm_status_updates_render_max_length($text, $max_length) {
 
 global $tm_status_updates_feeds_template;
 $tm_status_updates_feeds_template = <<<EOT
-<section class="contained contained-block status-updates">
+<section class="contained contained-block status-updates __CSS_CLASS__">
 	<header class="contained-head">
 		<h1 class="prime-title status-updates top">__FEED_TITLE__</h1>
 	</header>
@@ -852,15 +894,29 @@ $tm_status_update_link_preview_template = <<<EOT
 <!--googleon: index-->
 EOT;
 
+global $tm_status_update_custom_message_template;
+$tm_status_update_custom_message_template = <<<EOT
+<section class="contained contained-block newsfeed">
+<div class="contained-body newsfeed">
+	<p style="margin-left: 16px; margin-right: 8px; padding: 16px;">
+		__MESSAGE__
+	</p>
+</div>
+</section>
+EOT;
+
 global $tm_status_updates_feed_template_css;
 $tm_status_updates_feed_template_css = <<<EOT
 <style>
+.contained-block.newsfeed { overflow: visible; }
 .status-update-container { padding-left: 1rem; padding-top: 0.5rem; padding-right: 4.2em; }
 .prime-title.status-updates a:hover { color: #3080b2;}
 .prime-title.status-updates a { text-decoration: underline;}
 .card.status-updates { padding-top: 0.5rem; padding-bottom: 0.5rem;}
 .card.status-updates:hover { background-color: #e7f2f7; }
 img.status-updates-image { max-height: 64px; max-width: 64px; border-radius: 4px; }
+.status-updates.newsfeed { border-left: 8px solid #2b75b4; }
+.status-updates.promoted { border-left: 8px solid #ffA700; }
 </style>
 EOT;
 

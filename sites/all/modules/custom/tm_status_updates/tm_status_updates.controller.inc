@@ -103,6 +103,24 @@ function tm_status_updates_get_latest_update($entity_id, $entity_type) {
 }
 
 /**
+ * Get the most recent promoted updates
+ */
+function tm_status_updates_get_promoted_updates($days_old = 7) {
+
+	$query = "SELECT *, UNIX_TIMESTAMP(`created`) AS `timestamp` FROM tm_newsfeed_status_updates WHERE  created >= DATE_SUB(NOW(), INTERVAL " . intval($days_old) . " DAY) AND is_promoted = 1 AND moderator_hide = 0 AND is_removed = 0 ORDER BY created DESC";
+
+	$results = db_query($query)->fetchAll();
+
+	// no updates
+	if (sizeof($results) == 0) {
+		return null;
+	}
+
+	// return results
+	return $results;
+}
+
+/**
  * Create a status update
  */
 function tm_status_updates_create_update($entity_id, $entity_type, $status_update, $preview_link_id, $posting_user, $posting_user_ip, $location_text, $location_latitude, $location_longitude) {
@@ -182,7 +200,6 @@ function tm_status_updates_promote($status_update_id, $is_promoted = true) {
 	return true;
 }
 
-
 /**
  * Edit status update
  */
@@ -215,7 +232,6 @@ function tm_status_updates_edit_update($status_update) {
 	}
 	
 }
-
 
 /**
  * Return a sorted list of flag and status updates for a user account

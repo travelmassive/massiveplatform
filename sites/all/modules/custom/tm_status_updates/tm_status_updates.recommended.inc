@@ -41,7 +41,6 @@ function tm_status_updated_render_recommended_members($account) {
 	$recommended_html = str_replace("__RECOMMENDED_MEMBERS_TITLE__", "Featured members", $tm_status_updates_recommended_members_template);
 	$recommended_html = str_replace("__RECOMMENDED_ITEMS__", $recommended_members_html, $recommended_html);
 	
-
 	return $recommended_html;
 }
 

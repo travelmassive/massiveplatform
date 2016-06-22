@@ -1963,7 +1963,3 @@ function tm_fields_google_analytics_report_link($path) {
 
   return $google_analytics_report_link;
 }
-
-
-
-

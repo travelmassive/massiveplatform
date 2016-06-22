@@ -8,6 +8,7 @@
 function tm_status_updates_show_frontpage_updates($display_num_items = 5, $display_max_items = 5, $cache_key = "page-status-updates", $cache_time = 120, $show_unapproved = false, $show_repeat_user = false) {
 
 	global $user;
+	global $conf;
 
 	// cache for logged out users
 	if (!user_is_logged_in()) {
@@ -19,7 +20,7 @@ function tm_status_updates_show_frontpage_updates($display_num_items = 5, $displ
 	}
 
 	$limit_from = 0;
-	$limit_to = 10;
+	$limit_to = 50;
 	$display_limit = 5;
 
 	// get sorted list of status update and flag results
@@ -33,7 +34,11 @@ function tm_status_updates_show_frontpage_updates($display_num_items = 5, $displ
 
 	// render newsfeed section
 	global $tm_status_updates_feed_template_frontpage_css;
-	$newsfeed_html = tm_status_updates_render_results_feed($results_html, "Latest Updates", "frontpage", "/newsfeed", "View more", $tm_status_updates_feed_template_frontpage_css);
+	if ($conf["tm_status_updates_enabled"]) {
+		$newsfeed_html = tm_status_updates_render_results_feed($results_html, "Latest Updates", "frontpage", "/newsfeed", "View more", $tm_status_updates_feed_template_frontpage_css);
+	} else {
+		$newsfeed_html = tm_status_updates_render_results_feed($results_html, "Latest Updates", "", "", "", $tm_status_updates_feed_template_frontpage_css);
+	}
 
 	// store in cache
 	// for public users

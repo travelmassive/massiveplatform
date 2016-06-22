@@ -133,7 +133,7 @@ function tm_status_updates_render_update($result, $count_viewer_ip = null, $show
 	}
 
   	// prepare status update text
-  	$status_update_html = tm_base_linkify(strip_tags($result->status_update), array('http', 'https'), array("rel" => "nofollow", "target" => "_blank"));
+  	$status_update_html = tm_base_linkify(strip_tags($result->status_update), array('http', 'https', 'hashtag'), array("rel" => "nofollow", "target" => "_blank"));
 
   	// post update or shared link
   	$post_action_text = "posted an update";
@@ -800,8 +800,16 @@ function tm_status_update_render_custom_message($message) {
 /**
  * Render login form for the newsfeed
  */
-function tm_status_updates_render_login_form() {
-	return "Please sign in!";
+function tm_status_updates_render_login_message() {
+
+	global $conf;
+
+	$signup_message = "Welcome to the " . $conf["tm_site_name"] . " News Feed. Want to contribute to our community? ";
+	if (isset($conf["tm_status_updates_signup_message"])) {
+		$signup_message = $conf["tm_status_updates_signup_message"];
+	}
+
+	return $signup_message;
 }
 
 /**
@@ -865,12 +873,12 @@ $tm_status_updates_feed_template = <<<EOT
 		        </div>
 	        </div>
 
-	    	<div class="teaser">
-	      		<span class="prime-title status-updates">__FEED_TITLE__</span>
+	    	<div class="teaser tm-wrap-long-text">
+	      		<span class="prime-title status-updates tm-wrap-long-text">__FEED_TITLE__</span>
 	      		<p class="meta status-updates"><span class="role">__FEED_INFO__</span>
 	      	</div>
 
-	      	<div class="tm-status-update-details" style="display: __DETAILS_DISPLAY__; float: right; display: inline-block; margin-right: -38px; padding-top: 12px;">
+	      	<div class="tm-status-update-details tm-wrap-long-text" style="display: __DETAILS_DISPLAY__; float: right; display: inline-block; margin-right: -38px; padding-top: 12px;">
 	      		__DETAILS_HTML__
 	      	</div>
 	     
@@ -885,7 +893,7 @@ $tm_status_update_link_preview_template = <<<EOT
 <!--googleoff: index-->
 <div class="tm-status-update-preview">
 	__PREVIEW_IMAGE_URL__
-	<div class='tm-status-update-preview-body'>
+	<div class='tm-status-update-preview-body tm-wrap-long-text'>
 	<h4><a target="_blank" rel="nofollow" href="__PREVIEW_URL__">__PREVIEW_TITLE__</a></h4>
 	__PREVIEW_DESCRIPTION__
 	<br><a target="_blank" rel="nofollow" href="__PREVIEW_URL__">(__PREVIEW_URL_DISPLAY__)</a>
@@ -909,6 +917,7 @@ global $tm_status_updates_feed_template_css;
 $tm_status_updates_feed_template_css = <<<EOT
 <style>
 .contained-block.newsfeed { overflow: visible; }
+.contained-block.promoted { overflow: visible; }
 .status-update-container { padding-left: 1rem; padding-top: 0.5rem; padding-right: 4.2em; }
 .prime-title.status-updates a:hover { color: #3080b2;}
 .prime-title.status-updates a { text-decoration: underline;}

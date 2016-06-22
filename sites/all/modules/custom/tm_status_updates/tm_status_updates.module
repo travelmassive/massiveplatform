@@ -55,9 +55,25 @@ function tm_status_updates_menu() {
     'type' => MENU_CALLBACK,
   );
 
-  $items['newsfeed/nearby/%'] = array(
+  $items['newsfeed/search/%'] = array(
+    'title' => 'Search status updates',
+    'page callback' => 'tm_status_updates_display_search',
+    'page arguments' => array(1),
+    'access callback' => 'tm_status_updates_display_callback',
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['newsfeed/near'] = array(
     'title' => 'Nearby status updates',
-    'page callback' => 'tm_status_updates_display_nearby',
+    'page callback' => 'tm_status_updates_display_near',
+    'page arguments' => array(1),
+    'access callback' => 'tm_status_updates_display_callback',
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['newsfeed/near/%'] = array(
+    'title' => 'Nearby status updates',
+    'page callback' => 'tm_status_updates_display_near',
     'page arguments' => array(1),
     'access callback' => 'tm_status_updates_display_callback',
     'type' => MENU_CALLBACK,
@@ -144,6 +160,132 @@ function tm_status_updates_menu() {
   );
 
   return $items;
+}
+
+/**
+ * Check whether the current path is on the newsfeed
+ * ie: /newsfeed/global etc
+ */
+function tm_status_updates_check_newsfeed_path() {
+
+  $path = current_path();
+
+  // match /newsfeed
+  if ($path == "newsfeed") {
+    return true;
+  }
+
+  // match /newsfeed/global
+  if (strpos($path, "newsfeed/") === 0) {
+    return true;
+  }
+ 
+}
+
+/**
+ * Get the newsfeed subpath
+ * ie: /newsfeed/global returns 'global'
+ */
+function tm_status_updates_get_newsfeed_subpath() {
+
+  if (!tm_status_updates_check_newsfeed_path()) {
+    return null;
+  }
+
+  $parts = explode("/", current_path());
+  if (isset($parts[1])) {
+    return $parts[1];
+  }
+
+  return null;
+ 
+}
+
+/**
+ * Update meta tags for /newsfeed pages
+ */
+function tm_status_updates_metatag_metatags_view_alter(&$output, $instance) {
+
+  // check that we are on newsfeed path
+  if (!tm_status_updates_check_newsfeed_path()) {
+    return;
+  }
+
+  // remove following metatags as we create them in tm_status_updates_preprocess_html
+  unset($output['og:title']);
+  unset($output['dcterms.title']);
+
+}
+
+/**
+ * Add html meta tags
+ * Called from tm/themes/template.php
+ */
+function tm_status_updates_preprocess_html(&$variables, $hook) {
+
+  global $conf;
+
+  // Check that we are on newsfeed page
+  if (!tm_status_updates_check_newsfeed_path()) {
+    return;
+  }
+
+  // add tag
+  $variables['classes_array'][] = "tm_status_updates";
+
+  // og:title
+  if (isset($conf['tm_status_updates_meta_og_title'])) {
+
+    // append subpath to title so it's unique
+    $title = $conf['tm_status_updates_meta_og_title'];
+    $sub_title = tm_status_updates_get_newsfeed_subpath();
+    if ($sub_title != "") {
+      $title .= " | " . ucfirst($sub_title);
+    }
+
+    $meta = array(
+      '#tag' => 'meta', 
+      '#attributes' => array(
+        'property' => 'og:title', 
+        'content' => $title,
+      ),
+    );
+    drupal_add_html_head($meta, 'og:title');
+
+    $meta = array(
+      '#tag' => 'meta', 
+      '#attributes' => array(
+        'property' => 'dcterms.title', 
+        'content' => $title,
+      ),
+    );
+    drupal_add_html_head($meta, 'dcterms.title');
+  }
+
+  // og:image
+  if (isset($conf['tm_status_updates_meta_og_image'])) {
+    $meta = array(
+      '#tag' => 'meta', 
+      '#attributes' => array(
+        'property' => 'og:image', 
+        'content' => $conf['tm_status_updates_meta_og_image'],
+      ),
+    );
+    drupal_add_html_head($meta, 'og:image');
+  }
+
+  // description
+  if (isset($conf['tm_status_updates_meta_description'])) {
+    $meta = array(
+      '#tag' => 'meta', 
+      '#attributes' => array(
+        'name' => 'description',
+        'property' => 'og:description',
+        'content' => $conf['tm_status_updates_meta_description'],
+      ),
+    );
+    drupal_add_html_head($meta, 'description');
+  }
 }
 
 /**

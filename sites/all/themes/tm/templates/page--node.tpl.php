@@ -77,7 +77,7 @@ if (sizeof($request_uri_parts) == 3) {
             </div>
           </li>
           <?php endif; ?>
-          <?php if (module_exists("tm_status_updates") and user_is_logged_in()) : ?>
+          <?php if (module_exists("tm_status_updates") and user_is_logged_in() and ($conf["tm_status_updates_enabled"])) : ?>
           <li class="newsfeed-wrapper">
             <h2><a class="toggle" href="/newsfeed"><span class="hide"><?= t('Newsfeed'); ?></span></a></h2>
           </li>

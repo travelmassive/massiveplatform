@@ -132,7 +132,7 @@ function tm_status_updates_update_status_ajax() {
 	$posting_user_ip = tm_geoip_get_real_visitor_ip();
 
 	// If location is not set, fallback to geoip lookup
-	if (($location_latitude == null) or ($location_longitude = null)) {
+	if (($location_latitude == null) or ($location_longitude == null)) {
 		$ip_location = tm_geoip_lookup($posting_user_ip);
 		if (isset($ip_location["location"]["latitude"])) {
 			$location_latitude = $ip_location["location"]["latitude"];

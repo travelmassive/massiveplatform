@@ -1097,7 +1097,7 @@ $conf["tm_branding_include_css"] = "";
 // include custom js for branding ( do not include <script> tag)
 $conf["tm_branding_include_js"] = "";
 
-// status updates
+/** STATUS UPDATES **/
 $conf["tm_status_updates_enabled"] = true; // enable status updates
 $conf["tm_status_updates_placeholders"] = array("Post a news update...", "Where is your next destination?", "Share an achievement with the community...");
 $conf["tm_status_updates_silence_uids"] = array(); // silence any spamming members
@@ -1120,6 +1120,10 @@ $conf["tm_status_updates_show_featured"] = 2; // how many featured items to disp
 $conf["tm_status_updates_custom_message"] = array(); // custom messages for newsfeed display
 $conf["tm_status_updates_custom_message"]["global"] = "Find out what's happening in the community";
 $conf["tm_status_updates_custom_message"]["newsfeed"] = "Share an update or news with your followers";
+$conf['tm_status_updates_meta_og_title'] = "Travel Massive News Feed";
+//$conf['tm_status_updates_meta_og_image'] = "";
+$conf['tm_status_updates_meta_description'] = "Share the latest news with our community on your news feed.";
+
 
 $conf['install_profile'] = 'tm';
 $conf['suppress_itok_output'] = true; // supress ?itok so email images can be loaded by gmail

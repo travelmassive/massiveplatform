@@ -218,6 +218,11 @@
   // ajax loader
   tm_status_updates_load_more = function(feed_type, display_from, display_to) {
 
+    // check anonymous user
+    if (!tm_search_check_anonymous_user()) {
+      return;
+    }
+
     // ui
     //$(".tm-status-updates-pager").addClass("previous-pager");
     $(".tm-status-update-pager-link").text("Loading more...");
@@ -227,6 +232,12 @@
     var limit_to = limit_from + tm_update_status_items_per_load;
     tm_status_updates_loader_page++;
 
+    // track search tags
+    var loader_meta = null;
+    if (typeof(tm_update_status_loader_meta) !== 'undefined') {
+      loader_meta = tm_update_status_loader_meta;
+    }
+
     // load newsfeed
     $.ajax({
       type: 'GET',
@@ -234,7 +245,8 @@
       data: {
         'feed_type': feed_type,
         'limit_from': limit_from,
-        'limit_to': limit_to
+        'limit_to': limit_to,
+        'meta': JSON.stringify(loader_meta)
       },
       success: function(data) {
 
@@ -264,7 +276,6 @@
   tm_status_update_init_dropdown_handlers = function() {
 
     $('.status-update-list [data-dropd-toggle]').unbind();
-
     $('.status-update-list [data-dropd-toggle]').click(function(e) {
 
       e.preventDefault();
@@ -289,6 +300,40 @@
       }
     });
 
+  }
+
+  // show login box
+  tm_search_check_anonymous_user = function() {
+
+    // show login box if logged out
+    if (Drupal.settings.currentUser == 0) {
+          
+      // improvements for IE support
+      // clone the form and update ids
+      // add event listener to login button to submit the form via js
+      html = $("#account-menu-blk").clone(false).find("*[id]").andSelf().each(function() { $(this).attr("id", $(this).attr("id") + "-cloned"); }).html();
+      message = '<div id="account-menu-blk">' + html + '</div>';
+      
+      $.prompt(message, {
+        buttons: {}, 
+        loaded: function() { 
+          $("#main").addClass("tm-blur-filter");
+          $("#edit-submit-cloned").click(function(e) {
+            e.preventDefault();
+                $("#user-login-form-cloned")[0].submit();
+            });
+          },
+        close: function() { 
+          $("#main").removeClass("tm-blur-filter");
+        }
+      });
+
+      // anonymous
+      return false;
+    }
+
+    // logged in
+    return true;
   }
 
 });})(jQuery, Drupal, this, this.document);

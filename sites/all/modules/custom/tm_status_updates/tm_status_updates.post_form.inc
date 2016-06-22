@@ -20,10 +20,16 @@ function tm_status_updates_render_update_form($account) {
 	// status update form
 	$tm_status_update_form = file_get_contents(drupal_get_path('module', 'tm_status_updates') .'/templates/tm_status_updates_post_form.tpl.php');
 	$tm_status_update_form = str_replace("__MEMBER_IMAGE_SRC__", $image_url, $tm_status_update_form);
-	$tm_status_update_form = str_replace("__MEMBER_UID__", $account->uid, $tm_status_update_form);
+	
+	// get post as options
 	$post_as_options = tm_status_updates_get_user_options($account);
 	$tm_status_update_form = str_replace("__POST_AS_OPTIONS__", $post_as_options, $tm_status_update_form);
 
+	// get post as images
+	$post_as_images = tm_status_updates_get_post_as_images($account);
+	$tm_status_update_form = str_replace("__POST_AS_IMAGES__", json_encode($post_as_images), $tm_status_update_form);
+
+	// placeholder text
 	$rand_keys = array_rand($conf["tm_status_updates_placeholders"], 1);
 	$placeholder_arr = $conf["tm_status_updates_placeholders"];
 	$placeholder_text = $placeholder_arr[mt_rand(0, count($placeholder_arr) - 1)];
@@ -36,6 +42,7 @@ function tm_status_updates_render_update_form($account) {
  * Helper method to generate list of post as options for the user
  */
 function tm_status_updates_get_user_options($account) {
+
 
 	// post as: user
 	$posting_user_name = strip_tags($account->field_user_first_name[LANGUAGE_NONE][0]['value'] . " " . $account->field_user_last_name[LANGUAGE_NONE][0]['value']);
@@ -57,3 +64,35 @@ function tm_status_updates_get_user_options($account) {
 
 	return $post_as_options;
 }
+
+/**
+ * Helper method to generate array of images for account posting
+ */
+function tm_status_updates_get_post_as_images($account) {
+
+	$images = array();
+
+	// post as: user
+	$image_uri = _tm_users_get_avatar_uri($account);
+	$images['uid-' . $account->uid] = image_style_url("avatar", $image_uri);
+
+	// post as: company
+	$companies_nids = tm_organizations_get_users_companies($account->uid);
+	foreach ($companies_nids as $company_nid) {
+		$organization = node_load($company_nid);
+		$image_uri = _tm_organizations_get_avatar_uri($organization);
+		$images['nid-' . $organization->nid] = image_style_url("avatar", $image_uri);
+	}
+
+	// post as: chapter
+	$chapters_nids = tm_users_get_chapters_leading($account);
+	foreach ($chapters_nids as $chapter_nid) {
+		$chapter = node_load($chapter_nid);
+		$image_uri = _tm_chapters_get_image_uri($chapter);
+		$images['nid-' . $chapter->nid] = image_style_url("banner", $image_uri);
+	}
+
+	return $images;
+}
+
+

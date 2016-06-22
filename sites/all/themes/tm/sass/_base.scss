@@ -192,7 +192,8 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
   }
   .newsfeed-wrapper {
     .toggle:before {
-      @extend .icon-bubble;
+      @extend .icon-2016-comment-bubble;
+      font-size: 24pt;
       color: #007DB7;
     }
   }
@@ -709,5 +710,117 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
   .tm-payments-report-extra {
     display: none;
   }
+}
+
+/* Status updates */
+
+.tm-status-update-promoted { 
+  margin-right: 0.5rem;
+  color: #FFA600;
+  margin-top: -2px;
+  &:before { position: relative; top: 2px;  margin-right: 0.2rem; @extend .icon-2016-tag; font-size: 12pt; }
+}
+
+.tm-status-update-location { 
+  margin-right: 0.5rem;
+  &:before { font-size: 12pt; margin-right: 0.2rem; @extend .icon-map-marker; font-size: 8pt; }
+}
+
+.tm-status-update-location a {
+  text-decoration: none;
+}
+
+.tm-status-update-location a:hover {
+  text-decoration: underline;
+}
+
+.tm-status-update-details {
+  color: #888;
+}
+
+.tm-status-update-details a {
+  color: #888;
+}
+
+.tm-status-update-views {
+  margin-right: 0.5rem;
+  margin-top: -2px;
+  &:before { font-size: 12pt; position: relative; top: 2px; margin-right: 0.2rem; @extend .icon-2016-eye; }
+}
+
+.tm-status-update-popular { 
+  margin-right: 0.5rem;
+  margin-top: -2px;
+  &:before { font-size: 12pt; position: relative; top: 2px; margin-right: 0.2rem; @extend .icon-2016-flames; color: #F1805A; }
+}
+
+.tm-status-update-actions {
+  &:before { font-size: 18pt; position: relative; top: 1px; margin-right: 0.2rem; @extend .icon-2016-dots; }
+}
+
+li.tm-status-update-actions-dropdown {
+  list-style-type: none;
+  position: absolute;
+  right: 12px;
+}
+
+.tm-status-update-actions-dropdown-menu li {
+  padding: 0px !important;
+  box-shadow: none !important;
+}
+
+.tm-status-update-actions a {
+  text-decoration: underline;
+}
+
+.tm-status-update-time {
+  color: #888 !important;
+  font-weight: normal !important; 
+}
+
+.tm-status-update-posted-by {
+  color: #888 !important;
+  font-weight: normal !important; 
+}
+
+.tm-status-update-separator {
+  margin-left: 0.2rem;
+  color: #888 !important;
+}
+
+/* Status update link previews */
+
+.tm-status-update-preview { 
+  min-height: 112px;
+  margin-top: 16px; 
+  padding: 0px; 
+  background-color: #fff; 
+  border: 1px solid #e1e8ed; 
+  border-radius: 4px;
+}
+
+img.tm-status-update-preview-image { 
+  float: left;
+  width: 96px;
+  margin-right: 8px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-left: 1px solid #e1e8ed;
+  border-top: 1px solid #e1e8ed;
+  margin-left: -1px;
+  margin-top: -1px;
+}
+
+.tm-status-update-preview-body {
+  overflow: hidden;
+  padding: 8px;
+  font-size: 14px;
+  min-height: 97px;
+  font-size: 14px;
+}
+
+.tm-status-update-preview h4 { 
+  margin-top: 0px; 
+  margin-bottom: 4px;
 }
 

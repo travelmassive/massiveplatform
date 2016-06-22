@@ -7,6 +7,8 @@
  */
 function tm_status_updates_show_frontpage_updates($display_num_items = 5, $display_max_items = 5, $cache_key = "page-status-updates", $cache_time = 120, $show_unapproved = false, $show_repeat_user = false) {
 
+	global $user;
+
 	// cache for logged out users
 	if (!user_is_logged_in()) {
 		$cache_value = cache_get($cache_key, 'cache');
@@ -23,12 +25,15 @@ function tm_status_updates_show_frontpage_updates($display_num_items = 5, $displ
 	// get sorted list of status update and flag results
 	$all_results = tm_status_updates_get_combined_feed_global($limit_from, $limit_to);
 
+	// get ip
+	$viewer_ip = tm_geoip_get_real_visitor_ip();
+
 	// render item html from results
-	$results_html = tm_status_updates_render_results_items($all_results, $display_limit);
+	$results_html = tm_status_updates_render_results_items($all_results, $viewer_ip, true, true, false, $display_limit);
 
 	// render newsfeed section
 	global $tm_status_updates_feed_template_frontpage_css;
-	$newsfeed_html = tm_status_updates_render_results_feed($results_html, "/newsfeed", "View more", $tm_status_updates_feed_template_frontpage_css);
+	$newsfeed_html = tm_status_updates_render_results_feed($results_html, "Latest Updates", "/newsfeed", "View more", $tm_status_updates_feed_template_frontpage_css);
 
 	// store in cache
 	// for public users
@@ -38,6 +43,9 @@ function tm_status_updates_show_frontpage_updates($display_num_items = 5, $displ
 		}
 	}
 
+	// load js libraries
+	tm_status_updates_display_include_js(true, false, false);
+	
 	// return html
 	return $newsfeed_html;
 }

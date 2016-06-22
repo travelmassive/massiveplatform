@@ -175,7 +175,7 @@
 		});
 
 		// Step 6 (note: this is async). Push xhr request to stack
-		tm_global_search_query_stack.push(xhr)	;
+		tm_global_search_query_stack.push(xhr);
 
 	}
 

@@ -147,7 +147,7 @@ function tm_theme_add_meta_tags_front_page() {
   $meta = array(
     '#tag' => 'meta', 
     '#attributes' => array(
-      'name' => 'og:url', 
+      'property' => 'og:url', 
       'content' => $canonical,
     ),
   );

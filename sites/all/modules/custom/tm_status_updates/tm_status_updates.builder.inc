@@ -9,7 +9,7 @@ function tm_people_suggest_global() {
     $results = db_query_range(TmStatusUpdatesSqlLibrary::sql('tm_sql_people_suggest_global'), 0, $pool);
 
     return $results->fetchAll();
-}
+    }
 
 function tm_people_suggest_chapters_and_locations($user_id) {
     // get a pool of results to randomly select from

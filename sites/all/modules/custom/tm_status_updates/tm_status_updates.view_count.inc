@@ -8,19 +8,24 @@
  */
 function tm_status_updates_get_view_count($status_update_id) {
 
+	$total_count = 0;
+
 	// get count from totals table
 	$query = "SELECT total_view_count FROM tm_newsfeed_view_count_total WHERE status_update_id = :status_update_id";
 	$result = db_query($query, array(':status_update_id' => $status_update_id))->fetch();
-	$total_count = $result->total_view_count;
+	if ($result != null) {
+		$total_count += $result->total_view_count;
+	}
 
 	// add count from daily table
 	$query = "SELECT COUNT(*) AS total_views from tm_newsfeed_view_count_daily WHERE status_update_id = :status_update_id";
 	$result = db_query($query, array(':status_update_id' => $status_update_id))->fetch();
-	$daily_count = $result->total_views;
+	if ($result != null) {
+		$total_count += $result->total_views;
+	}
 
-	// total
-	$total_views = $total_count + $daily_count;
-	return $total_views;
+	// return total count
+	return $total_count;
 }
 
 /**

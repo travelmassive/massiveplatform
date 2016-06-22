@@ -8,6 +8,7 @@
  */
 function tm_status_updates_render_theme() {
 
+	global $user;
 	global $conf;
 
 	// get current path
@@ -52,7 +53,14 @@ function tm_status_updates_render_theme() {
 		return;
 	}
 
-	// check past X days (need conf)
+	// Display on profile for limited time
+	$days_displayed = $conf["tm_status_updates_profile_display_days"];
+	$date_posted = new DateTime("@".$result->timestamp, new DateTimeZone('UTC'));
+	$date_now = new DateTime(null, new DateTimeZone('UTC'));
+	$posted_seconds = $date_now->getTimestamp() - $date_posted->getTimestamp();
+	if (($posted_seconds / (24 * 60 * 60)) > $days_displayed) {
+		return;
+	}
 
 	// Increment view
 	tm_status_updates_increment_daily_view_count($result->id);
@@ -63,8 +71,14 @@ function tm_status_updates_render_theme() {
 	// Render status update
 	$html = tm_status_updates_render_update($result, $count_viewer_ip);
 
-	// add profile css
+	// Add profile css
 	global $tm_status_updates_feed_template_profile_css;
+
+	// Add actions js
+	drupal_add_js('var tm_update_status_uid = ' . $user->uid . ';', array('type' => 'inline'));
+	if (user_is_logged_in()) {
+		drupal_add_js(drupal_get_path('module', 'tm_status_updates') . '/js/tm_status_updates_actions.js');
+	}
 
 	return $tm_status_updates_feed_template_profile_css . "\n" . $html;
 }
@@ -72,7 +86,7 @@ function tm_status_updates_render_theme() {
 /**
  * Render a status update
  */
-function tm_status_updates_render_update($result, $count_viewer_ip = null, $show_repeat_user = false, $show_unapproved = false, &$last_flagging_user_uid = null) {
+function tm_status_updates_render_update($result, $count_viewer_ip = null, $show_you = true, $show_unapproved = false) {
 
 	global $user;
 	global $conf;
@@ -104,7 +118,7 @@ function tm_status_updates_render_update($result, $count_viewer_ip = null, $show
 	}
 
 	// member who posted
-	if ($posting_user->uid != $user->uid) {
+	if (!$show_you or ($posting_user->uid != $user->uid)) {
 		$posting_user_name = strip_tags($posting_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . " " . $posting_user->field_user_last_name[LANGUAGE_NONE][0]['value']);
 	} else {
 		$posting_user_name = "You";
@@ -113,23 +127,29 @@ function tm_status_updates_render_update($result, $count_viewer_ip = null, $show
 	// get time posted
 	$date_posted = new DateTime("@".$result->timestamp, new DateTimeZone('UTC'));
 	$date_now = new DateTime(null, new DateTimeZone('UTC'));
-  	$posted_time = format_interval($date_now->getTimestamp() - $date_posted->getTimestamp(), 1) . " ago";
-  	if ($posted_time == "0 sec ago") {
-  		$posted_time = "just now";
-  	}
+	$posted_time = format_interval($date_now->getTimestamp() - $date_posted->getTimestamp(), 1) . " ago";
+	if ($posted_time == "0 sec ago") {
+		$posted_time = "just now";
+	}
 
   	// prepare status update text
   	$status_update_html = tm_base_linkify(strip_tags($result->status_update), array('http', 'https'), array("rel" => "nofollow", "target" => "_blank"));
 
+  	// post update or shared link
+  	$post_action_text = "posted an update";
+  	if ($result->preview_link_id != null) {
+  		$post_action_text = "shared a link";
+  	}
+
   	// feed text
-  	$feed_info = "<span class='status_update'>" . $status_update_html;
+  	$feed_info = "<span class='status_update'>" . $status_update_html . "</span>";
 
 	// user update
 	if ($entity_type == "user") {
 
 		$image_uri = _tm_users_get_avatar_uri($posting_user);
 		$image_url = image_style_url("avatar", $image_uri);
-		$feed_title = l($posting_user_name, $entity_url) . " posted an update";
+		$feed_title = l($posting_user_name, $entity_url) . " " . $post_action_text;
 	}
 
 	// organization update
@@ -137,7 +157,7 @@ function tm_status_updates_render_update($result, $count_viewer_ip = null, $show
 
 		$image_uri = _tm_organizations_get_avatar_uri($entity);
 		$image_url = image_style_url("avatar", $image_uri);
-		$feed_title = l($entity->title, $entity_url) . " posted an update";
+		$feed_title = l($entity->title, $entity_url) . " " . $post_action_text;
 	}
 
 	// chapter update
@@ -145,7 +165,7 @@ function tm_status_updates_render_update($result, $count_viewer_ip = null, $show
 
 		$image_uri = _tm_chapters_get_image_uri($entity);
 		$image_url = image_style_url("banner", $image_uri);
-		$feed_title = l(tm_chapters_formal_name($entity), $entity_url) . " posted an update";
+		$feed_title = l(tm_chapters_formal_name($entity), $entity_url) . " " . $post_action_text;
 	}
 
 	// event update
@@ -154,12 +174,91 @@ function tm_status_updates_render_update($result, $count_viewer_ip = null, $show
 		return "";
 	}
 
-	// show details
-	$details_display = "block";
-	$details_html = "<span class='status_update_ago'>" . $posted_time . "</span>";
-	$view_count = tm_status_updates_get_view_count($result->id);
-	$details_html = "<span class='view_count'>" . $view_count . " views</span>";
-	$details_html .= "<a href='' style='color: #888; text-decoration: underline;'>edit</a>";
+	// post details
+	$details = array();
+	$details["location_text"] = $result->location_text;
+	if ($details["location_text"] != "") {
+		$parts = explode(",", $details["location_text"]);
+		if (sizeof($parts) > 0) {
+			$search_string = strip_tags($parts[0]);
+			if (strpos($search_string, " ")) {
+				$search_string = '"' . $search_string . '"';
+			}
+			$details["location_url"] = "/search/?query=in:" . urlencode($search_string);
+		}
+	}
+	$details["posted_time"] = $posted_time;
+	$details["view_count"] = tm_status_updates_get_view_count($result->id);
+	$details["is_edited"] = ($result->edited != null);
+	$details["is_promoted"] = ($result->is_promoted == 1);
+
+	// posted by
+	if ($result->entity_type != "user") {
+		$posted_by = user_load($result->poster_uid);
+		if ($posted_by != null) {
+			$details["posted_by_url"] = "/" . drupal_get_path_alias("user/" . $posted_by->uid);
+			$details["posted_by"] = strip_tags($posted_by->field_user_first_name[LANGUAGE_NONE][0]['value'] . " " . $posted_by->field_user_last_name[LANGUAGE_NONE][0]['value']);
+		}
+	}
+
+	// display more links to logged in user
+	if (user_is_logged_in()) {
+
+		// actions actions html
+		$details["more_links"] = array();
+
+		// edit link
+		if (tm_status_updates_check_permission($result->entity_type, $result->entity_id, "edit", $user->uid)) {
+			$details["more_links"][] = "<a href='javascript:void(0);' onClick='tm_user_status_edit_form(" . $result->id . ");'>Edit</a>";
+		}
+
+		// delete link
+		if (tm_status_updates_check_permission($result->entity_type, $result->entity_id, "remove", $user->uid)) {
+
+			$details["more_links"][] = "<a href='javascript:void(0);' onClick='tm_user_status_remove_confirm(" . $result->id . ");'>Delete</a>";
+		}
+
+		// moderator
+		if (tm_status_updates_check_permission($result->entity_type, $result->entity_id, "moderate", $user->uid)) {
+			$details["more_links"][] = "<a href='javascript:void(0);' onClick='tm_user_status_moderate_confirm(" . $result->id . ");'>Moderate</a>";
+		}
+
+		// promote
+		if (tm_status_updates_check_permission($result->entity_type, $result->entity_id, "promote", $user->uid)) {
+			if (!$result->is_promoted) {
+				$details["more_links"][] = "<a href='javascript:void(0);' onClick='tm_user_status_promote_confirm(" . $result->id . ");'>Promote</a>";
+			} else {
+				$details["more_links"][] = "<a href='javascript:void(0);' onClick='tm_user_status_unpromote_confirm(" . $result->id . ");'>Unpromote</a>";
+			}
+		}
+
+		// report if it's not yours
+		if (!tm_status_updates_check_permission($result->entity_type, $result->entity_id, "edit", $user->uid)) {
+
+			if ($result->entity_type == "organization") {
+				if ($result->entity_id != $user->uid) {
+					$community_values_url = $conf["tm_community_values_url"];
+					$details["more_links"][] = "<a href='javascript:void(0);' onClick='jq_confirm_report_organization(" . $result->entity_id . ", \"" . $community_values_url . "\");'>Report</a>";
+				}
+			} else {
+				// report posting user
+				$community_values_url = $conf["tm_community_values_url"];
+				$details["more_links"][] = "<a href='javascript:void(0);' onClick='jq_confirm_report_member(" . $result->poster_uid . ", \"" . $community_values_url . "\");'>Report</a>";
+			}
+		}
+
+		// don't display menu if there are no actions
+		if (sizeof($details["more_links"]) == 0) {
+			unset($details["more_links"]);
+		}
+	}
+	
+	// preview url
+	if ($result->preview_link_id != null) {
+		$preview_data = tm_status_updates_get_preview_link($result->preview_link_id);
+		$preview_html = tm_status_updates_render_link_preview($preview_data);
+		$feed_info .= $preview_html;
+	}
 
 	// Record visitor ip if set
 	if ($count_viewer_ip != null) {
@@ -167,17 +266,17 @@ function tm_status_updates_render_update($result, $count_viewer_ip = null, $show
 	}
 
 	// render
-	$html = tm_status_updates_render_flag_feed($entity_url, $image_url, $feed_title, $feed_info, $details_display, $details_html);
+	$html = tm_status_updates_render_flag_feed($entity_url, $image_url, $feed_title, $feed_info, $details);
 
 	return $html;
-
 }
 
 /**
  * Render flagged item
  */
-function tm_status_updates_render_flagged_item($result, $show_repeat_user = false, $show_unapproved = false, &$last_flagging_user_uid = null) {
+function tm_status_updates_render_flagged_item($result, $show_you = true, $show_unapproved = false) {
 
+	global $user;
 	global $conf;
 
 	// reset vars
@@ -212,14 +311,22 @@ function tm_status_updates_render_flagged_item($result, $show_repeat_user = fals
 	}
 	if ($result->entity_type == "user") {
 		$flagged_user = user_load($result->entity_id);
-		$flagged_user_name = strip_tags($flagged_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . " " . $flagged_user->field_user_last_name[LANGUAGE_NONE][0]['value']);
+		if (!$show_you or ($flagged_user->uid != $user->uid)) {
+			$flagged_user_name = strip_tags($flagged_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . " " . $flagged_user->field_user_last_name[LANGUAGE_NONE][0]['value']);
+		} else {
+			$flagged_user_name = "you";
+		}
 		$flagged_user_url = drupal_get_path_alias("user/" . $flagged_user->uid);
 	}
 
 	$flagging_user = user_load($result->uid);
-	$flagging_user_name = strip_tags($flagging_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . " " . $flagging_user->field_user_last_name[LANGUAGE_NONE][0]['value']);
+	if (!$show_you or ($flagging_user->uid != $user->uid)) {
+		$flagging_user_name = strip_tags($flagging_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . " " . $flagging_user->field_user_last_name[LANGUAGE_NONE][0]['value']);
+	} else {
+		$flagging_user_name = "You";
+	}
 	$flagging_user_url = drupal_get_path_alias("user/" . $flagging_user->uid);
-		$flagged_time = format_interval(time() - $result->timestamp, 1) . " ago";
+	$flagged_time = format_interval(time() - $result->timestamp, 1) . " ago";
 
 	// skip showing feed for non-approved users
 	if (!$show_unapproved) {
@@ -228,17 +335,12 @@ function tm_status_updates_render_flagged_item($result, $show_repeat_user = fals
 		}
 	}
 
-	// skip showing if same user has flagged multiple times
-	// exception of approval flag
-	if (!$show_repeat_user && ($flag->name != "approval_approved_by")) {
-		if ($last_flagging_user_uid == $flagging_user->uid) {
-			$last_flagging_user_uid = $flagging_user->uid;
-			return "";
-		}
-	}
-
 	// keep track of last flagged user
 	$last_flagging_user_uid = $flagging_user->uid;
+
+	// show when last posted
+	$details = array();
+	$details["posted_time"] = $flagged_time;
 
 	switch ($flag->name) {
 
@@ -249,15 +351,14 @@ function tm_status_updates_render_flagged_item($result, $show_repeat_user = fals
 			$image_uri = _tm_users_get_avatar_uri($flagged_user);
 			$image_url = image_style_url("avatar", $image_uri);
 
+			// location
 			if (isset($flagged_user->field_location_city[LANGUAGE_NONE][0]['value'])) {
 				$flagged_user_location = $flagged_user->field_location_city[LANGUAGE_NONE][0]['value'];
-				$feed_info = "<span class='time_ago'>" . $flagged_time . "</span>, " . strip_tags($flagged_user_location);
-			} else {
-				$feed_info = "<span class='time_ago'>" . $flagged_time . "</span>";
+				$details["location_text"] = $flagged_user_location;
 			}
 
 			$feed_title = l($flagged_user_name, $flagged_user_url) . " joined the community";
-			$html = tm_status_updates_render_flag_feed($flagged_user_url, $image_url, $feed_title, $feed_info);
+			$html = tm_status_updates_render_flag_feed($flagged_user_url, $image_url, $feed_title, $feed_info, $details);
 			break;
 
 	   	// MEMBER REGISTERED FOR EVENT
@@ -271,14 +372,13 @@ function tm_status_updates_render_flagged_item($result, $show_repeat_user = fals
 
 			// if event has chapter
 			if (isset($event->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
-			$event_chapter = node_load($event->field_chapter[LANGUAGE_NONE][0]['target_id']);
-			$feed_info = "<span class='time_ago'>" . $flagged_time . "</span>, in " . $event_chapter->title;
-			} else {
-				$feed_info = "<span class='time_ago'>" . $flagged_time . "</span>";
+				$event_chapter = node_load($event->field_chapter[LANGUAGE_NONE][0]['target_id']);
+				$details["location_text"] = $event_chapter->title;
+				$details["location_url"] = drupal_get_path_alias("node/" . $event_chapter->nid);
 			}
 
 			$feed_title = l($flagging_user_name, $flagging_user_url) . " registered for " . l($event->title, $flagged_node_url);
-			$html = tm_status_updates_render_flag_feed($flagging_user_url, $image_url, $feed_title, $feed_info);
+			$html = tm_status_updates_render_flag_feed($flagging_user_url, $image_url, $feed_title, "", $details);
 			break;
 
 	    // MEMBER REGISTERED FOR WAITLIST
@@ -292,14 +392,13 @@ function tm_status_updates_render_flagged_item($result, $show_repeat_user = fals
 
 			// if event has chapter
 			if (isset($event->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
-			$event_chapter = node_load($event->field_chapter[LANGUAGE_NONE][0]['target_id']);
-			$feed_info = "<span class='time_ago'>" . $flagged_time . "</span>, in " . $event_chapter->title;
-			} else {
-				$feed_info = "<span class='time_ago'>" . $flagged_time . "</span>";
+				$event_chapter = node_load($event->field_chapter[LANGUAGE_NONE][0]['target_id']);
+				$details["location_text"] = $event_chapter->title;
+				$details["location_url"] = drupal_get_path_alias("node/" . $event_chapter->nid);
 			}
 
 			$feed_title = l($flagging_user_name, $flagging_user_url) . " joined the waitlist for " . l($event->title, $flagged_node_url);
-			$html = tm_status_updates_render_flag_feed($flagging_user_url, $image_url, $feed_title, $feed_info);
+			$html = tm_status_updates_render_flag_feed($flagging_user_url, $image_url, $feed_title, "", $details);
 			break;
 
 	    // MEMBER JOINED CHAPTER
@@ -311,9 +410,8 @@ function tm_status_updates_render_flagged_item($result, $show_repeat_user = fals
 			$image_uri = _tm_chapters_get_image_uri($chapter);
 			$image_url = image_style_url("banner", $image_uri);
 
-			$feed_info = "<span class='time_ago'>" . $flagged_time . "</span>";
 			$feed_title = l($flagging_user_name, $flagging_user_url) . " joined " . l($chapter->title . " " . $conf["tm_site_name"], $flagged_node_url);
-		    $html = tm_status_updates_render_flag_feed($flagged_node_url, $image_url, $feed_title, $feed_info);
+		    $html = tm_status_updates_render_flag_feed($flagged_node_url, $image_url, $feed_title, "", $details);
 			break;
 
 	    // MEMBER FOLLOWED SOMEONE
@@ -323,10 +421,9 @@ function tm_status_updates_render_flagged_item($result, $show_repeat_user = fals
 			$image_uri = _tm_users_get_avatar_uri($flagging_user);
 			$image_url = image_style_url("avatar", $image_uri);
 
-			$feed_info = "<span class='time_ago'>" . $flagged_time . "</span>";
 			$feed_title = l($flagging_user_name, $flagging_user_url) . " followed " . l($flagged_user_name, $flagged_user_url);
 			//$feed_title = l($flagged_user_name, $flagged_user_url) . " was followed by " . l($flagging_user_name, $flagging_user_url);
-			$html = tm_status_updates_render_flag_feed($flagged_user_url, $image_url, $feed_title, $feed_info);
+			$html = tm_status_updates_render_flag_feed($flagged_user_url, $image_url, $feed_title, "", $details);
 			break;
 
 	   	// MEMBER FOLLOWED AN ORGANIZATION
@@ -343,9 +440,8 @@ function tm_status_updates_render_flagged_item($result, $show_repeat_user = fals
 				$image_url = image_style_url("avatar", $organization->field_avatar[LANGUAGE_NONE][0]['uri']);
 			}
 
-			$feed_info = "<span class='time_ago'>" . $flagged_time . "</span>";
 			$feed_title = l($flagging_user_name, $flagging_user_url) . " followed " . l($organization->title, $flagged_node_url);
-			$html = tm_status_updates_render_flag_feed($flagged_node_url, $image_url, $feed_title, $feed_info);
+			$html = tm_status_updates_render_flag_feed($flagged_node_url, $image_url, $feed_title, "", $details);
 			break;
 
 	   	// ORGANIZATION FLAGGED AS A SPONSOR
@@ -357,11 +453,11 @@ function tm_status_updates_render_flagged_item($result, $show_repeat_user = fals
 			$image_uri = _tm_organizations_get_avatar_uri($organization);
 			$image_url = image_style_url("avatar", $image_uri);
 
-			$feed_info = "<span class='time_ago'>" . $flagged_time . "</span>";
 			$feed_title = l($organization->title, $flagged_node_url) . " just became a sponsor, thanks!";
-			$html = tm_status_updates_render_flag_feed($flagged_node_url, $image_url, $feed_title, $feed_info);
+			
+			$html = tm_status_updates_render_flag_feed($flagged_node_url, $image_url, $feed_title, "", $details);
 			break;
-	}	
+	}
 
 	return $html;
 }
@@ -369,13 +465,15 @@ function tm_status_updates_render_flagged_item($result, $show_repeat_user = fals
 /**
  * Helper method to render results list
  */
-function tm_status_updates_render_results_items($results, $count_viewer_ip, $display_limit = 1000) {
+function tm_status_updates_render_results_items($results, $count_viewer_ip, $hide_repeat_posters = true, $hide_own_repeats = false, $show_you = true, $display_limit = 100) {
 
+	global $user;
 	global $conf;
 
 	// render results
 	$html_items = array();
 	$count_items = 0;
+	$last_user_uid = null;
 	foreach($results as $result) {
 
 		if ($count_items > $display_limit) {
@@ -385,30 +483,58 @@ function tm_status_updates_render_results_items($results, $count_viewer_ip, $dis
 		// status update
 		if (isset($result->created)) {
 
+			// hide repeating posts
+			$own_post = ($user->uid == $result->poster_uid);
+			$repeating_post = $result->poster_uid == $last_user_uid;
+			if ($repeating_post) {
+				if ($own_post and $hide_own_repeats) {
+					continue;
+				} elseif (!$own_post) {
+					continue;
+				}
+			}
+			
 			// hide spammers
 			if (in_array($result->poster_uid, $conf["tm_status_updates_silence_uids"])) {
 				continue;
 			}
 
-			$html = tm_status_updates_render_update($result, $count_viewer_ip);
+			// track last id
+			$last_user_uid = $result->poster_uid;
+
+			// render item
+			$html = tm_status_updates_render_update($result, $count_viewer_ip, $show_you);
 		}
 
 		// flagged item
 		if (isset($result->fid)) {
+
+			// hide repeating posts
+			$own_post = ($user->uid == $result->uid);
+			$repeating_post = $result->uid == $last_user_uid;
+			if ($repeating_post) {
+				if ($own_post and $hide_own_repeats) {
+					continue;
+				} elseif (!$own_post) {
+					continue;
+				}
+			}
 
 			// hide spammers
 			if (in_array($result->uid, $conf["tm_status_updates_silence_uids"])) {
 				continue;
 			}
 
-			$html = tm_status_updates_render_flagged_item($result);
+			// track last id
+			$last_user_uid = $result->uid;
+
+			// render item
+			$html = tm_status_updates_render_flagged_item($result, $show_you);
 		}
 
-		if ($html != "") {
-			$html_items[] = $html;
-		}
-
+		$html_items[] = $html;
 		$count_items++;
+
 	}
 
 	// return html
@@ -419,14 +545,44 @@ function tm_status_updates_render_results_items($results, $count_viewer_ip, $dis
 /**
  * Render flag feed from template
  */
-function tm_status_updates_render_flag_feed($feed_url, $feed_image_url, $feed_title, $feed_info, $details_display = "none", $details_html = "") {
+function tm_status_updates_render_flag_feed($feed_url, $feed_image_url, $feed_title, $feed_info, $details) {
+
 	global $tm_status_updates_feed_template;
+
+	// update feed title with posted time
+	if (isset($details["posted_time"])) {
+		$edited_text = "";
+		if (isset($details["is_edited"])) {
+			if ($details["is_edited"] == true) {
+				$edited_text = " (edited)";
+			}
+		}
+		$feed_title .= "<span class='tm-status-update-separator'>&middot;</span> <span class='tm-status-update-time'>" . $details["posted_time"] . $edited_text . '</span>';
+	}
+
+	// posted by
+	if (isset($details["posted_by"])) {
+		$posted_by_html = $details["posted_by"];
+		if (isset($details["posted_by_url"])) {
+			$posted_by_html = "<a href='" . $details["posted_by_url"] . "'>" . $details["posted_by"] . "</a>";
+		}
+		$feed_title .= " <span class='tm-status-update-posted-by'>by " . $posted_by_html . '</span>';
+	}
+
 	$html = str_replace("__FEED_URL__", $feed_url, $tm_status_updates_feed_template);
 	$html = str_replace("__FEED_IMAGE_URL__", $feed_image_url, $html);
 	$html = str_replace("__FEED_TITLE__", $feed_title, $html);
 	$html = str_replace("__FEED_INFO__", $feed_info, $html);
 	$html = str_replace("__FEED_LI_STYLE__", "display: block;", $html);	
 	$html = str_replace("__FEED_LI_CLASS__", "feeditem", $html);
+	
+	// render details
+	$details_display = "none";
+	$details_html = "";
+	if ($details != null) {
+		$details_display = "block";
+		$details_html = tm_status_updates_render_details($details);
+	}
 	$html = str_replace("__DETAILS_DISPLAY__", $details_display, $html);
 	$html = str_replace("__DETAILS_HTML__", $details_html, $html);
 
@@ -434,14 +590,89 @@ function tm_status_updates_render_flag_feed($feed_url, $feed_image_url, $feed_ti
 }
 
 /**
+ * Render details html
+ * Provide a details array
+ */
+function tm_status_updates_render_details($details) {
+
+	global $conf;
+
+	// promoted
+	$promoted_html = "";
+	if (isset($details["is_promoted"])) {
+		if ($details["is_promoted"]) {
+			$promoted_html = "<span class='tm-status-update-promoted' style='float: left;'>Featured";
+			$promoted_html .= "</span>";
+		}	
+	}
+
+	// location
+	$location_html = "";
+	if (isset($details["location_text"])) {
+		$location_html = "<span class='tm-status-update-location' style='float: left;'>";
+		if (isset($details["location_url"])) {
+			$location_html .= "<a href='" . $details["location_url"] . "'>" . strip_tags($details["location_text"]) . "</a>";
+		} else {
+			$location_html .= strip_tags($details["location_text"]);
+		}
+		$location_html .= "</span>";
+	}
+
+	// view count
+	$view_count_html = "";
+	if (isset($details["view_count"])) {
+		$view_count = $details["view_count"];
+		if ($view_count > 0) {
+			$views_text = "view";
+			if ($view_count > 1) {
+				$views_text = "views";
+			}
+			$view_count_class = 'tm-status-update-views';
+			if ($view_count > $conf["tm_status_updates_views_popular"]) {
+				$view_count_class = 'tm-status-update-popular';
+			}
+			$view_count_html = "<span class='" . $view_count_class . "' style='float: left;'>" . $view_count . " " . $views_text . "</span>";
+		} else {
+			$view_count_html = "<span>&nbsp;</span>";
+		}
+	}
+
+	// more links
+	$more_html = "";
+	if (isset($details["more_links"])) {
+		$more_html = "<span style='float: right; width: 12px;'>";
+		$more_html .= "<li class='tm-status-update-actions-dropdown' data-dropd-wrapper>";
+
+		$more_html .= "<a class='tm-status-update-actions' href='javascript:void(0);' data-dropd-toggle=''></a>";
+
+		// more-actions
+		$more_html .= "<div class='inner dropd dropd-s dropd-right' data-dropd='' style='top: 24px; min-width: 8rem;'>";
+
+		// dropd-menu
+		$more_html .= "<ul class='tm-status-update-actions-dropdown-menu dropd-menu'>";
+		foreach ($details["more_links"] as $item) {
+			$more_html .= "<li>" . $item . "</li>";
+		}
+		$more_html .= "</ul>";
+		$more_html .= "</div>"; // more-actions
+		$more_html .= "</li>"; // data-dropd-wrapper
+		$more_html .= "</span>";
+	}
+
+	// return html
+	return $promoted_html . $location_html . $view_count_html . $more_html;
+}
+
+/**
  * Helper method to render results feed into template
  * Will include the css
  */
-function tm_status_updates_render_results_feed($result_html, $more_url = "", $more_text = "", $include_css = "") {
+function tm_status_updates_render_results_feed($result_html, $title, $more_url = "", $more_text = "", $include_css = "") {
 
 	global $tm_status_updates_feeds_template;
+
 	$newsfeed_html = str_replace("__FEED_ITEMS__", $result_html, $tm_status_updates_feeds_template);
-	$newsfeed_html = str_replace("__FEED_TITLE__", "Latest Updates", $newsfeed_html);
+	$newsfeed_html = str_replace("__FEED_TITLE__", $title, $newsfeed_html);
 	
 	// more link
 	if ($more_url != "") {
@@ -462,6 +693,86 @@ function tm_status_updates_render_results_feed($result_html, $more_url = "", $mo
 	return $include_css . "\n" . $newsfeed_html;
 }
 
+/**
+ * Render link preview
+ */
+function tm_status_updates_render_link_preview($preview_data) {
+
+	global $tm_status_update_link_preview_template;
+
+	// make sure we have valid data
+	if ($preview_data == null) {
+		return "";
+	}
+
+	// get fields
+	$url = $preview_data["link_url"];
+	$title = $preview_data["link_og_title"];
+	$description = $preview_data["link_og_description"];
+	$image_file = $preview_data["image_file"];
+	$image_url = file_create_url($image_file);
+
+	// add protocol to url if not already
+	if ((stripos($url, "http://") !== 0) or ((stripos($url, "https://") !== 0))) {
+		$url = "http://" . $url;
+	}
+
+	// display url
+	$display_url = $url;
+	$url_parts = explode("/", $url);
+	if (isset($url_parts[2])) {
+		$display_url = str_replace("www.", "", $url_parts[2]);
+	}
+
+	// case of no title
+	if ($title == tm_status_updates_render_max_length($url, 100)) {
+		$title = "";
+	}
+
+	// case of no description
+	if ($description == "") {
+		$description = "No description available";
+	}
+
+	$html = str_replace("__PREVIEW_URL__", $url, $tm_status_update_link_preview_template);
+	$html = str_replace("__PREVIEW_URL_DISPLAY__", tm_status_updates_render_max_length($display_url, 100), $html);
+	$html = str_replace("__PREVIEW_TITLE__", tm_status_updates_render_max_length($title, 100), $html);
+	$html = str_replace("__PREVIEW_DESCRIPTION__", tm_status_updates_render_max_length($description, 255), $html);
+
+	$image_url_html = "";
+	if ($image_file != null) {
+		$image_url_html = '<a target="_blank" rel="nofollow" href="' . $url . '"><img class="tm-status-update-preview-image" align="left" src="' . $image_url . '"></a>';
+	}
+	$html = str_replace("__PREVIEW_IMAGE_URL__", $image_url_html, $html);
+
+	return $html;
+}
+
+/**
+ * Render ajax loader
+ */
+function tm_status_updates_render_loader($loader_feed_type, $loader_from, $loader_to) {
+
+	// ajax loader
+	global $tm_status_updates_loader_template;
+	$loader_html = "";
+	$loader_html = str_replace("__LOADER_FEED_TYPE__", $loader_feed_type, $tm_status_updates_loader_template);
+	$loader_html = str_replace("__LOADER_DISPLAY_FROM__", $loader_from, $loader_html);
+	$loader_html = str_replace("__LOADER_DISPLAY_TO__", $loader_to, $loader_html);
+	return $loader_html;
+}
+
+/**
+ * Helper method to render text to max length
+ */
+function tm_status_updates_render_max_length($text, $max_length) {
+	if (strlen($text) > $max_length) {
+		$pos = strpos($text, ' ', $max_length);
+		return substr($text, 0, $pos) . " ...";
+	}
+	return $text;
+}
+
 // TEMPLATES
 
 global $tm_status_updates_feeds_template;
@@ -471,12 +782,24 @@ $tm_status_updates_feeds_template = <<<EOT
 		<h1 class="prime-title status-updates top">__FEED_TITLE__</h1>
 	</header>
 	<div class="contained-body status-updates">
-		<ul class="user-list related-list">
+		<ul class="status-update-list related-list">
 			__FEED_ITEMS__
 		</ul>
 	</div>
 	__MORE_LINK__
 </section>
+EOT;
+
+global $tm_status_updates_loader_template;
+$tm_status_updates_loader_template = <<<EOT
+<div class="item-list tm-status-updates-loader" style="margin-bottom: 32px;">
+	<ul class="pager pager-load-more">
+		<li>
+			<a class='tm-status-update-pager-link' href="javascript:void(0);" onClick="tm_status_updates_load_more('__LOADER_FEED_TYPE__');">Load more</a>
+			<img class="tm-status-update-pager-loading-image" style="display:none; margin-left: 16px; " src='/sites/all/themes/tm/images/load-more-ajax-loader.gif'>
+		</li>
+	</ul>
+</div>
 EOT;
 
 global $tm_status_updates_feeds_more_link_template;
@@ -490,7 +813,7 @@ global $tm_status_updates_feed_template;
 $tm_status_updates_feed_template = <<<EOT
 <li class="status-updates __FEED_LI_CLASS__" style="__FEED_LI_STYLE__">
    <article class="card contained view-mode-grid status-updates clearfix">
-    	<div style="padding-left: 2em; padding-right: 4em;">
+    	<div class="status-update-container">
     	
 	        <div class="media">
 		        <div class="avatar">
@@ -505,7 +828,7 @@ $tm_status_updates_feed_template = <<<EOT
 	      		<p class="meta status-updates"><span class="role">__FEED_INFO__</span>
 	      	</div>
 
-	      	<div class="details" style="display: __DETAILS_DISPLAY__; float: right; font-size: smaller;">
+	      	<div class="tm-status-update-details" style="display: __DETAILS_DISPLAY__; float: right; display: inline-block; margin-right: -38px; padding-top: 12px;">
 	      		__DETAILS_HTML__
 	      	</div>
 	     
@@ -515,34 +838,53 @@ $tm_status_updates_feed_template = <<<EOT
 </li>
 EOT;
 
+global $tm_status_update_link_preview_template;
+$tm_status_update_link_preview_template = <<<EOT
+<!--googleoff: index-->
+<div class="tm-status-update-preview">
+	__PREVIEW_IMAGE_URL__
+	<div class='tm-status-update-preview-body'>
+	<h4><a target="_blank" rel="nofollow" href="__PREVIEW_URL__">__PREVIEW_TITLE__</a></h4>
+	__PREVIEW_DESCRIPTION__
+	<br><a target="_blank" rel="nofollow" href="__PREVIEW_URL__">(__PREVIEW_URL_DISPLAY__)</a>
+	</div>
+</div>
+<!--googleon: index-->
+EOT;
+
 global $tm_status_updates_feed_template_css;
 $tm_status_updates_feed_template_css = <<<EOT
 <style>
+.status-update-container { padding-left: 1rem; padding-top: 0.5rem; padding-right: 4.2em; }
 .prime-title.status-updates a:hover { color: #3080b2;}
 .prime-title.status-updates a { text-decoration: underline;}
 .card.status-updates { padding-top: 0.5rem; padding-bottom: 0.5rem;}
-.card.status-updates:hover { background-color: #e7f2f7;}
-img.status-updates-image { max-height: 64px; max-width: 64px;}
+.card.status-updates:hover { background-color: #e7f2f7; }
+img.status-updates-image { max-height: 64px; max-width: 64px; border-radius: 4px; }
 </style>
 EOT;
 
 global $tm_status_updates_feed_template_frontpage_css;
 $tm_status_updates_feed_template_frontpage_css = <<<EOT
 <style>
+.status-update-container { padding-left: 1rem; padding-top: 0.5rem; padding-right: 4.2em; }
 .prime-title.status-updates a:hover { color: #3080b2;}
 .prime-title.status-updates a { text-decoration: underline;}
 .card.status-updates { padding-top: 0.5rem; padding-bottom: 0.5rem;}
 .card.status-updates:hover { background-color: #e7f2f7;}
-img.status-updates-image { max-height: 64px; max-width: 64px;}
+img.status-updates-image { max-height: 64px; max-width: 64px; border-radius: 4px; }
 </style>
 EOT;
 
 global $tm_status_updates_feed_template_profile_css;
 $tm_status_updates_feed_template_profile_css = <<<EOT
 <style>
+.status-update-container { padding-left: 1rem; padding-top: 0.5rem; padding-right: 4.2em; }
 .prime-title.status-updates a:hover { color: #3080b2;}
 .prime-title.status-updates a { text-decoration: underline;}
 .card.status-updates { padding-top: 0.5rem; padding-bottom: 0.5rem;}
-img.status-updates-image { max-height: 64px; max-width: 64px;}
+img.status-updates-image { max-height: 64px; max-width: 64px; border-radius: 4px; }
+li.status-updates.feeditem { background-color: #fff; border-radius: 4px; box-shadow: 0 0.125rem 0 0 rgba(33, 48, 64, 0.1);}
+.tm-status-update-details { font-size: 14px; }
 </style>
 EOT;

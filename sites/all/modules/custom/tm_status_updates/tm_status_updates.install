@@ -1,9 +1,60 @@
 <?php
 
-/* tm_status_updates table */
-/* 
+/* tm_status_updates.install.inc - create tables */
 
+/**
+ * Implements hook_install()
+ */
+function tm_status_updates_install() {
+  // install database tables
+  tm_status_updates_create_tables();
+}
+
+/**
+ * Reinstall database tables
+ */
+function tm_status_updates_reinstall_database_tables() {
+
+  // re-install database tables
+  tm_status_updates_drop_tables();
+  tm_status_updates_create_tables();
+}
+
+
+function tm_status_updates_drop_tables() {
+
+  print "Dropping tables...
+  - tm_newsfeed_status_updates
+  - table tm_newsfeed_preview_links
+  - table tm_newsfeed_view_count_daily
+  - table tm_newsfeed_view_count_total";
+
+  $sql_drop_status_updates = <<<EOT
 drop table tm_newsfeed_status_updates;
+drop table tm_newsfeed_preview_links;
+drop table tm_newsfeed_view_count_daily;
+drop table tm_newsfeed_view_count_total;
+EOT;
+
+  try {
+    db_query($sql_drop_status_updates);
+    return true;
+  } catch (Exception $e) {
+    print "Error: ";
+    print_r($e);
+    return false;
+  }
+}
+
+function tm_status_updates_create_tables() {
+
+  print "\nCreating tables...
+  - tm_newsfeed_status_updates
+  - tm_newsfeed_preview_links
+  - tm_newsfeed_view_count_daily
+  - tm_newsfeed_view_count_total";
+
+  $sql_tm_newsfeed_status_updates = <<<EOT
 CREATE TABLE IF NOT EXISTS `tm_newsfeed_status_updates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `entity_id` int(11) NOT NULL,
@@ -11,38 +62,48 @@ CREATE TABLE IF NOT EXISTS `tm_newsfeed_status_updates` (
   `status_update` longtext COLLATE utf8_unicode_ci NOT NULL,
   `created` timestamp DEFAULT CURRENT_TIMESTAMP,
   `edited` timestamp NULL,
-  `latitude` decimal(18,12) NULL,
-  `longitude` decimal(18,12) NULL,
   `location_text` varchar(255) NULL,
+  `location_latitude` decimal(18,12) NULL,
+  `location_longitude` decimal(18,12) NULL,
+  `preview_link_id` int(11) NULL,
   `poster_uid` int(11) NOT NULL,
   `poster_ip` varchar(255) NOT NULL,
   `moderator_uid` int(11) NULL,
   `moderator_hide` tinyint(3) DEFAULT 0,
   `moderator_note` varchar(255) NULL,
+  `moderator_timestamp` timestamp NULL,
+  `reply_to_id` int(11) NULL,
+  `is_removed` tinyint(3) DEFAULT 0,
+  `is_promoted` tinyint(3) DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (entity_id);
 ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (entity_type);
+ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (status_update);
 ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (created);
-ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (latitude);
-ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (longitude);
+ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (location_latitude);
+ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (reply_to_id);
+ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (is_removed);
+ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (is_promoted);
+EOT;
 
-
-drop table tm_newsfeed_link_details;
-CREATE TABLE IF NOT EXISTS `tm_newsfeed_link_details` (
+  $sql_tm_newsfeed_preview_links = <<<EOT
+CREATE TABLE IF NOT EXISTS `tm_newsfeed_preview_links` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `status_update_id` int(11) NOT NULL,
-  `link_url` varchar(255) NULL,
+  `creator_uid` int(11) NOT NULL,
+  `link_url` varchar(255) NOT NULL,
   `link_og_title` varchar(255) NULL,
-  `link_og_description` varchar(255) NULL,
+  `link_og_description` longtext COLLATE utf8_unicode_ci NULL,
   `link_og_image` varchar(255) NULL,
   `image_file` varchar(255) NULL,
+  `created` timestamp DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
-ALTER TABLE `tm_newsfeed_link_details` ADD INDEX (status_update_id);
+ALTER TABLE `tm_newsfeed_preview_links` ADD INDEX (status_update_id);
+ALTER TABLE `tm_newsfeed_preview_links` ADD INDEX (creator_uid);
+EOT;
 
-
-drop table tm_newsfeed_view_count_daily;
+  $sql_tm_newsfeed_view_count_daily = <<<EOT
 CREATE TABLE IF NOT EXISTS `tm_newsfeed_view_count_daily` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `status_update_id` int(11) NOT NULL,
@@ -54,9 +115,9 @@ CREATE TABLE IF NOT EXISTS `tm_newsfeed_view_count_daily` (
 ALTER TABLE `tm_newsfeed_view_count_daily` ADD INDEX (status_update_id);
 ALTER TABLE `tm_newsfeed_view_count_daily` ADD INDEX (viewer_ip);
 ALTER TABLE `tm_newsfeed_view_count_daily` ADD INDEX (created);
+EOT;
 
-
-drop table tm_newsfeed_view_count_total;
+  $tm_newsfeed_view_count_total = <<<EOT
 CREATE TABLE IF NOT EXISTS `tm_newsfeed_view_count_total` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `status_update_id` int(11) NOT NULL,
@@ -64,6 +125,18 @@ CREATE TABLE IF NOT EXISTS `tm_newsfeed_view_count_total` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 ALTER TABLE `tm_newsfeed_view_count_total` ADD INDEX (status_update_id);
+EOT;
 
+  try {
+    db_query($sql_tm_newsfeed_status_updates);
+    db_query($sql_tm_newsfeed_preview_links);
+    db_query($sql_tm_newsfeed_view_count_daily);
+    db_query($tm_newsfeed_view_count_total);
+    return true;
+  } catch (Exception $e) {
+    print "Error: ";
+    print_r($e);
+  }
 
-*/
+}
+

@@ -1098,10 +1098,24 @@ $conf["tm_branding_include_css"] = "";
 $conf["tm_branding_include_js"] = "";
 
 // status updates
+$conf["tm_status_updates_enabled"] = true; // enable status updates
 $conf["tm_status_updates_placeholders"] = array("Post a news update...", "Where is your next destination?", "Share an achievement with the community...");
 $conf["tm_status_updates_silence_uids"] = array(); // silence any spamming members
 $conf["tm_status_updates_hide_recommended_uids"] = array(); // hide members from recommended members lists
 $conf["tm_status_updates_view_counter_no_cron"] = true; // for larger sites, set to fale and run "drush status-updates-index-view-counter" daily
+$conf["tm_status_updates_preview_enabled"] = true; // enable link preview
+$conf["tm_status_updates_preview_curl_timeout"] = 8; // max seconds to wait to fetch preview image
+$conf["tm_status_updates_preview_curl_max_mb"] = 8; // max mb curl will download before ending connection
+$conf["tm_status_updates_preview_image_path"] = "public://preview_link_images/"; // where to save preview images
+$conf["tm_status_updates_preview_image_width"] = 512; // max width to resize preview image
+$conf["tm_status_updates_preview_image_height"] = 512; // min width to resize preview image
+$conf["tm_status_updates_preview_image_quality"] = 80; // image quality of preview images
+$conf["tm_status_updates_preview_max_per_day"] = 200; // rate limit how many preview links a user can gererate in a day
+$conf["tm_status_updates_views_popular"] = 500; // how many views before shown as popular
+$conf["tm_status_updates_google_maps_api_key"] = "API_KEY"; // your google maps client-side api key for location lookups
+$conf["tm_status_updates_profile_display_days"] = 14; // show latest update on profile for how many days
+$conf["tm_status_updates_limit_results"] = 500; // how far back can you load results
+$conf["tm_status_updates_items_per_load"] = 50; // how many items to show per load
 
 $conf['install_profile'] = 'tm';
 $conf['suppress_itok_output'] = true; // supress ?itok so email images can be loaded by gmail

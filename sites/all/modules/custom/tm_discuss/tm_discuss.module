@@ -117,13 +117,6 @@ function tm_discuss_embed_vanilla() {
 		return;
 	}
 
-	if (isset($conf["tm_discuss_menu_hide"])) {
-		if ($conf["tm_discuss_menu_hide"]) {
-			// set cookie so we can show the menu item
-			user_cookie_save(array('show_discuss_menu'=>'true'));
-		}
-	}
-
 	// load user
 	$loaded = user_load($user->uid);
 
@@ -207,7 +200,7 @@ function tm_discuss_preprocess_html(&$variables, $hook) {
 	$meta = array(
 	  '#tag' => 'meta', 
 	  '#attributes' => array(
-	    'name' => 'og:url', 
+	    'property' => 'og:url', 
 	    'content' => $canonical,
 	  ),
 	);
@@ -218,7 +211,7 @@ function tm_discuss_preprocess_html(&$variables, $hook) {
 	  $meta = array(
 	    '#tag' => 'meta', 
 	    '#attributes' => array(
-	      'name' => 'og:title', 
+	      'property' => 'og:title', 
 	      'content' => $conf['tm_discuss_meta_og_title'],
 	    ),
 	  );
@@ -230,7 +223,7 @@ function tm_discuss_preprocess_html(&$variables, $hook) {
 	  $meta = array(
 	    '#tag' => 'meta', 
 	    '#attributes' => array(
-	      'name' => 'og:image', 
+	      'property' => 'og:image', 
 	      'content' => $conf['tm_discuss_meta_og_image'],
 	    ),
 	  );

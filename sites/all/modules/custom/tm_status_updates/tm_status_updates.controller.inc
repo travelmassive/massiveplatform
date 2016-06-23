@@ -71,9 +71,25 @@ function tm_status_updates_check_permission($entity_type, $entity_id, $action, $
  */
 function tm_status_updates_get_update_by_id($status_update_id) {
 
-	$query = "SELECT *, UNIX_TIMESTAMP(`created`) AS `timestamp` FROM tm_newsfeed_status_updates WHERE id = :status_update_id ORDER BY created DESC LIMIT 1";
-
+	$query = "SELECT *, UNIX_TIMESTAMP(`created`) AS `timestamp` FROM tm_newsfeed_status_updates WHERE id = :status_update_id LIMIT 1";
 	$results = db_query($query, array(':status_update_id' => $status_update_id))->fetchAll();
+
+	// no updates
+	if (sizeof($results) == 0) {
+		return null;
+	}
+
+	// return update
+	return $results[0];
+}
+
+/**
+ * Get a flagged item by id
+ */
+function tm_status_updates_get_flagged_by_id($flagging_id) {
+
+	$query = "SELECT * FROM flagging WHERE flagging_id = :flagging_id LIMIT 1";
+	$results = db_query($query, array(':flagging_id' => $flagging_id))->fetchAll();
 
 	// no updates
 	if (sizeof($results) == 0) {
@@ -107,7 +123,7 @@ function tm_status_updates_get_latest_update($entity_id, $entity_type) {
  */
 function tm_status_updates_get_promoted_updates($days_old = 7) {
 
-	$query = "SELECT *, UNIX_TIMESTAMP(`created`) AS `timestamp` FROM tm_newsfeed_status_updates WHERE  created >= DATE_SUB(NOW(), INTERVAL " . intval($days_old) . " DAY) AND is_promoted = 1 AND moderator_hide = 0 AND is_removed = 0 ORDER BY created DESC";
+	$query = "SELECT UNIX_TIMESTAMP(`created`) AS `timestamp`, 'status_update' AS result_type, id as status_update_id, poster_uid AS owner_uid FROM tm_newsfeed_status_updates WHERE  created >= DATE_SUB(NOW(), INTERVAL " . intval($days_old) . " DAY) AND is_promoted = 1 AND moderator_hide = 0 AND is_removed = 0 ORDER BY created DESC";
 
 	$results = db_query($query)->fetchAll();
 
@@ -235,116 +251,76 @@ function tm_status_updates_edit_update($status_update) {
 
 /**
  * Return a sorted list of flag and status updates for a user account
- * Note: the flag items are returned within the range of timestamps from the status updates
  */
-function tm_status_updates_get_combined_feed($account, $limit_from = 0, $limit_to = 10) {
+function tm_status_updates_get_combined_feed_user($account, $limit_from = 0, $limit_to = 10) {
 
-	// Flag user as having updated status
+	// Get list of entities which can be followed (flagged) that can post status updates
 	$follow_flags = array();
 	$follow_flags[] = flag_get_flag('follow_members')->fid;
 	$follow_flags[] = flag_get_flag('follow_organizations')->fid;
-	$follow_flags[] = flag_get_flag('signup')->fid;
+	$follow_flags[] = flag_get_flag('signup')->fid; // chapter
 	$follow_flags[] = flag_get_flag('event_register')->fid;
 
-	// get recent status update items
-	$query = "SELECT *, UNIX_TIMESTAMP(`created`) AS `timestamp` FROM tm_newsfeed_status_updates WHERE (entity_id IN (SELECT entity_id FROM flagging WHERE uid = :uid AND fid IN (" . implode(",", $follow_flags) . ")) OR entity_id = :uid) AND is_removed = 0 AND moderator_hide = 0 ORDER BY timestamp DESC LIMIT " . intval($limit_from) . ", " . intval($limit_to);
-	$status_updates = db_query($query, array(':uid' => $account->uid))->fetchAll();
+	// Get your status updates or those of people you are following
+	$query1 = "SELECT UNIX_TIMESTAMP(`created`) AS `timestamp`,
+				'status_update' as result_type,
+				id as status_update_id,
+				'' flagging_id,
+				poster_uid as 'owner_uid'
+				FROM tm_newsfeed_status_updates WHERE (entity_id IN (SELECT entity_id FROM flagging WHERE uid = :uid AND fid IN (" . implode(",", $follow_flags) . ")) OR entity_id = :uid) AND is_removed = 0 AND moderator_hide = 0";
 
-	// get range of timestamps
-	// use this for the flag query
-	$min_timestamp = PHP_INT_MAX;
-	$max_timestamp = 0;
-	foreach($status_updates as $result) {
-		if ($result->timestamp < $min_timestamp) {
-			$min_timestamp = $result->timestamp;
-		}
-		if ($result->timestamp > $max_timestamp) {
-			$max_timestamp = $result->timestamp;
-		}
-	}
-	
-	// if no status updates for personal newsfeed, extend range of flags
-	if (sizeof($status_updates) == 0) {
-		$min_timestamp = 0;
-		$max_timestamp = PHP_INT_MAX;
-	}
+	// Get list of flags which can be rendered
+	$display_flags = $follow_flags;
+	$display_flags[] = flag_get_flag('approval_approved_by')->fid;
+	$display_flags[] = flag_get_flag('event_waitlist')->fid;
+	$display_flags[] = flag_get_flag('tm_sponsor')->fid;
 
-	// get recent flag items
-	$query = "SELECT * FROM flagging WHERE (entity_id IN (SELECT entity_id FROM flagging WHERE uid = :uid AND fid IN (" . implode(",", $follow_flags) . ")) OR entity_id = :uid) AND fid IN (" . implode(",", $follow_flags) . ") AND timestamp >= " . $min_timestamp;
+	$query2 = "SELECT timestamp,
+			'flagged_item' as result_type,
+			'' status_update_id,
+			flagging_id,
+			uid as 'owner_uid'
+			FROM flagging WHERE (entity_id IN (SELECT entity_id FROM flagging WHERE uid = :uid AND fid IN (" . implode(",", $display_flags) . ")) OR entity_id = :uid) AND fid IN (" . implode(",", $display_flags) . ")";
 
-	// if on first page, show all new posts since min_timestamp
-	if ($limit_from > 0) {
-		$query .= " AND timestamp <= " . $max_timestamp;
-	}
-	$query .= " ORDER BY timestamp DESC";
-	$flag_results = db_query($query, array(':uid' => $account->uid))->fetchAll();
+	$joined = $query1 . " UNION ALL " . $query2 . " ORDER BY timestamp DESC LIMIT " . intval($limit_from) . ", " . intval($limit_to);
 
-	// merge
-	$all_results = array();
-	foreach($status_updates as $result) {
-		$all_results[] = $result;
-	}
-	foreach($flag_results as $result) {
-		$all_results[] = $result;
-	}
-
-	// sort
-	usort($all_results, "_tm_status_updates_compare_timestamps");
+	$all_results = db_query($joined, array(':uid' => $account->uid))->fetchAll();
 	return $all_results;
 }
 
 /**
  * Return a sorted list of flag and status updates for all accounts
- * Note: the flag items are returned within the range of timestamps from the status updates
  */
 function tm_status_updates_get_combined_feed_global($limit_from = 0, $limit_to = 10) {
-	
-	// Flag user as having updated status
-	$follow_flags = array();
-	$follow_flags[] = flag_get_flag('follow_members')->fid;
-	$follow_flags[] = flag_get_flag('follow_organizations')->fid;
-	$follow_flags[] = flag_get_flag('signup')->fid;
-	$follow_flags[] = flag_get_flag('event_register')->fid;
 
-	// get recent status update items
-	$query = "SELECT *, UNIX_TIMESTAMP(`created`) AS `timestamp` FROM tm_newsfeed_status_updates WHERE is_removed = 0 AND moderator_hide = 0 ORDER BY created DESC LIMIT " . intval($limit_from) . ", " . intval($limit_to);
-	$status_updates = db_query($query)->fetchAll();
+	// Status updates
+	$query1 = "SELECT UNIX_TIMESTAMP(`created`) AS `timestamp`,
+				'status_update' as result_type,
+				id as status_update_id,
+				'' flagging_id,
+				poster_uid as 'owner_uid'
+				FROM tm_newsfeed_status_updates WHERE is_removed = 0 AND moderator_hide = 0";
 
-	// get range of timestamps
-	// use this for the flag query
-	$min_timestamp = PHP_INT_MAX;
-	$max_timestamp = 0;
-	foreach($status_updates as $result) {
-		if ($result->timestamp < $min_timestamp) {
-			$min_timestamp = $result->timestamp;
-		}
-		if ($result->timestamp > $max_timestamp) {
-			$max_timestamp = $result->timestamp;
-		}
-	}
+	// Get list of flags that can be displayed
+	$display_flags = array();
+	$display_flags[] = flag_get_flag('approval_approved_by')->fid;
+	$display_flags[] = flag_get_flag('event_waitlist')->fid;
+	$display_flags[] = flag_get_flag('tm_sponsor')->fid;
+	$display_flags[] = flag_get_flag('follow_members')->fid;
+	$display_flags[] = flag_get_flag('follow_organizations')->fid;
+	$display_flags[] = flag_get_flag('signup')->fid;
+	$display_flags[] = flag_get_flag('event_register')->fid;
 
-	// get recent flag items
-	$query = "SELECT * FROM flagging WHERE fid IN (" . implode(",", $follow_flags) . ") AND timestamp >= " . $min_timestamp;
+	$query2 = "SELECT timestamp,
+			'flagged_item' as result_type,
+			'' status_update_id,
+			flagging_id,
+			uid as 'owner_uid'
+			FROM flagging WHERE fid IN (" . implode(",", $display_flags) . ")";
 
-	// if on first page, show all new posts since min_timestamp
-	if ($limit_from > 0) {
-		$query .= " AND timestamp <= " . $max_timestamp;
-	}
-	$query .= " ORDER BY timestamp DESC";
-	$flag_results = db_query($query)->fetchAll();
+	$joined = $query1 . " UNION ALL " . $query2 . " ORDER BY timestamp DESC LIMIT " . intval($limit_from) . ", " . intval($limit_to);
 
-	// merge
-	$all_results = array();
-	foreach($status_updates as $result) {
-		$all_results[] = $result;
-	}
-	foreach($flag_results as $result) {
-		$all_results[] = $result;
-	}
-
-	// sort
-	usort($all_results, "_tm_status_updates_compare_timestamps");
-
+	$all_results = db_query($joined)->fetchAll();
 	return $all_results;
 }
 
@@ -360,7 +336,7 @@ function tm_status_updates_get_matching_search_terms($search_terms, $limit_from 
 	}
 
 	// get recent status update items
-	$query = "SELECT *, UNIX_TIMESTAMP(`created`) AS `timestamp` FROM tm_newsfeed_status_updates WHERE created >= DATE_SUB(NOW(), INTERVAL " . intval($days_old) . " DAY) AND is_removed = 0 AND moderator_hide = 0 ";
+	$query = "SELECT UNIX_TIMESTAMP(`created`) AS `timestamp`, 'status_update' AS result_type, id AS status_update_id, poster_uid AS owner_uid FROM tm_newsfeed_status_updates WHERE created >= DATE_SUB(NOW(), INTERVAL " . intval($days_old) . " DAY) AND is_removed = 0 AND moderator_hide = 0 ";
 
 	$query_options = array();
 	for ($i = 0; $i < sizeof($search_terms); $i++) {
@@ -385,15 +361,14 @@ function tm_status_updates_get_near_location($latitude, $longitude, $range, $lim
 	// converted to km
 
 	// search for status updates near location
-	$query = "SELECT *, UNIX_TIMESTAMP(`created`) AS `timestamp`, ";
-
+	$query = "SELECT *, 'status_update' AS result_type, id AS status_update_id, poster_uid AS owner_uid, ";
 	$query .= "SQRT(
 		    POW(111.2 * (location_latitude - " . floatval($latitude) . "), 2) +
 		    POW(111.2 * (" . floatval($longitude) . " - location_longitude) * COS(location_latitude / 57.3), 2)) AS distance";
 
 	$query .= " FROM tm_newsfeed_status_updates WHERE location_latitude IS NOT null AND location_longitude IS NOT NULL AND created >= DATE_SUB(NOW(), INTERVAL " . intval($days_old) . " DAY) AND is_removed = 0 AND moderator_hide = 0";
 	
-	$query = "SELECT * FROM (" . $query . ") AS distance_results WHERE distance < " . floatval($range) . " ORDER BY created DESC LIMIT " . intval($limit_from) . ", " . intval($limit_to);
+	$query = "SELECT *, UNIX_TIMESTAMP(`created`) AS `timestamp` FROM (" . $query . ") AS distance_results WHERE distance < " . floatval($range) . " ORDER BY created DESC LIMIT " . intval($limit_from) . ", " . intval($limit_to);
 
 	$status_updates = db_query($query)->fetchAll();
 	return $status_updates;

@@ -476,65 +476,47 @@ function tm_status_updates_render_results_items($results, $count_viewer_ip, $hid
 	$last_user_uid = null;
 	foreach($results as $result) {
 
+		$html = "";
+
 		if ($count_items > $display_limit) {
 			break;
 		}
 
-		// status update
-		if (isset($result->created)) {
-
-			// hide repeating posts
-			$own_post = ($user->uid == $result->poster_uid);
-			$repeating_post = $result->poster_uid == $last_user_uid;
-			if ($repeating_post) {
-				if ($own_post and $hide_own_repeats) {
-					continue;
-				} elseif (!$own_post and $hide_repeat_posters) {
-					continue;
-				}
-			}
-			
-			// hide spammers
-			if (in_array($result->poster_uid, $conf["tm_status_updates_silence_uids"])) {
+		// hide repeating posts
+		$own_post = ($user->uid == $result->owner_uid);
+		$repeating_post = $result->owner_uid == $last_user_uid;
+		if ($repeating_post) {
+			if ($own_post and $hide_own_repeats) {
+				continue;
+			} elseif (!$own_post and $hide_repeat_posters) {
 				continue;
 			}
-
-			// track last id
-			$last_user_uid = $result->poster_uid;
-
-			// render item
-			$html = tm_status_updates_render_update($result, $count_viewer_ip, $show_you);
 		}
 
-		// flagged item
-		if (isset($result->fid)) {
-
-			// hide repeating posts
-			$own_post = ($user->uid == $result->uid);
-			$repeating_post = $result->uid == $last_user_uid;
-			if ($repeating_post) {
-				if ($own_post and $hide_own_repeats) {
-					continue;
-				} elseif (!$own_post and $hide_repeat_posters) {
-					continue;
-				}
-			}
-
-			// hide spammers
-			if (in_array($result->uid, $conf["tm_status_updates_silence_uids"])) {
-				continue;
-			}
-
-			// track last id
-			$last_user_uid = $result->uid;
-
-			// render item
-			$html = tm_status_updates_render_flagged_item($result, $show_you);
+		// hide silenced accounts
+		if (in_array($result->owner_uid, $conf["tm_status_updates_silence_uids"])) {
+			continue;
 		}
 
-		$html_items[] = $html;
-		$count_items++;
+		// render status update
+		if ($result->result_type == "status_update") {
+			$status_update = tm_status_updates_get_update_by_id($result->status_update_id);
+			$html = tm_status_updates_render_update($status_update, $count_viewer_ip, $show_you);
+		}
 
+		// render flagged item
+		if ($result->result_type == "flagged_item") {
+			$flagged_item = tm_status_updates_get_flagged_by_id($result->flagging_id);
+			$html = tm_status_updates_render_flagged_item($flagged_item, $show_you);
+		}
+
+		// track last id
+		$last_user_uid = $result->owner_uid;
+
+		if ($html != "") {
+			$html_items[] = $html;
+			$count_items++;
+		}
 	}
 
 	// return html

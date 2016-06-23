@@ -39,7 +39,7 @@ function tm_status_updates_display_feed($feed_type) {
 
 			// clear any previous sign in messages
 			drupal_get_messages("help-tip");
-			
+
 			// show status update form
 			$tm_status_update_form = tm_status_updates_render_update_form($account);
 		}
@@ -51,7 +51,7 @@ function tm_status_updates_display_feed($feed_type) {
 	if ($feed_type == "newsfeed") {
 
 		$feed_title = "Your feed &middot; <a style='font-size: smaller; text-decoration: none;color: #007DB7;' href='/newsfeed/global'>All members</a>";
-		$all_results = tm_status_updates_get_combined_feed($account, $display_from, $display_to);
+		$all_results = tm_status_updates_get_combined_feed_user($account, $display_from, $display_to);
 		$tm_status_update_form = tm_status_updates_render_update_form($account);
 
 		// If no results for your feed, switch to global feed
@@ -107,7 +107,7 @@ function tm_status_updates_display_feed($feed_type) {
 	$newsfeed_html = tm_status_updates_render_results_feed($results_html, $feed_title, "newsfeed");
 
 	// show loader
-	if ((sizeof($all_results) < $limit_results) and (sizeof($all_results) > $display_to)) {
+	if (sizeof($all_results) == $display_to) {
 		$loader_html = tm_status_updates_render_loader($feed_type, $display_from, $display_to);
 		$newsfeed_html .= $loader_html;
 	}
@@ -119,9 +119,9 @@ function tm_status_updates_display_feed($feed_type) {
 	$recommended_html = tm_status_updated_render_recommended_members($user);
 
 	// show help text if now enough results
-	$loader_html = "";
 	$help_message = "";
 	if (sizeof($all_results) < $display_to) {
+		$loader_html = "";
 		$help_message = "Build your personal news feed by following members and companies you're interested in. Or find out what's happening on the <a href='/newsfeed/global'>global news feed</a>.";
 		//drupal_set_message($help_message, "help-tip");
 		$help_html = tm_status_update_render_custom_message($help_message);
@@ -245,7 +245,7 @@ function tm_status_updates_display_ajax() {
 		$all_results = tm_status_updates_get_combined_feed_global($limit_from, $limit_to);
 	}
 	if ($feed_type == "newsfeed") {
-		$all_results = tm_status_updates_get_combined_feed($user, $limit_from, $limit_to);
+		$all_results = tm_status_updates_get_combined_feed_user($user, $limit_from, $limit_to);
 	}
 	if ($feed_type == "tags") {
 		// get the tag search
@@ -420,5 +420,3 @@ function tm_status_updates_display_include_js($actions = true, $post = false, $g
 		drupal_add_js($google_maps_api_url, 'external');
 	}
 }
-
-

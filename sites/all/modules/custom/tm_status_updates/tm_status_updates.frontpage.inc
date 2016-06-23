@@ -21,7 +21,7 @@ function tm_status_updates_show_frontpage_updates($display_num_items = 5, $displ
 
 	$limit_from = 0;
 	$limit_to = 50;
-	$display_limit = 5;
+	$display_limit = 4;
 
 	// get sorted list of status update and flag results
 	$all_results = tm_status_updates_get_combined_feed_global($limit_from, $limit_to);

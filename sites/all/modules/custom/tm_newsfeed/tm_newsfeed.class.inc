@@ -46,7 +46,11 @@ class TmNewsfeedEmailGenerator
 			$email = $e->tm_newsfeed_generate_email($user_id, $start_date, $end_date);
 			$email_subject = $email['subject'];
 			$email_body = $email['body'];
-			$notifications[] = array("user_id" => $user_id, "subject" => $email_subject, "body" => $email_body);
+
+			// only add to notification if we have subject and body
+			if (($email['subject'] != "") and ($email['body'] != "")) {
+				$notifications[] = array("user_id" => $user_id, "subject" => $email_subject, "body" => $email_body);
+			}
 
 			// debug info
 			$debug_timer['90_end_email'] = time();
@@ -104,6 +108,10 @@ class TmNewsfeedEmail
 		$debug_timer['06_done_tips'] = time();
 
 		$content = $this->tm_newsfeed_email_populate_section_content($user_id, $search_country, $start_date, $end_date);
+		if ($content == "") {
+			$debug_timer['000_no_content_return'] = time();
+			return array('body' => "", 'subject' => "");
+		}
 		$email = str_replace("__EMAIL_CONTENT__", $content, $email);
 
 		$quote = $conf['tm_newsfeed_email_quotes'][array_rand($conf['tm_newsfeed_email_quotes'])];

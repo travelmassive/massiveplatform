@@ -381,7 +381,7 @@ function tm_status_updates_get_near_location($latitude, $longitude, $range, $lim
 function tm_status_updates_get_last_update_timestamp($entity_type, $entity_id) {
 
 	// fetch the timestamp of the user's most recent status update
-	$query = "SELECT CONVERT_TZ(`created`, @@session.time_zone, '+00:00') AS `created_utc`  FROM tm_newsfeed_status_updates WHERE entity_type = :entity_type AND entity_id = :entity_id ORDER BY created DESC LIMIT 1";
+	$query = "SELECT CONVERT_TZ(`created`, @@session.time_zone, '+00:00') AS `created_utc` FROM tm_newsfeed_status_updates WHERE entity_type = :entity_type AND entity_id = :entity_id ORDER BY created DESC LIMIT 1";
 	$result = db_query($query, array(":entity_type" => $entity_type, ":entity_id" => $entity_id))->fetch();
 
 	// get timestamp of last status update

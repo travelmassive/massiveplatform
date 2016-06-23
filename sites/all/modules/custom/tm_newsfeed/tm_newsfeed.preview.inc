@@ -81,7 +81,7 @@ function tm_newsfeed_admin_notification_preview() {
 	$html .= "<hr style='border-top: 1px solid #eee;'>";
 
 	if (sizeof($notifications) == 0) {
-		$html .= "No notifications generated.";
+		$html .= "No notification generated (check content feeds).";
 	} else {
 		$html .= "<br><strong>Subject: " . $notifications[0]['subject'] . "</strong>";
 		$html .= "<br>" . $notifications[0]['body'];

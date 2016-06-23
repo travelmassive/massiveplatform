@@ -231,8 +231,8 @@ and users_roles.rid = __RID_APPROVED_MEMBER__  -- approved_member
 
 where
 	following.fid in (__FID_FOLLOW_MEMBERS__,__FID_FOLLOW_ORGANIZATIONS__,__FID_SIGNUP__)  -- follow_members, follow_organizations, signup
-	and UNIX_TIMESTAMP(updates.created) >= :start_date
-	and UNIX_TIMESTAMP(updates.created) <= :end_date
+	and UNIX_TIMESTAMP(CONVERT_TZ(updates.created, @@session.time_zone, '+00:00')) >= :start_date
+	and UNIX_TIMESTAMP(CONVERT_TZ(updates.created, @@session.time_zone, '+00:00')) <= :end_date
 	-- exclude members that aren't approved
 	and ( (users_roles.uid is not null and updates.entity_type = 'user') or updates.entity_type <> 'user' )
 	-- exclude status updates that users have removed themselves, or moderators have hidden (i.e. spam)

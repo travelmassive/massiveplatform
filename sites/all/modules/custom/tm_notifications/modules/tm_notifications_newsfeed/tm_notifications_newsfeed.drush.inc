@@ -368,7 +368,7 @@ function tm_notifications_newsfeed_test_worker() {
 
 	// default type is daily
 	if ($notif_type == null) {
-		$notif_type == "daily";
+		$notif_type = "daily";
 	}
 	$notif_type = strtolower($notif_type);
 

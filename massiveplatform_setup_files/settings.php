@@ -1129,10 +1129,10 @@ $conf["tm_status_updates_show_featured"] = 2; // how many featured items to disp
 $conf["tm_status_updates_custom_message"] = array(); // custom messages for newsfeed display
 $conf["tm_status_updates_custom_message"]["global"] = "Find out what's happening in the community";
 $conf["tm_status_updates_custom_message"]["newsfeed"] = "Share an update or news with your followers";
-$conf['tm_status_updates_meta_og_title'] = "Travel Massive News Feed";
-//$conf['tm_status_updates_meta_og_image'] = "";
-$conf['tm_status_updates_meta_description'] = "Share the latest news with our community on your news feed.";
-
+$conf["tm_status_updates_meta_og_title"] = "Travel Massive News Feed";
+//$conf['tm_status_updates_meta_og_image"] = "";
+$conf["tm_status_updates_meta_description"] = "Share the latest news with our community on your news feed.";
+$conf["tm_status_updates_unapproved_message"] = "Your updates won't be published until your account is approved."; // display banner to unapproved members
 
 $conf['install_profile'] = 'tm';
 $conf['suppress_itok_output'] = true; // supress ?itok so email images can be loaded by gmail

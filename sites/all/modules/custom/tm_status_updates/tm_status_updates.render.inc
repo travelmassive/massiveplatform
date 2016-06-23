@@ -110,6 +110,11 @@ function tm_status_updates_render_update($result, $count_viewer_ip = null, $show
 	// get posting user
 	$posting_user = user_load($result->poster_uid);
 
+	// allow viewing your own content if you are unapproved
+	if ($result->poster_uid == $user->uid) {
+		$show_unapproved = true;
+	}
+
 	// ensure posting user is approved
 	if (!$show_unapproved) {
 		if (!in_array("approved user", $posting_user->roles))  {
@@ -327,6 +332,11 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 	}
 	$flagging_user_url = drupal_get_path_alias("user/" . $flagging_user->uid);
 	$flagged_time = format_interval(time() - $result->timestamp, 1) . " ago";
+
+	// allow viewing your own content if you are unapproved
+	if ($flagging_user->uid == $user->uid) {
+		$show_unapproved = true;
+	}
 
 	// skip showing feed for non-approved users
 	if (!$show_unapproved) {

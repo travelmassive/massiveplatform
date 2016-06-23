@@ -132,7 +132,15 @@ function tm_status_updates_display_feed($feed_type) {
 	$message_html = "";
 	if (($help_message == "") and (isset($conf["tm_status_updates_custom_message"][$feed_type]))) {
 		$message_html = tm_status_update_render_custom_message($conf["tm_status_updates_custom_message"][$feed_type]);
+		if ($promoted_html == "") {
+			// if no promoted updates, push the help text up to be even with left hand side
+			$message_html = "<div style='margin-top: -14px;'>" . $message_html . "</div>";
+		}
+
 	}
+	
+	// if not approved show a message
+	tm_status_updates_unapproved_member_message();
 
 	// construct page from rendered items
 	$html = file_get_contents(drupal_get_path('module', 'tm_status_updates') .'/templates/tm_status_updates_newsfeed.tpl.php');
@@ -420,3 +428,48 @@ function tm_status_updates_display_include_js($actions = true, $post = false, $g
 		drupal_add_js($google_maps_api_url, 'external');
 	}
 }
+
+/**
+ * Helper method to display member approval message
+ */
+function tm_status_updates_unapproved_member_message() {
+
+	global $user;
+	global $conf;
+
+	// don't show to logged out users
+	if (!user_is_logged_in()) {
+		return;
+	}
+
+	// if user is not approved yet
+	$account = user_load($user->uid);
+
+	// don't show if user has't yet validated address
+	if (in_array('non-validated', $account->roles)) {
+		return;
+	}
+
+	// check if user has been approved yet
+	if (!in_array("approved user", $user->roles)) {
+
+		// show approval link
+		$who_flagged = flag_get_entity_flags("user", $user->uid, "approval_requested_by_user");
+		if (sizeof($who_flagged) > 0) {
+	  		foreach ($who_flagged as $flagger) {
+	    		$difference = time() - $flagger->timestamp;
+	  		}
+	  		$flagged_time = format_interval($difference, 1) . " ago";
+			$approval_link = l(t('Approval requested (' . $flagged_time . ')'), 'javascript:jq_approval_already_requested();', array('fragment' => '','external'=>true));
+		} 
+		else {
+			$approval_link = l(t('Approve my account'), 'javascript:jq_request_approval(' . $user->uid . ')', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('approval-link'))));
+		}
+
+		// tell user they need to be approved
+		$message = $conf["tm_status_updates_unapproved_message"];
+		drupal_set_message($message . " " . $approval_link, "help-tip");
+	}
+}
+
+

@@ -9,6 +9,7 @@
 #tm-status-update-feedback-container { font-size: 14px; margin-bottom: -12px; min-height: 24px;}
 #tm-status-update-location-text { font-size: 14px; color: #213040; text-decoration: underline; }
 #tm-status-update-feedback-loading-image { margin-top: 6px; padding-right: 8px; }
+#tm-status-update-text { resize: none; }
 </style>
 
 <script>

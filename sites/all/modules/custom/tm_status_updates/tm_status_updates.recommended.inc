@@ -130,7 +130,7 @@ function tm_status_updates_render_recommended_member($account) {
 	$member_name = strip_tags($account->field_user_first_name[LANGUAGE_NONE][0]['value'] . " " . $account->field_user_last_name[LANGUAGE_NONE][0]['value']);
 	$image_uri = _tm_users_get_avatar_uri($account);
 	$image_url = image_style_url("avatar", $image_uri);
-	$member_url = drupal_get_path_alias("user/" . $account->uid);
+	$member_url = "/" . drupal_get_path_alias("user/" . $account->uid);
 
 	// home chapter
 	$home_chapter_url = "";

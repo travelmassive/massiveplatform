@@ -149,33 +149,33 @@ class TmNewsfeedEmail
 
 	public function tm_newsfeed_email_get_tip($account, $start_date, $end_date) {
 
+		global $conf;
+
 		$uid = $account->uid;
 		$edit_url = tm_newfeed_absolute_url("user/" . $uid);
 
-		// important tips
-		// these will always be shown in order of importance if applicable
-
+		// Always show message when not approved
 		if (!in_array("approved user", $account->roles)){
-			$tip = "Your profile is not approved, please complete your profile and request approval";
-			return "<strong>$tip</strong>";
-		}
-
-		$following_no_one = (0 == db_query("select count(*) from flagging where fid=1 and uid = :uid", array(":uid" => $uid))->fetchField());
-		if ($following_no_one){
-			$tip = "You aren't following anyone - connect with other members in the community to receive updates";
-			return "<strong>$tip</strong>";
-		}
-
-		$no_chapters = (0 == db_query("select count(*) from flagging where fid=3 and uid = :uid", array(":uid" => $uid))->fetchField());
-		if ($no_chapters){
-			$tip = "You haven't joined a chapter yet - join a chapter near you to receive local updates.";
-			return "<strong>$tip</strong>";
+			$tip = $conf["tm_newsfeed_email_tip_not_approved"];
+			return "<em>($tip)</em>";
 		}
 
 		// cycle tips
 		// create an array of other tips that apply to the user
 		// and select a random one for inclusion in the email
 		$tips = array();
+		
+		// no followers
+		$following_no_one = (0 == db_query("select count(*) from flagging where fid=1 and uid = :uid", array(":uid" => $uid))->fetchField());
+		if ($following_no_one){
+			$tips[] = $conf["tm_newsfeed_email_tip_not_following"];
+		}
+
+		// no chapters
+		$no_chapters = (0 == db_query("select count(*) from flagging where fid=3 and uid = :uid", array(":uid" => $uid))->fetchField());
+		if ($no_chapters){
+			$tips[] = $conf["tm_newsfeed_email_tip_no_chapter"];
+		}
 
 		// create company profile
 		// if user has populated field_job_organization, show tip to create a company profile
@@ -205,22 +205,24 @@ class TmNewsfeedEmail
 			}
 		}
 
+		// about me
 		if (sizeof($account->field_about_me) == 0) {
 			$tips[] = "Share a little bit " . l(t('about yourself'), $edit_url) . " so other members know why they should connect with you.";
 		}
 
+		// no location
 		if ((sizeof($account->field_location_city) == 0) or (sizeof($account->field_user_country) == 0)) {
 			$tips[] = "Share " . l(t('where you are located'), $edit_url) . " so local members can find you.";
 		}
 
+		// no job role
 		if (sizeof($account->field_job_role) == 0) {
 			$tips[] = "Fill out your " . l(t('job role'), $edit_url) . " so other professionals can find your profile.";
 		}
 
-		// Add config tips
-		global $conf;
-		if(isset($conf["tm_newsfeed_email_tips"])) {
-			$more_tips = $conf["tm_newsfeed_email_tips"];
+		// more tips
+		if(isset($conf["tm_newsfeed_email_more_tips"])) {
+			$more_tips = $conf["tm_newsfeed_email_more_tips"];
 			$tips = array_merge($more_tips, $tips);
 		}
 		

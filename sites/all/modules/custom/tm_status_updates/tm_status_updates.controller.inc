@@ -262,9 +262,21 @@ function tm_status_updates_get_combined_feed($account, $limit_from = 0, $limit_t
 			$max_timestamp = $result->timestamp;
 		}
 	}
+	
+	// if no status updates for personal newsfeed, extend range of flags
+	if (sizeof($status_updates) == 0) {
+		$min_timestamp = 0;
+		$max_timestamp = PHP_INT_MAX;
+	}
 
 	// get recent flag items
-	$query = "SELECT * FROM flagging WHERE (entity_id IN (SELECT entity_id FROM flagging WHERE uid = :uid AND fid IN (" . implode(",", $follow_flags) . ")) OR entity_id = :uid) AND timestamp >= " . $min_timestamp . " AND timestamp <= " . $max_timestamp . " ORDER BY timestamp DESC";
+	$query = "SELECT * FROM flagging WHERE (entity_id IN (SELECT entity_id FROM flagging WHERE uid = :uid AND fid IN (" . implode(",", $follow_flags) . ")) OR entity_id = :uid) AND fid IN (" . implode(",", $follow_flags) . ") AND timestamp >= " . $min_timestamp;
+
+	// if on first page, show all new posts since min_timestamp
+	if ($limit_from > 0) {
+		$query .= " AND timestamp <= " . $max_timestamp;
+	}
+	$query .= " ORDER BY timestamp DESC";
 	$flag_results = db_query($query, array(':uid' => $account->uid))->fetchAll();
 
 	// merge
@@ -312,7 +324,13 @@ function tm_status_updates_get_combined_feed_global($limit_from = 0, $limit_to =
 	}
 
 	// get recent flag items
-	$query = "SELECT * FROM flagging WHERE (entity_id IN (SELECT entity_id FROM flagging WHERE fid IN (" . implode(",", $follow_flags) . "))) AND timestamp >= " . $min_timestamp . " AND timestamp <= " . $max_timestamp . " ORDER BY timestamp DESC LIMIT " . intval($limit_from) . ", " . intval($limit_to);
+	$query = "SELECT * FROM flagging WHERE fid IN (" . implode(",", $follow_flags) . ") AND timestamp >= " . $min_timestamp;
+
+	// if on first page, show all new posts since min_timestamp
+	if ($limit_from > 0) {
+		$query .= " AND timestamp <= " . $max_timestamp;
+	}
+	$query .= " ORDER BY timestamp DESC";
 	$flag_results = db_query($query)->fetchAll();
 
 	// merge

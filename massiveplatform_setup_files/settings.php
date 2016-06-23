@@ -951,8 +951,11 @@ $conf['tm_newsfeed_subject_extra_fallbacks'] = array(
   );
 
 // email tips
-$conf['tm_newsfeed_email_tips'] = array();
-$conf['tm_newsfeed_email_tips'][] = "Post a status update to share your latest news with your followers.";
+$conf["tm_newsfeed_email_tip_not_approved"] = "Your profile is not approved, please complete your profile and request approval";
+$conf["tm_newsfeed_email_tip_not_following"] = "You aren't following anyone - connect with other members in the community to receive updates";
+$conf["tm_newsfeed_email_tip_no_chapter"] = "You haven't joined a chapter yet - join a chapter near you to receive local updates.";
+$conf['tm_newsfeed_email_more_tips'] = array(); // create additional tips that will be cycled through
+$conf['tm_newsfeed_email_more_tips'][] = "Post a status update to share your latest news with your followers.";
 
 // the headers for the email sections
 $conf['tm_newsfeed_email_section_headers'] = array(

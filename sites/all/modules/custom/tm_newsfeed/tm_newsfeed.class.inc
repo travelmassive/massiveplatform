@@ -112,7 +112,7 @@ class TmNewsfeedEmail
 
 		$feedback_base = $conf['tm_newsfeed_feedback_base'];
 		$feedback_link_text = $conf['tm_newsfeed_feedback_link_text'];
-		$feedback = "$feedback_base <a href='".url("contact")."'>$feedback_link_text</a>";
+		$feedback = "$feedback_base <a href='".url("contact").tm_newsfeed_utm_campaign()."'>$feedback_link_text</a>";
 		$email = str_replace("__LET_US_KNOW_FEEDBACK__", $feedback, $email);
 
 		$email = str_replace("__THANK_YOU_PHRASE__", "Cheers", $email);
@@ -156,20 +156,20 @@ class TmNewsfeedEmail
 		// these will always be shown in order of importance if applicable
 
 		if (!in_array("approved user", $account->roles)){
-			$tip = "your profile is not approved, please complete your profile and request approval";
-			return "[Tip: $tip]";
+			$tip = "Your profile is not approved, please complete your profile and request approval";
+			return "<strong>$tip</strong>";
 		}
 
 		$following_no_one = (0 == db_query("select count(*) from flagging where fid=1 and uid = :uid", array(":uid" => $uid))->fetchField());
 		if ($following_no_one){
-			$tip = "you aren't following anyone - connect with other members of the community to receive updates";
-			return "[Tip: $tip]";
+			$tip = "You aren't following anyone - connect with other members in the community to receive updates";
+			return "<strong>$tip</strong>";
 		}
 
 		$no_chapters = (0 == db_query("select count(*) from flagging where fid=3 and uid = :uid", array(":uid" => $uid))->fetchField());
 		if ($no_chapters){
-			$tip = "you haven't joined a chapter yet - connect with other members of the community to receive updates";
-			return "[Tip: $tip]";
+			$tip = "You haven't joined a chapter yet - join a chapter near you to receive local updates.";
+			return "<strong>$tip</strong>";
 		}
 
 		// cycle tips
@@ -197,8 +197,8 @@ class TmNewsfeedEmail
 				if ($no_match) {
 					$num_companies = number_format(db_query("select count(*) as 'count' from node where node.type='organization'")->fetchField());
 
-					$company_profile_link = "<a href='".url("companies")."'>company profile</a>";
-					$tip = "Create a $company_profile_link for $field_job_organization and join more than $num_companies other companies on our network.";
+					$company_profile_link = "<a href='".url("companies").tm_newsfeed_utm_campaign()."'>company profile</a>";
+					$tip = "Create a $company_profile_link for $field_job_organization and join more than $num_companies other companies profiles in our community.";
 
 					$tips[] = $tip;
 				}
@@ -206,29 +206,38 @@ class TmNewsfeedEmail
 		}
 
 		if (sizeof($account->field_about_me) == 0) {
-			$tips[] = "Share a little bit " . l(t('about yourself'), $edit_url) . " and your story with the community.";
+			$tips[] = "Share a little bit " . l(t('about yourself'), $edit_url) . " so other members know why they should connect with you.";
 		}
 
 		if ((sizeof($account->field_location_city) == 0) or (sizeof($account->field_user_country) == 0)) {
-			$tips[] = "Tell us " . l(t('where you are located'), $edit_url) . " so other members can discover you.";
+			$tips[] = "Share " . l(t('where you are located'), $edit_url) . " so local members can find you.";
 		}
 
 		if (sizeof($account->field_job_role) == 0) {
-			$tips[] = "Share your " . l(t('job role'), $edit_url) . " so like-minded members can connect with you.";
+			$tips[] = "Fill out your " . l(t('job role'), $edit_url) . " so other professionals can find your profile.";
 		}
 
-		if (sizeof($tips) == 0) {
-			// general fall back tips if no other tips were selected based on user conditions
-			$tips[] = "if you relocate, be sure to keep your profile up to date so that you can meet other people in the Travel Massive community";
-			// $tips[] = "";
-			// $tips[] = "";
+		// Add config tips
+		global $conf;
+		if(isset($conf["tm_newsfeed_email_tips"])) {
+			$more_tips = $conf["tm_newsfeed_email_tips"];
+			$tips = array_merge($more_tips, $tips);
 		}
 		
-		// select random tip
-		$rand = $tips[array_rand($tips)];
-		$tip = "[Tip: $rand]";
+		if (sizeof($tips) > 0) {
 
-		return $tip;
+			// random intro
+			$intros = array("Did you know?");
+
+			// select random tip
+			$rand = $tips[array_rand($tips)];
+			$rand_intro = $intros[array_rand($intros)];
+			$tip = "<em>($rand)</em>";
+			return $tip;
+		}
+
+		// no tip
+		return "";
 	}
 
 	public function tm_newsfeed_email_populate_section_content($user_id, $search_country, $start_date, $end_date) {
@@ -310,7 +319,7 @@ class TmNewsfeedEmail
 			$items[] = array("href" => $href, "link" => strip_tags($link), "text" => $text);
 		}
 
-		$read_more = "<a href='" . tm_newfeed_absolute_url("newsfeed") . "'>View your news feed</a><br>";
+		$read_more = "<a href='" . tm_newfeed_absolute_url("newsfeed") . tm_newsfeed_utm_campaign() . "'>View your news feed</a><br>";
 		return $this->tm_newsfeed_email_populate_section('updates', $items, $read_more);
 	}
 
@@ -347,7 +356,7 @@ class TmNewsfeedEmail
 			$href = tm_newfeed_absolute_url("user/" . $result->uid);
 			$link = $result->user_full_name;
 
-			$home_chapter_url = tm_newfeed_absolute_url('node/'.$result->home_chapter_id);
+			$home_chapter_url = tm_newfeed_absolute_url('node/'.$result->home_chapter_id) . tm_newsfeed_utm_campaign();
 			$home_chapter = "<a href='$home_chapter_url'>".$result->home_chapter."</a>";
 			$num_signups = $result->signup_count;
 
@@ -484,6 +493,7 @@ class TmNewsfeedEmail
 		foreach($items as $item) {
 			$row = TmNewsfeedEmailTemplates::$newsfeed_email_section_row;
 			$row = str_replace("__EMAIL_ITEM_LINK__", $item['href'], $row);
+			$row = str_replace("__EMAIL_ITEM_UTM_CAMPAIGN__", tm_newsfeed_utm_campaign(), $row);
 			$row = str_replace("__EMAIL_ITEM_LINK_TEXT__", $item['link'], $row);
 			$row = str_replace("__EMAIL_ITEM_EXTRA_TEXT__", $item['text'], $row);
 			$section_contents = $section_contents . $row;
@@ -550,7 +560,7 @@ class TmNewsfeedEmailTemplates
 	<p>__OPENING_LINE__</p>
 </div>
 <div class="email-tip">
-	<p><em>__EMAIL_TIP__</em></p>
+	<p>__EMAIL_TIP__</p>
 </div>
 <div class="email-content">
 	__EMAIL_CONTENT__
@@ -574,7 +584,7 @@ EOT;
 EOT;
 
 	public static $newsfeed_email_section_row = <<<EOT
-<a href="__EMAIL_ITEM_LINK__">__EMAIL_ITEM_LINK_TEXT__</a>__EMAIL_ITEM_EXTRA_TEXT__<br>
+<a href="__EMAIL_ITEM_LINK____EMAIL_ITEM_UTM_CAMPAIGN__">__EMAIL_ITEM_LINK_TEXT__</a>__EMAIL_ITEM_EXTRA_TEXT__<br>
 EOT;
 
 }
@@ -668,4 +678,15 @@ function tm_newsfeed_check_uid($uid) {
 	$query = "SELECT COUNT(*) as found_uid FROM {users} u WHERE u.uid = :uid";
 	$result = db_query($query, array(':uid' => $uid))->fetch();
 	return ($result->found_uid >= 1);
+}
+
+/**
+ * Add UTM campaign code to a link
+ */
+function tm_newsfeed_utm_campaign() {
+	global $conf;
+	if (isset($conf["tm_newsfeeds_email_utm_campaign"])) {
+		return "?utm_campaign=" . $conf["tm_newsfeeds_email_utm_campaign"];
+	}
+	else return "";
 }

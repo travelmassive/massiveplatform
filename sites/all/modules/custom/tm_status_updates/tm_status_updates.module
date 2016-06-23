@@ -19,7 +19,6 @@ include_once 'tm_status_updates.handle_preview.inc';
 include_once 'tm_status_updates.handle_promote.inc';
 include_once 'tm_status_updates.render.inc';
 include_once 'tm_status_updates.frontpage.inc';
-include_once 'tm_status_updates.helpers.inc';
 include_once 'tm_status_updates.post_form.inc';
 include_once 'tm_status_updates.recommended.inc';
 include_once 'tm_status_updates.view_count.inc';

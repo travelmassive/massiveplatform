@@ -109,7 +109,7 @@ if (sizeof($request_uri_parts) == 3) {
           <?php print render($title_suffix); ?>
           <?php print render($page['header']); ?>
           <?php print $messages; ?>
-          <?php print tm_status_updates_render_theme(); ?>
+          <?php if(module_exists("tm_status_updates")) { print tm_status_updates_render_theme(); } ?>
           <?php //print render($tabs); ?>
           <?php print render($page['help']); ?>
           <?php if ($action_links): ?>

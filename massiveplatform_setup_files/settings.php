@@ -918,6 +918,8 @@ $conf["tm_newsfeed_send_notifications"] = true; // enable sending newsfeed notif
 $conf['tm_newsfeed_daily_notification_time'] = "10:00:00"; // time of day to send daily notifications
 $conf['tm_newsfeed_weekly_notification_time'] = "11:00:00"; // time of day to send weekly notifications
 $conf['tm_newsfeed_moderator_preview'] = true; // show user's notification preview for moderators
+$conf['tm_newsfeeds_email_utm_campaign'] = 'travelmassive'; // append ?utm_campaign= to email links
+// $conf['tm_newsfeed_schedule_test_mod_userid'] = 10; // (uncomment to enable) enable schedules for selected users by mod
 
 // external api feeds
 $conf["tm_newsfeed_curl_timeout"] = 2; // seconds for curl timeout
@@ -947,6 +949,10 @@ $conf['tm_newsfeed_subject_extra_fallbacks'] = array(
   "(Discussions to catch up on + more)",
   "(New users to follow + more)"
   );
+
+// email tips
+$conf['tm_newsfeed_email_tips'] = array();
+$conf['tm_newsfeed_email_tips'][] = "Post a status update to share your latest news with your followers.";
 
 // the headers for the email sections
 $conf['tm_newsfeed_email_section_headers'] = array(

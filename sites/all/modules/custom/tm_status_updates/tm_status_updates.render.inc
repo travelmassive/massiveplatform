@@ -489,7 +489,7 @@ function tm_status_updates_render_results_items($results, $count_viewer_ip, $hid
 			if ($repeating_post) {
 				if ($own_post and $hide_own_repeats) {
 					continue;
-				} elseif (!$own_post) {
+				} elseif (!$own_post and $hide_repeat_posters) {
 					continue;
 				}
 			}
@@ -515,7 +515,7 @@ function tm_status_updates_render_results_items($results, $count_viewer_ip, $hid
 			if ($repeating_post) {
 				if ($own_post and $hide_own_repeats) {
 					continue;
-				} elseif (!$own_post) {
+				} elseif (!$own_post and $hide_repeat_posters) {
 					continue;
 				}
 			}
@@ -640,13 +640,13 @@ function tm_status_updates_render_details($details) {
 	// more links
 	$more_html = "";
 	if (isset($details["more_links"])) {
-		$more_html = "<span style='float: right; width: 12px;'>";
+		$more_html = "<span style='float: left; width: 12px;'>";
 		$more_html .= "<li class='tm-status-update-actions-dropdown' data-dropd-wrapper>";
 
 		$more_html .= "<a class='tm-status-update-actions' href='javascript:void(0);' data-dropd-toggle=''></a>";
 
 		// more-actions
-		$more_html .= "<div class='inner dropd dropd-s dropd-right' data-dropd='' style='top: 24px; min-width: 8rem;'>";
+		$more_html .= "<div class='inner dropd dropd-s dropd-right' data-dropd='' style='top: 24px; min-width: 8rem; wod'>";
 
 		// dropd-menu
 		$more_html .= "<ul class='tm-status-update-actions-dropdown-menu dropd-menu'>";

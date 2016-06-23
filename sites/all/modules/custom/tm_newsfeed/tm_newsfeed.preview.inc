@@ -89,6 +89,7 @@ function tm_newsfeed_admin_notification_preview() {
 		$html .= "<a href='javascript:void(0);' onClick=\"document.getElementById('debug').style.display='block';\">Show developer info</a><div id='debug' style='display: none;'><pre>" . str_replace("\\n", "<br>", $gen->get_debug_log()) . "</pre></div>";
 	}
 
+	header('Content-Type: text/html; charset=utf-8');
 	echo $html;
 	return;
 }

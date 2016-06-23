@@ -1306,7 +1306,7 @@ function _tm_more_actions_process($field, $title = NULL) {
       if ($conf["tm_newsfeed_moderator_preview"]) {
         $links['moderator_tools'][] = array(
           'wrapper_class' => array('moderator_tools'),
-          'content' => l(t('Preview news feed'), '/admin/newsfeed/notification_preview?uid=' . $targetuser->uid,
+          'content' => l(t('Preview news feed email'), '/admin/newsfeed/notification_preview?uid=' . $targetuser->uid,
             array(
             'external' => true,
             'attributes' => array(

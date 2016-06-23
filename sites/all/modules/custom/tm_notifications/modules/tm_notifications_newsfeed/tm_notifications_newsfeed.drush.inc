@@ -107,6 +107,16 @@ function tm_notifications_newsfeed_schedule_deliveries() {
 		// get uid
 		$user_id = $record->uid;
 
+		// testing
+		// skip % of users using modulus on user_id
+		if (isset($conf["tm_newsfeed_schedule_test_mod_userid"])) {
+			$mod = $conf["tm_newsfeed_schedule_test_mod_userid"];
+			if (($user_id % $mod) != 0) {
+				drush_print("Skipping uid " . $user_id . " (mod is " . $mod . ")");
+				continue;
+			}
+		}
+
 		// get user timezone
 		$users_timezone = tm_notifications_get_users_timezone($user_id, $record->timezone);
 		try {

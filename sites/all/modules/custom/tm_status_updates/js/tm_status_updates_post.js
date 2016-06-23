@@ -88,7 +88,7 @@
 	  tm_user_status_updates_cancel_previews();
 
 	  // Step 2. Fetch preview
-	  $.ajax({
+	  xhr = $.ajax({
 	    type: 'POST',
 	    url: '/user/' + tm_update_status_uid + '/status/preview_link',
 	    data: {
@@ -347,7 +347,12 @@
 	    while( (matchArray = regexToken.exec( source )) !== null )
 	    {
 	        var token = matchArray[0];
-	          urlArray.push( token );        
+
+	        // don't include www or www. as people type them
+	        if ((token.toLowerCase() != 'www') && (token.toLowerCase() != 'www.')) {
+	        	urlArray.push( token );
+			}
+	          
 	    }
 
 	    return urlArray;

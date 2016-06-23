@@ -37,6 +37,9 @@ function tm_status_updates_display_feed($feed_type) {
 
 		} else {
 
+			// clear any previous sign in messages
+			drupal_get_messages("help-tip");
+			
 			// show status update form
 			$tm_status_update_form = tm_status_updates_render_update_form($account);
 		}

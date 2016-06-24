@@ -178,3 +178,20 @@ function tm_geoip_get_real_visitor_ip() {
   // no ip
   return null;
 }
+
+/**
+ * Get users's last visit time ferom the ip_tracker module
+ */
+function tm_geoip_get_users_last_visit_time($uid) {
+
+	$query = "SELECT last_visit FROM ip_tracker WHERE uid = :uid ORDER BY last_visit DESC LIMIT 1";
+	$row = db_query($query, array(':uid' => $uid))->fetch();
+
+	// get result
+	$last_visit = null;
+	if ($last_visit != null) {
+		$last_visit = $row->last_visit;
+	}
+
+	return $last_visit;
+}

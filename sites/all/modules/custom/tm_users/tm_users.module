@@ -28,6 +28,10 @@ function tm_users_init() {
   // access uid in js with:
   // var id = Drupal.settings.currentUser;
   drupal_add_js(array('currentUser' => $user->uid), 'setting');
+
+  // keep track of signed in users
+  tm_users_track_signed_in();
+
 }
 
 /*
@@ -446,3 +450,26 @@ function tm_users_views_query_alter(&$view, &$query) {
   }
 }
 
+/**
+ * Keep track of already signed in users
+ * Updates ip_tracker record
+ */
+function tm_users_track_signed_in() {
+
+  global $user;
+
+  // must be logged in
+  if (!user_is_logged_in()) {
+    return;
+  }
+
+  // if no cookie set
+  if (!isset($_COOKIE['Drupal_visitor_tm_is_signed_in'])) {
+    
+    // set cookie for a day
+    setrawcookie('Drupal.visitor.tm_is_signed_in', rawurlencode(true), REQUEST_TIME + 86400, '/');
+
+    // track ip
+    ip_tracker_user_save($user->uid);
+  }
+}

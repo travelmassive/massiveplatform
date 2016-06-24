@@ -655,6 +655,82 @@ function _tm_reports_get_global_insights() {
   $num_waitlists = db_query($query, array(':fid' => $flag->fid))->fetch();
   $insights["num_members_sent_messages"] = $num_waitlists->amount;
 
+  // TOTAL NUMBER OF STATUS UPDATES
+  $query = "SELECT COUNT(id) amount FROM {tm_newsfeed_status_updates} WHERE is_removed = 0";
+  $num_updates = db_query($query)->fetch();
+  $insights["num_total_status_updates"] = $num_updates->amount;
+
+  // TOTAL NUMBER OF PROMOTED UPDATES
+  $query = "SELECT COUNT(id) amount FROM {tm_newsfeed_status_updates} WHERE is_promoted = 1 AND is_removed = 0";
+  $num_promoted = db_query($query)->fetch();
+  $insights["num_promoted_status_updates"] = $num_promoted->amount;
+
+  // TOTAL NUMBER OF MODERATED UPDATES
+  $query = "SELECT COUNT(id) amount FROM {tm_newsfeed_status_updates} WHERE moderator_hide = 1";
+  $num_moderated = db_query($query)->fetch();
+  $insights["num_moderated_status_updates"] = $num_moderated->amount;
+
+  // TOTAL NUMBER OF LINKS SHARED
+  $query = "SELECT COUNT(id) amount FROM {tm_newsfeed_status_updates} WHERE is_removed = 0 AND preview_link_id IS NOT NULL";
+  $num_links = db_query($query)->fetch();
+  $insights["num_total_status_links"] = $num_links->amount;
+
+  // TOTAL NUMBER OF PREVIEW LINKS CREATED
+  $query = "SELECT COUNT(id) amount FROM {tm_newsfeed_preview_links}";
+  $preview_links_created = db_query($query)->fetch();
+  $insights["num_total_preview_links_created"] = $preview_links_created->amount;
+
+  // TOTAL NUMBER OF UPDATE VIEWS DAILY
+  $query = "SELECT SUM(view_count) amount FROM {tm_newsfeed_view_count_daily}";
+  $view_count_daily = db_query($query)->fetch();
+  $insights["num_total_status_views_daily"] = $view_count_daily->amount;
+
+  // TOTAL NUMBER OF STATUS UPDATE VIEWS
+  $query = "SELECT SUM(total_view_count) amount FROM {tm_newsfeed_view_count_total}";
+  $view_count = db_query($query)->fetch();
+  $insights["num_total_status_views_all_time"] = $view_count->amount + $view_count_daily->amount;
+
+  // NUMBER OF SIGNED IN MEMBERS TODAY
+  $query = "SELECT COUNT(uid) amount FROM ip_tracker WHERE FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 1 DAY)";
+  $signed_in_today = db_query($query)->fetch();
+  $insights["num_signedin_members_24_hours"] = $signed_in_today->amount;
+
+  // NUMBER OF SIGNED IN MEMBERS 7 DAYS
+  $query = "SELECT COUNT(uid) amount FROM ip_tracker WHERE FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 7 DAY)";
+  $signed_in_7_days = db_query($query)->fetch();
+  $insights["num_signedin_members_7_days"] = $signed_in_7_days->amount;
+
+  // NUMBER OF SIGNED IN MEMBERS 30 DAYS
+  $query = "SELECT COUNT(uid) amount FROM ip_tracker WHERE FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 30 DAY)";
+  $signed_in_30_days = db_query($query)->fetch();
+  $insights["num_signedin_members_30_days"] = $signed_in_30_days->amount;
+
+  // NUMBER OF SIGNED IN MEMBERS 90 DAYS
+  $query = "SELECT COUNT(uid) amount FROM ip_tracker WHERE FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 90 DAY)";
+  $signed_in_90_days = db_query($query)->fetch();
+  $insights["num_signedin_members_90_days"] = $signed_in_90_days->amount;
+
+  // NUMBER OF MEMBERS WHO HAVEN'T SIGNED IN SINCE 90 DAYS
+  $query = "SELECT COUNT(uid) amount FROM ip_tracker WHERE FROM_UNIXTIME(last_visit) < DATE_SUB(NOW(), INTERVAL 90 DAY)";
+  $signed_in_older_than_90_days = db_query($query)->fetch();
+  $insights["num_signedin_members_older_than_90_days"] = $signed_in_older_than_90_days->amount;
+
+  // % OF SIGNED IN MEMBERS TODAY
+  $insights["pct_signedin_members_24_hours"] = round(($signed_in_today->amount / $members_total), 0);
+
+  // % OF SIGNED IN MEMBERS 7 DAYS
+  $insights["pct_signedin_members_7_days"] = round(($signed_in_7_days->amount / $members_total), 0);
+
+  // % OF SIGNED IN MEMBERS 30 DAYS
+  $insights["pct_signedin_members_30_days"] = round(($signed_in_30_days->amount / $members_total), 0);
+
+  // % OF SIGNED IN MEMBERS 90 DAYS
+  $insights["pct_signedin_members_90_days"] = round(($signed_in_90_days->amount / $members_total), 0);
+
+  // % OF MEMBERS WHO HAVEN'T SIGNED IN SINCE 90 DAYS
+  $insights["pct_signedin_members_older_than_90_days"] = round(($signed_in_older_than_90_days->amount / $members_total), 0);
+
+
   // RETURN DATA
   $data_labels = tm_reports_get_insights_labels();
   $results = ["data_values" => $insights, "data_labels" => $data_labels];
@@ -702,6 +778,23 @@ function tm_reports_get_insights_labels() {
   "num_events" => "Total Number Events",
   "num_organizations" => "Number of Organizations",
   "num_members_sent_messages" => "Members who have sent Messages",
+  "num_total_status_updates" => "Total Status Updates",
+  "num_promoted_status_updates" => "Promoted Status Updates",
+  "num_moderated_status_updates" => "Moderated Status Updates",
+  "num_total_status_links" => "Total Links Shared",
+  "num_total_preview_links_created" => "Total Links Previewed",
+  "num_total_status_views_daily" => "Status Views (24 Hours)",
+  "num_total_status_views_all_time" => "Total Status Views",
+  "num_signedin_members_24_hours" => "Active Members (24 Hours)",
+  "num_signedin_members_7_days" => "Active Members (7 Days)",
+  "num_signedin_members_30_days" => "Active Members (30 Days)",
+  "num_signedin_members_90_days" => "Active Members (90 Days)",
+  "num_signedin_members_older_than_90_days" => "Inactive Members (> 90 Days)",
+  "pct_signedin_members_24_hours" => "% Active Members (24 Hours)",
+  "pct_signedin_members_7_days" => "% Active Members (7 Days)",
+  "pct_signedin_members_30_days" => "% Active Members (30 Days)",
+  "pct_signedin_members_90_days" => "% Active Members (90 Days)",
+  "pct_signedin_members_older_than_90_days" => "% Inactive Members (> 90 Days)",
   "num_chapters" => "Number of Chapters"];
 
   return $data_labels;
@@ -995,7 +1088,7 @@ function tm_reports_global_insights() {
 
   // Generate HTML
   $html = _tm_reports_insights_js_css_header();
-  $redraw_functions = array("drawChart", "draw_new_signups", "draw_event_registrations", "draw_event_payments", "draw_follow_members", "draw_follow_organizations", "draw_monthly_chapters");
+  $redraw_functions = array("drawChart", "draw_new_signups", "draw_event_registrations", "draw_event_payments", "draw_follow_members", "draw_follow_organizations", "draw_monthly_chapters", "draw_status_updates", "draw_links_shared");
   $html .= _tm_reports_insights_js_redraw_function($redraw_functions);
 
   // Start artlce
@@ -1068,6 +1161,22 @@ function tm_reports_global_insights() {
             <h1 class='prime-title'>Total Chapters</h1>
             </header>";
   $html .= _tm_reports_insights_monthly_chapters_html();
+  $html .= "</section>";
+
+  // Status updates
+  $html .= "<section class='contained contained-block'>";
+  $html .= "<header class='contained-head'>
+            <h1 class='prime-title'>Status Updates</h1>
+            </header>";
+  $html .= _tm_reports_insights_monthly_status_updates_html();
+  $html .= "</section>";
+
+  // Links shared
+  $html .= "<section class='contained contained-block'>";
+  $html .= "<header class='contained-head'>
+            <h1 class='prime-title'>Links Shared</h1>
+            </header>";
+  $html .= _tm_reports_insights_monthly_links_shared_html();
   $html .= "</section>";
 
   $html .= "</div>";
@@ -1169,6 +1278,30 @@ function _tm_reports_insights_monthly_chapters_html() {
   $results = _tm_reports_monthly_chapters_time_series("INTERVAL 1 YEAR");
   // Step 2. Render chart
   $html = _tm_reports_insights_chart_html($results, "", "Total Chapters", "Month", "monthly_chapters");
+  return $html;
+}
+
+/**
+ * Generate a chart of status updates per month
+ */
+function _tm_reports_insights_monthly_status_updates_html() {
+
+  // Step 1. Get status update data
+  $results = _tm_reports_status_updates_time_series("INTERVAL 1 YEAR");
+  // Step 2. Render chart
+  $html = _tm_reports_insights_chart_html($results, "", "Status Updates", "Month", "status_updates");
+  return $html;
+}
+
+/**
+ * Generate a chart of links shared per month
+ */
+function _tm_reports_insights_monthly_links_shared_html() {
+
+  // Step 1. Get status update data
+  $results = _tm_reports_links_shared_time_series("INTERVAL 1 YEAR");
+  // Step 2. Render chart
+  $html = _tm_reports_insights_chart_html($results, "", "Links Shared", "Month", "links_shared");
   return $html;
 }
 
@@ -1507,6 +1640,62 @@ function _tm_reports_monthly_chapters_time_series($timestamp_interval = "INTERVA
 }
 
 /**
+ * Get monthly status updates data over time
+ */
+function _tm_reports_status_updates_time_series($timestamp_interval = "INTERVAL 1 YEAR") {
+
+   // check cache
+  $cache_key = "tm-reports-status-updates-" . $timestamp_interval;
+  $cache_key = str_replace(" ", "-", $cache_key);
+  $cache = cache_get($cache_key, 'cache');
+  if (!empty($cache)) {
+    return $cache->data;
+  }
+
+  // SQL 
+  $query = "select count(*) as total, YEAR(created) as group_year, MONTH(created) as group_month from tm_newsfeed_status_updates
+  where created >= DATE_SUB(NOW()," . $timestamp_interval . ")
+  group by group_year, group_month order by group_year, group_month asc;";
+  
+  $rows = db_query($query)->fetchAll();
+
+  // pad the grouped data data
+  $series = _tm_reports_helper_pad_monthly_grouped_data($rows);
+
+  // return data
+  cache_set($cache_key, $series, 'cache', time() + 900); // 15 mins
+  return $series;
+}
+
+/**
+ * Get preview links shared over time
+ */
+function _tm_reports_links_shared_time_series($timestamp_interval = "INTERVAL 1 YEAR") {
+
+   // check cache
+  $cache_key = "tm-reports-status-updates-" . $timestamp_interval;
+  $cache_key = str_replace(" ", "-", $cache_key);
+  $cache = cache_get($cache_key, 'cache');
+  if (!empty($cache)) {
+    return $cache->data;
+  }
+
+  // SQL 
+  $query = "select count(*) as total, YEAR(created) as group_year, MONTH(created) as group_month from tm_newsfeed_status_updates
+  where preview_link_id is not null and created >= DATE_SUB(NOW()," . $timestamp_interval . ")
+  group by group_year, group_month order by group_year, group_month asc;";
+  
+  $rows = db_query($query)->fetchAll();
+
+  // pad the grouped data data
+  $series = _tm_reports_helper_pad_monthly_grouped_data($rows);
+
+  // return data
+  cache_set($cache_key, $series, 'cache', time() + 900); // 15 mins
+  return $series;
+}
+
+/**
  * Helper method to pad empty sql grouped data in a time series
  */
 function _tm_reports_helper_pad_monthly_grouped_data($rows) {
@@ -1568,8 +1757,46 @@ EOT;
   }
   $html .= <<<EOT
   ]);
+
+EOT;
   
-  var options = { };
+  // Report chart colors
+  // If ?reports_color_hash is provided, create a unique color code for each segment
+  // This is so segment colors are consistent across all graphs regardless of order in the chart
+  // ie: 0: { color: '#014eff' },
+  // ie: 1: { color: '#ab6754' }
+  // default is off
+  $color_hash = null;
+
+  // get from cookie
+  if (isset($_COOKIE['Drupal_visitor_tm_reports_color_hash'])) {
+   $color_hash = $_COOKIE['Drupal_visitor_tm_reports_color_hash'];
+  }
+
+  // ie: 
+  // ?chart_color_hash
+  // ?chart_color_hash = 123
+  if (isset($_GET["reports_color_hash"])) {
+    $color_hash = $_GET["reports_color_hash"];
+    if ($color_hash == "") {
+      $color_hash = rand(0,1000);
+    }
+    user_cookie_save(array("tm_reports_color_hash" => $color_hash));
+  }
+
+  if ($color_hash != null) {
+    $count = 0;
+    $color_parts = array();
+    foreach ($segment_data as $segment) {
+      $color_parts[] = $count++ . ": { color: '#" . _tm_reports_string_color_code($segment["name"] . $color_hash) . "' }";
+    }
+    $html .= "var slices = {" . implode(", ", $color_parts) . "};";
+  } else {
+    $html .= "var slices = {};";
+  }
+
+  $html .= <<<EOT
+  var options = { 'slices': slices };
   var chart = new google.visualization.PieChart(document.getElementById('insights_segments'));
   chart.draw(data, options);
 }
@@ -1579,4 +1806,15 @@ EOT;
 
   return $html;
 }
+
+/**
+ * Helper method to convert string to color code
+ */
+function _tm_reports_string_color_code($str) {
+  // ref: http://stackoverflow.com/questions/3724111/how-can-i-convert-strings-to-an-html-color-code-hash
+  $code = dechex(crc32($str));
+  $code = substr($code, 0, 6);
+  return $code;
+}
+
 

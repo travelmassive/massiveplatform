@@ -62,14 +62,28 @@ function tm_status_updates_render_theme() {
 		return;
 	}
 
-	// Increment view
-	tm_status_updates_increment_daily_view_count($result->id);
-
 	// Get viewer IP
 	$count_viewer_ip = tm_geoip_get_real_visitor_ip();
 
+	// If moderator or administrator, show unapproved member's posts
+	$show_unapproved = false;
+	if (user_is_logged_in()) {
+		$account = user_load($user->uid);
+		if (in_array("moderator", $user->roles) or in_array("administrator", $user->roles)) {
+			$show_unapproved = true;
+		}
+	}
+
 	// Render status update
-	$html = tm_status_updates_render_update($result, $count_viewer_ip);
+	$html = tm_status_updates_render_update($result, $count_viewer_ip = null, true, $show_unapproved);
+
+	// Check if no display
+	if ($html == "") {
+		return;
+	}
+
+	// Increment view
+	tm_status_updates_increment_daily_view_count($result->id);
 
 	// Add profile css
 	global $tm_status_updates_feed_template_profile_css;

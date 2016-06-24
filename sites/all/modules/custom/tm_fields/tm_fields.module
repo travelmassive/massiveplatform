@@ -800,6 +800,8 @@ function _tm_more_actions_process($field, $title = NULL) {
   // Signup date
   // Reason for joining
   // Who approved
+  // Email
+  // Geoip
   if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
 
     // show who approved user
@@ -813,7 +815,7 @@ function _tm_more_actions_process($field, $title = NULL) {
       $flagged_time = format_interval($difference, 1) . " ago";
       $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Signed up " . $flagged_time . "</span><br>";
       
-      $links['approve'][] = array(
+      $links['moderate'][] = array(
         'wrapper_class' => array('approve'),
         'content' => t($menu_text),
       );
@@ -842,7 +844,7 @@ function _tm_more_actions_process($field, $title = NULL) {
         $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Approved by administrator</span>";
       }
 
-      $links['approve'][] = array(
+      $links['moderate'][] = array(
         'wrapper_class' => array('approve'),
         'content' => t($menu_text),
       );
@@ -853,7 +855,7 @@ function _tm_more_actions_process($field, $title = NULL) {
         if (trim($reason_for_joining) != "") {
           $menu_text = "<div style='font-size: smaller; font-style: italic; padding-left: 2em; background-color: #efefef;'>Reason for joining:<br><span style='color: #888; font-style: normal;'>" . $reason_for_joining . "</span></div>";
 
-          $links['approve'][] = array(
+          $links['moderate'][] = array(
             'wrapper_class' => array('approve'),
             'content' => t($menu_text),
           );
@@ -870,10 +872,58 @@ function _tm_more_actions_process($field, $title = NULL) {
           $verified_text = "verified";
         }
 
-
         $menu_text = "<div style='font-size: smaller; font-style: italic; padding-left: 2em; background-color: #efefef;'>Signup email:<br><span style='color: #888; font-style: normal;'>" . $targetuser->mail . " (" . $verified_text . ")</span></div>";
 
-        $links['approve'][] = array(
+        $links['moderate'][] = array(
+          'wrapper_class' => array('approve'),
+          'content' => t($menu_text),
+        );
+      }
+
+      // Show last activity time if in your chapter and IP to moderator
+      if (tm_users_member_in_users_chapter($targetuser->uid, $user->uid, true) or (in_array("moderator", $user->roles))) {
+
+        // Get last active time    
+        $last_visit_timestamp = tm_geoip_get_users_last_visit_time($targetuser->uid);
+        if ($last_visit_timestamp == null) {
+          $last_visit_time = "never";
+        } else {
+          $last_visit_difference = time() - $last_visit_timestamp;
+          if ($last_visit_difference < (60 * 60 * 24)) {
+            $last_visit_time = "today";
+          } else {
+            $last_visit_time = format_interval($last_visit_difference, 1) . " ago";
+          }
+        }
+
+        // Get geoip info
+        $last_ip = tm_geoip_get_users_last_ip($targetuser->uid);
+        $geoip_details = "";
+        if ($last_ip == null) {
+          $last_ip = "never signed in";
+        } else {
+          $geoip_info = tm_geoip_lookup($last_ip);
+          if ($geoip_info != null) {
+            if (isset($geoip_info["city"]["names"]["en"])) {
+              $geoip_details = htmlentities($geoip_info["city"]["names"]["en"]);
+            }
+            if (isset($geoip_info["country"]["names"]["en"])) {
+              $geoip_details .= ", " . htmlentities($geoip_info["country"]["names"]["en"]);
+            }
+          }
+        }
+
+        // Show IP to moderator
+        if (in_array("moderator", $user->roles)) {
+          if ($geoip_details != "") {
+            $geoip_details .= "<br>";
+          }
+          $geoip_details .= "IP: " . $last_ip;
+        }
+       
+        $menu_text = "<div style='font-size: smaller; font-style: italic; padding-left: 2em; background-color: #efefef;'>Last active " . $last_visit_time . "<br><span style='color: #888; font-style: normal;'>" . $geoip_details . "</span></div>";
+
+        $links['moderate'][] = array(
           'wrapper_class' => array('approve'),
           'content' => t($menu_text),
         );

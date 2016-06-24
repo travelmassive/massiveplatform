@@ -138,7 +138,7 @@ function tm_status_updates_render_update($result, $count_viewer_ip = null, $show
 	}
 
   	// prepare status update text
-  	$status_update_html = tm_base_linkify(strip_tags($result->status_update), array('http', 'https', 'hashtag'), array("rel" => "nofollow", "target" => "_blank"));
+  	$status_update_html = tm_base_linkify(strip_tags($result->status_update), array('http', 'https', 'newsfeed_hashtag', 'newsfeed_mention'), array("rel" => "nofollow", "target" => "_blank"));
 
   	// post update or shared link
   	$post_action_text = "posted an update";

@@ -195,8 +195,10 @@ function tm_base_block_view($delta) {
   return $block;
 }
 
-// return formatted number for display
-// ie: 80, 1.1k, 3.0k, etc.
+/**
+ * Helper to return formatted number for display
+ * ie: 80, 1.1k, 3.0k, etc.
+ */
 function tm_base_stats_format($num) {
 
   // less than a thousand
@@ -281,8 +283,8 @@ function _tm_base_frontpage() {
 }
 
 /**
-* Implements hook_token_info().
-*/
+ * Implements hook_token_info().
+ */
 function tm_base_token_info() {
   $info['tokens']['node']['friendly_url_org'] = array(
     'name' => t('Friendly URL'),
@@ -294,9 +296,10 @@ function tm_base_token_info() {
   );
   return $info;
 }
+
 /**
-* Implements hook_tokens(). This hook will operate the token and replace it with it's value.
-*/
+ * Implements hook_tokens(). This hook will operate the token and replace it with it's value.
+ */
 function tm_base_tokens($type, $tokens, array $data = array(), array $options = array()) {
   $replacements = array();
 
@@ -344,6 +347,7 @@ function tm_base_tokens($type, $tokens, array $data = array(), array $options = 
   }
   return $replacements;
 }
+
 /**
  * Implements hook_field_group_formatter_info().
  */
@@ -361,6 +365,7 @@ function tm_base_field_group_formatter_info() {
 
   return $info;
 }
+
 /**
  * Implements hook_field_group_pre_render().
  *
@@ -413,6 +418,7 @@ function tm_base_field_group_pre_render(&$element, $group, &$form) {
       break;
     }
 }
+
 /**
  * Implements hook_ds_field_theme_functions_info().
  */
@@ -422,9 +428,10 @@ function tm_base_ds_field_theme_functions_info() {
     'theme_ds_field_tm_default' => t('TM default field')
   );
 }
+
 /**
-* Field theming function. Output a definition list item
-*/
+ * Field theming function. Output a definition list item
+ */
 function theme_ds_field_dl($variables) {
   $output = '';
 
@@ -436,9 +443,10 @@ function theme_ds_field_dl($variables) {
 
   return $output;
 }
+
 /**
-* Field theming function. Output the default TM field
-*/
+ * Field theming function. Output the default TM field
+ */
 function theme_ds_field_tm_default($variables) {
   $output = '';
 
@@ -453,8 +461,10 @@ function theme_ds_field_tm_default($variables) {
   return $output;
 }
 
-// turn any links in the text into urls
-// see: https://gist.github.com/jasny/2000705
+/**
+ * Turn any links in the text into urls
+ * see: https://gist.github.com/jasny/2000705
+ */
 function tm_base_linkify($value, $protocols = array('http', 'mail'), array $attributes = array())
 {
     // Link attributes
@@ -472,11 +482,26 @@ function tm_base_linkify($value, $protocols = array('http', 'mail'), array $attr
     foreach ((array)$protocols as $protocol) {
         switch ($protocol) {
             case 'http':
-            case 'https':   $value = preg_replace_callback('~(?:(https?)://([^\s<]+)|(www\.[^\s<]+?\.[^\s<]+))(?<![\.,:\)])~i', function ($match) use ($protocol, &$links, $attr) { if ($match[1]) $protocol = $match[1]; $link = $match[2] ?: $match[3]; return '<' . array_push($links, "<a $attr href=\"$protocol://$link\">$link</a>") . '>'; }, $value); break;
+            case 'https':
+              $value = preg_replace_callback('~(?:(https?)://([^\s<]+)|(www\.[^\s<]+?\.[^\s<]+))(?<![\.,:\)])~i', function ($match) use ($protocol, &$links, $attr) { if ($match[1]) $protocol = $match[1]; $link = $match[2] ?: $match[3]; return '<' . array_push($links, "<a $attr href=\"$protocol://$link\">$link</a>") . '>'; }, $value); break;
             case 'mail':    $value = preg_replace_callback('~([^\s<]+?@[^\s<]+?\.[^\s<]+)(?<![\.,:])~', function ($match) use (&$links, $attr) { return '<' . array_push($links, "<a $attr href=\"mailto:{$match[1]}\">{$match[1]}</a>") . '>'; }, $value); break;
-            case 'twitter': $value = preg_replace_callback('~(?<!\w)[@#]([A-z]\w++)~', function ($match) use (&$links, $attr) { return '<' . array_push($links, "<a $attr href=\"https://twitter.com/" . ($match[0][0] == '@' ? '' : 'search/%23') . $match[1]  . "\">{$match[0]}</a>") . '>'; }, $value); break;
-            case 'hashtag': $value = preg_replace_callback('~(?<!\w)[#]([A-z]\w++)~', function ($match) use (&$links, $attr) { return '<' . array_push($links, "<a href=\"/newsfeed/tags/" . $match[1]  . "\">{$match[0]}</a>") . '>'; }, $value); break;
-            default:        $value = preg_replace_callback('~' . preg_quote($protocol, '~') . '://([^\s<]+?)(?<![\.,:\)])~i', function ($match) use ($protocol, &$links, $attr) { return '<' . array_push($links, "<a $attr href=\"$protocol://{$match[1]}\">{$match[1]}</a>") . '>'; }, $value); break;
+            case 'twitter':
+              $value = preg_replace_callback('~(?<!\w)[@#]([A-z]\w++)~', function ($match) use (&$links, $attr) { return '<' . array_push($links, "<a $attr href=\"https://twitter.com/" . ($match[0][0] == '@' ? '' : 'search/%23') . $match[1]  . "\">{$match[0]}</a>") . '>'; }, $value); break;
+            case 'newsfeed_hashtag': 
+              $attr = str_replace(' target="_blank"', "", $attr); // never open in new window
+              $value = preg_replace_callback('~(?<!\w)[#]([A-z]\w++)~', function ($match) use (&$links, $attr) { return '<' . array_push($links, "<a $attr href=\"/newsfeed/tags/" . $match[1]  . "\">{$match[0]}</a>") . '>'; }, $value); break;
+            case 'newsfeed_mention':
+              $attr = str_replace(' target="_blank"', "", $attr); // never open in new window
+              $value = preg_replace_callback('~(?<!\w)[@]([A-z]\w++)~', function ($match) use (&$links, $attr) { 
+                  // check account exists first
+                  if (tm_base_check_path_exists(strtolower($match[1]))) {
+                    return '<' . array_push($links, "<a $attr href=\"/" . $match[1]  . "\">{$match[0]}</a>") . '>';
+                  } else {
+                    return "@" . $match[1];
+                  }
+                }, $value); break;
+            default:
+              $value = preg_replace_callback('~' . preg_quote($protocol, '~') . '://([^\s<]+?)(?<![\.,:\)])~i', function ($match) use ($protocol, &$links, $attr) { return '<' . array_push($links, "<a $attr href=\"$protocol://{$match[1]}\">{$match[1]}</a>") . '>'; }, $value); break;
         }
     }
     
@@ -484,7 +509,9 @@ function tm_base_linkify($value, $protocols = array('http', 'mail'), array $attr
     return preg_replace_callback('/<(\d+)>/', function ($match) use (&$links) { return $links[$match[1] - 1]; }, $value);
 }
 
-/* The helper function to detect original nid for the current page. */
+/**
+ * The helper function to detect original nid for the current page.
+ */
 function _orig_nid() {
   $orig_path = _orig_path();
   $node = menu_get_object('node', 1, $orig_path);
@@ -492,9 +519,28 @@ function _orig_nid() {
   return $nid;
 }
 
-/* The helper function to detect original path for the current page. */
+/**
+ * The helper function to detect original path for the current page.
+ */
 function _orig_path() {
   $url = arg(0).'/'.arg(1);
   $path = (drupal_lookup_path('source', $url));
   return $path;
+}
+
+/**
+ * Determine if path exists
+ * ref: https://eureka.ykyuen.info/2013/03/05/drupal-7-check-if-a-path-exists/
+ */
+function tm_base_check_path_exists($path) {
+  if (!drupal_valid_path($path)) {
+    // Not a system URL.
+    if (!drupal_lookup_path('source', $path)) {
+      // Not a path alias.
+      return false;
+    }
+  }
+
+  // exists
+  return true;
 }

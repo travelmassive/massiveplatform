@@ -8,6 +8,7 @@
 function _tm_payments_price($field, $title = NULL) {
 
 	global $user;
+	global $conf;
 
 	// check if event is valid
 	$node = $field['entity'];
@@ -41,12 +42,15 @@ function _tm_payments_price($field, $title = NULL) {
 	}
 
 	$event_type = $node->field_event_type[LANGUAGE_NONE][0]['value'];
-	if ($event_type == "community") { $event_type = "event"; }
+	$event_type_label = "event";
+	if (isset($conf['tm_event_types'][$event_type])) {
+		$event_type_label = $conf['tm_event_types'][$event_type];
+	}
 
 	// Option 1. Paid and registered
 	if ($paid_for_event && $registered_for_event) {
 		$html = '<h2><span>Price</span></h2>';
-		$html .= '<div class="detail-price">You have purchased a ticket to this ' . t($event_type) . ' event</div>';
+		$html .= '<div class="detail-price">You have purchased a ticket to this ' . t($event_type_label) . '</div>';
 		return $html;
 	}
 
@@ -71,14 +75,14 @@ function _tm_payments_price($field, $title = NULL) {
 
 			$html .= '<div class="detail-price">';
 			$html .= '<span style="font-weight: bold;">' . $pricing["early_bird_label"] . ' </span>';
-			$html .= 'Attend this ' . t($event_type) . ' for ' . $pricing["currency_prefix"] . str_replace(".00", "", $pricing["display_amount"]);
+			$html .= 'Attend this ' . t($event_type_label) . ' for ' . $pricing["currency_prefix"] . str_replace(".00", "", $pricing["display_amount"]);
 			if ($pricing["saving_message"] != "") {
 				$html .= ' (<span style="font-weight: bold;">' . $pricing["saving_message"] . '</span>)';
 			}
 			$html .= '<br><span style="font-style: italic;">' . $pricing["early_bird_message"] . '</span>';
 			$html .= '</div>';
 		} else {
-			$html .= '<div class="detail-price">Attend this ' . t($event_type) . ' for ' . $pricing["currency_prefix"] . str_replace(".00", "", $pricing["display_amount"]) . '</div>';
+			$html .= '<div class="detail-price">Attend this ' . t($event_type_label) . ' for ' . $pricing["currency_prefix"] . str_replace(".00", "", $pricing["display_amount"]) . '</div>';
 		}
 		
 		return $html;

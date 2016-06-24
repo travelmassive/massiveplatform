@@ -91,6 +91,17 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
 		$form['field_organizer'][LANGUAGE_NONE]['#options'] = $opts;
     $form['field_organizer'][LANGUAGE_NONE]['#multiple'] = true; // multiple select
 
+    // Select existing organizers if existing event
+    if (!$is_new_event) {
+      $existing_organizers = array();
+      if (sizeof($event->field_organizer) > 0) {
+        foreach ($event->field_organizer['und'] as $organizer) {
+          $existing_organizers[] = $organizer['target_id'];
+        }
+      }
+      $form['field_organizer'][LANGUAGE_NONE]['#default_value'] = $existing_organizers;
+    }
+
 		// Disable fields
   	$form['field_chapter']['#disabled'] = true;
   	$form['field_event_company']['#disabled'] = true;
@@ -127,6 +138,17 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
       $organizer_opts[$loaded->uid] = tm_events_username($loaded) . " (" . $loaded->uid . ")";
     }
     $form['field_organizer'][LANGUAGE_NONE]['#options'] = $organizer_opts;
+
+    // Select existing organizers if existing event
+    if (!$is_new_event) {
+      $existing_organizers = array();
+      if (sizeof($event->field_organizer) > 0) {
+        foreach ($event->field_organizer['und'] as $organizer) {
+          $existing_organizers[] = $organizer['target_id'];
+        }
+      }
+      $form['field_organizer'][LANGUAGE_NONE]['#default_value'] = $existing_organizers;
+    }
 
     // Set timezone
 		if (($is_new_event) && ($user->timezone != null)) {

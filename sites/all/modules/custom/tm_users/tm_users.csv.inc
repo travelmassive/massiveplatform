@@ -61,28 +61,56 @@ function tm_users_download_global_newsletter_csv(){
 	$message .= "\n# You may only use this data in compliance with the " . $conf['tm_site_name'] . " Privacy Terms.\n\n";
 	fputs($fh,$message,strlen($message));
 
+	// lookup approved member role id
+	$approved_member_role = user_role_load_by_name("approved user")->rid;
+
 	// puts a header row across the top of the csv
-	$item = array(t('First name'),t('Last name'),t('Country Code'),t('Location'),t('Home Chapter'),t('Home Chapter Country'),t('Email'));
+	$item = array(t('First name'),t('Last name'),t('Country Code'),t('Location'),t('Home Chapter'),t('Home Chapter Country'),t('Email'),t('User ID'), t('Approved Status'),t('Profile URL'));
 	fputcsv($fh, $item);
 
 	// fetch newsletter subscribers
-	$global_newsletter_sql = "select field_user_first_name_value, field_user_last_name_value, field_user_country_iso2 as country, field_location_city_value as location_field, chapter.title as home_chapter, field_data_field_country.field_country_iso2 as home_chapter_country, mail from (select field_user_first_name_value, field_user_last_name_value, mail, uid from users u, field_data_field_user_first_name fn, field_data_field_user_last_name ln where u.uid = fn.entity_id and u.uid = ln.entity_id) as ud 
+	$global_newsletter_sql = "select field_user_first_name_value, field_user_last_name_value, field_user_country_iso2 as country, field_location_city_value as location_field, chapter.title as home_chapter, field_data_field_country.field_country_iso2 as home_chapter_country, mail, ud.uid from (select field_user_first_name_value, field_user_last_name_value, mail, uid from users u, field_data_field_user_first_name fn, field_data_field_user_last_name ln where u.uid = fn.entity_id and u.uid = ln.entity_id) as ud 
 left join tm_notifications n on ud.uid = n.uid and n.bundle = 'global_newsletter'
 left join field_data_field_user_country uc on uc.entity_id = ud.uid and uc.entity_type = 'user'
 left join field_data_field_location_city uloc on uloc.entity_id = ud.uid and uloc.entity_type = 'user'
 left join field_data_field_home_chapter uchapter on uchapter.entity_id = ud.uid and uchapter.entity_type = 'user' 
 left join node chapter on chapter.nid = uchapter.field_home_chapter_target_id
 left join field_data_field_country on field_data_field_country.entity_id = chapter.nid and field_data_field_country.bundle = 'chapter'
-where n.value = 1";
+where n.value = 1 order by ud.uid asc";
 	
 	// perform query
 	$query = db_query($global_newsletter_sql);
 	while ($row = $query->fetchAssoc()) {
+
+		// include approval status
+		$user_id = $row["uid"];
+		$approved_status = tm_users_userid_has_roleid($user_id, $approved_member_role);
+		if ($approved_status == true) {
+			$row[] = "approved";
+		} else {
+			$row[] = "not approved";
+		}
+
+		// include profile url
+		$profile_url = drupal_get_path_alias("user/" . $user_id);
+		$profile_url_absolute = url($profile_url,array('absolute'=>true));
+		$row[] = $profile_url_absolute;
+
 		fputcsv($fh, $row);
 	}
 
 	// close file handle
 	fclose($fh);
+}
+
+/**
+ * Helper method quickly look up if user is approved or not
+ */
+function tm_users_userid_has_roleid($uid, $rid) {
+
+	$query = "SELECT uid FROM users_roles WHERE uid = :uid and rid = :rid LIMIT 1";
+	$row = db_query($query, array(':uid' => $uid, ':rid' => $rid))->fetch();
+	return ($row != null);
 }
 
 /*

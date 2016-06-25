@@ -31,7 +31,7 @@
             </div>
           </li>
           <?php endif; ?>
-          <?php if (module_exists("tm_status_updates") and user_is_logged_in() and ($conf["tm_status_updates_enabled"])) : ?>
+          <?php if (module_exists("tm_status_updates") and ($conf["tm_status_updates_enabled"])) : ?>
           <li class="newsfeed-wrapper">
             <h2><a class="toggle" href="/newsfeed"><span class="hide"><?= t('Newsfeed'); ?></span></a></h2>
           </li>
@@ -134,8 +134,8 @@
             <?php
             // only show flag feeds if enabled and on front page
             $show_flag_feeds = false;
-            if (@isset($conf["tm_enable_flags_feed"])) {
-              if ($conf["tm_enable_flags_feed"] and drupal_is_front_page()) {
+            if (@isset($conf["tm_status_updates_frontpage_feed"])) {
+              if ($conf["tm_status_updates_frontpage_feed"] and drupal_is_front_page()) {
                 $show_flag_feeds = true;
               }
             }

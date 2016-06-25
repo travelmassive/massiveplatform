@@ -587,10 +587,6 @@ $conf['tm_enable_wordpress_feedme'] = false;
 $conf['tm_wordpress_feedme_url'] = "/blog/wp-content/plugins/tm-feeds/feedme.php";
 $conf['tm_wordpress_feedme_frontpage_id'] = "1831";
 
-/** FLAG FEEDS **/
-/** This will display a feed of recent actions on the front page, such as signup, new members, and following **/
-$conf['tm_enable_flags_feed'] = true;
-
 /** LIMIT FOLLOW AND JOIN **/
 /** NOTE: Administrator and chapter leaders do not have limits **/
 $conf['tm_following_ratio_limit'] = '100'; // difference between following/followers (for approved members)
@@ -918,11 +914,11 @@ $conf["tm_newsfeed_send_notifications"] = true; // enable sending newsfeed notif
 $conf['tm_newsfeed_daily_notification_time'] = "10:00:00"; // time of day to send daily notifications
 $conf['tm_newsfeed_weekly_notification_time'] = "11:00:00"; // time of day to send weekly notifications
 $conf['tm_newsfeed_moderator_preview'] = true; // show user's notification preview for moderators
-$conf['tm_newsfeeds_email_utm_campaign'] = 'travelmassive'; // append ?utm_campaign= to email links
+$conf['tm_newsfeeds_email_utm_campaign'] = 'newsfeed'; // append ?utm_campaign= to email links
 // $conf['tm_newsfeed_schedule_test_mod_userid'] = 10; // (uncomment to enable) enable schedules for selected users by mod
 
 // external api feeds
-$conf["tm_newsfeed_curl_timeout"] = 2; // seconds for curl timeout
+$conf["tm_newsfeed_curl_timeout"] = 8; // seconds for curl timeout
 $conf["tm_newsfeed_curl_check_certificate"] = false; // check ssl certificate
 $conf["tm_newsfeed_marketplace_enabled"] = true; // enable marketplace newsfeed
 $conf["tm_newsfeed_marketplace_api_url"] = ""; // url for marketplace api
@@ -1005,7 +1001,7 @@ $conf["tm_google_analytics_report_path"] = "https://analytics.google.com/analyti
 // Geoip settings
 $conf['tm_geoip_maxmind_db'] = '/usr/local/share/GeoIP/GeoIP2-City.mmd'; // path to maxmind geoip datbase
 //$conf['tm_geoip_fake_ip'] = '183.108.246.31'; // simulate a visitor ip address for testing geoip module
-//$conf['tm_geoip_server_header'] = 'HTTP_X_REAL_IP'; // server header to use (overrides REMOTE_ADDR)
+//$conf['tm_geoip_server_header'] = 'HTTP_X_REAL_IP'; // $_SERVER[] header to use (overrides REMOTE_ADDR)
 
 /** SITE BRANDING **/
 // Base site branding
@@ -1108,6 +1104,7 @@ $conf["tm_branding_include_js"] = "";
 
 /** STATUS UPDATES **/
 $conf["tm_status_updates_enabled"] = true; // enable status updates
+$conf['tm_status_updates_frontpage_feed'] = true; // display status updates and flags on front page
 $conf["tm_status_updates_placeholders"] = array("Post a news update...", "Where is your next destination?", "Share an achievement with the community...");
 $conf["tm_status_updates_silence_uids"] = array(); // silence any spamming members
 $conf["tm_status_updates_hide_recommended_uids"] = array(); // hide members from recommended members lists
@@ -1127,8 +1124,8 @@ $conf["tm_status_updates_limit_results"] = 500; // how far back can you load res
 $conf["tm_status_updates_items_per_load"] = 50; // how many items to show per load
 $conf["tm_status_updates_show_featured"] = 2; // how many featured items to display on news feed
 $conf["tm_status_updates_custom_message"] = array(); // custom messages for newsfeed display
-$conf["tm_status_updates_custom_message"]["global"] = "Find out what's happening in the community";
-$conf["tm_status_updates_custom_message"]["newsfeed"] = "Share an update or news with your followers";
+$conf["tm_status_updates_custom_message"]["global"] = "Got a press release? Tag it <a href='/newsfeed/tags/news'>#news</a> to share with the community";
+$conf["tm_status_updates_custom_message"]["newsfeed"] = "Share an update to your followers, or view the <a href='/newsfeed/global'>global news feed</a>";
 $conf["tm_status_updates_meta_og_title"] = "Travel Massive News Feed";
 //$conf['tm_status_updates_meta_og_image"] = "";
 $conf["tm_status_updates_meta_description"] = "Share the latest news with our community on your news feed.";

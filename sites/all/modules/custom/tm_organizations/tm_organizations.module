@@ -300,3 +300,17 @@ function tm_organizations_node_view($node, $view_mode, $langcode) {
   }
 
 }
+
+/**
+ * Fast lookup of organizational title
+ */
+function tm_organizations_get_title($nid) {
+
+  $query = "SELECT title FROM node WHERE nid = :nid";
+  $rows = db_query($query, array(':nid' => $nid))->fetch();
+  if ($rows != null) {
+    return $rows->title;
+  }
+  return null;
+}
+

@@ -639,7 +639,7 @@ function tm_status_updates_render_details($details) {
 			}
 			$view_count_html = "<span class='" . $view_count_class . "' style='float: left;'>" . $view_count . " " . $views_text . "</span>";
 		} else {
-			$view_count_html = "<span>&nbsp;</span>";
+			$view_count_html = "<span style='float: left;'>&nbsp;</span>";
 		}
 	}
 

@@ -566,7 +566,7 @@ class TmNewsfeedEmailTemplates
 	/* Templates */
 	public static $newsfeed_email_template = <<<EOT
 <div class="email-intro">
-	<p>__GREETING__, __USER_FIRST_NAME__</p>
+	<p>__GREETING__ __USER_FIRST_NAME__</p>
 	<p>__OPENING_LINE__</p>
 </div>
 <div class="email-tip">
@@ -618,8 +618,8 @@ function tm_newfeed_absolute_url($path) {
  * Helper method to get time since
  */
 function tm_newsfeed_time_elapsed_string($datetime, $full = false) {
-	$now = new DateTime;
-	$ago = new DateTime($datetime);
+	$now = new DateTime(null, new DateTimeZone('UTC'));
+	$ago = new DateTime($datetime, new DateTimeZone('UTC'));
 	$diff = $now->diff($ago);
 
 	$diff->w = floor($diff->d / 7);

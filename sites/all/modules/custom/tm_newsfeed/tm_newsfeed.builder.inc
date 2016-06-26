@@ -6,7 +6,7 @@
 
 function tm_newsfeed_get_updates($user_id, $start_date, $end_date) {
 	$results = db_query_range(TmNewsFeedSqlLibrary::sql('tm_sql_updates'), 0, 10,
-		array(":user_id" => $user_id, ":start_date" => strtotime($start_date), ":end_date" => strtotime($end_date))
+		array(":user_id" => $user_id, ":start_date" => strtotime($start_date . " UTC"), ":end_date" => strtotime($end_date . " UTC"))
 		);
 
 	return $results->fetchAll();
@@ -15,7 +15,7 @@ function tm_newsfeed_get_updates($user_id, $start_date, $end_date) {
 
 function tm_newsfeed_get_events($user_id, $from_date) {
 	$results = db_query_range(TmNewsFeedSqlLibrary::sql('tm_sql_events'), 0, 3,
-		array(":user_id" => $user_id, ":from_date" => strtotime($from_date))
+		array(":user_id" => $user_id, ":from_date" => strtotime($from_date . " UTC"))
 		);
 
 	return $results->fetchAll();
@@ -24,7 +24,7 @@ function tm_newsfeed_get_events($user_id, $from_date) {
 
 function tm_newsfeed_get_new_members($user_id, $start_date, $end_date) {
 	$results = db_query_range(TmNewsFeedSqlLibrary::sql('tm_sql_new_members'), 0, 3,
-		array(":user_id" => $user_id, ":start_date" => strtotime($start_date), ":end_date" => strtotime($end_date))
+		array(":user_id" => $user_id, ":start_date" => strtotime($start_date . " UTC"), ":end_date" => strtotime($end_date . " UTC"))
 		);
 
 	return $results->fetchAll();
@@ -32,7 +32,7 @@ function tm_newsfeed_get_new_members($user_id, $start_date, $end_date) {
 
 function tm_newsfeed_get_new_companies($user_id, $start_date, $end_date) {
 	$results = db_query_range(TmNewsFeedSqlLibrary::sql('tm_sql_new_companies'), 0, 3,
-		array(":user_id" => $user_id, ":start_date" => strtotime($start_date), ":end_date" => strtotime($end_date))
+		array(":user_id" => $user_id, ":start_date" => strtotime($start_date . " UTC"), ":end_date" => strtotime($end_date . " UTC"))
 		);
 
 	return $results->fetchAll();
@@ -40,7 +40,7 @@ function tm_newsfeed_get_new_companies($user_id, $start_date, $end_date) {
 
 function tm_newsfeed_select_tip($user_id, $start_date, $end_date) {
 	$results = db_query_range(TmNewsFeedSqlLibrary::sql('tm_sql_select_tip'), 0, 1,
-		array(":user_id" => $user_id, ":start_date" => strtotime($start_date), ":end_date" => strtotime($end_date))
+		array(":user_id" => $user_id, ":start_date" => strtotime($start_date . " UTC"), ":end_date" => strtotime($end_date . " UTC"))
 		);
 
 	return $results->fetchAll();
@@ -190,7 +190,7 @@ select
 	-- case when chapter_followers.count is null then 0
 	-- else chapter_followers.count end as 'chapter_followers',
 
-	updates.created
+	max(updates.created) as created
 
 from tm_newsfeed_status_updates updates
 
@@ -242,7 +242,7 @@ group by
 	updates.entity_id
 order by
 	entity_followers_weighted desc,
-	updates.created asc
+	updates.created desc
 
 SQL;
 

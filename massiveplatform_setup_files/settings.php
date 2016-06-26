@@ -914,7 +914,7 @@ $conf["tm_newsfeed_send_notifications"] = true; // enable sending newsfeed notif
 $conf['tm_newsfeed_daily_notification_time'] = "10:00:00"; // time of day to send daily notifications
 $conf['tm_newsfeed_weekly_notification_time'] = "11:00:00"; // time of day to send weekly notifications
 $conf['tm_newsfeed_moderator_preview'] = true; // show user's notification preview for moderators
-$conf['tm_newsfeeds_email_utm_campaign'] = 'newsfeed'; // append ?utm_campaign= to email links
+$conf['tm_newsfeeds_email_utm_campaign'] = 'newsfeed&utm_medium=newsletter&utm_source=email'; // append ?utm_campaign= to email links
 // $conf['tm_newsfeed_schedule_test_mod_userid'] = 10; // (uncomment to enable) enable schedules for selected users by mod
 
 // external api feeds

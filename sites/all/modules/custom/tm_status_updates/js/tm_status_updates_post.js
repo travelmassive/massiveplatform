@@ -142,6 +142,7 @@
 
 	  // let user know we're posting
 	  $("#tm-status-update-post").html("Posting...");
+	  $("#tm-status-update-text").prop('disabled', true);
 
 	  // post the update
 	  $.ajax({

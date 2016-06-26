@@ -63,8 +63,8 @@ function tm_geoip_info() {
 		// if tm_status_updates_google_maps_api_key is set, embed a google map
 		$embed_map_html = "";
 		if (isset($conf["tm_status_updates_google_maps_api_key"])) {
-			$googe_maps_api_key = $conf["tm_status_updates_google_maps_api_key"];
-			$embed_map_html = '<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=' . $googe_maps_api_key . '&q=' . $test_your_ip["location"]["latitude"] . ',' . $test_your_ip["location"]["longitude"] . '&zoom=6" allowfullscreen></iframe><br>';
+			$google_maps_api_key = $conf["tm_status_updates_google_maps_api_key"];
+			$embed_map_html = '<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=' . $google_maps_api_key . '&q=' . $test_your_ip["location"]["latitude"] . ',' . $test_your_ip["location"]["longitude"] . '&zoom=6" allowfullscreen></iframe><br>';
 		}
 		print $embed_map_html;
 

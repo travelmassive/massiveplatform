@@ -513,7 +513,8 @@ function tm_branding_field_default_field_bases() {
         'anonymous_user' => 'Only match when logged out',
         'match_all' => 'Match all visitors and users',
         'match_partner_cookie' => 'Match partner cookie',
-        'match_referer_domain' => 'Match referrer domain',
+        'match_referer_domain' => 'Match referer domain',
+        'match_url_path' => 'Match URL path',
         'match_probability' => 'Match probability',
       ),
       'allowed_values_function' => '',
@@ -763,6 +764,21 @@ function tm_branding_field_default_field_bases() {
     'type' => 'entityreference',
   );
 
+  // Exported field_base: 'field_match_cookie_expiry'.
+  $field_bases['field_match_cookie_expiry'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_match_cookie_expiry',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'number_integer',
+  );
+
   // Exported field_base: 'field_match_partner_cookie'.
   $field_bases['field_match_partner_cookie'] = array(
     'active' => 1,
@@ -828,6 +844,27 @@ function tm_branding_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'list_boolean',
+  );
+
+  // Exported field_base: 'field_match_url_path'.
+  $field_bases['field_match_url_path'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_match_url_path',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 255,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
   );
 
   return $field_bases;

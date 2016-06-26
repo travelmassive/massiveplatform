@@ -176,13 +176,41 @@ function tm_branding_check_brand($site_brand, $account) {
 		}
 	}
 
+	// Step 6. Match URL path
+	if (in_array("match_url_path", $match_methods)) {
+
+		if (isset($site_brand->field_match_url_path[LANGUAGE_NONE][0]['value'])) {
+
+			// get list of urls to match
+			// ie: mycompany,user23
+			$parts = explode(",", $site_brand->field_match_url_path[LANGUAGE_NONE][0]['value']);
+			$match_urls = array();
+			foreach($parts as $part) {
+				// remove leading / and trim
+				$url = trim(ltrim(strtolower($part), '/'));
+				if ($url != "") {
+					$match_urls[] = $url;
+				}
+				
+			}
+
+			// check if url path matches
+			if (in_array(strtolower(request_path()), $match_urls)) {
+				return (rand(1,100) <= $match_probability);
+			}
+		}
+	}
+
 	// Step 7. Match brand partner cookie
 	if (in_array("match_partner_cookie", $match_methods)) {
 
 		if (isset($_COOKIE['Drupal_visitor_site_branding_partner'])) {
 
+			// Check if partner cookie has expired
+			$partner_expired = tm_branding_check_timestamp_expired($site_brand, "Drupal_visitor_site_branding_partner_timestamp");
+
 			// Get partner codes
-			if (isset($site_brand->field_match_partner_cookie[LANGUAGE_NONE][0]['value'])) {
+			if (!$partner_expired and isset($site_brand->field_match_partner_cookie[LANGUAGE_NONE][0]['value'])) {
 
 				// get list of partners to match
 				// ie: mybrand,myotherbrand
@@ -200,28 +228,37 @@ function tm_branding_check_brand($site_brand, $account) {
 		}
 	}
 
-	// Step 7. Match referrer domain
+	// Step 8. Match referrer domain
 	if (in_array("match_referer_domain", $match_methods)) {
 
 		$referer_domain = "";
+		$referer_expired = true;
 
 		// check cookie value
 		if (isset($_COOKIE['Drupal_visitor_site_branding_referer_domain'])) {
 			$referer_domain = $_COOKIE['Drupal_visitor_site_branding_referer_domain'];
+
+			// Check if referer cookie has expired
+			$referer_expired = tm_branding_check_timestamp_expired($site_brand, "Drupal_visitor_site_branding_referer_domain_timestamp");
 		}
 
 		// check HTTP_REFERER in case cookie has been set in this page load
-		if(isset($_SERVER['HTTP_REFERER'])) {
-			try {
-				$referer_domain = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
-				$referer_domain = trim(str_replace("www.", "", $referer_domain)); // remove www
-				
-			} catch (Exception $e) {
-				// continue
+		if (isset($_SERVER['HTTP_REFERER'])) {
+
+			if ($_SERVER['HTTP_REFERER'] != "") {
+				try {
+					$referer_domain = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
+					$referer_domain = trim(str_replace("www.", "", $referer_domain)); // remove www
+					
+				} catch (Exception $e) {
+					// continue
+				}
+
+				$referer_expired = false;
 			}
 		}
 
-		if ($referer_domain != "") {
+		if (!$referer_expired and $referer_domain != "") {
 
 			// Get partner codes
 			if (isset($site_brand->field_match_referer_domain[LANGUAGE_NONE][0]['value'])) {
@@ -242,7 +279,7 @@ function tm_branding_check_brand($site_brand, $account) {
 		}
 	}
 
-	// Step 8. Match "geoip"
+	// Step 9. Match "geoip"
 	if (in_array("geoip", $match_methods)) {
 
 		if (module_exists("tm_geoip")) {
@@ -316,7 +353,7 @@ function tm_branding_check_brand($site_brand, $account) {
 	}
 	
 
-	// Step 9. Check "user_country"
+	// Step 10. Check "user_country"
 	// Match against the user's profile setting
 	if (in_array("user_country", $match_methods)) {
 		if ($account->uid > 0) {
@@ -343,7 +380,7 @@ function tm_branding_check_brand($site_brand, $account) {
 		}
 	}
 
-	// Step 10. Match "user_home_chapter"
+	// Step 11. Match "user_home_chapter"
 	if (in_array("user_home_chapter", $match_methods)) {
 		if ($account->uid > 0) {
 
@@ -367,7 +404,7 @@ function tm_branding_check_brand($site_brand, $account) {
 	}
 
 
-	// Step 11. Match "user_in_chapter"
+	// Step 12. Match "user_in_chapter"
 	if (in_array("user_in_chapter", $match_methods)) {
 		if ($account->uid > 0) {
 
@@ -387,7 +424,7 @@ function tm_branding_check_brand($site_brand, $account) {
 		}
 	}
 
-	// Step 12. Match "user_in_segment"
+	// Step 13. Match "user_in_segment"
 	if (in_array("user_in_segment", $match_methods)) {
 		if ($account->uid > 0) {
 
@@ -740,4 +777,40 @@ function tm_branding_replace_vars($element) {
 	$element = str_replace("__FOOTER_LOGO_URL__", tm_branding_get_conf("tm_branding_footer_logo"), $element);
 	
 	return $element;
+}
+
+/**
+ * Helper method to determine if timestamp has expired or not
+ */
+function tm_branding_check_timestamp_expired($site_brand, $cookie_key) {
+
+	// Get cookie timeout value
+	$cookie_expiry_days = 0;
+	if (isset($site_brand->field_match_cookie_expiry[LANGUAGE_NONE][0]['value'])) {
+		$cookie_expiry_days = $site_brand->field_match_cookie_expiry[LANGUAGE_NONE][0]['value'];
+	}
+
+	// Check for no expiry
+	if ($cookie_expiry_days == 0) {
+		return false;
+	}
+
+	// Expire if no timestamp provided
+	if (!isset($_COOKIE[$cookie_key])) {
+		return true;
+	}
+
+	// Get timestamp
+	$timestamp = intval($_COOKIE[$cookie_key]);
+
+	// Expiry
+	if ($cookie_expiry_days != 0) {
+		$now = new DateTime(null, new DateTimeZone('UTC'));
+		if ($timestamp < ($now->getTimestamp() - ($cookie_expiry_days * 60 * 60 * 24))) {
+			return true;
+		}
+	}
+
+	// Still valid
+	return false;
 }

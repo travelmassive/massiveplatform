@@ -1043,7 +1043,7 @@ This is helpful if you want to match only 50% of visitors with a rule.',
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 18,
+      'weight' => 19,
     ),
   );
 
@@ -1539,6 +1539,58 @@ This will override any match criteria.',
     ),
   );
 
+  // Exported field_instance: 'node-site_brand-field_match_cookie_expiry'.
+  $field_instances['node-site_brand-field_match_cookie_expiry'] = array(
+    'bundle' => 'site_brand',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Number of days the partner or referer cookie will be valid for.<br>
+Set to 0 to never expire (default)',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 0,
+          'thousand_separator' => '',
+        ),
+        'type' => 'number_integer',
+        'weight' => 44,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_match_cookie_expiry',
+    'label' => 'Cookie Valid For',
+    'required' => 0,
+    'settings' => array(
+      'max' => '',
+      'min' => 0,
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 17,
+    ),
+  );
+
   // Exported field_instance: 'node-site_brand-field_match_partner_cookie'.
   $field_instances['node-site_brand-field_match_partner_cookie'] = array(
     'bundle' => 'site_brand',
@@ -1666,7 +1718,50 @@ This will prevent subsequent rules from branding other elements.<br>',
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 19,
+      'weight' => 20,
+    ),
+  );
+
+  // Exported field_instance: 'node-site_brand-field_match_url_path'.
+  $field_instances['node-site_brand-field_match_url_path'] = array(
+    'bundle' => 'site_brand',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Match an exact URL path that the visitor is viewing.<br>
+Can be comma separated to include multiple paths.<br>
+ie: "partner-company" will match the URL "/partner-company"',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 45,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_match_url_path',
+    'label' => 'Match URL path',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 18,
     ),
   );
 
@@ -1688,6 +1783,7 @@ You can reference __ASSETS_BASE_PATH__/assets/filename.ext in html template<br>'
   t('Check this to enable testing for a member account or IP.<br>
 Branding will be enabled for any matching test criteria.<br>
 This will be enabled even if the branding is not activated.');
+  t('Cookie Valid For');
   t('Custom css');
   t('Custom html block for frontpage.<br>
 Will be displayed above the newsfeeds.<br>
@@ -1737,6 +1833,10 @@ Default is $conf[\'tm_branding_search_page_link\']');
 Default is $conf[\'tm_branding_frontpage_video_link\']');
   t('List of IP addresses separated by spaces to match for testing.<br>
 This will override any match criteria.');
+  t('Match URL path');
+  t('Match an exact URL path that the visitor is viewing.<br>
+Can be comma separated to include multiple paths.<br>
+ie: "partner-company" will match the URL "/partner-company"');
   t('Match continent');
   t('Match continent (GeoIP matching only)');
   t('Match country');
@@ -1750,6 +1850,8 @@ This will override any match criteria.');
   t('Match user chapter');
   t('Match user\'s chapters.<br>');
   t('Menu html');
+  t('Number of days the partner or referer cookie will be valid for.<br>
+Set to 0 to never expire (default)');
   t('Order in which the brand directive is processed.
 <br>A lower number will be processed first. The first match will be displayed.');
   t('Play an mp4 video stream on the frontpage as a background video.<br>

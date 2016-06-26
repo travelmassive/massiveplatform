@@ -86,7 +86,14 @@ function tm_theme_html_head_alter(&$head_elements) {
     // set site_branding_partner cookie
     if (isset($_GET["partner"])) {
       if (trim($_GET["partner"]) != "") {
+
+        // store partner
         user_cookie_save(array('site_branding_partner'=>strtolower(trim($_GET["partner"]))));
+
+        // store timestamp
+        $now = new DateTime(null, new DateTimeZone('UTC'));
+        user_cookie_save(array('site_branding_partner_timestamp'=>$now->getTimestamp()));
+
         drupal_goto("/");
       }
     }
@@ -99,8 +106,14 @@ function tm_theme_html_head_alter(&$head_elements) {
       try {
         $referer_domain = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
         if (strtolower($referer_domain) != strtolower($_SERVER['HTTP_HOST'])) {
+
+          // store domain
           $referer_domain = str_replace("www.", "", $referer_domain); // remove www
           user_cookie_save(array('site_branding_referer_domain'=>strtolower($referer_domain)));
+          
+          // store timestamp
+          $now = new DateTime(null, new DateTimeZone('UTC'));
+          user_cookie_save(array('site_branding_referer_domain_timestamp'=>$now->getTimestamp()));
         }
         
       } catch (Exception $e) {

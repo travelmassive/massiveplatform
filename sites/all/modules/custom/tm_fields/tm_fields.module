@@ -921,7 +921,7 @@ function _tm_more_actions_process($field, $title = NULL) {
             $geoip_details .= "<br>";
           }
           // link to /admin/geoip_text
-          $geoip_details .= "IP: <a style='display: inline; padding: 0rem;' target='_blank' href='/admin/geoip_test?ip=" . $last_ip . "'>" . $last_ip . "</a>";
+          $geoip_details .= "IP: <a style='display: inline; padding: 0rem;' target='_blank' href='/admin/geoip_info?ip=" . $last_ip . "'>" . $last_ip . "</a>";
         }
        
         $menu_text = "<div style='font-size: smaller; font-style: italic; padding-left: 2em; background-color: #efefef;'>Last active " . $last_visit_time . "<br><span style='color: #888; font-style: normal;'>" . $geoip_details . "</span></div>";

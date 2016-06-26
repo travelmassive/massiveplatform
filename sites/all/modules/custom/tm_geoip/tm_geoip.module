@@ -6,7 +6,7 @@
 // Installation:
 // Download maxmind database and install to path accessible by server.
 // Set path to $conf['tm_geoip_maxmind_db']
-// Check /admin/geoip_test to verify installation
+// Check /admin/geoip_info to verify installation
 
 // Lite database
 // You can download a lite database for free here:
@@ -27,10 +27,10 @@ use MaxMind\Db\Reader;
  * Implements hook_menu()
  */
 function tm_geoip_menu() {
-  $items['admin/geoip_test'] = array(
-    'title' => 'Geoip test',
-    'page callback' => 'tm_geoip_test',
-    'access callback' => 'tm_geoip_test_check',
+  $items['admin/geoip_info'] = array(
+    'title' => 'Geoip info',
+    'page callback' => 'tm_geoip_info',
+    'access callback' => 'tm_geoip_info_check',
     'type' => MENU_CALLBACK
   );
   return $items;
@@ -39,13 +39,15 @@ function tm_geoip_menu() {
 /**
  * Test your ip
  */
-function tm_geoip_test() {
+function tm_geoip_info() {
 
 	global $conf;
 
-	print "<h1>Geoip test.</h1>";
-	print "Use ?ip= to test another ip.<br>";
+	header('Content-Type: text/html; charset=utf-8');
 
+	print "<h1>Geoip info</h1>";
+	print "Use ?ip= to test another ip.<br>";
+	
 	$ip = tm_geoip_get_real_visitor_ip();
 	if (isset($_GET["ip"])) {
 		$ip = $_GET["ip"];
@@ -56,7 +58,17 @@ function tm_geoip_test() {
 	if ($test_your_ip == null) {
 		print "<br>No match found (local ip?)";
 	} else {
-		print "<br>Matched ip:";
+		print "<br><br>Location<br>";
+
+		// if tm_status_updates_google_maps_api_key is set, embed a google map
+		$embed_map_html = "";
+		if (isset($conf["tm_status_updates_google_maps_api_key"])) {
+			$googe_maps_api_key = $conf["tm_status_updates_google_maps_api_key"];
+			$embed_map_html = '<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=' . $googe_maps_api_key . '&q=' . $test_your_ip["location"]["latitude"] . ',' . $test_your_ip["location"]["longitude"] . '&zoom=6" allowfullscreen></iframe><br>';
+		}
+		print $embed_map_html;
+
+		print "<br>Geoip info:";
 		print "<pre>";
 		print_r($test_your_ip);
 		print "</pre>";
@@ -67,7 +79,7 @@ function tm_geoip_test() {
 /**
  * Test your ip access callback
  */
-function tm_geoip_test_check() {
+function tm_geoip_info_check() {
 
 	global $user;
 

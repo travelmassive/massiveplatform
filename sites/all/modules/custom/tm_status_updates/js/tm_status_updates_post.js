@@ -13,6 +13,7 @@
 	var tm_update_location_text = null;
 	var tm_update_location_latitude = null;
 	var tm_update_location_longitude = null;
+	var tm_update_refesh_feed = true; // whether to reload or refresh newsfeed  
 
 	// event handlers
 	$("#tm-status-update-post-as").change(function () {
@@ -25,6 +26,7 @@
 	tm_user_status_update_main = function() {
 	  // preload images
 	  tm_user_status_update_preload_images();
+	  //tm_user_status_update_show_feedback("init", false);
 	}
 
 	// preload post as images
@@ -56,7 +58,7 @@
 		for(i = 0; i < tm_update_status_preview_stack.length; i++) {
 			tm_update_status_preview_stack[i].abort();
 		}
-		tm_global_search_query_stack = Array();
+		tm_update_status_preview_stack = Array();
 		clearTimeout(tm_update_status_preview_timer);
 	}
 
@@ -109,8 +111,7 @@
 
 	          // render preview
 	          tm_user_status_update_show_feedback("Preview link", false);
-	          $("#tm-status-update-link-preview-html").html(data.preview_html);
-	          $("#tm-status-update-link-preview-container").show();
+	          $("#tm-status-update-link-preview-html").html(data.preview_html).show();
 
 	        }
 	      } else {
@@ -123,7 +124,7 @@
 	  });
 
 	  // Step 3. (note: this is async). Push xhr request to stack
-	  tm_global_search_query_stack.push(xhr);
+	  tm_update_status_preview_stack.push(xhr);
 
 	}
 
@@ -138,11 +139,9 @@
 	    $('#tm-status-update-text').attr("placeholder", "Write something...");
 	    return;
 	  }
-	  tm_update_status_posted = true;
 
-	  // let user know we're posting
-	  $("#tm-status-update-post").html("Posting...");
-	  $("#tm-status-update-text").prop('disabled', true);
+	  // disable posting form
+	  tm_user_status_disable_form();
 
 	  // post the update
 	  $.ajax({
@@ -162,14 +161,15 @@
 	        // go to page
 	        if (data.redirect != null) {
 	          if (data.redirect == '/newsfeed') {
-	            location.reload();
+	            tm_user_status_reload_newsfeed();
 	          } else {
 	            window.location = data.redirect;
 	          }
 	        }
 
 	      } else {
-	        jq_alert(null, 'Oops, there was a problem updating your status.'); 
+	      	tm_user_status_enable_form();
+	        tm_user_status_update_show_feedback(data.error_message);
 	      }
 	    },
 	    error: function(data) {
@@ -178,27 +178,82 @@
 	  });
 	}
 
+	// enable post form
+	tm_user_status_enable_form = function() {
+		$("#tm-status-update-post").html("Post");
+		//$("#tm-status-update-text").prop('disabled', false);
+		$("#tm-status-update-text").attr('readonly',false);
+		tm_update_status_posted = false;
+	}
+
+	// disable post form
+	tm_user_status_disable_form = function() {
+		$("#tm-status-update-post").html("Posting...");
+		//$("#tm-status-update-text").prop('disabled', true);
+		$("#tm-status-update-text").attr('readonly',true);
+		tm_update_status_posted = false;
+	}
+
+	// reload newfeed
+	tm_user_status_reload_newsfeed = function() {
+
+		if (tm_update_refesh_feed) {
+
+			// cancel any more previews
+			tm_user_status_updates_cancel_previews();
+
+			// enable post form
+			$("#tm-status-update-text").val("");
+			tm_user_status_enable_form();
+
+			// hide preview and feedback
+			tm_user_status_update_show_feedback_preview("", true, false);
+
+			// reset page count and load feed
+			tm_status_updates_load_feed("newsfeed", true);
+
+		} else {
+
+			location.reload();
+		}
+	}
+
 	// hide feedback message
 	tm_user_status_update_hide_feedback = function() {
-	  $("#tm-status-update-feedback-container").hide();
-	  $("#tm-status-update-feedback-loading-image").hide();
+		$("#tm-status-update-feedback-text").html("");
+		$("#tm-status-update-feedback-loading-image").hide();	  
 	}
 
 	// show feedback message
 	tm_user_status_update_show_feedback = function(feedback_text, show_loading_image) {
+		tm_user_status_update_show_feedback_preview(feedback_text, show_loading_image, true);
+	}
 
-	  $("#tm-status-update-feedback-text").html(feedback_text);
-	  if (show_loading_image == true) {
-	    $("#tm-status-update-feedback-loading-image").show();
-	  } else {
-	    $("#tm-status-update-feedback-loading-image").hide();
-	  }
-	  $("#tm-status-update-feedback-container").show();
+	// show feedback message
+	tm_user_status_update_show_feedback_preview = function(feedback_text, show_loading_image, hide_preview) {
+
+		$("#tm-status-update-feedback-text").html(feedback_text);
+		if (show_loading_image == true) {
+			$("#tm-status-update-feedback-loading-image").show();
+		} else {
+			$("#tm-status-update-feedback-loading-image").hide();
+		}
+		if (hide_preview) {
+			// hide preview html
+			$("#tm-status-update-link-preview-html").hide();
+		}
+		
 	}
 
 	// hide link preview
 	tm_user_status_update_hide_preview = function() {
-	  $("#tm-status-update-link-preview-container").hide();
+		$("#tm-status-update-link-preview-html").hide();
+	}
+
+	// clear preview
+	tm_user_status_update_clear_preview = function() {
+		tm_user_status_update_hide_feedback();
+	  	$("#tm-status-update-link-preview-html").html("");
 	}
 
 	// show user location

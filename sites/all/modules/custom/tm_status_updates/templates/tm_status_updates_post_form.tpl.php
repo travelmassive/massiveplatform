@@ -6,7 +6,7 @@
 .tm-status-update-post-actions { text-align: right; margin-top: 6px; }
 #tm-status-update-post-as { margin-right: 8px; }
 #charNum { font-size: 14px; color: #888; margin-right: 8px; position: absolute; top: -16px; right: 8px;}
-#tm-status-update-feedback-container { font-size: 14px; margin-bottom: -12px; min-height: 24px;}
+#tm-status-update-feedback-container { font-size: 14px; margin-bottom: -12px; min-height: 28px; }
 #tm-status-update-location-text { font-size: 14px; color: #213040; text-decoration: underline; }
 #tm-status-update-feedback-loading-image { margin-top: 6px; padding-right: 8px; }
 #tm-status-update-text { resize: none; }
@@ -43,11 +43,13 @@ var tm_update_post_as_images = __POST_AS_IMAGES__;
 
 <div id="tm-status-update-link-preview-container">
 	<div id="tm-status-update-feedback-container">
-		<img id="tm-status-update-feedback-loading-image" style="display:none;" src='/sites/all/themes/tm/images/load-more-ajax-loader.gif'>
+		<img id="tm-status-update-feedback-loading-image" style="display:none;" style="width: 16px; height: 11px;" src='/sites/all/themes/tm/images/load-more-ajax-loader.gif'>
 		<span id="tm-status-update-feedback-text"></span>
 	</div>
 	<div id="tm-status-update-link-preview-html"></div>
 </div>
 
+
 <div style="clear: both;"></div>
+
 

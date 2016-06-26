@@ -282,7 +282,7 @@ function tm_status_updates_get_combined_feed_user($account, $limit_from = 0, $li
 			uid as 'owner_uid'
 			FROM flagging WHERE (entity_id IN (SELECT entity_id FROM flagging WHERE uid = :uid AND fid IN (" . implode(",", $display_flags) . ")) OR entity_id = :uid) AND fid IN (" . implode(",", $display_flags) . ")";
 
-	$joined = $query1 . " UNION ALL " . $query2 . " ORDER BY timestamp DESC LIMIT " . intval($limit_from) . ", " . intval($limit_to);
+	$joined = $query1 . " UNION ALL " . $query2 . " ORDER BY timestamp DESC LIMIT " . intval($limit_from) . ", " . abs(intval($limit_from) - intval($limit_to));
 
 	$all_results = db_query($joined, array(':uid' => $account->uid))->fetchAll();
 	return $all_results;
@@ -318,7 +318,7 @@ function tm_status_updates_get_combined_feed_global($limit_from = 0, $limit_to =
 			uid as 'owner_uid'
 			FROM flagging WHERE fid IN (" . implode(",", $display_flags) . ")";
 
-	$joined = $query1 . " UNION ALL " . $query2 . " ORDER BY timestamp DESC LIMIT " . intval($limit_from) . ", " . intval($limit_to);
+	$joined = $query1 . " UNION ALL " . $query2 . " ORDER BY timestamp DESC LIMIT " . intval($limit_from) . ", " . abs(intval($limit_from) - intval($limit_to));
 
 	$all_results = db_query($joined)->fetchAll();
 	return $all_results;
@@ -344,7 +344,7 @@ function tm_status_updates_get_matching_search_terms($search_terms, $limit_from 
 		$query_options[':search_term' . $i] = '%' . $search_terms[$i] . '%';
 	}
 
-	$query .= " ORDER BY created DESC LIMIT " . intval($limit_from) . ", " . intval($limit_to);
+	$query .= " ORDER BY created DESC LIMIT " . intval($limit_from) . ", " . abs(intval($limit_from) - intval($limit_to));
 	$status_updates = db_query($query, $query_options)->fetchAll();
 
 	return $status_updates;
@@ -368,7 +368,7 @@ function tm_status_updates_get_near_location($latitude, $longitude, $range, $lim
 
 	$query .= " FROM tm_newsfeed_status_updates WHERE location_latitude IS NOT null AND location_longitude IS NOT NULL AND created >= DATE_SUB(NOW(), INTERVAL " . intval($days_old) . " DAY) AND is_removed = 0 AND moderator_hide = 0";
 	
-	$query = "SELECT *, UNIX_TIMESTAMP(`created`) AS `timestamp` FROM (" . $query . ") AS distance_results WHERE distance < " . floatval($range) . " ORDER BY created DESC LIMIT " . intval($limit_from) . ", " . intval($limit_to);
+	$query = "SELECT *, UNIX_TIMESTAMP(`created`) AS `timestamp` FROM (" . $query . ") AS distance_results WHERE distance < " . floatval($range) . " ORDER BY created DESC LIMIT " . intval($limit_from) . ", " . abs(intval($limit_from) - intval($limit_to));
 
 	$status_updates = db_query($query)->fetchAll();
 	return $status_updates;

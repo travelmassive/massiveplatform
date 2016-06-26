@@ -5,10 +5,6 @@
 
   var tm_status_updates_loader_page = 1;
 
-  tm_user_status_apply_event_handlers = function() {
-   
-  }
-
   // confirm with user to moderate status
   tm_user_status_edit_form = function(status_update_id) {
     
@@ -216,7 +212,12 @@
   }
 
   // ajax loader
-  tm_status_updates_load_more = function(feed_type, display_from, display_to) {
+  tm_status_updates_load_more = function(feed_type) {
+    tm_status_updates_load_feed(feed_type, false);
+  }
+
+  // load more feed
+  tm_status_updates_load_feed = function(feed_type, reload) {
 
     // check anonymous user
     if (!tm_search_check_anonymous_user()) {
@@ -228,9 +229,14 @@
     $(".tm-status-update-pager-link").text("Loading more...");
     $(".tm-status-update-pager-loading-image").show();
 
+    // reloading
+    if (reload) {
+      tm_status_updates_loader_page = 0;
+    }
+
     var limit_from = tm_status_updates_loader_page * tm_update_status_items_per_load; 
     var limit_to = limit_from + tm_update_status_items_per_load;
-    tm_status_updates_loader_page++;
+    tm_status_updates_loader_page = tm_status_updates_loader_page + 1;
 
     // track search tags
     var loader_meta = null;
@@ -250,6 +256,11 @@
       },
       success: function(data) {
 
+        // if reloading empty feed
+        if (reload) {
+          $(".status-update-list:first").html("");
+        }
+        
         // add data
         $(".status-update-list:first").append(data);
 
@@ -259,10 +270,16 @@
         // update pager
         $(".tm-status-update-pager-link").text("Load more");
         $(".tm-status-update-pager-loading-image").hide();
+
+        // hide updating message
+        if (typeof(tm_user_status_update_clear_preview) !== 'undefined') {
+          tm_user_status_update_clear_preview();
+          //tm_user_status_update_show_feedback_preview("Update posted!", false);
+        }
         
       },
       error: function(data) {
-        $(".previous-pager").html("Oops, a problem occured");
+        $(".previous-pager").html("Oops, a problem occurred");
       }
     });
   }

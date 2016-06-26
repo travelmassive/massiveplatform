@@ -716,16 +716,16 @@ function _tm_reports_get_global_insights() {
   $insights["num_signedin_members_older_than_90_days"] = $signed_in_older_than_90_days->amount;
 
   // % OF SIGNED IN MEMBERS TODAY
-  $insights["pct_signedin_members_24_hours"] = round(($signed_in_today->amount / $members_total), 0);
+  $insights["pct_signedin_members_24_hours"] = round(($signed_in_today->amount / $members_total) * 100, 0);
 
   // % OF SIGNED IN MEMBERS 7 DAYS
-  $insights["pct_signedin_members_7_days"] = round(($signed_in_7_days->amount / $members_total), 0);
+  $insights["pct_signedin_members_7_days"] = round(($signed_in_7_days->amount / $members_total) * 100, 0);
 
   // % OF SIGNED IN MEMBERS 30 DAYS
-  $insights["pct_signedin_members_30_days"] = round(($signed_in_30_days->amount / $members_total), 0);
+  $insights["pct_signedin_members_30_days"] = round(($signed_in_30_days->amount / $members_total) * 100, 0);
 
   // % OF SIGNED IN MEMBERS 90 DAYS
-  $insights["pct_signedin_members_90_days"] = round(($signed_in_90_days->amount / $members_total), 0);
+  $insights["pct_signedin_members_90_days"] = round(($signed_in_90_days->amount / $members_total) * 100, 0);
 
   // % OF MEMBERS WHO HAVEN'T SIGNED IN SINCE 90 DAYS
   $insights["pct_signedin_members_older_than_90_days"] = round(($signed_in_older_than_90_days->amount / $members_total), 0);

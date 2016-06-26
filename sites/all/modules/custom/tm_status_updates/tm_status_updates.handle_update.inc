@@ -100,14 +100,14 @@ function tm_status_updates_update_status_ajax() {
 
 	// Softfail if update too short
 	if (strlen($status_update_text) < 3) {
-		$ret = array("result" => false, "error_message" => "Update is too short.", "redirect" => null);
+		$ret = array("result" => false, "error_message" => "Sorry, your update is too short", "redirect" => null);
 		drupal_json_output($ret);
 		return;
 	}
 
 	// Softfail if update too long
 	if (strlen($status_update_text) > 250) {
-		$ret = array("result" => false, "error_message" => "Update is too long.", "redirect" => null);
+		$ret = array("result" => false, "error_message" => "Sorry, your update is too long", "redirect" => null);
 		drupal_json_output($ret);
 		return;
 	}

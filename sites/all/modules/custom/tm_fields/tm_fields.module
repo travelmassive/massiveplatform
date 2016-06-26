@@ -904,12 +904,14 @@ function _tm_more_actions_process($field, $title = NULL) {
         } else {
           $geoip_info = tm_geoip_lookup($last_ip);
           if ($geoip_info != null) {
+            $geoip_labels = array();
             if (isset($geoip_info["city"]["names"]["en"])) {
-              $geoip_details = htmlentities($geoip_info["city"]["names"]["en"]);
+              $geoip_labels[] = htmlentities($geoip_info["city"]["names"]["en"]);
             }
             if (isset($geoip_info["country"]["names"]["en"])) {
-              $geoip_details .= ", " . htmlentities($geoip_info["country"]["names"]["en"]);
+              $geoip_labels[] = htmlentities($geoip_info["country"]["names"]["en"]);
             }
+            $geoip_details .= implode(", ", $geoip_labels);
           }
         }
 
@@ -918,7 +920,8 @@ function _tm_more_actions_process($field, $title = NULL) {
           if ($geoip_details != "") {
             $geoip_details .= "<br>";
           }
-          $geoip_details .= "IP: " . $last_ip;
+          // link to /admin/geoip_text
+          $geoip_details .= "IP: <a style='display: inline; padding: 0rem;' target='_blank' href='/admin/geoip_test?ip=" . $last_ip . "'>" . $last_ip . "</a>";
         }
        
         $menu_text = "<div style='font-size: smaller; font-style: italic; padding-left: 2em; background-color: #efefef;'>Last active " . $last_visit_time . "<br><span style='color: #888; font-style: normal;'>" . $geoip_details . "</span></div>";

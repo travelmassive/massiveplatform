@@ -46,14 +46,7 @@ function tm_geoip_test() {
 	print "<h1>Geoip test.</h1>";
 	print "Use ?ip= to test another ip.<br>";
 
-	$ip = $_SERVER['REMOTE_ADDR'];
-	if (isset($conf["tm_geoip_server_header"])) {
-		$reverse_proxy_header = $conf["tm_geoip_server_header"];
-		if (isset($_SERVER[$reverse_proxy_header])) {
-			$ip = $_SERVER[$reverse_proxy_header];
-		}
-	}
-
+	$ip = tm_geoip_get_real_visitor_ip();
 	if (isset($_GET["ip"])) {
 		$ip = $_GET["ip"];
 	}
@@ -156,27 +149,10 @@ function tm_geoip_get_ip_from_int($ip_number)
 
 /**
  * Get the real IP address of a visitor
- * Check if server is behind a proxy and use proxy ip header
+ * Wrap around ip_address()
  */
 function tm_geoip_get_real_visitor_ip() {
-
-  global $conf;
-
-  // if tm_geoip_server_header is set, return header
-  if (isset($conf["tm_geoip_server_header"])) {
-    $reverse_proxy_header = $conf["tm_geoip_server_header"];
-    if (isset($_SERVER[$reverse_proxy_header])) {
-      return $_SERVER[$reverse_proxy_header];
-    }
-  }
-
-  // fallback to REMOTE_ADDR
-  if (isset($_SERVER['REMOTE_ADDR'])) {
-    return $_SERVER['REMOTE_ADDR'];
-  }
-
-  // no ip
-  return null;
+  return ip_address();
 }
 
 /**

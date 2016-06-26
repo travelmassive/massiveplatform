@@ -176,7 +176,7 @@ $image = theme('image_style', array(
           <li><?php print l(t('Manage branding'), 'admin/branding'); ?></li>
         <?php endif; ?>
         <?php if (tm_users_download_global_newsletter_csv_check()): ?>
-        <li><?php print l(t('Export newsletter subscribers'), 'admin/export_global_newsletter'); ?></li>
+        <li><?php print l(t('Export newsletter subscribers'), 'javascript:jq_alert("Please wait", "Your download will begin in a moment."); document.location = "admin/export_global_newsletter";', array('fragment' => '','external'=>true)); ?></li>
         <?php endif; ?>
          <?php if (tm_users_download_chapter_leaders_csv_check()): ?>
         <li><?php print l(t('Export chapter leaders'), 'admin/export_chapter_leaders'); ?></li>

@@ -995,7 +995,7 @@ $conf['tm_newsfeed_feedback_link_text'] = 'Let us know';
 /** GOOGLE ANALYTICS REPORT **/
 // Base path to Google Analytics drilldown report
 // Replace GOOGLE_ANALYTICS_HASH from your own GA report URL
-$conf["tm_google_analytics_report_path"] = "https://analytics.google.com/analytics/web/#report/content-drilldown/GOOGLE_ANALYTICS_HASH/%3F_u.dateOption%3Dlast30days%26explorer-table.plotKeys%3D%5B%5D%26_r.drilldown%3D";
+$conf["tm_google_analytics_report_path"] = "https://analytics.google.com/analytics/web/?authuser=1#report/content-drilldown/GOOGLE_ANALYTICS_HASH/%3F_u.dateOption%3Dlast30days%26explorer-table.plotKeys%3D%5B%5D%26_r.drilldown%3D";
 
 /** GEO IP MODULE **/
 // Geoip settings

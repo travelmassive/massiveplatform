@@ -622,7 +622,7 @@ function tm_newsfeed_time_elapsed_string($datetime, $full = false) {
 	$ago = new DateTime($datetime, new DateTimeZone('UTC'));
 	$diff = $now->diff($ago);
 
-	if ($diff < 60) { 
+	if (($now->getTimestamp() - $ago->getTimestamp()) < 60) { 
 		return "just now";
 	}
 

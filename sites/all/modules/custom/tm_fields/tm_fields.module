@@ -885,7 +885,7 @@ function _tm_more_actions_process($field, $title = NULL) {
 
         // Get last active time    
         $last_visit_timestamp = tm_geoip_get_users_last_visit_time($targetuser->uid);
-        if ($last_visit_timestamp == null) {
+        if (($last_visit_timestamp == null) or ($last_visit_timestamp == 0)) {
           $last_visit_time = "never";
         } else {
           $last_visit_difference = time() - $last_visit_timestamp;

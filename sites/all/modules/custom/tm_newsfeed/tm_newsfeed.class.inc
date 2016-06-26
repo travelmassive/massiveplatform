@@ -326,7 +326,7 @@ class TmNewsfeedEmail
 				$this->first_update_from = $link;
 			}
 
-			$items[] = array("href" => $href, "link" => strip_tags($link), "text" => $text);
+			$items[] = array("href" => $href, "link" => $link, "text" => $text);
 		}
 
 		$read_more = "<a href='" . tm_newfeed_absolute_url("newsfeed") . tm_newsfeed_utm_campaign() . "'>View your news feed</a><br>";
@@ -349,7 +349,7 @@ class TmNewsfeedEmail
 			$link = $result->event_title;
 			$text = ', '. date_format(new DateTime($result->event_date), 'l, F j');
 
-			$items[] = array("href" => $href, "link" => strip_tags($link), "text" => $text);
+			$items[] = array("href" => $href, "link" => $link, "text" => $text);
 		}
 
 		return $this->tm_newsfeed_email_populate_section('events', $items);
@@ -380,7 +380,7 @@ class TmNewsfeedEmail
 				$text = " joined Travel Massive";
 			}
 
-			$items[] = array("href" => $href, "link" => strip_tags($link), "text" => $text);
+			$items[] = array("href" => $href, "link" => $link, "text" => $text);
 		}
 
 		return $this->tm_newsfeed_email_populate_section('new_members', $items);
@@ -398,7 +398,7 @@ class TmNewsfeedEmail
 			$link = $result->title;
 			$text = ", ".$result->category;
 
-			$items[] = array("href" => $href, "link" => strip_tags($link), "text" => strip_tags($text));
+			$items[] = array("href" => $href, "link" => $link, "text" => $text);
 		}
 
 		return $this->tm_newsfeed_email_populate_section('new_companies', $items);
@@ -504,8 +504,8 @@ class TmNewsfeedEmail
 			$row = TmNewsfeedEmailTemplates::$newsfeed_email_section_row;
 			$row = str_replace("__EMAIL_ITEM_LINK__", $item['href'], $row);
 			$row = str_replace("__EMAIL_ITEM_UTM_CAMPAIGN__", tm_newsfeed_utm_campaign(), $row);
-			$row = str_replace("__EMAIL_ITEM_LINK_TEXT__", $item['link'], $row);
-			$row = str_replace("__EMAIL_ITEM_EXTRA_TEXT__", $item['text'], $row);
+			$row = str_replace("__EMAIL_ITEM_LINK_TEXT__", strip_tags($item['link']), $row);
+			$row = str_replace("__EMAIL_ITEM_EXTRA_TEXT__", strip_tags($item['text']), $row);
 			$section_contents = $section_contents . $row;
 		}
 

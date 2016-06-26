@@ -141,7 +141,7 @@
 	  }
 
 	  // disable posting form
-	  tm_user_status_disable_form();
+	  tm_user_status_posting_form();
 
 	  // post the update
 	  $.ajax({
@@ -180,18 +180,18 @@
 
 	// enable post form
 	tm_user_status_enable_form = function() {
-		$("#tm-status-update-post").html("Post");
-		//$("#tm-status-update-text").prop('disabled', false);
-		$("#tm-status-update-text").attr('readonly',false);
 		tm_update_status_posted = false;
+		$("#tm-status-update-post").html("Post");
+		$("#tm-status-update-text").attr('readonly',false);
+		
 	}
 
 	// disable post form
-	tm_user_status_disable_form = function() {
+	tm_user_status_posting_form = function() {
+		tm_update_status_posted = true;
 		$("#tm-status-update-post").html("Posting...");
-		//$("#tm-status-update-text").prop('disabled', true);
 		$("#tm-status-update-text").attr('readonly',true);
-		tm_update_status_posted = false;
+		tm_user_status_update_show_feedback_preview("", true, false);
 	}
 
 	// reload newfeed

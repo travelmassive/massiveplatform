@@ -173,7 +173,8 @@
 	      }
 	    },
 	    error: function(data) {
-	      jq_alert(null, 'Oops, there was a problem updating your status.'); 
+	    	tm_user_status_enable_form();
+	    	tm_user_status_update_show_feedback("Oops, there was a problem updating your status");
 	    }
 	  });
 	}

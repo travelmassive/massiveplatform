@@ -791,13 +791,16 @@ li.tm-status-update-actions-dropdown {
 /* Status update link previews */
 
 .tm-status-update-preview { 
-  margin-left: 80px;
   min-height: 112px;
   margin-top: 16px; 
   padding: 0px; 
   background-color: #fff; 
   border: 1px solid #e1e8ed; 
   border-radius: 4px;
+}
+
+.status-update-container .tm-status-update-preview {
+  margin-left: 80px;
 }
 
 img.tm-status-update-preview-image { 
@@ -848,6 +851,7 @@ img.tm-status-update-preview-image {
   .status-update-container { padding-right: 2.2rem !important; }
   .tm-status-update-preview { width: 100%; margin-left: 0px; margin-top: 32px; }
   .tm-status-update-details { padding-right: 2.2rem; }
+  .status-update-container .tm-status-update-preview { margin-left: 0px; }
 }
 
 @media only screen and (max-width: 395px) {

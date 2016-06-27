@@ -14,7 +14,6 @@
 @media only screen and (max-width: 650px) {
 	#tm-status-update-location-container { float: right; min-width: 300px; text-align: right; margin-left: 0px; }
 }
-#tm-status-update-link-preview-html { margin-left: -80px !important; }
 </style>
 
 <script>

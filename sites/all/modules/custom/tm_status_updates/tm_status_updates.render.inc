@@ -888,7 +888,7 @@ $tm_status_updates_feed_template = <<<EOT
 
 	    	<div class="teaser tm-wrap-long-text">
 	      		<span class="prime-title status-updates tm-wrap-long-text">__FEED_TITLE__</span>
-	      		<p class="meta status-updates"><span class="role">__FEED_INFO__</span>
+	      		<p class="meta status-updates"><span class="role">__FEED_INFO__</span></p>
 	      	</div>
 
 	      	__PREVIEW_LINK__

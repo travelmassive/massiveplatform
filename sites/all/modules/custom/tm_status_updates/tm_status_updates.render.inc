@@ -519,7 +519,9 @@ function tm_status_updates_render_results_items($results, $count_viewer_ip, $hid
 
 		// hide silenced accounts
 		if (in_array($result->owner_uid, $conf["tm_status_updates_silence_uids"])) {
-			continue;
+			if (!($show_you and $own_post)) {
+				continue;
+			}
 		}
 
 		// render status update

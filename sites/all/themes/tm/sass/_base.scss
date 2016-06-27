@@ -849,9 +849,10 @@ img.tm-status-update-preview-image {
 
 @media only screen and (max-width: 650px) {
   .status-update-container { padding-right: 2.2rem !important; }
-  .tm-status-update-preview { width: 100%; margin-left: 0px; margin-top: 32px; }
+  .tm-status-update-preview { width: 100%; margin-left: 0px; margin-top: 16px; }
   .tm-status-update-details { padding-right: 2.2rem; }
   .status-update-container .tm-status-update-preview { margin-left: 0px; }
+  p.status-updates { margin-bottom: 16px; }
 }
 
 @media only screen and (max-width: 395px) {

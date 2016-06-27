@@ -4770,7 +4770,7 @@ img.tm-status-update-preview-image {
   .tm-status-update-preview {
     width: 100%;
     margin-left: 0px;
-    margin-top: 32px;
+    margin-top: 16px;
   }
 
   /* line 853, ../sass/_base.scss */
@@ -4782,16 +4782,21 @@ img.tm-status-update-preview-image {
   .status-update-container .tm-status-update-preview {
     margin-left: 0px;
   }
+
+  /* line 855, ../sass/_base.scss */
+  p.status-updates {
+    margin-bottom: 16px;
+  }
 }
 @media only screen and (max-width: 395px) {
-  /* line 858, ../sass/_base.scss */
+  /* line 859, ../sass/_base.scss */
   .tm-status-update-preview {
     margin-top: 16px;
   }
 }
 /* Hide search icon on small screen */
 @media only screen and (max-width: 320px) {
-  /* line 863, ../sass/_base.scss */
+  /* line 864, ../sass/_base.scss */
   .search-wrapper {
     display: none;
   }

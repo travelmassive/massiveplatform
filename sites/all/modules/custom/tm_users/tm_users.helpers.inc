@@ -327,8 +327,6 @@ function tm_users_get_last_public_flag_timestamp($uid) {
   $query = "SELECT timestamp FROM flagging WHERE uid = :uid AND fid IN (" . implode(",", $fids) . ") ORDER BY timestamp DESC LIMIT 1";
   $result = db_query($query, array(":uid" => $uid))->fetch();
 
-  print_r($result);
-
   // get timestamp of last flag update
   if (isset($result->timestamp)) {
     return $result->timestamp;

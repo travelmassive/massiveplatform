@@ -116,6 +116,7 @@ dependencies[] = tm_payments
 dependencies[] = tm_search_api
 dependencies[] = tm_geoip
 dependencies[] = tm_branding
+dependencies[] = tm_status_updates
 
 ; TM - notifications
 dependencies[] = tm_notifications

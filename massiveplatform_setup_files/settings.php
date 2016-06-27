@@ -909,89 +909,6 @@ $conf["tm_notifications_subscription_secret_key"] = "randomstring123"; // random
 /** COVER VIDEOS **/
 $conf["tm_cover_videos_enabled"] = true; // enable cover video
 
-/** NEWSFEED NOTIFICATIONS **/
-$conf["tm_newsfeed_send_notifications"] = true; // enable sending newsfeed notifications
-$conf['tm_newsfeed_daily_notification_time'] = "10:00:00"; // time of day to send daily notifications
-$conf['tm_newsfeed_weekly_notification_time'] = "11:00:00"; // time of day to send weekly notifications
-$conf['tm_newsfeed_moderator_preview'] = true; // show user's notification preview for moderators
-$conf['tm_newsfeeds_email_utm_campaign'] = 'newsfeed&utm_medium=newsletter&utm_source=email'; // append ?utm_campaign= to email links
-// $conf['tm_newsfeed_schedule_test_mod_userid'] = 10; // (uncomment to enable) enable schedules for selected users by mod
-
-// external api feeds
-$conf["tm_newsfeed_curl_timeout"] = 8; // seconds for curl timeout
-$conf["tm_newsfeed_curl_check_certificate"] = false; // check ssl certificate
-$conf["tm_newsfeed_marketplace_enabled"] = true; // enable marketplace newsfeed
-$conf["tm_newsfeed_marketplace_api_url"] = ""; // url for marketplace api
-$conf["tm_newsfeed_marketplace_cache"] = 60; // how long to cache results in seconds
-// $conf["tm_newsfeed_marketplace_api_userpass"] = "user:pass"; // uncomment to use basic httpauth 
-$conf["tm_newsfeed_blog_enabled"] = true; // enable blog newsfeed
-$conf["tm_newsfeed_blog_api_url"] = ""; // url for blog api
-$conf["tm_newsfeed_blog_cache"] = 60; // how long to cache results in seconds
-// $conf["tm_newsfeed_blog_api_userpass"] = "user:pass"; // uncomment to use basic httpauth 
-$conf["tm_newsfeed_discuss_enabled"] = true; // enable discussions newsfeed
-$conf["tm_newsfeed_discuss_api_url"] = ""; // url for discussions api
-$conf["tm_newsfeed_discuss_cache"] = 60; // how long to cache results in seconds
-// $conf["tm_newsfeed_discuss_api_userpass"] = "user:pass"; // uncomment to use basic httpauth 
-
-// base email subject line
-$conf['tm_newsfeed_subject_base'] = "What's happening in Travel Massive";
-$conf['tm_newsfeed_subject_base_daily'] = "Your daily Travel Massive update";
-$conf['tm_newsfeed_subject_base_weekly'] = "This week in Travel Massive";
-
-// subject extra text if no updates available to customise with
-$conf['tm_newsfeed_subject_extra_fallbacks'] = array(
-  "(Events to attend + more)",
-  "(Blog posts not to be missed + more)",
-  "(Discussions to catch up on + more)",
-  "(New users to follow + more)"
-  );
-
-// email tips
-$conf["tm_newsfeed_email_tip_not_approved"] = "Your profile is not approved, please complete your profile and request approval";
-$conf["tm_newsfeed_email_tip_not_following"] = "You aren't following anyone - connect with other members in the community to receive updates";
-$conf["tm_newsfeed_email_tip_no_chapter"] = "You haven't joined a chapter yet - join a chapter near you to receive local updates.";
-$conf['tm_newsfeed_email_more_tips'] = array(); // create additional tips that will be cycled through
-$conf['tm_newsfeed_email_more_tips'][] = "Post a status update to share your latest news with your followers.";
-
-// the headers for the email sections
-$conf['tm_newsfeed_email_section_headers'] = array(
-  'blog_posts' => 'New blog posts',
-  'discussions' => 'Trending discussions',
-  'jobs' => 'Jobs and opportunities',
-  'new_members' => 'New members in your network',
-  'new_companies' => 'New companies in your network',
-  'updates' => 'Latest status updates',
-  'events' => 'Upcoming events'
-  );
-
-// greetings to cycle through
-$conf['tm_newsfeed_email_greetings'] = array(
-  "Hello",
-  "Hey",
-  "Hola",
-  "Konnichiwa"
-  );
-
-// opening lines to cycle through
-$conf['tm_newsfeed_email_opening_lines'] = array(
-  "Here’s what’s been happening at Travel Massive this week.",
-  "Check out what’s been happening at Travel Massive this week."
-  );
-
-// closing lines to cycle through
-$conf['tm_newsfeed_email_quotes'] = array(
-  array("text" => "Travel makes one modest, you see what a tiny place you occupy in the world.",
-        "author" => "Gustave Flaubert"),
-  array("text" => "Oh the places you'll go!",
-        "author" => "Dr. Seuss"),
-  array("text" => "Investment in travel is an investment in yourself.",
-        "author" => "Matthew Karsten")
-  );
-
-// start of feedback line and text of link
-$conf['tm_newsfeed_feedback_base'] = 'Feedback? Suggestions?';
-$conf['tm_newsfeed_feedback_link_text'] = 'Let us know';
-
 /** GOOGLE ANALYTICS REPORT **/
 // Base path to Google Analytics drilldown report
 // Replace GOOGLE_ANALYTICS_HASH from your own GA report URL
@@ -1116,11 +1033,11 @@ $conf["tm_status_updates_preview_image_width"] = 512; // max width to resize pre
 $conf["tm_status_updates_preview_image_height"] = 512; // min width to resize preview image
 $conf["tm_status_updates_preview_image_quality"] = 80; // image quality of preview images
 $conf["tm_status_updates_preview_max_per_day"] = 200; // rate limit how many preview links a user can gererate in a day
-$conf["tm_status_updates_views_popular"] = 500; // how many views before shown as popular
+$conf["tm_status_updates_views_popular"] = 100; // how many views before shown as popular
 $conf["tm_status_updates_google_maps_api_key"] = "API_KEY"; // your google maps client-side api key for location lookups
 $conf["tm_status_updates_profile_display_days"] = 14; // show latest update on profile for how many days
 $conf["tm_status_updates_limit_results"] = 500; // how far back can you load results
-$conf["tm_status_updates_items_per_load"] = 50; // how many items to show per load
+$conf["tm_status_tupdates_items_per_load"] = 50; // how many items to show per load
 $conf["tm_status_updates_show_featured"] = 2; // how many featured items to display on news feed
 $conf["tm_status_updates_custom_message"] = array(); // custom messages for newsfeed display
 $conf["tm_status_updates_custom_message"]["global"] = "Got a press release? Tag it <a href='/newsfeed/tags/news'>#news</a> to share with the community";
@@ -1129,6 +1046,89 @@ $conf["tm_status_updates_meta_og_title"] = "Travel Massive News Feed";
 //$conf['tm_status_updates_meta_og_image"] = "";
 $conf["tm_status_updates_meta_description"] = "Share the latest news with our community on your news feed.";
 $conf["tm_status_updates_unapproved_message"] = "Your updates won't be published until your account is approved."; // display banner to unapproved members
+
+/** NEWSFEED NOTIFICATIONS **/
+$conf["tm_newsfeed_send_notifications"] = true; // enable sending newsfeed notifications
+$conf['tm_newsfeed_daily_notification_time'] = "10:00:00"; // time of day to send daily notifications
+$conf['tm_newsfeed_weekly_notification_time'] = "11:00:00"; // time of day to send weekly notifications
+$conf['tm_newsfeed_moderator_preview'] = true; // show user's notification preview for moderators
+$conf['tm_newsfeeds_email_utm_campaign'] = 'newsfeed&utm_medium=newsletter&utm_source=email'; // append ?utm_campaign= to email links
+// $conf['tm_newsfeed_schedule_test_mod_userid'] = 10; // (uncomment to enable) enable schedules for selected users by mod
+
+// external api feeds
+$conf["tm_newsfeed_curl_timeout"] = 8; // seconds for curl timeout
+$conf["tm_newsfeed_curl_check_certificate"] = false; // check ssl certificate
+$conf["tm_newsfeed_marketplace_enabled"] = true; // enable marketplace newsfeed
+$conf["tm_newsfeed_marketplace_api_url"] = ""; // url for marketplace api
+$conf["tm_newsfeed_marketplace_cache"] = 60; // how long to cache results in seconds
+// $conf["tm_newsfeed_marketplace_api_userpass"] = "user:pass"; // uncomment to use basic httpauth 
+$conf["tm_newsfeed_blog_enabled"] = true; // enable blog newsfeed
+$conf["tm_newsfeed_blog_api_url"] = ""; // url for blog api
+$conf["tm_newsfeed_blog_cache"] = 60; // how long to cache results in seconds
+// $conf["tm_newsfeed_blog_api_userpass"] = "user:pass"; // uncomment to use basic httpauth 
+$conf["tm_newsfeed_discuss_enabled"] = true; // enable discussions newsfeed
+$conf["tm_newsfeed_discuss_api_url"] = ""; // url for discussions api
+$conf["tm_newsfeed_discuss_cache"] = 60; // how long to cache results in seconds
+// $conf["tm_newsfeed_discuss_api_userpass"] = "user:pass"; // uncomment to use basic httpauth 
+
+// base email subject line
+$conf['tm_newsfeed_subject_base'] = "What's happening in Travel Massive";
+$conf['tm_newsfeed_subject_base_daily'] = "Your daily Travel Massive update";
+$conf['tm_newsfeed_subject_base_weekly'] = "This week in Travel Massive";
+
+// subject extra text if no updates available to customise with
+$conf['tm_newsfeed_subject_extra_fallbacks'] = array(
+  "(Events to attend + more)",
+  "(Blog posts not to be missed + more)",
+  "(Discussions to catch up on + more)",
+  "(New users to follow + more)"
+  );
+
+// email tips
+$conf["tm_newsfeed_email_tip_not_approved"] = "Your profile is not approved - please complete your profile and request approval";
+$conf["tm_newsfeed_email_tip_not_following"] = "You aren't following anyone - connect with other members in the community to receive updates";
+$conf["tm_newsfeed_email_tip_no_chapter"] = "You haven't joined a chapter yet - join a chapter near you to receive local updates.";
+$conf['tm_newsfeed_email_more_tips'] = array(); // create additional tips that will be cycled through
+$conf['tm_newsfeed_email_more_tips'][] = "Post a status update to share your latest news with your followers.";
+
+// the headers for the email sections
+$conf['tm_newsfeed_email_section_headers'] = array(
+  'blog_posts' => 'New blog posts',
+  'discussions' => 'Trending discussions',
+  'jobs' => 'Jobs and opportunities',
+  'new_members' => 'New members in your network',
+  'new_companies' => 'New companies in your network',
+  'updates' => 'Latest status updates',
+  'events' => 'Upcoming events'
+  );
+
+// greetings to cycle through
+$conf['tm_newsfeed_email_greetings'] = array(
+  "Hello",
+  "Hey",
+  "Hola",
+  "Konnichiwa"
+  );
+
+// opening lines to cycle through
+$conf['tm_newsfeed_email_opening_lines'] = array(
+  "Here’s what’s been happening at Travel Massive this week.",
+  "Check out what’s been happening at Travel Massive this week."
+  );
+
+// closing lines to cycle through
+$conf['tm_newsfeed_email_quotes'] = array(
+  array("text" => "Travel makes one modest, you see what a tiny place you occupy in the world.",
+        "author" => "Gustave Flaubert"),
+  array("text" => "Oh the places you'll go!",
+        "author" => "Dr. Seuss"),
+  array("text" => "Investment in travel is an investment in yourself.",
+        "author" => "Matthew Karsten")
+  );
+
+// start of feedback line and text of link
+$conf['tm_newsfeed_feedback_base'] = 'Feedback? Suggestions?';
+$conf['tm_newsfeed_feedback_link_text'] = 'Let us know';
 
 $conf['install_profile'] = 'tm';
 $conf['suppress_itok_output'] = true; // supress ?itok so email images can be loaded by gmail

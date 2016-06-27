@@ -165,7 +165,7 @@ class TmNewsfeedEmail
 		// Always show message when not approved
 		if (!in_array("approved user", $account->roles)){
 			$tip = $conf["tm_newsfeed_email_tip_not_approved"];
-			return "<em>($tip)</em>";
+			return "<em>$tip</em>";
 		}
 
 		// cycle tips
@@ -242,7 +242,7 @@ class TmNewsfeedEmail
 			// select random tip
 			$rand = $tips[array_rand($tips)];
 			$rand_intro = $intros[array_rand($intros)];
-			$tip = "<em>($rand)</em>";
+			$tip = "<em>$rand</em>";
 			return $tip;
 		}
 

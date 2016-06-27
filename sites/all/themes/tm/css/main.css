@@ -4703,6 +4703,7 @@ li.tm-status-update-actions-dropdown {
 /* Status update link previews */
 /* line 793, ../sass/_base.scss */
 .tm-status-update-preview {
+  margin-left: 80px;
   min-height: 112px;
   margin-top: 16px;
   padding: 0px;
@@ -4711,7 +4712,7 @@ li.tm-status-update-actions-dropdown {
   border-radius: 4px;
 }
 
-/* line 802, ../sass/_base.scss */
+/* line 803, ../sass/_base.scss */
 img.tm-status-update-preview-image {
   float: left;
   width: 96px;
@@ -4724,7 +4725,7 @@ img.tm-status-update-preview-image {
   margin-top: -1px;
 }
 
-/* line 814, ../sass/_base.scss */
+/* line 815, ../sass/_base.scss */
 .tm-status-update-preview-body {
   overflow: hidden;
   padding: 8px;
@@ -4733,14 +4734,14 @@ img.tm-status-update-preview-image {
   font-size: 14px;
 }
 
-/* line 822, ../sass/_base.scss */
+/* line 823, ../sass/_base.scss */
 .tm-status-update-preview h4 {
   margin-top: 0px;
   margin-bottom: 4px;
 }
 
 /* reference: https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container */
-/* line 828, ../sass/_base.scss */
+/* line 829, ../sass/_base.scss */
 .tm-wrap-long-text {
   /* These are technically the same, but use both */
   overflow-wrap: break-word;
@@ -4755,6 +4756,37 @@ img.tm-status-update-preview-image {
   hyphens: auto;
 }
 
+@media only screen and (max-width: 650px) {
+  /* line 848, ../sass/_base.scss */
+  .status-update-container {
+    padding-right: 0 !important;
+  }
+
+  /* line 849, ../sass/_base.scss */
+  .tm-status-update-preview {
+    width: 95%;
+    margin-left: 0px;
+    margin-top: 32px;
+  }
+
+  /* line 850, ../sass/_base.scss */
+  .tm-status-update-details {
+    padding-right: 4.2rem;
+  }
+}
+@media only screen and (max-width: 350px) {
+  /* line 854, ../sass/_base.scss */
+  .tm-status-update-preview {
+    margin-top: 16px;
+  }
+}
+/* Hide search icon on small screen */
+@media only screen and (max-width: 320px) {
+  /* line 859, ../sass/_base.scss */
+  .search-wrapper {
+    display: none;
+  }
+}
 /* line 3, ../sass/_buttons.scss */
 button:hover, button:focus {
   outline: none;

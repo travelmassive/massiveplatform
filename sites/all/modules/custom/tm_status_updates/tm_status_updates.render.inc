@@ -276,7 +276,7 @@ function tm_status_updates_render_update($result, $count_viewer_ip = null, $show
 	if ($result->preview_link_id != null) {
 		$preview_data = tm_status_updates_get_preview_link($result->preview_link_id);
 		$preview_html = tm_status_updates_render_link_preview($preview_data);
-		$feed_info .= $preview_html;
+		$details["preview_link_html"] = $preview_html;
 	}
 
 	// Record visitor ip if set
@@ -575,10 +575,17 @@ function tm_status_updates_render_flag_feed($feed_url, $feed_image_url, $feed_ti
 		$feed_title .= " <span class='tm-status-update-posted-by'>by " . $posted_by_html . '</span>';
 	}
 
+	// preview link
+	$preview_link = "";
+	if (isset($details["preview_link_html"])) {
+		$preview_link = $details["preview_link_html"];
+	}
+
 	$html = str_replace("__FEED_URL__", $feed_url, $tm_status_updates_feed_template);
 	$html = str_replace("__FEED_IMAGE_URL__", $feed_image_url, $html);
 	$html = str_replace("__FEED_TITLE__", $feed_title, $html);
 	$html = str_replace("__FEED_INFO__", $feed_info, $html);
+	$html = str_replace("__PREVIEW_LINK__", $preview_link, $html);
 	$html = str_replace("__FEED_LI_STYLE__", "display: block;", $html);	
 	$html = str_replace("__FEED_LI_CLASS__", "feeditem", $html);
 	
@@ -884,6 +891,8 @@ $tm_status_updates_feed_template = <<<EOT
 	      		<p class="meta status-updates"><span class="role">__FEED_INFO__</span>
 	      	</div>
 
+	      	__PREVIEW_LINK__
+
 	      	<div class="tm-status-update-details tm-wrap-long-text" style="display: __DETAILS_DISPLAY__; float: right; display: inline-block; margin-right: -38px; padding-top: 12px;">
 	      		__DETAILS_HTML__
 	      	</div>
@@ -901,8 +910,8 @@ $tm_status_update_link_preview_template = <<<EOT
 	__PREVIEW_IMAGE_URL__
 	<div class='tm-status-update-preview-body tm-wrap-long-text'>
 	<h4><a target="_blank" rel="nofollow" href="__PREVIEW_URL__">__PREVIEW_TITLE__</a></h4>
-	__PREVIEW_DESCRIPTION__
-	<br><a target="_blank" rel="nofollow" href="__PREVIEW_URL__">(__PREVIEW_URL_DISPLAY__)</a>
+	<span class='tm-status-update-preview-description'>__PREVIEW_DESCRIPTION__</span>
+	<br><a class='tm-status-update-preview-link' target="_blank" rel="nofollow" href="__PREVIEW_URL__">(__PREVIEW_URL_DISPLAY__)</a>
 	</div>
 </div>
 <!--googleon: index-->

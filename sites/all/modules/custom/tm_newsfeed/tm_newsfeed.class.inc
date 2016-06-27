@@ -143,7 +143,7 @@ class TmNewsfeedEmail
 		// add extra text
 		$subject_extra = "";
 		if (strlen($this->first_update_from) > 0) {
-			$subject_extra = "(Updates from $this->first_update_from + more)";
+			$subject_extra = "(Updates from " . strip_tags($this->first_update_from) . " and more)";
 		} else {
 			// subject extra text if no updates available to customise with
 			$subject_extra = $conf['tm_newsfeed_subject_extra_fallbacks'][array_rand($conf['tm_newsfeed_subject_extra_fallbacks'])];

@@ -10,7 +10,21 @@ function tm_status_updates_get_recommended_members($uid, $limit = 5) {
 
 	// anonymous user
 	if ($uid == 0) {
-		return tm_status_updates_people_suggestions_global($limit);
+
+		// check cache for public users
+		$cache_key = "tm-recommended-members-" . $limit;
+		$cache_value = cache_get($cache_key, 'cache');
+		if (!empty($cache_value)) {
+			return($cache_value->data);
+		}
+
+		// fetch results
+		$results = tm_status_updates_people_suggestions_global($limit);
+
+		// store in cache for 5 minutes
+		cache_set($cache_key, $results, 'cache', time() + 600);
+
+		return $results;
 	}
 
 	// get a list of user ids to display, related to this user

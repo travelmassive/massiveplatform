@@ -333,8 +333,8 @@ order by
 	same_home_chapter_as_me desc,
 	our_home_chapters_in_same_country desc,
 	same_country_as_my_home_chapter desc,
-	same_country desc
-	, users.created desc
+	same_country desc,
+	RAND() desc
 
 SQL;
 

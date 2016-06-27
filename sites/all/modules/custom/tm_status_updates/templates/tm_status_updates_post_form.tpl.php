@@ -10,12 +10,11 @@
 #tm-status-update-location-text { font-size: 14px; color: #213040; text-decoration: underline; }
 #tm-status-update-feedback-loading-image { margin-top: 6px; padding-right: 8px; }
 #tm-status-update-text { resize: none; }
-
 #tm-status-update-location-container { float: left; min-width: 150px; min-height: 2rem; text-align: left; margin-left: 56px; }
 @media only screen and (max-width: 650px) {
 	#tm-status-update-location-container { float: right; min-width: 300px; text-align: right; margin-left: 0px; }
 }
-
+#tm-status-update-link-preview-html { margin-left: -80px !important; }
 </style>
 
 <script>

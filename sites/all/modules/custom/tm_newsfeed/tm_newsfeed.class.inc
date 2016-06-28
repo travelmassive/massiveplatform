@@ -259,7 +259,15 @@ class TmNewsfeedEmail
 
 		// note that for the email, we want 'upcoming events' - those taking place after the data period for this email, hence $end_date
 		$debug_timer['11_start_events'] = time();
-		$content = $content . $this->tm_newsfeed_email_populate_events($user_id, $start_date);
+
+		// ensure event start date is future
+		$events_start_date = $start_date;
+		$datetime_now = new DateTime(null, new DateTimeZone('UTC'));
+		$datetime_start_date = new DateTime($start_date, new DateTimeZone('UTC'));
+		if ($datetime_start_date < $datetime_now) {
+			$events_start_date = $datetime_now->format('Y-m-d H:i:s');
+		}
+		$content = $content . $this->tm_newsfeed_email_populate_events($user_id, $events_start_date);
 
 		$debug_timer['12_start_updates'] = time();
 		$content = $content . $this->tm_newsfeed_email_populate_updates($user_id, $start_date, $end_date);

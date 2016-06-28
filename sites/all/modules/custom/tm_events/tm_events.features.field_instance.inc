@@ -1066,6 +1066,62 @@ This will be added to the attendee count on the event page.',
     ),
   );
 
+  // Exported field_instance: 'node-event-field_event_is_preview_mode'.
+  $field_instances['node-event-field_event_is_preview_mode'] = array(
+    'bundle' => 'event',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Only people with the link can see the event.<br><br>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 54,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_is_preview_mode',
+    'label' => 'Preview mode',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 47,
+    ),
+  );
+
   // Exported field_instance: 'node-event-field_event_payment_commission'.
   $field_instances['node-event-field_event_payment_commission'] = array(
     'bundle' => 'event',
@@ -2376,10 +2432,12 @@ This will be displayed to the member on the event page and included in the autom
   t('Message When Registered');
   t('Message When Waitlisted');
   t('Non-registered Guests');
+  t('Only people with the link can see the event.<br><br>');
   t('Only show location to registered attendees');
   t('Organizers');
   t('Partner Event');
   t('Payment commission (%)');
+  t('Preview mode');
   t('Provide a link to the page with the RSVP (ie: http://www.eventbrite.com/e/your-event-url)');
   t('Provide the street address or physical location for this event.');
   t('Publish to Chapters');

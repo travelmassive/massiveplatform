@@ -89,6 +89,14 @@ function tm_events_views_default_views() {
   $handler->display->display_options['filters']['field_event_date_value']['operator'] = '>';
   $handler->display->display_options['filters']['field_event_date_value']['granularity'] = 'hour';
   $handler->display->display_options['filters']['field_event_date_value']['default_date'] = 'now -12 hours';
+  /* Filter criterion: Content: Preview mode (field_event_is_preview_mode) */
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['id'] = 'field_event_is_preview_mode_value';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['table'] = 'field_data_field_event_is_preview_mode';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['field'] = 'field_event_is_preview_mode_value';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['operator'] = 'not';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['value'] = array(
+    1 => '1',
+  );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'events_community');
@@ -150,6 +158,14 @@ function tm_events_views_default_views() {
   $handler->display->display_options['filters']['field_event_date_value']['operator'] = '>=';
   $handler->display->display_options['filters']['field_event_date_value']['granularity'] = 'hour';
   $handler->display->display_options['filters']['field_event_date_value']['default_date'] = 'now -12 hours';
+  /* Filter criterion: Content: Preview mode (field_event_is_preview_mode) */
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['id'] = 'field_event_is_preview_mode_value';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['table'] = 'field_data_field_event_is_preview_mode';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['field'] = 'field_event_is_preview_mode_value';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['operator'] = 'not';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['value'] = array(
+    1 => '1',
+  );
   $handler->display->display_options['path'] = 'events';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Events';
@@ -237,6 +253,14 @@ function tm_events_views_default_views() {
   $handler->display->display_options['filters']['field_event_date_value']['operator'] = '>=';
   $handler->display->display_options['filters']['field_event_date_value']['granularity'] = 'hour';
   $handler->display->display_options['filters']['field_event_date_value']['default_date'] = 'now -12 hours';
+  /* Filter criterion: Content: Preview mode (field_event_is_preview_mode) */
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['id'] = 'field_event_is_preview_mode_value';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['table'] = 'field_data_field_event_is_preview_mode';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['field'] = 'field_event_is_preview_mode_value';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['operator'] = 'not';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['value'] = array(
+    1 => '1',
+  );
   $handler->display->display_options['path'] = 'events/list/%';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Events';
@@ -328,6 +352,14 @@ function tm_events_views_default_views() {
   $handler->display->display_options['filters']['field_event_date_value']['field'] = 'field_event_date_value';
   $handler->display->display_options['filters']['field_event_date_value']['operator'] = '>';
   $handler->display->display_options['filters']['field_event_date_value']['default_date'] = 'now';
+  /* Filter criterion: Content: Preview mode (field_event_is_preview_mode) */
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['id'] = 'field_event_is_preview_mode_value';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['table'] = 'field_data_field_event_is_preview_mode';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['field'] = 'field_event_is_preview_mode_value';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['operator'] = 'not';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['value'] = array(
+    1 => '1',
+  );
 
   /* Display: Block */
   $handler = $view->new_display('block', 'Block', 'event_list');
@@ -403,6 +435,14 @@ function tm_events_views_default_views() {
   $handler->display->display_options['filters']['field_event_date_value']['field'] = 'field_event_date_value';
   $handler->display->display_options['filters']['field_event_date_value']['operator'] = '>';
   $handler->display->display_options['filters']['field_event_date_value']['default_date'] = 'now - 1 day';
+  /* Filter criterion: Content: Preview mode (field_event_is_preview_mode) */
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['id'] = 'field_event_is_preview_mode_value';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['table'] = 'field_data_field_event_is_preview_mode';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['field'] = 'field_event_is_preview_mode_value';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['operator'] = 'not';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['value'] = array(
+    1 => '1',
+  );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page_1');
@@ -481,6 +521,14 @@ function tm_events_views_default_views() {
   $handler->display->display_options['filters']['field_event_date_value']['operator'] = '<';
   $handler->display->display_options['filters']['field_event_date_value']['form_type'] = 'date_text';
   $handler->display->display_options['filters']['field_event_date_value']['default_date'] = 'now';
+  /* Filter criterion: Content: Preview mode (field_event_is_preview_mode) */
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['id'] = 'field_event_is_preview_mode_value';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['table'] = 'field_data_field_event_is_preview_mode';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['field'] = 'field_event_is_preview_mode_value';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['operator'] = 'not';
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['value'] = array(
+    1 => '1',
+  );
   $handler->display->display_options['path'] = 'node/%/events';
   $export['related_events'] = $view;
 

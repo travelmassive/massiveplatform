@@ -135,6 +135,15 @@ $image = theme('image_style', array(
       ?>
     </ul>
 
+  <?php
+    $include_chapter_events = in_array("chapter leader", $loaded->roles);
+    $member_events_html = tm_users_menu_events($loaded->uid, $include_chapter_events, 5);
+    if ($member_events_html != ""): ?>
+    <ul class="dropd-menu dropdown-company-profiles">
+    <?php print $member_events_html; ?>
+    </ul>
+  <?php endif; ?>
+
   <?php if (in_array("approved user", $loaded->roles)) : ?>
     <ul class="dropd-menu dropdown-company-profiles">
       <?php print tm_users_menu_companies($loaded->uid); ?>
@@ -176,7 +185,7 @@ $image = theme('image_style', array(
           <li><?php print l(t('Manage branding'), 'admin/branding'); ?></li>
         <?php endif; ?>
         <?php if (tm_users_download_global_newsletter_csv_check()): ?>
-        <li><?php print l(t('Export newsletter subscribers'), 'javascript:jq_alert("Please wait", "Your download will begin in a moment."); document.location = "admin/export_global_newsletter";', array('fragment' => '','external'=>true)); ?></li>
+        <li><?php print l(t('Export newsletter subscribers'), 'javascript:jq_alert("Please wait", "Your download will begin in a moment.<iframe style=\'display: none\' src=\'admin/export_global_newsletter\'></iframe>");', array('fragment' => '','external'=>true)); ?></li>
         <?php endif; ?>
          <?php if (tm_users_download_chapter_leaders_csv_check()): ?>
         <li><?php print l(t('Export chapter leaders'), 'admin/export_chapter_leaders'); ?></li>

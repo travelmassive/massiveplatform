@@ -373,7 +373,7 @@ function tm_notifications_newsfeed_test_worker() {
 	$notif_type = strtolower($notif_type);
 
 	if (($member_email == null) and ($user_id == null)) {
-		drush_print('Usage: --member-email=user@example or --user-id=1001');
+		drush_print('Usage: --member-email=user@example or --user-id=1001 --type=daily or weekly');
 		return;
 	}
 

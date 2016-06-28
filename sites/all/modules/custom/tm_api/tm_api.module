@@ -232,9 +232,14 @@ function tm_api_events() {
 
   $query = "SELECT entity_id FROM field_data_field_event_date WHERE entity_type = 'node' and bundle = 'event' and field_event_date_value > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY field_event_date_value ASC";
 
-  $chapter_ids = db_query_range($query, 0, $limit)->fetchAll();
+  $event_ids = db_query_range($query, 0, $limit)->fetchAll();
   $event_data = array();
-  foreach($chapter_ids as $result) {
+  foreach($event_ids as $result) {
+
+    // don't show preview events
+    if (tm_events_is_preview_mode($result->entity_id)) {
+      continue;
+    }
 
     // get information about event
     $event = node_load($result->entity_id);

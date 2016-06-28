@@ -22,6 +22,25 @@ https://www.drupal.org/project/search_api_multi
 http://drupal.stackexchange.com/questions/118282/how-to-search-both-users-and-nodes-simultaneously-in-drupal-7
 https://www.phase2technology.com/blog/expanding-indexed-content-with-search-api-data-alterations/
 https://www.drupal.org/node/2043339#comment-7654017 (search_api_db doesn't support phrase searches)
+
+Notes:
+
+1. To reindex:
+
+drush search-api-reindex
+drush search-api-index
+
+2. When reverting features (ie: adding an index), to rebuild the index columns:
+
+https://www.drupal.org/node/1347438#comment-9566299
+
+1. Edit the index and set the Server to "< No Server >" and Save
+2. Edit it again and set the Server back to "Database Server" and Save
+3. Edit it AGAIN and enable it
+4. Now, everything appears to be working fine
+
+Then reindex the database.
+
 */
 
 /**

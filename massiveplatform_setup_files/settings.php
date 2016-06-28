@@ -1112,8 +1112,8 @@ $conf['tm_newsfeed_email_greetings'] = array(
 
 // opening lines to cycle through
 $conf['tm_newsfeed_email_opening_lines'] = array(
-  "Here’s what’s been happening at Travel Massive this week.",
-  "Check out what’s been happening at Travel Massive this week."
+  "Here’s what’s been happening at Travel Massive.",
+  "Check out what’s been happening at Travel Massive."
   );
 
 // closing lines to cycle through

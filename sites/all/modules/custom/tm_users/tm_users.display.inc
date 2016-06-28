@@ -383,18 +383,16 @@ function tm_users_menu_events($uid, $include_chapter_events = false, $limit = 5)
 
     // how long until event
     $time_until_text = "";
-    if ($preview_mode_text == "") {
-      $event_date = field_get_items('node',$event,'field_event_date');
-      $current_date = new DateTime('now', new DateTimeZone('UTC'));
-      $event_timezone = _tm_get_event_timezone($event);
-      $event_datetime = new DateTime($event_date[0]['value'], new DateTimeZone($event_timezone));
-      if (($event_datetime->format('U') - $current_date->format('U')) > 0) {
-        $time_until_text =  " - in " . _tm_event_time_elapsed($event_datetime->format('U') - $current_date->format('U')) . $waitlisted_text;
-      }
+    $event_date = field_get_items('node',$event,'field_event_date');
+    $current_date = new DateTime('now', new DateTimeZone('UTC'));
+    $event_timezone = _tm_get_event_timezone($event);
+    $event_datetime = new DateTime($event_date[0]['value'], new DateTimeZone($event_timezone));
+    if (($event_datetime->format('U') - $current_date->format('U')) > 0) {
+      $time_until_text =  "<br>in " . _tm_event_time_elapsed($event_datetime->format('U') - $current_date->format('U')) . $waitlisted_text;
     }
 
     $style = 'thumbnail';
-    $event_menu_text = t($event->title) . $time_until_text . $preview_mode_text;
+    $event_menu_text = t($event->title) . "<span style='font-style: italic; font-size: smaller;'>" . $time_until_text . $preview_mode_text . "</span>";
     $event_menu_link = drupal_get_path_alias("node/" . $event->nid);
 
     $markup .= "<li style='margin-bottom: 4px;'>

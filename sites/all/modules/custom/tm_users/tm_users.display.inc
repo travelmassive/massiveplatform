@@ -394,8 +394,12 @@ function tm_users_menu_events($uid, $include_chapter_events = false, $limit = 5)
     }
 
     $style = 'thumbnail';
-    $markup .= "<li style='margin-bottom: 4px;'><div style='width: 36px; max-height: 24px; overflow: hidden; float: left; margin-left: 1rem; margin-right: 0.5rem; margin-top: 4px; margin-bottom: 4px;'>
-    <img align='left' class='tm_menu_event_image' src='" . image_style_url($style, $img_url) . "'></div>" . l($event->title . $time_until_text . $preview_mode_text,'node/'.$event->nid) . '</li>'; 
+    $event_menu_text = t($event->title) . $time_until_text . $preview_mode_text;
+    $event_menu_link = drupal_get_path_alias("node/" . $event->nid);
+
+    $markup .= "<li style='margin-bottom: 4px;'>
+    <a href='/" . $event_menu_link . "'>
+    <img style='width: 36px; display:block; float:left' class='tm_menu_event_image' src='" . image_style_url($style, $img_url) . "'><span class='tm_menu_event_link' style='width: 100%; display:block; padding-left: 44px;'>" . $event_menu_text . '</span></a></li>'; 
   }
   return $markup;
 }

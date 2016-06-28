@@ -167,10 +167,34 @@ function tm_status_updates_create_update($entity_id, $entity_type, $status_updat
 	$status_update_id = db_insert('tm_newsfeed_status_updates')->fields($update_fields)->execute();
 
 	// Flag user as having updated status
-	$flag = flag_get_flag('status_updated_by_member');
-	$flag->flag("unflag", $posting_user->uid); // unflag so we can flag again
-	$flag->flag("flag", $posting_user->uid);
+	if ($entity_type == "user") {
+		$flag = flag_get_flag('status_updated_by_member');
+		$flag->flag("unflag", $entity_id, null, true); // unflag so we can flag again
+		$flag->flag("flag", $entity_id, null, true);
+	}
 
+	// Flag organization as having updated status
+	if ($entity_type == "organization") {
+		$flag = flag_get_flag('status_updated_by_organization');
+		$flag->flag("unflag", $entity_id, null, true); // unflag so we can flag again
+		$flag->flag("flag", $entity_id, null, true);
+	}
+
+	// Flag chapter as having updated status
+	if ($entity_type == "chapter") {
+		$flag = flag_get_flag('status_updated_by_chapter');
+		$flag->flag("unflag", $entity_id, null, true); // unflag so we can flag again
+		$flag->flag("flag", $entity_id, null, true);
+	}
+
+	// Flag event as having updated status
+	// Note: not implemented yet
+	/*if ($entity_type == "event") {
+		$flag = flag_get_flag('status_updated_by_event');
+		$flag->flag("unflag", $entity_id, null, true); // unflag so we can flag again
+		$flag->flag("flag", $entity_id, null, true);
+	}*/
+	
 	// Initialize the view counter
 	tm_status_updates_init_total_view_count($status_update_id);
 

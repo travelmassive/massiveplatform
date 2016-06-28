@@ -4,7 +4,7 @@
 .tm-status-update-image { width: 48px; border-radius: 4px; }
 .tm-status-update-text-container { position: absolute; left: 72px; right: 16px; top: 12px; }
 .tm-status-update-post-actions { text-align: right; margin-top: 6px; }
-#tm-status-update-post-as { margin-right: 8px; }
+#tm-status-update-post-button { margin-left: 8px; }
 #charNum { font-size: 14px; color: #888; margin-right: 8px; position: absolute; top: -16px; right: 8px; }
 #tm-status-update-feedback-container { font-size: 14px; margin-bottom: -12px; min-height: 28px; }
 #tm-status-update-location-text { font-size: 14px; color: #213040; text-decoration: underline; }
@@ -37,14 +37,16 @@ var tm_update_post_as_images = __POST_AS_IMAGES__;
 		
 		<span id="charNum">&nbsp;</span>
 		<div id="tm-status-update-location-container">
-			<span id='tm-status-update-location-field' class='tm-status-update-location' style='display: none;'>
+			<span id='tm-status-update-location-field' style='display: none;'>
 				<span id='tm-status-update-location-text' onClick='tm_user_status_enter_location()'>Add location</span>
 			</span>
 		</div>
 		<select id="tm-status-update-post-as" name="tm-status-update-post-as" style="margin-bottom: 8px;">
 			__POST_AS_OPTIONS__
 		</select>
-		<a id="tm-status-update-post" class='bttn bttn-secondary bttn-m edit' href='javascript:void(0);' onClick='tm_user_status_update();'>Post</a>
+		<span id="tm-status-update-post-button">
+			<a id="tm-status-update-post" class='bttn bttn-secondary bttn-m edit' href='javascript:void(0);' onClick='tm_user_status_update();'>Post</a>
+		</span>
 	</div>
 	
 </div>

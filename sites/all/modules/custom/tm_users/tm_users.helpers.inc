@@ -331,7 +331,6 @@ function tm_users_get_last_public_flag_timestamp($uid) {
   if (isset($result->timestamp)) {
     return $result->timestamp;
   }
-
   // no flag updates
   return null;
 }

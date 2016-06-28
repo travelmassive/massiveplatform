@@ -35,6 +35,7 @@ function tm_search_api_default_search_api_index() {
         "node:field_country:name" : { "type" : "text" },
         "node:field_country:official_name" : { "type" : "text" },
         "node:field_event_date:value" : { "type" : "date" },
+        "node:field_event_is_preview_mode" : { "type" : "boolean" },
         "node:field_event_type" : { "type" : "string" },
         "node:field_event_venue_name" : { "type" : "text" },
         "node:field_link_facebook:url" : { "type" : "string" },
@@ -662,6 +663,12 @@ function tm_search_api_default_search_api_server() {
             "type" : "string",
             "boost" : "1.0",
             "column" : "node_field_company_cover_video"
+          },
+          "node:field_event_is_preview_mode" : {
+            "table" : "search_api_db_tm_search_multi_index",
+            "column" : "node_field_event_is_preview_mode",
+            "type" : "boolean",
+            "boost" : "1.0"
           }
         }
       }

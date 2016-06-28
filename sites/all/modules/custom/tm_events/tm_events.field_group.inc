@@ -168,8 +168,8 @@ function tm_events_field_group_info() {
     'label' => 'Payout',
     'weight' => '16',
     'children' => array(
-      0 => 'field_event_payment_payout_to',
-      1 => 'field_event_payment_commission',
+      0 => 'field_event_payment_commission',
+      1 => 'field_event_payment_payout_to',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -443,7 +443,6 @@ function tm_events_field_group_info() {
       1 => 'field_event_type',
       2 => 'field_event_hide_organizers',
       3 => 'field_event_reassign_owner',
-      4 => 'field_event_discuss_category_id',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

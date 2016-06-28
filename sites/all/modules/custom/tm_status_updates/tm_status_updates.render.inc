@@ -327,6 +327,14 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 	if ($result->entity_type == "node") {
 		$flagged_node = node_load($result->entity_id);
 		$flagged_node_url = drupal_get_path_alias("node/" . $flagged_node->nid);
+
+		// don't show event if it's in preview mode
+		if ($flagged_node->type == "event") {
+			if (tm_events_is_preview_mode($flagged_node->nid)) {
+				return "";
+			}
+		}
+
 	}
 	if ($result->entity_type == "user") {
 		$flagged_user = user_load($result->entity_id);

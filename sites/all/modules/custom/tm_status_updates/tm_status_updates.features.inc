@@ -18,11 +18,11 @@ function tm_status_updates_ctools_plugin_api($module = NULL, $api = NULL) {
  */
 function tm_status_updates_flag_default_flags() {
   $flags = array();
-  // Exported flag: "status_updated_by_chapter".
+  // Exported flag: "Status updated by chapter".
   $flags['status_updated_by_chapter'] = array(
     'entity_type' => 'node',
-    'title' => 'status_updated_by_chapter',
-    'global' => 0,
+    'title' => 'Status updated by chapter',
+    'global' => 1,
     'types' => array(
       0 => 'chapter',
     ),
@@ -50,17 +50,17 @@ function tm_status_updates_flag_default_flags() {
     'access_author' => '',
     'show_contextual_link' => 0,
     'i18n' => 0,
-    'api_version' => 3,
     'module' => 'tm_status_updates',
     'locked' => array(
       0 => 'name',
     ),
+    'api_version' => 3,
   );
   // Exported flag: "Status updated by event".
   $flags['status_updated_by_event'] = array(
     'entity_type' => 'node',
     'title' => 'Status updated by event',
-    'global' => 0,
+    'global' => 1,
     'types' => array(
       0 => 'event',
     ),
@@ -88,17 +88,17 @@ function tm_status_updates_flag_default_flags() {
     'access_author' => '',
     'show_contextual_link' => 0,
     'i18n' => 0,
-    'api_version' => 3,
     'module' => 'tm_status_updates',
     'locked' => array(
       0 => 'name',
     ),
+    'api_version' => 3,
   );
   // Exported flag: "Status updated by member".
   $flags['status_updated_by_member'] = array(
     'entity_type' => 'user',
     'title' => 'Status updated by member',
-    'global' => 0,
+    'global' => 1,
     'types' => array(),
     'flag_short' => 'Flag this item',
     'flag_long' => '',
@@ -122,17 +122,17 @@ function tm_status_updates_flag_default_flags() {
     'show_contextual_link' => 0,
     'show_on_profile' => 0,
     'access_uid' => 'others',
-    'api_version' => 3,
     'module' => 'tm_status_updates',
     'locked' => array(
       0 => 'name',
     ),
+    'api_version' => 3,
   );
   // Exported flag: "Status updated by organization".
   $flags['status_updated_by_organization'] = array(
     'entity_type' => 'node',
     'title' => 'Status updated by organization',
-    'global' => 0,
+    'global' => 1,
     'types' => array(
       0 => 'organization',
     ),
@@ -160,11 +160,11 @@ function tm_status_updates_flag_default_flags() {
     'access_author' => '',
     'show_contextual_link' => 0,
     'i18n' => 0,
-    'api_version' => 3,
     'module' => 'tm_status_updates',
     'locked' => array(
       0 => 'name',
     ),
+    'api_version' => 3,
   );
   return $flags;
 

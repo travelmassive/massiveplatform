@@ -340,3 +340,62 @@ function _tm_users_get_avatar_uri($account) {
   // Return random avatar
   return _tm_users_get_default_avatar($conf["tm_images_default_field_avatar"], $account->uid);
 }
+
+/* 
+ * Link by title to any events this user had registered for or is organizer of
+ * inserts this markup into the user menu tpl file
+ */
+function tm_users_menu_events($uid, $include_chapter_events = false, $limit = 5){
+
+  global $conf;
+
+  // get list of events the user has registered for or is organizer of
+  $event_nids = tm_events_get_users_future_events($uid, $include_chapter_events);
+  $event_nids = array_slice($event_nids, 0, $limit);
+
+  $markup = "";
+  foreach ($event_nids as $nid) {
+    $event = node_load($nid);
+
+    // check valid event
+    if ($event == null) {
+      continue;
+    }
+
+    // get image
+    $img_url = $conf["tm_images_default_field_image"];
+    if (isset($event->field_image[LANGUAGE_NONE][0]['uri'])) {
+      $img_url = $event->field_image[LANGUAGE_NONE][0]['uri'];
+    }
+    $img_url = _tm_events_get_default_image($img_url, $nid);
+
+    // get preview mode
+    $preview_mode_text = "";
+    if (tm_events_is_preview_mode($nid)) {
+      $preview_mode_text = " (Preview mode)";
+    }
+
+    // get waitlisted
+    $waitlisted_text = "";
+    if (tm_events_user_is_waitlisted($nid, $uid)) {
+      $waitlisted_text = " (Waitlist)";
+    }
+
+    // how long until event
+    $time_until_text = "";
+    if ($preview_mode_text == "") {
+      $event_date = field_get_items('node',$event,'field_event_date');
+      $current_date = new DateTime('now', new DateTimeZone('UTC'));
+      $event_timezone = _tm_get_event_timezone($event);
+      $event_datetime = new DateTime($event_date[0]['value'], new DateTimeZone($event_timezone));
+      if (($event_datetime->format('U') - $current_date->format('U')) > 0) {
+        $time_until_text =  " - in " . _tm_event_time_elapsed($event_datetime->format('U') - $current_date->format('U')) . $waitlisted_text;
+      }
+    }
+
+    $style = 'thumbnail';
+    $markup .= "<li style='margin-bottom: 4px;'><div style='width: 36px; max-height: 24px; overflow: hidden; float: left; margin-left: 1rem; margin-right: 0.5rem; margin-top: 4px;'>
+    <img align='left' class='tm_menu_organization_image' src='" . image_style_url($style, $img_url) . "'></div>" . l($event->title . $time_until_text . $preview_mode_text,'node/'.$event->nid) . '</li>'; 
+  }
+  return $markup;
+}

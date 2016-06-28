@@ -259,7 +259,7 @@ class TmNewsfeedEmail
 
 		// note that for the email, we want 'upcoming events' - those taking place after the data period for this email, hence $end_date
 		$debug_timer['11_start_events'] = time();
-		$content = $content . $this->tm_newsfeed_email_populate_events($user_id, $end_date);
+		$content = $content . $this->tm_newsfeed_email_populate_events($user_id, $start_date);
 
 		$debug_timer['12_start_updates'] = time();
 		$content = $content . $this->tm_newsfeed_email_populate_updates($user_id, $start_date, $end_date);
@@ -339,12 +339,22 @@ class TmNewsfeedEmail
 		$items = array();
 		$results = tm_newsfeed_get_events($user_id, $from_date);
 
-		if (count($results) < 1) return "";
+		// remove any events that are in preview mode
+		$filtered_results = array();
+		foreach($results as $result) {
+			if (!tm_events_is_preview_mode($result->event_id)) {
+				$filtered_results[] = $result;
+			}
+		}
+
+		// ensure we have events to display
+		if (count($filtered_results) < 1) return "";
 
 		// sort results purely by date; query will be sorted by relevance columns first
-		usort($results, 'sort_event_date');
+		usort($filtered_results, 'sort_event_date');
 
-		foreach($results as $result) {
+		foreach($filtered_results as $result) {
+
 			$href = tm_newfeed_absolute_url("node/" . $result->event_id);
 			$link = $result->event_title;
 			$text = ', '. date_format(new DateTime($result->event_date), 'l, F j');

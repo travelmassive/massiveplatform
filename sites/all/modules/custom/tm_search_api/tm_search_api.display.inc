@@ -512,7 +512,11 @@ function tm_search_api_render_result_event($result, $event, $search_query, $resu
 	// set render fields
 	$result_url = drupal_get_path_alias("node/" . $event->nid);
 	$result_image_url = $image_url;
-	$result_title = l("Events > " . $event->title, $result_url, array('attributes' => array('target'=>$href_target)));
+	$preview_mode_text = "";
+	if (tm_events_is_preview_mode($event->nid)) {
+		$preview_mode_text = " (Preview mode)";
+	} 
+	$result_title = l("Events > " . $event->title . $preview_mode_text, $result_url, array('attributes' => array('target'=>$href_target)));
 
 	// show when event is
 	$current_date = new DateTime('now', new DateTimeZone('UTC'));

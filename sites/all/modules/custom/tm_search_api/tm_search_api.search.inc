@@ -408,6 +408,11 @@ function tm_search_api_fetch_results($query_array) {
 		// Event type
 		$query_filter_events_base->condition('node:type', 'event');
 
+		// Hide preview events except for moderator
+		if (!in_array("moderator", $user->roles) and (!in_array("administrator", $user->roles))) {
+			$query_filter_events_base->condition('node:field_event_is_preview_mode', true, '<>');
+		}
+
 		foreach ($search_terms as $search_term) {
 
 			// ignore specific keywords

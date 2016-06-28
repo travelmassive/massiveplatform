@@ -414,3 +414,91 @@ function tm_events_get_next_event($chapter_id) {
   // No upcoming event
   return null;
 }
+
+/**
+ * Fast lookup of event is in preview mode
+ */
+function tm_events_is_preview_mode($nid) {
+
+  $query = "SELECT field_event_is_preview_mode_value AS is_preview_mode FROM field_data_field_event_is_preview_mode WHERE entity_id = :nid";
+  $row = db_query($query, array(':nid' => $nid))->fetch();
+  if ($row != null) {
+    return ($row->is_preview_mode == 1);
+  }
+  return false;
+}
+
+/**
+ * Fast lookup if member is waitlisted for event
+ */
+function tm_events_user_is_waitlisted($event_id, $uid) {
+
+  $waitlist_flag_id = flag_get_flag('event_waitlist')->fid;
+  $query = "SELECT uid FROM flagging WHERE entity_id = :event_id AND fid = :fid AND uid = :uid";
+  $row = db_query($query, array(':event_id' => $event_id, ':fid' => $waitlist_flag_id, ':uid' => $uid, ))->fetch();
+  return ($row != null);
+}
+
+/**
+ * Fast lookup of future events member has registered for or is organizer of
+ */
+function tm_events_get_users_future_events($uid, $include_chapter_events = false) {
+
+  $event_flags = array();
+  $event_flags[] = flag_get_flag('event_register')->fid;
+  $event_flags[] = flag_get_flag('event_waitlist')->fid;
+  $event_flags[] = flag_get_flag('event_paid')->fid;
+
+  $event_ids = array();
+
+  // Step 1. Find all events member has registered for
+  $query = "SELECT entity_id FROM flagging WHERE entity_type = 'node' AND fid IN (" . implode(",", $event_flags) . ") AND uid = :uid ORDER BY timestamp desc";
+  $rows = db_query($query, array(':uid' => $uid))->fetchAll();
+  foreach ($rows as $row) {
+    $event_ids[] = $row->entity_id;
+  }
+
+  // Step 2. Find all events member is organizer of
+  $query = "SELECT entity_id FROM field_data_field_organizer WHERE bundle = 'event' AND field_organizer_target_id = :uid AND deleted = 0";
+  $rows = db_query($query, array(':uid' => $uid))->fetchAll();
+  foreach ($rows as $row) {
+    $event_ids[] = $row->entity_id;
+  }
+
+  // Step 3. Find all events member is owner of
+  $query = "SELECT nid FROM node WHERE `type` = 'event' AND uid = :uid";
+  $rows = db_query($query, array(':uid' => $uid))->fetchAll();
+  foreach ($rows as $row) {
+    $event_ids[] = $row->nid;
+  }
+
+  // Step 4. Find all events member is in chapter leader of
+  if ($include_chapter_events) {
+    $query = "SELECT nid FROM node 
+        LEFT JOIN field_data_field_chapter ON node.nid = field_data_field_chapter.entity_id
+        LEFT JOIN field_data_field_chapter_leaders ON field_data_field_chapter.field_chapter_target_id = field_data_field_chapter_leaders.entity_id  
+      WHERE field_chapter_leaders_target_id = :uid 
+      AND node.type = 'event'";
+    $rows = db_query($query, array(':uid' => $uid))->fetchAll();
+    foreach ($rows as $row) {
+      $event_ids[] = $row->nid;
+    }
+  }
+
+  // If not events, return
+  $event_ids = array_unique($event_ids);
+  if (sizeof($event_ids) == 0) {
+    return array();
+  }
+
+  // Step 4. Get all future events within 24 hours
+  // Don't worry about timezones as we have 24 hour threshold
+  $future_event_ids = array();
+  $query = "SELECT entity_id, field_event_date_value FROM field_data_field_event_date WHERE entity_type = 'node' AND entity_id IN (" . implode(",", $event_ids) . ") AND  field_event_date_value > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY field_event_date_value DESC";
+  $rows = db_query($query)->fetchAll();
+  foreach ($rows as $row) {
+    $future_event_ids[] = $row->entity_id;
+  }
+
+  return $future_event_ids;
+}

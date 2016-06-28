@@ -183,12 +183,12 @@ function tm_status_updates_fetch_link_meta($preview_url) {
 
     // title
     if (isset($object->title)) {
-      $preview_data["link_og_title"] = $object->title;
+      $preview_data["link_og_title"] = utf8_decode($object->title);
     }
 
     // description
     if (isset($object->description)) {
-      $preview_data["link_og_description"] = $object->description;
+      $preview_data["link_og_description"] = utf8_decode($object->description);
     }
 
     // image

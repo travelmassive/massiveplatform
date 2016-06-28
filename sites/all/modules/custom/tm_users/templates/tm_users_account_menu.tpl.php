@@ -185,7 +185,7 @@ $image = theme('image_style', array(
           <li><?php print l(t('Manage branding'), 'admin/branding'); ?></li>
         <?php endif; ?>
         <?php if (tm_users_download_global_newsletter_csv_check()): ?>
-        <li><?php print l(t('Export newsletter subscribers'), 'javascript:jq_alert("<img style=\'width: 16px; height: 11px; margin-right: 4px;\' src=\'/sites/all/themes/tm/images/load-more-ajax-loader.gif\'> Please wait", "Your download will begin in a moment.<iframe style=\'display: none\' src=\'/admin/export_global_newsletter\'></iframe>");', array('fragment' => '','external'=>true)); ?></li>
+        <li><?php print l(t('Export newsletter subscribers'), 'javascript:jq_alert_no_buttons("<img style=\'width: 16px; height: 11px; margin-right: 4px;\' src=\'/sites/all/themes/tm/images/load-more-ajax-loader.gif\'> Please wait", "Your download will begin in a moment.<iframe style=\'display: none\' src=\'/admin/export_global_newsletter\'></iframe>");', array('fragment' => '','external'=>true)); ?></li>
         <?php endif; ?>
          <?php if (tm_users_download_chapter_leaders_csv_check()): ?>
         <li><?php print l(t('Export chapter leaders'), 'admin/export_chapter_leaders'); ?></li>

@@ -178,6 +178,11 @@
     $.prompt(message, {title: alert_title});
   }
 
+  // wrapper for alert
+  jq_alert_no_buttons = function(alert_title, message) {
+    $.prompt(message, {title: alert_title, buttons: {}});
+  }
+
   // show create member event message
   jq_create_member_event_message = function() {
     if (typeof Drupal.settings.tm_events !== 'undefined') {

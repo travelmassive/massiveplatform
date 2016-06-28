@@ -494,7 +494,7 @@ function tm_events_get_users_future_events($uid, $include_chapter_events = false
   // Step 4. Get all future events within 24 hours
   // Don't worry about timezones as we have 24 hour threshold
   $future_event_ids = array();
-  $query = "SELECT entity_id, field_event_date_value FROM field_data_field_event_date WHERE entity_type = 'node' AND entity_id IN (" . implode(",", $event_ids) . ") AND  field_event_date_value > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY field_event_date_value DESC";
+  $query = "SELECT entity_id, field_event_date_value FROM field_data_field_event_date WHERE entity_type = 'node' AND entity_id IN (" . implode(",", $event_ids) . ") AND  field_event_date_value > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY field_event_date_value ASC";
   $rows = db_query($query)->fetchAll();
   foreach ($rows as $row) {
     $future_event_ids[] = $row->entity_id;

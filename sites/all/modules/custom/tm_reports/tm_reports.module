@@ -1654,7 +1654,7 @@ function _tm_reports_status_updates_time_series($timestamp_interval = "INTERVAL 
 
   // SQL 
   $query = "select count(*) as total, YEAR(created) as group_year, MONTH(created) as group_month from tm_newsfeed_status_updates
-  where created >= DATE_SUB(NOW()," . $timestamp_interval . ")
+  where is_removed = 0 and created >= DATE_SUB(NOW()," . $timestamp_interval . ")
   group by group_year, group_month order by group_year, group_month asc;";
   
   $rows = db_query($query)->fetchAll();
@@ -1673,7 +1673,7 @@ function _tm_reports_status_updates_time_series($timestamp_interval = "INTERVAL 
 function _tm_reports_links_shared_time_series($timestamp_interval = "INTERVAL 1 YEAR") {
 
    // check cache
-  $cache_key = "tm-reports-status-updates-" . $timestamp_interval;
+  $cache_key = "tm-reports-links-shared-" . $timestamp_interval;
   $cache_key = str_replace(" ", "-", $cache_key);
   $cache = cache_get($cache_key, 'cache');
   if (!empty($cache)) {
@@ -1682,7 +1682,7 @@ function _tm_reports_links_shared_time_series($timestamp_interval = "INTERVAL 1 
 
   // SQL 
   $query = "select count(*) as total, YEAR(created) as group_year, MONTH(created) as group_month from tm_newsfeed_status_updates
-  where preview_link_id is not null and created >= DATE_SUB(NOW()," . $timestamp_interval . ")
+  where is_removed = 0 and preview_link_id is not null and created >= DATE_SUB(NOW()," . $timestamp_interval . ")
   group by group_year, group_month order by group_year, group_month asc;";
   
   $rows = db_query($query)->fetchAll();

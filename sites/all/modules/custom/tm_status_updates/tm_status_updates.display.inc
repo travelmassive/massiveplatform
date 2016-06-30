@@ -14,6 +14,9 @@ function tm_status_updates_display_feed($feed_type) {
 	$display_to = $conf["tm_status_updates_items_per_load"];
 	$limit_results = $conf["tm_status_updates_limit_results"];
 
+	// start performance timer
+	$time_start = microtime(true); 
+
 	// load user
 	$account = user_load($user->uid);
 
@@ -150,6 +153,9 @@ function tm_status_updates_display_feed($feed_type) {
 	$html = str_replace("__RECOMMENDED_MEMBERS__", $recommended_html, $html);
 	$html = str_replace("__CUSTOM_MESSAGE__", $message_html, $html);
 
+	// include performance timing
+	$execution_time = round((microtime(true) - $time_start), 3);
+	$html .= "<div class='tm-status-updates-timer' style='display: none;'>" . $execution_time . "</div>";
 	return $html;
 }
 
@@ -248,6 +254,9 @@ function tm_status_updates_display_ajax() {
 		$hide_pager = true;
 	}
 
+	// start performance timer
+	$time_start = microtime(true); 
+
 	// get sorted list of status update and flag results
 	if ($feed_type == "global") {
 		$all_results = tm_status_updates_get_combined_feed_global($limit_from, $limit_to);
@@ -288,6 +297,10 @@ function tm_status_updates_display_ajax() {
 
 	// render item html from results
 	$results_html = tm_status_updates_render_results_items($all_results, $viewer_ip);
+
+	// include performance timing
+	$execution_time = round((microtime(true) - $time_start), 3);
+	$results_html .= "<div class='tm-status-updates-timer' style='display: none;'>" . $execution_time . "</div>";
 
 	// hide pager if more than display results or if no result
 	if (sizeof($all_results) == 0) {

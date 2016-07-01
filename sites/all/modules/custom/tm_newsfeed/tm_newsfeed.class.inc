@@ -327,7 +327,7 @@ class TmNewsfeedEmail
 			}
 
 			$time = tm_newsfeed_time_elapsed_string($result->created);
-			$text = " posted an update __ITALIC_START__$time__ITALIC_END__";
+			$text = " posted an update __ITALIC_START__" . $time . "__ITALIC_END__";
 
 			// save link text of first update item, for use email subject line
 			if ($index == 0) {

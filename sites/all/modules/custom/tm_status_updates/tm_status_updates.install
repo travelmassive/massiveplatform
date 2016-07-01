@@ -8,6 +8,7 @@
 function tm_status_updates_install() {
   // install database tables
   tm_status_updates_create_tables();
+  tm_status_updates_create_flagging_index();
 }
 
 /**
@@ -18,6 +19,8 @@ function tm_status_updates_reinstall_database_tables() {
   // re-install database tables
   tm_status_updates_drop_tables();
   tm_status_updates_create_tables();
+  tm_status_updates_create_flagging_index();
+
 }
 
 
@@ -54,7 +57,8 @@ function tm_status_updates_create_tables() {
   - tm_newsfeed_view_count_daily
   - tm_newsfeed_view_count_total";
 
-  $sql_tm_newsfeed_status_updates = <<<EOT
+  $sql_tm_newsfeed_status_updates = array();
+  $sql_tm_newsfeed_status_updates[] = <<<EOT
 CREATE TABLE IF NOT EXISTS `tm_newsfeed_status_updates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `entity_id` int(11) NOT NULL,
@@ -76,18 +80,21 @@ CREATE TABLE IF NOT EXISTS `tm_newsfeed_status_updates` (
   `is_removed` tinyint(3) DEFAULT 0,
   `is_promoted` tinyint(3) DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
-ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (entity_id);
-ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (entity_type);
-ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (status_update);
-ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (created);
-ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (location_latitude);
-ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (reply_to_id);
-ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (is_removed);
-ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (is_promoted);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 EOT;
 
-  $sql_tm_newsfeed_preview_links = <<<EOT
+$sql_tm_newsfeed_status_updates[] = "ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (entity_id);";
+$sql_tm_newsfeed_status_updates[] = "ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (entity_type);";
+$sql_tm_newsfeed_status_updates[] = "ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (status_update(512));";
+$sql_tm_newsfeed_status_updates[] = "ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (created);";
+$sql_tm_newsfeed_status_updates[] = "ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (location_latitude);";
+$sql_tm_newsfeed_status_updates[] = "ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (reply_to_id);";
+$sql_tm_newsfeed_status_updates[] = "ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (is_removed);";
+$sql_tm_newsfeed_status_updates[] = "ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (is_promoted);";
+
+
+  $sql_tm_newsfeed_preview_links = array();
+  $sql_tm_newsfeed_preview_links[] = <<<EOT
 CREATE TABLE IF NOT EXISTS `tm_newsfeed_preview_links` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `creator_uid` int(11) NOT NULL,
@@ -99,11 +106,13 @@ CREATE TABLE IF NOT EXISTS `tm_newsfeed_preview_links` (
   `created` timestamp DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
-ALTER TABLE `tm_newsfeed_preview_links` ADD INDEX (status_update_id);
-ALTER TABLE `tm_newsfeed_preview_links` ADD INDEX (creator_uid);
 EOT;
 
-  $sql_tm_newsfeed_view_count_daily = <<<EOT
+$sql_tm_newsfeed_preview_links[] = "ALTER TABLE `tm_newsfeed_preview_links` ADD INDEX (id);";
+$sql_tm_newsfeed_preview_links[] = "ALTER TABLE `tm_newsfeed_preview_links` ADD INDEX (creator_uid);";
+
+  $sql_tm_newsfeed_view_count_daily = array();
+  $sql_tm_newsfeed_view_count_daily[] = <<<EOT
 CREATE TABLE IF NOT EXISTS `tm_newsfeed_view_count_daily` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `status_update_id` int(11) NOT NULL,
@@ -112,26 +121,42 @@ CREATE TABLE IF NOT EXISTS `tm_newsfeed_view_count_daily` (
   `created` timestamp DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
-ALTER TABLE `tm_newsfeed_view_count_daily` ADD INDEX (status_update_id);
-ALTER TABLE `tm_newsfeed_view_count_daily` ADD INDEX (viewer_ip);
-ALTER TABLE `tm_newsfeed_view_count_daily` ADD INDEX (created);
 EOT;
 
-  $tm_newsfeed_view_count_total = <<<EOT
+$sql_tm_newsfeed_view_count_daily[] = "ALTER TABLE `tm_newsfeed_view_count_daily` ADD INDEX (status_update_id);";
+$sql_tm_newsfeed_view_count_daily[] = "ALTER TABLE `tm_newsfeed_view_count_daily` ADD INDEX (viewer_ip);";
+$sql_tm_newsfeed_view_count_daily[] = "ALTER TABLE `tm_newsfeed_view_count_daily` ADD INDEX (created);";
+
+  $tm_newsfeed_view_count_total = array();
+  $tm_newsfeed_view_count_total[] = <<<EOT
 CREATE TABLE IF NOT EXISTS `tm_newsfeed_view_count_total` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `status_update_id` int(11) NOT NULL,
   `total_view_count` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
-ALTER TABLE `tm_newsfeed_view_count_total` ADD INDEX (status_update_id);
 EOT;
 
+  $tm_newsfeed_view_count_total[] = "ALTER TABLE `tm_newsfeed_view_count_total` ADD INDEX (status_update_id);";
+
   try {
-    db_query($sql_tm_newsfeed_status_updates);
-    db_query($sql_tm_newsfeed_preview_links);
-    db_query($sql_tm_newsfeed_view_count_daily);
-    db_query($tm_newsfeed_view_count_total);
+
+    foreach ($sql_tm_newsfeed_status_updates as $query) {
+      db_query($query);
+    }
+
+    foreach($sql_tm_newsfeed_preview_links as $query) {
+      db_query($query);
+    }
+
+    foreach($sql_tm_newsfeed_view_count_daily as $query) {
+      db_query($query);
+    }
+
+    foreach($tm_newsfeed_view_count_total as $query) {
+      db_query($query);
+    }
+
     return true;
   } catch (Exception $e) {
     print "Error: ";
@@ -140,3 +165,12 @@ EOT;
 
 }
 
+// flagging table only indexes ids
+// so we need to add index on timestamp for fast queries
+function tm_status_updates_create_flagging_index() {
+
+  print "\nAdding index on flagging...";
+  $query = "alter TABLE `flagging` ADD INDEX `timestamp_idx` (timestamp);";
+  db_query($query);
+
+}

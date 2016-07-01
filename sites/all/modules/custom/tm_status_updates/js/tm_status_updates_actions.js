@@ -3,6 +3,8 @@
   // STATUS UPDATE ACTION METHODS
   // actions: edit, moderate, delete, featured
 
+  tm_status_updates_is_loading = false;
+
   // confirm with user to moderate status
   tm_user_status_edit_form = function(status_update_id) {
     
@@ -216,6 +218,13 @@
 
   // load more feed
   tm_status_updates_fetch_feed = function(reload) {
+
+    // check not already loading
+    if (tm_status_updates_is_loading) {
+      return;
+    }
+
+    tm_status_updates_is_loading = true;
 
     // check anonymous user
     if (!tm_search_check_anonymous_user()) {

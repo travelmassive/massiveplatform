@@ -19,18 +19,19 @@ function tm_status_updates_show_frontpage_updates($display_num_items = 5, $displ
 		}
 	}
 
-	$limit_from = 0;
-	$limit_to = 50;
 	$display_limit = 4;
 
 	// get sorted list of status update and flag results
-	$all_results = tm_status_updates_get_combined_feed_global($limit_from, $limit_to);
+	$all_results = tm_status_updates_poll_results("global", array(), null, 50);
+
+	// preload users before rending to improve performance
+	tm_status_updates_preload_entities($all_results["results"]);
 
 	// get ip
 	$viewer_ip = tm_geoip_get_real_visitor_ip();
 
 	// render item html from results
-	$results_html = tm_status_updates_render_results_items($all_results, $viewer_ip, true, true, false, $display_limit);
+	$results_html = tm_status_updates_render_results_items($all_results["results"], $viewer_ip, true, true, false, $display_limit);
 
 	// render newsfeed section
 	global $tm_status_updates_feed_template_frontpage_css;

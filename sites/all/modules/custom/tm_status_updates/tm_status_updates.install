@@ -2,6 +2,10 @@
 
 /* tm_status_updates.install.inc - create tables */
 
+// Notes:
+// 1. To update to utf8mb4:
+// alter table tm_newsfeed_status_updates CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 /**
  * Implements hook_install()
  */
@@ -19,6 +23,7 @@ function tm_status_updates_reinstall_database_tables() {
   // re-install database tables
   tm_status_updates_drop_tables();
   tm_status_updates_create_tables();
+  tm_status_updates_drop_flagging_index();
   tm_status_updates_create_flagging_index();
 
 }
@@ -84,8 +89,8 @@ CREATE TABLE IF NOT EXISTS `tm_newsfeed_status_updates` (
 EOT;
 
 $sql_tm_newsfeed_status_updates[] = "ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (entity_id);";
-$sql_tm_newsfeed_status_updates[] = "ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (entity_type);";
-$sql_tm_newsfeed_status_updates[] = "ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (status_update(512));";
+$sql_tm_newsfeed_status_updates[] = "ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (entity_type(16));";
+$sql_tm_newsfeed_status_updates[] = "ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (status_update(128));";
 $sql_tm_newsfeed_status_updates[] = "ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (created);";
 $sql_tm_newsfeed_status_updates[] = "ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (location_latitude);";
 $sql_tm_newsfeed_status_updates[] = "ALTER TABLE `tm_newsfeed_status_updates` ADD INDEX (reply_to_id);";
@@ -170,7 +175,17 @@ EOT;
 function tm_status_updates_create_flagging_index() {
 
   print "\nAdding index on flagging...";
-  $query = "alter TABLE `flagging` ADD INDEX `timestamp_idx` (timestamp);";
+  $query = "ALTER TABLE `flagging` ADD INDEX `timestamp_idx` (timestamp);";
   db_query($query);
 
 }
+
+// drop flagging index
+function tm_status_updates_drop_flagging_index() {
+
+  print "\nDropping index on flagging...";
+  $query = "DROP INDEX `timestamp_idx` ON `flagging`;";
+  db_query($query);
+
+}
+

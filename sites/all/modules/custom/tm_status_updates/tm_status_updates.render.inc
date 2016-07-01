@@ -870,7 +870,6 @@ EOT;
 global $tm_status_updates_loader_template;
 $tm_status_updates_loader_template = <<<EOT
 <script>
-console.log(tm_status_updates_loader_timestamp);
 tm_status_updates_loader_timestamp = __LOADER_TIMESTAMP__;</script>
 </script>
 <div class="item-list tm-status-updates-loader" style="margin-bottom: 32px;">

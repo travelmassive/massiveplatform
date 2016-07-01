@@ -406,7 +406,7 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 			if (isset($event->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
 				$event_chapter = node_load($event->field_chapter[LANGUAGE_NONE][0]['target_id']);
 				$details["location_text"] = $event_chapter->title;
-				$details["location_url"] = drupal_get_path_alias("node/" . $event_chapter->nid);
+				$details["location_url"] = "/" . drupal_get_path_alias("node/" . $event_chapter->nid);
 			}
 
 			$feed_title = l($flagging_user_name, $flagging_user_url) . " registered for " . l($event->title, $flagged_node_url);
@@ -426,7 +426,7 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 			if (isset($event->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
 				$event_chapter = node_load($event->field_chapter[LANGUAGE_NONE][0]['target_id']);
 				$details["location_text"] = $event_chapter->title;
-				$details["location_url"] = drupal_get_path_alias("node/" . $event_chapter->nid);
+				$details["location_url"] = "/" . drupal_get_path_alias("node/" . $event_chapter->nid);
 			}
 
 			$feed_title = l($flagging_user_name, $flagging_user_url) . " joined the waitlist for " . l($event->title, $flagged_node_url);

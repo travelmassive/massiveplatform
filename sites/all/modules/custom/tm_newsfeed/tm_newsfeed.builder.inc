@@ -76,15 +76,18 @@ select
 	else chapter_tz.field_chapter_timezone_value
 	end as 'timezone',
 
-	-- #dev#
-	-- event_type.field_event_type_value as 'event_type',
-	-- chapter.title 'chapter',
+	case
+	when event.uid = :user_id
+	then 1
+	else 0
+	end as 'event_created_by_me',
 
-	-- #dev#
-	-- event.uid as 'event_creator_id',
-	-- following_event_creator.entity_id as 'following_event_creator',
-	-- event_company.field_event_company_target_id as 'event_company_id',
-	-- following_event_company.entity_id as 'following_event_company',
+	case
+	when event.uid = :user_id
+	     and UNIX_TIMESTAMP(ed.field_event_date_value) < UNIX_TIMESTAMP() + 8*604800
+	then 1
+	else 0
+	end as 'event_created_by_me_and_is_in_near_future',
 
 	case
 	when event_type.field_event_type_value = 'member'
@@ -154,10 +157,12 @@ and UNIX_TIMESTAMP(ed.field_event_date_value) > :from_date
 and UNIX_TIMESTAMP() > (event.created + 3600)
 
 order by
-	event_belongs_to_a_member_that_i_follow desc,
-	event_belongs_to_a_company_that_i_follow desc,
+	event_created_by_me_and_is_in_near_future desc,
 	is_my_home_chapter desc,
 	have_joined_chapter desc,
+	event_belongs_to_a_member_that_i_follow desc,
+	event_belongs_to_a_company_that_i_follow desc,
+	event_created_by_me desc,
 	event_date asc
 
 SQL;

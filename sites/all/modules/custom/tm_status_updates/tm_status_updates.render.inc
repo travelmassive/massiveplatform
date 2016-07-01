@@ -521,7 +521,7 @@ function tm_status_updates_render_results_items($results, $count_viewer_ip, $hid
 
 		// hide repeating posts
 		$own_post = ($user->uid == $result->owner_uid);
-		$repeating_post = $result->owner_uid == $last_user_uid;
+		$repeating_post = ($result->owner_uid == $last_user_uid);
 		if ($repeating_post) {
 			if ($own_post and $hide_own_repeats) {
 				continue;

@@ -473,7 +473,8 @@ function tm_status_updates_get_combined_feed_newsfeed($account, $start_date = nu
 			entity_id AS flagged_entity_id,
 			entity_type AS flagged_entity_type
 			FROM flagging 
-			WHERE (((uid IN (SELECT entity_id FROM flagging WHERE uid = :uid AND fid IN (" . implode(",", $display_flags) . ")) OR (entity_id = :uid AND entity_type = 'user')) AND fid IN (" . implode(",", $display_flags) . ")) 
+			WHERE (uid = :uid)
+			OR (((uid IN (SELECT entity_id FROM flagging WHERE uid = :uid AND fid IN (" . implode(",", $display_flags) . ")) OR (entity_id = :uid AND entity_type = 'user')) AND fid IN (" . implode(",", $display_flags) . ")) 
 			OR (entity_id in (SELECT entity_id from flagging where uid = :uid AND fid IN (" . implode(",", $associated_entity_flags) . "))))
 			AND timestamp < UNIX_TIMESTAMP(CONVERT_TZ(:start_date, '+00:00', @@session.time_zone)) 
 			AND timestamp > UNIX_TIMESTAMP(CONVERT_TZ(:end_date, '+00:00', @@session.time_zone))

@@ -211,7 +211,7 @@
 			tm_user_status_update_show_feedback_preview("", true, false);
 
 			// reset page count and load feed
-			tm_status_updates_load_feed("newsfeed", true);
+			tm_status_updates_fetch_feed(true);
 
 		} else {
 

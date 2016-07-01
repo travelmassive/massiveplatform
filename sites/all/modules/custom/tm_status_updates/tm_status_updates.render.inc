@@ -497,10 +497,15 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 /**
  * Helper method to render results list
  */
-function tm_status_updates_render_results_items($results, $count_viewer_ip, $hide_repeat_posters = true, $hide_own_repeats = false, $show_you = true, $display_limit = 100) {
+function tm_status_updates_render_results_items($results, $count_viewer_ip, $hide_repeat_posters = true, $hide_own_repeats = false, $show_you = true, $display_limit = null) {
 
 	global $user;
 	global $conf;
+
+	// set display limit
+	if ($display_limit == null) {
+		$display_limit = $conf["tm_status_updates_items_per_load"];
+	}
 
 	// render results
 	$html_items = array();
@@ -778,14 +783,13 @@ function tm_status_updates_render_link_preview($preview_data) {
 /**
  * Render ajax loader
  */
-function tm_status_updates_render_loader($loader_feed_type, $loader_from, $loader_to) {
+function tm_status_updates_render_loader($timestamp) {
 
 	// ajax loader
 	global $tm_status_updates_loader_template;
 	$loader_html = "";
-	$loader_html = str_replace("__LOADER_FEED_TYPE__", $loader_feed_type, $tm_status_updates_loader_template);
-	$loader_html = str_replace("__LOADER_DISPLAY_FROM__", $loader_from, $loader_html);
-	$loader_html = str_replace("__LOADER_DISPLAY_TO__", $loader_to, $loader_html);
+	$loader_html = str_replace("__LOADER_TIMESTAMP__", $timestamp, $tm_status_updates_loader_template);
+
 	return $loader_html;
 }
 
@@ -865,10 +869,14 @@ EOT;
 
 global $tm_status_updates_loader_template;
 $tm_status_updates_loader_template = <<<EOT
+<script>
+console.log(tm_status_updates_loader_timestamp);
+tm_status_updates_loader_timestamp = __LOADER_TIMESTAMP__;</script>
+</script>
 <div class="item-list tm-status-updates-loader" style="margin-bottom: 32px;">
 	<ul class="pager pager-load-more">
 		<li>
-			<a class='tm-status-update-pager-link' href="javascript:void(0);" onClick="tm_status_updates_load_more('__LOADER_FEED_TYPE__');">Load more</a>
+			<a class='tm-status-update-pager-link' href="javascript:void(0);" onClick="tm_status_updates_fetch_more();">Load more</a>
 			<img class="tm-status-update-pager-loading-image" style="display:none; margin-left: 16px; " src='/sites/all/themes/tm/images/load-more-ajax-loader.gif'>
 		</li>
 	</ul>

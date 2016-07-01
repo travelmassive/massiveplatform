@@ -267,63 +267,127 @@ function tm_status_updates_edit_update($status_update) {
 			  ':status_update_id' => $status_update->id));
 		return true;
 	} catch (Exception $e) {
-		print_r($e);
 		return false;
 	}
 	
 }
 
 /**
- * Return a sorted list of flag and status updates for a user account
+ * Poll
  */
-function tm_status_updates_get_combined_feed_user($account, $limit_from = 0, $limit_to = 10) {
+function tm_status_updates_poll_results($feed_type = "global", $options = array(), $timestamp = null, $fetch_next = 25) {
 
-	// Get list of entities which can be followed (flagged) that can post status updates
-	$follow_flags = array();
-	$follow_flags[] = flag_get_flag('follow_members')->fid;
-	$follow_flags[] = flag_get_flag('follow_organizations')->fid;
-	$follow_flags[] = flag_get_flag('signup')->fid; // chapter
-	$follow_flags[] = flag_get_flag('event_register')->fid;
+	global $conf;
 
-	// Get your status updates or those of people you are following
-	$query1 = "SELECT UNIX_TIMESTAMP(`created`) AS `timestamp`,
-				'status_update' as result_type,
-				id as status_update_id,
-				'' flagging_id,
-				poster_uid as 'owner_uid'
-				FROM tm_newsfeed_status_updates WHERE (entity_id IN (SELECT entity_id FROM flagging WHERE uid = :uid AND fid IN (" . implode(",", $follow_flags) . ")) OR entity_id = :uid) AND is_removed = 0 AND moderator_hide = 0";
+	// settings
+	$MAX_FETCHES = 30; // how many fetches to try before we return results
+	$POLL_INTERVAL = "P1D"; // poll interval 1 day intervals
 
-	// Get list of flags which can be rendered
-	$display_flags = $follow_flags;
-	$display_flags[] = flag_get_flag('approval_approved_by')->fid;
-	$display_flags[] = flag_get_flag('event_waitlist')->fid;
-	$display_flags[] = flag_get_flag('tm_sponsor')->fid;
+	// if null use UTC
+	$datetime_start = new Datetime("now + 10 second", new DateTimeZone("UTC"));
+	$datetime_end = new Datetime("now", new DateTimeZone("UTC"));
 
-	$query2 = "SELECT timestamp,
-			'flagged_item' as result_type,
-			'' status_update_id,
-			flagging_id,
-			uid as 'owner_uid'
-			FROM flagging WHERE (entity_id IN (SELECT entity_id FROM flagging WHERE uid = :uid AND fid IN (" . implode(",", $display_flags) . ")) OR entity_id = :uid) AND fid IN (" . implode(",", $display_flags) . ")";
+	// get timestamp
+	if ($timestamp != null) {
+		$datetime_start = $datetime_start->setTimestamp(intval($timestamp));
+		$datetime_end = $datetime_end->setTimestamp(intval($timestamp));
+	}
 
-	$joined = $query1 . " UNION ALL " . $query2 . " ORDER BY timestamp DESC LIMIT " . intval($limit_from) . ", " . abs(intval($limit_from) - intval($limit_to));
+	// set end date to poll interval (ie: 1 day)
+	$datetime_end->sub(new DateInterval($POLL_INTERVAL));
 
-	$all_results = db_query($joined, array(':uid' => $account->uid))->fetchAll();
-	return $all_results;
+	// calculate date limit
+	$limit_results_days = $conf["tm_status_updates_limit_results_days"];
+	$limit_datetime = new DateTime("now", new DateTimeZone("UTC"));
+	$limit_datetime->sub(new DateInterval('P' . intval($limit_results_days) . 'D'));
+
+	$i = 0;
+	$results = array();
+	$last_timestamp = null;
+	while ((sizeof($results) < $fetch_next) and ($i++ < $MAX_FETCHES)) {
+
+		// check limits
+		if ($datetime_start < $limit_datetime) {
+			$i = $MAX_FETCHES;
+			continue;
+		}
+		if ($datetime_end < $limit_datetime) {
+			$datetime_end = clone $limit_datetime;
+		}
+
+		// format time
+		$start_date = $datetime_start->format('Y-m-d H:i:s');
+		$end_date = $datetime_end->format('Y-m-d H:i:s');
+
+		// global feed
+		if ($feed_type == "global") {
+			$fetch_results = tm_status_updates_get_combined_feed_global($start_date, $end_date, $fetch_next);
+		}
+
+		// news feed
+		if ($feed_type == "newsfeed") {
+			$fetch_results = tm_status_updates_get_combined_feed_newsfeed($options["account"], $start_date, $end_date, $fetch_next);
+		}
+
+		// tag feed
+		if ($feed_type == "tags") {
+			$fetch_results = tm_status_updates_get_matching_search_terms($options["tags"], $start_date, $end_date, $fetch_next);
+		}
+
+		// search feed
+		if ($feed_type == "search") {
+			$fetch_results = tm_status_updates_get_matching_search_terms($options["search_terms"], $start_date, $end_date, $fetch_next);
+		}
+
+		// search feed
+		if ($feed_type == "near") {
+			$fetch_results = tm_status_updates_get_near_location($options["latitude"], $options["longitude"], $options["range"], $start_date, $end_date, $fetch_next);
+		}
+
+		// merge results
+		$results = array_merge($results, $fetch_results);
+		
+		// increment one day
+		$datetime_start->sub(new DateInterval($POLL_INTERVAL));
+		$datetime_end->sub(new DateInterval($POLL_INTERVAL));
+
+	}
+
+	// size results
+	$results = array_slice($results, 0, $fetch_next);
+
+	if (sizeof($results) == 0) {
+		return array("results" => $results, "first_timestamp" => null, "last_timestamp" => null);
+	}
+
+	// get first timestamp
+	$first_timestamp = $results[0]->timestamp;
+	$last_timestamp = $results[sizeof($results) - 1]->timestamp;
+
+	// return results and timestamp pointer for next fetch
+	return array("results" => $results, "first_timestamp" => $first_timestamp, "last_timestamp" => $last_timestamp);
 }
 
 /**
  * Return a sorted list of flag and status updates for all accounts
  */
-function tm_status_updates_get_combined_feed_global($limit_from = 0, $limit_to = 10) {
+function tm_status_updates_get_combined_feed_global($start_date = null, $end_date = null, $limit = 100) {
 
 	// Status updates
 	$query1 = "SELECT UNIX_TIMESTAMP(`created`) AS `timestamp`,
 				'status_update' as result_type,
 				id as status_update_id,
 				'' flagging_id,
-				poster_uid as 'owner_uid'
-				FROM tm_newsfeed_status_updates WHERE is_removed = 0 AND moderator_hide = 0";
+				poster_uid as 'owner_uid',
+				entity_id as status_update_entity_id, 
+				entity_type as status_update_entity_type, 
+				'' as flagged_entity_id, 
+				'' as flagged_entity_type
+				FROM tm_newsfeed_status_updates 
+				WHERE is_removed = 0 AND moderator_hide = 0
+				AND created < CONVERT_TZ(:start_date, '+00:00', @@session.time_zone)
+				AND created > CONVERT_TZ(:end_date, '+00:00', @@session.time_zone)
+				ORDER BY timestamp DESC";
 
 	// Get list of flags that can be displayed
 	$display_flags = array();
@@ -339,12 +403,85 @@ function tm_status_updates_get_combined_feed_global($limit_from = 0, $limit_to =
 			'flagged_item' as result_type,
 			'' status_update_id,
 			flagging_id,
-			uid as 'owner_uid'
-			FROM flagging WHERE fid IN (" . implode(",", $display_flags) . ")";
+			uid as 'owner_uid',
+			'' as status_update_entity_id, 
+			'' as status_update_entity_type, 
+			entity_id as flagged_entity_id, 
+			entity_type as flagged_entity_type
+			FROM flagging 
+			WHERE fid IN (" . implode(",", $display_flags) . ") 
+			AND timestamp < UNIX_TIMESTAMP(CONVERT_TZ(:start_date, '+00:00', @@session.time_zone)) 
+			AND timestamp > UNIX_TIMESTAMP(CONVERT_TZ(:end_date, '+00:00', @@session.time_zone))
+			ORDER BY timestamp DESC";
 
-	$joined = $query1 . " UNION ALL " . $query2 . " ORDER BY timestamp DESC LIMIT " . intval($limit_from) . ", " . abs(intval($limit_from) - intval($limit_to));
+	$joined = "(" . $query1 . ") UNION ALL (" . $query2 . ") ORDER BY timestamp DESC LIMIT " . intval($limit);
+	$all_results = db_query($joined, array(':start_date' => $start_date, ':end_date' => $end_date))->fetchAll();
 
-	$all_results = db_query($joined)->fetchAll();
+	// return empty array if no results
+	if ($all_results == null) {
+		return array();
+	}
+
+	// return results
+	return $all_results;
+}
+
+/**
+ * Return a sorted list of flag and status updates for a user account
+ */
+function tm_status_updates_get_combined_feed_newsfeed($account, $start_date = null, $end_date = null, $limit = 100) {
+
+	// Get list of entities which can be followed (flagged) that can post status updates
+	$follow_flags = array();
+	$follow_flags[] = flag_get_flag('follow_members')->fid; // members
+	$follow_flags[] = flag_get_flag('follow_organizations')->fid; // organizations
+	$follow_flags[] = flag_get_flag('signup')->fid; // chapter
+	$follow_flags[] = flag_get_flag('event_register')->fid; // events
+
+	// Get your status updates or those of people you are following
+	$query1 = "SELECT UNIX_TIMESTAMP(`created`) AS `timestamp`,
+				'status_update' AS result_type,
+				id AS status_update_id,
+				'' flagging_id,
+				poster_uid AS 'owner_uid',
+				entity_id AS status_update_entity_id,
+				entity_type AS status_update_entity_type,
+				'' AS flagged_entity_id,
+				'' AS flagged_entity_type
+				FROM tm_newsfeed_status_updates 
+				WHERE ((entity_id IN (SELECT entity_id FROM flagging WHERE uid = :uid AND fid IN (" . implode(",", $follow_flags) . ")) OR entity_id = :uid) AND is_removed = 0 AND moderator_hide = 0) 
+				AND created < CONVERT_TZ(:start_date, '+00:00', @@session.time_zone)
+				AND created > CONVERT_TZ(:end_date, '+00:00', @@session.time_zone)
+				ORDER BY timestamp DESC";
+
+	// Show actions by people you are following (following, signup, event registration or waitlist)
+	$display_flags = $follow_flags;
+	$display_flags[] = flag_get_flag('event_waitlist')->fid;
+
+	// Show people joining your chapter or registering to same event as you
+	$associated_entity_flags = array();
+	$associated_entity_flags[] = flag_get_flag('signup')->fid; // chapter
+	$associated_entity_flags[] = flag_get_flag('event_register')->fid;
+
+	$query2 = "SELECT timestamp,
+			'flagged_item' as result_type,
+			'' status_update_id,
+			flagging_id,
+			uid AS 'owner_uid',
+			'' AS status_update_entity_id,
+			'' AS status_update_entity_type,
+			entity_id AS flagged_entity_id,
+			entity_type AS flagged_entity_type
+			FROM flagging 
+			WHERE (((uid IN (SELECT entity_id FROM flagging WHERE uid = :uid AND fid IN (" . implode(",", $display_flags) . ")) OR (entity_id = :uid AND entity_type = 'user')) AND fid IN (" . implode(",", $display_flags) . ")) 
+			OR (entity_id in (SELECT entity_id from flagging where uid = :uid AND fid IN (" . implode(",", $associated_entity_flags) . "))))
+			AND timestamp < UNIX_TIMESTAMP(CONVERT_TZ(:start_date, '+00:00', @@session.time_zone)) 
+			AND timestamp > UNIX_TIMESTAMP(CONVERT_TZ(:end_date, '+00:00', @@session.time_zone))
+			ORDER BY timestamp DESC";
+
+	$joined = "(" . $query1 . ") UNION ALL (" . $query2 . ") ORDER BY timestamp DESC LIMIT " . intval($limit);
+
+	$all_results = db_query($joined, array(':uid' => $account->uid, ':start_date' => $start_date, ':end_date' => $end_date))->fetchAll();
 	return $all_results;
 }
 
@@ -352,7 +489,7 @@ function tm_status_updates_get_combined_feed_global($limit_from = 0, $limit_to =
  * Return a sorted status updates that match a tag
  * $tags should be array prefixed with #. ie: array('#awesome', '#tag') or array('word');
  */
-function tm_status_updates_get_matching_search_terms($search_terms, $limit_from = 0, $limit_to = 100, $days_old = 30) {
+function tm_status_updates_get_matching_search_terms($search_terms, $start_date = null, $end_date = null, $limit = 100) {
 	
 	// check we have search terms
 	if (sizeof($search_terms) == 0) {
@@ -360,15 +497,21 @@ function tm_status_updates_get_matching_search_terms($search_terms, $limit_from 
 	}
 
 	// get recent status update items
-	$query = "SELECT UNIX_TIMESTAMP(`created`) AS `timestamp`, 'status_update' AS result_type, id AS status_update_id, poster_uid AS owner_uid FROM tm_newsfeed_status_updates WHERE created >= DATE_SUB(NOW(), INTERVAL " . intval($days_old) . " DAY) AND is_removed = 0 AND moderator_hide = 0 ";
+	$query = "SELECT UNIX_TIMESTAMP(`created`) AS `timestamp`, 'status_update' AS result_type, id AS status_update_id, poster_uid AS owner_uid,
+		entity_id AS status_update_entity_id,
+		entity_type AS status_update_entity_type
+		FROM tm_newsfeed_status_updates 
+		WHERE is_removed = 0 AND moderator_hide = 0
+		AND created < CONVERT_TZ(:start_date, '+00:00', @@session.time_zone)
+		AND created > CONVERT_TZ(:end_date, '+00:00', @@session.time_zone) ";
 
-	$query_options = array();
+	$query_options = array(":start_date" => $start_date, ":end_date" => $end_date);
 	for ($i = 0; $i < sizeof($search_terms); $i++) {
 		$query .= " AND status_update LIKE :search_term" . $i;
 		$query_options[':search_term' . $i] = '%' . $search_terms[$i] . '%';
 	}
 
-	$query .= " ORDER BY created DESC LIMIT " . intval($limit_from) . ", " . abs(intval($limit_from) - intval($limit_to));
+	$query .= " ORDER BY created DESC LIMIT " . intval($limit);
 	$status_updates = db_query($query, $query_options)->fetchAll();
 
 	return $status_updates;
@@ -377,7 +520,7 @@ function tm_status_updates_get_matching_search_terms($search_terms, $limit_from 
 /**
  * Search for updates near a geographic location, sorted by how close to the distance
  */
-function tm_status_updates_get_near_location($latitude, $longitude, $range, $limit_from, $limit_to, $days_old = 30) {
+function tm_status_updates_get_near_location($latitude, $longitude, $range, $start_date, $end_date, $limit = 100) {
 
 
 	// reference
@@ -385,16 +528,20 @@ function tm_status_updates_get_near_location($latitude, $longitude, $range, $lim
 	// converted to km
 
 	// search for status updates near location
-	$query = "SELECT *, 'status_update' AS result_type, id AS status_update_id, poster_uid AS owner_uid, ";
+	$query = "SELECT *, 'status_update' AS result_type, id AS status_update_id, poster_uid AS owner_uid, entity_id as status_update_entity_id, 
+				entity_type as status_update_entity_type, ";
+
 	$query .= "SQRT(
 		    POW(111.2 * (location_latitude - " . floatval($latitude) . "), 2) +
 		    POW(111.2 * (" . floatval($longitude) . " - location_longitude) * COS(location_latitude / 57.3), 2)) AS distance";
 
-	$query .= " FROM tm_newsfeed_status_updates WHERE location_latitude IS NOT null AND location_longitude IS NOT NULL AND created >= DATE_SUB(NOW(), INTERVAL " . intval($days_old) . " DAY) AND is_removed = 0 AND moderator_hide = 0";
+	$query .= " FROM tm_newsfeed_status_updates WHERE location_latitude IS NOT null AND location_longitude IS NOT NULL AND is_removed = 0 AND moderator_hide = 0
+	AND created < CONVERT_TZ(:start_date, '+00:00', @@session.time_zone)
+	AND created > CONVERT_TZ(:end_date, '+00:00', @@session.time_zone) ";
 	
-	$query = "SELECT *, UNIX_TIMESTAMP(`created`) AS `timestamp` FROM (" . $query . ") AS distance_results WHERE distance < " . floatval($range) . " ORDER BY created DESC LIMIT " . intval($limit_from) . ", " . abs(intval($limit_from) - intval($limit_to));
+	$query = "SELECT *, UNIX_TIMESTAMP(`created`) AS `timestamp` FROM (" . $query . ") AS distance_results WHERE distance < " . floatval($range) . " ORDER BY created DESC LIMIT " . intval($limit);
 
-	$status_updates = db_query($query)->fetchAll();
+	$status_updates = db_query($query, array(":start_date" => $start_date, ":end_date" => $end_date))->fetchAll();
 	return $status_updates;
 }
 

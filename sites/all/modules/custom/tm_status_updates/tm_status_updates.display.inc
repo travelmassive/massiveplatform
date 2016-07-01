@@ -10,12 +10,10 @@ function tm_status_updates_display_feed($feed_type) {
 	global $user;
 	global $conf;
 
-	$display_from = 0;
-	$display_to = $conf["tm_status_updates_items_per_load"];
-	$limit_results = $conf["tm_status_updates_limit_results"];
+	$fetch_next = $conf["tm_status_updates_items_per_load"];
 
 	// start performance timer
-	$time_start = microtime(true); 
+	$timer_start = microtime(true); 
 
 	// load user
 	$account = user_load($user->uid);
@@ -47,14 +45,14 @@ function tm_status_updates_display_feed($feed_type) {
 			$tm_status_update_form = tm_status_updates_render_update_form($account);
 		}
 
-		$all_results = tm_status_updates_get_combined_feed_global($display_from, $display_to);
+		$all_results = tm_status_updates_poll_results("global", array(), null, $fetch_next);
 	}
 
 	// newsfeed
 	if ($feed_type == "newsfeed") {
 
 		$feed_title = "Your feed &middot; <a style='font-size: smaller; text-decoration: none;color: #007DB7;' href='/newsfeed/global'>All members</a>";
-		$all_results = tm_status_updates_get_combined_feed_user($account, $display_from, $display_to);
+		$all_results = tm_status_updates_poll_results("newsfeed", array("account" => $account), null, $fetch_next);
 		$tm_status_update_form = tm_status_updates_render_update_form($account);
 
 		// If no results for your feed, switch to global feed
@@ -70,7 +68,7 @@ function tm_status_updates_display_feed($feed_type) {
 	if ($feed_type == "tags") {
 		$feed_title = "Tagged updates";
 		$tags = tm_status_updates_get_search_tags();
-		$all_results = tm_status_updates_get_matching_search_terms($tags, $display_from, $display_to);
+		$all_results = tm_status_updates_poll_results("tags", array("tags" => $tags), null, $fetch_next);
 		$tm_status_update_form = "<h2 style='margin-bottom: 8px;'>Updates recently tagged " . implode(" and ", $tags) . "</h2><a href='/newsfeed'>&larr; Return to news feed</a>";
 		drupal_add_js("var tm_update_status_loader_meta = ". json_encode(array("tags" => $tags)) . ";", "inline");
 	}
@@ -79,7 +77,7 @@ function tm_status_updates_display_feed($feed_type) {
 	if ($feed_type == "search") {
 		$feed_title = "Search updates";
 		$search_terms = tm_status_updates_get_search_terms();
-		$all_results = tm_status_updates_get_matching_search_terms($search_terms, $display_from, $display_to);
+		$all_results = tm_status_updates_poll_results("search", array("search_terms" => $search_terms), null, $fetch_next);
 		$tm_status_update_form = "<h2 style='margin-bottom: 8px;'>Updates matching '" . implode(" and ", $search_terms) . "'</h2><a href='/newsfeed'>&larr; Return to news feed</a>";
 		drupal_add_js("var tm_update_status_loader_meta = ". json_encode(array("search_terms" => $search_terms)) . ";", "inline");
 	}
@@ -88,30 +86,33 @@ function tm_status_updates_display_feed($feed_type) {
 	if ($feed_type == "near") {
 		$feed_title = "Nearby updates";
 		$location = tm_status_updates_get_location();
-		$all_results = tm_status_updates_get_near_location($location["latitude"], $location["longitude"], $location["range"], $display_from, $display_to);
+		$all_results = tm_status_updates_poll_results("near", array("latitude" => $location["latitude"], "longitude" => $location["longitude"], "range" => $location["range"]), null, $fetch_next);
 		$tm_status_update_form = "<h2 style='margin-bottom: 8px;'>Nearby updates</h2><span style='background-color: #fff; font-size: 14px; border-radius: 4px; padding: 4px;'> latitude:" . $location["latitude"] . ", longitude:" . $location["longitude"] . ", range: " . $location["range"] . "km</span><br><a href='/newsfeed'>&larr; Return to news feed</a>";
 		drupal_add_js("var tm_update_status_loader_meta = ". json_encode(array("location" => $location)) . ";", "inline");
 	}
 
 	// // load js libraries
 	if ($user->uid == 0) {
-		tm_status_updates_display_include_js(true, false, false);
+		tm_status_updates_display_include_js(true, $feed_type, false, false);
 	} else {
-		tm_status_updates_display_include_js(true, true, true);
+		tm_status_updates_display_include_js(true, $feed_type, true, true);
 	}
 
 	// get viewer ip
 	$viewer_ip = tm_geoip_get_real_visitor_ip();
 
+	// preload users before rending to improve performance
+	tm_status_updates_preload_entities($all_results["results"]);
+
 	// render item html from results
-	$results_html = tm_status_updates_render_results_items($all_results, $viewer_ip);
+	$results_html = tm_status_updates_render_results_items($all_results["results"], $viewer_ip);
 
 	// render newsfeed section
 	$newsfeed_html = tm_status_updates_render_results_feed($results_html, $feed_title, "newsfeed");
 
 	// show loader
-	if (sizeof($all_results) == $display_to) {
-		$loader_html = tm_status_updates_render_loader($feed_type, $display_from, $display_to);
+	if (sizeof($all_results["results"]) >= $fetch_next) {
+		$loader_html = tm_status_updates_render_loader($all_results["last_timestamp"]);
 		$newsfeed_html .= $loader_html;
 	}
  
@@ -123,7 +124,7 @@ function tm_status_updates_display_feed($feed_type) {
 
 	// show help text if now enough results
 	$help_message = "";
-	if (sizeof($all_results) < $display_to) {
+	if (sizeof($all_results["results"]) < $fetch_next) {
 		$loader_html = "";
 		$help_message = "Build your personal news feed by following members and companies you're interested in. Or find out what's happening on the <a href='/newsfeed/global'>global news feed</a>.";
 		//drupal_set_message($help_message, "help-tip");
@@ -154,8 +155,8 @@ function tm_status_updates_display_feed($feed_type) {
 	$html = str_replace("__CUSTOM_MESSAGE__", $message_html, $html);
 
 	// include performance timing
-	$execution_time = round((microtime(true) - $time_start), 3);
-	$html .= "<div class='tm-status-updates-timer' style='display: none;'>" . $execution_time . "</div>";
+	$performance_time = round((microtime(true) - $timer_start), 3);
+	$html .= "\n<div class='tm-status-updates-timer' style='display: none;'>" . $performance_time . "</div>";
 	return $html;
 }
 
@@ -213,17 +214,37 @@ function tm_status_updates_display_ajax() {
 	global $conf;
 	global $user;
 
-	$items_per_load = $conf["tm_status_updates_items_per_load"];
-	$limit_results = $conf["tm_status_updates_limit_results"];
-
-	$limit_from = 0;
-	if (isset($_GET["limit_from"])) {
-		$limit_from = intval($_GET["limit_from"]);
+	// only allow status updates for signed in users
+	if (!user_is_logged_in()) {
+		echo "";
+		return;
 	}
 
-	$limit_to = $items_per_load;
-	if (isset($_GET["limit_to"])) {
-		$limit_to = intval($_GET["limit_to"]);
+	$fetch_next = $conf["tm_status_updates_items_per_load"];
+	$limit_results_days = $conf["tm_status_updates_limit_results_days"];
+
+	// limit results to time stamp
+	$limit_datetime = new DateTime("now", new DateTimeZone("UTC"));
+	$limit_datetime->sub(new DateInterval('P' . intval($limit_results_days) . 'D'));
+	$limit_timestamp = $limit_datetime->getTimestamp();
+
+	// default timestamp 
+	$timestamp = null;
+
+	// get timestamp
+	if (isset($_GET["timestamp"])) {
+
+		// get timestamp if not null
+		if ($_GET["timestamp"] != "") {
+			$timestamp = intval($_GET["timestamp"]);
+		}
+	}
+
+	// limit timestamp
+	$hide_loader = false;
+	if (($timestamp != null) and ($limit_timestamp > $timestamp)) {
+		$timestamp = $limit_timestamp;
+		$hide_loader = true;
 	}
 
 	$feed_type = "newsfeed";
@@ -242,27 +263,15 @@ function tm_status_updates_display_ajax() {
 		$meta = $_GET["meta"];
 	}
 
-	// limit results
-	$hide_pager = false;
-	if ($limit_from > $limit_results) {
-		$limit_from = $limit_results;
-		$hide_pager = true;
-	}
-
-	if ($limit_to > $limit_results) { 
-		$limit_to = $limit_results;
-		$hide_pager = true;
-	}
-
 	// start performance timer
-	$time_start = microtime(true); 
+	$timer_start = microtime(true); 
 
 	// get sorted list of status update and flag results
 	if ($feed_type == "global") {
-		$all_results = tm_status_updates_get_combined_feed_global($limit_from, $limit_to);
+		$all_results = tm_status_updates_poll_results("global", array(), $timestamp, $fetch_next);
 	}
 	if ($feed_type == "newsfeed") {
-		$all_results = tm_status_updates_get_combined_feed_user($user, $limit_from, $limit_to);
+		$all_results = tm_status_updates_poll_results("newsfeed", array("account" => $user), $timestamp, $fetch_next);
 	}
 	if ($feed_type == "tags") {
 		// get the tag search
@@ -271,7 +280,7 @@ function tm_status_updates_display_ajax() {
 			return;
 		}
 		$tags = $meta->tags;
-		$all_results = tm_status_updates_get_matching_search_terms($tags, $limit_from, $limit_to);
+		$all_results = tm_status_updates_poll_results("tags", array("tags" => $tags), $timestamp, $fetch_next);
 	}
 	if ($feed_type == "search") {
 		// get the search_terms
@@ -280,7 +289,7 @@ function tm_status_updates_display_ajax() {
 			return;
 		}
 		$search_terms = $meta->search_terms;
-		$all_results = tm_status_updates_get_matching_search_terms($search_terms, $limit_from, $limit_to);
+		$all_results = tm_status_updates_poll_results("search", array("search_terms" => $search_terms), $timestamp, $fetch_next);
 	}
 	if ($feed_type == "near") {
 		// get the location
@@ -289,28 +298,42 @@ function tm_status_updates_display_ajax() {
 			return;
 		}
 		$location = $meta->location;
-		$all_results = tm_status_updates_get_near_location($location["latitude"], $location["longitude"], $location["range"], $limit_from, $limit_to);
+		$all_results = tm_status_updates_poll_results("near", array("latitude" => $location->latitude, "longitude" => $location->longitude, "range" => $location->range), $timestamp, $fetch_next);
 	}
 
 	// get viewer ip
 	$viewer_ip = tm_geoip_get_real_visitor_ip();
 
+	// preload users before rending to improve performance
+	tm_status_updates_preload_entities($all_results["results"]);
+
 	// render item html from results
-	$results_html = tm_status_updates_render_results_items($all_results, $viewer_ip);
+	$results_html = tm_status_updates_render_results_items($all_results["results"], $viewer_ip);
 
 	// include performance timing
-	$execution_time = round((microtime(true) - $time_start), 3);
-	$results_html .= "<div class='tm-status-updates-timer' style='display: none;'>" . $execution_time . "</div>";
+	$performance_time = round((microtime(true) - $timer_start), 3);
+	$results_html .= "\n<div class='tm-status-updates-timer' style='display: none;'>" . $performance_time . "</div>";
 
 	// hide pager if more than display results or if no result
 	if (sizeof($all_results) == 0) {
 		$hide_pager = true;
 	}
-	if ($hide_pager) {
-		$results_html .= "<script>tm_status_update_remove_loader();</script>";
+
+	// hide pager if:
+	// - last_timestamp is at limit
+	// - less results returned than fetch_next
+	if (($limit_timestamp == $all_results["last_timestamp"]) 
+		or (sizeof($all_results["results"]) < $fetch_next)) {
+		$hide_loader = true;
 	}
 
-	echo $results_html . $loader_html;
+	if ($hide_loader) {
+		$results_js = "\n<script>tm_status_update_remove_loader();</script>\n";
+	} else {
+		$results_js = "\n<script>tm_status_updates_loader_timestamp = " . $all_results["last_timestamp"] . ";</script>\n";
+	}
+
+	echo $results_html . $results_js;
 	return;
 }
 
@@ -410,14 +433,17 @@ function tm_status_updates_get_location() {
 /**
  * Helper method to load js libraries
  */
-function tm_status_updates_display_include_js($actions = true, $post = false, $google_maps = false) {
+function tm_status_updates_display_include_js($actions = true, $feed_type = "global", $post = false, $google_maps = false) {
 
 	global $user;
 	global $conf;
 
 	// js vars
-	drupal_add_js("var tm_update_status_uid = " . $user->uid . ";", "inline");
-	drupal_add_js("var tm_update_status_items_per_load = " . $conf["tm_status_updates_items_per_load"] . ";", "inline");
+	$js_vars = "";
+	$js_vars .= "\nvar tm_update_status_uid = " . $user->uid . ";";
+	$js_vars .= "\nvar tm_status_updates_loader_feed_type = '" . $feed_type . "';";
+	$js_vars .= "\nvar tm_status_updates_loader_timestamp = null;";
+	drupal_add_js($js_vars, "inline");
 
 	// actions js
 	if ($actions) {
@@ -485,4 +511,43 @@ function tm_status_updates_unapproved_member_message() {
 	}
 }
 
+/**
+ * Helper method to preload user and nodes that will be displayed for faster performance
+ */
+function tm_status_updates_preload_entities($results) {
+
+	$uids = array();
+	$nids = array();
+	foreach ($results as $result) {
+		
+		// add person who flagged or posted
+		$uids[] = $result->owner_uid;
+
+		// status update
+		if ($result->result_type == "status_update") {
+			if ($result->status_update_entity_type != "user") {
+				$nids[] = $result->status_update_entity_id; // add entity id of posting as
+			}
+		}
+
+		// flagged item
+		if ($result->result_type == "flagged_item") {
+			if ($result->flagged_entity_type != "user") { 
+				$nids[] = $result->flagged_entity_id; // node that was flagged
+			}
+		}
+	}
+
+	// unique
+	$uids = array_unique($uids);
+	$nids = array_unique($nids);
+
+	// preload users
+	$loaded_uids = user_load_multiple($uids);
+
+	// preload nodes
+	$loaded_nids = node_load_multiple($nids);
+
+	return true;
+}
 

@@ -3,8 +3,6 @@
   // STATUS UPDATE ACTION METHODS
   // actions: edit, moderate, delete, featured
 
-  var tm_status_updates_loader_page = 1;
-
   // confirm with user to moderate status
   tm_user_status_edit_form = function(status_update_id) {
     
@@ -212,12 +210,12 @@
   }
 
   // ajax loader
-  tm_status_updates_load_more = function(feed_type) {
-    tm_status_updates_load_feed(feed_type, false);
+  tm_status_updates_fetch_more = function() {
+    tm_status_updates_fetch_feed(false);
   }
 
   // load more feed
-  tm_status_updates_load_feed = function(feed_type, reload) {
+  tm_status_updates_fetch_feed = function(reload) {
 
     // check anonymous user
     if (!tm_search_check_anonymous_user()) {
@@ -231,12 +229,8 @@
 
     // reloading
     if (reload) {
-      tm_status_updates_loader_page = 0;
+      tm_status_updates_loader_timestamp = null;
     }
-
-    var limit_from = tm_status_updates_loader_page * tm_update_status_items_per_load; 
-    var limit_to = limit_from + tm_update_status_items_per_load;
-    tm_status_updates_loader_page = tm_status_updates_loader_page + 1;
 
     // track search tags
     var loader_meta = null;
@@ -249,9 +243,8 @@
       type: 'GET',
       url: '/newsfeed/load',
       data: {
-        'feed_type': feed_type,
-        'limit_from': limit_from,
-        'limit_to': limit_to,
+        'feed_type': tm_status_updates_loader_feed_type,
+        'timestamp': tm_status_updates_loader_timestamp,
         'meta': JSON.stringify(loader_meta)
       },
       success: function(data) {

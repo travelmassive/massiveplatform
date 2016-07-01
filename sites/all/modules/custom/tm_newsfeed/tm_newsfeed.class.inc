@@ -262,7 +262,7 @@ class TmNewsfeedEmail
 
 		// ensure event start date is future
 		$events_start_date = $start_date;
-		$datetime_now = new DateTime(null, new DateTimeZone('UTC'));
+		$datetime_now = new DateTime("now", new DateTimeZone('UTC'));
 		$datetime_start_date = new DateTime($start_date, new DateTimeZone('UTC'));
 		if ($datetime_start_date < $datetime_now) {
 			$events_start_date = $datetime_now->format('Y-m-d H:i:s');
@@ -636,7 +636,7 @@ function tm_newfeed_absolute_url($path) {
  * Helper method to get time since
  */
 function tm_newsfeed_time_elapsed_string($datetime, $full = false) {
-	$now = new DateTime(null, new DateTimeZone('UTC'));
+	$now = new DateTime("now", new DateTimeZone('UTC'));
 	$ago = new DateTime($datetime, new DateTimeZone('UTC'));
 	$diff = $now->diff($ago);
 

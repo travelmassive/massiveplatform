@@ -327,7 +327,7 @@ class TmNewsfeedEmail
 			}
 
 			$time = tm_newsfeed_time_elapsed_string($result->created);
-			$text = " posted an update <i>$time</i>";
+			$text = " posted an update __ITALIC_START__$time__ITALIC_END__";
 
 			// save link text of first update item, for use email subject line
 			if ($index == 0) {
@@ -523,7 +523,12 @@ class TmNewsfeedEmail
 			$row = str_replace("__EMAIL_ITEM_LINK__", $item['href'], $row);
 			$row = str_replace("__EMAIL_ITEM_UTM_CAMPAIGN__", tm_newsfeed_utm_campaign(), $row);
 			$row = str_replace("__EMAIL_ITEM_LINK_TEXT__", strip_tags($item['link']), $row);
-			$row = str_replace("__EMAIL_ITEM_EXTRA_TEXT__", strip_tags($item['text']), $row);
+
+			$item_text = strip_tags($item['text']);
+			$item_text = str_replace("__ITALIC_START__", "<i>", $item_text);
+			$item_text = str_replace("__ITALIC_END__", "</i>", $item_text);
+
+			$row = str_replace("__EMAIL_ITEM_EXTRA_TEXT__", $item_text, $row);
 			$section_contents = $section_contents . $row;
 		}
 

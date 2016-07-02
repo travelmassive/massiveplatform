@@ -10,7 +10,7 @@ You MUST run these commands first before pulling the commit.
 Step 1. Cleanup old modules:
 
 drush pm-disable admin_menu backup_migrate migrate migrate_extras tm_sample_content masquerade
-drush pm-uninstall admin_menu backup_migrate migrate migrate_extras tm_sample_content masquerade;
+drush pm-uninstall admin_menu backup_migrate migrate migrate_extras tm_sample_content masquerade openlayers;
 
 Step 2. Clean up old modules SQL:
 

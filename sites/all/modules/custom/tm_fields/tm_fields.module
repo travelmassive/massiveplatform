@@ -808,7 +808,7 @@ function _tm_more_actions_process($field, $title = NULL) {
     if ((in_array("moderator", $user->roles) or user_access('administer')) 
     or ((in_array("chapter leader", $user->roles)))) {
 
-      // 1. SIGNUP DATE
+      // 1. SIGNUP AND MODIFIED DATE
       $menu_text = "";
       $show_user = user_load($uid);
       $difference = time() - $show_user->created;
@@ -819,6 +819,18 @@ function _tm_more_actions_process($field, $title = NULL) {
         'wrapper_class' => array('approve'),
         'content' => t($menu_text),
       );
+
+      // show modified time
+      if (isset($show_user->field_last_modified_timestamp[LANGUAGE_NONE][0]['value'])) {
+        $difference = time() - $show_user->field_last_modified_timestamp[LANGUAGE_NONE][0]['value'];
+        $flagged_time = format_interval($difference, 1) . " ago";
+        $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Last edited " . $flagged_time . "</span><br>";
+        
+        $links['moderate'][] = array(
+          'wrapper_class' => array('approve'),
+          'content' => t($menu_text),
+        );
+      }
 
       // 2. WHO APPROVED
       $flag = flag_get_flag('approval_approved_by');

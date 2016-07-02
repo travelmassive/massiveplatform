@@ -824,7 +824,7 @@ function _tm_more_actions_process($field, $title = NULL) {
       if (isset($show_user->field_last_modified_timestamp[LANGUAGE_NONE][0]['value'])) {
         $difference = time() - $show_user->field_last_modified_timestamp[LANGUAGE_NONE][0]['value'];
         $flagged_time = format_interval($difference, 1) . " ago";
-        $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Profile edited " . $flagged_time . "</span><br>";
+        $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Profile updated " . $flagged_time . "</span><br>";
         
         $links['moderate'][] = array(
           'wrapper_class' => array('approve'),

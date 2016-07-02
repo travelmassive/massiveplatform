@@ -32,6 +32,7 @@ dependencies[] = ultimate_cron
 dependencies[] = variable
 dependencies[] = variable_admin
 dependencies[] = views
+dependencies[] = tm_status_updates
 scripts[] = tm_base.js
 features[ctools][] = strongarm:strongarm:1
 features[ctools][] = ultimate_cron:ultimate_cron:3

@@ -68,3 +68,8 @@ drop table cache_admin_menu;
 
 drop table masquerade;
 drop table masquerade_users;
+
+# honeypot_user
+
+drop table honeypot_user;
+

@@ -1037,7 +1037,7 @@ $conf["tm_status_updates_views_popular"] = 100; // how many views before shown a
 $conf["tm_status_updates_google_maps_api_key"] = "API_KEY"; // your google maps client-side api key for location lookups
 $conf["tm_status_updates_profile_display_days"] = 14; // show latest update on profile for how many days
 $conf["tm_status_updates_limit_results_days"] = 30; // how far back to show results
-$conf["tm_status_tupdates_items_per_load"] = 50; // how many items to show per load
+$conf["tm_status_updates_items_per_load"] = 50; // how many items to show per load
 $conf["tm_status_updates_show_featured"] = 2; // how many featured items to display on news feed
 $conf["tm_status_updates_custom_message"] = array(); // custom messages for newsfeed display
 $conf["tm_status_updates_custom_message"]["global"] = "Got a press release? Tag it <a href='/newsfeed/tags/news'>#news</a> to share with the community";

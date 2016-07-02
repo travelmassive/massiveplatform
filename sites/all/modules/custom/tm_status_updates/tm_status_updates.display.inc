@@ -330,7 +330,12 @@ function tm_status_updates_display_ajax() {
 	if ($hide_loader) {
 		$results_js = "\n<script>tm_status_update_remove_loader();</script>\n";
 	} else {
-		$results_js = "\n<script>tm_status_updates_is_loading = false; tm_status_updates_loader_timestamp = " . $all_results["last_timestamp"] . ";</script>\n";
+		// check for empty timestamp
+		$timestamp = $all_results["last_timestamp"];
+		if (($timestamp == "") or ($timestamp == null)) {
+			$timestamp = "null";
+		}
+		$results_js = "\n<script>tm_status_updates_is_loading = false; tm_status_updates_loader_timestamp = " . $timestamp . ";</script>\n";
 	}
 
 	echo $results_html . $results_js;

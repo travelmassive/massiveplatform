@@ -785,6 +785,11 @@ function tm_status_updates_render_link_preview($preview_data) {
  */
 function tm_status_updates_render_loader($timestamp) {
 
+	// check for empty timestamp
+	if (($timestamp == "") or ($timestamp == null)) {
+		$timestamp = "null";
+	}
+
 	// ajax loader
 	global $tm_status_updates_loader_template;
 	$loader_html = "";

@@ -206,7 +206,7 @@ class TmNewsfeedEmail
 					$num_companies = number_format(db_query("select count(*) as 'count' from node where node.type='organization'")->fetchField());
 
 					$company_profile_link = "<a href='".url("companies").tm_newsfeed_utm_campaign()."'>company profile</a>";
-					$tip = "Create a $company_profile_link for $field_job_organization and join more than $num_companies other companies profiles in our community.";
+					$tip = "Create a $company_profile_link for $field_job_organization and join more than $num_companies other company profiles in our community.";
 
 					$tips[] = $tip;
 				}

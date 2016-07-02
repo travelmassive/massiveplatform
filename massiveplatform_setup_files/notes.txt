@@ -1,0 +1,70 @@
+Installation and setup notes
+
+
+-----
+
+Commit: following 56c77d2dda576508475c179c64abcf086e0b0b19
+This commit removes old, unused modules and tables from the datbase.
+You MUST run these commands first before pulling the commit.
+
+Step 1. Cleanup old modules:
+
+drush pm-disable admin_menu backup_migrate migrate migrate_extras tm_sample_content masquerade
+drush pm-uninstall admin_menu backup_migrate migrate migrate_extras tm_sample_content masquerade;
+
+Step 2. Clean up old modules SQL:
+
+# remove migrate tables
+
+drop table migrate_map_tmchapter;
+drop table migrate_map_tmcompany;
+drop table migrate_map_tmevent;
+drop table migrate_map_tmpage;
+drop table migrate_map_tmpartnerevent;
+drop table migrate_map_tmuser;
+drop table migrate_message_tmchapter;
+drop table migrate_message_tmcompany;
+drop table migrate_message_tmevent;
+drop table migrate_message_tmpage;
+drop table migrate_message_tmpartnerevent;
+drop table migrate_message_tmuser;
+drop table migrate_status;
+
+# unused fields
+
+drop table field_data_field_ol_locator_address;
+drop table field_data_field_ol_locator_geofield;
+drop table field_revision_field_ol_locator_address;
+drop table field_revision_field_ol_locator_geofield;
+drop table field_deleted_data_49;
+drop table field_deleted_revision_49;
+
+# old (event) registration module
+
+drop table registration;
+drop table registration_entity;
+drop table registration_state;
+drop table registration_type;
+drop table cache_entity_registration;
+drop table cache_entity_registration_state;
+drop table cache_entity_registration_type;
+
+# developer access backtracemodule
+
+drop table adb;
+
+# openlayers
+
+drop table openlayers_maps;
+drop table openlayers_projections;
+drop table openlayers_styles;
+drop table openlayers_layers;
+
+# admin_menu
+
+drop table cache_admin_menu;
+
+# masquerade
+
+drop table masquerade;
+drop table masquerade_users;

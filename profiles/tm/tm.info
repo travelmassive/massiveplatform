@@ -18,7 +18,6 @@ dependencies[] = search
 dependencies[] = taxonomy
 
 ; TM - general
-dependencies[] = backup_migrate
 dependencies[] = color_field
 dependencies[] = context
 dependencies[] = context_ui
@@ -67,7 +66,6 @@ dependencies[] = ultimate_cron
 dependencies[] = role_watchdog
 dependencies[] = geophp
 dependencies[] = geofield
-dependencies[] = migrate_extras
 dependencies[] = email_registration
 dependencies[] = redirect
 dependencies[] = mimemail
@@ -83,14 +81,9 @@ dependencies[] = metatag_dc
 dependencies[] = metatag_opengraph
 
 ; TM - development
-dependencies[] = admin_menu
-dependencies[] = admin_menu_toolbar
 dependencies[] = devel
 dependencies[] = features
-dependencies[] = masquerade
-dependencies[] = migrate
 dependencies[] = strongarm
-dependencies[] = tm_sample_content
 dependencies[] = simpletest
 
 ; TM - features

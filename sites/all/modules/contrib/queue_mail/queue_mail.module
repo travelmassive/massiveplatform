@@ -53,11 +53,14 @@ function queue_mail_cron_queue_info() {
 function queue_mail_mail_alter(&$message) {
   $mail_keys = variable_get('queue_mail_keys', '');
 
-  if (drupal_match_path($message['id'], $mail_keys)) {
-    // Store the message for sending on cron.
-    _queue_mail_get_queue()->createItem($message);
-    // And prevent the message from being sent instantly.
-    $message['send'] = FALSE;
+  if (drupal_match_path($message['id'], $mail_keys) && $message['send']) {
+    // if message is already set to NOT be sent do not queue it
+    if ($message['send'] != FALSE) {
+      // Store the message for sending on cron.
+      _queue_mail_get_queue()->createItem($message);
+      // And prevent the message from being sent instantly.
+      $message['send'] = FALSE;
+    }
   }
 }
 

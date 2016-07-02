@@ -9,11 +9,14 @@
  * The admin settings form for Queue Mail.
  */
 function queue_mail_settings_form() {
+  $queue_length = _queue_mail_get_queue()->numberOfItems();
 
   $form['queue_status'] = array(
     '#type' => 'item',
     '#title' => t('Queue status'),
-    '#markup' => format_plural(_queue_mail_get_queue()->numberOfItems(), '1 mail currently queued for sending.', '@count mails currently queued for sending.'),
+    '#markup' => $queue_length > 0 ? format_plural($queue_length,
+      '1 mail currently queued for sending.',
+      '@count mails currently queued for sending.') : t('Mail queue is empty'),
   );
 
   $form['queue_mail_send_on_cron'] = array(

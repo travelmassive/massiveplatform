@@ -64,6 +64,15 @@ class QueueMailTestCase extends DrupalWebTestCase {
   }
 
   /**
+   * Test we don't send mail that is prevented from sending by other modules.
+   */
+  public function testDoNotQueueMailedStoppedByOtherModules() {
+    // Set all emails to be queued and test.
+    variable_set('queue_mail_keys', '*');
+    $this->sendEmailAndTest('stopped', FALSE, FALSE);
+  }
+
+  /**
    * Asserts that the most recently sent e-mail message has the given value.
    *
    * The field in $name must have the content described in $value.
@@ -93,7 +102,7 @@ class QueueMailTestCase extends DrupalWebTestCase {
    *   Pass in TRUE to test if the email was queued, FALSE to test that it
    *   wasn't queued.
    */
-  function sendEmailAndTest($mail_key = 'basic', $should_be_queued = TRUE) {
+  function sendEmailAndTest($mail_key = 'basic', $should_be_queued = TRUE, $should_be_sent = TRUE) {
     $queue = _queue_mail_get_queue();
     $queue_count_before = $queue->numberOfItems();
     $email_count_before = count($this->drupalGetMails());
@@ -115,12 +124,23 @@ class QueueMailTestCase extends DrupalWebTestCase {
       $queue_count_after = $queue->numberOfItems();
       $email_count_after = count($this->drupalGetMails());
       $this->assertTrue($queue_count_after - $queue_count_before == -1, 'Email is sent from the queue.');
-      $this->assertTrue($email_count_after - $email_count_before == 1, 'Queued email is sent on cron.');
+      if ($should_be_sent) {
+        $this->assertTrue($email_count_after - $email_count_before == 1, 'Queued email is sent on cron.');
+      }
+      else {
+        $this->assertTrue($email_count_after - $email_count_before == 0, 'Queued email is not sent on cron.');
+      }
+
     }
     elseif ($should_be_queued === FALSE) {
       $this->assertTrue($queue_count_after - $queue_count_before == 0, 'Email is not queued.');
-      $this->assertTrue($email_count_after - $email_count_before == 1, 'Email is sent immediately.');
-      $this->assertMail('body', $content, 'Queued email content is sent.');
+      if ($should_be_sent) {
+        $this->assertTrue($email_count_after - $email_count_before == 1, 'Email is sent immediately.');
+        $this->assertMail('body', $content, 'Queued email content is sent.');
+      }
+      else {
+        $this->assertTrue($email_count_after - $email_count_before == 0, 'Email is not sent immediately.');
+      }
     }
   }
 

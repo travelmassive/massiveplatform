@@ -29,6 +29,9 @@ drop table migrate_message_tmpage;
 drop table migrate_message_tmpartnerevent;
 drop table migrate_message_tmuser;
 drop table migrate_status;
+drop table migrate_field_mapping;
+drop table migrate_group;
+drop table migrate_log;
 
 # unused fields
 

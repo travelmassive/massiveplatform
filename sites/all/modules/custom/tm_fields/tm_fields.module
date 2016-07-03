@@ -820,18 +820,6 @@ function _tm_more_actions_process($field, $title = NULL) {
         'content' => t($menu_text),
       );
 
-      // show modified time
-      if (isset($show_user->field_last_modified_timestamp[LANGUAGE_NONE][0]['value'])) {
-        $difference = time() - $show_user->field_last_modified_timestamp[LANGUAGE_NONE][0]['value'];
-        $flagged_time = format_interval($difference, 1) . " ago";
-        $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Profile updated " . $flagged_time . "</span><br>";
-        
-        $links['moderate'][] = array(
-          'wrapper_class' => array('approve'),
-          'content' => t($menu_text),
-        );
-      }
-
       // 2. WHO APPROVED
       $flag = flag_get_flag('approval_approved_by');
 
@@ -844,9 +832,10 @@ function _tm_more_actions_process($field, $title = NULL) {
       });
 
       $menu_text = "";
+      $approved_difference = null;
       foreach ($who_flagged as $flagger) {
-        $difference = time() - $flagger->timestamp;
-        $flagged_time = format_interval($difference, 1) . " ago";
+        $approved_difference = time() - $flagger->timestamp;
+        $flagged_time = format_interval($approved_difference, 1) . " ago";
         $flagged_user = user_load($flagger->uid);
         $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Approved by " . $flagged_user->field_user_first_name['und'][0]['value'] . " " . $flagged_time . "</span><br>";
       }
@@ -861,7 +850,21 @@ function _tm_more_actions_process($field, $title = NULL) {
         'content' => t($menu_text),
       );
 
-      // 3. REASON FOR JOINING
+      // 3. SHOW MODIFIED TIME
+      if (isset($show_user->field_last_modified_timestamp[LANGUAGE_NONE][0]['value'])) {
+        $updated_difference = time() - $show_user->field_last_modified_timestamp[LANGUAGE_NONE][0]['value'];
+        // show if updated different to approval time
+        if ($updated_difference <> $approved_difference) {
+          $flagged_time = format_interval($updated_difference, 1) . " ago";
+          $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Profile updated " . $flagged_time . "</span><br>";
+          $links['moderate'][] = array(
+            'wrapper_class' => array('approve'),
+            'content' => t($menu_text),
+          );
+        }
+      }
+
+      // 4. REASON FOR JOINING
       if (isset($targetuser->field_reason_for_joining[LANGUAGE_NONE][0]['value'])) {
         $reason_for_joining = strip_tags($targetuser->field_reason_for_joining[LANGUAGE_NONE][0]['value']);
         if (trim($reason_for_joining) != "") {
@@ -874,7 +877,7 @@ function _tm_more_actions_process($field, $title = NULL) {
         }
       }
 
-      // Show email address to chapter leader if unapproved
+      // 5. Show email address to chapter leader if unapproved
       // Always show to moderators
       $targetuser = user_load($uid);
       if ((!in_array("approved user", $targetuser->roles) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid, true))) or (in_array("moderator", $user->roles))) {
@@ -892,7 +895,7 @@ function _tm_more_actions_process($field, $title = NULL) {
         );
       }
 
-      // Show last activity time if in your chapter and IP to moderator
+      // 6. Show last activity time if in your chapter and IP to moderator
       if (tm_users_member_in_users_chapter($targetuser->uid, $user->uid, true) or (in_array("moderator", $user->roles))) {
 
         // Get last active time    

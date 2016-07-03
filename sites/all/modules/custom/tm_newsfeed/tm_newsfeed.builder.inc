@@ -71,8 +71,8 @@ select
 	event.nid as 'event_id',
 	event.title as 'event_title',
 	ed.field_event_date_value as 'event_date',
-	case when ed.field_event_date_timezone is not null
-	then ed.field_event_date_timezone
+	case when event_tz.field_event_timezone_value is not null
+	then event_tz.field_event_timezone_value
 	else chapter_tz.field_chapter_timezone_value
 	end as 'timezone',
 
@@ -120,6 +120,7 @@ on event_chapter.entity_id=event.nid
 and event_chapter.bundle = 'event' 
 
 left join node chapter on event_chapter.field_chapter_target_id=chapter.nid
+left join field_data_field_event_timezone event_tz on event_tz.entity_id=event.nid
 left join field_data_field_chapter_timezone chapter_tz on chapter_tz.entity_id=chapter.nid
 
 left join flagging have_joined_chapter
@@ -153,8 +154,10 @@ where
 event.type = 'event'
 -- get events taking place after the from date
 and UNIX_TIMESTAMP(ed.field_event_date_value) > :from_date
--- but give a grace period of 1 hour before a result appears here
-and UNIX_TIMESTAMP() > (event.created + 3600)
+#-- but give a grace period of 30 minutes before a result appears here
+#and UNIX_TIMESTAMP() > (event.created + 1800)
+#-- and event is not in preview mode
+#note: this is taken care of in newsfeed class in tm_newsfeed_email_populate_events()
 
 order by
 	event_created_by_me_and_is_in_near_future desc,

@@ -1371,7 +1371,7 @@ function _tm_more_actions_process($field, $title = NULL) {
     // Only show to administrator or moderator
     if (in_array("administrator", $user->roles) or in_array("moderator", $user->roles)) {
 
-      if ($conf["tm_newsfeed_moderator_preview"]) {
+      if (module_exists("tm_newsfeed") and ($conf["tm_newsfeed_moderator_preview"])) {
         $links['moderator_tools'][] = array(
           'wrapper_class' => array('moderator_tools'),
           'content' => l(t('Preview news update'), '/admin/newsfeed/notification_preview?uid=' . $targetuser->uid,

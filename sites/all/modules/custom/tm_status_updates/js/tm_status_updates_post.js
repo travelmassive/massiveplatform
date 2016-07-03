@@ -314,12 +314,12 @@
 	  }
 
 	  // use google maps geocoder and search for nearest locality name
-	  var locality_found = false;
-
 	  try {
 	    tm_status_updates_geocoder.geocode({latLng: latlng}, function(results, status) {
 
 	      if (status == google.maps.GeocoderStatus.OK) {
+
+	      	var locality_found = false;
 
 	      	// Method 1
 	        if (results[0]) {
@@ -346,6 +346,11 @@
 	          	});
 	          }
 
+	          // If we couldn't find a location from the geocoder, ask the user
+	          if (!locality_found) {
+	          	tm_user_status_location_show(null);
+	          }
+
 	        } else {
 	          tm_user_status_location_hide();
 	          return null;
@@ -358,11 +363,6 @@
 	  } catch (e) {
 	    tm_user_status_location_hide();
 	    return null;
-	  }
-
-	  // if we couldn't find a location from the geocoder, ask the user
-	  if (!locality_found) {
-	  	tm_user_status_location_show(null);
 	  }
 	  
 	}

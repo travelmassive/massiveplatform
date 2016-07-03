@@ -314,9 +314,14 @@
 	  }
 
 	  // use google maps geocoder and search for nearest locality name
+	  var locality_found = false;
+
 	  try {
 	    tm_status_updates_geocoder.geocode({latLng: latlng}, function(results, status) {
+
 	      if (status == google.maps.GeocoderStatus.OK) {
+
+	      	// Method 1
 	        if (results[0]) {
 	          var arrAddress = results;
 	          $.each(arrAddress, function(i, address_component) {
@@ -324,8 +329,23 @@
 	              var city_name = address_component.address_components[0].long_name;
 	              tm_update_location_text = city_name;
 	              tm_user_status_location_show(city_name);
+	              locality_found = true;
 	            }
 	          });
+
+	          // Method 2
+	          if (!locality_found) {
+	          	var firstAddress = results[0];
+	          	$.each(firstAddress.address_components, function(i, address_components) {
+	          	  if (address_components.types[0] == "locality") {
+	          	    var city_name = address_components.long_name;
+	          	    tm_update_location_text = city_name;
+	          	    tm_user_status_location_show(city_name);
+	          	    locality_found = true;
+	          	  }
+	          	});
+	          }
+
 	        } else {
 	          tm_user_status_location_hide();
 	          return null;
@@ -338,6 +358,11 @@
 	  } catch (e) {
 	    tm_user_status_location_hide();
 	    return null;
+	  }
+
+	  // if we couldn't find a location from the geocoder, ask the user
+	  if (!locality_found) {
+	  	tm_user_status_location_show(null);
 	  }
 	  
 	}
@@ -450,4 +475,3 @@ function initGoogleMaps() {
 		tm_user_status_location_request_location();
 	});
 }
-

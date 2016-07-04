@@ -164,7 +164,7 @@ class TmNewsfeedEmail
 		global $conf;
 
 		$uid = $account->uid;
-		$edit_url = tm_newfeed_absolute_url("user/" . $uid);
+		$edit_url = tm_newfeed_absolute_url("user/" . $uid) . tm_newsfeed_utm_campaign();
 
 		// Always show message when not approved
 		if (!in_array("approved user", $account->roles)){

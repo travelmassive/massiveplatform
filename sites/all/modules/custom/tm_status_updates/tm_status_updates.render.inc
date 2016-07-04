@@ -615,6 +615,12 @@ function tm_status_updates_render_flag_feed($feed_url, $feed_image_url, $feed_ti
 		$preview_link = $details["preview_link_html"];
 	}
 
+	// add leading / if url is not absolute
+	if ((stripos($feed_url, "https://") !== 0) and (stripos($feed_url, "http://") !== 0)
+		and (strpos($feed_url, "/") !== 0)) {
+		$feed_url = "/" . $feed_url;
+	}
+
 	$html = str_replace("__FEED_URL__", $feed_url, $tm_status_updates_feed_template);
 	$html = str_replace("__FEED_IMAGE_URL__", $feed_image_url, $html);
 	$html = str_replace("__FEED_TITLE__", $feed_title, $html);

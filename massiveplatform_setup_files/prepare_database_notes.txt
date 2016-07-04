@@ -14,3 +14,12 @@ truncate tm_invitations;
 truncate cache_form;
 truncate watchdog;
 truncate queue;
+
+- Check /remove files that aren't in system
+
+Notes:
+- Use with caution
+- Also see: https://www.drupal.org/project/registry_rebuild
+
+cd /path/to/drupal
+echo "select filename from system" | mysql DATABASE_NAME | awk '{print "ls -l "$1}' | sh 2>&1 | grep cannot | awk '{print "delete from system where filename = __"$4"__;"}' | sed s/://g | grep -v "filename = __filename__" | sed s/__/\'/g # | mysql DATABASE_NAME

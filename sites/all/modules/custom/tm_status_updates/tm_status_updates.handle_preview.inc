@@ -172,6 +172,15 @@ function tm_status_updates_fetch_link_meta($preview_url) {
   $preview_data["link_og_description"] = null;
   $preview_data["link_og_image"] = null;
 
+  // optional: utf_decode the title and description to better support utf8 collation
+  // preferably use utf8mb4 database and there is no need to reduce the character set
+  $utf_decode = false;
+  if (isset($conf["tm_status_updates_preview_utf_decode"])) {
+    if ($conf["tm_status_updates_preview_utf_decode"] == true) {
+      $utf_decode = true;
+    }
+  }
+
   // Fetch url preview
   try {
 
@@ -183,12 +192,18 @@ function tm_status_updates_fetch_link_meta($preview_url) {
 
     // title
     if (isset($object->title)) {
-      $preview_data["link_og_title"] = utf8_decode($object->title);
+      if ($utf_decode) {
+        $object->title = utf8_decode($object->title);
+      }
+      $preview_data["link_og_title"] = $object->title;
     }
 
     // description
     if (isset($object->description)) {
-      $preview_data["link_og_description"] = utf8_decode($object->description);
+      if ($utf_decode) {
+        $object->description = utf8_decode($object->description);
+      }
+      $preview_data["link_og_description"] = $object->description;
     }
 
     // image
@@ -295,6 +310,7 @@ function tm_status_updates_fetch_meta_image($image_url) {
 function tm_status_updates_fetch_external_image($image_url) {
 
   global $conf;
+  global $curl_max_mb;
 
   // timeout and download limit
   $curl_timeout = $conf["tm_status_updates_preview_curl_timeout"];
@@ -314,11 +330,12 @@ function tm_status_updates_fetch_external_image($image_url) {
 
   // We need progress updates to break the connection mid-way
   // http://stackoverflow.com/questions/17641073/how-to-set-a-maximum-size-limit-to-php-curl-downloads
-  curl_setopt($cURL_Handle, CURLOPT_BUFFERSIZE, 128); // more progress info
-  curl_setopt($cURL_Handle, CURLOPT_NOPROGRESS, false);
-  curl_setopt($cURL_Handle, CURLOPT_PROGRESSFUNCTION, function(
+  curl_setopt($ch, CURLOPT_BUFFERSIZE, 128); // more progress info
+  curl_setopt($ch, CURLOPT_NOPROGRESS, false);
+  curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, function(
       $DownloadSize, $Downloaded, $UploadSize, $Uploaded
   ) {
+      global $curl_max_mb;
       // If $Downloaded exceeds $curl_max_mb MB, returning non-0 breaks the connection
       return ($Downloaded > ($curl_max_mb * 1024 * 1024)) ? 1 : 0;
   });
@@ -327,7 +344,7 @@ function tm_status_updates_fetch_external_image($image_url) {
   $image_file = curl_exec($ch);
 
   $curl_error = "";
-  if ($result === false) {
+  if ($image_file === false) {
     $curl_error = "CURL error: " . curl_error($ch);
     return null;
   }

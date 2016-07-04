@@ -115,7 +115,7 @@
 
 	        }
 	      } else {
-	      	tm_user_status_update_show_feedback("Oops, there was a problem previewing your link.", false);
+	      	tm_user_status_update_show_feedback("Link preview is not available.", false);
 	      }
 	    },
 	    error: function(data) {

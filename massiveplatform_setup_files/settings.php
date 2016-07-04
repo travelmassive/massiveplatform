@@ -1034,6 +1034,7 @@ $conf["tm_status_updates_preview_image_width"] = 512; // max width to resize pre
 $conf["tm_status_updates_preview_image_height"] = 512; // min width to resize preview image
 $conf["tm_status_updates_preview_image_quality"] = 80; // image quality of preview images
 $conf["tm_status_updates_preview_max_per_day"] = 200; // rate limit how many preview links a user can gererate in a day
+$conf["tm_status_updates_preview_utf_decode"] = true; // if database only support utf8, enable this to strip extended characters
 $conf["tm_status_updates_views_popular"] = 100; // how many views before shown as popular
 $conf["tm_status_updates_google_maps_api_key"] = "API_KEY"; // your google maps client-side api key for location lookups
 $conf["tm_status_updates_profile_display_days"] = 14; // show latest update on profile for how many days

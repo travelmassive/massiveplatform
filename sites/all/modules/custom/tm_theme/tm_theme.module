@@ -67,9 +67,32 @@ function tm_theme_html_head_alter(&$head_elements) {
   if (isset($conf["tm_cookieconsent_enable"])) {
     if ($conf["tm_cookieconsent_enable"] == true) {
 
-      $privacy_url = $conf["tm_cookieconsent_privacy_url"];
-      drupal_add_js(drupal_get_path('theme', 'tm') . '/js/cookieconsent.v2.min.js', array('group' => JS_THEME));
-      drupal_add_js('window.cookieconsent_options = {"message":"We use cookies to ensure you get the best experience on our website. ","dismiss":"Ok","learnMore":"Learn more","link":"' . $privacy_url . '","theme":"dark-bottom"};', 'inline');
+      $show_cookie_consent = true;
+
+      // If tm_cookieconsent_check_geoip_is_eu check geoip
+      if (isset($conf["tm_cookieconsent_check_geoip_is_eu"])) {
+        if ($conf["tm_cookieconsent_check_geoip_is_eu"]) {
+          $visitor_ip = tm_geoip_get_real_visitor_ip();
+          $geoip_info = tm_geoip_lookup($visitor_ip);
+
+          if ($geoip_info != null) {
+            if (isset($geoip_info["continent"]["code"])) {
+
+              // set cookie consent to false if not EU
+              if ($geoip_info["continent"]["code"] != "EU") {
+                $show_cookie_consent = false;
+              }
+            }
+          } // end if geoip_info not null
+        } // end if tm_cookieconsent_check_geoip_is_eu enabled
+      } // end if tm_cookieconsent_check_geoip_is_eu set
+      
+      if ($show_cookie_consent) {
+        $privacy_url = $conf["tm_cookieconsent_privacy_url"];
+        drupal_add_js(drupal_get_path('theme', 'tm') . '/js/cookieconsent.v2.min.js', array('group' => JS_THEME));
+        drupal_add_js('window.cookieconsent_options = {"message":"We use cookies to ensure you get the best experience on our website. ","dismiss":"Ok","learnMore":"Learn more","link":"' . $privacy_url . '","theme":"dark-bottom"};', 'inline');
+      }
+     
     }
   }
 

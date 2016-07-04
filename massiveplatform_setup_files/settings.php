@@ -902,6 +902,7 @@ Add options to your search text to filter your results. Here's some examples.
 /** EU COOKIE CONSENT **/
 $conf["tm_cookieconsent_enable"] = true; // enable EU cookie consent notice
 $conf["tm_cookieconsent_privacy_url"] = ""; // link to privacy policy
+$conf["tm_cookieconsent_check_geoip_is_eu"] = true; // use geoip to limit cookie consent to eu visitors
 
 /** NOTIFICATION UNSUBSCRIBE LINK **/
 $conf["tm_notifications_subscription_secret_key"] = "randomstring123"; // random string

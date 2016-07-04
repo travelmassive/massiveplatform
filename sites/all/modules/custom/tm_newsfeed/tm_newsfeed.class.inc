@@ -104,8 +104,9 @@ class TmNewsfeedEmail
 
 		$debug_timer['05_start_tips'] = time();
 		$tip = $this->tm_newsfeed_email_get_tip($account, $start_date, $end_date);
-		$user_profile_url = tm_newfeed_absolute_url("user/" . $user_id) . tm_newsfeed_utm_campaign();
+		$user_profile_url = tm_newfeed_absolute_url("user/" . $user_id);
 		$tip = str_replace("__USER_PROFILE_URL__", $user_profile_url, $tip);
+		$tip = str_replace("__UTM_CAMPAIGN__", tm_newsfeed_utm_campaign(), $tip);
 
 		$email = str_replace("__EMAIL_TIP__", $tip, $email);
 		$debug_timer['06_done_tips'] = time();

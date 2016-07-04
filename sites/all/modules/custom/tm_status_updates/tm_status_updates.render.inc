@@ -474,7 +474,7 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 
 			$feed_title = l($flagging_user_name, $flagging_user_url) . " followed " . l($flagged_user_name, $flagged_user_url);
 			//$feed_title = l($flagged_user_name, $flagged_user_url) . " was followed by " . l($flagging_user_name, $flagging_user_url);
-			$html = tm_status_updates_render_flag_feed($flagged_user_url, $image_url, $feed_title, "", $details);
+			$html = tm_status_updates_render_flag_feed($flagging_user_url, $image_url, $feed_title, "", $details);
 			break;
 
 	   	// MEMBER FOLLOWED AN ORGANIZATION

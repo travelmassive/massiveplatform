@@ -945,23 +945,10 @@ function module_invoke_all($hook) {
   // Remove $hook from the arguments.
   unset($args[0]);
   $return = array();
-  
   foreach (module_implements($hook) as $module) {
     $function = $module . '_' . $hook;
     if (function_exists($function)) {
-      $timer_start = microtime(true); 
-    
       $result = call_user_func_array($function, $args);
-      
-      $performance_time = round((microtime(true) - $timer_start), 3);
-      print $function;
-      print "<br>" . $performance_time;
-      if ($performance_time > 1) {
-        print "!!!";
-      } 
-      print "<hr>";
-
-
       if (isset($result) && is_array($result)) {
         $return = array_merge_recursive($return, $result);
       }

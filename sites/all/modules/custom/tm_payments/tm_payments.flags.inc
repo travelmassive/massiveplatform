@@ -141,6 +141,14 @@ function _tm_payments_preprocess_flag_register_flag(&$variables) {
 	$tm_payments_handler_name = $conf["tm_payments_handler_name"]; // ie: "Travel Massive";
 	$tm_payments_handler_description = $conf["tm_payments_handler_description"]; // ie: "Event Registration";
 
+	// Enable billing address
+	$enable_billing_address = "false";
+	if (isset($event->field_event_payment_ask_address[LANGUAGE_NONE][0]['value'])) {
+		if ($event->field_event_payment_ask_address[LANGUAGE_NONE][0]['value'] == 1) {
+			$enable_billing_address = "true";
+		}
+	}
+
 	  $stripe_js = <<<EOT
 
 jQuery(document).ready(function($) {
@@ -178,7 +186,7 @@ jQuery(document).ready(function($) {
 			description: '{$tm_payments_handler_description}',
 			amount: $stripe_amount,
 			currency: '{$stripe_currency}',
-			billingAddress: false,
+			billingAddress: {$enable_billing_address},
 			email: '{$user_email}'
 		});
 		e.preventDefault();

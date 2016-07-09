@@ -89,6 +89,7 @@ function tm_payments_field_group_info() {
       1 => 'field_event_payment_currency',
       2 => 'field_event_payment_enabled',
       3 => 'field_event_payment_refund_text',
+      4 => 'field_event_payment_ask_address',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

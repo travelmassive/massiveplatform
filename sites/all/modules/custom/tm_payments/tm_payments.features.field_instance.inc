@@ -75,6 +75,63 @@ function tm_payments_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-event-field_event_payment_ask_address'.
+  $field_instances['node-event-field_event_payment_ask_address'] = array(
+    'bundle' => 'event',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Require the customer to enter their billing address when making a payment.<br>
+This might help to improve card validation in certain regions.<br>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 55,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_payment_ask_address',
+    'label' => 'Enable billing address',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 26,
+    ),
+  );
+
   // Exported field_instance: 'node-event-field_event_payment_currency'.
   $field_instances['node-event-field_event_payment_currency'] = array(
     'bundle' => 'event',
@@ -710,6 +767,7 @@ function tm_payments_field_default_field_instances() {
   t('Enable Early Bird Price');
   t('Enable Event Payments');
   t('Enable Registration Payment');
+  t('Enable billing address');
   t('Explain the refund policy for this event. It will be shown on the event page.
 <br>If you leave this blank, the default refund policy will be displayed.');
   t('Fix the default commission percentage for events created by this company.
@@ -718,6 +776,8 @@ function tm_payments_field_default_field_instances() {
   t('Price will be displayed and members will be charged in the selected currency');
   t('Refund Policy');
   t('Registration Price');
+  t('Require the customer to enter their billing address when making a payment.<br>
+This might help to improve card validation in certain regions.<br>');
   t('Set whether company can create paid events.');
   t('The number of seats available for early bird pricing
 <br>Leave blank for no limit');

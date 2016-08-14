@@ -99,14 +99,27 @@ select
 	case
 	when event_type.field_event_type_value = 'company'
 	and following_event_company.entity_id is not null
-	then '1'
+	then 1
 	else 0
 	end as 'event_belongs_to_a_company_that_i_follow',
 
-	is_my_home_chapter.field_home_chapter_target_id as 'is_my_home_chapter',
-	have_joined_chapter.entity_id as 'have_joined_chapter',
+	case
+	when is_my_home_chapter.field_home_chapter_target_id is not null
+	then 1
+	else 0
+	end as 'is_my_home_chapter',
 
-	already_going.entity_id as 'already_going'
+	case
+	when have_joined_chapter.entity_id is not null
+	then 1
+	else 0
+	end as 'have_joined_chapter',
+
+	case
+	when already_going.entity_id is not null
+	then 1
+	else 0
+	end as 'already_going'
 
 from node event
 left join field_data_field_event_date ed on event.nid = ed.entity_id
@@ -161,6 +174,7 @@ and UNIX_TIMESTAMP(ed.field_event_date_value) > :from_date
 
 order by
 	event_created_by_me_and_is_in_near_future desc,
+	already_going desc,
 	is_my_home_chapter desc,
 	have_joined_chapter desc,
 	event_belongs_to_a_member_that_i_follow desc,

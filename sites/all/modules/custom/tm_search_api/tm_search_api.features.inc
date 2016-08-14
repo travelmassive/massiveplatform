@@ -38,14 +38,14 @@ function tm_search_api_default_search_api_index() {
         "node:field_event_is_preview_mode" : { "type" : "boolean" },
         "node:field_event_type" : { "type" : "string" },
         "node:field_event_venue_name" : { "type" : "text" },
-        "node:field_link_facebook:url" : { "type" : "string" },
-        "node:field_link_instagram:url" : { "type" : "string" },
-        "node:field_link_linkedin:url" : { "type" : "string" },
-        "node:field_link_snapchat:url" : { "type" : "string" },
-        "node:field_link_twitter:url" : { "type" : "string" },
-        "node:field_link_vimeo:url" : { "type" : "string" },
-        "node:field_link_website:url" : { "type" : "string" },
-        "node:field_link_youtube:url" : { "type" : "string" },
+        "node:field_link_facebook:url" : { "type" : "text" },
+        "node:field_link_instagram:url" : { "type" : "text" },
+        "node:field_link_linkedin:url" : { "type" : "text" },
+        "node:field_link_snapchat:url" : { "type" : "text" },
+        "node:field_link_twitter:url" : { "type" : "text" },
+        "node:field_link_vimeo:url" : { "type" : "text" },
+        "node:field_link_website:url" : { "type" : "text" },
+        "node:field_link_youtube:url" : { "type" : "text" },
         "node:field_location" : { "type" : "text" },
         "node:field_location_city" : { "type" : "text" },
         "node:field_organizer" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "user" },
@@ -62,14 +62,14 @@ function tm_search_api_default_search_api_index() {
         "user:field_home_chapter" : { "type" : "integer", "entity_type" : "node" },
         "user:field_job_organization" : { "type" : "text", "boost" : "2.0" },
         "user:field_job_role" : { "type" : "text" },
-        "user:field_link_facebook:url" : { "type" : "string" },
-        "user:field_link_instagram:url" : { "type" : "string" },
-        "user:field_link_linkedin:url" : { "type" : "string" },
-        "user:field_link_snapchat:url" : { "type" : "string" },
-        "user:field_link_twitter:url" : { "type" : "string" },
-        "user:field_link_vimeo:url" : { "type" : "string" },
-        "user:field_link_website:url" : { "type" : "string" },
-        "user:field_link_youtube:url" : { "type" : "string" },
+        "user:field_link_facebook:url" : { "type" : "text" },
+        "user:field_link_instagram:url" : { "type" : "text" },
+        "user:field_link_linkedin:url" : { "type" : "text" },
+        "user:field_link_snapchat:url" : { "type" : "text" },
+        "user:field_link_twitter:url" : { "type" : "text" },
+        "user:field_link_vimeo:url" : { "type" : "text" },
+        "user:field_link_website:url" : { "type" : "text" },
+        "user:field_link_youtube:url" : { "type" : "text" },
         "user:field_location_city" : { "type" : "text" },
         "user:field_segment" : { "type" : "integer", "entity_type" : "taxonomy_term" },
         "user:field_segment:name" : { "type" : "text" },
@@ -457,27 +457,27 @@ function tm_search_api_default_search_api_server() {
             "boost" : "1.0"
           },
           "user:field_link_facebook:url" : {
-            "table" : "search_api_db_tm_search_multi_index",
+            "table" : "search_api_db_tm_search_multi_index_text",
             "column" : "user_field_link_facebook_url",
-            "type" : "string",
+            "type" : "text",
             "boost" : "1.0"
           },
           "user:field_link_linkedin:url" : {
-            "table" : "search_api_db_tm_search_multi_index",
+            "table" : "search_api_db_tm_search_multi_index_text",
             "column" : "user_field_link_linkedin_url",
-            "type" : "string",
+            "type" : "text",
             "boost" : "1.0"
           },
           "user:field_link_twitter:url" : {
-            "table" : "search_api_db_tm_search_multi_index",
+            "table" : "search_api_db_tm_search_multi_index_text",
             "column" : "user_field_link_twitter_url",
-            "type" : "string",
+            "type" : "text",
             "boost" : "1.0"
           },
           "user:field_link_website:url" : {
-            "table" : "search_api_db_tm_search_multi_index",
+            "table" : "search_api_db_tm_search_multi_index_text",
             "column" : "user_field_link_website_url",
-            "type" : "string",
+            "type" : "text",
             "boost" : "1.0"
           },
           "user:field_segment:name" : {
@@ -506,27 +506,27 @@ function tm_search_api_default_search_api_server() {
             "boost" : "1.0"
           },
           "user:field_link_instagram:url" : {
-            "table" : "search_api_db_tm_search_multi_index",
+            "table" : "search_api_db_tm_search_multi_index_text",
             "column" : "user_field_link_instagram_url",
-            "type" : "string",
+            "type" : "text",
             "boost" : "1.0"
           },
           "user:field_link_snapchat:url" : {
-            "table" : "search_api_db_tm_search_multi_index",
+            "table" : "search_api_db_tm_search_multi_index_text",
             "column" : "user_field_link_snapchat_url",
-            "type" : "string",
+            "type" : "text",
             "boost" : "1.0"
           },
           "user:field_link_vimeo:url" : {
-            "table" : "search_api_db_tm_search_multi_index",
+            "table" : "search_api_db_tm_search_multi_index_text",
             "column" : "user_field_link_vimeo_url",
-            "type" : "string",
+            "type" : "text",
             "boost" : "1.0"
           },
           "user:field_link_youtube:url" : {
-            "table" : "search_api_db_tm_search_multi_index",
+            "table" : "search_api_db_tm_search_multi_index_text",
             "column" : "user_field_link_youtube_url",
-            "type" : "string",
+            "type" : "text",
             "boost" : "1.0"
           },
           "node:body:value" : {
@@ -535,27 +535,27 @@ function tm_search_api_default_search_api_server() {
             "boost" : "1.0"
           },
           "node:field_link_facebook:url" : {
-            "table" : "search_api_db_tm_search_multi_index",
+            "table" : "search_api_db_tm_search_multi_index_text",
             "column" : "node_field_link_facebook_url",
-            "type" : "string",
+            "type" : "text",
             "boost" : "1.0"
           },
           "node:field_link_linkedin:url" : {
-            "table" : "search_api_db_tm_search_multi_index",
+            "table" : "search_api_db_tm_search_multi_index_text",
             "column" : "node_field_link_linkedin_url",
-            "type" : "string",
+            "type" : "text",
             "boost" : "1.0"
           },
           "node:field_link_twitter:url" : {
-            "table" : "search_api_db_tm_search_multi_index",
+            "table" : "search_api_db_tm_search_multi_index_text",
             "column" : "node_field_link_twitter_url",
-            "type" : "string",
+            "type" : "text",
             "boost" : "1.0"
           },
           "node:field_link_website:url" : {
-            "table" : "search_api_db_tm_search_multi_index",
+            "table" : "search_api_db_tm_search_multi_index_text",
             "column" : "node_field_link_website_url",
-            "type" : "string",
+            "type" : "text",
             "boost" : "1.0"
           },
           "node:field_segment:name" : {
@@ -564,27 +564,27 @@ function tm_search_api_default_search_api_server() {
             "boost" : "1.0"
           },
           "node:field_link_instagram:url" : {
-            "table" : "search_api_db_tm_search_multi_index",
+            "table" : "search_api_db_tm_search_multi_index_text",
             "column" : "node_field_link_instagram_url",
-            "type" : "string",
+            "type" : "text",
             "boost" : "1.0"
           },
           "node:field_link_snapchat:url" : {
-            "table" : "search_api_db_tm_search_multi_index",
+            "table" : "search_api_db_tm_search_multi_index_text",
             "column" : "node_field_link_snapchat_url",
-            "type" : "string",
+            "type" : "text",
             "boost" : "1.0"
           },
           "node:field_link_vimeo:url" : {
-            "table" : "search_api_db_tm_search_multi_index",
+            "table" : "search_api_db_tm_search_multi_index_text",
             "column" : "node_field_link_vimeo_url",
-            "type" : "string",
+            "type" : "text",
             "boost" : "1.0"
           },
           "node:field_link_youtube:url" : {
-            "table" : "search_api_db_tm_search_multi_index",
+            "table" : "search_api_db_tm_search_multi_index_text",
             "column" : "node_field_link_youtube_url",
-            "type" : "string",
+            "type" : "text",
             "boost" : "1.0"
           },
           "node:field_country:iso2" : {

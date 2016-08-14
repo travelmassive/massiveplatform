@@ -1671,9 +1671,12 @@ class SearchApiDbService extends SearchApiAbstractService {
         $not_equals = $f[2] == '<>' || $f[2] == '!=';
         // If the field is in its own table, we have to check for NULL values in
         // a special way (i.e., check for missing entries in that table).
-        if ($f[1] === NULL && $field['column'] === 'value') {
+        if (($f[1] === NULL && $field['column'] === 'value') or ($f[1] === NULL && $field['type'] === 'text')) {
           $query = $this->connection->select($field['table'], 't')
             ->fields('t', array('item_id'));
+          if (search_api_is_text_type($field['type'])) {
+            $query->condition('t.field_name', $f[0]);
+          }
           $cond->condition('t.item_id', $query, $not_equals ? 'IN' : 'NOT IN');
           continue;
         }

@@ -305,19 +305,15 @@ class UltimateCronDatabaseLogger extends UltimateCronLogger {
       return parent::loadLatestLogEntries($jobs, $log_types);
     }
 
-    $result = db_query("SELECT l.*
-    FROM {ultimate_cron_log} l
-    JOIN (
-      SELECT l3.name, (
-        SELECT l4.lid
-        FROM {ultimate_cron_log} l4
-        WHERE l4.name = l3.name
-        AND l4.log_type IN (:log_types)
-        ORDER BY l4.name desc, l4.start_time DESC
-        LIMIT 1
-      ) AS lid FROM {ultimate_cron_log} l3
-      GROUP BY l3.name
-    ) l2 on l2.lid = l.lid", array(':log_types' => $log_types));
+    $result = db_query("SELECT l1.*
+      FROM {ultimate_cron_log} l1
+      JOIN (
+        SELECT name, MAX(start_time) AS start_time
+        FROM {ultimate_cron_log}
+        GROUP BY name
+      ) l2
+      ON l1.name = l2.name AND l1.start_time = l2.start_time
+      WHERE l1.log_type IN (:log_types)", array(':log_types' => $log_types));
 
     $log_entries = array();
     while ($object = $result->fetchObject()) {

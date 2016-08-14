@@ -129,6 +129,7 @@ function ultimate_cron_schema() {
       'message' => array(
         'description' => 'Message',
         'type' => 'text',
+        'size' => 'big',
         'not null' => FALSE,
       ),
       'severity' => array(
@@ -227,6 +228,19 @@ function ultimate_cron_schema() {
  * Implements hook_enable().
  */
 function ultimate_cron_enable() {
+  // If Drupal's poormanscron settings are manually disabled, we want to disable
+  // Ultimate Cron's poormanscron implementation when we enable the module.
+  $cron_safe_threshold = db_query("SELECT value FROM {variable} WHERE name = 'cron_safe_threshold'")->fetchField();
+  $cron_safe_threshold = $cron_safe_threshold ? unserialize($cron_safe_threshold) : 0;
+  if ($cron_safe_threshold === 0) {
+    $poorman_settings = array(
+      'launcher' => '',
+      'early_page_flush' => 1,
+      'user_agent' => 'Ultimate Cron',
+    );
+    variable_set('ultimate_cron_plugin_settings_poorman_settings', $poorman_settings);
+  }
+
   // Disable built-in poor mans cron.
   variable_set('cron_safe_threshold', 0);
 }
@@ -981,5 +995,17 @@ function ultimate_cron_update_7203() {
   db_add_primary_key('ultimate_cron_signal', array(
     array('job_name', 64),
     array('signal_name', 64),
+  ));
+}
+
+/**
+ * Change {ultimate_cron_log} message schema to big text.
+ */
+function ultimate_cron_update_7204() {
+  db_change_field('ultimate_cron_log', 'message', 'message', array(
+    'description' => 'Message',
+    'type' => 'text',
+    'size' => 'big',
+    'not null' => FALSE,
   ));
 }

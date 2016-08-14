@@ -798,8 +798,36 @@ function ultimate_cron_init() {
 function ultimate_cron_help($path, $arg) {
   switch ($path) {
     case 'admin/help#ultimate_cron':
-      // Return a line-break version of the module README.
-      return '<pre>' . file_get_contents(dirname(__FILE__) . '/README.txt') . '</pre>';
+      $readme = dirname(__FILE__) . '/README.txt';
+      if (is_readable($readme)) {
+        // Return a line-break version of the module README.
+        return '<pre>' . file_get_contents($readme) . '</pre>';
+      }
+      else {
+        $output = '<h3>' . t('About') . '</h3>';
+        $output .= '<p>' . t('The Ultimate Cron handling for Drupal. Runs cron jobs individually in parallel using configurable rules, pool management and load balancing.') . '</p>';
+        $output .= '<h3>' . t('Features') . '</h3>';
+        $output .= '<ul>';
+        $output .= '<li>' . t('Works out-of-the box in most cases (or aims to)') . '</li>';
+        $output .= '<li>' . t('Parallel exection of cron jobs') . '</li>';
+        $output .= '<li>' . t('Configuration per job (enable/disable, rules, etc.)') . '</li>';
+        $output .= '<li>' . t('Multiple rules per cron job') . '</li>';
+        $output .= '<li>' . t('Pool management and load balancing using Background process') . '</li>';
+        $output .= '<li>' . t('Support for Drupal Queues') . '</li>';
+        $output .= '<li>' . t('Overview of cron jobs') . '</li>';
+        $output .= '<li>' . t('Log history of cron jobs') . '</li>';
+        $output .= '<li>' . t('Status/error messages per cron job, providing easy debugging of troublesome cron jobs') . '</li>';
+        $output .= '<li>' . t('hook_cron_alter() for easy adding/manipulating cron jobs') . '</li>';
+        $output .= '<li>' . t('Poormans cron with keepalive a granularity of 1 minute') . '</li>';
+        $output .= '<li>' . t('<a href="@url" rel="nofollow">Drush</a> support (list, start, enable/disable jobs from the command line)', array('@url' => 'https://www.drupal.org/project/drush')) . '</li>';
+        $output .= '</ul>';
+
+        $output .= '<h3>' . t('Useful links') . '</h3>';
+        $output .= '<ul>';
+        $output .= '<li>' . t('<a href="@url">Ultimate Cron project on Drupal.org</a>', array('@url' => 'https://www.drupal.org/project/ultimate_cron')) . '</li>';
+        $output .= '</ul>';
+        return $output;
+      }
   }
 }
 

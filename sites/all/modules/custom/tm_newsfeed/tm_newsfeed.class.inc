@@ -124,7 +124,7 @@ class TmNewsfeedEmail
 
 		$feedback_base = $conf['tm_newsfeed_feedback_base'];
 		$feedback_link_text = $conf['tm_newsfeed_feedback_link_text'];
-		$feedback = "$feedback_base <a href='".url("contact").tm_newsfeed_utm_campaign()."'>$feedback_link_text</a>";
+		$feedback = "$feedback_base <a href='".tm_newfeed_absolute_url("contact").tm_newsfeed_utm_campaign()."'>$feedback_link_text</a>";
 		$email = str_replace("__LET_US_KNOW_FEEDBACK__", $feedback, $email);
 
 		$email = str_replace("__THANK_YOU_PHRASE__", "Cheers", $email);
@@ -209,7 +209,7 @@ class TmNewsfeedEmail
 				if ($no_match) {
 					$num_companies = number_format(db_query("select count(*) as 'count' from node where node.type='organization'")->fetchField());
 
-					$company_profile_link = "<a href='".url("companies").tm_newsfeed_utm_campaign()."'>company profile</a>";
+					$company_profile_link = "<a href='".tm_newfeed_absolute_url("companies").tm_newsfeed_utm_campaign()."'>company profile</a>";
 					$tip = "Create a $company_profile_link for $field_job_organization and join more than $num_companies other companies in our community.";
 
 					$tips[] = $tip;

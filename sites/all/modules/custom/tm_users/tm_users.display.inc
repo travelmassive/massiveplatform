@@ -25,6 +25,15 @@ function tm_users_user_view($account, $view_mode, $langcode) {
     tm_users_add_photo_edit_js($account);
   }
 
+  // If viewing own account, set create member event message js
+  global $user;
+  if (($view_mode == "full") && ($account->uid == $user->uid)) {
+    // Set create member event message as js var
+    // We use this in jq_create_member_event_message()
+    $member_event_message = _tm_events_check_create_member_event_message($account);
+    drupal_add_js(array('tm_events' => array('create_member_event_message' => $member_event_message)), array('type' => 'setting'));
+  }
+
 }
 
 /** 

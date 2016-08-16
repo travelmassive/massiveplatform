@@ -837,7 +837,7 @@ function _tm_more_actions_process($field, $title = NULL) {
         $approved_difference = time() - $flagger->timestamp;
         $flagged_time = format_interval($approved_difference, 1) . " ago";
         $flagged_user = user_load($flagger->uid);
-        $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Approved by " . $flagged_user->field_user_first_name['und'][0]['value'] . " " . $flagged_time . "</span><br>";
+        $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Approved by " . l($flagged_user->field_user_first_name[LANGUAGE_NONE][0]['value'], "/" . drupal_get_path_alias("user/" . $flagged_user->uid), array('attributes' => array('target' => '_blank', 'class' => array('report-flagged-link')))) . " " . $flagged_time . "</span><br>";
       }
 
       // if empty menu text, then user was approved before we started flagging
@@ -992,7 +992,7 @@ function _tm_more_actions_process($field, $title = NULL) {
           $difference = time() - $flagger->timestamp;
           $flagged_time = format_interval($difference, 1) . " ago";
           $flagged_user = user_load($flagger->uid);
-          $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Flagged by " . $flagged_user->field_user_first_name['und'][0]['value'] . " " . $flagged_time . "</span><br>";
+          $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Flagged by " . l($flagged_user->field_user_first_name[LANGUAGE_NONE][0]['value'], "/" . drupal_get_path_alias("user/" . $flagged_user->uid), array('attributes' => array('target' => '_blank', 'class' => array('report-flagged-link')))) . " " . $flagged_time . "</span><br>";
         }
         
         $links['approve'][] = array(
@@ -1263,12 +1263,48 @@ function _tm_more_actions_process($field, $title = NULL) {
   }
   // END report organization profile link
  
+  // START Add member event link
+  if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
+
+    if ($conf['tm_event_member_events_enabled'] == true) {
+      if ($user->uid == $field['entity']->uid) {
+
+        // member can create event
+        if (_tm_events_check_create_member_event($user)) {
+          $links['edition'][] = array(
+            'wrapper_class' => array('add'),
+            'content' => l(t('Add event'), '/node/add/event',
+              array('attributes' => array('title' => t('Add your own event')))
+            )
+          );
+        } else {
+          // member not able to create event
+          $member_event_message = _tm_events_check_create_member_event_message($user);
+          if ($member_event_message != "") {
+            $links['edition'][] = array(
+              'wrapper_class' => array('add'),
+              'content' => l(t('Add event'), 'javascript:jq_create_member_event_message();',
+                array(
+                  'fragment' => '',
+                  'external' => true,
+                  'attributes' => array('title' => t('Add your own event'))
+                )
+              )
+            );
+          }
+
+        } // end else
+      }
+    }
+  }
+  // END Add memmber event link
+
   // START Add chapter event Link
   if (isset($field['entity']->type) && $field['entity']->type == 'chapter') {
     if (_tm_events_check_create_chapter_event($user, $field['entity']->nid)) {
       $links['edition'][] = array(
       'wrapper_class' => array('add'),
-      'content' => l(t('Add event'), '/node/add/event', array(
+      'content' => l(t('Add chapter event'), '/node/add/event', array(
         'query' => array(
           'field_chapter' => $field['entity']->nid
         ),

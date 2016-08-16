@@ -24,11 +24,6 @@ $user_score = tm_users_signup_score();
 
 <?php
 
-// Set create member event message as js var
-// We use this in jq_create_member_event_message()
-$member_event_message = _tm_events_check_create_member_event_message($loaded);
-drupal_add_js(array('tm_events' => array('create_member_event_message' => $member_event_message)), array('type' => 'setting'));
-
 // Set avatar
 if (empty($loaded->field_avatar)) {
   $img_uri = $conf["tm_images_default_field_avatar"];
@@ -105,16 +100,6 @@ $image = theme('image_style', array(
       if (!$twitter_data): ?>
       <li><?php print l(t('Connect with Twitter'), 'tm_twitter/oauth'); ?></li>
       <?php endif; ?>
-
-      <?php if ($conf['tm_event_member_events_enabled'] == true) { ?>
-        <?php if (_tm_events_check_create_member_event($loaded)) { ?>
-        <li><?php print l(t('Add member event'), 'node/add/event'); ?></li>
-        <?php } else {
-          if ($member_event_message != "") { ?>
-            <li><?php print l(t('Add member event'), 'javascript:jq_create_member_event_message();', array('fragment' => '','external'=>true)); ?></li>
-          <?php } // end if teaser_message ?>
-        <?php } // end else ?>
-      <?php } // ense if tm_event_member_events_enabled?>
 
       <?php if (!in_array("approved user", $loaded->roles)) { 
       // show last time request info was flagged

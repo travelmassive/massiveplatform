@@ -12,7 +12,7 @@ function tm_notifications_messages_admin_form($form, &$form_state) {
   $form['introduction'] = array(
     '#type' => 'item',
     '#title' => t('Notification Messages'),
-    '#description' => t('On this page you can edit the custom Travel Massive notifications and reminders.') . '<br/>' . 
+    '#description' => t('On this page you can edit the custom Massive Platform notifications and reminders.') . '<br/>' . 
       t('If you are searching for the standard Drupal messages (email on user creation for example), !link.', array('!link' => l(t('click here'), 'admin/config/people/accounts'))),
   );
   

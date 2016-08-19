@@ -558,6 +558,7 @@ function tm_users_field_group_info() {
       1 => 'group_user_notifications',
       2 => 'group_user_profile',
       3 => 'group_user_twitter_settings',
+      4 => 'group_user_privacy',
     ),
     'format_type' => 'htabs',
     'format_settings' => array(
@@ -597,6 +598,34 @@ function tm_users_field_group_info() {
     ),
   );
   $field_groups['group_user_notifications|user|user|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_user_privacy|user|user|form';
+  $field_group->group_name = 'group_user_privacy';
+  $field_group->entity_type = 'user';
+  $field_group->bundle = 'user';
+  $field_group->mode = 'form';
+  $field_group->parent_name = 'group_user_edit';
+  $field_group->data = array(
+    'label' => 'Privacy',
+    'weight' => '38',
+    'children' => array(
+      0 => 'field_user_disable_public_index',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'formatter' => 'collapsible',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-user-privacy field-group-fieldset',
+        'required_fields' => 1,
+        'id' => '',
+      ),
+    ),
+  );
+  $field_groups['group_user_privacy|user|user|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -738,6 +767,7 @@ function tm_users_field_group_info() {
   t('Job wrapper');
   t('Location');
   t('Notifications');
+  t('Privacy');
   t('Profile');
   t('QA');
   t('Summary');

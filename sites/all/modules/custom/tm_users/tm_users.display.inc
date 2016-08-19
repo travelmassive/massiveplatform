@@ -34,6 +34,23 @@ function tm_users_user_view($account, $view_mode, $langcode) {
     drupal_add_js(array('tm_events' => array('create_member_event_message' => $member_event_message)), array('type' => 'setting'));
   }
 
+  // Member privacy - add noindex metatag if field_user_disable_public_index enabled
+  if ($view_mode == "full") {
+    if (isset($account->field_user_disable_public_index[LANGUAGE_NONE][0]['value'])) {
+      if ($account->field_user_disable_public_index[LANGUAGE_NONE][0]['value']) {
+
+        $noindex_meta_tag = array(
+          '#tag' => 'meta',
+          '#attributes' => array(
+          'name' => 'robots',
+          'content' => 'noindex, nofollow',
+          ),
+        );
+        drupal_add_html_head($noindex_meta_tag, 'user_profile_meta_robots');
+      }
+    }
+  }
+
 }
 
 /** 

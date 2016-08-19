@@ -494,7 +494,7 @@ function tm_users_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_text',
-      'weight' => 82,
+      'weight' => 8,
     ),
   );
 
@@ -1165,7 +1165,7 @@ function tm_users_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 81,
+      'weight' => 7,
     ),
   );
 
@@ -1321,6 +1321,58 @@ function tm_users_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 39,
+    ),
+  );
+
+  // Exported field_instance: 'user-user-field_user_disable_public_index'.
+  $field_instances['user-user-field_user_disable_public_index'] = array(
+    'bundle' => 'user',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'People will still be able to view your profile page, but public search engines will not be allowed to index it.
+<br>This setting is immediate however it may take some time for search engines to update their results.
+<br>If you have any questions or concerns about your privacy, please <a class="cancel" href="/contact">contact us</a>.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 37,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'user',
+    'field_name' => 'field_user_disable_public_index',
+    'label' => 'Hide my profile from Google',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 9,
     ),
   );
 
@@ -1712,6 +1764,7 @@ function tm_users_field_default_field_instances() {
   t('Facebook');
   t('First name');
   t('Friendly URL');
+  t('Hide my profile from Google');
   t('Home Chapter');
   t('In a few short words, tell us why you\\\'d like to join the community.');
   t('Increase your exposure with a cover video.
@@ -1723,6 +1776,9 @@ function tm_users_field_default_field_instances() {
   t('Last name');
   t('Linkedin');
   t('Organization Name');
+  t('People will still be able to view your profile page, but public search engines will not be allowed to index it.
+<br>This setting is immediate however it may take some time for search engines to update their results.
+<br>If you have any questions or concerns about your privacy, please <a class="cancel" href="/contact">contact us</a>.');
   t('Please provide your given name. This field will be <strong>public</strong>.');
   t('Please provide your last name. This field will be <strong>public</strong>.');
   t('Please select the industry segment that best applies to you.');

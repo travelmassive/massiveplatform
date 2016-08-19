@@ -62,7 +62,7 @@ function tm_events_menu() {
     'title' => t('Message event organizers'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('tm_events_contact_form',1),
-    'access callback' => 'user_is_logged_in',
+    'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
   return $items;

@@ -7,6 +7,14 @@
  */
 function tm_events_contact_form(){
 
+  // if user is not logged in send them to the login page with a redirect to the contact form
+  if (!user_is_logged_in()) {
+    // /events/message/123
+    $url_parts = explode("/", request_path());
+    $event_id = $url_parts[2];
+    drupal_goto("/user/login", array("query" => array("destination" => "events/message/" . $event_id)));
+    return;
+  }
 
   $form['subject'] = array(
     '#title' => t('Subject'),
@@ -105,7 +113,8 @@ function tm_events_contact_form_submit($form, &$form_state) {
     // send to all event organizers in one email
     tm_events_send_contact_email($event_organizer_emails, $form_state['values']['subject'], $form_state['values']['body'], $account, $event);
 
-    drupal_set_message(t('Your message has been sent.'));
+    drupal_get_messages("help-tip");
+    drupal_set_message(t('Your message has been sent to the event organizers.'));
     drupal_goto('node/'.$event->nid);
   }
 }

@@ -39,3 +39,16 @@ function tm_chapters_formal_name($chapter) {
 
   return $chapter_name;
 }
+
+/**
+ * Helper method get number of events member has attended or waitlisted in this chapter
+ * Flag name can be "event_register" or "event_waitlist"
+ */
+function tm_chapters_get_num_events_for_member($uid, $chapter_id, $flag_name = "event_register") {
+
+  $flag = flag_get_flag($flag_name, NULL);
+  $query = "SELECT COUNT(*) amount FROM flagging LEFT JOIN field_data_field_chapter ON field_data_field_chapter.entity_id = flagging.entity_id WHERE field_chapter_target_id = :chapter_id AND flagging.fid = :fid AND flagging.uid = :uid";
+  $num_events = db_query($query, array(':chapter_id' => $chapter_id, 'fid' => $flag->fid, ':uid' => $uid))->fetch();
+
+  return $num_events->amount;
+}

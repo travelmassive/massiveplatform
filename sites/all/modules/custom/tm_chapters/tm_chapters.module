@@ -228,3 +228,4 @@ function _tm_chapters_check_moderator_delete($chapter_id) {
   return true; 
 }
 
+

@@ -49,7 +49,7 @@ function tm_chapters_download_csv(){
   fputs($fh,$message,strlen($message));
 
   // puts a header row across the top of the csv
-  $item = array(t('First name'),t('Last name'),t('Email'),t('SubscribeChapterNewsletter'),t('SubscribeGlobalNewsletter'),t('SubscribeChapterAnnouncements'),t('Country'),t('City'),t('Organization'),t('Role'),t('Website'),t('Segment'),t('MemberSince'),t('ApprovalStatus'));
+  $item = array(t('First name'),t('Last name'),t('Email'),t('SubscribeChapterNewsletter'),t('SubscribeGlobalNewsletter'),t('SubscribeChapterAnnouncements'),t('Country'),t('City'),t('Organization'),t('Role'),t('Website'),t('Segment'),t('MemberSince'),t('Events'),t('Waitlists'), t('ApprovalStatus'));
   fputcsv($fh, $item);
 
   // list of users
@@ -107,6 +107,14 @@ function tm_chapters_download_csv(){
     }
     else $item[] = t('none');
     $item[] = date('j M Y',$load_user['timestamp']);
+
+    // number of registered events
+    $num_events = tm_chapters_get_num_events_for_member($account->uid, $chapter->nid, "event_register");
+    $item[] = $num_events;
+
+    // number of waitlists
+    $num_waitlists = tm_chapters_get_num_events_for_member($account->uid, $chapter->nid, "event_waitlist");
+    $item[] = $num_waitlists;
 
     // approved or not
     if (!in_array("approved user", $account->roles)) { 

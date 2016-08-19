@@ -104,7 +104,7 @@ function tm_events_communication_form($event) {
   $form['body'] = array(
     '#type' =>'text_format',
     '#title' => t('Custom Message'),
-    '#rows' => 10,
+    '#rows' => 18,
     '#value' => $prefill,
     '#required' => TRUE,
     '#id' => 'edit-body',
@@ -772,7 +772,15 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
       $prefill .= "<li>Sponsors: " . implode(", ", $sponsor_links) . "</li>";
   }
 
-  $prefill .= "<li>" . t('Register here').': <a href="' . $event_url . '">' . $event_url .'</a>'; 
+  $prefill .= "<li>" . t('Register here').': <a href="' . $event_url . '">' . $event_url .'</a></li>';
+
+  // add contact link if html email
+  if ($use_html) {
+    $contact_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('events/message/' . $event->nid);
+    $prefill .= '<li>Questions about event? <a href="' . $contact_url . '">Send a message</a></li>';
+  }
+
+
   $prefill .= "</ul>";
   if ($event->body != null) {
     // add line breaks
@@ -792,13 +800,12 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
     $prefill .= ",<br>- " . $first_name . " " . $last_name;
   }
   
-
-
   if (!$use_html) {
     $prefill = str_replace("<br>", "\n", $prefill);
     $prefill = str_replace("<li>", "\n* ", $prefill);
     $prefill = str_replace("</ul>", "\n\n", $prefill);
     $prefill = strip_tags($prefill);
+
   }
 
   return $prefill;

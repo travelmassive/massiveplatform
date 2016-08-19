@@ -98,7 +98,7 @@ function tm_chapters_download_csv(){
       $term = taxonomy_term_load($account->field_segment[$language][0]['tid']);
       // load parent term
       $parent_terms = taxonomy_get_parents($term->tid);
-      if (sizeof($parent_terms > 0)) {
+      if (sizeof($parent_terms) > 0) {
         $parent_term = current($parent_terms);
         $item[] = $parent_term->name. " > " . $term->name;
       } else {

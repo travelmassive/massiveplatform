@@ -728,7 +728,7 @@ function _tm_reports_get_global_insights() {
   $insights["pct_signedin_members_90_days"] = round(($signed_in_90_days->amount / $members_total) * 100, 0);
 
   // % OF MEMBERS WHO HAVEN'T SIGNED IN SINCE 90 DAYS
-  $insights["pct_signedin_members_older_than_90_days"] = round(($signed_in_older_than_90_days->amount / $members_total), 0);
+  $insights["pct_signedin_members_older_than_90_days"] = round(($signed_in_older_than_90_days->amount / $members_total) * 100, 0);
 
 
   // RETURN DATA

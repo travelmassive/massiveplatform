@@ -220,6 +220,62 @@ function tm_organizations_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-organization-field_company_enable_events'.
+  $field_instances['node-organization-field_company_enable_events'] = array(
+    'bundle' => 'organization',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Allow this company to list events without requiring the minimum follower count.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 22,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_company_enable_events',
+    'label' => 'Enable events',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 57,
+    ),
+  );
+
   // Exported field_instance: 'node-organization-field_country'.
   $field_instances['node-organization-field_country'] = array(
     'bundle' => 'organization',
@@ -1366,11 +1422,13 @@ Displays a short message to followers on your company profile page.<br>',
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Allow this company to list events without requiring the minimum follower count.');
   t('City');
   t('Country');
   t('Cover Image');
   t('Cover Video');
   t('Description');
+  t('Enable events');
   t('Facebook');
   t('Friendly URL');
   t('Give something back to members who follow your company profile.<br>

@@ -269,6 +269,14 @@ function _tm_events_check_create_company_event($check_user, $company_id) {
     return false;
   }
 
+  // if field_company_enable_events enabled, allow company event
+  $company = node_load($company_id);
+  if (isset($company->field_company_enable_events[LANGUAGE_NONE][0]['value'])) {
+    if ($company->field_company_enable_events[LANGUAGE_NONE][0]['value']) {
+      return true;
+    }
+  }
+
   // allow approved members with minimum number of company followers to create an event
   $min_followers = $conf["tm_event_company_event_min_followers"];
   $num_followers = tm_organizations_get_num_followers($company_id);

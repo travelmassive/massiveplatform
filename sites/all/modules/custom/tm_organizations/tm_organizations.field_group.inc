@@ -98,6 +98,35 @@ function tm_organizations_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_company_moderator_settings|node|organization|form';
+  $field_group->group_name = 'group_company_moderator_settings';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'organization';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Moderator Settings',
+    'weight' => '60',
+    'children' => array(
+      0 => 'field_company_enable_events',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'label' => 'Moderator Settings',
+      'instance_settings' => array(
+        'required_fields' => 1,
+        'id' => '',
+        'classes' => 'group-company-moderator-settings field-group-fieldset',
+        'description' => '',
+      ),
+      'formatter' => 'open',
+    ),
+  );
+  $field_groups['group_company_moderator_settings|node|organization|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_details_wrapper|node|organization|full';
   $field_group->group_name = 'group_details_wrapper';
   $field_group->entity_type = 'node';
@@ -317,6 +346,7 @@ function tm_organizations_field_group_info() {
   t('Events');
   t('Followers');
   t('Location');
+  t('Moderator Settings');
   t('Profile managed by');
   t('Summary');
 

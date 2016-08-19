@@ -270,6 +270,13 @@ function tm_organizations_form_alter(&$form, $form_state, $form_id) {
   if (!$conf["tm_cover_videos_enabled"]) {
     unset($form['field_company_cover_video']);
   }
+
+  // hide moderator settings for non moderators
+  global $user;
+  $perm_is_moderator_or_admin = ((in_array("moderator", $user->roles)) || (in_array("administrator", $user->roles)));
+  if (!$perm_is_moderator_or_admin) {
+    field_group_hide_field_groups($form, array('group_company_moderator_settings'));
+  }
   
 }
 

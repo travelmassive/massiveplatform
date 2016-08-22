@@ -13,7 +13,7 @@ function tm_events_communication_form($event) {
   global $conf;
 
   // Add javascript for form
-  drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_communication_v3.js');
+  drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_communication_v4.js');
 
   // Add page title and page url to javascript
   $event_url = drupal_get_path_alias('node/'.$event->nid);
@@ -22,11 +22,9 @@ function tm_events_communication_form($event) {
 
   // Get chapter associated with event if there is one
   $chapter = null;
-  if (isset($event->field_chapter[LANGUAGE_NONE])) {
-    if (sizeof($event->field_chapter[LANGUAGE_NONE][0] > 0)) {
-      $chapter_id = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
-      $chapter = node_load($chapter_id);
-    }
+  if (isset($event->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
+    $chapter_id = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
+    $chapter = node_load($chapter_id);
   }
 
   // Get company associated with event if there is one
@@ -188,17 +186,30 @@ function tm_events_communication_form($event) {
 
   // Permission variables
   $perm_is_moderator_or_admin = ((in_array("moderator", $user->roles)) || (in_array("administrator", $user->roles)));
-  $perm_is_chapter_leader = (in_array("chapter leader", $user->roles));
 
-  // Only show chapter option if the event has a chapter
-  // Also check user is chapter leader or moderator
+  // Add event chapters
+  $chapter_nids = tm_events_get_published_chapters($event);
   if ($chapter != null) {
-    if ($perm_is_chapter_leader || $perm_is_moderator_or_admin) {
-      $num_members = _tm_chapters_get_num_members($chapter->nid);
-      $options['chapter'] = t('All Chapter Members (' . tm_events_pluralize_members($num_members) . ')');
+    array_unshift($chapter_nids, $chapter->nid);
+  }
+  $chapter_nids = array_unique($chapter_nids);
 
-      $num_members_not_registered = $num_members - ($num_registered + $num_waitlisted);
-      $options['chapter_and_not_rsvp_or_waitlist'] = t('Members who have not yet registered (' . tm_events_pluralize_members($num_members_not_registered) . ')');
+  // Add each chapter
+  foreach ($chapter_nids as $chapter_id) {
+
+    // load chapter
+    $published_chapter = node_load($chapter_id);
+
+    // check if user is chapter leader
+    if ((tm_users_is_chapter_leader($user->uid, $chapter_id)) or ($perm_is_moderator_or_admin)) {
+
+      $num_members = _tm_chapters_get_num_members($published_chapter->nid);
+      $options['chapter-' . $chapter_id] = tm_chapters_formal_name($published_chapter) . ' - All members (' . tm_events_pluralize_members($num_members) . ')';
+
+      $members_not_registered = tm_events_get_chapter_members_not_registered($event->nid, $chapter_id);
+
+      $num_members_not_registered = sizeof($members_not_registered);
+      $options['chapter_and_not_rsvp_or_waitlist-' . $chapter_id] = tm_chapters_formal_name($published_chapter) . t(' - Not registered (' . tm_events_pluralize_members($num_members_not_registered) . ')');
     } 
   }
 
@@ -209,7 +220,7 @@ function tm_events_communication_form($event) {
   }
 
   // Member event - select followers
-  if (($chapter == null) && ($company == null)) {
+  if (($chapter == null) && ($company == null) && (tm_events_check_published_chapter_leader($event, $user->uid) == null)) {
     $num_followers = tm_users_get_num_followers($user->uid);
     $options['member_followers'] = t('My followers (' . tm_events_pluralize_members($num_followers) . ')');
   }
@@ -343,13 +354,15 @@ function tm_events_test_email_ajax(){
 /**
  * Submit function of communication ajax request
  */
-function tm_events_send_emails($recipients, $subject, $message, $eventid, $replyto = "", $approved_members = true){
+function tm_events_send_emails($recipients, $subject, $message, $eventid, $chapterid, $replyto = "", $approved_members = true){
 
   global $user;
 
-  // Permission variables
-  $perm_is_moderator_or_admin = ((in_array("moderator", $user->roles)) || (in_array("administrator", $user->roles)));
-  $perm_is_chapter_leader = (in_array("chapter leader", $user->roles));
+  // permission check
+  $event = node_load($eventid);
+  if (!tm_events_check_permission_announce_event($user, $event)) {
+    print(json_encode(array("sent" => $sendcount)));
+  }
 
   // all these user lists are just flags to event or chapter
   $rsvpflag = flag_get_flag('event_register', NULL);
@@ -388,7 +401,6 @@ function tm_events_send_emails($recipients, $subject, $message, $eventid, $reply
   }
 
   // RSVP and Waitlist
-  // Todo: check this shouldn't cause duplicates
   if ($recipients == 'all') {
 
     $results = db_select('flagging', 'f')
@@ -406,70 +418,55 @@ function tm_events_send_emails($recipients, $subject, $message, $eventid, $reply
   // All chapter members
   if ($recipients == 'chapter') {
 
-    if ($perm_is_chapter_leader || $perm_is_moderator_or_admin) {
+    $results = db_select('flagging', 'f')
+      ->fields('f')
+      ->condition('fid', $chapterflag->fid ,'=')
+      ->condition('entity_id', $chapterid ,'=')
+      ->execute();
 
-      // load up the event and find out what the chapter is
-      $event = node_load($eventid);
-      $chapterid = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
-
-      $results = db_select('flagging', 'f')
-        ->fields('f')
-        ->condition('fid', $chapterflag->fid ,'=')
-        ->condition('entity_id', $chapterid ,'=')
-        ->execute();
-
-      // create user_ids list from results
-      while ($result = $results->fetchAssoc()){
-        $user_ids[] = $result['uid'];
-      }
+    // create user_ids list from results
+    while ($result = $results->fetchAssoc()){
+      $user_ids[] = $result['uid'];
     }
-
   }
 
   // All chapter members who are not registered or on waitlist
   if ($recipients == 'chapter_and_not_rsvp_or_waitlist') {
 
-    if ($perm_is_chapter_leader || $perm_is_moderator_or_admin) {
+    $members_in_chapter = array();
+    $members_who_have_rsvp = array();
+    $members_who_have_waitlist = array();
 
-      $members_in_chapter = array();
-      $members_who_have_rsvp = array();
-      $members_who_have_waitlist = array();
-
-      // load up the event and find out what the chapter is
-      $event = node_load($eventid);
-      $chapterid = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
-
-      $results = db_select('flagging', 'f')
-        ->fields('f')
-        ->condition('fid', $chapterflag->fid ,'=')
-        ->condition('entity_id', $chapterid ,'=')
-        ->execute();
-      while ($result = $results->fetchAssoc()){
-        $members_in_chapter[] = $result['uid'];
-      }
-
-      $results = db_select('flagging', 'f')
-        ->fields('f')
-        ->condition('fid', $rsvpflag->fid ,'=')
-        ->condition('entity_id', $eventid ,'=')
-        ->execute();
-      while ($result = $results->fetchAssoc()){
-        $members_who_have_rsvp[] = $result['uid'];
-      }
-
-      $results = db_select('flagging', 'f')
-        ->fields('f')
-        ->condition('fid', $waitflag->fid ,'=')
-        ->condition('entity_id', $eventid ,'=')
-        ->execute();
-
-      while ($result = $results->fetchAssoc()){
-        $members_who_have_waitlist[] = $result['uid'];
-      }
-
-      // we only want people who are in the chapter who have not registered or waitlist
-      $user_ids = array_diff($members_in_chapter, $members_who_have_rsvp, $members_who_have_waitlist);
+    $results = db_select('flagging', 'f')
+      ->fields('f')
+      ->condition('fid', $chapterflag->fid ,'=')
+      ->condition('entity_id', $chapterid ,'=')
+      ->execute();
+    while ($result = $results->fetchAssoc()){
+      $members_in_chapter[] = $result['uid'];
     }
+
+    $results = db_select('flagging', 'f')
+      ->fields('f')
+      ->condition('fid', $rsvpflag->fid ,'=')
+      ->condition('entity_id', $eventid ,'=')
+      ->execute();
+    while ($result = $results->fetchAssoc()){
+      $members_who_have_rsvp[] = $result['uid'];
+    }
+
+    $results = db_select('flagging', 'f')
+      ->fields('f')
+      ->condition('fid', $waitflag->fid ,'=')
+      ->condition('entity_id', $eventid ,'=')
+      ->execute();
+
+    while ($result = $results->fetchAssoc()){
+      $members_who_have_waitlist[] = $result['uid'];
+    }
+
+    // we only want people who are in the chapter who have not registered or waitlist
+    $user_ids = array_diff($members_in_chapter, $members_who_have_rsvp, $members_who_have_waitlist);
   }
 
   // Member Followers
@@ -485,7 +482,6 @@ function tm_events_send_emails($recipients, $subject, $message, $eventid, $reply
     while ($result = $results->fetchAssoc()){
       $user_ids[] = $result['uid'];
     }
-
   }
 
   // Company Followers
@@ -511,6 +507,9 @@ function tm_events_send_emails($recipients, $subject, $message, $eventid, $reply
       }
     }
   }
+
+  // Remove any duplicates
+  $user_ids = array_unique($user_ids);
 
   // send the emails
   // We use a cron queue tm_event_announcements to send emails in the background.
@@ -683,6 +682,7 @@ function tm_events_send_emails_ajax() {
   if (!isset($_POST['recipients'])) return FALSE;
   if (!isset($_POST['approved_members'])) return FALSE;
   if (!isset($_POST['eventid'])) return FALSE;
+  if (!isset($_POST['chapterid'])) return FALSE;
   if (!isset($_POST['include_cover_image'])) return FALSE;
   if (!isset($_POST['message_format'])) return FALSE;
 
@@ -692,6 +692,7 @@ function tm_events_send_emails_ajax() {
   $recipients = $_POST['recipients'];
   $approved_members = ($_POST['approved_members'] == "1");
   $eventid = $_POST['eventid'];
+  $chapterid = $_POST['chapterid'];
   $include_cover_image = ($_POST['include_cover_image'] == "1");
   $replyto = "";
   if (isset($_POST['replyto'])) { 
@@ -718,7 +719,7 @@ function tm_events_send_emails_ajax() {
       tm_events_send_email(null, $conf["tm_announcement_copy_email"], "[Copy] " . $subject, $message, $eventid, $replyto);
   }
 
-  $sendcount = tm_events_send_emails($recipients, $subject, $message, $eventid, $replyto, $approved_members);
+  $sendcount = tm_events_send_emails($recipients, $subject, $message, $eventid, $chapterid, $replyto, $approved_members);
 
   // indicate success to the js ajax handler
   // todo: return a nicer json response and parse it in the js
@@ -742,7 +743,7 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
   $date = render($view);
 
   $intro_text = "We're pleased to announce a new event, please see details below:";
-  if (($chapter == null) && ($company == null)) {
+  if (($chapter == null) && ($company == null) && (tm_events_check_published_chapter_leader($event, $user->uid) == null)) {
     $intro_text = "I'd like to invite you to my upcoming event:";
   }
 
@@ -772,7 +773,7 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
       $prefill .= "<li>Sponsors: " . implode(", ", $sponsor_links) . "</li>";
   }
 
-  $prefill .= "<li>" . t('Register here').': <a href="' . $event_url . '">' . $event_url .'</a></li>';
+  $prefill .= '<li>Register here: <a href="' . $event_url . '">' . $event_url .'</a></li>';
 
   // add contact link if html email
   if ($use_html) {
@@ -793,7 +794,13 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
     $prefill .= ",<br>- The " . $chapter->title  . " Team";
   }
 
-  if (($chapter == null) && ($company == null)) {
+  if (tm_events_check_published_chapter_leader($event, $user->uid) != null) {
+    $chapter_id = tm_events_check_published_chapter_leader($event, $user->uid);
+    $published_chapter = node_load($chapter_id);
+    $prefill .= ",<br>- The " . $published_chapter->title . " Team";
+  }
+
+  if (($chapter == null) && ($company == null) && (tm_events_check_published_chapter_leader($event, $user->uid) == null)) {
     $loaded = user_load($user->uid);
     $first_name = strip_tags($loaded->field_user_first_name[LANGUAGE_NONE][0]['value']);
     $last_name = strip_tags($loaded->field_user_last_name[LANGUAGE_NONE][0]['value']);

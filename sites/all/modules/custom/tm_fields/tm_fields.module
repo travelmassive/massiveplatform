@@ -512,7 +512,7 @@ function _tm_more_actions_process($field, $title = NULL) {
     if ($node->type == 'event') {
 
       // check permission
-      $show_menu_item = tm_events_check_permission_edit_event($user, $field['entity']);
+      $show_menu_item = tm_events_check_permission_announce_event($user, $field['entity']);
 
       // if event is external rsvp, don't show
       if ($node->field_external_rsvp['und'][0]['value']) {

@@ -261,6 +261,62 @@ function tm_events_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-event-field_chapter_can_announce'.
+  $field_instances['node-event-field_chapter_can_announce'] = array(
+    'bundle' => 'event',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Chapters that you publish this event to will be able to announce the event.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 56,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_chapter_can_announce',
+    'label' => 'Allow Chapter Leaders to send announcements',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 32,
+    ),
+  );
+
   // Exported field_instance: 'node-event-field_chapter_publish'.
   $field_instances['node-event-field_chapter_publish'] = array(
     'bundle' => 'event',
@@ -2382,6 +2438,7 @@ This will be displayed to the member on the event page and included in the autom
   // Translatables
   // Included for use with string extractors like potx.
   t('<span id=\'tm-event-edit-company-description\'>The company hosting this event.</span>');
+  t('Allow Chapter Leaders to send announcements');
   t('Allow featured members to download the attendee list');
   t('Allow featured members to receive event notifications');
   t('Approved Members Only');
@@ -2390,6 +2447,7 @@ This will be displayed to the member on the event page and included in the autom
 <br><br>');
   t('Change Owner');
   t('Change the owner of the event.');
+  t('Chapters that you publish this event to will be able to announce the event.');
   t('Check this box if you want to restrict registration and waitlist to members who are approved. Non-approved members won\'t be able to sign up.');
   t('Check this option if you want to restrict displaying the event location to registered attendees only.');
   t('Check this to indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)');

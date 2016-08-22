@@ -28,7 +28,7 @@ function tm_events_menu() {
     'title' => t('Send Announcement'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('tm_events_communication_form'),
-    'access callback' => 'tm_events_check_permission_callback',
+    'access callback' => 'tm_events_check_announcement_callback',
     'attributes' => array('class' => 'classname'),
     'type' => MENU_CALLBACK,
   );
@@ -49,13 +49,13 @@ function tm_events_menu() {
   $items['events/send-announcement-test/%node'] = array(
     'title' => t('Send test email'),
     'page callback' => 'tm_events_test_email_ajax',
-    'access callback' => 'tm_events_check_permission_callback',
+    'access callback' => 'tm_events_check_announcement_callback',
     'type' => MENU_CALLBACK,
   );
   $items['events/send-announcement-callback/%node'] = array(
     'title' => t('Send event emails'),
     'page callback' => 'tm_events_send_emails_ajax',
-    'access callback' => 'tm_events_check_permission_callback',
+    'access callback' => 'tm_events_check_announcement_callback',
     'type' => MENU_CALLBACK,
   );
   $items['events/message/%node'] = array(

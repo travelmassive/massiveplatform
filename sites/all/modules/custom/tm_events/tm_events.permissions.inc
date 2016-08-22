@@ -433,3 +433,45 @@ function tm_events_check_featured_member_download_csv($check_user, $event) {
   // not allowed
   return false;
 }
+
+/**
+ * Callback wrapper for tm_events_check_permission_announce_event()
+ */
+function tm_events_check_announcement_callback() {
+
+  global $user;
+  $event_id = arg(2); // /events/action/1234
+  $event = node_load($event_id);
+
+  // check permissions
+  return tm_events_check_permission_announce_event($user, $event);
+}
+
+/**
+ * Check if a user has ability to announce existing event
+ */
+function tm_events_check_permission_announce_event($check_user, $event) {
+
+  // Step 1. Check edit permissions
+  $allowed = tm_events_check_permission_edit_event($check_user, $event);
+  if ($allowed) {
+    return true;
+  }
+
+  // Step 2. Check "Enable Chapter announcements" setting
+  if (isset($event->field_chapter_can_announce[LANGUAGE_NONE][0]['value'])) {
+    if ($event->field_chapter_can_announce[LANGUAGE_NONE][0]['value']) {
+
+      // check if user is chapter leader of published chapter
+      $published_chapters = tm_events_get_published_chapters($event);
+      foreach ($published_chapters as $chapter_id) {
+        if (tm_users_is_chapter_leader($check_user->uid, $chapter_id)) {
+          return true;
+        }
+      }
+    }
+  }
+
+  // no permission
+  return false;
+}

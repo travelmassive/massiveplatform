@@ -140,6 +140,7 @@ function tm_events_field_group_info() {
     'weight' => '10',
     'children' => array(
       0 => 'field_chapter_publish',
+      1 => 'field_chapter_can_announce',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

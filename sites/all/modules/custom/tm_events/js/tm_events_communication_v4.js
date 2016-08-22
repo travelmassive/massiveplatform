@@ -7,6 +7,9 @@ var tm_communications_message_format = "";
 var tm_communications_submitted = false;
 var tm_communications_completed = false;
 var tm_communications_confirm_chapters = false;
+var tm_communications_recipients = "";
+var tm_communications_chapter_id = null;
+
 
 // send emails
 // action is either test_email or send_emails
@@ -17,7 +20,25 @@ tm_communication_event_send_emails = function(form_action) {
 	// note: workaround as usual jquery targeting does not work with drupal hidden fields
 	tm_communications_event_id = $('input[name^="eventid"]').val();
 
-	// 2. GET HTML OR TEXT MESSAGE
+	
+	// 2. GET RECIPIENTS AND CHAPTER ID
+	// get recipient parts from options
+	var recipients_parts = $('#edit-recipients').val().split("-");
+
+	// no chapter id
+	// ie: rsvp
+	if (recipients_parts.length == 1) {
+		tm_communications_recipients = recipients_parts[0];
+	}
+
+	// chapter id
+	// ie: chapter-1234
+	if (recipients_parts.length == 2) {
+		tm_communications_recipients = recipients_parts[0];
+		tm_communications_chapter_id = recipients_parts[1];
+	}
+
+	// 3. GET HTML OR TEXT MESSAGE
 	// get the html message from the CKEditor
 	var message;
 	
@@ -31,7 +52,7 @@ tm_communication_event_send_emails = function(form_action) {
 		tm_communications_message_format = "text";
 	}
 
-	// 3. VALIDATION
+	// 4. VALIDATION
 	// check message is not empty
 	if (tm_communications_message == "") {
 	  jq_alert(null, "Please enter an announcement message.");
@@ -59,7 +80,7 @@ tm_communication_event_send_emails = function(form_action) {
 	  }
 	}
 
-	// 4. SEND EMAILS
+	// 5. SEND EMAILS
 	// Either test or all emails
 
 	// TEST EMAILS
@@ -141,7 +162,7 @@ tm_communication_send_test_email = function() {
 tm_communication_send_recipient_emails = function() {
 
 	// confirm send to all chapter members
-	if (($('#edit-recipients').val() == "chapter") && (!tm_communications_confirm_chapters)) {
+	if ((tm_communications_recipients == "chapter") && (!tm_communications_confirm_chapters)) {
 
 	 $.prompt('Send message to all Chapter Members?', 
 	 	{ 
@@ -190,7 +211,8 @@ tm_communication_send_recipient_emails = function() {
     data: {'subject': $('#edit-subject').val(),
           'message': tm_communications_message, //$('#edit-body').val(),
           'message_format': tm_communications_message_format, // html, or text
-          'recipients': $('#edit-recipients').val(),
+          'recipients': tm_communications_recipients,
+          'chapterid': tm_communications_chapter_id,
           'approved_members': $('[name="approved_members"]').val(),
           'eventid': tm_communications_event_id,
           'replyto': $('#edit-reply-to').val(),

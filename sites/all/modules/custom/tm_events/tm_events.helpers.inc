@@ -502,3 +502,89 @@ function tm_events_get_users_future_events($uid, $include_chapter_events = false
 
   return $future_event_ids;
 }
+
+/**
+ * Helper method
+ * Get members in chapter who haven't registered to event 
+ */
+function tm_events_get_chapter_members_not_registered($event_id, $chapter_id) {
+
+  $rsvpflag = flag_get_flag('event_register', NULL);
+  $waitflag = flag_get_flag('event_waitlist', NULL);
+  $chapterflag = flag_get_flag('signup', NULL);
+
+  $members_in_chapter = array();
+  $members_who_have_rsvp = array();
+  $members_who_have_waitlist = array();
+
+  $results = db_select('flagging', 'f')
+    ->fields('f')
+    ->condition('fid', $chapterflag->fid ,'=')
+    ->condition('entity_id', $chapter_id ,'=')
+    ->execute();
+  while ($result = $results->fetchAssoc()){
+    $members_in_chapter[] = $result['uid'];
+  }
+
+  $results = db_select('flagging', 'f')
+    ->fields('f')
+    ->condition('fid', $rsvpflag->fid ,'=')
+    ->condition('entity_id', $event_id ,'=')
+    ->execute();
+  while ($result = $results->fetchAssoc()){
+    $members_who_have_rsvp[] = $result['uid'];
+  }
+
+  $results = db_select('flagging', 'f')
+    ->fields('f')
+    ->condition('fid', $waitflag->fid ,'=')
+    ->condition('entity_id', $event_id ,'=')
+    ->execute();
+
+  while ($result = $results->fetchAssoc()){
+    $members_who_have_waitlist[] = $result['uid'];
+  }
+
+  // we only want people who are in the chapter who have not registered or waitlist
+  $user_ids = array_diff($members_in_chapter, $members_who_have_rsvp, $members_who_have_waitlist);
+
+  return $user_ids;
+}
+
+/**
+ * Helper method to get array of chapters event is published to
+ */
+function tm_events_get_published_chapters($event) {
+
+  if (!isset($event->field_chapter_publish[LANGUAGE_NONE][0])) {
+    return array();
+  }
+
+  $chapter_ids = array();
+  foreach ($event->field_chapter_publish[LANGUAGE_NONE] as $item) {
+    $chapter_ids[] = $item['target_id'];
+  }
+
+  return $chapter_ids;
+}
+
+/**
+ * Helper method to check if user a chapter leader of any published chapters.
+ * Returns id of chapter user is leading, otherwise null if no match.
+ */
+function tm_events_check_published_chapter_leader($event, $user_id) {
+
+  // get published chapters of event
+  $published_chapters = tm_events_get_published_chapters($event);
+
+  // check if user is a chapter leader of published chapter
+  foreach($published_chapters as $published_chapter_id) {
+    if (tm_users_is_chapter_leader($user_id, $published_chapter_id)) {
+      return $published_chapter_id;
+    }
+  }
+
+  // not match
+  return null;
+}
+

@@ -711,7 +711,11 @@ function _tm_reports_get_global_insights() {
   $insights["num_signedin_members_90_days"] = $signed_in_90_days->amount;
 
   // NUMBER OF MEMBERS WHO HAVEN'T SIGNED IN SINCE 90 DAYS
-  $query = "SELECT COUNT(DISTINCT uid) amount FROM ip_tracker WHERE FROM_UNIXTIME(last_visit) < DATE_SUB(NOW(), INTERVAL 90 DAY)";
+  $query = "SELECT COUNT(DISTINCT uid) amount FROM 
+    (SELECT uid, max(last_visit) as min_last_visit
+      FROM ip_tracker
+      GROUP BY uid) as t1 
+     WHERE FROM_UNIXTIME(min_last_visit) < DATE_SUB(NOW(), INTERVAL 90 DAY)";
   $signed_in_older_than_90_days = db_query($query)->fetch();
   $insights["num_signedin_members_older_than_90_days"] = $signed_in_older_than_90_days->amount;
 

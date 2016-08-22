@@ -790,16 +790,16 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
   }
   $prefill .= "<br>Cheers";
 
-  if ($chapter != null) {
-    $prefill .= ",<br>- The " . $chapter->title  . " Team";
-  }
-
+  // chapter signoff
   if (tm_events_check_published_chapter_leader($event, $user->uid) != null) {
     $chapter_id = tm_events_check_published_chapter_leader($event, $user->uid);
     $published_chapter = node_load($chapter_id);
     $prefill .= ",<br>- The " . $published_chapter->title . " Team";
+  } elseif ($chapter != null) {
+    $prefill .= ",<br>- The " . $chapter->title  . " Team";
   }
 
+  // individual signup
   if (($chapter == null) && ($company == null) && (tm_events_check_published_chapter_leader($event, $user->uid) == null)) {
     $loaded = user_load($user->uid);
     $first_name = strip_tags($loaded->field_user_first_name[LANGUAGE_NONE][0]['value']);

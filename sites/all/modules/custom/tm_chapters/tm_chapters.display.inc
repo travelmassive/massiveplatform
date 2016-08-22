@@ -108,7 +108,12 @@ function _tm_chapters_get_image_uri($chapter) {
 function tm_chapters_node_view($node, $view_mode) {
 
   if (($node->type == "chapter") && ($view_mode == "full")) {
+
+    // show help wanted
     tm_chapters_show_help_needed_message($node);
+
+    // drop cookie to set default chapter on signup page
+    user_cookie_save(array('chapter_referral_id'=>$node->nid));
   }
 }
 

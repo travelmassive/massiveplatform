@@ -68,6 +68,11 @@ function _tm_users_modify_register_form(&$form, $form_state, $form_id) {
     '#weight'=>9,
   );
 
+  // set default chapter if set from cookie
+  if (isset($_COOKIE['Drupal_visitor_chapter_referral_id'])) {
+    $chapter_referral_id = $_COOKIE['Drupal_visitor_chapter_referral_id'];
+    $form['chapter_list']['#default_value'] = $chapter_referral_id;
+  }
   
   // Step 2. Add community connection to validate membership
   global $conf;

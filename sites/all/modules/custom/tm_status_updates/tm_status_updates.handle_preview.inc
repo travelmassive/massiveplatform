@@ -193,7 +193,9 @@ function tm_status_updates_fetch_link_meta($preview_url) {
     // title
     if (isset($object->title)) {
       if ($utf_decode) {
-        $object->title = utf8_decode($object->title);
+        if (tm_status_updates_check_non_utf8($object->title)) {
+          $object->title = utf8_decode($object->title);
+        }
       }
       $preview_data["link_og_title"] = $object->title;
     }
@@ -201,7 +203,9 @@ function tm_status_updates_fetch_link_meta($preview_url) {
     // description
     if (isset($object->description)) {
       if ($utf_decode) {
-        $object->description = utf8_decode($object->description);
+        if (tm_status_updates_check_non_utf8($object->description)) {
+          $object->description = utf8_decode($object->description);
+        }
       }
       $preview_data["link_og_description"] = $object->description;
     }
@@ -354,5 +358,14 @@ function tm_status_updates_fetch_external_image($image_url) {
 
   // return raw image
   return $image_file;
+}
+
+/**
+ * Helper method to detect non-utf8
+ * Perform a simple test for a character that appears when failed conversion
+ * ie: â (a quote character)
+ */
+function tm_status_updates_check_non_utf8($string) {
+  return (strpos($string, "â") !== false);
 }
 

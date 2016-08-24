@@ -33,9 +33,9 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
       $form['revision_information']['#access'] = FALSE;
       $form['author']['#access'] = FALSE;
       $form['options']['#access'] = FALSE;
-      $form['padding_before_save'] = array(
+      /*$form['padding_before_save'] = array(
         '#markup' => '<br>',
-        '#weight' => 10);
+        '#weight' => 10);*/
     }
   }
 

@@ -391,6 +391,14 @@ function tm_events_node_presave($node) {
     }
   }
 
+  // If external rsvp is set but no url provided, switch back to managed rsvp
+  $external_rsvp = $node->field_external_rsvp[LANGUAGE_NONE][0]['value'];
+  if ($external_rsvp === '1') {
+    if (!isset($node->field_rsvp_link[LANGUAGE_NONE][0]['url'])) {
+      $node->field_external_rsvp[LANGUAGE_NONE][0]['value'] = 0; // turn off
+    }
+  }
+
   // Remove rsvp link if field_external_rsvp is set to manage rsvps
   if (isset($node->field_external_rsvp[LANGUAGE_NONE][0]['value'])) {
     $external_rsvp = $node->field_external_rsvp[LANGUAGE_NONE][0]['value'];

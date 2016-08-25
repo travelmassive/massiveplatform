@@ -49,6 +49,7 @@ function tm_users_download_global_newsletter_csv(){
 	$csvname = strtolower(str_replace(" ", "_", $conf['tm_site_name'])) . '_global_newsletter_'.date('M_d_Y_Hi',time()) . ".csv";
 	$csvname = str_replace(array(","," "), "_", $csvname); // replace spaces and ,
 	date_default_timezone_set($oldzone);
+	$csvname = "confidential_" . $csvname;
 
 	// csv header
 	drupal_add_http_header('Content-Type', 'text/csv; utf-8');
@@ -57,19 +58,21 @@ function tm_users_download_global_newsletter_csv(){
 	$fh = fopen('php://output', 'w');
 
 	// put privacy information in the header
-	$message = "# IMPORTANT: This information is confidential and may not be transmitted to any 3rd party.";
-	$message .= "\n# You may only use this data in compliance with the " . $conf['tm_site_name'] . " Privacy Terms.\n\n";
-	fputs($fh,$message,strlen($message));
+	// note: removed since mailchimp no longer supports comments
+	// instead we put the privacy notice in the download prompt to the user downloading the csv
+	// $message = "# IMPORTANT: This information is confidential and may not be transmitted to any 3rd party.";
+	// $message .= "\n# You may only use this data in compliance with the " . $conf['tm_site_name'] . " Privacy Terms.\n\n";
+	// fputs($fh,$message,strlen($message));
 
 	// lookup approved member role id
 	$approved_member_role = user_role_load_by_name("approved user")->rid;
 
 	// puts a header row across the top of the csv
-	$item = array(t('First name'),t('Last name'),t('Country Code'),t('Location'),t('Home Chapter'),t('Home Chapter Country'),t('Email'),t('User ID'), t('Account Age (Days)'), t('Last Active (Days)'), t('Approved Status'), t('Profile URL'), t('First Organization Profile'), t('Organization Profile URL'), );
+	$item = array(t('First name'),t('Last name'), t('Email'), t('Country Code'), t('Location'), t('Home Chapter'), t('Home Chapter Country'), t('User ID'), t('Account Age (Days)'), t('Last Active (Days)'), t('Joined Chapters'), t('Approved Status'), t('Profile URL'), t('First Organization Profile'), t('Organization Profile URL'));
 	fputcsv($fh, $item);
 
 	// fetch newsletter subscribers
-	$global_newsletter_sql = "select field_user_first_name_value, field_user_last_name_value, field_user_country_iso2 as country, field_location_city_value as location_field, chapter.title as home_chapter, field_data_field_country.field_country_iso2 as home_chapter_country, mail, ud.uid, FLOOR((UNIX_TIMESTAMP() - ud.created) / (60 * 60 * 24)) as created_days from (select field_user_first_name_value, field_user_last_name_value, mail, uid, created from users u, field_data_field_user_first_name fn, field_data_field_user_last_name ln where u.uid = fn.entity_id and u.uid = ln.entity_id) as ud 
+	$global_newsletter_sql = "select field_user_first_name_value, field_user_last_name_value, mail, field_user_country_iso2 as country, field_location_city_value as location_field, chapter.title as home_chapter, field_data_field_country.field_country_iso2 as home_chapter_country, ud.uid, FLOOR((UNIX_TIMESTAMP() - ud.created) / (60 * 60 * 24)) as created_days from (select field_user_first_name_value, field_user_last_name_value, mail, uid, created from users u, field_data_field_user_first_name fn, field_data_field_user_last_name ln where u.uid = fn.entity_id and u.uid = ln.entity_id) as ud 
 left join tm_notifications n on ud.uid = n.uid and n.bundle = 'global_newsletter'
 left join field_data_field_user_country uc on uc.entity_id = ud.uid and uc.entity_type = 'user'
 left join field_data_field_location_city uloc on uloc.entity_id = ud.uid and uloc.entity_type = 'user'
@@ -78,6 +81,12 @@ left join node chapter on chapter.nid = uchapter.field_home_chapter_target_id
 left join field_data_field_country on field_data_field_country.entity_id = chapter.nid and field_data_field_country.bundle = 'chapter'
 where n.value = 1 order by ud.uid asc";
 	
+	// get array of chapter shortcodes to lookup
+	$chapter_shortcodes = tm_chapters_get_all_chapter_shortcodes();
+
+	// get signup flag
+	$signup_flag = flag_get_flag("signup", NULL);
+
 	// perform query
 	$query = db_query($global_newsletter_sql);
 	while ($row = $query->fetchAssoc()) {
@@ -92,6 +101,11 @@ where n.value = 1 order by ud.uid asc";
 		} else {
 			$row[] = -1; // never logged in
 		}
+
+		// get joined chapters
+		// ie: SYD,NYC,BNE
+		$joined_chapters = tm_users_get_users_chapters_shortcodes($chapter_shortcodes, $signup_flag, $user_id);
+		$row[] = implode(",", $joined_chapters);
 
 		// include approval status
 		$approved_status = tm_users_userid_has_roleid($user_id, $approved_member_role);
@@ -196,5 +210,20 @@ function tm_users_download_chapter_leaders_csv(){
 
 	// close file handle
 	fclose($fh);
+}
+
+/**
+ * Helper method for use within tm_users_download_global_newsletter_csv()
+ * Get a list of user's chapters shortcodes
+ */
+function tm_users_get_users_chapters_shortcodes($chapter_shortcodes, $signup_flag, $user_id) {
+  $joined_chapters = array();
+  $query = "SELECT entity_id FROM {flagging} f WHERE f.fid = :fid AND f.entity_type='node' AND f.uid=:uid";
+  $joined_chapters_rows = db_query($query, array(':fid' => $signup_flag->fid, ':uid' => $user_id))->fetchAll();
+  foreach ($joined_chapters_rows as $chapters_row) {
+    $joined_chapters[] = $chapter_shortcodes[$chapters_row->entity_id];
+  }
+
+  return $joined_chapters;
 }
 

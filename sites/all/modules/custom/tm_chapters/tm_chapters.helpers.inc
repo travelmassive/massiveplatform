@@ -52,3 +52,21 @@ function tm_chapters_get_num_events_for_member($uid, $chapter_id, $flag_name = "
 
   return $num_events->amount;
 }
+
+/**
+ * Helper method get all chapter short codes
+ * Return array of nid => shortcode
+ */
+function tm_chapters_get_all_chapter_shortcodes() {
+
+  $query = "SELECT entity_id, field_chapter_shortcode_value FROM field_data_field_chapter_shortcode WHERE entity_type = 'node' AND bundle = 'chapter' AND deleted = 0";
+  $results = db_query($query)->fetchAll();
+
+  $chapters_shortcodes = array();
+  foreach ($results as $result) {
+    $chapters_shortcodes[$result->entity_id] = $result->field_chapter_shortcode_value;
+  }
+
+  return $chapters_shortcodes;
+
+}

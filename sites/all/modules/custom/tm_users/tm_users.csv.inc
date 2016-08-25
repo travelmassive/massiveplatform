@@ -48,21 +48,14 @@ function tm_users_download_global_newsletter_csv(){
 	date_default_timezone_set(drupal_get_user_timezone());
 	$csvname = strtolower(str_replace(" ", "_", $conf['tm_site_name'])) . '_global_newsletter_'.date('M_d_Y_Hi',time()) . ".csv";
 	$csvname = str_replace(array(","," "), "_", $csvname); // replace spaces and ,
-	date_default_timezone_set($oldzone);
 	$csvname = "confidential_" . $csvname;
+	date_default_timezone_set($oldzone);
 
 	// csv header
 	drupal_add_http_header('Content-Type', 'text/csv; utf-8');
 	drupal_add_http_header('Content-Disposition', 'attachment; filename = '.$csvname);
 
 	$fh = fopen('php://output', 'w');
-
-	// put privacy information in the header
-	// note: removed since mailchimp no longer supports comments
-	// instead we put the privacy notice in the download prompt to the user downloading the csv
-	// $message = "# IMPORTANT: This information is confidential and may not be transmitted to any 3rd party.";
-	// $message .= "\n# You may only use this data in compliance with the " . $conf['tm_site_name'] . " Privacy Terms.\n\n";
-	// fputs($fh,$message,strlen($message));
 
 	// lookup approved member role id
 	$approved_member_role = user_role_load_by_name("approved user")->rid;
@@ -172,6 +165,7 @@ function tm_users_download_chapter_leaders_csv(){
 	date_default_timezone_set(drupal_get_user_timezone());
 	$csvname = strtolower(str_replace(" ", "_", $conf['tm_site_name'])) . '_chapter_leaders_'.date('M_d_Y_Hi',time()) . ".csv";
 	$csvname = str_replace(array(","," "), "_", $csvname); // replace spaces and ,
+	$csvname = "confidential_" . $csvname;
 	date_default_timezone_set($oldzone);
 
 	// csv header
@@ -179,12 +173,6 @@ function tm_users_download_chapter_leaders_csv(){
 	drupal_add_http_header('Content-Disposition', 'attachment; filename = '.$csvname);
 
 	$fh = fopen('php://output', 'w');
-
-	// put privacy information in the header
-	$message = "# IMPORTANT: This information is confidential and may not be transmitted to any 3rd party.";
-	$message .= "\n# You may only use this data in compliance with the " . $conf['tm_site_name'] . " Privacy Terms.";
-	$message .= "\n# Note: Chapter leaders of more than one chapter will be listed in multiple rows.\n\n";
-	fputs($fh,$message,strlen($message));
 
 	// puts a header row across the top of the csv
 	$item = array(t('First name'),t('Last name'),t('Country Code'),t('Location'),t('Chapter'),t('Chapter Country'),t('Email'));

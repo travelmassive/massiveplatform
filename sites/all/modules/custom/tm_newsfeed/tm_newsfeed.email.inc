@@ -48,6 +48,7 @@ function tm_newsfeed_notification_send_test_email($email, $subject, $body) {
 	$template = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $template);  
 	$template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
 	$template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template); 
+	$template = str_replace("__HERO_IMAGE__", "", $template); // remove hero image
 
 	// STEP 5. LOAD HTML TEMPLATE INTO EMAIL BODY
 	$email_message['body'] = $template;

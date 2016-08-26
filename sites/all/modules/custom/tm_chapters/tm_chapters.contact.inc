@@ -147,6 +147,7 @@ function tm_chapters_send_email($chapter_leader_emails, $subject, $body, $user, 
     $template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
     $template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template); 
     $template = str_replace("__EMAIL_BRAND_MESSAGE__", "", $template); // disable brand message
+    $template = str_replace("__HERO_IMAGE__", "", $template); // remove hero image
 
     // STEP 5. LOAD HTML TEMPLATE INTO EMAIL BODY
     $email_message['body'] = $template;

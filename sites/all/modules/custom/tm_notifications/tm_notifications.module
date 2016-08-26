@@ -286,6 +286,7 @@ function tm_notifications_mail($key, &$message, $params) {
   $template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
   $template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template);
   $template = str_replace("__MEMBERS_LABEL__", $conf["tm_members_label"], $template);
+  $template = str_replace("__HERO_IMAGE__", "", $template); // remove hero image
 
   // STEP 7. ADD BRANDING MESSAGE TO FOOTER
   $show_branding = true;

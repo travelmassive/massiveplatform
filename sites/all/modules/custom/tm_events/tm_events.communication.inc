@@ -338,14 +338,29 @@ function tm_events_test_email_ajax(){
 
   // Insert cover image
   // Check if tm_event_announcement_enable_cover_image is enabled
+  $event_image_src = null;
+  $event_image_link = null;
   if ($conf['tm_event_announcement_enable_cover_image'] == true) {
     if ($include_cover_image) {
-      $image_html = tm_render_html_email_event_image($eventid);
-      $message = $image_html . "<br>" . $message;
+      
+      // load event
+      $event = node_load($eventid);
+
+      // get image url
+      if (isset($event->field_image[LANGUAGE_NONE][0]['uri'])) {
+        $event_image_src = image_style_url("banner", $event->field_image[LANGUAGE_NONE][0]['uri']);
+      } else {
+        $default_image_uri = _tm_events_get_default_image($conf["tm_images_default_field_image"], $event->nid);
+        $event_image_src = image_style_url("banner", $default_image_uri);
+      }
+
+      // get event url
+      $event_image_link = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('node/' . $event->nid);
+
     }
   }
   
-  $sendcount = tm_events_send_email(null, $email, $subject, $message, $eventid, $replyto);
+  $sendcount = tm_events_send_email(null, $email, $subject, $message, $event_image_src, $event_image_link, $eventid, $replyto);
 
   // indicate success to the js ajax handler
   print(json_encode(array("sent" => $sendcount)));
@@ -354,7 +369,7 @@ function tm_events_test_email_ajax(){
 /**
  * Submit function of communication ajax request
  */
-function tm_events_send_emails($recipients, $subject, $message, $eventid, $chapterid, $replyto = "", $approved_members = true){
+function tm_events_send_emails($recipients, $subject, $message, $event_image_src, $event_image_link, $eventid, $chapterid, $replyto = "", $approved_members = true){
 
   global $user;
 
@@ -539,13 +554,15 @@ function tm_events_send_emails($recipients, $subject, $message, $eventid, $chapt
       // add to user_chapter_announcements cron queue
       $queue->createItem(["uid" => $user_account->uid,
                         "email" => $user_account->mail, 
-                        "subject" => $subject, 
+                        "subject" => $subject,
                         "message" => $message,
+                        "event_image_src" => $event_image_src,
+                        "event_image_link" => $event_image_link,
                         "replyto" => $replyto,
                         "eventid" => $eventid]);
       
       // below is the non queue method
-      //tm_events_send_email($user_account->uid, $user_account->mail, $subject, $message, $eventid);
+      //tm_events_send_email($user_account->uid, $user_account->mail, $subject, $message, $event_image_src, $event_image_link, $eventid);
     }
 
   }
@@ -572,14 +589,14 @@ function tm_events_cron_queue_info() {
  *
  */
 function tm_events_send_email_cron($item) {
-  tm_events_send_email($item["uid"], $item["email"], $item["subject"], $item["message"], $item["eventid"], $item["replyto"]);
+  tm_events_send_email($item["uid"], $item["email"], $item["subject"], $item["message"], $item["event_image_src"], $item["event_image_link"], $item["eventid"], $item["replyto"]);
 }
 
 
 /**
  * Sends out a single email
  */
-function tm_events_send_email($uid, $email, $subject, $message, $eventid, $replyto="") {
+function tm_events_send_email($uid, $email, $subject, $message, $event_email_src, $event_email_link, $eventid, $replyto="") {
 
 	global $conf;
 
@@ -642,6 +659,15 @@ function tm_events_send_email($uid, $email, $subject, $message, $eventid, $reply
 	$template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
 	$template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template);  
   $template = str_replace("__EMAIL_BRAND_MESSAGE__", "", $template); // disable brand message
+
+  // Event image
+  // Render with tm_events_render_hero_image_html()
+  if ($event_image_src != null) {
+    $event_image_html = tm_events_render_hero_image_html($event_image_src, $event_image_link, "Event image");
+    $template = str_replace("__HERO_IMAGE__", $event_image_html, $template);
+  } else {
+    $template = str_replace("__HERO_IMAGE__", "", $template); // disable brand message
+  }
 
 	// STEP 5. LOAD HTML TEMPLATE INTO EMAIL BODY
 	$email_message['body'] = $template;
@@ -707,19 +733,34 @@ function tm_events_send_emails_ajax() {
 
   // Insert cover image
   // Check if tm_event_announcement_enable_cover_image is enabled
+  $event_image_src = null;
+  $event_image_link = null;
   if ($conf['tm_event_announcement_enable_cover_image'] == true) {
     if ($include_cover_image) {
-      $image_html = tm_render_html_email_event_image($eventid);
-      $message = $image_html . "<br>" . $message;
+      
+      // load event
+      $event = node_load($eventid);
+
+      // get image url
+      if (isset($event->field_image[LANGUAGE_NONE][0]['uri'])) {
+        $event_image_src = image_style_url("banner", $event->field_image[LANGUAGE_NONE][0]['uri']);
+      } else {
+        $default_image_uri = _tm_events_get_default_image($conf["tm_images_default_field_image"], $event->nid);
+        $event_image_src = image_style_url("banner", $default_image_uri);
+      }
+
+      // get event url
+      $event_image_link = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('node/' . $event->nid);
+
     }
   }
 
   // copy announcement email to a specific address
   if (isset($conf["tm_announcement_copy_email"])) {
-      tm_events_send_email(null, $conf["tm_announcement_copy_email"], "[Copy] " . $subject, $message, $eventid, $replyto);
+      tm_events_send_email(null, $conf["tm_announcement_copy_email"], "[Copy] " . $subject, $message, $event_image_src, $event_image_link, $eventid, $replyto);
   }
 
-  $sendcount = tm_events_send_emails($recipients, $subject, $message, $eventid, $chapterid, $replyto, $approved_members);
+  $sendcount = tm_events_send_emails($recipients, $subject, $message, $event_image_src, $event_image_link, $eventid, $chapterid, $replyto, $approved_members);
 
   // indicate success to the js ajax handler
   // todo: return a nicer json response and parse it in the js
@@ -778,7 +819,7 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
   // add contact link if html email
   if ($use_html) {
     $contact_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('events/message/' . $event->nid);
-    $prefill .= '<li>Questions about event? <a href="' . $contact_url . '">Send a message</a></li>';
+    $prefill .= '<li>Questions about this event? <a href="' . $contact_url . '">Send a message</a></li>';
   }
 
 
@@ -819,53 +860,25 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
 }
 
 /**
- * Render event image for html email
+ * Helper method to render hero image html
  */
-function tm_render_html_email_event_image($eventid) {
+function tm_events_render_hero_image_html($hero_image_src, $hero_image_link = null, $hero_image_alt_text = "image") {
 
-  global $conf;
+  // strip ' in alt text
+  $hero_image_alt_text = str_replace("'", "", $hero_image_alt_text);
 
-  // load event
-  $event = node_load($eventid);
-
-  // get image url
-  if (isset($event->field_image[LANGUAGE_NONE][0]['uri'])) {
-    $image_url = image_style_url("banner", $event->field_image[LANGUAGE_NONE][0]['uri']);
-  } else {
-    $default_image_uri = _tm_events_get_default_image($conf["tm_images_default_field_image"], $event->nid);
-    $image_url = image_style_url("banner", $default_image_uri);
+  $hero_image_html = '<tr><td bgcolor="#ffffff">';
+  if ($hero_image_link != null) {
+    $hero_image_html .= '<a href="' . $hero_image_link . '">';
   }
 
-  // get event image src
-  // note: gmail image proxy will rewrite %20 to +
-  $event_image_src = $image_url;
+  $hero_image_html = '<img src="' . $hero_image_src . '" width="600" height="" alt="' . $hero_image_alt_text . '" border="0" align="center" style="width: 100%; max-width: 600px;">';
 
-  // html template
-  // http://stackoverflow.com/questions/30485328/how-to-make-a-fluid-width-email-with-a-max-width
-  $image_html_template = '<table align="center" width="100%" style="width: 100%;">
-  <tr>
-    <td>&nbsp;</td>
-    <td align="center" width="600" style="width: 600px;">
-      <table align="center" border="0" width="100%" style="width: 100%;">
-        <tr>
-          <td align="center">
-            <a href="__EVENT_URL__"><img alt="event banner" src="__EVENT_IMAGE_SRC__" border="0" width="100%"></a>
-          </td>
-        </tr>
-      </table>
-    </td>
-    <td>&nbsp;</td>
-  </tr>
-</table>';
+  if ($hero_image_link != null) {
+    $hero_image_html .= '</a>';
+  }
 
-  // get event url
-  $event_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('node/' . $event->nid);
-
-  //$event_image_src = "https://travelmassive.com/sites/default/files/styles/banner/public/images/events/GBTA.Conference.png";
-
-  $image_html = str_replace("__EVENT_URL__", $event_url, $image_html_template);
-  $image_html = str_replace("__EVENT_IMAGE_SRC__", $event_image_src, $image_html);
-
-  return $image_html;
+  $hero_image_html .= '</td></tr>';
+  return $hero_image_html;
 }
 

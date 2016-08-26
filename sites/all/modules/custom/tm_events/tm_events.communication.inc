@@ -814,7 +814,7 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
       $prefill .= "<li>Sponsors: " . implode(", ", $sponsor_links) . "</li>";
   }
 
-  $prefill .= '<li>Register here: <a href="' . $event_url . '">' . $event_url .'</a></li>';
+  $prefill .= '<li><b>Register here:</b> <a href="' . $event_url . '">' . $event_url .'</a></li>';
 
   // add contact link if html email
   if ($use_html) {

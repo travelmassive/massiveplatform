@@ -123,7 +123,7 @@
             <!-- Email Footer : BEGIN -->
             <table cellspacing="0" cellpadding="0" border="0" align="center" width="100%" style="max-width: 680px;" role="presentation">
                 <tr>
-                    <td style="padding: 40px 10px;width: 100%;font-size: 12px; font-family: sans-serif; mso-height-rule: exactly; line-height:18px; text-align: center; color: #888888;">
+                    <td style="padding: 40px 10px;width: 100%;font-size: 12px; font-family: sans-serif; mso-height-rule: exactly; line-height:18px; text-align: center; color: #888888; margin-top: 1px solid #888888;">
                         __EMAIL_BRAND_MESSAGE____EMAIL_FOOTER__
                     </td>
                 </tr>

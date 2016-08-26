@@ -241,6 +241,7 @@ function tm_notifications_mail($key, &$message, $params) {
   
 
   // STEP 2. LOAD HTML TEMPLATE
+  // Note: We use http://tedgoas.github.io/Cerberus/ hybrid template
   $template_file = drupal_get_path('module', 'tm_notifications') . '/templates/tm_notifications-email_template.tpl.php';
   $template = file_get_contents($template_file);
  

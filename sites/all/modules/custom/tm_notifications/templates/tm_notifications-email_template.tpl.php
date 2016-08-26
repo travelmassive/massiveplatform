@@ -21,7 +21,7 @@
 	<!-- All other clients get the webfont reference; some will render the font and others will silently fail to the fallbacks. More on that here: http://stylecampaign.com/blog/2015/02/webfont-support-in-email/ -->
 	<!--[if !mso]><!-->
 		<!-- insert web font reference, eg: <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'> -->
-		<link href="//fonts.googleapis.com/css?family=Raleway:400,800" rel="stylesheet" type="text/css"/>
+		<link href="https://fonts.googleapis.com/css?family=Raleway:400,800" rel="stylesheet" type="text/css"/>
 	<!--<![endif]-->
 
 	<!-- Web Font / @font-face : END -->

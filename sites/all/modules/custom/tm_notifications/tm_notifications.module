@@ -565,3 +565,27 @@ function tm_notifications_preferences_purge_bulk($notification_names) {
     variable_delete($notif->getVarName());
   }
 }
+
+/**
+ * Helper method to render hero image html
+ */
+function tm_notifications_render_hero_image_html($hero_image_src, $hero_image_link = null, $hero_image_alt_text = "image") {
+
+  // strip ' in alt text
+  $hero_image_alt_text = str_replace("'", "", $hero_image_alt_text);
+
+  $hero_image_html = '<tr><td bgcolor="#ffffff">';
+  if ($hero_image_link != null) {
+    $hero_image_html .= '<a href="' . $hero_image_link . '">';
+  }
+
+  $hero_image_html .= '<img src="' . $hero_image_src . '" width="600" height="" alt="' . $hero_image_alt_text . '" border="0" align="center" style="width: 100%; max-width: 600px;">';
+
+  if ($hero_image_link != null) {
+    $hero_image_html .= '</a>';
+  }
+
+  $hero_image_html .= '</td></tr>';
+  return $hero_image_html;
+}
+

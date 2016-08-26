@@ -596,7 +596,7 @@ function tm_events_send_email_cron($item) {
 /**
  * Sends out a single email
  */
-function tm_events_send_email($uid, $email, $subject, $message, $event_email_src, $event_email_link, $eventid, $replyto="") {
+function tm_events_send_email($uid, $email, $subject, $message, $event_image_src, $event_image_link, $eventid, $replyto="") {
 
 	global $conf;
 
@@ -663,7 +663,7 @@ function tm_events_send_email($uid, $email, $subject, $message, $event_email_src
   // Event image
   // Render with tm_events_render_hero_image_html()
   if ($event_image_src != null) {
-    $event_image_html = tm_events_render_hero_image_html($event_image_src, $event_image_link, "Event image");
+    $event_image_html = tm_notifications_render_hero_image_html($event_image_src, $event_image_link, "Event image");
     $template = str_replace("__HERO_IMAGE__", $event_image_html, $template);
   } else {
     $template = str_replace("__HERO_IMAGE__", "", $template); // disable brand message
@@ -858,27 +858,3 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
 
   return $prefill;
 }
-
-/**
- * Helper method to render hero image html
- */
-function tm_events_render_hero_image_html($hero_image_src, $hero_image_link = null, $hero_image_alt_text = "image") {
-
-  // strip ' in alt text
-  $hero_image_alt_text = str_replace("'", "", $hero_image_alt_text);
-
-  $hero_image_html = '<tr><td bgcolor="#ffffff">';
-  if ($hero_image_link != null) {
-    $hero_image_html .= '<a href="' . $hero_image_link . '">';
-  }
-
-  $hero_image_html = '<img src="' . $hero_image_src . '" width="600" height="" alt="' . $hero_image_alt_text . '" border="0" align="center" style="width: 100%; max-width: 600px;">';
-
-  if ($hero_image_link != null) {
-    $hero_image_html .= '</a>';
-  }
-
-  $hero_image_html .= '</td></tr>';
-  return $hero_image_html;
-}
-

@@ -130,12 +130,14 @@
   <?php 
     if ($bg_video_body_html != "") {
       print($bg_video_body_html); // <video> embed
+      if ($frontpage_video_url != "") { // show video controls
   ?>
     <div id="tm-frontpage-video-controls" style="display:none;">
       <div id="tm-frontpage-video-buttons"><span class="tm-frontpage-video-pause"></span><span class="tm-frontpage-video-play"></span></div>
       <div id="tm-frontpage-video-info">Now playing: <a href="<?php echo tm_branding_get_element("frontpage_video_link"); ?>"><?php echo tm_branding_get_element("frontpage_video_text");?></a></div>
     </div>
   <?php 
+      } // end show video controls
     } // end if front page video
   ?>
 

@@ -63,46 +63,80 @@
     ?>
 
   </head>
+
   <?php
-    global $conf;
-    // https://github.com/VodkaBears/Vide#readme
-    $bg_video_body_attributes = "";
-    if ($is_front) {
-
-      $frontpage_video_url = tm_branding_get_element("frontpage_video_url");
-      $frontpage_image = tm_branding_get_element("frontpage_image");
-
-      // background video and background image
-      if (($frontpage_video_url != "") and ($frontpage_image != "")) {
-        $bg_video_body_attributes = "data-vide-bg=\"mp4: $frontpage_video_url, poster: $frontpage_image\" data-vide-options=\"posterType: jpg, playbackRate: 1\"";
-      }
-
-      // background video only
-      if (($frontpage_video_url != "") and ($frontpage_image == "")) {
-        $bg_video_body_attributes = "data-vide-bg=\"mp4: $frontpage_video_url\" data-vide-options=\"playbackRate: 1\"";
-      }
-
-      // background image only
-      if (($frontpage_video_url == "") and ($frontpage_image != "")) {
-        $bg_video_body_attributes = "data-vide-bg=\"poster: $frontpage_image\" data-vide-options=\"posterType: jpg, playbackRate: 1\"";
-      }
-      
-    } // end if frront page
+  // background video
+  if ($is_front) { 
   ?>
-  <body class="<?php print $classes; ?>" <?php print $attributes;?> <?php if ($is_front) { print($bg_video_body_attributes); } ?>>
+
+  <style>
+  .fullscreen-bg {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      overflow: hidden;
+      z-index: -100;
+      opacity: 0.6;
+  }
+
+  .fullscreen-bg__video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: auto;
+      height: auto;
+      min-width: 100%;
+      min-height: 100%;
+      -webkit-transform: translate(-50%, -50%);
+         -moz-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+  }
+  </style>
+  <?php
+
+      $frontpage_image = tm_branding_get_element("frontpage_image");
+      $frontpage_video_url = tm_branding_get_element("frontpage_video_url");
+
+      // create <video> tag if image or video url provided
+      $bg_video_body_html = "";
+      if (($frontpage_image != "") or ($frontpage_video_url != "")) {
+
+        // div wrapper
+        $bg_video_body_html = '<div class="fullscreen-bg">';
+
+        // video cover
+        if ($frontpage_image != '') {
+          $bg_video_body_html .= '<video loop autoplay muted poster="' . $frontpage_image . '" class="fullscreen-bg__video">';
+        } else {
+          $bg_video_body_html .= '<video loop autoplay muted class="fullscreen-bg__video">';
+        }
+
+        // background video and background image
+        if ($frontpage_video_url != "") {
+          $bg_video_body_html .= '<source src="' . $frontpage_video_url . '" type="video/mp4">';
+        }
+
+        $bg_video_body_html .= '</video>';
+        $bg_video_body_html .= '</div>';
+      }
+    } // end if front page
+  ?>
+
+  <body class="<?php print $classes; ?>" <?php print $attributes;?>>
     
   <?php 
-    if ($is_front) { 
-      if ($frontpage_video_url != "") { 
+    if ($bg_video_body_html != "") {
+      print($bg_video_body_html); // <video> embed
   ?>
     <div id="tm-frontpage-video-controls" style="display:none;">
       <div id="tm-frontpage-video-buttons"><span class="tm-frontpage-video-pause"></span><span class="tm-frontpage-video-play"></span></div>
-      <div id="tm-frontpage-video-info">Now playing: <a href="<?php echo tm_branding_get_element("frontpage_video_link"); ?>"><?php echo tm_branding_get_element("frontpage_video_text");?></a>
-      </div>
+      <div id="tm-frontpage-video-info">Now playing: <a href="<?php echo tm_branding_get_element("frontpage_video_link"); ?>"><?php echo tm_branding_get_element("frontpage_video_text");?></a></div>
     </div>
   <?php 
-      } // end front page video
-    } // end if front page
+    } // end if front page video
   ?>
 
     <!--[if lt IE 9]>

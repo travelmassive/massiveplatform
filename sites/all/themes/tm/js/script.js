@@ -846,13 +846,13 @@
 (function ($, Drupal, window, document, undefined) {jQuery(document).ready(function() {
 
   tm_frontpage_video_play = function() {
-    var video_instance = $(document.body).data('vide');
-    video_instance.getVideoObject().play();
+    var video_instance = $('video.fullscreen-bg__video');
+    video_instance.get(0).play();
   }
 
   tm_frontpage_video_pause = function() {
-    var video_instance = $(document.body).data('vide');
-    video_instance.getVideoObject().pause();
+    var video_instance = $('video.fullscreen-bg__video');
+    video_instance.get(0).pause();
   }
 
   // handlers if front page video showing and not mobile

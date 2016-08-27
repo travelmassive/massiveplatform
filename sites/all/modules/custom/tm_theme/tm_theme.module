@@ -38,11 +38,6 @@ function tm_theme_html_head_alter(&$head_elements) {
   	);
   }
 
-  // if front page add vid js for background video
-  if (drupal_is_front_page()) {
-    drupal_add_js(drupal_get_path('theme', 'tm') . '/js/jquery.vide.min.js', array('group' => JS_THEME));
-  }
-
   // add impromptu js for better alert box handling
   // see: http://trentrichardson.com/Impromptu/
   // https://github.com/trentrichardson/jQuery-Impromptu

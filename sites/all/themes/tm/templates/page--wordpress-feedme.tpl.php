@@ -57,10 +57,10 @@ if (!$feedme_off) {
 ?>
 
 <script>
-(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){
+$(document).ready(function(){
 
 feedme_append = "<?php print($feedme_append);?>";
-$( feedme_append ).append( "<div id='feedme' style='<?php print($feedme_style);?>'></div>" );
+jQuery(feedme_append).append( "<div id='feedme' style='<?php print($feedme_style);?>'></div>" );
 
 function load_feedme() {
 	// set feedme_mode and feedme_q
@@ -75,8 +75,8 @@ function load_feedme() {
     	feedme_url = feedme_url + "&frontpage_id=" + feedme_frontpage_id;
     }
     //console.log(feedme_url);
-    $.get(feedme_url, function(data) {
-        $("#feedme").replaceWith(data);
+    jQuery.get(feedme_url, function(data) {
+        jQuery("#feedme").replaceWith(data);
         // if feedme_loaded() function defined, call it
         // this can be used to display a div when the feed loads
         if (typeof(feedme_loaded) == "function") {
@@ -87,7 +87,7 @@ function load_feedme() {
 
 load_feedme(); // This will run on page load
 
-});})(jQuery, Drupal, this, this.document);
+});
 </script>
 
 <?php 

@@ -55,7 +55,7 @@ function tm_organizations_moderate_report_organization($reported_organization) {
   flag('flag', 'moderate_report_organization', $reported_organization->nid, $reporting_user); 
 
   // Notify user
-  drupal_set_message("Thanks for reporting an issue. Our moderation team will take a look as soon as possible.");
+  drupal_set_message("Thanks for reporting an issue. Our moderation team has been notified and will respond to you.");
 
   // Redirect to user's profile
   drupal_goto(drupal_get_path_alias("node/$reported_organization->nid"));

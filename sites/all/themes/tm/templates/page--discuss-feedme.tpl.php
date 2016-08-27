@@ -78,10 +78,10 @@ if (!$feedme_off) {
 ?>
 
 <script>
-(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){
+$(document).ready(function(){
 
 feedme_append = "<?php print($feedme_append);?>";
-$( feedme_append ).append( "<div id='discuss_feedme' style='<?php print($feedme_style);?>'></div>" );
+jQuery(feedme_append).append( "<div id='discuss_feedme' style='<?php print($feedme_style);?>'></div>" );
 
 function load_discuss_feedme() {
 
@@ -94,8 +94,8 @@ function load_discuss_feedme() {
     feedme_base_url = "/<?php global $conf; print($conf["tm_discuss_full_path"]);?>/massiveplatform/feedme";
     feedme_url = feedme_base_url + "/render?mode=" + feedme_mode + "&category_id=" + feedme_category_id + "&user_id=" + feedme_user_id + "&num_items=" + feedme_num_items;
     
-    $.get(feedme_url, function(data) {
-        $("#discuss_feedme").replaceWith(data);
+    jQuery.get(feedme_url, function(data) {
+        jQuery("#discuss_feedme").replaceWith(data);
         // if feedme_loaded() function defined, call it
         // this can be used to display a div when the feed loads
         if (typeof(discuss_feedme_loaded) == "function") {
@@ -106,7 +106,7 @@ function load_discuss_feedme() {
 
 load_discuss_feedme(); // This will run on page load
 
-});})(jQuery, Drupal, this, this.document);
+});
 </script>
 
 <?php 

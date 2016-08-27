@@ -36,7 +36,7 @@
     <link type="text/plain" rel="author" href="<?php print $base_path . path_to_theme(); ?>/humans.txt" />
     <link href="//fonts.googleapis.com/css?family=Raleway:400,800" rel="stylesheet" type="text/css" />
     <?php print $styles; ?>
-    <?php print $scripts; ?>
+    
     <?php if ($add_html5_shim and !$add_respond_js): ?>
       <!--[if lt IE 9]>
       <script src="<?php print $base_path . $path_to_zen; ?>/js/html5.js"></script>
@@ -50,20 +50,15 @@
       <script src="<?php print $base_path . $path_to_zen; ?>/js/respond.js"></script>
       <![endif]-->
     <?php endif; ?>
+    
+    <!-- http://writing.colin-gourlay.com/safely-using-ready-before-including-jquery/ -->
+    <script>(function(w,d,u){w.readyQ=[];w.bindReadyQ=[];function p(x,y){if(x=="ready"){w.bindReadyQ.push(y);}else{w.readyQ.push(x);}};var a={ready:p,bind:p};w.$=w.jQuery=function(f){if(f===d||f===u){return a}else{p(f)}}})(window,document)</script>
 
     <?php
       // include brand css
       $tm_branding_css = tm_branding_get_element("include_css");
       if ($tm_branding_css) {
         echo "<style>" . $tm_branding_css . "</style>";
-      }
-    ?>
-
-    <?php
-      // include brand js
-      $tm_branding_js = tm_branding_get_element("include_js");
-      if ($tm_branding_js) {
-        echo "<script>" . $tm_branding_js . "</script>";
       }
     ?>
 
@@ -125,6 +120,19 @@
     <?php endif; ?>
     <?php print $page_top; ?>
     <?php print $page; ?>
+    <?php print $scripts; ?>
     <?php print $page_bottom; ?>
+
+    <?php
+      // include brand js
+      $tm_branding_js = tm_branding_get_element("include_js");
+      if ($tm_branding_js) {
+        echo "<script>" . $tm_branding_js . "</script>";
+      }
+    ?>
+
+    <!-- http://writing.colin-gourlay.com/safely-using-ready-before-including-jquery/ -->
+    <script>(function($,d){$.each(readyQ,function(i,f){$(f)});$.each(bindReadyQ,function(i,f){$(d).bind("ready",f)})})(jQuery,document)</script>
+
   </body>
 </html>

@@ -127,7 +127,7 @@ function tm_users_moderate_report_member($reported_user) {
 	flag('flag', 'moderate_report_member', $reported_user->uid, $reporting_user); 
 
   // Notify user
-  drupal_set_message("Thanks for reporting an issue. Our moderation team will take a look as soon as possible.");
+  drupal_set_message("Thanks for reporting an issue. Our moderation team has been notified and will respond to you.");
 
   // Redirect to user's profile
   drupal_goto(drupal_get_path_alias("user/$reported_user->uid"));

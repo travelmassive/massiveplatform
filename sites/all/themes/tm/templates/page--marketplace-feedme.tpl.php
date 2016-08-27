@@ -52,10 +52,10 @@ if (!$feedme_off) {
 ?>
 
 <script>
-(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){
+$(document).ready(function(){
 
 feedme_append = "<?php print($feedme_append);?>";
-$( feedme_append ).append( "<div id='marketplace_feedme' style='<?php print($feedme_style);?>'></div>" );
+jQuery(feedme_append).append( "<div id='marketplace_feedme' style='<?php print($feedme_style);?>'></div>" );
 
 function load_marketplace_feedme() {
 	// set feedme_mode and feedme_q
@@ -78,8 +78,8 @@ function load_marketplace_feedme() {
 
     feedme_url = feedme_url + "&limit=" + feedme_num_items;
     
-    $.get(feedme_url, function(data) {
-        $("#marketplace_feedme").replaceWith(data);
+    jQuery.get(feedme_url, function(data) {
+        jQuery("#marketplace_feedme").replaceWith(data);
         // if marketplace_feedme_loaded() function defined, call it
         // this can be used to display a div when the feed loads
         if (typeof(marketplace_feedme_loaded) == "function") {
@@ -90,7 +90,7 @@ function load_marketplace_feedme() {
 
 load_marketplace_feedme(); // This will run on page load
 
-});})(jQuery, Drupal, this, this.document);
+});
 </script>
 
 <?php 

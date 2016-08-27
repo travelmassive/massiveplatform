@@ -78,7 +78,7 @@
       left: 0;
       overflow: hidden;
       z-index: -100;
-      opacity: 0.6;
+      opacity: 0.7;
   }
 
   .fullscreen-bg__video {

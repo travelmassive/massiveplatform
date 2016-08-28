@@ -120,7 +120,7 @@ function tm_discuss_embed_vanilla() {
 	// load user
 	$loaded = user_load($user->uid);
 
-	$embed_script = '<div id="vanilla-comments"></div><script defer type="text/javascript" src="/' . $discuss_full_path . '/js/embed.js"></script>';
+	$embed_script = '<div id="vanilla-comments"></div><script defer type="text/javascript" src="/' . $discuss_full_path . '/js/embed.js" data-pagespeed-no-defer></script>';
 
 	// hide title as it's displayed on the forum anyway
 	drupal_add_css('#page-title { display: none; }', 'inline');

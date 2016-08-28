@@ -98,7 +98,7 @@ where n.value = 1 order by ud.uid asc";
 		// get joined chapters
 		// ie: SYD,NYC,BNE
 		$joined_chapters = tm_users_get_users_chapters_shortcodes($chapter_shortcodes, $signup_flag, $user_id);
-		$row[] = implode(",", $joined_chapters);
+		$row[] = implode(" ", $joined_chapters);
 
 		// include approval status
 		$approved_status = tm_users_userid_has_roleid($user_id, $approved_member_role);

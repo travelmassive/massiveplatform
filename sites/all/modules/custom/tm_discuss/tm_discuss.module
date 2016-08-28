@@ -119,7 +119,8 @@ function tm_discuss_embed_vanilla() {
 
 	// load user
 	$loaded = user_load($user->uid);
-	drupal_add_js($discuss_full_path . '/js/embed.js');
+
+	$embed_script = '<div id="vanilla-comments"></div><script defer type="text/javascript" src="/' . $discuss_full_path . '/js/embed.js"></script>';
 
 	// hide title as it's displayed on the forum anyway
 	drupal_add_css('#page-title { display: none; }', 'inline');
@@ -157,7 +158,7 @@ function tm_discuss_embed_vanilla() {
 	}
 
 	drupal_set_title("Discuss");
-	return "<div id='vanilla-comments'></div>";
+	return $embed_script;
 
 }
 

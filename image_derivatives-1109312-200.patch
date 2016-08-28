@@ -1,0 +1,19 @@
+diff --git a/modules/image/image.module b/modules/image/image.module
+index dab8836..f4d0bec 100644
+--- a/modules/image/image.module
++++ b/modules/image/image.module
+@@ -1054,6 +1054,14 @@ function image_style_url($style_name, $path) {
+     $file_url .= (strpos($file_url, '?') !== FALSE ? '&' : '?') . drupal_http_build_query($token_query);
+   }
+ 
++  // Create derivated image if it doesn't exist.
++  if (!file_exists($file_url) && !file_exists($uri)) {
++    if (file_exists($path)) {
++      $current_style = image_style_load($style_name);
++      image_style_create_derivative($current_style, $path, $uri);
++    }
++  }
++
+   return $file_url;
+ }
+ 

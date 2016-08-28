@@ -128,7 +128,7 @@
   <body class="<?php print $classes; ?>" <?php print $attributes;?>>
     
   <?php 
-    if ($bg_video_body_html != "") {
+    if ($is_front != "") {
       print($bg_video_body_html); // <video> embed
       if ($frontpage_video_url != "") { // show video controls
   ?>

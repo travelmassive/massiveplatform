@@ -1,5 +1,52 @@
 Installation and setup notes
 
+utf8mb4 supporT:
+
+As of Drupal 7.50 ut8mb4 support is in core: 
+
+https://www.drupal.org/node/2754539
+
+Notes:
+https://www.drupal.org/project/utf8mb4_convert (upgrade tool)
+
+Steps:
+
+1. Update /etc/mysql/my.cnf:
+	- innodb_file_per_table
+    - innodb_large_prefix
+    - innodb_file_format=barracuda 
+2. In settings.php in database:
+    - 'charset' => 'utf8mb4',
+    - 'collation' => 'utf8mb4_general_ci',
+
+3. Run drush @none dl utf8mb4_convert
+
+4. run drush utf8mb4-convert-databases
+
+5. Manually update tables
+
+# tm_status_update
+
+alter table tm_newsfeed_preview_links CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+alter table tm_newsfeed_status_updates CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+alter table tm_newsfeed_view_count_daily CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+alter table tm_newsfeed_view_count_total CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+5. Check tables:
+
+show table status from DATABASE_NAME
+
+(note: search_db remains as utf8_unicode_ci)
+
+6. Hide warnings (optional)
+
+If not all tables are converted you will receive this warning in admin panel
+
+"Please convert all databases to utf8mb4 prior to enabling it in settings.php"
+
+To turn it off, run:
+
+drush vset drupal_all_databases_are_utf8mb4 1
 
 -----
 

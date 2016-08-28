@@ -127,6 +127,12 @@ function tm_base_block_view($delta) {
           $show_stats = $conf["tm_frontpage_show_anon_stats"];
         }
 
+        // cache block for front page
+        $cache = cache_get('tm-front-page-stats-anon', 'cache');
+        if (!empty($cache)) {
+          $block['content'] = $cache->data;
+          return $block;
+        }
 
         // Member label for displaying membership counts
         $members_label = $conf["tm_members_label"];
@@ -185,6 +191,10 @@ function tm_base_block_view($delta) {
 
           $block['content'] .= '<li><a href="' . url('community') . '" title="' . t('Go to community') . '"><strong class="key">' . t('Friends') . '<small>: </small></strong><span class="value">' . $no_mutual_follows . '</span></a></li>';
         }
+
+        // cache anon block for 15 minutes
+        $cache_block = $block['content'] . '</ul>';
+        cache_set('tm-front-page-stats-anon', $cache_block, 'cache', time() + 900); // 15 mins
 
       }
 

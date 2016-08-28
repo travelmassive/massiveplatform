@@ -1,3 +1,7 @@
+<style>
+/* inline styles for critical css */
+#prime-nav .account-wrapper .toggle img { width: 24px; height: 24px; }
+</style>
 <?php 
 
 // account user menu template

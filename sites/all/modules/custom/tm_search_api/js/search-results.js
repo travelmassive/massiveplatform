@@ -519,13 +519,15 @@
 	});
 
 	// search external discussions
+	// todo: refer to a js setting
 	$(".search-external-qa").click(function(e) {
 		e.preventDefault();
 		// /discuss/#search?Search=example
-		window.location  = "/discuss/#search?Search=" + encodeURI(getSearchKeywordsFromResults());
+		window.location  = "/answers/#search?Search=" + encodeURI(getSearchKeywordsFromResults());
 	});
 
 	// search external google
+	// todo: refer to a js setting
 	$(".search-external-google").click(function(e) {
 		e.preventDefault();
 		// /https://www.google.com/#q=travelmassive%20

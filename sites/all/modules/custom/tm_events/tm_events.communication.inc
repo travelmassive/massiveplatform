@@ -315,7 +315,7 @@ function tm_events_test_email_ajax(){
   if (!isset($_POST['include_cover_image'])) return FALSE;
   if (!isset($_POST['message_format'])) return FALSE;
 
-  $subject = $_POST['subject'];
+  $subject = '[Test] ' . $_POST['subject'];
   $message = $_POST['message'];
   $message .= "<p><small>(Event ID: " . $_POST['eventid'] . ")</small></p>";
   $email = $_POST['address'];

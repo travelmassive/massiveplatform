@@ -92,7 +92,7 @@ function tm_preprocess_page(&$variables, $hook) {
   // Workaround for gmail image proxy
   // Gmail uses a + sign for spaces, which causes a a 404
   $header = drupal_get_http_header("status");
-  if($header == "403 Forbidden") {
+  if(($header == "403 Forbidden") or ($header == "404 Not Found")) {
     $request_uri = $_SERVER["REQUEST_URI"];
     if (strpos($request_uri, "/sites/default/files/styles/banner/public/images/events/") === 0) {
       if (strpos($request_uri, "+") !== false) {

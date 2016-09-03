@@ -146,7 +146,9 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
     $organizer_opts =array('_none' => t('- None -'));
     foreach ($company->field_owner[LANGUAGE_NONE] as $owner) {
       $loaded = user_load($owner['target_id']);
-      $organizer_opts[$loaded->uid] = tm_events_username($loaded) . " (" . $loaded->uid . ")";
+      if ($loaded != null) {
+        $organizer_opts[$loaded->uid] = tm_events_username($loaded) . " (" . $loaded->uid . ")";
+      }
     }
     $form['field_organizer'][LANGUAGE_NONE]['#options'] = $organizer_opts;
 
@@ -358,6 +360,19 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
     drupal_get_messages("help-tip");
   }
 
+  // STEP 8. SET BUTTON TEXT
+  //////////
+  if ($is_new_event) { 
+    $form['actions']['submit']['#value'] = t('Add event');
+  }
+
+  // STEP 8. Add js prompt if event is new and user returned via back button
+  //////////
+  if ($is_new_event) {
+    drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_add_event.js');
+  }
+
+
 }
 
 /**
@@ -382,7 +397,6 @@ function tm_events_node_presave($node) {
 
 	// Set the field_event_reassign_owner with the node uid
 	$node->field_event_reassign_owner[LANGUAGE_NONE][0]['target_id'] = $node->uid;
-
 
   // If field_chapter is set, unset field_event_company
 	if (isset($node->field_chapter[LANGUAGE_NONE][0])) {
@@ -444,4 +458,30 @@ function tm_events_node_presave($node) {
   // http://drupal.stackexchange.com/questions/22983/how-can-i-enable-automatic-path-creating-for-all-nodes
   $node->path['pathauto']=1;
 
+}
+
+/**
+ * Implement hook_node_insert
+ * Set cookie for event nid on save
+ */
+function tm_events_node_insert($node) {
+  user_cookie_save(array("last_edited_event" => $node->nid));
+}
+
+/**
+ * Handler /node/new/event
+ * Removes last_edited_event cookie and redirects to /node/add/event
+ */
+function tm_events_new_event() {
+
+  // remove last_edited_event cookie
+  user_cookie_delete("last_edited_event");
+
+  // set new url
+  $request_uri = ($_SERVER['REQUEST_URI']);
+  $request_uri = str_replace("/node/new/event", "/node/add/event", $request_uri);
+  $options['absolute'] = TRUE;
+  $url = url($request_uri, $options);
+  header('Location: ' . $request_uri, TRUE, 302);
+  drupal_exit($url);
 }

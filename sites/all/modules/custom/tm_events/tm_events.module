@@ -65,6 +65,12 @@ function tm_events_menu() {
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
+  $items['node/new/event'] = array(
+    'title' => t('New event'),
+    'page callback' => 'tm_events_new_event',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
   return $items;
 }
 

@@ -1281,7 +1281,7 @@ function _tm_more_actions_process($field, $title = NULL) {
         if (_tm_events_check_create_member_event($user)) {
           $links['edition'][] = array(
             'wrapper_class' => array('add'),
-            'content' => l(t('Add event'), '/node/add/event',
+            'content' => l(t('Add event'), '/node/new/event',
               array('attributes' => array('title' => t('Add your own event')))
             )
           );
@@ -1312,7 +1312,7 @@ function _tm_more_actions_process($field, $title = NULL) {
     if (_tm_events_check_create_chapter_event($user, $field['entity']->nid)) {
       $links['edition'][] = array(
       'wrapper_class' => array('add'),
-      'content' => l(t('Add chapter event'), '/node/add/event', array(
+      'content' => l(t('Add chapter event'), '/node/new/event', array(
         'query' => array(
           'field_chapter' => $field['entity']->nid
         ),
@@ -1331,7 +1331,7 @@ function _tm_more_actions_process($field, $title = NULL) {
     if (_tm_events_check_create_company_event($user, $field['entity']->nid)) {
       $links['edition'][] = array(
       'wrapper_class' => array('add'),
-      'content' => l(t('Add event'), '/node/add/event', array(
+      'content' => l(t('Add event'), '/node/new/event', array(
         'query' => array(
           'field_event_company' => $field['entity']->nid
         ),

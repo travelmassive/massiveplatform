@@ -228,7 +228,9 @@ function _tm_payments_form_alter_event_form(&$form, &$form_state, $form_id) {
 		$company = node_load($company_id);
 		foreach ($company->field_owner[LANGUAGE_NONE] as $owner) {
 			$loaded = user_load($owner['target_id']);
-			$organizer_opts[$loaded->uid] = tm_events_username($loaded) . " (" . $loaded->uid . ")";
+			if ($loaded != null) {
+				$organizer_opts[$loaded->uid] = tm_events_username($loaded) . " (" . $loaded->uid . ")";
+			}
 		}
 		$form['field_event_payment_payout_to'][LANGUAGE_NONE]['#options'] = $organizer_opts;
 	}

@@ -295,6 +295,23 @@ function tm_branding_field_default_field_bases() {
     'type' => 'file',
   );
 
+  // Exported field_base: 'field_brand_frontpage_opacity'.
+  $field_bases['field_brand_frontpage_opacity'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_brand_frontpage_opacity',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(
+      'decimal_separator' => '.',
+    ),
+    'translatable' => 0,
+    'type' => 'number_float',
+  );
+
   // Exported field_base: 'field_brand_frontpage_video_link'.
   $field_bases['field_brand_frontpage_video_link'] = array(
     'active' => 1,

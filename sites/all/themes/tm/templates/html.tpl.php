@@ -78,7 +78,7 @@
       left: 0;
       overflow: hidden;
       z-index: -100;
-      opacity: 0.7;
+      opacity: <?php print (round(tm_branding_get_element("frontpage_opacity"), 2)); ?>;
   }
 
   .fullscreen-bg__video {
@@ -94,6 +94,11 @@
           -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
   }
+
+  video::-webkit-media-controls {
+      display:none !important;
+  }
+
   </style>
   <?php
 

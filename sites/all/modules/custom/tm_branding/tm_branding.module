@@ -542,6 +542,14 @@ function tm_branding_get_brand_element($site_brand, $element_name) {
 		return $element;
 	}
 
+	// frontpage opacity
+	if ($element_name == "frontpage_opacity") {
+		if (isset($site_brand->field_brand_frontpage_opacity[LANGUAGE_NONE][0]['value'])) {
+			$element = $site_brand->field_brand_frontpage_opacity[LANGUAGE_NONE][0]['value'];
+		}
+		return $element;
+	}
+
 	// frontpage video url
 	if ($element_name == "frontpage_video_url") {
 		if (isset($site_brand->field_brand_frontpage_video_url[LANGUAGE_NONE][0]['url'])) {
@@ -677,6 +685,14 @@ function tm_branding_get_base_element($element_name, $extra = null) {
 	// frontpage image
 	if ($element_name == "frontpage_image") {
 		$element = tm_branding_get_conf("tm_branding_frontpage_image");
+	}
+
+	// frontpage opacity
+	if ($element_name == "frontpage_opacity") {
+		$element = tm_branding_get_conf("tm_branding_frontpage_opacity");
+		if ($element == "") {
+			return 1; // default
+		}
 	}
 
 	// frontpage video url

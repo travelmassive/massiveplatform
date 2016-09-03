@@ -589,6 +589,59 @@ Default is $conf[\'tm_branding_frontpage_image\']',
     ),
   );
 
+  // Exported field_instance: 'node-site_brand-field_brand_frontpage_opacity'.
+  $field_instances['node-site_brand-field_brand_frontpage_opacity'] = array(
+    'bundle' => 'site_brand',
+    'default_value' => array(
+      0 => array(
+        'value' => 1,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Adjust the transparency level of the frontpage image or video<br>
+Example: 1 (default) is not transparent at all, 0.5 is 50% see-through, and 0 is completely transparent.
+',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 2,
+          'thousand_separator' => '',
+        ),
+        'type' => 'number_decimal',
+        'weight' => 46,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_brand_frontpage_opacity',
+    'label' => 'Frontpage opacity',
+    'required' => 0,
+    'settings' => array(
+      'max' => 1,
+      'min' => 0,
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 22,
+    ),
+  );
+
   // Exported field_instance:
   // 'node-site_brand-field_brand_frontpage_video_link'.
   $field_instances['node-site_brand-field_brand_frontpage_video_link'] = array(
@@ -1776,6 +1829,9 @@ This will set a cookie called "site_branding_partner" and redirect to the home p
   t('Activated');
   t('Additional file assets for html branding elements to reference.<br>
 You can reference __ASSETS_BASE_PATH__/assets/filename.ext in html template<br>');
+  t('Adjust the transparency level of the frontpage image or video<br>
+Example: 1 (default) is not transparent at all, 0.5 is 50% see-through, and 0 is completely transparent.
+');
   t('Asset files');
   t('Brand Description');
   t('Check this to activate the branding.');
@@ -1812,6 +1868,7 @@ If using a front page video, this should be the first frame of the video.<br>
 Default is $conf[\'tm_branding_frontpage_image\']');
   t('Frontpage block html');
   t('Frontpage image');
+  t('Frontpage opacity');
   t('Frontpage video link');
   t('Frontpage video mp4 url');
   t('Frontpage video text');

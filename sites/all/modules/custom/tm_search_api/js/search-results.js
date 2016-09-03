@@ -132,6 +132,7 @@
 				if (tm_global_search_from_filter) {
 					// Clear results prior to update if updating from filter
 					$("#search-results").html("");
+					tm_global_search_from_filter = false;
 				}		
 
 				// Keep track of current page

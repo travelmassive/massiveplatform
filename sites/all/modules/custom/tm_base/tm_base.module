@@ -588,10 +588,10 @@ function tm_base_init() {
 
   // get current request path
   // ie: /admin/branding
-  $request_path = "/" . request_path();
+  $request_path = "/" . strtolower(request_path());
 
   // check if request path is for admin
-  if (strpos($request_path, "/admin/") === 0) {
+  if ((strpos($request_path, "/admin/") === 0) or ($request_path == "/admin")) {
    
     $perm_is_moderator = (in_array("moderator", $user->roles));
     $perm_is_admin = (in_array("administrator", $user->roles));

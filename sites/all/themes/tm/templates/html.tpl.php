@@ -75,6 +75,9 @@
   .card.contained .meta span:last-of-type:after, .node-form>div.card .meta span:last-of-type:after, #user-profile-form>div.card .meta span:last-of-type:after, #user-register-form>div.card .meta span:last-of-type:after, #content .card.search-form .meta span:last-of-type:after {
     content: '';
   }
+  .contained-block .detail-item.field-location span:after, .contained-block .detail-item.location span:after {
+    content: ', ';
+  }
   </style>
 
   <?php

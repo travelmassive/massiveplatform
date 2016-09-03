@@ -21,6 +21,15 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
   // Add javascript to form
   drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_edit_event.js');
 
+  // Hide "show row weights"
+  drupal_add_css(".tabledrag-toggle-weight { display: none; }", "inline");
+
+  // Detect ajax request (show sponsors and speakers)
+  $ajax_request = false;
+  if (strpos(current_path(), 'ajax') !== false) {
+      $ajax_request = true;
+  }
+
   // STEP 1. Determine if event is new or editing existing
   //////////
   $event = $form_state['node'];
@@ -220,8 +229,8 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
 
     // Hide fields for non-moderators
     if (!$perm_is_moderator_or_admin) { 
-      field_group_hide_field_groups($form, array('group_sponsors'));
-      field_group_hide_field_groups($form, array('group_featured_members'));
+      if (!$ajax_request) { field_group_hide_field_groups($form, array('group_sponsors')); }
+      if (!$ajax_request) { field_group_hide_field_groups($form, array('group_featured_members')); }
       field_group_hide_field_groups($form, array('group_extra_stuff'));
     }
 
@@ -371,7 +380,6 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
   if ($is_new_event) {
     drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_add_event.js');
   }
-
 
 }
 

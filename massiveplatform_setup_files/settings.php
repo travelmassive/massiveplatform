@@ -79,8 +79,10 @@ $conf['tm_event_member_event_min_followers'] = 5; // how many followers a member
 $conf['tm_event_send_announcements_intro'] = "Get more people to your event by sending a great announcement. See our guide below."; // tip
 $conf['tm_event_announcement_enable_cover_image'] = true; // enable including event cover image in announcement email
 $conf['tm_event_online_timezones'] = array("America/Los_Angeles" => "Los Angeles", "America/New_York" => "New York", "Europe/London" => "London", "Europe/Athens" => "Athens", "Asia/Singapore" => "Singapore", "Australia/Sydney" => "Sydney"); // display online event date in these timezones
-$conf['tm_event_title_placeholder_text'] = 'The name of your event - make it clear and engaging.'; // placeholder text for event title
-$conf['tm_event_description_placeholder_text'] = 'Describe how awesome your event will be and why people should attend.'; // placeholder text for event description
+$conf['tm_event_title_placeholder_text'] = 'Write a clear and engaging event title to make people interested and excited!'; // placeholder text for event title
+$conf['tm_event_description_placeholder_text'] = 'Describe how fantastic your event will be and why people should attend.'; // placeholder text for event description
+$conf['tm_event_follow_company'] = true; // follow company when joining company event
+$conf['tm_event_follow_member'] = true; // follow member when joining member event
 
 /** SIGNUP PAGE SETTINGS **/
 /** Provides a list of validated options on the signup page to indicate how the user connects with the community **/
@@ -168,8 +170,6 @@ $conf['tm_event_types_edit_tips']['community'] = "Make your event stand out. Her
 $conf['tm_event_types_edit_tips']['company'] = "Create a company event in our community.<br>Please follow our <a target='_blank' href='" . $conf['tm_community_values_url'] . "'>community guidelines</a>.";
 $conf['tm_event_types_edit_tips']['member'] = "Create a member event in our community.<br>Please follow our <a target='_blank' href='" . $conf['tm_community_values_url'] . "'>community guidelines</a>.";
 $conf['tm_event_types_labels'] = array("workshop" => "workshop"); // optional label when referencing event type. ie: "Attend this workshop" 
-$conf['tm_event_follow_company'] = true; // follow company when joining company event
-$conf['tm_event_follow_member'] = true; // follow member when joining member event
 
 /** PROFILE AND COMPANY LINK FIELDS **/
 /** Options available: website, twitter, facebook, linkedin, instagram, youtube, vimeo, snapchat **/

@@ -64,6 +64,13 @@
 
   </head>
 
+  <style>
+  /* Fix for 'Aggregate and compress CSS files' */
+  .trilithon-header .meta span:after {
+      content: ', ';
+  }
+  </style>
+
   <?php
   // background video
   if ($is_front) { 

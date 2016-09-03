@@ -67,7 +67,13 @@
   <style>
   /* Fix for 'Aggregate and compress CSS files' */
   .trilithon-header .meta span:after {
-      content: ', ';
+    content: ', ';
+  }
+  .card.contained .meta span:after, .node-form>div.card .meta span:after, #user-profile-form>div.card .meta span:after, #user-register-form>div.card .meta span:after, #content .card.search-form .meta span:after {
+    content: ', ';
+  }
+  .card.contained .meta span:last-of-type:after, .node-form>div.card .meta span:last-of-type:after, #user-profile-form>div.card .meta span:last-of-type:after, #user-register-form>div.card .meta span:last-of-type:after, #content .card.search-form .meta span:last-of-type:after {
+    content: '';
   }
   </style>
 

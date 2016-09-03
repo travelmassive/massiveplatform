@@ -554,3 +554,63 @@ function tm_base_check_path_exists($path) {
   // exists
   return true;
 }
+
+/**
+ * Implement hook_init
+ * Further restrict access to /admin paths to non-admins
+ * Silent redirect to home page if access denied
+ */
+function tm_base_init() {
+
+  global $conf;
+  global $user;
+
+  // only apply if user user is logged in
+  if (!user_is_logged_in()) {
+    return;
+  }
+
+  // whitelist of admin pages
+  // list of admin pages moderator is allowed to access
+  $moderator_allowed_admin_pages = array(
+    "/admin/branding",
+    "/admin/unapproved-members",
+    "/admin/tm_reports",
+    "/admin/global_insights",
+    "/admin/export_global_newsletter",
+    "/admin/export_chapter_leaders");
+
+  // set any other admin pages you want to make available to moderators
+  // in $conf["tm_admin_moderator_whitelist"]
+  if (isset($conf["tm_admin_moderator_whitelist"])) {
+    $moderator_allowed_admin_pages = array_merge($moderator_allowed_admin_pages, $conf["tm_admin_moderator_whitelist"]);
+  }
+
+  // get current request path
+  // ie: /admin/branding
+  $request_path = "/" . request_path();
+
+  // check if request path is for admin
+  if (strpos($request_path, "/admin/") === 0) {
+   
+    $perm_is_moderator = (in_array("moderator", $user->roles));
+    $perm_is_admin = (in_array("administrator", $user->roles));
+
+    // deny access to admin pages for all users except moderators or admins
+    if ((!$perm_is_moderator) && (!$perm_is_admin)) {
+      drupal_goto("/");
+    }
+
+    // allow moderators to access restricted admin pages
+    if (($perm_is_moderator) && !($perm_is_admin)) {
+
+      // restrict moderator admin pages
+      $res = array_search($request_path, $moderator_allowed_admin_pages);
+      if (array_search($request_path, $moderator_allowed_admin_pages) === false) {
+        drupal_goto("/");
+      }
+    }
+
+    // otherwise, user is admin
+  }
+}

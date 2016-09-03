@@ -7,6 +7,10 @@
 $conf['install_profile'] = 'tm';
 $conf['suppress_itok_output'] = true; // supress ?itok so email images can be loaded by gmail
 
+/** ADMIN PAGES **/
+/** Additional admin pages that moderator can access **/
+//$conf["tm_admin_moderator_whitelist"] = array("admin/your_own_page");
+
 /** TWITTER OATH **/
 /** Required for Twitter authentication **/
 $conf['tm_twitter_consumer_key'] = '';

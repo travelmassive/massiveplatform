@@ -11,6 +11,17 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   // Needed for simple_pass_reset to work
   if (!user_is_logged_in()) { return; }
 
+  // Don't allow moderators to edit other moderators or admin accounts
+  global $user;
+  $user_id = $form['#user']->uid;
+
+  // Check that moderator can edit account
+  if (!tm_users_check_moderator_edit_permission($user, $form['#user'])) {
+    drupal_set_message("Sorry, you can't modify a moderator account.", "warning");
+    drupal_goto("user/" . $user_id);
+    return;
+  }
+
   // Add an indication of the username, in case users are not allowed to edit 
   // their usernames.
   if (!user_access('change own username')) {
@@ -37,11 +48,10 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   // Note: Chapter leaders and moderators don't get the link as they may have content
   // Todo: With subscription model, warn user of any active subscriptions
   // See: https://github.com/travelmassive/massiveplatform/issues/81
-  global $user;
   if ((!in_array("chapter leader", $user->roles)) && (!in_array("moderator", $user->roles)) && (!in_array("administrator", $user->roles))) {
 
-    $cancel_url = "/user/" . $user->uid . "/cancel";
-    $form['cancel_account_link'] = array('#markup' => l(t('Remove account'), 'javascript:jq_confirm_cancel_account(' . $user->uid . ');', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('cancel_account_link')))), '#weight' => 100);
+    $cancel_url = "/user/" . $user_id . "/cancel";
+    $form['cancel_account_link'] = array('#markup' => l(t('Remove account'), 'javascript:jq_confirm_cancel_account(' . $user_id . ');', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('cancel_account_link')))), '#weight' => 100);
     $form['#group_children']['cancel_account_link'] = 'group_user_account';
   }
 
@@ -199,5 +209,28 @@ function _tm_users_modify_profile_form(&$form, $form_state, $form_id) {
 
   $form['field_friendly_url'][LANGUAGE_NONE][0]['value']['#description'] = $conf["tm_field_friendly_url_description"];
   
+}
+
+/**
+ * Check if moderator can edit admin or other moderator's account
+ * Call this in tm_user_presave() and tm_users_form_user_profile_form_alter()
+ * $editor = the user editing the account
+ * $account = the account we are editing
+ */
+function tm_users_check_moderator_edit_permission($editor, $account) {
+
+  $user_is_moderator = (in_array("moderator", $account->roles));
+  $user_is_admin = (in_array("administrator", $account->roles));
+  $editor_is_moderator = (in_array("moderator", $editor->roles));
+  $editor_is_admin = (in_array("administrator", $editor->roles));
+
+  if (($user_is_moderator or $user_is_admin) and ($editor->uid != $account->uid)) {
+    if (!$editor_is_admin) {
+      return false;
+    }
+  }
+
+  // ok
+  return true;
 }
 

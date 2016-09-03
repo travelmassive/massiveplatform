@@ -330,6 +330,15 @@ function tm_users_preprocess_field(&$variables) {
  */
 function tm_users_user_presave(&$edit, $account, $category) {
 
+  global $user;
+
+  // Check that moderator can edit account
+  if (!tm_users_check_moderator_edit_permission($user, $account)) {
+    drupal_set_message("Sorry, you can't modify a moderator account.", "warning");
+    drupal_goto("user/" . $account->uid);
+    return;
+  }
+
   // ITEM 1
   // If the user is already approved then overwrite role to approved when they save profile.
   // Reason: if user signs up, and in middle of editing profile is approved, then
@@ -339,8 +348,6 @@ function tm_users_user_presave(&$edit, $account, $category) {
   // 
   // ITEM 2
   // Strip spaces from URL fields
-
-  global $user;
 
   // only fire this method if saving your own account
   if ($account->uid == $user->uid) {

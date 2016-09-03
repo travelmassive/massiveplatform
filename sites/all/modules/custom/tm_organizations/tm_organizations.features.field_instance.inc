@@ -339,7 +339,7 @@ function tm_organizations_field_default_field_instances() {
     'default_value' => NULL,
     'deleted' => 0,
     'description' => 'Give something back to members who follow your company profile.<br>
-Displays a short message to followers on your company profile page.<br>',
+Displays a short message to followers on your company profile page.<br><br>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -1432,7 +1432,7 @@ Displays a short message to followers on your company profile page.<br>',
   t('Facebook');
   t('Friendly URL');
   t('Give something back to members who follow your company profile.<br>
-Displays a short message to followers on your company profile page.<br>');
+Displays a short message to followers on your company profile page.<br><br>');
   t('Increase your exposure with a cover video. 
 <br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM');
   t('Industry Segment');

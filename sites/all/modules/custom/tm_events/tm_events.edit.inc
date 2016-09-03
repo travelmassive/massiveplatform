@@ -43,6 +43,17 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
     $event_owner_uid = $user->uid;
   }
 
+  // Title placeholder text
+  if (isset($conf["tm_event_title_placeholder_text"])) {
+    $form['title']['#attributes']['placeholder'] = $conf["tm_event_title_placeholder_text"];
+
+  }
+
+  // Description placeholder text
+  if (isset($conf["tm_event_description_placeholder_text"])) {
+    $form['body'][LANGUAGE_NONE]['0']['value']['#attributes']['placeholder'] = $conf["tm_event_description_placeholder_text"];
+  }
+
   // Existing event
   if (!$is_new_event) {
 

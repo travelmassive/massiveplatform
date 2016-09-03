@@ -79,6 +79,8 @@ $conf['tm_event_member_event_min_followers'] = 5; // how many followers a member
 $conf['tm_event_send_announcements_intro'] = "Get more people to your event by sending a great announcement. See our guide below."; // tip
 $conf['tm_event_announcement_enable_cover_image'] = true; // enable including event cover image in announcement email
 $conf['tm_event_online_timezones'] = array("America/Los_Angeles" => "Los Angeles", "America/New_York" => "New York", "Europe/London" => "London", "Europe/Athens" => "Athens", "Asia/Singapore" => "Singapore", "Australia/Sydney" => "Sydney"); // display online event date in these timezones
+$conf['tm_event_title_placeholder_text'] = 'Title of your event - make it stand out'; // placeholder text for event title
+$conf['tm_event_description_placeholder_text'] = 'Describe how awesome your event will be and why nobody should miss it.'; // placeholder text for event description
 
 /** SIGNUP PAGE SETTINGS **/
 /** Provides a list of validated options on the signup page to indicate how the user connects with the community **/

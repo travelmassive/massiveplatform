@@ -30,4 +30,3 @@ features[variable][] = mimemail_linkonly
 features[variable][] = mimemail_simple_address
 features[variable][] = mimemail_sitestyle
 features[variable][] = mimemail_textonly
-mtime = 1419811690

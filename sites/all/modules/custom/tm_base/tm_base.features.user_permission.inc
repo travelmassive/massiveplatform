@@ -27,7 +27,6 @@ function tm_base_user_default_permissions() {
     'name' => 'access content overview',
     'roles' => array(
       'administrator' => 'administrator',
-      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -56,7 +55,6 @@ function tm_base_user_default_permissions() {
     'name' => 'administer taxonomy',
     'roles' => array(
       'administrator' => 'administrator',
-      'moderator' => 'moderator',
     ),
     'module' => 'taxonomy',
   );
@@ -115,7 +113,6 @@ function tm_base_user_default_permissions() {
     'name' => 'delete terms in tm_segments',
     'roles' => array(
       'administrator' => 'administrator',
-      'moderator' => 'moderator',
     ),
     'module' => 'taxonomy',
   );
@@ -145,7 +142,6 @@ function tm_base_user_default_permissions() {
     'name' => 'edit terms in tm_segments',
     'roles' => array(
       'administrator' => 'administrator',
-      'moderator' => 'moderator',
     ),
     'module' => 'taxonomy',
   );
@@ -155,7 +151,6 @@ function tm_base_user_default_permissions() {
     'name' => 'manage tm settings',
     'roles' => array(
       'administrator' => 'administrator',
-      'moderator' => 'moderator',
     ),
     'module' => 'tm_base',
   );

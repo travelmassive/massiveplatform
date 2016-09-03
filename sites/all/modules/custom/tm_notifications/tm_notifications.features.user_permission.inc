@@ -22,7 +22,6 @@ function tm_notifications_user_default_permissions() {
     'name' => 'manage tm notifications',
     'roles' => array(
       'administrator' => 'administrator',
-      'moderator' => 'moderator',
     ),
     'module' => 'tm_notifications',
   );

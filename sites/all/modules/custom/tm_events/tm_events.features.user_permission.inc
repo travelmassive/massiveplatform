@@ -69,6 +69,7 @@ function tm_events_user_default_permissions() {
       'administrator' => 'administrator',
       'approved user' => 'approved user',
       'authenticated user' => 'authenticated user',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );

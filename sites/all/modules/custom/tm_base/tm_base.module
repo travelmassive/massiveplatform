@@ -567,6 +567,11 @@ function tm_base_init() {
 
   // only apply if user user is logged in
   if (!user_is_logged_in()) {
+
+    // redirect if explicit /admin is requested
+    if (strtolower(request_path()) == "admin") {
+      drupal_goto("/");
+    }
     return;
   }
 

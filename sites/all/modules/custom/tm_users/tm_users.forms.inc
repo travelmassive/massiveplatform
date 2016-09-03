@@ -146,10 +146,12 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
   }
 
   // Contact form tip
-  if($form_id == "contact_site_form") {
-    global $conf;
-    $contact_form_message = "Get in touch with " . $conf["tm_site_name"] . " and send us your ideas, comments or feedback.";
-    drupal_set_message($contact_form_message, "help-tip");
+  if ($form_id == "contact_site_form") {
+    if (!isset($form_state['input']['form_token'])) {
+      global $conf;
+      $contact_form_message = "Get in touch with " . $conf["tm_site_name"] . " and send us your ideas, comments or feedback.";
+      drupal_set_message($contact_form_message, "help-tip");
+    }   
   }
 
   // disable user from choosing own contact form
@@ -230,4 +232,3 @@ function tm_users_form_contact_site_form_alter(&$form, &$form_state, $form_id) {
   $form['copy']['#access'] = FALSE;
 
 }
-

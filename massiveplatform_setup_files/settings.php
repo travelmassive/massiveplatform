@@ -305,6 +305,7 @@ $conf['tm_branding_assets_base_path'] = '/sites/default/files/site_branding'; //
 $conf['tm_branding_favicon'] = '/sites/default/files/site_branding/favicon/default_favicon.ico'; // default favicon (ico)
 $conf['tm_branding_apple_touch_icon_path'] = '/sites/default/files/site_branding/apple_touch_icons/'; // path to apple_touch_icons 
 $conf['tm_branding_frontpage_image'] = '/sites/default/files/site_branding/frontpage_image/default_frontpage_image.jpg'; // frontpage image (jpg)
+$conf['tm_branding_frontpage_opacity'] = 0.8; // frontpage image/video opacity
 $conf['tm_branding_frontpage_video_url'] = ''; // frontpage video url (ie: 720p mp4 stream url from vimeo). Leave blank to disable
 $conf['tm_branding_frontpage_video_text'] = 'Check out our awesome events'; // label for frontpage video
 $conf['tm_branding_frontpage_video_link'] = '/events'; // link for frontpage video

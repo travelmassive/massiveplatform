@@ -167,6 +167,9 @@ $conf['tm_event_types_edit_tips'] = array();
 $conf['tm_event_types_edit_tips']['community'] = "Make your event stand out. Here's a few <a target='_blank' href='#'>tips</a>.";
 $conf['tm_event_types_edit_tips']['company'] = "Create a company event in our community.<br>Please follow our <a target='_blank' href='" . $conf['tm_community_values_url'] . "'>community guidelines</a>.";
 $conf['tm_event_types_edit_tips']['member'] = "Create a member event in our community.<br>Please follow our <a target='_blank' href='" . $conf['tm_community_values_url'] . "'>community guidelines</a>.";
+$conf['tm_event_types_labels'] = array("workshop" => "workshop"); // optional label when referencing event type. ie: "Attend this workshop" 
+$conf['tm_event_follow_company'] = true; // follow company when joining company event
+$conf['tm_event_follow_member'] = true; // follow member when joining member event
 
 /** PROFILE AND COMPANY LINK FIELDS **/
 /** Options available: website, twitter, facebook, linkedin, instagram, youtube, vimeo, snapchat **/

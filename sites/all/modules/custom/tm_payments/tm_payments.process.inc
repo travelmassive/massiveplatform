@@ -141,9 +141,11 @@ function tm_payments_process_event_payment($event, $member) {
 	$ch = curl_init();
 
 	//set the url, number of POST vars, POST data
-	$CURLOPT_SSL_VERIFYHOST = 0; 
-	if ($conf["tm_payments_process_check_certificate"]) {
-		$CURLOPT_SSL_VERIFYHOST = 2;
+	$CURLOPT_SSL_VERIFYHOST = 2;
+	$CURLOPT_SSL_VERIFYPEER = true;
+	if ($conf["tm_payments_process_check_certificate"] == false) {
+		$CURLOPT_SSL_VERIFYHOST = 0;
+		$CURLOPT_SSL_VERIFYPEER = false;
 	}
 	curl_setopt($ch, CURLOPT_URL, $url);
 	curl_setopt($ch, CURLOPT_POST, count($fields));
@@ -151,6 +153,7 @@ function tm_payments_process_event_payment($event, $member) {
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_VERBOSE, false);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $CURLOPT_SSL_VERIFYHOST);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $CURLOPT_SSL_VERIFYPEER);
 	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0); 
 	curl_setopt($ch, CURLOPT_TIMEOUT, $conf["tm_payments_process_timeout"]); // timeout in seconds
 

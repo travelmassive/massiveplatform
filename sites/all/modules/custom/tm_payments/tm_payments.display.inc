@@ -43,8 +43,8 @@ function _tm_payments_price($field, $title = NULL) {
 
 	$event_type = $node->field_event_type[LANGUAGE_NONE][0]['value'];
 	$event_type_label = "event";
-	if (isset($conf['tm_event_types'][$event_type])) {
-		$event_type_label = $conf['tm_event_types'][$event_type];
+	if (isset($conf['tm_event_types_labels'][$event_type])) {
+		$event_type_label = $conf['tm_event_types_labels'][$event_type];
 	}
 
 	// Option 1. Paid and registered

@@ -410,7 +410,12 @@ function tm_base_field_group_pre_render(&$element, $group, &$form) {
           }
           // not specified
           if ($group_label == "") {
-            $group_label = $conf["tm_featured_members_event_types"][$event_type];
+            if (isset($conf["tm_featured_members_event_types"][$event_type])) {
+              $group_label = $conf["tm_featured_members_event_types"][$event_type];
+            } else {
+              // default all
+              $group_label = "Special Guests";
+            }
           }
           
         }

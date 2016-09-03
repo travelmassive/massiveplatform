@@ -47,7 +47,7 @@ function tm_theme_html_head_alter(&$head_elements) {
 
   // impromptu pure css theme effects admin theme
   // allow on /user for profile editing
-  if (!path_is_admin(current_path()) or ($url_parts[1] == "user")) {
+  if (!path_is_admin(current_path()) or ($url_parts[1] == "user") or ($url_parts[1] == "node")) {
     drupal_add_css(drupal_get_path('theme', 'tm') . '/css/jquery-impromptu.pure.css', array('group' => CSS_THEME));
   }
 

@@ -236,9 +236,21 @@ function _tm_fulldate_event($field, $title = NULL) {
       $event_html .= $timezone_name . " - ";
     }
 
-    if ($event_date != $event_date2) {
+    $multi_day = ($event_date->format('l, F j, Y') != $event_date2->format('l, F j, Y'));
+
+    // multi day
+    if ($multi_day) {
+      $event_html .= '<span style="font-weight: normal; width: 2.2rem; display: inline-block;">Start</span>';
+      $event_html .= $event_date->format('l, F j, Y') . ' <span style="font-weight: normal;">' . $event_date->format($time_format) . "</span>";
+      $event_html .= '<br><span style="font-weight: normal; width: 2.2rem; display: inline-block;">End</span>';
+      $event_html .= $event_date2->format('l, F j, Y') . ' <span style="font-weight: normal;">' . $event_date2->format($time_format) . "</span>";
+      $event_html .= "</span>";
+    }
+    // same day, start and end time
+    elseif ($event_date != $event_date2) {
       $event_html .= $event_date->format('l, F j, Y') . '</span><span class="time ' . $css_class . '">' . t('From') . ' ' . $event_date->format($time_format) . ' to ' . $event_date2->format($time_format);      
     }
+    // only start time
     else {
       $event_html .= $event_date->format('l, F j, Y') . '</span><span class="time ' . $css_class . '">' . $event_date->format($time_format);
     }

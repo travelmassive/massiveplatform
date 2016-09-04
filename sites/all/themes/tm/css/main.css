@@ -7885,7 +7885,7 @@ a.cancel_account_link {
 .trilithon-header .actions-menu > li {
   float: left;
   position: relative;
-  margin: 0 0.25rem;
+  margin: 0 0.15rem;
 }
 @media only screen and (min-width: 34.063rem) {
   /* line 424, ../sass/_single.scss */

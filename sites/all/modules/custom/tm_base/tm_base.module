@@ -586,6 +586,7 @@ function tm_base_init() {
     "/admin/branding",
     "/admin/geoip_info",
     "/admin/newsfeed/notification_preview",
+    "/admin/reports/status/rebuild",
     "/admin/unapproved-members",
     "/admin/tm_reports",
     "/admin/global_insights",

@@ -1458,19 +1458,21 @@ function _tm_more_actions_process($field, $title = NULL) {
       )
     ))
   );
-  
+
+  // https://developer.linkedin.com/docs/share-on-linkedin#!
   $links['share'][] = array(
-    'wrapper_class' => array('google-plus'),
-    'content' => l(t('Share on Google+'), 'https://plus.google.com/share', array(
+    'wrapper_class' => array('twitter'),
+    'content' => l(t('Share on LinkedIn'), 'https://www.linkedin.com/shareArticle', array(
       'absolute' => TRUE,
-      'query' => array('url' => $base),
+      'query' => array('url' => $base, 'mini' => true, 'source' => $conf["tm_site_name"]),
       'attributes' => array(
-        'onclick' => "javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600'); return false;",
-        'class' => array('google-plus'),
-        'title' => t('Share this on Google+')
+        'target' => '_blank',
+        'class' => array('linkedin'),
+        'title' => t('Share this on LinkedIn')
       )
     ))
   );
+
   // END sharing links
 
   // BEGIN google analytics report link

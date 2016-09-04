@@ -585,7 +585,7 @@ function tm_base_init() {
   $moderator_allowed_admin_pages = array(
     "/admin/branding",
     "/admin/geoip_info",
-    "/admin/newsfeed",
+    "/admin/newsfeed/notification_preview",
     "/admin/unapproved-members",
     "/admin/tm_reports",
     "/admin/global_insights",

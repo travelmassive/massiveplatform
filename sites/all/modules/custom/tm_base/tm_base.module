@@ -584,6 +584,8 @@ function tm_base_init() {
   // list of admin pages moderator is allowed to access
   $moderator_allowed_admin_pages = array(
     "/admin/branding",
+    "/admin/geoip_info",
+    "/admin/newsfeed",
     "/admin/unapproved-members",
     "/admin/tm_reports",
     "/admin/global_insights",

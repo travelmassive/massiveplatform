@@ -94,7 +94,7 @@
       left: 0;
       overflow: hidden;
       z-index: -100;
-      opacity: <?php print (round(tm_branding_get_element("frontpage_opacity"), 2)); ?>;
+      opacity: <?php print (round(tm_branding_get_element("frontpage_opacity"), 2)); ?> !important;
   }
 
   .fullscreen-bg__video {

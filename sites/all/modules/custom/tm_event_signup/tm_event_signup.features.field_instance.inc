@@ -21,8 +21,7 @@ function tm_event_signup_field_default_field_instances() {
     'deleted' => 0,
     'description' => 'Allow members to register for your event quickly and easily using our event management system.
 <ul>
-<li>Easily send event announcements</li>
-<li>Get instant notifications when members sign up</li>
+<li>Get instant notifications when members register</li>
 <li>Easily manage and download the attendee list</li>
 <li>Attendees can see who else is going</li>
 </ul>',
@@ -158,8 +157,7 @@ function tm_event_signup_field_default_field_instances() {
   t('Add the amount of available spots for the event. Leave empty for unlimited signup.');
   t('Allow members to register for your event quickly and easily using our event management system.
 <ul>
-<li>Easily send event announcements</li>
-<li>Get instant notifications when members sign up</li>
+<li>Get instant notifications when members register</li>
 <li>Easily manage and download the attendee list</li>
 <li>Attendees can see who else is going</li>
 </ul>');

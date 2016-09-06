@@ -38,7 +38,8 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
   // STEP 2. Fetch event_type and set chapter_id, company_id
   //////////
 
-  if ($is_new_event) {
+  // new event from form submit
+  if ($is_new_event && !$ajax_request) {
 
     if (isset($_GET["field_chapter"])) {
       $typeof_event = "chapter_event";
@@ -52,15 +53,38 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
     $event_owner_uid = $user->uid;
   }
 
-  // Title placeholder text
-  if (isset($conf["tm_event_title_placeholder_text"])) {
-    $form['title']['#attributes']['placeholder'] = $conf["tm_event_title_placeholder_text"];
 
-  }
+  // new event via ajax handler (ie: user uploads image)
+  if ($is_new_event && $ajax_request) {
 
-  // Description placeholder text
-  if (isset($conf["tm_event_description_placeholder_text"])) {
-    $form['body'][LANGUAGE_NONE]['0']['value']['#attributes']['placeholder'] = $conf["tm_event_description_placeholder_text"];
+    // parse referer string into an array similar to _GET
+    $ajax_query_get = array();
+    if (isset($_SERVER["HTTP_REFERER"])) {
+      $ajax_request_parts = explode("?", $_SERVER["HTTP_REFERER"]);
+      if (sizeof($ajax_request_parts) > 1) {
+        $ajax_query_string = $ajax_request_parts[1]; // field_event_company=13739&opt=2
+        $ajax_query_parts = explode("&", $ajax_query_string);
+        foreach ($ajax_query_parts as $ajax_query_part) {
+          $ajax_query_key_value = explode("=", $ajax_query_part);
+          if (sizeof($ajax_query_key_value) > 1) {
+            $ajax_query_get[$ajax_query_key_value[0]] = $ajax_query_key_value[1];
+          } else {
+            $ajax_query_get[$ajax_query_key_value[0]] = null;
+          }
+        }
+      }
+    }
+
+    if (isset($ajax_query_get["field_chapter"])) {
+      $typeof_event = "chapter_event";
+      $chapter_id = $ajax_query_get["field_chapter"];
+    } elseif (isset($ajax_query_get["field_event_company"])) {
+      $typeof_event = "company_event";
+      $company_id = $ajax_query_get["field_event_company"];
+    } else {
+      $typeof_event = "member_event";
+    }
+    $event_owner_uid = $user->uid;
   }
 
   // Existing event
@@ -76,7 +100,17 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
       $typeof_event = "member_event";
     }
     $event_owner_uid = $event->uid;
-  } 
+  }
+
+  // Title placeholder text
+  if (isset($conf["tm_event_title_placeholder_text"])) {
+    $form['title']['#attributes']['placeholder'] = $conf["tm_event_title_placeholder_text"];
+  }
+
+  // Description placeholder text
+  if (isset($conf["tm_event_description_placeholder_text"])) {
+    $form['body'][LANGUAGE_NONE]['0']['value']['#attributes']['placeholder'] = $conf["tm_event_description_placeholder_text"];
+  }
 
   // Step 3. Modify form
   //////////
@@ -305,10 +339,6 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
 
 	if (isset($conf["tm_event_types"])) {
 		$event_types = $conf["tm_event_types"];
-	}
-
-	if (isset($conf["tm_event_types_default"])) {
-		$default_event_type = $conf["tm_event_types_default"];
 	}
 
 	if ($typeof_event == "chapter_event") {

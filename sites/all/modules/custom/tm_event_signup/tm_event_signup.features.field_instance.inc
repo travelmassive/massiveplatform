@@ -19,7 +19,13 @@ function tm_event_signup_field_default_field_instances() {
       ),
     ),
     'deleted' => 0,
-    'description' => 'Though we encourage you to manage RSVPs for the event using the community platform, you can choose to link to an external service such as eventbrite.com',
+    'description' => 'Allow members to register for your event quickly and easily using our event management system.
+<ul>
+<li>Easily send event announcements</li>
+<li>Get instant notifications when members sign up</li>
+<li>Easily manage and download the attendee list</li>
+<li>Attendees can see who else is going</li>
+</ul>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -150,9 +156,15 @@ function tm_event_signup_field_default_field_instances() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Add the amount of available spots for the event. Leave empty for unlimited signup.');
+  t('Allow members to register for your event quickly and easily using our event management system.
+<ul>
+<li>Easily send event announcements</li>
+<li>Get instant notifications when members sign up</li>
+<li>Easily manage and download the attendee list</li>
+<li>Attendees can see who else is going</li>
+</ul>');
   t('RSVP Method');
   t('Signup limit');
-  t('Though we encourage you to manage RSVPs for the event using the community platform, you can choose to link to an external service such as eventbrite.com');
 
   return $field_instances;
 }

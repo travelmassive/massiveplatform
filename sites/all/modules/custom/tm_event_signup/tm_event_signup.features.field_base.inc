@@ -26,8 +26,8 @@ function tm_event_signup_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        0 => 'Manage RSVP',
-        1 => 'External RSVP',
+        0 => '(Default) Allow members to RSVP instantly',
+        1 => 'Link to an external RSVP service',
       ),
       'allowed_values_function' => '',
     ),

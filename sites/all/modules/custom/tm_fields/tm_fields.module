@@ -515,16 +515,21 @@ function _tm_more_actions_process($field, $title = NULL) {
       $show_menu_item = tm_events_check_permission_announce_event($user, $field['entity']);
 
       // if event is external rsvp, don't show
-      if ($node->field_external_rsvp['und'][0]['value']) {
-        $show_menu_item = false;
-        $links['manageattendees'][] = array(
-          'wrapper_class' => array('contactattendees'),
-          'content' => l(t('Send announcement'), "javascript:jq_alert('Enable event management features', 'Make it easier for members to register and get access to event management features by enabling <i>Manage RSVPs</i> in your event settings.')", array(
-                            'fragment' => '',
-                            'external'=>true,
-                            'attributes' => array('title' => t('Send member'))
-                        ))
-          );
+      if (isset($conf['tm_event_restrict_announcement_rsvp'])) {
+        if ($conf['tm_event_restrict_announcement_rsvp'] == true) {
+      
+          if ($node->field_external_rsvp['und'][0]['value']) {
+            $show_menu_item = false;
+            $links['manageattendees'][] = array(
+              'wrapper_class' => array('contactattendees'),
+              'content' => l(t('Send announcement'), "javascript:jq_alert('Enable event management features', 'Make it easier for members to register and get access to event management features by enabling <i>Manage RSVPs</i> in your event settings.')", array(
+                                'fragment' => '',
+                                'external'=>true,
+                                'attributes' => array('title' => t('Send member'))
+                            ))
+              );
+          }
+        }
       }
 
       if ($show_menu_item) {

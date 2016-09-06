@@ -83,6 +83,7 @@ $conf['tm_event_title_placeholder_text'] = 'Write a clear and engaging event tit
 $conf['tm_event_description_placeholder_text'] = 'Describe how fantastic your event will be and why people should attend.'; // placeholder text for event description
 $conf['tm_event_follow_company'] = true; // follow company when joining company event
 $conf['tm_event_follow_member'] = true; // follow member when joining member event
+$conf['tm_event_restrict_announcement_rsvp'] = true; // if true, don't allow members to send announcement from external rsvp events
 
 /** SIGNUP PAGE SETTINGS **/
 /** Provides a list of validated options on the signup page to indicate how the user connects with the community **/

@@ -12,6 +12,17 @@ function tm_events_communication_form($event) {
   global $user;
   global $conf;
 
+  // Check tm_event_restrict_announcement_rsvp
+  // If set, don't allow announcing external rsvp event
+  if (isset($conf['tm_event_restrict_announcement_rsvp'])) {
+    if ($conf['tm_event_restrict_announcement_rsvp'] == true) {
+      if ($event->field_external_rsvp['und'][0]['value']) {
+        drupal_set_message("Not allowed to announce this event (external RSVP method)", "warning");
+        drupal_access_denied();
+      }
+    }
+  }
+
   // Add javascript for form
   drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_communication_v4.js');
 
@@ -778,6 +789,14 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
   // event url
   $event_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('node/' . $event->nid);
 
+  // registration text
+  $register_text = "Register now:";
+  if (module_exists("tm_payments")) {
+    if (_tm_payments_is_payment_enabled($event)) {
+      $register_text = "Get your ticket now:";
+    }
+  }
+
   // event date
   $view = field_view_field('node',$event,'field_event_date',
     array('label'=>'hidden',));
@@ -791,7 +810,7 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
   $prefill = "Hi [first_name],<br><br>";
   $prefill .= $intro_text . "<br>";
   $prefill .= "<ul>";
-  $prefill .= "<li>" . t('Event').': '.$event->title . "</li>";
+  $prefill .= "<li>" . t('Event').': <b>'.$event->title . "</b></li>";
   $prefill .= "<li>" . t('Date').': '.strip_tags($date) . "</li>";
   if ($event->field_event_venue_name != null) {
     $prefill .= "<li>" . t('Venue').': '.$event->field_event_venue_name[LANGUAGE_NONE][0]['value'];
@@ -814,7 +833,7 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
       $prefill .= "<li>Sponsors: " . implode(", ", $sponsor_links) . "</li>";
   }
 
-  $prefill .= '<li><b>Register here:</b> <a href="' . $event_url . '">' . $event_url .'</a></li>';
+  $prefill .= '<li><b>' . $register_text . '</b> <a href="' . $event_url . '">' . $event_url .'</a></li>';
 
   // add contact link if html email
   if ($use_html) {

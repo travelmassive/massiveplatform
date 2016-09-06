@@ -732,7 +732,7 @@ function _tm_reports_get_global_insights() {
   $insights["pct_signedin_members_90_days"] = round(($signed_in_90_days->amount / $members_total) * 100, 0) . " / " . round(($signed_in_90_days->amount / $members_approved_total) * 100, 0);
 
   // % OF MEMBERS WHO HAVEN'T SIGNED IN SINCE 90 DAYS
-  $insights["pct_signedin_members_older_than_90_days"] = round(($signed_in_older_than_90_days->amount / $members_total) * 100, 0);
+  $insights["pct_signedin_members_older_than_90_days"] = (100 - round(($signed_in_90_days->amount / $members_total) * 100, 0)) . " / " . (100 - round(($signed_in_90_days->amount / $members_approved_total) * 100, 0));
 
 
   // RETURN DATA
@@ -798,7 +798,7 @@ function tm_reports_get_insights_labels() {
   "pct_signedin_members_7_days" => "% Active Members (7 Days) (All/Approved)",
   "pct_signedin_members_30_days" => "% Active Members (30 Days) (All/Approved)",
   "pct_signedin_members_90_days" => "% Active Members (90 Days) (All/Approved)",
-  "pct_signedin_members_older_than_90_days" => "% Inactive Members (> 90 Days) (All)",
+  "pct_signedin_members_older_than_90_days" => "% Inactive Members (> 90 Days) (All/Approved)",
   "num_chapters" => "Number of Chapters"];
 
   return $data_labels;

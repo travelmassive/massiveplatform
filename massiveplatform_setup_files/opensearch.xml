@@ -1,0 +1,9 @@
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+<ShortName>example.massiveplatform.com</ShortName>
+<Description>
+Massive Platform is awesome. Describe your site here.
+</Description>
+<InputEncoding>UTF-8</InputEncoding>
+<Image width="16" height="16" type="image/x-icon">/sites/default/files/site_branding/favicon/default_favicon.ico</Image>
+<Url type="text/html" method="get" template="https://example.massiveplatform.com/search/?query={searchTerms}"/>
+</OpenSearchDescription>

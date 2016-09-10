@@ -1,9 +1,0 @@
-<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
-<ShortName>travelmassive.com</ShortName>
-<Description>
-Travel Massive is the world's largest community of travel industry insiders, leaders and innovators. 
-</Description>
-<InputEncoding>UTF-8</InputEncoding>
-<Image width="16" height="16" type="image/x-icon">/sites/all/themes/tm/images/meta/favicon.ico</Image>
-<Url type="text/html" method="get" template="https://travelmassive.com/search/?query={searchTerms}"/>
-</OpenSearchDescription>

@@ -20,7 +20,7 @@ if ($date->format('Y-M-d') == $date2->format('Y-M-d')) {
 	<div class="avatar">
 	  <time datetime="<?php print $date->format('c'); ?>" class="badge-cal">
 	    <span class="month"><?php print $date->format('M'); if (($date->format('M') != ($date2->format('M')))) { print "-" . $date2->format('M'); }?></span> 
-	    <span class="day" style="font-size: 24pt;"><?php print $date->format('d'); ?>-<?php print $date2->format('d'); ?></span> 
+	    <span class="day" style="font-size: 1.5rem;"><?php print $date->format('j'); ?>-<?php print $date2->format('j'); ?></span> 
 	    <span class="year"><?php print $date->format('Y'); ?></span>
 	  </time>
 	</div>

@@ -68,6 +68,7 @@ function tm_events_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'event' => 'event',
   );
+  $handler->display->display_options['filters']['type']['group'] = 1;
   $handler->display->display_options['filters']['type']['exposed'] = TRUE;
   $handler->display->display_options['filters']['type']['expose']['operator_id'] = 'type_op';
   $handler->display->display_options['filters']['type']['expose']['operator'] = 'type_op';
@@ -82,13 +83,14 @@ function tm_events_views_default_views() {
     5 => 0,
   );
   $handler->display->display_options['filters']['type']['expose']['reduce'] = TRUE;
-  /* Filter criterion: Content: When -  start date (field_event_date) */
-  $handler->display->display_options['filters']['field_event_date_value']['id'] = 'field_event_date_value';
-  $handler->display->display_options['filters']['field_event_date_value']['table'] = 'field_data_field_event_date';
-  $handler->display->display_options['filters']['field_event_date_value']['field'] = 'field_event_date_value';
-  $handler->display->display_options['filters']['field_event_date_value']['operator'] = '>';
-  $handler->display->display_options['filters']['field_event_date_value']['granularity'] = 'hour';
-  $handler->display->display_options['filters']['field_event_date_value']['default_date'] = 'now -12 hours';
+  /* Filter criterion: Content: When - end date (field_event_date:value2) */
+  $handler->display->display_options['filters']['field_event_date_value2']['id'] = 'field_event_date_value2';
+  $handler->display->display_options['filters']['field_event_date_value2']['table'] = 'field_data_field_event_date';
+  $handler->display->display_options['filters']['field_event_date_value2']['field'] = 'field_event_date_value2';
+  $handler->display->display_options['filters']['field_event_date_value2']['operator'] = '>=';
+  $handler->display->display_options['filters']['field_event_date_value2']['group'] = 1;
+  $handler->display->display_options['filters']['field_event_date_value2']['granularity'] = 'hour';
+  $handler->display->display_options['filters']['field_event_date_value2']['default_date'] = 'now -12 hours';
   /* Filter criterion: Content: Preview mode (field_event_is_preview_mode) */
   $handler->display->display_options['filters']['field_event_is_preview_mode_value']['id'] = 'field_event_is_preview_mode_value';
   $handler->display->display_options['filters']['field_event_is_preview_mode_value']['table'] = 'field_data_field_event_is_preview_mode';
@@ -97,6 +99,7 @@ function tm_events_views_default_views() {
   $handler->display->display_options['filters']['field_event_is_preview_mode_value']['value'] = array(
     1 => '1',
   );
+  $handler->display->display_options['filters']['field_event_is_preview_mode_value']['group'] = 1;
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'events_community');

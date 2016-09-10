@@ -159,8 +159,11 @@ function _tm_date_avatar($field, $title = NULL) {
     $event_timezone = _tm_get_event_timezone($field['entity']);
 
     $event_date = new DateTime($field['entity']->field_event_date['und'][0]['value'], new DateTimeZone($event_timezone));
+    $event_date2 = new DateTime($field['entity']->field_event_date['und'][0]['value2'], new DateTimeZone($event_timezone));
+
     return theme('tm_date_avatar', array(
       'date' => $event_date,
+      'date2' => $event_date2
     ));
   }
 }

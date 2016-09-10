@@ -540,7 +540,7 @@ function tm_events_views_default_views() {
   $handler->display->display_options['filters']['field_event_date_value2']['expose']['operator'] = 'field_event_date_value2_op';
   $handler->display->display_options['filters']['field_event_date_value2']['expose']['identifier'] = 'field_event_date_value2';
   $handler->display->display_options['filters']['field_event_date_value2']['granularity'] = 'hour';
-  $handler->display->display_options['filters']['field_event_date_value2']['default_date'] = 'now +12 hours';
+  $handler->display->display_options['filters']['field_event_date_value2']['default_date'] = 'now -12 hours';
   /* Filter criterion: Content: Preview mode (field_event_is_preview_mode) */
   $handler->display->display_options['filters']['field_event_is_preview_mode_value']['id'] = 'field_event_is_preview_mode_value';
   $handler->display->display_options['filters']['field_event_is_preview_mode_value']['table'] = 'field_data_field_event_is_preview_mode';

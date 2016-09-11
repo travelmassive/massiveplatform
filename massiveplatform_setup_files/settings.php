@@ -2,6 +2,36 @@
 
 /** Add these lines to your sites/default/settings.php **/
 
+// MINIMAL / QUICK START  
+// PLEASE REFER TO DRUPAL INSTALLATION GUIDE
+// Uncomment the configuration below for quick start
+/*$databases = array (
+  'default' =>
+  array (
+    'default' =>
+    array (
+      'database' => 'massiveplatform',
+      'username' => 'YOUR_DB_USER',
+      'password' => 'YOUR_DB_PASS',
+      'host' => 'localhost',
+      'port' => '',
+      'driver' => 'mysql',
+      'prefix' => '',
+      // uncomment two lines below if you are using utf8mb4
+      //'charset' => 'utf8mb4',
+      //'collation' => 'utf8mb4_general_ci',
+    ),
+  ),
+);
+
+$update_free_access = FALSE;
+$drupal_hash_salt = 'RANDOM_STRING_HERE'; // generate a random string and insert here
+ini_set('session.gc_probability', 1);
+ini_set('session.gc_divisor', 100);
+ini_set('session.gc_maxlifetime', (60 * 60 * 24 * 90)); // 90 days
+ini_set('session.cookie_lifetime', (60 * 60 * 24 * 90)); // 90 days
+*/
+
 /** MASSIVE PLATFORM **/
 /** Add the following settings to your sites/default/settings.php file **/
 $conf['install_profile'] = 'tm';

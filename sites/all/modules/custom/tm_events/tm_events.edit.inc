@@ -383,6 +383,32 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
   //////////
   if (module_exists("tm_payments")) {
     _tm_payments_form_alter_event_form($form, $form_state, $form_id);
+  } else {
+
+    // hide fields manually
+    // note: because if module is disabled, field groups don't exist
+    $disable_payment_fields = array(
+      'field_event_payment_enabled',
+      'field_event_payment_early_date',
+      'field_event_payment_early_label',
+      'field_event_payment_enabled',
+      'field_event_payment_currency',
+      'field_event_payment_amount',
+      'field_event_payment_refund_text',
+      'field_event_payment_ask_address',
+      'field_event_payment_early_enable',
+      'field_event_payment_early_amount',
+      'field_event_payment_early_seats',
+      'field_event_is_preview_mode',
+      'field_event_payment_payout_to',
+      'field_event_payment_commission');
+
+    foreach ($disable_payment_fields as $payment_field_name) {
+      if (isset($form[$payment_field_name])) {
+        $form[$payment_field_name]['#access'] = false;
+      }
+    }
+
   }
 
   // STEP 7. Hide any help tips for ajax requests

@@ -277,6 +277,12 @@ function tm_organizations_form_alter(&$form, $form_state, $form_id) {
   if (!$perm_is_moderator_or_admin) {
     field_group_hide_field_groups($form, array('group_company_moderator_settings'));
   }
+
+  // check if payments not enabled
+  if (!module_exists("tm_payments")) {
+    field_group_hide_field_groups($form, array('group_company_payments'));
+    unset($form['field_company_payments_enabled']);
+  }
   
 }
 

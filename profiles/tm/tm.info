@@ -105,7 +105,6 @@ dependencies[] = tm_api
 dependencies[] = tm_messaging
 dependencies[] = tm_discuss
 dependencies[] = tm_reports
-dependencies[] = tm_payments
 dependencies[] = tm_search_api
 dependencies[] = tm_geoip
 dependencies[] = tm_branding

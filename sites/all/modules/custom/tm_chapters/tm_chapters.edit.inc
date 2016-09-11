@@ -123,7 +123,12 @@ function tm_chapters_form_alter(&$form, &$form_state, $form_id) {
   if (!$conf["tm_cover_videos_enabled"]) {
     unset($form['field_chapter_cover_video']);
   }
-  
+
+  // check if payments not enabled
+  if (!module_exists("tm_payments")) {
+    field_group_hide_field_groups($form, array('group_chapter_payments'));
+    unset($form['field_chapter_payments_enabled']);
+  }
     
 }
 

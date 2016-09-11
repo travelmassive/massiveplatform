@@ -98,6 +98,15 @@ function tm_organizations_check_user_can_create_company($uid) {
   global $conf;
   $account = user_load($uid);
 
+  // If tm_add_company_enabled is false, only moderator can create company profiles
+  if (isset($conf["tm_add_company_enabled"])) {
+    if ($conf["tm_add_company_enabled"] == false) {
+      if (!in_array("moderator", $account->roles)) {
+        return false;
+      }
+    }
+  }
+
   // Must be an approved user
   if (!in_array("approved user", $account->roles)) {
     return false;

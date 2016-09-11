@@ -66,6 +66,9 @@ $conf['tm_following_ratio_limit_daily'] = '0.5'; // number of followers added to
 $conf['tm_chapter_join_limit'] = '16'; // "join" limit for the non chapter leaders
 $conf['tm_add_company_limit'] = '8'; // maximum number of companies a user can add (no limit for chapter leaders, moderators)
 
+/** COMPANY PROFILES **/
+$conf['tm_add_company_enabled'] = true; // allow approved members to create company profiles
+
 /** SETTINGS FOR EMAIL TEMPLATES **/
 $conf['tm_site_name'] = "Massive"; // used by emails and in templates to refer to the site
 $conf['tm_email_server_http'] = "https"; // http or https depending on your setup. Will be used in email settings

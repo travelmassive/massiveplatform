@@ -209,9 +209,19 @@ class TmNewsfeedEmail
 				if ($no_match) {
 					$num_companies = number_format(db_query("select count(*) as 'count' from node where node.type='organization'")->fetchField());
 
-					$company_profile_link = "<a href='".tm_newfeed_absolute_url("companies").tm_newsfeed_utm_campaign()."'>company profile</a>";
-					$tip = "Create a $company_profile_link for $field_job_organization and join more than $num_companies other companies in our community.";
+					// check if members can create company profiles
+					$create_company_link = true;
+					if (isset($conf["tm_add_company_enabled"])) {
+					  if ($conf["tm_add_company_enabled"] == false) {
+					  	$create_company_link = false;
+					  }
+					}
 
+					if ($create_company_link) {
+						$company_profile_link = "<a href='".tm_newfeed_absolute_url("companies").tm_newsfeed_utm_campaign()."'>company profile</a>";
+						$tip = "Create a $company_profile_link for $field_job_organization and join more than $num_companies other companies in our community.";
+					}
+					
 					$tips[] = $tip;
 				}
 			}

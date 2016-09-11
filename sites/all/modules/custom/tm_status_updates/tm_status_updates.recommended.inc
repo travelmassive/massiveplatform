@@ -122,12 +122,17 @@ function tm_status_updates_people_suggestions($uid, $limit = 5) {
 	// collection of all users from queries, ensuring that we don't have duplicates
 	$collection = array_unique(array_merge($user_ids_location, $user_ids_job_role, $user_ids_industry, $user_ids_prolific));
 
-	// check empty array
+	// check limit not greater than array size
 	if (sizeof($collection) < $limit) {
 		$limit = sizeof($collection);
 	}
 
 	$keys = array_rand($collection, $limit);
+
+	// check empty array
+    if ($keys == 0) {
+    	return array();
+    }
 
 	foreach ($keys as $index) {
 		$users[] = $collection[$index];

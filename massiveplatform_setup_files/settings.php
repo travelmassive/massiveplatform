@@ -4,6 +4,11 @@
 
 // MINIMAL / QUICK START  
 // PLEASE REFER TO DRUPAL INSTALLATION GUIDE
+//
+// To create mysql database run these commands:
+// create database massiveplatform;
+// grant all on massiveplatform.* to massiveplatform@localhost identified by 'YOUR_DB_PASS';
+//
 // Uncomment the configuration below for quick start
 /*$databases = array (
   'default' =>
@@ -11,7 +16,7 @@
     'default' =>
     array (
       'database' => 'massiveplatform',
-      'username' => 'YOUR_DB_USER',
+      'username' => 'massiveplatform',
       'password' => 'YOUR_DB_PASS',
       'host' => 'localhost',
       'port' => '',

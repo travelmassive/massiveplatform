@@ -123,8 +123,8 @@ function tm_status_updates_people_suggestions($uid, $limit = 5) {
 	$collection = array_unique(array_merge($user_ids_location, $user_ids_job_role, $user_ids_industry, $user_ids_prolific));
 
 	// check empty array
-	if (sizeof($collection) == 0) {
-		return array();
+	if (sizeof($collection) < $limit) {
+		$limit = sizeof($collection);
 	}
 
 	$keys = array_rand($collection, $limit);

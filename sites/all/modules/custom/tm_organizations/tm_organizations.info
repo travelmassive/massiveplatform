@@ -18,7 +18,6 @@ dependencies[] = strongarm
 dependencies[] = text
 dependencies[] = tm_base
 dependencies[] = tm_fields
-dependencies[] = tm_payments
 dependencies[] = views
 dependencies[] = views_load_more
 features[context][] = company_page

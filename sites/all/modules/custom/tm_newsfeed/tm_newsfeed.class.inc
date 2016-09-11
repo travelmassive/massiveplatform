@@ -220,9 +220,8 @@ class TmNewsfeedEmail
 					if ($create_company_link) {
 						$company_profile_link = "<a href='".tm_newfeed_absolute_url("companies").tm_newsfeed_utm_campaign()."'>company profile</a>";
 						$tip = "Create a $company_profile_link for $field_job_organization and join more than $num_companies other companies in our community.";
+						$tips[] = $tip;
 					}
-					
-					$tips[] = $tip;
 				}
 			}
 		}

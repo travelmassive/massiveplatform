@@ -134,6 +134,10 @@ function tm_status_updates_people_suggestions($uid, $limit = 5) {
 
 	$keys = array_rand($collection, $limit);
 
+	if ($keys == null) {
+		return array();
+	}
+	
 	foreach ($keys as $index) {
 		$users[] = $collection[$index];
 	}

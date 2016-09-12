@@ -134,10 +134,16 @@ $image = theme('image_style', array(
   <?php endif; ?>
 
   <?php if (in_array("approved user", $loaded->roles)) : ?>
-      <?php if (tm_organizations_check_user_can_create_company($loaded->uid)): ?>
+      <?php
+        $company_profiles = tm_users_menu_companies($loaded->uid);
+        $can_create_company = tm_organizations_check_user_can_create_company($loaded->uid);
+        if (($company_profiles != "") or ($can_create_company)):
+      ?>
       <ul class="dropd-menu dropdown-company-profiles">
-      <?php print tm_users_menu_companies($loaded->uid); ?>
-      <li><?php print l(t('Add company profile'), 'node/add/organization'); ?></li>
+        <?php print tm_users_menu_companies($loaded->uid); ?>
+        <?php if (tm_organizations_check_user_can_create_company($loaded->uid)): ?>
+        <li><?php print l(t('Add company profile'), 'node/add/organization'); ?></li>
+        <?php endif; ?>
       </ul>
       <?php endif; ?>
   <?php endif; ?>

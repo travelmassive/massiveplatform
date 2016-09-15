@@ -388,6 +388,8 @@ class TmNewsfeedEmail
 
 
 	public function tm_newsfeed_email_populate_new_members($user_id, $start_date, $end_date) {
+
+		global $conf;
 		$items = array();
 		$results = tm_newsfeed_get_new_members($user_id, $start_date, $end_date);
 
@@ -408,7 +410,7 @@ class TmNewsfeedEmail
 			} elseif ($num_signups == 1) {
 				$text = " joined $home_chapter";
 			} else {
-				$text = " joined Travel Massive";
+				$text = " joined " . $conf["tm_site_name"];
 			}
 
 			$items[] = array("href" => $href, "link" => $link, "text" => $text);

@@ -112,8 +112,6 @@ class HierarchicalSelectInternals extends DrupalWebTestCase {
         ),
         'save_lineage'    => 0,
         'enforce_deepest' => 0,
-        'entity_count'    => 0,
-        'require_entity'  => 0,
         'resizable'       => 1,
         'level_labels' => array(
           'status' => 0,
@@ -129,6 +127,14 @@ class HierarchicalSelectInternals extends DrupalWebTestCase {
           'allowed_levels'   => array(),
           'allow_new_levels' => 0,
           'max_levels'       => 3,
+        ),
+        'entity_count'    => array(
+          'enabled' => 0,
+          'require_entity' => 0,
+          'settings' => array(
+            'count_children' => 0,
+            'entity_types' => array(),
+          ),
         ),
         'animation_delay'    => 400,
         'exclusive_lineages' => array(),
@@ -259,8 +265,6 @@ class HierarchicalSelectInternals extends DrupalWebTestCase {
         ),
         'save_lineage'    => 0,
         'enforce_deepest' => 1,
-        'entity_count'    => 0,
-        'require_entity'  => 0,
         'resizable'       => 1,
         'level_labels' => array(
           'status' => 0,
@@ -276,6 +280,14 @@ class HierarchicalSelectInternals extends DrupalWebTestCase {
           'allowed_levels'   => array(),
           'allow_new_levels' => 0,
           'max_levels'       => 3,
+        ),
+        'entity_count'    => array(
+          'enabled' => 0,
+          'require_entity' => 0,
+          'settings' => array(
+            'count_children' => 0,
+            'entity_types' => array(),
+          ),
         ),
         'animation_delay'    => 400,
         'exclusive_lineages' => array(),

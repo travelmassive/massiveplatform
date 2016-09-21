@@ -23,6 +23,7 @@
 .hierarchical-select-wrapper .hierarchical-select .add-to-dropbox,
 .hierarchical-select-wrapper .hierarchical-select .create-new-item {
   margin-left: .5em;
+  margin-right: 0; /* Reset ltr style */
   float: right;
 }
 
@@ -32,6 +33,7 @@
 .hierarchical-select-wrapper .hierarchical-select .create-new-item-cancel {
   float: left;
   margin-right: .4em;
+  margin-left: 0; /* Reset ltr style */
 }
 
 .hierarchical-select-wrapper .hierarchical-select .create-new-item-input {
@@ -51,4 +53,5 @@
 /* Dropbox limit warning.*/
 p.hierarchical-select-dropbox-limit-warning {
   padding-right: .5em;
+  padding-left: 0; /* Reset ltr style */
 }

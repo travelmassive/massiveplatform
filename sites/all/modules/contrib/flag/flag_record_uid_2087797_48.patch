@@ -1,8 +1,8 @@
-diff --git a/flag.module b/flag.module
-index bca0b47..45038df 100644
---- a/flag.module
-+++ b/flag.module
-@@ -2112,13 +2112,15 @@ function flag_get_user_flags($entity_type, $entity_id = NULL, $uid = NULL, $sid
+diff --git a/docroot/sites/all/modules/contrib/flag/flag.module b/docroot/sites/all/modules/contrib/flag/flag.module
+index 7b54c65..5884098 100644
+--- a/docroot/sites/all/modules/contrib/flag/flag.module
++++ b/docroot/sites/all/modules/contrib/flag/flag.module
+@@ -2140,13 +2140,15 @@ function flag_get_user_flags($entity_type, $entity_id = NULL, $uid = NULL, $sid
      if (!isset($flagged_content[$uid][$sid][$entity_type][$entity_id])) {
        $flag_names = _flag_get_flag_names();
        $flagged_content[$uid][$sid][$entity_type][$entity_id] = array();
@@ -21,7 +21,7 @@ index bca0b47..45038df 100644
          )
          ->condition('sid', $sid)
          ->execute();
-@@ -2134,15 +2136,18 @@ function flag_get_user_flags($entity_type, $entity_id = NULL, $uid = NULL, $sid
+@@ -2162,15 +2164,18 @@ function flag_get_user_flags($entity_type, $entity_id = NULL, $uid = NULL, $sid
      if (!isset($flagged_content[$uid][$sid][$entity_type]['all'])) {
        $flag_names = _flag_get_flag_names();
        $flagged_content[$uid][$sid][$entity_type]['all'] = array();
@@ -43,10 +43,10 @@ index bca0b47..45038df 100644
        foreach ($result as $flagging_data) {
          $flagged_content[$uid][$sid][$entity_type]['all'][$flag_names[$flagging_data->fid]][$flagging_data->entity_id] = $flagging_data;
        }
-diff --git a/flag.rules.inc b/flag.rules.inc
+diff --git a/docroot/sites/all/modules/contrib/flag/flag.rules.inc b/docroot/sites/all/modules/contrib/flag/flag.rules.inc
 index 60abc45..e7ba38c 100644
---- a/flag.rules.inc
-+++ b/flag.rules.inc
+--- a/docroot/sites/all/modules/contrib/flag/flag.rules.inc
++++ b/docroot/sites/all/modules/contrib/flag/flag.rules.inc
 @@ -171,7 +171,7 @@ function flag_rules_action_info() {
      'flagging_user' => array(
        'type' => 'user',
@@ -100,10 +100,10 @@ index 60abc45..e7ba38c 100644
            ),
          ),
          'group' => t('Flag'),
-diff --git a/includes/flag/flag_flag.inc b/includes/flag/flag_flag.inc
-index 7adc458..077ffb4 100644
---- a/includes/flag/flag_flag.inc
-+++ b/includes/flag/flag_flag.inc
+diff --git a/docroot/sites/all/modules/contrib/flag/includes/flag/flag_flag.inc b/docroot/sites/all/modules/contrib/flag/includes/flag/flag_flag.inc
+index 2b96b9f..96de526 100644
+--- a/docroot/sites/all/modules/contrib/flag/includes/flag/flag_flag.inc
++++ b/docroot/sites/all/modules/contrib/flag/includes/flag/flag_flag.inc
 @@ -726,20 +726,14 @@ class flag_flag {
        return FALSE;
      }
@@ -131,7 +131,7 @@ index 7adc458..077ffb4 100644
      }
  
      // @todo: Discuss: Core wraps everything in a try { }, should we?
-@@ -1005,8 +999,8 @@ class flag_flag {
+@@ -1014,8 +1008,8 @@ class flag_flag {
     * Parameters are the same as is_flagged()'s.
     */
    function get_flagging_record($entity_id, $uid = NULL, $sid = NULL) {
@@ -140,9 +140,9 @@ index 7adc458..077ffb4 100644
 +    $uid = (!isset($uid) ? $GLOBALS['user']->uid : $uid);
 +    $sid = (!isset($sid) ? flag_get_sid($uid) : $sid);
  
-     // flag_get_user_flags() does caching.
-     $user_flags = flag_get_user_flags($this->entity_type, $entity_id, $uid, $sid);
-@@ -1039,14 +1033,16 @@ class flag_flag {
+     // Get all the flaggings for this user on the entity from
+     // flag_get_user_flags(), which will statically cache them. This means that
+@@ -1051,14 +1045,16 @@ class flag_flag {
     * @private
     */
    function _is_flagged($entity_id, $uid, $sid) {
@@ -165,11 +165,11 @@ index 7adc458..077ffb4 100644
    }
  
    /**
-diff --git a/includes/views/flag_handler_relationships.inc b/includes/views/flag_handler_relationships.inc
-index 0ee05fc..4e1f3cf 100644
---- a/includes/views/flag_handler_relationships.inc
-+++ b/includes/views/flag_handler_relationships.inc
-@@ -148,7 +148,7 @@ class flag_handler_relationship_content extends flag_handler_relationship {
+diff --git a/docroot/sites/all/modules/contrib/flag/includes/views/flag_handler_relationships.inc b/docroot/sites/all/modules/contrib/flag/includes/views/flag_handler_relationships.inc
+index 820e544..cf79450 100644
+--- a/docroot/sites/all/modules/contrib/flag/includes/views/flag_handler_relationships.inc
++++ b/docroot/sites/all/modules/contrib/flag/includes/views/flag_handler_relationships.inc
+@@ -163,7 +163,7 @@ class flag_handler_relationship_content extends flag_handler_relationship {
        'value' => $flag->fid,
        'numeric' => TRUE,
      );
@@ -178,4 +178,3 @@ index 0ee05fc..4e1f3cf 100644
        $this->definition['extra'][] = array(
          'field' => 'uid',
          'value' => '***CURRENT_USER***',
-

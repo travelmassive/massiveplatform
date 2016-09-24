@@ -261,8 +261,6 @@ function _hierarchical_select_create_export_code($config) {
   $output .= "  'config_id'       => '" . $config['config_id'] . "',\n";
   $output .= "  'save_lineage'    => " . $config['save_lineage'] . ",\n";
   $output .= "  'enforce_deepest' => " . $config['enforce_deepest'] . ",\n";
-  $output .= "  'entity_count'    => " . $config['entity_count'] . ",\n";
-  $output .= "  'require_entity'  => " . $config['require_entity'] . ",\n";
   $output .= "  'resizable'       => " . $config['resizable'] . ",\n";
   $output .= "  'level_labels' => array(\n";
   $output .= "    'status' => " . $config['level_labels']['status'] . ",\n";
@@ -280,6 +278,7 @@ function _hierarchical_select_create_export_code($config) {
   $output .= "    'title'     => '" . str_replace("'", "\'", $config['dropbox']['title']) . "',\n";
   $output .= "    'limit'     => " . $config['dropbox']['limit'] . ",\n";
   $output .= "    'reset_hs'  => " . $config['dropbox']['reset_hs'] . ",\n";
+  $output .= "    'sort'      => " . $config['dropbox']['sort'] . ",\n";
   $output .= "  ),\n";
   $output .= "  'editability' => array(\n";
   $output .= "    'status' => " . $config['editability']['status'] . ",\n";
@@ -300,6 +299,28 @@ function _hierarchical_select_create_export_code($config) {
   $output .= "    ),\n";
   $output .= "    'allow_new_levels' => " . $config['editability']['allow_new_levels'] . ",\n";
   $output .= "    'max_levels'       => " . $config['editability']['max_levels'] . ",\n";
+  $output .= "  ),\n";
+  $output .= "  'entity_count' => array(\n";
+  $output .= "    'enabled' => " . $config['entity_count']['enabled'] . ",\n";
+  $output .= "    'require_entity' => " . $config['entity_count']['require_entity'] . ",\n";
+  $output .= "    'settings' => array(\n";
+  $output .= "      'count_children' => " . $config['entity_count']['settings']['count_children'] . ",\n";
+  if (isset($config['entity_count']['settings']['entity_types'])) {
+    $output .= "      'entity_types' => array(\n";
+    foreach ($config['entity_count']['settings']['entity_types'] as $entity_type => $count) {
+      $output .= "        '$entity_type' => array(\n";
+      foreach ($count as $delta => $bundles) {
+        $output .= "          '$delta' => array(\n";
+        foreach ($bundles as $delta => $bundle) {
+          $output .= "            '$delta' => '$bundle',\n";
+        }
+        $output .= "          ),\n";
+      }
+      $output .= "        ),\n";
+    }
+  }
+  $output .= "      ),\n";
+  $output .= "    ),\n";
   $output .= "  ),\n";
   $output .= ");\n";
 

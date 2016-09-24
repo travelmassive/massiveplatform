@@ -159,41 +159,6 @@ function hierarchical_select_common_config_form($module, $params, $config_id, $d
     '#attributes' => array('class' => array('enforce-deepest')),
   );
 
-  if (module_hook($module, 'hierarchical_select_entity_count')) {
-    $form['entity_count'] = array(
-      '#type' => 'radios',
-      '#title' => t('Display the !entity count', $args),
-      '#description' => t(
-        'When enabled, the user will see the number of !entities that match
-        the current !item listed between brackets.',
-        $args
-      ),
-      '#options' => array(
-        0 => t('Disabled'),
-        1 => t('Enabled'),
-      ),
-      '#default_value' => (isset($config['entity_count'])) ? $config['entity_count'] : NULL,
-      '#attributes' => array('class' => array('entity-count')),
-    );
-
-    $form['require_entity'] = array(
-      '#type' => 'radios',
-      '#title' => t('Require associated !entity', $args),
-      '#description' => t(
-        'When enabled, !items will only be displayed when they are associated
-        with at least one !entity, or if one of their child !items are
-        associated with at least one !entity.',
-        $args
-      ),
-      '#options' => array(
-        0 => t('Disabled'),
-        1 => t('Enabled'),
-      ),
-      '#default_value' => (isset($config['require_entity'])) ? $config['require_entity'] : NULL,
-      '#attributes' => array('class' => array('require-entity')),
-    );
-  }
-
   $form['resizable'] = array(
     '#type' => 'radios',
     '#title' => t('Resizable'),
@@ -295,7 +260,13 @@ function hierarchical_select_common_config_form($module, $params, $config_id, $d
     '#default_value' => (isset($config['dropbox']['reset_hs'])) ? $config['dropbox']['reset_hs'] : NULL,
     '#attributes' => array('class' => array('dropbox-reset-hs')),
   );
-
+  $form['dropbox']['sort'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Sort dropbox items'),
+    '#description' => t('Automatically sort items added to the dropbox. If unchecked new items will be added to the end of the dropbox list.'),
+    '#default_value' => (isset($config['dropbox']['sort'])) ? $config['dropbox']['sort'] : 1,
+    '#attributes' => array('class' => array('dropbox-sort')),
+  );
   if (module_hook($module, 'hierarchical_select_create_item')) {
     $form['editability'] = array(
       '#type' => 'fieldset',
@@ -360,6 +331,78 @@ function hierarchical_select_common_config_form($module, $params, $config_id, $d
 
     $form['editability']['#theme'] = 'hierarchical_select_common_config_form_editability';
     $form['editability']['#strings'] = $strings;
+  }
+
+  if (module_hook($module, 'hierarchical_select_entity_count')) {
+    $form['entity_count'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Entity Count'),
+      '#collapsible' => TRUE,
+    );
+
+    $form['entity_count']['enabled'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Display number of entities'),
+      '#description' => t('Display the number of entities associated with the !item. Do not forget to check which entities should be counted.', $args),
+      '#default_value' => isset($config['entity_count']['enabled']) ? $config['entity_count']['enabled'] : FALSE,
+      '#weight' => -1,
+      '#attributes' => array('class' => array('entity-count-enabled')),
+    );
+
+    $form['entity_count']['require_entity'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Require associated entity'),
+      '#description' => t('If checked only !items that have at least one entity associated with them will be displayed.', $args),
+      '#default_value' => (isset($config['entity_count']['require_entity'])) ? $config['entity_count']['require_entity'] : FALSE,
+    );
+
+    $form['entity_count']['settings'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Entity count settings'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+      '#weight' => -1,
+      '#attributes' => array('class' => array('entity-count-settings')),
+    );
+
+    $form['entity_count']['settings']['count_children'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Also count children of !item.', $args),
+      '#description' => t('If checked this will result in a larger number because the children will be counted also.'),
+      '#default_value' => isset($config['entity_count']['settings']['count_children']) ? $config['entity_count']['settings']['count_children'] : FALSE,
+    );
+
+    $form['entity_count']['settings']['entity_types'] = array(
+      '#type' => 'item',
+      '#title' => t('Select entities that should be counted.'),
+      '#description' => t('Select entity type or one of it\'s bundles that should be counted'),
+    );
+
+    $entity_info = entity_get_info();
+    foreach ($entity_info as $entity => $entity_info) {
+      if (!empty($entity_info['bundles']) && $entity_info['fieldable'] === TRUE) {
+        $options = array();
+        $default_values = array();
+
+        $form['entity_count']['settings']['entity_types'][$entity] = array(
+          '#type' => 'fieldset',
+          '#title' => check_plain($entity_info['label']),
+          '#collapsible' => TRUE,
+          '#collapsed' => TRUE,
+        );
+
+        foreach ($entity_info['bundles'] as $bundle => $bundle_info) {
+          $options[$bundle] = check_plain($bundle_info['label']);
+          $default_values[$entity][$bundle] = isset($config['entity_count']['settings']['entity_types'][$entity]['count_' . $entity][$bundle]) ? $config['entity_count']['settings']['entity_types'][$entity]['count_' . $entity][$bundle] : 0;
+        }
+
+        $form['entity_count']['settings']['entity_types'][$entity]['count_' . $entity] = array(
+          '#type' => 'checkboxes',
+          '#options' => $options,
+          '#default_value' => $default_values[$entity],
+        );
+      }
+    }
   }
 
   return $form;

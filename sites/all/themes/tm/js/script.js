@@ -355,7 +355,7 @@
     $.prompt({
       state0: {
         title: 'Do you want to approve this account?',
-        html: 'Guidelines for approval:<li>Account is a real person</li><li>Profile is not a company or brand</li><li>Profile picture is not a brand logo</li><li>At least one link to a personal account</li><li>Profile meets our <a target="_blank" href="' + community_values_url + '">community values</a></li>',
+        html: 'Guidelines for approval:<li>Account is a real person</li><li>Profile is not a company or logo</li><li>At least one link to verify personal account</li><li>Profile meets our <a target="_blank" href="' + community_values_url + '">community values</a></li>',
         buttons: { Cancel: false, Next: true },
         focus: 1,
         submit:function(e,v,m,f){

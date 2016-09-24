@@ -46,8 +46,6 @@ element type:
       ),
       'save_lineage'    => 0,
       'enforce_deepest' => 0,
-      'entity_count'    => 0,
-      'require_entity'  => 0,
       'resizable'       => 1,
       'level_labels' => array(
         'status' => 0,
@@ -62,6 +60,7 @@ element type:
         'title'    => t('All selections'),
         'limit'    => 0,
         'reset_hs' => 1,
+        'sort'     => 1,
       ),
       'editability' => array(
         'status'           => 0,
@@ -73,6 +72,14 @@ element type:
         ),
         'allow_new_levels' => 0,
         'max_levels'       => 3,
+      ),
+      'entity_count'    => array(
+        'enabled' => 0,
+        'require_entity' => 0,
+        'settings' => array(
+          'count_children' => 0,
+          'entity_types' => array(),
+        ),
       ),
       // These settings cannot be configured through the UI: they can only be
       // overridden through code.
@@ -110,14 +117,6 @@ array. These are the items it can contain:
    Triggers the enforcing of a selection in the deepest level. If enabled, the
    selection will always be a single value.
 
- - entity_count (optional, defaults to 0)
-   Enables the display of entity counts, between parentheses, for each item in
-   the hierarchy.
-
- - require_entity (optional, defaults to 0)
-   Whether an item should only be displayed if it has at least one associated
-   entity.
-
  - resizable (optional, defaults to 1)
    Makes the hierarchical select resizable.
 
@@ -148,6 +147,9 @@ array. These are the items it can contain:
  - dropbox['reset_hs'] (optional, defaults to 1, which means "do reset")
    Determines what will happen to the hierarchical select when the user has
    added a selection to the dropbox.
+
+ - dropbox['sort'] (optional, defaults to 1, which means "do sort")
+   Determines whether the items in the dropbox will be automatically sorted.
 
  - editability['status] (optional, defaults to 0)
    Allow the user to create new items in the hierarchy.
@@ -180,6 +182,21 @@ array. These are the items it can contain:
    Limits the maximum number of levels. Don't set this too high or you'll end
    up with very deep hierarchies. This only affects how deep new levels can be
    created, it will not affect the existing hierarchy.
+
+ - entity_count['enabled'] (optional, defaults to 0)
+   Enables the display of entity counts, between parentheses, for each item in
+   the hierarchy.
+
+ - entity_count['require_entity'] (optional, defaults to 0)
+   Whether an item should only be displayed if it has at least one associated
+   entity.
+
+ - entity_count['settings']['count_children'] (optional, defaults to 0)
+   Whether the entity count should also count associated children of the entity.
+
+ - entity_count['settings']['entity_types'] (optional, defaults to array())
+   Which types of entities should be counted. This is a list of checkboxes that
+   allow the user to select entity types by bundles.
 
  - animation_delay (optional, defaults to 400)
    The delay of each animation (the drop in left and right animations), in ms.
@@ -361,7 +378,6 @@ should get you started.
       ),
       'save_lineage'    => 0,
       'enforce_deepest' => 0,
-      'entity_count'    => 0,
       'resizable'       => 1,
       'level_labels' => array(
         'status' => 0,
@@ -376,6 +392,7 @@ should get you started.
         'title'    => t('All selections'),
         'limit'    => 0,
         'reset_hs' => 1,
+        'sort'     => 1,
       ),
       'editability' => array(
         'status'           => 0,
@@ -387,6 +404,14 @@ should get you started.
         ),
         'allow_new_levels' => 0,
         'max_levels'       => 3,
+      ),
+      'entity_count'    => array(
+        'enabled' => 0,
+        'require_entity' => 0,
+        'settings' => array(
+          'count_children' => 0,
+          'entity_types' => array(),
+        ),
       ),
       // These settings cannot be configured through the UI: they can only be
       // overridden through code.

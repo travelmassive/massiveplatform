@@ -61,6 +61,7 @@ function hser_field_widget_form(&$form, &$form_state, $field, $instance, $langco
         '#size' => 1,
         '#default_value' => $default_value,
         '#element_validate' => array('_hser_element_validate'),
+        '#required' => $instance['required'],
         '#config' => array(
           'module' => 'hs_taxonomy',
           'params' => array(
@@ -68,8 +69,6 @@ function hser_field_widget_form(&$form, &$form_state, $field, $instance, $langco
           ),
           'save_lineage' => FALSE,
           'enforce_deepest' => FALSE,
-          'entity_count' => FALSE,
-          'require_entity' => FALSE,
           'resizable' => FALSE,
           'level_labels' => array('status' => FALSE),
           'dropbox' => array(
@@ -80,6 +79,14 @@ function hser_field_widget_form(&$form, &$form_state, $field, $instance, $langco
             'status' => $instance['widget']['settings']['editable'],
             'allow_new_levels' => TRUE,
             'max_levels' => 0,
+          ),
+          'entity_count'    => array(
+            'enabled' => 0,
+            'require_entity' => 0,
+            'settings' => array(
+              'count_children' => 0,
+              'entity_types' => array(),
+            ),
           ),
           'render_flat_select' => FALSE,
         ),
@@ -103,6 +110,13 @@ function _hser_element_validate($element, &$form_state, $form) {
     $value[$delta]['target_id'] = $target_id;
   }
   form_set_value($element, $value, $form_state);
+
+  if ($element['#required'] && (!isset($form_state['submit_handlers'][0]) || $form_state['submit_handlers'][0] !== 'hierarchical_select_ajax_update_submit')) {
+    if (!count($element['#value']) || (is_string($element['#value']) && strlen(trim($element['#value'])) == 0) || (array_key_exists(0, $element['#value'])) && !$element['#value'][0]) {
+      form_error($element, t('!name field is required.', array('!name' => $element['#title'])));
+      _hierarchical_select_form_set_error_class($element);
+    }
+  }
 }
 
 /**

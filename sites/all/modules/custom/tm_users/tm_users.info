@@ -103,6 +103,7 @@ features[field_instance][] = user-user-field_link_facebook
 features[field_instance][] = user-user-field_link_instagram
 features[field_instance][] = user-user-field_link_linkedin
 features[field_instance][] = user-user-field_link_snapchat
+features[field_instance][] = user-user-field_link_strava
 features[field_instance][] = user-user-field_link_twitter
 features[field_instance][] = user-user-field_link_vimeo
 features[field_instance][] = user-user-field_link_website

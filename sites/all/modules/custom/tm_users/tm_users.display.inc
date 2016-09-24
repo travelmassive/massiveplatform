@@ -10,7 +10,7 @@ function tm_users_user_view($account, $view_mode, $langcode) {
   global $conf;
 
   // Show additional link fields based on $conf['tm_users_link_fields']
-  $all_fields = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat');
+  $all_fields = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat', 'strava');
   if (isset($conf["tm_users_link_fields"])) {
     $show_link_fields = $conf["tm_users_link_fields"];
     foreach ($all_fields as $field) {

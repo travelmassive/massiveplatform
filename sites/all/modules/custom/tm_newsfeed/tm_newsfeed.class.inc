@@ -209,10 +209,19 @@ class TmNewsfeedEmail
 				if ($no_match) {
 					$num_companies = number_format(db_query("select count(*) as 'count' from node where node.type='organization'")->fetchField());
 
-					$company_profile_link = "<a href='".tm_newfeed_absolute_url("companies").tm_newsfeed_utm_campaign()."'>company profile</a>";
-					$tip = "Create a $company_profile_link for $field_job_organization and join more than $num_companies other companies in our community.";
+					// check if members can create company profiles
+					$create_company_link = true;
+					if (isset($conf["tm_add_company_enabled"])) {
+					  if ($conf["tm_add_company_enabled"] == false) {
+					  	$create_company_link = false;
+					  }
+					}
 
-					$tips[] = $tip;
+					if ($create_company_link) {
+						$company_profile_link = "<a href='".tm_newfeed_absolute_url("companies").tm_newsfeed_utm_campaign()."'>company profile</a>";
+						$tip = "Create a $company_profile_link for $field_job_organization and join more than $num_companies other companies in our community.";
+						$tips[] = $tip;
+					}
 				}
 			}
 		}
@@ -379,6 +388,8 @@ class TmNewsfeedEmail
 
 
 	public function tm_newsfeed_email_populate_new_members($user_id, $start_date, $end_date) {
+
+		global $conf;
 		$items = array();
 		$results = tm_newsfeed_get_new_members($user_id, $start_date, $end_date);
 
@@ -399,7 +410,7 @@ class TmNewsfeedEmail
 			} elseif ($num_signups == 1) {
 				$text = " joined $home_chapter";
 			} else {
-				$text = " joined Travel Massive";
+				$text = " joined " . $conf["tm_site_name"];
 			}
 
 			$items[] = array("href" => $href, "link" => $link, "text" => $text);

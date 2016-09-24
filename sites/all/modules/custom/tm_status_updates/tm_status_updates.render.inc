@@ -387,17 +387,21 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 			if (isset($flagged_user->field_home_chapter[LANGUAGE_NONE][0]['target_id'])) {
 				$home_chapter = node_load($flagged_user->field_home_chapter[LANGUAGE_NONE][0]['target_id']);
 
-				// check if chapter is group
-				$chapter_is_group = false;
-				if (isset($home_chapter->field_chapter_is_group[LANGUAGE_NONE][0]['value'])) {
-					$chapter_is_group = ($home_chapter->field_chapter_is_group[LANGUAGE_NONE][0]['value']);
-				}
+				if ($home_chapter != false) {
 
-				// if not group, use the chapter as location
-				if (!$chapter_is_group) {
-					$details["location_text"] = $home_chapter->title;
-					$details["location_url"] = "/" . drupal_get_path_alias("node/" . $home_chapter->nid);
+					// check if chapter is group
+					$chapter_is_group = false;
+					if (isset($home_chapter->field_chapter_is_group[LANGUAGE_NONE][0]['value'])) {
+						$chapter_is_group = ($home_chapter->field_chapter_is_group[LANGUAGE_NONE][0]['value']);
+					}
+
+					// if not group, use the chapter as location
+					if (!$chapter_is_group) {
+						$details["location_text"] = $home_chapter->title;
+						$details["location_url"] = "/" . drupal_get_path_alias("node/" . $home_chapter->nid);
+					}
 				}
+				
 			}
 
 			// Show user's location field if no home chapter

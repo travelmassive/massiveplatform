@@ -29,13 +29,13 @@ function tm_fields_strongarm() {
         'field_type' => 'entityreference',
       ),
       'field_event_company' => array(
+        'all' => array(
+          'view' => 'view',
+        ),
         'referenced' => array(
           'view' => array(
             'view' => 'view',
           ),
-        ),
-        'all' => array(
-          'view' => 'view',
         ),
         'field_type' => 'entityreference',
       ),

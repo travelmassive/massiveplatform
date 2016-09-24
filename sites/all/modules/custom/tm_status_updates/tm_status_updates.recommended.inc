@@ -127,13 +127,17 @@ function tm_status_updates_people_suggestions($uid, $limit = 5) {
 		$limit = sizeof($collection);
 	}
 
+	// check we have results to show
+	if (($limit == 0) or (sizeof($collection) == 0)) {
+		return array();
+	}
+
 	$keys = array_rand($collection, $limit);
 
-	// check empty array
-    if ($keys == 0) {
-    	return array();
-    }
-
+	if ($keys == null) {
+		return array();
+	}
+	
 	foreach ($keys as $index) {
 		$users[] = $collection[$index];
 	}

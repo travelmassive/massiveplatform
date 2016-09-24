@@ -2,6 +2,41 @@
 
 /** Add these lines to your sites/default/settings.php **/
 
+// MINIMAL / QUICK START  
+// PLEASE REFER TO DRUPAL INSTALLATION GUIDE
+//
+// To create mysql database run these commands:
+// create database massiveplatform;
+// grant all on massiveplatform.* to massiveplatform@localhost identified by 'YOUR_DB_PASS';
+//
+// Uncomment the configuration below for quick start
+/*$databases = array (
+  'default' =>
+  array (
+    'default' =>
+    array (
+      'database' => 'massiveplatform',
+      'username' => 'massiveplatform',
+      'password' => 'YOUR_DB_PASS',
+      'host' => 'localhost',
+      'port' => '',
+      'driver' => 'mysql',
+      'prefix' => '',
+      // uncomment two lines below if you are using utf8mb4
+      //'charset' => 'utf8mb4',
+      //'collation' => 'utf8mb4_general_ci',
+    ),
+  ),
+);
+
+$update_free_access = FALSE;
+$drupal_hash_salt = 'RANDOM_STRING_HERE'; // generate a random string and insert here
+ini_set('session.gc_probability', 1);
+ini_set('session.gc_divisor', 100);
+ini_set('session.gc_maxlifetime', (60 * 60 * 24 * 90)); // 90 days
+ini_set('session.cookie_lifetime', (60 * 60 * 24 * 90)); // 90 days
+*/
+
 /** MASSIVE PLATFORM **/
 /** Add the following settings to your sites/default/settings.php file **/
 $conf['install_profile'] = 'tm';
@@ -30,6 +65,9 @@ $conf['tm_following_ratio_limit_unapproved'] = '20'; // difference between follo
 $conf['tm_following_ratio_limit_daily'] = '0.5'; // number of followers added to limit each day since approval
 $conf['tm_chapter_join_limit'] = '16'; // "join" limit for the non chapter leaders
 $conf['tm_add_company_limit'] = '8'; // maximum number of companies a user can add (no limit for chapter leaders, moderators)
+
+/** COMPANY PROFILES **/
+$conf['tm_add_company_enabled'] = true; // allow approved members to create company profiles
 
 /** SETTINGS FOR EMAIL TEMPLATES **/
 $conf['tm_site_name'] = "Massive"; // used by emails and in templates to refer to the site
@@ -163,7 +201,7 @@ $conf['tm_event_types_system'] = array("community" => "Chapter Event", "member" 
 $conf['tm_event_types_custom'] = array("workshop" => "Workshop", "conference" => "Conference"); // add your own custom events here
 $conf['tm_event_types'] = array_merge($conf['tm_event_types_system'], $conf['tm_event_types_custom']);
 $conf['tm_event_types_display'] = array("all" => "All Events", "conference" => "Conferences", "member" => "Member Events"); // event types to select on /event page
-$conf['tm_event_types_tips'] = array("workshop" => "Learn and share with other members around the world. Do you have an idea for a workshop you would like to attend or host? Please <a href='/contact'>let us know</a>.", "conference" => "We're proud community partners with the world's leading industry conferences and exhibitions. <a href='/blog/about-us'>Learn more</a>", "member" => "member" => "Do you have a local event you want to share with the community? Add an event from your profile page or <a href='/contact'>contact us</a> to learn more.");
+$conf['tm_event_types_tips'] = array("workshop" => "Learn and share with other members around the world. Do you have an idea for a workshop you would like to attend or host? Please <a href='/contact'>let us know</a>.", "conference" => "We're proud community partners with the world's leading industry conferences and exhibitions. <a href='/blog/about-us'>Learn more</a>", "member" => "Do you have a local event you want to share with the community? Add an event from your profile page or <a href='/contact'>contact us</a> to learn more.");
 $conf['tm_event_types_default'] = "all"; // default setting for /events listing
 $conf['tm_event_types_sticker_icon_color'] = "#000000"; // color of sticker for non-chapter events
 $conf['tm_event_types_edit_tips'] = array();
@@ -174,7 +212,7 @@ $conf['tm_event_types_labels'] = array("workshop" => "workshop"); // optional la
 
 /** PROFILE AND COMPANY LINK FIELDS **/
 /** Options available: website, twitter, facebook, linkedin, instagram, youtube, vimeo, snapchat **/
-$conf["tm_users_link_fields"] = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat');
+$conf["tm_users_link_fields"] = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat'); /* also: strava */
 $conf["tm_organizations_link_fields"] = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo');
 
 /** RANDOMIZE DEFAULT IMAGES **/
@@ -303,7 +341,7 @@ $conf['tm_geoip_maxmind_db'] = '/usr/local/share/GeoIP/GeoIP2-City.mmd'; // path
 $conf['tm_branding_enabled'] = true; // set to false to disable brand processing and only use config variables
 $conf['tm_branding_frontpage_url'] = '/'; // link to frontpage url
 $conf['tm_branding_assets_base_path'] = '/sites/default/files/site_branding'; // path to site_branding assets 
-$conf['tm_branding_favicon'] = '/sites/default/files/site_branding/favicon/default_favicon.ico'; // default favicon (ico)
+$conf['tm_branding_favicon'] = '/sites/default/files/site_branding/apple_touch_icons/apple-touch-icon-72x72.png'; // default favicon (ico)
 $conf['tm_branding_apple_touch_icon_path'] = '/sites/default/files/site_branding/apple_touch_icons/'; // path to apple_touch_icons 
 $conf['tm_branding_frontpage_image'] = '/sites/default/files/site_branding/frontpage_image/default_frontpage_image.jpg'; // frontpage image (jpg)
 $conf['tm_branding_frontpage_opacity'] = 0.8; // frontpage image/video opacity

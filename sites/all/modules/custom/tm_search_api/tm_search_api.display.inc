@@ -414,6 +414,9 @@ function tm_search_api_render_result_user($result, $results_user, $search_query,
 	if (sizeof($results_user->field_link_vimeo) > 0) {
 		$result_text .= " | Vimeo: " . $results_user->field_link_vimeo[LANGUAGE_NONE][0]['url'];
 	}
+	if (sizeof($results_user->field_link_strava) > 0) {
+		$result_text .= " | Strava: " . $results_user->field_link_strava[LANGUAGE_NONE][0]['url'];
+	}
 
 	// user questions
 	if (sizeof($results_user->field_user_question_1) > 0) {
@@ -432,6 +435,9 @@ function tm_search_api_render_result_user($result, $results_user, $search_query,
 		$result_text .= " | " . $results_user->field_user_question_5[LANGUAGE_NONE][0]['safe_value'];
 	}
 
+	// strip tags
+	$result_text = strip_tags($result_text);
+	
 	$result_info = tm_search_api_result_highlight($result_text, $search_query); 
 
 	// render item

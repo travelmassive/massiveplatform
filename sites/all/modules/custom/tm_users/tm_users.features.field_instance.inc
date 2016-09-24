@@ -444,16 +444,8 @@ function tm_users_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'date',
-        'settings' => array(
-          'format_type' => 'long',
-          'fromto' => 'both',
-          'multiple_from' => '',
-          'multiple_number' => '',
-          'multiple_to' => '',
-          'show_remaining_days' => FALSE,
-        ),
-        'type' => 'date_default',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 36,
       ),
       'grid' => array(
@@ -778,6 +770,70 @@ function tm_users_field_default_field_instances() {
       'settings' => array(),
       'type' => 'link_field',
       'weight' => 57,
+    ),
+  );
+
+  // Exported field_instance: 'user-user-field_link_strava'.
+  $field_instances['user-user-field_link_strava'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'ie: https://www.strava.com/athletes/1237890',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'tm_fields',
+        'settings' => array(),
+        'type' => 'tm_fields_strava',
+        'weight' => 35,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'user',
+    'field_name' => 'field_link_strava',
+    'label' => 'Strava',
+    'required' => 0,
+    'settings' => array(
+      'absolute_url' => 0,
+      'attributes' => array(
+        'class' => '',
+        'configurable_class' => 0,
+        'configurable_title' => 0,
+        'rel' => 'nofollow',
+        'target' => '_blank',
+        'title' => '',
+      ),
+      'display' => array(
+        'url_cutoff' => 80,
+      ),
+      'enable_tokens' => 0,
+      'rel_remove' => 'default',
+      'title' => 'none',
+      'title_label_use_field_label' => 0,
+      'title_maxlength' => 128,
+      'title_value' => '',
+      'url' => 0,
+      'user_register_form' => 0,
+      'validate_url' => 0,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'link',
+      'settings' => array(),
+      'type' => 'link_field',
+      'weight' => 58,
     ),
   );
 
@@ -1286,9 +1342,8 @@ function tm_users_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'text',
         'settings' => array(),
-        'type' => 'text_default',
+        'type' => 'hidden',
         'weight' => 35,
       ),
       'grid' => array(
@@ -1339,9 +1394,8 @@ function tm_users_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
+        'type' => 'hidden',
         'weight' => 37,
       ),
       'grid' => array(
@@ -1793,6 +1847,7 @@ function tm_users_field_default_field_instances() {
   t('Question 5');
   t('Reason for joining');
   t('Snapchat');
+  t('Strava');
   t('Tell the community about yourself. This information will be <strong>public</strong>.
 <br><strong>Providing information about your company?</strong> Please add a <a target=\'_blank\' class=\'cancel\' href="/companies">company profile</a>.');
   t('The name of your business, company, or organization.
@@ -1811,6 +1866,7 @@ function tm_users_field_default_field_instances() {
   t('ie: https://linkedin.com/in/myname
 <br>Need help finding your LinkedIn URL? Watch this <a target=\'_blank\' class=\'cancel\' href=\'https://www.youtube.com/watch?v=iioFPii_Pb8\'>quick tutorial video</a>.');
   t('ie: https://vimeo.com/yourname');
+  t('ie: https://www.strava.com/athletes/1237890');
   t('ie: https://www.youtube.com/user/username');
 
   return $field_instances;

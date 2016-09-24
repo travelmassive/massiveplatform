@@ -129,6 +129,12 @@ function tm_users_strongarm() {
             'visible' => FALSE,
           ),
         ),
+        'realname' => array(
+          'default' => array(
+            'weight' => '-1',
+            'visible' => FALSE,
+          ),
+        ),
       ),
     ),
   );

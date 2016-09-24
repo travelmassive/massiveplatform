@@ -308,6 +308,7 @@ function tm_search_api_fetch_results($query_array) {
 			$query_filter_people->condition('user:field_link_linkedin:url', $search_term);
 			$query_filter_people->condition('user:field_link_youtube:url', $search_term);
 			$query_filter_people->condition('user:field_link_vimeo:url', $search_term);
+			$query_filter_people->condition('user:field_link_strava:url', $search_term);
 
 			$query_filter_people->condition('user:field_user_question_1', $search_term);
 			$query_filter_people->condition('user:field_user_question_2', $search_term);
@@ -375,6 +376,9 @@ function tm_search_api_fetch_results($query_array) {
 		}
 		if (in_array("cover_video", $has_queries)) {
 			$query_filter_has->condition('user:field_user_cover_video', null, '<>');
+		}
+		if (in_array("strava", $has_queries)) {
+			$query_filter_has->condition('user:field_link_strava:url', null, '<>');
 		}
 
 		// role:field
@@ -762,7 +766,7 @@ function tm_search_api_init_option($query_options, $key) {
 			if (array_search("youtube", $query_options[$key]) !== false) { return $query_options[$key]; }
 			if (array_search("vimeo", $query_options[$key]) !== false) { return $query_options[$key]; }
 			if (array_search("cover_video", $query_options[$key]) !== false) { return $query_options[$key]; }
-
+			if (array_search("strava", $query_options[$key]) !== false) { return $query_options[$key]; }
 			// not supported
 			return array();
 		}

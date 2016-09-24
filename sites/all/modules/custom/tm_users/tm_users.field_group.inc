@@ -170,11 +170,12 @@ function tm_users_field_group_info() {
       7 => 'field_link_snapchat',
       8 => 'field_link_vimeo',
       9 => 'field_link_youtube',
-      10 => 'tm_ds_user_stats',
-      11 => 'tm_ds_user_featured',
-      12 => 'tm_ds_connection_actions',
-      13 => 'group_location_wrapper',
-      14 => 'group_user_qa_wrapper',
+      10 => 'field_link_strava',
+      11 => 'tm_ds_user_stats',
+      12 => 'tm_ds_user_featured',
+      13 => 'tm_ds_connection_actions',
+      14 => 'group_location_wrapper',
+      15 => 'group_user_qa_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -310,8 +311,7 @@ function tm_users_field_group_info() {
       0 => 'field_friendly_url',
       1 => 'field_user_first_name',
       2 => 'field_user_last_name',
-      3 => 'masquerade',
-      4 => 'account',
+      3 => 'account',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -347,6 +347,7 @@ function tm_users_field_group_info() {
       5 => 'field_link_snapchat',
       6 => 'field_link_vimeo',
       7 => 'field_link_youtube',
+      8 => 'field_link_strava',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -464,7 +465,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '36',
+    'weight' => '37',
     'children' => array(
       0 => 'field_location_city',
     ),
@@ -556,9 +557,9 @@ function tm_users_field_group_info() {
     'children' => array(
       0 => 'group_user_account',
       1 => 'group_user_notifications',
-      2 => 'group_user_profile',
-      3 => 'group_user_twitter_settings',
-      4 => 'group_user_privacy',
+      2 => 'group_user_privacy',
+      3 => 'group_user_profile',
+      4 => 'group_user_twitter_settings',
     ),
     'format_type' => 'htabs',
     'format_settings' => array(
@@ -669,7 +670,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'QA',
-    'weight' => '35',
+    'weight' => '36',
     'children' => array(
       0 => 'group_user_qa',
     ),

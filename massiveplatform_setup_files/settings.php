@@ -212,7 +212,7 @@ $conf['tm_event_types_labels'] = array("workshop" => "workshop"); // optional la
 
 /** PROFILE AND COMPANY LINK FIELDS **/
 /** Options available: website, twitter, facebook, linkedin, instagram, youtube, vimeo, snapchat **/
-$conf["tm_users_link_fields"] = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat');
+$conf["tm_users_link_fields"] = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat'); /* also: strava */
 $conf["tm_organizations_link_fields"] = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo');
 
 /** RANDOMIZE DEFAULT IMAGES **/

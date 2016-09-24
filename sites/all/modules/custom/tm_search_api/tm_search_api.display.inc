@@ -356,10 +356,18 @@ function tm_search_api_render_result_user($result, $results_user, $search_query,
 		$image_url = image_style_url("avatar", $default_image_uri);
 	}
 
+	// privacy mode
+	$privacy_mode_text = "";
+	if (isset($results_user->field_user_has_private_profile[LANGUAGE_NONE][0]['value'])) {
+	  if ($results_user->field_user_has_private_profile[LANGUAGE_NONE][0]['value']) {
+		$privacy_mode_text = " (Private profile)";
+	  }
+	}
+
 	// set render fields
 	$result_url = drupal_get_path_alias("user/" . $results_user->uid);
 	$result_image_url = $image_url;
-	$result_title = l("People > " . $results_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . " " . $results_user->field_user_last_name[LANGUAGE_NONE][0]['value'], $result_url, array('attributes' => array('target'=>$href_target)));
+	$result_title = l("People > " . $results_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . " " . $results_user->field_user_last_name[LANGUAGE_NONE][0]['value'] . $privacy_mode_text, $result_url, array('attributes' => array('target'=>$href_target)));
 
 	// about
 	$result_text = $results_user->field_about_me[LANGUAGE_NONE][0]['safe_value'];
@@ -437,7 +445,7 @@ function tm_search_api_render_result_user($result, $results_user, $search_query,
 
 	// strip tags
 	$result_text = strip_tags($result_text);
-	
+
 	$result_info = tm_search_api_result_highlight($result_text, $search_query); 
 
 	// render item

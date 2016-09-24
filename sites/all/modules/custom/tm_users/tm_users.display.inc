@@ -51,6 +51,47 @@ function tm_users_user_view($account, $view_mode, $langcode) {
     }
   }
 
+  // Member privacy - don't allow anonymous or non-approved member to view
+  if ($view_mode == "full") {
+    if (isset($account->field_user_has_private_profile[LANGUAGE_NONE][0]['value'])) {
+      if ($account->field_user_has_private_profile[LANGUAGE_NONE][0]['value']) {
+
+        $private_profile = false;
+
+        // check anonymous user
+        if (user_is_anonymous()) {
+          $private_profile = true;
+        } else {
+          // check user is approved
+          if ((!in_array('approved user', $user->roles)) and (!in_array('administrator', $user->roles))) {
+            $private_profile = true;
+          }
+        }
+
+        // if profile private, display message
+        if ($private_profile) {
+
+          // also add no-index
+          $noindex_meta_tag = array(
+            '#tag' => 'meta',
+            '#attributes' => array(
+            'name' => 'robots',
+            'content' => 'noindex, nofollow',
+            ),
+          );
+          drupal_add_html_head($noindex_meta_tag, 'user_profile_meta_robots');
+
+          // markup the access denied message with js
+          $js = "document.title = 'Private profile'; document.getElementById('page-title').innerHTML = 'Nothing to see here...'; document.getElementById('content').innerHTML = document.getElementById('content').innerHTML.replace('You are not authorized to access this page.', '');";
+          drupal_add_js($js, "inline");
+          drupal_set_message("This member's profile is private.", "help-tip");
+          drupal_access_denied();
+          return;
+        }
+
+      }
+    }
+  }
 }
 
 /** 

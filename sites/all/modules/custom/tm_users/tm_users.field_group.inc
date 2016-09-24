@@ -614,6 +614,7 @@ function tm_users_field_group_info() {
     'weight' => '38',
     'children' => array(
       0 => 'field_user_disable_public_index',
+      1 => 'field_user_has_private_profile',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

@@ -44,6 +44,8 @@ if (!$found_match) {
 // remove http and https
 if ($display_url == "") {
 	$display_url = $strava_url;
+	$display_url = str_ireplace("http://www.", "", $display_url);
+	$display_url = str_ireplace("https://www.", "", $display_url);
 	$display_url = str_ireplace("http://", "", $display_url);
 	$display_url = str_ireplace("https://", "", $display_url);
 }

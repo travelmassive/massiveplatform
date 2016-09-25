@@ -257,7 +257,7 @@ function tm_users_form_contact_site_form_alter(&$form, &$form_state, $form_id) {
     $chapter_referral_id = $_COOKIE['Drupal_visitor_chapter_referral_id'];
     if (isset($chapter_list[$chapter_referral_id])) {
       $chapter = node_load($chapter_referral_id);
-      $contact_list[$chapter_referral_id] = tm_chapters_formal_name($chapter);
+      $contact_list[$chapter_referral_id] = strip_tags($chapter->title);
     }
   }
 

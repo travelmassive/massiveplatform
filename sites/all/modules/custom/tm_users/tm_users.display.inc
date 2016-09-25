@@ -82,9 +82,9 @@ function tm_users_user_view($account, $view_mode, $langcode) {
           drupal_add_html_head($noindex_meta_tag, 'user_profile_meta_robots');
 
           // markup the access denied message with js
-          $js = "document.title = 'Private profile'; document.getElementById('page-title').innerHTML = 'Nothing to see here...'; document.getElementById('content').innerHTML = document.getElementById('content').innerHTML.replace('You are not authorized to access this page.', '');";
+          $js = "document.title = 'Private profile'; document.getElementById('page-title').innerHTML = 'Private profile'; document.getElementById('content').innerHTML = document.getElementById('content').innerHTML.replace('You are not authorized to access this page.', '');";
           drupal_add_js($js, "inline");
-          drupal_set_message("This member's profile is private.", "help-tip");
+          drupal_set_message("This member's profile is private. Only approved members can view this page.", "help-tip");
           drupal_access_denied();
           return;
         }

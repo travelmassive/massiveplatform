@@ -481,6 +481,7 @@ function tm_users_track_signed_in() {
 
     // track ip
     ip_tracker_user_save($user->uid);
+
   }
 }
 

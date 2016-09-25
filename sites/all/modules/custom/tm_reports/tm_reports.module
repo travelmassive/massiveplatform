@@ -432,35 +432,27 @@ function _tm_reports_get_chapter_insights($chapter_id) {
   $insights["members_with_segment_pct"] = $members_with_segment_pct;
 
   // NUMBER OF SIGNED IN MEMBERS TODAY (APPROVED)
-  $query = "SELECT COUNT(DISTINCT ip_tracker.uid) amount FROM ip_tracker RIGHT JOIN users_roles ON users_roles.uid = ip_tracker.uid RIGHT JOIN {flagging} f ON f.uid = ip_tracker.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 1 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
+  $query = "SELECT COUNT(DISTINCT users.uid) amount FROM users RIGHT JOIN users_roles ON users_roles.uid = users.uid RIGHT JOIN {flagging} f ON f.uid = users.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(access) > DATE_SUB(NOW(), INTERVAL 1 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
   $signed_in_today_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
   $insights["num_signedin_members_24_hours_chapter"] = $signed_in_today_chapter->amount;
 
   // NUMBER OF SIGNED IN MEMBERS 7 DAYS (APPROVED)
-  $query = "SELECT COUNT(DISTINCT ip_tracker.uid) amount FROM ip_tracker RIGHT JOIN users_roles ON users_roles.uid = ip_tracker.uid RIGHT JOIN {flagging} f ON f.uid = ip_tracker.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 7 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
+  $query = "SELECT COUNT(DISTINCT users.uid) amount FROM users RIGHT JOIN users_roles ON users_roles.uid = users.uid RIGHT JOIN {flagging} f ON f.uid = users.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(access) > DATE_SUB(NOW(), INTERVAL 7 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
   $signed_in_7_days_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
   $insights["num_signedin_members_7_days_chapter"] = $signed_in_7_days_chapter->amount;
 
   // NUMBER OF SIGNED IN MEMBERS 30 DAYS (APPROVED)
-  $query = "SELECT COUNT(DISTINCT ip_tracker.uid) amount FROM ip_tracker RIGHT JOIN users_roles ON users_roles.uid = ip_tracker.uid RIGHT JOIN {flagging} f ON f.uid = ip_tracker.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 30 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
+  $query = "SELECT COUNT(DISTINCT users.uid) amount FROM users RIGHT JOIN users_roles ON users_roles.uid = users.uid RIGHT JOIN {flagging} f ON f.uid = users.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(access) > DATE_SUB(NOW(), INTERVAL 30 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
   $signed_in_30_days_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
   $insights["num_signedin_members_30_days_chapter"] = $signed_in_30_days_chapter->amount;
 
   // NUMBER OF SIGNED IN MEMBERS 90 DAYS (APPROVED)
-  $query = "SELECT COUNT(DISTINCT ip_tracker.uid) amount FROM ip_tracker RIGHT JOIN users_roles ON users_roles.uid = ip_tracker.uid RIGHT JOIN {flagging} f ON f.uid = ip_tracker.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 90 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
+  $query = "SELECT COUNT(DISTINCT users.uid) amount FROM users RIGHT JOIN users_roles ON users_roles.uid = users.uid RIGHT JOIN {flagging} f ON f.uid = users.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(access) > DATE_SUB(NOW(), INTERVAL 90 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
   $signed_in_90_days_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
   $insights["num_signedin_members_90_days_chapter"] = $signed_in_90_days_chapter->amount;
 
   // NUMBER OF MEMBERS WHO HAVEN'T SIGNED IN SINCE 90 DAYS (APPROVED)
-  $query = "SELECT COUNT(DISTINCT t1.uid) amount FROM 
-    (SELECT uid, max(last_visit) as min_last_visit
-      FROM ip_tracker
-      GROUP BY uid) as t1 
-      RIGHT JOIN users_roles ON users_roles.uid = t1.uid 
-      RIGHT JOIN {flagging} f ON f.uid = t1.uid 
-      WHERE users_roles.rid = :role_id
-      AND FROM_UNIXTIME(min_last_visit) < DATE_SUB(NOW(), INTERVAL 90 DAY)
-      AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
+  $query = "SELECT COUNT(DISTINCT users.uid) amount FROM users RIGHT JOIN users_roles ON users_roles.uid = users.uid RIGHT JOIN {flagging} f ON f.uid = users.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(access) < DATE_SUB(NOW(), INTERVAL 90 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
   $signed_in_older_than_90_days_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
   $insights["num_signedin_members_older_than_90_days_chapter"] = $signed_in_older_than_90_days_chapter->amount;
 
@@ -742,61 +734,52 @@ function _tm_reports_get_global_insights() {
   $insights["num_total_status_views_all_time"] = $view_count->amount + $view_count_daily->amount;
 
   // NUMBER OF SIGNED IN MEMBERS TODAY (ALL)
-  $query = "SELECT COUNT(DISTINCT uid) amount FROM ip_tracker WHERE FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 1 DAY)";
+  $query = "SELECT COUNT(DISTINCT uid) amount FROM users WHERE FROM_UNIXTIME(access) > DATE_SUB(NOW(), INTERVAL 1 DAY)";
   $signed_in_today = db_query($query)->fetch();
   $insights["num_signedin_members_24_hours"] = $signed_in_today->amount;
 
   // NUMBER OF SIGNED IN MEMBERS 7 DAYS (ALL)
-  $query = "SELECT COUNT(DISTINCT uid) amount FROM ip_tracker WHERE FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 7 DAY)";
+  $query = "SELECT COUNT(DISTINCT uid) amount FROM users WHERE FROM_UNIXTIME(access) > DATE_SUB(NOW(), INTERVAL 7 DAY)";
   $signed_in_7_days = db_query($query)->fetch();
   $insights["num_signedin_members_7_days"] = $signed_in_7_days->amount;
 
   // NUMBER OF SIGNED IN MEMBERS 30 DAYS (ALL)
-  $query = "SELECT COUNT(DISTINCT uid) amount FROM ip_tracker WHERE FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 30 DAY)";
+  $query = "SELECT COUNT(DISTINCT uid) amount FROM users WHERE FROM_UNIXTIME(access) > DATE_SUB(NOW(), INTERVAL 30 DAY)";
   $signed_in_30_days = db_query($query)->fetch();
   $insights["num_signedin_members_30_days"] = $signed_in_30_days->amount;
 
   // NUMBER OF SIGNED IN MEMBERS 90 DAYS (ALL)
-  $query = "SELECT COUNT(DISTINCT uid) amount FROM ip_tracker WHERE FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 90 DAY)";
+  $query = "SELECT COUNT(DISTINCT uid) amount FROM users WHERE FROM_UNIXTIME(access) > DATE_SUB(NOW(), INTERVAL 90 DAY)";
   $signed_in_90_days = db_query($query)->fetch();
   $insights["num_signedin_members_90_days"] = $signed_in_90_days->amount;
 
   // NUMBER OF MEMBERS WHO HAVEN'T SIGNED IN SINCE 90 DAYS (ALL)
-  $query = "SELECT COUNT(DISTINCT uid) amount FROM 
-    (SELECT uid, max(last_visit) as min_last_visit
-      FROM ip_tracker
-      GROUP BY uid) as t1 
-     WHERE FROM_UNIXTIME(min_last_visit) < DATE_SUB(NOW(), INTERVAL 90 DAY)";
+  $query = "SELECT COUNT(DISTINCT uid) amount FROM users WHERE FROM_UNIXTIME(access) < DATE_SUB(NOW(), INTERVAL 90 DAY)";
   $signed_in_older_than_90_days = db_query($query)->fetch();
   $insights["num_signedin_members_older_than_90_days"] = $signed_in_older_than_90_days->amount;
 
   // NUMBER OF SIGNED IN MEMBERS TODAY (APPROVED)
-  $query = "SELECT COUNT(DISTINCT ip_tracker.uid) amount FROM ip_tracker RIGHT JOIN users_roles ON users_roles.uid = ip_tracker.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 1 DAY)";
+  $query = "SELECT COUNT(DISTINCT users.uid) amount FROM users RIGHT JOIN users_roles ON users_roles.uid = users.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(access) > DATE_SUB(NOW(), INTERVAL 1 DAY)";
   $signed_in_today_approved = db_query($query, array(':role_id' => $approved_role->rid))->fetch();
   $insights["num_signedin_members_24_hours_approved"] = $signed_in_today_approved->amount;
 
   // NUMBER OF SIGNED IN MEMBERS 7 DAYS (APPROVED)
-  $query = "SELECT COUNT(DISTINCT ip_tracker.uid) amount FROM ip_tracker RIGHT JOIN users_roles ON users_roles.uid = ip_tracker.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 7 DAY)";
+  $query = "SELECT COUNT(DISTINCT users.uid) amount FROM users RIGHT JOIN users_roles ON users_roles.uid = users.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(access) > DATE_SUB(NOW(), INTERVAL 7 DAY)";
   $signed_in_7_days_approved = db_query($query, array(':role_id' => $approved_role->rid))->fetch();
   $insights["num_signedin_members_7_days_approved"] = $signed_in_7_days_approved->amount;
 
   // NUMBER OF SIGNED IN MEMBERS 30 DAYS (APPROVED)
-  $query = "SELECT COUNT(DISTINCT ip_tracker.uid) amount FROM ip_tracker RIGHT JOIN users_roles ON users_roles.uid = ip_tracker.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 30 DAY)";
+  $query = "SELECT COUNT(DISTINCT users.uid) amount FROM users RIGHT JOIN users_roles ON users_roles.uid = users.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(access) > DATE_SUB(NOW(), INTERVAL 30 DAY)";
   $signed_in_30_days_approved = db_query($query, array(':role_id' => $approved_role->rid))->fetch();
   $insights["num_signedin_members_30_days_approved"] = $signed_in_30_days_approved->amount;
 
   // NUMBER OF SIGNED IN MEMBERS 90 DAYS (APPROVED)
-  $query = "SELECT COUNT(DISTINCT ip_tracker.uid) amount FROM ip_tracker RIGHT JOIN users_roles ON users_roles.uid = ip_tracker.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 90 DAY)";
+  $query = "SELECT COUNT(DISTINCT users.uid) amount FROM users RIGHT JOIN users_roles ON users_roles.uid = users.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(access) > DATE_SUB(NOW(), INTERVAL 90 DAY)";
   $signed_in_90_days_approved = db_query($query, array(':role_id' => $approved_role->rid))->fetch();
   $insights["num_signedin_members_90_days_approved"] = $signed_in_90_days_approved->amount;
 
   // NUMBER OF MEMBERS WHO HAVEN'T SIGNED IN SINCE 90 DAYS (APPROVED)
-  $query = "SELECT COUNT(DISTINCT t1.uid) amount FROM 
-    (SELECT uid, max(last_visit) as min_last_visit
-      FROM ip_tracker
-      GROUP BY uid) as t1 
-      RIGHT JOIN users_roles ON users_roles.uid = t1.uid WHERE users_roles.rid = :role_id
-      AND FROM_UNIXTIME(min_last_visit) < DATE_SUB(NOW(), INTERVAL 90 DAY)";
+  $query = "SELECT COUNT(DISTINCT users.uid) amount FROM users RIGHT JOIN users_roles ON users_roles.uid = users.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(access) < DATE_SUB(NOW(), INTERVAL 90 DAY)";
   $signed_in_older_than_90_days_approved = db_query($query, array(':role_id' => $approved_role->rid))->fetch();
   $insights["num_signedin_members_older_than_90_days_approved"] = $signed_in_older_than_90_days_approved->amount;
 
@@ -873,7 +856,7 @@ function tm_reports_get_insights_labels() {
   "num_signedin_members_7_days" => "All Active Members (7 Days)",
   "num_signedin_members_30_days" => "All Active Members (30 Days)",
   "num_signedin_members_90_days" => "All Active Members (90 Days)",
-  "num_signedin_members_older_than_90_days" => "Approved Inactive Members (> 90 Days)",
+  "num_signedin_members_older_than_90_days" => "All Inactive Members (> 90 Days)",
   "num_signedin_members_24_hours_approved" => "Approved Active Members (24 Hours)",
   "num_signedin_members_7_days_approved" => "Approved Active Members (7 Days)",
   "num_signedin_members_30_days_approved" => "Approved Active Members (30 Days)",

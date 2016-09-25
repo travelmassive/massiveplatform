@@ -358,14 +358,14 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['fields']['field_link_linkedin']['alter']['target'] = '_blank';
   $handler->display->display_options['fields']['field_link_linkedin']['click_sort_column'] = 'url';
   $handler->display->display_options['fields']['field_link_linkedin']['type'] = 'link_plain';
-  /* Field: User: Last login */
-  $handler->display->display_options['fields']['login']['id'] = 'login';
-  $handler->display->display_options['fields']['login']['table'] = 'users';
-  $handler->display->display_options['fields']['login']['field'] = 'login';
-  $handler->display->display_options['fields']['login']['relationship'] = 'field_chapter_leaders_target_id';
-  $handler->display->display_options['fields']['login']['element_class'] = 'tm_nowrap';
-  $handler->display->display_options['fields']['login']['date_format'] = 'time ago';
-  $handler->display->display_options['fields']['login']['second_date_format'] = 'long';
+  /* Field: User: Last access */
+  $handler->display->display_options['fields']['access']['id'] = 'access';
+  $handler->display->display_options['fields']['access']['table'] = 'users';
+  $handler->display->display_options['fields']['access']['field'] = 'access';
+  $handler->display->display_options['fields']['access']['relationship'] = 'field_chapter_leaders_target_id';
+  $handler->display->display_options['fields']['access']['label'] = 'Last active';
+  $handler->display->display_options['fields']['access']['date_format'] = 'time ago';
+  $handler->display->display_options['fields']['access']['second_date_format'] = 'long';
   $handler->display->display_options['defaults']['sorts'] = FALSE;
   /* Sort criterion: Content: Title */
   $handler->display->display_options['sorts']['title']['id'] = 'title';
@@ -500,14 +500,15 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['fields']['field_link_linkedin']['relationship'] = 'field_chapter_leaders_target_id';
   $handler->display->display_options['fields']['field_link_linkedin']['click_sort_column'] = 'url';
   $handler->display->display_options['fields']['field_link_linkedin']['type'] = 'link_plain';
-  /* Field: User: Last login */
-  $handler->display->display_options['fields']['login']['id'] = 'login';
-  $handler->display->display_options['fields']['login']['table'] = 'users';
-  $handler->display->display_options['fields']['login']['field'] = 'login';
-  $handler->display->display_options['fields']['login']['relationship'] = 'field_chapter_leaders_target_id';
-  $handler->display->display_options['fields']['login']['date_format'] = 'custom';
-  $handler->display->display_options['fields']['login']['custom_date_format'] = 'Y-m-d h:m';
-  $handler->display->display_options['fields']['login']['second_date_format'] = 'long';
+  /* Field: User: Last access */
+  $handler->display->display_options['fields']['access']['id'] = 'access';
+  $handler->display->display_options['fields']['access']['table'] = 'users';
+  $handler->display->display_options['fields']['access']['field'] = 'access';
+  $handler->display->display_options['fields']['access']['relationship'] = 'field_chapter_leaders_target_id';
+  $handler->display->display_options['fields']['access']['label'] = 'Last active';
+  $handler->display->display_options['fields']['access']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['access']['custom_date_format'] = 'Y-m-d h:m';
+  $handler->display->display_options['fields']['access']['second_date_format'] = 'long';
   $handler->display->display_options['defaults']['sorts'] = FALSE;
   /* Sort criterion: Content: Title */
   $handler->display->display_options['sorts']['title']['id'] = 'title';

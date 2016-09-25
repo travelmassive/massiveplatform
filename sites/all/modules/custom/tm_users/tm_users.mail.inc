@@ -212,4 +212,7 @@ function tm_users_send_html_mail($module, $key, $email, $language, $params, $sub
   // Don't send via drupal mail
   $mail_form['send'] = false;
 
+  // Suppress help tip
+  drupal_get_messages("help-tip");
+
 }

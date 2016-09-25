@@ -145,17 +145,6 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
     }
   }
 
-  // Contact form tip
-  if ($form_id == "contact_site_form") {
-    if (!isset($form_state['input']['form_token'])) {
-      global $conf;
-      if ((drupal_get_messages("warning", false) == null)) {
-        $contact_form_message = "Get in touch with " . $conf["tm_site_name"] . " and send us your ideas, comments or feedback.";
-        drupal_set_message($contact_form_message, "help-tip");
-      }
-    }
-  }
-
   // disable user from choosing own contact form
   // http://stackoverflow.com/questions/2540582/how-do-i-disable-the-personal-contact-form-option-in-the-user-edit-form
   if ('user_profile_form' === $form_id) {
@@ -231,6 +220,10 @@ function tm_users_form_contact_site_form_alter(&$form, &$form_state, $form_id) {
       $form['mail']['#disabled'] = TRUE;
   }
 
+  // Contact form tip
+  $contact_form_message = "Get in touch with " . $conf["tm_site_name"] . " and send us your ideas, comments or feedback.";
+  drupal_set_message($contact_form_message, "help-tip", $repeat = FALSE);
+  
   // Remove "send a copy to yourself" option from form (if required).
   $form['copy']['#access'] = FALSE;
 
@@ -254,6 +247,8 @@ function tm_users_form_contact_site_form_alter(&$form, &$form_state, $form_id) {
         $default_value = $conf["tm_contact_page_contacts"][$value];
       }
     }
+  } else {
+    $contact_list["defaut_contact"] = "Contact us";
   }
 
   // set default chapter if set from cookie

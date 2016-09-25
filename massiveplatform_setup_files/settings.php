@@ -91,6 +91,8 @@ $conf['tm_community_values_url'] = "https://example.massiveplatform.com/blog/com
 
 /** CONTACT AND NOTIFICATION EMAILS **/
 $conf['tm_contact_page_email'] = "hello@massiveplatform.com"; // Where to send contact form emails to
+$conf['tm_contact_page_titles'] = array("media" => "Media and PR"); // optional: list of department titles
+$conf['tm_contact_page_contacts'] = array("media" => "media@massiveplatform.com"); // optional: list of department email addresses
 $conf['tm_user_remove_own_account_notify'] = 'community@massiveplatform.com'; // If user removes their account, who do we notify?
 
 /** MEMBER LABELS **/

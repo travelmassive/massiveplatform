@@ -90,7 +90,7 @@ function tm_chapters_send_email($chapter_leader_emails, $subject, $body, $user, 
     $module = 'tm_chapters';
     $key = 'key';
     $language = language_default();
-    $params = array();
+    $params["headers"] = array("Cc" => $conf['tm_contact_page_email']);
     $from = NULL;
     $reply = $user->mail;
     $send = FALSE;

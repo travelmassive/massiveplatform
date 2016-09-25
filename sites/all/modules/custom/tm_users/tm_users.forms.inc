@@ -141,7 +141,7 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
 
       // Replace "All" option to more meaningful name
       $form['name_list']['#options']['All'] = "Country";
-      
+
     }
   }
 
@@ -149,9 +149,11 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
   if ($form_id == "contact_site_form") {
     if (!isset($form_state['input']['form_token'])) {
       global $conf;
-      $contact_form_message = "Get in touch with " . $conf["tm_site_name"] . " and send us your ideas, comments or feedback.";
-      drupal_set_message($contact_form_message, "help-tip");
-    }   
+      if ((drupal_get_messages("warning", false) == null)) {
+        $contact_form_message = "Get in touch with " . $conf["tm_site_name"] . " and send us your ideas, comments or feedback.";
+        drupal_set_message($contact_form_message, "help-tip");
+      }
+    }
   }
 
   // disable user from choosing own contact form
@@ -220,6 +222,7 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
  */
 function tm_users_form_contact_site_form_alter(&$form, &$form_state, $form_id) {
 
+  global $user;
   global $conf;
 
   // If you are logged in, disable editing name and email
@@ -230,5 +233,68 @@ function tm_users_form_contact_site_form_alter(&$form, &$form_state, $form_id) {
 
   // Remove "send a copy to yourself" option from form (if required).
   $form['copy']['#access'] = FALSE;
+
+  // get a list of chapters
+  $chapters = node_load_multiple(array(), array('type' => "chapter"));
+
+  // add chapter dropdown list
+  $chapter_list = array();
+  foreach ($chapters as $chapter) { // See this line in your original code
+    $chapter_list[$chapter->nid] = tm_chapters_formal_name($chapter);
+  }
+  asort($chapter_list);
+
+  // add contact titles
+  $contact_list = array();
+  $default_value = "";
+  if(isset($conf["tm_contact_page_contacts"])) {
+    foreach($conf["tm_contact_page_contacts"] as $value => $title) {
+      $contact_list[$value] = $title;
+      if ($default_value == "") {
+        $default_value = $conf["tm_contact_page_contacts"][$value];
+      }
+    }
+  }
+
+  // set default chapter if set from cookie
+  if (isset($_COOKIE['Drupal_visitor_chapter_referral_id'])) {
+    $chapter_referral_id = $_COOKIE['Drupal_visitor_chapter_referral_id'];
+    if (isset($chapter_list[$chapter_referral_id])) {
+      $chapter = node_load($chapter_referral_id);
+      $contact_list[$chapter_referral_id] = tm_chapters_formal_name($chapter);
+    }
+  }
+
+  // allow approved members to choose a chapter
+  if (user_is_logged_in()) {
+    if (in_array('approved user', $user->roles)) {
+      $contact_list[""] = " - Chapters - ";
+      foreach($chapter_list as $nid => $title) {
+        $contact_list[$nid] = $title;
+      }
+    }
+  }
+  
+  // add chapter list to registraton form
+  $form['contact_list']=array(
+    '#type'=>'select',
+    '#title' =>t('Who do you want to contact?'),
+    '#options' => $contact_list,
+    //'#description' => "Help us notify the best person to reply to you.",
+    '#multiple' => false,
+    '#weight'=>-100,
+    '#default_value' => $default_value
+  );
+
+  // catch spam
+  $form['fullname'] = array(
+    '#title'    => t('Name'),
+    '#type'     => 'textfield',
+    '#required' => false,
+  );
+
+  // hide spam field
+  $js = "document.getElementsByClassName('form-item-fullname')[0].style.display = 'none';";
+  drupal_add_js($js, "inline");
 
 }

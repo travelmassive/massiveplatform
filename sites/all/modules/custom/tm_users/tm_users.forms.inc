@@ -249,6 +249,7 @@ function tm_users_form_contact_site_form_alter(&$form, &$form_state, $form_id) {
     }
   } else {
     $contact_list["defaut_contact"] = "Contact us";
+    $default_value = "contact_us";
   }
 
   // set default chapter if set from cookie

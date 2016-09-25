@@ -2855,8 +2855,8 @@ tr.selected td {
 }
 
 /* line 33, ../sass/_helpers.scss */
-.bttn-primary, .bttn-group a, .page-views .tabs-primary a, .page-search .tabs-primary a, .pager li a, .views-exposed-form .form-type-select, .bttn-secondary, #prime-nav .search-wrapper .search-form #edit-submit,
-#prime-nav .search-wrapper .search-form #edit-submit--2, #content .search-form #edit-submit, .twitter-login, .bttn-tertiary, .form-submit, .form-download, #account-menu-blk .form-download, #account-menu-blk .form-submit, .bttn-danger, #edit-delete, .bttn-success, #edit-submit, .pager, .views-exposed-form .form-type-select select, .card.contained .avatar, .node-form > div.card .avatar,
+.bttn-primary, .bttn-group a, .page-views .tabs-primary a, .page-search .tabs-primary a, .pager li a, .views-exposed-form .form-type-select, .bttn-secondary, #prime-nav .search-wrapper .search-form #search-submit,
+#prime-nav .search-wrapper .search-form #edit-submit--2, #content .search-form #search-submit, .twitter-login, .bttn-tertiary, .form-submit, .form-download, #account-menu-blk .form-download, #account-menu-blk .form-submit, .bttn-danger, #edit-delete, .bttn-success, #edit-submit, .pager, .views-exposed-form .form-type-select select, .card.contained .avatar, .node-form > div.card .avatar,
 #user-profile-form > div.card .avatar,
 #user-register-form > div.card .avatar, #content .card.search-form .avatar, .card.contained .chapter-sticker, .node-form > div.card .chapter-sticker,
 #user-profile-form > div.card .chapter-sticker,
@@ -3939,7 +3939,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   right: 4rem;
 }
 /* line 215, ../sass/_base.scss */
-#prime-nav .search-wrapper .search-form #edit-submit,
+#prime-nav .search-wrapper .search-form #search-submit,
 #prime-nav .search-wrapper .search-form #edit-submit--2 {
   width: 100%;
   margin: 0.5rem 0 0 0;
@@ -5019,23 +5019,23 @@ button:hover, button:focus {
 }
 
 /* line 169, ../sass/_buttons.scss */
-.bttn-secondary, #prime-nav .search-wrapper .search-form #edit-submit,
-#prime-nav .search-wrapper .search-form #edit-submit--2, #content .search-form #edit-submit, .twitter-login {
+.bttn-secondary, #prime-nav .search-wrapper .search-form #search-submit,
+#prime-nav .search-wrapper .search-form #edit-submit--2, #content .search-form #search-submit, .twitter-login {
   color: #FFF !important;
   background: #007eb5 !important;
   box-shadow: inset 0 -2px 0 0 #00587e;
 }
 /* line 174, ../sass/_buttons.scss */
-.bttn-secondary:hover, #prime-nav .search-wrapper .search-form #edit-submit:hover,
-#prime-nav .search-wrapper .search-form #edit-submit--2:hover, #content .search-form #edit-submit:hover, .twitter-login:hover, .bttn-secondary:focus, #prime-nav .search-wrapper .search-form #edit-submit:focus,
-#prime-nav .search-wrapper .search-form #edit-submit--2:focus, #content .search-form #edit-submit:focus, .twitter-login:focus {
+.bttn-secondary:hover, #prime-nav .search-wrapper .search-form #search-submit:hover,
+#prime-nav .search-wrapper .search-form #edit-submit--2:hover, #content .search-form #search-submit:hover, .twitter-login:hover, .bttn-secondary:focus, #prime-nav .search-wrapper .search-form #search-submit:focus,
+#prime-nav .search-wrapper .search-form #edit-submit--2:focus, #content .search-form #search-submit:focus, .twitter-login:focus {
   color: #FFF !important;
 }
 /* line 177, ../sass/_buttons.scss */
-.bttn-secondary:active, #prime-nav .search-wrapper .search-form #edit-submit:active,
-#prime-nav .search-wrapper .search-form #edit-submit--2:active, #content .search-form #edit-submit:active, .twitter-login:active, .bttn-secondary.on, #prime-nav .search-wrapper .search-form .on#edit-submit,
-#prime-nav .search-wrapper .search-form .on#edit-submit--2, #content .search-form .on#edit-submit, .on.twitter-login, .bttn-secondary.flagged, #prime-nav .search-wrapper .search-form .flagged#edit-submit,
-#prime-nav .search-wrapper .search-form .flagged#edit-submit--2, #content .search-form .flagged#edit-submit, .flagged.twitter-login {
+.bttn-secondary:active, #prime-nav .search-wrapper .search-form #search-submit:active,
+#prime-nav .search-wrapper .search-form #edit-submit--2:active, #content .search-form #search-submit:active, .twitter-login:active, .bttn-secondary.on, #prime-nav .search-wrapper .search-form .on#search-submit,
+#prime-nav .search-wrapper .search-form .on#edit-submit--2, #content .search-form .on#search-submit, .on.twitter-login, .bttn-secondary.flagged, #prime-nav .search-wrapper .search-form .flagged#search-submit,
+#prime-nav .search-wrapper .search-form .flagged#edit-submit--2, #content .search-form .flagged#search-submit, .flagged.twitter-login {
   background: #00587e !important;
   box-shadow: inset 0 2px 0 0 #003f5a;
   color: #FFF !important;
@@ -6145,6 +6145,13 @@ a.cancel_account_link {
 
 /* line 612, ../sass/_forms.scss */
 .field-name-field-user-disable-public-index {
+  margin-left: 2rem;
+  margin-bottom: 2rem;
+  margin-right: 1rem;
+}
+
+/* line 618, ../sass/_forms.scss */
+.field-name-field-user-has-private-profile {
   margin-left: 2rem;
   margin-bottom: 2rem;
   margin-right: 1rem;
@@ -7398,7 +7405,7 @@ a.cancel_account_link {
   margin-bottom: 0.5rem;
 }
 /* line 230, ../sass/_single.scss */
-#content .search-form #edit-submit {
+#content .search-form #search-submit {
   width: 100%;
 }
 @media only screen and (min-width: 34.063rem) {

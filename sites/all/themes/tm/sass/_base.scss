@@ -211,7 +211,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
       label {
         @extend .visually-hidden;
       }
-      #edit-submit,
+      #search-submit,
       #edit-submit--2 {
         width: 100%;
         @extend .bttn-secondary;

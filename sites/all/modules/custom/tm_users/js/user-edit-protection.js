@@ -30,15 +30,17 @@
             $(this).click(function(event) {
               // return when a "#" link is clicked so as to skip the
               // window.onbeforeunload function
-              if (edit && $(this).attr("href").indexOf("#") < 0) {
-                var r = confirm(profile_message);
-                if (r==true) {
-                  event.preventDefault();
-                  $("#edit-submit").click();
-                } else {
-                  window.location = $(this).attr('href');
+              try {
+                  if (edit && $(this).attr("href").indexOf("#") < 0) {
+                  var r = confirm(profile_message);
+                  if (r==true) {
+                    event.preventDefault();
+                    $("#edit-submit").click();
+                  } else {
+                    window.location = $(this).attr('href');
+                  }
                 }
-              }
+              } catch(e) {}
             });
           });
 

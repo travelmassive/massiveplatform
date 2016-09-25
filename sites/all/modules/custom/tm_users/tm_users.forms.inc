@@ -266,7 +266,7 @@ function tm_users_form_contact_site_form_alter(&$form, &$form_state, $form_id) {
   // allow approved members to choose a chapter
   if (user_is_logged_in()) {
     if (in_array('approved user', $user->roles)) {
-      $contact_list["select_chapter"] = " - Chapters - ";
+      $contact_list["select_chapter"] = " - " . $conf["tm_site_name"] . " Chapters - ";
       foreach($chapter_list as $nid => $title) {
         if ($nid != $default_chapter_nid) {
           $contact_list[$nid] = $title;

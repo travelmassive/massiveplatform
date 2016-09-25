@@ -279,7 +279,8 @@ function tm_users_form_contact_site_form_alter(&$form, &$form_state, $form_id) {
     //'#description' => "Help us notify the best person to reply to you.",
     '#multiple' => false,
     '#weight'=>-100,
-    '#default_value' => $default_value
+    //'#default_value' => $default_value,
+    '#required' => true
   );
 
   // catch spam

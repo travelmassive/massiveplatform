@@ -141,9 +141,9 @@ function tm_reports_views_default_views() {
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
-    'continent' => 'continent',
-    'field_country' => 'field_country',
     'title' => 'title',
+    'field_country' => 'field_country',
+    'continent' => 'continent',
     'field_user_first_name' => 'field_user_first_name',
     'field_user_last_name' => 'field_user_last_name',
     'uid' => 'uid',
@@ -152,11 +152,11 @@ function tm_reports_views_default_views() {
     'field_link_facebook' => 'field_link_facebook',
     'field_link_twitter' => 'field_link_twitter',
     'field_link_linkedin' => 'field_link_linkedin',
-    'login' => 'login',
+    'access' => 'access',
   );
   $handler->display->display_options['style_options']['default'] = '-1';
   $handler->display->display_options['style_options']['info'] = array(
-    'continent' => array(
+    'title' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -170,7 +170,7 @@ function tm_reports_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'title' => array(
+    'continent' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -233,7 +233,7 @@ function tm_reports_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'login' => array(
+    'access' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',

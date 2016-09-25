@@ -889,6 +889,7 @@ function tm_reports_get_insights_labels() {
   "num_signedin_members_7_days_chapter" => "Chapter Active Members (7 Days)",
   "num_signedin_members_30_days_chapter" => "Chapter Active Members (30 Days)",
   "num_signedin_members_90_days_chapter" => "Chapter Active Members (90 Days)",
+  "num_signedin_members_older_than_90_days_chapter" => "Chapter Inactive Members (> 90 Days)",
   "pct_signedin_members_24_hours_chapter" => "% Active Members (24 Hours)",
   "pct_signedin_members_7_days_chapter" => "% Active Members (7 Days)",
   "pct_signedin_members_30_days_chapter" => "% Active Members (30 Days)",

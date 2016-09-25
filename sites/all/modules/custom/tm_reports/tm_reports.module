@@ -382,6 +382,9 @@ function _tm_reports_get_chapter_insights($chapter_id) {
   $query_sql = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
   $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id))->fetch();
   $members_total = $query->total;
+  if ($members_total == 0) {
+    $members_total = 1; // prevent div0
+  }
   $insights["members_total"] = $members_total;
 
   // TOTAL APPROVED MEMBERS
@@ -427,6 +430,54 @@ function _tm_reports_get_chapter_insights($chapter_id) {
     $members_with_segment_pct = round((($insights["members_approved_with_segment"] / $members_approved_total) * 100), 0);
   }
   $insights["members_with_segment_pct"] = $members_with_segment_pct;
+
+  // NUMBER OF SIGNED IN MEMBERS TODAY (APPROVED)
+  $query = "SELECT COUNT(DISTINCT ip_tracker.uid) amount FROM ip_tracker RIGHT JOIN users_roles ON users_roles.uid = ip_tracker.uid RIGHT JOIN {flagging} f ON f.uid = ip_tracker.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 1 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
+  $signed_in_today_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
+  $insights["num_signedin_members_24_hours_chapter"] = $signed_in_today_chapter->amount;
+
+  // NUMBER OF SIGNED IN MEMBERS 7 DAYS (APPROVED)
+  $query = "SELECT COUNT(DISTINCT ip_tracker.uid) amount FROM ip_tracker RIGHT JOIN users_roles ON users_roles.uid = ip_tracker.uid RIGHT JOIN {flagging} f ON f.uid = ip_tracker.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 7 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
+  $signed_in_7_days_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
+  $insights["num_signedin_members_7_days_chapter"] = $signed_in_7_days_chapter->amount;
+
+  // NUMBER OF SIGNED IN MEMBERS 30 DAYS (APPROVED)
+  $query = "SELECT COUNT(DISTINCT ip_tracker.uid) amount FROM ip_tracker RIGHT JOIN users_roles ON users_roles.uid = ip_tracker.uid RIGHT JOIN {flagging} f ON f.uid = ip_tracker.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 30 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
+  $signed_in_30_days_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
+  $insights["num_signedin_members_30_days_chapter"] = $signed_in_30_days_chapter->amount;
+
+  // NUMBER OF SIGNED IN MEMBERS 90 DAYS (APPROVED)
+  $query = "SELECT COUNT(DISTINCT ip_tracker.uid) amount FROM ip_tracker RIGHT JOIN users_roles ON users_roles.uid = ip_tracker.uid RIGHT JOIN {flagging} f ON f.uid = ip_tracker.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 90 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
+  $signed_in_90_days_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
+  $insights["num_signedin_members_90_days_chapter"] = $signed_in_90_days_chapter->amount;
+
+  // NUMBER OF MEMBERS WHO HAVEN'T SIGNED IN SINCE 90 DAYS (APPROVED)
+  $query = "SELECT COUNT(DISTINCT t1.uid) amount FROM 
+    (SELECT uid, max(last_visit) as min_last_visit
+      FROM ip_tracker
+      GROUP BY uid) as t1 
+      RIGHT JOIN users_roles ON users_roles.uid = t1.uid 
+      RIGHT JOIN {flagging} f ON f.uid = t1.uid 
+      WHERE users_roles.rid = :role_id
+      AND FROM_UNIXTIME(min_last_visit) < DATE_SUB(NOW(), INTERVAL 90 DAY)
+      AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
+  $signed_in_older_than_90_days_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
+  $insights["num_signedin_members_older_than_90_days_chapter"] = $signed_in_older_than_90_days_chapter->amount;
+
+  // % OF SIGNED IN MEMBERS TODAY
+  $insights["pct_signedin_members_24_hours_chapter"] = round(($signed_in_today_chapter->amount / $members_approved_total) * 100, 0);
+
+  // % OF SIGNED IN MEMBERS 7 DAYS
+  $insights["pct_signedin_members_7_days_chapter"] = round(($signed_in_7_days_chapter->amount / $members_approved_total) * 100, 0);
+
+  // % OF SIGNED IN MEMBERS 30 DAYS
+  $insights["pct_signedin_members_30_days_chapter"] = round(($signed_in_30_days_chapter->amount / $members_approved_total) * 100, 0);
+
+  // % OF SIGNED IN MEMBERS 90 DAYS
+  $insights["pct_signedin_members_90_days_chapter"] = round(($signed_in_90_days_chapter->amount / $members_approved_total) * 100, 0);
+
+  // % OF MEMBERS WHO HAVEN'T SIGNED IN SINCE 90 DAYS
+  $insights["pct_signedin_members_older_than_90_days_chapter"] = (100 - round(($signed_in_90_days_chapter->amount / $members_approved_total) * 100, 0));
 
   // RETURN DATA
   $data_labels = tm_reports_get_insights_labels();
@@ -690,27 +741,27 @@ function _tm_reports_get_global_insights() {
   $view_count = db_query($query)->fetch();
   $insights["num_total_status_views_all_time"] = $view_count->amount + $view_count_daily->amount;
 
-  // NUMBER OF SIGNED IN MEMBERS TODAY
+  // NUMBER OF SIGNED IN MEMBERS TODAY (ALL)
   $query = "SELECT COUNT(DISTINCT uid) amount FROM ip_tracker WHERE FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 1 DAY)";
   $signed_in_today = db_query($query)->fetch();
   $insights["num_signedin_members_24_hours"] = $signed_in_today->amount;
 
-  // NUMBER OF SIGNED IN MEMBERS 7 DAYS
+  // NUMBER OF SIGNED IN MEMBERS 7 DAYS (ALL)
   $query = "SELECT COUNT(DISTINCT uid) amount FROM ip_tracker WHERE FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 7 DAY)";
   $signed_in_7_days = db_query($query)->fetch();
   $insights["num_signedin_members_7_days"] = $signed_in_7_days->amount;
 
-  // NUMBER OF SIGNED IN MEMBERS 30 DAYS
+  // NUMBER OF SIGNED IN MEMBERS 30 DAYS (ALL)
   $query = "SELECT COUNT(DISTINCT uid) amount FROM ip_tracker WHERE FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 30 DAY)";
   $signed_in_30_days = db_query($query)->fetch();
   $insights["num_signedin_members_30_days"] = $signed_in_30_days->amount;
 
-  // NUMBER OF SIGNED IN MEMBERS 90 DAYS
+  // NUMBER OF SIGNED IN MEMBERS 90 DAYS (ALL)
   $query = "SELECT COUNT(DISTINCT uid) amount FROM ip_tracker WHERE FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 90 DAY)";
   $signed_in_90_days = db_query($query)->fetch();
   $insights["num_signedin_members_90_days"] = $signed_in_90_days->amount;
 
-  // NUMBER OF MEMBERS WHO HAVEN'T SIGNED IN SINCE 90 DAYS
+  // NUMBER OF MEMBERS WHO HAVEN'T SIGNED IN SINCE 90 DAYS (ALL)
   $query = "SELECT COUNT(DISTINCT uid) amount FROM 
     (SELECT uid, max(last_visit) as min_last_visit
       FROM ip_tracker
@@ -719,21 +770,50 @@ function _tm_reports_get_global_insights() {
   $signed_in_older_than_90_days = db_query($query)->fetch();
   $insights["num_signedin_members_older_than_90_days"] = $signed_in_older_than_90_days->amount;
 
+  // NUMBER OF SIGNED IN MEMBERS TODAY (APPROVED)
+  $query = "SELECT COUNT(DISTINCT ip_tracker.uid) amount FROM ip_tracker RIGHT JOIN users_roles ON users_roles.uid = ip_tracker.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 1 DAY)";
+  $signed_in_today_approved = db_query($query, array(':role_id' => $approved_role->rid))->fetch();
+  $insights["num_signedin_members_24_hours_approved"] = $signed_in_today_approved->amount;
+
+  // NUMBER OF SIGNED IN MEMBERS 7 DAYS (APPROVED)
+  $query = "SELECT COUNT(DISTINCT ip_tracker.uid) amount FROM ip_tracker RIGHT JOIN users_roles ON users_roles.uid = ip_tracker.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 7 DAY)";
+  $signed_in_7_days_approved = db_query($query, array(':role_id' => $approved_role->rid))->fetch();
+  $insights["num_signedin_members_7_days_approved"] = $signed_in_7_days_approved->amount;
+
+  // NUMBER OF SIGNED IN MEMBERS 30 DAYS (APPROVED)
+  $query = "SELECT COUNT(DISTINCT ip_tracker.uid) amount FROM ip_tracker RIGHT JOIN users_roles ON users_roles.uid = ip_tracker.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 30 DAY)";
+  $signed_in_30_days_approved = db_query($query, array(':role_id' => $approved_role->rid))->fetch();
+  $insights["num_signedin_members_30_days_approved"] = $signed_in_30_days_approved->amount;
+
+  // NUMBER OF SIGNED IN MEMBERS 90 DAYS (APPROVED)
+  $query = "SELECT COUNT(DISTINCT ip_tracker.uid) amount FROM ip_tracker RIGHT JOIN users_roles ON users_roles.uid = ip_tracker.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(last_visit) > DATE_SUB(NOW(), INTERVAL 90 DAY)";
+  $signed_in_90_days_approved = db_query($query, array(':role_id' => $approved_role->rid))->fetch();
+  $insights["num_signedin_members_90_days_approved"] = $signed_in_90_days_approved->amount;
+
+  // NUMBER OF MEMBERS WHO HAVEN'T SIGNED IN SINCE 90 DAYS (APPROVED)
+  $query = "SELECT COUNT(DISTINCT t1.uid) amount FROM 
+    (SELECT uid, max(last_visit) as min_last_visit
+      FROM ip_tracker
+      GROUP BY uid) as t1 
+      RIGHT JOIN users_roles ON users_roles.uid = t1.uid WHERE users_roles.rid = :role_id
+      AND FROM_UNIXTIME(min_last_visit) < DATE_SUB(NOW(), INTERVAL 90 DAY)";
+  $signed_in_older_than_90_days_approved = db_query($query, array(':role_id' => $approved_role->rid))->fetch();
+  $insights["num_signedin_members_older_than_90_days_approved"] = $signed_in_older_than_90_days_approved->amount;
+
   // % OF SIGNED IN MEMBERS TODAY
-  $insights["pct_signedin_members_24_hours"] = round(($signed_in_today->amount / $members_total) * 100, 0) . " / " . round(($signed_in_today->amount / $members_approved_total) * 100, 0);
+  $insights["pct_signedin_members_24_hours"] = round(($signed_in_today->amount / $members_total) * 100, 0) . " / " . round(($signed_in_today_approved->amount / $members_approved_total) * 100, 0);
 
   // % OF SIGNED IN MEMBERS 7 DAYS
-  $insights["pct_signedin_members_7_days"] = round(($signed_in_7_days->amount / $members_total) * 100, 0) . " / " . round(($signed_in_7_days->amount / $members_approved_total) * 100, 0);
+  $insights["pct_signedin_members_7_days"] = round(($signed_in_7_days->amount / $members_total) * 100, 0) . " / " . round(($signed_in_7_days_approved->amount / $members_approved_total) * 100, 0);
 
   // % OF SIGNED IN MEMBERS 30 DAYS
-  $insights["pct_signedin_members_30_days"] = round(($signed_in_30_days->amount / $members_total) * 100, 0) . " / " . round(($signed_in_30_days->amount / $members_approved_total) * 100, 0);
+  $insights["pct_signedin_members_30_days"] = round(($signed_in_30_days->amount / $members_total) * 100, 0) . " / " . round(($signed_in_30_days_approved->amount / $members_approved_total) * 100, 0);
 
   // % OF SIGNED IN MEMBERS 90 DAYS
-  $insights["pct_signedin_members_90_days"] = round(($signed_in_90_days->amount / $members_total) * 100, 0) . " / " . round(($signed_in_90_days->amount / $members_approved_total) * 100, 0);
+  $insights["pct_signedin_members_90_days"] = round(($signed_in_90_days->amount / $members_total) * 100, 0) . " / " . round(($signed_in_90_days_approved->amount / $members_approved_total) * 100, 0);
 
   // % OF MEMBERS WHO HAVEN'T SIGNED IN SINCE 90 DAYS
-  $insights["pct_signedin_members_older_than_90_days"] = (100 - round(($signed_in_90_days->amount / $members_total) * 100, 0)) . " / " . (100 - round(($signed_in_90_days->amount / $members_approved_total) * 100, 0));
-
+  $insights["pct_signedin_members_older_than_90_days"] = (100 - round(($signed_in_90_days->amount / $members_total) * 100, 0)) . " / " . (100 - round(($signed_in_90_days_approved->amount / $members_approved_total) * 100, 0));
 
   // RETURN DATA
   $data_labels = tm_reports_get_insights_labels();
@@ -789,16 +869,31 @@ function tm_reports_get_insights_labels() {
   "num_total_preview_links_created" => "Total Links Previewed",
   "num_total_status_views_daily" => "Status Views (24 Hours)",
   "num_total_status_views_all_time" => "Total Status Views",
-  "num_signedin_members_24_hours" => "Active Members (24 Hours)",
-  "num_signedin_members_7_days" => "Active Members (7 Days)",
-  "num_signedin_members_30_days" => "Active Members (30 Days)",
-  "num_signedin_members_90_days" => "Active Members (90 Days)",
-  "num_signedin_members_older_than_90_days" => "Inactive Members (> 90 Days)",
+  "num_signedin_members_24_hours" => "All Active Members (24 Hours)",
+  "num_signedin_members_7_days" => "All Active Members (7 Days)",
+  "num_signedin_members_30_days" => "All Active Members (30 Days)",
+  "num_signedin_members_90_days" => "All Active Members (90 Days)",
+  "num_signedin_members_older_than_90_days" => "Approved Inactive Members (> 90 Days)",
+  "num_signedin_members_24_hours_approved" => "Approved Active Members (24 Hours)",
+  "num_signedin_members_7_days_approved" => "Approved Active Members (7 Days)",
+  "num_signedin_members_30_days_approved" => "Approved Active Members (30 Days)",
+  "num_signedin_members_90_days_approved" => "Approved Active Members (90 Days)",
+  "num_signedin_members_older_than_90_days_approved" => "Approved Inactive Members (> 90 Days)",
   "pct_signedin_members_24_hours" => "% Active Members (24 Hours) (All/Approved)",
   "pct_signedin_members_7_days" => "% Active Members (7 Days) (All/Approved)",
   "pct_signedin_members_30_days" => "% Active Members (30 Days) (All/Approved)",
   "pct_signedin_members_90_days" => "% Active Members (90 Days) (All/Approved)",
   "pct_signedin_members_older_than_90_days" => "% Inactive Members (> 90 Days) (All/Approved)",
+  "num_signedin_members_older_than_90_days" => "Approved Inactive Members (> 90 Days)",
+  "num_signedin_members_24_hours_chapter" => "Chapter Active Members (24 Hours)",
+  "num_signedin_members_7_days_chapter" => "Chapter Active Members (7 Days)",
+  "num_signedin_members_30_days_chapter" => "Chapter Active Members (30 Days)",
+  "num_signedin_members_90_days_chapter" => "Chapter Active Members (90 Days)",
+  "pct_signedin_members_24_hours_chapter" => "% Active Members (24 Hours)",
+  "pct_signedin_members_7_days_chapter" => "% Active Members (7 Days)",
+  "pct_signedin_members_30_days_chapter" => "% Active Members (30 Days)",
+  "pct_signedin_members_90_days_chapter" => "% Active Members (90 Days)",
+  "pct_signedin_members_older_than_90_days_chapter" => "% Inactive Members (> 90 Days)",
   "num_chapters" => "Number of Chapters"];
 
   return $data_labels;

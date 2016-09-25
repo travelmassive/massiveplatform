@@ -79,6 +79,8 @@ Example Company LLC. 123 Smith St, San Francisco CA 94111<br> Phone +1 555-123-4
 $conf['tm_announcement_copy_email'] = "community@massiveplatform.com"; // Send a copy of any announcement to this address
 $conf['tm_announcement_reply_email'] = "commmunity@massiveplatform.com"; // Default reply_to address if left blank
 $conf['tm_invitations_custom_message'] = "I'd like to invite you to Massive, a global community that connects industry insiders, leaders and innovators to collaborate and share ideas at locally organized events."; // tm_invitations_custom_message
+$conf['tm_contact_page_contacts'] = array("partnerships" => "Partnerships and Sales", "media" => "Media and Press", "editorial" => "Editorial Team", "support" => "Online Support", "new_chapter" => "Start a New Chapter"); // optional: list of department titles
+$conf['tm_contact_page_addresses'] = array("partnerships" => "partnerships@travelmassive.com", "media" => "pr@massiveplatform.com", "editorial" => "jenna@travelmassive.com", "support" => "hello@travelmassive.com", "new_chapter" => "hello@travelmassive.com"); // optional: list of department email addresses
 
 /** TIP SETTINGS **/
 $conf['tm_tips_start_chapter_link'] = "https://example.massiveplatform.com/blog/start-a-chapter-guide/"; // tm_tips_start_chapter_link
@@ -91,7 +93,7 @@ $conf['tm_community_values_url'] = "https://example.massiveplatform.com/blog/com
 
 /** CONTACT AND NOTIFICATION EMAILS **/
 $conf['tm_contact_page_email'] = "hello@massiveplatform.com"; // Where to send contact form emails to
-$conf['tm_contact_page_contacts'] = array("media" => "Media and PR"); // optional: list of department titles
+$conf['tm_contact_page_contacts'] = array("media" => "Media and Press"); // optional: list of department titles
 $conf['tm_contact_page_addresses'] = array("media" => "media@massiveplatform.com"); // optional: list of department email addresses
 $conf['tm_user_remove_own_account_notify'] = 'community@massiveplatform.com'; // If user removes their account, who do we notify?
 

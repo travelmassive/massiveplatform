@@ -1389,7 +1389,7 @@ function tm_users_field_default_field_instances() {
     ),
     'deleted' => 0,
     'description' => 'People will still be able to view your profile page, but public search engines will not be allowed to index it.
-<br>This setting is immediate however it may take some time for search engines to update their results.
+<br>It may take some time for search engines to update their results.
 <br>If you have any questions or concerns about your privacy, please <a class="cancel" href="/contact">contact us</a>.',
     'display' => array(
       'default' => array(
@@ -1479,6 +1479,57 @@ function tm_users_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 34,
+    ),
+  );
+
+  // Exported field_instance: 'user-user-field_user_has_private_profile'.
+  $field_instances['user-user-field_user_has_private_profile'] = array(
+    'bundle' => 'user',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Your profile page will only be available to approved members who are signed in.<br>
+People will not be able to find you on the site search.<br>
+It may take a few minutes for changes to take effect.<br>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 38,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'user',
+    'field_name' => 'field_user_has_private_profile',
+    'label' => 'Make my profile private',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 10,
     ),
   );
 
@@ -1829,9 +1880,10 @@ function tm_users_field_default_field_instances() {
   t('Last modified timestamp');
   t('Last name');
   t('Linkedin');
+  t('Make my profile private');
   t('Organization Name');
   t('People will still be able to view your profile page, but public search engines will not be allowed to index it.
-<br>This setting is immediate however it may take some time for search engines to update their results.
+<br>It may take some time for search engines to update their results.
 <br>If you have any questions or concerns about your privacy, please <a class="cancel" href="/contact">contact us</a>.');
   t('Please provide your given name. This field will be <strong>public</strong>.');
   t('Please provide your last name. This field will be <strong>public</strong>.');
@@ -1858,6 +1910,9 @@ function tm_users_field_default_field_instances() {
   t('Where you spend most of your time');
   t('YouTube');
   t('Your Snapchat username');
+  t('Your profile page will only be available to approved members who are signed in.<br>
+People will not be able to find you on the site search.<br>
+It may take a few minutes for changes to take effect.<br>');
   t('examples: Founder, CEO, VP Marketing, Social Media Manager, Chief Explorer');
   t('ie: @twittername or https://twitter.com/yourname');
   t('ie: @yourname or https://instagram.com/yourname');

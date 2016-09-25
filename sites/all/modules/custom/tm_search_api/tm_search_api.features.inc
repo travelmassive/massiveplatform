@@ -82,6 +82,7 @@ function tm_search_api_default_search_api_index() {
         "user:field_user_country:official_name" : { "type" : "text" },
         "user:field_user_cover_video" : { "type" : "string" },
         "user:field_user_first_name" : { "type" : "text" },
+        "user:field_user_has_private_profile" : { "type" : "boolean" },
         "user:field_user_last_name" : { "type" : "text", "boost" : "3.0" },
         "user:field_user_question_1" : { "type" : "text" },
         "user:field_user_question_2" : { "type" : "text" },
@@ -674,6 +675,12 @@ function tm_search_api_default_search_api_server() {
           "user:field_link_strava:url" : {
             "table" : "search_api_db_tm_search_multi_index_text",
             "type" : "text",
+            "boost" : "1.0"
+          },
+          "user:field_user_has_private_profile" : {
+            "table" : "search_api_db_tm_search_multi_index",
+            "column" : "user_field_user_has_private_profile",
+            "type" : "boolean",
             "boost" : "1.0"
           }
         }

@@ -222,6 +222,15 @@ function tm_search_api_fetch_results($query_array) {
 		// User type
 		$query_filter_people_base->condition('item_type', 'user');
 
+		// Respect privacy
+		$query_filter_people_privacy = $query->createFilter('OR');
+		$query_filter_people_base->filter($query_filter_people_privacy);
+
+		if (!in_array("moderator", $user->roles) and (!in_array("administrator", $user->roles))) {
+			$query_filter_people_privacy->condition('user:field_user_has_private_profile', null, '=');
+			$query_filter_people_privacy->condition('user:field_user_has_private_profile', 0);
+		}
+
 		// Match first and last name
 		// We try in this order:
 		// Case 1. If single query is in quotes, try to match first and last name from word parts

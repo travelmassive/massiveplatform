@@ -1256,6 +1256,7 @@ Displays a short message to followers on your company profile page.<br><br>',
         'module' => 'entityreference',
         'settings' => array(
           'links' => 0,
+          'use_content_language' => TRUE,
           'view_mode' => 'grid',
         ),
         'type' => 'entityreference_entity_view',

@@ -490,6 +490,7 @@ $conf["tm_newsfeed_discuss_enabled"] = false; // enable discussions newsfeed
 $conf["tm_newsfeed_discuss_api_url"] = ""; // url for discussions api
 $conf["tm_newsfeed_discuss_cache"] = 60; // how long to cache results in seconds
 // $conf["tm_newsfeed_discuss_api_userpass"] = "user:pass"; // uncomment to use basic httpauth 
+// $conf["tm_newsfeed_discuss_classes"] = array(); // optional: always include categories with these classes
 
 // base email subject line
 $conf['tm_newsfeed_subject_base'] = "What's happening in the community";

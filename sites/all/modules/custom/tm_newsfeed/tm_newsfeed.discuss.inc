@@ -77,6 +77,8 @@ function tm_newsfeed_discuss_fetch($search_category_classes = array("all")) {
 // prepare category_id classes based on user's chapters and events
 function tm_newsfeed_discuss_fetch_for_user($user_id) {
 
+	global $conf;
+
 	// load user
 	$account = user_load($user_id);
 	if ($account == null) {
@@ -122,6 +124,13 @@ function tm_newsfeed_discuss_fetch_for_user($user_id) {
 	// If no matching category classes, show all discussions
 	if (sizeof($search_category_classes) == 0) {
 	  $search_category_classes = array("all");
+	} else {
+		// include additional category classes
+		if (isset($conf["tm_newsfeed_discuss_classes"])) {
+			foreach ($conf["tm_newsfeed_discuss_classes"] as $discuss_class) {
+				$search_category_classes[] = $discuss_class;
+			}
+		}
 	}
 
 	// Remove duplicate classes

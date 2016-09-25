@@ -35,7 +35,7 @@ if (!$found_match) {
 // Anything not starting with http or www
 if (!$found_match) {
 	if (($strava_url == "") and (strpos(strtolower($url), "http") === FALSE) and (strpos(strtolower($url), "www") === FALSE)) {
-		$strava_url = "https://www.strava.com/atheletes/" . $url;
+		$strava_url = "https://www.strava.com/athletes/" . $url;
 		$found_match = true;
 	}
 }

@@ -334,9 +334,12 @@ function tm_users_user_presave(&$edit, $account, $category) {
 
   // Check that moderator can edit account
   if (!tm_users_check_moderator_edit_permission($user, $account)) {
-    drupal_set_message("Sorry, you can't modify a moderator account.", "warning");
-    drupal_goto("user/" . $account->uid);
-    return;
+    // allow password resets
+    if (($user->uid != 0) and ($category == "account")) {
+      drupal_set_message("Sorry, you can't modify a moderator account.", "warning");
+      drupal_goto("user/" . $account->uid);
+      return;
+    }
   }
 
   // ITEM 1

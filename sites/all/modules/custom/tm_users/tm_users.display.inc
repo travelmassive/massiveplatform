@@ -86,7 +86,8 @@ function tm_users_user_view($account, $view_mode, $langcode) {
           drupal_add_js($js, "inline");
           drupal_set_message("This member's profile is private. Only approved members can view this page.", "help-tip");
           drupal_access_denied();
-          return;
+          module_invoke_all('exit');
+          exit();
         }
 
       }

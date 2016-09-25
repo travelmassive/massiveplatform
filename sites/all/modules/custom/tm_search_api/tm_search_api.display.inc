@@ -12,6 +12,24 @@ function tm_search_api_view() {
 	drupal_add_css(drupal_get_path('module', 'tm_search_api') . '/css/search-results.css');
 	drupal_add_js(drupal_get_path('module', 'tm_search_api') . '/js/search-results.js');
 
+	// add js vars
+
+	// site name
+	drupal_add_js(array('tm_search' => array('site_name' => $conf["tm_site_name"])), array('type' => 'setting'));
+
+	// blog
+	drupal_add_js(array('tm_search' => array('blog_path' => "blog")), array('type' => 'setting'));
+
+	// marketplace
+	if (isset($conf["tm_marketplace_menu_path"])) {
+		drupal_add_js(array('tm_search' => array('marketplace_path' => $conf["tm_marketplace_menu_path"])), array('type' => 'setting'));
+	}
+
+	// discussions
+	if (isset($conf["tm_discuss_menu_path"])) {
+		drupal_add_js(array('tm_search' => array('discuss_path' => $conf["tm_discuss_menu_path"])), array('type' => 'setting'));
+	}
+
 	// load template
 	$template = file_get_contents(drupal_get_path('module', 'tm_search_api') .'/templates/tm_search_api_form.tpl.php');
 	$template = str_replace("__EXAMPLE_SEARCH__", $conf["tm_search_api_example_search"], $template);

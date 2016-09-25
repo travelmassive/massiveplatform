@@ -509,14 +509,23 @@
 	$(".search-external-blog").click(function(e) {
 		e.preventDefault();
 		// /blog/?s=example
-		window.location  = "/blog/?s=" + encodeURI(getSearchKeywordsFromResults());
+		var blog_path = "blog";
+		if (typeof Drupal.settings.tm_search.blog_path !== 'undefined') {
+			blog_path = Drupal.settings.tm_search.blog_path;
+		}
+		window.location = "/" + blog_path + "/?s=" + encodeURI(getSearchKeywordsFromResults());
 	});
 
 	// search external jobs
 	$(".search-external-jobs").click(function(e) {
 		e.preventDefault();
 		// /jobs/search/example
-		window.location  = "/jobs/search/" + encodeURI(getSearchKeywordsFromResults());
+		var marketplace_path = "marketplace";
+		console.log(Drupal.settings.tm_search.marketplace_path);
+		if (typeof Drupal.settings.tm_search.marketplace_path !== 'undefined') {
+			marketplace_path = Drupal.settings.tm_search.marketplace_path;
+		}
+		window.location = "/" + marketplace_path + "/search/" + encodeURI(getSearchKeywordsFromResults());
 	});
 
 	// search external discussions
@@ -524,7 +533,11 @@
 	$(".search-external-qa").click(function(e) {
 		e.preventDefault();
 		// /discuss/#search?Search=example
-		window.location  = "/answers/#search?Search=" + encodeURI(getSearchKeywordsFromResults());
+		var discuss_path = "discuss";
+		if (typeof Drupal.settings.tm_search.discuss_path !== 'undefined') {
+			discuss_path = Drupal.settings.tm_search.discuss_path;
+		}
+		window.location = "/" + discuss_path + "/#search?Search=" + encodeURI(getSearchKeywordsFromResults());
 	});
 
 	// search external google
@@ -532,7 +545,11 @@
 	$(".search-external-google").click(function(e) {
 		e.preventDefault();
 		// /https://www.google.com/#q=travelmassive%20
-		window.location  = "https://www.google.com/#q=Travel%20Massive%20" + encodeURI(getSearchKeywordsFromResults());
+		var site_name = "";
+		if (typeof Drupal.settings.tm_search.site_name !== 'undefined') {
+			site_name = Drupal.settings.tm_search.site_name;
+		}
+		window.location  = "https://www.google.com/#q=" + encodeURI(site_name) + "%20" + encodeURI(getSearchKeywordsFromResults());
 	});			
 
 	// example searches

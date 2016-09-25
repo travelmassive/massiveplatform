@@ -233,7 +233,7 @@ function tm_users_form_contact_site_form_alter(&$form, &$form_state, $form_id) {
   // add chapter dropdown list
   $chapter_list = array();
   foreach ($chapters as $chapter) { // See this line in your original code
-    $chapter_list[$chapter->nid] = tm_chapters_formal_name($chapter);
+    $chapter_list[$chapter->nid] = strip_tags($chapter->title);
   }
   asort($chapter_list);
 
@@ -257,7 +257,7 @@ function tm_users_form_contact_site_form_alter(&$form, &$form_state, $form_id) {
     $chapter_referral_id = $_COOKIE['Drupal_visitor_chapter_referral_id'];
     if (isset($chapter_list[$chapter_referral_id])) {
       $chapter = node_load($chapter_referral_id);
-      $contact_list[$chapter_referral_id] = strip_tags($chapter->title);
+      $contact_list[$chapter_referral_id] = tm_chapters_formal_name($chapter);
     }
   }
 

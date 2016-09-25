@@ -45,6 +45,27 @@ function tm_status_updates_render_theme() {
 		$entity_type = $node->type;
 	}
 
+	// check privacy for user
+	if ($entity_type == "user") {
+
+		// check accounts privacy setting
+		$account = user_load($entity_id);
+		if (isset($account->field_user_has_private_profile[LANGUAGE_NONE][0]['value'])) {
+			if ($account->field_user_has_private_profile[LANGUAGE_NONE][0]['value']) {
+
+				// check anonymous user
+				if (user_is_anonymous()) {
+					return;
+				}
+
+				// check viewing user is approved
+				if ((!in_array('approved user', $user->roles)) and (!in_array('administrator', $user->roles))) {
+					return;
+				}
+			}
+		}
+	}
+	
 	// fetch latest status update
 	$result = tm_status_updates_get_latest_update($entity_id, $entity_type);
 

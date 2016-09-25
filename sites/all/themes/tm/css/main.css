@@ -6157,6 +6157,11 @@ a.cancel_account_link {
   margin-right: 1rem;
 }
 
+/* line 624, ../sass/_forms.scss */
+td.views-field-access {
+  white-space: nowrap;
+}
+
 /* line 4, ../sass/_modules.scss */
 #tm-events-communication-form,
 #tm-events-manage-registrations-form,

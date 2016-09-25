@@ -253,9 +253,11 @@ function tm_users_form_contact_site_form_alter(&$form, &$form_state, $form_id) {
   }
 
   // set default chapter if set from cookie
+  $default_chapter_nid = null;
   if (isset($_COOKIE['Drupal_visitor_chapter_referral_id'])) {
     $chapter_referral_id = $_COOKIE['Drupal_visitor_chapter_referral_id'];
     if (isset($chapter_list[$chapter_referral_id])) {
+      $default_chapter_nid = $chapter_referral_id;
       $chapter = node_load($chapter_referral_id);
       $contact_list[$chapter_referral_id] = tm_chapters_formal_name($chapter);
     }
@@ -266,7 +268,9 @@ function tm_users_form_contact_site_form_alter(&$form, &$form_state, $form_id) {
     if (in_array('approved user', $user->roles)) {
       $contact_list["select_chapter"] = " - Chapters - ";
       foreach($chapter_list as $nid => $title) {
-        $contact_list[$nid] = $title;
+        if ($nid != $default_chapter_nid) {
+          $contact_list[$nid] = $title;
+        }
       }
     }
   }

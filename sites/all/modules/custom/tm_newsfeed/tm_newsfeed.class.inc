@@ -191,7 +191,7 @@ class TmNewsfeedEmail
 
 		// create company profile
 		// if user has populated field_job_organization, show tip to create a company profile
-		if (sizeof($account->field_job_organization) > 0) {
+		if ((sizeof($account->field_job_organization) > 0) and ($conf["tm_add_company_enabled"])) {
 
 			$is_owner_of = db_query("select count(*) from field_data_field_owner where field_owner_target_id = :uid", array(":uid" => $uid))->fetchField();
 			if ($is_owner_of > 0) {

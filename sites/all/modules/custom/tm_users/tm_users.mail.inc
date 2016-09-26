@@ -86,6 +86,7 @@ function _tm_users_mail_alter_contact_page_mail(&$mail_form) {
 
   // Get contact id
   $contact_id = "";
+  $contact_re = "";
   if (isset($mail_form['params']['contact_list'])) {
     $contact_id = $mail_form['params']['contact_list'];
   }
@@ -99,6 +100,9 @@ function _tm_users_mail_alter_contact_page_mail(&$mail_form) {
     // send to chapter leaders
     if (is_numeric($contact_id)) {
       $chapter = node_load($contact_id);
+      if ($chapter) {
+        $contact_re = tm_chapters_formal_name($chapter);
+      }
       if ($chapter and isset($chapter->field_chapter_leaders[$chapter->language])) {
 
           // get chapter leaders emails
@@ -122,6 +126,9 @@ function _tm_users_mail_alter_contact_page_mail(&$mail_form) {
       if (isset($conf["tm_contact_page_addresses"][$contact_id])) {
         $email = $conf["tm_contact_page_addresses"][$contact_id];
         $params["headers"] = array("Bcc" => $conf['tm_contact_page_email']); // bcc
+        if (isset($conf["tm_contact_page_contacts"][$contact_id])) {
+          $contact_re = $conf["tm_contact_page_contacts"][$contact_id];
+        }
       }
     }
   }
@@ -130,6 +137,9 @@ function _tm_users_mail_alter_contact_page_mail(&$mail_form) {
   $member_url = url('user/'.$user->uid, array('absolute'=>TRUE));
   $message = "Hi, a member just sent a message via the site contact form:";
   $message .= "<br>";
+  if ($contact_re != "") {
+    $message .= "<br>Attention: " . $contact_re;
+  }
   $message .= "<br>Name: " . $mail_form['params']['name'];
   $message .= "<br>Subject: " . check_plain($mail_form['params']['subject']);
   $message .= "<p><strong>Message:</strong><br>";

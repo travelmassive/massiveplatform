@@ -1492,7 +1492,6 @@ function tm_users_field_default_field_instances() {
     ),
     'deleted' => 0,
     'description' => 'Your profile page will only be available to approved members who are signed in.<br>
-People will not be able to find you on the site search.<br>
 It may take a few minutes for changes to take effect.<br>',
     'display' => array(
       'default' => array(
@@ -1911,7 +1910,6 @@ It may take a few minutes for changes to take effect.<br>',
   t('YouTube');
   t('Your Snapchat username');
   t('Your profile page will only be available to approved members who are signed in.<br>
-People will not be able to find you on the site search.<br>
 It may take a few minutes for changes to take effect.<br>');
   t('examples: Founder, CEO, VP Marketing, Social Media Manager, Chief Explorer');
   t('ie: @twittername or https://twitter.com/yourname');

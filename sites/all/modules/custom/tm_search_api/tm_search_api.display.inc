@@ -847,7 +847,7 @@ $tm_search_api_form_template = <<<EOT
         <label for="edit-keys">Enter your keywords </label>
         <input type="text" id="edit-keys" name="query" value="" size="40" maxlength="255" class="form-text">
       </div>
-    <input type="submit" id="search-submit" value="Search" class="form-submit"></div>
+    <input type="submit" id="search-box-submit" value="Search" class="form-submit"></div>
   </div>
 </form>
 <p style='font-size: 0.85rem; line-height: 1.25rem; color: #636e79; margin-bottom: 0;'>Find members, companies, events or chapters. Or, visit our <a href='/search'>Search page</a>.</p>

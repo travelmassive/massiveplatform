@@ -134,7 +134,7 @@
 
         // video cover
         if ($frontpage_image != '') {
-          $bg_video_body_html .= '<video loop autoplay muted poster="' . $frontpage_image . '" class="fullscreen-bg__video">';
+          $bg_video_body_html .= '<video loop autoplay muted poster="' . $frontpage_image . '" class="fullscreen-bg__video" id="fullscreen-bg-video">';
         } else {
           $bg_video_body_html .= '<video loop autoplay muted class="fullscreen-bg__video">';
         }
@@ -146,6 +146,12 @@
 
         $bg_video_body_html .= '</video>';
         $bg_video_body_html .= '</div>';
+
+        // detect hls url
+        $is_hls_url = 0;
+        if (strpos($frontpage_video_url, "m3u8") !== false) {
+          $is_hls_url = 1;
+        }
       }
     } // end if front page
   ?>
@@ -153,7 +159,7 @@
   <body class="<?php print $classes; ?>" <?php print $attributes;?>>
     
   <?php 
-    if ($is_front != "") {
+    if ($is_front) {
       print($bg_video_body_html); // <video> embed
       if ($frontpage_video_url != "") { // show video controls
   ?>
@@ -161,6 +167,31 @@
       <div id="tm-frontpage-video-buttons"><span class="tm-frontpage-video-pause"></span><span class="tm-frontpage-video-play"></span></div>
       <div id="tm-frontpage-video-info">Now playing: <a href="<?php echo tm_branding_get_element("frontpage_video_link"); ?>"><?php echo tm_branding_get_element("frontpage_video_text");?></a></div>
     </div>
+
+<script>
+  // Add HTTP Live Streaming support for Chrome and Firefox
+  // https://github.com/dailymotion/hls.js
+  // note: safari already supports hls
+  jQuery(document).ready(function() {
+    var is_chrome = navigator.userAgent.indexOf('Chrome') > -1;
+    var is_explorer = navigator.userAgent.indexOf('MSIE') > -1;
+    var is_firefox = navigator.userAgent.indexOf('Firefox') > -1;
+    var is_safari = navigator.userAgent.indexOf("Safari") > -1;
+    var is_hls_url = <?php print($is_hls_url); ?>;
+    if (is_hls_url && (is_chrome || is_firefox)) {
+      if(Hls.isSupported()) {
+        var video = document.getElementById('fullscreen-bg-video');
+        var hls = new Hls();
+        hls.loadSource('<?php print($frontpage_video_url);?>');
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED,function() {
+          video.play();
+        });
+      }
+    }
+  });
+</script>
+
   <?php 
       } // end show video controls
     } // end if front page video

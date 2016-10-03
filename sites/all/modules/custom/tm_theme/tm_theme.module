@@ -140,6 +140,12 @@ function tm_theme_html_head_alter(&$head_elements) {
     }
   }
 
+  // Add support for HTTP Live Streaming
+  // hls.js
+  if (drupal_is_front_page()) {
+    drupal_add_js(drupal_get_path('theme', 'tm') . '/js/hls.min.js');
+  }
+
 }
 
 /**

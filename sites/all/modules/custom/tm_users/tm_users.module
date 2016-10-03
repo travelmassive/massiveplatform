@@ -372,17 +372,13 @@ function tm_users_user_presave(&$edit, $account, $category) {
       }
     }
 
-    // preserve chapter leader roles
-    if (in_array('chapter leader', $user->roles)) {
-      if ($role = user_role_load_by_name('chapter leader')) {
-        $edit['roles'][$role->rid] = $role->rid;
-      }
-    }
-
-    // preserve moderator roles
-    if (in_array('moderator', $user->roles)) {
-      if ($role = user_role_load_by_name('moderator')) {
-        $edit['roles'][$role->rid] = $role->rid;
+    // preserve roles
+    $preserve_roles = array("chapter leader", "moderator", "export-global-newsletter-csv", "access-google-analytics-report", "brand-editor", "discuss-moderator", "discuss-administrator");
+    foreach($preserve_roles as $preserve_role) {
+      if (in_array($preserve_role, $user->roles)) {
+        if ($role = user_role_load_by_name($preserve_role)) {
+          $edit['roles'][$role->rid] = $role->rid;
+        }
       }
     }
 

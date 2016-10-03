@@ -48,7 +48,8 @@
 				'controls': 1,
 				'disablekb': 0,
 				'loop': 1,
-				'modestbranding': 1
+				'modestbranding': 1,
+				'playlist': cover_video_id
 			},
 			events: {
 				'onReady': onPlayerReady

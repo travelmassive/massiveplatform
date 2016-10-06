@@ -47,9 +47,10 @@
 				'color': 'white',
 				'controls': 1,
 				'disablekb': 0,
-				'loop': 1,
+				'loop': 0,
 				'modestbranding': 1,
-				'playlist': cover_video_id
+				'rel' : 0,
+				'showinfo': 0
 			},
 			events: {
 				'onReady': onPlayerReady

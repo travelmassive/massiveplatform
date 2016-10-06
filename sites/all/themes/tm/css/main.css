@@ -111,7 +111,7 @@ audio:not([controls]) {
  */
 /* line 106, ../sass/_normalize.scss */
 html {
-  font-family: "Raleway", sans-serif;
+  font-family: "Lato", sans-serif;
   /* 1 */
   font-size: 100%;
   /* 3 */
@@ -3682,7 +3682,7 @@ html, body {
 body {
   background: #d2d5d8;
   color: #213040;
-  font-family: "Raleway", sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: normal;
   font-style: normal;
   position: relative;

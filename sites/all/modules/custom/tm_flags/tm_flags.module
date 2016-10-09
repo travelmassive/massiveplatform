@@ -306,7 +306,29 @@ function _tm_flags_flag_limits(&$variables) {
       }
     }
     
-    if(isset($tm_limit)) {
+    // If unapproved follow limit is set to zero, show feature message
+    if(isset($tm_limit) and (!in_array('approved user', $user->roles))) {
+      $variables['link_href'] = '';
+      $variables['flag_button_class'] = 'flag-limit follow bttn bttn-secondary bttn-m';
+      drupal_add_js('
+      jQuery(document).ready(function($) {
+        $( ".flag-limit" ).click(function() {
+          var message = "<strong>How can I follow other members?</strong><br>Unlock this feature by completing your profile and <a href=\"javascript:jq_request_approval(' . $user->uid . ')\" class=\"approval-link\">requesting approval</a> of your account.";
+          $.prompt(message, {
+            title: "This feature is for ' . str_replace("'", "", tm_users_get_approved_member_label("plural")) . '",
+            buttons: {}, 
+            loaded: function() { 
+              $("#main").addClass("tm-blur-filter");
+            },
+            close: function() { 
+              $("#main").removeClass("tm-blur-filter");
+            }
+          });
+        }); 
+      });
+      ', 'inline');
+    }
+    else if(isset($tm_limit)) {
       $variables['link_href'] = '';
       $variables['flag_button_class'] = 'flag-limit follow bttn bttn-secondary bttn-m';
       drupal_add_js('
@@ -322,7 +344,7 @@ function _tm_flags_flag_limits(&$variables) {
         }); 
       });
       ', 'inline');
-    }       
+    }  
   }
 }
 

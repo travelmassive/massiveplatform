@@ -5108,30 +5108,32 @@ button:hover, button:focus {
 .bttn-facebook, .facebook-login {
   color: #FFF !important;
   background: #3b5898 !important;
-  box-shadow: inset 0 -2px 0 0 #00587e;
+  box-shadow: inset 0 -2px 0 0 #3d5390;
 }
 /* line 251, ../sass/_buttons.scss */
 .bttn-facebook:hover, .facebook-login:hover, .bttn-facebook:focus, .facebook-login:focus {
   color: #FFF !important;
+  background: #5877cf !important;
+  opacity: 1 !important;
 }
-/* line 254, ../sass/_buttons.scss */
+/* line 256, ../sass/_buttons.scss */
 .bttn-facebook:active, .facebook-login:active, .bttn-facebook.on, .on.facebook-login, .bttn-facebook.flagged, .flagged.facebook-login {
-  background: #3b5898 !important;
-  box-shadow: inset 0 2px 0 0 #003f5a;
+  background: #5877cf !important;
+  box-shadow: inset 0 2px 0 0 #2c3b67;
   color: #FFF !important;
 }
 
-/* line 262, ../sass/_buttons.scss */
+/* line 264, ../sass/_buttons.scss */
 .bttn-twitter, .twitter-login {
   color: #FFF !important;
   background: #1da1f2 !important;
   box-shadow: inset 0 -2px 0 0 #00587e;
 }
-/* line 267, ../sass/_buttons.scss */
+/* line 269, ../sass/_buttons.scss */
 .bttn-twitter:hover, .twitter-login:hover, .bttn-twitter:focus, .twitter-login:focus {
   color: #FFF !important;
 }
-/* line 270, ../sass/_buttons.scss */
+/* line 272, ../sass/_buttons.scss */
 .bttn-twitter:active, .twitter-login:active, .bttn-twitter.on, .on.twitter-login, .bttn-twitter.flagged, .flagged.twitter-login {
   background: #1da1f2 !important;
   box-shadow: inset 0 2px 0 0 #003f5a;
@@ -5139,7 +5141,7 @@ button:hover, button:focus {
 }
 
 /* Button group */
-/* line 279, ../sass/_buttons.scss */
+/* line 281, ../sass/_buttons.scss */
 .bttn-group, .page-views .tabs-primary, .page-search .tabs-primary {
   border: 0;
   padding: 0;
@@ -5147,7 +5149,7 @@ button:hover, button:focus {
   list-style: none;
   background: none;
 }
-/* line 286, ../sass/_buttons.scss */
+/* line 288, ../sass/_buttons.scss */
 .bttn-group > *, .page-views .tabs-primary > *, .page-search .tabs-primary > *,
 .bttn-group > .is-active,
 .page-views .tabs-primary > .is-active,
@@ -5158,14 +5160,14 @@ button:hover, button:focus {
   text-shadow: none;
   border-radius: 0;
 }
-/* line 292, ../sass/_buttons.scss */
+/* line 294, ../sass/_buttons.scss */
 .bttn-group > * a, .page-views .tabs-primary > * a, .page-search .tabs-primary > * a,
 .bttn-group > .is-active a,
 .page-views .tabs-primary > .is-active a,
 .page-search .tabs-primary > .is-active a {
   border-radius: 0;
 }
-/* line 296, ../sass/_buttons.scss */
+/* line 298, ../sass/_buttons.scss */
 .bttn-group > *:first-child a, .page-views .tabs-primary > *:first-child a, .page-search .tabs-primary > *:first-child a,
 .bttn-group > .is-active:first-child a,
 .page-views .tabs-primary > .is-active:first-child a,
@@ -5173,7 +5175,7 @@ button:hover, button:focus {
   border-top-left-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
 }
-/* line 302, ../sass/_buttons.scss */
+/* line 304, ../sass/_buttons.scss */
 .bttn-group > *:last-child a, .page-views .tabs-primary > *:last-child a, .page-search .tabs-primary > *:last-child a,
 .bttn-group > .is-active:last-child a,
 .page-views .tabs-primary > .is-active:last-child a,
@@ -5181,35 +5183,35 @@ button:hover, button:focus {
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
 }
-/* line 308, ../sass/_buttons.scss */
+/* line 310, ../sass/_buttons.scss */
 .bttn-group a, .page-views .tabs-primary a, .page-search .tabs-primary a {
   letter-spacing: inherit;
 }
-/* line 311, ../sass/_buttons.scss */
+/* line 313, ../sass/_buttons.scss */
 .bttn-group a:hover, .page-views .tabs-primary a:hover, .page-search .tabs-primary a:hover {
   background-color: inherit;
 }
-/* line 315, ../sass/_buttons.scss */
+/* line 317, ../sass/_buttons.scss */
 .bttn-group a.is-active, .page-views .tabs-primary a.is-active, .page-search .tabs-primary a.is-active {
   border: 0;
   letter-spacing: inherit;
 }
 
-/* line 322, ../sass/_buttons.scss */
+/* line 324, ../sass/_buttons.scss */
 .pager {
   display: inline-block;
 }
-/* line 331, ../sass/_buttons.scss */
+/* line 333, ../sass/_buttons.scss */
 .pager li a, .pager .pager-current {
   border-radius: 0;
 }
-/* line 335, ../sass/_buttons.scss */
+/* line 337, ../sass/_buttons.scss */
 .pager li:first-child,
 .pager li:first-child a {
   border-top-left-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
 }
-/* line 340, ../sass/_buttons.scss */
+/* line 342, ../sass/_buttons.scss */
 .pager li:last-child,
 .pager li:last-child a {
   border-top-right-radius: 0.25rem;
@@ -5217,7 +5219,7 @@ button:hover, button:focus {
 }
 
 /* Dropdown */
-/* line 347, ../sass/_buttons.scss */
+/* line 349, ../sass/_buttons.scss */
 .dropd {
   min-width: 12.5rem;
   position: absolute;
@@ -5247,7 +5249,7 @@ button:hover, button:focus {
   -o-transition-delay: 0, 0, 0;
   transition-delay: 0, 0, 0;
 }
-/* line 365, ../sass/_buttons.scss */
+/* line 367, ../sass/_buttons.scss */
 .dropd:before {
   position: absolute;
   z-index: 15;
@@ -5260,33 +5262,33 @@ button:hover, button:focus {
   height: 1rem;
   width: 1rem;
 }
-/* line 379, ../sass/_buttons.scss */
+/* line 381, ../sass/_buttons.scss */
 .dropd.dropd-right {
   left: auto;
   right: 0;
 }
-/* line 382, ../sass/_buttons.scss */
+/* line 384, ../sass/_buttons.scss */
 .dropd.dropd-right:before {
   left: auto;
   right: 1rem;
 }
-/* line 388, ../sass/_buttons.scss */
+/* line 390, ../sass/_buttons.scss */
 .dropd.dropd-center {
   left: 50%;
   margin-left: -6.25rem;
 }
-/* line 391, ../sass/_buttons.scss */
+/* line 393, ../sass/_buttons.scss */
 .dropd.dropd-center:before {
   left: 50%;
   margin-left: -0.5rem;
 }
-/* line 397, ../sass/_buttons.scss */
+/* line 399, ../sass/_buttons.scss */
 .dropd.on {
   opacity: 1;
   margin-top: 0.75rem;
   visibility: visible;
 }
-/* line 403, ../sass/_buttons.scss */
+/* line 405, ../sass/_buttons.scss */
 .dropd .dropd-menu {
   list-style: none;
   padding: 0.5rem 0;
@@ -5295,22 +5297,22 @@ button:hover, button:focus {
   line-height: 1.25rem;
   border-bottom: 1px solid #e8eaeb;
 }
-/* line 411, ../sass/_buttons.scss */
+/* line 413, ../sass/_buttons.scss */
 .dropd .dropd-menu:first-child {
   margin-top: -0.75rem;
 }
-/* line 415, ../sass/_buttons.scss */
+/* line 417, ../sass/_buttons.scss */
 .dropd .dropd-menu:last-child {
   margin-bottom: -0.75rem;
   border: none;
 }
-/* line 419, ../sass/_buttons.scss */
+/* line 421, ../sass/_buttons.scss */
 .dropd .dropd-menu li {
   position: relative;
   z-index: 20;
   margin: 0;
 }
-/* line 423, ../sass/_buttons.scss */
+/* line 425, ../sass/_buttons.scss */
 .dropd .dropd-menu li a {
   display: block;
   padding: 0.25rem 1rem;
@@ -5333,13 +5335,13 @@ button:hover, button:focus {
   -o-transition-delay: 0, 0, 0, 0;
   transition-delay: 0, 0, 0, 0;
 }
-/* line 434, ../sass/_buttons.scss */
+/* line 436, ../sass/_buttons.scss */
 .dropd .dropd-menu li a:hover {
   opacity: 1;
   background-color: rgba(127, 190, 218, 0.2);
   color: #007eb5;
 }
-/* line 440, ../sass/_buttons.scss */
+/* line 442, ../sass/_buttons.scss */
 .dropd .dropd-menu li a:before {
   vertical-align: bottom !important;
   font-weight: normal;
@@ -5348,7 +5350,7 @@ button:hover, button:focus {
 }
 
 /* Approval status */
-/* line 451, ../sass/_buttons.scss */
+/* line 453, ../sass/_buttons.scss */
 .approval {
   text-align: center;
   color: #1b2430;
@@ -5357,24 +5359,24 @@ button:hover, button:focus {
   margin-bottom: 0px;
 }
 
-/* line 458, ../sass/_buttons.scss */
+/* line 460, ../sass/_buttons.scss */
 .approval img {
   margin-bottom: -3px;
   padding-right: 4px;
 }
 
-/* line 462, ../sass/_buttons.scss */
+/* line 464, ../sass/_buttons.scss */
 .text_approved {
   font-size: 0.8em;
 }
 
-/* line 465, ../sass/_buttons.scss */
+/* line 467, ../sass/_buttons.scss */
 .text_notapproved {
   font-size: 0.8em;
 }
 
 /* Edit image buttons */
-/* line 470, ../sass/_buttons.scss */
+/* line 472, ../sass/_buttons.scss */
 .image-edit-button {
   color: #4d5767;
   background-color: #fff;
@@ -5387,7 +5389,7 @@ button:hover, button:focus {
   border-bottom: 2px #888 solid;
 }
 
-/* line 471, ../sass/_buttons.scss */
+/* line 473, ../sass/_buttons.scss */
 .image-edit-button:hover {
   opacity: 1.0 !important;
 }

@@ -247,13 +247,15 @@ button {
   color: #FFF !important;
   background: #3b5898 !important;
   @extend %antialiased;
-  box-shadow: inset 0 -2px 0 0 shade($secondary-color, 30%);
+  box-shadow: inset 0 -2px 0 0 shade(#5877cf, 30%);
   &:hover, &:focus {
     color: #FFF !important;
+    background: #5877cf !important;
+    opacity: 1 !important;
   }
   &:active, &.on, &.flagged {
-    background: #3b5898 !important;
-    box-shadow: inset 0 2px 0 0 shade($secondary-color, 50%);
+    background: #5877cf !important;
+    box-shadow: inset 0 2px 0 0 shade(#5877cf, 50%);
     color: #FFF !important;
   }
 }

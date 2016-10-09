@@ -56,7 +56,9 @@ $conf['image_allow_insecure_derivatives'] = TRUE;
 /** SIGN IN METHODS **/
 /** If you just want password login only, disable Facebook and Twitter sign in **/
 $conf['tm_signin_facebook'] = true; // allow signin with facebook
+$conf['tm_signin_facebook_label'] = "Continue with Facebook"; // or Log in with Facebook
 $conf['tm_signin_twitter'] = false; // allow signin with twitter
+$conf['tm_signin_twitter_label'] = "Sign in with Twitter";
 $conf['tm_signin_buttons'] = array("facebook"); // login button display
 $conf['tm_signin_links'] = array("twitter"); // link display
 $conf['tm_signin_title'] = "JOIN OUR COMMUNITY"; // message to display at top of login box

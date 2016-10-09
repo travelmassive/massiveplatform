@@ -347,7 +347,7 @@
   }
 
   jq_approval_already_requested = function() {
-    jq_alert("Your account is being reviewed", "A member of our community team will review your account shortly and notify you of your status.<br><br>To <strong>fast track your approval</strong> - make your profile impressive so we can feature you in the community.<br><br>For urgent enquiries please <a href='/contact'>contact us</a>.");
+    jq_alert("We're checking your account...", "Our community team will get back to you shortly.<br><br><strong>Here's a few tips to fast track your approval</strong> - accounts that are completely filled out get approved much faster. Make sure you write about yourself, not your business. Explain why you want to be a part of our community 😊<br><br>If you need to be approved sooner, please <a href='/contact'>contact us</a>.");
   }
 
   jq_confirm_approve_member = function(uid, community_values_url) {

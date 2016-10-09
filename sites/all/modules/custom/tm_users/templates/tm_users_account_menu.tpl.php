@@ -220,11 +220,11 @@ $image = theme('image_style', array(
         foreach($conf["tm_signin_links"] as $signin_method) {
           if (($signin_method == "facebook") and $conf["tm_signin_facebook"]) {
             $has_external_signin = true;
-            print "<p>" . l(t('Facebook'), 'user/simple-fb-connect') . "</p>";
+            print "<p>" . l(t($conf['tm_signin_facebook_label']), 'user/simple-fb-connect') . "</p>";
           }
           if (($signin_method == "twitter") and $conf["tm_signin_twitter"]) {
             $has_external_signin = true;
-            print "<p>" . l(t('Twitter'), 'tm_twitter/oauth') . "</p>";
+            print "<p>" . l(t($conf['tm_signin_twitter_label']), 'tm_twitter/oauth') . "</p>";
           }
         } 
       }

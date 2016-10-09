@@ -63,7 +63,8 @@ function tm_users_external_signin_facebook_sync($drupal_user, $method) {
 
   // Get FacebookSession for current user.
   $fb_session = simple_fb_connect_get_session();
-
+  $facebook_id = null;
+  
   // Try to read first and last name from Facebook API.
   try {
 

@@ -1,6 +1,6 @@
 Installation and setup notes
 
-utf8mb4 supporT:
+utf8mb4 support:
 
 As of Drupal 7.50 ut8mb4 support is in core: 
 

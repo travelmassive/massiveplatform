@@ -234,9 +234,12 @@ function _tm_approved_process($field, $title = NULL) {
     } else {
 
       // 2. Show "Approve my account" link
-      $approval_link = l(t('Unlock more features'), 'javascript:jq_request_approval(' . $loaded->uid . ')', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('approval-link'))));
+      $tm_request_approval_text = 'Request approval';
+      if (isset($conf["tm_request_approval_text"])) {
+        $tm_request_approval_text = $conf["tm_request_approval_text"];
+      }
+      $approval_link = l(t($tm_request_approval_text), 'javascript:jq_request_approval(' . $loaded->uid . ')', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('approval-link'))));
 
-      //$approval_link = l(t('Approve my account'), 'user/' . $loaded->uid . '/request_approval', array('attributes' => array('class' => array('approval-link'))));
       $html .= '<span class="approval" style="font-size: 10pt;">' . $approval_link . '</span>';
     }
   }

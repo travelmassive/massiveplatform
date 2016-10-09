@@ -131,6 +131,7 @@ $conf["tm_unapproved_label"] = "Guest Member"; // title for unapproved member
 $conf["tm_approved_label_plural"] = "Approved Members"; // title for approved member
 $conf["tm_unapproved_label_plural"] = "Guest Members"; // title for unapproved member
 $conf["tm_request_approval_text"] = "Request approval"; // label for request approval link
+$conf["tm_requested_approval_text"] = "Requested approval"; // label for requested approval link
 
 /** MESSAGING OPTIONS **/
 /** Allow approved members to message each other via email if they follow each other **/

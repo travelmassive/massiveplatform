@@ -228,7 +228,7 @@ function _tm_approved_process($field, $title = NULL) {
       $flagged_time = format_interval($difference, 1) . " ago";
 
       // 1. Show approval requested link
-      $approval_link = l(t('Approval requested (' . $flagged_time . ')'), 'javascript:jq_approval_already_requested();', array('fragment' => '','external'=>true));
+      $approval_link = l(t($conf['tm_requested_approval_text'] . ' (' . $flagged_time . ')'), 'javascript:jq_approval_already_requested();', array('fragment' => '','external'=>true));
       $html .= '<span class="approval_pending" style="font-size: 10pt;">' . $approval_link . '</span>';
 
     } else {

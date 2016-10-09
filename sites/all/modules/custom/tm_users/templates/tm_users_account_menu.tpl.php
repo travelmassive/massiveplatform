@@ -117,10 +117,10 @@ $image = theme('image_style', array(
         }
         $flagged_time = format_interval($difference, 1) . " ago";
       ?>
-      <li><?php print l(t('Approval requested (' . $flagged_time . ')'), 'javascript:jq_approval_already_requested();', array('fragment' => '','external'=>true)); ?></li>
+      <li><?php print l(t($conf['tm_requested_approval_text'] . ' (' . $flagged_time . ')'), 'javascript:jq_approval_already_requested();', array('fragment' => '','external'=>true)); ?></li>
       <?php } else { ?>
       <li><?php
-        print l(t('Approve my account'), 'javascript:jq_request_approval(' . $loaded->uid . ')', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('approval-link')))); ?></li>
+        print l(t($conf['tm_request_approval_text']), 'javascript:jq_request_approval(' . $loaded->uid . ')', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('approval-link')))); ?></li>
       <?php
       } // end if flagged
       } // end if not approved

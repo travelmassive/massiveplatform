@@ -62,7 +62,14 @@ $conf['tm_signin_links'] = array("twitter"); // link display
 $conf['tm_signin_title'] = "JOIN OUR COMMUNITY"; // message to display at top of login box
 $conf['tm_signin_facebook_always_sync'] = true; // fill empty fields from Facebook when logging in
 
-/** TWITTER OATH **/
+/** FACEBOOK OAUTH **/
+$conf['simple_fb_connect_appid'] = "333167423698294"; // app id
+$conf['simple_fb_connect_skey'] = "58a0280b139aebd05589ce655a966ccf"; // secret key
+$conf['simple_fb_connect_connect_url'] = "http://localdev.massiveplatform.com"; // our domain
+$conf['simple_fb_connect_redirect_user_form'] = 1; // redirect to user form after register
+$conf['simple_fb_connect_post_login_url'] = "<front>"; // redirect to home page after login
+
+/** TWITTER OAUTH **/
 /** Required for Twitter authentication **/
 $conf['tm_twitter_consumer_key'] = '';
 $conf['tm_twitter_consumer_secret'] = '';

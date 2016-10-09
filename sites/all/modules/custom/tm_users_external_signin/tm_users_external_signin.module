@@ -38,7 +38,6 @@ function tm_users_external_signin_menu() {
       'title' => 'Twitter Redirect',
       'page callback' => 'tm_users_external_signin_oauth',
       'access callback' => TRUE,
-      'file' => 'tm_users_external_signin.pages.inc',
       'type' => MENU_CALLBACK,
     );
     
@@ -47,7 +46,6 @@ function tm_users_external_signin_menu() {
       'title' => 'Twitter Redirect',
       'page callback' => 'tm_users_external_signin_oauth_callback',
       'access callback' => TRUE,
-      'file' => 'tm_users_external_signin.pages.inc',
       'type' => MENU_CALLBACK,
     );
     

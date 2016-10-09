@@ -826,3 +826,12 @@
 
 /* Preview notification */
 .tm_preview_notification .jqi { width: auto;}
+
+/* Unapproved label */
+.text_notapproved:before { @extend .icon-subtract; margin-right: 0.2rem;}
+
+/* Unapproved label */
+.text_approved:before { @extend .icon-tick; margin-right: 0.2rem;}
+
+
+

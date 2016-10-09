@@ -207,14 +207,12 @@ function _tm_approved_process($field, $title = NULL) {
   global $conf;
   $approval = "notapproved";
   $approval_text = tm_users_get_unapproved_member_label();
-  $approval_img = "/sites/all/themes/tm/images/notapproved_icon_32x32.png";
   if (in_array("approved user", $field['entity']->roles)){
     $approval = "approved";
     $approval_text = tm_users_get_approved_member_label();
-    $approval_img = "/sites/all/themes/tm/images/approved_icon_32x32.png";
   }
   // so small it's not really worth a tpl
-  $html = '<p class="approval"><img style="width:16px; height:16px; padding:0px; margin-right: 4px;" src="'.$approval_img.'"><span class="text_'.$approval.'">'.$approval_text.'</span></p>';
+  $html = '<p class="approval"><span class="text_'.$approval.'">'.$approval_text.'</span></p>';
 
   // if user is looking at their own profile and its unapproved, show them approval link
   global $user;

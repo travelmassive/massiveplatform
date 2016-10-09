@@ -100,10 +100,13 @@ $image = theme('image_style', array(
       <li><?php print l(t('Account settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-account-options')); ?></li>
       <li><?php print l(t('Notification settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-notifications-options')); ?></li>
       <li><?php print l(t('Invite members'), 'invite'); ?></li>
-      <?php $twitter_data = tm_twitter_account_load($loaded->uid);
-      if (!$twitter_data): ?>
-      <li><?php print l(t('Connect with Twitter'), 'tm_twitter/oauth'); ?></li>
-      <?php endif; ?>
+      <li><?php
+      if (isset($conf["tm_users_account_menu_links"])) {
+        foreach($conf["tm_users_account_menu_links"] as $account_menu_title => $account_menu_link) {
+          print "<li>" . l(t($account_menu_title), $account_menu_link, array('fragment' => '', 'external' =>true)) . "</li>";
+        }
+      }
+      ?>
 
       <?php if (!in_array("approved user", $loaded->roles)) { 
       // show last time request info was flagged
@@ -173,7 +176,7 @@ $image = theme('image_style', array(
       <ul class="dropd-menu dropdown-moderator-tools" id="account_menu_moderator_actions_items" style="display: none;">
         <li><?php print l(t('Add event'), 'node/add/event'); ?></li>
         <li><?php print l(t('Add chapter'), 'node/add/chapter'); ?></li>
-        <li><?php print l(t('All unapproved members'), 'admin/unapproved-members'); ?></li>
+        <li><?php print l(t('All ' . strtolower(tm_users_get_unapproved_member_label("plural"))), 'admin/unapproved-members'); ?></li>
         <li><?php print l(t('Community reports'), 'admin/tm_reports'); ?></li>
         <li><?php print l(t('Global insights'), 'admin/global_insights'); ?></li>
         <?php if (in_array("brand-editor", $loaded->roles) or in_array("administrator", $loaded->roles)): ?>
@@ -194,9 +197,42 @@ $image = theme('image_style', array(
 
   <?php else : ?>
 
-    <h3 class="menu-blk-title">Sign in</h3>
-    <p><?php print l(t('Twitter'), 'tm_twitter/oauth', array('attributes' => array('class' => 'twitter-login'))); ?></p>
+    <h3 class="menu-blk-title"><?php if (!isset($conf["tm_signin_title"])) { print "JOIN OUR COMMUNITY"; } else { print($conf["tm_signin_title"]); }?></h3>
+    <?php
+
+      // signin buttons
+      $has_external_signin = false;
+      if (isset($conf["tm_signin_buttons"])) {
+        foreach($conf["tm_signin_buttons"] as $signin_method) {
+          if (($signin_method == "facebook") and $conf["tm_signin_facebook"]) {
+            $has_external_signin = true;
+            print "<p style='margin-bottom: 0.5rem;'>" . l(t('Facebook'), 'user/simple-fb-connect', array('attributes' => array('class' => 'facebook-login'))) . "</p>";
+          }
+          if (($signin_method == "twitter") and $conf["tm_signin_twitter"]) {
+            $has_external_signin = true;
+            print "<p style='margin-bottom: 0.5rem;'>" . l(t('Twitter'), 'tm_twitter/oauth', array('attributes' => array('class' => 'twitter-login'))) . "</p>";
+          }
+        } 
+      }
+
+      // signin links
+      if (isset($conf["tm_signin_links"])) {
+        foreach($conf["tm_signin_links"] as $signin_method) {
+          if (($signin_method == "facebook") and $conf["tm_signin_facebook"]) {
+            $has_external_signin = true;
+            print "<p>" . l(t('Facebook'), 'user/simple-fb-connect') . "</p>";
+          }
+          if (($signin_method == "twitter") and $conf["tm_signin_twitter"]) {
+            $has_external_signin = true;
+            print "<p>" . l(t('Twitter'), 'tm_twitter/oauth') . "</p>";
+          }
+        } 
+      }
+    ?>
+   
+    <?php if ($has_external_signin) { ?>
     <i class="or">or</i>
+    <?php } // end if ?>
 
     <?php $login_form = drupal_get_form('user_login_block'); ?>
     <?php print render($login_form); ?>

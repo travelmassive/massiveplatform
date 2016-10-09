@@ -67,6 +67,9 @@ function tm_users_strongarm() {
         'contact' => array(
           'weight' => '3',
         ),
+        'tm_connect_settings' => array(
+          'weight' => '80',
+        ),
       ),
       'display' => array(
         'masquerade' => array(

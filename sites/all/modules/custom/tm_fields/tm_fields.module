@@ -203,12 +203,14 @@ function _tm_chapter_sticker_process($field, $title = NULL) {
  * Custom function to build the approved status
  */
 function _tm_approved_process($field, $title = NULL) {
+
+  global $conf;
   $approval = "notapproved";
-  $approval_text = "Pending Approval";
+  $approval_text = tm_users_get_unapproved_member_label();
   $approval_img = "/sites/all/themes/tm/images/notapproved_icon_32x32.png";
   if (in_array("approved user", $field['entity']->roles)){
     $approval = "approved";
-    $approval_text = "Approved Member";
+    $approval_text = tm_users_get_approved_member_label();
     $approval_img = "/sites/all/themes/tm/images/approved_icon_32x32.png";
   }
   // so small it's not really worth a tpl
@@ -654,12 +656,13 @@ function _tm_more_actions_process($field, $title = NULL) {
         );
 
         // unapproved members
+        $unapproved_label = tm_users_get_unapproved_member_label("plural");
         $link_path = $current_uri.'/unapproved-members';
         $links['chaptertools'][] = array(
           'wrapper_class' => array('chapterinvitiations'),
-          'content' => l(t('Unapproved members'), $link_path , array(
+          'content' => l(t($unapproved_label), $link_path , array(
             'attributes' => array( 
-            'title' => t('Unapproved members')
+            'title' => t($unapproved_label)
             )
           ))
         );
@@ -889,6 +892,19 @@ function _tm_more_actions_process($field, $title = NULL) {
           );
         }
       }
+      if (isset($targetuser->field_facebook_signin_link[LANGUAGE_NONE][0]['value'])) {
+        $facebook_signin_link = strip_tags($targetuser->field_facebook_signin_link[LANGUAGE_NONE][0]['value']);
+        if (trim($facebook_signin_link) != "") {
+          $menu_text = "<div style='font-size: smaller; font-style: italic; padding-left: 2em; background-color: #efefef;'>Signed in with Facebook:<br><span style='color: #888; font-style: normal;'><a style='display: inline; padding: 0rem;' target='_blank' href='" . $facebook_signin_link . "'>view Facebook profile</a></span></div>";
+
+          $links['moderate'][] = array(
+            'wrapper_class' => array('approve'),
+            'content' => t($menu_text),
+          );
+        }
+      }
+
+
 
       // 5. Show email address to chapter leader if unapproved
       // Always show to moderators

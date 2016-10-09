@@ -2839,7 +2839,7 @@ tr.selected td {
    Helpers - extends + custom vars
    ========================================================================== */
 /* line 9, ../sass/_helpers.scss */
-.visually-hidden, #site-title span, #prime-nav h1, #prime-nav h2 .hide, #prime-nav .search-wrapper .search-form label, #foot-credits .logo span, .bttn.hide-txt span, .bttn-group a.hide-txt span, .page-views .tabs-primary a.hide-txt span, .page-search .tabs-primary a.hide-txt span, .pager li a.hide-txt span, .pager .hide-txt.pager-current span, .views-exposed-form .hide-txt.form-type-select span, .hide-txt.twitter-login span,
+.visually-hidden, #site-title span, #prime-nav h1, #prime-nav h2 .hide, #prime-nav .search-wrapper .search-form label, #foot-credits .logo span, .bttn.hide-txt span, .bttn-group a.hide-txt span, .page-views .tabs-primary a.hide-txt span, .page-search .tabs-primary a.hide-txt span, .pager li a.hide-txt span, .pager .hide-txt.pager-current span, .views-exposed-form .hide-txt.form-type-select span, .hide-txt.facebook-login span, .hide-txt.twitter-login span,
 .form-download.hide-txt span,
 .form-submit.hide-txt span, .contained-block .detail-item h2, .card.contained .badge-cal .year, .node-form > div.card .badge-cal .year,
 #user-profile-form > div.card .badge-cal .year,
@@ -2856,7 +2856,7 @@ tr.selected td {
 
 /* line 33, ../sass/_helpers.scss */
 .bttn-primary, .bttn-group a, .page-views .tabs-primary a, .page-search .tabs-primary a, .pager li a, .views-exposed-form .form-type-select, .bttn-secondary, #prime-nav .search-wrapper .search-form #search-box-submit,
-#prime-nav .search-wrapper .search-form #edit-submit--2, #content .search-form #search-box-submit, .twitter-login, .bttn-tertiary, .form-submit, .form-download, #account-menu-blk .form-download, #account-menu-blk .form-submit, .bttn-danger, #edit-delete, .bttn-success, #edit-submit, .pager, .views-exposed-form .form-type-select select, .card.contained .avatar, .node-form > div.card .avatar,
+#prime-nav .search-wrapper .search-form #edit-submit--2, #content .search-form #search-box-submit, .bttn-tertiary, .form-submit, .form-download, #account-menu-blk .form-download, #account-menu-blk .form-submit, .bttn-danger, #edit-delete, .bttn-success, #edit-submit, .bttn-facebook, .facebook-login, .bttn-twitter, .twitter-login, .pager, .views-exposed-form .form-type-select select, .card.contained .avatar, .node-form > div.card .avatar,
 #user-profile-form > div.card .avatar,
 #user-register-form > div.card .avatar, #content .card.search-form .avatar, .card.contained .chapter-sticker, .node-form > div.card .chapter-sticker,
 #user-profile-form > div.card .chapter-sticker,
@@ -2891,19 +2891,19 @@ Icons
 }
 
 /* line 26, ../sass/_type.scss */
-.icon, .icon-medal, .contained-block .detail-item.tm-ds-tm-sponsor:before, .icon-move, .draggable a.tabledrag-handle:before, .icon-briefcase, .contained-block .detail-item.field-segment:before, .icon-bubble, .bttn.communication:before, .bttn-group a.communication:before, .page-views .tabs-primary a.communication:before, .page-search .tabs-primary a.communication:before, .pager li a.communication:before, .pager .communication.pager-current:before, .views-exposed-form .communication.form-type-select:before, .communication.twitter-login:before,
+.icon, .icon-medal, .contained-block .detail-item.tm-ds-tm-sponsor:before, .icon-move, .draggable a.tabledrag-handle:before, .icon-briefcase, .contained-block .detail-item.field-segment:before, .icon-bubble, .bttn.communication:before, .bttn-group a.communication:before, .page-views .tabs-primary a.communication:before, .page-search .tabs-primary a.communication:before, .pager li a.communication:before, .pager .communication.pager-current:before, .views-exposed-form .communication.form-type-select:before, .communication.facebook-login:before, .communication.twitter-login:before,
 .form-download.communication:before,
-.form-submit.communication:before, .contained-block .detail-item.field-qa:before, .contained-block .detail-item.qa:before, .icon-s-new-window, .bttn.external:before, .bttn-group a.external:before, .page-views .tabs-primary a.external:before, .page-search .tabs-primary a.external:before, .pager li a.external:before, .pager .external.pager-current:before, .views-exposed-form .external.form-type-select:before, .external.twitter-login:before,
+.form-submit.communication:before, .contained-block .detail-item.field-qa:before, .contained-block .detail-item.qa:before, .icon-s-new-window, .bttn.external:before, .bttn-group a.external:before, .page-views .tabs-primary a.external:before, .page-search .tabs-primary a.external:before, .pager li a.external:before, .pager .external.pager-current:before, .views-exposed-form .external.form-type-select:before, .external.facebook-login:before, .external.twitter-login:before,
 .form-download.external:before,
-.form-submit.external:before, .icon-instagram, #foot-nav .instagram:before, .contained-block .detail-item.field-link-instagram:before, .icon-users, .contained-block .detail-item.tm-ds-user-stats:before, .contained-block .detail-item.tm-ds-organization-stats:before, .icon-user, #prime-nav .account-wrapper .toggle:before, .icon-twitter, #foot-nav .twitter:before, .contained-block .detail-item.field-link-twitter:before, .twitter-login:before, .icon-triangle-up, .dropd:before, .icon-triangle-right, .icon-triangle-left, .icon-triangle-down, .icon-trash-bin, .icon-tick, .contained-block .detail-item.tm-payment-gateway-logo:before, .icon-subtract, .icon-star, .contained-block .detail-item.tm-ds-user-featured:before, .icon-spinner, .icon-share, .chapter-sticker-icon:before, .icon-share-reg, .icon-search-r, #prime-nav .search-wrapper .toggle:before, .icon-search-l, .icon-s-triangle-up, .icon-s-triangle-right, .tm-frontpage-video-pause:before, .icon-s-triangle-left, .icon-s-triangle-down, .icon-s-tick, .bttn.follow.on:before, .bttn-group a.follow.on:before, .page-views .tabs-primary a.follow.on:before, .page-search .tabs-primary a.follow.on:before, .pager li a.follow.on:before, .pager .follow.on.pager-current:before, .views-exposed-form .follow.on.form-type-select:before, .follow.on.twitter-login:before, .bttn.follow.flagged:before, .bttn-group a.follow.flagged:before, .page-views .tabs-primary a.follow.flagged:before, .page-search .tabs-primary a.follow.flagged:before, .pager li a.follow.flagged:before, .pager .follow.flagged.pager-current:before, .views-exposed-form .follow.flagged.form-type-select:before, .follow.flagged.twitter-login:before,
+.form-submit.external:before, .icon-instagram, #foot-nav .instagram:before, .contained-block .detail-item.field-link-instagram:before, .icon-users, .contained-block .detail-item.tm-ds-user-stats:before, .contained-block .detail-item.tm-ds-organization-stats:before, .icon-user, #prime-nav .account-wrapper .toggle:before, .icon-twitter, #foot-nav .twitter:before, .contained-block .detail-item.field-link-twitter:before, .twitter-login:before, .icon-triangle-up, .dropd:before, .icon-triangle-right, .icon-triangle-left, .icon-triangle-down, .icon-trash-bin, .icon-tick, .contained-block .detail-item.tm-payment-gateway-logo:before, .icon-subtract, .icon-star, .contained-block .detail-item.tm-ds-user-featured:before, .icon-spinner, .icon-share, .chapter-sticker-icon:before, .icon-share-reg, .icon-search-r, #prime-nav .search-wrapper .toggle:before, .icon-search-l, .icon-s-triangle-up, .icon-s-triangle-right, .tm-frontpage-video-pause:before, .icon-s-triangle-left, .icon-s-triangle-down, .icon-s-tick, .bttn.follow.on:before, .bttn-group a.follow.on:before, .page-views .tabs-primary a.follow.on:before, .page-search .tabs-primary a.follow.on:before, .pager li a.follow.on:before, .pager .follow.on.pager-current:before, .views-exposed-form .follow.on.form-type-select:before, .follow.on.facebook-login:before, .follow.on.twitter-login:before, .bttn.follow.flagged:before, .bttn-group a.follow.flagged:before, .page-views .tabs-primary a.follow.flagged:before, .page-search .tabs-primary a.follow.flagged:before, .pager li a.follow.flagged:before, .pager .follow.flagged.pager-current:before, .views-exposed-form .follow.flagged.form-type-select:before, .follow.flagged.facebook-login:before, .follow.flagged.twitter-login:before,
 .form-download.follow.on:before,
 .form-download.follow.flagged:before,
 .form-submit.follow.on:before,
-.form-submit.follow.flagged:before, .form-submit:before, .messages.status:before, .status.messages--status:before, .status.messages--warning:before, .status.messages--error:before, .icon-s-subtract, .icon-s-cancel, .icon-s-arr-up, .icon-s-arr-right, .cta-inline:after, .contained-block .detail-item .detail-venue-link a:after, .contained-block .more-link a:after, #foot-nav a:before, .contained-block .detail-item.price:before, .icon-s-arr-left, .icon-s-arr-down, .bttn-dropdown:after, html.js .collapsible .fieldset-legend a:after, .views-exposed-form .form-type-select:after, .icon-s-add, .bttn.follow:before, .bttn-group a.follow:before, .page-views .tabs-primary a.follow:before, .page-search .tabs-primary a.follow:before, .pager li a.follow:before, .pager .follow.pager-current:before, .views-exposed-form .follow.form-type-select:before, .follow.twitter-login:before,
+.form-submit.follow.flagged:before, .form-submit:before, .messages.status:before, .status.messages--status:before, .status.messages--warning:before, .status.messages--error:before, .icon-s-subtract, .icon-s-cancel, .icon-s-arr-up, .icon-s-arr-right, .cta-inline:after, .contained-block .detail-item .detail-venue-link a:after, .contained-block .more-link a:after, #foot-nav a:before, .contained-block .detail-item.price:before, .icon-s-arr-left, .icon-s-arr-down, .bttn-dropdown:after, html.js .collapsible .fieldset-legend a:after, .views-exposed-form .form-type-select:after, .icon-s-add, .bttn.follow:before, .bttn-group a.follow:before, .page-views .tabs-primary a.follow:before, .page-search .tabs-primary a.follow:before, .pager li a.follow:before, .pager .follow.pager-current:before, .views-exposed-form .follow.form-type-select:before, .follow.facebook-login:before, .follow.twitter-login:before,
 .form-download.follow:before,
-.form-submit.follow:before, .icon-refresh, .icon-phone, .icon-pencil, .bttn.edit:before, .bttn-group a.edit:before, .page-views .tabs-primary a.edit:before, .page-search .tabs-primary a.edit:before, .pager li a.edit:before, .pager .edit.pager-current:before, .views-exposed-form .edit.form-type-select:before, .edit.twitter-login:before,
+.form-submit.follow:before, .icon-refresh, .icon-phone, .icon-pencil, .bttn.edit:before, .bttn-group a.edit:before, .page-views .tabs-primary a.edit:before, .page-search .tabs-primary a.edit:before, .pager li a.edit:before, .pager .edit.pager-current:before, .views-exposed-form .edit.form-type-select:before, .edit.facebook-login:before, .edit.twitter-login:before,
 .form-download.edit:before,
-.form-submit.edit:before, .image-edit-button:before, .icon-my-location, .icon-mobile, .icon-menu, #prime-nav .browse-wrapper .toggle:before, .icon-map, .icon-map-marker, .tm-status-update-location:before, #tm-status-update-location-field:before, .contained-block .detail-item.field-location:before, .contained-block .detail-item.location:before, .icon-list, .icon-linkedin, #foot-nav .linkedin:before, .contained-block .detail-item.field-link-linkedin:before, .icon-image, .icon-home, .icon-history, .icon-grid, .icon-google-plus, .icon-globe, .contained-block .detail-item.field-link-website:before, .icon-github, .icon-flickr, .icon-feed, .icon-facebook, #foot-nav .facebook:before, .contained-block .detail-item.field-link-facebook:before, .icon-expand, .icon-email, .icon-download, .form-download:before, .icon-disc-cancel, .icon-description, .contained-block .detail-item.field-about-me:before, .contained-block .detail-item.about-me:before, .contained-block .detail-item.body:before, .icon-cog, .bttn.settings:before, .bttn-group a.settings:before, .page-views .tabs-primary a.settings:before, .page-search .tabs-primary a.settings:before, .pager li a.settings:before, .pager .settings.pager-current:before, .views-exposed-form .settings.form-type-select:before, .settings.twitter-login:before,
+.form-submit.edit:before, .image-edit-button:before, .icon-my-location, .icon-mobile, .icon-menu, #prime-nav .browse-wrapper .toggle:before, .icon-map, .icon-map-marker, .tm-status-update-location:before, #tm-status-update-location-field:before, .contained-block .detail-item.field-location:before, .contained-block .detail-item.location:before, .icon-list, .icon-linkedin, #foot-nav .linkedin:before, .contained-block .detail-item.field-link-linkedin:before, .icon-image, .icon-home, .icon-history, .icon-grid, .icon-google-plus, .icon-globe, .contained-block .detail-item.field-link-website:before, .icon-github, .icon-flickr, .icon-feed, .icon-facebook, #foot-nav .facebook:before, .contained-block .detail-item.field-link-facebook:before, .facebook-login:before, .icon-expand, .icon-email, .icon-download, .form-download:before, .icon-disc-cancel, .icon-description, .contained-block .detail-item.field-about-me:before, .contained-block .detail-item.about-me:before, .contained-block .detail-item.body:before, .icon-cog, .bttn.settings:before, .bttn-group a.settings:before, .page-views .tabs-primary a.settings:before, .page-search .tabs-primary a.settings:before, .pager li a.settings:before, .pager .settings.pager-current:before, .views-exposed-form .settings.form-type-select:before, .settings.facebook-login:before, .settings.twitter-login:before,
 .form-download.settings:before,
 .form-submit.settings:before, .icon-clock, .contained-block .detail-item.field-date-event:before, .icon-circle-warning, .messages.warning:before, .warning.messages--status:before, .warning.messages--warning:before, .warning.messages--error:before, .icon-circle-success, .icon-circle-question, .contained-block .detail-item.tm-ds-event-refund-policy:before, .icon-circle-play, .tm-frontpage-video-play:before, .icon-circle-info, .messages.help-tip:before, .help-tip.messages--status:before, .help-tip.messages--warning:before, .help-tip.messages--error:before, .contained-block .detail-item.tm-ds-event-message:before, .icon-circle-error, .messages.error:before, .error.messages--status:before, .error.messages--warning:before, .error.messages--error:before, .icon-cancel, .icon-arr-up, .icon-arr-tail-up, .icon-arr-tail-right, .icon-arr-tail-left, .icon-arr-tail-down, .icon-arr-right, .icon-arr-right-last, .icon-arr-left, .icon-arr-left-first, .icon-arr-down, .icon-add, .icon-connection, .contained-block .detail-item.tm-ds-connection-actions:before, .contained-block .detail-item.tm-ds-organization-follow-message:before, .icon-youtube, #foot-nav .youtube:before, .contained-block .detail-item.field-link-youtube:before, .icon-vimeo, #foot-nav .vimeo:before, .contained-block .detail-item.field-link-vimeo:before, .icon-snapchat, #foot-nav .snapchat:before, .contained-block .detail-item.field-link-snapchat:before, .social .icon-snapchat, .social #foot-nav .snapchat:before, #foot-nav .social .snapchat:before, .social .contained-block .detail-item.field-link-snapchat:before, .contained-block .social .detail-item.field-link-snapchat:before, .icon-strava, .contained-block .detail-item.field-link-strava:before, .icon-2016-tick, .icon-2016-flame, .icon-2016-credit-card, .icon-2016-lightening, .icon-2016-play, .icon-2016-heart-outline, .icon-2016-globe, .icon-2016-megaphone, .icon-2016-bell, .icon-2016-comment-bubble, #prime-nav .newsfeed-wrapper .toggle:before, .icon-2016-up-arrow, .icon-2016-down-arrow, .icon-2016-plane, .icon-2016-eye, .tm-status-update-views:before, .icon-2016-flames, .tm-status-update-popular:before, .icon-2016-tag, .tm-status-update-promoted:before, .icon-2016-qr-code, .icon-2016-flag, .icon-2016-chart, .icon-2016-heart, .icon-2016-star, .icon-2016-star-outline, .icon-2016-dots, .tm-status-update-actions:before, [class^="icon-"], [class*=" icon-"] {
   font-family: 'tm-icons';
@@ -2933,14 +2933,14 @@ Icons
 }
 
 /* line 51, ../sass/_type.scss */
-.icon-bubble, .bttn.communication:before, .bttn-group a.communication:before, .page-views .tabs-primary a.communication:before, .page-search .tabs-primary a.communication:before, .pager li a.communication:before, .pager .communication.pager-current:before, .views-exposed-form .communication.form-type-select:before, .communication.twitter-login:before,
+.icon-bubble, .bttn.communication:before, .bttn-group a.communication:before, .page-views .tabs-primary a.communication:before, .page-search .tabs-primary a.communication:before, .pager li a.communication:before, .pager .communication.pager-current:before, .views-exposed-form .communication.form-type-select:before, .communication.facebook-login:before, .communication.twitter-login:before,
 .form-download.communication:before,
 .form-submit.communication:before, .contained-block .detail-item.field-qa:before, .contained-block .detail-item.qa:before {
   content: "\e64c";
 }
 
 /* line 55, ../sass/_type.scss */
-.icon-s-new-window, .bttn.external:before, .bttn-group a.external:before, .page-views .tabs-primary a.external:before, .page-search .tabs-primary a.external:before, .pager li a.external:before, .pager .external.pager-current:before, .views-exposed-form .external.form-type-select:before, .external.twitter-login:before,
+.icon-s-new-window, .bttn.external:before, .bttn-group a.external:before, .page-views .tabs-primary a.external:before, .page-search .tabs-primary a.external:before, .pager li a.external:before, .pager .external.pager-current:before, .views-exposed-form .external.form-type-select:before, .external.facebook-login:before, .external.twitter-login:before,
 .form-download.external:before,
 .form-submit.external:before {
   content: "\e64a";
@@ -3052,7 +3052,7 @@ Icons
 }
 
 /* line 143, ../sass/_type.scss */
-.icon-s-tick, .bttn.follow.on:before, .bttn-group a.follow.on:before, .page-views .tabs-primary a.follow.on:before, .page-search .tabs-primary a.follow.on:before, .pager li a.follow.on:before, .pager .follow.on.pager-current:before, .views-exposed-form .follow.on.form-type-select:before, .follow.on.twitter-login:before, .bttn.follow.flagged:before, .bttn-group a.follow.flagged:before, .page-views .tabs-primary a.follow.flagged:before, .page-search .tabs-primary a.follow.flagged:before, .pager li a.follow.flagged:before, .pager .follow.flagged.pager-current:before, .views-exposed-form .follow.flagged.form-type-select:before, .follow.flagged.twitter-login:before,
+.icon-s-tick, .bttn.follow.on:before, .bttn-group a.follow.on:before, .page-views .tabs-primary a.follow.on:before, .page-search .tabs-primary a.follow.on:before, .pager li a.follow.on:before, .pager .follow.on.pager-current:before, .views-exposed-form .follow.on.form-type-select:before, .follow.on.facebook-login:before, .follow.on.twitter-login:before, .bttn.follow.flagged:before, .bttn-group a.follow.flagged:before, .page-views .tabs-primary a.follow.flagged:before, .page-search .tabs-primary a.follow.flagged:before, .pager li a.follow.flagged:before, .pager .follow.flagged.pager-current:before, .views-exposed-form .follow.flagged.form-type-select:before, .follow.flagged.facebook-login:before, .follow.flagged.twitter-login:before,
 .form-download.follow.on:before,
 .form-download.follow.flagged:before,
 .form-submit.follow.on:before,
@@ -3091,7 +3091,7 @@ Icons
 }
 
 /* line 171, ../sass/_type.scss */
-.icon-s-add, .bttn.follow:before, .bttn-group a.follow:before, .page-views .tabs-primary a.follow:before, .page-search .tabs-primary a.follow:before, .pager li a.follow:before, .pager .follow.pager-current:before, .views-exposed-form .follow.form-type-select:before, .follow.twitter-login:before,
+.icon-s-add, .bttn.follow:before, .bttn-group a.follow:before, .page-views .tabs-primary a.follow:before, .page-search .tabs-primary a.follow:before, .pager li a.follow:before, .pager .follow.pager-current:before, .views-exposed-form .follow.form-type-select:before, .follow.facebook-login:before, .follow.twitter-login:before,
 .form-download.follow:before,
 .form-submit.follow:before {
   content: "\e61c";
@@ -3108,7 +3108,7 @@ Icons
 }
 
 /* line 183, ../sass/_type.scss */
-.icon-pencil, .bttn.edit:before, .bttn-group a.edit:before, .page-views .tabs-primary a.edit:before, .page-search .tabs-primary a.edit:before, .pager li a.edit:before, .pager .edit.pager-current:before, .views-exposed-form .edit.form-type-select:before, .edit.twitter-login:before,
+.icon-pencil, .bttn.edit:before, .bttn-group a.edit:before, .page-views .tabs-primary a.edit:before, .page-search .tabs-primary a.edit:before, .pager li a.edit:before, .pager .edit.pager-current:before, .views-exposed-form .edit.form-type-select:before, .edit.facebook-login:before, .edit.twitter-login:before,
 .form-download.edit:before,
 .form-submit.edit:before, .image-edit-button:before {
   content: "\e61f";
@@ -3195,7 +3195,7 @@ Icons
 }
 
 /* line 251, ../sass/_type.scss */
-.icon-facebook, #foot-nav .facebook:before, .contained-block .detail-item.field-link-facebook:before {
+.icon-facebook, #foot-nav .facebook:before, .contained-block .detail-item.field-link-facebook:before, .facebook-login:before {
   content: "\e630";
 }
 
@@ -3225,7 +3225,7 @@ Icons
 }
 
 /* line 275, ../sass/_type.scss */
-.icon-cog, .bttn.settings:before, .bttn-group a.settings:before, .page-views .tabs-primary a.settings:before, .page-search .tabs-primary a.settings:before, .pager li a.settings:before, .pager .settings.pager-current:before, .views-exposed-form .settings.form-type-select:before, .settings.twitter-login:before,
+.icon-cog, .bttn.settings:before, .bttn-group a.settings:before, .page-views .tabs-primary a.settings:before, .page-search .tabs-primary a.settings:before, .pager li a.settings:before, .pager .settings.pager-current:before, .views-exposed-form .settings.form-type-select:before, .settings.facebook-login:before, .settings.twitter-login:before,
 .form-download.settings:before,
 .form-submit.settings:before {
   content: "\e636";
@@ -3758,12 +3758,12 @@ button:active,
 }
 
 /* line 65, ../sass/_base.scss */
-a.disabled, .bttn.disabled, .bttn-group a.disabled, .page-views .tabs-primary a.disabled, .page-search .tabs-primary a.disabled, .pager li a.disabled, .pager .disabled.pager-current, .views-exposed-form .disabled.form-type-select, .disabled.twitter-login, .form-submit.disabled, .form-download.disabled {
+a.disabled, .bttn.disabled, .bttn-group a.disabled, .page-views .tabs-primary a.disabled, .page-search .tabs-primary a.disabled, .pager li a.disabled, .pager .disabled.pager-current, .views-exposed-form .disabled.form-type-select, .disabled.facebook-login, .disabled.twitter-login, .form-submit.disabled, .form-download.disabled {
   opacity: 0.4;
   cursor: default;
 }
 /* line 68, ../sass/_base.scss */
-a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled:hover, .page-views .tabs-primary a.disabled:hover, .page-search .tabs-primary a.disabled:hover, .pager li a.disabled:hover, .pager .disabled.pager-current:hover, .views-exposed-form .disabled.form-type-select:hover, .disabled.twitter-login:hover, .bttn.disabled:focus, .bttn-group a.disabled:focus, .page-views .tabs-primary a.disabled:focus, .page-search .tabs-primary a.disabled:focus, .pager li a.disabled:focus, .pager .disabled.pager-current:focus, .views-exposed-form .disabled.form-type-select:focus, .disabled.twitter-login:focus, .form-submit.disabled:hover, .form-submit.disabled:focus, .form-download.disabled:hover, .form-download.disabled:focus {
+a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled:hover, .page-views .tabs-primary a.disabled:hover, .page-search .tabs-primary a.disabled:hover, .pager li a.disabled:hover, .pager .disabled.pager-current:hover, .views-exposed-form .disabled.form-type-select:hover, .disabled.facebook-login:hover, .disabled.twitter-login:hover, .bttn.disabled:focus, .bttn-group a.disabled:focus, .page-views .tabs-primary a.disabled:focus, .page-search .tabs-primary a.disabled:focus, .pager li a.disabled:focus, .pager .disabled.pager-current:focus, .views-exposed-form .disabled.form-type-select:focus, .disabled.facebook-login:focus, .disabled.twitter-login:focus, .form-submit.disabled:hover, .form-submit.disabled:focus, .form-download.disabled:hover, .form-download.disabled:focus {
   opacity: 0.4;
 }
 
@@ -4824,7 +4824,7 @@ button:hover, button:focus {
 
 /* Base button style */
 /* line 11, ../sass/_buttons.scss */
-.bttn, .bttn-group a, .page-views .tabs-primary a, .page-search .tabs-primary a, .pager li a, .pager .pager-current, .views-exposed-form .form-type-select, .twitter-login,
+.bttn, .bttn-group a, .page-views .tabs-primary a, .page-search .tabs-primary a, .pager li a, .pager .pager-current, .views-exposed-form .form-type-select, .facebook-login, .twitter-login,
 .form-download,
 .form-submit {
   display: inline-block;
@@ -4840,7 +4840,7 @@ button:hover, button:focus {
   border: 0;
 }
 /* line 26, ../sass/_buttons.scss */
-.bttn:link, .bttn-group a:link, .page-views .tabs-primary a:link, .page-search .tabs-primary a:link, .pager li a:link, .pager .pager-current:link, .views-exposed-form .form-type-select:link, .twitter-login:link, .bttn:active, .bttn-group a:active, .page-views .tabs-primary a:active, .page-search .tabs-primary a:active, .pager li a:active, .pager .pager-current:active, .views-exposed-form .form-type-select:active, .twitter-login:active, .bttn:visited, .bttn-group a:visited, .page-views .tabs-primary a:visited, .page-search .tabs-primary a:visited, .pager li a:visited, .pager .pager-current:visited, .views-exposed-form .form-type-select:visited, .twitter-login:visited,
+.bttn:link, .bttn-group a:link, .page-views .tabs-primary a:link, .page-search .tabs-primary a:link, .pager li a:link, .pager .pager-current:link, .views-exposed-form .form-type-select:link, .facebook-login:link, .twitter-login:link, .bttn:active, .bttn-group a:active, .page-views .tabs-primary a:active, .page-search .tabs-primary a:active, .pager li a:active, .pager .pager-current:active, .views-exposed-form .form-type-select:active, .facebook-login:active, .twitter-login:active, .bttn:visited, .bttn-group a:visited, .page-views .tabs-primary a:visited, .page-search .tabs-primary a:visited, .pager li a:visited, .pager .pager-current:visited, .views-exposed-form .form-type-select:visited, .facebook-login:visited, .twitter-login:visited,
 .form-download:link,
 .form-download:active,
 .form-download:visited,
@@ -4851,13 +4851,13 @@ button:hover, button:focus {
   top: 0;
 }
 /* line 30, ../sass/_buttons.scss */
-.bttn:active, .bttn-group a:active, .page-views .tabs-primary a:active, .page-search .tabs-primary a:active, .pager li a:active, .pager .pager-current:active, .views-exposed-form .form-type-select:active, .twitter-login:active,
+.bttn:active, .bttn-group a:active, .page-views .tabs-primary a:active, .page-search .tabs-primary a:active, .pager li a:active, .pager .pager-current:active, .views-exposed-form .form-type-select:active, .facebook-login:active, .twitter-login:active,
 .form-download:active,
 .form-submit:active {
   opacity: 1;
 }
 /* line 34, ../sass/_buttons.scss */
-.bttn:hover, .bttn-group a:hover, .page-views .tabs-primary a:hover, .page-search .tabs-primary a:hover, .pager li a:hover, .pager .pager-current:hover, .views-exposed-form .form-type-select:hover, .twitter-login:hover, .bttn:focus, .bttn-group a:focus, .page-views .tabs-primary a:focus, .page-search .tabs-primary a:focus, .pager li a:focus, .pager .pager-current:focus, .views-exposed-form .form-type-select:focus, .twitter-login:focus,
+.bttn:hover, .bttn-group a:hover, .page-views .tabs-primary a:hover, .page-search .tabs-primary a:hover, .pager li a:hover, .pager .pager-current:hover, .views-exposed-form .form-type-select:hover, .facebook-login:hover, .twitter-login:hover, .bttn:focus, .bttn-group a:focus, .page-views .tabs-primary a:focus, .page-search .tabs-primary a:focus, .pager li a:focus, .pager .pager-current:focus, .views-exposed-form .form-type-select:focus, .facebook-login:focus, .twitter-login:focus,
 .form-download:hover,
 .form-download:focus,
 .form-submit:hover,
@@ -4865,7 +4865,7 @@ button:hover, button:focus {
   outline: none;
 }
 /* line 37, ../sass/_buttons.scss */
-.bttn:before, .bttn-group a:before, .page-views .tabs-primary a:before, .page-search .tabs-primary a:before, .pager li a:before, .pager .pager-current:before, .views-exposed-form .form-type-select:before, .twitter-login:before, .bttn:after, .bttn-group a:after, .page-views .tabs-primary a:after, .page-search .tabs-primary a:after, .pager li a:after, .pager .pager-current:after, .views-exposed-form .form-type-select:after, .twitter-login:after,
+.bttn:before, .bttn-group a:before, .page-views .tabs-primary a:before, .page-search .tabs-primary a:before, .pager li a:before, .pager .pager-current:before, .views-exposed-form .form-type-select:before, .facebook-login:before, .twitter-login:before, .bttn:after, .bttn-group a:after, .page-views .tabs-primary a:after, .page-search .tabs-primary a:after, .pager li a:after, .pager .pager-current:after, .views-exposed-form .form-type-select:after, .facebook-login:after, .twitter-login:after,
 .form-download:before,
 .form-download:after,
 .form-submit:before,
@@ -4875,32 +4875,32 @@ button:hover, button:focus {
   vertical-align: bottom !important;
 }
 /* line 42, ../sass/_buttons.scss */
-.bttn:before, .bttn-group a:before, .page-views .tabs-primary a:before, .page-search .tabs-primary a:before, .pager li a:before, .pager .pager-current:before, .views-exposed-form .form-type-select:before, .twitter-login:before,
+.bttn:before, .bttn-group a:before, .page-views .tabs-primary a:before, .page-search .tabs-primary a:before, .pager li a:before, .pager .pager-current:before, .views-exposed-form .form-type-select:before, .facebook-login:before, .twitter-login:before,
 .form-download:before,
 .form-submit:before {
   margin-right: 0.375rem;
 }
 /* line 45, ../sass/_buttons.scss */
-.bttn:after, .bttn-group a:after, .page-views .tabs-primary a:after, .page-search .tabs-primary a:after, .pager li a:after, .pager .pager-current:after, .views-exposed-form .form-type-select:after, .twitter-login:after,
+.bttn:after, .bttn-group a:after, .page-views .tabs-primary a:after, .page-search .tabs-primary a:after, .pager li a:after, .pager .pager-current:after, .views-exposed-form .form-type-select:after, .facebook-login:after, .twitter-login:after,
 .form-download:after,
 .form-submit:after {
   margin-left: 0.375rem;
   opacity: 0.4;
 }
 /* line 49, ../sass/_buttons.scss */
-.bttn.settings, .bttn-group a.settings, .page-views .tabs-primary a.settings, .page-search .tabs-primary a.settings, .pager li a.settings, .pager .settings.pager-current, .views-exposed-form .settings.form-type-select, .settings.twitter-login,
+.bttn.settings, .bttn-group a.settings, .page-views .tabs-primary a.settings, .page-search .tabs-primary a.settings, .pager li a.settings, .pager .settings.pager-current, .views-exposed-form .settings.form-type-select, .settings.facebook-login, .settings.twitter-login,
 .form-download.settings,
 .form-submit.settings {
   width: 3rem;
 }
 /* line 55, ../sass/_buttons.scss */
-.bttn.communication, .bttn-group a.communication, .page-views .tabs-primary a.communication, .page-search .tabs-primary a.communication, .pager li a.communication, .pager .communication.pager-current, .views-exposed-form .communication.form-type-select, .communication.twitter-login,
+.bttn.communication, .bttn-group a.communication, .page-views .tabs-primary a.communication, .page-search .tabs-primary a.communication, .pager li a.communication, .pager .communication.pager-current, .views-exposed-form .communication.form-type-select, .communication.facebook-login, .communication.twitter-login,
 .form-download.communication,
 .form-submit.communication {
   width: 3rem;
 }
 /* line 63, ../sass/_buttons.scss */
-.bttn.follow, .bttn-group a.follow, .page-views .tabs-primary a.follow, .page-search .tabs-primary a.follow, .pager li a.follow, .pager .follow.pager-current, .views-exposed-form .follow.form-type-select, .follow.twitter-login, .bttn.external, .bttn-group a.external, .page-views .tabs-primary a.external, .page-search .tabs-primary a.external, .pager li a.external, .pager .external.pager-current, .views-exposed-form .external.form-type-select, .external.twitter-login, .bttn.edit, .bttn-group a.edit, .page-views .tabs-primary a.edit, .page-search .tabs-primary a.edit, .pager li a.edit, .pager .edit.pager-current, .views-exposed-form .edit.form-type-select, .edit.twitter-login,
+.bttn.follow, .bttn-group a.follow, .page-views .tabs-primary a.follow, .page-search .tabs-primary a.follow, .pager li a.follow, .pager .follow.pager-current, .views-exposed-form .follow.form-type-select, .follow.facebook-login, .follow.twitter-login, .bttn.external, .bttn-group a.external, .page-views .tabs-primary a.external, .page-search .tabs-primary a.external, .pager li a.external, .pager .external.pager-current, .views-exposed-form .external.form-type-select, .external.facebook-login, .external.twitter-login, .bttn.edit, .bttn-group a.edit, .page-views .tabs-primary a.edit, .page-search .tabs-primary a.edit, .pager li a.edit, .pager .edit.pager-current, .views-exposed-form .edit.form-type-select, .edit.facebook-login, .edit.twitter-login,
 .form-download.follow,
 .form-download.external,
 .form-download.edit,
@@ -4910,7 +4910,7 @@ button:hover, button:focus {
   width: 9rem;
 }
 /* line 65, ../sass/_buttons.scss */
-.bttn.follow:before, .bttn-group a.follow:before, .page-views .tabs-primary a.follow:before, .page-search .tabs-primary a.follow:before, .pager li a.follow:before, .pager .follow.pager-current:before, .views-exposed-form .follow.form-type-select:before, .follow.twitter-login:before, .bttn.external:before, .bttn-group a.external:before, .page-views .tabs-primary a.external:before, .page-search .tabs-primary a.external:before, .pager li a.external:before, .pager .external.pager-current:before, .views-exposed-form .external.form-type-select:before, .external.twitter-login:before, .bttn.edit:before, .bttn-group a.edit:before, .page-views .tabs-primary a.edit:before, .page-search .tabs-primary a.edit:before, .pager li a.edit:before, .pager .edit.pager-current:before, .views-exposed-form .edit.form-type-select:before, .edit.twitter-login:before,
+.bttn.follow:before, .bttn-group a.follow:before, .page-views .tabs-primary a.follow:before, .page-search .tabs-primary a.follow:before, .pager li a.follow:before, .pager .follow.pager-current:before, .views-exposed-form .follow.form-type-select:before, .follow.facebook-login:before, .follow.twitter-login:before, .bttn.external:before, .bttn-group a.external:before, .page-views .tabs-primary a.external:before, .page-search .tabs-primary a.external:before, .pager li a.external:before, .pager .external.pager-current:before, .views-exposed-form .external.form-type-select:before, .external.facebook-login:before, .external.twitter-login:before, .bttn.edit:before, .bttn-group a.edit:before, .page-views .tabs-primary a.edit:before, .page-search .tabs-primary a.edit:before, .pager li a.edit:before, .pager .edit.pager-current:before, .views-exposed-form .edit.form-type-select:before, .edit.facebook-login:before, .edit.twitter-login:before,
 .form-download.follow:before,
 .form-download.external:before,
 .form-download.edit:before,
@@ -4920,7 +4920,7 @@ button:hover, button:focus {
   margin-left: -0.5rem;
 }
 /* line 77, ../sass/_buttons.scss */
-.bttn.hide-txt:before, .bttn-group a.hide-txt:before, .page-views .tabs-primary a.hide-txt:before, .page-search .tabs-primary a.hide-txt:before, .pager li a.hide-txt:before, .pager .hide-txt.pager-current:before, .views-exposed-form .hide-txt.form-type-select:before, .hide-txt.twitter-login:before,
+.bttn.hide-txt:before, .bttn-group a.hide-txt:before, .page-views .tabs-primary a.hide-txt:before, .page-search .tabs-primary a.hide-txt:before, .pager li a.hide-txt:before, .pager .hide-txt.pager-current:before, .views-exposed-form .hide-txt.form-type-select:before, .hide-txt.facebook-login:before, .hide-txt.twitter-login:before,
 .form-download.hide-txt:before,
 .form-submit.hide-txt:before {
   margin-right: 0;
@@ -4933,7 +4933,7 @@ button:hover, button:focus {
 }
 
 /* line 94, ../sass/_buttons.scss */
-.bttn-blk, #account-menu-blk .form-download, #account-menu-blk .form-submit, .twitter-login {
+.bttn-blk, #account-menu-blk .form-download, #account-menu-blk .form-submit, .facebook-login, .twitter-login {
   display: block;
   width: 100%;
 }
@@ -4955,7 +4955,7 @@ button:hover, button:focus {
 
 /* 32px */
 /* line 110, ../sass/_buttons.scss */
-.bttn-m, .bttn-group a, .page-views .tabs-primary a, .page-search .tabs-primary a, .pager li a, .pager .pager-current, .form-submit, .form-download, #edit-submit, #edit-delete, .views-exposed-form .form-type-select, .twitter-login {
+.bttn-m, .bttn-group a, .page-views .tabs-primary a, .page-search .tabs-primary a, .pager li a, .pager .pager-current, .form-submit, .form-download, #edit-submit, #edit-delete, .views-exposed-form .form-type-select, .facebook-login, .twitter-login {
   line-height: 1.5rem !important;
   font-size: 1rem;
   padding: 0.25rem 0.75rem !important;
@@ -5020,22 +5020,22 @@ button:hover, button:focus {
 
 /* line 169, ../sass/_buttons.scss */
 .bttn-secondary, #prime-nav .search-wrapper .search-form #search-box-submit,
-#prime-nav .search-wrapper .search-form #edit-submit--2, #content .search-form #search-box-submit, .twitter-login {
+#prime-nav .search-wrapper .search-form #edit-submit--2, #content .search-form #search-box-submit {
   color: #FFF !important;
   background: #007eb5 !important;
   box-shadow: inset 0 -2px 0 0 #00587e;
 }
 /* line 174, ../sass/_buttons.scss */
 .bttn-secondary:hover, #prime-nav .search-wrapper .search-form #search-box-submit:hover,
-#prime-nav .search-wrapper .search-form #edit-submit--2:hover, #content .search-form #search-box-submit:hover, .twitter-login:hover, .bttn-secondary:focus, #prime-nav .search-wrapper .search-form #search-box-submit:focus,
-#prime-nav .search-wrapper .search-form #edit-submit--2:focus, #content .search-form #search-box-submit:focus, .twitter-login:focus {
+#prime-nav .search-wrapper .search-form #edit-submit--2:hover, #content .search-form #search-box-submit:hover, .bttn-secondary:focus, #prime-nav .search-wrapper .search-form #search-box-submit:focus,
+#prime-nav .search-wrapper .search-form #edit-submit--2:focus, #content .search-form #search-box-submit:focus {
   color: #FFF !important;
 }
 /* line 177, ../sass/_buttons.scss */
 .bttn-secondary:active, #prime-nav .search-wrapper .search-form #search-box-submit:active,
-#prime-nav .search-wrapper .search-form #edit-submit--2:active, #content .search-form #search-box-submit:active, .twitter-login:active, .bttn-secondary.on, #prime-nav .search-wrapper .search-form .on#search-box-submit,
-#prime-nav .search-wrapper .search-form .on#edit-submit--2, #content .search-form .on#search-box-submit, .on.twitter-login, .bttn-secondary.flagged, #prime-nav .search-wrapper .search-form .flagged#search-box-submit,
-#prime-nav .search-wrapper .search-form .flagged#edit-submit--2, #content .search-form .flagged#search-box-submit, .flagged.twitter-login {
+#prime-nav .search-wrapper .search-form #edit-submit--2:active, #content .search-form #search-box-submit:active, .bttn-secondary.on, #prime-nav .search-wrapper .search-form .on#search-box-submit,
+#prime-nav .search-wrapper .search-form .on#edit-submit--2, #content .search-form .on#search-box-submit, .bttn-secondary.flagged, #prime-nav .search-wrapper .search-form .flagged#search-box-submit,
+#prime-nav .search-wrapper .search-form .flagged#edit-submit--2, #content .search-form .flagged#search-box-submit {
   background: #00587e !important;
   box-shadow: inset 0 2px 0 0 #003f5a;
   color: #FFF !important;
@@ -5093,19 +5093,53 @@ button:hover, button:focus {
 }
 
 /* line 233, ../sass/_buttons.scss */
-.bttn.disabled, .bttn-group a.disabled, .page-views .tabs-primary a.disabled, .page-search .tabs-primary a.disabled, .pager li a.disabled, .pager .disabled.pager-current, .views-exposed-form .disabled.form-type-select, .disabled.twitter-login, button.disabled {
+.bttn.disabled, .bttn-group a.disabled, .page-views .tabs-primary a.disabled, .page-search .tabs-primary a.disabled, .pager li a.disabled, .pager .disabled.pager-current, .views-exposed-form .disabled.form-type-select, .disabled.facebook-login, .disabled.twitter-login, button.disabled {
   opacity: 0.4;
   cursor: default;
 }
 /* line 237, ../sass/_buttons.scss */
-.bttn.disabled:active, .bttn-group a.disabled:active, .page-views .tabs-primary a.disabled:active, .page-search .tabs-primary a.disabled:active, .pager li a.disabled:active, .pager .disabled.pager-current:active, .views-exposed-form .disabled.form-type-select:active, .disabled.twitter-login:active, button.disabled:active {
+.bttn.disabled:active, .bttn-group a.disabled:active, .page-views .tabs-primary a.disabled:active, .page-search .tabs-primary a.disabled:active, .pager li a.disabled:active, .pager .disabled.pager-current:active, .views-exposed-form .disabled.form-type-select:active, .disabled.facebook-login:active, .disabled.twitter-login:active, button.disabled:active {
   position: static;
   top: 0;
   opacity: 0.4;
 }
 
+/* line 246, ../sass/_buttons.scss */
+.bttn-facebook, .facebook-login {
+  color: #FFF !important;
+  background: #4081FF !important;
+  box-shadow: inset 0 -2px 0 0 #00587e;
+}
+/* line 251, ../sass/_buttons.scss */
+.bttn-facebook:hover, .facebook-login:hover, .bttn-facebook:focus, .facebook-login:focus {
+  color: #FFF !important;
+}
+/* line 254, ../sass/_buttons.scss */
+.bttn-facebook:active, .facebook-login:active, .bttn-facebook.on, .on.facebook-login, .bttn-facebook.flagged, .flagged.facebook-login {
+  background: #3b5898 !important;
+  box-shadow: inset 0 2px 0 0 #003f5a;
+  color: #FFF !important;
+}
+
+/* line 262, ../sass/_buttons.scss */
+.bttn-twitter, .twitter-login {
+  color: #FFF !important;
+  background: #1da1f2 !important;
+  box-shadow: inset 0 -2px 0 0 #00587e;
+}
+/* line 267, ../sass/_buttons.scss */
+.bttn-twitter:hover, .twitter-login:hover, .bttn-twitter:focus, .twitter-login:focus {
+  color: #FFF !important;
+}
+/* line 270, ../sass/_buttons.scss */
+.bttn-twitter:active, .twitter-login:active, .bttn-twitter.on, .on.twitter-login, .bttn-twitter.flagged, .flagged.twitter-login {
+  background: #1da1f2 !important;
+  box-shadow: inset 0 2px 0 0 #003f5a;
+  color: #FFF !important;
+}
+
 /* Button group */
-/* line 247, ../sass/_buttons.scss */
+/* line 279, ../sass/_buttons.scss */
 .bttn-group, .page-views .tabs-primary, .page-search .tabs-primary {
   border: 0;
   padding: 0;
@@ -5113,7 +5147,7 @@ button:hover, button:focus {
   list-style: none;
   background: none;
 }
-/* line 254, ../sass/_buttons.scss */
+/* line 286, ../sass/_buttons.scss */
 .bttn-group > *, .page-views .tabs-primary > *, .page-search .tabs-primary > *,
 .bttn-group > .is-active,
 .page-views .tabs-primary > .is-active,
@@ -5124,14 +5158,14 @@ button:hover, button:focus {
   text-shadow: none;
   border-radius: 0;
 }
-/* line 260, ../sass/_buttons.scss */
+/* line 292, ../sass/_buttons.scss */
 .bttn-group > * a, .page-views .tabs-primary > * a, .page-search .tabs-primary > * a,
 .bttn-group > .is-active a,
 .page-views .tabs-primary > .is-active a,
 .page-search .tabs-primary > .is-active a {
   border-radius: 0;
 }
-/* line 264, ../sass/_buttons.scss */
+/* line 296, ../sass/_buttons.scss */
 .bttn-group > *:first-child a, .page-views .tabs-primary > *:first-child a, .page-search .tabs-primary > *:first-child a,
 .bttn-group > .is-active:first-child a,
 .page-views .tabs-primary > .is-active:first-child a,
@@ -5139,7 +5173,7 @@ button:hover, button:focus {
   border-top-left-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
 }
-/* line 270, ../sass/_buttons.scss */
+/* line 302, ../sass/_buttons.scss */
 .bttn-group > *:last-child a, .page-views .tabs-primary > *:last-child a, .page-search .tabs-primary > *:last-child a,
 .bttn-group > .is-active:last-child a,
 .page-views .tabs-primary > .is-active:last-child a,
@@ -5147,35 +5181,35 @@ button:hover, button:focus {
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
 }
-/* line 276, ../sass/_buttons.scss */
+/* line 308, ../sass/_buttons.scss */
 .bttn-group a, .page-views .tabs-primary a, .page-search .tabs-primary a {
   letter-spacing: inherit;
 }
-/* line 279, ../sass/_buttons.scss */
+/* line 311, ../sass/_buttons.scss */
 .bttn-group a:hover, .page-views .tabs-primary a:hover, .page-search .tabs-primary a:hover {
   background-color: inherit;
 }
-/* line 283, ../sass/_buttons.scss */
+/* line 315, ../sass/_buttons.scss */
 .bttn-group a.is-active, .page-views .tabs-primary a.is-active, .page-search .tabs-primary a.is-active {
   border: 0;
   letter-spacing: inherit;
 }
 
-/* line 290, ../sass/_buttons.scss */
+/* line 322, ../sass/_buttons.scss */
 .pager {
   display: inline-block;
 }
-/* line 299, ../sass/_buttons.scss */
+/* line 331, ../sass/_buttons.scss */
 .pager li a, .pager .pager-current {
   border-radius: 0;
 }
-/* line 303, ../sass/_buttons.scss */
+/* line 335, ../sass/_buttons.scss */
 .pager li:first-child,
 .pager li:first-child a {
   border-top-left-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
 }
-/* line 308, ../sass/_buttons.scss */
+/* line 340, ../sass/_buttons.scss */
 .pager li:last-child,
 .pager li:last-child a {
   border-top-right-radius: 0.25rem;
@@ -5183,7 +5217,7 @@ button:hover, button:focus {
 }
 
 /* Dropdown */
-/* line 315, ../sass/_buttons.scss */
+/* line 347, ../sass/_buttons.scss */
 .dropd {
   min-width: 12.5rem;
   position: absolute;
@@ -5213,7 +5247,7 @@ button:hover, button:focus {
   -o-transition-delay: 0, 0, 0;
   transition-delay: 0, 0, 0;
 }
-/* line 333, ../sass/_buttons.scss */
+/* line 365, ../sass/_buttons.scss */
 .dropd:before {
   position: absolute;
   z-index: 15;
@@ -5226,33 +5260,33 @@ button:hover, button:focus {
   height: 1rem;
   width: 1rem;
 }
-/* line 347, ../sass/_buttons.scss */
+/* line 379, ../sass/_buttons.scss */
 .dropd.dropd-right {
   left: auto;
   right: 0;
 }
-/* line 350, ../sass/_buttons.scss */
+/* line 382, ../sass/_buttons.scss */
 .dropd.dropd-right:before {
   left: auto;
   right: 1rem;
 }
-/* line 356, ../sass/_buttons.scss */
+/* line 388, ../sass/_buttons.scss */
 .dropd.dropd-center {
   left: 50%;
   margin-left: -6.25rem;
 }
-/* line 359, ../sass/_buttons.scss */
+/* line 391, ../sass/_buttons.scss */
 .dropd.dropd-center:before {
   left: 50%;
   margin-left: -0.5rem;
 }
-/* line 365, ../sass/_buttons.scss */
+/* line 397, ../sass/_buttons.scss */
 .dropd.on {
   opacity: 1;
   margin-top: 0.75rem;
   visibility: visible;
 }
-/* line 371, ../sass/_buttons.scss */
+/* line 403, ../sass/_buttons.scss */
 .dropd .dropd-menu {
   list-style: none;
   padding: 0.5rem 0;
@@ -5261,22 +5295,22 @@ button:hover, button:focus {
   line-height: 1.25rem;
   border-bottom: 1px solid #e8eaeb;
 }
-/* line 379, ../sass/_buttons.scss */
+/* line 411, ../sass/_buttons.scss */
 .dropd .dropd-menu:first-child {
   margin-top: -0.75rem;
 }
-/* line 383, ../sass/_buttons.scss */
+/* line 415, ../sass/_buttons.scss */
 .dropd .dropd-menu:last-child {
   margin-bottom: -0.75rem;
   border: none;
 }
-/* line 387, ../sass/_buttons.scss */
+/* line 419, ../sass/_buttons.scss */
 .dropd .dropd-menu li {
   position: relative;
   z-index: 20;
   margin: 0;
 }
-/* line 391, ../sass/_buttons.scss */
+/* line 423, ../sass/_buttons.scss */
 .dropd .dropd-menu li a {
   display: block;
   padding: 0.25rem 1rem;
@@ -5299,13 +5333,13 @@ button:hover, button:focus {
   -o-transition-delay: 0, 0, 0, 0;
   transition-delay: 0, 0, 0, 0;
 }
-/* line 402, ../sass/_buttons.scss */
+/* line 434, ../sass/_buttons.scss */
 .dropd .dropd-menu li a:hover {
   opacity: 1;
   background-color: rgba(127, 190, 218, 0.2);
   color: #007eb5;
 }
-/* line 408, ../sass/_buttons.scss */
+/* line 440, ../sass/_buttons.scss */
 .dropd .dropd-menu li a:before {
   vertical-align: bottom !important;
   font-weight: normal;
@@ -5314,7 +5348,7 @@ button:hover, button:focus {
 }
 
 /* Approval status */
-/* line 419, ../sass/_buttons.scss */
+/* line 451, ../sass/_buttons.scss */
 .approval {
   text-align: center;
   color: #1b2430;
@@ -5323,24 +5357,24 @@ button:hover, button:focus {
   margin-bottom: 0px;
 }
 
-/* line 426, ../sass/_buttons.scss */
+/* line 458, ../sass/_buttons.scss */
 .approval img {
   margin-bottom: -3px;
   padding-right: 4px;
 }
 
-/* line 430, ../sass/_buttons.scss */
+/* line 462, ../sass/_buttons.scss */
 .text_approved {
   font-size: 0.8em;
 }
 
-/* line 433, ../sass/_buttons.scss */
+/* line 465, ../sass/_buttons.scss */
 .text_notapproved {
   font-size: 0.8em;
 }
 
 /* Edit image buttons */
-/* line 438, ../sass/_buttons.scss */
+/* line 470, ../sass/_buttons.scss */
 .image-edit-button {
   color: #4d5767;
   background-color: #fff;
@@ -5353,7 +5387,7 @@ button:hover, button:focus {
   border-bottom: 2px #888 solid;
 }
 
-/* line 439, ../sass/_buttons.scss */
+/* line 471, ../sass/_buttons.scss */
 .image-edit-button:hover {
   opacity: 1.0 !important;
 }
@@ -7510,7 +7544,7 @@ td.views-field-access {
   margin: 1rem 0 0 0;
 }
 /* line 310, ../sass/_single.scss */
-#upcoming-events .more-link .bttn, #upcoming-events .more-link .bttn-group a, .bttn-group #upcoming-events .more-link a, #upcoming-events .more-link .page-views .tabs-primary a, .page-views .tabs-primary #upcoming-events .more-link a, #upcoming-events .more-link .page-search .tabs-primary a, .page-search .tabs-primary #upcoming-events .more-link a, #upcoming-events .more-link .pager li a, .pager li #upcoming-events .more-link a, #upcoming-events .more-link .pager .pager-current, .pager #upcoming-events .more-link .pager-current, #upcoming-events .more-link .views-exposed-form .form-type-select, .views-exposed-form #upcoming-events .more-link .form-type-select, #upcoming-events .more-link .twitter-login {
+#upcoming-events .more-link .bttn, #upcoming-events .more-link .bttn-group a, .bttn-group #upcoming-events .more-link a, #upcoming-events .more-link .page-views .tabs-primary a, .page-views .tabs-primary #upcoming-events .more-link a, #upcoming-events .more-link .page-search .tabs-primary a, .page-search .tabs-primary #upcoming-events .more-link a, #upcoming-events .more-link .pager li a, .pager li #upcoming-events .more-link a, #upcoming-events .more-link .pager .pager-current, .pager #upcoming-events .more-link .pager-current, #upcoming-events .more-link .views-exposed-form .form-type-select, .views-exposed-form #upcoming-events .more-link .form-type-select, #upcoming-events .more-link .facebook-login, #upcoming-events .more-link .twitter-login {
   width: 14rem;
 }
 
@@ -7630,7 +7664,7 @@ td.views-field-access {
   margin: 2rem 0 0 0;
 }
 /* line 388, ../sass/_single.scss */
-#welcome .cta-wrapper .bttn, #welcome .cta-wrapper .bttn-group a, .bttn-group #welcome .cta-wrapper a, #welcome .cta-wrapper .page-views .tabs-primary a, .page-views .tabs-primary #welcome .cta-wrapper a, #welcome .cta-wrapper .page-search .tabs-primary a, .page-search .tabs-primary #welcome .cta-wrapper a, #welcome .cta-wrapper .pager li a, .pager li #welcome .cta-wrapper a, #welcome .cta-wrapper .pager .pager-current, .pager #welcome .cta-wrapper .pager-current, #welcome .cta-wrapper .views-exposed-form .form-type-select, .views-exposed-form #welcome .cta-wrapper .form-type-select, #welcome .cta-wrapper .twitter-login {
+#welcome .cta-wrapper .bttn, #welcome .cta-wrapper .bttn-group a, .bttn-group #welcome .cta-wrapper a, #welcome .cta-wrapper .page-views .tabs-primary a, .page-views .tabs-primary #welcome .cta-wrapper a, #welcome .cta-wrapper .page-search .tabs-primary a, .page-search .tabs-primary #welcome .cta-wrapper a, #welcome .cta-wrapper .pager li a, .pager li #welcome .cta-wrapper a, #welcome .cta-wrapper .pager .pager-current, .pager #welcome .cta-wrapper .pager-current, #welcome .cta-wrapper .views-exposed-form .form-type-select, .views-exposed-form #welcome .cta-wrapper .form-type-select, #welcome .cta-wrapper .facebook-login, #welcome .cta-wrapper .twitter-login {
   text-shadow: none;
   width: 14rem;
 }
@@ -8390,6 +8424,36 @@ td.views-field-access {
 /* line 76, ../sass/_login.scss */
 #account-menu-blk .media-obj strong {
   display: block;
+}
+
+/* line 96, ../sass/_login.scss */
+.login-or {
+  display: block;
+  position: relative;
+  text-align: center;
+  font-style: normal;
+  color: #79828c;
+  margin: 0.5rem 0;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+/* line 106, ../sass/_login.scss */
+.login-or:before, .login-or:after {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  height: 1px;
+  width: 40%;
+  content: '';
+  background: #e8eaeb;
+}
+/* line 115, ../sass/_login.scss */
+.login-or:before {
+  left: 0;
+}
+/* line 118, ../sass/_login.scss */
+.login-or:after {
+  right: 0;
 }
 
 /**

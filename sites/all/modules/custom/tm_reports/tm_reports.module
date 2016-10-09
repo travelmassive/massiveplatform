@@ -28,7 +28,7 @@ function tm_reports_menu() {
    );
 
    $items['node/%/unapproved-members'] = array(
-    'title' => t('Unapproved Members'),
+    'title' => tm_users_get_unapproved_member_label("plural"),
     'page callback' => 'tm_reports_unapproved_members_redirect',
     'page arguments' => array(1),
     'access arguments' => array('approve users'),
@@ -36,7 +36,7 @@ function tm_reports_menu() {
    );
 
    $items['node/%/chapter-insights'] = array(
-    'title' => t('Chapter insightsw'),
+    'title' => t('Chapter insights'),
     'page callback' => 'tm_reports_chapter_insights_redirect',
     'page arguments' => array(1),
     'access arguments' => array('approve users'),
@@ -239,15 +239,15 @@ function _tm_reports_views_pre_render_chapter_report(&$view) {
     $view->field["members_total"]->view->result[$i]->members_total = $insights["members_total"];
 
     // TOTAL APPROVED MEMBERS
-    $view->field["members_approved_total"] = _tm_reports_add_handler_field_numeric($view, $table, $table_alias, $real_field, "members_approved_total", "Total Approved");
+    $view->field["members_approved_total"] = _tm_reports_add_handler_field_numeric($view, $table, $table_alias, $real_field, "members_approved_total", "Total " . tm_users_get_approved_member_label("plural"));
     $view->field["members_approved_total"]->view->result[$i]->members_approved_total = $insights["members_approved_total"];
 
     // TOTAL UNAPPROVED MEMBERS
-    $view->field["members_unapproved_total"] = _tm_reports_add_handler_field_numeric($view, $table, $table_alias, $real_field, "members_unapproved_total", "Total Unapproved");
+    $view->field["members_unapproved_total"] = _tm_reports_add_handler_field_numeric($view, $table, $table_alias, $real_field, "members_unapproved_total", "Total " . tm_users_get_unapproved_member_label("plural"));
     $view->field["members_unapproved_total"]->view->result[$i]->members_unapproved_total = $insights["members_unapproved_total"];
 
     // % UNAPPROVED MEMBERS
-    $view->field["members_unapproved_pct"] = _tm_reports_add_handler_field_numeric($view, $table, $table_alias, $real_field, "members_unapproved_pct", "% Unapproved");
+    $view->field["members_unapproved_pct"] = _tm_reports_add_handler_field_numeric($view, $table, $table_alias, $real_field, "members_unapproved_pct", "% " . tm_users_get_unapproved_member_label("plural"));
     $view->field["members_unapproved_pct"]->view->result[$i]->members_unapproved_pct = $insights["members_unapproved_pct"];
 
   }
@@ -798,6 +798,18 @@ function _tm_reports_get_global_insights() {
   // % OF MEMBERS WHO HAVEN'T SIGNED IN SINCE 90 DAYS
   $insights["pct_signedin_members_older_than_90_days"] = (100 - round(($signed_in_90_days->amount / $members_total) * 100, 0)) . " / " . (100 - round(($signed_in_90_days_approved->amount / $members_approved_total) * 100, 0));
 
+  // TOTAL FACEBOOK SIGNUPS
+  $query_sql = "SELECT COUNT(*) total FROM field_data_field_facebook_signin_link";
+  $query = db_query($query_sql)->fetch();
+  $num_signups_facebook = $query->total;
+  $insights['num_signups_facebook'] = $num_signups_facebook;
+
+  // TOTAL TWITTER SIGNUPS
+  $query_sql = "SELECT COUNT(*) total FROM tm_twitter_account";
+  $query = db_query($query_sql)->fetch();
+  $num_signups_twitter = $query->total;
+  $insights['num_signups_twitter'] = $num_signups_twitter;
+
   // RETURN DATA
   $data_labels = tm_reports_get_insights_labels();
   $results = ["data_values" => $insights, "data_labels" => $data_labels];
@@ -823,13 +835,13 @@ function tm_reports_get_insights_labels() {
   "members_30_days_pct" => "% Growth (30 days)",
   "members_90_days_pct" => "% Growth (90 days)",
   "members_total" => "Total Members",
-  "members_approved_total"  => "Total Approved",
-  "members_unapproved_total" => "Total Unapproved",
-  "members_approved_pct" => "% Approved Members",
-  "members_unapproved_pct" => "% Unapproved Members",
-  "members_approved_with_segment" => "Approved members with Industry Segment",
-  "members_approved_without_segment" => "Approved members without Industry Segment",
-  "members_with_segment_pct" => "% Approved Members with Industry Segment",
+  "members_approved_total"  => "Total " . tm_users_get_approved_member_label("plural"),
+  "members_unapproved_total" => "Total " . tm_users_get_unapproved_member_label("plural"),
+  "members_approved_pct" => "% " . tm_users_get_approved_member_label("plural"),
+  "members_unapproved_pct" => "% " . tm_users_get_unapproved_member_label("plural"),
+  "members_approved_with_segment" => tm_users_get_approved_member_label("plural") . " with Industry Segment",
+  "members_approved_without_segment" => tm_users_get_approved_member_label("plural") . " without Industry Segment",
+  "members_with_segment_pct" => "% " . tm_users_get_approved_member_label("plural") . " with Industry Segment",
   "num_event_waitlists" => "Total Event Waitlists",
   "num_event_registrations" => "Total Event Registrations",
   "num_event_payments" => "Total Event Payments",
@@ -857,17 +869,16 @@ function tm_reports_get_insights_labels() {
   "num_signedin_members_30_days" => "All Active Members (30 Days)",
   "num_signedin_members_90_days" => "All Active Members (90 Days)",
   "num_signedin_members_older_than_90_days" => "All Inactive Members (> 90 Days)",
-  "num_signedin_members_24_hours_approved" => "Approved Active Members (24 Hours)",
-  "num_signedin_members_7_days_approved" => "Approved Active Members (7 Days)",
-  "num_signedin_members_30_days_approved" => "Approved Active Members (30 Days)",
-  "num_signedin_members_90_days_approved" => "Approved Active Members (90 Days)",
-  "num_signedin_members_older_than_90_days_approved" => "Approved Inactive Members (> 90 Days)",
-  "pct_signedin_members_24_hours" => "% Active Members (24 Hours) (All/Approved)",
-  "pct_signedin_members_7_days" => "% Active Members (7 Days) (All/Approved)",
-  "pct_signedin_members_30_days" => "% Active Members (30 Days) (All/Approved)",
-  "pct_signedin_members_90_days" => "% Active Members (90 Days) (All/Approved)",
-  "pct_signedin_members_older_than_90_days" => "% Inactive Members (> 90 Days) (All/Approved)",
-  "num_signedin_members_older_than_90_days" => "Approved Inactive Members (> 90 Days)",
+  "num_signedin_members_24_hours_approved" => "Active " . tm_users_get_approved_member_label("plural") . " (24 Hours)",
+  "num_signedin_members_7_days_approved" => "Active " . tm_users_get_approved_member_label("plural") . " (7 Days)",
+  "num_signedin_members_30_days_approved" => "Active " . tm_users_get_approved_member_label("plural") . " (30 Days)",
+  "num_signedin_members_90_days_approved" => "Active " . tm_users_get_approved_member_label("plural") . " (90 Days)",
+  "num_signedin_members_older_than_90_days_approved" => "Inactive " . tm_users_get_approved_member_label("plural") . " (> 90 Days)",
+  "pct_signedin_members_24_hours" => "% Active Members (24 Hours) (All/" . tm_users_get_approved_member_label("plural") . ")",
+  "pct_signedin_members_7_days" => "% Active Members (7 Days) (All/" . tm_users_get_approved_member_label("plural") . ")",
+  "pct_signedin_members_30_days" => "% Active Members (30 Days) (All/" . tm_users_get_approved_member_label("plural") . ")",
+  "pct_signedin_members_90_days" => "% Active Members (90 Days) (All/" . tm_users_get_approved_member_label("plural") . ")",
+  "pct_signedin_members_older_than_90_days" => "% Inactive Members (> 90 Days) (All/" . tm_users_get_approved_member_label("plural") . ")",
   "num_signedin_members_24_hours_chapter" => "Chapter Active Members (24 Hours)",
   "num_signedin_members_7_days_chapter" => "Chapter Active Members (7 Days)",
   "num_signedin_members_30_days_chapter" => "Chapter Active Members (30 Days)",
@@ -878,6 +889,8 @@ function tm_reports_get_insights_labels() {
   "pct_signedin_members_30_days_chapter" => "% Active Members (30 Days)",
   "pct_signedin_members_90_days_chapter" => "% Active Members (90 Days)",
   "pct_signedin_members_older_than_90_days_chapter" => "% Inactive Members (> 90 Days)",
+  "num_signups_facebook" => "Total Signups with Facebook",
+  "num_signups_twitter" => "Total Signups with Twitter",
   "num_chapters" => "Number of Chapters"];
 
   return $data_labels;

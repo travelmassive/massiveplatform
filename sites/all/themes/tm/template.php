@@ -87,6 +87,7 @@ function tm_preprocess_html(&$variables, $hook) {
 
 function tm_preprocess_page(&$variables, $hook) {
   
+  global $conf;
   global $user;
 
   // Workaround for gmail image proxy
@@ -112,7 +113,20 @@ function tm_preprocess_page(&$variables, $hook) {
 
   // On registration page put a twitter link
   if (current_path() == "user/register") {
-      drupal_set_message('<a href="/tm_twitter/oauth" class="twitter-login" style="margin-left: -16px; width: 220px; text-decoration: none;">Sign Up With Twitter</a>', 'signup_notice');
+    $message = "";
+    if (isset($conf["tm_signin_facebook"])) {
+      if ($conf["tm_signin_facebook"]) {
+        $message .= '<a href="/user/simple-fb-connect" class="facebook-login" style="margin-left: -16px; width: 220px; text-decoration: none; display: inline-block; margin-right: 1.5rem; margin-top: 0.25rem; margin-bottom: 0.25rem;">Sign up with Facebook</a>';
+      }
+    }
+    if (isset($conf["tm_signin_twitter"])) {
+      if ($conf["tm_signin_twitter"]) {
+        $message .= ' <a href="/tm_twitter/oauth" class="twitter-login" style="margin-left: -16px; width: 220px; text-decoration: none; display: inline-block; margin-right: 1.5rem; margin-top: 0.25rem; margin-bottom: 0.25rem;">Sign up with Twitter</a>';
+      }
+    }
+    if ($message != "") {
+      drupal_set_message($message, 'signup_notice');
+    }
   }
 
   // Nag user to verify email if there are no other messages
@@ -131,8 +145,6 @@ function tm_preprocess_page(&$variables, $hook) {
 
   // customize account page titles
   if (!$user->uid) {
-
-    global $conf;
 
     if (arg(0) == 'user' && arg(1) == 'login') {
         drupal_set_title(t('Sign in'));

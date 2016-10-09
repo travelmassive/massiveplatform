@@ -1,0 +1,25 @@
+--- simple_fb_connect.module	2016-10-09 22:35:15.000000000 +1100
++++ simple_fb_connect.module.ian	2016-10-09 22:34:53.000000000 +1100
+@@ -173,7 +173,16 @@
+   }
+ 
+   // Check if we have an existing Drupal user with the same email address and try to log in
+-  if ($drupal_user = user_load_by_mail($email)) {
++  // Modified by ianc
++  // we track facebook id in user field and compare
++  // this allows users to change email address and still remain signed in
++  $drupal_user = user_load_by_mail($email);
++  if (!$drupal_user) {
++    $fb_user_array = $fb_profile->asArray();
++    $drupal_user = tm_users_get_user_by_fb_id($fb_user_array["id"]);
++  }
++
++  if ($drupal_user) {
+     if (simple_fb_connect_login_user($drupal_user)) {
+       $post_login_url = simple_fb_connect_get_post_login_url();
+       simple_fb_connect_go_to_redirect_url($post_login_url);
+@@ -809,3 +818,4 @@
+ 
+   return $return_url;
+ }
++

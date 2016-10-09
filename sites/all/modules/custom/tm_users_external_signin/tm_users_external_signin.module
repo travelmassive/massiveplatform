@@ -6,6 +6,7 @@
  * 
  * @author Daniel da Silva (daniel.silva@flipside.org)
  */
+
 include_once 'tm_users_external_signin.features.inc';
 
 define ('TWITTER_HOST',         'http://twitter.com');
@@ -13,63 +14,65 @@ define ('TWITTER_API',          'https://api.twitter.com');
 define ('TWITTER_SEARCH',       'http://search.twitter.com');
 define ('TWITTER_TINYURL',      'http://tinyurl.com');
 
-module_load_include('lib.php', 'tm_users_external_signin', 'twitter');
+include 'includes/twitter.lib.php';
+include 'tm_users_external_signin.twitter.inc';
+include 'tm_users_external_signin.facebook.inc';
 
 /**
  * Implements hook_menu().
  */
 function tm_users_external_signin_menu() {
-  // Signin with twitter entry point.
-  $items['tm_twitter/oauth'] = array(
-    'title' => 'Twitter Redirect',
-    'page callback' => 'tm_users_external_signin_oauth',
-    'access callback' => TRUE,
-    'file' => 'tm_users_external_signin.pages.inc',
-    'type' => MENU_CALLBACK,
-  );
-  
-  // Twitter callback after acceptance.
-  $items['tm_twitter/oauth/callback'] = array(
-    'title' => 'Twitter Redirect',
-    'page callback' => 'tm_users_external_signin_oauth_callback',
-    'access callback' => TRUE,
-    'file' => 'tm_users_external_signin.pages.inc',
-    'type' => MENU_CALLBACK,
-  );
-  
-  // Register page prompting data not provided by twitter.
-  $items['tm_twitter/register'] = array(
-    'title' => 'Great, almost there!',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('tm_users_external_signin_register_form'),
-    'access callback' => TRUE,
-    'file' => 'tm_users_external_signin.pages.inc',
-    'type' => MENU_CALLBACK,
-  );
-  
-  // Admin pages.
-  // Settings for twitter like API keys
-  $items['admin/config/services/tm_twitter'] = array(
-    'title' => 'Twitter',
-    'description' => 'Twitter settings.',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('tm_users_external_signin_admin_form'),
-    'access arguments' => array('manage tm twitter settings'),
-    'file' => 'tm_users_external_signin.admin.pages.inc',
-    'type' => MENU_NORMAL_ITEM,
-  );
-  
-  // User settings form : used by submodules.
-  $items['user/%user/edit/tm_twitter'] = array(
-    'title' => 'Twitter',
-    'type' => MENU_LOCAL_TASK,
-    'page callback' => 'tm_users_external_signin_manage_account',
-    'file' => 'tm_users_external_signin.pages.inc',
-    'page arguments' => array(1),
-    'access callback' => 'tm_users_external_signin_manage_account_access_callback',
-    'access arguments' => array(1),
-  );
-  
+
+  global $conf;
+
+  $tm_signin_twitter = true;
+  if (isset($conf["tm_signin_twitter"])) {
+    $tm_signin_twitter = $conf["tm_signin_twitter"];
+  }
+
+  // Twitter sign in methods
+
+  if ($tm_signin_twitter) {
+    // Signin with twitter entry point.
+    $items['tm_twitter/oauth'] = array(
+      'title' => 'Twitter Redirect',
+      'page callback' => 'tm_users_external_signin_oauth',
+      'access callback' => TRUE,
+      'file' => 'tm_users_external_signin.pages.inc',
+      'type' => MENU_CALLBACK,
+    );
+    
+    // Twitter callback after acceptance.
+    $items['tm_twitter/oauth/callback'] = array(
+      'title' => 'Twitter Redirect',
+      'page callback' => 'tm_users_external_signin_oauth_callback',
+      'access callback' => TRUE,
+      'file' => 'tm_users_external_signin.pages.inc',
+      'type' => MENU_CALLBACK,
+    );
+    
+    // Register page prompting data not provided by twitter.
+    $items['tm_twitter/register'] = array(
+      'title' => 'Great, almost there!',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('tm_users_external_signin_register_form'),
+      'access callback' => TRUE,
+      'type' => MENU_CALLBACK,
+    );
+    
+    // Admin pages.
+    // Settings for twitter like API keys
+    $items['admin/config/services/tm_twitter'] = array(
+      'title' => 'Twitter',
+      'description' => 'Twitter settings.',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('tm_users_external_signin_admin_form'),
+      'access arguments' => array('manage tm twitter settings'),
+      'type' => MENU_NORMAL_ITEM,
+    );
+    
+  }
+
   return $items;
 }
 
@@ -79,20 +82,10 @@ function tm_users_external_signin_menu() {
 function tm_users_external_signin_permission() {
   return array(
     'manage tm twitter settings' => array(
-      'title' => t('Manage tm twitter settings'),
+      'title' => t('Manage Twitter settings'),
     )
   );
 }
-
-/**
- * Custom access callback for user/%user/edit/tm_twitter
- * Only the owner of the account can link/unlink the account.
- */
-function tm_users_external_signin_manage_account_access_callback($account) {
-  global $user;
-  return $user->uid == $account->uid;
-}
-
 
 /**
  * Implements hook_user_delete()
@@ -115,106 +108,77 @@ function tm_users_external_signin_theme() {
   );
 }
 
+/**
+ * Add to sign up page
+ */
 function tm_users_external_signin_form_user_login_alter(&$form, &$form_state) {
-  $form['tm_users_external_signin'] = array(
-    '#markup' => theme('tm_users_external_signin_link_signin', array('url' => url('tm_twitter/oauth'))),
-    '#weight' => 100 // move to below login button
-  );
-}
 
-/**
- * Creates a new twitter account in the database.
- *
- * @param $account_data
- *   The account data as returned by twitter.
- * @param $auth
- *  An array with the oauth_token and oauth_token_secret.
- */
-function tm_twitter_account_create($account_data, $auth) {
-  $result = db_insert('tm_twitter_account')
-    ->fields(array(
-      'twitter_uid' => $account_data['id'],
-      'screen_name' => $account_data['screen_name'],
-      'oauth_token' => $auth['oauth_token'],
-      'oauth_token_secret' => $auth['oauth_token_secret'],
-      'name' => $account_data['name'],
-      'description' => $account_data['description'],
-      'uid' => $account_data['drupal_uid'],
-    ))
-    ->execute();
-  
-  return $result;
-}
+  global $conf;
 
-/**
- * Load an account from the database using the uid
- *
- * @param $uid
- *   The user id
- * @return array
- */
-function tm_twitter_account_load($uid) {
-  $result = db_query('SELECT * FROM {tm_twitter_account} WHERE uid = :uid', array(':uid' => $uid))->fetchAssoc();
-  return $result;
-}
-
-/**
- * Delete an account from the database using the uid
- *
- * @param $uid
- *   The user id
- * @return bool
- */
-function tm_twitter_account_delete($uid) {
-  return db_delete('tm_twitter_account')->condition('uid', $uid)->execute();
-}
-
-/**
- * Implements hook_field_extra_fields()
- * Add a new field to the user form that contain the notifications.
- * The actual form element will be created in the form_alter hook
- */
-function tm_users_external_signin_field_extra_fields() {
-  $return['user']['user']  = array(
-    'form' => array(
-      'tm_twitter_settings' => array(
-        'label' => t('Twitter'),
-        'description' => t('User Twitter settings.'),
-        'weight' => 80,
-      ),
-    )
-  );
-
-  return $return;
+  // On registration page put a twitter link
+  $message = "";
+  if (isset($conf["tm_signin_facebook"])) {
+    if ($conf["tm_signin_facebook"]) {
+      $message .= '<a href="/user/simple-fb-connect" class="facebook-login" style="margin-left: -16px; width: 220px; text-decoration: none; display: inline-block; margin-right: 1.5rem; margin-top: 0.25rem; margin-bottom: 0.25rem;">Sign in with Facebook</a>';
+    }
+  }
+  if (isset($conf["tm_signin_twitter"])) {
+    if ($conf["tm_signin_twitter"]) {
+      $message .= ' <a href="/tm_twitter/oauth" class="twitter-login" style="margin-left: -16px; width: 220px; text-decoration: none; display: inline-block; margin-right: 1.5rem; margin-top: 0.25rem; margin-bottom: 0.25rem;">Sign in with Twitter</a>';
+    }
+  }
+  if ($message != "") {
+    $form['tm_users_external_signin'] = array(
+      '#markup' => '<br><i class="login-or">or</i><p style="margin-bottom: 0.8em; margin-left: 1rem;">' . $message . '</p>',
+      '#weight' => 100 // move to below login button
+    );
+  }
+ 
 }
 
 /**
  * Implements hook_form_FORM_ID_alter()
  */
 function tm_users_external_signin_form_user_profile_form_alter(&$form, &$form_state) {
+
   $account = $form['#user'];
 
+  // Get linked account data
   $twitter_data = tm_twitter_account_load($account->uid);
+  $facebook_data = false;
+  if (isset($_SESSION['simple_fb_connect'])) {
+    if (isset($form['#user']->field_facebook_signin_link[LANGUAGE_NONE][0]['value'])) {
+      $facebook_data = array("link" => $form['#user']->field_facebook_signin_link[LANGUAGE_NONE][0]['value']);
+    } 
+  }
   $output = '';
-  
-  if ($twitter_data) {
-    //$output .= 'Your account is linked with twitter.</br>';
-    $output .= 'Your account is linked with @' .  $twitter_data["screen_name"] . '<br>';
-    $output .= 'Click here to ' . l('unlink your account', 'user/' . $account->uid . '/edit/tm_twitter');
-  }
-  else {
-    //$output .= 'Your account is not linked with twitter.</br>';
-    $output .= 'Click here to ' . l('link your account', 'tm_twitter/oauth');
-  }
-  
-  $form['tm_twitter_settings'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Sign in with Twitter'),
-    '#description' => t('Login with your Twitter account for easy sign in.<br>'),
-    '#attributes' => array(
-      'class' => array('field-group-fieldset')
-    ),
-    '#suffix' => $output . "<br><br>",
-  );
 
+  // Facebook
+  if ($facebook_data) {
+    $output .= '<strong>Facebook</strong> &gt; You have connected your <a target="_blank" class="cancel" href=' .  $facebook_data["link"] . '>Facebook account</a> for sign in.<br>';
+    $output .= '<br><i>To unlink this account, remove this app from your <a target="_blank" class="cancel" href="https://web.facebook.com/settings?tab=applications">Facebook App Settings</a>.</i></p>';
+    $output .= "<div style='border-top: 1px solid #eee; margin-bottom: 1rem;'></div>";
+  }
+
+  // Twitter
+  if ($twitter_data) {
+    $output .= '<strong>Twitter</strong> &gt; Your have connected your <a target="_blank" class="cancel" href="https://twitter.com/' . $twitter_data["screen_name"] . '">Twitter account</a> for sign in.</a> ';
+    $output .= "<p><i>" . l('Unlink your Twitter account', 'user/' . $account->uid . '/edit/tm_twitter') . "</i></p>";
+    $output .= "<div style='border-top: 1px solid #eee; margin-bottom: 1rem;'></div>";
+  }
+
+  if ($twitter_data || $facebook_data) {
+    $form['tm_connect_settings'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Connected Accounts'),
+      '#attributes' => array(
+        'class' => array('field-group-fieldset')
+      ),
+      '#suffix' => $output
+    );
+  }
+  
 }
+
+
+

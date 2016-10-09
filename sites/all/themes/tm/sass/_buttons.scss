@@ -242,6 +242,38 @@ button {
   }
 }
 
+// Facebook
+.bttn-facebook {
+  color: #FFF !important;
+  background: #4081FF !important;
+  @extend %antialiased;
+  box-shadow: inset 0 -2px 0 0 shade($secondary-color, 30%);
+  &:hover, &:focus {
+    color: #FFF !important;
+  }
+  &:active, &.on, &.flagged {
+    background: #3b5898 !important;
+    box-shadow: inset 0 2px 0 0 shade($secondary-color, 50%);
+    color: #FFF !important;
+  }
+}
+
+// Twitter
+.bttn-twitter {
+  color: #FFF !important;
+  background: #1da1f2 !important;
+  @extend %antialiased;
+  box-shadow: inset 0 -2px 0 0 shade($secondary-color, 30%);
+  &:hover, &:focus {
+    color: #FFF !important;
+  }
+  &:active, &.on, &.flagged {
+    background: #1da1f2 !important;
+    box-shadow: inset 0 2px 0 0 shade($secondary-color, 50%);
+    color: #FFF !important;
+  }
+}
+
 /* Button group */
 
 .bttn-group {

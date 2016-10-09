@@ -1,0 +1,110 @@
+<?php
+
+/**
+ * @file
+ * Install file for simple fb connect module. Checks requirements.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function simple_fb_connect_requirements($phase) {
+  $requirements = array();
+  $t = get_t();
+
+  if ($phase == 'install') {
+
+    if (!function_exists('curl_init')) {
+      $requirements['curl']['severity'] = REQUIREMENT_ERROR;
+      $requirements['curl']['description'] = $t('Simple FB Connect could not be installed. The cURL library is not installed. Please check the <a href="@url">PHP cURL documentation</a> for information on how to correct this.', array('@url' => 'http://www.php.net/manual/en/curl.setup.php'));
+    }
+
+    if (!function_exists('json_decode')) {
+      $requirements['json']['severity'] = REQUIREMENT_ERROR;
+      $requirements['json']['description'] = $t('Simple FB Connect could not be installed. The JSON library is not installed. Facebook needs the JSON PHP extension.');
+    }
+
+    if (version_compare(phpversion(), '5.4.0', '<')) {
+      $requirements['php_version']['title'] = $t('PHP version');
+      $requirements['php_version']['value'] = check_plain(phpversion());
+      $requirements['php_version']['severity'] = REQUIREMENT_ERROR;
+      $requirements['php_version']['description'] = $t('Simple FB Connect could not be installed. Facebook PHP SDK v4 requires PHP 5.4 or higher.');
+    }
+
+    // Make sure that Libraries module is loaded
+    if (!function_exists('libraries_get_path')) {
+      module_load_include('module', 'libraries');
+    }
+    // Try to check that we have version 4.0.x of the SDK library.
+    // - libraries_detect does not work in the install phase so we can't easily check the exact version
+    // - We check if sites/all/libraries/facebook-php-sdk-v4/README.md is found
+    $path = libraries_get_path('facebook-php-sdk-v4');
+    if (!is_file($path . '/README.md')) {
+      $requirements['facebook-php-sdk-v4']['severity'] = REQUIREMENT_ERROR;
+      $requirements['facebook-php-sdk-v4']['description'] = $t('Simple FB Connect could not be installed. Facebook PHP SDK library version 4.0.x not found. See README.txt.');
+    }
+  }
+
+  if ($phase == 'runtime') {
+    $sdk = libraries_detect('facebook-php-sdk-v4');
+    if (!is_array($sdk) || !$sdk['installed']) {
+      $requirements['facebook-php-sdk-v4']['title'] = $t('Facebook PHP SDK v4');
+      $requirements['facebook-php-sdk-v4']['value'] = $t('Not installed');
+      $requirements['facebook-php-sdk-v4']['severity'] = REQUIREMENT_ERROR;
+      $requirements['facebook-php-sdk-v4']['description'] = $t('Facebook PHP SDK library version 4.0.x not found. See README.txt');
+    }
+    elseif (($sdk['version'] < '4.0') || ($sdk['version'] >= '4.1')) {
+      $requirements['facebook-php-sdk-v4']['title'] = $t('Facebook PHP SDK v4');
+      $requirements['facebook-php-sdk-v4']['value'] = $t('Unsupported version detected');
+      $requirements['facebook-php-sdk-v4']['severity'] = REQUIREMENT_ERROR;
+      $requirements['facebook-php-sdk-v4']['description'] = $t('Version @version detected. See README.txt', array('@version' => $sdk['version']));
+    }
+    else {
+      $requirements['facebook-php-sdk-v4']['title'] = $t('Facebook PHP SDK v4');
+      $requirements['facebook-php-sdk-v4']['value'] = $t('Version @version detected.', array('@version' => $sdk['version']));
+      $requirements['facebook-php-sdk-v4']['severity'] = REQUIREMENT_OK;
+    }
+  }
+  return $requirements;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function simple_fb_connect_uninstall() {
+  variable_del('simple_fb_connect_appid');
+  variable_del('simple_fb_connect_skey');
+  variable_del('simple_fb_connect_connect_url');
+  variable_del('simple_fb_connect_post_login_url');
+  variable_del('simple_fb_connect_login_only');
+  variable_del('simple_fb_connect_disable_admin_login');
+  variable_del('simple_fb_connect_disabled_roles');
+}
+
+/**
+ * Implements hook_enable().
+ */
+function simple_fb_connect_enable() {
+  drupal_set_message(t('Simple FB Connect enabled. <a href="@path">Check module settings</a>.', array('@path' => url('admin/config/people/simple-fb-connect'))));
+}
+
+/**
+ * Update disabled roles setting to use label as identifier rather than role id.
+ *
+ * This is to make the configuration transferable between environments using
+ * Features. See https://www.drupal.org/node/2653060
+ */
+function simple_fb_connect_update_7001() {
+  $roles = variable_get('simple_fb_connect_disabled_roles', array());
+
+  $updated_roles = array();
+  foreach ($roles as $rid => $value) {
+    $role = user_role_load($rid);
+
+    if (!$role || empty($value)) {
+      continue;
+    }
+    $updated_roles[$role->name] = $role->name;
+  }
+  variable_set('simple_fb_connect_disabled_roles', $updated_roles);
+}

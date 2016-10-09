@@ -10,6 +10,7 @@ dependencies[] = logintoboggan
 dependencies[] = oauth_common
 dependencies[] = strongarm
 dependencies[] = tm_users
+dependencies[] = simple_fb_connect
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:2
 features[user_permission][] = administer consumers

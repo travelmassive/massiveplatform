@@ -732,17 +732,16 @@ function tm_users_field_group_info() {
   $field_group->mode = 'form';
   $field_group->parent_name = 'group_user_edit';
   $field_group->data = array(
-    'label' => 'Twitter',
+    'label' => 'Connect',
     'weight' => '37',
     'children' => array(
-      0 => 'tm_twitter_settings',
+      0 => 'tm_connect_settings',
     ),
     'format_type' => 'htab',
     'format_settings' => array(
-      'label' => 'Twitter',
+      'label' => 'Connect',
       'instance_settings' => array(
         'required_fields' => 1,
-        'id' => 'user-twitter-options',
         'classes' => '',
         'description' => '',
       ),
@@ -761,6 +760,7 @@ function tm_users_field_group_info() {
   t('Basic settings');
   t('Chapters joined');
   t('Company Profiles');
+  t('Connect');
   t('Elsewhere');
   t('Events joined');
   t('Followers');
@@ -773,7 +773,6 @@ function tm_users_field_group_info() {
   t('Profile');
   t('QA');
   t('Summary');
-  t('Twitter');
   t('User edit');
 
   return $field_groups;

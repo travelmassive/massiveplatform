@@ -37,19 +37,38 @@ ini_set('session.gc_maxlifetime', (60 * 60 * 24 * 90)); // 90 days
 ini_set('session.cookie_lifetime', (60 * 60 * 24 * 90)); // 90 days
 */
 
+/** PERFORMANCE SETTINGS **/
+$conf['cache'] = 1;                      // Page cache (disable if using geoip branding)
+$conf['page_cache_maximum_age'] = 300;   // External cache TTL
+$conf['preprocess_css'] = TRUE;          // Optimize css
+$conf['preprocess_js'] = TRUE;           // Optimize javascript
+
 /** MASSIVE PLATFORM **/
 /** Add the following settings to your sites/default/settings.php file **/
 $conf['install_profile'] = 'tm';
-$conf['suppress_itok_output'] = true; // supress ?itok so email images can be loaded by gmail
+$conf['image_suppress_itok_output'] = TRUE; // supress ?itok so email images can be loaded by gmail
+$conf['image_allow_insecure_derivatives'] = TRUE;
 
 /** ADMIN PAGES **/
 /** Additional admin pages that moderator can access **/
 //$conf["tm_admin_moderator_whitelist"] = array("admin/your_own_page");
 
+/** SIGN IN METHODS **/
+/** If you just want password login only, disable Facebook and Twitter sign in **/
+$conf['tm_signin_facebook'] = true; // allow signin with facebook
+$conf['tm_signin_twitter'] = false; // allow signin with twitter
+$conf['tm_signin_buttons'] = array("facebook"); // login button display
+$conf['tm_signin_links'] = array("twitter"); // link display
+$conf['tm_signin_title'] = "JOIN OUR COMMUNITY"; // message to display at top of login box
+$conf['tm_signin_facebook_always_sync'] = true; // fill empty fields from Facebook when logging in
+
 /** TWITTER OATH **/
 /** Required for Twitter authentication **/
 $conf['tm_twitter_consumer_key'] = '';
 $conf['tm_twitter_consumer_secret'] = '';
+
+/** ACCOUNT MENU **/
+// $conf['tm_users_account_menu_links'] = array("Visit Massive" => "http://massiveplatform.com"); // array of account links (optional)
 
 /** WORDPRESS FEEDME **/
 /** This calls a module hosted on wordpress to embed blog (plus other) content based on current page **/
@@ -98,6 +117,10 @@ $conf['tm_user_remove_own_account_notify'] = 'community@massiveplatform.com'; //
 /** MEMBER LABELS **/
 $conf["tm_member_label"] = "massive member"; // singular
 $conf["tm_members_label"] = "massive members"; // plural
+$conf["tm_approved_label"] = "Approved Member"; // title for approved member
+$conf["tm_unapproved_label"] = "Guest Member"; // title for unapproved member
+$conf["tm_approved_label_plural"] = "Approved Members"; // title for approved member
+$conf["tm_unapproved_label_plural"] = "Guest Members"; // title for unapproved member
 
 /** MESSAGING OPTIONS **/
 /** Allow approved members to message each other via email if they follow each other **/

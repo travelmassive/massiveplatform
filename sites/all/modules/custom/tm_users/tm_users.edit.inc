@@ -87,6 +87,10 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   // Hide last modified timestamp
   unset($form['field_last_modified_timestamp']);
 
+  // Hide Facebook signin profile link and id
+  unset($form['field_facebook_signin_link']);
+  unset($form['field_facebook_signin_id']);
+
 }
 
 /**
@@ -218,6 +222,11 @@ function _tm_users_modify_profile_form(&$form, $form_state, $form_id) {
  * $account = the account we are editing
  */
 function tm_users_check_moderator_edit_permission($editor, $account) {
+
+  // Check for new user
+  if (!isset($account->roles)) {
+    return true;
+  }
 
   $user_is_moderator = (in_array("moderator", $account->roles));
   $user_is_admin = (in_array("administrator", $account->roles));

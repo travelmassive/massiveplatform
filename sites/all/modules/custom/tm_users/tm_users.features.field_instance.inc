@@ -144,6 +144,98 @@ function tm_users_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'user-user-field_facebook_signin_id'.
+  $field_instances['user-user-field_facebook_signin_id'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 41,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'user',
+    'field_name' => 'field_facebook_signin_id',
+    'label' => 'Facebook Signin ID',
+    'required' => FALSE,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 83,
+    ),
+  );
+
+  // Exported field_instance: 'user-user-field_facebook_signin_link'.
+  $field_instances['user-user-field_facebook_signin_link'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'If signed in with Facebook, link to the user\'s Facebook profile',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 40,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'user',
+    'field_name' => 'field_facebook_signin_link',
+    'label' => 'Facebook Signin Link',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 82,
+    ),
+  );
+
   // Exported field_instance: 'user-user-field_friendly_url'.
   $field_instances['user-user-field_friendly_url'] = array(
     'bundle' => 'user',
@@ -1866,10 +1958,13 @@ It may take a few minutes for changes to take effect.<br>',
   t('Cover Image');
   t('Cover Video');
   t('Facebook');
+  t('Facebook Signin ID');
+  t('Facebook Signin Link');
   t('First name');
   t('Friendly URL');
   t('Hide my profile from Google');
   t('Home Chapter');
+  t('If signed in with Facebook, link to the user\'s Facebook profile');
   t('In a few short words, tell us why you\\\'d like to join the community.');
   t('Increase your exposure with a cover video.
 <br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM');

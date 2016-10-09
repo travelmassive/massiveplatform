@@ -347,7 +347,7 @@
   }
 
   jq_approval_already_requested = function() {
-    jq_alert(null, "Please allow 12-24 hours for a Chapter Leader to review your account.<br><br>Our community is important to us, so please ensure you\'ve filled out your profile so we can approve you.<br><br>If your account has not been approved please <a href='/contact'>contact us</a> so we can assist you.");
+    jq_alert("Your account is being reviewed", "A member of our community team will review your account shortly and notify you of your status.<br><br>To <strong>fast track your approval</strong> - make your profile impressive so we can feature you in the community.<br><br>For urgent enquiries please <a href='/contact'>contact us</a>.");
   }
 
   jq_confirm_approve_member = function(uid, community_values_url) {

@@ -147,8 +147,10 @@ function tm_users_request_approval($user) {
       // get home chapter
       $home_chapter_id = $user->field_home_chapter['und'][0]['target_id'];
       $home_chapter = node_load($home_chapter_id);
-      foreach ($home_chapter->field_chapter_leaders['und'] as $leader) {
-        $moderator_ids[] = $leader['target_id'];
+      if (isset($home_chapter->field_chapter_leaders['und'])) {
+        foreach ($home_chapter->field_chapter_leaders['und'] as $leader) {
+          $moderator_ids[] = $leader['target_id'];
+        }
       }
     }
   }
@@ -189,7 +191,7 @@ function tm_users_request_approval($user) {
   $flag->flag("flag", $user->uid);
 
   // Notify user
-  drupal_set_message("Our team has been notified to review your account. Please ensure you've completed your profile to ensure your account is approved, thanks!");
+  drupal_set_message("Thanks for submitting your profile for approval. We'll take a look and notify you shortly.");
 
   drupal_goto(drupal_get_path_alias("user/$user->uid"));
 

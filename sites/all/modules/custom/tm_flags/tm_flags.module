@@ -135,6 +135,7 @@ function _tm_flags_unflag_chapter(&$variables) {
  */
 function _tm_flags_flag_limits(&$variables) {
   
+  global $conf;
   global $user;
   $initialized = &drupal_static(__FUNCTION__, array());
 
@@ -305,9 +306,11 @@ function _tm_flags_flag_limits(&$variables) {
         }
       }
     }
-    
-    // If unapproved follow limit is set to zero, show feature message
-    if(isset($tm_limit) and (!in_array('approved user', $user->roles))) {
+
+    // If tm_following_ratio_limit_unapproved is 0, and unapproved member, restrict follow members and organizations
+    $restrict_unapproved_following = ((($flag_name == 'follow_members') or ($flag_name == 'follow_organizations')) and ($conf["tm_following_ratio_limit_unapproved"] == 0) and (!in_array('approved user', $user->roles)));
+
+    if ($restrict_unapproved_following) {
       $variables['link_href'] = '';
       $variables['flag_button_class'] = 'flag-limit follow bttn bttn-secondary bttn-m';
       drupal_add_js('
@@ -316,7 +319,7 @@ function _tm_flags_flag_limits(&$variables) {
           var message = "<strong>How can I follow other members?</strong><br>Unlock this feature by completing your profile and <a href=\"javascript:jq_request_approval(' . $user->uid . ')\" class=\"approval-link\">requesting approval</a> of your account.";
           $.prompt(message, {
             title: "This feature is for ' . str_replace("'", "", tm_users_get_approved_member_label("plural")) . '",
-            buttons: {}, 
+            buttons: {"OK": false}, 
             loaded: function() { 
               $("#main").addClass("tm-blur-filter");
             },

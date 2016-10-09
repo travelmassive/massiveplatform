@@ -63,9 +63,9 @@ $conf['tm_signin_title'] = "JOIN OUR COMMUNITY"; // message to display at top of
 $conf['tm_signin_facebook_always_sync'] = true; // fill empty fields from Facebook when logging in
 
 /** FACEBOOK OAUTH **/
-$conf['simple_fb_connect_appid'] = "333167423698294"; // app id
-$conf['simple_fb_connect_skey'] = "58a0280b139aebd05589ce655a966ccf"; // secret key
-$conf['simple_fb_connect_connect_url'] = "http://localdev.massiveplatform.com"; // our domain
+$conf['simple_fb_connect_appid'] = ""; // app id - create one at https://developers.facebook.com/apps
+$conf['simple_fb_connect_skey'] = ""; // secret key
+$conf['simple_fb_connect_connect_url'] = "https://example.massiveplatform.com"; // our domain
 $conf['simple_fb_connect_redirect_user_form'] = 1; // redirect to user form after register
 $conf['simple_fb_connect_post_login_url'] = "<front>"; // redirect to home page after login
 

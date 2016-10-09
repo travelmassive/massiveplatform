@@ -9,6 +9,12 @@ function tm_users_user_view($account, $view_mode, $langcode) {
 
   global $conf;
 
+  // redirect from /user to full alias
+  if (($view_mode == "full") and (request_path() == "user")) {
+    drupal_goto(drupal_get_path_alias("user/" . $account->uid));
+    return;
+  }
+
   // Show additional link fields based on $conf['tm_users_link_fields']
   $all_fields = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat', 'strava');
   if (isset($conf["tm_users_link_fields"])) {

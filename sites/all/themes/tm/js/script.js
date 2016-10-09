@@ -323,8 +323,8 @@
 
     $.prompt({
       state0: {
-        title: 'Would you like to request approval?',
-        html: 'Your profile is now ' + current_user_score + '% complete and we can review your account.',
+        title: 'Bravo! Your profile is ' + current_user_score + '% complete.',
+        html: 'Do you want to unlock more features for your account?',
         buttons: { "Yes, request approval": true, "No, not yet": false },
         //focus: 1,
         submit:function(e,v,m,f){

@@ -116,12 +116,12 @@ function tm_preprocess_page(&$variables, $hook) {
     $message = "";
     if (isset($conf["tm_signin_facebook"])) {
       if ($conf["tm_signin_facebook"]) {
-        $message .= '<a href="/user/simple-fb-connect" class="facebook-login" style="margin-left: -16px; width: 220px; text-decoration: none; display: inline-block; margin-right: 1.5rem; margin-top: 0.25rem; margin-bottom: 0.25rem;">Sign up with Facebook</a>';
+        $message .= '<a href="/user/simple-fb-connect" class="facebook-login" style="margin-left: -16px; width: 220px; text-decoration: none; display: inline-block; margin-right: 1.5rem; margin-top: 0.25rem; margin-bottom: 0.25rem;">Log in with Facebook</a>';
       }
     }
     if (isset($conf["tm_signin_twitter"])) {
       if ($conf["tm_signin_twitter"]) {
-        $message .= ' <a href="/tm_twitter/oauth" class="twitter-login" style="margin-left: -16px; width: 220px; text-decoration: none; display: inline-block; margin-right: 1.5rem; margin-top: 0.25rem; margin-bottom: 0.25rem;">Sign up with Twitter</a>';
+        $message .= ' <a href="/tm_twitter/oauth" class="twitter-login" style="margin-left: -16px; width: 220px; text-decoration: none; display: inline-block; margin-right: 1.5rem; margin-top: 0.25rem; margin-bottom: 0.25rem;">Log in with Twitter</a>';
       }
     }
     if ($message != "") {

@@ -147,23 +147,27 @@ function tm_users_external_signin_facebook_sync($drupal_user, $method) {
     	}
     }
 
-    // Website (requires permissoin website)
-    $website = substr($object->getProperty('website'), 0, 255);
-    if (strlen($website) > 0) {
-    	if (($method == "register") or ($method == "login" and !isset($drupal_user->field_link_website[LANGUAGE_NONE][0]['url']))) {
-    		$user_updated = true;
-    		$drupal_user->field_link_website[LANGUAGE_NONE][0]['url'] = $website;
-    	}
+    // Website (requires permission website)
+    if ($object->getProperty('website') != "") {
+      $parts = preg_split('/\s+/', $object->getProperty('website'));
+      $first_website = $parts[0];
+      $website = substr($first_website, 0, 255);
+      if (strlen($website) > 0) {
+        if (($method == "register") or ($method == "login" and !isset($drupal_user->field_link_website[LANGUAGE_NONE][0]['url']))) {
+          $user_updated = true;
+          $drupal_user->field_link_website[LANGUAGE_NONE][0]['url'] = $website;
+        }
+      }
     }
 
-	// Save Facebook profile picture
-	if (($method == "register") or ($method == "login" and (sizeof($drupal_user->field_avatar) == 0))) {
-		$avatar_file = tm_users_get_fb_profile_pic($fb_session);
-		if ($avatar_file) {
-			$user_updated = true;
-			$drupal_user->field_avatar = array(LANGUAGE_NONE => array('0' => (array)$avatar_file));
-		}
-	}
+  	// Save Facebook profile picture
+  	if (($method == "register") or ($method == "login" and (sizeof($drupal_user->field_avatar) == 0))) {
+  		$avatar_file = tm_users_get_fb_profile_pic($fb_session);
+  		if ($avatar_file) {
+  			$user_updated = true;
+  			$drupal_user->field_avatar = array(LANGUAGE_NONE => array('0' => (array)$avatar_file));
+  		}
+  	}
 
     // Save Facebook cover picture
     if (($method == "register") or ($method == "login" and (sizeof($drupal_user->field_image) == 0))) {

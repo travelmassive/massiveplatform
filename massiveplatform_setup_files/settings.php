@@ -66,8 +66,8 @@ $conf['tm_signin_facebook_always_sync'] = true; // fill empty fields from Facebo
 $conf['simple_fb_connect_appid'] = ""; // app id - create one at https://developers.facebook.com/apps
 $conf['simple_fb_connect_skey'] = ""; // secret key
 $conf['simple_fb_connect_connect_url'] = "https://example.massiveplatform.com"; // our domain
-$conf['simple_fb_connect_redirect_user_form'] = 1; // redirect to user form after register
-$conf['simple_fb_connect_post_login_url'] = "<front>"; // redirect to home page after login
+$conf['simple_fb_connect_redirect_user_form'] = 0; // redirect to user form after register
+$conf['simple_fb_connect_post_login_url'] = "user"; // redirect to profile page after login
 
 /** TWITTER OAUTH **/
 /** Required for Twitter authentication **/

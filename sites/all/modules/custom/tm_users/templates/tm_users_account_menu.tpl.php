@@ -206,11 +206,11 @@ $image = theme('image_style', array(
         foreach($conf["tm_signin_buttons"] as $signin_method) {
           if (($signin_method == "facebook") and $conf["tm_signin_facebook"]) {
             $has_external_signin = true;
-            print "<p style='margin-bottom: 0.5rem;'>" . l(t('Facebook'), 'user/simple-fb-connect', array('attributes' => array('class' => 'facebook-login'))) . "</p>";
+            print "<p style='margin-bottom: 0.5rem;'>" . l(t('Log in with Facebook'), 'user/simple-fb-connect', array('attributes' => array('class' => 'facebook-login'))) . "</p>";
           }
           if (($signin_method == "twitter") and $conf["tm_signin_twitter"]) {
             $has_external_signin = true;
-            print "<p style='margin-bottom: 0.5rem;'>" . l(t('Twitter'), 'tm_twitter/oauth', array('attributes' => array('class' => 'twitter-login'))) . "</p>";
+            print "<p style='margin-bottom: 0.5rem;'>" . l(t('Log in with Twitter'), 'tm_twitter/oauth', array('attributes' => array('class' => 'twitter-login'))) . "</p>";
           }
         } 
       }

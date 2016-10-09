@@ -160,8 +160,8 @@ function tm_users_external_signin_form_user_profile_form_alter(&$form, &$form_st
 
   // Twitter
   if ($twitter_data) {
-    $output .= '<strong>Twitter</strong> &gt; Your have connected your <a target="_blank" class="cancel" href="https://twitter.com/' . $twitter_data["screen_name"] . '">Twitter account</a> for sign in.</a> ';
-    $output .= "<p><i>" . l('Unlink your Twitter account', 'user/' . $account->uid . '/edit/tm_twitter') . "</i></p>";
+    $output .= '<strong>Twitter</strong> &gt; Your have connected your <a target="_blank" class="cancel" href="https://twitter.com/' . $twitter_data["screen_name"] . '">Twitter account</a> for sign in.</a><br>';
+    $output .= '<br><i>To unlink this account, remove this app from your <a target="_blank" class="cancel" href="https://twitter.com/settings/applications">Twitter Applications</a>.</i></p>';
     $output .= "<div style='border-top: 1px solid #eee; margin-bottom: 1rem;'></div>";
   }
 

@@ -282,7 +282,7 @@ if ((!in_array("approved user", $loaded->roles))
             if (typeof jq_prompt_request_approval == 'function') { 
               jq_prompt_request_approval(" . $loaded->uid . ");
             }
-          }, 1000);
+          }, 500);
           });
         ", "inline");
 } 

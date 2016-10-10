@@ -92,7 +92,13 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
 
   // Allow Moderator to edit facebook signin id
   if ((in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles))) {
-    
+
+    // Hide if facebook signin not enabled
+    if (isset($conf['tm_signin_facebook'])) {
+      if (!$conf['tm_signin_facebook']) {
+        unset($form['field_facebook_signin_id']);
+      }
+    }
   } else {
     unset($form['field_facebook_signin_id']);
   }

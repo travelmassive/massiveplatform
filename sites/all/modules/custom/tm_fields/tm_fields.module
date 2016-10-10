@@ -917,7 +917,7 @@ function _tm_more_actions_process($field, $title = NULL) {
           $verified_text = "verified";
         }
 
-        $menu_text = "<div style='font-size: smaller; font-style: italic; padding-left: 2em; background-color: #efefef;'>Signup email:<br><span style='color: #888; font-style: normal;'>" . $targetuser->mail . " (" . $verified_text . ")</span></div>";
+        $menu_text = "<div style='font-size: smaller; font-style: italic; padding-left: 2em; background-color: #efefef;'>Signup email:<br><span style='color: #888; font-style: normal;'><a style='display: inline; padding: 0rem;' href='mailto:" . $targetuser->mail . "'>" . $targetuser->mail . "</a> (" . $verified_text . ")</span></div>";
 
         $links['moderate'][] = array(
           'wrapper_class' => array('approve'),

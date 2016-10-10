@@ -1,0 +1,12 @@
+--- a/modules/hs_taxonomy.module	2016-06-03 22:06:36.000000000 +0300
++++ b/modules/hs_taxonomy.module	2016-07-14 14:52:59.157581203 +0300
+@@ -412,7 +412,8 @@
+     foreach ($items[$id] as $delta => $item) {
+       // Force the array key to prevent duplicates.
+       if ($item['tid'] != 'autocreate') {
+-        $selection[$item['tid']] = $item['tid'];
++        $key = in_array($item['tid'], $selection) ? array_search($item['tid'], $selection) : $delta;
++        $selection[$key] = $item['tid'];
+       }
+     }
+ 

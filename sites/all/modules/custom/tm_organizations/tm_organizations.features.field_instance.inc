@@ -276,6 +276,122 @@ function tm_organizations_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance:
+  // 'node-organization-field_company_payment_commission'.
+  $field_instances['node-organization-field_company_payment_commission'] = array(
+    'bundle' => 'organization',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Fix the default commission percentage for events created by this company.
+<br>Note: Does not include bank fees, forex or other charges.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 2,
+          'thousand_separator' => '',
+        ),
+        'type' => 'number_decimal',
+        'weight' => 20,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_company_payment_commission',
+    'label' => 'Company payment commission (%)',
+    'required' => 0,
+    'settings' => array(
+      'max' => 100,
+      'min' => 0,
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 59,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-organization-field_company_payments_enabled'.
+  $field_instances['node-organization-field_company_payments_enabled'] = array(
+    'bundle' => 'organization',
+    'default_value' => array(
+      0 => array(
+        'value' => 'disabled',
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Set whether company can create paid events.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 19,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_company_payments_enabled',
+    'label' => 'Enable Event Payments',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 58,
+    ),
+  );
+
   // Exported field_instance: 'node-organization-field_country'.
   $field_instances['node-organization-field_country'] = array(
     'bundle' => 'organization',
@@ -1425,12 +1541,16 @@ Displays a short message to followers on your company profile page.<br><br>',
   // Included for use with string extractors like potx.
   t('Allow this company to list events without requiring the minimum follower count.');
   t('City');
+  t('Company payment commission (%)');
   t('Country');
   t('Cover Image');
   t('Cover Video');
   t('Description');
+  t('Enable Event Payments');
   t('Enable events');
   t('Facebook');
+  t('Fix the default commission percentage for events created by this company.
+<br>Note: Does not include bank fees, forex or other charges.');
   t('Friendly URL');
   t('Give something back to members who follow your company profile.<br>
 Displays a short message to followers on your company profile page.<br><br>');
@@ -1447,6 +1567,7 @@ Displays a short message to followers on your company profile page.<br><br>');
   t('Provide a cover image to be displayed behind your company logo.
 <br>To support retina displays, upload your image sized to 1610x906');
   t('Select the member that manages this account.');
+  t('Set whether company can create paid events.');
   t('Snapchat');
   t('Tell us about your organization or company. Describe your business and the service or product that you provide.');
   t('Twitter');

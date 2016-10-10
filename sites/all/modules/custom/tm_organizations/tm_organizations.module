@@ -291,6 +291,7 @@ function tm_organizations_form_alter(&$form, $form_state, $form_id) {
   if (!module_exists("tm_payments")) {
     field_group_hide_field_groups($form, array('group_company_payments'));
     unset($form['field_company_payments_enabled']);
+    unset($form['field_company_payment_commission']);
   }
   
 }

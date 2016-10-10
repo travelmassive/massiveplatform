@@ -106,15 +106,17 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Moderator Settings',
-    'weight' => '60',
+    'weight' => '3',
     'children' => array(
-      0 => 'field_company_enable_events',
+      0 => 'field_company_payment_commission',
+      1 => 'field_company_payments_enabled',
+      2 => 'field_company_enable_events',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
       'label' => 'Moderator Settings',
       'instance_settings' => array(
-        'required_fields' => 1,
+        'required_fields' => 0,
         'id' => '',
         'classes' => 'group-company-moderator-settings field-group-fieldset',
         'description' => '',

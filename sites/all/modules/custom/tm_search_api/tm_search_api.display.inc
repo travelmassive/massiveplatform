@@ -491,8 +491,8 @@ function tm_search_api_render_result_chapter($result, $chapter, $search_query, $
 	$result_text = $chapter->body[LANGUAGE_NONE][0]['safe_value'];
 
 	// country
-	if (sizeof($organization->field_country) > 0) {
-		$country = country_load($organization->field_country[LANGUAGE_NONE][0]['iso2']);
+	if (sizeof($chapter->field_country) > 0) {
+		$country = country_load($chapter->field_country[LANGUAGE_NONE][0]['iso2']);
 		if ($country) {
 			$result_text .= " | " . $country->label();
 		}

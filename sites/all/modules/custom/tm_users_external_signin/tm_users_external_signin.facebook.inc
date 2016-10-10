@@ -76,11 +76,25 @@ function tm_users_external_signin_facebook_sync($drupal_user, $method) {
 
     // Get facebook id
     $facebook_id = $object->getProperty('id');
-    $drupal_user->field_facebook_signin_id[LANGUAGE_NONE][0]['value'] = $facebook_id;
+    if (!isset($drupal_user->field_facebook_signin_id[LANGUAGE_NONE][0]['value'])) {
+      $user_updated = true;
+      $drupal_user->field_facebook_signin_id[LANGUAGE_NONE][0]['value'] = $facebook_id;
+    } elseif ($drupal_user->field_facebook_signin_id[LANGUAGE_NONE][0]['value'] != $facebook_id) {
+      // updated value
+      $user_updated = true;
+      $drupal_user->field_facebook_signin_id[LANGUAGE_NONE][0]['value'] = $facebook_id;
+    }
 
     // Link and id (for moderator)
     $facebook_link = substr($object->getProperty('link'), 0, 255);
-    $drupal_user->field_facebook_signin_link[LANGUAGE_NONE][0]['value'] = $facebook_link;
+    if (!isset($drupal_user->field_facebook_signin_link[LANGUAGE_NONE][0]['value'])) {
+      $user_updated = true;
+      $drupal_user->field_facebook_signin_link[LANGUAGE_NONE][0]['value'] = $facebook_link;
+    } elseif ($drupal_user->field_facebook_signin_link[LANGUAGE_NONE][0]['value'] != $facebook_link) {
+      // updated value
+      $user_updated = true;
+      $drupal_user->field_facebook_signin_link[LANGUAGE_NONE][0]['value'] = $facebook_link;
+    }
 
     // First and last name
     if ($method == "register") {

@@ -87,9 +87,15 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   // Hide last modified timestamp
   unset($form['field_last_modified_timestamp']);
 
-  // Hide Facebook signin profile link and id
+  // Hide Facebook signin profile link
   unset($form['field_facebook_signin_link']);
-  unset($form['field_facebook_signin_id']);
+
+  // Allow Moderator to edit facebook signin id
+  if ((in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles))) {
+    
+  } else {
+    unset($form['field_facebook_signin_id']);
+  }
 
 }
 

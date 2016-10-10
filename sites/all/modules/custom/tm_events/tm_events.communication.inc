@@ -257,7 +257,7 @@ function tm_events_communication_form($event) {
   // Approved members
   $form['approved_members'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Send to approved members only'),
+    '#title' => t('Send to ' . tm_users_get_approved_member_label("plural") . ' only'),
     '#default_value' => true,
   );
 

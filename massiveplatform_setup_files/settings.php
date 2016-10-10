@@ -89,10 +89,12 @@ $conf['tm_wordpress_feedme_frontpage_id'] = "1831";
 /** LIMIT FOLLOW AND JOIN **/
 /** NOTE: Administrator and chapter leaders do not have limits **/
 $conf['tm_following_ratio_limit'] = '100'; // difference between following/followers (for approved members)
-$conf['tm_following_ratio_limit_unapproved'] = '0'; // set to zero to disallow unapproved members from following and show a feature message
+$conf['tm_following_ratio_limit_unapproved'] = '20'; // set to zero to disallow unapproved members from following and show a feature message
 $conf['tm_following_ratio_limit_daily'] = '0.5'; // number of followers added to limit each day since approval
 $conf['tm_chapter_join_limit'] = '16'; // "join" limit for the non chapter leaders
 $conf['tm_add_company_limit'] = '8'; // maximum number of companies a user can add (no limit for chapter leaders, moderators)
+$conf['tm_unapproved_follow_member'] = false; // allow unapproved members to follow other members
+$conf['tm_unapproved_follow_company'] = true; // allow unapproved members to follow other organizations
 
 /** COMPANY PROFILES **/
 $conf['tm_add_company_enabled'] = true; // allow approved members to create company profiles

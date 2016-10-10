@@ -150,7 +150,8 @@ function tm_users_field_default_field_instances() {
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '(Moderators) Attach this account with the member\'s Facebook ID number for Facebook signin.<br>
-If you are assigning a Facebook ID to another account, you should remove the Facebook ID from the other account.',
+If you are assigning a Facebook ID to another account, you should remove the Facebook ID from the other account.
+<br><br>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -1952,7 +1953,8 @@ It may take a few minutes for changes to take effect.<br>',
   // Translatables
   // Included for use with string extractors like potx.
   t('(Moderators) Attach this account with the member\'s Facebook ID number for Facebook signin.<br>
-If you are assigning a Facebook ID to another account, you should remove the Facebook ID from the other account.');
+If you are assigning a Facebook ID to another account, you should remove the Facebook ID from the other account.
+<br><br>');
   t('<strong>Provide a photo so other members can recognize you.</strong>
 <br>Logos are not allowed here. You can add a <a href="/companies">company profile</a> once approved.
 <br>Your profile picture will be cropped to a square format.');

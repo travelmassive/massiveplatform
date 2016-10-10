@@ -525,8 +525,9 @@ function tm_users_field_group_info() {
     'label' => 'Account',
     'weight' => '34',
     'children' => array(
-      0 => 'timezone',
-      1 => 'group_form_basic_settings',
+      0 => 'field_facebook_signin_id',
+      1 => 'timezone',
+      2 => 'group_form_basic_settings',
     ),
     'format_type' => 'htab',
     'format_settings' => array(

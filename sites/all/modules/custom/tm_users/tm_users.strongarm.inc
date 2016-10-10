@@ -44,7 +44,7 @@ function tm_users_strongarm() {
           'weight' => '36',
         ),
         'timezone' => array(
-          'weight' => '27',
+          'weight' => '26',
         ),
         'tm_notifications' => array(
           'weight' => '50',

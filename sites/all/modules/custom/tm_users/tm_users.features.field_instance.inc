@@ -149,7 +149,8 @@ function tm_users_field_default_field_instances() {
     'bundle' => 'user',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => '(Moderators) Attach this account with the member\'s Facebook ID number for Facebook signin.<br>
+If you are assigning a Facebook ID to another account, you should remove the Facebook ID from the other account.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -171,21 +172,23 @@ function tm_users_field_default_field_instances() {
         'weight' => 0,
       ),
     ),
+    'ds_extras_field_template' => '',
     'entity_type' => 'user',
     'field_name' => 'field_facebook_signin_id',
     'label' => 'Facebook Signin ID',
-    'required' => FALSE,
+    'required' => 0,
     'settings' => array(
       'text_processing' => 0,
-      'user_register_form' => FALSE,
+      'user_register_form' => 0,
     ),
     'widget' => array(
+      'active' => 1,
       'module' => 'text',
       'settings' => array(
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 83,
+      'weight' => 27,
     ),
   );
 
@@ -1948,6 +1951,8 @@ It may take a few minutes for changes to take effect.<br>',
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('(Moderators) Attach this account with the member\'s Facebook ID number for Facebook signin.<br>
+If you are assigning a Facebook ID to another account, you should remove the Facebook ID from the other account.');
   t('<strong>Provide a photo so other members can recognize you.</strong>
 <br>Logos are not allowed here. You can add a <a href="/companies">company profile</a> once approved.
 <br>Your profile picture will be cropped to a square format.');

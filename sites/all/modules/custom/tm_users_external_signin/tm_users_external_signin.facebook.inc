@@ -40,7 +40,25 @@ function tm_users_external_signin_fb_fallback_save_name($drupal_user, $fid) {
  * Implement hook_external_signin_simple_fb_connect_registration()
  */
 function tm_users_external_signin_simple_fb_connect_registration($drupal_user) {
- tm_users_external_signin_facebook_sync($drupal_user, "register");
+
+  tm_users_external_signin_facebook_sync($drupal_user, "register");
+
+  // Join chapter
+  // Since we don't ask for it on Facebook signup, use the most recently visited chapter
+  if (isset($_COOKIE['Drupal_visitor_chapter_referral_id'])) {
+   $chapter_referral_id = $_COOKIE['Drupal_visitor_chapter_referral_id'];
+   $chapter = node_load($chapter_referral_id);
+   if ($chapter) {
+     if ($chapter->type == "chapter") {
+       // flag the user so they join the chapter
+       $signup_flag = flag_get_flag('signup');
+       if (!$signup_flag->is_flagged($chapter->nid, $drupal_user->uid)) {
+         flag('flag', 'signup', $chapter->nid, $drupal_user);
+       }
+     }
+   }
+  }
+
 }
 
 /**
@@ -187,14 +205,14 @@ function tm_users_external_signin_facebook_sync($drupal_user, $method) {
     // Save Facebook cover picture
     if (($method == "register") or ($method == "login" and (sizeof($drupal_user->field_image) == 0))) {
 	    if (isset($obj_array["cover"]->source)) {
-		  $cover_url = $obj_array["cover"]->source;
-		  $cover_file = tm_users_get_fb_cover_pic($fb_session, $cover_url);
-		  if ($cover_file) {
-		  	$user_updated = true;
-		    $drupal_user->field_image = array(LANGUAGE_NONE => array('0' => (array)$cover_file));
-		  }
-		}
-	}
+        $cover_url = $obj_array["cover"]->source;
+        $cover_file = tm_users_get_fb_cover_pic($fb_session, $cover_url);
+        if ($cover_file) {
+          $user_updated = true;
+          $drupal_user->field_image = array(LANGUAGE_NONE => array('0' => (array)$cover_file));
+        }
+      }
+    }
 
     // Save the user.
     if ($user_updated) {

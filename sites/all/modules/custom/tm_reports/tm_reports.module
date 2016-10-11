@@ -801,14 +801,14 @@ function _tm_reports_get_global_insights() {
   // TOTAL FACEBOOK SIGNUPS
   $query_sql = "SELECT COUNT(*) total FROM field_data_field_facebook_signin_link";
   $query = db_query($query_sql)->fetch();
-  $num_signups_facebook = $query->total;
-  $insights['num_signups_facebook'] = $num_signups_facebook;
+  $num_logins_facebook = $query->total;
+  $insights['num_logins_facebook'] = $num_logins_facebook;
 
   // TOTAL TWITTER SIGNUPS
   $query_sql = "SELECT COUNT(*) total FROM tm_twitter_account";
   $query = db_query($query_sql)->fetch();
-  $num_signups_twitter = $query->total;
-  $insights['num_signups_twitter'] = $num_signups_twitter;
+  $num_logins_twitter = $query->total;
+  $insights['num_logins_twitter'] = $num_logins_twitter;
 
   // RETURN DATA
   $data_labels = tm_reports_get_insights_labels();
@@ -889,8 +889,8 @@ function tm_reports_get_insights_labels() {
   "pct_signedin_members_30_days_chapter" => "% Active Members (30 Days)",
   "pct_signedin_members_90_days_chapter" => "% Active Members (90 Days)",
   "pct_signedin_members_older_than_90_days_chapter" => "% Inactive Members (> 90 Days)",
-  "num_signups_facebook" => "Total Signups with Facebook",
-  "num_signups_twitter" => "Total Signups with Twitter",
+  "num_logins_facebook" => "Total Users Logged in with Facebook",
+  "num_logins_twitter" => "Total USers Logged in with Twitter",
   "num_chapters" => "Number of Chapters"];
 
   return $data_labels;

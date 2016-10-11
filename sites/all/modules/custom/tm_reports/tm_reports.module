@@ -890,7 +890,7 @@ function tm_reports_get_insights_labels() {
   "pct_signedin_members_90_days_chapter" => "% Active Members (90 Days)",
   "pct_signedin_members_older_than_90_days_chapter" => "% Inactive Members (> 90 Days)",
   "num_logins_facebook" => "Total Users Logged in with Facebook",
-  "num_logins_twitter" => "Total USers Logged in with Twitter",
+  "num_logins_twitter" => "Total Users Logged in with Twitter",
   "num_chapters" => "Number of Chapters"];
 
   return $data_labels;

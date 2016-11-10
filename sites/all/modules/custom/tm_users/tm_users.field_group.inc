@@ -380,6 +380,7 @@ function tm_users_field_group_info() {
       2 => 'field_user_question_3',
       3 => 'field_user_question_4',
       4 => 'field_user_question_5',
+      5 => 'field_reason_for_joining',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -708,6 +709,7 @@ function tm_users_field_group_info() {
       2 => 'field_user_question_3',
       3 => 'field_user_question_4',
       4 => 'field_user_question_5',
+      5 => 'field_reason_for_joining',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(

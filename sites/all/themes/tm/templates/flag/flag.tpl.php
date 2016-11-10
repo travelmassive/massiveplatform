@@ -50,15 +50,14 @@
 <?php elseif (isset($event_flag) && $event_flag == "show_not_approved") : ?>
 
 <li class="<?php print $flag_wrapper_classes; ?>">
-	<!--<style>
-	.cog_example { padding-left: 0.2em; padding-right: 0.2em;}
-	.cog_example:before {
-	font-family: tm-icons;
-  	content: "\e636";
-  	}
-  	</style>-->
-  	<!--<span>You can contact the organizers from the <span class='cog_example'>menu.</span>-->
-    <span onClick="jq_alert('Only <?php print(tm_users_get_approved_member_label("plural"));?> can register', '<strong>How can I register for this event?</strong><br>Complete your profile and <a href=\'javascript:jq_request_approval(<?php print($user->uid);?>)\' class=\'approval-link\'>request approval</a> of your account. When your account is approved, you will be able to register for this event.');" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></span>
+
+<?php
+  $who_flagged = flag_get_entity_flags("user", $user->uid, "approval_requested_by_user");
+  if (sizeof($who_flagged) > 0): ?>
+  <span onClick="jq_alert('Only <?php print(tm_users_get_approved_member_label("plural"));?> can register', 'Hey there! We have received your approval request and will notify you soon. If you need assistance please <a href=\'/contact\'>contact us</a>.');" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></span>
+<?php else: ?>
+  <span onClick="jq_unapproved_member_event_register('<?php print(tm_users_get_approved_member_label("single"));?>', '<?php print(tm_users_get_approved_member_label("plural"));?>');" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></span>
+<?php endif; ?>    
 </li>
 
 <?php elseif (!isset($hide_flag) || $hide_flag == FALSE) : ?>

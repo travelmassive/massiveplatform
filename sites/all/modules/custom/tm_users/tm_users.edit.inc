@@ -204,9 +204,6 @@ function _tm_users_modify_profile_form(&$form, $form_state, $form_id) {
   // hide loggintoboggan revalidate notice since we print it anyway
   hide($form['revalidate']);
 
-  // hide reason for joining (only display on signup and requesting approval)
-  hide($form['field_reason_for_joining']);
-
   // set site specific help text for friendly url
   global $conf;
   
@@ -224,6 +221,12 @@ function _tm_users_modify_profile_form(&$form, $form_state, $form_id) {
   $form['field_friendly_url'][LANGUAGE_NONE][0]['value']['#title'] = $conf["tm_field_friendly_url_title"];
 
   $form['field_friendly_url'][LANGUAGE_NONE][0]['value']['#description'] = $conf["tm_field_friendly_url_description"];
+
+  // Hide reason for joining if it wasn't provided when requesting approval
+  unset($form['field_reason_for_joining'][LANGUAGE_NONE][0]['value']['#description']);
+  if (sizeof($form['#user']->field_reason_for_joining) == 0) {
+    hide($form['field_reason_for_joining']);
+  }
   
 }
 

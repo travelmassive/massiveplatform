@@ -368,6 +368,9 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 	}
 
 	$flagging_user = user_load($result->uid);
+	if ($flagging_user == false) {
+		return "";
+	}
 	if (!$show_you or ($flagging_user->uid != $user->uid)) {
 		$flagging_user_name = strip_tags($flagging_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . " " . $flagging_user->field_user_last_name[LANGUAGE_NONE][0]['value']);
 	} else {

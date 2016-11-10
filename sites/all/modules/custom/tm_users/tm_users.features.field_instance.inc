@@ -155,9 +155,8 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'text',
         'settings' => array(),
-        'type' => 'text_default',
+        'type' => 'hidden',
         'weight' => 41,
       ),
       'grid' => array(
@@ -202,9 +201,8 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'text',
         'settings' => array(),
-        'type' => 'text_default',
+        'type' => 'hidden',
         'weight' => 40,
       ),
       'grid' => array(
@@ -1278,8 +1276,9 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
     'display' => array(
       'default' => array(
         'label' => 'above',
+        'module' => 'text',
         'settings' => array(),
-        'type' => 'hidden',
+        'type' => 'text_default',
         'weight' => 24,
       ),
       'grid' => array(
@@ -1692,7 +1691,7 @@ It may take a few minutes for changes to take effect.<br>',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 16,
+        'weight' => 25,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1730,7 +1729,7 @@ It may take a few minutes for changes to take effect.<br>',
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 53,
+      'weight' => 8,
     ),
   );
 
@@ -1746,7 +1745,7 @@ It may take a few minutes for changes to take effect.<br>',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 17,
+        'weight' => 26,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1784,7 +1783,7 @@ It may take a few minutes for changes to take effect.<br>',
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 54,
+      'weight' => 9,
     ),
   );
 
@@ -1800,7 +1799,7 @@ It may take a few minutes for changes to take effect.<br>',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 18,
+        'weight' => 27,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1838,7 +1837,7 @@ It may take a few minutes for changes to take effect.<br>',
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 55,
+      'weight' => 10,
     ),
   );
 
@@ -1854,7 +1853,7 @@ It may take a few minutes for changes to take effect.<br>',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 19,
+        'weight' => 28,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1892,7 +1891,7 @@ It may take a few minutes for changes to take effect.<br>',
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 56,
+      'weight' => 11,
     ),
   );
 
@@ -1908,7 +1907,7 @@ It may take a few minutes for changes to take effect.<br>',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 20,
+        'weight' => 29,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1946,7 +1945,7 @@ It may take a few minutes for changes to take effect.<br>',
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 57,
+      'weight' => 12,
     ),
   );
 

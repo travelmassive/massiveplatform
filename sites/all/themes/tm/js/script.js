@@ -131,7 +131,7 @@
   var current_user_score = $('#current_user_score').val();
   var current_user_uid = $('#current_user_uid').val();
   var confirm_title = "Oops, your profile is only " + current_user_score + "% complete.";
-  var confirm_message = "Please fill out your community profile first and then request approval so we can review your profile.";
+  var confirm_message = "To be a part of our community you need to complete your profile. It's easy and only takes a few minutes.";
   var score_threshold = 50;
   var profile_edit_url = "/user/" + current_user_uid + "/edit#user-profile-options";
 
@@ -754,6 +754,28 @@
         }
       }
     });
+
+  }
+
+  // show message to unapproved member when registering for event
+  jq_unapproved_member_event_register = function(approved_member_label_single, approved_member_label_plural) {
+
+    var current_user_uid = $('#current_user_uid').val();
+    var confirm_message = "Please complete your profile and request approval of your account. It's easy and only takes a few minutes.";
+    var profile_edit_url = "/user/" + current_user_uid + "/edit#user-profile-options";
+
+    // prompt to complete profile
+    event.preventDefault();
+    $.prompt(confirm_message, {
+        title: 'Only ' + approved_member_label_plural + ' can register',
+        buttons: { "OK": false, "Edit Profile": true },
+        submit: function(e,v,m,f){
+          if (v==true) {
+            window.location = profile_edit_url;
+          }
+        }
+      }
+    );
 
   }
 

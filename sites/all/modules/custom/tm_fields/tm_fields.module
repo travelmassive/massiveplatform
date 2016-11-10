@@ -1316,12 +1316,19 @@ function _tm_more_actions_process($field, $title = NULL) {
 
         // member can create event
         if (_tm_events_check_create_member_event($user)) {
-          $links['edition'][] = array(
-            'wrapper_class' => array('add'),
-            'content' => l(t('Add event'), '/node/new/event',
-              array('attributes' => array('title' => t('Add your own event')))
-            )
-          );
+
+          // chapter leader
+          if (in_array("chapter leader", $user->roles)) {
+            // don't display a link for chapter leaders to create a member event
+          } else {
+            $links['edition'][] = array(
+              'wrapper_class' => array('add'),
+              'content' => l(t('Add event'), '/node/new/event',
+                array('attributes' => array('title' => t('Add your own event')))
+              )
+            );
+          }
+         
         } else {
           // member not able to create event
           $member_event_message = _tm_events_check_create_member_event_message($user);

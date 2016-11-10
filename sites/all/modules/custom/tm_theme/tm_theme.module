@@ -509,7 +509,7 @@ function tm_theme_add_cover_video_js($account, $node) {
 function tm_theme_ds_pre_render_alter(&$layout_render_array, $context) {
 
   // if current page is a node or user
-  if (((arg(0) == 'node') or (arg(0) == 'user')) && (is_numeric(arg(1)))) {
+  if (((arg(0) == 'node') or (arg(0) == 'user')) && (is_numeric(arg(1))) && (arg(2) == null)) {
    
     // if rendering a grid
     if ($context['view_mode'] == 'grid') {

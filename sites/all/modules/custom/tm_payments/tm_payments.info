@@ -14,6 +14,7 @@ dependencies[] = options
 dependencies[] = text
 dependencies[] = tm_events
 dependencies[] = tm_geoip
+dependencies[] = tm_organizations
 dependencies[] = tm_users
 dependencies[] = views
 features[ctools][] = field_group:field_group:1

@@ -13,6 +13,7 @@ function tm_meta_metatag_export_default() {
   // Exported Metatag config instance: global.
   $config['global'] = array(
     'instance' => 'global',
+    'disabled' => FALSE,
     'config' => array(
       'title' => array(
         'value' => '[current-page:title] | [site:name]',
@@ -299,6 +300,7 @@ function tm_meta_metatag_export_default() {
   // Exported Metatag config instance: global:403.
   $config['global:403'] = array(
     'instance' => 'global:403',
+    'disabled' => FALSE,
     'config' => array(
       'canonical' => array(
         'value' => '[site:url]',
@@ -327,6 +329,7 @@ function tm_meta_metatag_export_default() {
   // Exported Metatag config instance: global:404.
   $config['global:404'] = array(
     'instance' => 'global:404',
+    'disabled' => FALSE,
     'config' => array(
       'canonical' => array(
         'value' => '[site:url]',
@@ -355,6 +358,7 @@ function tm_meta_metatag_export_default() {
   // Exported Metatag config instance: global:frontpage.
   $config['global:frontpage'] = array(
     'instance' => 'global:frontpage',
+    'disabled' => FALSE,
     'config' => array(
       'title' => array(
         'value' => '[site:name]',
@@ -374,6 +378,7 @@ function tm_meta_metatag_export_default() {
   // Exported Metatag config instance: node.
   $config['node'] = array(
     'instance' => 'node',
+    'disabled' => FALSE,
     'config' => array(
       'title' => array(
         'value' => '[node:title] | [site:name]',
@@ -411,6 +416,7 @@ function tm_meta_metatag_export_default() {
   // Exported Metatag config instance: node:chapter.
   $config['node:chapter'] = array(
     'instance' => 'node:chapter',
+    'disabled' => FALSE,
     'config' => array(
       'image_src' => array(
         'value' => '[node:field_image]',
@@ -460,6 +466,7 @@ function tm_meta_metatag_export_default() {
   // Exported Metatag config instance: node:event.
   $config['node:event'] = array(
     'instance' => 'node:event',
+    'disabled' => FALSE,
     'config' => array(
       'image_src' => array(
         'value' => '[node:field_image]',
@@ -500,6 +507,7 @@ function tm_meta_metatag_export_default() {
   // Exported Metatag config instance: node:organization.
   $config['node:organization'] = array(
     'instance' => 'node:organization',
+    'disabled' => FALSE,
     'config' => array(
       'abstract' => array(
         'value' => '[node:field_segment], [node:field_country]',
@@ -543,6 +551,7 @@ function tm_meta_metatag_export_default() {
   // Exported Metatag config instance: node:page.
   $config['node:page'] = array(
     'instance' => 'node:page',
+    'disabled' => FALSE,
     'config' => array(
       'shortlink' => array(
         'value' => '',
@@ -553,6 +562,7 @@ function tm_meta_metatag_export_default() {
   // Exported Metatag config instance: taxonomy_term.
   $config['taxonomy_term'] = array(
     'instance' => 'taxonomy_term',
+    'disabled' => FALSE,
     'config' => array(
       'title' => array(
         'value' => '[term:name] | [site:name]',
@@ -578,6 +588,7 @@ function tm_meta_metatag_export_default() {
   // Exported Metatag config instance: user.
   $config['user'] = array(
     'instance' => 'user',
+    'disabled' => FALSE,
     'config' => array(
       'title' => array(
         'value' => '[user:name] | [site:name]',

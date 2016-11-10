@@ -317,7 +317,7 @@ function tm_events_ds_field_settings_info() {
   $ds_fieldsetting->view_mode = 'grid';
   $ds_fieldsetting->settings = array(
     'title' => array(
-      'weight' => '3',
+      'weight' => '2',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -330,7 +330,7 @@ function tm_events_ds_field_settings_info() {
       ),
     ),
     'tm_ds_chapter_sticker' => array(
-      'weight' => '5',
+      'weight' => '3',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -340,25 +340,12 @@ function tm_events_ds_field_settings_info() {
       ),
     ),
     'tm_ds_date_avatar' => array(
-      'weight' => '2',
+      'weight' => '1',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
         'ft' => array(
           'func' => 'theme_ds_field_reset',
-        ),
-      ),
-    ),
-    'field_event_date' => array(
-      'formatter_settings' => array(
-        'ft' => array(
-          'func' => 'theme_ds_field_expert',
-          'ow' => TRUE,
-          'ow-el' => 'p',
-          'ow-cl' => 'meta',
-          'ow-def-cl' => FALSE,
-          'ow-at' => '',
-          'ow-def-at' => FALSE,
         ),
       ),
     ),
@@ -623,7 +610,6 @@ function tm_events_ds_layout_settings_info() {
       ),
       'teaser' => array(
         2 => 'title',
-        4 => 'field_event_date',
       ),
       'extra' => array(
         3 => 'tm_ds_chapter_sticker',
@@ -634,7 +620,6 @@ function tm_events_ds_layout_settings_info() {
       'tm_ds_date_avatar' => 'media',
       'title' => 'teaser',
       'tm_ds_chapter_sticker' => 'extra',
-      'field_event_date' => 'teaser',
     ),
     'classes' => array(),
     'wrappers' => array(
@@ -647,6 +632,7 @@ function tm_events_ds_layout_settings_info() {
     'layout_attributes_merge' => 1,
     'layout_link_attribute' => '',
     'layout_link_custom' => '',
+    'layout_disable_css' => FALSE,
   );
   $export['node|event|grid'] = $ds_layout;
 

@@ -131,9 +131,17 @@ function tm_users_strongarm() {
             'weight' => '15',
             'visible' => FALSE,
           ),
+          'grid' => array(
+            'weight' => '0',
+            'visible' => FALSE,
+          ),
         ),
         'realname' => array(
           'default' => array(
+            'weight' => '-1',
+            'visible' => FALSE,
+          ),
+          'grid' => array(
             'weight' => '-1',
             'visible' => FALSE,
           ),

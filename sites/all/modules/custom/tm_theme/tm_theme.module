@@ -500,3 +500,30 @@ function tm_theme_add_cover_video_js($account, $node) {
   }
 
 }
+
+/**
+ * Implement hook_theme_ds_pre_render_alter(&$layout_render_array, $context);
+ * Optimize performance of rendering grid views on pages.
+ * Remove field_image from grid view if not viewing a one column grid
+ */
+function tm_theme_ds_pre_render_alter(&$layout_render_array, $context) {
+
+  // if current page is a node or user
+  if (((arg(0) == 'node') or (arg(0) == 'user')) && (is_numeric(arg(1)))) {
+   
+    // if rendering a grid
+    if ($context['view_mode'] == 'grid') {
+
+      // remove field_image (since it wont be displayed)
+      foreach($layout_render_array['media'] as $key => $value) {
+        if (isset($layout_render_array['media'][$key]['#field_name'])) {
+          if ($layout_render_array['media'][$key]['#field_name'] == 'field_image') {
+            unset($layout_render_array['media'][$key]);
+          }
+        }
+      }
+    }
+  }
+  
+}
+

@@ -320,6 +320,7 @@ function tm_organizations_ds_field_settings_info() {
           'fi-at' => '',
           'fi-def-at' => FALSE,
           'fi-odd-even' => FALSE,
+          'fi-first-last' => FALSE,
         ),
       ),
     ),
@@ -549,6 +550,7 @@ function tm_organizations_ds_layout_settings_info() {
     'layout_attributes_merge' => 1,
     'layout_link_attribute' => '',
     'layout_link_custom' => '',
+    'layout_disable_css' => FALSE,
   );
   $export['node|organization|grid'] = $ds_layout;
 

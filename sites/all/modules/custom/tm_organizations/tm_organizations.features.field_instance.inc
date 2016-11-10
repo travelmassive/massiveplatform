@@ -114,7 +114,7 @@ function tm_organizations_field_default_field_instances() {
         'module' => 'image',
         'settings' => array(
           'image_link' => '',
-          'image_style' => 'avatar',
+          'image_style' => 'avatar_grid',
         ),
         'type' => 'image',
         'weight' => 11,
@@ -608,7 +608,7 @@ Displays a short message to followers on your company profile page.<br><br>',
         'module' => 'image',
         'settings' => array(
           'image_link' => '',
-          'image_style' => 'banner',
+          'image_style' => 'banner_grid',
         ),
         'type' => 'image',
         'weight' => 3,

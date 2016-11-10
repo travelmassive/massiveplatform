@@ -88,7 +88,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'image',
         'settings' => array(
           'image_link' => '',
-          'image_style' => 'avatar',
+          'image_style' => 'avatar_grid',
         ),
         'type' => 'image',
         'weight' => 1,
@@ -369,7 +369,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'image',
         'settings' => array(
           'image_link' => '',
-          'image_style' => 'banner',
+          'image_style' => 'banner_grid',
         ),
         'type' => 'image',
         'weight' => 0,

@@ -50,6 +50,34 @@ function tm_theme_image_default_styles() {
     ),
   );
 
+  // Exported image style: avatar_grid.
+  $styles['avatar_grid'] = array(
+    'label' => 'Avatar (Grid)',
+    'effects' => array(
+      1 => array(
+        'name' => 'coloractions_convert',
+        'data' => array(
+          'format' => 'image/jpeg',
+          'quality' => '',
+        ),
+        'weight' => 1,
+      ),
+      2 => array(
+        'name' => 'image_scale_and_crop',
+        'data' => array(
+          'width' => 200,
+          'height' => 200,
+        ),
+        'weight' => 2,
+      ),
+      3 => array(
+        'name' => 'image_hires',
+        'data' => array(),
+        'weight' => 3,
+      ),
+    ),
+  );
+
   // Exported image style: banner.
   $styles['banner'] = array(
     'label' => 'Banner',
@@ -74,6 +102,34 @@ function tm_theme_image_default_styles() {
         'name' => 'image_hires',
         'data' => array(),
         'weight' => -8,
+      ),
+    ),
+  );
+
+  // Exported image style: banner_grid.
+  $styles['banner_grid'] = array(
+    'label' => 'Banner (Grid)',
+    'effects' => array(
+      4 => array(
+        'name' => 'coloractions_convert',
+        'data' => array(
+          'format' => 'image/jpeg',
+          'quality' => '',
+        ),
+        'weight' => 1,
+      ),
+      5 => array(
+        'name' => 'image_scale_and_crop',
+        'data' => array(
+          'width' => 800,
+          'height' => 450,
+        ),
+        'weight' => 2,
+      ),
+      6 => array(
+        'name' => 'image_hires',
+        'data' => array(),
+        'weight' => 3,
       ),
     ),
   );

@@ -437,8 +437,8 @@ function tm_users_field_group_info() {
     'label' => 'Job wrapper',
     'weight' => '1',
     'children' => array(
-      0 => 'field_job_role',
-      1 => 'field_job_organization',
+      0 => 'field_job_organization',
+      1 => 'field_job_role',
     ),
     'format_type' => 'html-element',
     'format_settings' => array(

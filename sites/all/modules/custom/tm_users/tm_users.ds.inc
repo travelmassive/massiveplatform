@@ -444,6 +444,7 @@ function tm_users_ds_field_settings_info() {
           'fi-at' => '',
           'fi-def-at' => FALSE,
           'fi-odd-even' => FALSE,
+          'fi-first-last' => FALSE,
         ),
       ),
     ),
@@ -460,19 +461,6 @@ function tm_users_ds_field_settings_info() {
         ),
       ),
     ),
-    'field_job_role' => array(
-      'formatter_settings' => array(
-        'ft' => array(
-          'func' => 'theme_ds_field_expert',
-          'ow' => TRUE,
-          'ow-el' => 'span',
-          'ow-cl' => 'role',
-          'ow-def-cl' => FALSE,
-          'ow-at' => '',
-          'ow-def-at' => FALSE,
-        ),
-      ),
-    ),
     'field_job_organization' => array(
       'formatter_settings' => array(
         'ft' => array(
@@ -480,6 +468,19 @@ function tm_users_ds_field_settings_info() {
           'ow' => TRUE,
           'ow-el' => 'span',
           'ow-cl' => 'organization',
+          'ow-def-cl' => FALSE,
+          'ow-at' => '',
+          'ow-def-at' => FALSE,
+        ),
+      ),
+    ),
+    'field_job_role' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_expert',
+          'ow' => TRUE,
+          'ow-el' => 'span',
+          'ow-cl' => 'role',
           'ow-def-cl' => FALSE,
           'ow-at' => '',
           'ow-def-at' => FALSE,
@@ -773,13 +774,13 @@ function tm_users_ds_layout_settings_info() {
     'regions' => array(
       'teaser' => array(
         0 => 'name',
-        2 => 'group_job_wrapper',
-        3 => 'field_job_role',
+        3 => 'group_job_wrapper',
+        4 => 'field_job_role',
         5 => 'field_job_organization',
       ),
       'media' => array(
         1 => 'field_image',
-        4 => 'field_avatar',
+        2 => 'field_avatar',
       ),
       'extra' => array(
         6 => 'tm_ds_chapter_sticker',
@@ -788,9 +789,9 @@ function tm_users_ds_layout_settings_info() {
     'fields' => array(
       'name' => 'teaser',
       'field_image' => 'media',
+      'field_avatar' => 'media',
       'group_job_wrapper' => 'teaser',
       'field_job_role' => 'teaser',
-      'field_avatar' => 'media',
       'field_job_organization' => 'teaser',
       'tm_ds_chapter_sticker' => 'extra',
     ),
@@ -805,6 +806,7 @@ function tm_users_ds_layout_settings_info() {
     'layout_attributes_merge' => 1,
     'layout_link_attribute' => '',
     'layout_link_custom' => '',
+    'layout_disable_css' => FALSE,
   );
   $export['user|user|grid'] = $ds_layout;
 

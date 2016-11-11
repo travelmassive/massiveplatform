@@ -229,7 +229,7 @@ function tm_payments_notify_payment_error($error_message) {
 	global $conf;
 	global $user;
 
-	$log_user_ip = $_SERVER["REMOTE_ADDR"];
+	$log_user_ip = tm_geoip_get_real_visitor_ip(); // $_SERVER["REMOTE_ADDR"];
 	$log_user_http_user_agent = "none";
 	if (isset($_SERVER['HTTP_USER_AGENT'])) {
 		$log_user_http_user_agent = $_SERVER['HTTP_USER_AGENT'];

@@ -54,7 +54,7 @@
 <?php
   $who_flagged = flag_get_entity_flags("user", $user->uid, "approval_requested_by_user");
   if (sizeof($who_flagged) > 0): ?>
-  <span onClick="jq_alert('Only <?php print(tm_users_get_approved_member_label("plural"));?> can register', 'Hey there! We have received your approval request and will notify you soon. If you need assistance please <a href=\'/contact\'>contact us</a>.');" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></span>
+  <span onClick="jq_alert('Only <?php print(tm_users_get_approved_member_label("plural"));?> can register', 'Hey there! We received your approval request and will notify you soon. If you need assistance please <a href=\'/contact\'>contact us</a>.');" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></span>
 <?php else: ?>
   <span onClick="jq_unapproved_member_event_register('<?php print(tm_users_get_approved_member_label("single"));?>', '<?php print(tm_users_get_approved_member_label("plural"));?>');" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></span>
 <?php endif; ?>    

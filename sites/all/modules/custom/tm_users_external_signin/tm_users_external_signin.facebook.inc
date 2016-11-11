@@ -79,6 +79,8 @@ function tm_users_external_signin_simple_fb_connect_login($drupal_user) {
  */
 function tm_users_external_signin_facebook_sync($drupal_user, $method) {
 
+  global $conf;
+  
   // Get FacebookSession for current user.
   $fb_session = simple_fb_connect_get_session();
   $facebook_id = null;

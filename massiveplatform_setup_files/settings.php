@@ -63,6 +63,8 @@ $conf['tm_signin_buttons'] = array("facebook"); // login button display
 $conf['tm_signin_links'] = array("twitter"); // link display
 $conf['tm_signin_title'] = "JOIN OUR COMMUNITY"; // message to display at top of login box
 $conf['tm_signin_facebook_always_sync'] = true; // fill empty fields from Facebook when logging in
+$conf['tm_signin_facebook_sync_avatar'] = true; // sync avatar picture
+$conf['tm_signin_facebook_sync_cover'] = true; // sync cover picture
 
 /** FACEBOOK OAUTH **/
 $conf['simple_fb_connect_appid'] = ""; // app id - create one at https://developers.facebook.com/apps

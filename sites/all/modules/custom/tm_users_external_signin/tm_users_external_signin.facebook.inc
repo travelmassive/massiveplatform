@@ -194,22 +194,26 @@ function tm_users_external_signin_facebook_sync($drupal_user, $method) {
     }
 
   	// Save Facebook profile picture
-  	if (($method == "register") or ($method == "login" and (sizeof($drupal_user->field_avatar) == 0))) {
-  		$avatar_file = tm_users_get_fb_profile_pic($fb_session);
-  		if ($avatar_file) {
-  			$user_updated = true;
-  			$drupal_user->field_avatar = array(LANGUAGE_NONE => array('0' => (array)$avatar_file));
-  		}
-  	}
-
-    // Save Facebook cover picture
-    if (($method == "register") or ($method == "login" and (sizeof($drupal_user->field_image) == 0))) {
-	    if (isset($obj_array["cover"]->source)) {
-        $cover_url = $obj_array["cover"]->source;
-        $cover_file = tm_users_get_fb_cover_pic($fb_session, $cover_url);
-        if ($cover_file) {
+    if ($conf['tm_signin_facebook_sync_avatar']) {
+      if (($method == "register") or ($method == "login" and (sizeof($drupal_user->field_avatar) == 0))) {
+        $avatar_file = tm_users_get_fb_profile_pic($fb_session);
+        if ($avatar_file) {
           $user_updated = true;
-          $drupal_user->field_image = array(LANGUAGE_NONE => array('0' => (array)$cover_file));
+          $drupal_user->field_avatar = array(LANGUAGE_NONE => array('0' => (array)$avatar_file));
+        }
+      }
+    }
+  	
+    // Save Facebook cover picture
+    if ($conf['tm_signin_facebook_sync_cover']) {
+      if (($method == "register") or ($method == "login" and (sizeof($drupal_user->field_image) == 0))) {
+  	    if (isset($obj_array["cover"]->source)) {
+          $cover_url = $obj_array["cover"]->source;
+          $cover_file = tm_users_get_fb_cover_pic($fb_session, $cover_url);
+          if ($cover_file) {
+            $user_updated = true;
+            $drupal_user->field_image = array(LANGUAGE_NONE => array('0' => (array)$cover_file));
+          }
         }
       }
     }

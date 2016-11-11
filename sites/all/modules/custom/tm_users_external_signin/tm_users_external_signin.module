@@ -31,7 +31,7 @@ function tm_users_external_signin_menu() {
   }
 
   // Twitter sign in methods
-
+  $items = array();
   if ($tm_signin_twitter) {
     // Signin with twitter entry point.
     $items['tm_twitter/oauth'] = array(

@@ -383,7 +383,11 @@ function tm_users_community_tips() {
   $user_tip = "Discover and follow other members in the " . $conf["tm_site_name"] . " community. Looking for an organization? Check out our " . l(t("company listings"), "companies") . ".";
 
   if (module_exists("tm_search_api")) {
-    $user_tip = "Discover and follow other members and companies in our community with <a href='/search'>" . $conf["tm_site_name"] . " Search</a>.";
+    if (isset($conf["tm_tips_community_list"])) {
+      $user_tip = $conf["tm_tips_community_list"];
+    } else {
+      $user_tip = "Discover and follow other members and companies in our community with <a href='/search'>" . $conf["tm_site_name"] . " Search</a>.";
+    }
   }
 
   // Shower user tip

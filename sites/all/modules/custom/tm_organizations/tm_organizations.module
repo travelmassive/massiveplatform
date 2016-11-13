@@ -146,9 +146,12 @@ function tm_organizations_preprocess_page(&$variables, $hook) {
   // Don't allow user to exceed limit of adding companies
   if (current_path() == "node/add/organization") {
     if (!tm_organizations_check_user_can_create_company($user->uid)) {
+      if (!user_is_logged_in()) {
+        return;
+      }
       $message = "Sorry, you've reached the limit of the number of company profiles you can create.";
       drupal_set_message($message, 'page_notice');
-      drupal_goto("user/$user->uid/companies");
+      drupal_goto("user/" . $user->uid . "/companies");
     }
   }
 

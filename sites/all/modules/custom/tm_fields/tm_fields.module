@@ -929,7 +929,7 @@ function _tm_more_actions_process($field, $title = NULL) {
       if (tm_users_member_in_users_chapter($targetuser->uid, $user->uid, true) or (in_array("moderator", $user->roles))) {
 
         // Get last active time    
-        $last_visit_timestamp = tm_geoip_get_users_last_visit_time($targetuser->uid);
+        $last_visit_timestamp = $targetuser->access;
         if (($last_visit_timestamp == null) or ($last_visit_timestamp == 0)) {
           $last_visit_time = "never";
         } else {

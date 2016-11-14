@@ -935,7 +935,8 @@ function _tm_more_actions_process($field, $title = NULL) {
         } else {
           $last_visit_difference = time() - $last_visit_timestamp;
           if ($last_visit_difference < (60 * 60 * 24)) {
-            $last_visit_time = "today";
+            // $last_visit_time = "today";
+            $last_visit_time = format_interval($last_visit_difference, 1) . " ago";
           } else {
             $last_visit_time = format_interval($last_visit_difference, 1) . " ago";
           }

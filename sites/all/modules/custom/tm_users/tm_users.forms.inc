@@ -74,8 +74,8 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
 
       // Replace "All" option to more meaningful name
       $form['name_list']['#options']['All'] = "Country";
-      if (isset($conf['tm_industry_label'])) {
-        $form['term_node_tid_depth']['#options']['All'] = $conf['tm_industry_label'];
+      if (isset($conf['tm_segment_label'])) {
+        $form['term_node_tid_depth']['#options']['All'] = $conf['tm_segment_label'];
       } else {
         $form['term_node_tid_depth']['#options']['All'] = "Industry";
       }
@@ -118,8 +118,8 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
 
       // Replace "All" option to more meaningful name
       $form['name_list']['#options']['All'] = "Country";
-      if (isset($conf['tm_industry_label'])) {
-        $form['taxonomy_entity_index_tid_depth']['#options']['All'] = $conf['tm_industry_label'];
+      if (isset($conf['tm_segment_label'])) {
+        $form['taxonomy_entity_index_tid_depth']['#options']['All'] = $conf['tm_segment_label'];
       } else {
         $form['taxonomy_entity_index_tid_depth']['#options']['All'] = "Industry";
       }

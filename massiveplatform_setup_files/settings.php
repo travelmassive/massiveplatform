@@ -139,9 +139,9 @@ $conf["tm_request_approval_text"] = "Request approval"; // label for request app
 $conf["tm_requested_approval_text"] = "Requested approval"; // label for requested approval link
 
 /** OTHER LABELS **/
-// $conf["tm_industry_label"] = "Industry Segment"; // optional - change the "industry" label 
-// $conf["tm_industry_user_description"] = "Please select the industry segment that best applies to you."; // optional
-// $conf["tm_industry_organization_description"] = "Please provide the segment which identifies the company the best."; // optional
+// $conf["tm_segment_label"] = "Industry Segment"; // optional - change the "industry" label 
+// $conf["tm_segment_user_description"] = "Please select the industry segment that best applies to you."; // optional
+// $conf["tm_segment_organization_description"] = "Please provide the segment which identifies the company the best."; // optional
 
 /** MESSAGING OPTIONS **/
 /** Allow approved members to message each other via email if they follow each other **/

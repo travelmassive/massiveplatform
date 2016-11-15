@@ -822,6 +822,13 @@ function _tm_reports_get_global_insights() {
  */
 function tm_reports_get_insights_labels() {
 
+  global $conf;
+
+  $segment_label = "Industry Segment";
+  if (isset($conf["tm_segment_label"])) {
+    $segment_label = $conf["tm_segment_label"];
+  }
+
   // DATA LABELS
   $data_labels = ["last_event_time" => "Last Event",
   "next_event_time" => "Next Event",
@@ -839,9 +846,9 @@ function tm_reports_get_insights_labels() {
   "members_unapproved_total" => "Total " . tm_users_get_unapproved_member_label("plural"),
   "members_approved_pct" => "% " . tm_users_get_approved_member_label("plural"),
   "members_unapproved_pct" => "% " . tm_users_get_unapproved_member_label("plural"),
-  "members_approved_with_segment" => tm_users_get_approved_member_label("plural") . " with Industry Segment",
-  "members_approved_without_segment" => tm_users_get_approved_member_label("plural") . " without Industry Segment",
-  "members_with_segment_pct" => "% " . tm_users_get_approved_member_label("plural") . " with Industry Segment",
+  "members_approved_with_segment" => tm_users_get_approved_member_label("plural") . " with " . $segment_label,
+  "members_approved_without_segment" => tm_users_get_approved_member_label("plural") . " without " . $segment_label,
+  "members_with_segment_pct" => "% " . tm_users_get_approved_member_label("plural") . " with " . $segment_label,
   "num_event_waitlists" => "Total Event Waitlists",
   "num_event_registrations" => "Total Event Registrations",
   "num_event_payments" => "Total Event Payments",
@@ -920,6 +927,11 @@ function _tm_reports_views_query_alter_industry_report(&$view, &$query) {
 /* Modify industry report view pre render */
 function _tm_reports_views_pre_render_industry_report(&$view) {
 
+  $segment_label = "Industry Segment";
+  if (isset($conf["tm_segment_label"])) {
+    $segment_label = $conf["tm_segment_label"];
+  }
+
   /* Create custom column for the Industry Segment */
   $table = 'taxonomy_term_hierarchy';
   $table_alias = 'th';
@@ -933,7 +945,7 @@ function _tm_reports_views_pre_render_industry_report(&$view) {
     $industry_field["tid_" . $term->tid] = $term->name;
   }
 
-  $view->field["total_has_industry_pct"] = _tm_reports_add_handler_field_numeric($view, $table, $table_alias, $real_field, "total_has_industry_pct", "Has Industry Segment (%)");
+  $view->field["total_has_industry_pct"] = _tm_reports_add_handler_field_numeric($view, $table, $table_alias, $real_field, "total_has_industry_pct", "Has " . $segment_label . " (%)");
 
   /* Count */
   foreach ($industry_field as $field_alias => $label) {
@@ -1115,6 +1127,11 @@ function tm_reports_chapter_insights($nid) {
     return;
   }
 
+  $segment_label = "Industry Segment";
+  if (isset($conf["tm_segment_label"])) {
+    $segment_label = $conf["tm_segment_label"];
+  }
+
   $flag_signup = flag_get_flag('signup', NULL);
   $chapter = node_load($nid);
   $return_link = l(t('View chapter'), url('node/'.$nid, array('absolute' => TRUE)));
@@ -1139,7 +1156,7 @@ function tm_reports_chapter_insights($nid) {
   // Industry Segments
   $html .= "<section class='contained contained-block'>";
   $html .= "<header class='contained-head'>
-            <h1 class='prime-title'>Industry Segments - " . $chapter->title . "</h1>
+            <h1 class='prime-title'>" . $segment_label . " - " . $chapter->title . "</h1>
             </header>";
   $html .= _tm_reports_insights_segments_html($chapter->nid);
   $html .= "</section>";
@@ -1179,6 +1196,11 @@ function tm_reports_global_insights() {
   global $user;
   global $conf;
 
+  $segment_label = "Industry Segment";
+  if (isset($conf["tm_segment_label"])) {
+    $segment_label = $conf["tm_segment_label"];
+  }
+
   $flag_signup = flag_get_flag('signup', NULL);
   //$return_link = l(t('Community Reports'), url('admin/tm_reports', array('absolute' => TRUE)));
 
@@ -1202,7 +1224,7 @@ function tm_reports_global_insights() {
   // Segments
   $html .= "<section class='contained contained-block'>";
   $html .= "<header class='contained-head'>
-            <h1 class='prime-title'>Industry Segments</h1>
+            <h1 class='prime-title'>" . $segment_label . "</h1>
             </header>";
   $html .= _tm_reports_insights_segments_html();
   $html .= "</section>";
@@ -1845,7 +1867,7 @@ function _tm_reports_insights_segments_html($chapter_id = "") {
 google.setOnLoadCallback(drawChart);
 function drawChart() {
   var data = google.visualization.arrayToDataTable([
-  ['Industry Segment', 'Members'],
+  ['Segment', 'Members'],
 EOT;
 
   foreach ($segment_data as $segment) {

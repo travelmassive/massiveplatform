@@ -168,6 +168,9 @@ $conf['tm_event_description_placeholder_text'] = 'Describe how fantastic your ev
 $conf['tm_event_follow_company'] = true; // follow company when joining company event
 $conf['tm_event_follow_member'] = true; // follow member when joining member event
 $conf['tm_event_restrict_announcement_rsvp'] = true; // if true, don't allow members to send announcement from external rsvp events
+$conf["tm_event_approved_members_default"] = 1; // (default = 1) set default of approved members checkbox
+$conf["tm_event_approved_members_title"] = "Approved Members Only"; // optional - set the title for approved members checkbox
+$conf["tm_event_approved_members_description"] = "Check this box if you want to restrict registration and waitlist to members who are approved. Guest members won't be able to register."; // optional - set the description for the approved members description
 
 /** SIGNUP PAGE SETTINGS **/
 /** Provides a list of validated options on the signup page to indicate how the user connects with the community **/

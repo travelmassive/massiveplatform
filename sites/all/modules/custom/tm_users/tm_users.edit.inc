@@ -103,6 +103,12 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
     unset($form['field_facebook_signin_id']);
   }
 
+  // Allow customisation of industry segement
+  if (isset($conf['tm_industry_label']) and isset($conf['tm_industry_user_description'])) {
+    $form['field_segment'][LANGUAGE_NONE][0]['tid']['#title'] = $conf['tm_industry_label'];
+    $form['field_segment'][LANGUAGE_NONE][0]['tid']['#description'] = $conf['tm_industry_user_description'];
+  }
+
 }
 
 /**

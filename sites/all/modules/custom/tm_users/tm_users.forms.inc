@@ -7,6 +7,8 @@
  */
 function tm_users_form_alter(&$form, $form_state, $form_id) {
 
+  global $conf;
+
   if ($form_id == 'user_login') {
     $form['cutomtext'] = array(
         '#type' => 'item',
@@ -72,7 +74,11 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
 
       // Replace "All" option to more meaningful name
       $form['name_list']['#options']['All'] = "Country";
-      $form['term_node_tid_depth']['#options']['All'] = "Industry";
+      if (isset($conf['tm_industry_label'])) {
+        $form['term_node_tid_depth']['#options']['All'] = $conf['tm_industry_label'];
+      } else {
+        $form['term_node_tid_depth']['#options']['All'] = "Industry";
+      }
 
       // Remove form description
       unset($form['term_node_tid_depth']['#description']);
@@ -112,7 +118,11 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
 
       // Replace "All" option to more meaningful name
       $form['name_list']['#options']['All'] = "Country";
-      $form['taxonomy_entity_index_tid_depth']['#options']['All'] = "Industry";
+      if (isset($conf['tm_industry_label'])) {
+        $form['taxonomy_entity_index_tid_depth']['#options']['All'] = $conf['tm_industry_label'];
+      } else {
+        $form['taxonomy_entity_index_tid_depth']['#options']['All'] = "Industry";
+      }
 
       // Remove form description
       unset($form['taxonomy_entity_index_tid_depth']['#description']);

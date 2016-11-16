@@ -45,7 +45,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['empty']['area']['table'] = 'views';
   $handler->display->display_options['empty']['area']['field'] = 'area';
   $handler->display->display_options['empty']['area']['empty'] = TRUE;
-  $handler->display->display_options['empty']['area']['content'] = 'Sorry, we can\'t find any results that match your criteria.';
+  $handler->display->display_options['empty']['area']['content'] = 'We can\'t find any results that match your criteria.';
   $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
   /* Relationship: User: Country (field_user_country) */
   $handler->display->display_options['relationships']['field_user_country_iso2']['id'] = 'field_user_country_iso2';
@@ -231,7 +231,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['empty']['area']['table'] = 'views';
   $handler->display->display_options['empty']['area']['field'] = 'area';
   $handler->display->display_options['empty']['area']['empty'] = TRUE;
-  $handler->display->display_options['empty']['area']['content'] = 'No Travel Massive member found with those criteria. Please change your filters.';
+  $handler->display->display_options['empty']['area']['content'] = 'We can\'t find any results that match your criteria.';
   $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
   /* Relationship: User: Country (field_user_country) */
   $handler->display->display_options['relationships']['field_user_country_iso2']['id'] = 'field_user_country_iso2';

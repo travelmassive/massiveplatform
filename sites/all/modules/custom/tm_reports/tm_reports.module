@@ -938,7 +938,7 @@ function tm_reports_get_insights_labels() {
   "num_members_without_home_chapter" => "Members from other Chapters",
   "pct_members_without_home_chapter" => "% Members from other Chapters",
   "num_unique_chapter_event_registrations" => "Members who have registered for events",
-  "pct_unique_chapter_event_registrations" => "% Members who have registered for events"];
+  "pct_unique_chapter_event_registrations" => "% " . tm_users_get_approved_member_label("plural") . " who have registered for events"];
   return $data_labels;
 }
 

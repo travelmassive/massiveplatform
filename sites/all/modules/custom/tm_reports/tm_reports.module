@@ -492,7 +492,7 @@ function _tm_reports_get_chapter_insights($chapter_id) {
   $insights["num_event_waitlists"] = $num_event_waitlists->amount;
 
   // NUMBER OF TOTAL EVENT PAYMENTS
-  $flag_event_register = flag_get_flag('event_payment', NULL);
+  $flag_event_register = flag_get_flag('event_paid', NULL);
   $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
   $num_event_payments = db_query($query, array(':fid' => $flag_event_register->fid, ':chapter_id' => $chapter_id))->fetch();
   if ($num_event_payments->amount > 0) {

@@ -392,6 +392,9 @@ function _tm_reports_get_chapter_insights($chapter_id) {
   $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
   $members_approved_total = $query->total;
   $insights["members_approved_total"] = $members_approved_total;
+  if ($members_approved_total == 0) { 
+    $members_approved_total = 1; // prevent division by zero
+  }
 
   // TOTAL UNAPPROVED MEMBERS
   $members_unapproved_total = $members_total - $members_approved_total;
@@ -1215,51 +1218,59 @@ function tm_reports_chapter_insights($nid) {
   $html .= "</div>";
 
   // Event Registrations
-  $html .= "<div class='column second'>";
-  $html .= "<section class='contained contained-block'>";
-  $html .= "<header class='contained-head'>
-            <h1 class='prime-title'>Event Registrations - " . $chapter->title . "</h1>
-            </header>";
-  $html .= _tm_reports_insights_flagging_chart_html(_tm_reports_get_chapter_event_nids($chapter->nid), $flag_event_register->fid, "", "Event Registrations", "Month", "insights_event_registrations");
-  $html .= "</section>";
-  $html .= "</div>";
+  $chapter_event_nids = _tm_reports_get_chapter_event_nids($chapter->nid);
 
-  // Event Waitlists
-  // Only display is chapter has had waitlisted members
-  $flag_event_waitlist = flag_get_flag('event_waitlist', NULL);
-  $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
-  $num_event_waitlists = db_query($query, array(':fid' => $flag_event_waitlist->fid, ':chapter_id' => $chapter->nid))->fetch();
-  if ($num_event_waitlists->amount > 0) {
-
-    $insights["num_event_payments"] = $num_event_payments->amount;  
+  // Show event charts if chapter has had events
+  if (sizeof($chapter_event_nids) > 0) {
 
     $html .= "<div class='column second'>";
     $html .= "<section class='contained contained-block'>";
     $html .= "<header class='contained-head'>
-              <h1 class='prime-title'>Event Waitlists - " . $chapter->title . "</h1>
+              <h1 class='prime-title'>Event Registrations - " . $chapter->title . "</h1>
               </header>";
-    $html .= _tm_reports_insights_flagging_chart_html(_tm_reports_get_chapter_event_nids($chapter->nid), $flag_event_waitlist->fid, "", "Event Waitlists", "Month", "insights_event_waitlists");
+    $html .= _tm_reports_insights_flagging_chart_html($chapter_event_nids, $flag_event_register->fid, "", "Event Registrations", "Month", "insights_event_registrations");
     $html .= "</section>";
     $html .= "</div>";
 
+    // Event Waitlists
+    // Only display is chapter has had waitlisted members
+    $flag_event_waitlist = flag_get_flag('event_waitlist', NULL);
+    $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
+    $num_event_waitlists = db_query($query, array(':fid' => $flag_event_waitlist->fid, ':chapter_id' => $chapter->nid))->fetch();
+    if ($num_event_waitlists->amount > 0) {
+
+      $insights["num_event_payments"] = $num_event_payments->amount;  
+
+      $html .= "<div class='column second'>";
+      $html .= "<section class='contained contained-block'>";
+      $html .= "<header class='contained-head'>
+                <h1 class='prime-title'>Event Waitlists - " . $chapter->title . "</h1>
+                </header>";
+      $html .= _tm_reports_insights_flagging_chart_html($chapter_event_nids, $flag_event_waitlist->fid, "", "Event Waitlists", "Month", "insights_event_waitlists");
+      $html .= "</section>";
+      $html .= "</div>";
+
+    }
+
+    // Event Payments
+    // Only display if payments have been made
+    $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
+    $num_event_payments = db_query($query, array(':fid' => $flag_event_paid->fid, ':chapter_id' => $chapter->nid))->fetch();
+    if ($num_event_payments->amount > 0) {
+
+      $html .= "<div class='column second'>";
+      $html .= "<section class='contained contained-block'>";
+      $html .= "<header class='contained-head'>
+                <h1 class='prime-title'>Event Payments - " . $chapter->title . "</h1>
+                </header>";
+      $html .= _tm_reports_insights_flagging_chart_html(_tm_reports_get_chapter_event_nids($chapter->nid), $flag_event_paid->fid, "", "Event Payments", "Month", "insights_event_payments");
+      $html .= "</section>";
+      $html .= "</div>";
+
+    }
+
   }
-
-  // Event Payments
-  // Only display if payments have been made
-  $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
-  $num_event_payments = db_query($query, array(':fid' => $flag_event_paid->fid, ':chapter_id' => $chapter->nid))->fetch();
-  if ($num_event_payments->amount > 0) {
-
-    $html .= "<div class='column second'>";
-    $html .= "<section class='contained contained-block'>";
-    $html .= "<header class='contained-head'>
-              <h1 class='prime-title'>Event Payments - " . $chapter->title . "</h1>
-              </header>";
-    $html .= _tm_reports_insights_flagging_chart_html(_tm_reports_get_chapter_event_nids($chapter->nid), $flag_event_paid->fid, "", "Event Payments", "Month", "insights_event_payments");
-    $html .= "</section>";
-    $html .= "</div>";
-
-  }
+  
 
   // Close article
   $html .= "</article>";
@@ -1752,10 +1763,9 @@ function _tm_reports_flagging_time_series($node_id, $flag_id, $entity_type = "no
   where FROM_UNIXTIME(timestamp) >= DATE_SUB(NOW()," . $timestamp_interval . ")";
 
   // node_id can be null, id, or array
-  if (is_array($node_id)) {
+  if ((is_array($node_id) and sizeof($node_id) > 0)) {
     $query .= " and entity_id IN (:node_id)"; 
-  }
-  else if ($node_id != NULL) {
+  } else if ($node_id != NULL) {
     $query .= " and entity_id = :node_id"; 
   }
   

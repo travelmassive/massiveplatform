@@ -471,6 +471,41 @@ function _tm_reports_get_chapter_insights($chapter_id) {
   // % OF MEMBERS WHO HAVEN'T SIGNED IN SINCE 90 DAYS
   $insights["pct_signedin_members_older_than_90_days_chapter"] = (100 - round(($signed_in_90_days_chapter->amount / $members_approved_total) * 100, 0));
 
+  // NUMBER OF MEMBERS WITH HOME CHAPTER
+  $query = "SELECT COUNT(*) AS amount FROM flagging f RIGHT JOIN field_data_field_home_chapter hc ON hc.entity_id = f.uid WHERE f.fid = :fid AND f.entity_id = :chapter_id AND hc.field_home_chapter_target_id = :chapter_id";
+  $num_members_with_home_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id))->fetch();
+  $insights["num_members_with_home_chapter"] = $num_members_with_home_chapter->amount;
+  $insights["pct_members_with_home_chapter"] = round(($insights["num_members_with_home_chapter"] / $members_total) * 100, 0);
+  $insights["num_members_without_home_chapter"] = $members_total - $num_members_with_home_chapter->amount;
+  $insights["pct_members_without_home_chapter"] = round(($insights["num_members_without_home_chapter"] / $members_total) * 100, 0);
+
+  // NUMBER OF TOTAL EVENT REGISTRATIONS
+  $flag_event_register = flag_get_flag('event_register', NULL);
+  $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT field_chapter_target_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
+  $num_event_registrations = db_query($query, array(':fid' => $flag_event_register->fid, ':chapter_id' => $chapter_id))->fetch();
+  $insights["num_event_registrations"] = $num_event_registrations->amount;
+
+  // NUMBER OF TOTAL EVENT WAITLISTS
+  $flag_event_register = flag_get_flag('event_waitlist', NULL);
+  $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT field_chapter_target_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
+  $num_event_waitlists = db_query($query, array(':fid' => $flag_event_register->fid, ':chapter_id' => $chapter_id))->fetch();
+  $insights["num_event_waitlists"] = $num_event_waitlists->amount;
+
+  // NUMBER OF TOTAL EVENT PAYMENTS
+  $flag_event_register = flag_get_flag('event_payment', NULL);
+  $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT field_chapter_target_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
+  $num_event_payments = db_query($query, array(':fid' => $flag_event_register->fid, ':chapter_id' => $chapter_id))->fetch();
+  if ($num_event_payments->amount > 0) {
+    $insights["num_event_payments"] = $num_event_payments->amount;
+  }
+
+  // NUMBER OF UNIQUE EVENT REGISTRATIONS
+  $flag_event_register = flag_get_flag('event_register', NULL);
+  $query = "SELECT COUNT(DISTINCT(uid)) AS amount FROM flagging WHERE entity_id IN (SELECT field_chapter_target_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
+  $num_unique_chapter_event_registrations = db_query($query, array(':fid' => $flag_event_register->fid, ':chapter_id' => $chapter_id))->fetch();
+  $insights["num_unique_chapter_event_registrations"] = $num_unique_chapter_event_registrations->amount;
+  $insights["pct_unique_chapter_event_registrations"] = round(($insights["num_unique_chapter_event_registrations"] / $members_total) * 100, 0);
+
   // RETURN DATA
   $data_labels = tm_reports_get_insights_labels();
   $results = ["data_values" => $insights, "data_labels" => $data_labels];
@@ -898,8 +933,13 @@ function tm_reports_get_insights_labels() {
   "pct_signedin_members_older_than_90_days_chapter" => "% Inactive Members (> 90 Days)",
   "num_logins_facebook" => "Total Users Logged in with Facebook",
   "num_logins_twitter" => "Total Users Logged in with Twitter",
-  "num_chapters" => "Number of Chapters"];
-
+  "num_chapters" => "Number of Chapters",
+  "num_members_with_home_chapter" => "Members from this Chapter (Home Chapter)",
+  "pct_members_with_home_chapter" => "% Members from this Chapter (Home Chapter)",
+  "num_members_without_home_chapter" => "Members from other Chapters",
+  "pct_members_without_home_chapter" => "% Members from other Chapters",
+  "num_unique_chapter_event_registrations" => "Members who have registered for events",
+  "pct_unique_chapter_event_registrations" => "% Members who have registered for events"];
   return $data_labels;
 }
 
@@ -1133,12 +1173,14 @@ function tm_reports_chapter_insights($nid) {
   }
 
   $flag_signup = flag_get_flag('signup', NULL);
+  $flag_event_register = flag_get_flag('event_register', NULL);
+  $flag_event_waitlist = flag_get_flag('event_waitlist', NULL);
   $chapter = node_load($nid);
   $return_link = l(t('View chapter'), url('node/'.$nid, array('absolute' => TRUE)));
 
   // Generate HTML
   $html = _tm_reports_insights_js_css_header();
-  $redraw_functions = array("drawChart", "draw_insights_signups");
+  $redraw_functions = array("drawChart", "draw_insights_signups", "draw_insights_event_registrations", "draw_insights_event_waitlists");
   $html .= _tm_reports_insights_js_redraw_function($redraw_functions);
 
   // Start article
@@ -1169,6 +1211,26 @@ function tm_reports_chapter_insights($nid) {
             <h1 class='prime-title'>New Members - " . $chapter->title . "</h1>
             </header>";
   $html .= _tm_reports_insights_flagging_chart_html($chapter->nid, $flag_signup->fid, "", "New Members", "Month", "insights_signups");
+  $html .= "</section>";
+  $html .= "</div>";
+
+  // Event Registrations
+  $html .= "<div class='column second'>";
+  $html .= "<section class='contained contained-block'>";
+  $html .= "<header class='contained-head'>
+            <h1 class='prime-title'>Event Registrations - " . $chapter->title . "</h1>
+            </header>";
+  $html .= _tm_reports_insights_flagging_chart_html(_tm_reports_get_chapter_event_nids($chapter->nid), $flag_event_register->fid, "", "Event Registrations", "Month", "insights_event_registrations");
+  $html .= "</section>";
+  $html .= "</div>";
+
+  // Event Waitlists
+  $html .= "<div class='column second'>";
+  $html .= "<section class='contained contained-block'>";
+  $html .= "<header class='contained-head'>
+            <h1 class='prime-title'>Event Waitlists - " . $chapter->title . "</h1>
+            </header>";
+  $html .= _tm_reports_insights_flagging_chart_html(_tm_reports_get_chapter_event_nids($chapter->nid), $flag_event_waitlist->fid, "", "Event Waitlists", "Month", "insights_event_waitlists");
   $html .= "</section>";
   $html .= "</div>";
 
@@ -1646,7 +1708,12 @@ function _tm_reports_get_industry_segment_data($chapter_id = "") {
 function _tm_reports_flagging_time_series($node_id, $flag_id, $entity_type = "node", $timestamp_interval = "INTERVAL 1 YEAR") {
 
   // check cache
-  $cache_key = "tm-reports-flagging-time-series-" . $node_id . "-" . $flag_id . "-" . $entity_type . "-" . $timestamp_interval;
+  if (is_array($node_id)) {
+    $cache_key_node_id = implode("_", $node_id);
+  } else {
+    $cache_key_node_id = $node_id;
+  }
+  $cache_key = "tm-reports-flagging-time-series-" . $cache_key_node_id . "-" . $flag_id . "-" . $entity_type . "-" . $timestamp_interval;
   $cache_key = str_replace(" ", "-", $cache_key);
   $cache = cache_get($cache_key, 'cache');
   if (!empty($cache)) {
@@ -1657,7 +1724,11 @@ function _tm_reports_flagging_time_series($node_id, $flag_id, $entity_type = "no
   $query = "select count(*) as total, YEAR(FROM_UNIXTIME(timestamp)) as group_year, MONTH(FROM_UNIXTIME(timestamp)) as group_month from flagging
   where FROM_UNIXTIME(timestamp) >= DATE_SUB(NOW()," . $timestamp_interval . ")";
 
-  if ($node_id != NULL) {
+  // node_id can be null, id, or array
+  if (is_array($node_id)) {
+    $query .= " and entity_id IN (:node_id)"; 
+  }
+  else if ($node_id != NULL) {
     $query .= " and entity_id = :node_id"; 
   }
   
@@ -1935,4 +2006,17 @@ function _tm_reports_string_color_code($str) {
   return $code;
 }
 
+/**
+ * Get all event nids for a chapter (does not include published events)
+ */
+function _tm_reports_get_chapter_event_nids($chapter_id) {
+
+  $event_nids = array();
+  $query = "SELECT field_chapter_target_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id";
+  $results = db_query($query, array(':chapter_id' => $chapter_id))->fetchAll();
+  foreach ($results as $result) {
+    $event_nids[] = $result->nid;
+  }
+  return $event_nids;
+}
 

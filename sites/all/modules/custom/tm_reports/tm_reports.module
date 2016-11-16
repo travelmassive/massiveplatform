@@ -1243,7 +1243,7 @@ function tm_reports_chapter_insights($nid) {
     $html .= "<div class='column second'>";
     $html .= "<section class='contained contained-block'>";
     $html .= "<header class='contained-head'>
-              <h1 class='prime-title'>Event Waitlists - " . $chapter->title . "</h1>
+              <h1 class='prime-title'>Event Payments - " . $chapter->title . "</h1>
               </header>";
     $html .= _tm_reports_insights_flagging_chart_html(_tm_reports_get_chapter_event_nids($chapter->nid), $flag_event_paid->fid, "", "Event Payments", "Month", "insights_event_payments");
     $html .= "</section>";

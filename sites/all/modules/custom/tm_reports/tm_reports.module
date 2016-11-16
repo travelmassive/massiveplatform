@@ -1225,14 +1225,24 @@ function tm_reports_chapter_insights($nid) {
   $html .= "</div>";
 
   // Event Waitlists
-  $html .= "<div class='column second'>";
-  $html .= "<section class='contained contained-block'>";
-  $html .= "<header class='contained-head'>
-            <h1 class='prime-title'>Event Waitlists - " . $chapter->title . "</h1>
-            </header>";
-  $html .= _tm_reports_insights_flagging_chart_html(_tm_reports_get_chapter_event_nids($chapter->nid), $flag_event_waitlist->fid, "", "Event Waitlists", "Month", "insights_event_waitlists");
-  $html .= "</section>";
-  $html .= "</div>";
+  // Only display is chapter has had waitlisted members
+  $flag_event_waitlist = flag_get_flag('event_waitlist', NULL);
+  $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
+  $num_event_waitlists = db_query($query, array(':fid' => $flag_event_waitlist->fid, ':chapter_id' => $chapter->nid))->fetch();
+  if ($num_event_waitlists->amount > 0) {
+
+    $insights["num_event_payments"] = $num_event_payments->amount;  
+
+    $html .= "<div class='column second'>";
+    $html .= "<section class='contained contained-block'>";
+    $html .= "<header class='contained-head'>
+              <h1 class='prime-title'>Event Waitlists - " . $chapter->title . "</h1>
+              </header>";
+    $html .= _tm_reports_insights_flagging_chart_html(_tm_reports_get_chapter_event_nids($chapter->nid), $flag_event_waitlist->fid, "", "Event Waitlists", "Month", "insights_event_waitlists");
+    $html .= "</section>";
+    $html .= "</div>";
+
+  }
 
   // Event Payments
   // Only display if payments have been made
@@ -1582,7 +1592,7 @@ function _tm_reports_insights_js_redraw_function($redraw_functions) {
   delay(function(){";
 
   foreach ($redraw_functions as $fn) {
-    $html .= "\n" . $fn . "();";
+    $html .= "\nif (typeof " . $fn . " == 'function') { " . $fn . "(); }";
   }
   
   $html .= "}, 250); 

@@ -481,19 +481,19 @@ function _tm_reports_get_chapter_insights($chapter_id) {
 
   // NUMBER OF TOTAL EVENT REGISTRATIONS
   $flag_event_register = flag_get_flag('event_register', NULL);
-  $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT field_chapter_target_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
+  $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
   $num_event_registrations = db_query($query, array(':fid' => $flag_event_register->fid, ':chapter_id' => $chapter_id))->fetch();
   $insights["num_event_registrations"] = $num_event_registrations->amount;
 
   // NUMBER OF TOTAL EVENT WAITLISTS
   $flag_event_register = flag_get_flag('event_waitlist', NULL);
-  $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT field_chapter_target_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
+  $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
   $num_event_waitlists = db_query($query, array(':fid' => $flag_event_register->fid, ':chapter_id' => $chapter_id))->fetch();
   $insights["num_event_waitlists"] = $num_event_waitlists->amount;
 
   // NUMBER OF TOTAL EVENT PAYMENTS
   $flag_event_register = flag_get_flag('event_payment', NULL);
-  $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT field_chapter_target_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
+  $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
   $num_event_payments = db_query($query, array(':fid' => $flag_event_register->fid, ':chapter_id' => $chapter_id))->fetch();
   if ($num_event_payments->amount > 0) {
     $insights["num_event_payments"] = $num_event_payments->amount;
@@ -501,7 +501,7 @@ function _tm_reports_get_chapter_insights($chapter_id) {
 
   // NUMBER OF UNIQUE EVENT REGISTRATIONS
   $flag_event_register = flag_get_flag('event_register', NULL);
-  $query = "SELECT COUNT(DISTINCT(uid)) AS amount FROM flagging WHERE entity_id IN (SELECT field_chapter_target_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
+  $query = "SELECT COUNT(DISTINCT(uid)) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
   $num_unique_chapter_event_registrations = db_query($query, array(':fid' => $flag_event_register->fid, ':chapter_id' => $chapter_id))->fetch();
   $insights["num_unique_chapter_event_registrations"] = $num_unique_chapter_event_registrations->amount;
   $insights["pct_unique_chapter_event_registrations"] = round(($insights["num_unique_chapter_event_registrations"] / $members_total) * 100, 0);
@@ -2012,7 +2012,7 @@ function _tm_reports_string_color_code($str) {
 function _tm_reports_get_chapter_event_nids($chapter_id) {
 
   $event_nids = array();
-  $query = "SELECT field_chapter_target_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id";
+  $query = "SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id";
   $results = db_query($query, array(':chapter_id' => $chapter_id))->fetchAll();
   foreach ($results as $result) {
     $event_nids[] = $result->nid;

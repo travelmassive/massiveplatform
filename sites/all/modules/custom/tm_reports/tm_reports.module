@@ -486,21 +486,20 @@ function _tm_reports_get_chapter_insights($chapter_id) {
   $insights["num_event_registrations"] = $num_event_registrations->amount;
 
   // NUMBER OF TOTAL EVENT WAITLISTS
-  $flag_event_register = flag_get_flag('event_waitlist', NULL);
+  $flag_event_waitlist = flag_get_flag('event_waitlist', NULL);
   $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
-  $num_event_waitlists = db_query($query, array(':fid' => $flag_event_register->fid, ':chapter_id' => $chapter_id))->fetch();
+  $num_event_waitlists = db_query($query, array(':fid' => $flag_event_waitlist->fid, ':chapter_id' => $chapter_id))->fetch();
   $insights["num_event_waitlists"] = $num_event_waitlists->amount;
 
   // NUMBER OF TOTAL EVENT PAYMENTS
-  $flag_event_register = flag_get_flag('event_paid', NULL);
+  $flag_event_paid = flag_get_flag('event_paid', NULL);
   $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
-  $num_event_payments = db_query($query, array(':fid' => $flag_event_register->fid, ':chapter_id' => $chapter_id))->fetch();
+  $num_event_payments = db_query($query, array(':fid' => $flag_event_paid->fid, ':chapter_id' => $chapter_id))->fetch();
   if ($num_event_payments->amount > 0) {
     $insights["num_event_payments"] = $num_event_payments->amount;
   }
 
   // NUMBER OF UNIQUE EVENT REGISTRATIONS
-  $flag_event_register = flag_get_flag('event_register', NULL);
   $query = "SELECT COUNT(DISTINCT(uid)) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
   $num_unique_chapter_event_registrations = db_query($query, array(':fid' => $flag_event_register->fid, ':chapter_id' => $chapter_id))->fetch();
   $insights["num_unique_chapter_event_registrations"] = $num_unique_chapter_event_registrations->amount;
@@ -1175,6 +1174,7 @@ function tm_reports_chapter_insights($nid) {
   $flag_signup = flag_get_flag('signup', NULL);
   $flag_event_register = flag_get_flag('event_register', NULL);
   $flag_event_waitlist = flag_get_flag('event_waitlist', NULL);
+  $flag_event_paid = flag_get_flag('event_paid', NULL);
   $chapter = node_load($nid);
   $return_link = l(t('View chapter'), url('node/'.$nid, array('absolute' => TRUE)));
 
@@ -1233,6 +1233,23 @@ function tm_reports_chapter_insights($nid) {
   $html .= _tm_reports_insights_flagging_chart_html(_tm_reports_get_chapter_event_nids($chapter->nid), $flag_event_waitlist->fid, "", "Event Waitlists", "Month", "insights_event_waitlists");
   $html .= "</section>";
   $html .= "</div>";
+
+  // Event Payments
+  // Only display if payments have been made
+  $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
+  $num_event_payments = db_query($query, array(':fid' => $flag_event_paid->fid, ':chapter_id' => $chapter->nid))->fetch();
+  if ($num_event_payments->amount > 0) {
+
+    $html .= "<div class='column second'>";
+    $html .= "<section class='contained contained-block'>";
+    $html .= "<header class='contained-head'>
+              <h1 class='prime-title'>Event Waitlists - " . $chapter->title . "</h1>
+              </header>";
+    $html .= _tm_reports_insights_flagging_chart_html(_tm_reports_get_chapter_event_nids($chapter->nid), $flag_event_paid->fid, "", "Event Payments", "Month", "insights_event_waitlists");
+    $html .= "</section>";
+    $html .= "</div>";
+
+  }
 
   // Close article
   $html .= "</article>";

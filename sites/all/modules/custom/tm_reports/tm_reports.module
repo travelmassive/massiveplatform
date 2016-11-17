@@ -2039,7 +2039,7 @@ function _tm_reports_event_registration_frequency($chapter_id = null) {
   $max_total = 0;
   foreach ($rows as $row) {
     if ($row->amount >= $max_amount) {
-      $max_total = $max_total + $row->amount;
+      $max_total = $max_total + $row->freq;
     } else {
       $series[$row->amount] = array("label" => $row->amount, "total" => $row->freq);
     }

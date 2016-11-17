@@ -2110,7 +2110,7 @@ EOT;
   chart.draw(data, options);
 }
 </script>
-<div id="insights_segments" style="width: 100%; height: 760px;"></div>
+<div id="insights_segments" style="width: 100%; height: 700px;"></div>
 <div style='padding: 8px; text-align: right;'><a href='?reports_color_hash={$random_number}'>Randomize chart color</a> | <a href='?reports_color_hash='>Reset</a></div>
 EOT;
 

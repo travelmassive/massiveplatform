@@ -2035,20 +2035,28 @@ function _tm_reports_event_registration_frequency($chapter_id = null) {
 
   // pad the grouped data data
   $series = array();
-  $largest_amount = 0;
+  $max_amount = 10;
+  $max_total = 0;
   foreach ($rows as $row) {
-    $series[$row->amount] = array("label" => $row->amount, "total" => $row->freq);
-    if ($row->amount > $largest_amount) {
-      $largest_amount = $row->amount;
+    if ($row->amount >= $max_amount) {
+      $max_total = $max_total + $row->amount;
+    } else {
+      $series[$row->amount] = array("label" => $row->amount, "total" => $row->freq);
+    }
+  }
+  
+  // add max amount
+  $series[$max_amount] = array("label" => $max_amount . "+", "total" => $max_total);
+
+  // pad empty groups
+  for ($i = 1; $i <= $max_amount; $i++) {
+    if (!isset($series[$i])) {
+      $series[$i] = array("label" => $i, "total" => 0);
     }
   }
 
-  // pad empty groups
-  for ($i = 1; $i <= $largest_amount; $i++) {
-    if (!isset($series[$i])) {
-      $series[$i] = array("label" => $i, "total" => $row->freq);
-    }
-  }
+  // sort it
+  ksort($series);
 
   // return data
   cache_set($cache_key, $series, 'cache', time() + 900); // 15 mins

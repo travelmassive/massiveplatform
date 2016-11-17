@@ -1232,7 +1232,6 @@ function tm_reports_chapter_insights($nid) {
             </header>";
   $html .= _tm_reports_insights_flagging_chart_html($chapter->nid, $flag_signup->fid, "", "New Members", "Month", "insights_signups");
   $html .= "</section>";
-  $html .= "</div>";
 
   // Event Registrations
   $chapter_event_nids = _tm_reports_get_chapter_event_nids($chapter->nid);
@@ -1240,14 +1239,12 @@ function tm_reports_chapter_insights($nid) {
   // Show event charts if chapter has had events
   if (sizeof($chapter_event_nids) > 0) {
 
-    $html .= "<div class='column second'>";
     $html .= "<section class='contained contained-block'>";
     $html .= "<header class='contained-head'>
               <h1 class='prime-title'>Event Registrations - " . $chapter->title . "</h1>
               </header>";
     $html .= _tm_reports_insights_flagging_chart_html($chapter_event_nids, $flag_event_register->fid, "", "Event Registrations", "Month", "insights_event_registrations");
     $html .= "</section>";
-    $html .= "</div>";
 
     // Event Waitlists
     // Only display is chapter has had waitlisted members
@@ -1258,14 +1255,12 @@ function tm_reports_chapter_insights($nid) {
 
       $insights["num_event_payments"] = $num_event_payments->amount;  
 
-      $html .= "<div class='column second'>";
       $html .= "<section class='contained contained-block'>";
       $html .= "<header class='contained-head'>
                 <h1 class='prime-title'>Event Waitlists - " . $chapter->title . "</h1>
                 </header>";
       $html .= _tm_reports_insights_flagging_chart_html($chapter_event_nids, $flag_event_waitlist->fid, "", "Event Waitlists", "Month", "insights_event_waitlists");
       $html .= "</section>";
-      $html .= "</div>";
 
     }
 
@@ -1275,29 +1270,26 @@ function tm_reports_chapter_insights($nid) {
     $num_event_payments = db_query($query, array(':fid' => $flag_event_paid->fid, ':chapter_id' => $chapter->nid))->fetch();
     if ($num_event_payments->amount > 0) {
 
-      $html .= "<div class='column second'>";
       $html .= "<section class='contained contained-block'>";
       $html .= "<header class='contained-head'>
                 <h1 class='prime-title'>Event Payments - " . $chapter->title . "</h1>
                 </header>";
       $html .= _tm_reports_insights_flagging_chart_html(_tm_reports_get_chapter_event_nids($chapter->nid), $flag_event_paid->fid, "", "Event Payments", "Month", "insights_event_payments");
       $html .= "</section>";
-      $html .= "</div>";
-
     }
 
     // Registration frequency
-    $html .= "<div class='column second'>";
     $html .= "<section class='contained contained-block'>";
     $html .= "<header class='contained-head'>
               <h1 class='prime-title'>How Many Events Members Have Attended - " . $chapter->title . "</h1>
               </header>";
     $html .= _tm_reports_insights_event_registration_frequency_html($chapter->nid);
     $html .= "</section>";
-    $html .= "</div>";
 
   }
   
+  // Close column second
+  $html .= "</div>";
 
   // Close article
   $html .= "</article>";

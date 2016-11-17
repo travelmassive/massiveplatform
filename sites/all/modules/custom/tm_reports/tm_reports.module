@@ -508,6 +508,13 @@ function _tm_reports_get_chapter_insights($chapter_id) {
   $insights["num_unique_chapter_event_registrations"] = $num_unique_chapter_event_registrations->amount;
   $insights["pct_unique_chapter_event_registrations"] = round(($insights["num_unique_chapter_event_registrations"] / $members_approved_total) * 100, 0);
 
+  // FREQUENCY OF EVENTS
+  $flag = flag_get_flag('event_register', NULL);
+  $query_sql = "SELECT AVG(amount) AS total FROM (SELECT uid, COUNT(uid) AS amount FROM flagging f WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND f.fid = :fid GROUP BY uid) AS t2";
+  $query = db_query($query_sql, array("chapter_id" => $chapter_id, ":fid" => $flag->fid))->fetch();
+  $avg_event_registeration_frequency = round($query->total, 1);
+  $insights['avg_event_registeration_frequency'] = $avg_event_registeration_frequency;
+
   // RETURN DATA
   $data_labels = tm_reports_get_insights_labels();
   $results = ["data_values" => $insights, "data_labels" => $data_labels];
@@ -716,6 +723,14 @@ function _tm_reports_get_global_insights() {
   $query = "SELECT COUNT(DISTINCT uid) amount FROM {flagging} f WHERE f.fid = :fid";
   $num_registrations = db_query($query, array(':fid' => $flag->fid))->fetch();
   $insights["num_unique_event_registrations"] = $num_registrations->amount;
+  $insights["pct_unique_event_registrations"] = round(($insights["num_unique_event_registrations"] / $members_approved_total) * 100, 0);
+
+  // FREQUENCY OF EVENTS
+  $flag = flag_get_flag('event_register', NULL);
+  $query_sql = "SELECT AVG(amount) as total FROM (SELECT uid, COUNT(uid) AS amount FROM flagging f WHERE f.fid = :fid GROUP BY uid) as t2";
+  $query = db_query($query_sql, array(":fid" => $flag->fid))->fetch();
+  $avg_event_registeration_frequency = round($query->total, 2);
+  $insights['avg_event_registeration_frequency'] = $avg_event_registeration_frequency;
 
   // NUMBER OF UNIQUE WAITLISTS
   $flag = flag_get_flag('event_waitlist', NULL);
@@ -891,6 +906,7 @@ function tm_reports_get_insights_labels() {
   "num_event_payments" => "Total Event Payments",
   "num_unique_event_waitlists" => "Total Unique Event Waitlists",
   "num_unique_event_registrations" => "Total Unique Event Registrations",
+  "pct_unique_event_registrations" => "% " . tm_users_get_approved_member_label("plural") . " who have registered for events",
   "num_unique_event_payments" => "Total Unique Event Payments",
   "num_mutual_follows" => "Total Mutual Connections",
   "num_connections" => "Total Connections (All Followers)",
@@ -941,7 +957,8 @@ function tm_reports_get_insights_labels() {
   "num_members_without_home_chapter" => "Members from other Chapters",
   "pct_members_without_home_chapter" => "% Members from other Chapters",
   "num_unique_chapter_event_registrations" => "Members who have registered for events",
-  "pct_unique_chapter_event_registrations" => "% " . tm_users_get_approved_member_label("plural") . " who have registered for events"];
+  "pct_unique_chapter_event_registrations" => "% " . tm_users_get_approved_member_label("plural") . " who have registered for events",
+  "avg_event_registeration_frequency" => "Average Number Of Events Attended (of those who registered)"];
   return $data_labels;
 }
 
@@ -1183,7 +1200,7 @@ function tm_reports_chapter_insights($nid) {
 
   // Generate HTML
   $html = _tm_reports_insights_js_css_header();
-  $redraw_functions = array("drawChart", "draw_insights_signups", "draw_insights_event_registrations", "draw_insights_event_waitlists", "draw_insights_event_payments");
+  $redraw_functions = array("drawChart", "draw_insights_signups", "draw_insights_event_registrations", "draw_insights_event_waitlists", "draw_insights_event_payments", "draw_insights_event_registration_frequency");
   $html .= _tm_reports_insights_js_redraw_function($redraw_functions);
 
   // Start article
@@ -1269,6 +1286,16 @@ function tm_reports_chapter_insights($nid) {
 
     }
 
+    // Registration frequency
+    $html .= "<div class='column second'>";
+    $html .= "<section class='contained contained-block'>";
+    $html .= "<header class='contained-head'>
+              <h1 class='prime-title'>How Many Events Members Have Attended - " . $chapter->title . "</h1>
+              </header>";
+    $html .= _tm_reports_insights_event_registration_frequency_html($chapter->nid);
+    $html .= "</section>";
+    $html .= "</div>";
+
   }
   
 
@@ -1306,7 +1333,7 @@ function tm_reports_global_insights() {
 
   // Generate HTML
   $html = _tm_reports_insights_js_css_header();
-  $redraw_functions = array("drawChart", "draw_new_signups", "draw_event_registrations", "draw_event_payments", "draw_follow_members", "draw_follow_organizations", "draw_monthly_chapters", "draw_status_updates", "draw_links_shared");
+  $redraw_functions = array("drawChart", "draw_new_signups", "draw_event_registrations", "draw_event_payments", "draw_follow_members", "draw_follow_organizations", "draw_monthly_chapters", "draw_status_updates", "draw_links_shared", "draw_insights_event_registration_frequency");
   $html .= _tm_reports_insights_js_redraw_function($redraw_functions);
 
   // Start artlce
@@ -1395,6 +1422,14 @@ function tm_reports_global_insights() {
             <h1 class='prime-title'>Links Shared</h1>
             </header>";
   $html .= _tm_reports_insights_monthly_links_shared_html();
+  $html .= "</section>";
+
+  // Registration frequency
+  $html .= "<section class='contained contained-block'>";
+  $html .= "<header class='contained-head'>
+            <h1 class='prime-title'>How Many Events Members Have Attended</h1>
+            </header>";
+  $html .= _tm_reports_insights_event_registration_frequency_html();
   $html .= "</section>";
 
   $html .= "</div>";
@@ -1523,6 +1558,18 @@ function _tm_reports_insights_monthly_links_shared_html() {
   return $html;
 }
 
+/**
+ * Generate a chart of frequency of events for attendees
+ */
+function _tm_reports_insights_event_registration_frequency_html($chapter_id = null) {
+
+  // Step 1. Get status update data
+  $results = _tm_reports_event_registration_frequency($chapter_id);
+  // Step 2. Render chart
+  $html = _tm_reports_insights_chart_html($results, "", "Members", "Number of Events", "insights_event_registration_frequency");
+  return $html;
+}
+
 
 /**
  * Generate Google Chart from a data series
@@ -1541,7 +1588,11 @@ function _tm_reports_insights_chart_html($results, $chart_title, $v_title, $h_ti
   $html .= "data.addRows([";
 
   foreach ($results as $result) {
-    $html .= "['" . $result["group_year"] . "-" . $result["group_month"] . "', " . $result["total"] . "],";
+    if (isset($result["label"])) {
+      $html .= "['" . $result["label"] . "', " . $result["total"] . "],";
+    } else {
+      $html .= "['" . $result["group_year"] . "-" . $result["group_month"] . "', " . $result["total"] . "],";
+    }
   }
 
   $html .= <<<EOT
@@ -1959,6 +2010,50 @@ function _tm_reports_helper_pad_monthly_grouped_data($rows) {
   return $series;
 }
 
+/**
+ * Get event attendance frequency
+ */
+function _tm_reports_event_registration_frequency($chapter_id = null) {
+
+  // check cache
+  $cache_key = "tm-reports-event-registration-frequency-" . $chapter_id;
+  $cache_key = str_replace(" ", "-", $cache_key);
+  $cache = cache_get($cache_key, 'cache');
+  if (!empty($cache)) {
+    return $cache->data;
+  }
+
+  // SQL
+  $flag_event_register = flag_get_flag('event_register', NULL);
+  if ($chapter_id == null) {
+    $query = "SELECT amount, COUNT(*) AS freq FROM (SELECT uid, COUNT(uid) AS amount FROM flagging f WHERE f.fid = :fid group by uid) AS t2 GROUP BY amount ORDER BY amount ASC";
+    $rows = db_query($query, array(":fid" => $flag_event_register->fid) )->fetchAll();
+  } else {
+    $query = "SELECT amount, COUNT(*) AS freq FROM (SELECT uid, COUNT(uid) AS amount FROM flagging f WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND f.fid = :fid GROUP BY uid) as t2 GROUP BY amount ORDER BY amount ASC";
+    $rows = db_query($query, array(":chapter_id" => $chapter_id, ":fid" => $flag_event_register->fid) )->fetchAll();
+  }
+
+  // pad the grouped data data
+  $series = array();
+  $largest_amount = 0;
+  foreach ($rows as $row) {
+    $series[$row->amount] = array("label" => $row->amount, "total" => $row->freq);
+    if ($row->amount > $largest_amount) {
+      $largest_amount = $row->amount;
+    }
+  }
+
+  // pad empty groups
+  for ($i = 1; $i <= $largest_amount; $i++) {
+    if (!isset($series[$i])) {
+      $series[$i] = array("label" => $i, "total" => $row->freq);
+    }
+  }
+
+  // return data
+  cache_set($cache_key, $series, 'cache', time() + 900); // 15 mins
+  return $series;
+}
 
 /**
  * Generate Chapter / Global Segments Pie Chart via Google Charts

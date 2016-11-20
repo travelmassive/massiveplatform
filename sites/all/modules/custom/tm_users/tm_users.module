@@ -24,7 +24,9 @@ include_once 'tm_users.tips.inc';
  * Init tm_users module
  */
 function tm_users_init() {
+
   global $user;
+
   // access uid in js with:
   // var id = Drupal.settings.currentUser;
   drupal_add_js(array('currentUser' => $user->uid), 'setting');
@@ -32,7 +34,10 @@ function tm_users_init() {
   // keep track of signed in users
   tm_users_track_signed_in();
 
+  // set application cookies
+  tm_users_set_application_cookies();
 }
+
 
 /*
 * Implements hook_permission()
@@ -499,3 +504,68 @@ function tm_users_get_organization_profiles($uid) {
   return $nids;
 }
 
+/**
+ * Track some additional user information in a cookie for use by other applications on the domain
+ * ie: blog, forum. etc.
+ */
+function tm_users_set_application_cookies() {
+
+  global $user;
+  global $conf;
+
+  // store user details for other domain hosted apps
+  // Note: when user logs out we unset them in tm_users_user_logout()
+  if (!user_is_logged_in()) {
+    user_cookie_save(array('anonymous_visitor' => 1));
+    return;
+  }
+
+  // load user
+  $loaded = user_load($user->uid);
+
+  // anonymous_visitor
+  user_cookie_save(array('anonymous_visitor' => 0));
+
+  // approved_member
+  if (in_array("approved user", $user->roles)) {
+    user_cookie_save(array('approved_member' => 1));
+  } else {
+    user_cookie_save(array('approved_member' => 0));
+  }
+
+  // user_profile_uri
+  $user_profile_uri = url('user/' . $loaded->uid);
+  user_cookie_save(array('user_profile_uri' => $user_profile_uri));
+
+  // user_avatar_uri
+  if (empty($loaded->field_avatar)) {
+    $img_uri = $conf["tm_images_default_field_avatar"];
+  }  else {
+    $img_uri = $loaded->field_avatar[LANGUAGE_NONE][0]['uri'];
+  }
+
+  // If image is default, replace with random image from folder
+  if (isset($conf["tm_images_default_path"])) {
+    if ($img_uri == $conf["tm_images_default_field_avatar"]) {
+      $image_id = $loaded->uid;
+      $cover_files = $conf["tm_images_default_avatar"];
+      $image_index = $image_id % sizeof($cover_files);
+      $img_uri = $conf["tm_images_default_path"] . $cover_files[$image_index];
+    }
+  }
+
+  user_cookie_save(array('user_avatar_uri' => image_style_url("avatar", $img_uri)));
+  
+}
+
+/**
+ * Unset cookies set in tm_users_init() when user logs out
+ */
+function tm_users_user_logout($account) {
+
+  $unset_cookies = array("Drupal.visitor.anonymous_visitor", "Drupal.visitor.approved_member", "Drupal.visitor.user_profile_uri", "Drupal.visitor.user_avatar_uri");
+  foreach ($unset_cookies as $cookie_name) {
+    unset($_COOKIE[str_replace(".", "_", $cookie_name)]);
+    setcookie($cookie_name, '', time() - 3600, "/");
+  }  
+}

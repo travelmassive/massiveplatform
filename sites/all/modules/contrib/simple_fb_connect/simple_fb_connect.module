@@ -759,7 +759,7 @@ function simple_fb_connect_login_disabled_by_role($drupal_user) {
  * Generates a unique username for drupal site based on fb username.
  */
 function simple_fb_connect_unique_user_name($fb_name) {
-  $base = trim($fb_name);
+  $base = str_replace("  ", " ", trim($fb_name));
   $i = 1;
   $candidate = $base;
   while (is_object(user_load_by_name($candidate))) {

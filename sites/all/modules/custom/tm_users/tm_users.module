@@ -409,6 +409,13 @@ function tm_users_user_presave(&$edit, $account, $category) {
       $edit['field_about_me'][LANGUAGE_NONE][0]['value'] = $trimmed;
     }
 
+    // Trim user cover video field
+    if (isset($edit['field_user_cover_video'][LANGUAGE_NONE][0]['value'])) {
+      $trimmed = trim($edit['field_user_cover_video'][LANGUAGE_NONE][0]['value']);
+      // save trimmed value
+      $edit['field_user_cover_video'][LANGUAGE_NONE][0]['value'] = $trimmed;
+    }
+
     // Trim first_name, last_name, job role, organization name, city
     // Otherwise a blank space causes the link to be rendered blank
     $field_names = array("field_user_first_name", "field_user_last_name", "field_job_role", "field_job_organization", "field_location_city");

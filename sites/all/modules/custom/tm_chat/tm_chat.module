@@ -20,7 +20,7 @@ events
 sponsors
 - Relationship method - All Users
 - Enable PHP Session Caching - No
-
+- Configure permissions at /admin/people/permissions
 */
 
 
@@ -36,6 +36,13 @@ function tm_chat_drupalchat_get_groups_alter(&$user_groups, $id) {
 		$chapter = node_load($nid);
 		$user_groups['chapter-' . $nid] = $chapter->title; // tm_chapters_formal_name($chapter);
 	}
+
+	// add chapter leaders to own group
+	if (in_array("chapter leader", $account->roles)) {
+		$user_groups['chapter-leader'] = "Chapter Leaders";
+	}
+
+
 }
 
 /**
@@ -45,23 +52,23 @@ function tm_chat_drupalchat_get_user_avatar_url_alter(&$user_avatar_url, $id) {
 
 	global $conf;
 
-	// loader user
-	$loaded = user_load($id);
-	if ($loaded == null) {
+	// load user
+	$account = user_load($id);
+	if ($account == null) {
 		return;
 	}
 
 	// user_avatar_uri
-	if (empty($loaded->field_avatar)) {
+	if (empty($account->field_avatar)) {
 		$img_uri = $conf["tm_images_default_field_avatar"];
 	}  else {
-		$img_uri = $loaded->field_avatar[LANGUAGE_NONE][0]['uri'];
+		$img_uri = $account->field_avatar[LANGUAGE_NONE][0]['uri'];
 	}
 
 	// If image is default, replace with random image from folder
 	if (isset($conf["tm_images_default_path"])) {
 		if ($img_uri == $conf["tm_images_default_field_avatar"]) {
-			$image_id = $loaded->uid;
+			$image_id = $account->uid;
 			$cover_files = $conf["tm_images_default_avatar"];
 			$image_index = $image_id % sizeof($cover_files);
 			$img_uri = $conf["tm_images_default_path"] . $cover_files[$image_index];
@@ -76,15 +83,8 @@ function tm_chat_drupalchat_get_user_avatar_url_alter(&$user_avatar_url, $id) {
  */
 function tm_chat_drupalchat_get_user_profile_alter(&$user_profile_url, $id) { 
 
-	// loader user
-	$loaded = user_load($id);
-	if ($loaded == null) {
-		return;
-	}
-
 	// user_profile_uri
-	$user_profile_url = url('user/' . $loaded->uid);
-
+	$user_profile_url = url('user/' . $id);
 }
 
 ?>

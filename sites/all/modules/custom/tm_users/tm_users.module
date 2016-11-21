@@ -246,13 +246,6 @@ function tm_users_preprocess_page(&$variables) {
     tm_users_sponsors_tips();
   }
 
-  // Show discussion tips
-  if (($url_parts[0] == "discuss") and (sizeof($url_parts) == 1)) {
-    // show signup tips if less than < 70% complete
-    tm_users_signup_tips(false, null, 70);
-    return;
-  }
-
   // Show search tips
   if (($url_parts[0] == "search") and (sizeof($url_parts) == 1)) {  
     // show signup tips if less than < 70% complete

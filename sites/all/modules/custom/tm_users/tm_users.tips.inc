@@ -163,7 +163,7 @@ function tm_users_signup_tips($return_score = false, $uid = null, $show_threshol
   // Option 2. Display the tips
   // Only show on the following pages
   // Only show on up to two levels deep (ie: /chapters and /chapters/london)
-  $target_pages = array("events", "community", "leaders", "discuss", "search");
+  $target_pages = array("events", "community", "leaders", "search");
   $url_parts = explode('/', request_path());
   if ((!in_array($url_parts[0], $target_pages)) or (sizeof($url_parts) > 2)) {
     return;

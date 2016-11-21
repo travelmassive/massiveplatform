@@ -26,8 +26,8 @@ function tm_search_api_view() {
 	}
 
 	// discussions
-	if (isset($conf["tm_discuss_menu_path"])) {
-		drupal_add_js(array('tm_search' => array('discuss_path' => $conf["tm_discuss_menu_path"])), array('type' => 'setting'));
+	if (isset($conf["tm_discuss_full_path"])) {
+		drupal_add_js(array('tm_search' => array('discuss_path' => $conf["tm_discuss_full_path"])), array('type' => 'setting'));
 	}
 
 	// load template

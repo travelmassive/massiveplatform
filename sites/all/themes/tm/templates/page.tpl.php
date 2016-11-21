@@ -39,23 +39,6 @@
           <li class="search-wrapper" data-dropd-wrapper>
             <h2><a class="toggle" href="#search-menu-blk" data-dropd-toggle><span class="hide"><?= t('Search'); ?></span></a></h2>
               <div id="search-menu-blk" class="inner dropd dropd-right" data-dropd>
-            <?php if (module_exists("tm_discuss") && (current_path() == $conf['tm_discuss_menu_path'])) { ?>
-              
-                <form class="search-form" action="/<?php print($conf["tm_discuss_menu_path"]);?>/#/search" method="get" id="search-form" accept-charset="UTF-8">
-                  <div>
-                    <div class="container-inline form-wrapper" id="edit-basic">
-                      <div class="form-item form-type-textfield form-item-keys">
-                        <label for="edit-keys">Enter your keywords </label>
-                        <input type="text" id="Search" name="Search" value="" size="40" maxlength="255" class="form-text">
-                      </div>
-                      <input type="submit" id="edit-submit--2" value="Search" class="form-submit" onClick="javascript:document.location.href='/<?php print($conf["tm_discuss_menu_path"]);?>/#search?Search='+document.getElementById('Search').value; return false;">
-                    </div>
-                  </div>
-                </form>
-                <p class="helper">Search discussions and comments.</p>
-              <!-- https://localdev.travelmassive.com/discuss/#/search?Search=foo -->
-
-            <?php } else { ?>
               <?php
                 // display search form in menu
                 $search_form ="<p>Site search disabled</p>";
@@ -68,7 +51,6 @@
                 }
                 print $search_form;
               ?>
-              <?php } // end else  ?>
           </li>
           <li class="account-wrapper" data-dropd-wrapper>
             <?php print($page['account_menu']); ?>

@@ -635,6 +635,8 @@ $conf["tm_payments_reports_help_message"] = "Here's your ticket sales for this e
 /** DISCUSSION SETTINGS **/
 /** Optional discussion module, powered by Vanilla Forums.
 /*
+$conf['tm_discuss_full_path'] = "discussions"; // where vanilla is installed
+// $conf['tm_discuss_signup_message'] = ""; // customise the signup message. leave unset for default
 $conf['tm_discuss_enable_feedme'] = true; // show recent discussions for a chapter or member
 **/
 

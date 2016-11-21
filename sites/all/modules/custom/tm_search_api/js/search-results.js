@@ -537,7 +537,7 @@
 		if (typeof Drupal.settings.tm_search.discuss_path !== 'undefined') {
 			discuss_path = Drupal.settings.tm_search.discuss_path;
 		}
-		window.location = "/" + discuss_path + "/#search?Search=" + encodeURI(getSearchKeywordsFromResults());
+		window.location = "/" + discuss_path + "/search?Search=" + encodeURI(getSearchKeywordsFromResults());
 	});
 
 	// search external google

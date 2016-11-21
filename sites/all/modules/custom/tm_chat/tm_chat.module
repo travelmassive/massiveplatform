@@ -1,0 +1,90 @@
+<?php
+
+/* 
+
+Custom module for iflychat integration
+This also requires drupalchat module (custom)
+
+Install instructions
+- install drupalchat
+
+Settings
+- /admin/config/drupalchat/configuration
+- Choose Polling Method - iFlyChat
+- Show DrupalChat on specific pages
+admin/*
+user/*
+node/*
+companies
+events
+sponsors
+- Relationship method - All Users
+- Enable PHP Session Caching - No
+
+*/
+
+
+/**
+ * Allow users to see other members in their chapter
+ * see: https://github.com/iflylabs/iflychat-documentation/blob/master/integration/drupal-7/hooks-implementation.md
+ */
+function tm_chat_drupalchat_get_groups_alter(&$user_groups, $id) {
+
+	$account = user_load($id);
+	$chapters = tm_users_get_chapters($account);
+	foreach ($chapters as $nid) {
+		$chapter = node_load($nid);
+		$user_groups['chapter-' . $nid] = $chapter->title; // tm_chapters_formal_name($chapter);
+	}
+}
+
+/**
+ * Get avatar url
+ */
+function tm_chat_drupalchat_get_user_avatar_url_alter(&$user_avatar_url, $id) { 
+
+	global $conf;
+
+	// loader user
+	$loaded = user_load($id);
+	if ($loaded == null) {
+		return;
+	}
+
+	// user_avatar_uri
+	if (empty($loaded->field_avatar)) {
+		$img_uri = $conf["tm_images_default_field_avatar"];
+	}  else {
+		$img_uri = $loaded->field_avatar[LANGUAGE_NONE][0]['uri'];
+	}
+
+	// If image is default, replace with random image from folder
+	if (isset($conf["tm_images_default_path"])) {
+		if ($img_uri == $conf["tm_images_default_field_avatar"]) {
+			$image_id = $loaded->uid;
+			$cover_files = $conf["tm_images_default_avatar"];
+			$image_index = $image_id % sizeof($cover_files);
+			$img_uri = $conf["tm_images_default_path"] . $cover_files[$image_index];
+		}
+	}
+
+	$user_avatar_url = image_style_url("avatar", $img_uri);
+}
+
+/**
+ * Get profile url
+ */
+function tm_chat_drupalchat_get_user_profile_alter(&$user_profile_url, $id) { 
+
+	// loader user
+	$loaded = user_load($id);
+	if ($loaded == null) {
+		return;
+	}
+
+	// user_profile_uri
+	$user_profile_url = url('user/' . $loaded->uid);
+
+}
+
+?>

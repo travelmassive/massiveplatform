@@ -85,7 +85,7 @@ function tm_theme_html_head_alter(&$head_elements) {
       if ($show_cookie_consent) {
         $privacy_url = $conf["tm_cookieconsent_privacy_url"];
         drupal_add_js(drupal_get_path('theme', 'tm') . '/js/cookieconsent.v2.min.js', array('group' => JS_THEME));
-        drupal_add_js('window.cookieconsent_options = {"message":"We use cookies to ensure you get the best experience on our website. ","dismiss":"Ok","learnMore":"Learn more","link":"' . $privacy_url . '","theme":"dark-bottom"};', 'inline');
+        drupal_add_js('window.cookieconsent_options = {"message":"We use cookies to ensure you get the best experience on our website. ","dismiss":"Ok","learnMore":"Learn more","link":"' . $privacy_url . '","theme":"dark-top"};', 'inline');
       }
      
     }

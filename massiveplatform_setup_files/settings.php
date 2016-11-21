@@ -635,12 +635,6 @@ $conf["tm_payments_reports_help_message"] = "Here's your ticket sales for this e
 /** DISCUSSION SETTINGS **/
 /** Optional discussion module, powered by Vanilla Forums.
 /*
-$conf['tm_discuss_meta_og_title'] = "Massive Forum";
-$conf['tm_discuss_meta_og_image'] = "";
-$conf['tm_discuss_meta_description'] = "Massive Forum is the place to ask questions and get answers about the industry from members of our community.";
-$conf['tm_discuss_menu_path'] = "discuss"; // page where vanilla will be embedded
-$conf['tm_discuss_full_path'] = "discussions"; // where vanilla is installed
-// $conf['tm_discuss_signup_message'] = ""; // customise the signup message. leave unset for default
 $conf['tm_discuss_enable_feedme'] = true; // show recent discussions for a chapter or member
 **/
 

@@ -11,13 +11,17 @@ Install instructions
 Settings
 - /admin/config/drupalchat/configuration
 - Choose Polling Method - iFlyChat
-- Show DrupalChat on specific pages
+- Show DrupalChat on specific pages:
+
 admin/*
 user/*
 node/*
+community
 companies
 events
 sponsors
+payment/*
+
 - Relationship method - All Users
 - Enable PHP Session Caching - No
 - Configure permissions at /admin/people/permissions
@@ -31,17 +35,23 @@ sponsors
 function tm_chat_drupalchat_get_groups_alter(&$user_groups, $id) {
 
 	$account = user_load($id);
+
+	// create group for each chapter
 	$chapters = tm_users_get_chapters($account);
 	foreach ($chapters as $nid) {
 		$chapter = node_load($nid);
-		$user_groups['chapter-' . $nid] = $chapter->title; // tm_chapters_formal_name($chapter);
+
+		// connect approved members in chapter
+		if (in_array("approved user", $account->roles)) {
+			$user_groups['chapter-' . $nid] = $chapter->title; // tm_chapters_formal_name($chapter);
+		}
+
 	}
 
 	// add chapter leaders to own group
 	if (in_array("chapter leader", $account->roles)) {
 		$user_groups['chapter-leader'] = "Chapter Leaders";
 	}
-
 
 }
 
@@ -81,10 +91,10 @@ function tm_chat_drupalchat_get_user_avatar_url_alter(&$user_avatar_url, $id) {
 /**
  * Get profile url
  */
-function tm_chat_drupalchat_get_user_profile_alter(&$user_profile_url, $id) { 
+function tm_chat_drupalchat_get_user_profile_alter(&$user_profile_url, $id) {
 
-	// user_profile_uri
-	$user_profile_url = url('user/' . $id);
+        // user_profile_uri
+        $user_profile_url = url('user/' . $id);
 }
 
 ?>

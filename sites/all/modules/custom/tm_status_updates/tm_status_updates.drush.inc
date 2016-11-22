@@ -20,6 +20,14 @@ function tm_status_updates_drush_command() {
 	  ),
 	);
 
+	$items['status-updates-post-update'] = array(
+		  'description' => 'Post an update via command line',
+		  'callback' => 'tm_status_updates_post_update',
+		  'options' => array(
+		  	'confirm' => 'Confirm that you want to proceed',
+		  ),
+	);
+
 	return $items;
 }
 
@@ -51,6 +59,14 @@ function tm_status_updates_reinstall_database_tables_drush() {
 	drush_print("Reinstalling newsfeed tables ...");
 	tm_status_updates_reinstall_database_tables();
 	drush_print("Done.\n");
+}
+
+/**
+ * Post an update
+ */
+function tm_status_updates_post_update() {
+
+	drush_print("Posting update ...");
 }
 
 

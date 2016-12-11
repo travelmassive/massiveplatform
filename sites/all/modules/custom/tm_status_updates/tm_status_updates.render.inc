@@ -797,16 +797,16 @@ function tm_status_updates_render_link_preview($preview_data) {
 	$image_file = $preview_data["image_file"];
 	$image_url = file_create_url($image_file);
 
-	// add protocol to url if not already
-	if ((stripos($url, "http://") !== 0) or ((stripos($url, "https://") !== 0))) {
-		$url = "http://" . $url;
-	}
-
 	// display url
 	$display_url = $url;
 	$url_parts = explode("/", $url);
 	if (isset($url_parts[2])) {
 		$display_url = str_replace("www.", "", $url_parts[2]);
+	}
+
+	// add protocol to url if not already
+	if ((stripos($url, "http://") !== 0) or ((stripos($url, "https://") !== 0))) {
+		$url = "http://" . $url;
 	}
 
 	// case of no title

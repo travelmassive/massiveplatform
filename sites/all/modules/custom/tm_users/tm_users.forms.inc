@@ -91,17 +91,46 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
   if(isset($form_state['view'])) {
     if (($form_state['view']->name == 'community') && ($form_id == "views_exposed_form")) {
 
-      // Limit countries dropdown to users countries
-      $output = '';
-      $output = cache_get('views-exposed-form-community-countries', 'cache');
-      if (empty($output)) {
-        $result = db_query("SELECT DISTINCT iso2, name from {field_data_field_user_country} f LEFT JOIN {countries_country} c ON f.field_user_country_iso2 = c.iso2 WHERE f.bundle = 'user' AND c.iso2 IS NOT NULL ORDER BY name ASC");
-        $defaultoptions = array('All'=>'- Any -');
+      // Filter community by chapter or by country
+      $tm_chapters_community_search_filter = "country";
+      if (isset($conf["tm_chapters_community_search_filter"])) {
+        $tm_chapters_community_search_filter = $conf["tm_chapters_community_search_filter"];
+      }
+
+      if ($tm_chapters_community_search_filter == "chapter") {
+
+        // Filter community by chapter - show available chapters
+        $output = '';
+        $result = db_query("SELECT DISTINCT nid, title from {node} n WHERE n.type = 'chapter' AND n.status = 1 ORDER BY title ASC");
+        $defaultoptions = array('All'=>'Chapter');
         $output = $defaultoptions + $result->fetchAllKeyed();
+
+        // Remove the name_list field and replace with name_list_chapter
         $form['name_list']['#options'] = $output;
-        cache_set('views-exposed-form-community-countries', $output, 'cache', time() + 3600);
-      } else{
-        $form['name_list']['#options'] = $output->data;
+        $form['name_list_chapter'] = $form['name_list'];
+        hide($form['name_list']);
+
+        // Set default option
+        $form['name_list_chapter']['#options']['All'] = "Chapter";
+
+      } else {
+
+        // Filter community by country - limit countries dropdown to members' countries
+        $output = '';
+        $output = cache_get('views-exposed-form-community-countries', 'cache');
+        if (empty($output)) {
+          $result = db_query("SELECT DISTINCT iso2, name from {field_data_field_user_country} f LEFT JOIN {countries_country} c ON f.field_user_country_iso2 = c.iso2 WHERE f.bundle = 'user' AND c.iso2 IS NOT NULL ORDER BY name ASC");
+          $defaultoptions = array('All'=>'- Any -');
+          $output = $defaultoptions + $result->fetchAllKeyed();
+          $form['name_list']['#options'] = $output;
+          cache_set('views-exposed-form-community-countries', $output, 'cache', time() + 3600);
+        } else{
+          $form['name_list']['#options'] = $output->data;
+        }
+
+        // Set default option
+        $form['name_list']['#options']['All'] = "Country";
+
       }
 
       // Alter the segment dropdown
@@ -116,8 +145,7 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
         }
       }
 
-      // Replace "All" option to more meaningful name
-      $form['name_list']['#options']['All'] = "Country";
+      // Industry label
       if (isset($conf['tm_segment_label'])) {
         $form['taxonomy_entity_index_tid_depth']['#options']['All'] = $conf['tm_segment_label'];
       } else {
@@ -131,7 +159,7 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
   }
   
   // Alter leaders view dropdowns
-  if(isset($form_state['view'])) {
+  if (isset($form_state['view'])) {
 
     if ($form_state['view']->name == 'chapter_leaders') {
 

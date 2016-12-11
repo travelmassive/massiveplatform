@@ -21,6 +21,7 @@ companies
 events
 sponsors
 payment/*
+events/send-announcement/*
 
 - Relationship method - All Users
 - Enable PHP Session Caching - No

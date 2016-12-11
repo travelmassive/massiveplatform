@@ -437,7 +437,7 @@ function tm_users_user_presave(&$edit, $account, $category) {
  */
 function tm_users_views_post_execute(&$view) {
   if ($view->name == 'community') {
-    $view->build_info['title'] = "Community &middot; <a style='color: red;' href='/leaders'>Chapter Leaders</a>";
+    $view->build_info['title'] = "Community &middot; <a href='/leaders'>Chapter Leaders</a>";
   }
 
   if ($view->name == 'chapter_leaders') {
@@ -457,10 +457,39 @@ function tm_users_views_post_execute(&$view) {
  * 
  */
 function tm_users_views_query_alter(&$view, &$query) {
+
   if ($view->name == 'signups') {
     if ($query->options['query_comment'] == 'block_joined_events') {
       $query->where[0]['type'] = 'OR';
     }
+  }
+
+  if ($view->name == 'community') {
+
+    // Filter community by chapter or by country
+    if (isset($_GET["name_list_chapter"])) {
+      
+      global $conf;
+      $tm_chapters_community_search_filter = "country";
+      if (isset($conf["tm_chapters_community_search_filter"])) {
+        $tm_chapters_community_search_filter = $conf["tm_chapters_community_search_filter"];
+      }
+
+      // Filter results by chapter
+      if ($tm_chapters_community_search_filter == "chapter") {
+
+        $chapter_nid = $_GET["name_list_chapter"];
+        $signup_flag = flag_get_flag("signup");
+
+        $join = new views_join;
+        $join->construct('flagging', 'flagging', 'users.uid', 'uid', array(), 'LEFT');     
+        $query->add_relationship('f', $join, 'users');
+        $query->add_where(0, "f.fid", $signup_flag->fid, "=");
+        $query->add_where(0, "f.entity_id", $chapter_nid, "=");
+
+      }
+    }
+  
   }
 }
 

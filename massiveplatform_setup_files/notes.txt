@@ -123,3 +123,20 @@ drop table masquerade_users;
 
 drop table honeypot_user;
 
+
+-----
+
+How to manually flag someone to attend an event:
+
+Change the userid and event id accordingly.
+
+# example for regular event
+# drush php-eval '$account = user_load(34757); $content_id = 16555; $event_register = flag_get_flag("event_register"); $event_register->flag('flag', $content_id, $account, null);'
+
+# example for paid event
+# drush php-eval '$account = user_load(34757); $content_id = 16555; $event_paid = flag_get_flag("event_paid"); $event_paid->flag('flag', $content_id, $account, null); $event_register = flag_get_flag("event_register"); $event_register->flag('flag', $content_id, $account, null);'
+
+
+
+
+

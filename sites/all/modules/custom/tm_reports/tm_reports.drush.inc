@@ -48,7 +48,7 @@ function tm_reports_global_rankings_drush() {
 		$continent_name = "NONE";
 		if (isset($chapter->field_country[LANGUAGE_NONE][0]['iso2'])) {
 			$country_code = $chapter->field_country[LANGUAGE_NONE][0]['iso2'];
-			$country = str_replace(",", " - ", country_load($country_code));
+			$country = country_load($country_code);
 			$country_name = str_replace(",", " - ", $country->name);
 			$continent_code = str_replace(",", " - ", $country->continent);
 			$continent_name = str_replace(",", " - ", $continents[$continent_code]);

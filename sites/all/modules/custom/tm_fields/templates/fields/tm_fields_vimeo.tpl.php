@@ -19,12 +19,12 @@ $found_match = false;
 if (!$found_match) {
 	if ((strpos(strtolower($url), "https://vimeo.com/") !== FALSE) or (strpos($url, "http://vimeo.com/") !== FALSE)) {
 		$vimeo_url = str_ireplace("https://vimeo.com/", "https://vimeo.com/", $url);
-		$vimeo_url = str_ireplace("http://vimeo.com/", "https://vimeo.com/", $url);
+		$vimeo_url = str_ireplace("http://vimeo.com/", "https://vimeo.com/", $vimeo_url);
 		$found_match = true;
 	}
 	if ((strpos(strtolower($url), "https://www.vimeo.com/") !== FALSE) or (strpos($url, "http://www.vimeo.com/") !== FALSE)) {
 		$vimeo_url = str_ireplace("https://www.vimeo.com/", "https://vimeo.com/", $url);
-		$vimeo_url = str_ireplace("http://www.vimeo.com/", "https://vimeo.com/", $url);
+		$vimeo_url = str_ireplace("http://www.vimeo.com/", "https://vimeo.com/", $vimeo_url);
 		$found_match = true;
 	}
 }

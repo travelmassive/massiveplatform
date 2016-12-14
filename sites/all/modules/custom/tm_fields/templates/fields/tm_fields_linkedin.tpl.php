@@ -22,18 +22,18 @@ $country_codes = array("af","al","dz","ar","au","at","bh","bd","be","bo","ba","b
 if (!$found_match) {
 	if ((strpos(strtolower($url), "https://linkedin.com/") !== FALSE) or (strpos($url, "http://linkedin.com/") !== FALSE)) {
 		$linkedin_url = str_ireplace("https://linkedin.com/", "https://linkedin.com/", $url);
-		$linkedin_url = str_ireplace("http://linkedin.com/", "https://linkedin.com/", $url);
+		$linkedin_url = str_ireplace("http://linkedin.com/", "https://linkedin.com/", $linkedin_url);
 		$found_match = true;
 	}
 	if ((strpos(strtolower($url), "https://www.linkedin.com/") !== FALSE) or (strpos($url, "http://www.linkedin.com/") !== FALSE)) {
 		$linkedin_url = str_ireplace("https://www.linkedin.com/", "https://linkedin.com/", $url);
-		$linkedin_url = str_ireplace("http://www.linkedin.com/", "https://linkedin.com/", $url);
+		$linkedin_url = str_ireplace("http://www.linkedin.com/", "https://linkedin.com/", $linkedin_url);
 		$found_match = true;
 	}
 	foreach ($country_codes as $country_code) {
 		if ((strpos(strtolower($url), "https://" . $country_code . ".linkedin.com/") !== FALSE) or (strpos($url, "http://" . ".linkedin.com/") !== FALSE)) {
 			$linkedin_url = str_ireplace("https://" . $country_code . ".linkedin.com/", "https://linkedin.com/", $url);
-			$linkedin_url = str_ireplace("http://" . $country_code . ".linkedin.com/", "https://linkedin.com/", $url);
+			$linkedin_url = str_ireplace("http://" . $country_code . ".linkedin.com/", "https://linkedin.com/", $linkedin_url);
 			$found_match = true;
 		}
 	}

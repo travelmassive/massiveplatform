@@ -19,22 +19,22 @@ $found_match = false;
 if (!$found_match) {
 	if ((strpos(strtolower($url), "https://facebook.com/") !== FALSE) or (strpos($url, "http://facebook.com/") !== FALSE)) {
 		$facebook_url = str_ireplace("https://facebook.com/", "https://facebook.com/", $url);
-		$facebook_url = str_ireplace("http://facebook.com/", "https://facebook.com/", $url);
+		$facebook_url = str_ireplace("http://facebook.com/", "https://facebook.com/", $facebook_url);
 		$found_match = true;
 	}
 	if ((strpos(strtolower($url), "https://www.facebook.com/") !== FALSE) or (strpos($url, "http://www.facebook.com/") !== FALSE)) {
 		$facebook_url = str_ireplace("https://www.facebook.com/", "https://facebook.com/", $url);
-		$facebook_url = str_ireplace("http://www.facebook.com/", "https://facebook.com/", $url);
+		$facebook_url = str_ireplace("http://www.facebook.com/", "https://facebook.com/", $facebook_url);
 		$found_match = true;
 	}
 	if ((strpos(strtolower($url), "https://m.facebook.com/") !== FALSE) or (strpos($url, "http://m.facebook.com/") !== FALSE)) {
 		$facebook_url = str_ireplace("https://m.facebook.com/", "https://facebook.com/", $url);
-		$facebook_url = str_ireplace("http://m.facebook.com/", "https://facebook.com/", $url);
+		$facebook_url = str_ireplace("http://m.facebook.com/", "https://facebook.com/", $facebook_url);
 		$found_match = true;
 	}
 	if ((strpos(strtolower($url), "https://web.facebook.com/") !== FALSE) or (strpos($url, "http://web.facebook.com/") !== FALSE)) {
 		$facebook_url = str_ireplace("https://web.facebook.com/", "https://facebook.com/", $url);
-		$facebook_url = str_ireplace("http://web.facebook.com/", "https://facebook.com/", $url);
+		$facebook_url = str_ireplace("http://web.facebook.com/", "https://facebook.com/", $facebook_url);
 		$found_match = true;
 	}
 }

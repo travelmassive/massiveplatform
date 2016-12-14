@@ -41,12 +41,12 @@ if (!$found_match) {
 if (!$found_match) {
 	if ((strpos(strtolower($url), "https://twitter.com/") !== FALSE) or (strpos($url, "http://twitter.com/") !== FALSE)) {
 		$twitter_url = str_ireplace("https://twitter.com/", "https://twitter.com/", $url);
-		$twitter_url = str_ireplace("http://twitter.com/", "https://twitter.com/", $url);
+		$twitter_url = str_ireplace("http://twitter.com/", "https://twitter.com/", $twitter_url);
 		$found_match = true;
 	}
 	if ((strpos(strtolower($url), "https://www.twitter.com/") !== FALSE) or (strpos($url, "http://www.twitter.com/") !== FALSE)) {
 		$twitter_url = str_ireplace("https://www.twitter.com/", "https://twitter.com/", $url);
-		$twitter_url = str_ireplace("http://www.twitter.com/", "https://twitter.com/", $url);
+		$twitter_url = str_ireplace("http://www.twitter.com/", "https://twitter.com/", $twitter_url);
 		$found_match = true;
 	}
 }

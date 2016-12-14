@@ -19,12 +19,12 @@ $found_match = false;
 if (!$found_match) {
 	if ((strpos(strtolower($url), "https://youtube.com/") !== FALSE) or (strpos($url, "http://youtube.com/") !== FALSE)) {
 		$youtube_url = str_ireplace("https://youtube.com/", "https://youtube.com/", $url);
-		$youtube_url = str_ireplace("http://youtube.com/", "https://youtube.com/", $url);
+		$youtube_url = str_ireplace("http://youtube.com/", "https://youtube.com/", $youtube_url);
 		$found_match = true;
 	}
 	if ((strpos(strtolower($url), "https://www.youtube.com/") !== FALSE) or (strpos($url, "http://www.youtube.com/") !== FALSE)) {
 		$youtube_url = str_ireplace("https://www.youtube.com/", "https://youtube.com/", $url);
-		$youtube_url = str_ireplace("http://www.youtube.com/", "https://youtube.com/", $url);
+		$youtube_url = str_ireplace("http://www.youtube.com/", "https://youtube.com/", $youtube_url);
 		$found_match = true;
 	}
 }

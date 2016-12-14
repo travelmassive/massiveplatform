@@ -19,12 +19,12 @@ $found_match = false;
 if (!$found_match) {
 	if ((strpos(strtolower($url), "https://strava.com/") !== FALSE) or (strpos($url, "http://strava.com/") !== FALSE)) {
 		$strava_url = str_ireplace("https://strava.com/", "https://strava.com/", $url);
-		$strava_url = str_ireplace("http://strava.com/", "https://strava.com/", $url);
+		$strava_url = str_ireplace("http://strava.com/", "https://strava.com/", $strava_url);
 		$found_match = true;
 	}
 	if ((strpos(strtolower($url), "https://www.strava.com/") !== FALSE) or (strpos($url, "http://www.strava.com/") !== FALSE)) {
 		$strava_url = str_ireplace("https://www.strava.com/", "https://strava.com/", $url);
-		$strava_url = str_ireplace("http://www.strava.com/", "https://strava.com/", $url);
+		$strava_url = str_ireplace("http://www.strava.com/", "https://strava.com/", $strava_url);
 		$found_match = true;
 	}
 }

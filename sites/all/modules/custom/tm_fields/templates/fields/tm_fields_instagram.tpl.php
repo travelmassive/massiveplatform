@@ -41,12 +41,12 @@ if (!$found_match) {
 if (!$found_match) {
 	if ((strpos(strtolower($url), "https://instagram.com/") !== FALSE) or (strpos($url, "http://instagram.com/") !== FALSE)) {
 		$instagram_url = str_ireplace("https://instagram.com/", "https://instagram.com/", $url);
-		$instagram_url = str_ireplace("http://instagram.com/", "https://instagram.com/", $url);
+		$instagram_url = str_ireplace("http://instagram.com/", "https://instagram.com/", $instagram_url);
 		$found_match = true;
 	}
 	if ((strpos(strtolower($url), "https://www.instagram.com/") !== FALSE) or (strpos($url, "http://www.instagram.com/") !== FALSE)) {
 		$instagram_url = str_ireplace("https://www.instagram.com/", "https://instagram.com/", $url);
-		$instagram_url = str_ireplace("http://www.instagram.com/", "https://instagram.com/", $url);
+		$instagram_url = str_ireplace("http://www.instagram.com/", "https://instagram.com/", $instagram_url);
 		$found_match = true;
 	}
 }

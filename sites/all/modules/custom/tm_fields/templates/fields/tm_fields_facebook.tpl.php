@@ -32,6 +32,11 @@ if (!$found_match) {
 		$facebook_url = str_ireplace("http://m.facebook.com/", "https://facebook.com/", $url);
 		$found_match = true;
 	}
+	if ((strpos(strtolower($url), "https://web.facebook.com/") !== FALSE) or (strpos($url, "http://web.facebook.com/") !== FALSE)) {
+		$facebook_url = str_ireplace("https://web.facebook.com/", "https://facebook.com/", $url);
+		$facebook_url = str_ireplace("http://web.facebook.com/", "https://facebook.com/", $url);
+		$found_match = true;
+	}
 }
 
 

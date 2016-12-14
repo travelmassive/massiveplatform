@@ -21,7 +21,7 @@ function tm_reports_drush_command() {
 function tm_reports_global_rankings_drush() {
 
 	// Get all chapters
-	$query = "SELECT nid, title FROM node WHERE type = 'chapter' AND status = 1";
+	$query = "SELECT nid, title FROM node WHERE type = 'chapter' AND status = 1 ORDER BY title ASC";
 	$results = db_query($query)->fetchAll();
 	$chapter_nids = array();
 	foreach ($results as $result) {
@@ -48,10 +48,10 @@ function tm_reports_global_rankings_drush() {
 		$continent_name = "NONE";
 		if (isset($chapter->field_country[LANGUAGE_NONE][0]['iso2'])) {
 			$country_code = $chapter->field_country[LANGUAGE_NONE][0]['iso2'];
-			$country = country_load($country_code);
-			$country_name = $country->name;
-			$continent_code = $country->continent;
-			$continent_name = $continents[$continent_code];
+			$country = str_replace(",", " - ", country_load($country_code));
+			$country_name = str_replace(",", " - ", $country->name);
+			$continent_code = str_replace(",", " - ", $country->continent);
+			$continent_name = str_replace(",", " - ", $continents[$continent_code]);
 		}
 
 		// create header row
@@ -61,8 +61,8 @@ function tm_reports_global_rankings_drush() {
 				$row[] = str_replace(",", "", $key);
 			}
 			$first_row = false;
+			$rows[] = $row;
 		}
-		$rows[] = $row;
 
 		// create data row
 		$row = array($chapter->title, $country_name, $continent_name, $country_code, $continent_code);
@@ -70,7 +70,6 @@ function tm_reports_global_rankings_drush() {
 			$row[] = str_replace(",", "", $value);
 		}
 		$rows[] = $row;
-		//$row_sting = implode(",", $row)		
 	}
 
 	drush_print("\nCSV export...");
@@ -95,25 +94,4 @@ function tm_reports_global_rankings_drush() {
 		drush_print(implode(",", $row));
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

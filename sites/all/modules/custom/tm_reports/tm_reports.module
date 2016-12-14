@@ -502,6 +502,8 @@ function _tm_reports_get_chapter_insights($chapter_id) {
   $num_event_payments = db_query($query, array(':fid' => $flag_event_paid->fid, ':chapter_id' => $chapter_id))->fetch();
   if ($num_event_payments->amount > 0) {
     $insights["num_event_payments"] = $num_event_payments->amount;
+  } else {
+    $insights["num_event_payments"] = 0;
   }
 
   // NUMBER OF UNIQUE EVENT REGISTRATIONS

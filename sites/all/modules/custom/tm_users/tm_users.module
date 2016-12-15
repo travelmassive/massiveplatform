@@ -467,29 +467,44 @@ function tm_users_views_query_alter(&$view, &$query) {
   if ($view->name == 'community') {
 
     // Filter community by chapter or by country
-    if (isset($_GET["name_list_chapter"])) {
-      
-      global $conf;
-      $tm_chapters_community_search_filter = "country";
-      if (isset($conf["tm_chapters_community_search_filter"])) {
-        $tm_chapters_community_search_filter = $conf["tm_chapters_community_search_filter"];
-      }
-
-      // Filter results by chapter
-      if ($tm_chapters_community_search_filter == "chapter") {
-
-        $chapter_nid = $_GET["name_list_chapter"];
-        $signup_flag = flag_get_flag("signup");
-
-        $join = new views_join;
-        $join->construct('flagging', 'flagging', 'users.uid', 'uid', array(), 'LEFT');     
-        $query->add_relationship('f', $join, 'users');
-        $query->add_where(0, "f.fid", $signup_flag->fid, "=");
-        $query->add_where(0, "f.entity_id", $chapter_nid, "=");
-
-      }
+    global $conf;
+    $tm_chapters_community_search_filter = "country";
+    if (isset($conf["tm_chapters_community_search_filter"])) {
+      $tm_chapters_community_search_filter = $conf["tm_chapters_community_search_filter"];
     }
-  
+
+    // Filter by chapter
+    if ($tm_chapters_community_search_filter == "chapter") {
+
+      // Chapter filter provided
+      if (isset($_GET["name_list"])) {
+        
+        // Filter results by chapter
+        if (($tm_chapters_community_search_filter == "chapter") and ($_GET["name_list"] != "All")) {
+
+          // remove the country query
+          unset($query->where[1]['conditions'][1]);
+          unset($query->tables['users']['field_data_field_user_country']);
+          unset($query->tables['users']['countries_country_field_data_field_user_country']);
+          unset($query->relationships['countries_country_field_data_field_user_country']);
+          unset($query->table_queue['field_data_field_user_country']);
+          unset($query->table_queue['countries_country_field_data_field_user_country']);
+
+          // update the query
+          $chapter_nid = $_GET["name_list"];
+          $signup_flag = flag_get_flag("signup");
+          $join = new views_join;
+          $join->construct('flagging', 'flagging', 'users.uid', 'uid', array(), 'LEFT');     
+          $query->add_relationship('f', $join, 'users');
+          $query->add_where(0, "f.fid", $signup_flag->fid, "=");
+          $query->add_where(0, "f.entity_id", $chapter_nid, "=");
+
+        }
+      }
+        
+    }
+
+    
   }
 }
 

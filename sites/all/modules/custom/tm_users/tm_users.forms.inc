@@ -105,13 +105,11 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
         $defaultoptions = array('All'=>'Chapter');
         $output = $defaultoptions + $result->fetchAllKeyed();
 
-        // Remove the name_list field and replace with name_list_chapter
+        // Replace the name_list options with chapters
         $form['name_list']['#options'] = $output;
-        $form['name_list_chapter'] = $form['name_list'];
-        hide($form['name_list']);
 
         // Set default option
-        $form['name_list_chapter']['#options']['All'] = "Chapter";
+        $form['name_list']['#options']['All'] = "Chapter";
 
       } else {
 

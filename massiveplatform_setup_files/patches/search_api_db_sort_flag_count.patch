@@ -1,0 +1,36 @@
+diff --git a/sites/all/modules/contrib/search_api_db/service.inc b/sites/all/modules/contrib/search_api_db/service.inc
+index 9fdf904..480f85f 100644
+--- a/sites/all/modules/contrib/search_api_db/service.inc
++++ b/sites/all/modules/contrib/search_api_db/service.inc
+@@ -1838,7 +1838,31 @@ class SearchApiDbService extends SearchApiAbstractService {
+       }
+     }
+     else {
++
++      // Author: Dean
++      // Order by number of followers (for users, companies), attendees (for events), or members (for chapters)
++      // Search api db index table has either 'user' or 'node' info, so pick the relevant one for sorting;
++      // chapters, events and companies are a 'node', and users are a 'user'
++      // Need to select specific flag types to prevent duplicate results from auditing flags
++      $fid_approval_approved_by = flag_get_flag('approval_approved_by')->fid;
++      $fid_follow_members = flag_get_flag('follow_members')->fid;
++      $fid_follow_organizations = flag_get_flag('follow_organizations')->fid;
++      $fid_signup = flag_get_flag('signup')->fid;
++      $fid_event_register = flag_get_flag('event_register')->fid;
++
++      // First, just get all approved users, then add the flag counts for each entity type
++      $db_query->leftJoin('flag_counts', 'app', "t.user=app.entity_id AND app.entity_type='user' AND t.node IS NULL AND app.fid=$fid_approval_approved_by");
++      $db_query->leftJoin('flag_counts', 'fcu', "app.entity_id=fcu.entity_id AND fcu.entity_type='user' AND fcu.fid=$fid_follow_members");
++      $db_query->leftJoin('flag_counts', 'fcn', "t.node=fcn.entity_id AND fcn.entity_type='node' AND t.user IS NULL AND fcn.fid in ($fid_follow_organizations, $fid_signup, $fid_event_register)");
++
++      // Select flag count depending on entity type and catch a missing count as 0
++      // To boost nodes, use IFNULL((fcn.count)*2,0)
++      $db_query->addExpression('CASE WHEN t.user IS NULL THEN IFNULL(fcn.count,0) WHEN t.node IS NULL THEN IFNULL(fcu.count, 0) ELSE 0 END','flag_count');
++
++      $db_query->orderBy('flag_count', 'DESC');
+       $db_query->orderBy('score', 'DESC');
++      $db_query->orderBy('item_id', 'ASC');
++
+     }
+   }
+ 

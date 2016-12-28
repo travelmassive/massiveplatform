@@ -1782,7 +1782,8 @@ This will prevent subsequent rules from branding other elements.<br>',
     'deleted' => 0,
     'description' => 'Match an exact URL path that the visitor is viewing.<br>
 Can be comma separated to include multiple paths.<br>
-ie: "partner-company" will match the URL "/partner-company"',
+Can use a * to match wildcard at end of path (ie: /chapters/* to match all chapters)<br>
+example: "partner-company" will match the URL "/partner-company"<br>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -1893,7 +1894,8 @@ This will override any match criteria.');
   t('Match URL path');
   t('Match an exact URL path that the visitor is viewing.<br>
 Can be comma separated to include multiple paths.<br>
-ie: "partner-company" will match the URL "/partner-company"');
+Can use a * to match wildcard at end of path (ie: /chapters/* to match all chapters)<br>
+example: "partner-company" will match the URL "/partner-company"<br>');
   t('Match continent');
   t('Match continent (GeoIP matching only)');
   t('Match country');

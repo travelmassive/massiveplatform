@@ -185,19 +185,36 @@ function tm_branding_check_brand($site_brand, $account) {
 			// ie: mycompany,user23
 			$parts = explode(",", $site_brand->field_match_url_path[LANGUAGE_NONE][0]['value']);
 			$match_urls = array();
+			$wildcard_urls = array();
 			foreach($parts as $part) {
 				// remove leading / and trim
 				$url = trim(ltrim(strtolower($part), '/'));
+
 				if ($url != "") {
-					$match_urls[] = $url;
+					if (strpos($url, "*") !== false) {
+						// ie: /chapters/*
+						$wildcard_urls[] = $url;
+					} else {
+						// ie: /community
+						$match_urls[] = $url;
+					}
 				}
-				
 			}
 
 			// check if url path matches
-			if (in_array(strtolower(request_path()), $match_urls)) {
+			$request_path = strtolower(request_path());
+			if (in_array($request_path, $match_urls)) {
 				return (rand(1,100) <= $match_probability);
 			}
+
+			// check if wildcard path matches
+			foreach($wildcard_urls as $wildcard_url) {
+				$wildcard_match = rtrim($wildcard_url, "*"); // remove wildcard
+				if ((strpos($request_path, $wildcard_match)) === 0) {
+					return (rand(1,100) <= $match_probability);
+				}
+			}
+			
 		}
 	}
 

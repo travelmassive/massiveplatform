@@ -295,6 +295,7 @@ $conf["tm_chapters_community_search_filter"] = "country"; // filter /community p
 $conf["tm_theme_meta_color"] = "#007DB7"; // Set the theme color for mobile Android, iOS 
 
 /** SEARCH SETTINGS **/
+$conf["tm_search_api_sort_method"] = "followers"; // sort by: followers, newest, or default
 $conf["tm_search_api_results_per_page"] = 10; // how many results to show per page
 $conf["tm_search_api_max_search_terms"] = 8; // max terms allowed in search
 $conf["tm_search_api_top_results_display"] = 5; // perform a quote search first, and insert N results at top

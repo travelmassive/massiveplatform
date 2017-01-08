@@ -586,6 +586,32 @@ function _tm_more_actions_process($field, $title = NULL) {
   }
   // END ticket sales
 
+  // START show calendar link
+  if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
+    $node = menu_get_object();
+    if ($node->type == 'event') {
+      
+      $show_menu_item = false;
+
+      // check permission
+      $show_menu_item = tm_events_check_permission_edit_event($user, $field['entity']);
+    
+      if ($show_menu_item) {
+
+        $calendar_link = '/events/download-ical/' . $nid;
+        $links['downloadcalendar'][] = array(
+          'wrapper_class' => array('downloadcalendar'),
+          'content' => l(t('Download calendar'), $calendar_link, array(
+            'attributes' => array(
+              'title' => t('Download calendar')
+            )
+          ))
+        );
+      }
+    }
+  }
+  // END show calendar link
+
   // START download chapter members.
   if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
     $node = menu_get_object();

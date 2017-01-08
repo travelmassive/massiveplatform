@@ -2899,7 +2899,7 @@ Icons
 .form-download.follow.on:before,
 .form-download.follow.flagged:before,
 .form-submit.follow.on:before,
-.form-submit.follow.flagged:before, .form-submit:before, .messages.status:before, .status.messages--status:before, .status.messages--warning:before, .status.messages--error:before, .icon-s-subtract, .icon-s-cancel, .icon-s-arr-up, .icon-s-arr-right, .cta-inline:after, .contained-block .detail-item .detail-venue-link a:after, .contained-block .more-link a:after, #foot-nav a:before, .contained-block .detail-item.price:before, .icon-s-arr-left, .icon-s-arr-down, .bttn-dropdown:after, html.js .collapsible .fieldset-legend a:after, .views-exposed-form .form-type-select:after, .icon-s-add, .bttn.follow:before, .bttn-group a.follow:before, .page-views .tabs-primary a.follow:before, .page-search .tabs-primary a.follow:before, .pager li a.follow:before, .pager .follow.pager-current:before, .views-exposed-form .follow.form-type-select:before, .follow.facebook-login:before, .follow.twitter-login:before,
+.form-submit.follow.flagged:before, .form-submit:before, .messages.status:before, .status.messages--status:before, .status.messages--warning:before, .status.messages--error:before, .icon-s-subtract, .icon-s-cancel, .icon-s-arr-up, .icon-s-arr-right, .cta-inline:after, .contained-block .detail-item .detail-venue-link a:after, .contained-block .detail-item .detail-add-calendar a:after, .contained-block .more-link a:after, #foot-nav a:before, .contained-block .detail-item.price:before, .icon-s-arr-left, .icon-s-arr-down, .bttn-dropdown:after, html.js .collapsible .fieldset-legend a:after, .views-exposed-form .form-type-select:after, .icon-s-add, .bttn.follow:before, .bttn-group a.follow:before, .page-views .tabs-primary a.follow:before, .page-search .tabs-primary a.follow:before, .pager li a.follow:before, .pager .follow.pager-current:before, .views-exposed-form .follow.form-type-select:before, .follow.facebook-login:before, .follow.twitter-login:before,
 .form-download.follow:before,
 .form-submit.follow:before, .icon-refresh, .icon-phone, .icon-pencil, .bttn.edit:before, .bttn-group a.edit:before, .page-views .tabs-primary a.edit:before, .page-search .tabs-primary a.edit:before, .pager li a.edit:before, .pager .edit.pager-current:before, .views-exposed-form .edit.form-type-select:before, .edit.facebook-login:before, .edit.twitter-login:before,
 .form-download.edit:before,
@@ -3076,7 +3076,7 @@ Icons
 }
 
 /* line 159, ../sass/_type.scss */
-.icon-s-arr-right, .cta-inline:after, .contained-block .detail-item .detail-venue-link a:after, .contained-block .more-link a:after, #foot-nav a:before, .contained-block .detail-item.price:before {
+.icon-s-arr-right, .cta-inline:after, .contained-block .detail-item .detail-venue-link a:after, .contained-block .detail-item .detail-add-calendar a:after, .contained-block .more-link a:after, #foot-nav a:before, .contained-block .detail-item.price:before {
   content: "\e619";
 }
 
@@ -3768,11 +3768,11 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 }
 
 /* line 73, ../sass/_base.scss */
-.cta-inline, .contained-block .detail-item .detail-venue-link a, .contained-block .more-link a {
+.cta-inline, .contained-block .detail-item .detail-venue-link a, .contained-block .detail-item .detail-add-calendar a, .contained-block .more-link a {
   font-weight: 800;
 }
 /* line 75, ../sass/_base.scss */
-.cta-inline:after, .contained-block .detail-item .detail-venue-link a:after, .contained-block .more-link a:after {
+.cta-inline:after, .contained-block .detail-item .detail-venue-link a:after, .contained-block .detail-item .detail-add-calendar a:after, .contained-block .more-link a:after {
   vertical-align: bottom;
   font-weight: normal;
 }
@@ -6435,87 +6435,98 @@ td.views-field-access {
 .contained-block .detail-item .detail-venue-link {
   margin: 1rem 0 0 0;
 }
-/* line 163, ../sass/_modules.scss */
+/* line 162, ../sass/_modules.scss */
+.contained-block .detail-item .detail-add-calendar {
+  margin: 1rem 0 0 0;
+}
+/* line 170, ../sass/_modules.scss */
 .contained-block .detail-item p {
   margin: 0 0 1rem 0;
 }
-/* line 165, ../sass/_modules.scss */
+/* line 172, ../sass/_modules.scss */
 .contained-block .detail-item p:last-child {
   margin: 0;
 }
-/* line 169, ../sass/_modules.scss */
+/* line 176, ../sass/_modules.scss */
 .contained-block .detail-item dl {
   margin: 0;
   padding: 0;
 }
-/* line 172, ../sass/_modules.scss */
+/* line 179, ../sass/_modules.scss */
 .contained-block .detail-item dl dt {
   font-weight: 800;
   margin: 0;
 }
-/* line 176, ../sass/_modules.scss */
+/* line 183, ../sass/_modules.scss */
 .contained-block .detail-item dl dd {
   margin: 0 0 1rem 0;
 }
-/* line 178, ../sass/_modules.scss */
+/* line 185, ../sass/_modules.scss */
 .contained-block .detail-item dl dd:last-child {
   margin: 0;
 }
-/* line 185, ../sass/_modules.scss */
+/* line 192, ../sass/_modules.scss */
 .contained-block .more-link {
   padding: 0 1rem 1rem 2.5rem;
   margin: 0 0 1rem 0;
 }
-/* line 193, ../sass/_modules.scss */
+/* line 200, ../sass/_modules.scss */
 .contained-block .view-empty {
   padding: 0 1rem;
   margin: 0 0 1rem 0;
   color: #79828c;
 }
-/* line 197, ../sass/_modules.scss */
+/* line 204, ../sass/_modules.scss */
 .contained-block .view-empty p {
   margin: 0 0 1rem 0;
 }
-/* line 199, ../sass/_modules.scss */
+/* line 206, ../sass/_modules.scss */
 .contained-block .view-empty p:last-child {
   margin: 0;
 }
 @media only screen and (min-width: 69.063rem) {
-  /* line 206, ../sass/_modules.scss */
+  /* line 213, ../sass/_modules.scss */
   .contained-block .contained-head {
     padding: 2rem 2rem 1.5rem 2rem;
   }
-  /* line 209, ../sass/_modules.scss */
+  /* line 216, ../sass/_modules.scss */
   .contained-block .detail-item {
     padding: 0 2rem 1rem 3.5rem;
   }
-  /* line 211, ../sass/_modules.scss */
+  /* line 218, ../sass/_modules.scss */
   .contained-block .detail-item:before {
     left: 2rem;
   }
-  /* line 214, ../sass/_modules.scss */
+  /* line 221, ../sass/_modules.scss */
   .contained-block .detail-item:last-child {
     margin-bottom: 2rem;
   }
-  /* line 217, ../sass/_modules.scss */
+  /* line 224, ../sass/_modules.scss */
   .contained-block .detail-item .detail-venue-name {
     padding-right: 7rem;
   }
-  /* line 220, ../sass/_modules.scss */
+  /* line 227, ../sass/_modules.scss */
   .contained-block .detail-item .detail-venue-link {
     position: absolute;
     top: 0;
     right: 2rem;
     margin: 0;
   }
-  /* line 227, ../sass/_modules.scss */
+  /* line 233, ../sass/_modules.scss */
+  .contained-block .detail-item .detail-add-calendar {
+    position: absolute;
+    top: 0;
+    right: 2rem;
+    margin: 0;
+  }
+  /* line 240, ../sass/_modules.scss */
   .contained-block .view-empty {
     padding: 0 2rem;
     margin: 0 0 2rem 0;
   }
 }
 
-/* line 234, ../sass/_modules.scss */
+/* line 247, ../sass/_modules.scss */
 .card.contained, .node-form > div.card,
 #user-profile-form > div.card,
 #user-register-form > div.card, #content .card.search-form {
@@ -6523,7 +6534,7 @@ td.views-field-access {
   background: transparent;
   position: relative;
 }
-/* line 238, ../sass/_modules.scss */
+/* line 251, ../sass/_modules.scss */
 .card.contained > a, .node-form > div.card > a,
 #user-profile-form > div.card > a,
 #user-register-form > div.card > a, #content .card.search-form > a {
@@ -6531,20 +6542,20 @@ td.views-field-access {
   display: table;
   color: #213040;
 }
-/* line 243, ../sass/_modules.scss */
+/* line 256, ../sass/_modules.scss */
 .card.contained.node-event > a, .node-form > div.card.node-event > a,
 #user-profile-form > div.card.node-event > a,
 #user-register-form > div.card.node-event > a, #content .card.node-event.search-form > a {
   padding-right: 2.25rem;
 }
-/* line 246, ../sass/_modules.scss */
+/* line 259, ../sass/_modules.scss */
 .card.contained .media, .node-form > div.card .media,
 #user-profile-form > div.card .media,
 #user-register-form > div.card .media, #content .card.search-form .media {
   float: left;
   margin: 0 0.75rem 0 0;
 }
-/* line 250, ../sass/_modules.scss */
+/* line 263, ../sass/_modules.scss */
 .card.contained .cover, .node-form > div.card .cover,
 #user-profile-form > div.card .cover,
 #user-register-form > div.card .cover, #content .card.search-form .cover {
@@ -6552,14 +6563,14 @@ td.views-field-access {
   position: relative;
   z-index: 1;
 }
-/* line 254, ../sass/_modules.scss */
+/* line 267, ../sass/_modules.scss */
 .card.contained .cover img, .node-form > div.card .cover img,
 #user-profile-form > div.card .cover img,
 #user-register-form > div.card .cover img, #content .card.search-form .cover img {
   display: block;
   border-radius: 0.25rem 0.25rem 0 0;
 }
-/* line 259, ../sass/_modules.scss */
+/* line 272, ../sass/_modules.scss */
 .card.contained .avatar, .node-form > div.card .avatar,
 #user-profile-form > div.card .avatar,
 #user-register-form > div.card .avatar, #content .card.search-form .avatar {
@@ -6572,7 +6583,7 @@ td.views-field-access {
   text-transform: uppercase;
   font-weight: 800;
 }
-/* line 270, ../sass/_modules.scss */
+/* line 283, ../sass/_modules.scss */
 .card.contained .badge-chapter, .node-form > div.card .badge-chapter,
 #user-profile-form > div.card .badge-chapter,
 #user-register-form > div.card .badge-chapter, #content .card.search-form .badge-chapter {
@@ -6586,7 +6597,7 @@ td.views-field-access {
   display: inline-block;
   padding-bottom: 0.5rem;
 }
-/* line 280, ../sass/_modules.scss */
+/* line 293, ../sass/_modules.scss */
 .card.contained .badge-chapter:before, .node-form > div.card .badge-chapter:before,
 #user-profile-form > div.card .badge-chapter:before,
 #user-register-form > div.card .badge-chapter:before, #content .card.search-form .badge-chapter:before {
@@ -6596,7 +6607,7 @@ td.views-field-access {
   vertical-align: bottom;
   width: 0;
 }
-/* line 287, ../sass/_modules.scss */
+/* line 300, ../sass/_modules.scss */
 .card.contained .badge-chapter:after, .node-form > div.card .badge-chapter:after,
 #user-profile-form > div.card .badge-chapter:after,
 #user-register-form > div.card .badge-chapter:after, #content .card.search-form .badge-chapter:after {
@@ -6611,7 +6622,7 @@ td.views-field-access {
   background-size: cover;
   border-radius: 0.125rem 0 0 0;
 }
-/* line 300, ../sass/_modules.scss */
+/* line 313, ../sass/_modules.scss */
 .card.contained .badge-cal, .node-form > div.card .badge-cal,
 #user-profile-form > div.card .badge-cal,
 #user-register-form > div.card .badge-cal, #content .card.search-form .badge-cal {
@@ -6619,7 +6630,7 @@ td.views-field-access {
   width: 4rem;
   height: 4rem;
 }
-/* line 304, ../sass/_modules.scss */
+/* line 317, ../sass/_modules.scss */
 .card.contained .badge-cal .month, .node-form > div.card .badge-cal .month,
 #user-profile-form > div.card .badge-cal .month,
 #user-register-form > div.card .badge-cal .month, #content .card.search-form .badge-cal .month {
@@ -6630,7 +6641,7 @@ td.views-field-access {
   font-size: 0.875rem;
   line-height: 1.5rem;
 }
-/* line 312, ../sass/_modules.scss */
+/* line 325, ../sass/_modules.scss */
 .card.contained .badge-cal .day, .node-form > div.card .badge-cal .day,
 #user-profile-form > div.card .badge-cal .day,
 #user-register-form > div.card .badge-cal .day, #content .card.search-form .badge-cal .day {
@@ -6642,7 +6653,7 @@ td.views-field-access {
   padding-bottom: 0.25rem;
   letter-spacing: -0.0625rem;
 }
-/* line 326, ../sass/_modules.scss */
+/* line 339, ../sass/_modules.scss */
 .card.contained .badge-organization, .node-form > div.card .badge-organization,
 #user-profile-form > div.card .badge-organization,
 #user-register-form > div.card .badge-organization, #content .card.search-form .badge-organization,
@@ -6655,7 +6666,7 @@ td.views-field-access {
   height: 4rem;
   display: block;
 }
-/* line 330, ../sass/_modules.scss */
+/* line 343, ../sass/_modules.scss */
 .card.contained .badge-organization img, .node-form > div.card .badge-organization img,
 #user-profile-form > div.card .badge-organization img,
 #user-register-form > div.card .badge-organization img, #content .card.search-form .badge-organization img,
@@ -6668,7 +6679,7 @@ td.views-field-access {
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 336, ../sass/_modules.scss */
+/* line 349, ../sass/_modules.scss */
 .card.contained .badge-flagfeed, .node-form > div.card .badge-flagfeed,
 #user-profile-form > div.card .badge-flagfeed,
 #user-register-form > div.card .badge-flagfeed, #content .card.search-form .badge-flagfeed {
@@ -6676,7 +6687,7 @@ td.views-field-access {
   height: 4rem;
   display: block;
 }
-/* line 340, ../sass/_modules.scss */
+/* line 353, ../sass/_modules.scss */
 .card.contained .badge-flagfeed img, .node-form > div.card .badge-flagfeed img,
 #user-profile-form > div.card .badge-flagfeed img,
 #user-register-form > div.card .badge-flagfeed img, #content .card.search-form .badge-flagfeed img {
@@ -6684,7 +6695,7 @@ td.views-field-access {
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 346, ../sass/_modules.scss */
+/* line 359, ../sass/_modules.scss */
 .card.contained .badge-wordpress-feedme, .node-form > div.card .badge-wordpress-feedme,
 #user-profile-form > div.card .badge-wordpress-feedme,
 #user-register-form > div.card .badge-wordpress-feedme, #content .card.search-form .badge-wordpress-feedme {
@@ -6692,7 +6703,7 @@ td.views-field-access {
   height: 4rem;
   display: block;
 }
-/* line 350, ../sass/_modules.scss */
+/* line 363, ../sass/_modules.scss */
 .card.contained .badge-wordpress-feedme img, .node-form > div.card .badge-wordpress-feedme img,
 #user-profile-form > div.card .badge-wordpress-feedme img,
 #user-register-form > div.card .badge-wordpress-feedme img, #content .card.search-form .badge-wordpress-feedme img {
@@ -6700,7 +6711,7 @@ td.views-field-access {
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 356, ../sass/_modules.scss */
+/* line 369, ../sass/_modules.scss */
 .card.contained .badge-marketplace-feedme, .node-form > div.card .badge-marketplace-feedme,
 #user-profile-form > div.card .badge-marketplace-feedme,
 #user-register-form > div.card .badge-marketplace-feedme, #content .card.search-form .badge-marketplace-feedme {
@@ -6708,7 +6719,7 @@ td.views-field-access {
   height: 4rem;
   display: block;
 }
-/* line 360, ../sass/_modules.scss */
+/* line 373, ../sass/_modules.scss */
 .card.contained .badge-marketplace-feedme img, .node-form > div.card .badge-marketplace-feedme img,
 #user-profile-form > div.card .badge-marketplace-feedme img,
 #user-register-form > div.card .badge-marketplace-feedme img, #content .card.search-form .badge-marketplace-feedme img {
@@ -6716,7 +6727,7 @@ td.views-field-access {
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 366, ../sass/_modules.scss */
+/* line 379, ../sass/_modules.scss */
 .card.contained .badge-search-result, .node-form > div.card .badge-search-result,
 #user-profile-form > div.card .badge-search-result,
 #user-register-form > div.card .badge-search-result, #content .card.search-form .badge-search-result {
@@ -6724,7 +6735,7 @@ td.views-field-access {
   height: 4rem;
   display: block;
 }
-/* line 370, ../sass/_modules.scss */
+/* line 383, ../sass/_modules.scss */
 .card.contained .badge-search-result img, .node-form > div.card .badge-search-result img,
 #user-profile-form > div.card .badge-search-result img,
 #user-register-form > div.card .badge-search-result img, #content .card.search-form .badge-search-result img {
@@ -6732,7 +6743,7 @@ td.views-field-access {
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 376, ../sass/_modules.scss */
+/* line 389, ../sass/_modules.scss */
 .card.contained .teaser, .node-form > div.card .teaser,
 #user-profile-form > div.card .teaser,
 #user-register-form > div.card .teaser, #content .card.search-form .teaser {
@@ -6741,13 +6752,13 @@ td.views-field-access {
   vertical-align: middle;
   padding-right: 1.75rem;
 }
-/* line 381, ../sass/_modules.scss */
+/* line 394, ../sass/_modules.scss */
 .card.contained .teaser p, .node-form > div.card .teaser p,
 #user-profile-form > div.card .teaser p,
 #user-register-form > div.card .teaser p, #content .card.search-form .teaser p {
   margin: 0;
 }
-/* line 383, ../sass/_modules.scss */
+/* line 396, ../sass/_modules.scss */
 .card.contained .prime-title, .node-form > div.card .prime-title,
 #user-profile-form > div.card .prime-title,
 #user-register-form > div.card .prime-title, #content .card.search-form .prime-title {
@@ -6758,7 +6769,7 @@ td.views-field-access {
   padding: 0;
   letter-spacing: normal;
 }
-/* line 392, ../sass/_modules.scss */
+/* line 405, ../sass/_modules.scss */
 .card.contained .meta, .node-form > div.card .meta,
 #user-profile-form > div.card .meta,
 #user-register-form > div.card .meta, #content .card.search-form .meta {
@@ -6767,26 +6778,26 @@ td.views-field-access {
   line-height: 1.25rem;
   display: block;
 }
-/* line 398, ../sass/_modules.scss */
+/* line 411, ../sass/_modules.scss */
 .card.contained .meta span:after, .node-form > div.card .meta span:after,
 #user-profile-form > div.card .meta span:after,
 #user-register-form > div.card .meta span:after, #content .card.search-form .meta span:after {
   content: ', ';
 }
-/* line 403, ../sass/_modules.scss */
+/* line 416, ../sass/_modules.scss */
 .card.contained .meta span:last-of-type:after, .node-form > div.card .meta span:last-of-type:after,
 #user-profile-form > div.card .meta span:last-of-type:after,
 #user-register-form > div.card .meta span:last-of-type:after, #content .card.search-form .meta span:last-of-type:after {
   content: '';
 }
-/* line 408, ../sass/_modules.scss */
+/* line 421, ../sass/_modules.scss */
 .card.contained .extra, .node-form > div.card .extra,
 #user-profile-form > div.card .extra,
 #user-register-form > div.card .extra, #content .card.search-form .extra {
   position: absolute;
   top: 0.5rem;
 }
-/* line 412, ../sass/_modules.scss */
+/* line 425, ../sass/_modules.scss */
 .card.contained .chapter-sticker, .node-form > div.card .chapter-sticker,
 #user-profile-form > div.card .chapter-sticker,
 #user-register-form > div.card .chapter-sticker, #content .card.search-form .chapter-sticker {
@@ -6810,19 +6821,19 @@ td.views-field-access {
   -o-transform-origin: top right;
   transform-origin: top right;
 }
-/* line 430, ../sass/_modules.scss */
+/* line 443, ../sass/_modules.scss */
 .card.contained .chapter-sticker-icon-text, .node-form > div.card .chapter-sticker-icon-text,
 #user-profile-form > div.card .chapter-sticker-icon-text,
 #user-register-form > div.card .chapter-sticker-icon-text, #content .card.search-form .chapter-sticker-icon-text {
   display: none;
 }
-/* line 434, ../sass/_modules.scss */
+/* line 447, ../sass/_modules.scss */
 .node-chapter .card.contained .extra, .node-chapter .node-form > div.card .extra,
 .node-chapter #user-profile-form > div.card .extra,
 .node-chapter #user-register-form > div.card .extra, .node-chapter #content .card.search-form .extra, #content .node-chapter .card.search-form .extra {
   display: none;
 }
-/* line 439, ../sass/_modules.scss */
+/* line 452, ../sass/_modules.scss */
 .team-list .card.contained, .team-list .node-form > div.card,
 .team-list #user-profile-form > div.card,
 .team-list #user-register-form > div.card, .team-list #content .card.search-form, #content .team-list .card.search-form, .related-list .card.contained, .related-list .node-form > div.card,
@@ -6831,7 +6842,7 @@ td.views-field-access {
   margin-bottom: 0;
   border-radius: 0;
 }
-/* line 444, ../sass/_modules.scss */
+/* line 457, ../sass/_modules.scss */
 .team-list .card.contained > a, .team-list .node-form > div.card > a,
 .team-list #user-profile-form > div.card > a,
 .team-list #user-register-form > div.card > a, .team-list #content .card.search-form > a, #content .team-list .card.search-form > a, .related-list .card.contained > a, .related-list .node-form > div.card > a,
@@ -6855,7 +6866,7 @@ td.views-field-access {
   -o-transition-delay: 0, 0, 0, 0;
   transition-delay: 0, 0, 0, 0;
 }
-/* line 451, ../sass/_modules.scss */
+/* line 464, ../sass/_modules.scss */
 .team-list .card.contained > a:hover, .team-list .node-form > div.card > a:hover,
 .team-list #user-profile-form > div.card > a:hover,
 .team-list #user-register-form > div.card > a:hover, .team-list #content .card.search-form > a:hover, #content .team-list .card.search-form > a:hover, .related-list .card.contained > a:hover, .related-list .node-form > div.card > a:hover,
@@ -6865,7 +6876,7 @@ td.views-field-access {
   background-color: rgba(127, 190, 218, 0.2);
   color: #007eb5;
 }
-/* line 458, ../sass/_modules.scss */
+/* line 471, ../sass/_modules.scss */
 .team-list .card.contained .extra, .team-list .node-form > div.card .extra,
 .team-list #user-profile-form > div.card .extra,
 .team-list #user-register-form > div.card .extra, .team-list #content .card.search-form .extra, #content .team-list .card.search-form .extra, .related-list .card.contained .extra, .related-list .node-form > div.card .extra,
@@ -6874,7 +6885,7 @@ td.views-field-access {
   right: 2.25rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 439, ../sass/_modules.scss */
+  /* line 452, ../sass/_modules.scss */
   .team-list .card.contained, .team-list .node-form > div.card,
   .team-list #user-profile-form > div.card,
   .team-list #user-register-form > div.card, .team-list #content .card.search-form, #content .team-list .card.search-form, .related-list .card.contained, .related-list .node-form > div.card,
@@ -6884,7 +6895,7 @@ td.views-field-access {
   }
 }
 @media only screen and (min-width: 69.063rem) {
-  /* line 467, ../sass/_modules.scss */
+  /* line 480, ../sass/_modules.scss */
   .team-list .card.contained > a, .team-list .node-form > div.card > a,
   .team-list #user-profile-form > div.card > a,
   .team-list #user-register-form > div.card > a, .team-list #content .card.search-form > a, #content .team-list .card.search-form > a, .related-list .card.contained > a, .related-list .node-form > div.card > a,
@@ -6893,7 +6904,7 @@ td.views-field-access {
     padding-left: 2rem;
     padding-right: 4rem;
   }
-  /* line 471, ../sass/_modules.scss */
+  /* line 484, ../sass/_modules.scss */
   .team-list .card.contained .extra, .team-list .node-form > div.card .extra,
   .team-list #user-profile-form > div.card .extra,
   .team-list #user-register-form > div.card .extra, .team-list #content .card.search-form .extra, #content .team-list .card.search-form .extra, .related-list .card.contained .extra, .related-list .node-form > div.card .extra,
@@ -6902,7 +6913,7 @@ td.views-field-access {
     right: 3.25rem;
   }
 }
-/* line 480, ../sass/_modules.scss */
+/* line 493, ../sass/_modules.scss */
 .grid .card.contained > a, .grid .node-form > div.card > a,
 .grid #user-profile-form > div.card > a,
 .grid #user-register-form > div.card > a, .grid #content .card.search-form > a, #content .grid .card.search-form > a {
@@ -6914,7 +6925,7 @@ td.views-field-access {
   -o-transition: -o-transform 0.1s ease-in-out;
   transition: transform 0.1s ease-in-out;
 }
-/* line 486, ../sass/_modules.scss */
+/* line 499, ../sass/_modules.scss */
 .grid .card.contained > a:hover, .grid .node-form > div.card > a:hover,
 .grid #user-profile-form > div.card > a:hover,
 .grid #user-register-form > div.card > a:hover, .grid #content .card.search-form > a:hover, #content .grid .card.search-form > a:hover {
@@ -6926,46 +6937,46 @@ td.views-field-access {
   -o-transform: scale(1.05);
   transform: scale(1.05);
 }
-/* line 492, ../sass/_modules.scss */
+/* line 505, ../sass/_modules.scss */
 .grid .card.contained .extra, .grid .node-form > div.card .extra,
 .grid #user-profile-form > div.card .extra,
 .grid #user-register-form > div.card .extra, .grid #content .card.search-form .extra, #content .grid .card.search-form .extra {
   right: 1.75rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 478, ../sass/_modules.scss */
+  /* line 491, ../sass/_modules.scss */
   .grid .card.contained, .grid .node-form > div.card,
   .grid #user-profile-form > div.card,
   .grid #user-register-form > div.card, .grid #content .card.search-form, #content .grid .card.search-form {
     text-align: center;
   }
-  /* line 498, ../sass/_modules.scss */
+  /* line 511, ../sass/_modules.scss */
   .grid .card.contained > a, .grid .node-form > div.card > a,
   .grid #user-profile-form > div.card > a,
   .grid #user-register-form > div.card > a, .grid #content .card.search-form > a, #content .grid .card.search-form > a {
     display: block;
     padding: 0 0 2rem 0;
   }
-  /* line 502, ../sass/_modules.scss */
+  /* line 515, ../sass/_modules.scss */
   .grid .card.contained.node-event > a, .grid .node-form > div.card.node-event > a,
   .grid #user-profile-form > div.card.node-event > a,
   .grid #user-register-form > div.card.node-event > a, .grid #content .card.node-event.search-form > a, #content .grid .card.node-event.search-form > a {
     padding-right: 0;
   }
-  /* line 505, ../sass/_modules.scss */
+  /* line 518, ../sass/_modules.scss */
   .grid .card.contained .media, .grid .node-form > div.card .media,
   .grid #user-profile-form > div.card .media,
   .grid #user-register-form > div.card .media, .grid #content .card.search-form .media, #content .grid .card.search-form .media {
     float: none;
     margin: 0 0 1rem 0;
   }
-  /* line 509, ../sass/_modules.scss */
+  /* line 522, ../sass/_modules.scss */
   .grid .card.contained .cover, .grid .node-form > div.card .cover,
   .grid #user-profile-form > div.card .cover,
   .grid #user-register-form > div.card .cover, .grid #content .card.search-form .cover, #content .grid .card.search-form .cover {
     display: block;
   }
-  /* line 512, ../sass/_modules.scss */
+  /* line 525, ../sass/_modules.scss */
   .grid .card.contained .avatar, .grid .node-form > div.card .avatar,
   .grid #user-profile-form > div.card .avatar,
   .grid #user-register-form > div.card .avatar, .grid #content .card.search-form .avatar, #content .grid .card.search-form .avatar {
@@ -6975,7 +6986,7 @@ td.views-field-access {
     background-color: #FFF;
     margin: -4rem auto 0 auto;
   }
-  /* line 519, ../sass/_modules.scss */
+  /* line 532, ../sass/_modules.scss */
   .grid .card.contained .badge-chapter, .grid .node-form > div.card .badge-chapter,
   .grid #user-profile-form > div.card .badge-chapter,
   .grid #user-register-form > div.card .badge-chapter, .grid #content .card.search-form .badge-chapter, #content .grid .card.search-form .badge-chapter {
@@ -6984,7 +6995,7 @@ td.views-field-access {
     font-size: 1.25rem;
     padding-bottom: 1rem;
   }
-  /* line 524, ../sass/_modules.scss */
+  /* line 537, ../sass/_modules.scss */
   .grid .card.contained .badge-chapter:after, .grid .node-form > div.card .badge-chapter:after,
   .grid #user-profile-form > div.card .badge-chapter:after,
   .grid #user-register-form > div.card .badge-chapter:after, .grid #content .card.search-form .badge-chapter:after, #content .grid .card.search-form .badge-chapter:after {
@@ -6992,21 +7003,21 @@ td.views-field-access {
     width: 1rem;
     border-radius: 0.25rem 0 0 0;
   }
-  /* line 530, ../sass/_modules.scss */
+  /* line 543, ../sass/_modules.scss */
   .grid .card.contained .badge-cal, .grid .node-form > div.card .badge-cal,
   .grid #user-profile-form > div.card .badge-cal,
   .grid #user-register-form > div.card .badge-cal, .grid #content .card.search-form .badge-cal, #content .grid .card.search-form .badge-cal {
     width: 6rem;
     height: 6rem;
   }
-  /* line 533, ../sass/_modules.scss */
+  /* line 546, ../sass/_modules.scss */
   .grid .card.contained .badge-cal .month, .grid .node-form > div.card .badge-cal .month,
   .grid #user-profile-form > div.card .badge-cal .month,
   .grid #user-register-form > div.card .badge-cal .month, .grid #content .card.search-form .badge-cal .month, #content .grid .card.search-form .badge-cal .month {
     font-size: 1.25rem;
     line-height: 2rem;
   }
-  /* line 537, ../sass/_modules.scss */
+  /* line 550, ../sass/_modules.scss */
   .grid .card.contained .badge-cal .day, .grid .node-form > div.card .badge-cal .day,
   .grid #user-profile-form > div.card .badge-cal .day,
   .grid #user-register-form > div.card .badge-cal .day, .grid #content .card.search-form .badge-cal .day, #content .grid .card.search-form .badge-cal .day {
@@ -7015,7 +7026,7 @@ td.views-field-access {
     padding-bottom: 0.5rem;
     letter-spacing: -0.125rem;
   }
-  /* line 545, ../sass/_modules.scss */
+  /* line 558, ../sass/_modules.scss */
   .grid .card.contained .badge-organization, .grid .node-form > div.card .badge-organization,
   .grid #user-profile-form > div.card .badge-organization,
   .grid #user-register-form > div.card .badge-organization, .grid #content .card.search-form .badge-organization, #content .grid .card.search-form .badge-organization,
@@ -7028,7 +7039,7 @@ td.views-field-access {
     width: 6rem;
     height: 6rem;
   }
-  /* line 549, ../sass/_modules.scss */
+  /* line 562, ../sass/_modules.scss */
   .grid .card.contained .teaser, .grid .node-form > div.card .teaser,
   .grid #user-profile-form > div.card .teaser,
   .grid #user-register-form > div.card .teaser, .grid #content .card.search-form .teaser, #content .grid .card.search-form .teaser {
@@ -7036,21 +7047,21 @@ td.views-field-access {
     width: auto;
     padding: 0 1rem;
   }
-  /* line 554, ../sass/_modules.scss */
+  /* line 567, ../sass/_modules.scss */
   .grid .card.contained .prime-title, .grid .node-form > div.card .prime-title,
   .grid #user-profile-form > div.card .prime-title,
   .grid #user-register-form > div.card .prime-title, .grid #content .card.search-form .prime-title, #content .grid .card.search-form .prime-title {
     font-size: 1.5rem;
     line-height: 1.16667;
   }
-  /* line 559, ../sass/_modules.scss */
+  /* line 572, ../sass/_modules.scss */
   .grid .card.contained .meta, .grid .node-form > div.card .meta,
   .grid #user-profile-form > div.card .meta,
   .grid #user-register-form > div.card .meta, .grid #content .card.search-form .meta, #content .grid .card.search-form .meta {
     font-size: 1rem;
     line-height: 1.5;
   }
-  /* line 563, ../sass/_modules.scss */
+  /* line 576, ../sass/_modules.scss */
   .grid .card.contained .extra, .grid .node-form > div.card .extra,
   .grid #user-profile-form > div.card .extra,
   .grid #user-register-form > div.card .extra, .grid #content .card.search-form .extra, #content .grid .card.search-form .extra {
@@ -7059,7 +7070,7 @@ td.views-field-access {
     left: 0.5rem;
     right: auto;
   }
-  /* line 569, ../sass/_modules.scss */
+  /* line 582, ../sass/_modules.scss */
   .grid .card.contained .chapter-sticker, .grid .node-form > div.card .chapter-sticker,
   .grid #user-profile-form > div.card .chapter-sticker,
   .grid #user-register-form > div.card .chapter-sticker, .grid #content .card.search-form .chapter-sticker, #content .grid .card.search-form .chapter-sticker {
@@ -7072,7 +7083,7 @@ td.views-field-access {
     -o-transform: rotate(0);
     transform: rotate(0);
   }
-  /* line 575, ../sass/_modules.scss */
+  /* line 588, ../sass/_modules.scss */
   .grid .card.contained .chapter-sticker-icon-text, .grid .node-form > div.card .chapter-sticker-icon-text,
   .grid #user-profile-form > div.card .chapter-sticker-icon-text,
   .grid #user-register-form > div.card .chapter-sticker-icon-text, .grid #content .card.search-form .chapter-sticker-icon-text, #content .grid .card.search-form .chapter-sticker-icon-text {

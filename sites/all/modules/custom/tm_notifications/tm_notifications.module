@@ -316,6 +316,22 @@ function tm_notifications_mail($key, &$message, $params) {
   // STEP 8. LOAD HTML TEMPLATE INTO EMAIL BODY
   $message['body'] = $template;
 
+  // STEP 9. Calendar attachment
+  if (isset($params['tokens']['__EVENT_CALENDAR_LINK__'])) {
+
+    $event = node_load($params['tokens']['node']->nid);
+    $ical_filename = tm_events_generate_ical_filename($event);
+    $ical = tm_events_generate_ical($event);
+
+    $attachment = array(
+      'filecontent' => $ical,
+      'filename' => $ical_filename,
+      'filemime' => 'text/calendar; charset=utf-8'
+    );
+    $message['params']['attachments'][] = $attachment;
+
+  }
+
   // STEP 9. Cron Flag
   // TODO: This is untested with mimemail
   // Notifications that are likely to be sent to multiple user at the

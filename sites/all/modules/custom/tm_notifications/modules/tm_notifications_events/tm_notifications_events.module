@@ -354,7 +354,10 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
       }
     }
    
-    tm_notifications_notify('events_register_flag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url, '__MAP_LINK__' => $map_link_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time, '__REGISTER_EVENT_MESSAGE__' => $message, '__REGISTER_SUBJECT__' => $member_register_subject, '__REGISTER_INTRO__' => $member_register_intro, '__REGISTER_PAYMENT_NOTE__' => $member_register_payment_note));
+    // calendar link
+    $event_calendar_link = "events/download-calendar/" . $event->nid;
+
+    tm_notifications_notify('events_register_flag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__EVENT_URL__' => $event_url, '__MAP_LINK__' => $map_link_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time, '__REGISTER_EVENT_MESSAGE__' => $message, '__REGISTER_SUBJECT__' => $member_register_subject, '__REGISTER_INTRO__' => $member_register_intro, '__REGISTER_PAYMENT_NOTE__' => $member_register_payment_note, '__EVENT_CALENDAR_LINK__' => $event_calendar_link));
   }
 
   // events_register_unflag
@@ -365,7 +368,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
   // waitlist_register_flag
   if (($flag_or_unflag == "flag") && ($flag->name == 'event_waitlist')) {
 
-    // register event message
+    // waitlist event message
     $message = "";
     if (isset($event->field_waitlist_event_message['und'][0]['value'])) {
       $message = trim(strip_tags(check_plain($event->field_waitlist_event_message['und'][0]['value'])));

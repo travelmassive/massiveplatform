@@ -46,7 +46,8 @@ function _tm_event_message($field, $title = NULL) {
           $field_register_event_message = trim($node->field_register_event_message['und'][0]['value']);
           $field_register_event_message = strip_tags(trim($field_register_event_message));
           $extra = "<p>" . $field_register_event_message . "</p>";
-        }     
+        }
+
       }
 
       // waitlisted for event and waitlist message
@@ -260,6 +261,16 @@ function _tm_fulldate_event($field, $title = NULL) {
 
     $event_html .= "</span>";
 
+  }
+
+  // show calendar link if logged in
+  if (user_is_logged_in()) {
+    $registered_flag = flag_get_flag('event_register');
+    $registered_for_event = ($registered_flag && $registered_flag->is_flagged($event->nid, $user->uid));
+    if ($registered_for_event) {
+      $ical_link = "/events/download-ical/" . $event->nid;
+      $event_html .= '<div class="detail-add-calendar"><a href="' . t($ical_link) . '">Add to calendar</a></div>';
+    }
   }
 
   return $event_html;

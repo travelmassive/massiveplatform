@@ -159,6 +159,13 @@
       }
     }
 
+    .detail-add-calendar {
+      margin: 1rem 0 0 0;
+      a {
+        @extend .cta-inline;
+      }
+    }
+
     h2 { @extend .visually-hidden; }
     p {
       margin: 0 0 1rem 0;
@@ -218,6 +225,12 @@
         padding-right: 7rem;
       }
       .detail-venue-link {
+        position: absolute;
+        top: 0;
+        right: 2rem;
+        margin: 0;
+      }
+      .detail-add-calendar {
         position: absolute;
         top: 0;
         right: 2rem;

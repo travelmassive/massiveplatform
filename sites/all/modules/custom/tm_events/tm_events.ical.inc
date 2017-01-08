@@ -137,6 +137,7 @@ if ($single_event) {
 	$ical = str_replace("__URL__", tm_events_ical_escape_string($uri), $ical);
 	$ical = str_replace("__SUMMARY__", tm_events_ical_escape_string($summary), $ical);
 	$ical = str_replace("__DTSTART__", date_format($datestart, 'Ymd\THis'), $ical);
+	$ical = str_replace("__VTIMEZONE__", $event_timezone, $ical);
 
 	return $ical;
 }

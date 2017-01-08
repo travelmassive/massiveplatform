@@ -101,9 +101,10 @@ function tm_events_generate_ical($event, $single_event = true) {
 	$location = $venue_name . "\n" . $event->field_location[LANGUAGE_NONE][0]['value'];
 	$location = str_replace("\n", ", ", $location);
 	$description = "";
-	if (isset($event->body[LANGUAGE_NONE][0]['safe_value'])) {
-		$description = $event->body[LANGUAGE_NONE][0]['safe_value'];
+	if (isset($event->body[LANGUAGE_NONE][0]['value'])) {
+		$description = $event->body[LANGUAGE_NONE][0]['value'];
 	}
+	
 	$uri = $conf["tm_email_server_http"] . "://" . $conf["tm_email_server_url_domain"] . "/" . drupal_get_path_alias('node/' . $event->nid);
 
 	$summary = $event->title;
@@ -119,9 +120,9 @@ UID:__UID__
 DTSTART;TZID=__VTIMEZONE__:__DTSTART__
 DTEND;TZID=__VTIMEZONE__:__DTEND__
 DTSTAMP:__DTSTAMP__
-LOCATION:__LOCATION__
 DESCRIPTION:__DESCRIPTION__
-URL;VALUE=URI:__URL__
+LOCATION:__LOCATION__
+URL:__URL__
 SUMMARY:__SUMMARY__
 END:VEVENT";
 
@@ -146,6 +147,16 @@ if ($single_event) {
  * Helper method to escape string for iCal format
  */
 function tm_events_ical_escape_string($str) {
+
+	// strip tags
+	$str = strip_tags($str);
+
 	// http://stackoverflow.com/questions/6735500/create-ical-calendar-event-with-php
-	return preg_replace('/([\,;])/','\\\$1', $str);
+	$str = preg_replace('/([\,;])/','\\\$1', $str);
+
+	// replace new lines with \\n
+	$str = str_replace(array("\r\n", "\r", "\n"), "\\n", $str); 
+
+	return $str;
+
 }

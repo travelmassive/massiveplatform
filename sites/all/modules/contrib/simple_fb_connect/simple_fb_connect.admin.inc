@@ -2,16 +2,16 @@
 
 /**
  * @file
- * Administration page callbacks for the simple fb connect module.
+ * Administration page callbacks for the Simple FB Connect module.
  */
 function simple_fb_connect_api_keys_settings($form, &$form_state) {
-  // Check that Facebook PHP SDK is properly installed and that the version is 4.0.x
+  // Check that Facebook PHP SDK is properly installed and that the version is 4.0.x.
   $sdk = libraries_detect('facebook-php-sdk-v4');
   if (!is_array($sdk) || !$sdk['installed'] || $sdk['version'] < '4.0' || $sdk['version'] >= '4.1') {
     drupal_set_message(t('Facebook PHP SDK v4 not properly installed. Check README.txt and <a href="@url">Drupal status report</a> for further details!', array('@url' => url('admin/reports/status'))), 'error');
   }
 
-  // show instructions to README.txt and Drupal account settings
+  // Show instructions to README.txt and Drupal account settings.
   drupal_set_message(t('Installation and configuration instructions can be found from the README.txt'));
   drupal_set_message(t('Also check <a href="@url">Drupal account settings</a>', array('@url' => url('admin/config/people/accounts'))));
 

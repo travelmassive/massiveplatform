@@ -8,11 +8,11 @@ define("SIMPLE_FB_CONNECT_DEFAULT_DIMENSIONS_STRING", "1024x1024");
 define("SIMPLE_FB_CONNECT_DEFAULT_WIDTH", 1024);
 define("SIMPLE_FB_CONNECT_DEFAULT_HEIGHT", 1024);
 
-use Facebook\FacebookSession;
 use Facebook\FacebookRedirectLoginHelper;
-use Facebook\FacebookSDKException;
 use Facebook\FacebookRequest;
 use Facebook\FacebookRequestException;
+use Facebook\FacebookSDKException;
+use Facebook\FacebookSession;
 use Facebook\GraphObject;
 
 /**
@@ -62,7 +62,7 @@ function simple_fb_connect_libraries_info() {
     'download url' => 'https://github.com/facebook/facebook-php-sdk-v4/releases',
     'version arguments' => array(
       'file' => 'README.md',
-      // pattern to search for: Stable-4.0.23
+      // Pattern to search for: Stable-4.0.23.
       'pattern' => '@Stable-(\d*\.\d*\.\d*)@'
     ),
     'xautoload' => function($adapter) {
@@ -73,65 +73,42 @@ function simple_fb_connect_libraries_info() {
 }
 
 /**
- * Implements hook_rules_event_info().
- *
- * Defines a rules event to react on Facebook login and user creation
- *
- * @ingroup rules
- */
-function simple_fb_connect_rules_event_info() {
-  return array(
-    'simple_fb_connect_login' => array(
-      'label' => t('User logs in to their existing Drupal account with Facebook'),
-      'module' => 'simple_fb_connect',
-      'group' => t('Social Media'),
-      'variables' => array(
-        'user' => array('type' => 'user', 'label' => t('The user logging in with Facebook')),
-      ),
-    ),
-    'simple_fb_connect_registration' => array(
-      'label' => t('User registers a new account connected to Facebook'),
-      'module' => 'simple_fb_connect',
-      'group' => t('Social Media'),
-      'variables' => array(
-        'user' => array('type' => 'user', 'label' => t('The user registering the account')),
-      ),
-    ),
-  );
-}
-
-/**
  * Page callback for /user/simple-fb-connect.
  *
  * Redirects the user to FB for authentication.
  */
 function simple_fb_connect_redirect_to_fb() {
-  // Validate configuartion
+  // Validate configuration
   if (!simple_fb_connect_initialize()) {
-    drupal_goto("user");
+    drupal_goto('user');
   }
 
-  // Save the post login URL to $_SESSION if it was explicitly defined.
-  $destination = drupal_get_destination();
-  if (!url_is_external($destination['destination']) && $destination['destination'] != 'user/simple-fb-connect') {
-    $_SESSION['simple_fb_connect']['post_login_url'] = $destination['destination'];
-    // We need to unset the GET parameter so that we actually redirect the user to FB
-    unset($_GET['destination']);
-  }
+  // FacebookRedirectLoginHelper requires session to be started.
+  drupal_session_start();
 
-  // Generate the URL where FB will return the user after authentication
+  // Generate the URL where FB will return the user after authentication.
   $return_url = simple_fb_connect_get_return_url();
+  $login_helper = new FacebookRedirectLoginHelper($return_url);
 
   // Allow other modules to modify FB permission scope
   $scope = simple_fb_connect_get_scope();
 
-  // Redirect the user to Facebook for authentication
-  $login_helper = new FacebookRedirectLoginHelper($return_url);
-  $login_helper->disableSessionStatusCheck();
+  // Save the post login URL to session variables.
+  simple_fb_connect_save_post_login_url();
+
+  // Generate the URL where the user will be redirected for FB login.
+  // If the user did not have email permission granted on previous attempt,
+  // we use the re-request URL requesting only the email address.
   $login_url = $login_helper->getLoginUrl($scope);
+  if (isset($_SESSION['simple_fb_connect']['reprompt'])) {
+    $scope = array('public_profile', 'email');
+    $login_url = $login_helper->getReRequestUrl($scope);
+  }
+
+  // Redirect the user to Facebook for login.
   drupal_goto($login_url);
 
-  // We should never reach this point because the user was redirected
+  // We should never reach this point because the user was redirected.
   return MENU_ACCESS_DENIED;
 }
 
@@ -143,59 +120,65 @@ function simple_fb_connect_redirect_to_fb() {
 function simple_fb_connect_return_from_fb() {
   // Validate configuartion
   if (!simple_fb_connect_initialize()) {
-    drupal_goto("user");
+    drupal_goto('user');
   }
 
-  // FB SDK can start FacebookSession from the page where FB returned the user
+  // FB SDK can start FacebookSession from the page where FB returned the user.
   $return_url = simple_fb_connect_get_return_url();
   $login_helper = new FacebookRedirectLoginHelper($return_url);
   if (!simple_fb_connect_save_session($login_helper)) {
     drupal_set_message(t("Facebook login failed."), "error");
-    drupal_goto("user");
+    drupal_goto('user');
   }
 
-  // Get a validated FacebookSession object
+  // Get a validated FacebookSession object.
   if (!$fb_session = simple_fb_connect_get_session()) {
     drupal_set_message(t("Facebook login failed."), "error");
-    drupal_goto("user");
+    simple_fb_connect_destroy_session();
+    drupal_goto('user');
   }
 
-  // Get the user's Facebook profile from Facebook API
+  // Check that user authorized our app to access user's email address.
+  if (!simple_fb_connect_check_permission($fb_session, 'email')) {
+    drupal_set_message(t('Facebook login failed. This site requires permission to get your email address from Facebook. Please try again.'), 'error');
+
+    // Preserve the post login URL from the previous attempt.
+    $post_login_url = simple_fb_connect_get_post_login_url();
+    simple_fb_connect_destroy_session();
+    // Set the email permission reprompt flag and save post-login URL.
+    $_SESSION['simple_fb_connect']['reprompt'] = TRUE;
+    $_SESSION['simple_fb_connect']['post_login_url'] = $post_login_url;
+    drupal_goto('user');
+  }
+
+  // Get the user's Facebook profile from Facebook API.
   if (!$fb_profile = simple_fb_connect_get_fb_profile($fb_session)) {
     drupal_set_message(t("Facebook login failed."), "error");
-    drupal_goto("user");
+    simple_fb_connect_destroy_session();
+    drupal_goto('user');
   }
 
-  // Get user's email address from the profile
+  // Get user's email address from the profile. It is possible that FB profile
+  // does not have email address (user can sign up with a phone number only).
   if (!$email = simple_fb_connect_get_email($fb_profile)) {
-    drupal_set_message(t('Facebook login failed. This site requires permission to get your email address.'), 'error');
-    drupal_goto("user");
+    drupal_set_message(t('Facebook login failed. This site requires an email address. Please add one in your Facebook profile.'), 'error');
+    simple_fb_connect_destroy_session();
+    drupal_goto('user');
   }
 
-  // Check if we have an existing Drupal user with the same email address and try to log in
-  // Modified by ianc
-  // we track facebook id in user field and compare
-  // this allows users to change email address and still remain signed in
-  $drupal_user = false;
-  $fb_user_array = $fb_profile->asArray();
-  if (isset($fb_user_array["id"])) {
-    $drupal_user = tm_users_get_user_by_fb_id($fb_user_array["id"]);
-  }
-  if (!$drupal_user) {
-    $drupal_user = user_load_by_mail($email);
-  }
-
-  if ($drupal_user) {
+  // Check if we have an existing Drupal user with the same email address and try to log in.
+  if ($drupal_user = user_load_by_mail($email)) {
     if (simple_fb_connect_login_user($drupal_user)) {
       $post_login_url = simple_fb_connect_get_post_login_url();
       simple_fb_connect_go_to_redirect_url($post_login_url);
     }
     else {
+      simple_fb_connect_destroy_session();
       drupal_goto('user');
     }
   }
 
-  // If there was no existing user, try to create a new user and try to log in
+  // If there was no existing user, try to create a new user and try to log in.
   if ($drupal_user = simple_fb_connect_create_user($fb_profile, $fb_session)) {
     if (simple_fb_connect_login_user($drupal_user)) {
       // Check if new users should be redirected to Drupal user form.
@@ -210,30 +193,32 @@ function simple_fb_connect_return_from_fb() {
       simple_fb_connect_go_to_redirect_url($post_login_url);
     }
     else {
-      // New user was succesfully created but the account is blocked
+      // New user was successfully created but the account is blocked.
       drupal_set_message(t('You will receive an email when site administrator activates your account.'), 'warning');
       $post_login_url = simple_fb_connect_get_post_login_url();
+      simple_fb_connect_destroy_session();
       simple_fb_connect_go_to_redirect_url($post_login_url);
     }
   }
   else {
-    // New user could not be created
+    // New user could not be created.
+    simple_fb_connect_destroy_session();
     drupal_goto('user');
   }
 
-  // We should never reach this point because the user is redirected in all cases to some other page
-  // If we ever get here, return "access denied" page
+  // We should never reach this point because the user is redirected in all
+  // cases to some other page. If we ever get here, return "access denied" page.
   return MENU_ACCESS_DENIED;
 }
 
 /**
- * This function will initialize the FB App
+ * Initializes the FB App.
  *
  * @return
  *   TRUE if initialization was OK. FALSE otherwise.
  */
 function simple_fb_connect_initialize() {
-  // Check that PHP version is 5.4 or higher
+  // Check that PHP version is 5.4 or higher.
   if (version_compare(phpversion(), '5.4.0', '<')) {
     drupal_set_message(t('Simple FB Connect not configured properly.'), 'error');
     watchdog(
@@ -245,7 +230,7 @@ function simple_fb_connect_initialize() {
     return FALSE;
   }
 
-  // Check that Facebook PHP SDK is properly installed and that the version is 4.0.x
+  // Check that Facebook PHP SDK is properly installed and that the version is 4.0.x.
   $sdk = libraries_detect('facebook-php-sdk-v4');
   if (!is_array($sdk) || !$sdk['installed'] || $sdk['version'] < '4.0' || $sdk['version'] >= '4.1') {
     drupal_set_message(t('Facebook PHP SDK not properly installed.'), 'error');
@@ -258,7 +243,7 @@ function simple_fb_connect_initialize() {
     return FALSE;
   }
 
-  // Check that the module is configured properly
+  // Check that the module is configured properly.
   $app_id = variable_get('simple_fb_connect_appid', 0);
   $app_secret = variable_get('simple_fb_connect_skey', 0);
 
@@ -273,31 +258,31 @@ function simple_fb_connect_initialize() {
     return FALSE;
   }
 
-  // If we have not returned FALSE, SDK is found and module has been configured
+  // If we have not returned FALSE, SDK is found and module has been configured.
   FacebookSession::setDefaultApplication($app_id, $app_secret);
   return TRUE;
 }
 
 /**
- * This function will check that we have a valid FB session after Facebook has
- * returned the user back to our site. Users access token is saved to $_SESSION.
+ * Checks that we have a valid FB session after Facebook has returned the user
+ * back to our site. User's access token is saved to $_SESSION.
  *
  * @param FacebookRedirectLoginHelper $login_helper
- *   FacebookRedirectLoginHelper object
+ *   FacebookRedirectLoginHelper object.
  * @return
- *   FacebookSession object if we have a valid FB session, FALSE otherwise
+ *   FacebookSession object if we have a valid FB session, FALSE otherwise.
  */
 function simple_fb_connect_save_session(FacebookRedirectLoginHelper $login_helper) {
   try {
     $fb_session = $login_helper->getSessionFromRedirect();
     if ($fb_session) {
-      // Store user access token to $_SESSION
+      // Store user access token to $_SESSION.
       $_SESSION['simple_fb_connect']['user_token'] = $fb_session->getToken();
       return TRUE;
     }
     else {
       // If the user cancels the dialog or return URL is invalid,
-      // Facebook will not throw an exception but will return NULL
+      // Facebook will not throw an exception but will return NULL.
       watchdog(
         'simple_fb_connect',
         'Could not start FB session. User cancelled the dialog in FB or return URL was not valid.',
@@ -307,7 +292,7 @@ function simple_fb_connect_save_session(FacebookRedirectLoginHelper $login_helpe
     }
   }
   catch (FacebookRequestException $ex) {
-    // When Facebook returns an error
+    // When Facebook returns an error.
     watchdog(
       'simple_fb_connect',
       'Could not save FB session. FacebookRequestException: @message',
@@ -316,7 +301,7 @@ function simple_fb_connect_save_session(FacebookRedirectLoginHelper $login_helpe
     );
   }
   catch (\Exception $ex) {
-    // When validation fails or other local issues
+    // When validation fails or other local issues.
     watchdog(
       'simple_fb_connect',
       'Could not save FB session. Exception: @message',
@@ -328,7 +313,7 @@ function simple_fb_connect_save_session(FacebookRedirectLoginHelper $login_helpe
 }
 
 /**
- * This function will load the user access token from $_SESSION and validate it.
+ * Loads the user's access token from $_SESSION and validates it.
  *
  * @return
  *   FacebookSession object if access token was found and session is valid. FALSE otherwise.
@@ -336,15 +321,13 @@ function simple_fb_connect_save_session(FacebookRedirectLoginHelper $login_helpe
 function simple_fb_connect_get_session() {
   static $fb_session = NULL;
 
-  // We are only executing the following code when this function is called for the first time
+  // We are only executing the following code when this function is called for the first time.
   if (is_null($fb_session)) {
-    // debug message
-    // drupal_set_message("Validating session... We only want to see this message once per page load.");
-    if (isset($_SESSION) && isset($_SESSION['simple_fb_connect'])) {
+    if (isset($_SESSION['simple_fb_connect']['user_token'])) {
       $user_token = $_SESSION['simple_fb_connect']['user_token'];
 
       try {
-        // Check that we are able to start a session with the token
+        // Check that we are able to start a session with the token.
         $fb_session = new FacebookSession($user_token);
         $fb_session->validate();
         return $fb_session;
@@ -368,7 +351,7 @@ function simple_fb_connect_get_session() {
         );
       }
     }
-    // Return FALSE if we don't have a session at all or if the access token was not valid
+    // Return FALSE if we don't have a session at all or if the access token was not valid.
     $fb_session = FALSE;
   }
 
@@ -376,14 +359,73 @@ function simple_fb_connect_get_session() {
 }
 
 /**
- * Makes an API call to get user's Facebook profile
+ * Destroys the session if user was not logged in.
+ *
+ * @see https://www.drupal.org/node/2829558
+ */
+function simple_fb_connect_destroy_session() {
+  // Remove all other session keys except 'messages' which is preserved
+  // so that we can display a message about a failed login.
+  foreach ($_SESSION as $key => $value) {
+    if ($key != 'messages') {
+      unset($_SESSION[$key]);
+    }
+  }
+}
+
+/**
+ * Makes an API call to check if user has granted given permission.
  *
  * @param Facebook\FacebookSession $fb_session
- *   FacebookSession object
+ *   FacebookSession object.
+ *
+ * @param string $permission_to_check
+ *   Permission to check.
+ *
+ * @return bool
+ *   True if user has granted given permission.
+ *   False otherwise.
+ */
+function simple_fb_connect_check_permission(FacebookSession $fb_session, $permission_to_check) {
+  try {
+    // Make the API call to Facebook.
+    $request = new FacebookRequest($fb_session, 'GET', '/me/permissions');
+    $permissions = $request->execute()->getGraphObject()->asArray();
+
+    foreach ($permissions as $permission) {
+      if ($permission->permission == $permission_to_check && $permission->status == 'granted') {
+        return TRUE;
+      }
+    }
+  } catch (FacebookRequestException $ex) {
+    watchdog(
+      'simple_fb_connect',
+      'Error checking permission: FacebookRequestException. Error details: @message',
+      array('@message' => json_encode($ex->getResponse())),
+      WATCHDOG_WARNING
+    );
+  } catch (\Exception $ex) {
+    watchdog(
+      'simple_fb_connect',
+      'Error checking permission: Unhandled exception. Error details: @message',
+      array('@message' => $ex->getMessage()),
+      WATCHDOG_WARNING
+    );
+  }
+
+  // We don't have permission or we got an exception during the API call.
+  return FALSE;
+}
+
+/**
+ * Makes an API call to get user's Facebook profile.
+ *
+ * @param Facebook\FacebookSession $fb_session
+ *   FacebookSession object.
  *
  * @return Facebook\GraphObject|false
- *   GraphObject representing the user
- *   False if exception was thrown
+ *   GraphObject representing the user.
+ *   False if exception was thrown.
  */
 function simple_fb_connect_get_fb_profile(FacebookSession $fb_session) {
   try {
@@ -408,22 +450,22 @@ function simple_fb_connect_get_fb_profile(FacebookSession $fb_session) {
     );
   }
 
-  // Something went wrong
+  // Something went wrong.
   return FALSE;
 }
 
 /**
- * Makes an API call to get user's Facebook profile picture
+ * Makes an API call to get user's Facebook profile picture.
  *
  * @param Facebook\FacebookSession $fb_session
- *   FacebookSession object
+ *   FacebookSession object.
  *
  * @return int|false
- *   File id (fid) of the Drupal file object if download was succesfull
- *   False on errors
+ *   File id (fid) of the Drupal file object if download was successful.
+ *   False on errors.
  */
 function simple_fb_connect_get_fb_profile_pic(FacebookSession $fb_session) {
-  // Get desired dimensions from module settings
+  // Get desired dimensions from module settings.
   $dimensions_in_text = variable_get('user_picture_dimensions', SIMPLE_FB_CONNECT_DEFAULT_DIMENSIONS_STRING);
   $dimensions = explode('x', $dimensions_in_text);
   if (count($dimensions) == 2) {
@@ -435,7 +477,7 @@ function simple_fb_connect_get_fb_profile_pic(FacebookSession $fb_session) {
     $height = SIMPLE_FB_CONNECT_DEFAULT_HEIGHT;
   }
 
-  // Check that target directory is writeable
+  // Check that target directory is writeable.
   $picture_directory = file_default_scheme() . '://' . variable_get('user_picture_path', 'pictures/');
   if (!file_prepare_directory($picture_directory, FILE_CREATE_DIRECTORY)) {
     watchdog(
@@ -447,13 +489,20 @@ function simple_fb_connect_get_fb_profile_pic(FacebookSession $fb_session) {
     return FALSE;
   }
 
-  // Call Graph API to request profile picture
+  // Call Graph API to request profile picture.
   try {
     $request = new FacebookRequest(
         $fb_session, 'GET', '/me/picture?width=' . $width . '&height=' . $height . '&redirect=false');
-    $picture_url = $request->execute()->getGraphObject()->getProperty('url');
+    $graph_object = $request->execute()->getGraphObject();
+
+    // We don't download the FB default silhouettes, only real pictures.
+    $is_default_picture = (bool) $graph_object->getProperty('is_silhouette');
+    if ($is_default_picture) {
+      return FALSE;
+    }
 
     // Save the picture locally. Use FB user_id as file name.
+    $picture_url = $graph_object->getProperty('url');
     $fb_user_id = $fb_session->getSessionInfo()->getProperty('user_id');
     $destination = file_default_scheme() . '://' . variable_get('user_picture_path', 'pictures') . '/' . check_plain($fb_user_id) . '.jpg';
     if ($file = system_retrieve_file($picture_url, $destination, TRUE, FILE_EXISTS_REPLACE)) {
@@ -490,21 +539,21 @@ function simple_fb_connect_get_fb_profile_pic(FacebookSession $fb_session) {
 }
 
 /**
- * Returns user's email address from Facebook profile
+ * Returns user's email address from Facebook profile.
  *
  * @param Facebook\GraphObject $fb_profile
- *   User's Facebook profile
+ *   User's Facebook profile.
  *
  * @return string|false
- *   User's email address if found
- *   False otherwise
+ *   User's email address if found.
+ *   False otherwise.
  */
 function simple_fb_connect_get_email(GraphObject $fb_profile) {
   if ($email = $fb_profile->getProperty('email')) {
     return $email;
   }
 
-  // Email address was not found. Log error and return FALSE
+  // Email address was not found. Log error and return FALSE.
   watchdog(
     'simple_fb_connect',
     'No email address in FB user profile',
@@ -518,34 +567,35 @@ function simple_fb_connect_get_email(GraphObject $fb_profile) {
  * Returns an array of Facebook permissions that will be requested from the user.
  *
  * @return
- *   Array of FB permissions
+ *   Array of FB permissions.
  */
 function simple_fb_connect_get_scope() {
   $scope = array();
 
-  // Check if other modules have added any permissions with our hook
+  // Check if other modules have added any permissions with our hook.
   if (sizeof(module_implements('simple_fb_connect_scope_info')) > 0) {
     // Call modules that implement the hook, and let them change scope.
     $scope = module_invoke_all('simple_fb_connect_scope_info', array());
   }
 
-  // add 'email' permission request. This is needed to match the FB user to Drupal user.
+  // Add permission request to public profile and email.
+  $scope[] = 'public_profile';
   $scope[] = 'email';
   return ($scope);
 }
 
 /**
- * Create a new user account for a Facebook user
+ * Creates a new user account for a Facebook user.
  *
  * @param Facebook\GraphObject $fb_profile
- *   Previously loaded FB user profile object
+ *   Previously loaded FB user profile object.
  * @param Facebook\FacebookSession $fb_session
- *   FacebookSession object so that we can load user profile pic
+ *   FacebookSession object so that we can load user profile pic.
  * @return
  *   Drupal user account. FALSE on errors.
  */
 function simple_fb_connect_create_user(GraphObject $fb_profile, FacebookSession $fb_session) {
-  // Check if Drupal account settings allow users to register
+  // Check if Drupal account settings allow users to register.
   if (!variable_get('user_register', 1)) {
     drupal_set_message(t('Creation of new accounts on this site is disabled.'), 'error');
     watchdog(
@@ -557,7 +607,7 @@ function simple_fb_connect_create_user(GraphObject $fb_profile, FacebookSession 
     return FALSE;
   }
 
-  // Check if module settings allow users to register
+  // Check if module settings allow users to register.
   if (variable_get('simple_fb_connect_login_only', 0)) {
     drupal_set_message(t('Only registered users can log in with Facebook.'), 'error');
     watchdog(
@@ -573,14 +623,24 @@ function simple_fb_connect_create_user(GraphObject $fb_profile, FacebookSession 
     $real_name = $fb_profile->getProperty('name');
     $email = $fb_profile->getProperty('email');
 
-    // Make sure username will be unique
+    // Make sure username will be unique.
     $drupal_username_generated = simple_fb_connect_unique_user_name($real_name);
+    if ($drupal_username_generated === FALSE) {
+      watchdog(
+        'simple_fb_connect',
+        'Could not create new user, username contains illegal characters.',
+        array(),
+        WATCHDOG_ERROR
+      );
+      drupal_set_message(t("Username contains illegal characters."), 'error');
+      return FALSE;
+    }
 
     // This will generate a random password. Since the user will never see this
     // password, we can use long password to make it stronger.
     $password = user_password(32);
 
-    //set up the user fields
+    // Set up the user fields
     $fields = array(
       'name' => $drupal_username_generated,
       'mail' => $email,
@@ -592,7 +652,13 @@ function simple_fb_connect_create_user(GraphObject $fb_profile, FacebookSession 
       ),
     );
 
-    // If user pictures are enabled, try to get the profile picture from FB
+    // Set user language to current UI language.
+    if (drupal_multilingual()) {
+      global $language;
+      $fields['language'] = $language->language;
+    }
+
+    // If user pictures are enabled, try to get the profile picture from FB.
     if (variable_get('user_pictures', 0)) {
       $fid = simple_fb_connect_get_fb_profile_pic($fb_session);
       if ($fid) {
@@ -600,14 +666,20 @@ function simple_fb_connect_create_user(GraphObject $fb_profile, FacebookSession 
       }
     }
 
-    // allow other modules to modify $fields array before the new user is saved
+    // Allow other modules to modify $fields array before the new user is saved.
     drupal_alter("simple_fb_connect_register", $fields, $fb_profile);
 
-    //the first parameter is left blank so a new user is created
-    $account = user_save('', $fields);
+    // The first parameter is left blank so a new user is created.
+    if ($account = user_save('', $fields)) {
 
-    // log new user creation
-    if ($account) {
+      // Now that user ID is known, set owner of profile picture.
+      if (!empty($account->picture)) {
+        $file = file_load($account->picture);
+        $file->uid = $account->uid;
+        file_save($file);
+      }
+
+      // Log new user creation.
       watchdog(
         'simple_fb_connect',
         'New user created: @username',
@@ -615,18 +687,18 @@ function simple_fb_connect_create_user(GraphObject $fb_profile, FacebookSession 
         WATCHDOG_NOTICE
       );
 
-      // invoke a registration event if Rules module is enabled
+      // Invoke a registration event if Rules module is enabled.
       if (module_exists('rules')) {
         rules_invoke_event('simple_fb_connect_registration', $account);
       }
-      // invoke user creation event if some module implements hook_simple_fb_connect_registration
+      // Invoke user creation event if some module implements hook_simple_fb_connect_registration.
       module_invoke_all('simple_fb_connect_registration', $account);
 
       return $account;
     }
   }
 
-  // Something went wrong
+  // Something went wrong.
   drupal_set_message(t("Error while creating a new user account."), 'error');
   watchdog(
     'simple_fb_connect',
@@ -644,39 +716,39 @@ function simple_fb_connect_create_user(GraphObject $fb_profile, FacebookSession 
  *   A Drupal user object.
  *
  * @return bool
- *   True if login was successful
- *   False if the login was blocked
+ *   True if login was successful.
+ *   False if login was blocked.
  */
 function simple_fb_connect_login_user($drupal_user) {
-  // Prevent admin login if defined in module settings
+  // Prevent admin login if defined in module settings.
   if (simple_fb_connect_login_disabled_for_admin($drupal_user)) {
     drupal_set_message(t('FB login is disabled for site administrator. Please login with your local user account.'), 'error');
     return FALSE;
   }
 
-  // Prevent login if user has one of the roles defined in module settings
+  // Prevent login if user has one of the roles defined in module settings.
   if (simple_fb_connect_login_disabled_by_role($drupal_user)) {
     drupal_set_message(t('FB login is disabled for your role. Please login with your local user account.'), 'error');
     return FALSE;
   }
 
-  // Check that the account is active
+  // Check that the account is active.
   if ($drupal_user->status) {
 
-    // Do the actual login
+    // Do the actual login.
     $form_state['uid'] = $drupal_user->uid;
     user_login_submit(array(), $form_state);
 
-    // invoke a login event if Rules module is enabled
+    // Invoke a login event if Rules module is enabled.
     if (module_exists('rules')) {
       rules_invoke_event('simple_fb_connect_login', $drupal_user);
     }
-    // invoke a login event if some module implements hook_simple_fb_connect_login
+    // Invoke a login event if some module implements hook_simple_fb_connect_login.
     module_invoke_all('simple_fb_connect_login', $drupal_user);
 
     // If Boost module is used, we need to add DRUPAL_UID cookie.
     // If this cookie is set, Boost will not serve cached pages to the user.
-    // user/simple-fb-connect/* must also be added to Boost "cache all pages except those listed"
+    // user/simple-fb-connect/* must also be added to Boost "cache all pages except those listed".
     if (module_exists('boost')) {
       boost_set_cookie($drupal_user->uid);
     }
@@ -698,17 +770,17 @@ function simple_fb_connect_login_user($drupal_user) {
 }
 
 /**
- * Checks if the admin FB login is disabled
+ * Checks if the admin FB login is disabled.
  *
  * @param $drupal_user
- *   Drupal user object
+ *   Drupal user object.
  *
  * @return bool
- *   True if login is disabled for this user
- *   False if login is not disabled for this user
+ *   True if login is disabled for this user.
+ *   False if login is not disabled for this user.
  */
 function simple_fb_connect_login_disabled_for_admin($drupal_user) {
-  // Prevent admin login if defined in module settings
+  // Prevent admin login if defined in module settings.
   if ($drupal_user->uid == 1 && variable_get('simple_fb_connect_disable_admin_login', 1)) {
     watchdog(
       'simple_fb_connect',
@@ -719,27 +791,27 @@ function simple_fb_connect_login_disabled_for_admin($drupal_user) {
     return TRUE;
   }
 
-  // User is not admin or admin login is not disabled
+  // User is not admin or admin login is not disabled.
   return FALSE;
 }
 
 /**
- * Checks if the user has one of the "FB login disabled" roles
+ * Checks if the user has one of the "FB login disabled" roles.
  *
  * @param $drupal_user
- *   Drupal user object
+ *   Drupal user object.
  *
  * @return bool
- *   True if login is disabled for one of this user's role
- *   False if login is not disabled for this user's roles
+ *   True if login is disabled for one of this user's role.
+ *   False if login is not disabled for this user's roles.
  */
 function simple_fb_connect_login_disabled_by_role($drupal_user) {
   // Get module settings.
   $roles = variable_get('simple_fb_connect_disabled_roles', array());
 
-  // Loop through all roles the user has
+  // Loop through all roles the user has.
   foreach ($drupal_user->roles as $role) {
-    // Check if FB login is disabled for this role. Disabled roles have value > 0
+    // Check if FB login is disabled for this role. Disabled roles have value > 0.
     if (array_key_exists($role, $roles) && !empty($roles[$role])) {
       watchdog(
         'simple_fb_connect',
@@ -751,37 +823,62 @@ function simple_fb_connect_login_disabled_by_role($drupal_user) {
     }
   }
 
-  // If we didn't return TRUE already, FB login is not disabled for any of the user's roles
+  // If we didn't return TRUE already, FB login is not disabled for any of the user's roles.
   return FALSE;
 }
 
 /**
- * Generates a unique username for drupal site based on fb username.
+ * Generates a unique username for Drupal site based on FB username.
+ *
+ * @return string|bool
+ *   Unique username, if the generated username passes user_validate_name().
+ *   False otherwise.
+ *
+ * @see user_validate_name()
  */
 function simple_fb_connect_unique_user_name($fb_name) {
+  // Truncate to max length.
+  $fb_name = drupal_substr($fb_name, 0, USERNAME_MAX_LENGTH);
 
-  $base = trim($fb_name);
-  $base = mb_ereg_replace('\s+', ' ', $base); // replace multiple spaces
+  // Add a trailing number if needed to make username unique.
+  $base = $fb_name;
   $i = 1;
   $candidate = $base;
   while (is_object(user_load_by_name($candidate))) {
     $i++;
+    // Calculate max length for $base and truncate if needed.
+    $max_length_base = USERNAME_MAX_LENGTH - strlen((string)$i) - 1;
+    $base = drupal_substr($base, 0, $max_length_base);
     $candidate = $base . " " . $i;
   }
+
+  // Trim leading and trailing whitespace.
+  $candidate = trim($candidate);
+
+  // Remove multiple spacebars if needed.
+  $candidate = preg_replace('/ {2,}/', ' ', $candidate);
+
+  // We now have a candidate that is unique and not too long.
+  // Let's check that the username passes Drupal username validation.
+  if ($error = user_validate_name($candidate)) {
+    return FALSE;
+  }
+
+  // Validation passed, return the username.
   return $candidate;
 }
 
 /**
- * This function returns the path were user should be redirected after a successful FB login
+ * Returns the path were user should be redirected after a successful FB login.
  *
  * @return
- *   path where the user should be redirected after FB login
+ *   Path where the user should be redirected after FB login.
  */
 function simple_fb_connect_get_post_login_url() {
   $post_login_url = variable_get('simple_fb_connect_post_login_url', 'user');
 
-  // If we have stored the destination to $_SESSION, use that instead
-  if (isset($_SESSION) && isset($_SESSION['simple_fb_connect']) && isset($_SESSION['simple_fb_connect']['post_login_url'])) {
+  // If we have stored the destination to $_SESSION, use that instead.
+  if (isset($_SESSION['simple_fb_connect']['post_login_url'])) {
     $post_login_url = $_SESSION['simple_fb_connect']['post_login_url'];
   }
 
@@ -789,31 +886,43 @@ function simple_fb_connect_get_post_login_url() {
 }
 
 /**
- * Redirect user after Facebook login to the desired Drupal path.
+ * Saves post login URL to $_SESSION if it was explicitly defined.
+ */
+function simple_fb_connect_save_post_login_url() {
+  $destination = drupal_get_destination();
+  if (!url_is_external($destination['destination']) && $destination['destination'] != 'user/simple-fb-connect') {
+    $_SESSION['simple_fb_connect']['post_login_url'] = $destination['destination'];
+    // We need to unset the GET parameter so that the user will be redirected.
+    unset($_GET['destination']);
+  }
+}
+
+/**
+ * Redirects user after Facebook login to the desired Drupal path.
  *
  * The input parameter might contain a query parameter. This function
  * will parse the URL and handle the query parameters correctly.
  *
  * @param string $post_login_url
- *   Post login url.
+ *   Post login URL.
  */
 function simple_fb_connect_go_to_redirect_url($post_login_url) {
-  // Extract url parts and use it to redirect to the post login url.
+  // Extract URL parts and use it to redirect to the post login URL.
   $url_parts = drupal_parse_url($post_login_url);
   drupal_goto($url_parts['path'], array('query' => $url_parts['query']));
 }
 
 /**
- * Creates the return URL that works with and without clean URLs
+ * Creates the return URL that works with and without clean URLs.
  *
  * @return
- *   return URL for FacebookRedirectLoginHelper
+ *   return URL for FacebookRedirectLoginHelper.
  */
 function simple_fb_connect_get_return_url() {
-  // Generate the URL where FB will return the user after authentication
+  // Generate the URL where FB will return the user after authentication.
   $return_url = url('user/simple-fb-connect/return', array('absolute' => TRUE));
 
-  // If clean URLs is disabled, we need to encode slashes in the query string
+  // If clean URLs is disabled, we need to encode slashes in the query string.
   $query_pos = strpos($return_url, '?');
   if ($query_pos !== FALSE) {
     $url_string = substr($return_url, 0, $query_pos);
@@ -823,4 +932,3 @@ function simple_fb_connect_get_return_url() {
 
   return $return_url;
 }
-

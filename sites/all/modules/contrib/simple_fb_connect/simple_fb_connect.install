@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Install file for simple fb connect module. Checks requirements.
+ * Install file for Simple FB Connect module. Checks requirements.
  */
 
 /**
@@ -89,7 +89,7 @@ function simple_fb_connect_enable() {
 }
 
 /**
- * Update disabled roles setting to use label as identifier rather than role id.
+ * Updates disabled roles setting to use label as identifier rather than role id.
  *
  * This is to make the configuration transferable between environments using
  * Features. See https://www.drupal.org/node/2653060

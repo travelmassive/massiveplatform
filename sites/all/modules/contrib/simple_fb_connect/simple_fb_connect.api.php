@@ -24,11 +24,11 @@
  * @deprecated This function is deprecated.
  *   This hook is deprecated but has not been removed for backwards
  *   compatibility. Facebook changed their API in version 2.4 so that we have to
- *   explicitely list the fields that we want Facebook to return in the /me
+ *   explicitly list the fields that we want Facebook to return in the /me
  *   query (previously Facebook returned all user fields).
  *
- *   If you want to map Facebook fields to Drupal user fields, impelement either
- *   hook_simple_fb_connect_registration hook_simple_fb_connect_login and
+ *   If you want to map Facebook fields to Drupal user fields, implement either
+ *   hook_simple_fb_connect_registration or hook_simple_fb_connect_login and
  *   make call Facebook API for the desired field there. Example is provided in
  *   hook_simple_fb_connect_registration.
  */
@@ -111,7 +111,7 @@ function hook_simple_fb_connect_registration($drupal_user) {
     $first_name = substr($object->getProperty('first_name'), 0, 255);
     $last_name = substr($object->getProperty('last_name'), 0, 255);
 
-    // Save Facebook valuest to Drupal user
+    // Save Facebook values to Drupal user.
     $drupal_user->field_first_name[LANGUAGE_NONE][0]['value'] = $first_name;
     $drupal_user->field_last_name[LANGUAGE_NONE][0]['value'] = $last_name;
 

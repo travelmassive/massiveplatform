@@ -599,7 +599,7 @@ function _tm_more_actions_process($field, $title = NULL) {
       if ($show_menu_item) {
 
         $calendar_link = '/events/download-ical/' . $nid;
-        $links['downloadcalendar'][] = array(
+        $links['manageattendees'][] = array(
           'wrapper_class' => array('downloadcalendar'),
           'content' => l(t('Download calendar'), $calendar_link, array(
             'attributes' => array(

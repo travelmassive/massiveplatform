@@ -277,6 +277,170 @@ function tm_organizations_field_default_field_instances() {
   );
 
   // Exported field_instance:
+  // 'node-organization-field_company_newsfeed_location'.
+  $field_instances['node-organization-field_company_newsfeed_location'] = array(
+    'bundle' => 'organization',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Add a location field to automatic newsfeed posts.<br>
+Example: Sydney<br>
+Example including lat/lon: Sydney|-33.8,151.2',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 25,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_company_newsfeed_location',
+    'label' => 'Newsfeed location',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 62,
+    ),
+  );
+
+  // Exported field_instance: 'node-organization-field_company_newsfeed_tags'.
+  $field_instances['node-organization-field_company_newsfeed_tags'] = array(
+    'bundle' => 'organization',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Add tags or text to automatic newsfeed posts<br>
+Example: #news #tech',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 24,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_company_newsfeed_tags',
+    'label' => 'Newsfeed tags',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 61,
+    ),
+  );
+
+  // Exported field_instance: 'node-organization-field_company_newsfeed_url'.
+  $field_instances['node-organization-field_company_newsfeed_url'] = array(
+    'bundle' => 'organization',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Post status updates automatically via WordPress Feed<br>
+example: http://exampleblog.com/feed/',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 23,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_company_newsfeed_url',
+    'label' => 'Newsfeed URL',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 60,
+    ),
+  );
+
+  // Exported field_instance:
   // 'node-organization-field_company_payment_commission'.
   $field_instances['node-organization-field_company_payment_commission'] = array(
     'bundle' => 'organization',
@@ -1539,6 +1703,11 @@ Displays a short message to followers on your company profile page.<br><br>',
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Add a location field to automatic newsfeed posts.<br>
+Example: Sydney<br>
+Example including lat/lon: Sydney|-33.8,151.2');
+  t('Add tags or text to automatic newsfeed posts<br>
+Example: #news #tech');
   t('Allow this company to list events without requiring the minimum follower count.');
   t('City');
   t('Company payment commission (%)');
@@ -1563,7 +1732,12 @@ Displays a short message to followers on your company profile page.<br><br>');
   t('Make your company profile available through a friendly URL. Example: "your-company"');
   t('Managed by');
   t('Message for Followers (Optional)');
+  t('Newsfeed URL');
+  t('Newsfeed location');
+  t('Newsfeed tags');
   t('Please provide the segment which identifies the company the best.');
+  t('Post status updates automatically via WordPress Feed<br>
+example: http://exampleblog.com/feed/');
   t('Provide a cover image to be displayed behind your company logo.
 <br>To support retina displays, upload your image sized to 1610x906');
   t('Select the member that manages this account.');

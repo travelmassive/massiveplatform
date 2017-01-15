@@ -111,6 +111,9 @@ function tm_organizations_field_group_info() {
       0 => 'field_company_payment_commission',
       1 => 'field_company_payments_enabled',
       2 => 'field_company_enable_events',
+      3 => 'field_company_newsfeed_url',
+      4 => 'field_company_newsfeed_tags',
+      5 => 'field_company_newsfeed_location',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

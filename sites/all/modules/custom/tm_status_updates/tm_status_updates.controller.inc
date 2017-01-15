@@ -574,3 +574,14 @@ function tm_status_updates_get_last_update_timestamp($entity_type, $entity_id) {
 function _tm_status_updates_compare_timestamps($a, $b) {
 	return ($a->timestamp < $b->timestamp);
 }
+
+/**
+ * Get organisations that have automatic newsfeeds
+ * Returns array of nids
+ */
+function tm_status_updates_get_organization_newsfeeds() {
+
+  $query = "SELECT entity_id FROM {field_data_field_company_newsfeed_url} f WHERE f.bundle = 'organization'";
+  $result = db_query($query)->fetchAllKeyed(0,0);
+  return $result;
+}

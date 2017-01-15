@@ -1474,6 +1474,56 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
     ),
   );
 
+  // Exported field_instance: 'user-user-field_user_disable_chat'.
+  $field_instances['user-user-field_user_disable_chat'] = array(
+    'bundle' => 'user',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Site chat allows you to chat to other members in your chapter who are online.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 43,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'user',
+    'field_name' => 'field_user_disable_chat',
+    'label' => 'Disable site chat',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 11,
+    ),
+  );
+
   // Exported field_instance: 'user-user-field_user_disable_public_index'.
   $field_instances['user-user-field_user_disable_public_index'] = array(
     'bundle' => 'user',
@@ -1963,6 +2013,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
   t('Country');
   t('Cover Image');
   t('Cover Video');
+  t('Disable site chat');
   t('Facebook');
   t('Facebook Signin ID');
   t('Facebook Signin Link');
@@ -1998,6 +2049,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
   t('Question 4');
   t('Question 5');
   t('Reason for joining');
+  t('Site chat allows you to chat to other members in your chapter who are online.');
   t('Snapchat');
   t('Strava');
   t('Tell the community about yourself. This information will be <strong>public</strong>.

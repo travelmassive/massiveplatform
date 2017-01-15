@@ -830,5 +830,8 @@
 /* Unapproved label */
 .text_approved:before { @extend .icon-tick; margin-right: 0.2rem;}
 
+/* tm_chat - hide spinning launcher button */
+.ifc-launcher-button { display: none !important; }
+.iflychat-icon-chat { display: block !important; }
 
 

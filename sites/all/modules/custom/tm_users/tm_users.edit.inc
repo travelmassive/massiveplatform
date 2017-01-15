@@ -233,6 +233,11 @@ function _tm_users_modify_profile_form(&$form, $form_state, $form_id) {
   if (sizeof($form['#user']->field_reason_for_joining) == 0) {
     hide($form['field_reason_for_joining']);
   }
+
+  // Disable site chat if not approved or if tm_chat is not enabled
+  if (!in_array("approved user", $user->roles) or (!module_exists("tm_chat"))) {
+    hide($form['field_user_disable_chat']);
+  }
   
 }
 

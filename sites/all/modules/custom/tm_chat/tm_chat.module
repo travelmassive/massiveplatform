@@ -30,6 +30,31 @@ events/send-announcement/*
 
 
 /**
+ * Check user's privacy setting if the have disabled chat
+ */
+function tm_chat_init() {
+
+	global $conf;
+	global $user;
+
+	$account = user_load($user->uid);
+
+	// if user is approved and checked field_user_disable_chat, disable chat
+	if (in_array("approved user", $account->roles)) {
+		if (isset($account->field_user_disable_chat[LANGUAGE_NONE][0]['value'])) {
+			if ($account->field_user_disable_chat[LANGUAGE_NONE][0]['value'] == 1) {
+
+				// add * wildcard to disable path_pages
+				if (isset($conf["drupalchat_path_pages"]))  {
+					$conf["drupalchat_path_pages"]  = "*";
+				}
+
+			}
+		}
+	}
+}
+
+/**
  * Allow users to see other members in their chapter
  * see: https://github.com/iflylabs/iflychat-documentation/blob/master/integration/drupal-7/hooks-implementation.md
  */

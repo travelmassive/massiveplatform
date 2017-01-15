@@ -6194,6 +6194,13 @@ a.cancel_account_link {
 }
 
 /* line 624, ../sass/_forms.scss */
+.field-name-field-user-disable-chat {
+  margin-left: 2rem;
+  margin-bottom: 2rem;
+  margin-right: 1rem;
+}
+
+/* line 630, ../sass/_forms.scss */
 td.views-field-access {
   white-space: nowrap;
 }
@@ -8366,6 +8373,17 @@ td.views-field-access {
 /* line 831, ../sass/_single.scss */
 .text_approved:before {
   margin-right: 0.2rem;
+}
+
+/* tm_chat - hide spinning launcher button */
+/* line 834, ../sass/_single.scss */
+.ifc-launcher-button {
+  display: none !important;
+}
+
+/* line 835, ../sass/_single.scss */
+.iflychat-icon-chat {
+  display: block !important;
 }
 
 /* line 2, ../sass/_login.scss */

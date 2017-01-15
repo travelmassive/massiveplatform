@@ -617,6 +617,7 @@ function tm_users_field_group_info() {
     'children' => array(
       0 => 'field_user_disable_public_index',
       1 => 'field_user_has_private_profile',
+      2 => 'field_user_disable_chat',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

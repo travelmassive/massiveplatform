@@ -392,12 +392,17 @@ function _tm_events_check_create_company_event_message($check_user, $company_id)
     return "";
   }
 
+  // must be company that you manage
+  if (!tm_organizations_is_company_profile_manager($check_user->uid, $company_id)) {
+    return "";
+  }
+
   // must have validated email
   if (in_array('non-validated', $check_user->roles)) {
     return "Please verify your email address.";
   }
 
-   // need minimum number of company followers to vouch for you
+  // need minimum number of company followers to vouch for you
   $min_followers = $conf["tm_event_company_event_min_followers"];
   $num_followers = tm_organizations_get_num_followers($company_id);
   if ($num_followers < $min_followers) {

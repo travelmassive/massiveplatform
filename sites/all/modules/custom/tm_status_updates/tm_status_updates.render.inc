@@ -805,7 +805,7 @@ function tm_status_updates_render_link_preview($preview_data) {
 	}
 
 	// add protocol to url if not already
-	if ((stripos($url, "http://") !== 0) or ((stripos($url, "https://") !== 0))) {
+	if ((stripos($url, "http://") !== 0) and ((stripos($url, "https://") !== 0))) {
 		$url = "http://" . $url;
 	}
 

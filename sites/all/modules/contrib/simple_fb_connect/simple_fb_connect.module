@@ -166,8 +166,21 @@ function simple_fb_connect_return_from_fb() {
     drupal_goto('user');
   }
 
+  // Check if we have an existing Drupal user with the same email address and try to log in
+  // Modified by ianc
+  // we track facebook id in user field and compare
+  // this allows users to change email address and still remain signed in
+  $drupal_user = false;
+  $fb_user_array = $fb_profile->asArray();
+  if (isset($fb_user_array["id"])) {
+    $drupal_user = tm_users_get_user_by_fb_id($fb_user_array["id"]);
+  }
+  if (!$drupal_user) {
+    $drupal_user = user_load_by_mail($email);
+  }
+
   // Check if we have an existing Drupal user with the same email address and try to log in.
-  if ($drupal_user = user_load_by_mail($email)) {
+  if ($drupal_user) {
     if (simple_fb_connect_login_user($drupal_user)) {
       $post_login_url = simple_fb_connect_get_post_login_url();
       simple_fb_connect_go_to_redirect_url($post_login_url);

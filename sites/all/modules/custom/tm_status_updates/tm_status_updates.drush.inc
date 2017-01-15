@@ -39,7 +39,10 @@ function tm_status_updates_drush_command() {
 		  'description' => 'Post automated updates for an organization profile.',
 		  'callback' => 'tm_status_updates_post_organization_update',
 		  'options' => array(
-		  	'nid' => 'nid'
+		  	'nid' => 'nid',
+		  	'newsfeed_url' => 'newsfeed_url',
+		  	'newsfeed_tags' => 'newsfeed_tags',
+		  	'newsfeed_location' => 'newsfeed_location'
 		  )
 		);
 
@@ -151,7 +154,9 @@ Optional: --location-text='Sydney' --location_latitude=-33.8 --location_longitud
 function tm_status_updates_post_organization_update() {
 
 	// usage instructions
-	$usage = "Usage: status-updates-post-organization-update --nid=123";
+	$usage = "Usage: status-updates-post-organization-update --nid=123
+Optional overrides: --newsfeed_url='http://exampleblog.com/feed/' --newsfeed_tags='#news #massive' --newsfeed-location='Berkeley' 
+";
 
 	// get entity type
 	$nid = drush_get_option('nid');
@@ -160,8 +165,13 @@ function tm_status_updates_post_organization_update() {
 		return;
 	}
 
+	// get optional parameters
+	$newsfeed_url = drush_get_option('newsfeed_url');
+	$newsfeed_tags = drush_get_option('newsfeed_tags');
+	$newsfeed_location = drush_get_option('newsfeed_location');
+
 	// post organization update
-	tm_status_updates_post_organization_update_helper($nid);
+	tm_status_updates_post_organization_update_helper($nid, $newsfeed_url, $newsfeed_tags, $newsfeed_location);
 
 }
 
@@ -193,8 +203,9 @@ function tm_status_updates_post_organization_updates() {
 
 /**
  * Helper function to post organiztion update from wordpress feed
+ * Can optionally override newsfeed url, tags and location from command line
  */
-function tm_status_updates_post_organization_update_helper($nid) {
+function tm_status_updates_post_organization_update_helper($nid, $newsfeed_url = null, $newsfeed_tags = null, $newsfeed_location = null) {
 
 	// load organization
 	$organization = node_load($nid);
@@ -211,26 +222,31 @@ function tm_status_updates_post_organization_update_helper($nid) {
 	$poster_uid = $organization->field_owner[LANGUAGE_NONE][0]['target_id'];
 
 	// get newsfeed url
-	$newsfeed_url = trim($organization->field_company_newsfeed_url[LANGUAGE_NONE][0]['value']);
-	if ($newsfeed_url == "") {
-		drush_print("Missing newsfeed URL");
-		return;
+	if ($newsfeed_url == null) {
+		$newsfeed_url = trim($organization->field_company_newsfeed_url[LANGUAGE_NONE][0]['value']);
+		if ($newsfeed_url == "") {
+			drush_print("Missing newsfeed URL");
+			return;
+		}
 	}
-
+	
 	// get newsfeed tags
-	$newsfeed_tags = "";
-	if (isset($organization->field_company_newsfeed_tags[LANGUAGE_NONE][0]['value'])) {
-		$newsfeed_tags = trim($organization->field_company_newsfeed_tags[LANGUAGE_NONE][0]['value']);
+	if ($newsfeed_tags == null) {
+		$newsfeed_tags = "";
+		if (isset($organization->field_company_newsfeed_tags[LANGUAGE_NONE][0]['value'])) {
+			$newsfeed_tags = trim($organization->field_company_newsfeed_tags[LANGUAGE_NONE][0]['value']);
+		}
 	}
 
 	// get newsfeed location
-	$newsfeed_location = null;
-	if (isset($organization->field_company_newsfeed_location[LANGUAGE_NONE][0]['value'])) {
-		$newsfeed_location = trim($organization->field_company_newsfeed_location[LANGUAGE_NONE][0]['value']);
-		if ($newsfeed_location == "") {
-			$newsfeed_location = null;
+	if ($newsfeed_location == null) {
+		if (isset($organization->field_company_newsfeed_location[LANGUAGE_NONE][0]['value'])) {
+			$newsfeed_location = trim($organization->field_company_newsfeed_location[LANGUAGE_NONE][0]['value']);
+			if ($newsfeed_location == "") {
+				$newsfeed_location = null;
+			}
 		}
-	}
+	}	
 
 	// get lat/lon
 	// ie: Sydney|-33.8,151.2

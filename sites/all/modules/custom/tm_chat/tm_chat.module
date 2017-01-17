@@ -28,6 +28,73 @@ events/send-announcement/*
 - Configure permissions at /admin/people/permissions
 */
 
+/**
+ * Implement hook_menu
+ */
+function tm_chat_menu() {
+
+	$items = array();
+
+	// configurable menu path
+	global $conf;
+	$chat_menu_path = "chat"; // default
+	if (isset($conf["tm_chat_embed_menu_path"])) {
+		$chat_menu_path = $conf["tm_chat_embed_menu_path"];
+	}
+
+	$items[$chat_menu_path] = array(
+		'title' => '',
+		'page callback' => 'tm_chat_embed',
+		'access callback' => 'tm_chat_check_permission' 
+	);
+
+   return $items;
+}
+
+
+/**
+ * Check permission to chat room
+ */
+function tm_chat_check_permission($roles = array()) {
+
+	global $user;
+	global $conf;
+
+	foreach ($conf["tm_chat_embed_access_roles"] as $role) {
+		if (in_array($role, $user->roles)) {
+			return TRUE;
+		}
+	}
+	return FALSE;
+
+}
+
+/**
+ * Embed chat
+ */
+function tm_chat_embed() {
+
+	global $conf;
+	global $user;
+
+	$chat_menu_path = "chat"; // default
+	if (isset($conf["tm_chat_embed_menu_path"])) {
+		$chat_menu_path = $conf["tm_chat_embed_menu_path"];
+	}
+
+	// load user
+	$loaded = user_load($user->uid);
+
+	$embed_script = '<div class="iflychat-embed" data-room-id="' . $conf["tm_chat_embed_room_id"] . '" data-height="500px" data-width="100%"></div>';
+
+	// hide title
+	drupal_add_css('#page-title { display: none; }', 'inline');
+	drupal_set_title("Chat");
+
+	return $embed_script;
+
+}
+
 
 /**
  * Check user's privacy setting if the have disabled chat

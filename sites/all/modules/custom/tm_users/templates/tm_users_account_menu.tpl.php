@@ -100,7 +100,7 @@ $image = theme('image_style', array(
       <li><?php print l(t('Account settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-account-options')); ?></li>
       <li><?php print l(t('Notification settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-notifications-options')); ?></li>
       <li><?php print l(t('Invite members'), 'invite'); ?></li>
-      <li><?php
+      <?php
       if (isset($conf["tm_users_account_menu_links"])) {
         foreach($conf["tm_users_account_menu_links"] as $account_menu_title => $account_menu_link) {
           print "<li>" . l(t($account_menu_title), $account_menu_link, array('fragment' => '', 'external' =>true)) . "</li>";
@@ -161,11 +161,13 @@ $image = theme('image_style', array(
         <?php print tm_users_menu_chapters($loaded->uid); ?>
         <?php
         if (in_array("chapter leader", $loaded->roles)): ?>
-        <li>
-          <?php
-          print l(t('Chapter leader resources'), $conf['tm_tips_chapter_leaders_link'], array('fragment' => '','external'=>true)); 
-          ?>
-        </li> 
+        <?php
+        if (isset($conf["tm_users_chapter_leader_menu_links"])) {
+          foreach($conf["tm_users_chapter_leader_menu_links"] as $account_menu_title => $account_menu_link) {
+            print "<li>" . l(t($account_menu_title), $account_menu_link, array('fragment' => '', 'external' =>true)) . "</li>";
+          }
+        }
+        ?>
         <?php endif; ?>       
     </ul>
 

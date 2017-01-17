@@ -80,6 +80,7 @@ $conf['tm_twitter_consumer_secret'] = '';
 
 /** ACCOUNT MENU **/
 // $conf['tm_users_account_menu_links'] = array("Visit Massive" => "http://massiveplatform.com"); // array of account links (optional)
+// $conf['tm_users_chapter_leader_menu_links'] = array("Chapter Leader Resources" => "https://example.massiveplatform.com/blog/chapter-leader-resources/"); // array of account links (optional)
 
 /** WORDPRESS FEEDME **/
 /** This calls a module hosted on wordpress to embed blog (plus other) content based on current page **/
@@ -115,7 +116,6 @@ $conf['tm_invitations_custom_message'] = "I'd like to invite you to Massive, a g
 /** TIP SETTINGS **/
 $conf['tm_tips_start_chapter_link'] = "https://example.massiveplatform.com/blog/start-a-chapter-guide/"; // tm_tips_start_chapter_link
 $conf['tm_tips_sponsor_page_link'] = "https://example.massiveplatform.com/blog/sponsors-guide/"; // tm_tips_start_chapter_link
-$conf['tm_tips_chapter_leaders_link'] = "https://example.massiveplatform.com/blog/chapter-leader-resources/"; // tm_tips_chapter_leaders_guide
 $conf["tm_reports_chapter_insights_tip"] = "Join our Facebook group to share tips with other members on growing your chapter and be part of our global team!"; // Display a tip on chapter insights page
 // $conf["tm_tips_community_list"] = "Discover and follow other members and companies in our community with our <a href='/search'>Community Search</a>."; // optional - override community page tip
 
@@ -650,5 +650,13 @@ $conf['tm_marketplace_cookie_secret_key'] = 'randomstringabc'; // must match job
 $conf['tm_marketplace_cookie_secret_iv'] = 'randomstring123'; // must match jobskee config
 $conf['tm_marketplace_enable_feedme'] = true; // embed marketplace jobs into chapter and company pages
 $conf['tm_marketplace_feedme_url'] = '/jobs/api/search/'; // url for search
+*/
+
+/** CHAT **/
+/* Optional iFlyChat integration with tm_chat module */
+/*
+$conf["tm_chat_embed_menu_path"] = "chat"; // path of embedded chat
+$conf["tm_chat_embed_room_id"] = 1; // id of the room to embed
+$conf["tm_chat_embed_access_roles"] = array("chapter leader"); // role allowed for chat
 */
 

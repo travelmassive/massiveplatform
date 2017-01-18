@@ -300,7 +300,12 @@ function tm_chapters_community_management_tasks_drush() {
 		  }
 
 		} else {
-			drush_print("- " . $chapter->title . ": No previous events");
+
+			if (isset($future_result['node'])) {
+				drush_print("- " . $chapter->title . ": Upcoming event in next 3 months");
+			} else {
+				drush_print("- " . $chapter->title . ": No previous events");
+			}
 		}
 
 	}

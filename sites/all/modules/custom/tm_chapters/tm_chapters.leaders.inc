@@ -194,7 +194,7 @@ function tm_chapters_leaders_notify_add_leader($new_leader, $chapter) {
 	$subject = 'You\'re now a chapter leader of __CHAPTER_NAME__';
 	$body = 'Hi __FIRST_NAME__,
 <br>
-<br>Congratulations, you have been appointed as a chapter leader of: __CHAPTER_NAME__.
+<br>Congratulations, you have been appointed as a chapter leader of __CHAPTER_NAME__.
 <br>
 <br>__CHAPTER_LEADER_WELCOME_MESSAGE__
 <br>

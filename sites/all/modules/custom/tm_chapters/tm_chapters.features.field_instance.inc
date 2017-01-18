@@ -78,7 +78,7 @@ function tm_chapters_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 4,
+      'weight' => 3,
     ),
   );
 
@@ -133,7 +133,7 @@ function tm_chapters_field_default_field_instances() {
       'module' => 'color_field',
       'settings' => array(),
       'type' => 'color_field_spectrum_widget',
-      'weight' => 7,
+      'weight' => 6,
     ),
   );
 
@@ -187,7 +187,7 @@ function tm_chapters_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 9,
+      'weight' => 8,
     ),
   );
 
@@ -360,7 +360,7 @@ function tm_chapters_field_default_field_instances() {
         'size' => 40,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 10,
+      'weight' => 9,
     ),
   );
 
@@ -412,7 +412,60 @@ function tm_chapters_field_default_field_instances() {
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 6,
+      'weight' => 48,
+    ),
+  );
+
+  // Exported field_instance: 'node-chapter-field_chapter_management_reason'.
+  $field_instances['node-chapter-field_chapter_management_reason'] = array(
+    'bundle' => 'chapter',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Please add a brief explanation for our community managers if you appoint or remove a chapter leader.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 21,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_chapter_management_reason',
+    'label' => 'Reason for changing leadership',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 10,
     ),
   );
 
@@ -584,7 +637,7 @@ function tm_chapters_field_default_field_instances() {
         'size' => 10,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 5,
     ),
   );
 
@@ -753,7 +806,7 @@ function tm_chapters_field_default_field_instances() {
     'default_value' => NULL,
     'default_value_function' => '',
     'deleted' => 0,
-    'description' => 'Assign a community manager to the chapter. Currently this will be used in the chapter report.',
+    'description' => 'Assign a community manager to the chapter. They will gain chapter leader access to the chapter and its events without being listed as a chapter leader.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -802,20 +855,21 @@ function tm_chapters_field_default_field_instances() {
       ),
       'nodeaccess_userreference' => array(
         'all' => array(
-          'view' => 0,
+          'view' => 'view',
         ),
         'all_published' => 0,
         'author' => array(
           'delete' => 0,
-          'update' => 0,
+          'update' => 'update',
           'view' => 0,
         ),
         'author_published' => 0,
         'create' => array(
           'chapter' => 0,
-          'event' => 0,
+          'event' => 'event',
           'organization' => 0,
           'page' => 0,
+          'site_brand' => 0,
         ),
         'priority' => 0,
         'referenced' => array(
@@ -823,7 +877,7 @@ function tm_chapters_field_default_field_instances() {
           'deny_delete' => 0,
           'deny_update' => 0,
           'deny_view' => 0,
-          'update' => 0,
+          'update' => 'update',
           'view' => 0,
         ),
         'referenced_published' => 0,
@@ -844,7 +898,7 @@ function tm_chapters_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 5,
+      'weight' => 47,
     ),
   );
 
@@ -1041,7 +1095,7 @@ function tm_chapters_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 8,
+      'weight' => 7,
     ),
   );
 
@@ -1101,7 +1155,7 @@ The message will be included in the notification email sent to the member when t
         'rows' => 4,
       ),
       'type' => 'text_textarea',
-      'weight' => 5,
+      'weight' => 4,
     ),
   );
 
@@ -1413,7 +1467,7 @@ The message will be included in the notification email sent to the member when t
   // Included for use with string extractors like potx.
   t('Add a welcome message to new members when they join your chapter.<br>
 The message will be included in the notification email sent to the member when they join.');
-  t('Assign a community manager to the chapter. Currently this will be used in the chapter report.');
+  t('Assign a community manager to the chapter. They will gain chapter leader access to the chapter and its events without being listed as a chapter leader.');
   t('Chapter Sponsors');
   t('Chapter color');
   t('Chapter is a group');
@@ -1435,10 +1489,12 @@ The message will be included in the notification email sent to the member when t
   t('Increase your exposure with a cover video. 
 <br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM');
   t('Linkedin');
+  t('Please add a brief explanation for our community managers if you appoint or remove a chapter leader.');
   t('Please enter a unique 3 letter shortcode for this city.');
   t('Please specify the country of the chapter.');
   t('Provide a banner image that is a good reflection of your chapter.
 <br>To support retina displays, upload your image sized to 1610x906');
+  t('Reason for changing leadership');
   t('Recognize a company as a sponsor of your chapter.<br>
 <ul>
 <li>To add a sponsor, search and select a company profile page from the dropdown.</li>

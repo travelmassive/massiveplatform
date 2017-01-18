@@ -76,6 +76,36 @@ function tm_chapters_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_chapter_leaders|node|chapter|form';
+  $field_group->group_name = 'group_chapter_leaders';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'chapter';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Chapter Leaders',
+    'weight' => '1',
+    'children' => array(
+      0 => 'field_chapter_leaders',
+      1 => 'field_chapter_management_reason',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'label' => 'Chapter Leaders',
+      'instance_settings' => array(
+        'required_fields' => 0,
+        'id' => '',
+        'classes' => 'group-chapter-leaders field-group-fieldset',
+        'description' => '',
+      ),
+      'formatter' => 'open',
+    ),
+  );
+  $field_groups['group_chapter_leaders|node|chapter|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_chapter_location|node|chapter|form';
   $field_group->group_name = 'group_chapter_location';
   $field_group->entity_type = 'node';
@@ -84,7 +114,7 @@ function tm_chapters_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '3',
+    'weight' => '4',
     'children' => array(
       0 => 'field_geomaplocation',
     ),
@@ -112,10 +142,10 @@ function tm_chapters_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Payments',
-    'weight' => '7',
+    'weight' => '8',
     'children' => array(
-      0 => 'field_chapter_payments_enabled',
-      1 => 'field_chapter_payment_commission',
+      0 => 'field_chapter_payment_commission',
+      1 => 'field_chapter_payments_enabled',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -142,7 +172,7 @@ function tm_chapters_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Chapter Sponsors',
-    'weight' => '2',
+    'weight' => '3',
     'children' => array(
       0 => 'field_chapter_sponsors',
     ),
@@ -196,7 +226,7 @@ function tm_chapters_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Community Management',
-    'weight' => '4',
+    'weight' => '5',
     'children' => array(
       0 => 'field_community_managers',
       1 => 'field_chapter_leaders_needed',
@@ -279,17 +309,15 @@ function tm_chapters_field_group_info() {
     'children' => array(
       0 => 'body',
       1 => 'field_chapter_color',
-      2 => 'field_chapter_leaders',
-      3 => 'field_chapter_shortcode',
-      4 => 'field_image',
-      5 => 'field_chapter_timezone',
-      6 => 'field_country',
-      7 => 'field_join_chapter_message',
+      2 => 'field_chapter_shortcode',
+      3 => 'field_image',
+      4 => 'field_chapter_timezone',
+      5 => 'field_country',
+      6 => 'field_join_chapter_message',
+      7 => 'field_chapter_cover_video',
       8 => 'field_chapter_is_group',
-      9 => 'field_discuss_category_id',
-      10 => 'field_chapter_cover_video',
-      11 => 'title',
-      12 => 'path',
+      9 => 'title',
+      10 => 'path',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -315,7 +343,7 @@ function tm_chapters_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Elsewhere',
-    'weight' => '1',
+    'weight' => '2',
     'children' => array(
       0 => 'field_link_facebook',
       1 => 'field_link_linkedin',
@@ -392,6 +420,7 @@ function tm_chapters_field_group_info() {
   t('About');
   t('Action menu');
   t('Action menu wrapper');
+  t('Chapter Leaders');
   t('Chapter Sponsors');
   t('Chapter leaders');
   t('Community');

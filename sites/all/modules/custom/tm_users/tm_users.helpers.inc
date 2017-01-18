@@ -43,20 +43,76 @@ function tm_users_member_in_users_chapter($member_uid, $chapter_leader_uid, $ret
     $chapters_leader_nids = array_keys($result['node']);
   }
 
+  // Step 3. Fetch list of chapters the user is a community manager of
+  $chapters_leader_nids = array();
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'chapter')
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->fieldCondition('field_community_managers', 'target_id', $chapter_leader_uid, '=');
+
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    foreach (array_keys($result['node']) as $nid) {
+      $chapters_leader_nids[] = $nid;
+    }
+  }
+
   $intersect = array_intersect($chapters_nids, $chapters_leader_nids);
   return (sizeof($intersect) > 0);
 }
 
 /**
  * Checks if a user is a chapter leader of a chapter
+ * Also checks if user is community manager (can be toggled)
  */
-function tm_users_is_chapter_leader($uid, $chapterid) {
+function tm_users_is_chapter_leader($uid, $chapterid, $check_community_manager = true) {
+
+  // ensure wer have a chapter id
+  if ($chapterid == null) {
+    return FALSE;
+  }
+
   $query = new EntityFieldQuery();
   $query->entityCondition('entity_type', 'node')
     ->entityCondition('bundle', 'chapter')
     ->propertyCondition('nid', $chapterid)
     ->propertyCondition('status', NODE_PUBLISHED)
     ->fieldCondition('field_chapter_leaders', 'target_id', $uid, '=');
+
+  $result = $query->execute();
+
+  if (isset($result['node'])) {
+    return TRUE;
+  }
+
+  // check if community manager
+  if ($check_community_manager) {
+    if (tm_users_is_community_manager($uid, $chapterid)) {
+      return TRUE;
+    }
+  }
+  
+
+  return FALSE;
+}
+
+/**
+ * Checks if a user is a community manager of a chapter
+ */
+function tm_users_is_community_manager($uid, $chapterid) {
+
+  // ensure wer have a chapter id
+  if ($chapterid == null) {
+    return FALSE;
+  }
+
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'chapter')
+    ->propertyCondition('nid', $chapterid)
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->fieldCondition('field_community_managers', 'target_id', $uid, '=');
 
   $result = $query->execute();
 

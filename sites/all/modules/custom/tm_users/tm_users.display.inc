@@ -208,7 +208,9 @@ function tm_users_menu_chapters($uid){
     }
   }
 
-  // Step 2. Fetch list of chapters the user is a leader of
+  // Step 2. Fetch list of chapters the user is a leader of and is community manager of
+
+  // Chapter leader
   $chapters_leader_nids = array();
   $query = new EntityFieldQuery();
   $query->entityCondition('entity_type', 'node')
@@ -219,6 +221,19 @@ function tm_users_menu_chapters($uid){
   $result = $query->execute();
   if (isset($result['node'])) {
     $chapters_leader_nids = array_keys($result['node']);
+  }
+
+  // Community manager
+  $community_manager_nids = array();
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'chapter')
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->fieldCondition('field_community_managers', 'target_id', $uid, '=');
+
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    $community_manager_nids = array_keys($result['node']);
   }
 
   // Step 3. Join the two arrays of chapter leader nids and joined chapters
@@ -244,6 +259,9 @@ function tm_users_menu_chapters($uid){
       $chapter_leader_text = " (Member)";
       if (in_array($nid, $chapters_leader_nids)) { 
         $chapter_leader_text = " (Chapter Leader)";
+      }
+      if (in_array($nid, $community_manager_nids)) { 
+        $chapter_leader_text = " (Community Manager)";
       }
 
       // get image

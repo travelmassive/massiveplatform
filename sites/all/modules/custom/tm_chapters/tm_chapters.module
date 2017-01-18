@@ -10,7 +10,38 @@ include_once 'tm_chapters.csv.inc';
 include_once 'tm_chapters.display.inc';
 include_once 'tm_chapters.edit.inc';
 include_once 'tm_chapters.helpers.inc';
+include_once 'tm_chapters.leaders.inc';
+include_once 'tm_chapters.drush.inc';
 
+
+/**
+ * Implement hook_init()
+ */
+function tm_chapters_init() {
+
+  // custom permissions for /chapters/X/unapproved-members
+  if ((arg(0) == 'chapters') and (arg(2) == 'unapproved-members')) {
+    
+    global $user;
+
+    $nid = _orig_nid();
+
+    if($nid == 0) {
+      print drupal_not_found();
+      return false;
+    }
+
+    // check if:
+    // - chapter leader, or community manager
+    // - moderator, or
+    // - administrator
+    if (!(tm_users_is_chapter_leader($user->uid, $nid) or (in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles)))) {
+      drupal_access_denied();
+      drupal_exit();
+    }
+
+  }
+}
 
 /**
  * Implements hook_menu()
@@ -26,8 +57,7 @@ function tm_chapters_menu() {
   $items['chapters/%/export'] = array(
     'title' => t('Export Members'),
     'page callback' => 'tm_chapters_download_csv',
-    //'page arguments' => array(2),
-    'access arguments' => array('approve users'),
+    'access callback' => 'tm_chapters_download_csv_check_permission',
     'type' => MENU_CALLBACK,
   );
   return $items;

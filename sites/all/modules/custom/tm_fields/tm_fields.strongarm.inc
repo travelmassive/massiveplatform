@@ -74,6 +74,20 @@ function tm_fields_strongarm() {
           'view' => 'view',
         ),
       ),
+      'field_community_managers' => array(
+        'referenced' => array(
+          'update' => 'update',
+        ),
+        'create' => array(
+          'event' => 'event',
+        ),
+        'author' => array(
+          'update' => 'update',
+        ),
+        'all' => array(
+          'view' => 'view',
+        ),
+      ),
     ),
     'organization' => array(
       'field_owner' => array(

@@ -16,7 +16,7 @@ function tm_reports_menu() {
     'title' => 'Chapter insights',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('tm_reports_chapter_insights'),
-    'access arguments' => array('tm invite own chapters'),
+    'access callback' => 'tm_reports_chapter_insights_check_permission',
     'type' => MENU_CALLBACK,
    );
 
@@ -1177,6 +1177,27 @@ function _tm_reports_add_join_industry($field_alias, $tid) {
 }
 
 /**
+ * Check permission to view chapter insights
+ */
+function tm_reports_chapter_insights_check_permission() {
+
+  global $user;
+  global $conf;
+  $nid = _orig_nid();
+
+  if($nid == 0) {
+    return false;
+  }
+
+  // check if:
+  // - chapter leader, or community manager
+  // - moderator, or
+  // - administrator
+  return (tm_users_is_chapter_leader($user->uid, $nid) or (in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles)));
+
+}
+
+/**
  * Generate chapter stats for chapter leader 
  */
 function tm_reports_chapter_insights($nid) {
@@ -1246,7 +1267,7 @@ function tm_reports_chapter_insights($nid) {
     $num_event_waitlists = db_query($query, array(':fid' => $flag_event_waitlist->fid, ':chapter_id' => $chapter->nid))->fetch();
     if ($num_event_waitlists->amount > 0) {
 
-      $insights["num_event_payments"] = $num_event_payments->amount;  
+      // ? $insights["num_event_payments"] = $num_event_payments->amount;  
 
       $html .= "<section class='contained contained-block'>";
       $html .= "<header class='contained-head'>

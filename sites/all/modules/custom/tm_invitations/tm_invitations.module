@@ -48,12 +48,33 @@ function tm_invitations_menu() {
     'title callback' => 't',
     'page callback' => 'chapter_invitations_page',
     'page arguments' => array('tm_invitations_invite_form'),
-    'access arguments' => array('tm invite own chapters'),
+    'access callback' => 'chapter_invitations_page_check_permissions',
     'class' => 'invite-header',
     'type' => MENU_CALLBACK,
   );
  
   return $items;
+}
+
+/**
+ * Check permission to view chapter insights
+ */
+function chapter_invitations_page_check_permissions() {
+
+  global $user;
+  global $conf;
+  $nid = _orig_nid();
+
+  if($nid == 0) {
+    return false;
+  }
+
+  // check if:
+  // - chapter leader, or community manager
+  // - moderator, or
+  // - administrator
+  return (tm_users_is_chapter_leader($user->uid, $nid) or (in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles)));
+
 }
 
 /* 

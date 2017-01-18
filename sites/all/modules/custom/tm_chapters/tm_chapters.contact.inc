@@ -162,3 +162,4 @@ function tm_chapters_send_email($chapter_leader_emails, $subject, $body, $user, 
     // Send e-mail.
     $result = $system->mail($format_message);
 }
+

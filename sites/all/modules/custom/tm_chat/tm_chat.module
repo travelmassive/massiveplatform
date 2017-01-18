@@ -65,6 +65,10 @@ function tm_chat_check_permission($roles = array()) {
 			return TRUE;
 		}
 	}
+
+	// be nicer
+	drupal_set_message("Please sign in to your account to access this feature");
+	drupal_goto("/");
 	return FALSE;
 
 }

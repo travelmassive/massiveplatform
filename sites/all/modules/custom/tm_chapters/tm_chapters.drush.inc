@@ -1,0 +1,433 @@
+<?php
+
+// tm_chapters.drush.inc - drush commands
+
+/**
+ * Implements hook_drush_command().
+ */
+function tm_chapters_drush_command() {
+
+	$items['tm-community-management-tasks'] = array(
+		'description' => 'Run automated community management tasks.',
+		'callback' => 'tm_chapters_community_management_tasks_drush',
+		'options' => array(
+			'confirm' => 'Confirm that you want to proceed',
+		),
+	);
+
+	$items['tm-community-management-reports'] = array(
+		'description' => 'Run automated community management reports.',
+		'callback' => 'tm_chapters_community_management_reports_drush',
+		'options' => array(
+			'confirm' => 'Confirm that you want to proceed',
+		),
+	);
+
+	return $items;
+}
+
+/**
+ * Run automatied community management tasks
+ */
+function tm_chapters_community_management_tasks_drush() {
+
+	global $conf;
+
+	// check confirm
+	$confirm = false;
+	$confirm_opt = drush_get_option('confirm');
+	if ($confirm_opt != null) {
+		$confirm = ($confirm_opt == "true");
+	}
+	if ($confirm_opt == null) {
+		drush_print("Usage: drush tm-community-management-tasks --uri=HOSTNAME --confirm=true");
+		return;
+	}
+
+	if (!$confirm) {
+		drush_print("Running simulation only. Use --confirm=true to process.");
+	}
+
+	// Get all chapters
+	$query = "SELECT nid, title FROM node WHERE type = 'chapter' AND status = 1 ORDER BY title";
+	$results = db_query($query)->fetchAll();
+	$chapter_nids = array();
+	foreach ($results as $result) {
+	  $chapter_nids[$result->title] = $result->nid;
+	}
+
+	// STEP 1.
+	// CHECK ACTIVITY
+	drush_print("Checking signin in activity...");
+	foreach ($chapter_nids as $title => $nid) {
+
+		// Load chapter
+		$chapter = node_load($nid);
+
+		// Clone chapter 
+		$resign_chapter_leaders = array();
+		$warn_chapter_leaders = array();
+
+		// Analyse chapter leaders
+		if (isset($chapter->field_chapter_leaders[LANGUAGE_NONE])) {
+		  foreach ($chapter->field_chapter_leaders[LANGUAGE_NONE] as $leader) {
+		    $leader = user_load($leader['target_id']);
+
+		    $print_line = "- " . $title . ": " . $leader->field_user_first_name[LANGUAGE_NONE][0]['value'] . " " . $leader->field_user_last_name[LANGUAGE_NONE][0]['value'];
+
+		    // when last accessed
+		    $last_visit_timestamp = $leader->access;
+			$last_visit_difference = time() - $last_visit_timestamp;
+			if (($last_visit_timestamp == 0) or ($last_visit_timestamp == null)) {
+				$last_visit_time = "never";
+			} else {
+				$last_visit_time = format_interval($last_visit_difference, 1) . " ago";
+			}
+			$print_line .= ". Last seen: " . $last_visit_time;
+			if ($last_visit_difference > (60 * 60 * 24 * $conf["tm_chapters_leader_inactive_retire_days"])) {
+
+				// three months
+				$print_line .= " ( > " . $conf["tm_chapters_leader_inactive_retire_days"] .  " days inactive - RETIRE)";
+
+				$resign_chapter_leaders[] = $leader->uid;
+
+			} else if ($last_visit_difference > (60 * 60 * 24 * $conf["tm_chapters_leader_inactive_warning_days"])) {
+
+				if (!in_array($leader->uid, $warn_chapter_leaders)) {
+
+					$print_line .= " ( > " . $conf["tm_chapters_leader_inactive_warning_days"] . " days inactive - SEND WARNING)";
+
+					$notification_emails = array($leader->mail);
+					
+					// Cc all community managers of any chapters member is a leader of
+					$cc_uids = array();
+					foreach (tm_users_get_chapters_leading($leader) as $nid) {
+						$leaders_chapter = node_load($nid);
+						if (isset($leaders_chapter->field_community_managers[LANGUAGE_NONE])) {
+							foreach ($leaders_chapter->field_community_managers[LANGUAGE_NONE] as $community_manager) {
+								$cc_uids[] = $community_manager['target_id'];
+							}
+						}
+					}
+
+					// unique ids
+					$cc_uids = array_unique($cc_uids);
+
+					// get addreses
+					$cc_emails = array();
+					foreach ($cc_uids as $uid) {
+						if ($uid != $leader->uid) {
+							$cc_user = user_load($uid);
+							$cc_emails[] = $cc_user->mail;
+						}
+					}
+
+					// Send warning
+					if ($confirm) {
+
+						// prepare subject and body
+						$subject = $conf["tm_chapters_leader_inactive_warning_subject"];
+						$subject = str_replace("__SITE_NAME__", $conf["tm_site_name"], $subject);
+
+						$body = $conf["tm_chapters_leader_inactive_warning"];
+						$body = str_replace("__SITE_NAME__", $conf["tm_site_name"], $body);
+						$body = str_replace("__FIRST_NAME__", strip_tags($leader->field_user_first_name[LANGUAGE_NONE][0]['value']), $body);
+
+						tm_chapters_leaders_send_notification($notification_emails, $subject, $body, $chapter, $cc_emails);
+					}
+
+
+				} else {
+					$print_line .= " ( > " . $conf["tm_chapters_leader_inactive_warning_days"] . " days inactive - SEND WARNING)";
+
+				}
+
+				$warn_chapter_leaders[] = $leader->uid;
+			
+			}
+
+			drush_print($print_line);
+
+		  }
+
+		  if ($confirm) {
+		  	// Remove any chapter leaders in bulk for each chapter
+		  	foreach ($chapter->field_chapter_leaders[LANGUAGE_NONE] as $key => $leader) {
+		  		if (in_array($leader["target_id"], $resign_chapter_leaders)) {
+		  			unset($chapter->field_chapter_leaders[LANGUAGE_NONE][$key]);
+		  		}
+		  	}
+		  	node_save($chapter);
+		  }
+		  
+
+		} else {
+			drush_print("- " . $title . ": No chapter leaders");
+		}
+
+	}
+
+	// STEP 2.
+	// CHECK LAST EVENT
+	drush_print("\nChecking last event date...");
+	foreach ($chapter_nids as $title => $nid) {
+		
+		$chapter = node_load($nid);
+		$chapter_name = tm_chapters_formal_name($chapter);
+
+		// Check events..
+		// LAST EVENT DATE
+		// Fetch the nearest past event that references a particular chapter.
+		// Only returns one event, the one with the closest starting date.
+		// Fetch the current and make sure it's UTC and user-defined timezone.
+		$current_date = new DateTime('now', new DateTimeZone('UTC'));
+		$query = new EntityFieldQuery();
+		$query->entityCondition('entity_type', 'node')
+		  ->entityCondition('bundle', 'event')
+		  ->propertyCondition('status', 1)
+		  ->fieldCondition('field_chapter', 'target_id', $nid)
+		  ->fieldCondition('field_event_date', 'value2', $current_date->format('Y-m-d H:i:s'), '<=')
+		  ->fieldOrderBy('field_event_date', 'value2', 'DESC')
+		  ->range(0,1);
+		$result = $query->execute();
+
+		// FUTURE EVENT DATE WITHIN 3 MONTHS
+		// Fetch the nearest past event that references a particular chapter.
+		// Only returns one event, the one with the closest starting date.
+		// Fetch the current and make sure it's UTC and user-defined timezone.
+		$in_three_months = new DateTime('now +3 months', new DateTimeZone('UTC'));
+		$query = new EntityFieldQuery();
+		$query->entityCondition('entity_type', 'node')
+		  ->entityCondition('bundle', 'event')
+		  ->propertyCondition('status', 1)
+		  ->fieldCondition('field_chapter', 'target_id', $nid)
+		  ->fieldCondition('field_event_date', 'value2', $current_date->format('Y-m-d H:i:s'), '>=')
+		  ->fieldCondition('field_event_date', 'value2', $in_three_months->format('Y-m-d H:i:s'), '<=')
+		  ->fieldOrderBy('field_event_date', 'value2', 'DESC')
+		  ->range(0,1);
+		$future_result = $query->execute();
+
+		// Initialize time_until.
+		$time_until = NULL;
+
+		$last_event_time = "No past events";
+
+		if (isset($result['node']) and !(isset($future_result['node']))) {
+		  $next_event_array = array_keys($result['node']);
+		  $next_event = node_load($next_event_array[0]);
+		  $event_date = field_get_items('node',$next_event,'field_event_date');
+		  
+		  // Create datetime object and ensure UTC timezone, instead of user-defined timezone.
+		  $event_timezone = _tm_get_event_timezone($next_event);
+		  $event_datetime = new DateTime($event_date[0]['value'], new DateTimeZone($event_timezone));
+		  //$time_until = format_interval($event_datetime->format('U') - $current_date->format('U'), 2);
+		  $last_event_time = _tm_event_time_elapsed($current_date->format('U') - $event_datetime->format('U')) . " ago";
+
+		  $days_since_last_event = ($current_date->format('U') - $event_datetime->format('U')) / (60 * 60 * 24);
+
+		  if ($days_since_last_event > $conf["tm_chapters_leader_no_events_days"]) {
+		  	drush_print("- " . $chapter->title . ": last event " . $last_event_time . " ( > " . $conf["tm_chapters_leader_no_events_days"] . " days - SEND WARNING)");
+
+		  	// Send warning
+		  	if ($confirm) {
+
+		  		// get formal chapter name
+			  	$chapter_url = drupal_get_path_alias('node/' . $chapter->nid);
+
+			  	// notify chapter leaders
+			  	$notify_uids = array();
+			  	if (isset($chapter->field_chapter_leaders[LANGUAGE_NONE])) {
+			  		foreach ($chapter->field_chapter_leaders[LANGUAGE_NONE] as $chapter_leader) {
+			  			$notify_uids[] = $chapter_leader['target_id'];
+			  		}
+			  	}
+
+			  	// notify community managers
+			  	if (isset($chapter->field_community_managers[LANGUAGE_NONE])) {
+			  		foreach ($chapter->field_community_managers[LANGUAGE_NONE] as $community_manager) {
+			  			$notify_uids[] = $community_manager['target_id'];
+			  		}
+			  	}
+
+			  	// unique ids
+			  	$notify_uids = array_unique($notify_uids);
+
+			  	// get addreses
+			  	$notify_emails = array();
+			  	foreach ($notify_uids as $uid) {
+			  		$notify_user = user_load($uid);
+			  		$notify_emails[] = $notify_user->mail;
+			  	}
+
+			  	// saluation
+			  	$salutation = "team";
+			  	if (sizeof($notify_uids) == 1) {
+			  		$single_user = user_load($notify_uids[0]); 
+			  		$salutation = strip_tags($single_user->field_user_first_name[LANGUAGE_NONE][0]['value']);
+			  	}
+
+			  	// number of future events
+			  	$query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 
+			  	LEFT JOIN field_revision_field_is_partner_event p on e.entity_id = p.entity_id
+			  	WHERE p.entity_type = 'node' AND field_is_partner_event_value = 0
+			  	AND e.entity_type = 'node' AND field_event_date_value >= NOW();";
+			  	$num_events = db_query($query_sql)->fetch();
+			  	$upcoming_events = $num_events->total;
+
+			  	// number of members in past 30 days
+			  	$query = "SELECT COUNT(*) amount FROM {users} u WHERE u.created > UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 30 day));";
+			  	$num_members = db_query($query)->fetch();
+			  	$number_signups = $num_members->amount;
+
+		  		// prepare subject and body
+		  		$subject = $conf["tm_chapters_leader_no_events_warning_subject"];
+		  		$subject = str_replace("__SITE_NAME__", $conf["tm_site_name"], $subject);
+		  		$subject = str_replace("__CHAPTER_NAME__", $chapter_name, $subject);
+
+		  		$body = $conf["tm_chapters_leader_no_events_warning"];
+		  		$body = str_replace("__SALUTATION__", $salutation, $body);
+		  		$body = str_replace("__SITE_NAME__", $conf["tm_site_name"], $body);
+		  		$body = str_replace("__CHAPTER_NAME__", $chapter_name, $body);
+		  		$body = str_replace("__UPCOMING_EVENTS__", $upcoming_events, $body);
+		  		$body = str_replace("__NUMBER_SIGNUPS__", $number_signups, $body);
+
+		  		tm_chapters_leaders_send_notification($notify_emails, $subject, $body, $chapter);
+		  	}
+
+
+		  } else {
+		  	drush_print("- " . $chapter->title . ": last event " . $last_event_time);
+		  }
+
+		} else {
+			drush_print("- " . $chapter->title . ": No previous events");
+		}
+
+	}
+	
+
+	drush_print("Done.");
+}
+
+
+/**
+ * Run automatied community management tasks
+ */
+function tm_chapters_community_management_reports_drush() {
+
+	global $conf;
+
+	// check confirm
+	$confirm = false;
+	$confirm_opt = drush_get_option('confirm');
+	if ($confirm_opt != null) {
+		$confirm = ($confirm_opt == "true");
+	}
+	if ($confirm_opt == null) {
+		drush_print("Usage: drush tm-community-management-reports --uri=HOSTNAME --confirm=true");
+		return;
+	}
+
+	if (!$confirm) {
+		drush_print("Running simulation only. Use --confirm=true to process.");
+	}
+
+	// Get all chapters
+	$query = "SELECT nid, title FROM node WHERE type = 'chapter' AND status = 1 ORDER BY title";
+	$results = db_query($query)->fetchAll();
+	$chapter_nids = array();
+	foreach ($results as $result) {
+	  $chapter_nids[$result->title] = $result->nid;
+	}
+
+	// STEP 1.
+	// SEND REPORTS
+	drush_print("Sending chapter report emails...");
+	foreach ($chapter_nids as $title => $nid) {
+
+		// Load chapter
+		$chapter = node_load($nid);
+		$chapter_name = tm_chapters_formal_name($chapter);
+
+		// Print chapter
+		drush_print("- " . $chapter->title);
+
+		// get some report data
+		$report_data = _tm_reports_get_chapter_insights($nid);
+
+		// Send report
+		if ($confirm) {
+
+			// notify chapter leaders
+			$notify_uids = array();
+			if (isset($chapter->field_chapter_leaders[LANGUAGE_NONE])) {
+				foreach ($chapter->field_chapter_leaders[LANGUAGE_NONE] as $chapter_leader) {
+					$notify_uids[] = $chapter_leader['target_id'];
+				}
+			}
+
+			// notify community managers
+			if (isset($chapter->field_community_managers[LANGUAGE_NONE])) {
+				foreach ($chapter->field_community_managers[LANGUAGE_NONE] as $community_manager) {
+					$notify_uids[] = $community_manager['target_id'];
+				}
+			}
+
+			// unique ids
+			$notify_uids = array_unique($notify_uids);
+
+			// get addreses
+			$notify_emails = array();
+			foreach ($notify_uids as $uid) {
+				$notify_user = user_load($uid);
+				$notify_emails[] = $notify_user->mail;
+			}
+
+			// saluation
+			$salutation = "team";
+			if (sizeof($notify_uids) == 1) {
+				$single_user = user_load($notify_uids[0]); 
+				$salutation = strip_tags($single_user->field_user_first_name[LANGUAGE_NONE][0]['value']);
+			}
+
+			// chapter insights url
+			$chapter_insights_url = drupal_get_path_alias('node/' . $chapter->nid) . "/insights";
+
+			// prepare subject and body
+			$subject = $conf["tm_chapters_leader_weekly_report_subject"];
+			$subject = str_replace("__SITE_NAME__", $conf["tm_site_name"], $subject);
+			$subject = str_replace("__CHAPTER_NAME__", $chapter_name, $subject);
+			$subject = str_replace("__REPORT_DATE__", date("j F", time() - (60*60*12)), $subject);
+
+
+			$body = $conf["tm_chapters_leader_weekly_report"];
+			$body = str_replace("__SALUTATION__", $salutation, $body);
+			$body = str_replace("__SITE_NAME__", $conf["tm_site_name"], $body);
+			$body = str_replace("__CHAPTER_NAME__", $chapter_name, $body);
+			$body = str_replace("__UPCOMING_EVENTS__", $upcoming_events, $body);
+			$body = str_replace("__NUMBER_SIGNUPS__", $number_signups, $body);
+			$body = str_replace("__CHAPTER_INSIGHTS_URL__", $chapter_insights_url, $body);
+			$body = str_replace("__REPORT_DATE__", date("j F", time() - (60*60*12)), $body);
+
+			// insert stats
+			foreach ($report_data["data_values"] as $key => $value) {
+				$body = str_replace("__" . strtoupper($key) . "__", $value, $body);
+			}
+
+			// send report
+			tm_chapters_leaders_send_notification($notify_emails, $subject, $body, $chapter);
+
+		}
+
+		
+	}
+
+}
+
+
+
+
+
+
+
+

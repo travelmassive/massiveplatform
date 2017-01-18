@@ -588,3 +588,18 @@ function tm_events_check_published_chapter_leader($event, $user_id) {
   return null;
 }
 
+/** 
+ * Helper method to get chapter from event
+ */
+function _tm_event_get_chapter_id($event) {
+  
+  if (isset($event->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
+    $chapter_id = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
+    return $chapter_id;
+  }
+
+  // No chapter
+  return null;
+
+}
+

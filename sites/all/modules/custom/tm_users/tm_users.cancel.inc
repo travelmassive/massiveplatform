@@ -28,7 +28,18 @@ function tm_users_user_cancel_methods_alter(&$methods) {
         drupal_goto("/user/" . $cancel_uid);
       }
     }
-  } 
+  }
+
+  // Add a custom method
+  // see: http://valuebound.com/resources/blog/custom-account-cancellation-methods-in-drupal-7
+  $methods['tm_users_remove_user'] = array(
+    'title' => t('TM - Delete the account and reassign chapter or event content to the <i
+      >Anonymous</i> user.'),
+    'description' => t('Chapters and events are kept'),
+    // access should be used for administrative methods only.
+    'access' => user_access('Administer permissions'),
+  );
+
 }
 
 /**
@@ -82,3 +93,39 @@ function tm_users_confirm_cancel_account($account) {
   drupal_goto("user/" . $account->uid . "/cancel");
 
 }
+
+/**
+ * Safeguard any chapters or events owned by users if their account is removed
+ * see: http://valuebound.com/resources/blog/custom-account-cancellation-methods-in-drupal-7
+ */
+function tm_base_user_cancel($edit, $account, $method) {
+
+  if ($method == "tm_users_remove_user") {
+
+    // Assign events to anon user
+    module_load_include('inc', 'node', 'node.admin');
+    $nodes = db_select('node', 'n')
+      ->fields('n', array('nid'))
+      ->condition('uid', $account->uid)
+      ->condition('type', 'event')
+      ->execute()
+      ->fetchCol();
+    node_mass_update($nodes, array('uid' => 0));
+
+    // Assign chapters to anon user
+    module_load_include('inc', 'node', 'node.admin');
+    $nodes = db_select('node', 'n')
+      ->fields('n', array('nid'))
+      ->condition('uid', $account->uid)
+      ->condition('type', 'chapter')
+      ->execute()
+      ->fetchCol();
+    node_mass_update($nodes, array('uid' => 0));
+
+    // Update message
+    drupal_get_messages('status');
+
+  }
+
+}
+

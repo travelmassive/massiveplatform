@@ -3,6 +3,28 @@
 // tm_chapters.csv.inc - csv methods
 
 /**
+ * Check permission to download CSV
+ */
+function tm_chapters_download_csv_check_permission() {
+
+  global $user;
+  global $conf;
+  $nid = _orig_nid();
+
+  if($nid == 0) {
+    return false;
+  }
+
+  // check if:
+  // - chapter leader, or community manager
+  // - moderator, or
+  // - administrator
+  return (tm_users_is_chapter_leader($user->uid, $nid) or (in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles)));
+
+}
+
+
+/**
  * Download Chapter CSV function 
  */
 function tm_chapters_download_csv(){
@@ -13,16 +35,6 @@ function tm_chapters_download_csv(){
 
   if($nid == 0) {
     print drupal_not_found();
-    return;
-  }
-
-  // Check that user is a chapter leader of this chapter
-  if ((!tm_users_is_chapter_leader($user->uid, $nid)) 
-    and (!(in_array("moderator", $user->roles))) 
-    and (!in_array("administrator", $user->roles)))
- {
-    $output = drupal_access_denied();
-    print $output;
     return;
   }
 

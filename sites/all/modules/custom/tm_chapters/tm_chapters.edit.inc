@@ -5,39 +5,16 @@
 /** 
  * Alters a node on saving
  */
-function tm_chapters_node_presave($node){
-  $role_name = 'chapter leader';
-  
-  // make sure we are working on a chapter node
+function tm_chapters_node_presave($node) {
+    
+  // Only operate on chapters
   if ($node->type != "chapter") { return; }
 
-  // Check chapter leaders
-  // If removing chapter leader, remove roles
-  if ($role = user_role_load_by_name($role_name)) {
-    foreach ($node->field_chapter_leaders[LANGUAGE_NONE] as $target){
-      $user = user_load($target['target_id']);
-      // make sure all chapter leaders have the right role set
-      user_multiple_role_edit(array($user->uid), 'add_role', $role->rid);
-    }
-    // should also check $node->original for users being *removed*
-    if (isset($node->original->field_chapter_leaders[LANGUAGE_NONE])){
-      $original = flatten_chapter_leaders($node->original->field_chapter_leaders[LANGUAGE_NONE]);
-      $new = flatten_chapter_leaders($node->field_chapter_leaders[LANGUAGE_NONE]);
-      $removed = array_diff($original, $new);
-      foreach ($removed as $rem){
-        // check first that leader is not in other chapters
-          $chapters = db_select('field_data_field_chapter_leaders', 'd')
-          ->fields('d')
-          ->condition('field_chapter_leaders_target_id',$rem,'=')
-          ->condition('deleted',0,'=')
-          ->execute();
-        if ($chapters->rowCount() == 1){
-          user_multiple_role_edit(array($rem), 'remove_role', $role->rid);
-        }
-      }
-    }
-  }
+  // Handle chapter leader changes
+  tm_chapters_leaders_chapter_save($node);
+  $node->field_chapter_management_reason[LANGUAGE_NONE] = array(); // unset reason
 
+  // Flag chapter sponsors
   // If sponsors are set, flag them
   // IC note:
   // Flag module (7.x-3.5) sets uid 0 for global flags.
@@ -84,7 +61,8 @@ function tm_chapters_form_alter(&$form, &$form_state, $form_id) {
   }
 
   // Permission var
-  $perm_is_moderator_or_admin = ((in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles)));
+  $perm_is_moderator_or_admin = (tm_users_is_community_manager($user->uid, $chapter_id) or (in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles)));
+
 
   // Only allow moderators and administrators to edit chapter leaders
   // setting: tm_chapters_allow_edit_chapter_leaders
@@ -92,6 +70,7 @@ function tm_chapters_form_alter(&$form, &$form_state, $form_id) {
     if (isset($conf["tm_chapters_allow_edit_chapter_leaders"])) {
       if (!$conf["tm_chapters_allow_edit_chapter_leaders"]) {
         unset($form['field_chapter_leaders']);
+        unset($form['field_chapter_management_reason']);
       }
     }
   }

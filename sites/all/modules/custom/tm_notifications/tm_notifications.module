@@ -287,7 +287,13 @@ function tm_notifications_mail($key, &$message, $params) {
   $template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
   $template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template);
   $template = str_replace("__MEMBERS_LABEL__", $conf["tm_members_label"], $template);
-  $template = str_replace("__HERO_IMAGE__", "", $template); // remove hero image
+
+  // Hero image
+  $hero_image = "";
+  if (isset ($params['tokens']['__HERO_IMAGE__'])) {
+    $hero_image = $params['tokens']["__HERO_IMAGE__"];
+  }
+  $template = str_replace("__HERO_IMAGE__", $hero_image, $template); // insert hero image
 
   // STEP 7. ADD BRANDING MESSAGE TO FOOTER
   $show_branding = true;
@@ -596,7 +602,7 @@ function tm_notifications_render_hero_image_html($hero_image_src, $hero_image_li
     $hero_image_html .= '<a href="' . $hero_image_link . '">';
   }
 
-  $hero_image_html .= '<img src="' . $hero_image_src . '" width="600" height="" alt="' . $hero_image_alt_text . '" border="0" align="center" style="width: 100%; max-width: 600px;">';
+  $hero_image_html .= '<img src="' . $hero_image_src . '" width="600" height="" alt="' . str_replace("'", "", strip_tags($hero_image_alt_text)) . '" border="0" align="center" style="width: 100%; max-width: 600px;">';
 
   if ($hero_image_link != null) {
     $hero_image_html .= '</a>';

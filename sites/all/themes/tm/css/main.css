@@ -8386,6 +8386,12 @@ td.views-field-access {
   display: block !important;
 }
 
+/* hide show row weights */
+/* line 838, ../sass/_single.scss */
+.tabledrag-toggle-weight-wrapper {
+  display: none;
+}
+
 /* line 2, ../sass/_login.scss */
 #account-menu-blk .menu-blk-title {
   text-transform: uppercase;

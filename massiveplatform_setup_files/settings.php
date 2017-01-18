@@ -290,6 +290,51 @@ $conf["tm_chapters_groups_enabled"] = true; // Allow group chapters. Exposes the
 $conf["tm_chapters_leaders_needed_max_days_since_event"] = 180; // show the help needed message if no events since this many days
 $conf["tm_chapters_leaders_needed_message"] = "We're looking for Chapter Leaders to help organize regular events for this chapter. Is that you? <a href='/contact'>Apply to lead this chapter</a>."; // message to display if chapter leader needed
 $conf["tm_chapters_community_search_filter"] = "country"; // filter /community page by country (default) or chapter
+$conf["tm_chapters_support_email"] = "support@massiveplatform.com"; // reply and cc email when making changes to chapters
+$conf["tm_chapters_leaders_welcome_message"] = "Welcome to Massive leadership team! If you need assistance please get in touch with your community manager or reply to this email.<br><br>Thanks for your support and for contributing to our community!"; // welcome message to new chapter leaders
+$conf["tm_chapters_leaders_retired_message"] = "Thanks for your contributions to the chapter and we hope you will continue to participate in our community. If you need any assistance please get in touch with our community management team or reply to this email."; // welcome message to retired chapter leaders
+$conf["tm_chapters_leader_inactive_warning_days"] = 60; // days inactive until we warn
+$conf["tm_chapters_leader_inactive_retire_days"] = 90; // days inactive until we retire as chapter leader
+$conf["tm_chapters_leader_no_events_days"] = 90; // days no events until we warn
+
+$conf["tm_chapters_leader_inactive_warning_subject"] = "Anyone home? Your __SITE_NAME__ account is inactive.";
+$conf["tm_chapters_leader_inactive_warning"] = "Hi __FIRST_NAME__
+<br>
+<br>We noticed that you haven't signed in to __SITE_NAME__ for more than 60 days.
+<br>
+<br>Did you go on an African safari or are you meditating on a mountain? We'd like to know that everything is ok so we're checking in with you.
+<br>
+<br>If we don't hear from you, your chapter leadership will be retired.
+<br>";
+$conf["tm_chapters_leader_inactive_retire_intro"] = "Your account has been inactive for more than 90 days, so we're retiring your chapter leadership of";
+$conf["tm_chapters_leader_no_events_warning_subject"] = "Get the party started. Need help with __CHAPTER_NAME__?";
+$conf["tm_chapters_leader_no_events_warning"] = "Hi __SALUTATION__,
+<br>
+<br>We noticed that your chapter __CHAPTER_NAME__ hasn't hosted any events for more than three months.
+<br>
+<br>Did you know that there are currently __UPCOMING_EVENTS__ upcoming events planned by other chapters? Last month more than __NUMBER_SIGNUPS__ members joined our community. Start planning for your next event now and support your local members!
+<br>
+<br>Do you need some help to get started? We'd love to help - simply reply to this email to get in touch.
+<br>
+<br>";
+$conf["tm_chapters_leader_weekly_report_subject"] = "You've got stats. Weekly report for __CHAPTER_NAME__";
+$conf["tm_chapters_leader_weekly_report"] = "Hi __SALUTATION__,
+<br>
+<br>Here's your chapter's statistics as of this week (__REPORT_DATE__):
+<br>
+<br>Total members: __MEMBERS_TOTAL__ (__MEMBERS_APPROVED_PCT__% approved)
+<br>Events in past 12 months: __NUM_EVENTS_PAST_12_MONTHS__
+<br>New members in past 30 days: __MEMBERS_30_DAYS_TOTAL__
+<br>Growth in past 30 days: __MEMBERS_30_DAYS_PCT__%
+<br>Growth in past 90 days: __MEMBERS_90_DAYS_PCT__%
+<br>All time event registrations: __NUM_EVENT_REGISTRATIONS__
+<br>
+<br>Find dozens more trends and stats on your Chapter Insights page:
+<br>
+<br><a href='__SERVER_HTTP__://__SERVER_NAME__/__CHAPTER_URL__'>__SERVER_NAME__/__CHAPTER_INSIGHTS_URL__</a>
+<br>
+<br>Let us know what you think about these stats! Reply to this email to get in touch.
+<br>";
 
 /** THEME SETTINGS **/
 $conf["tm_theme_meta_color"] = "#007DB7"; // Set the theme color for mobile Android, iOS 

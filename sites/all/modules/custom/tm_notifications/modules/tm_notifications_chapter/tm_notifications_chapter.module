@@ -62,9 +62,12 @@ function tm_notifications_chapter_tm_notif_info() {
  * Implement hook_flag_flag()
  */
 function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flagging) {
+
   // We want to target the signup flag on nodes.
   if ($flag->name == 'signup' && $flag->entity_type == 'node') {
+
     $node = node_load($entity_id);
+
     // Only for event nodes.
     if ($node->type == 'chapter') {
 
@@ -90,9 +93,23 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
       // get formal chapter name
       $chapter_name = tm_chapters_formal_name($node);
 
-      tm_notifications_notify('user_chapter_join_welcome_member', $account, array('node' => $node, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__WELCOME_MESSAGE__' => $welcome_message, '__CHAPTER_NAME__' => $chapter_name));
+      // Chapter hero image
+      global $conf;
+      if (isset($node->field_image[LANGUAGE_NONE][0]['uri'])) {
+        $chapter_image_src = image_style_url("banner", $node->field_image[LANGUAGE_NONE][0]['uri']);
+      } else {
+        $default_image_uri = _tm_chapters_get_default_image($conf["tm_images_default_field_image"], $node->nid);
+        $chapter_image_src = image_style_url("banner", $default_image_uri);
+      }
 
-      // notify each owner of the organizational profile that they have a new follower
+      $chapter_url = $conf["tm_email_server_http"] . "://" . $conf["tm_email_server_url_domain"] . "/" . drupal_get_path_alias('node/' . $node->nid);
+
+      $chapter_image_html = tm_notifications_render_hero_image_html($chapter_image_src, $chapter_url, $chapter_name);
+
+
+      tm_notifications_notify('user_chapter_join_welcome_member', $account, array('node' => $node, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__WELCOME_MESSAGE__' => $welcome_message, '__CHAPTER_NAME__' => $chapter_name, '__HERO_IMAGE__' => $chapter_image_html));
+
+      // notify each owner of the chapter that they have a new member
       if (isset($node->field_chapter_leaders[LANGUAGE_NONE])) {
         foreach ($node->field_chapter_leaders[LANGUAGE_NONE] as $leader) {
           $leader = user_load($leader['target_id']);
@@ -103,9 +120,10 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
 
           $profile_url = drupal_get_path_alias("user/" . $who_joined->uid);
 
-          tm_notifications_notify('user_chapter_join_notify_leaders', $leader, array('node' => $node, 'user' => $leader, '__PROFILE_URL__' => $profile_url, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name));
+          tm_notifications_notify('user_chapter_join_notify_leaders', $leader, array('node' => $node, 'user' => $leader, '__PROFILE_URL__' => $profile_url, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__HERO_IMAGE__' => $chapter_image_html));
         }
       }
     }
   }
 }
+

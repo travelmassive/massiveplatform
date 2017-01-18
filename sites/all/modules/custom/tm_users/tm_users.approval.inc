@@ -133,8 +133,14 @@ function tm_users_request_approval($user) {
     $moderator_ids[] = $flagger->uid;
   }
 
-  // get list of people who flagged this user as a company or brand
+  // Get list of people who flagged this user as a company or brand
   $who_flagged = flag_get_entity_flags("user", $user->uid, "approval_is_company_or_brand");
+  foreach ($who_flagged as $flagger) {
+    $moderator_ids[] = $flagger->uid;
+  }
+
+  // Get list of people who flagged this as non-community
+  $who_flagged = flag_get_entity_flags("user", $user->uid, "moderate_non_community_profile");
   foreach ($who_flagged as $flagger) {
     $moderator_ids[] = $flagger->uid;
   }

@@ -723,6 +723,7 @@ function _tm_more_actions_process($field, $title = NULL) {
           // Show approval tool if:
           // 1. if user is a moderator or administrator
           // 2. or if they are chapter leader and the member is signed up their chapter
+          // 3. or if they are a community manager and the member is a chapter they community manage
           if ((in_array("moderator", $user->roles) or user_access('administer')) 
           or ((in_array("chapter leader", $user->roles))) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid, true))) {
 

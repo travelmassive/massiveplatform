@@ -106,6 +106,10 @@ function tm_chapters_leaders_notify_changes($user_who_changed, $chapter) {
 <a href="__SERVER_HTTP__://__SERVER_NAME__/__CHAPTER_URL__">__SERVER_NAME__/__CHAPTER_URL__</a> 
 <br>';
 
+	if ($conf["tm_chapters_allow_edit_chapter_leaders"]) {
+		$body .= "<br>You can add or remove chapter leaders at any time from your chapter settings.<br>";
+	}
+
 	// get reason
 	$reason = "";
 	if (isset($chapter->field_chapter_management_reason[LANGUAGE_NONE][0]['value'])) {

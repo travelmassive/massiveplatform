@@ -155,8 +155,8 @@ function tm_chapters_leaders_notify_changes($user_who_changed, $chapter) {
 	// unique ids
 	$notify_uids = array_unique($notify_uids);
 
-	// saluation
-	$saluation = "team";
+	// salutation
+	$salutation = "team";
 	if (sizeof($notify_uids) == 1) {
 		$single_user = user_load($notify_uids[0]); 
 		$salutation = strip_tags($single_user->field_user_first_name[LANGUAGE_NONE][0]['value']);
@@ -169,9 +169,14 @@ function tm_chapters_leaders_notify_changes($user_who_changed, $chapter) {
 		$notify_emails[] = $notify_user->mail;
 	}
 
+	// if no chapter leaders or community managers, send to support email
+	if (sizeof($notify_emails) == 0) {
+		$notify_emails[] = $tm_chapters_support_email;
+	}
+
 	// replace template vars
 	$subject = str_replace("__CHAPTER_NAME__", $chapter_name, $subject);
-	$body = str_replace("__SALUATION__", $saluation, $body);
+	$body = str_replace("__SALUTATION__", $salutation, $body);
 	$body = str_replace("__CHAPTER_NAME__", $chapter_name, $body);
 	$body = str_replace("__CHAPTER_URL__", $chapter_url, $body);
 	$body = str_replace("__USER_FIRST_NAME__", $first_name, $body);

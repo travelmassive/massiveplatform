@@ -312,7 +312,7 @@ $conf["tm_chapters_leader_no_events_warning"] = "Hi __SALUTATION__,
 <br>
 <br>We noticed that your chapter __CHAPTER_NAME__ hasn't hosted any events for more than three months.
 <br>
-<br>Did you know that there are currently __UPCOMING_EVENTS__ upcoming events planned by other chapters? Last month more than __NUMBER_SIGNUPS__ members joined our community. Start planning for your next event now and support your local members!
+<br>Did you know that there are currently __UPCOMING_EVENTS__ upcoming events planned by other chapters? In the past month more than __NUMBER_SIGNUPS__ new members have joined our community. Start planning for your next event now and support your local members!
 <br>
 <br>Do you need some help to get started? We'd love to help - simply reply to this email to get in touch.
 <br>

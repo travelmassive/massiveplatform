@@ -12,6 +12,7 @@ function tm_chapters_drush_command() {
 		'callback' => 'tm_chapters_community_management_tasks_drush',
 		'options' => array(
 			'confirm' => 'Confirm that you want to proceed',
+			'target_chapter' => 'id of single chapter to process',
 		),
 	);
 
@@ -20,6 +21,7 @@ function tm_chapters_drush_command() {
 		'callback' => 'tm_chapters_community_management_reports_drush',
 		'options' => array(
 			'confirm' => 'Confirm that you want to proceed',
+			'target_chapter' => 'id of single chapter to process',
 		),
 	);
 
@@ -48,12 +50,22 @@ function tm_chapters_community_management_tasks_drush() {
 		$confirm = ($confirm_opt == "true");
 	}
 	if ($confirm_opt == null) {
-		drush_print("Usage: drush tm-community-management-tasks --uri=HOSTNAME --confirm=true");
+		drush_print("Usage: drush tm-community-management-tasks --uri=HOSTNAME --confirm=true\nOptional: --target_id=123");
 		return;
 	}
 
 	if (!$confirm) {
 		drush_print("Running simulation only. Use --confirm=true to process.");
+	}
+
+	if (drush_get_option("uri") == null) {
+		drush_print("Warning! Need to --uri to ensure URLS are correctly rendered in emails");
+	}
+
+	// target chapter
+	$target_chapter = drush_get_option('target_chapter');
+	if ($target_chapter != null) {
+		drush_print("Target chapter id: " . $target_chapter);
 	}
 
 	// Get all chapters
@@ -68,6 +80,13 @@ function tm_chapters_community_management_tasks_drush() {
 	// CHECK ACTIVITY
 	drush_print("Checking signin in activity...");
 	foreach ($chapter_nids as $title => $nid) {
+
+		// optional: only target specific chapter
+		if ($target_chapter != null) {
+			if ($target_chapter != $nid) {
+				continue;
+			}
+		}
 
 		// Load chapter
 		$chapter = node_load($nid);
@@ -180,6 +199,13 @@ function tm_chapters_community_management_tasks_drush() {
 	drush_print("\nChecking last event date...");
 	foreach ($chapter_nids as $title => $nid) {
 		
+		// optional: only target specific chapter
+		if ($target_chapter != null) {
+			if ($target_chapter != $nid) {
+				continue;
+			}
+		}
+
 		$chapter = node_load($nid);
 		$chapter_name = tm_chapters_formal_name($chapter);
 
@@ -267,6 +293,11 @@ function tm_chapters_community_management_tasks_drush() {
 			  		$notify_emails[] = $notify_user->mail;
 			  	}
 
+			  	// if no chapter leaders or community managers, send to support email
+			  	if (sizeof($notify_emails) == 0) {
+			  		$notify_emails[] = $conf['tm_chapters_support_email'];
+			  	}
+
 			  	// saluation
 			  	$salutation = "team";
 			  	if (sizeof($notify_uids) == 1) {
@@ -337,12 +368,22 @@ function tm_chapters_community_management_reports_drush() {
 		$confirm = ($confirm_opt == "true");
 	}
 	if ($confirm_opt == null) {
-		drush_print("Usage: drush tm-community-management-reports --uri=HOSTNAME --confirm=true");
+		drush_print("Usage: drush tm-community-management-reports --uri=HOSTNAME --confirm=true\nOptional: --target_id=123");
 		return;
 	}
 
 	if (!$confirm) {
 		drush_print("Running simulation only. Use --confirm=true to process.");
+	}
+
+	if (drush_get_option("uri") == null) {
+		drush_print("Warning! Need to --uri to ensure URLS are correctly rendered in emails");
+	}
+
+	// target chapter
+	$target_chapter = drush_get_option('target_chapter');
+	if ($target_chapter != null) {
+		drush_print("Target chapter id: " . $target_chapter);
 	}
 
 	// Get all chapters
@@ -357,6 +398,13 @@ function tm_chapters_community_management_reports_drush() {
 	// SEND REPORTS
 	drush_print("Sending chapter report emails...");
 	foreach ($chapter_nids as $title => $nid) {
+
+		// optional: only target specific chapter
+		if ($target_chapter != null) {
+			if ($target_chapter != $nid) {
+				continue;
+			}
+		}
 
 		// Load chapter
 		$chapter = node_load($nid);
@@ -392,6 +440,11 @@ function tm_chapters_community_management_reports_drush() {
 		foreach ($notify_uids as $uid) {
 			$notify_user = user_load($uid);
 			$notify_emails[] = $notify_user->mail;
+		}
+
+		// if no chapter leaders or community managers, send to support email
+		if (sizeof($notify_emails) == 0) {
+			$notify_emails[] = $conf['tm_chapters_support_email'];
 		}
 
 		// saluation

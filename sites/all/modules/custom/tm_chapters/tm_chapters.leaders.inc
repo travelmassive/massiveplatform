@@ -175,7 +175,7 @@ function tm_chapters_leaders_notify_changes($user_who_changed, $chapter) {
 
 	// if no chapter leaders or community managers, send to support email
 	if (sizeof($notify_emails) == 0) {
-		$notify_emails[] = $tm_chapters_support_email;
+		$notify_emails[] = $conf['tm_chapters_support_email'];
 	}
 
 	// replace template vars

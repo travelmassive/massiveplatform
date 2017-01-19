@@ -317,7 +317,7 @@ $conf["tm_chapters_leader_no_events_warning"] = "Hi __SALUTATION__,
 <br>Do you need some help to get started? We'd love to help - simply reply to this email to get in touch.
 <br>
 <br>";
-$conf["tm_chapters_leader_weekly_report_subject"] = "You've got stats. Weekly report for __CHAPTER_NAME__";
+$conf["tm_chapters_leader_weekly_report_subject"] = "You've got stats. Weekly report for __CHAPTER_NAME____SUBJECT_STATS__";
 $conf["tm_chapters_leader_weekly_report"] = "Hi __SALUTATION__,
 <br>
 <br>Here's your chapter's statistics as of this week (__REPORT_DATE__):
@@ -331,7 +331,7 @@ $conf["tm_chapters_leader_weekly_report"] = "Hi __SALUTATION__,
 <br>
 <br>Find dozens more trends and stats on your Chapter Insights page:
 <br>
-<br><a href='__SERVER_HTTP__://__SERVER_NAME__/__CHAPTER_URL__'>__SERVER_NAME__/__CHAPTER_INSIGHTS_URL__</a>
+<br><a href='__SERVER_HTTP__://__SERVER_NAME__/__CHAPTER_INSIGHTS_URL__'>__SERVER_NAME__/__CHAPTER_INSIGHTS_URL__</a>
 <br>
 <br>Let us know what you think about these stats! Reply to this email to get in touch.
 <br>";

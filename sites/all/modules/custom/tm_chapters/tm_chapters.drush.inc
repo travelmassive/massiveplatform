@@ -360,79 +360,84 @@ function tm_chapters_community_management_reports_drush() {
 		// get some report data
 		$report_data = _tm_reports_get_chapter_insights($nid);
 
+		
+		// notify chapter leaders
+		$notify_uids = array();
+		if (isset($chapter->field_chapter_leaders[LANGUAGE_NONE])) {
+			foreach ($chapter->field_chapter_leaders[LANGUAGE_NONE] as $chapter_leader) {
+				$notify_uids[] = $chapter_leader['target_id'];
+			}
+		}
+
+		// notify community managers
+		if (isset($chapter->field_community_managers[LANGUAGE_NONE])) {
+			foreach ($chapter->field_community_managers[LANGUAGE_NONE] as $community_manager) {
+				$notify_uids[] = $community_manager['target_id'];
+			}
+		}
+
+		// unique ids
+		$notify_uids = array_unique($notify_uids);
+
+		// get addreses
+		$notify_emails = array();
+		foreach ($notify_uids as $uid) {
+			$notify_user = user_load($uid);
+			$notify_emails[] = $notify_user->mail;
+		}
+
+		// saluation
+		$salutation = "team";
+		if (sizeof($notify_uids) == 1) {
+			$single_user = user_load($notify_uids[0]); 
+			$salutation = strip_tags($single_user->field_user_first_name[LANGUAGE_NONE][0]['value']);
+		}
+
+		// chapter insights url
+		$chapter_insights_url = drupal_get_path_alias('node/' . $chapter->nid) . "/insights";
+
+		// subject stats
+		// report > 50 members joined in a day
+		$subject_stats = "";
+		if ($report_data["data_values"]["members_30_days_total"] >= 50) {
+			$subject_stats = " (" . $report_data["data_values"]["members_30_days_total"] . " new members past month)";
+		}
+		// report > 20% growth
+		if (($report_data["data_values"]["members_30_days_pct"] >= 20) and ($report_data["data_values"]["members_30_days_pct"] < 1000)) {
+			$subject_stats = " (" . $report_data["data_values"]["members_30_days_pct"] . "% growth past month)";
+		}
+
+		// prepare subject and body
+		$subject = $conf["tm_chapters_leader_weekly_report_subject"];
+		$subject = str_replace("__SITE_NAME__", $conf["tm_site_name"], $subject);
+		$subject = str_replace("__CHAPTER_NAME__", $chapter_name, $subject);
+		$subject = str_replace("__REPORT_DATE__", date("j F", time() - (60*60*12)), $subject);
+		$subject = str_replace("__SUBJECT_STATS__", $subject_stats, $subject);
+
+
+		$body = $conf["tm_chapters_leader_weekly_report"];
+		$body = str_replace("__SALUTATION__", $salutation, $body);
+		$body = str_replace("__SITE_NAME__", $conf["tm_site_name"], $body);
+		$body = str_replace("__CHAPTER_NAME__", $chapter_name, $body);
+		$body = str_replace("__UPCOMING_EVENTS__", $upcoming_events, $body);
+		$body = str_replace("__NUMBER_SIGNUPS__", $number_signups, $body);
+		$body = str_replace("__CHAPTER_INSIGHTS_URL__", $chapter_insights_url, $body);
+		$body = str_replace("__REPORT_DATE__", date("j F", time() - (60*60*12)), $body);
+
+		// insert stats
+		foreach ($report_data["data_values"] as $key => $value) {
+			$body = str_replace("__" . strtoupper($key) . "__", $value, $body);
+		}
+
 		// Send report
 		if ($confirm) {
-
-			// notify chapter leaders
-			$notify_uids = array();
-			if (isset($chapter->field_chapter_leaders[LANGUAGE_NONE])) {
-				foreach ($chapter->field_chapter_leaders[LANGUAGE_NONE] as $chapter_leader) {
-					$notify_uids[] = $chapter_leader['target_id'];
-				}
-			}
-
-			// notify community managers
-			if (isset($chapter->field_community_managers[LANGUAGE_NONE])) {
-				foreach ($chapter->field_community_managers[LANGUAGE_NONE] as $community_manager) {
-					$notify_uids[] = $community_manager['target_id'];
-				}
-			}
-
-			// unique ids
-			$notify_uids = array_unique($notify_uids);
-
-			// get addreses
-			$notify_emails = array();
-			foreach ($notify_uids as $uid) {
-				$notify_user = user_load($uid);
-				$notify_emails[] = $notify_user->mail;
-			}
-
-			// saluation
-			$salutation = "team";
-			if (sizeof($notify_uids) == 1) {
-				$single_user = user_load($notify_uids[0]); 
-				$salutation = strip_tags($single_user->field_user_first_name[LANGUAGE_NONE][0]['value']);
-			}
-
-			// chapter insights url
-			$chapter_insights_url = drupal_get_path_alias('node/' . $chapter->nid) . "/insights";
-
-			// prepare subject and body
-			$subject = $conf["tm_chapters_leader_weekly_report_subject"];
-			$subject = str_replace("__SITE_NAME__", $conf["tm_site_name"], $subject);
-			$subject = str_replace("__CHAPTER_NAME__", $chapter_name, $subject);
-			$subject = str_replace("__REPORT_DATE__", date("j F", time() - (60*60*12)), $subject);
-
-
-			$body = $conf["tm_chapters_leader_weekly_report"];
-			$body = str_replace("__SALUTATION__", $salutation, $body);
-			$body = str_replace("__SITE_NAME__", $conf["tm_site_name"], $body);
-			$body = str_replace("__CHAPTER_NAME__", $chapter_name, $body);
-			$body = str_replace("__UPCOMING_EVENTS__", $upcoming_events, $body);
-			$body = str_replace("__NUMBER_SIGNUPS__", $number_signups, $body);
-			$body = str_replace("__CHAPTER_INSIGHTS_URL__", $chapter_insights_url, $body);
-			$body = str_replace("__REPORT_DATE__", date("j F", time() - (60*60*12)), $body);
-
-			// insert stats
-			foreach ($report_data["data_values"] as $key => $value) {
-				$body = str_replace("__" . strtoupper($key) . "__", $value, $body);
-			}
 
 			// send report
 			tm_chapters_leaders_send_notification($notify_emails, $subject, $body, $chapter);
 
 		}
-
 		
 	}
 
 }
-
-
-
-
-
-
-
 

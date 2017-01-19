@@ -40,7 +40,7 @@ function flatten_chapter_leaders($array){
   if ($array == null) { 
     return $newarray;
   }
-  
+
   foreach ($array as $item){
     $newarray[] = $item['target_id'];
   }
@@ -100,7 +100,7 @@ function tm_chapters_form_alter(&$form, &$form_state, $form_id) {
   }
 
   // Only allow moderators and administrators to link to discussion category
-  if ((!$perm_is_moderator_or_admin)) {
+  if (!(in_array("moderator", $user->roles)) or (!in_array("administrator", $user->roles))) {
     unset($form['field_discuss_category_id']);
   }
 

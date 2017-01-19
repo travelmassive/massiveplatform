@@ -35,6 +35,12 @@ function tm_chapters_node_presave($node) {
  */
 function flatten_chapter_leaders($array){
   $newarray = array();
+
+  // check for null array
+  if ($array == null) { 
+    return $newarray;
+  }
+  
   foreach ($array as $item){
     $newarray[] = $item['target_id'];
   }

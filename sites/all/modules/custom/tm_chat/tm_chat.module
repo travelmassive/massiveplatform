@@ -45,7 +45,7 @@ function tm_chat_menu() {
 	$items[$chat_menu_path] = array(
 		'title' => '',
 		'page callback' => 'tm_chat_embed',
-		'access callback' => 'tm_chat_check_permission' 
+		'access arguments' => array('access content')
 	);
 
    return $items;
@@ -65,7 +65,7 @@ function tm_chat_check_permission($roles = array()) {
 			return TRUE;
 		}
 	}
-	
+
 	return FALSE;
 
 }
@@ -77,6 +77,18 @@ function tm_chat_embed() {
 
 	global $conf;
 	global $user;
+
+	// friendly check permission
+	print_r($user->roles);
+	if (!tm_chat_check_permission($user->roles)) {
+		if (!user_is_logged_in()) {
+			drupal_set_message('Please sign in to access the chat room.');
+		} else {
+			drupal_set_message('Sorry, you don\'t have permission to access the chat room right now.');
+		}
+		drupal_goto("/");
+		return;
+	}
 
 	$chat_menu_path = "chat"; // default
 	if (isset($conf["tm_chat_embed_menu_path"])) {

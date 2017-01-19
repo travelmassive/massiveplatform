@@ -23,6 +23,14 @@ function tm_chapters_drush_command() {
 		),
 	);
 
+	$items['tm-community-management-remove-all-managers'] = array(
+		'description' => 'Remove all community managers from all chapters.',
+		'callback' => 'tm_chapters_community_management_remove_all_managers_drush',
+		'options' => array(
+			'confirm' => 'Confirm that you want to proceed',
+		),
+	);
+
 	return $items;
 }
 
@@ -440,4 +448,43 @@ function tm_chapters_community_management_reports_drush() {
 	}
 
 }
+
+/**
+ * Remove all community managers from all chapters
+ */
+function tm_chapters_community_management_remove_all_managers_drush() {
+
+	// check confirm
+	$confirm = false;
+	$confirm_opt = drush_get_option('confirm');
+	if ($confirm_opt != null) {
+		$confirm = ($confirm_opt == "true");
+	}
+	if ($confirm_opt == null) {
+		drush_print("Usage: drush tm-community-management-remove-all-managers --confirm=true");
+		return;
+	}
+	if ($confirm == false) {
+		drush_print("Not confirmed, exiting.");
+		return;
+	}
+
+	// remove all community managers
+	$query = "SELECT nid, title FROM node WHERE type = :chapter AND status = 1 ORDER BY title";
+	$results = db_query($query, array(":chapter" => "chapter"))->fetchAll();
+	$chapter_nids = array();
+	foreach ($results as $result) {
+	  $chapter = node_load($result->nid);
+	  drush_print("Removed community managers for " . $chapter->title . "...");
+	  if (isset($chapter->field_community_managers[LANGUAGE_NONE])) {
+		foreach ($chapter->field_community_managers[LANGUAGE_NONE] as $key => $manager) {
+			unset($chapter->field_community_managers[LANGUAGE_NONE][$key]);
+		}
+	  }
+	  node_save($chapter);
+	}
+
+	drush_print("Completed.");
+}
+
 

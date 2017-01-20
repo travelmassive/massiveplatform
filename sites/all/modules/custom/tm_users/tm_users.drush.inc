@@ -13,6 +13,7 @@ function tm_users_drush_command() {
 		'options' => array(
 			'confirm' => 'Confirm that you want to proceed',
 			'uid' => 'uid to reassign to',
+			'target_uid' => 'target a user id'
 		),
 	);
 
@@ -43,12 +44,18 @@ function tm_users_assign_missing_approval_flags_drush() {
 		drush_print("Running simulation only. Use --confirm=true to process.");
 	}
 
-	// get uid - default 0
+	// get uid - default 0 (optional)
 	$assign_uid = drush_get_option('uid');
 	if ($assign_uid == null) {
 		$assign_uid = 0;
 	}
 	drush_print("Resassign uid: " . $assign_uid);
+
+	// target uid (optional)
+	$target_uid = drush_get_option('target_uid');
+	if ($target_uid != null) {
+		drush_print("Target uid: " . $target_uid);
+	}
 
 	// get min and max uid
 	$all_uids = db_query("SELECT name,uid FROM users ORDER BY uid ASC")->fetchAllKeyed(1,0);
@@ -62,26 +69,37 @@ function tm_users_assign_missing_approval_flags_drush() {
 
 	// loop through all users
 	foreach ($all_uids as $uid => $name) {
-	  // load user
-	  $account = user_load($uid);
-	  if ($account !== FALSE) {
-	    // check if user is approved
-	    if (in_array("approved user", $account->roles)) {
-	      // check if user is flagged
-	      $who_flagged = flag_get_entity_flags("user", $uid, "approval_approved_by");
-	      if (sizeof($who_flagged) == 0) {
-	        drush_print("Approved user " . $uid . " is not flagged. Flagging with approval_approved_by to uid: " . $assign_uid);
-	        if ($confirm) {
 
-	        	// set approval flag
-	        	$approval_flag->flag('flag', $uid, $approving_user, true);
-	        	
-	        	// set it back six months	
-	        	db_query("update flagging set timestamp = (timestamp - (60*60*24*180)) where fid = " . $approval_flag->fid . " and entity_id = " . $assign_uid . ";");
-	        }
-	      }
-	    }
-	  }
+		// target uid
+		if ($target_uid != null) {
+			if ($target_uid != $uid) {
+				continue;
+			}
+		}
+
+		// load user
+		$account = user_load($uid);
+			if ($account !== FALSE) {
+
+				// check if user is approved
+				if (in_array("approved user", $account->roles)) {
+
+					// check if user is flagged
+					$who_flagged = flag_get_entity_flags("user", $uid, "approval_approved_by");
+					if (sizeof($who_flagged) == 0) {
+						drush_print("Approved user " . $uid . " is not flagged. Flagging with approval_approved_by to uid: " . $assign_uid);
+
+					if ($confirm) {
+
+						// set approval flag
+						$approval_flag->flag('flag', $uid, $approving_user, true);
+
+						// set it back six months	
+						db_query("update flagging set timestamp = (timestamp - (60*60*24*180)) where fid = " . $approval_flag->fid . " and entity_id = " . $assign_uid . ";");
+					}
+				}
+			}
+		}
 	}
 
 	drush_print("Completed.");

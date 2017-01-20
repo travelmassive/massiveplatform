@@ -476,6 +476,14 @@ function tm_chapters_community_management_reports_drush() {
 			$approval_reminder_message .= "<br>Your " . $conf["tm_approved_label_plural"] . " is below " . $min_approval_members_pct . "%. Please take a moment to review your <a href='__SERVER_HTTP__://__SERVER_NAME__/" . $unapproved_members_link . "'>" . $conf["tm_unapproved_label_plural"] . "</a> and pending requests.<br>";
 		}
 
+		// num_event_payments
+		$event_payments_message = "";
+		if (isset($report_data["data_values"]["num_event_payments"])) {
+			if ($report_data["data_values"]["num_event_payments"] > 0) {
+				$event_payments_message = "<br>All time event payments: " . number_format($report_data["data_values"]["num_event_payments"]) ;
+			}
+		}
+
 		// prepare subject and body
 		$subject = $conf["tm_chapters_leader_weekly_report_subject"];
 		$subject = str_replace("__SITE_NAME__", $conf["tm_site_name"], $subject);
@@ -492,7 +500,7 @@ function tm_chapters_community_management_reports_drush() {
 		$body = str_replace("__CHAPTER_INSIGHTS_URL__", $chapter_insights_url, $body);
 		$body = str_replace("__REPORT_DATE__", date("j F", time() - (60*60*12)), $body);
 		$body = str_replace("__APPROVAL_REMINDER_MESSAGE__", $approval_reminder_message, $body);
-
+		$body = str_replace("__EVENT_PAYMENTS_MESSAGE__", $event_payments_message, $body);
 
 		// insert stats
 		foreach ($report_data["data_values"] as $key => $value) {

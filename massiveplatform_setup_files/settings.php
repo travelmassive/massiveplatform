@@ -328,13 +328,15 @@ $conf["tm_chapters_leader_weekly_report"] = "Hi __SALUTATION__,
 <br>Growth in past 30 days: __MEMBERS_30_DAYS_PCT__%
 <br>Growth in past 90 days: __MEMBERS_90_DAYS_PCT__%
 <br>All time event registrations: __NUM_EVENT_REGISTRATIONS__
+<br>Total chapter connections: __TOTAL_CHAPTER_MEMBER_CONNECTIONS__
 <br>
 <br>Find dozens more trends and stats on your Chapter Insights page:
 <br>
 <br><a href='__SERVER_HTTP__://__SERVER_NAME__/__CHAPTER_INSIGHTS_URL__'>__SERVER_NAME__/__CHAPTER_INSIGHTS_URL__</a>
-<br>
+<br>__APPROVAL_REMINDER_MESSAGE__
 <br>Let us know what you think about these stats! Reply to this email to get in touch.
 <br>";
+$conf["tm_chapters_leader_weekly_report_min_approved"] = 80; // display approval reminder messsage if approval % is below this
 
 /** THEME SETTINGS **/
 $conf["tm_theme_meta_color"] = "#007DB7"; // Set the theme color for mobile Android, iOS 

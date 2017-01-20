@@ -519,6 +519,29 @@ function _tm_reports_get_chapter_insights($chapter_id) {
   $avg_event_registeration_frequency = round($query->total, 1);
   $insights['avg_event_registeration_frequency'] = $avg_event_registeration_frequency;
 
+  // NUMBER OF CONNECTIONS BETWEEN MEMBERS IN THE CHAPTER
+  $follow_flag = flag_get_flag('follow_members', NULL);
+  $follow_organizations_flag = flag_get_flag('follow_organizations', NULL);
+  $signup_flag = flag_get_flag('signup', NULL);
+
+  // get outbound follows (total follows from chapter members)
+  $query_sql = "SELECT COUNT(uid) AS total FROM flagging f WHERE f.fid = :follow_fid AND f.uid IN (SELECT uid FROM flagging f2 WHERE f2.entity_id = :chapter_id AND f2.fid = :signup_fid)";
+  $query = db_query($query_sql, array(":chapter_id" => $chapter_id, ":follow_fid" => $follow_flag->fid, ":signup_fid" => $signup_flag->fid))->fetch();
+  $total_chapter_member_connections_outbound = $query->total;
+
+  // get inbound follows (total following of chapter members)
+  $query_sql = "SELECT SUM(fc.count) AS total FROM flag_counts fc WHERE fc.fid = :follow_fid AND entity_id IN (SELECT uid FROM flagging f2 WHERE f2.entity_id = :chapter_id AND f2.fid = :signup_fid)";
+  $query = db_query($query_sql, array(":chapter_id" => $chapter_id, ":follow_fid" => $follow_flag->fid, ":signup_fid" => $signup_flag->fid))->fetch();
+  $total_chapter_member_connections_inbound = $query->total;
+
+  // chapter members following organizations
+  $query_sql = "SELECT COUNT(uid) AS total FROM flagging f WHERE f.fid = :follow_fid AND f.uid IN (SELECT uid FROM flagging f2 WHERE f2.entity_id = :chapter_id AND f2.fid = :signup_fid)";
+  $query = db_query($query_sql, array(":chapter_id" => $chapter_id, ":follow_fid" => $follow_organizations_flag->fid, ":signup_fid" => $signup_flag->fid))->fetch();
+  $total_chapter_member_connections_organizations = $query->total;
+
+  $total_chapter_member_connections = $total_chapter_member_connections_outbound + $total_chapter_member_connections_inbound + $total_chapter_member_connections_organizations;
+  $insights['total_chapter_member_connections'] = $total_chapter_member_connections;
+
   // RETURN DATA
   $data_labels = tm_reports_get_insights_labels();
   $results = ["data_values" => $insights, "data_labels" => $data_labels];
@@ -962,8 +985,10 @@ function tm_reports_get_insights_labels() {
   "pct_members_without_home_chapter" => "% Members from other Chapters",
   "num_unique_chapter_event_registrations" => "Members who have registered for events",
   "pct_unique_chapter_event_registrations" => "% " . tm_users_get_approved_member_label("plural") . " who have registered for events",
-  "avg_event_registeration_frequency" => "Average Number Of Events Attended (of those who registered)"];
+  "avg_event_registeration_frequency" => "Average Number Of Events Attended (of those who registered)",
+  "total_chapter_member_connections" => "Total Chapter Connections (Member Follows)"];
   return $data_labels;
+
 }
 
 /* Modify industry report view query */

@@ -327,8 +327,14 @@ function _tm_flags_flag_limits(&$variables) {
       $variables['link_href'] = '';
       $variables['flag_button_class'] = 'flag-limit follow bttn bttn-secondary bttn-m';
       drupal_add_js('
+      var tm_follow_restricted_prompt = false;
       jQuery(document).ready(function($) {
+        
         $( ".flag-limit" ).click(function() {
+
+          if (tm_follow_restricted_prompt) { return; }
+          tm_follow_restricted_prompt = true;
+
           var message = "<strong>How can I follow other members?</strong><br>Unlock this feature by completing your profile and <a href=\"javascript:jq_request_approval(' . $user->uid . ')\" class=\"approval-link\">requesting approval</a> of your account.";
           $.prompt(message, {
             title: "This feature is for ' . str_replace("'", "", tm_users_get_approved_member_label("plural")) . '",
@@ -338,6 +344,7 @@ function _tm_flags_flag_limits(&$variables) {
             },
             close: function() { 
               $("#main").removeClass("tm-blur-filter");
+              tm_follow_restricted_prompt = false;
             }
           });
         }); 

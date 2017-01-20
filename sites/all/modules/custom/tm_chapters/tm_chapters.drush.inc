@@ -468,13 +468,20 @@ function tm_chapters_community_management_reports_drush() {
 			$subject_stats = " (" . $report_data["data_values"]["members_30_days_pct"] . "% growth past month)";
 		}
 
+		// approval link
+		$unapproved_members_link = drupal_get_path_alias('node/' . $chapter->nid) . "/unapproved-members";
+		$approval_reminder_message = "";
+		$min_approval_members_pct = $conf["tm_chapters_leader_weekly_report_min_approved"];
+		if ($report_data["data_values"]["members_approved_pct"] < $min_approval_members_pct) {
+			$approval_reminder_message .= "<br>Your " . $conf["tm_approved_label_plural"] . " is below " . $min_approval_members_pct . "%. Please take a moment to review your <a href='__SERVER_HTTP__://__SERVER_NAME__/" . $unapproved_members_link . "'>" . $conf["tm_unapproved_label_plural"] . "</a> to approve new people and pending requests.<br>";
+		}
+
 		// prepare subject and body
 		$subject = $conf["tm_chapters_leader_weekly_report_subject"];
 		$subject = str_replace("__SITE_NAME__", $conf["tm_site_name"], $subject);
 		$subject = str_replace("__CHAPTER_NAME__", $chapter_name, $subject);
 		$subject = str_replace("__REPORT_DATE__", date("j F", time() - (60*60*12)), $subject);
 		$subject = str_replace("__SUBJECT_STATS__", $subject_stats, $subject);
-
 
 		$body = $conf["tm_chapters_leader_weekly_report"];
 		$body = str_replace("__SALUTATION__", $salutation, $body);
@@ -484,6 +491,8 @@ function tm_chapters_community_management_reports_drush() {
 		$body = str_replace("__NUMBER_SIGNUPS__", $number_signups, $body);
 		$body = str_replace("__CHAPTER_INSIGHTS_URL__", $chapter_insights_url, $body);
 		$body = str_replace("__REPORT_DATE__", date("j F", time() - (60*60*12)), $body);
+		$body = str_replace("__APPROVAL_REMINDER_MESSAGE__", $approval_reminder_message, $body);
+
 
 		// insert stats
 		foreach ($report_data["data_values"] as $key => $value) {

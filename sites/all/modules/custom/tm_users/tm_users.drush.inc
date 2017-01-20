@@ -95,7 +95,7 @@ function tm_users_assign_missing_approval_flags_drush() {
 						$approval_flag->flag('flag', $uid, $approving_user, true);
 
 						// set it back six months	
-						db_query("update flagging set timestamp = (timestamp - (60*60*24*180)) where fid = " . $approval_flag->fid . " and entity_id = " . $assign_uid . ";");
+						db_query("update flagging set timestamp = (timestamp - (60*60*24*180)) where fid = " . $approval_flag->fid . " and uid = " . $assign_uid . " and entity_id = " . $uid . ";");
 					}
 				}
 			}

@@ -191,5 +191,3 @@ function tm_users_module_implements_alter(&$implementations, $hook) {
     $implementations = array_merge(array('tm_users' => $group), $implementations);
   }
 }
-
-

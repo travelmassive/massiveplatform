@@ -49,17 +49,26 @@ function tm_users_default_field_validation_rule() {
   $rule->validator = 'field_validation_regex_validator';
   $rule->settings = array(
     'data' => '^[_\\-\\sa-zA-Z0-9]+$',
-    'bypass' => 0,
+    'bypass' => 1,
     'roles' => array(
+      2 => '2',
       1 => 0,
-      2 => 0,
       4 => 0,
       6 => 0,
       7 => 0,
       3 => 0,
       5 => 0,
+      8 => 0,
+      9 => 0,
+      10 => 0,
     ),
     'errors' => 0,
+    'condition' => 0,
+    'condition_wrapper' => array(
+      'condition_field' => '',
+      'condition_operator' => 'equals',
+      'condition_value' => '',
+    ),
   );
   $rule->error_message = 'The friendly url may only contain letters, numbers, hyphens and underscores. (example: "your-name")';
   $export['friendly_url_user_characters'] = $rule;

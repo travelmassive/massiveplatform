@@ -11,6 +11,23 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   // Needed for simple_pass_reset to work
   if (!user_is_logged_in()) { return; }
 
+  print_r($form['account']);
+  $form['account']['pass']['#disabled'] = TRUE;
+
+  $form['test_fieldset'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Title of the fieldset'),
+        '#collapsible' => TRUE,
+        '#collapsed' => TRUE,
+        '#access' => user_access(TRUE),
+        '#weight' => 30,
+      );
+
+  drupal_add_js(drupal_get_path('module', 'tm_users') . '/js/user-edit-email-password.js');
+
+  //drupal_add_js('jQuery(document).ready(function () { jQuery(".form-type-password-confirm").append("hello").hide(); });', 'inline');
+
+  
   // Don't allow moderators to edit other moderators or admin accounts
   global $user;
   $user_id = $form['#user']->uid;

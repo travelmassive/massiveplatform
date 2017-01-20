@@ -433,6 +433,33 @@ function tm_users_user_presave(&$edit, $account, $category) {
 
   }
 
+  // Filter friendly URL
+  if (isset($edit['field_friendly_url'][LANGUAGE_NONE][0]['value'])) {
+
+    // split a full url
+    // ie: https://example.massiveplatform.com/my-account -> "my-account"
+    $parts = explode("/", $edit['field_friendly_url'][LANGUAGE_NONE][0]['value']);
+    $last_part = $parts[sizeof($parts) - 1]; // get last component
+
+    // filter it with ^[_\-\sa-zA-Z0-9]+$
+    $last_part = str_replace(' ', '-', $last_part); // Replaces all spaces with hyphens.
+    //$last_part = preg_replace('/[_\-\sa-zA-Z0-9]/', '', $last_part); // Removes special chars.
+    $last_part = preg_replace('/[^A-Za-z0-9\-_]/', '', $last_part); // Removes special chars.
+
+    // Replaces multiple hyphens with single one
+    // We allow multiple _ to support twitter usernames
+    if ($last_part != null) {
+      $last_part = preg_replace('/-+/', '-', $last_part); 
+    }
+
+    if ($last_part != "") {
+      $edit['field_friendly_url'][LANGUAGE_NONE][0]['value'] = $last_part;
+    } else {
+      $edit['field_friendly_url'][LANGUAGE_NONE] = "";
+    }
+
+  }
+
   // Set last modified timestamp of user
   $datetime_now = new DateTime(null, new DateTimeZone('UTC'));
   $edit['field_last_modified_timestamp'][LANGUAGE_NONE][0]['value'] = $datetime_now->getTimestamp();

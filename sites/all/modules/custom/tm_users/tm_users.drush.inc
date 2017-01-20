@@ -51,7 +51,7 @@ function tm_users_assign_missing_approval_flags_drush() {
 	drush_print("Resassign uid: " . $assign_uid);
 
 	// get min and max uid
-	$all_uids = db_query("SELECT name,uid from users")->fetchAllKeyed(1,0);
+	$all_uids = db_query("SELECT name,uid FROM users ORDER BY uid ASC")->fetchAllKeyed(1,0);
 	$approving_user = user_load($assign_uid);
 	if ($approving_user == null) {
 		drush_print("Invalid approving user id: " . $assign_uid);

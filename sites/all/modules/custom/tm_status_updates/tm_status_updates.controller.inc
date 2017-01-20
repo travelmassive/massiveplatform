@@ -585,3 +585,18 @@ function tm_status_updates_get_organization_newsfeeds() {
   $result = db_query($query)->fetchAllKeyed(0,0);
   return $result;
 }
+
+/**
+ * Delete all updates for a user
+ */
+function tm_status_updates_delete_users_updates($uid) {
+
+	// remove status updates
+	$query = "DELETE FROM tm_newsfeed_status_updates WHERE entity_id = :uid AND entity_type = 'user'";
+	db_query($query, array(":uid" => $uid));
+
+	// remove preview links
+	$query = "DELETE FROM tm_newsfeed_preview_links WHERE creator_uid = :uid";
+	db_query($query, array(":uid" => $uid));
+	
+}

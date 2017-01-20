@@ -19,6 +19,7 @@ include_once 'tm_users.mail.inc';
 include_once 'tm_users.moderate.inc';
 include_once 'tm_users.register.inc';
 include_once 'tm_users.tips.inc';
+include_once 'tm_users.drush.inc';
 
 /**
  * Init tm_users module
@@ -36,6 +37,7 @@ function tm_users_init() {
 
   // set application cookies
   tm_users_set_application_cookies();
+  
 }
 
 
@@ -374,14 +376,19 @@ function tm_users_user_presave(&$edit, $account, $category) {
     }
 
     // preserve roles
-    $preserve_roles = array("chapter leader", "moderator", "export-global-newsletter-csv", "access-google-analytics-report", "brand-editor", "discuss-moderator", "discuss-administrator");
-    foreach($preserve_roles as $preserve_role) {
-      if (in_array($preserve_role, $user->roles)) {
-        if ($role = user_role_load_by_name($preserve_role)) {
-          $edit['roles'][$role->rid] = $role->rid;
+    // except if modifying via tm_chapters.leaders.inc - set variable tm_resigning_chapter_leader
+    $resigning_chapter_leader = drupal_static("tm_resigning_chapter_leader");
+    if (($resigning_chapter_leader == null) or ($resigning_chapter_leader == false)) {
+      $preserve_roles = array("chapter leader", "moderator", "export-global-newsletter-csv", "access-google-analytics-report", "brand-editor", "discuss-moderator", "discuss-administrator");
+      foreach($preserve_roles as $preserve_role) {
+        if (in_array($preserve_role, $user->roles)) {
+          if ($role = user_role_load_by_name($preserve_role)) {
+            $edit['roles'][$role->rid] = $role->rid;
+          }
         }
       }
-    }
+    } 
+    drupal_static_reset("tm_resigning_chapter_leader");
 
     // Trim all URL fields
     // Otherwise a blank space causes the link to be rendered blank
@@ -531,21 +538,6 @@ function tm_users_track_signed_in() {
     ip_tracker_user_save($user->uid);
 
   }
-}
-
-/**
- * Get array or user's organization profiles
- */
-function tm_users_get_organization_profiles($uid) {
-
-  $query = "SELECT entity_id FROM field_data_field_owner WHERE entity_type = 'node' AND bundle = 'organization' AND field_owner_target_id = :uid";
-  $rows = db_query($query, array(':uid' => $uid))->fetchAll();
-
-  $nids = array();
-  foreach ($rows as $row) {
-    $nids[] = $row->entity_id;
-  }
-  return $nids;
 }
 
 /**

@@ -33,7 +33,10 @@ function tm_chapters_leaders_chapter_save($chapter) {
 	if (isset($chapter->original->field_chapter_leaders[LANGUAGE_NONE])) {
 		$original = flatten_chapter_leaders($chapter->original->field_chapter_leaders[LANGUAGE_NONE]);
 	}
-	$new = flatten_chapter_leaders($chapter->field_chapter_leaders[LANGUAGE_NONE]);
+	$new = array();
+	if (isset($chapter->field_chapter_leaders[LANGUAGE_NONE])) {
+		$new = flatten_chapter_leaders($chapter->field_chapter_leaders[LANGUAGE_NONE]);
+	}
 
 	$new_leaders = array_diff($new, $original);
 	$retired_leaders = array_diff($original, $new);
@@ -48,6 +51,10 @@ function tm_chapters_leaders_chapter_save($chapter) {
 		->condition('deleted',0,'=')
 		->execute();
 		if ($chapters->rowCount() == 1) {
+			
+			// set static variable for so roles are not preserved in tm_users_user_presave
+			$tm_resigning_chapter_leader = &drupal_static("tm_resigning_chapter_leader");
+			$tm_resigning_chapter_leader = true;
 
 			// don't edit admin or moderator roles unless editing themselves
 			$account = user_load($retired_leader);
@@ -55,7 +62,6 @@ function tm_chapters_leaders_chapter_save($chapter) {
 				(!(in_array("moderator", $account->roles) or in_array("administrator", $account->roles)))) {
 					user_multiple_role_edit(array($retired_leader), 'remove_role', $chapter_leader_role->rid);
 			}
-
 		}
 	}
 

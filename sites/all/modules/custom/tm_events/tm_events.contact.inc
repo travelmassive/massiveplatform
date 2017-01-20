@@ -76,9 +76,12 @@ function tm_events_contact_form_submit($form, &$form_state) {
         $chapter_id = $event->field_chapter['und'][0]['target_id'];
         $chapter = node_load($chapter_id);
       
-        foreach($chapter->field_chapter_leaders['und'] as $chapter_leader) {
-          $notify_ids[] = $chapter_leader['target_id'];
+        if (isset($chapter->field_chapter_leaders['und'])) {
+          foreach($chapter->field_chapter_leaders['und'] as $chapter_leader) {
+            $notify_ids[] = $chapter_leader['target_id'];
+          }
         }
+        
       }
     }
 
@@ -109,6 +112,11 @@ function tm_events_contact_form_submit($form, &$form_state) {
       $event_organizer = user_load($notify_id);
       $event_organizer_emails[] = $event_organizer->mail;
     }
+
+    // if no-one to contact, send to contact page email
+    if (sizeof($event_organizer_emails) == 0) {
+      $event_organizer_emails[] = $conf["tm_contact_page_email"];
+    } 
 
     // send to all event organizers in one email
     tm_events_send_contact_email($event_organizer_emails, $form_state['values']['subject'], $form_state['values']['body'], $account, $event);

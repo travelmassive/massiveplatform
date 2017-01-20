@@ -465,4 +465,21 @@ function tm_users_get_unapproved_member_label($type = "singular") {
   
 }
 
+/**
+ * Get array or user's organization profiles
+ */
+function tm_users_get_organization_profiles($uid) {
+
+  $query = "SELECT entity_id FROM field_data_field_owner WHERE entity_type = 'node' AND bundle = 'organization' AND field_owner_target_id = :uid";
+  $rows = db_query($query, array(':uid' => $uid))->fetchAll();
+
+  $nids = array();
+  foreach ($rows as $row) {
+    $nids[] = $row->entity_id;
+  }
+  return $nids;
+}
+
+
+
 

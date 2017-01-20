@@ -12,10 +12,13 @@ function tm_users_check_cancel_account() {
 
 /**
  * Prevent cancelling account if user is chapter leader, moderator or administrator
+ * Restrict the cancel methods available
  */
 function tm_users_user_cancel_methods_alter(&$methods) {
  
   global $user;
+
+  // Don't allow cancellation of chapter leader or moderators account
   $args = arg();
   if (sizeof($args) == 3) {
     if (($args[0] == "user") and ($args[2] == "cancel")) {
@@ -30,15 +33,20 @@ function tm_users_user_cancel_methods_alter(&$methods) {
     }
   }
 
-  // Add a custom method
-  // see: http://valuebound.com/resources/blog/custom-account-cancellation-methods-in-drupal-7
-  $methods['tm_users_remove_user'] = array(
-    'title' => t('TM - Delete the account and reassign chapter or event content to the <i
-      >Anonymous</i> user.'),
-    'description' => t('Chapters and events are kept'),
-    // access should be used for administrative methods only.
-    'access' => user_access('Administer permissions'),
-  );
+  // Improve description of methods
+  $methods['user_cancel_reassign']['title'] = 'Delete the account, preserving any events or shared company profiles created.';
+  $methods['user_cancel_reassign']['description'] = 'Your account will be removed and all account information deleted.';
+
+  // These methods are still destructive (ie: on flags) so don't allow these options
+  unset($methods['user_cancel_block_unpublish']);
+  unset($methods['user_cancel_block']);
+
+  // The user_cancel_delete is potentially harmful, so restrict to administrator
+  if (in_array("administrator", $user->roles)) {
+    $methods['user_cancel_delete']['title'] = 'Delete the account and its content. (Warning: includes any chapters, events, or company profiles created by the user.)';
+  } else {
+    unset($methods['user_cancel_delete']);
+  }
 
 }
 
@@ -95,32 +103,74 @@ function tm_users_confirm_cancel_account($account) {
 }
 
 /**
- * Safeguard any chapters or events owned by users if their account is removed
- * see: http://valuebound.com/resources/blog/custom-account-cancellation-methods-in-drupal-7
+ * Handle hook_user_cancel
+ * Preserve shared company profiles, re-assign approval flags, and re-assign files
  */
-function tm_base_user_cancel($edit, $account, $method) {
+function tm_users_user_cancel($edit, $account, $method) {
 
-  if ($method == "tm_users_remove_user") {
+  if ($method == "user_cancel_reassign") {
 
-    // Assign events to anon user
-    module_load_include('inc', 'node', 'node.admin');
-    $nodes = db_select('node', 'n')
-      ->fields('n', array('nid'))
-      ->condition('uid', $account->uid)
-      ->condition('type', 'event')
-      ->execute()
-      ->fetchCol();
-    node_mass_update($nodes, array('uid' => 0));
+    // STEP 1. Handle company profiles
+    // Reassign or delete company profile if member account is removed
+    // Case 1. Multiple owners - re-assign company to other managers
+    // Case 2. One owner - remove the company profile.
+    // (Chapters, events are assigned to anonymous user)
 
-    // Assign chapters to anon user
-    module_load_include('inc', 'node', 'node.admin');
-    $nodes = db_select('node', 'n')
-      ->fields('n', array('nid'))
-      ->condition('uid', $account->uid)
-      ->condition('type', 'chapter')
-      ->execute()
-      ->fetchCol();
-    node_mass_update($nodes, array('uid' => 0));
+    // Get list of member's company
+    $company_nids = tm_organizations_get_nodes_created($account->uid);
+    foreach ($company_nids as $nid) {
+
+      // Check if we reassign or not
+      $reassigned = false;
+      $company = node_load($nid);
+      if (isset($company->field_owner[LANGUAGE_NONE])) {
+        foreach ($company->field_owner[LANGUAGE_NONE] as $owner) {
+
+          // re-assign to first other owner
+          if ((!$reassigned) and ($owner['target_id'] != $account->uid)) {
+
+            $reassigned = true;
+            $company->uid = $owner['target_id'];
+
+            $message = "Canceling user account: ownership of company profile " . strip_tags($company->title) . " (nid: " . $company->nid . ") has been assigned from uid " . $company->uid . " to " . $owner['target_id'];
+            watchdog('tm_users', $message, WATCHDOG_INFO);
+
+          }
+        }
+      }
+
+      // save company if reassigned
+      if ($reassigned) {
+
+        // remove user from owner list
+        for ($i = 0; $i < sizeof($company->field_owner[LANGUAGE_NONE]); $i++) {
+          if ($company->field_owner[LANGUAGE_NONE][$i]['target_id'] == $account->uid) {
+            unset($company->field_owner[LANGUAGE_NONE][$i]);
+          }
+        }
+
+        $tm_user_cancel_reassign_company = &drupal_static('tm_user_cancel_reassign_company');
+        $tm_user_cancel_reassign_company = true;
+        node_save($company);
+        drupal_static_reset('tm_user_cancel_reassign_company');
+
+      } else {
+        node_delete($company->nid);
+      }
+    }
+
+    // STEP 2. Handle members flags
+    // Re-assign any approval flags to anonymous user
+    // Then the flag modules's user_cancel method will operate
+    $flag = flag_get_flag('approval_approved_by', NULL);
+    $new_uid = 0; // Anonymous user
+    $query = "UPDATE flagging SET uid = :new_uid WHERE fid = :fid AND uid = :old_uid";
+    db_query($query, array(":new_uid" => $new_uid, ":old_uid" => $account->uid, ":fid" => $flag->fid));
+
+    // STEP 3. Update files (ie: image uploads)
+    // Re-assign any files to anonymous user
+    $query = "UPDATE file_managed SET uid = :new_uid WHERE uid = :old_uid";
+    db_query($query, array(":new_uid" => $new_uid, ":old_uid" => $account->uid));
 
     // Update message
     drupal_get_messages('status');
@@ -128,4 +178,18 @@ function tm_base_user_cancel($edit, $account, $method) {
   }
 
 }
+
+/**
+ * Implement module_implements_alter
+ * Make tm_users operate first cancelling user account
+ */
+function tm_users_module_implements_alter(&$implementations, $hook) {
+
+  if ($hook == 'user_cancel') {
+    $group = $implementations['tm_users'];
+    unset($implementations['tm_users']);
+    $implementations = array_merge(array('tm_users' => $group), $implementations);
+  }
+}
+
 

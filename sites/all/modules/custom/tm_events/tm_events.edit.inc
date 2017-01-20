@@ -464,8 +464,18 @@ function tm_events_node_presave($node) {
   // make sure we are working on an event node
   if ($node->type != "event") { return; }
 
+  // Don't interfere with tm_users_user_cancel()
+  // This method prevents reassignment of nodes to anonymous user when $user is moderator or admin
+  $menu_path = menu_get_item();
+  if (isset($menu_path['path'])) {
+    if ($menu_path['path'] == "user/%/cancel") {
+      return;
+    }
+  }
+
   // Moderators can reassign the owner of the event
   // This will change the owner of the node
+  // Only perform this if node is not owned by anonymous
   $perm_is_moderator_or_admin = ((in_array("moderator", $user->roles)) || (in_array("administrator", $user->roles)));
 	if ($perm_is_moderator_or_admin) { 
 		if (isset($node->field_event_reassign_owner[LANGUAGE_NONE][0])) {

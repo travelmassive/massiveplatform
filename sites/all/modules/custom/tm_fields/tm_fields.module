@@ -881,7 +881,12 @@ function _tm_more_actions_process($field, $title = NULL) {
         $approved_difference = time() - $flagger->timestamp;
         $flagged_time = format_interval($approved_difference, 1) . " ago";
         $flagged_user = user_load($flagger->uid);
-        $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Approved by " . l($flagged_user->field_user_first_name[LANGUAGE_NONE][0]['value'], "/" . drupal_get_path_alias("user/" . $flagged_user->uid), array('attributes' => array('target' => '_blank', 'class' => array('report-flagged-link')))) . " " . $flagged_time . "</span><br>";
+        if ($flagged_user->uid > 0) {
+          $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Approved by " . l($flagged_user->field_user_first_name[LANGUAGE_NONE][0]['value'], "/" . drupal_get_path_alias("user/" . $flagged_user->uid), array('attributes' => array('target' => '_blank', 'class' => array('report-flagged-link')))) . " " . $flagged_time . "</span><br>";
+        } else {
+          // Approved by a user who has removed their account
+          $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Approved " . $flagged_time . "</span><br>";
+        }
       }
 
       // if empty menu text, then user was approved before we started flagging

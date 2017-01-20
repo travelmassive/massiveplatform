@@ -294,5 +294,22 @@ function tm_status_updates_display_callback() {
   return true;
 }
 
+/**
+ * Handle user account being cancelled
+ */
+function tm_status_updates_user_cancel($edit, $account, $method) {
 
+  // remove status updates for user when cancelling account
+  tm_status_updates_delete_users_updates($account->uid);
+}
+
+/**
+ * Handle user account being deleted
+ */
+function tm_status_updates_user_delete($account) {
+
+  // remove status updates for user when cancelling account
+  tm_status_updates_delete_users_updates($account->uid);
+
+}
 

@@ -46,16 +46,24 @@ function tm_organizations_menu() {
 /* 
  * Alters a node on saving to make sure organizations have the owner field set to author
  */
-function tm_organizations_node_presave($node){
+function tm_organizations_node_presave($node) {
   
+  global $user;
+
   // make sure we are working on an organization node
   if ($node->type != "organization") { return; }
+
+  // Ignore if this is triggered from tm_users_user_cancel reassign
+  $tm_user_cancel_reassign_company = drupal_static('tm_user_cancel_reassign_company');
+  if ($tm_user_cancel_reassign_company == true) {
+    return;
+  }
 
   // Step 1. See how many owners the organization has
   $num_owners = 0;
   $owned_by_node_creator = false;
   $owner_uid = 0;
-  foreach ($node->field_owner[$node->language] as $owner) {
+  foreach ($node->field_owner[LANGUAGE_NONE] as $owner) {
 
     // get owner uid in case transferring ownership
     if ($num_owners == 0) {
@@ -71,22 +79,34 @@ function tm_organizations_node_presave($node){
   }
 
   // Step 2. If no owner set, then add the node owner
-  if ($num_owners == 0){
-    $node->field_owner[$node->language][] = array('target_id' => $node->uid);
+  if ($num_owners == 0) {
+    $node->field_owner[LANGUAGE_NONE][] = array('target_id' => $node->uid);
   }
   
-  // Step 3. If not owned by node creator, re-assign ownership
-  // Note: disabled for time being, as no audit trail of original creator kept
-  /*if ((!$owned_by_node_creator) and ($num_owners > 0)) {
+  // Step 3. If not owned by node creator, either:
 
-    $new_owner = user_load($owner_uid);
-    $first_name = $new_owner->field_user_first_name['und'][0]['value'];
-    $last_name = $new_owner->field_user_last_name['und'][0]['value'];
+  // Case 1. Chapter leader, moderator = re-assign the node ownership
+  // Case 2. Non-chapter leader, moderator = add user as an owner again
 
-    $message = "Ownership of this profile has been assigned to " . $first_name . " " . $last_name . ".";
-    drupal_set_message($message, 'page_notice');
-    $node->uid = $owner_uid;
-  }*/
+  if ((!$owned_by_node_creator) and ($num_owners > 0)) {
+
+    // Case 1
+    if ((in_array("chapter leader", $user->roles)) or (in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles))) {
+
+      // Re-assign node ownership
+      $node->uid = $owner_uid;
+
+      $message = "Ownership of company profile " . strip_tags($node->title) . " (nid: " . $node->nid . ") has been assigned from uid " . $node->uid . " to " . $owner_uid;
+      watchdog('tm_organizations', $message, WATCHDOG_INFO);
+
+    } else {
+
+      // Add user as an owner
+      $node->field_owner[LANGUAGE_NONE][] = array('target_id' => $node->uid);
+
+    }
+
+  }
 
 }
 
@@ -345,4 +365,20 @@ function tm_organizations_get_title($nid) {
   }
   return null;
 }
+
+/**
+ * Get array of organization nodes that were created by the user 
+ */
+function tm_organizations_get_nodes_created($uid) {
+
+  $query = "SELECT nid FROM node WHERE uid = :uid AND type = 'organization'";
+  $rows = db_query($query, array(':uid' => $uid))->fetchAll();
+
+  $nids = array();
+  foreach ($rows as $row) {
+    $nids[] = $row->nid;
+  }
+  return $nids;
+}
+
 

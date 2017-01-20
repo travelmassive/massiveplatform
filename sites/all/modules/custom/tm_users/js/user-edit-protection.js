@@ -25,6 +25,9 @@
         });
       });
 
+      // Ignore Reset Password link
+      $(".form-type-password a").addClass("cancel");
+
       $("a:not(.cancel), button, input[type='submit']:not(.user-edit-protection-processed)")
           .each(function() {
             $(this).click(function(event) {

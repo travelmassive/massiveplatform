@@ -11,23 +11,6 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   // Needed for simple_pass_reset to work
   if (!user_is_logged_in()) { return; }
 
-  print_r($form['account']);
-  $form['account']['pass']['#disabled'] = TRUE;
-
-  $form['test_fieldset'] = array(
-        '#type' => 'fieldset',
-        '#title' => t('Title of the fieldset'),
-        '#collapsible' => TRUE,
-        '#collapsed' => TRUE,
-        '#access' => user_access(TRUE),
-        '#weight' => 30,
-      );
-
-  drupal_add_js(drupal_get_path('module', 'tm_users') . '/js/user-edit-email-password.js');
-
-  //drupal_add_js('jQuery(document).ready(function () { jQuery(".form-type-password-confirm").append("hello").hide(); });', 'inline');
-
-  
   // Don't allow moderators to edit other moderators or admin accounts
   global $user;
   $user_id = $form['#user']->uid;
@@ -57,9 +40,23 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   // http://drupal.stackexchange.com/questions/64171/redirect-user-to-their-profile-page-after-savin
   $form['#submit'][] = 'tm_users_user_profile_form_submit';
 
-  // Add javascript protection to prompt to save profile if its edited
-  // Use case is that many users don't click the save button on their profile
-  drupal_add_js(drupal_get_path('module', 'tm_users') . '/js/user-edit-protection.js');
+  
+  // Add JS
+  $form['#attached']['js'] = array(
+
+    // Add javascript protection to prompt to save profile if its edited
+    // Use case is that many users don't click the save button on their profile
+    drupal_get_path('module', 'tm_users') . '/js/user-edit-protection.js',
+
+    // Add javascript to hide email and password fields to improve useability
+    drupal_get_path('module', 'tm_users') . '/js/user-edit-email-password.js'
+  );
+
+
+  $form['user_show_change_email'] = array('#markup' => l(t('Change Email'), 'javascript:jq_show_edit_change_email();', array('fragment' => '','external'=>true, 'attributes' => array('style' => 'margin-top: 1rem; margin-left: 0.5rem;', 'class' => array('user_edit_change_email', 'bttn bttn-tertiary bttn-m cancel')))));
+
+  $form['user_show_change_password'] = array('#markup' => l(t('Change Password'), 'javascript:jq_show_edit_change_password();', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('user_edit_change_password', 'bttn bttn-tertiary bttn-m cancel')))));
+
 
   // Allow users to cancel their accounts
   // Note: Chapter leaders and moderators don't get the link as they may have content

@@ -496,6 +496,9 @@ function tm_chapters_community_management_reports_drush() {
 
 		// insert stats
 		foreach ($report_data["data_values"] as $key => $value) {
+			if (is_numeric($value)) {
+				$value = number_format($value);
+			}
 			$body = str_replace("__" . strtoupper($key) . "__", $value, $body);
 		}
 

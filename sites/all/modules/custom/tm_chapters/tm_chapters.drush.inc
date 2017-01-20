@@ -480,7 +480,7 @@ function tm_chapters_community_management_reports_drush() {
 		$event_payments_message = "";
 		if (isset($report_data["data_values"]["num_event_payments"])) {
 			if ($report_data["data_values"]["num_event_payments"] > 0) {
-				$event_payments_message = "<br>All time event payments: " . number_format($report_data["data_values"]["num_event_payments"]) ;
+				$event_payments_message = "(" . number_format($report_data["data_values"]["num_event_payments"]) . " payments)";
 			}
 		}
 

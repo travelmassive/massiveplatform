@@ -342,13 +342,14 @@ function tm_chapters_leaders_send_notification($notification_emails, $subject, $
 	$module = 'tm_chapters';
 	$key = 'key';
 	$language = language_default();
-	$cc = $conf['tm_chapters_support_email'];
+	$cc = "";
+	$params = array();
 	if (sizeof($cc_emails) > 0) {
-		$cc .= "," . implode(",", $cc_emails);
+		$cc = "," . implode(",", $cc_emails);
+		$params["headers"] = array("Cc" => $cc);
 	}
-	$params["headers"] = array("Cc" => $cc);
-	$from = NULL;
-	$reply = $conf['tm_chapters_support_email'];
+	$from = $conf['tm_chapters_support_email'];
+	// $reply = $conf['tm_chapters_support_email'];
 	$send = FALSE;
 
 	// CONSTRUCT MESSAGE
@@ -367,7 +368,8 @@ function tm_chapters_leaders_send_notification($notification_emails, $subject, $
 	$email_message['headers']['MIME-Version'] = '1.0';
 	$email_message['headers']['Content-Type'] = 'multipart/mixed;';
 	$email_message['headers']['Content-Type'] = 'text/html;';
-	$email_message['headers']['Reply-to'] = $reply; // set reply-to to the user
+	// $email_message['headers']['Reply-to'] = $reply; // set reply-to to the user
+	$email_message['headers']['From'] = $from;
 
 	// STEP 3. SET SUBJECT 
 	$email_message['subject'] = check_plain($subject);

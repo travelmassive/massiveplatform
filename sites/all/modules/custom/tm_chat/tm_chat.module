@@ -79,7 +79,6 @@ function tm_chat_embed() {
 	global $user;
 
 	// friendly check permission
-	print_r($user->roles);
 	if (!tm_chat_check_permission($user->roles)) {
 		if (!user_is_logged_in()) {
 			drupal_set_message('Please sign in to access the chat room.');

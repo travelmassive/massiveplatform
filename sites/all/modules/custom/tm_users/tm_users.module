@@ -474,8 +474,31 @@ function tm_users_user_presave(&$edit, $account, $category) {
  * Add a link to chapter leaders from the community page
  */
 function tm_users_views_post_execute(&$view) {
+
   if ($view->name == 'community') {
-    $view->build_info['title'] = "Community &middot; <a href='/leaders'>Chapter Leaders</a>";
+
+    global $conf;
+    global $user;
+
+    // show toggle all members link if only displaying approved members
+    // restrict to chapter leaders, moderators
+    $toggle_all_members_link = "";
+
+    if (isset($conf["tm_community_show_unapproved_users"])) {
+      if ($conf["tm_community_show_unapproved_users"] == false) {
+
+        if ((in_array('administrator', $user->roles)) or in_array('chapter leader', $user->roles) or in_array('moderator', $user->roles)) {
+
+          if (isset($_GET["show_all_members"])) {
+            $toggle_all_members_link = "<div><a style='margin-left: 0.5rem;' class='bttn bttn-tertiary bttn-m' href='/community'>Hide " . $conf["tm_unapproved_label_plural"] . "</a></div>";
+          } else {
+            $toggle_all_members_link = "<div><a class='bttn bttn-tertiary bttn-m' href='/community?show_all_members'>Show " . $conf["tm_unapproved_label_plural"] . "</a></div>";
+          }
+        }
+      }
+    }
+
+    $view->build_info['title'] = "Community &middot; <a href='/leaders'>Chapter Leaders</a>" . $toggle_all_members_link;
   }
 
   if ($view->name == 'chapter_leaders') {
@@ -504,8 +527,39 @@ function tm_users_views_query_alter(&$view, &$query) {
 
   if ($view->name == 'community') {
 
-    // Filter community by chapter or by country
     global $conf;
+
+    // 1. Filter user roles
+    // INNER JOIN {users_roles} users_roles ON users.uid = users_roles.uid
+    // ... AND (users_roles.rid = '6') ))
+    $tm_community_show_unapproved_users = false;
+    if (isset($conf["tm_community_show_unapproved_users"])) {
+      $tm_community_show_unapproved_users = $conf["tm_community_show_unapproved_users"];
+    }
+
+    // allow chapter leaders, moderator to override and show all members
+    if (isset($_GET["show_all_members"])) {
+
+      global $user;
+      if ((in_array('administrator', $user->roles)) or in_array('chapter leader', $user->roles) or in_array('moderator', $user->roles)) {
+        $tm_community_show_unapproved_users = true;
+      }
+
+    }
+
+    if (!$tm_community_show_unapproved_users) {
+
+      // Add filter for approved users only
+      $role = user_role_load_by_name('approved user');
+      $join = new views_join;
+      $join->construct('users_roles', 'users', 'uid', 'uid', array(), 'INNER');
+      $query->add_relationship('users_roles', $join, 'users');
+      $query->add_where(0, "users_roles.rid", $role->rid, "=");
+
+    }
+
+
+    // 2. Filter community by chapter or by country
     $tm_chapters_community_search_filter = "country";
     if (isset($conf["tm_chapters_community_search_filter"])) {
       $tm_chapters_community_search_filter = $conf["tm_chapters_community_search_filter"];

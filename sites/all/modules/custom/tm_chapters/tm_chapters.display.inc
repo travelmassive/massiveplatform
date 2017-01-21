@@ -239,7 +239,7 @@ function _tm_ds_chapter_stats($field, $title = NULL) {
 
   if ($conf["tm_chapters_display_stats_connections"]) {
     if ($num_connections > 1) {
-      $html .= "<span class='tm_stats tm_stats_connections'>" . $num_connections . " <span class='tm_stats_connections_divider'>|</span> " . $connections_text . " </span>";
+      $html .= "<span class='tm_stats tm_stats_connections'>" . tm_base_stats_format($num_connections) . " <span class='tm_stats_connections_divider'>|</span> " . $connections_text . " </span>";
     }
   }
   

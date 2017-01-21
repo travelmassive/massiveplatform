@@ -34,6 +34,12 @@ function tm_users_check_duplicate_account() {
     }
   }
 
+  // don't check if account is older than three months
+  $user_created_days_ago = (time() - $user->created) / (60 * 60 *24);
+  if ($user_created_days_ago > 90) {
+    return;
+  }
+
   // find possible duplicate accounts
   $possible_duplicates = tm_users_get_duplicate_accounts($user->uid);
 
@@ -79,7 +85,7 @@ function tm_users_check_duplicate_account() {
     drupal_set_message($message, "page_notice");
   } else {
 
-    // dismiss cookie, don't search again
+    // set dismiss cookie, don't search again
     // cookie will be destroyed after browser sessions, so next session will perform a search again
     setcookie("Drupal.visitor.dismiss_duplicate_account_message", 1);
 

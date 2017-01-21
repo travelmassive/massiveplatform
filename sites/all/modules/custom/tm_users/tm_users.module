@@ -561,8 +561,8 @@ function tm_users_views_query_alter(&$view, &$query) {
 
     // 2. Filter community by chapter or by country
     $tm_chapters_community_search_filter = "country";
-    if (isset($conf["tm_chapters_community_search_filter"])) {
-      $tm_chapters_community_search_filter = $conf["tm_chapters_community_search_filter"];
+    if (isset($conf["tm_community_search_filter"])) {
+      $tm_chapters_community_search_filter = $conf["tm_community_search_filter"];
     }
 
     // Filter by chapter

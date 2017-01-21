@@ -19,7 +19,6 @@ function tm_chapters_ds_fields_info($entity_type) {
   );
 
   // stats
-  $fields = array();
   $fields['tm_ds_chapter_stats'] = array(
     'title' => t('Chapter Highlight Stats'),
     'field_type' => DS_FIELD_TYPE_FUNCTION,

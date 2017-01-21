@@ -383,9 +383,20 @@ function tm_chapters_leaders_send_notification($notification_emails, $subject, $
 	$template = str_replace("__EMAIL_FOOTER__", $footer, $template);
 
 	// Chapter hero image
-	// Use chapter->original
+	$chapter_image_uri = null;
+
+	// check chapter->original if saving a node
 	if (isset($chapter->original->field_image[LANGUAGE_NONE][0]['uri'])) {
-	  $chapter_image_src = image_style_url("banner", $chapter->original->field_image[LANGUAGE_NONE][0]['uri']);
+		$chapter_image_uri = $chapter->original->field_image[LANGUAGE_NONE][0]['uri'];
+	}
+
+	// check chapter object
+	if (isset($chapter->field_image[LANGUAGE_NONE][0]['uri'])) {
+		$chapter_image_uri = $chapter->field_image[LANGUAGE_NONE][0]['uri'];
+	}
+
+	if ($chapter_image_uri != null) {
+	  $chapter_image_src = image_style_url("banner", $chapter_image_uri);
 	} else {
 	  $default_image_uri = _tm_chapters_get_default_image($conf["tm_images_default_field_image"], $chapter->nid);
 	  $chapter_image_src = image_style_url("banner", $default_image_uri);

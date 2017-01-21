@@ -908,8 +908,10 @@
     // hide message
     $(".hide_duplicate_account_link").parent().hide();
 
-    // set cookie
-    var cookie = ['Drupal.visitor.dismiss_duplicate_account_message=', true, '; domain=', window.location.host.toString(), '; path=/;'].join('');
+    // set cookie (expire in a year)
+    date = new Date();
+    date.setTime(date.getTime()+(365*24*60*60*1000));
+    var cookie = ['Drupal.visitor.dismiss_duplicate_account_message=', 1, '; domain=', window.location.host.toString(), '; path=/;', 'expires='+date.toGMTString()].join('');
     document.cookie = cookie;
   }
 

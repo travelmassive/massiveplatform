@@ -285,6 +285,7 @@ function tm_chapters_field_group_info() {
       2 => 'field_link_linkedin',
       3 => 'field_link_twitter',
       4 => 'field_link_website',
+      5 => 'tm_ds_chapter_stats',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(

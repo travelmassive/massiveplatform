@@ -285,6 +285,7 @@ $conf["tm_following_enable_message_user"] = true;
 $conf["tm_following_enable_message_organization"] = true;
 
 /** CHAPTER SETTINGS **/
+$conf["tm_chapters_display_stats_connections"] = true; // Display number of member connections on chapters page
 $conf["tm_chapters_allow_edit_chapter_leaders"] = false; // Allow chapter leaders to edit leaders for their own chapter (default false)
 $conf["tm_chapters_groups_enabled"] = true; // Allow group chapters. Exposes the /groups url.
 $conf["tm_chapters_leaders_needed_max_days_since_event"] = 180; // show the help needed message if no events since this many days

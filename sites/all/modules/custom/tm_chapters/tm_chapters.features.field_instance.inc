@@ -29,7 +29,7 @@ function tm_chapters_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 5,
+        'weight' => 1,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -1177,7 +1177,7 @@ The message will be included in the notification email sent to the member when t
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_link',
-        'weight' => 8,
+        'weight' => 4,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1253,7 +1253,7 @@ The message will be included in the notification email sent to the member when t
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_link',
-        'weight' => 9,
+        'weight' => 5,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1329,7 +1329,7 @@ The message will be included in the notification email sent to the member when t
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_twitter',
-        'weight' => 7,
+        'weight' => 3,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1405,7 +1405,7 @@ The message will be included in the notification email sent to the member when t
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_link',
-        'weight' => 6,
+        'weight' => 2,
       ),
       'grid' => array(
         'label' => 'above',

@@ -137,6 +137,7 @@
     &.tm-ds-organization-follow-message { display: none; }
     &.tm-ds-organization-follow-message:before { @extend .icon-connection; }
     &.tm-ds-user-stats:before { @extend .icon-users; }
+    &.tm-ds-chapter-stats:before { @extend .icon-2016-chart; }
     &.tm-ds-organization-stats:before { @extend .icon-users; }
     &.tm-payment-gateway-logo:before { @extend .icon-tick; }
 

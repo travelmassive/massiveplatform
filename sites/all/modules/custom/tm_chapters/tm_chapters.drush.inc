@@ -33,6 +33,14 @@ function tm_chapters_drush_command() {
 		),
 	);
 
+	$items['tm-chapters-update-display-stats-cache'] = array(
+		'description' => 'Update display stats cache for all chapters.',
+		'callback' => 'tm_chapters_update_display_stats_cache_drush',
+		'options' => array(
+			'confirm' => 'Confirm that you want to proceed',
+		),
+	);
+
 	return $items;
 }
 
@@ -555,6 +563,40 @@ function tm_chapters_community_management_remove_all_managers_drush() {
 		}
 	  }
 	  node_save($chapter);
+	}
+
+	drush_print("Completed.");
+}
+
+/**
+ * Update chapter stats display cache for all chapters
+ * This is relied on for public display of chapter stats
+ */
+function tm_chapters_update_display_stats_cache_drush() {
+
+	// check confirm
+	$confirm = false;
+	$confirm_opt = drush_get_option('confirm');
+	if ($confirm_opt != null) {
+		$confirm = ($confirm_opt == "true");
+	}
+	if ($confirm_opt == null) {
+		drush_print("Usage: drush tm-chapters-update-display-stats-cache --confirm=true");
+		return;
+	}
+	if ($confirm == false) {
+		drush_print("Not confirmed, exiting.");
+		return;
+	}
+
+	// update display stats cache for all chapters
+	$query = "SELECT nid, title FROM node WHERE type = :chapter AND status = 1 ORDER BY title";
+	$results = db_query($query, array(":chapter" => "chapter"))->fetchAll();
+	$chapter_nids = array();
+	foreach ($results as $result) {
+	  $chapter = node_load($result->nid);
+	  drush_print("Updating display stats cache for " . $chapter->title . "...");
+	  _tm_reports_get_chapter_insights($chapter->nid, true);
 	}
 
 	drush_print("Completed.");

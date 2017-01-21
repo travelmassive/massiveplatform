@@ -18,6 +18,15 @@ function tm_chapters_ds_fields_info($entity_type) {
     'function' => '_tm_members_chapter'
   );
 
+  // stats
+  $fields = array();
+  $fields['tm_ds_chapter_stats'] = array(
+    'title' => t('Chapter Highlight Stats'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('chapter|full'),
+    'function' => '_tm_ds_chapter_stats'
+  );
+
   return array($entity_type => $fields);
 }
 
@@ -186,4 +195,69 @@ function tm_chapters_show_help_needed_message($chapter) {
 
   }
  
+}
+
+/**
+ * Render chapter's highlight stats
+ */
+function _tm_ds_chapter_stats($field, $title = NULL) {
+
+  // get chapter
+  $chapter = $field['entity'];
+  $nid = $chapter->nid;
+
+  // rely on the permanent cache stored by _tm_reports_get_chapter_insights
+  // run drush tm-chapters-update-display-stats-cache to update
+  $cache = cache_get('tm-reports-get-chapter-insights-display-' . $nid, 'cache');
+  if (empty($cache)) {
+    return;
+  }
+
+  global $conf;
+
+  // fetch report data from cache
+  // tm-reports-get-chapter-insights-display-NID
+  $report_data = $cache->data;
+
+  $connections_text = "Connections";
+  $new_members_text = "New Member";
+  $upcoming_events_text = "New Event";
+  $past_events_text = "Past Event";
+
+  $num_connections = $report_data["data_values"]["total_chapter_member_connections"];
+  $num_new_members = $report_data["data_values"]["members_30_days_total"];
+  $num_events_upcoming = $report_data["data_values"]["num_events_upcoming"];
+  
+  $num_past_events = $report_data["data_values"]["num_events_past_total"];
+
+  // Make sure we have stats to display
+  if (($num_new_members == 0) and ($num_events_upcoming == 0) and ($num_past_events == 0)) {
+    return; 
+  }
+
+  $html = "<div class='tm_stats_container'>";
+
+  if ($conf["tm_chapters_display_stats_connections"]) {
+    if ($num_connections > 1) {
+      $html .= "<span class='tm_stats tm_stats_connections'>" . $num_connections . " <span class='tm_stats_connections_divider'>|</span> " . $connections_text . " </span>";
+    }
+  }
+  
+  if ($num_new_members > 0) {
+    if ($num_new_members > 1) { $new_members_text = "New Members"; }
+    $html .= "<a href='/node/" . $nid . "/members'><span class='tm_stats tm_stats_new_members'>" . $num_new_members . " <span class='tm_stats_new_members_divider'>|</span> " . $new_members_text . " </span></a>";
+  }
+  
+  if ($num_events_upcoming > 0) {
+    if ($num_events_upcoming > 1) { $upcoming_events_text = "New Events"; }
+    $html .= "<span class='tm_stats tm_stats_events'>" . $num_events_upcoming . " <span class='tm_stats_events_divider'>|</span> " . $upcoming_events_text . "</span>";
+  } elseif ($num_past_events > 0) {
+    if ($num_past_events > 1) { 
+    $past_events_text = "Past Events"; }
+      $html .= "<a href='/node/" . $nid . "/events'><span class='tm_stats tm_stats_events'>" . $num_past_events . " <span class='tm_stats_events_divider'>|</span> " . $past_events_text . "</span></a>";
+  }
+
+  $html .= "</div>";
+
+  return $html;
 }

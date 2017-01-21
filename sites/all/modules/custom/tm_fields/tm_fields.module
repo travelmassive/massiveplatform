@@ -925,6 +925,8 @@ function _tm_more_actions_process($field, $title = NULL) {
           );
         }
       }
+
+      // 5. Show Facebook signin
       if (isset($targetuser->field_facebook_signin_link[LANGUAGE_NONE][0]['value'])) {
         $facebook_signin_link = strip_tags($targetuser->field_facebook_signin_link[LANGUAGE_NONE][0]['value']);
         if (trim($facebook_signin_link) != "") {
@@ -937,9 +939,44 @@ function _tm_more_actions_process($field, $title = NULL) {
         }
       }
 
+      // 6. Show any possible duplicate logins
+      if (isset($conf["tm_users_check_duplicate_accounts"])) {
+        if ($conf["tm_users_check_duplicate_accounts"] == true) {
+
+          // Check duplicates
+          $possible_duplicates = tm_users_get_duplicate_accounts($targetuser->uid);
+          if (sizeof($possible_duplicates) > 0) {
+
+            // Show duplicate accounts
+            $duplicate_message = "Account with same name";
+            if (sizeof($possible_duplicates) > 1) {
+              $duplicate_message = "Accounts with same names";
+            }
+            $menu_text = "<div style='font-size: smaller; font-style: italic; padding-left: 2em; background-color: #efefef;'>" . $duplicate_message . ":<br>";
+            foreach ($possible_duplicates as $duplicate_uid) {
+
+              $duplicate_account = user_load($duplicate_uid);
+              $duplicate_first_name = strip_tags($duplicate_account->field_user_first_name[LANGUAGE_NONE][0]['value']);
+              $duplicate_last_name = strip_tags($duplicate_account->field_user_last_name[LANGUAGE_NONE][0]['value']);
+
+              $duplicate_user_url = drupal_get_path_alias("user/" . $duplicate_uid);
+              $menu_text .= "<span style='color: #888; font-style: normal;'><a style='display: inline; padding: 0rem;' target='_blank' href='/" . $duplicate_user_url . "'>" . $duplicate_first_name . " " . $duplicate_last_name . " (id: " . $duplicate_uid . ")</a><br></span>";
+            }
+            $menu_text .= "</div>";
+
+            $links['moderate'][] = array(
+              'wrapper_class' => array('approve'),
+              'content' => t($menu_text),
+            );
+
+          }
+
+        }
+      }
+      
 
 
-      // 5. Show email address to chapter leader if unapproved
+      // 7. Show email address to chapter leader if unapproved
       // Always show to moderators
       $targetuser = user_load($uid);
       if ((!in_array("approved user", $targetuser->roles) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid, true))) or (in_array("moderator", $user->roles))) {
@@ -957,7 +994,7 @@ function _tm_more_actions_process($field, $title = NULL) {
         );
       }
 
-      // 6. Show last activity time if in your chapter and IP to moderator
+      // 8. Show last activity time if in your chapter and IP to moderator
       if (tm_users_member_in_users_chapter($targetuser->uid, $user->uid, true) or (in_array("moderator", $user->roles))) {
 
         // Get last active time    
@@ -1010,7 +1047,7 @@ function _tm_more_actions_process($field, $title = NULL) {
         );
       }
 
-      // 7. Show if user has set profile to private
+      // 9. Show if user has set profile to private
       if (in_array("moderator", $user->roles) or in_array("administrator", $user->roles)) {
         if (isset($targetuser->field_user_has_private_profile[LANGUAGE_NONE][0]['value'])) {
           if ($targetuser->field_user_has_private_profile[LANGUAGE_NONE][0]['value']) {
@@ -1340,6 +1377,26 @@ function _tm_more_actions_process($field, $title = NULL) {
     }
   }
   // END report organization profile link
+
+  // START cancel member profile link
+  if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
+
+    // Only show to administrator or moderator
+    if (((in_array("administrator", $user->roles) or (in_array("moderator", $user->roles)))) 
+      and ($targetuser->uid != $user->uid)) {
+
+      $links['approve'][] = array(
+        'wrapper_class' => array('approve'),
+        'content' => l(t('Cancel account'), '/user/' . $targetuser->uid . '/cancel',
+          array(
+          'attributes' => array(
+            'title' => t('Cancel account'),
+          )
+        ))
+      );
+    }
+  }
+  // END cancel account profile link
  
   // START Add member event link
   if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {

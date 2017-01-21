@@ -900,4 +900,17 @@
 
 });})(jQuery, Drupal, this, this.document);
 
+// Hide duplicate account message
+(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){
+  
+  tm_hide_duplicate_account_message = function() {
 
+    // hide message
+    $(".hide_duplicate_account_link").parent().hide();
+
+    // set cookie
+    var cookie = ['Drupal.visitor.dismiss_duplicate_account_message=', true, '; domain=', window.location.host.toString(), '; path=/;'].join('');
+    document.cookie = cookie;
+  }
+
+});})(jQuery, Drupal, this, this.document);

@@ -65,6 +65,7 @@ $conf['tm_signin_title'] = "JOIN OUR COMMUNITY"; // message to display at top of
 $conf['tm_signin_facebook_always_sync'] = true; // fill empty fields from Facebook when logging in
 $conf['tm_signin_facebook_sync_avatar'] = true; // sync avatar picture
 $conf['tm_signin_facebook_sync_cover'] = true; // sync cover picture
+$conf['tm_users_check_duplicate_accounts'] = true; // check for duplicate accounts and show message to user
 
 /** FACEBOOK OAUTH **/
 $conf['simple_fb_connect_appid'] = ""; // app id - create one at https://developers.facebook.com/apps

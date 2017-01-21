@@ -20,6 +20,8 @@ include_once 'tm_users.moderate.inc';
 include_once 'tm_users.register.inc';
 include_once 'tm_users.tips.inc';
 include_once 'tm_users.drush.inc';
+include_once 'tm_users.duplicates.inc';
+
 
 /**
  * Init tm_users module
@@ -37,9 +39,8 @@ function tm_users_init() {
 
   // set application cookies
   tm_users_set_application_cookies();
-  
-}
 
+}
 
 /*
 * Implements hook_permission()
@@ -194,6 +195,9 @@ function tm_users_preprocess_page(&$variables) {
 
   // Add account menu to page.
   $variables['page']['account_menu'] = theme('account_menu');
+
+  // Check for duplicate accounts
+  tm_users_check_duplicate_account();
 
   // disable personal contact form setting
   // see: http://stackoverflow.com/questions/2540582/how-do-i-disable-the-personal-contact-form-option-in-the-user-edit-form
@@ -631,15 +635,5 @@ function tm_users_user_logout($account) {
     unset($_COOKIE[str_replace(".", "_", $cookie_name)]);
     setcookie($cookie_name, '', time() - 3600, "/");
   }  
-}
-
-/**
- * Get user's friends (mutual followers)
- */
-function tm_users_get_friends($uid) {
-  $flag = flag_get_flag("follow_members");
-  $query = "SELECT f1.entity_id from flagging f1 LEFT JOIN flagging f2 ON f1.entity_id = f2.uid AND f1.uid = f2.entity_id WHERE f1.fid = :fid AND f2.fid = :fid AND f1.uid = :uid";
-  $results = db_query($query, array(':fid' => $flag->fid, ':uid' => $uid))->fetchAllKeyed(0,0);
-  return $results;
 }
 

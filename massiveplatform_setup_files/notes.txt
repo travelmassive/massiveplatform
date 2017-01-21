@@ -139,26 +139,3 @@ Change the userid and event id accordingly.
 
 ------
 
-Sample code to flag users as approved to support sort search by flag count.
-
-drush php-eval '$uid_start = 10000;
-$uid_end = 50000;
-$approving_user = user_load(1);
-for ($uid = $uid_start; $uid <= $uid_end; $uid++) {
-  // load user
-  $account = user_load($uid);
-  if ($account !== FALSE) {
-    // check if user is approved
-    if (in_array("approved user", $account->roles)) {
-      // check if user is flagged
-      $who_flagged = flag_get_entity_flags("user", $uid, "approval_approved_by");
-      if (sizeof($who_flagged) == 0) {
-        drush_print("Approved user " . $uid . " is not flagged. Flagging with approval_approved_by...");
-        flag('flag', 'approval_approved_by', $uid, $approving_user);
-        db_query("update flagging set timestamp = (timestamp - (60*60*24*180)) where fid = 12 and entity_id = " . $uid . ";");
-      }
-    }
-  }
-}'
-
-

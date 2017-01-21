@@ -480,6 +480,17 @@ function tm_users_get_organization_profiles($uid) {
   return $nids;
 }
 
+/**
+ * Get user's friends (mutual followers)
+ */
+function tm_users_get_friends($uid) {
+  $flag = flag_get_flag("follow_members");
+  $query = "SELECT f1.entity_id from flagging f1 LEFT JOIN flagging f2 ON f1.entity_id = f2.uid AND f1.uid = f2.entity_id WHERE f1.fid = :fid AND f2.fid = :fid AND f1.uid = :uid";
+  $results = db_query($query, array(':fid' => $flag->fid, ':uid' => $uid))->fetchAllKeyed(0,0);
+  return $results;
+}
+
+
 
 
 

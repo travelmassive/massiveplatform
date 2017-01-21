@@ -99,7 +99,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'inline',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 26,
+        'weight' => 30,
       ),
       'grid' => array(
         'label' => 'above',
@@ -156,7 +156,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 21,
       ),
       'grid' => array(
         'label' => 'above',
@@ -213,7 +213,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 18,
+        'weight' => 22,
       ),
       'grid' => array(
         'label' => 'above',
@@ -382,7 +382,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 20,
       ),
       'grid' => array(
         'label' => 'above',
@@ -434,7 +434,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 19,
       ),
       'grid' => array(
         'label' => 'above',
@@ -493,7 +493,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 19,
+        'weight' => 23,
       ),
       'grid' => array(
         'label' => 'above',
@@ -551,7 +551,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 25,
+        'weight' => 29,
       ),
       'grid' => array(
         'label' => 'above',
@@ -600,7 +600,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 27,
+        'weight' => 31,
       ),
       'grid' => array(
         'label' => 'above',
@@ -762,7 +762,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 21,
+        'weight' => 25,
       ),
       'grid' => array(
         'label' => 'above',
@@ -821,7 +821,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 24,
+        'weight' => 28,
       ),
       'grid' => array(
         'label' => 'above',
@@ -919,7 +919,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 20,
+        'weight' => 24,
       ),
       'grid' => array(
         'label' => 'above',
@@ -975,7 +975,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 23,
+        'weight' => 27,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1118,7 +1118,7 @@ The message will be included in the notification email sent to the member when t
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 22,
+        'weight' => 26,
       ),
       'grid' => array(
         'label' => 'above',

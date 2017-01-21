@@ -255,7 +255,7 @@ function tm_chapters_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Community',
-    'weight' => '10',
+    'weight' => '9',
     'children' => array(
       0 => 'chapter_members',
     ),
@@ -404,7 +404,7 @@ function tm_chapters_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Chapter leaders',
-    'weight' => '9',
+    'weight' => '8',
     'children' => array(
       0 => 'field_chapter_leaders',
     ),

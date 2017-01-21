@@ -93,8 +93,8 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
 
       // Filter community by chapter or by country
       $tm_chapters_community_search_filter = "country";
-      if (isset($conf["tm_chapters_community_search_filter"])) {
-        $tm_chapters_community_search_filter = $conf["tm_chapters_community_search_filter"];
+      if (isset($conf["tm_community_search_filter"])) {
+        $tm_chapters_community_search_filter = $conf["tm_community_search_filter"];
       }
 
       if ($tm_chapters_community_search_filter == "chapter") {

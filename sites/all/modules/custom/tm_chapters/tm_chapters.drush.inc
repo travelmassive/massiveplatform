@@ -58,7 +58,7 @@ function tm_chapters_community_management_tasks_drush() {
 		$confirm = ($confirm_opt == "true");
 	}
 	if ($confirm_opt == null) {
-		drush_print("Usage: drush tm-community-management-tasks --uri=HOSTNAME --confirm=true\nOptional: --target_id=123");
+		drush_print("Usage: drush tm-community-management-tasks --uri=HOSTNAME --confirm=true\nOptional: --target_chapter=123");
 		return;
 	}
 
@@ -376,7 +376,7 @@ function tm_chapters_community_management_reports_drush() {
 		$confirm = ($confirm_opt == "true");
 	}
 	if ($confirm_opt == null) {
-		drush_print("Usage: drush tm-community-management-reports --uri=HOSTNAME --confirm=true\nOptional: --target_id=123");
+		drush_print("Usage: drush tm-community-management-reports --uri=HOSTNAME --confirm=true\nOptional: --target_chapter=123");
 		return;
 	}
 

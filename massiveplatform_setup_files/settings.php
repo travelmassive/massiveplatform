@@ -296,7 +296,7 @@ $conf["tm_chapters_groups_enabled"] = true; // Allow group chapters. Exposes the
 $conf["tm_chapters_leaders_needed_max_days_since_event"] = 180; // show the help needed message if no events since this many days
 $conf["tm_chapters_leaders_needed_message"] = "We're looking for Chapter Leaders to help organize regular events for this chapter. Is that you? <a href='/contact'>Apply to lead this chapter</a>."; // message to display if chapter leader needed
 $conf["tm_chapters_support_email"] = "support@massiveplatform.com"; // reply and cc email when making changes to chapters
-$conf["tm_chapters_leaders_welcome_message"] = "Welcome to Massive leadership team! If you need assistance please get in touch with your community manager or reply to this email.<br><br>Thanks for your support and for contributing to our community!"; // welcome message to new chapter leaders
+$conf["tm_chapters_leaders_welcome_message"] = "Welcome to __SITE_NAME__ leadership team! If you need assistance please get in touch with your community manager or reply to this email.<br><br>Thanks for your support and for contributing to our community!"; // welcome message to new chapter leaders
 $conf["tm_chapters_leaders_retired_message"] = "Thanks for your contributions to the chapter and we hope you will continue to participate in our community. If you need any assistance please get in touch with our community management team or reply to this email."; // welcome message to retired chapter leaders
 $conf["tm_chapters_leader_inactive_warning_days"] = 60; // days inactive until we warn
 $conf["tm_chapters_leader_inactive_retire_days"] = 90; // days inactive until we retire as chapter leader

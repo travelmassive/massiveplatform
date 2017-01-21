@@ -948,9 +948,9 @@ function _tm_more_actions_process($field, $title = NULL) {
           if (sizeof($possible_duplicates) > 0) {
 
             // Show duplicate accounts
-            $duplicate_message = "Account with same name";
+            $duplicate_message = "Possible duplicate";
             if (sizeof($possible_duplicates) > 1) {
-              $duplicate_message = "Accounts with same names";
+              $duplicate_message = "Possible duplicates";
             }
             $menu_text = "<div style='font-size: smaller; font-style: italic; padding-left: 2em; background-color: #efefef;'>" . $duplicate_message . ":<br>";
             foreach ($possible_duplicates as $duplicate_uid) {

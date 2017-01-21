@@ -8,7 +8,7 @@
 function tm_users_drush_command() {
 
 	$items['tm-assign-missing-approval-flags'] = array(
-		'description' => 'Assign any missing approval flags to anymous user.',
+		'description' => 'Assign any missing approval flags to another user.',
 		'callback' => 'tm_users_assign_missing_approval_flags_drush',
 		'options' => array(
 			'confirm' => 'Confirm that you want to proceed',
@@ -44,10 +44,10 @@ function tm_users_assign_missing_approval_flags_drush() {
 		drush_print("Running simulation only. Use --confirm=true to process.");
 	}
 
-	// get uid - default 0 (optional)
+	// get uid - default 1 (optional)
 	$assign_uid = drush_get_option('uid');
 	if ($assign_uid == null) {
-		$assign_uid = 0;
+		$assign_uid = 1;
 	}
 	drush_print("Resassign uid: " . $assign_uid);
 

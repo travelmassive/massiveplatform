@@ -8422,7 +8422,7 @@ td.views-field-access {
 .avatar:hover .status-updates-image,
 .avatar:focus .status-updates-image {
   transform: scale(1.15);
-  opacity: 0.8;
+  opacity: 0.9;
   transition: all .5s;
 }
 
@@ -8430,7 +8430,7 @@ td.views-field-access {
 .avatar:hover .badge-user,
 .avatar:focus .badge-user {
   transform: scale(1.15);
-  opacity: 0.8;
+  opacity: 0.85;
   transition: all .5s;
 }
 
@@ -8438,7 +8438,7 @@ td.views-field-access {
 .avatar:hover .badge-organization,
 .avatar:focus .badge-organization {
   transform: scale(1.15);
-  opacity: 0.8;
+  opacity: 0.85;
   transition: all .5s;
 }
 
@@ -8446,7 +8446,7 @@ td.views-field-access {
 .avatar:hover .flagfeed-image-discuss,
 .avatar:focus .flagfeed-image-discuss {
   transform: scale(1.15);
-  opacity: 0.8;
+  opacity: 0.85;
   transition: all .5s;
 }
 
@@ -8454,7 +8454,7 @@ td.views-field-access {
 .avatar:hover .feedme-image-marketplace,
 .avatar:focus .feedme-image-marketplace {
   transform: scale(1.15);
-  opacity: 0.8;
+  opacity: 0.85;
   transition: all .5s;
 }
 
@@ -8462,7 +8462,7 @@ td.views-field-access {
 .avatar:hover .feedme-image,
 .avatar:focus .feedme-image {
   transform: scale(1.15);
-  opacity: 0.8;
+  opacity: 0.85;
   transition: all .5s;
 }
 

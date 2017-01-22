@@ -97,7 +97,21 @@ function tm_chat_embed() {
 	// load user
 	$loaded = user_load($user->uid);
 
-	$embed_script = '<div class="iflychat-embed" data-room-id="' . $conf["tm_chat_embed_room_id"] . '" data-height="500px" data-width="100%"></div>';
+	$max_width = "100%";
+	if (isset($conf["tm_chat_embed_side_panel_html"])) {
+		$max_width = "800px";
+	}
+
+	$embed_script  = '<div class="tm_chat_container">';
+	$embed_script  .= '<div class="tm_chat_container_drupalchat" style="float: left; max-width: ' . $max_width . '; width: 100%; margin-right: 24px; margin-bottom: 16px;" >';
+	$embed_script .= '<div class="iflychat-embed" data-room-id="' . $conf["tm_chat_embed_room_id"] . '" data-height="500px" data-width="100%"></div>';
+	$embed_script .= '</div>';
+
+	// add side panel if set
+	if (isset($conf["tm_chat_embed_side_panel_html"])) {
+		$embed_script .= '<div class="tm_chat_container_side_panel" style="min-width: 200px; overflow: auto; background-color: #fff; border-radius: 4px; box-shadow: 0 0.125rem 0 0 rgba(33,48,64,.1); padding: 0.5rem; padding-left: 1rem; padding-top: 0; font-size: 0.9rem;">' . $conf["tm_chat_embed_side_panel_html"] . '</div>';
+	}
+	$embed_script .= '</div>';
 
 	// hide title
 	drupal_add_css('#page-title { display: none; }', 'inline');

@@ -710,5 +710,7 @@ $conf['tm_marketplace_feedme_url'] = '/jobs/api/search/'; // url for search
 $conf["tm_chat_embed_menu_path"] = "chat"; // path of embedded chat
 $conf["tm_chat_embed_room_id"] = 1; // id of the room to embed
 $conf["tm_chat_embed_access_roles"] = array("chapter leader"); // role allowed for chat
+$conf["tm_chat_embed_side_panel_html"] = "<h2>Chat Room</h2><p>Welcome to our chat room!</p>"; // include an optional side panel
+
 */
 

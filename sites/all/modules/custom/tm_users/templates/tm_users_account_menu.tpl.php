@@ -100,6 +100,7 @@ $image = theme('image_style', array(
       <li><?php print l(t('Account settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-account-options')); ?></li>
       <li><?php print l(t('Notification settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-notifications-options')); ?></li>
       <li><?php print l(t('Invite members'), 'invite'); ?></li>
+      
       <?php
       if (isset($conf["tm_users_account_menu_links"])) {
         foreach($conf["tm_users_account_menu_links"] as $account_menu_title => $account_menu_link) {
@@ -107,6 +108,16 @@ $image = theme('image_style', array(
         }
       }
       ?>
+
+      <?php if (in_array("chapter leader", $loaded->roles) or in_array("moderator", $loaded->roles)): ?>
+      <?php if (isset($conf["tm_users_chapter_leader_menu_links"])): ?>
+          <?php
+            foreach($conf["tm_users_chapter_leader_menu_links"] as $account_menu_title => $account_menu_link) {
+              print "<li>" . l(t($account_menu_title), $account_menu_link, array('fragment' => '', 'external' =>true)) . "</li>";
+            }
+          ?>
+      <?php endif; ?>
+      <?php endif; ?>
 
       <?php if (!in_array("approved user", $loaded->roles)) { 
       // show last time request info was flagged
@@ -126,6 +137,8 @@ $image = theme('image_style', array(
       } // end if not approved
       ?>
     </ul>
+
+    
 
   <?php
     $include_chapter_events = in_array("chapter leader", $loaded->roles);
@@ -157,19 +170,9 @@ $image = theme('image_style', array(
     </ul>
   <?php endif; ?>
 
-    <ul class="dropd-menu dropdown-chapter-leader-resources">
+    <ul class="dropd-menu dropdown-chapters">
         <?php print tm_users_menu_chapters($loaded->uid); ?>
-        <?php
-        if (in_array("chapter leader", $loaded->roles)): ?>
-        <?php
-        if (isset($conf["tm_users_chapter_leader_menu_links"])) {
-          foreach($conf["tm_users_chapter_leader_menu_links"] as $account_menu_title => $account_menu_link) {
-            print "<li>" . l(t($account_menu_title), $account_menu_link, array('fragment' => '', 'external' =>true)) . "</li>";
-          }
-        }
-        ?>
-        <?php endif; ?>       
-    </ul>
+    </ul>     
 
   <?php if ((in_array("moderator", $loaded->roles)) or (in_array("administrator", $loaded->roles))) : ?>
       <ul class="dropd-menu" id="account_menu_moderator_actions_show">

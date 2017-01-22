@@ -8458,6 +8458,14 @@ td.views-field-access {
   transition: all .5s;
 }
 
+/* line 886, ../sass/_single.scss */
+.avatar:hover .feedme-image,
+.avatar:focus .feedme-image {
+  transform: scale(1.15);
+  opacity: 0.8;
+  transition: all .5s;
+}
+
 /* line 2, ../sass/_login.scss */
 #account-menu-blk .menu-blk-title {
   text-transform: uppercase;

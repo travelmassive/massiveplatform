@@ -8442,6 +8442,22 @@ td.views-field-access {
   transition: all .5s;
 }
 
+/* line 872, ../sass/_single.scss */
+.avatar:hover .flagfeed-image-discuss,
+.avatar:focus .flagfeed-image-discuss {
+  transform: scale(1.15);
+  opacity: 0.8;
+  transition: all .5s;
+}
+
+/* line 879, ../sass/_single.scss */
+.avatar:hover .feedme-image-marketplace,
+.avatar:focus .feedme-image-marketplace {
+  transform: scale(1.15);
+  opacity: 0.8;
+  transition: all .5s;
+}
+
 /* line 2, ../sass/_login.scss */
 #account-menu-blk .menu-blk-title {
   text-transform: uppercase;

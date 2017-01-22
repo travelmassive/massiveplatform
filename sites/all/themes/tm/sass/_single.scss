@@ -849,19 +849,22 @@
 
 .avatar:hover .status-updates-image,
 .avatar:focus .status-updates-image {
-  transform: scale(1.1);
+  transform: scale(1.15);
+  opacity: 0.8;
   transition: all .5s;
 }
 
 .avatar:hover .badge-user,
 .avatar:focus .badge-user {
-  transform: scale(1.1);
+  transform: scale(1.15);
+  opacity: 0.8;
   transition: all .5s;
 }
 
 .avatar:hover .badge-organization,
 .avatar:focus .badge-organization {
-  transform: scale(1.1);
+  transform: scale(1.15);
+  opacity: 0.8;
   transition: all .5s;
 }
 

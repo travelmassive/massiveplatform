@@ -840,3 +840,31 @@
 
 /* hide show row weights */
 .tabledrag-toggle-weight-wrapper { display: none; }
+
+/* zoom in avatar images on hover */
+
+.avatar {
+  overflow: hidden;
+}
+
+.avatar:hover .status-updates-image,
+.avatar:focus .status-updates-image {
+  transform: scale(1.1);
+  transition: all .5s;
+}
+
+.avatar:hover .badge-user,
+.avatar:focus .badge-user {
+  transform: scale(1.1);
+  transition: all .5s;
+}
+
+.avatar:hover .badge-organization,
+.avatar:focus .badge-organization {
+  transform: scale(1.1);
+  transition: all .5s;
+}
+
+
+
+

@@ -8412,6 +8412,33 @@ td.views-field-access {
   display: none;
 }
 
+/* zoom in avatar images on hover */
+/* line 846, ../sass/_single.scss */
+.avatar {
+  overflow: hidden;
+}
+
+/* line 851, ../sass/_single.scss */
+.avatar:hover .status-updates-image,
+.avatar:focus .status-updates-image {
+  transform: scale(1.1);
+  transition: all .5s;
+}
+
+/* line 857, ../sass/_single.scss */
+.avatar:hover .badge-user,
+.avatar:focus .badge-user {
+  transform: scale(1.1);
+  transition: all .5s;
+}
+
+/* line 863, ../sass/_single.scss */
+.avatar:hover .badge-organization,
+.avatar:focus .badge-organization {
+  transform: scale(1.1);
+  transition: all .5s;
+}
+
 /* line 2, ../sass/_login.scss */
 #account-menu-blk .menu-blk-title {
   text-transform: uppercase;

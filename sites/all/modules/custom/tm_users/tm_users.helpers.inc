@@ -44,7 +44,6 @@ function tm_users_member_in_users_chapter($member_uid, $chapter_leader_uid, $ret
   }
 
   // Step 3. Fetch list of chapters the user is a community manager of
-  $chapters_leader_nids = array();
   $query = new EntityFieldQuery();
   $query->entityCondition('entity_type', 'node')
     ->entityCondition('bundle', 'chapter')

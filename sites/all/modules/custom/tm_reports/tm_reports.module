@@ -702,6 +702,13 @@ function _tm_reports_get_global_insights() {
   $num_chapters = db_query($query, array(':type' => "chapter"))->fetch();
   $insights["num_chapters"] = $num_chapters->amount;
 
+  // NUM CHAPTER LEADERS
+  $chapter_leader_role = user_role_load_by_name("chapter leader");
+  $query = "SELECT COUNT(*) amount FROM {users_roles} r ".
+              "WHERE r.rid = :rid";
+  $num_chapter_leaders = db_query($query, array(':rid' => $chapter_leader_role->rid))->fetch();
+  $insights["num_chapter_leaders"] = $num_chapter_leaders->amount;
+
   // NUMBER OF ORGANIZATIONS
   $query = "SELECT COUNT(*) amount FROM {node} n ".
               "WHERE n.type = :type";
@@ -1000,6 +1007,7 @@ function tm_reports_get_insights_labels() {
   "num_logins_facebook" => "Total Users Logged in with Facebook",
   "num_logins_twitter" => "Total Users Logged in with Twitter",
   "num_chapters" => "Number of Chapters",
+  "num_chapter_leaders" => "Number of Chapter Leaders",
   "num_members_with_home_chapter" => "Members from this Chapter (Home Chapter)",
   "pct_members_with_home_chapter" => "% Members from this Chapter (Home Chapter)",
   "num_members_without_home_chapter" => "Members from other Chapters",

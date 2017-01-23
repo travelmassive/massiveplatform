@@ -149,7 +149,7 @@ function tm_chapters_leaders_notify_changes($user_who_changed, $chapter) {
 	$chapter_leaders_list = "";
 	foreach ($notify_uids as $notify_uid) {
 		$chapter_leader = user_load($notify_uid);
-		$chapter_leaders_list .= "<br>&middot; " . strip_tags($chapter_leader->field_user_first_name[LANGUAGE_NONE][0]['value']) . " " . strip_tags($user_who_changed->field_user_last_name[LANGUAGE_NONE][0]['value']); 
+		$chapter_leaders_list .= "<br>&middot; " . strip_tags($chapter_leader->field_user_first_name[LANGUAGE_NONE][0]['value']) . " " . strip_tags($chapter_leader->field_user_last_name[LANGUAGE_NONE][0]['value']); 
 	}
 	if ($chapter_leaders_list == "") {
 		$chapter_leaders_list = "&middot; No chapter leaders";

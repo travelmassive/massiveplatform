@@ -77,7 +77,7 @@ function tm_chapters_leaders_chapter_save($chapter) {
 		if ($user_who_changed->uid == $account->uid) {
 			$retired_intro = "You've removed yourself as a chapter leader of";
 		} else {
-			$retired_intro = "We've retired your leadership of";
+			$retired_intro = "Due to account inactivity, we've retired your leadership of";
 			if (!drupal_is_cli()) {
 				$retired_intro = strip_tags($user_who_changed->field_user_first_name[LANGUAGE_NONE][0]['value']) . " has retired your leadership of";
 			}

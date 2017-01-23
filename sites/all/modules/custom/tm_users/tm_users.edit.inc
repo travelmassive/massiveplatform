@@ -42,15 +42,18 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
 
   
   // Add JS
-  $form['#attached']['js'] = array(
+  $js_array = array(); 
 
-    // Add javascript protection to prompt to save profile if its edited
-    // Use case is that many users don't click the save button on their profile
-    drupal_get_path('module', 'tm_users') . '/js/user-edit-protection.js',
+  // Add javascript protection to prompt to save profile if its edited
+  // Use case is that many users don't click the save button on their profile
+  $js_array[] = drupal_get_path('module', 'tm_users') . '/js/user-edit-protection.js';
 
+  if (!(in_array("administrator", $user->roles))) {
     // Add javascript to hide email and password fields to improve useability
-    drupal_get_path('module', 'tm_users') . '/js/user-edit-email-password.js'
-  );
+    $js_array[] = drupal_get_path('module', 'tm_users') . '/js/user-edit-email-password.js';
+  }
+   
+  $form['#attached']['js'] = $js_array;
 
 
   $form['user_show_change_email'] = array('#markup' => l(t('Change Email'), 'javascript:jq_show_edit_change_email();', array('fragment' => '','external'=>true, 'attributes' => array('style' => 'margin-top: 1rem; margin-left: 0.5rem;', 'class' => array('user_edit_change_email', 'bttn bttn-tertiary bttn-m cancel')))));

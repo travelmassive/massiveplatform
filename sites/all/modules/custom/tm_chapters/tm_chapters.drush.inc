@@ -249,25 +249,53 @@ function tm_chapters_community_management_tasks_drush() {
 		  ->range(0,1);
 		$future_result = $query->execute();
 
+		// CHECK IF CHAPTER OLDER THAN THREE MONTHS
+		$three_months_ago = new DateTime('NOW -3 months', new DateTimeZone('UTC'));
+		$chapter_created = new DateTime('NOW', new DateTimeZone('UTC'));
+		$chapter_created->setTimeStamp($chapter->created);
+
+		// LOGICAL VARS
+		$has_past_events = (isset($result['node']));
+		$has_future_events = (isset($future_result['node']));
+		$older_than_three_months_no_events = (($chapter_created < $three_months_ago) and !$has_past_events and !$has_future_events);
+
 		// Initialize time_until.
 		$time_until = NULL;
 
 		$last_event_time = "No past events";
 
-		if (isset($result['node']) and !(isset($future_result['node']))) {
-		  $next_event_array = array_keys($result['node']);
-		  $next_event = node_load($next_event_array[0]);
-		  $event_date = field_get_items('node',$next_event,'field_event_date');
-		  
-		  // Create datetime object and ensure UTC timezone, instead of user-defined timezone.
-		  $event_timezone = _tm_get_event_timezone($next_event);
-		  $event_datetime = new DateTime($event_date[0]['value'], new DateTimeZone($event_timezone));
-		  //$time_until = format_interval($event_datetime->format('U') - $current_date->format('U'), 2);
-		  $last_event_time = _tm_event_time_elapsed($current_date->format('U') - $event_datetime->format('U')) . " ago";
+		// Send warning if:
+		// - has had past events, and no future events in past 3 months
+		// - chapter is older than three months, and has no past or future events
+		if (($has_past_events and !$has_future_events) or ($older_than_three_months_no_events)) {
 
-		  $days_since_last_event = ($current_date->format('U') - $event_datetime->format('U')) / (60 * 60 * 24);
+			$send_warning = false;
 
-		  if ($days_since_last_event > $conf["tm_chapters_leader_no_events_days"]) {
+			// Check past event date
+			if ($has_past_events) {
+
+			  $next_event_array = array_keys($result['node']);
+			  $next_event = node_load($next_event_array[0]);
+			  $event_date = field_get_items('node',$next_event,'field_event_date');
+			  
+			  // Create datetime object and ensure UTC timezone, instead of user-defined timezone.
+			  $event_timezone = _tm_get_event_timezone($next_event);
+			  $event_datetime = new DateTime($event_date[0]['value'], new DateTimeZone($event_timezone));
+			  $last_event_time = _tm_event_time_elapsed($current_date->format('U') - $event_datetime->format('U')) . " ago";
+			  $days_since_last_event = ($current_date->format('U') - $event_datetime->format('U')) / (60 * 60 * 24);
+
+			  // Send warning if past event older than X days
+			  if ($days_since_last_event > $conf["tm_chapters_leader_no_events_days"]) {
+			  	$send_warning = true;
+			  }
+			  
+			 } else {
+			 	$send_warning = true;
+			 	$last_event_time = "never";
+			 }
+
+		  if ($send_warning) {
+
 		  	drush_print("- " . $chapter->title . ": last event " . $last_event_time . " ( > " . $conf["tm_chapters_leader_no_events_days"] . " days - SEND WARNING)");
 
 		  	// Send warning

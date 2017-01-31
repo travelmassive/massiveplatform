@@ -109,6 +109,15 @@ function tm_api_stats() {
   $num_events = db_query($query_sql)->fetch();
   $api_data["num_events"] = $num_events->total;
 
+  // number of events (past year)
+  // don't include partner events
+  $query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 
+  LEFT JOIN field_revision_field_is_partner_event p on e.entity_id = p.entity_id
+  WHERE p.entity_type = 'node' AND field_is_partner_event_value = 0
+  AND e.entity_type = 'node' AND field_event_date_value >= (NOW() - INTERVAL 1 YEAR) AND field_event_date_value <= NOW();";
+  $num_events_past_year = db_query($query_sql)->fetch();
+  $api_data["num_events_past_year"] = $num_events_past_year->total;
+
   // number of members
   $query = "SELECT COUNT(*) amount FROM {users} u";
   $num_members = db_query($query)->fetch();
@@ -153,11 +162,23 @@ function tm_api_stats() {
   $num_registrations = db_query($query, array(':fid' => $flag->fid))->fetch();
   $api_data["num_event_registrations"] = $num_registrations->amount;
 
+  // number of registrations (past year)
+  $flag = flag_get_flag('event_register', NULL);
+  $query = "SELECT COUNT(*) amount FROM {flagging} f WHERE f.fid = :fid AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 1 YEAR)";
+  $num_registrations_past_year = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $api_data["num_event_registrations_past_year"] = $num_registrations_past_year->amount;
+
   // number of waitlists
   $flag = flag_get_flag('event_waitlist', NULL);
   $query = "SELECT COUNT(*) amount FROM {flagging} f WHERE f.fid = :fid";
   $num_waitlists = db_query($query, array(':fid' => $flag->fid))->fetch();
   $api_data["num_event_waitlists"] = $num_waitlists->amount;
+
+  // number of waitlists (past year)
+  $flag = flag_get_flag('event_waitlist', NULL);
+  $query = "SELECT COUNT(*) amount FROM {flagging} f WHERE f.fid = :fid AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 1 YEAR)";
+  $num_waitlists_past_year = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $api_data["num_waitlists_past_year"] = $num_waitlists_past_year->amount;
 
   // number of chapter leaders
   $query = "SELECT COUNT(DISTINCT(field_chapter_leaders_target_id)) AS amount FROM field_data_field_chapter_leaders fd WHERE fd.bundle = 'chapter' AND fd.deleted = 0";

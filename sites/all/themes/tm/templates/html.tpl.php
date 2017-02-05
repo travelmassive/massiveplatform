@@ -53,7 +53,7 @@
     <?php endif; ?>
     
     <!-- http://writing.colin-gourlay.com/safely-using-ready-before-including-jquery/ -->
-    <script>(function(w,d,u){w.readyQ=[];w.bindReadyQ=[];function p(x,y){if(x=="ready"){w.bindReadyQ.push(y);}else{w.readyQ.push(x);}};var a={ready:p,bind:p};w.$=w.jQuery=function(f){if(f===d||f===u){return a}else{p(f)}}})(window,document)</script>
+    <script type="text/javascript">(function(w,d,u){w.readyQ=[];w.bindReadyQ=[];function p(x,y){if(x=="ready"){w.bindReadyQ.push(y);}else{w.readyQ.push(x);}};var a={ready:p,bind:p};w.$=w.jQuery=function(f){if(f===d||f===u){return a}else{p(f)}}})(window,document)</script>
 
     <?php
       // include brand css
@@ -220,12 +220,12 @@
       // include brand js
       $tm_branding_js = tm_branding_get_element("include_js");
       if ($tm_branding_js) {
-        echo "<script>" . $tm_branding_js . "</script>";
+        echo "<script type='text/javascript'>" . $tm_branding_js . "</script>";
       }
     ?>
 
     <!-- http://writing.colin-gourlay.com/safely-using-ready-before-including-jquery/ -->
-    <script>(function($,d){$.each(readyQ,function(i,f){$(f)});$.each(bindReadyQ,function(i,f){$(d).bind("ready",f)})})(jQuery,document)</script>
+    <script type="text/javascript">(function($,d){$.each(readyQ,function(i,f){$(f)});$.each(bindReadyQ,function(i,f){$(d).bind("ready",f)})})(jQuery,document)</script>
 
   </body>
 </html>

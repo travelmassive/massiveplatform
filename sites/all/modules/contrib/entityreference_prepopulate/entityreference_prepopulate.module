@@ -298,10 +298,13 @@ function entityreference_prepopulate_get_values($field, $instance, $validate = T
   }
 
   $handler = entityreference_get_selection_handler($field, $instance);
-  if (!$ids = $handler->validateReferencableEntities($ids)) {
+  if (!$valid_ids = $handler->validateReferencableEntities($ids)) {
     $cache[$identifier] = FALSE;
     return;
   }
+
+  // Only include valid ids.
+  $ids = array_intersect($ids, $valid_ids);
 
   // Check access to the provided entities.
   $target_type = $field['settings']['target_type'];

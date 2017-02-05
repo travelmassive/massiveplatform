@@ -312,7 +312,7 @@ function drush_ultimate_cron_cron_logs($name = NULL) {
   );
 
   $lock_id = $job->isLocked();
-  $log_entries = $job->getLogEntries($limit);
+  $log_entries = $job->getLogEntries(ULTIMATE_CRON_LOG_TYPE_ALL, $limit);
   $progress = $job->getProgress();
 
   foreach ($log_entries as $log_entry) {

@@ -13,14 +13,18 @@ Settings
 - Choose Polling Method - iFlyChat
 - Show DrupalChat on specific pages:
 
+(replace \/ with /)
+
 admin/*
-user/*
-node/*
+user/*\/edit
+node/*\/edit
 community
 companies
 events
 sponsors
-payment/*
+contact
+*\/contact
+payment\/*
 events/send-announcement/*
 
 - Relationship method - All Users
@@ -130,6 +134,11 @@ function tm_chat_init() {
 	global $conf;
 	global $user;
 
+	// allow admin to edit settings if they have disabled chat
+	if (current_path() == "admin/config/drupalchat/configuration") {
+		return;
+	}
+
 	$account = user_load($user->uid);
 
 	// if user is approved and checked field_user_disable_chat, disable chat
@@ -137,9 +146,13 @@ function tm_chat_init() {
 		if (isset($account->field_user_disable_chat[LANGUAGE_NONE][0]['value'])) {
 			if ($account->field_user_disable_chat[LANGUAGE_NONE][0]['value'] == 1) {
 
+
 				// add * wildcard to disable path_pages
-				if (isset($conf["drupalchat_path_pages"]))  {
-					$conf["drupalchat_path_pages"]  = "*";
+				if (isset($conf["drupalchat_path_pages"])) {
+
+					$conf["drupalchat_path_visibility"] = 1; // only show on selected pages
+					$conf["drupalchat_path_pages"] = "/chatdisabled"; // don't show on any pages
+
 				}
 
 			}
@@ -214,6 +227,17 @@ function tm_chat_drupalchat_get_user_profile_alter(&$user_profile_url, $id) {
 
         // user_profile_uri
         $user_profile_url = url('user/' . $id);
+}
+
+/**
+ * Change weight of drupalchat module so it executes after tm_chat
+ */
+function tm_chat_install() {
+	print "Updating drupalchat module weight to 10...";
+    db_update('system')
+    ->fields(array('weight' => 10))
+    ->condition('name', 'drupalchat', '=')
+    ->execute();
 }
 
 ?>

@@ -70,6 +70,7 @@ public static $tm_sql_events = <<<SQL
 select
 	event.nid as 'event_id',
 	event.title as 'event_title',
+	chapter.title as 'chapter_name',
 	ed.field_event_date_value as 'event_date',
 	case when event_tz.field_event_timezone_value is not null
 	then event_tz.field_event_timezone_value

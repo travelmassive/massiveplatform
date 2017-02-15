@@ -376,9 +376,17 @@ class TmNewsfeedEmail
 
 		foreach($filtered_results as $result) {
 
+			// add chapter name if event has chapter and name not in event listing
+			$location_text = "";
+			if ($result->chapter_name != null) {
+				if(stripos($result->event_title, $result->chapter_name) === false) {
+			 		$location_text = " - " . strip_tags($result->chapter_name);
+			 	}
+			}
+
 			$href = tm_newfeed_absolute_url("node/" . $result->event_id);
 			$link = $result->event_title;
-			$text = ', '. date_format(new DateTime($result->event_date), 'l, F j');
+			$text = $location_text . ', '. date_format(new DateTime($result->event_date), 'l F j');
 
 			$items[] = array("href" => $href, "link" => $link, "text" => $text);
 		}

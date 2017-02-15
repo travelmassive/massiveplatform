@@ -493,7 +493,7 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 			$image_uri = _tm_chapters_get_image_uri($chapter);
 			$image_url = image_style_url("banner", $image_uri);
 
-			$feed_title = l($flagging_user_name, $flagging_user_url) . " joined " . l($chapter->title . " " . $conf["tm_site_name"], $flagged_node_url);
+			$feed_title = l($flagging_user_name, $flagging_user_url) . " joined " . l(tm_chapters_formal_name($chapter), $flagged_node_url);
 		    $html = tm_status_updates_render_flag_feed($flagged_node_url, $image_url, $feed_title, "", $details);
 			break;
 

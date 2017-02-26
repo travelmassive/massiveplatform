@@ -247,14 +247,14 @@ function tm_chapters_communication_form($chapter) {
 
   $help_text = '<div class="tm-chapters-send-announcement-tips">
   <h2>How to send a great announcement</h2>
-  <ul style="list-style: none; padding-left: 1.5rem;">
-  <li><span style="color: green;">&#10004;</span> Write a meaningful subject line that captures people\'s attention</li>
-  <li><span style="color: green;">&#10004;</span> The best time to send an announcement is on a weekday between 10.00 and 11.00</li>
-  <li><span style="color: red;">&#10008;</span> Don\'t WRITE IN ALL CAPITALS (that\'s shouting)</li>
-  <li><span style="color: red;">&#10008;</span> Don\'t use many exclamation points!!!!!</li>
-  <li><span style="color: red;">&#10008;</span> Don\'t use spam trigger words like "free" or "click here"</li>
+  <ul style="list-style: none; padding-left: 0.5rem;">
+  <li><span style="color: green; margin-right: 4px;">&#10004;</span> Write a meaningful subject line that captures people\'s attention</li>
+  <li><span style="color: green; margin-right: 4px;">&#10004;</span> The best time to send an announcement is on a weekday between 10.00 and 11.00</li>
+  <li><span style="color: red; margin-right: 4px;">&#10008;</span> Don\'t WRITE IN ALL CAPITALS (that\'s shouting)</li>
+  <li><span style="color: red; margin-right: 4px;">&#10008;</span> Don\'t use many exclamation points!!!!!</li>
+  <li><span style="color: red; margin-right: 4px;">&#10008;</span> Don\'t use spam trigger words like "free" or "click here"</li>
   </ul>
-  <h2>Other things to know</h2><ul>';
+  <h2>Other things to know</h2><ul style="padding-left: 1.5rem;">';
 
   // Warning for non chapter leaders
   if ((!in_array('administrator', array_values($user->roles)))

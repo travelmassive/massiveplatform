@@ -562,7 +562,7 @@ function _tm_more_actions_process($field, $title = NULL) {
 
         $links['manageattendees'][] = array(
           'wrapper_class' => array('contactattendees'),
-          'content' => l(t('Event insights'), "javascript:jq_alert('You\'re missing out on new features', 'Manage your attendee list and view detailed insights by switching to <i>Manage RSVPs</i> in your event settings.')", array(
+          'content' => l(t('Event insights'), "javascript:jq_alert('Get detailed reporting', 'Manage your attendee list and view detailed insights by switching to <i>Manage RSVPs</i> in your event settings.')", array(
                             'fragment' => '',
                             'external'=>true,
                             'attributes' => array('title' => t('Event insights'))

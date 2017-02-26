@@ -504,6 +504,7 @@ function tm_users_views_post_execute(&$view) {
   if ($view->name == 'chapter_leaders') {
     $view->build_info['title'] = "<a href='/community'>Community</a> &middot; Chapter Leaders";
   }
+
 }
 
 /** 

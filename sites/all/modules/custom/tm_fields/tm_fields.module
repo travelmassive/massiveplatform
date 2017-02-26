@@ -448,7 +448,7 @@ function _tm_more_actions_process($field, $title = NULL) {
   }
   // END Edit link.
 
-  // START manage RSVPs.
+  // START manage RSVPs
   if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
     $node = menu_get_object();
     if ($node->type == 'event') {
@@ -477,7 +477,7 @@ function _tm_more_actions_process($field, $title = NULL) {
   }
   // END manage RSVPs
 
-  // START download RSVP list
+  // START download RSVP list and event insights
   if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
     $node = menu_get_object();
     if ($node->type == 'event') {
@@ -504,10 +504,20 @@ function _tm_more_actions_process($field, $title = NULL) {
             )
           ))
         );
+
+        $links['manageattendees'][] = array(
+          'wrapper_class' => array('managersvp'),
+          'content' => l(t('Event insights'), 'events/insights/' . $nid, array(
+            'attributes' => array( 
+            'title' => t('Event insights')
+            )
+          ))
+        );
+
       }
     }
   }
-  // END download RSVP list
+  // END download RSVP list and event insights
 
   // START contact attendees.
   if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {

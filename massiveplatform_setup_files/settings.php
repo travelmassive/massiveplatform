@@ -119,6 +119,7 @@ $conf['tm_tips_start_chapter_link'] = "https://example.massiveplatform.com/blog/
 $conf['tm_tips_sponsor_page_link'] = "https://example.massiveplatform.com/blog/sponsors-guide/"; // tm_tips_start_chapter_link
 $conf["tm_reports_chapter_insights_tip"] = "Join our Facebook group to share tips with other members on growing your chapter and be part of our global team!"; // Display a tip on chapter insights page
 // $conf["tm_tips_community_list"] = "Discover and follow other members and companies in our community with our <a href='/search'>Community Search</a>."; // optional - override community page tip
+$conf["tm_reports_event_insights_tip"] = "Join our Facebook group to learn how to make your event a success."; // event report tip
 
 /** COMMUNITY VALUES URL **/
 $conf['tm_community_values_url'] = "https://example.massiveplatform.com/blog/community-values/"; // tm_community_values_url

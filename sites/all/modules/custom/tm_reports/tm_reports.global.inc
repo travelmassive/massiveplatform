@@ -103,7 +103,7 @@ function tm_reports_global_insights() {
   $html .= "<header class='contained-head'>
             <h1 class='prime-title'>Number of Events Members Have Attended</h1>
             </header>";
-  $html .= _tm_reports_insights_event_registration_frequency_html(null, true);
+  $html .= _tm_reports_insights_event_registration_frequency_html(null, null, true);
   $html .= "</section>";
 
   // Registration frequency
@@ -111,7 +111,7 @@ function tm_reports_global_insights() {
   $html .= "<header class='contained-head'>
             <h1 class='prime-title'>Number of Events Members Have Attended (Not Aggregated)</h1>
             </header>";
-  $html .= _tm_reports_insights_event_registration_frequency_html(null, false);
+  $html .= _tm_reports_insights_event_registration_frequency_html(null, null, false);
   $html .= "</section>";
 
   // Segments

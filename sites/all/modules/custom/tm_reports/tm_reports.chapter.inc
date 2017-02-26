@@ -132,7 +132,7 @@ function tm_reports_chapter_insights($nid) {
     $html .= "<header class='contained-head'>
               <h1 class='prime-title'>Number of Events Members Have Attended - " . $chapter->title . "</h1>
               </header>";
-    $html .= _tm_reports_insights_event_registration_frequency_html($chapter->nid, true);
+    $html .= _tm_reports_insights_event_registration_frequency_html($chapter->nid, "chapter", true);
     $html .= "</section>";
 
   }

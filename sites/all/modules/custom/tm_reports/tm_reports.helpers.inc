@@ -324,10 +324,10 @@ function _tm_reports_helper_pad_monthly_grouped_data($rows) {
 /**
  * Get event attendance frequency
  */
-function _tm_reports_event_registration_frequency($chapter_id = null, $aggregate = false) {
+function _tm_reports_event_registration_frequency($node_id = null, $node_type = "chapter", $aggregate = false) {
 
   // check cache
-  $cache_key = "tm-reports-event-registration-frequency-" . $chapter_id . "-" . $aggregate;
+  $cache_key = "tm-reports-event-registration-frequency-" . $node_type . "-" . $node_id . "-" . $aggregate;
   $cache_key = str_replace(" ", "-", $cache_key);
   $cache = cache_get($cache_key, 'cache');
   if (!empty($cache)) {
@@ -336,12 +336,21 @@ function _tm_reports_event_registration_frequency($chapter_id = null, $aggregate
 
   // SQL
   $flag_event_register = flag_get_flag('event_register', NULL);
-  if ($chapter_id == null) {
+
+  if ($node_id == null) {
+    // global
     $query = "SELECT amount, COUNT(*) AS freq FROM (SELECT uid, COUNT(uid) AS amount FROM flagging f WHERE f.fid = :fid group by uid) AS t2 GROUP BY amount ORDER BY amount ASC";
     $rows = db_query($query, array(":fid" => $flag_event_register->fid) )->fetchAll();
-  } else {
+  } elseif ($node_type == "chapter") {
+    // member of chapter
     $query = "SELECT amount, COUNT(*) AS freq FROM (SELECT uid, COUNT(uid) AS amount FROM flagging f WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND f.fid = :fid GROUP BY uid) as t2 GROUP BY amount ORDER BY amount ASC";
-    $rows = db_query($query, array(":chapter_id" => $chapter_id, ":fid" => $flag_event_register->fid) )->fetchAll();
+    $rows = db_query($query, array(":chapter_id" => $node_id, ":fid" => $flag_event_register->fid) )->fetchAll();
+  } elseif ($node_type == "event") {
+    // attending event
+    $query = "SELECT amount, COUNT(*) AS freq FROM (SELECT uid, COUNT(uid) AS amount FROM flagging f WHERE entity_id IN (SELECT entity_id AS nid FROM flagging f2 WHERE entity_id = :event_id) AND f.fid = :fid GROUP BY uid) as t2 GROUP BY amount ORDER BY amount ASC";
+    $rows = db_query($query, array(":event_id" => $node_id, ":fid" => $flag_event_register->fid) )->fetchAll();
+  } else {
+    return;
   }
 
   // pad the grouped data data

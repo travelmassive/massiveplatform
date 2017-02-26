@@ -219,10 +219,10 @@ function _tm_reports_insights_monthly_links_shared_html() {
 /**
  * Generate a chart of frequency of events for attendees
  */
-function _tm_reports_insights_event_registration_frequency_html($chapter_id = null, $aggregate = false) {
-
+function _tm_reports_insights_event_registration_frequency_html($node_id = null, $node_type = "chapter", $aggregate = false) {
+  
   // Step 1. Get status update data
-  $results = _tm_reports_event_registration_frequency($chapter_id, $aggregate);
+  $results = _tm_reports_event_registration_frequency($node_id, $node_type, $aggregate);
   // Step 2. Render chart
   $js_fn = "insights_event_registration_frequency";
   if ($aggregate) {
@@ -231,7 +231,6 @@ function _tm_reports_insights_event_registration_frequency_html($chapter_id = nu
   $html = _tm_reports_insights_chart_html($results, "", "Members", "Number of Events", $js_fn);
   return $html;
 }
-
 
 /**
  * Generate Google Chart from a data series

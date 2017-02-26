@@ -73,20 +73,21 @@ function tm_reports_event_insights($nid) {
   $html .= _tm_reports_insights_table_html($event->nid, "event");
   $html .= "</section>";
 
-  // todo
-  $event_registrations = 10;
+  // Registration frequency
+  $html .= "<section class='contained contained-block'>";
+  $html .= "<header class='contained-head'>
+            <h1 class='prime-title'>Number of Events Members Have Attended (including this event)</h1>
+            </header>";
+  $html .= _tm_reports_insights_event_registration_frequency_html($event->nid, "event", true);
+  $html .= "</section>";
 
-  // Show event charts if chapter has registartions
-  if (sizeof($event_registrations) > 0) {
-
-	  // Industry Segments
-	  $html .= "<section class='contained contained-block'>";
-	  $html .= "<header class='contained-head'>
-	            <h1 class='prime-title'>" . $segment_label . " - " . $event->title . "</h1>
-	            </header>";
-	  $html .= _tm_reports_insights_segments_html($event->nid, "event");
-	  $html .= "</section>";
-  }
+  // Industry Segments
+  $html .= "<section class='contained contained-block'>";
+  $html .= "<header class='contained-head'>
+            <h1 class='prime-title'>" . $segment_label . " Of Members Attending This Event</h1>
+            </header>";
+  $html .= _tm_reports_insights_segments_html($event->nid, "event");
+  $html .= "</section>";
 
   // Close article
   $html .= "</article>";
@@ -128,11 +129,13 @@ function _tm_reports_get_event_insights($event_id, $ignore_cache = false) {
   $query_sql = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :event_id";
   $query = db_query($query_sql, array(':fid' => $flag_event_waitlist->fid, ':event_id' => $event_id))->fetch();
   $event_total_waitlist = $query->total;
-  $insights["event_total_waitlist"] = $event_total_waitlist;
+  if ($event_total_waitlist > 0) {
+  	$insights["event_total_waitlist"] = $event_total_waitlist;
+  }
 
   // TOTAL MEMBERS PAID
   $query_sql = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :event_id";
-  $query = db_query($query_sql, array(':fid' => $flag_event_waitlist->fid, ':event_id' => $event_id))->fetch();
+  $query = db_query($query_sql, array(':fid' => $flag_event_paid->fid, ':event_id' => $event_id))->fetch();
   $event_total_payments = $query->total;
   if ($event_total_payments > 0) {
   	$insights["event_total_payments"] = $event_total_payments;

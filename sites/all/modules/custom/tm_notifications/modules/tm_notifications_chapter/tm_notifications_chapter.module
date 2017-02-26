@@ -110,6 +110,29 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
       tm_notifications_notify('user_chapter_join_welcome_member', $account, array('node' => $node, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__WELCOME_MESSAGE__' => $welcome_message, '__CHAPTER_NAME__' => $chapter_name, '__HERO_IMAGE__' => $chapter_image_html));
 
       // notify each owner of the chapter that they have a new member
+      $approved_by_message = "As they are a new member to " . $conf["tm_site_name"] . ", please take the time to review their profile and ensure it's valid before approving them.";
+
+      if (in_array("approved user", $who_joined->roles)) {
+
+        // get who approved
+        $flag = flag_get_flag('approval_approved_by');
+        $who_flagged = flag_get_entity_flags("user", $who_joined->uid, "approval_approved_by");
+        usort($who_flagged, function($a, $b){  // sort by flag time
+          return ($a->timestamp > $b->timestamp) ? -1 : 1;
+        });
+
+        // show who approved
+        $approved_by_message = "This member is already approved.";
+        if (sizeof($who_flagged) > 0) {
+          $flagger = $who_flagged[0];
+          $flagged_user = user_load($flagger->uid);
+          if ($flagged_user->uid > 0) {
+            $approved_by_message = "This member was approved by " . $flagged_user->field_user_first_name[LANGUAGE_NONE][0]['safe_value'] . " " . $flagged_user->field_user_last_name[LANGUAGE_NONE][0]['safe_value'] . ".";
+          }
+        }
+
+      }
+
       if (isset($node->field_chapter_leaders[LANGUAGE_NONE])) {
         foreach ($node->field_chapter_leaders[LANGUAGE_NONE] as $leader) {
           $leader = user_load($leader['target_id']);
@@ -120,7 +143,7 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
 
           $profile_url = drupal_get_path_alias("user/" . $who_joined->uid);
 
-          tm_notifications_notify('user_chapter_join_notify_leaders', $leader, array('node' => $node, 'user' => $leader, '__PROFILE_URL__' => $profile_url, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__HERO_IMAGE__' => $chapter_image_html));
+          tm_notifications_notify('user_chapter_join_notify_leaders', $leader, array('node' => $node, 'user' => $leader, '__PROFILE_URL__' => $profile_url, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__APPROVED_BY_MESSAGE__' => $approved_by_message, '__HERO_IMAGE__' => $chapter_image_html));
         }
       }
     }

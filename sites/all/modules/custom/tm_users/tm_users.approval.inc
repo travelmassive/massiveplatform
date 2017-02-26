@@ -7,6 +7,7 @@
  */
 function tm_users_approve($user) {
 
+  global $conf;
   $approving_user = $GLOBALS['user'];
   $role_name = 'approved user'; // The name of the role to add.
 
@@ -78,6 +79,30 @@ function tm_users_approve($user) {
     flag('flag', 'approval_approved_by', $user->uid, $approving_user);
 
   }
+
+  // Give approver feedback and link to guest members pending
+  // You have approved John Smith. There are 3 Guest Members pending approval in Sydney Travel Massive.
+  $unapproved_members_html = "";
+  if (sizeof($user->field_home_chapter) > 0) {
+      $chapter = node_load($user->field_home_chapter[LANGUAGE_NONE][0]['target_id']);
+      $chapter_url = url('node/' . $chapter->nid, array("absolute" => true));
+      $unapproved_members_url = $chapter_url . "/unapproved-members";
+
+      $membership_counts = _tm_chapters_get_membership_counts($chapter->nid);
+      $members_unapproved_total = $membership_counts["members_unapproved_total"];
+      if ($membership_counts["members_unapproved_total"] > 0) {
+
+        if ($membership_counts["members_unapproved_total"] == 1) {
+          $unapproved_members_html = "There is <a href='" . $unapproved_members_url . "'>1 " . $conf["tm_unapproved_label"] . " awaiting review</a> in " . tm_chapters_formal_name($chapter) . ".";
+        } else {
+          $unapproved_members_html = "There are <a href='" . $unapproved_members_url . "'>" . $members_unapproved_total . $conf["tm_unapproved_label_plural"] . " awaiting review</a> in " . tm_chapters_formal_name($chapter) . ".";
+        }
+       
+      }
+  }
+  $approved_name = $user->field_user_first_name[LANGUAGE_NONE][0]['safe_value'] . " " . $user->field_user_last_name[LANGUAGE_NONE][0]['safe_value'];
+  $message = "You have approved " . $approved_name . ". " . $unapproved_members_html;
+  drupal_set_message($message);
 
   drupal_goto(drupal_get_path_alias("user/$user->uid"));
 }

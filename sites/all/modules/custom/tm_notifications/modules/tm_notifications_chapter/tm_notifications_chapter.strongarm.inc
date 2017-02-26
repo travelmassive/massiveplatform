@@ -29,7 +29,7 @@ function tm_notifications_chapter_strongarm() {
 <br>
 <br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>
-<br>If they are a new member to __SITE_NAME__, they may also need approval. Please take the time to review their profile and ensure it\'s valid before approving them.
+<br>__APPROVED_BY_MESSAGE__
 <br>
 <br>__EMAIL_SIGNOFF__
 ',

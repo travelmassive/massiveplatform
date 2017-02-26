@@ -331,7 +331,7 @@ function _tm_reports_event_registration_frequency($node_id = null, $node_type = 
   $cache_key = str_replace(" ", "-", $cache_key);
   $cache = cache_get($cache_key, 'cache');
   if (!empty($cache)) {
-    //return $cache->data;
+    return $cache->data;
   }
 
   // SQL

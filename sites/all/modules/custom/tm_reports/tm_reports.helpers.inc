@@ -331,7 +331,7 @@ function _tm_reports_event_registration_frequency($node_id = null, $node_type = 
   $cache_key = str_replace(" ", "-", $cache_key);
   $cache = cache_get($cache_key, 'cache');
   if (!empty($cache)) {
-    return $cache->data;
+    //return $cache->data;
   }
 
   // SQL
@@ -347,7 +347,7 @@ function _tm_reports_event_registration_frequency($node_id = null, $node_type = 
     $rows = db_query($query, array(":chapter_id" => $node_id, ":fid" => $flag_event_register->fid) )->fetchAll();
   } elseif ($node_type == "event") {
     // attending event
-    $query = "SELECT amount, COUNT(*) AS freq FROM (SELECT uid, COUNT(uid) AS amount FROM flagging f WHERE entity_id IN (SELECT entity_id AS nid FROM flagging f2 WHERE entity_id = :event_id) AND f.fid = :fid GROUP BY uid) as t2 GROUP BY amount ORDER BY amount ASC";
+    $query = "SELECT amount, COUNT(*) AS freq FROM (SELECT uid, COUNT(uid) AS amount FROM flagging f WHERE uid IN (SELECT uid FROM flagging f2 WHERE entity_id = :event_id AND f.fid = :fid) AND f.fid = :fid GROUP BY uid) as t2 GROUP BY amount ORDER BY amount ASC";
     $rows = db_query($query, array(":event_id" => $node_id, ":fid" => $flag_event_register->fid) )->fetchAll();
   } else {
     return;

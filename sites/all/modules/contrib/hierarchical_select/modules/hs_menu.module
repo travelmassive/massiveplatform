@@ -292,7 +292,7 @@ function _hs_menu_apply_config(&$form, $params) {
   if (!empty($params['exclude'])) {
     $params['exclude'] = $params['exclude'][0] .':'. $params['exclude'][1];
     drupal_add_js('jQuery(document).ready(function () {
-        jQuery("[value*=' . $params['exclude'] . ']").hide();
+        jQuery("[value*=\"' . $params['exclude'] . '\"]").hide();
     });', 'inline');
   }
   $form['#config'] = array(

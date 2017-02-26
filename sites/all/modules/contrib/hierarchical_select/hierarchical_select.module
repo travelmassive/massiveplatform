@@ -1768,7 +1768,7 @@ function _hierarchical_select_hierarchy_generate($config, $selection, $required,
         && ($config['module'] == 'hs_taxonomy' && (user_access('administer taxonomy') || user_access('edit terms in ' . $config['params']['vid'])))
         && _hierarchical_select_create_new_item_is_allowed($config, 0)
   ) {
-    $item_type = (count($config['editability']['item_types']) > 0)
+    $item_type = (isset($config['editability']['item_types']) && count($config['editability']['item_types']) > 0)
       ? t($config['editability']['item_types'][0])
       : t('item');
     $option = theme('hierarchical_select_special_option', array('option' => t('create new !item_type', array('!item_type' => $item_type))));

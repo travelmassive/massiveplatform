@@ -95,7 +95,7 @@ function hs_taxonomy_form_field_ui_widget_type_form_alter(&$form, &$form_state) 
     $max_hierarchy_depth = _hs_taxonomy_hierarchical_select_get_depth($vid);
     $preview_is_required = ($instance['required'] == 1);
     $form['hs'] = hierarchical_select_common_config_form($module, $params, $config_id, $defaults, $strings, $max_hierarchy_depth, $preview_is_required);
-    
+
     if (!module_exists('taxonomy_entity_index')) {
       // Only allow person to select nodes.
       $form['hs']['entity_count']['settings']['entity_types'] = array('node' => $form['hs']['entity_count']['settings']['entity_types']['node']);
@@ -864,10 +864,12 @@ function hs_taxonomy_hierarchical_select_config_info() {
     $fields = field_info_fields();
     foreach ($fields as $field_name => $field) {
       foreach ($field['bundles'] as $entity_type => $bundles) {
+        $bundle_links = array();
         foreach ($bundles as $bundle) {
           $instance = field_info_instance($entity_type, $field_name, $bundle);
           if ($instance['widget']['type'] == 'taxonomy_hs') {
             $bundles_info = field_info_bundles($entity_type);
+            $bundle_links[] = l($bundles_info[$bundle]['label'], $bundles_info[$bundle]['admin']['real path']);
             $entity_info = entity_get_info($entity_type);
             $machine_name = $field['settings']['allowed_values'][0]['vocabulary'];
             $vocabulary = taxonomy_vocabulary_machine_name_load($machine_name);
@@ -875,14 +877,15 @@ function hs_taxonomy_hierarchical_select_config_info() {
             $config_info[$config_id] = array(
               'config_id'      => $config_id,
               'hierarchy type' => t('Taxonomy'),
-              'hierarchy'      => t('Vocabulary') . ': ' . l(t($vocabulary->name), "admin/structure/taxonomy/$vocabulary->machine_name") . '<br /><small>' . t('Field label') . ': ' . $instance['label'] . '<br />' . t('Field machine name') . ': ' . $field_name . '</small>',
+              'hierarchy'      => t('Vocabulary') . ': ' . l(t($vocabulary->name), "admin/structure/taxonomy/$machine_name")
+                . '<br /><small>' . t('Field label') . ': ' . $instance['label']
+                 . '<br />' . t('Field machine name') . ': ' . $field_name . '</small>',
               'entity type'    => $entity_info['label'],
-              'bundle'         => l(t($bundles_info[$bundle]['label']), "admin/structure/types/manage/$bundle"),
+              'bundle'         => implode('<br />', $bundle_links),
               'context type'   => '',
               'context'        => '',
               'edit link'      => isset($bundles_info[$bundle]['admin']['real path']) ? $bundles_info[$bundle]['admin']['real path'] . "/fields/$field_name/widget-type" : $bundles_info[$bundle]['admin']['path'] . "/fields/$field_name/widget-type",
             );
-
           }
         }
       }

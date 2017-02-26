@@ -4827,6 +4827,12 @@ img.tm-status-update-preview-image {
     display: none;
   }
 }
+/* Fix iFlyChat url color */
+/* line 878, ../sass/_base.scss */
+a.ifc-url-render {
+  color: #01ACFF !important;
+}
+
 /* line 3, ../sass/_buttons.scss */
 button:hover, button:focus {
   outline: none;

@@ -694,6 +694,17 @@ function _tm_more_actions_process($field, $title = NULL) {
           ))
         );
 
+        // chapter announcement
+        $link_path = '/chapters/send-announcement/' . $node->nid;
+        $links['chaptertools'][] = array(
+          'wrapper_class' => array('chapter_stats'),
+          'content' => l(t('Chapter announcement'), $link_path, array(
+            'attributes' => array( 
+            'title' => t('Chapter announcement')
+            )
+          ))
+        );
+
         // view stats
         $link_path = $current_uri.'/insights';
         $links['chaptertools'][] = array(
@@ -704,6 +715,7 @@ function _tm_more_actions_process($field, $title = NULL) {
             )
           ))
         );
+
       }
     }
   }

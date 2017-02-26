@@ -1,42 +1,25 @@
-/* Event announcement methods */
+/* Chapter announcement methods */
 (function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){
 
-var tm_communications_event_id = null;
+var tm_communications_chapter_id = null;
 var tm_communications_message = "";
 var tm_communications_message_format = "";
 var tm_communications_submitted = false;
 var tm_communications_completed = false;
 var tm_communications_confirm_chapters = false;
 var tm_communications_recipients = "";
-var tm_communications_chapter_id = null;
-
 
 // send emails
 // action is either test_email or send_emails
-tm_communication_event_send_emails = function(form_action) {
+tm_chapter_communication_send_emails = function(form_action) {
 
-	// 1. GET EVENT ID
-	// get event id from drupal form
+	// 1. GET CHAPTER ID
+	// get chapter id from drupal form
 	// note: workaround as usual jquery targeting does not work with drupal hidden fields
-	tm_communications_event_id = $('input[name^="eventid"]').val();
+	tm_communications_chapter_id = $('input[name^="chapterid"]').val();
 
-	
-	// 2. GET RECIPIENTS AND CHAPTER ID
-	// get recipient parts from options
-	var recipients_parts = $('#edit-recipients').val().split("-");
-
-	// no chapter id
-	// ie: rsvp
-	if (recipients_parts.length == 1) {
-		tm_communications_recipients = recipients_parts[0];
-	}
-
-	// chapter id
-	// ie: chapter-1234
-	if (recipients_parts.length == 2) {
-		tm_communications_recipients = recipients_parts[0];
-		tm_communications_chapter_id = recipients_parts[1];
-	}
+	// 2. GET RECIPIENTS
+	tm_communications_recipients = $('#edit-recipients').val();
 
 	// 3. GET HTML OR TEXT MESSAGE
 	// get the html message from the CKEditor
@@ -73,8 +56,8 @@ tm_communication_event_send_emails = function(form_action) {
 	  var emailReg = /^([\w-\.\+]+@([\w-]+\.)+[\w-]{2,4})?$/;
 	  if(!emailReg.test(inputEmail)){
 	      isValid = false;
-	      $('#event-test-email-submit').val("Send test email");
-	      $('#event-email-attendees-submit').val("Send Email To All Recipients");
+	      $('#chapter-test-email-submit').val("Send test email");
+	      $('#chapter-email-members-submit').val("Send Email To All Recipients");
 	      jq_alert(null, "Reply-to address is not valid.<br>Tip: You may leave it blank for no reply address.");
 	      return false;
 	  }
@@ -85,21 +68,21 @@ tm_communication_event_send_emails = function(form_action) {
 
 	// TEST EMAILS
 	if (form_action == "test_email") {
-		tm_communication_send_test_email();
+		tm_chapter_communication_send_test_email();
 	}
 
 	// ALL EMAILS
 	if (form_action == "send_emails") {
-		tm_communication_send_recipient_emails();
+		tm_chapter_communication_send_recipient_emails();
 	}	
 }
 
 // Send test email
-tm_communication_send_test_email = function() {
+tm_chapter_communication_send_test_email = function() {
 
 	  // check address is not empty
 	  if ($('#edit-testemail').val() == "") {
-	    $('#event-test-email-submit').val("Send test email");
+	    $('#chapter-test-email-submit').val("Send test email");
 	    jq_alert(null, "Please provide a test email address.");
 	    return false;
 	  }
@@ -119,16 +102,16 @@ tm_communication_send_test_email = function() {
 
 	  // check address is not empty
 	  if ($('#edit-testemail-name').val() == "") {
-	    $('#event-test-email-submit').val("Send test email");
+	    $('#chapter-test-email-submit').val("Send test email");
 	    jq_alert(null, "Name can't be empty.");
 	    return false;
 	  }
 
 	  // Sending
-	  $('#event-test-email-submit').val("Sending...");
+	  $('#chapter-test-email-submit').val("Sending...");
 
 	  // Set callback url
-	  var callback_url = "/events/send-announcement-test/" + tm_communications_event_id;
+	  var callback_url = "/chapters/send-announcement-test/" + tm_communications_chapter_id;
 
       var include_cover_image = 0;
       if ($('[name="include_cover_image"]').is(':checked')) {
@@ -142,14 +125,14 @@ tm_communication_send_test_email = function() {
 	    data: {'subject': $('#edit-subject').val(),
 	          'message': tm_communications_message, //$('#edit-body').val(),
 	          'message_format': tm_communications_message_format, // html, or text
-	          'eventid': tm_communications_event_id,
+	          'chapterid': tm_communications_chapter_id,
 	          'replyto': $('#edit-reply-to').val(),
 	          'address': $('#edit-testemail').val(),
 	          'include_cover_image': include_cover_image,
 	          'first_name': $('[name="test_email_name"]').val()},
 	    url: callback_url}).done(function(return_data) {
 	      if (typeof return_data.sent !== 'undefined') {
-	        $('#event-test-email-submit').val("Send test email");
+	        $('#chapter-test-email-submit').val("Send test email");
 	         jq_alert("Your test email was sent", "A test email was sent to <i>" + $('#edit-testemail').val() + "</i>");
 	       } else {
 	         jq_alert("Error", "Error sending emails");
@@ -159,24 +142,24 @@ tm_communication_send_test_email = function() {
 }
 
 // Send emails to recipients
-tm_communication_send_recipient_emails = function() {
+tm_chapter_communication_send_recipient_emails = function() {
 
 	// confirm send to all chapter members
-	if ((tm_communications_recipients == "chapter") && (!tm_communications_confirm_chapters)) {
+	if (!tm_communications_confirm_chapters) {
 
-	 $.prompt('Your email will be delivered to <i>verified</i> addresses subscribed to <i>Chapter and Event Announcements</i>.',
+	 $.prompt('Your email will be delivered to <i>verified</i> addresses subscribed to <i>Chapter and Event Announcements</i>.', 
 	 	{ 
 			buttons: { "OK": true, "Cancel": false },
-		  title: 'Send announcement to all Chapter Members?',
+		  title: 'Send message to selected Chapter Members?',
 		  submit: function(e,v,m,f){
 		    if (v == true) {
 		      tm_communications_confirm_chapters = true;
-		      return tm_communication_send_recipient_emails("send_emails");
+		      return tm_chapter_communication_send_recipient_emails("send_emails");
 		    }
 		 }
 	 	});
 
-	 	$('#event-email-attendees-submit').val("Send Email To All Recipients");
+	 	$('#chapter-email-members-submit').val("Send Email To All Recipients");
 	  return;
 	 }
 
@@ -193,10 +176,10 @@ tm_communication_send_recipient_emails = function() {
   }
 
   // Update
- 	$('#event-email-attendees-submit').val("Sending (this may take a few moments)...");
+ 	$('#chapter-email-members-submit').val("Sending (this may take a few moments)...");
 
  	// Set callback url
- 	var callback_url = "/events/send-announcement-callback/" + tm_communications_event_id;
+ 	var callback_url = "/chapters/send-announcement-callback/" + tm_communications_chapter_id;
 
     var include_cover_image = 0;
     if ($('[name="include_cover_image"]').is(':checked')) {
@@ -214,7 +197,6 @@ tm_communication_send_recipient_emails = function() {
           'recipients': tm_communications_recipients,
           'chapterid': tm_communications_chapter_id,
           'approved_members': $('[name="approved_members"]').val(),
-          'eventid': tm_communications_event_id,
           'replyto': $('#edit-reply-to').val(),
           'include_cover_image': include_cover_image,
           'address': $('#edit-testemail').val()},
@@ -224,29 +206,29 @@ tm_communication_send_recipient_emails = function() {
           // Sent at least one email
           if (return_data.sent > 0) {
           	
-          	$('#event-email-attendees-submit').val("Successfully sent " + return_data.sent + " emails.");
-	          $('#event-email-attendees-submit').attr("disabled", true);
-	          $('#event-email-attendees-confirm').attr("disabled", true);
+          	$('#chapter-email-members-submit').val("Successfully sent " + return_data.sent + " emails.");
+	          $('#chapter-email-members-submit').attr("disabled", true);
+	          $('#chapter-email-members-confirm').attr("disabled", true);
 	          $('#edit-recipients').attr("disabled", true);
 
           	tm_communications_completed = true;
           	$.prompt("<b>We successfully sent " + return_data.sent + " emails.</b><br>It may take a few minutes to deliver them all.", 
-					 	{ buttons: { "View event": true},
-					  title: 'Good job, your announcement has been sent',
+					 	{ buttons: { "View chapter": true},
+					  title: 'Sweet! Your announcement has been sent',
 						  submit: function(e,v,m,f){
 						    if (v == true) {
-						    	window.location = "/" + Drupal.settings.tm_events.event_url;
+						    	window.location = "/" + Drupal.settings.tm_chapters.chapter_url;
 			    			}
 			  			},
 			  			close: function() {
-			  				window.location = "/" + Drupal.settings.tm_events.event_url;
+			  				window.location = "/" + Drupal.settings.tm_chapters.chapter_url;
 			  			}
 		 				});
           }
           else {
           	// No emails sent
-          	jq_alert("No recipients", "We couldn't find any members that matched your recipient list. That\'s ok, try another list.");
-          	$('#event-email-attendees-submit').val("Send Email To All Recipients");
+          	jq_alert("No recipients", "We couldn't find any members that matched your recipient list.");
+          	$('#chapter-email-members-submit').val("Send Email To All Recipients");
           	tm_communications_submitted = false;
           }
           
@@ -261,17 +243,17 @@ tm_communication_send_recipient_emails = function() {
 
 // EVENT HANDLERS
 
-// event handler - test email
-$('#event-test-email-submit').click(function (event) {
+// chapter handler - test email
+$('#chapter-test-email-submit').click(function (event) {
 	event.preventDefault();
-	return tm_communication_event_send_emails("test_email");
+	return tm_chapter_communication_send_emails("test_email");
 });
 
 // event handler - send to all recipients
-$('#event-email-attendees-submit').click(function (event) {
+$('#chapter-email-members-submit').click(function (event) {
 	event.preventDefault();
-	if ($('#event-email-attendees-confirm').prop("checked")) {
-	  return tm_communication_event_send_emails("send_emails");
+	if ($('#chapter-email-members-confirm').prop("checked")) {
+	  return tm_chapter_communication_send_emails("send_emails");
 	} else {
 	  jq_alert("Have you sent a test email?", "Please confirm first that you are ready to proceed by checking the <strong>I'm ready</strong> checkbox.");
 	  return false;
@@ -284,7 +266,7 @@ $('#event-email-attendees-submit').click(function (event) {
 $('.filter-wrapper.form-wrapper').hide();
 
 // Update page title
-$("#page-title").html('<em>Event: <a href="/' + Drupal.settings.tm_events.event_url + '">' + Drupal.settings.tm_events.event_title + '</a></em>Send Announcement');
+$("#page-title").html('<em>Chapter: <a href="/' + Drupal.settings.tm_chapters.chapter_url + '">' + Drupal.settings.tm_chapters.chapter_title + '</a></em>Send Chapter Announcement');
 
 
 });})(jQuery, Drupal, this, this.document);

@@ -10,6 +10,34 @@ function _tm_chapters_get_num_members($chapter_id) {
     return $flag->get_count($chapter_id);
 }
 
+
+/**
+ * Helper method return number of approved and unapproved members
+ */
+function _tm_chapters_get_membership_counts($chapter_id) {
+
+  $membership_counts = array();
+  $flag = flag_get_flag('signup', NULL);
+  $approved_role = user_role_load_by_name("approved user");
+
+  // TOTAL MEMBERS
+  $membership_counts["members_total"] = $flag->get_count($chapter_id);
+
+  // TOTAL APPROVED MEMBERS
+  $query_sql = "SELECT COUNT(DISTINCT users_roles.uid) total FROM {flagging} f RIGHT JOIN users_roles ON users_roles.uid = f.uid WHERE users_roles.rid = :role_id AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
+  $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
+  $members_approved_total = $query->total;
+  $membership_counts["members_approved_total"] = $members_approved_total;
+
+  // TOTAL UNAPPROVED MEMBERS
+  $members_unapproved_total = $membership_counts["members_total"] - $members_approved_total;
+  $membership_counts["members_unapproved_total"] = $members_unapproved_total;
+
+  return $membership_counts;
+
+}
+
+
 /**
  * Helper method to return formal name of chapter
  * If chapter is a group, omit the site name

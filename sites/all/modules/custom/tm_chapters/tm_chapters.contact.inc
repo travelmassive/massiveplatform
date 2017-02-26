@@ -67,7 +67,7 @@ function tm_chapters_contact_form_submit($form, &$form_state) {
         }
 
         // send to all chapter leaders in one email
-        tm_chapters_send_email($chapter_leader_emails, $form_state['values']['subject'], $form_state['values']['body'], $account, $chapter);
+        tm_chapters_send_contact_email($chapter_leader_emails, $form_state['values']['subject'], $form_state['values']['body'], $account, $chapter);
     }
     
     drupal_get_messages("help-tip");
@@ -79,7 +79,7 @@ function tm_chapters_contact_form_submit($form, &$form_state) {
 /**
  * Email sending function
  */
-function tm_chapters_send_email($chapter_leader_emails, $subject, $body, $user, $chapter){
+function tm_chapters_send_contact_email($chapter_leader_emails, $subject, $body, $user, $chapter){
 
     global $conf;
 

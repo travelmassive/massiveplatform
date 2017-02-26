@@ -600,8 +600,9 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
   text-decoration: underline;
 }
 
-/* Event registration and announcement tips */
+/* Event registration and chapter announcement tips */
 .tm-event-send-announcement-tips,
+.tm-chapters-send-announcement-tips,
 .tm-event-manage-registrations-tips { 
   padding-left: 2rem;
   margin-top: 2rem;
@@ -612,12 +613,13 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
   font-size: 10pt;
 }
 
-/* Event announcement steps */
-.tm-event-send-announcement-step {
-  color: #51616e;
-  font-weight: bold;
-  font-style: italic;
+/* Announcement steps */
+.tm-event-send-announcement-step, .tm-chapter-send-announcement-step {
+  color: #ffffff;
   padding-top: 0.5rem;
+  background-color: #00608E;
+  padding: 8px;
+  border-radius: 8px;
 }
 
 /* Chapter sticker for external events */

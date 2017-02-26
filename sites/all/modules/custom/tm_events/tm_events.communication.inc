@@ -28,7 +28,7 @@ function tm_events_communication_form($event) {
 
   // Add page title and page url to javascript
   $event_url = drupal_get_path_alias('node/'.$event->nid);
-  $event_title = drupal_get_path_alias($event->title);
+  $event_title = $event->title;
   drupal_add_js(array('tm_events' => array('event_url' => $event_url, 'event_title' => $event_title)), array('type' => 'setting'));
 
   // Get chapter associated with event if there is one
@@ -62,7 +62,7 @@ function tm_events_communication_form($event) {
 
   // Separator
   $form['step_1_text'] = array(
-    '#markup' => '<div class="tm-event-send-announcement-step">Step 1. Create announcement</div>'
+    '#markup' => '<span class="tm-event-send-announcement-step">Step 1. Create announcement</span>'
   );
 
   // Create subject
@@ -151,7 +151,7 @@ function tm_events_communication_form($event) {
 
   // Separator
   $form['step_2_text'] = array(
-    '#markup' => '<div style="border-top: 2px dashed #eee; margin-top: 2rem;"><div class="tm-event-send-announcement-step">Step 2. Test your announcement</div></div>'
+    '#markup' => '<div style="margin-top: 2rem; padding-top: 1rem;"><span class="tm-event-send-announcement-step">Step 2. Test your announcement</span></div>'
   );
 
   // Test email address
@@ -182,7 +182,7 @@ function tm_events_communication_form($event) {
 
   // Step 3
   $form['step_3_text'] = array(
-    '#markup' => '<div style="border-top: 2px dashed #eee; margin-top: 2rem;"><div class="tm-event-send-announcement-step">Step 3. Send your announcement</div></div>'
+    '#markup' => '<div style="margin-top: 2rem; padding-top: 1rem;"><span class="tm-event-send-announcement-step">Step 3. Send your announcement</span></div>'
   );
 
   // Registered count
@@ -278,7 +278,7 @@ function tm_events_communication_form($event) {
   );
 
   $help_text = '<div class="tm-event-send-announcement-tips">
-  <b>How to send a great announcement</b>
+  <h2>How to send a great announcement</h2>
   <ul style="list-style: none; padding-left: 1.5rem;">
   <li><span style="color: green;">&#10004;</span> Write a meaningful subject line that captures people\'s attention</li>
   <li><span style="color: green;">&#10004;</span> The best time to send an announcement is on a weekday between 10.00 and 11.00</li>
@@ -287,7 +287,7 @@ function tm_events_communication_form($event) {
   <li><span style="color: red;">&#10008;</span> Don\'t use many exclamation points!!!!!</li>
   <li><span style="color: red;">&#10008;</span> Don\'t use spam trigger words like "free" or "click here"</li>
   </ul>
-  <b>Other things to know</b><ul>';
+  <h2>Other things to know</h2><ul>';
 
   // Warning for non chapter leaders
   if ((!in_array('administrator', array_values($user->roles)))

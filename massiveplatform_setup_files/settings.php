@@ -342,6 +342,14 @@ $conf["tm_chapters_leader_weekly_report"] = "Hi __SALUTATION__,
 <br>Let us know what you think about these stats! Reply to this email to get in touch.
 <br>";
 $conf["tm_chapters_leader_weekly_report_min_approved"] = 80; // display approval reminder messsage if approval % is below this
+$conf["tm_chapters_announcements_enabled"] = true; // allow chapter announcements
+$conf["tm_chapters_announcements_allow_replyto"] = true; // allow change of reply-to
+$conf["tm_chapters_announcements_allow_html"] = true; // allow html emails
+$conf["tm_chapters_announcements_intro"] = "Send an announcement to members in your chapter."; // display help tip on chapter announcement page
+$conf["tm_chapters_announcements_subject_prefix"] = "A message from "; // default prefix for subject line
+$conf["tm_chapters_announcements_enable_cover_image"] = true; // show cover image
+$conf["tm_chapters_announcements_prefill"] = "Hi [first_name],\n\n<p>Here's a short announcement from your local chapter leaders.</p>\n\n"; // default announcement text
+$conf["tm_chapters_announcements_signoff"] = "Cheers,<br>"; // default signoff text
 
 /** THEME SETTINGS **/
 $conf["tm_theme_meta_color"] = "#007DB7"; // Set the theme color for mobile Android, iOS 

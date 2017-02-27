@@ -365,7 +365,7 @@ function _tm_reports_helper_pad_dayofyear_grouped_data($rows) {
     for ($j=$start_dayofyear; (($j <= 365) && !$at_current_dayofyear); $j++) { 
 
       // check if we are at current dayofyear
-      $at_current_dayofyear = ($i == intval(date("Y")+1) && ($j == (intval(date("z"))+1)));
+      $at_current_dayofyear = ($i == intval(date("Y")) && ($j == (intval(date("z"))+1)));
 
       $key = $i . "_" . $j;
       $date_from_string = date_create_from_format("Y z", $i . " " . ($j-1));

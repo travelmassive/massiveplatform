@@ -173,55 +173,6 @@ function _tm_reports_flagging_time_series($node_id, $flag_id, $entity_type = "no
 }
 
 /**
- * Get daily flagging data for a node and flag over time
- * Note: CACHED
- */
-function _tm_reports_flagging_time_series_daily($node_id, $flag_id, $entity_type = "node", $timestamp_interval = "INTERVAL 1 YEAR") {
-
-  // check cache
-  if (is_array($node_id)) {
-    $cache_key_node_id = implode("_", $node_id);
-  } else {
-    $cache_key_node_id = $node_id;
-  }
-  $cache_key = "tm-reports-flagging-time-series-daily-" . $cache_key_node_id . "-" . $flag_id . "-" . $entity_type . "-" . $timestamp_interval;
-  $cache_key = str_replace(" ", "-", $cache_key);
-  $cache = cache_get($cache_key, 'cache');
-  if (!empty($cache)) {
-    return $cache->data;
-  }
-
-  // SQL 
-  $query = "select count(*) as total, YEAR(FROM_UNIXTIME(timestamp)) as group_year, DAYOFYEAR(FROM_UNIXTIME(timestamp)) as group_dayofyear from flagging
-  where FROM_UNIXTIME(timestamp) >= DATE_SUB(NOW()," . $timestamp_interval . ")";
-
-  // node_id can be null, id, or array
-  if ((is_array($node_id) and sizeof($node_id) > 0)) {
-    $query .= " and entity_id IN (:node_id)"; 
-  } else if ($node_id != NULL) {
-    $query .= " and entity_id = :node_id"; 
-  }
-  
-  $query .= " and fid = :fid
-  and entity_type = :entity_type
-  group by group_year, group_dayofyear order by group_year, group_month asc;";
-
-  $params = array(':node_id' => $node_id, ':fid' => $flag_id, ':entity_type' => $entity_type);
-  if ($node_id == NULL) {
-    $params = array(':fid' => $flag_id, ':entity_type' => $entity_type);
-  }
-
-  $rows = db_query($query, $params)->fetchAll();
-
-  // pad the grouped data data
-  $series = _tm_reports_helper_pad_monthly_grouped_data($rows);
-
-  // return data
-  cache_set($cache_key, $series, 'cache', time() + 900); // 15 mins
-  return $series;
-}
-
-/**
  * Get monthly new user signup data over time
  */
 function _tm_reports_new_users_time_series($timestamp_interval = "INTERVAL 1 YEAR") {
@@ -414,11 +365,11 @@ function _tm_reports_helper_pad_dayofyear_grouped_data($rows) {
     for ($j=$start_dayofyear; (($j <= 365) && !$at_current_dayofyear); $j++) { 
 
       // check if we are at current dayofyear
-      $at_current_dayofyear = ($i == intval(date("Y")) && ($j == (intval(date("z"))+1)));
+      $at_current_dayofyear = ($i == intval(date("Y")+1) && ($j == (intval(date("z"))+1)));
 
       $key = $i . "_" . $j;
       $date_from_string = date_create_from_format("Y z", $i . " " . ($j-1));
-      $label = $date_from_string->format('Y-m-d');
+      $label = $date_from_string->format('d M Y');
       if (array_key_exists($key, $results)) {
         $started_data = true;
         $results[$key]["label"] = $label;
@@ -429,6 +380,20 @@ function _tm_reports_helper_pad_dayofyear_grouped_data($rows) {
       }
     }
   }
+
+  // Step 3. Trim trailing empty results
+  $reverse_series = array_reverse($series);
+  $has_results = false;
+  $trimmed_series = array();
+  foreach($reverse_series as $result) {
+    if ($result["total"] > 0) {
+      $has_results = true;
+    }
+    if ($has_results) {
+      $trimmed_series[] = $result;
+    }
+  }
+  $series = array_reverse($trimmed_series);
 
   return $series;
 }

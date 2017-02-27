@@ -93,9 +93,9 @@ function tm_users_approve($user) {
       if ($membership_counts["members_unapproved_total"] > 0) {
 
         if ($membership_counts["members_unapproved_total"] == 1) {
-          $unapproved_members_html = "There is <a href='" . $unapproved_members_url . "'>1 " . $conf["tm_unapproved_label"] . " awaiting review</a> in " . tm_chapters_formal_name($chapter) . ".";
+          $unapproved_members_html = "There is <a href='" . $unapproved_members_url . "'>1 " . $conf["tm_unapproved_label"] . " to review</a> in " . tm_chapters_formal_name($chapter) . ".";
         } else {
-          $unapproved_members_html = "There are <a href='" . $unapproved_members_url . "'>" . $members_unapproved_total . " " . $conf["tm_unapproved_label_plural"] . " awaiting review</a> in " . tm_chapters_formal_name($chapter) . ".";
+          $unapproved_members_html = "There are <a href='" . $unapproved_members_url . "'>" . $members_unapproved_total . " " . $conf["tm_unapproved_label_plural"] . " to review</a> in " . tm_chapters_formal_name($chapter) . ".";
         }
        
       }

@@ -53,7 +53,7 @@ function tm_reports_event_insights($nid) {
  
   // Generate HTML
   $html = _tm_reports_insights_js_css_header();
-  $redraw_functions = array("drawChart");
+  $redraw_functions = array("drawChart", "draw_insights_event_registrations", "draw_insights_event_registration_frequency_aggregate");
   $html .= _tm_reports_insights_js_redraw_function($redraw_functions);
 
   // show event tip
@@ -71,6 +71,15 @@ function tm_reports_event_insights($nid) {
             <h1 class='prime-title'>" . $event->title . " Insights &middot; <span style='color: #0068a8;'>" . $return_link . "</span></h1>
             </header>";
   $html .= _tm_reports_insights_table_html($event->nid, "event");
+  $html .= "</section>";
+
+  // Event registrations
+  $flag_event_register = flag_get_flag('event_register', NULL);
+  $html .= "<section class='contained contained-block'>";
+  $html .= "<header class='contained-head'>
+            <h1 class='prime-title'>Event Registrations</h1>
+            </header>";
+  $html .= _tm_reports_insights_flagging_chart_html($event->nid, $flag_event_register->fid, "", "Event Registrations", "Day", "insights_event_registrations", "dayofyear");
   $html .= "</section>";
 
   // Registration frequency

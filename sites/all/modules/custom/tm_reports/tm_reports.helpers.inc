@@ -102,10 +102,14 @@ function _tm_reports_get_industry_segment_data($node_id = "", $node_type = "chap
 }
 
 /**
- * Get monthly flagging data for a node and flag over time
+ * Get monthly or day of year flagging data for a node and flag over time
  * Note: CACHED
  */
-function _tm_reports_flagging_time_series($node_id, $flag_id, $entity_type = "node", $timestamp_interval = "INTERVAL 1 YEAR") {
+function _tm_reports_flagging_time_series($node_id, $flag_id, $entity_type = "node", $timestamp_interval = "INTERVAL 1 YEAR", $group_by = "month") {
+
+  if (($group_by != "month") and ($group_by != "dayofyear")) {
+    return;
+  }
 
   // check cache
   if (is_array($node_id)) {
@@ -113,7 +117,7 @@ function _tm_reports_flagging_time_series($node_id, $flag_id, $entity_type = "no
   } else {
     $cache_key_node_id = $node_id;
   }
-  $cache_key = "tm-reports-flagging-time-series-" . $cache_key_node_id . "-" . $flag_id . "-" . $entity_type . "-" . $timestamp_interval;
+  $cache_key = "tm-reports-flagging-time-series-" . $group_by . "-" . $cache_key_node_id . "-" . $flag_id . "-" . $entity_type . "-" . $timestamp_interval;
   $cache_key = str_replace(" ", "-", $cache_key);
   $cache = cache_get($cache_key, 'cache');
   if (!empty($cache)) {
@@ -121,7 +125,74 @@ function _tm_reports_flagging_time_series($node_id, $flag_id, $entity_type = "no
   }
 
   // SQL 
-  $query = "select count(*) as total, YEAR(FROM_UNIXTIME(timestamp)) as group_year, MONTH(FROM_UNIXTIME(timestamp)) as group_month from flagging
+  if ($group_by == "month") {
+    $query = "select count(*) as total, YEAR(FROM_UNIXTIME(timestamp)) as group_year, MONTH(FROM_UNIXTIME(timestamp)) as group_month from flagging
+  where FROM_UNIXTIME(timestamp) >= DATE_SUB(NOW()," . $timestamp_interval . ")";
+  }
+  if ($group_by == "dayofyear") {
+    $query = "select count(*) as total, YEAR(FROM_UNIXTIME(timestamp)) as group_year, DAYOFYEAR(FROM_UNIXTIME(timestamp)) as group_dayofyear from flagging
+    where FROM_UNIXTIME(timestamp) >= DATE_SUB(NOW()," . $timestamp_interval . ")";
+
+  }
+
+  // node_id can be null, id, or array
+  if ((is_array($node_id) and sizeof($node_id) > 0)) {
+    $query .= " and entity_id IN (:node_id)"; 
+  } else if ($node_id != NULL) {
+    $query .= " and entity_id = :node_id"; 
+  }
+  
+  $query .= " and fid = :fid
+  and entity_type = :entity_type ";
+
+  if ($group_by == "month") {
+    $query .= "group by group_year, group_month order by group_year, group_month asc";
+  }
+  if ($group_by == "dayofyear") {
+    $query .= "group by group_year, group_dayofyear order by group_year, group_dayofyear asc";
+  }
+
+  $params = array(':node_id' => $node_id, ':fid' => $flag_id, ':entity_type' => $entity_type);
+  if ($node_id == NULL) {
+    $params = array(':fid' => $flag_id, ':entity_type' => $entity_type);
+  }
+
+  $rows = db_query($query, $params)->fetchAll();
+
+  // pad the grouped data data
+  if ($group_by == "month") {
+    $series = _tm_reports_helper_pad_monthly_grouped_data($rows);
+  }
+  if ($group_by == "dayofyear") {
+    $series = _tm_reports_helper_pad_dayofyear_grouped_data($rows);
+  }
+
+  // return data
+  cache_set($cache_key, $series, 'cache', time() + 900); // 15 mins
+  return $series;
+}
+
+/**
+ * Get daily flagging data for a node and flag over time
+ * Note: CACHED
+ */
+function _tm_reports_flagging_time_series_daily($node_id, $flag_id, $entity_type = "node", $timestamp_interval = "INTERVAL 1 YEAR") {
+
+  // check cache
+  if (is_array($node_id)) {
+    $cache_key_node_id = implode("_", $node_id);
+  } else {
+    $cache_key_node_id = $node_id;
+  }
+  $cache_key = "tm-reports-flagging-time-series-daily-" . $cache_key_node_id . "-" . $flag_id . "-" . $entity_type . "-" . $timestamp_interval;
+  $cache_key = str_replace(" ", "-", $cache_key);
+  $cache = cache_get($cache_key, 'cache');
+  if (!empty($cache)) {
+    return $cache->data;
+  }
+
+  // SQL 
+  $query = "select count(*) as total, YEAR(FROM_UNIXTIME(timestamp)) as group_year, DAYOFYEAR(FROM_UNIXTIME(timestamp)) as group_dayofyear from flagging
   where FROM_UNIXTIME(timestamp) >= DATE_SUB(NOW()," . $timestamp_interval . ")";
 
   // node_id can be null, id, or array
@@ -133,7 +204,7 @@ function _tm_reports_flagging_time_series($node_id, $flag_id, $entity_type = "no
   
   $query .= " and fid = :fid
   and entity_type = :entity_type
-  group by group_year, group_month order by group_year, group_month asc;";
+  group by group_year, group_dayofyear order by group_year, group_month asc;";
 
   $params = array(':node_id' => $node_id, ':fid' => $flag_id, ':entity_type' => $entity_type);
   if ($node_id == NULL) {
@@ -314,6 +385,47 @@ function _tm_reports_helper_pad_monthly_grouped_data($rows) {
       } else if ($started_data) {
         // pad data
         $series[] = array("total" => 0, "group_year" => $i, "group_month" => $j);
+      }
+    }
+  }
+
+  return $series;
+}
+
+/**
+ * Helper method to pad empty sql grouped data in a time series
+ */
+function _tm_reports_helper_pad_dayofyear_grouped_data($rows) {
+
+  // Step 1. Create a keyed array
+  // key in array as as YYYY_DAYOFYEAR
+  $results = array();
+  foreach ($rows as $row) {
+    $results[$row->group_year . "_" . $row->group_dayofyear] = array("total" => $row->total, "group_year" => $row->group_year, "group_dayofyear" => $row->group_dayofyear);
+  }
+
+  // Step 2. Pad results for with no entries
+  $start_year = 2014;
+  $start_dayofyear = 1;
+  $series = array();
+  $started_data = false;
+  $at_current_dayofyear = false;
+  for ($i=$start_year; $i <= intval(date("Y")); $i++) {
+    for ($j=$start_dayofyear; (($j <= 365) && !$at_current_dayofyear); $j++) { 
+
+      // check if we are at current dayofyear
+      $at_current_dayofyear = ($i == intval(date("Y")) && ($j == (intval(date("z"))+1)));
+
+      $key = $i . "_" . $j;
+      $date_from_string = date_create_from_format("Y z", $i . " " . ($j-1));
+      $label = $date_from_string->format('Y-m-d');
+      if (array_key_exists($key, $results)) {
+        $started_data = true;
+        $results[$key]["label"] = $label;
+        $series[] = $results[$key]; // add existing data
+      } else if ($started_data) {
+        // pad data
+        $series[] = array("total" => 0, "label" => $label, "group_year" => $i, "group_dayofyear" => $j);
       }
     }
   }

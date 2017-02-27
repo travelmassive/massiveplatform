@@ -113,10 +113,13 @@ function _tm_reports_insights_flagging_chart_html($node_id, $flag_id, $chart_tit
   // Step 2. (Optional) Aggregate total
   if ($aggregate_total) {
     $total = 0;
+    $aggregated_results = array();
     foreach ($results as $result) {
       $total = $total + $result["total"];
       $result["total"] = $total;
+      $aggregated_results[] = $result;
     }
+    $results = $aggregated_results;
   }
 
   // Step 3. Render chart

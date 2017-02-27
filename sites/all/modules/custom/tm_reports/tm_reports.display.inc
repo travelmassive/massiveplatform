@@ -105,10 +105,10 @@ function tm_reports_get_insights_labels() {
 /**
  * Generate a chart of flags on a node (ie: signups)
  */
-function _tm_reports_insights_flagging_chart_html($node_id, $flag_id, $chart_title = "Flagging", $v_title = "Members", $h_title = "Month", $div_id = "insights_flagging", $group_by = "month") {
+function _tm_reports_insights_flagging_chart_html($node_id, $flag_id, $chart_title = "Flagging", $v_title = "Members", $h_title = "Month", $div_id = "insights_flagging", $timestamp_interval = "INTERVAL 1 YEAR", $group_by = "month") {
 
   // Step 1. Get chapter insight data
-  $results = _tm_reports_flagging_time_series($node_id, $flag_id, "node", "INTERVAL 1 YEAR", $group_by);
+  $results = _tm_reports_flagging_time_series($node_id, $flag_id, "node", $timestamp_interval, $group_by);
 
   // Step 2. Render chart
   $html = _tm_reports_insights_chart_html($results, $chart_title, $v_title, $h_title, $div_id);

@@ -79,7 +79,7 @@ function tm_reports_event_insights($nid) {
   $html .= "<header class='contained-head'>
             <h1 class='prime-title'>Event Registrations</h1>
             </header>";
-  $html .= _tm_reports_insights_flagging_chart_html($event->nid, $flag_event_register->fid, "", "Event Registrations", "Day", "insights_event_registrations", "dayofyear");
+  $html .= _tm_reports_insights_flagging_chart_html($event->nid, $flag_event_register->fid, "", "Event Registrations", "Day", "insights_event_registrations", "INTERVAL 5 YEAR", "dayofyear");
   $html .= "</section>";
 
   // Registration frequency

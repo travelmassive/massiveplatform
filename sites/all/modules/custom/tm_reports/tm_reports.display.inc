@@ -123,7 +123,7 @@ function _tm_reports_insights_flagging_chart_html($node_id, $flag_id, $chart_tit
   }
 
   // Step 3. Render chart
-  $html = _tm_reports_insights_chart_html($results, $chart_title, $v_title, $h_title, $div_id, "LineChart");
+  $html = _tm_reports_insights_chart_html($results, $chart_title, $v_title, $h_title, $div_id, $chartType);
 
   return $html;
 }

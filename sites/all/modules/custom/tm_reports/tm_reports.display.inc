@@ -105,7 +105,7 @@ function tm_reports_get_insights_labels() {
 /**
  * Generate a chart of flags on a node (ie: signups)
  */
-function _tm_reports_insights_flagging_chart_html($node_id, $flag_id, $chart_title = "Flagging", $v_title = "Members", $h_title = "Month", $div_id = "insights_flagging", $timestamp_interval = "INTERVAL 1 YEAR", $group_by = "month", $aggregate_total = false) {
+function _tm_reports_insights_flagging_chart_html($node_id, $flag_id, $chart_title = "Flagging", $v_title = "Members", $h_title = "Month", $div_id = "insights_flagging", $timestamp_interval = "INTERVAL 1 YEAR", $group_by = "month", $aggregate_total = false, $chartType = "ColumnChart") {
 
   // Step 1. Get chapter insight data
   $results = _tm_reports_flagging_time_series($node_id, $flag_id, "node", $timestamp_interval, $group_by);
@@ -123,7 +123,7 @@ function _tm_reports_insights_flagging_chart_html($node_id, $flag_id, $chart_tit
   }
 
   // Step 3. Render chart
-  $html = _tm_reports_insights_chart_html($results, $chart_title, $v_title, $h_title, $div_id);
+  $html = _tm_reports_insights_chart_html($results, $chart_title, $v_title, $h_title, $div_id, "LineChart");
 
   return $html;
 }
@@ -247,7 +247,7 @@ function _tm_reports_insights_event_registration_frequency_html($node_id = null,
 /**
  * Generate Google Chart from a data series
  */
-function _tm_reports_insights_chart_html($results, $chart_title, $v_title, $h_title, $div_id) {
+function _tm_reports_insights_chart_html($results, $chart_title, $v_title, $h_title, $div_id, $chartType = "ColumnChart") {
 
   // Format in Google chart
   $html = "<script>";
@@ -284,7 +284,7 @@ EOT;
         legend: { position: 'none' },
       };";
 
-  $html .= "\nvar chart = new google.visualization.ColumnChart(document.getElementById('" . $div_id . "'));";
+  $html .= "\nvar chart = new google.visualization." . $chartType . "(document.getElementById('" . $div_id . "'));";
   $html .= "\nchart.draw(data, options);";
   $html .= "\n}";
   $html .= "\n</script>";

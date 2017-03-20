@@ -141,6 +141,8 @@
     &.tm-ds-chapter-stats:before { @extend .icon-2016-chart; }
     &.tm-ds-organization-stats:before { @extend .icon-users; }
     &.tm-payment-gateway-logo:before { @extend .icon-tick; }
+    &.tm-ds-subscription-organization-badge-ds:before { @extend .icon-2017-subscriber; font-size: 16pt;}
+    &.tm-ds-subscription-organization-cta-ds:before { @extend .icon-2017-subscribe-cta; font-size: 16pt;}
 
     &.field-link-facebook,
     &.field-link-linkedin,
@@ -424,7 +426,7 @@
     position: absolute;
     top: 0.5rem;
   }
-  .chapter-sticker {
+  .chapter-sticker, .organization-sticker {
     border-radius: $global-radius;
     @extend %antialiased;
     display: block;
@@ -435,6 +437,8 @@
     line-height: 1.25rem;
     font-size: 0.75rem;
     width: 4rem;
+  }
+  .chapter-sticker {
     @include transform(rotate(-90deg));
     -webkit-transform-origin: top right;
     -moz-transform-origin: top right;
@@ -442,7 +446,11 @@
     -o-transform-origin: top right;
     transform-origin: top right;
   }
-  .chapter-sticker-icon-text {
+  .organization-sticker {
+    position: relative;
+    right: -1.5rem;
+  }
+  .chapter-sticker-icon-text, .organization-sticker-icon-text {
     display:none;
   }
   .node-chapter & {
@@ -581,13 +589,17 @@
         left: 0.5rem;
         right: auto;
       }
-      .chapter-sticker {
+      .chapter-sticker, .organization-sticker {
         line-height: 2rem;
         font-size: 0.875rem;
         width: 4rem;
         @include transform(rotate(0));
       }
-      .chapter-sticker-icon-text {
+      .organization-sticker {
+        position: initial;
+        right: 0rem;
+      }
+      .chapter-sticker-icon-text, .organization-sticker-icon-text {
         display:inline;
       }
     }

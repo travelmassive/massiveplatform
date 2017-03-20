@@ -623,7 +623,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
 }
 
 /* Chapter sticker for external events */
-.chapter-sticker-icon {
+.chapter-sticker-icon, .organization-sticker-icon {
   width: auto !important;
   white-space: nowrap;
   padding-left: 0.5rem !important;
@@ -632,6 +632,13 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
 .chapter-sticker-icon:before {
   @extend .icon-share;
 }
+.organization-sticker-icon:before {
+  @extend .icon-2017-subscriber;
+  font-size: 16pt;
+  position: relative;
+  top: 0.25rem;
+}
+
 
 /* Checkboxes in forms */
 .page-node-edit .form-type-checkbox {

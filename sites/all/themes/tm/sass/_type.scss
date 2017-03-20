@@ -469,6 +469,16 @@ Icons
    @extend .icon;
    content: "\e668";
 }
+.icon-2017-subscriber {
+   @extend .icon;
+   content: "\e655";
+   color: #ffb800;
+}
+.icon-2017-subscribe-cta {
+   @extend .icon;
+   content: "\e655";
+   color: #ffb800;
+}
 
 /* ==========================================================================
    Headings

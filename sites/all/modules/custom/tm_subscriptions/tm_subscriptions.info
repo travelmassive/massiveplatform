@@ -1,0 +1,7 @@
+name = tm_subscriptions
+core = 7.x
+package = TM Subscriptions
+version = 7.x-1.0-dev
+project = tm_subscriptions
+files[] = tm_subscriptions.module
+project path = sites/all/modules/custom

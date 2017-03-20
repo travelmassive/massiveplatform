@@ -1,11 +1,10 @@
 <?php
 /**
  * @file
- * Code for the TM Base feature.
+ * Code for the TM Organization module.
  */
 
 include_once 'tm_organizations.features.inc';
-
 include_once 'tm_organizations.display.inc';
 include_once 'tm_organizations.follow.inc';
 include_once 'tm_organizations.helpers.inc';
@@ -276,7 +275,9 @@ function tm_organizations_preprocess_page(&$variables, $hook) {
  * Customize organization edit form 
  */
 function tm_organizations_form_alter(&$form, $form_state, $form_id) {
+
   global $conf;
+  global $user;
 
   // Modify company edit form
   if ($form_id != 'organization_node_form') {
@@ -304,7 +305,6 @@ function tm_organizations_form_alter(&$form, $form_state, $form_id) {
   }
 
   // hide moderator settings for non moderators
-  global $user;
   $perm_is_moderator_or_admin = ((in_array("moderator", $user->roles)) || (in_array("administrator", $user->roles)));
   if (!$perm_is_moderator_or_admin) {
     field_group_hide_field_groups($form, array('group_company_moderator_settings'));
@@ -321,6 +321,13 @@ function tm_organizations_form_alter(&$form, $form_state, $form_id) {
   if (isset($conf['tm_segment_label']) and isset($conf['tm_segment_organization_description'])) {
     $form['field_segment'][LANGUAGE_NONE][0]['tid']['#title'] = $conf['tm_segment_label'];
     $form['field_segment'][LANGUAGE_NONE][0]['tid']['#description'] = $conf['tm_segment_organization_description'];
+  }
+
+  // if tm_subscriptions not enabled, hide all subscription fields
+  if (!module_exists("tm_subscriptions")) {
+    field_group_hide_field_groups($form, array('group_company_account_details'));
+    unset($form['field_company_subscription_type']);
+    unset($form['field_company_subscription_date']);
   }
   
 }

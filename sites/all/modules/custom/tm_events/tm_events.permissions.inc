@@ -284,6 +284,13 @@ function _tm_events_check_create_company_event($check_user, $company_id) {
     return true;
   }
 
+  // check for subscription account (ie: premium member)
+  if (module_exists("tm_subscriptions")) {
+    if (tm_subscriptions_is_organization_subscription_enabled($company_id)) {
+      return true;
+    }
+  }
+
 	return false;
 }
 
@@ -407,7 +414,7 @@ function _tm_events_check_create_company_event_message($check_user, $company_id)
   $num_followers = tm_organizations_get_num_followers($company_id);
   if ($num_followers < $min_followers) {
     $message = "<b>You need " . ($min_followers - $num_followers) . " more members to vouch for you.</b>";
-    $message .= "<br><br>To add an event in our community your company needs at least " . $conf["tm_event_member_event_min_followers"] . " followers.";
+    $message .= "<br><br>To add an event in our community your company needs at least " . $conf["tm_event_company_event_min_followers"] . " followers.";
     return $message;
   }
 

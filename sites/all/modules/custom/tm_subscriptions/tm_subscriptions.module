@@ -1,0 +1,243 @@
+<?php
+/**
+ * @file
+ * Code for the TM Subscriptions feature.
+ */
+
+include_once 'tm_subscriptions.permissions.inc';
+include_once 'tm_subscriptions.display.inc';
+include_once 'tm_subscriptions.process.inc';
+include_once 'tm_subscriptions.helpers.inc';
+include_once 'tm_subscriptions.pricing.inc';
+//include_once 'tm_payments.reports.inc';*/
+
+
+/* 
+Stripe Payments Module
+You will also need stripe-payments repository installed into /payments and hosted on another server.
+*/
+
+function tm_subscriptions_menu() {
+
+	global $conf;
+
+	$items = array();
+	$items['payment/subscription-organization/%node/%user'] = array(
+    'title' => 'Entity payment',
+    'page callback' => 'tm_subscriptions_process_organization_payment',
+    'page arguments' => array(2,3),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+  /*$items['payment/reports/subscription-sales/%node'] = array(
+    'title' => 'Subscription sales',
+    'page callback' => 'tm_subscriptions_reports_subscription_sales',
+    'page arguments' => array(3),
+    'access callback' => array('tm_subscriptions_access_sales_check'),
+    'access arguments' => array(3),
+    'type' => MENU_CALLBACK,
+  );*/
+
+	return $items;
+}
+
+/**
+ * Permission callback. Check if user can access subscription data
+ */
+function tm_subscriptions_access_sales_check($node) {
+  global $user;
+  return false;
+  // todo
+  //return tm_events_check_permission_edit_event($user, $node);
+}
+
+/**
+ * Implement hook_ds_field_info()
+ */
+// see: https://ohthehugemanatee.org/blog/2014/04/02/how-to-create-a-custom-display-suite-field/
+function tm_subscriptions_ds_fields_info($entity_type) {
+
+  if ($entity_type != 'node') {
+    return;
+  }
+  
+  $fields = array();
+
+  // call to action
+  $fields['tm_ds_subscription_organization_cta_ds'] = array(
+    'title' => t('Company Subscription CTA'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('organization|full',),
+    'function' => '_tm_subscriptions_organization_cta_ds'
+  );
+
+  // show subscription badge
+  $fields['tm_ds_subscription_organization_badge_ds'] = array(
+    'title' => t('Company Subscription Badge'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('organization|full',),
+    'function' => '_tm_subscriptions_organization_badge_ds'
+  );
+
+  return array($entity_type => $fields);
+}
+
+/**
+ * Modify node
+ */
+function tm_subscriptions_node_view_alter(&$build) {
+
+  global $user;
+
+  // check user logged in
+  if (!(user_is_logged_in())) {
+    return;
+  }
+
+  // check view mode
+  if ($build['#view_mode'] != "full") {
+    return;
+  }
+
+  // check object
+  if (!isset($build['body']['#object'])) {
+    return;
+  }
+
+  // get node
+  $node = $build['body']['#object'];
+
+  // organization cta
+  if ($node->type == "organization") {
+
+    if (tm_subscriptions_check_show_organization_cta($node->nid, $user->uid)) {
+
+      // Add Stripe js and pricing
+      // (CTA html is rendered from themes/tm/trilithon/trilithon.tpl.php)
+      tm_subscriptions_organization_cta_js($node->nid);
+    }
+  }
+
+}
+
+// TODO
+/**
+ * Permission callback. Check if user can access subscription data
+ */
+function tm_subscriptions_preprocess_page(&$variables, $hook) {
+
+  global $user;
+  global $conf;
+
+  // Put a notice to create company accounts on company page
+  /*if (current_path() == "companies") {
+
+    // Ignore anonymous users
+    if (!user_is_logged_in()) {
+      drupal_set_message($default_message, 'page_notice');
+      return;
+    }
+
+    // Only a loaded user has values for the fields.
+    $loaded = user_load($user->uid);
+
+    // Check if user has created any company profiles
+    $user_has_companies = false;
+    $query = new EntityFieldQuery();
+    $markup = '';
+    $query->entityCondition('entity_type', 'node')
+      ->entityCondition('bundle', 'organization')
+      ->propertyCondition('status', NODE_PUBLISHED)
+      ->fieldCondition('field_owner', 'target_id', $user->uid, '=');
+    $result = $query->execute();
+
+    if (isset($result['node'])) {
+      $user_has_companies = true;
+    }
+
+    // Option 1. Create a message if user already has a company
+    if ($user_has_companies) {
+      $message = "Discover and connect with other companies in the " . $conf["tm_site_name"] . " network. View " . l(t('your company profiles'), 'user/' . $loaded->uid . "/companies") . "";
+      drupal_set_message($message, 'page_notice');
+      return;
+    }
+
+    // Display message
+    $message .= "<div id='pending_approval' style='display: none;'>Your account is currently pending approval by our team. Once we've approved your account, you will be able to add your company profile.</div>";
+    drupal_set_message($message, 'page_notice');
+
+  }*/
+  
+  // todo
+  //return tm_events_check_permission_edit_event($user, $node);
+}
+
+/**
+ * Customize organization edit form 
+ */
+function tm_subscriptions_form_alter(&$form, $form_state, $form_id) {
+
+  global $conf;
+  global $user;
+
+  // Modify company edit form
+  if ($form_id != 'organization_node_form') {
+    return;
+  }
+
+  // Show Account Details for subscribers
+  $organization = $form_state['node'];
+  $is_new_organization = (!isset($organization->nid) || isset($organization->is_new));
+  $perm_is_moderator_or_admin = ((in_array("moderator", $user->roles)) || (in_array("administrator", $user->roles)));
+
+  // Hide company account details and subscription date if subscriptions not enabled or new organization
+  if ($is_new_organization) {
+    field_group_hide_field_groups($form, array('group_company_account_details'));
+    unset($form['field_company_subscription_date']); // hide subscription end date
+    return;
+  }
+
+  // Hide company account details and subscription date if not a moderator or admin or not subscribed
+  if ((!tm_subscriptions_is_organization_subscription_enabled($organization->nid)) and
+    (!$perm_is_moderator_or_admin)) {
+
+    field_group_hide_field_groups($form, array('group_company_account_details'));
+    unset($form['field_company_subscription_date']); // hide subscription end date
+    return;
+  }
+
+  // Set field group title
+  $form['#groups']['group_company_account_details']->label = $conf["tm_subscriptions_organization_label"] . " Details";
+
+  // Include subscription date
+
+  // check that organization has subscription date
+  $subscription_date = tm_subscriptions_get_subscription_date($organization);
+  $subscription_date_text = date('Y-m-d', strtotime($subscription_date));
+  $expires_text = tm_subscriptions_get_subscription_expires_text($organization);
+
+  if ($subscription_date != "") {
+    $form['#groups']['group_company_account_details']->format_settings['instance_settings']['description'] .= "<br>Your " . $conf["tm_subscriptions_organization_label"] . " is valid until " . $subscription_date_text . " (" . $expires_text . ")";
+  }
+ 
+
+  $organization_owner = user_load($organization->uid);
+
+  // Set default contact
+  if (!isset($organization->field_company_account_contact[LANGUAGE_NONE][0]['value'])) {
+    $form["field_company_account_contact"][LANGUAGE_NONE][0]['value']['#default_value'] = $organization_owner->field_user_first_name[LANGUAGE_NONE][0]['safe_value'] . " " . $organization_owner->field_user_last_name[LANGUAGE_NONE][0]['safe_value'];
+  }
+
+  // Set default contact
+  if (!isset($organization->field_company_account_email[LANGUAGE_NONE][0]['email'])) {
+    $form["field_company_account_email"][LANGUAGE_NONE][0]['email']['#default_value'] = $organization_owner->mail;
+  }
+
+  // Hide subscription type and end date
+  if (!$perm_is_moderator_or_admin) {
+    unset($form['field_company_subscription_type']); // hide subscription type
+    unset($form['field_company_subscription_date']); // hide subscription end date
+  } else {
+    // if payment has been made, warn in toggle settings 
+  }
+}

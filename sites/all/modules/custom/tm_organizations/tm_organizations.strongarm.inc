@@ -77,10 +77,10 @@ function tm_organizations_strongarm() {
           'weight' => '11',
         ),
         'redirect' => array(
-          'weight' => '4',
+          'weight' => '5',
         ),
         'metatags' => array(
-          'weight' => '5',
+          'weight' => '6',
         ),
       ),
       'display' => array(
@@ -138,6 +138,20 @@ function tm_organizations_strongarm() {
   $strongarm->name = 'pathauto_node_organization_pattern';
   $strongarm->value = '[node:friendly_url_org]';
   $export['pathauto_node_organization_pattern'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'field_bundle_settings_flagging__organization_subscription_enable';
+  $strongarm->value = array();
+  $export['field_bundle_settings_flagging__organization_subscription_enable'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'field_bundle_settings_flagging__organization_subscription_paid';
+  $strongarm->value = array();
+  $export['field_bundle_settings_flagging__organization_subscription_paid'] = $strongarm;
 
   return $export;
 }

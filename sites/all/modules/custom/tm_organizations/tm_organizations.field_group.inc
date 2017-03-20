@@ -83,7 +83,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Followers',
-    'weight' => '8',
+    'weight' => '9',
     'children' => array(
       0 => 'members_following',
     ),
@@ -98,6 +98,38 @@ function tm_organizations_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_company_account_details|node|organization|form';
+  $field_group->group_name = 'group_company_account_details';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'organization';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Account Details',
+    'weight' => '2',
+    'children' => array(
+      0 => 'field_company_account_receipt',
+      1 => 'field_company_account_contact',
+      2 => 'field_company_account_email',
+      3 => 'field_company_account_phone',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'label' => 'Account Details',
+      'instance_settings' => array(
+        'required_fields' => 1,
+        'id' => '',
+        'classes' => 'group-company-account-details field-group-fieldset',
+        'description' => 'This information will be kept <i>private</i>.',
+      ),
+      'formatter' => 'open',
+    ),
+  );
+  $field_groups['group_company_account_details|node|organization|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_company_moderator_settings|node|organization|form';
   $field_group->group_name = 'group_company_moderator_settings';
   $field_group->entity_type = 'node';
@@ -106,14 +138,14 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Moderator Settings',
-    'weight' => '3',
+    'weight' => '4',
     'children' => array(
-      0 => 'field_company_payment_commission',
-      1 => 'field_company_payments_enabled',
-      2 => 'field_company_enable_events',
+      0 => 'field_company_enable_events',
+      1 => 'field_company_newsfeed_location',
+      2 => 'field_company_newsfeed_tags',
       3 => 'field_company_newsfeed_url',
-      4 => 'field_company_newsfeed_tags',
-      5 => 'field_company_newsfeed_location',
+      4 => 'field_company_subscription_type',
+      5 => 'field_company_subscription_on',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -151,10 +183,12 @@ function tm_organizations_field_group_info() {
       6 => 'field_link_snapchat',
       7 => 'field_link_vimeo',
       8 => 'field_link_youtube',
-      9 => 'tm_ds_tm_sponsor',
-      10 => 'tm_ds_organization_follow_message',
-      11 => 'tm_ds_organization_stats',
-      12 => 'group_location_wrapper',
+      9 => 'tm_ds_subscription_organization_cta_ds',
+      10 => 'tm_ds_subscription_organization_badge_ds',
+      11 => 'tm_ds_tm_sponsor',
+      12 => 'tm_ds_organization_follow_message',
+      13 => 'tm_ds_organization_stats',
+      14 => 'group_location_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -242,10 +276,11 @@ function tm_organizations_field_group_info() {
       1 => 'field_link_linkedin',
       2 => 'field_link_twitter',
       3 => 'field_link_website',
-      4 => 'field_link_instagram',
-      5 => 'field_link_snapchat',
-      6 => 'field_link_vimeo',
-      7 => 'field_link_youtube',
+      4 => 'field_follower_message',
+      5 => 'field_link_instagram',
+      6 => 'field_link_snapchat',
+      7 => 'field_link_vimeo',
+      8 => 'field_link_youtube',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -271,7 +306,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '12',
+    'weight' => '14',
     'children' => array(
       0 => 'field_location_city',
       1 => 'field_country',
@@ -301,7 +336,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Profile managed by',
-    'weight' => '7',
+    'weight' => '8',
     'children' => array(
       0 => 'field_owner',
     ),
@@ -345,6 +380,7 @@ function tm_organizations_field_group_info() {
   // Translatables
   // Included for use with string extractors like potx.
   t('About');
+  t('Account Details');
   t('Action menu');
   t('Action menu wrapper');
   t('Elsewhere');

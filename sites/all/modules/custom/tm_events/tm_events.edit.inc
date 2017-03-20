@@ -7,7 +7,7 @@
  * Note: create and update permission granted by tm_events_node_access
  */
 function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
-
+  
   global $user;
   global $conf;
 

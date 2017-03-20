@@ -84,5 +84,45 @@ function tm_organizations_user_default_permissions() {
     'module' => 'flag',
   );
 
+  // Exported permission: 'flag organization_subscription_enable'.
+  $permissions['flag organization_subscription_enable'] = array(
+    'name' => 'flag organization_subscription_enable',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'flag organization_subscription_paid'.
+  $permissions['flag organization_subscription_paid'] = array(
+    'name' => 'flag organization_subscription_paid',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag organization_subscription_enable'.
+  $permissions['unflag organization_subscription_enable'] = array(
+    'name' => 'unflag organization_subscription_enable',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag organization_subscription_paid'.
+  $permissions['unflag organization_subscription_paid'] = array(
+    'name' => 'unflag organization_subscription_paid',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
   return $permissions;
 }

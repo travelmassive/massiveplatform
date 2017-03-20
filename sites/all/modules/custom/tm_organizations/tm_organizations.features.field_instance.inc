@@ -29,13 +29,13 @@ function tm_organizations_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',
-        'weight' => 2,
+        'weight' => 4,
       ),
       'grid' => array(
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 1,
+        'weight' => 46,
       ),
       'list' => array(
         'label' => 'hidden',
@@ -117,7 +117,7 @@ function tm_organizations_field_default_field_instances() {
           'image_style' => 'avatar_grid',
         ),
         'type' => 'image',
-        'weight' => 11,
+        'weight' => 1,
       ),
       'list' => array(
         'label' => 'above',
@@ -166,6 +166,218 @@ function tm_organizations_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-organization-field_company_account_contact'.
+  $field_instances['node-organization-field_company_account_contact'] = array(
+    'bundle' => 'organization',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Who is the best person to contact about this account?',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 29,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 26,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_company_account_contact',
+    'label' => 'Contact person',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 66,
+    ),
+  );
+
+  // Exported field_instance: 'node-organization-field_company_account_email'.
+  $field_instances['node-organization-field_company_account_email'] = array(
+    'bundle' => 'organization',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'We\'ll send any payment receipt emails here.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'email',
+        'settings' => array(),
+        'type' => 'email_default',
+        'weight' => 30,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 25,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_company_account_email',
+    'label' => 'Contact email',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'email',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'email_textfield',
+      'weight' => 67,
+    ),
+  );
+
+  // Exported field_instance: 'node-organization-field_company_account_phone'.
+  $field_instances['node-organization-field_company_account_phone'] = array(
+    'bundle' => 'organization',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Your phone number, WhatsApp, or Skype username.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 31,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 11,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_company_account_phone',
+    'label' => 'Other contact method (Phone, WhatsApp, Skype)',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 68,
+    ),
+  );
+
+  // Exported field_instance: 'node-organization-field_company_account_receipt'.
+  $field_instances['node-organization-field_company_account_receipt'] = array(
+    'bundle' => 'organization',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Add additional details you would like displayed at the top of your receipt email.<br>
+Example: your business number, or tax id',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 28,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 40,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_company_account_receipt',
+    'label' => 'Official Receipt',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 3,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 69,
+    ),
+  );
+
   // Exported field_instance: 'node-organization-field_company_cover_video'.
   $field_instances['node-organization-field_company_cover_video'] = array(
     'bundle' => 'organization',
@@ -185,13 +397,13 @@ function tm_organizations_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 22,
       ),
       'grid' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 29,
       ),
       'list' => array(
         'label' => 'above',
@@ -242,13 +454,13 @@ function tm_organizations_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 24,
       ),
       'grid' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 42,
       ),
       'list' => array(
         'label' => 'above',
@@ -272,7 +484,7 @@ function tm_organizations_field_default_field_instances() {
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 57,
+      'weight' => 77,
     ),
   );
 
@@ -297,13 +509,13 @@ Example including lat/lon: Sydney|-33.8,151.2',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 23,
       ),
       'grid' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 37,
       ),
       'list' => array(
         'label' => 'above',
@@ -328,7 +540,7 @@ Example including lat/lon: Sydney|-33.8,151.2',
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 62,
+      'weight' => 80,
     ),
   );
 
@@ -351,13 +563,13 @@ Example: #news #tech',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 27,
       ),
       'grid' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 38,
       ),
       'list' => array(
         'label' => 'above',
@@ -382,7 +594,7 @@ Example: #news #tech',
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 61,
+      'weight' => 79,
     ),
   );
 
@@ -405,13 +617,13 @@ example: http://exampleblog.com/feed/',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 26,
       ),
       'grid' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 39,
       ),
       'list' => array(
         'label' => 'above',
@@ -436,30 +648,31 @@ example: http://exampleblog.com/feed/',
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 60,
+      'weight' => 78,
     ),
   );
 
   // Exported field_instance:
-  // 'node-organization-field_company_payment_commission'.
-  $field_instances['node-organization-field_company_payment_commission'] = array(
+  // 'node-organization-field_company_subscription_date'.
+  $field_instances['node-organization-field_company_subscription_date'] = array(
     'bundle' => 'organization',
-    'default_value' => NULL,
+    'default_value' => array(),
     'deleted' => 0,
-    'description' => 'Fix the default commission percentage for events created by this company.
-<br>Note: Does not include bank fees, forex or other charges.',
+    'description' => '(Moderator) When the subscription expires',
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'number',
+        'module' => 'date',
         'settings' => array(
-          'decimal_separator' => '.',
-          'prefix_suffix' => TRUE,
-          'scale' => 2,
-          'thousand_separator' => '',
+          'format_type' => 'long',
+          'fromto' => 'both',
+          'multiple_from' => '',
+          'multiple_number' => '',
+          'multiple_to' => '',
+          'show_remaining_days' => FALSE,
         ),
-        'type' => 'number_decimal',
-        'weight' => 20,
+        'type' => 'date_default',
+        'weight' => 33,
       ),
       'full' => array(
         'label' => 'above',
@@ -480,79 +693,86 @@ example: http://exampleblog.com/feed/',
         'weight' => 0,
       ),
     ),
-    'ds_extras_field_template' => '',
+    'ds_extras_field_template' => 'theme_ds_field_reset',
     'entity_type' => 'node',
-    'field_name' => 'field_company_payment_commission',
-    'label' => 'Company payment commission (%)',
+    'field_name' => 'field_company_subscription_date',
+    'label' => 'Subscription Renewal Date',
     'required' => 0,
     'settings' => array(
-      'max' => 100,
-      'min' => 0,
-      'prefix' => '',
-      'suffix' => '',
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 0,
-      'module' => 'number',
-      'settings' => array(),
-      'type' => 'number',
-      'weight' => 59,
-    ),
-  );
-
-  // Exported field_instance:
-  // 'node-organization-field_company_payments_enabled'.
-  $field_instances['node-organization-field_company_payments_enabled'] = array(
-    'bundle' => 'organization',
-    'default_value' => array(
-      0 => array(
-        'value' => 'disabled',
-      ),
-    ),
-    'deleted' => 0,
-    'description' => 'Set whether company can create paid events.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'list',
-        'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 19,
-      ),
-      'full' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-      'grid' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-      'list' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'ds_extras_field_template' => '',
-    'entity_type' => 'node',
-    'field_name' => 'field_company_payments_enabled',
-    'label' => 'Enable Event Payments',
-    'required' => 0,
-    'settings' => array(
+      'default_value' => 'now',
+      'default_value2' => 'same',
+      'default_value_code' => '',
+      'default_value_code2' => '',
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_select',
-      'weight' => 58,
+      'module' => 'date',
+      'settings' => array(
+        'increment' => 15,
+        'input_format' => 'm/d/Y - H:i:s',
+        'input_format_custom' => '',
+        'label_position' => 'above',
+        'no_fieldset' => 0,
+        'text_parts' => array(),
+        'year_range' => '-3:+3',
+      ),
+      'type' => 'date_popup',
+      'weight' => 3,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-organization-field_company_subscription_type'.
+  $field_instances['node-organization-field_company_subscription_type'] = array(
+    'bundle' => 'organization',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'The subscription type',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 32,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_company_subscription_type',
+    'label' => 'Subscription Type',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 76,
     ),
   );
 
@@ -581,7 +801,7 @@ example: http://exampleblog.com/feed/',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 27,
       ),
       'list' => array(
         'label' => 'above',
@@ -632,13 +852,13 @@ Displays a short message to followers on your company profile page.<br><br>',
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 18,
+        'weight' => 28,
       ),
       'grid' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 28,
       ),
       'list' => array(
         'label' => 'above',
@@ -669,7 +889,7 @@ Displays a short message to followers on your company profile page.<br><br>',
         'rows' => 4,
       ),
       'type' => 'text_textarea',
-      'weight' => 2,
+      'weight' => 55,
     ),
   );
 
@@ -691,13 +911,13 @@ Displays a short message to followers on your company profile page.<br><br>',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 19,
+        'weight' => 29,
       ),
       'grid' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 2,
+        'weight' => 47,
       ),
       'list' => array(
         'label' => 'above',
@@ -775,7 +995,7 @@ Displays a short message to followers on your company profile page.<br><br>',
           'image_style' => 'banner_grid',
         ),
         'type' => 'image',
-        'weight' => 3,
+        'weight' => 0,
       ),
       'list' => array(
         'label' => 'above',
@@ -852,13 +1072,13 @@ Displays a short message to followers on your company profile page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_facebook',
-        'weight' => 6,
+        'weight' => 8,
       ),
       'grid' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 32,
       ),
       'list' => array(
         'label' => 'above',
@@ -930,13 +1150,13 @@ Displays a short message to followers on your company profile page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_instagram',
-        'weight' => 8,
+        'weight' => 10,
       ),
       'grid' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 41,
       ),
       'list' => array(
         'label' => 'above',
@@ -1007,13 +1227,13 @@ Displays a short message to followers on your company profile page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_linkedin',
-        'weight' => 7,
+        'weight' => 9,
       ),
       'grid' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 33,
       ),
       'list' => array(
         'label' => 'above',
@@ -1085,13 +1305,13 @@ Displays a short message to followers on your company profile page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_snapchat',
-        'weight' => 11,
+        'weight' => 13,
       ),
       'grid' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 44,
       ),
       'list' => array(
         'label' => 'above',
@@ -1162,13 +1382,13 @@ Displays a short message to followers on your company profile page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_twitter',
-        'weight' => 5,
+        'weight' => 7,
       ),
       'grid' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 34,
       ),
       'list' => array(
         'label' => 'above',
@@ -1240,13 +1460,13 @@ Displays a short message to followers on your company profile page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_vimeo',
-        'weight' => 10,
+        'weight' => 12,
       ),
       'grid' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 43,
       ),
       'list' => array(
         'label' => 'above',
@@ -1317,13 +1537,13 @@ Displays a short message to followers on your company profile page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_link',
-        'weight' => 4,
+        'weight' => 6,
       ),
       'grid' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 31,
       ),
       'list' => array(
         'label' => 'above',
@@ -1395,13 +1615,13 @@ Displays a short message to followers on your company profile page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_youtube',
-        'weight' => 9,
+        'weight' => 11,
       ),
       'grid' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 45,
       ),
       'list' => array(
         'label' => 'above',
@@ -1478,7 +1698,7 @@ Displays a short message to followers on your company profile page.<br><br>',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 30,
       ),
       'list' => array(
         'label' => 'above',
@@ -1540,13 +1760,13 @@ Displays a short message to followers on your company profile page.<br><br>',
           'view_mode' => 'grid',
         ),
         'type' => 'entityreference_entity_view',
-        'weight' => 13,
+        'weight' => 1,
       ),
       'grid' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 4,
+        'weight' => 48,
       ),
       'list' => array(
         'label' => 'above',
@@ -1661,7 +1881,7 @@ Displays a short message to followers on your company profile page.<br><br>',
         'module' => 'hs_taxonomy',
         'settings' => array(),
         'type' => 'hs_taxonomy_term_reference_last_text_only',
-        'weight' => 1,
+        'weight' => 3,
       ),
       'list' => array(
         'label' => 'above',
@@ -1703,23 +1923,24 @@ Displays a short message to followers on your company profile page.<br><br>',
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('(Moderator) When the subscription expires');
   t('Add a location field to automatic newsfeed posts.<br>
 Example: Sydney<br>
 Example including lat/lon: Sydney|-33.8,151.2');
+  t('Add additional details you would like displayed at the top of your receipt email.<br>
+Example: your business number, or tax id');
   t('Add tags or text to automatic newsfeed posts<br>
 Example: #news #tech');
   t('Allow this company to list events without requiring the minimum follower count.');
   t('City');
-  t('Company payment commission (%)');
+  t('Contact email');
+  t('Contact person');
   t('Country');
   t('Cover Image');
   t('Cover Video');
   t('Description');
-  t('Enable Event Payments');
   t('Enable events');
   t('Facebook');
-  t('Fix the default commission percentage for events created by this company.
-<br>Note: Does not include bank fees, forex or other charges.');
   t('Friendly URL');
   t('Give something back to members who follow your company profile.<br>
 Displays a short message to followers on your company profile page.<br><br>');
@@ -1735,22 +1956,29 @@ Displays a short message to followers on your company profile page.<br><br>');
   t('Newsfeed URL');
   t('Newsfeed location');
   t('Newsfeed tags');
+  t('Official Receipt');
+  t('Other contact method (Phone, WhatsApp, Skype)');
   t('Please provide the segment which identifies the company the best.');
   t('Post status updates automatically via WordPress Feed<br>
 example: http://exampleblog.com/feed/');
   t('Provide a cover image to be displayed behind your company logo.
 <br>To support retina displays, upload your image sized to 1610x906');
   t('Select the member that manages this account.');
-  t('Set whether company can create paid events.');
   t('Snapchat');
+  t('Subscription Renewal Date');
+  t('Subscription Type');
   t('Tell us about your organization or company. Describe your business and the service or product that you provide.');
+  t('The subscription type');
   t('Twitter');
   t('Vimeo');
+  t('We\'ll send any payment receipt emails here.');
   t('Website');
   t('Where your business is based');
+  t('Who is the best person to contact about this account?');
   t('YouTube');
   t('Your Snapchat username');
   t('Your company logo in a square format. We recommend at least 600x600 pixels.');
+  t('Your phone number, WhatsApp, or Skype username.');
   t('ie: @companyname or https://twitter.com/yourname');
   t('ie: @yourcompany or https://instagram.com/yourcompany');
   t('ie: http://www.mycompany.com');

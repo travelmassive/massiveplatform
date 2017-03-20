@@ -695,6 +695,60 @@ $conf["tm_payments_reports_secret_token"] = "randomstring123"; // secret token t
 $conf["tm_payments_reports_help_message"] = "Here's your ticket sales for this event."; // message to show user
 */
 
+/* SUBSCRIPTION PAYMENT SETTINGS */
+/** Optional subscription payments settings **/
+/** Note: this requires a stripe payments endpoint which is not provided in this distribution **/
+/** If you would like to process event payments, please get in contact with the author. **/
+/*
+$conf["tm_subscriptions_stripe_publishable_key"] = "publishable"; // stripe publishable key
+$conf["tm_subscriptions_stripe_image_url"] = '/sites/all/themes/tm/images/travel_massive_stripe_payment_icon.png'; // stripe image url
+$conf["tm_subscriptions_process_url"] = ""; // external payment processor
+$conf["tm_subscriptions_process_check_certificate"] = false; // turn on for production 
+$conf["tm_subscriptions_process_timeout"] = 10; // seconds to wait for process url before timeout 
+$conf["tm_subscriptions_process_error_email"] = "support@massiveplatform.com"; // if payment process fails, who to email
+$conf["tm_subscriptions_error_message"] = "A problem occured processing your payment, please contact support@massiveplatform.com";
+$conf["tm_subscriptions_receipt_details"] = "<strong>TAX RECEIPT</strong><br>Your company name<br>Your company address<br>Email: your@receiptemail";
+$conf["tm_subscriptions_stripe_logo"] = "<a target='_blank' href='https://stripe.com/gallery'><img style='width: 119px; height: 26px;' width='119' height='26' src='/sites/all/themes/tm/images/stripe_logo_solid@2x.png'></a><br>Secure payment gateway trusted by <a target='_blank' href='https://stripe.com/gallery'>global brands</a>"; // displayed when payment is enabled
+$conf["tm_subscriptions_handler_name"] = "Massive"; // merchant name to display on payment screen
+$conf["tm_subscriptions_enable_billing_address"] = false; // enable billing address
+$conf["tm_subscriptions_stripe_email_field_enabled"] = true; // allow user to enter email address
+
+// ORGANIZATION SUBSCRIPTIONS
+// US
+$conf["tm_subscriptions_organization_enabled"] = true; // enable subscription payments
+$conf["tm_subscriptions_organization_label"] = "Premium Account"; // label to call a subscription account
+$conf["tm_subscriptions_organization_label_short"] = "Premium"; // short label to call a subscription account
+$conf["tm_subscriptions_organization_payment_success_message"] = "Thanks for your payment. Your company profile has been upgraded to premium.";// message to display after successful payment
+$conf["tm_subscriptions_organization_cta_text"] = "Upgrade to Premium and unlock extra features";
+$conf["tm_subscriptions_organization_expired_message"] = "Your Premium Account has expired.";
+$conf["tm_subscriptions_organization_default"] = ""; // optional - use this country as default price 
+$conf["tm_subscriptions_organization"] = array();
+$conf["tm_subscriptions_organization"]["US"] = array();
+$conf["tm_subscriptions_organization"]["US"]["price"] = 99;
+$conf["tm_subscriptions_organization"]["US"]["price_label"] = "$9.90/month billed Annually + 2 months free";
+$conf["tm_subscriptions_organization"]["US"]["currency"] = "usd"; // lowercase
+$conf["tm_subscriptions_organization"]["US"]["currency_prefix"] = "\$"; // ie: GBP £ 
+$conf["tm_subscriptions_organization"]["US"]["currency_symbol"] = "\$"; // ie: £
+$conf["tm_subscriptions_organization"]["US"]["subscription_type"] = "ORG_1YR_US";
+$conf["tm_subscriptions_organization"]["US"]["subscription_label"] = "Premium Account";
+$conf["tm_subscriptions_organization"]["US"]["subscription_expires"] = "+1 YEAR"; // 
+$conf["tm_subscriptions_organization"]["US"]["stripe_description"] = "Premium Subscription (1 Year)";
+$conf["tm_subscriptions_organization"]["US"]["partner_codes"] = array("MASSIVE" => "49", "PROMO" => "79"); // uppercase
+$conf["tm_subscriptions_organization"]["US"]["learn_more_url"] = "http://example.massiveplatform.com/blog/upgrade-to-premium/";
+$conf["tm_subscriptions_organization"]["US"]["support_url"] = "http://example.massiveplatform.com/blog/premium-support/";
+$conf["tm_subscriptions_organization"]["US"]["html"] = "<center><h2>Generate Leads and More Revenue.</h2>
+<p style='font-size: larger;'>Promote your business with a Premium account. <a href=''>Learn more</a></p><button class='payment-button bttn bttn-secondary bttn-m'>Upgrade to Premium</button> <br>
+<span style='color: #888; font-size: 10pt; line-height: 2rem;'>__PRICING_LABEL__</span></center>
+<span style='float: right;'><a class='hide-cta-banner' style='color: #888;' href='#'>No, thanks</a></span>";
+$conf["tm_subscriptions_organization"]["US"]["renew_html"] = "Renew subscription <button class='payment-button'>Buy</button>";
+
+// AU
+$conf["tm_subscriptions_organization"]["AU"] = $conf["tm_subscriptions_organization_pricing"]["US"];
+$conf["tm_subscriptions_organization"]["AU"]["price"] = 49;
+$conf["tm_subscriptions_organization"]["AU"]["currency"] = "aud"; // lowercase
+$conf["tm_subscriptions_organization"]["AU"]["subscription_type"] = "ORG_1YR_AU";
+*/
+
 /** DISCUSSION SETTINGS **/
 /** Optional discussion module, powered by Vanilla Forums.
 /*

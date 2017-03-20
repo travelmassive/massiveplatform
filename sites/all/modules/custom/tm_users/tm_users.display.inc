@@ -385,8 +385,18 @@ function tm_users_menu_companies($uid){
     }
     $img_url = _tm_organizations_get_default_image($img_url, $nid);
     $style = 'thumbnail';
+
+    // check if subscription
+    $subscription_html = "";
+    if (module_exists("tm_subscriptions")) {
+      if (tm_subscriptions_is_organization_subscription_enabled($nid)) {
+        $subscription_html = "<style></style>";
+        $subscription_html .= " <span class='tm-user-menu-subscription-badge'>" . strtoupper($conf["tm_subscriptions_organization_label_short"]) . "</span>";
+      }
+    }
+    $company_url = drupal_get_path_alias("node/" . $company->nid);
     $markup .= "<li style='margin-bottom: 4px;'><div style='width: 36px; max-height: 24px; overflow: hidden; float: left; margin-left: 1rem; margin-right: 0.5rem; margin-top: 2px;'>
-    <img align='left' class='tm_menu_organization_image' src='" . image_style_url($style, $img_url) . "'></div>" . l($company->title,'node/'.$company->nid) . '</li>'; 
+    <img align='left' class='tm_menu_organization_image' src='" . image_style_url($style, $img_url) . "'></div><a href='/" . $company_url . "'>" . $company->title . $subscription_html . '</a></li>'; 
   }
   return $markup;
 }

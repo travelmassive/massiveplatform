@@ -113,7 +113,7 @@ function tm_payments_reports_event_sales($event) {
   $html .= "<p><table cellspacing='0' cellpadding='0'>";
   $html .= "<tr><td><span class='tm-payments-report-status paid'>Received</span></td><td>Customer payment recieved</td></tr>";
   $html .= "<tr><td><span class='tm-payments-report-status paid_out'>Paid Out</span></td><td>We've paid out your commission</td></tr>";
-  $html .= "<tr><td><span class='tm-payments-report-status refunded' style='margin-right: 0.5rem;'>Redunded</span></td><td>Refund has been issued</td></tr>";
+  $html .= "<tr><td><span class='tm-payments-report-status refunded' style='margin-right: 0.5rem;'>Refunded</span></td><td>Refund has been issued</td></tr>";
   $html .= "</table><p>";
 
   $html .= "</div>";

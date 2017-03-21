@@ -290,6 +290,10 @@ $conf["tm_following_enable_message_organization"] = true;
 $conf["tm_community_search_filter"] = "country"; // filter /community page by country (default) or chapter
 $conf["tm_community_show_unapproved_users"] = false; // show unapproved members in the /community page
 
+/** SEGMENT FILTER SETTINGS **/
+$conf["tm_community_show_segment_2nd_level"] = true; // show 2nd level segment in dropdown
+$conf["tm_organizations_show_segment_2nd_level"] = true; // show 2nd level segment in dropdown
+
 /** CHAPTER SETTINGS **/
 $conf["tm_chapters_display_stats_connections"] = true; // Display number of member connections on chapters page
 $conf["tm_chapters_allow_edit_chapter_leaders"] = true; // Allow chapter leaders to edit leaders for their own chapter (default false)

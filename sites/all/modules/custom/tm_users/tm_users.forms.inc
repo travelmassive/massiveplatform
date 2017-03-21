@@ -41,51 +41,6 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
     }
   }
 
-  // Alter companies view dropdowns
-  // Note this should be in tm_organizations but it doesn't seem to fire there
-  // Cache for 1 hour
-  if(isset($form_state['view'])) {
-    if (($form_state['view']->name == 'companies') && ($form_id == "views_exposed_form")) {
-
-      // Limit countries dropdown to users countries
-      $output = '';
-      $output = cache_get('views-exposed-form-companies-countries', 'cache');
-      if (empty($output)) {
-        $result = db_query("SELECT DISTINCT iso2, name from {field_data_field_country} f LEFT JOIN {countries_country} c ON f.field_country_iso2 = c.iso2 WHERE f.bundle = 'organization' AND c.iso2 IS NOT NULL ORDER BY name ASC");
-        $defaultoptions = array('All'=>'- Any -');
-        $output = $defaultoptions + $result->fetchAllKeyed();
-        $form['name_list']['#options'] = $output;
-        cache_set('views-exposed-form-companies-countries', $output, 'cache', time() + 3600);
-      } else{
-        $form['name_list']['#options'] = $output->data;
-      }
-
-      // Alter the segment dropdown
-      // Hide the 2nd level of taxonomy
-      // In the future we might allow searching deeper
-      foreach ($form['term_node_tid_depth']['#options'] as $key => $obj) {
-        if (isset($obj->option)) {
-          $option = $obj->option;
-          if (strpos(current($option), "-") === 0) {
-            unset($form['term_node_tid_depth']['#options'][$key]);
-          }
-        }
-      }
-
-      // Replace "All" option to more meaningful name
-      $form['name_list']['#options']['All'] = "Country";
-      if (isset($conf['tm_segment_label'])) {
-        $form['term_node_tid_depth']['#options']['All'] = $conf['tm_segment_label'];
-      } else {
-        $form['term_node_tid_depth']['#options']['All'] = "Industry";
-      }
-
-      // Remove form description
-      unset($form['term_node_tid_depth']['#description']);
-
-    }
-  }
-
   // Alter community view dropdowns
   // Cache for 1 hour
   if(isset($form_state['view'])) {
@@ -133,12 +88,13 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
 
       // Alter the segment dropdown
       // Hide the 2nd level of taxonomy
-      // In the future we might allow searching deeper
-      foreach ($form['taxonomy_entity_index_tid_depth']['#options'] as $key => $obj) {
-        if (isset($obj->option)) {
-          $option = $obj->option;
-          if (strpos(current($option), "-") === 0) {
-            unset($form['taxonomy_entity_index_tid_depth']['#options'][$key]);
+      if ($conf["tm_community_show_segment_2nd_level"] == false) {
+        foreach ($form['taxonomy_entity_index_tid_depth']['#options'] as $key => $obj) {
+          if (isset($obj->option)) {
+            $option = $obj->option;
+            if (strpos(current($option), "-") === 0) {
+              unset($form['taxonomy_entity_index_tid_depth']['#options'][$key]);
+            }
           }
         }
       }

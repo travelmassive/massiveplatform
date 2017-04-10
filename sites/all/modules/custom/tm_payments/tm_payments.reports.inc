@@ -56,7 +56,7 @@ function tm_payments_reports_event_sales($event) {
   foreach($payments as $payment) {
 
     $html .=  "<tr>";
-    $html .=  "<td>" . ($payment->display_amount + 0) . " " . $payment->stripe_currency . "</td>";
+    $html .=  "<td>" . ($payment->display_amount + 0) . " " . strtoupper($payment->stripe_currency) . "</td>";
     $html .=  "<td><i>" . _tm_event_time_elapsed($payment->seconds_ago) . "</i></td>";
     $html .=  "<td><a target='_blank' href='/user/" . $payment->user_id . "'>" . $payment->user_first_name . " " . $payment->user_last_name . "</a></td>";
     $payment_status = "Received";
@@ -83,7 +83,7 @@ function tm_payments_reports_event_sales($event) {
 	  $html .= "<p>";
 	  $html .= (sizeof($payments) . " payments<br>");
 	  foreach($payment_totals as $currency => $total) {
-	    $html .= "<strong>Total: " . $total . " " . $currency . "</strong><br>";
+	    $html .= "<strong>Total: " . $total . " " . strtoupper($currency) . "</strong><br>";
 	  }
 	  $html .= "<i>Note: Excludes processing and forex fees</i></p>";
 	}
@@ -93,7 +93,7 @@ function tm_payments_reports_event_sales($event) {
   $event_commission = _tm_payments_get_event_commission($event);
   $html .= "Event commission: " . ($event_commission + 0) . "%<br>";
   foreach($payment_totals as $currency => $total) {
-    $html .= "<strong>Estimated earnings: " . round($total * ($event_commission/100)) . " " . $currency . "</strong><br>";
+    $html .= "<strong>Estimated earnings: " . round($total * ($event_commission/100)) . " " . strtoupper($currency) . "</strong><br>";
   }
   $html .= "</p>";
 

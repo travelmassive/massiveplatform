@@ -443,21 +443,32 @@ function tm_invitations_user_insert(&$edit, $account, $category) {
       }
     }*/
 
-    // TODO: Check that invite['uid'] is not valid.
-
     // Step 4. Follow for the inviter if user invited them
     if ($invite['nid'] == 0) {
-      $flag = flag_get_flag('follow_members');
-      $flag->flag('flag', $invite['uid'], $account, TRUE);
+
+      // Check that invite['uid'] is valid.
+      $check_user = user_load($invite['uid']);
+      if ($check_user != null) {
+        $flag = flag_get_flag('follow_members');
+        $flag->flag('flag', $invite['uid'], $account, TRUE);
+      }
+     
     }
 
     // Step 5. Join Chapter if invited from chapter
     if ($invite['nid'] > 0) {
-      $flag = flag_get_flag('signup');
-      $flag->flag('flag', $invite['nid'], $account, TRUE);
-      $chapter = node_load($invite['nid']);
-      $chapter_title = $chapter->title;
-      drupal_set_message(t('You have joined the ' . $chapter_title . " chapter."));
+
+      // Check that invite['nid'] is valid.
+      $check_node = node_load($invite['nid']);
+      if ($check_node != null) {
+
+        $flag = flag_get_flag('signup');
+        $flag->flag('flag', $invite['nid'], $account, TRUE);
+        $chapter = node_load($invite['nid']);
+        $chapter_title = $chapter->title;
+        drupal_set_message(t('You have joined the ' . $chapter_title . " chapter."));
+      }
+
     }
 
     // Step 6. Update this record as accepted

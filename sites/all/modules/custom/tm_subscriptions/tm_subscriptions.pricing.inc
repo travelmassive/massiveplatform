@@ -17,6 +17,9 @@ function tm_subscriptions_get_organization_subscription_price($organization) {
 
 	// STEP 1. GET REGISTRATION CURRENCY AND PRICE
 	$display_amount = $subscription["price"];
+	if (tm_subscriptions_check_organization_renewal_period($organization)) {
+		$display_amount = $subscription["price_renew"]; // if in renewal period, show renewal price
+	} 
 	$regular_amount = $display_amount; // keep track of regular price in case we have early bird price
 	$currency = $subscription["currency"];
 	$currency_symbol = $subscription["currency_symbol"];
@@ -28,18 +31,15 @@ function tm_subscriptions_get_organization_subscription_price($organization) {
 	$partner_enabled = false;
 	$partner_message = "Partner Discount";
 	$partner_label = "Partner Discount";
-	$partner_code = "";
-	if (isset($_GET["partner"])) {
-		if (trim($_GET["partner"] != "")) {
-			$partner_code = strtoupper(trim($_GET["partner"]));
-			// todo, validate partner code
+	$partner_code = tm_subscriptions_get_partner_code();
+	if ($partner_code != "") {
+		// todo, validate partner code
+		$partner_code = strtoupper($partner_code);
+		$partner_enabled = true;
+		if (isset($subscription["partner_codes"][$partner_code])) {
 			$partner_enabled = true;
-			if (isset($subscription["partner_codes"][$partner_code])) {
-				$partner_enabled = true;
-				$display_amount = $subscription["partner_codes"][$partner_code];
-				$subscription_label = $subscription_label . " (Partner Discount)";
-			}
-			$partner_code = trim($_GET["partner"]);
+			$display_amount = $subscription["partner_codes"][$partner_code];
+			$subscription_label = $subscription_label . " (Partner Discount)";
 		}
 	}
 

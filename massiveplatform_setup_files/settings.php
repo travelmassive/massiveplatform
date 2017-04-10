@@ -716,20 +716,28 @@ $conf["tm_subscriptions_stripe_logo"] = "<a target='_blank' href='https://stripe
 $conf["tm_subscriptions_handler_name"] = "Massive"; // merchant name to display on payment screen
 $conf["tm_subscriptions_enable_billing_address"] = false; // enable billing address
 $conf["tm_subscriptions_stripe_email_field_enabled"] = true; // allow user to enter email address
+$conf["tm_subscriptions_payments_reports_url"] = ""; // subscription payment reports
+$conf["tm_subscriptions_payments_reports_secret_token"] = "randomstring123"; // secret token to verify payment report 
+$conf["tm_subscriptions_reports_help_message"] = "Here's a receipt of your payments."; // message to show user
 
 // ORGANIZATION SUBSCRIPTIONS
 // US
 $conf["tm_subscriptions_organization_enabled"] = true; // enable subscription payments
 $conf["tm_subscriptions_organization_label"] = "Premium Account"; // label to call a subscription account
 $conf["tm_subscriptions_organization_label_short"] = "Premium"; // short label to call a subscription account
+$conf["tm_subscriptions_organization_cta_renewal_period"] = 30; // number of days to who renewal cta
 $conf["tm_subscriptions_organization_payment_success_message"] = "Thanks for your payment. Your company profile has been upgraded to premium.";// message to display after successful payment
+$conf["tm_subscriptions_organization_renewed_success_message"] = "Thanks for your payment. Your subscription has been renewed."; // message to display after renewing subscription 
 $conf["tm_subscriptions_organization_cta_text"] = "Upgrade to Premium and unlock extra features";
 $conf["tm_subscriptions_organization_expired_message"] = "Your Premium Account has expired.";
 $conf["tm_subscriptions_organization_default"] = ""; // optional - use this country as default price 
 $conf["tm_subscriptions_organization"] = array();
 $conf["tm_subscriptions_organization"]["US"] = array();
+$conf["tm_subscriptions_organization"]["US"]["private"] = false; // only show pricing if partner code applied
 $conf["tm_subscriptions_organization"]["US"]["price"] = 99;
-$conf["tm_subscriptions_organization"]["US"]["price_label"] = "$9.90/month billed Annually + 2 months free";
+$conf["tm_subscriptions_organization"]["US"]["price_renew"] = 79; // price to renew
+$conf["tm_subscriptions_organization"]["US"]["price_label"] = "Buy now for $99";
+$conf["tm_subscriptions_organization"]["US"]["price_label_renew"] = "Renew your subscription now and save $20";
 $conf["tm_subscriptions_organization"]["US"]["currency"] = "usd"; // lowercase
 $conf["tm_subscriptions_organization"]["US"]["currency_prefix"] = "\$"; // ie: GBP £ 
 $conf["tm_subscriptions_organization"]["US"]["currency_symbol"] = "\$"; // ie: £
@@ -737,14 +745,67 @@ $conf["tm_subscriptions_organization"]["US"]["subscription_type"] = "ORG_1YR_US"
 $conf["tm_subscriptions_organization"]["US"]["subscription_label"] = "Premium Account";
 $conf["tm_subscriptions_organization"]["US"]["subscription_expires"] = "+1 YEAR"; // 
 $conf["tm_subscriptions_organization"]["US"]["stripe_description"] = "Premium Subscription (1 Year)";
-$conf["tm_subscriptions_organization"]["US"]["partner_codes"] = array("MASSIVE" => "49", "PROMO" => "79"); // uppercase
+$conf["tm_subscriptions_organization"]["US"]["partner_codes"] = array("MASSIVE" => "49", "PROMO" => "80"); // uppercase
 $conf["tm_subscriptions_organization"]["US"]["learn_more_url"] = "http://example.massiveplatform.com/blog/upgrade-to-premium/";
 $conf["tm_subscriptions_organization"]["US"]["support_url"] = "http://example.massiveplatform.com/blog/premium-support/";
 $conf["tm_subscriptions_organization"]["US"]["html"] = "<center><h2>Generate Leads and More Revenue.</h2>
 <p style='font-size: larger;'>Promote your business with a Premium account. <a href=''>Learn more</a></p><button class='payment-button bttn bttn-secondary bttn-m'>Upgrade to Premium</button> <br>
 <span style='color: #888; font-size: 10pt; line-height: 2rem;'>__PRICING_LABEL__</span></center>
 <span style='float: right;'><a class='hide-cta-banner' style='color: #888;' href='#'>No, thanks</a></span>";
-$conf["tm_subscriptions_organization"]["US"]["renew_html"] = "Renew subscription <button class='payment-button'>Buy</button>";
+$conf["tm_subscriptions_organization"]["US"]["html_renew"] = "<center><h2>Generate Leads and More Revenue.</h2>
+<p style='font-size: larger;'>Renew your Subscription. <a href=''>Learn more</a></p><button class='payment-button bttn bttn-secondary bttn-m'>Upgrade to Premium</button> <br>
+<span style='color: #888; font-size: 10pt; line-height: 2rem;'>__PRICING_LABEL__</span></center>
+<span style='float: right;'><a class='hide-cta-banner' style='color: #888;' href='#'>No, thanks</a></span>";
+$conf["tm_subscriptions_organization"]["US"]["email_replyto"] = "support@massiveplatform.com"; // where should reply to emails go
+$conf["tm_subscriptions_organization"]["US"]["email_bcc"] = ""; // where should reply to emails go
+$conf["tm_subscriptions_organization"]["US"]["email_purchase_subject"] = "Thanks for purchasing a Premium Subscription";
+$conf["tm_subscriptions_organization"]["US"]["email_purchase_message"] = "Dear __FIRST_NAME__
+
+Thanks for purchasing a Premium Company subscription.
+
+View your <a href='__VIEW_PAYMENTS_URL__'>payment receipt</a> online.
+
+To view your company profile, visit the link below:
+
+<a href='__ORGANIZATION_PROFILE_URL__'>__ORGANIZATION_PROFILE_URL__</a>
+
+__EMAIL_SIGNOFF__
+";
+$conf["tm_subscriptions_organization"]["US"]["email_renewed_subject"] = "Thanks for renewing your Premium Subscription";
+$conf["tm_subscriptions_organization"]["US"]["email_renewed_message"] = "Dear __FIRST_NAME__
+
+Thanks for renewing your Premium Company subscription.
+
+View your <a href='__VIEW_PAYMENTS_URL__'>payment receipt</a> online.
+
+To view your company profile, visit the link below:
+
+<a href='__ORGANIZATION_PROFILE_URL__'>__ORGANIZATION_PROFILE_URL__</a>
+
+__EMAIL_SIGNOFF__
+";
+$conf["tm_subscriptions_organization"]["US"]["email_reminder_subject"] = "Renew your Premium Subscription";
+$conf["tm_subscriptions_organization"]["US"]["email_reminder_message"] = "Dear __FIRST_NAME__
+
+Your Premium Company subscription expires in __SUBSCRIPTION_EXPIRES_TEXT__ (__SUBSCRIPTION_EXPIRES_DATE__).
+
+To renew your subscription, simply sign in to your account and view your company profile:
+
+<a href='__ORGANIZATION_PROFILE_URL__'>__ORGANIZATION_PROFILE_URL__</a>
+
+__EMAIL_SIGNOFF__
+";
+$conf["tm_subscriptions_organization"]["US"]["email_expired_subject"] = "Your Premium Subscription has expired";
+$conf["tm_subscriptions_organization"]["US"]["email_expired_message"] = "Dear __FIRST_NAME__
+
+Your Premium Company subscription has expired.
+
+You can renew it by signing in to your account and viewing your company profile:
+
+<a href='__ORGANIZATION_PROFILE_URL__'>__ORGANIZATION_PROFILE_URL__</a>
+
+__EMAIL_SIGNOFF__
+";
 
 // AU
 $conf["tm_subscriptions_organization"]["AU"] = $conf["tm_subscriptions_organization_pricing"]["US"];

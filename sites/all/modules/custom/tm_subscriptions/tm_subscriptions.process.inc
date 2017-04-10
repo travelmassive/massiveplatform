@@ -109,6 +109,9 @@ function tm_subscriptions_process_organization_payment($node, $member) {
 	$user_first_name = $user_loaded->field_user_first_name[LANGUAGE_NONE][0]['value'];
   	$user_last_name = $user_loaded->field_user_last_name[LANGUAGE_NONE][0]['value'];
 
+  	// Check if is renewed
+  	$is_renewed = tm_subscriptions_check_organization_renewal_period($node);
+
   	// get referer code from home chapter of organization owner
   	$referer_code = tm_subscriptions_get_referer_id($node);
   	
@@ -219,10 +222,20 @@ function tm_subscriptions_process_organization_payment($node, $member) {
 		$node->field_company_account_email[LANGUAGE_NONE][0]['email'] = $stripe_email;
 
 		// Save changes to organization
-		node_save($node); 
+		node_save($node);
+
+		// Send notification
+		if ($is_renewed) {
+			$success_message = $conf["tm_subscriptions_organization_renewed_success_message"];
+			tm_subscriptions_organization_send_notification($node, "renewed", $user_first_name);
+		} else {
+			$success_message = $conf["tm_subscriptions_organization_payment_success_message"];
+			tm_subscriptions_organization_send_notification($node, "purchase", $user_first_name);
+		}
 
 		// Set success message and redirect to page
-		drupal_set_message($conf["tm_subscriptions_organization_payment_success_message"]);
+		$success_message .= " <a href='/payment/reports/subscription-payments/" . $node->nid . "'>View payment receipt</a>";
+		drupal_set_message($success_message);
 		drupal_goto($entity_path_alias);
 		return;
 	}

@@ -443,6 +443,8 @@ function tm_invitations_user_insert(&$edit, $account, $category) {
       }
     }*/
 
+    // TODO: Check that invite['uid'] is not valid.
+
     // Step 4. Follow for the inviter if user invited them
     if ($invite['nid'] == 0) {
       $flag = flag_get_flag('follow_members');

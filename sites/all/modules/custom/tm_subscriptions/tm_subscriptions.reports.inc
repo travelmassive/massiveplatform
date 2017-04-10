@@ -2,42 +2,96 @@
 
 // TODO
 
-// tm_payments.reports.inc - payment report methods
+// tm_subscriptions.reports.inc - payment report methods
+
+/**
+ * Permission callback. Check if user can access subscription data
+ */
+function tm_subscriptions_access_payment_report_check($node) {
+  
+  global $user;
+
+  // Allow moderator or administrators to view payments
+  if (in_array("administrator", $user->roles) or in_array("moderator", $user->roles)) {
+    return true;
+  }
+
+  // Allow managers of the organisation to view 
+  return tm_organizations_is_company_profile_manager($user->uid, $node->nid);
+}
 
 /**
  * Payment reports for event
  */
-function AAtm_payments_reports_event_sales($event) {
- 
+function tm_subscriptions_reports_organization_payments($organization) {
+
   global $conf;
 
+  // Check user is logged in
+  if (!user_is_logged_in()) {
+    drupal_set_message("Please <a href='/user/login?destination=/payment/reports/subscription-payments/" . $organization->nid . "'>sign in</a> to view payment details.");
+    drupal_goto("node/" . $organization->nid);
+    return;
+  }
+  
+  // Check if is manager of the profile
+  if (!tm_subscriptions_access_payment_report_check($organization)) {
+    drupal_set_message("You don't have permission to view payment details for this company listing.");
+    drupal_goto("node/" . $organization->nid);
+    return;
+  }
+
   // Add javascript to form
-  drupal_add_js(drupal_get_path('module', 'tm_payments') . '/js/tm_payments_reports.js');
-  $event_link = l(t($event->title), drupal_get_path_alias("node/" . $event->nid));
-  drupal_add_js(array('tm_payments_reports' => array('form_subtitle' => $event_link)), array('type' => 'setting'));
-  drupal_add_js(array('tm_payments_reports' => array('form_heading' => 'Ticket Sales')), array('type' => 'setting'));
+  drupal_add_js(drupal_get_path('module', 'tm_subscriptions') . '/js/tm_subscriptions_reports.js');
+  $organization_link = l(t($organization->title), drupal_get_path_alias("node/" . $organization->nid));
+  drupal_add_js(array('tm_subscriptions_reports' => array('form_subtitle' => $organization_link)), array('type' => 'setting'));
+  drupal_add_js(array('tm_subscriptions_reports' => array('form_heading' => 'Your Payments')), array('type' => 'setting'));
 
   $form = array();
 
   // get event sales from payment processor callback
-  $results = tm_payments_get_event_sales($event->nid);
+  $results = tm_subscriptions_get_organization_payments($organization->nid);
 
   // check we got a result
   if ($results == null) {
-    drupal_set_message("Oops, an error occured fetching event sales.<br>Please try again later.", 'error');
+    drupal_set_message("Oops, an error occured fetching your payment history.<br>Please try again later.", 'error');
     return "";
   }
 
   // check valid result
   if ($results->success == false) {
-    drupal_set_message("Oops, an error occured processing event sales (" . t($results->error) . ").<br>Please try again later.", 'error');
+    drupal_set_message("Oops, an error occured processing payment history (" . t($results->error) . ").<br>Please try again later.", 'error');
     return "";
   }
 
   // Help message
-  $help_message = $conf["tm_payments_reports_help_message"];
+  $help_message = $conf["tm_subscriptions_reports_help_message"];
   drupal_get_messages('help-tip');
   drupal_set_message($help_message, 'help-tip');
+
+  // Start report
+  $html = "<div id='tm-subscriptions-report'>";
+
+  // Render account details
+  // field_company_account_receipt
+  if (isset($organization->field_company_account_receipt[LANGUAGE_NONE][0]['safe_value'])) {
+    $html .= "<p style='font-weight: bold;'>";
+    $html .= str_replace("\n", "<br>", strip_tags($organization->field_company_account_receipt[LANGUAGE_NONE][0]['safe_value']));
+    $html .= "<span class='tm-subscriptions-report-edit'><br><a href='/node/" . $organization->nid . "/edit#company-account-details'>Edit</a></span>";
+    $html .= "</p>";
+  } else {
+    $html .= "<p class='tm-subscriptions-report-add'><a href='/node/" . $organization->nid . "/edit#company-account-details'>Add your company details to this receipt</a></p>";
+  }
+
+  // field_company_account_contact
+  if (isset($organization->field_company_account_contact[LANGUAGE_NONE][0]['safe_value'])) {
+    $html .= "Contact: " . strip_tags($organization->field_company_account_contact[LANGUAGE_NONE][0]['safe_value']);
+  }
+
+  // field_company_account_email
+  if (isset($organization->field_company_account_contact[LANGUAGE_NONE][0]['safe_value'])) {
+    $html .= "<br>Email: " . strip_tags($organization->field_company_account_contact[LANGUAGE_NONE][0]['safe_value']);
+  }
 
   // Get payments
   $payments = $results->data->payments;
@@ -45,33 +99,28 @@ function AAtm_payments_reports_event_sales($event) {
   $refund_totals = $results->data->refund_totals;
 
   // Render payments table
-  $html = "<div id='tm-payments-report'>";
-  $html .= "<p><table class='tm-payments-report-table'>";
-  $html .= "<tr><th>Payment</th><th>When</th><th>Customer</th><th>Status</th><th class='tm-payments-report-extra'>Timestamp</th><th class='tm-payments-report-extra'>Payment ID</th></tr>";
+  $html .= "<p><table class='tm-subscriptions-report-table'>";
+  $html .= "<tr><th>Payment</th><th>Subscription</th><th>Paid By</th><th class='tm-payments-report-extra'>Payment Date</th><th class='tm-payments-report-extra'>Payment ID</th></tr>";
 
   // No payments
   if (sizeof($payments) == 0) {
-  	$html .= "<tr><td colspan='6'>You haven't sold any tickets yet. Go hustle and sell some tickets! :)</td></tr>";
+  	$html .= "<tr><td colspan='5'><p style='font-size: larger;'>We haven't received any payments.</p></td></tr>";
   }
 
   // Payment Details
   foreach($payments as $payment) {
 
+    // look up subsription label
+    // if can't be found, fall back to subscription type
+    $subscription_label = tm_subscriptions_get_organization_subscription_field($organization, "subscription_label");
+    if ($subscription_label == "") {
+      $subscription_label = $payment->subscription_type;
+    }
+
     $html .=  "<tr>";
-    $html .=  "<td>" . ($payment->display_amount + 0) . " " . $payment->stripe_currency . "</td>";
-    $html .=  "<td><i>" . _tm_event_time_elapsed($payment->seconds_ago) . "</i></td>";
-    $html .=  "<td><a target='_blank' href='/user/" . $payment->user_id . "'>" . $payment->user_first_name . " " . $payment->user_last_name . "</a></td>";
-    $payment_status = "Received";
-    $payment_status_class = "paid";
-    if ($payment->paid_out) {
-      $payment_status = "Paid Out";
-      $payment_status_class = "paid_out";
-    }
-    if ($payment->refunded) {
-      $payment_status = "Refunded";
-      $payment_status_class = "refunded";
-    }
-    $html .=  "<td><span class='tm-payments-report-status " . $payment_status_class . "'>" . $payment_status . "</span></td>";
+    $html .=  "<td>" . ($payment->display_amount + 0) . " " . strtoupper($payment->stripe_currency) . "</td>";
+    $html .=  "<td>" . $subscription_label . "</td>";
+    $html .=  "<td><a target='_blank' href='/user/" . $payment->user_id . "'>" . $payment->user_first_name . " " . $payment->user_last_name . "</a></td>";    
     $html .=  "<td class='tm-payments-report-extra'>" . $payment->created_at . "</td>";
     $html .=  "<td class='tm-payments-report-extra'>" . $payment->charge_id . "</a></td>";
     $html .=  "</tr>";
@@ -83,40 +132,23 @@ function AAtm_payments_reports_event_sales($event) {
 
 	  // Payment Totals
 	  $html .= "<p>";
-	  $html .= (sizeof($payments) . " payments<br>");
-	  foreach($payment_totals as $currency => $total) {
-	    $html .= "<strong>Total: " . $total . " " . $currency . "</strong><br>";
-	  }
-	  $html .= "<i>Note: Excludes processing and forex fees</i></p>";
+    if (sizeof($payments) > 0) {
+
+      // pluralize
+      if (sizeof($payments) == 1) {
+        $html .= "1 payment<br>";
+      } else {
+        $html .= (sizeof($payments) . " payments<br>");
+      }     
+      foreach($payment_totals as $currency => $total) {
+        $html .= "<strong>Total: " . $total . " " . strtoupper($currency) . "</strong><br>";
+      }
+    }
+
+    // Our header
+    $html .= "<hr>" . $conf["tm_subscriptions_receipt_details"];
+	  
 	}
-
-  // Estimated commission
-  $html .= "<p>";
-  $event_commission = _tm_payments_get_event_commission($event);
-  $html .= "Event commission: " . ($event_commission + 0) . "%<br>";
-  foreach($payment_totals as $currency => $total) {
-    $html .= "<strong>Estimated earnings: " . round($total * ($event_commission/100)) . " " . $currency . "</strong><br>";
-  }
-  $html .= "</p>";
-
-
-  // Who to payout to
-  $payout_uid = $event->uid; // default event owner
-  if (isset($event->field_event_payment_payout_to[LANGUAGE_NONE][0]['target_id'])) {
-    $payout_uid = $event->field_event_payment_payout_to[LANGUAGE_NONE][0]['target_id'];
-  }
-  $payout_user = user_load($payout_uid);
-  $payout_user_name = tm_events_username($payout_user);
-  $html .= "<p>";
-  $html .= "Payout set to: <a target='_blank' href='/" . drupal_get_path_alias("user/" . $payout_uid) . "'>" . $payout_user_name . "</a>";
-  $html .= "</p>";
-
-  // Legend
-  $html .= "<p><table cellspacing='0' cellpadding='0'>";
-  $html .= "<tr><td><span class='tm-payments-report-status paid'>Received</span></td><td>Customer payment recieved</td></tr>";
-  $html .= "<tr><td><span class='tm-payments-report-status paid_out'>Paid Out</span></td><td>We've paid out your commission</td></tr>";
-  $html .= "<tr><td><span class='tm-payments-report-status refunded' style='margin-right: 0.5rem;'>Redunded</span></td><td>Refund has been issued</td></tr>";
-  $html .= "</table><p>";
 
   $html .= "</div>";
 
@@ -129,28 +161,31 @@ function AAtm_payments_reports_event_sales($event) {
 /**
  * Fetch event sales from payment processor callback
  */
-function AAtm_payments_get_event_sales($event_id) {
+function tm_subscriptions_get_organization_payments($organization_id) {
 
   global $conf;
 
   // construct url
-  $token = $conf["tm_payments_reports_secret_token"];
-  $url = $conf["tm_payments_reports_url"] . "?token=" . $token . "&event_id=" . $event_id;
+  $token = $conf["tm_subscriptions_payments_reports_secret_token"];
+  $url = $conf["tm_subscriptions_payments_reports_url"] . "?token=" . $token . "&entity_type=organization&entity_id=" . $organization_id;
 
   //open connection
   $ch = curl_init();
 
   //set the url, number of POST vars, POST data
-  $CURLOPT_SSL_VERIFYHOST = 0; 
-  if ($conf["tm_payments_process_check_certificate"]) {
-    $CURLOPT_SSL_VERIFYHOST = 2;
+  $CURLOPT_SSL_VERIFYHOST = 2;
+  $CURLOPT_SSL_VERIFYPEER = true;
+  if ($conf["tm_subscriptions_process_check_certificate"] == false) {
+    $CURLOPT_SSL_VERIFYHOST = 0;
+    $CURLOPT_SSL_VERIFYPEER = false;
   }
   curl_setopt($ch, CURLOPT_URL, $url);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($ch, CURLOPT_VERBOSE, false);
   curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $CURLOPT_SSL_VERIFYHOST);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $CURLOPT_SSL_VERIFYPEER);
   curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0); 
-  curl_setopt($ch, CURLOPT_TIMEOUT, $conf["tm_payments_process_timeout"]); // timeout in seconds
+  curl_setopt($ch, CURLOPT_TIMEOUT, $conf["tm_subscriptions_process_timeout"]); // timeout in seconds
 
   //execute post
   $result = curl_exec($ch);

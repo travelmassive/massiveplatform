@@ -657,7 +657,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
 }
 
 /* Payment reports */
-.tm-payments-report-table { 
+.tm-payments-report-table, .tm-subscriptions-report-table { 
   width: 100%;
   margin-top: 0px;
   padding: 1rem;
@@ -665,54 +665,68 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
   background-color: #FFF;
 }
 
-.tm-payments-report-table table {
+.tm-payments-report-table table, .tm-subscriptions-report-table table {
   cellspacing: 4px;
 }
 
-.tm-payments-report-table th { 
+.tm-payments-report-table th, .tm-subscriptions-report-table th { 
   border-bottom: 1px solid #888;
   background-color: #fff;
 }
 
-.tm-payments-report-table tr { 
+.tm-payments-report-table tr, .tm-subscriptions-report-table tr  { 
   border-radius: 2px;
   background-color: #fff;
 }
 
-.tm-payments-report-table td { 
+.tm-payments-report-table td, .tm-subscriptions-report-table td  { 
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   font-size: smaller;
 }
 
-.tm-payments-report-extra {
+.tm-payments-report-extra, .tm-subscriptions-report-extra {
   white-space:nowrap;
 }
 
-.tm-payments-report-status {
+.tm-payments-report-status, .tm-subscriptions-report-status  {
   border-radius: 4px;
 }
 
-.tm-payments-report-status {
+.tm-payments-report-status, .tm-subscriptions-report-status {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
   white-space: nowrap;
 }
 
-.tm-payments-report-status.paid {
+.tm-payments-report-status.paid, .tm-subscriptions-report-status.paid  {
   background-color: #007CB9;
   color: #fff;
 }
 
-.tm-payments-report-status.refunded {
+.tm-payments-report-status.refunded, .tm-subscriptions-report-status.refunded  {
   /* background-color: #E94B35; */
   background-color: #888;
   color: #fff;
 }
 
-.tm-payments-report-status.paid_out {
+.tm-payments-report-status.paid_out, .tm-subscriptions-report-status.paid_out {
   background-color: #00BD9C;
   color: #fff;
+}
+
+.tm-subscriptions-report-edit {
+  font-size: smaller;
+  text-decoration: underline;
+  font-weight: normal;
+}
+
+.tm-subscriptions-report-add {
+  font-weight: bold;
+}
+
+@media print {
+  .tm-subscriptions-report-edit, .tm-subscriptions-report-add { display: none; }
 }
 
 @media only screen and (max-width: 500px) {

@@ -111,7 +111,7 @@ function tm_payments_reports_event_sales($event) {
 
   // Legend
   $html .= "<p><table cellspacing='0' cellpadding='0'>";
-  $html .= "<tr><td><span class='tm-payments-report-status paid'>Received</span></td><td>Customer payment recieved</td></tr>";
+  $html .= "<tr><td><span class='tm-payments-report-status paid'>Received</span></td><td>Customer payment received</td></tr>";
   $html .= "<tr><td><span class='tm-payments-report-status paid_out'>Paid Out</span></td><td>We've paid out your commission</td></tr>";
   $html .= "<tr><td><span class='tm-payments-report-status refunded' style='margin-right: 0.5rem;'>Refunded</span></td><td>Refund has been issued</td></tr>";
   $html .= "</table><p>";
@@ -139,14 +139,17 @@ function tm_payments_get_event_sales($event_id) {
   $ch = curl_init();
 
   //set the url, number of POST vars, POST data
-  $CURLOPT_SSL_VERIFYHOST = 0; 
-  if ($conf["tm_payments_process_check_certificate"]) {
-    $CURLOPT_SSL_VERIFYHOST = 2;
+  $CURLOPT_SSL_VERIFYHOST = 2;
+  $CURLOPT_SSL_VERIFYPEER = true;
+  if ($conf["tm_payments_process_check_certificate"] == false) {
+    $CURLOPT_SSL_VERIFYHOST = 0;
+    $CURLOPT_SSL_VERIFYPEER = false;
   }
   curl_setopt($ch, CURLOPT_URL, $url);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($ch, CURLOPT_VERBOSE, false);
   curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $CURLOPT_SSL_VERIFYHOST);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $CURLOPT_SSL_VERIFYPEER);
   curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0); 
   curl_setopt($ch, CURLOPT_TIMEOUT, $conf["tm_payments_process_timeout"]); // timeout in seconds
 

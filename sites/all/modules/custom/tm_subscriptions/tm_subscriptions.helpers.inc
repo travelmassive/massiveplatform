@@ -21,7 +21,12 @@ function tm_subscriptions_check_show_organization_cta($nid, $uid) {
 
 	// check if organization is already subscribed
 	if (tm_subscriptions_is_organization_subscription_enabled($nid)) {
-		return false;
+
+		// check if in renewal period
+		$organization = node_load($nid);
+		if (!tm_subscriptions_check_organization_renewal_period($organization)) {
+			return false;
+		}
 	}
 
 	// check if user is a manager of the organization
@@ -31,8 +36,24 @@ function tm_subscriptions_check_show_organization_cta($nid, $uid) {
 
 	// check that subscriptions are enabled in this country
 	$organization = node_load($nid);
-	if (tm_subscriptions_get_organization_subscription($organization) == null) {
+	$subscription = tm_subscriptions_get_organization_subscription($organization);
+	if ($subscription == null) {
 		return false;
+	}
+
+	// if subscription is private
+	if ($subscription["private"] == true) {
+
+		// check partner code
+		$partner_code = strtoupper(tm_subscriptions_get_partner_code());
+		if ($partner_code == "") {
+			return false;
+		}
+
+		// check valid partner code
+		if (!isset($subscription["partner_codes"][$partner_code])) {
+			return false;
+		}
 	}
  
 	return true;
@@ -155,11 +176,12 @@ function tm_subscriptions_get_organization_subscription($organization) {
 	// get country code
 	$country_code = $organization->field_country[LANGUAGE_NONE][0]['iso2'];
 
-	// check subsription
+	// check subscription
 	if (array_key_exists($country_code, $conf["tm_subscriptions_organization"])) {
 		return $conf["tm_subscriptions_organization"][$country_code];
 	}
 
+	// default
 	$default_country = $conf["tm_subscriptions_organization_default"];
 	if (array_key_exists($default_country, $conf["tm_subscriptions_organization"])) {
 		return $conf["tm_subscriptions_organization"][$default_country];
@@ -181,3 +203,101 @@ function tm_subscriptions_get_organization_subscription_field($organization, $ke
 
 	return "";
 }
+
+/**
+ * Get partner code
+ * from ?partner= or from cookie subscription_partner
+ */
+function tm_subscriptions_get_partner_code() {
+
+	global $conf;
+
+	$partner_code = "";
+
+	// check ?partner=
+	if (isset($_GET["partner"])) {
+		$partner_code = $_GET["partner"];
+	} elseif (isset($_COOKIE['Drupal_visitor_subscription_partner'])) {
+		// check cookie
+		$partner_code = $_COOKIE['Drupal_visitor_subscription_partner'];
+	}
+
+	return trim($partner_code);
+}
+
+/**
+ * Set partner code and company url cookie
+ * Drupal.visitor.subscription_partner
+ * Drupal.visitor.subscription_company_url
+ */
+function tm_subscriptions_set_partner_cookie($nid = null) {
+
+	global $conf;
+	$cookie_time = '+30 days';
+
+	// get partner code
+	$partner_code = tm_subscriptions_get_partner_code();
+
+	// check ?partner=
+	if ($partner_code != "") {
+		setcookie("Drupal.visitor.subscription_partner", $partner_code, strtotime($cookie_time), "/");
+	}
+
+	// set subscription_company_url if nid set
+	if ($nid != null) {
+		$uri = $conf["tm_email_server_http"] . "://" . $conf["tm_email_server_url_domain"] . "/" . drupal_get_path_alias('node/' . $nid);
+		setcookie("Drupal.visitor.subscription_company_url", $uri, strtotime($cookie_time), "/");
+
+	}
+}
+
+/**
+ * Determine how many days until subscription expiry
+ * Return 0 if expired
+ * Return -1 if no expiry date
+ */
+function tm_subscriptions_organization_days_until_expiry($organization) {
+
+	// check that organization has subscription date
+	$subscription_date = tm_subscriptions_get_subscription_date($organization);
+	if ($subscription_date == "") {
+		return -1;
+	}
+
+	// calcualte expiry
+	$current_date = new DateTime('now', new DateTimeZone('UTC'));
+	$subscription_datetime = new DateTime($subscription_date, new DateTimeZone("UTC"));
+	$seconds_until_expiry = $subscription_datetime->format('U') - $current_date->format('U');
+	$days_until_expiry = floor($seconds_until_expiry / (60 * 60 * 24));
+	if ($days_until_expiry < 0) {
+		return 0;
+	}
+	return $days_until_expiry;
+}
+
+/**
+ * Check if the organization is within the renewal period
+ */
+function tm_subscriptions_check_organization_renewal_period($organization) {
+
+	global $conf;
+
+	$renewal_period_days = $conf["tm_subscriptions_organization_cta_renewal_period"];
+
+	// get expiry days
+	$days_until_expiry = tm_subscriptions_organization_days_until_expiry($organization);
+
+	// check if has renewal date
+	if ($days_until_expiry == -1) {
+		return false;
+	}
+
+	// check if has expired
+	if ($days_until_expiry == 0) {
+		return false;
+	}
+
+	// check if in renewal period
+	return ($days_until_expiry <= $renewal_period_days);
+}
+

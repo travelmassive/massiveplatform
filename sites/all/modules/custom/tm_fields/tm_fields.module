@@ -216,14 +216,25 @@ function _tm_organization_sticker_process($field, $title = NULL) {
   }
   
   global $conf;
+  global $user;
+
   $node_id = $field['entity']->nid;
   $organization = $field['entity'];
+
+  // show all other users the learn_more_url
+  // show customers the support url
+  if (tm_organizations_is_company_profile_manager($user->uid, $node_id)) {
+    $custom_url = tm_subscriptions_get_organization_subscription_field($organization, "support_url");
+  } else {
+    $custom_url = tm_subscriptions_get_organization_subscription_field($organization, "learn_more_url");
+  }
+
 
   $is_subscriber = tm_subscriptions_is_organization_subscription_enabled($node_id);
   return theme('tm_organization_sticker', array(
     'is_subscriber' => $is_subscriber,
     'label' => $conf["tm_subscriptions_organization_label_short"],
-    'custom_url' => tm_subscriptions_get_organization_subscription_field($organization, "support_url")
+    'custom_url' => $custom_url
     )
   );
 
@@ -1520,7 +1531,7 @@ function _tm_more_actions_process($field, $title = NULL) {
       }
     }
   }
-  // END Add memmber event link
+  // END Add member event link
 
   // START Add chapter event Link
   if (isset($field['entity']->type) && $field['entity']->type == 'chapter') {
@@ -1731,6 +1742,25 @@ function _tm_more_actions_process($field, $title = NULL) {
     }
   }
   // END View subscription details
+
+  // START View organization subscription payments
+  if (isset($field['entity']->type) && $field['entity']->type == 'organization') {
+
+    // Check if is moderator or administrator
+    $is_moderator_or_administrator = (in_array("administrator", $user->roles) or in_array("moderator", $user->roles));
+
+    // Check if can create company event
+    if ((tm_organizations_is_company_profile_manager($user->uid, $field['entity']->nid)) or $is_moderator_or_administrator) {
+      $links['edition'][] = array(
+      'wrapper_class' => array('edit'),
+      'content' => l(t('View payments'), '/payment/reports/subscription-payments/' . $field['entity']->nid, array(
+        'attributes' => array(
+          'title' => t('View payments for @organization', array('@organizations' => $field['entity']->title))
+        )
+      )));
+    }
+  }
+  // END View organization subscription payments
 
   // START preview notification link
   if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {

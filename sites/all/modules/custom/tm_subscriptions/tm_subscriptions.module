@@ -9,7 +9,8 @@ include_once 'tm_subscriptions.display.inc';
 include_once 'tm_subscriptions.process.inc';
 include_once 'tm_subscriptions.helpers.inc';
 include_once 'tm_subscriptions.pricing.inc';
-//include_once 'tm_payments.reports.inc';*/
+include_once 'tm_subscriptions.notifications.inc';
+include_once 'tm_subscriptions.reports.inc';
 
 
 /* 
@@ -29,26 +30,15 @@ function tm_subscriptions_menu() {
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
-  /*$items['payment/reports/subscription-sales/%node'] = array(
-    'title' => 'Subscription sales',
-    'page callback' => 'tm_subscriptions_reports_subscription_sales',
+  $items['payment/reports/subscription-payments/%node'] = array(
+    'title' => 'Subscription payments',
+    'page callback' => 'tm_subscriptions_reports_organization_payments',
     'page arguments' => array(3),
-    'access callback' => array('tm_subscriptions_access_sales_check'),
-    'access arguments' => array(3),
+    'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
-  );*/
+  );
 
 	return $items;
-}
-
-/**
- * Permission callback. Check if user can access subscription data
- */
-function tm_subscriptions_access_sales_check($node) {
-  global $user;
-  return false;
-  // todo
-  //return tm_events_check_permission_edit_event($user, $node);
 }
 
 /**
@@ -120,58 +110,6 @@ function tm_subscriptions_node_view_alter(&$build) {
 
 }
 
-// TODO
-/**
- * Permission callback. Check if user can access subscription data
- */
-function tm_subscriptions_preprocess_page(&$variables, $hook) {
-
-  global $user;
-  global $conf;
-
-  // Put a notice to create company accounts on company page
-  /*if (current_path() == "companies") {
-
-    // Ignore anonymous users
-    if (!user_is_logged_in()) {
-      drupal_set_message($default_message, 'page_notice');
-      return;
-    }
-
-    // Only a loaded user has values for the fields.
-    $loaded = user_load($user->uid);
-
-    // Check if user has created any company profiles
-    $user_has_companies = false;
-    $query = new EntityFieldQuery();
-    $markup = '';
-    $query->entityCondition('entity_type', 'node')
-      ->entityCondition('bundle', 'organization')
-      ->propertyCondition('status', NODE_PUBLISHED)
-      ->fieldCondition('field_owner', 'target_id', $user->uid, '=');
-    $result = $query->execute();
-
-    if (isset($result['node'])) {
-      $user_has_companies = true;
-    }
-
-    // Option 1. Create a message if user already has a company
-    if ($user_has_companies) {
-      $message = "Discover and connect with other companies in the " . $conf["tm_site_name"] . " network. View " . l(t('your company profiles'), 'user/' . $loaded->uid . "/companies") . "";
-      drupal_set_message($message, 'page_notice');
-      return;
-    }
-
-    // Display message
-    $message .= "<div id='pending_approval' style='display: none;'>Your account is currently pending approval by our team. Once we've approved your account, you will be able to add your company profile.</div>";
-    drupal_set_message($message, 'page_notice');
-
-  }*/
-  
-  // todo
-  //return tm_events_check_permission_edit_event($user, $node);
-}
-
 /**
  * Customize organization edit form 
  */
@@ -217,7 +155,9 @@ function tm_subscriptions_form_alter(&$form, $form_state, $form_id) {
   $expires_text = tm_subscriptions_get_subscription_expires_text($organization);
 
   if ($subscription_date != "") {
-    $form['#groups']['group_company_account_details']->format_settings['instance_settings']['description'] .= "<br>Your " . $conf["tm_subscriptions_organization_label"] . " is valid until " . $subscription_date_text . " (" . $expires_text . ")";
+    $subscription_message = "Your " . $conf["tm_subscriptions_organization_label"] . " is registered until " . $subscription_date_text . " (" . $expires_text . ")";
+    $form['#groups']['group_company_account_details']->format_settings['instance_settings']['description'] .= "<a name='company-account-details'/><br>" . $subscription_message;
+    drupal_set_message($subscription_message, 'help-tip');
   }
  
 

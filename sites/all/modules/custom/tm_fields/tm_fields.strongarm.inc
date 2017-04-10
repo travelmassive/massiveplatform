@@ -75,17 +75,17 @@ function tm_fields_strongarm() {
         ),
       ),
       'field_community_managers' => array(
-        'referenced' => array(
+        'all' => array(
+          'view' => 'view',
+        ),
+        'author' => array(
           'update' => 'update',
         ),
         'create' => array(
           'event' => 'event',
         ),
-        'author' => array(
+        'referenced' => array(
           'update' => 'update',
-        ),
-        'all' => array(
-          'view' => 'view',
         ),
       ),
     ),

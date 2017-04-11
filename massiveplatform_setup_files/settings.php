@@ -753,7 +753,7 @@ $conf["tm_subscriptions_organization"]["US"]["html"] = "<center><h2>Generate Lea
 <span style='color: #888; font-size: 10pt; line-height: 2rem;'>__PRICING_LABEL__</span></center>
 <span style='float: right;'><a class='hide-cta-banner' style='color: #888;' href='#'>No, thanks</a></span>";
 $conf["tm_subscriptions_organization"]["US"]["html_renew"] = "<center><h2>Generate Leads and More Revenue.</h2>
-<p style='font-size: larger;'>Renew your Subscription. <a href=''>Learn more</a></p><button class='payment-button bttn bttn-secondary bttn-m'>Upgrade to Premium</button> <br>
+<p style='font-size: larger;'>Renew your Subscription. <a href=''>Learn more</a></p><button class='payment-button bttn bttn-secondary bttn-m'>Renew Subscription</button> <br>
 <span style='color: #888; font-size: 10pt; line-height: 2rem;'>__PRICING_LABEL__</span></center>
 <span style='float: right;'><a class='hide-cta-banner' style='color: #888;' href='#'>No, thanks</a></span>";
 $conf["tm_subscriptions_organization"]["US"]["email_replyto"] = "support@massiveplatform.com"; // where should reply to emails go

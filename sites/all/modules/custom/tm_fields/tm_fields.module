@@ -1744,20 +1744,22 @@ function _tm_more_actions_process($field, $title = NULL) {
   // END View subscription details
 
   // START View organization subscription payments
-  if (isset($field['entity']->type) && $field['entity']->type == 'organization') {
+  if (module_exists("tm_subscriptions")) {
+    if (isset($field['entity']->type) && $field['entity']->type == 'organization') {
 
-    // Check if is moderator or administrator
-    $is_moderator_or_administrator = (in_array("administrator", $user->roles) or in_array("moderator", $user->roles));
+      // Check if is moderator or administrator
+      $is_moderator_or_administrator = (in_array("administrator", $user->roles) or in_array("moderator", $user->roles));
 
-    // Check if can create company event
-    if ((tm_organizations_is_company_profile_manager($user->uid, $field['entity']->nid)) or $is_moderator_or_administrator) {
-      $links['edition'][] = array(
-      'wrapper_class' => array('edit'),
-      'content' => l(t('View payments'), '/payment/reports/subscription-payments/' . $field['entity']->nid, array(
-        'attributes' => array(
-          'title' => t('View payments for @organization', array('@organizations' => $field['entity']->title))
-        )
-      )));
+      // Check if can create company event
+      if ((tm_organizations_is_company_profile_manager($user->uid, $field['entity']->nid)) or $is_moderator_or_administrator) {
+        $links['edition'][] = array(
+        'wrapper_class' => array('edit'),
+        'content' => l(t('View payments'), '/payment/reports/subscription-payments/' . $field['entity']->nid, array(
+          'attributes' => array(
+            'title' => t('View payments for @organization', array('@organizations' => $field['entity']->title))
+          )
+        )));
+      }
     }
   }
   // END View organization subscription payments

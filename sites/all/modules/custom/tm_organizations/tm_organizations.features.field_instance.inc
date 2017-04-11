@@ -329,7 +329,7 @@ function tm_organizations_field_default_field_instances() {
     'bundle' => 'organization',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Add additional details you would like displayed at the top of your receipt email.<br>
+    'description' => 'Add additional details you would like displayed at the top of your payment receipt.<br>
 Example: your business number, or tax id',
     'display' => array(
       'default' => array(
@@ -1740,7 +1740,7 @@ Displays a short message to followers on your company profile page.<br><br>',
     'default_value' => NULL,
     'default_value_function' => '',
     'deleted' => 0,
-    'description' => 'Select the member that manages this account.',
+    'description' => 'Select up to five members who can manage this listing.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -1820,6 +1820,7 @@ Displays a short message to followers on your company profile page.<br><br>',
           'event' => 0,
           'organization' => 0,
           'page' => 0,
+          'site_brand' => 0,
         ),
         'priority' => 0,
         'referenced' => array(
@@ -1927,7 +1928,7 @@ Displays a short message to followers on your company profile page.<br><br>',
   t('Add a location field to automatic newsfeed posts.<br>
 Example: Sydney<br>
 Example including lat/lon: Sydney|-33.8,151.2');
-  t('Add additional details you would like displayed at the top of your receipt email.<br>
+  t('Add additional details you would like displayed at the top of your payment receipt.<br>
 Example: your business number, or tax id');
   t('Add tags or text to automatic newsfeed posts<br>
 Example: #news #tech');
@@ -1963,7 +1964,7 @@ Displays a short message to followers on your company profile page.<br><br>');
 example: http://exampleblog.com/feed/');
   t('Provide a cover image to be displayed behind your company logo.
 <br>To support retina displays, upload your image sized to 1610x906');
-  t('Select the member that manages this account.');
+  t('Select up to five members who can manage this listing.');
   t('Snapchat');
   t('Subscription Renewal Date');
   t('Subscription Type');

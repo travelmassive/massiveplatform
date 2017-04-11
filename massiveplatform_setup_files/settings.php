@@ -808,7 +808,7 @@ __EMAIL_SIGNOFF__
 ";
 
 // AU
-$conf["tm_subscriptions_organization"]["AU"] = $conf["tm_subscriptions_organization_pricing"]["US"];
+$conf["tm_subscriptions_organization"]["AU"] = $conf["tm_subscriptions_organization"]["US"];
 $conf["tm_subscriptions_organization"]["AU"]["price"] = 49;
 $conf["tm_subscriptions_organization"]["AU"]["currency"] = "aud"; // lowercase
 $conf["tm_subscriptions_organization"]["AU"]["subscription_type"] = "ORG_1YR_AU";

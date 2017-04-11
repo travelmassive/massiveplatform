@@ -73,17 +73,6 @@ function tm_organizations_user_default_permissions() {
     'module' => 'flag',
   );
 
-  // Exported permission: 'unflag follow_organizations'.
-  $permissions['unflag follow_organizations'] = array(
-    'name' => 'unflag follow_organizations',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'authenticated user' => 'authenticated user',
-      'non-validated' => 'non-validated',
-    ),
-    'module' => 'flag',
-  );
-
   // Exported permission: 'flag organization_subscription_enable'.
   $permissions['flag organization_subscription_enable'] = array(
     'name' => 'flag organization_subscription_enable',
@@ -100,6 +89,17 @@ function tm_organizations_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag follow_organizations'.
+  $permissions['unflag follow_organizations'] = array(
+    'name' => 'unflag follow_organizations',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
+      'non-validated' => 'non-validated',
     ),
     'module' => 'flag',
   );

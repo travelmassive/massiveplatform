@@ -92,7 +92,7 @@ function tm_events_communication_form($event) {
 
   // Allow chapter leaders, community managers, moderators, administrator to set reply-to
   $event_chapter_id = _tm_event_get_chapter_id($event);
-  if (tm_users_is_chapter_leader($user->uid, $event_chapter_id) or (in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles))) {
+  if (tm_users_is_chapter_leader($user->uid, $event_chapter_id) or (in_array("chapter leader", $user->roles)) or (in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles))) {
     $form['reply_to']['#disabled'] = false;
     $form['reply_to']['#description'] = 'Any replies to this announcement will be sent here. Leave blank for no reply-to address.';
   }
@@ -101,7 +101,7 @@ function tm_events_communication_form($event) {
 
   // Allow chapter leaders, moderators, administrator to use html email
   $send_html_email = false;
-  if (tm_users_is_chapter_leader($user->uid, $event_chapter_id) or (in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles))) {
+  if (tm_users_is_chapter_leader($user->uid, $event_chapter_id) or (in_array("chapter leader", $user->roles)) or (in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles))) {
     $send_html_email = true;
   }
 

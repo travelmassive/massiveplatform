@@ -1750,15 +1750,21 @@ function _tm_more_actions_process($field, $title = NULL) {
       // Check if is moderator or administrator
       $is_moderator_or_administrator = (in_array("administrator", $user->roles) or in_array("moderator", $user->roles));
 
-      // Check if can create company event
+      // Check if is company manager
       if ((tm_organizations_is_company_profile_manager($user->uid, $field['entity']->nid)) or $is_moderator_or_administrator) {
-        $links['edition'][] = array(
-        'wrapper_class' => array('edit'),
-        'content' => l(t('View payments'), '/payment/reports/subscription-payments/' . $field['entity']->nid, array(
-          'attributes' => array(
-            'title' => t('View payments for @organization', array('@organizations' => $field['entity']->title))
-          )
-        )));
+
+        // Check if company has made payment
+        if (tm_subscriptions_is_organization_subscription_paid($field['entity']->nid)) {
+
+            $links['edition'][] = array(
+            'wrapper_class' => array('edit'),
+            'content' => l(t('View payments'), '/payment/reports/subscription-payments/' . $field['entity']->nid, array(
+              'attributes' => array(
+                'title' => t('View payments for @organization', array('@organizations' => $field['entity']->title))
+              )
+            )));
+
+        }
       }
     }
   }

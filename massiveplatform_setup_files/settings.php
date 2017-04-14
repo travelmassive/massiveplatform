@@ -673,7 +673,7 @@ $conf['tm_newsfeed_feedback_link_text'] = 'Let us know';
 /** If you would like to process event payments, please get in contact with the author. **/
 /*
 $conf["tm_payments_stripe_publishable_key"] = "publishable"; // stripe publishable key
-$conf["tm_payments_stripe_image_url"] = '/sites/all/themes/tm/images/travel_massive_stripe_payment_icon.png'; // stripe image url
+$conf["tm_payments_stripe_image_url"] = '/sites/all/themes/tm/images/stripe_payment_icon.png'; // stripe image url
 $conf["tm_payments_process_url"] = "https://example.massiveplatform.com/payments/process.php"; // external payment processor
 $conf["tm_payments_process_check_certificate"] = false; // turn on for production 
 $conf["tm_payments_process_timeout"] = 10; // seconds to wait for process url before timeout 
@@ -705,7 +705,7 @@ $conf["tm_payments_reports_help_message"] = "Here's your ticket sales for this e
 /** If you would like to process event payments, please get in contact with the author. **/
 /*
 $conf["tm_subscriptions_stripe_publishable_key"] = "publishable"; // stripe publishable key
-$conf["tm_subscriptions_stripe_image_url"] = '/sites/all/themes/tm/images/travel_massive_stripe_payment_icon.png'; // stripe image url
+$conf["tm_subscriptions_stripe_image_url"] = '/sites/all/themes/tm/images/stripe_payment_icon.png'; // stripe image url
 $conf["tm_subscriptions_process_url"] = ""; // external payment processor
 $conf["tm_subscriptions_process_check_certificate"] = false; // turn on for production 
 $conf["tm_subscriptions_process_timeout"] = 10; // seconds to wait for process url before timeout 
@@ -749,11 +749,11 @@ $conf["tm_subscriptions_organization"]["US"]["partner_codes"] = array("MASSIVE" 
 $conf["tm_subscriptions_organization"]["US"]["learn_more_url"] = "http://example.massiveplatform.com/blog/upgrade-to-premium/";
 $conf["tm_subscriptions_organization"]["US"]["support_url"] = "http://example.massiveplatform.com/blog/premium-support/";
 $conf["tm_subscriptions_organization"]["US"]["html"] = "<center><h2>Generate Leads and More Revenue.</h2>
-<p style='font-size: larger;'>Promote your business with a Premium account. <a href=''>Learn more</a></p><button class='payment-button bttn bttn-secondary bttn-m'>Upgrade to Premium</button> <br>
+<p style='font-size: larger;'>Promote your business to __NUM_MEMBERS_ROUNDED__ members with a Premium account. <a target='_blank' href=''>Learn more</a></p><button class='payment-button bttn bttn-secondary bttn-m'>Upgrade to Premium</button> <br>
 <span style='color: #888; font-size: 10pt; line-height: 2rem;'>__PRICING_LABEL__</span></center>
 <span style='float: right;'><a class='hide-cta-banner' style='color: #888;' href='#'>No, thanks</a></span>";
-$conf["tm_subscriptions_organization"]["US"]["html_renew"] = "<center><h2>Generate Leads and More Revenue.</h2>
-<p style='font-size: larger;'>Renew your Subscription. <a href=''>Learn more</a></p><button class='payment-button bttn bttn-secondary bttn-m'>Renew Subscription</button> <br>
+$conf["tm_subscriptions_organization"]["US"]["html_renew"] = "<center><h2>Your subscription expires in __SUBSCRIPTION_EXPIRES_TEXT__.</h2>
+<p style='font-size: larger;'>Renew your Subscription. <a target='_blank' href=''>Learn more</a></p><button class='payment-button bttn bttn-secondary bttn-m'>Renew Subscription</button> <br>
 <span style='color: #888; font-size: 10pt; line-height: 2rem;'>__PRICING_LABEL__</span></center>
 <span style='float: right;'><a class='hide-cta-banner' style='color: #888;' href='#'>No, thanks</a></span>";
 $conf["tm_subscriptions_organization"]["US"]["email_replyto"] = "support@massiveplatform.com"; // where should reply to emails go

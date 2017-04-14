@@ -22,10 +22,13 @@ function tm_subscriptions_organization_send_notification($organization, $notific
 	// get company url
 	$company_url = $conf["tm_email_server_http"] . "://" . $conf["tm_email_server_url_domain"] . "/" . drupal_get_path_alias('node/' . $organization->nid);
 
+	// payment receipt url
+	$view_payments_url = $conf["tm_email_server_http"] . "://" . $conf["tm_email_server_url_domain"] . "/payment/reports/subscription-payments/" . $organization->nid;
+
 	// first name of owner of account
-	//if ($first_name == "") {
+	if ($first_name == "") {
 		$first_name = tm_subscriptions_organization_get_owner_first_names($organization);
-	//}
+	}
 
 	// create email
 	$organization_emails = tm_subscriptions_organization_get_emails($organization, $country_code);
@@ -60,6 +63,7 @@ function tm_subscriptions_organization_send_notification($organization, $notific
 	$message = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $message); // email sign off
 	$message = str_replace("__ORGANIZATION_PROFILE_URL__", $company_url, $message); // organization url
 	$message = str_replace("__ORGANIZATION_ID__", $organization->nid, $message); // organization nid
+	$message = str_replace("__VIEW_PAYMENTS_URL__", $view_payments_url, $message); // payments url
 	$message = str_replace("\n", "<br>", $message); // line breaks
 
 	// expiry date

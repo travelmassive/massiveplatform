@@ -1562,7 +1562,7 @@ function _tm_more_actions_process($field, $title = NULL) {
           'field_event_company' => $field['entity']->nid
         ),
         'attributes' => array(
-          'title' => t('Add event for @organization', array('@organizations' => $field['entity']->title))
+          'title' => t('Add event for @organization', array('@organization' => $field['entity']->title))
         )
       )));
 
@@ -1617,7 +1617,7 @@ function _tm_more_actions_process($field, $title = NULL) {
         $difference = time() - $flagger->timestamp;
         $flagged_time = format_interval($difference, 1) . " ago";
         if ($flagger->uid == 0) { 
-          $flagger_name = "Adminstrator"; // global flags used to record 0
+          $flagger_name = "Administrator"; // global flags used to record 0
         }
         else {
           $flagged_user = user_load($flagger->uid);
@@ -1641,7 +1641,7 @@ function _tm_more_actions_process($field, $title = NULL) {
       // 1. Show Flag / Unflag link
       // only show for admin and moderator
       // chapter leaders flag sponsors via the event page but not directly
-      if ((in_array('administrator', array_values($user->roles))) or (in_array('moderator', array_values($user->roles)))) {
+    if ((in_array('administrator', array_values($user->roles))) or (in_array('moderator', array_values($user->roles)))) {
 
       $links['edition'][] = array(
         'wrapper_class' => array('subscription'),
@@ -1697,7 +1697,7 @@ function _tm_more_actions_process($field, $title = NULL) {
         $difference = time() - $flagger->timestamp;
         $flagged_time = format_interval($difference, 1) . " ago";
         if ($flagger->uid == 0) { 
-          $flagger_name = "Adminstrator"; // global flags used to record 0
+          $flagger_name = "Administrator"; // global flags used to record 0
         }
         else {
           $flagged_user = user_load($flagger->uid);
@@ -1760,7 +1760,7 @@ function _tm_more_actions_process($field, $title = NULL) {
             'wrapper_class' => array('edit'),
             'content' => l(t('View payments'), '/payment/reports/subscription-payments/' . $field['entity']->nid, array(
               'attributes' => array(
-                'title' => t('View payments for @organization', array('@organizations' => $field['entity']->title))
+                'title' => t('View payments for @organization', array('@organization' => $field['entity']->title))
               )
             )));
 

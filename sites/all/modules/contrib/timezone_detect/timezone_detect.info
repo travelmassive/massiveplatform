@@ -1,0 +1,12 @@
+name = Timezone Detect
+description = Provides automatic timezone detection via javascript.
+package = Date/Time
+configure = admin/config/regional/timezone_detect
+core = 7.x
+
+; Information added by Drupal.org packaging script on 2017-02-22
+version = "7.x-1.2"
+core = "7.x"
+project = "timezone_detect"
+datestamp = "1487777297"
+

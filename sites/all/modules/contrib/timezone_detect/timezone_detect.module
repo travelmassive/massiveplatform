@@ -1,0 +1,166 @@
+<?php
+/**
+ * @file
+ * Module provides automatic timezone detection via javascript.
+ */
+
+/**
+ * Load constants.
+ */
+require_once 'timezone_detect.constants.inc';
+
+/**
+ * Implements hook_menu().
+ */
+function timezone_detect_menu() {
+
+  // Admin settings.
+  $items['admin/config/regional/timezone_detect'] = array(
+    'title' => 'Timezone Detect',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('timezone_detect_admin_form'),
+    'access arguments' => array('administer site configuration'),
+    'description' => 'Configure timezone detection settings.',
+    'file' => 'timezone_detect.admin.inc',
+  );
+
+  $items['admin/config/regional/timezone_detect/admin'] = array(
+    'title' => 'Timezone Detect',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+  );
+
+  // Ajax callback function to set current user's timezone.
+  $items['timezone-detect/ajax/set-timezone'] = array(
+    'title' => 'Update session timezone',
+    'page callback' => 'timezone_detect_set_timezone',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_library().
+ */
+function timezone_detect_library() {
+  $path = drupal_get_path('module', 'timezone_detect');
+  return array(
+    'jstz' => array(
+      'title' => t('jsTimezoneDetect'),
+      'website' => TIMEZONE_DETECT_LIBRARY_WEBSITE,
+      'version' => '1.0.5',
+      'js' => array(
+        $path . '/' . TIMEZONE_DETECT_LIBRARY_FILENAME => array(),
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_user_login().
+ */
+function timezone_detect_user_login(&$edit, $account) {
+  if (variable_get('timezone_detect_mode') === TIMEZONE_DETECT_MODE_LOGIN || empty($account->timezone)) {
+    // Set session flag to update user's timezone. Note that we cannot add the
+    // js directly from this function, as the user is redirected after this
+    // hook fires.
+    $_SESSION['timezone_detect']['update_timezone'] = TRUE;
+  }
+}
+
+/**
+ * Implements hook_page_build().
+ */
+function timezone_detect_page_build(&$page) {
+  // Include the javascript only when appropriate.
+  if (isset($_SESSION['timezone_detect']['update_timezone']) || (!user_is_anonymous() && variable_get('timezone_detect_mode') === TIMEZONE_DETECT_MODE_ALWAYS)) {
+    timezone_detect_add_js();
+  }
+}
+
+/**
+ * Ajax callback function to set current user's timezone.
+ */
+function timezone_detect_set_timezone() {
+  global $user;
+
+  // If they are logged in, set some data.
+  if (!user_is_anonymous()) {
+    // Check for $_POST data.
+    // Timezone should be an IANA/Olson timezone id provided via $_POST.
+    if (!isset($_POST['timezone'])) {
+      watchdog('timezone_detect', 'Attempting to set timezone for user @uid, but no timezone found in $_POST data; aborting.', array('@uid' => $user->uid), WATCHDOG_ERROR);
+      return '';
+    }
+    // Make sure we have a valid session token to prevent cross-site request forgery.
+    if (!isset($_POST['token']) || !drupal_valid_token($_POST['token'])) {
+      watchdog('timezone_detect', 'Attempting to set timezone for user @uid, but session token in $_POST data is empty or invalid; aborting.', array('@uid' => $user->uid), WATCHDOG_ERROR);
+      return '';
+    }
+
+    $timezone = check_plain($_POST['timezone']);
+
+    // Keep track of the last submitted timezone in case it's not valid so that
+    // we don't keep POSTing it on every request.
+    $_SESSION['timezone_detect']['current_timezone'] = $timezone;
+
+    // Check valid timezone id.
+    $zone_list = timezone_identifiers_list();
+    if (!in_array($timezone, $zone_list)) {
+      watchdog('timezone_detect', 'Attempting to set timezone for user @uid to @timezone, but that does not appear to be a valid timezone id; aborting.', array('@uid' => $user->uid, '@timezone' => $timezone), WATCHDOG_ERROR);
+      return '';
+    }
+
+    // Save timezone to account.
+    $account = user_load($user->uid);
+    $edit['timezone'] = $timezone;
+    user_save($account, $edit);
+    if (variable_get('timezone_detect_success_watchdog', TRUE)) {
+      watchdog('timezone_detect', 'Set timezone for user @uid to @timezone.', array('@uid' => $user->uid, '@timezone' => $timezone));
+    }
+  }
+
+  // Unset session flag regarldess of whether they are logged in or not to avoid
+  // repeated attempts at this process that are likely to fail.
+  unset($_SESSION['timezone_detect']['update_timezone']);
+}
+
+/**
+ * Add the javascript that will update the user's timezone via ajax callback.
+ */
+function timezone_detect_add_js() {
+  $added = &drupal_static(__FUNCTION__, FALSE);
+  if (!$added) {
+    // Add library js.
+    drupal_add_library('timezone_detect', 'jstz');
+
+    // Add helper js.
+    $helper_js = drupal_get_path('module', 'timezone_detect') . '/timezone_detect.js';
+    drupal_add_js($helper_js);
+
+    // Store the current timezone for comparison.
+    $timezone = '';
+    if (!empty($_SESSION['timezone_detect']['current_timezone'])) {
+      $timezone = $_SESSION['timezone_detect']['current_timezone'];
+    }
+    elseif (!empty($GLOBALS['user']->timezone)) {
+      $timezone = $GLOBALS['user']->timezone;
+    }
+
+    // Create and pass token to prevent cross-site request forgery.
+    $token = drupal_get_token();
+
+    // Add these items as js settings.
+    $setting = array(
+      'timezone_detect' => array(
+        'current_timezone' => $timezone,
+        'token' => $token
+      ),
+    );
+    drupal_add_js($setting, 'setting');
+
+    // Mark as added so we don't do it again.
+    $added = TRUE;
+  }
+}

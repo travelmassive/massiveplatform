@@ -245,6 +245,14 @@ function _tm_payments_form_alter_event_form(&$form, &$form_state, $form_id) {
 	// Set options
 	$form['field_event_payment_payout_to'][LANGUAGE_NONE]['#options'] = $organizer_opts;
 
+	// Set default selected payout
+	if (!$is_new_event) {
+		if (isset($event->field_event_payment_payout_to[LANGUAGE_NONE][0]['target_id'])) {
+		  $payout_uid = $event->field_event_payment_payout_to[LANGUAGE_NONE][0]['target_id'];
+		  $form['field_event_payment_payout_to'][LANGUAGE_NONE]['#default_value'] = $payout_uid;
+		}
+	}
+
 	// Step 7. Display Commission
 	/////////
 

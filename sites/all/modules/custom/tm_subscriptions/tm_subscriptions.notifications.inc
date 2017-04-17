@@ -170,15 +170,15 @@ function tm_subscriptions_organization_send_email($organization_emails, $subject
 	$module = 'tm_subscriptions';
 	$key = 'key';
 	$language = language_default();
+	$params = array();
+	$send = FALSE;
+
 	if ($cc != "") {
 		$params["headers"] = array("Cc" => $cc);
 	}
 	if ($bcc != "") {
 		$params["headers"] = array("Bcc" => $bcc);
 	}
-
-	$params = array();
-	$send = FALSE;
 
 
 	// STEP 1. LOAD HTML TEMPLATE

@@ -10,10 +10,6 @@ function tm_subscriptions_node_view($node, $view_mode, $langcode) {
 
 	global $user;
 
-	// test
-	// TODO
-	//tm_subscriptions_organization_send_notification($node, "renewal");
-
 	if (!user_is_logged_in()) {
 		return;
 	}

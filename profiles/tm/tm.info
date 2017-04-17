@@ -81,10 +81,8 @@ dependencies[] = metatag_dc
 dependencies[] = metatag_opengraph
 
 ; TM - development
-dependencies[] = devel
 dependencies[] = features
 dependencies[] = strongarm
-dependencies[] = simpletest
 
 ; TM - features
 dependencies[] = tm_base

@@ -8,7 +8,7 @@
 /**
  * Implements hook_rules_event_info().
  *
- * Defines a rules event to react on Facebook login and user creation
+ * Defines a rules event to react on Facebook login and user creation.
  *
  * @ingroup rules
  */

@@ -31,13 +31,13 @@ function simple_fb_connect_requirements($phase) {
       $requirements['php_version']['description'] = $t('Simple FB Connect could not be installed. Facebook PHP SDK v4 requires PHP 5.4 or higher.');
     }
 
-    // Make sure that Libraries module is loaded
+    // Make sure that Libraries module is loaded.
     if (!function_exists('libraries_get_path')) {
       module_load_include('module', 'libraries');
     }
     // Try to check that we have version 4.0.x of the SDK library.
     // - libraries_detect does not work in the install phase so we can't easily check the exact version
-    // - We check if sites/all/libraries/facebook-php-sdk-v4/README.md is found
+    // - We check if sites/all/libraries/facebook-php-sdk-v4/README.md is found.
     $path = libraries_get_path('facebook-php-sdk-v4');
     if (!is_file($path . '/README.md')) {
       $requirements['facebook-php-sdk-v4']['severity'] = REQUIREMENT_ERROR;
@@ -74,11 +74,16 @@ function simple_fb_connect_requirements($phase) {
 function simple_fb_connect_uninstall() {
   variable_del('simple_fb_connect_appid');
   variable_del('simple_fb_connect_skey');
-  variable_del('simple_fb_connect_connect_url');
+  variable_del('simple_fb_connect_api_version');
+  variable_del('simple_fb_connect_oauth_redirect_url');
+  variable_del('simple_fb_connect_app_domains');
+  variable_del('simple_fb_connect_site_url');
   variable_del('simple_fb_connect_post_login_url');
+  variable_del('simple_fb_connect_redirect_user_form');
   variable_del('simple_fb_connect_login_only');
   variable_del('simple_fb_connect_disable_admin_login');
   variable_del('simple_fb_connect_disabled_roles');
+  variable_del('simple_fb_connect_logout_action');
 }
 
 /**
@@ -107,4 +112,13 @@ function simple_fb_connect_update_7001() {
     $updated_roles[$role->name] = $role->name;
   }
   variable_set('simple_fb_connect_disabled_roles', $updated_roles);
+}
+
+/**
+ * Sets Facebook API version to v2.3 in module settings.
+ *
+ * See https://www.drupal.org/node/2843364
+ */
+function simple_fb_connect_update_7201() {
+  variable_set('simple_fb_connect_api_version', 'v2.3');
 }

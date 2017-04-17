@@ -6,9 +6,9 @@ dependencies[] = libraries
 dependencies[] = xautoload
 configure = admin/config/people/simple-fb-connect
 
-; Information added by Drupal.org packaging script on 2016-12-28
-version = "7.x-2.7"
+; Information added by Drupal.org packaging script on 2017-03-17
+version = "7.x-2.8"
 core = "7.x"
 project = "simple_fb_connect"
-datestamp = "1482952385"
+datestamp = "1489724892"
 

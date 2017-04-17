@@ -1,27 +1,14 @@
-SIMPLE FACEBOOK CONNECT MODULE
+SIMPLE FB CONNECT MODULE
 
-Simple FB Connect is a Facebook Connect Integration for Drupal.
+Simple FB Connect module allows users to register and login to your Drupal
+site with their Facebook account.
 
-It adds to the site:
-* A new url: /user/simple-fb-connect
-* A tab on /user page pointing to the above url
+INSTALLATION INSTRUCTIONS AND MODULE HANDBOOK
+---------------------------------------------
+Installation instructions and other documentation for Drupal 7 can be found
+from the module handbook:
 
-HOW IT WORKS
-------------
-User can click on the "Facebook login" tab on the user login page
-You can add a button or link anywhere on the site that points
-to /user/simple-fb-connect so theming and customizing the button or link
-is very flexible.
-
-When the user opens the /user/simple-fb-connect link, it automatically takes
-user to Facebook for authentication. Facebook then returns the user to Drupal
-site. If we have an existing Drupal user with the same email address provided
-by Facebook, that user is logged in. Otherwise a new Drupal user is created.
-
-SETUP
------
-Installation instructions for Drupal 7 can be found from the module handbook:
-https://www.drupal.org/node/2642962
+https://www.drupal.org/docs/7/modules/simple-fb-connect
 
 ADVANCED USAGE
 --------------
@@ -32,8 +19,7 @@ The module also provides hooks for other modules. You can also use Rules module
 to react on user login and user creation events. You can easily extend Facebook
 integrations with a custom module.
 
-Please refer to module handbook for more information on these topics:
-https://www.drupal.org/node/2474731
+Please refer to module handbook for more information on these topics.
 
 SUPPORT REQUESTS
 ----------------

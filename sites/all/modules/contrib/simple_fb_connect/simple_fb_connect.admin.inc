@@ -4,6 +4,10 @@
  * @file
  * Administration page callbacks for the Simple FB Connect module.
  */
+
+/**
+ * Module settings form.
+ */
 function simple_fb_connect_api_keys_settings($form, &$form_state) {
   // Check that Facebook PHP SDK is properly installed and that the version is 4.0.x.
   $sdk = libraries_detect('facebook-php-sdk-v4');
@@ -18,7 +22,7 @@ function simple_fb_connect_api_keys_settings($form, &$form_state) {
   $form['fb_settings'] = array(
     '#type' => 'fieldset',
     '#title' => t('Facebook App settings'),
-    '#description' => t('You need to first create a Facebook App at <a href="https://developers.facebook.com/apps">https://developers.facebook.com/apps</a>')
+    '#description' => t('You need to first create a Facebook App at <a href="@url">@url</a>.', array('@url' => 'https://developers.facebook.com/apps')),
   );
 
   $form['fb_settings']['simple_fb_connect_appid'] = array(
@@ -26,7 +30,7 @@ function simple_fb_connect_api_keys_settings($form, &$form_state) {
     '#required' => TRUE,
     '#title' => t('App ID'),
     '#default_value' => variable_get('simple_fb_connect_appid', NULL),
-    '#description' => t('Copy the App ID of your Facebook App here'),
+    '#description' => t('Copy the App ID of your Facebook App here. This value can be found from your App Dashboard.'),
   );
 
   $form['fb_settings']['simple_fb_connect_skey'] = array(
@@ -34,21 +38,45 @@ function simple_fb_connect_api_keys_settings($form, &$form_state) {
     '#required' => TRUE,
     '#title' => t('App Secret'),
     '#default_value' => variable_get('simple_fb_connect_skey', NULL),
-    '#description' => t('Copy the App Secret of your Facebook App here'),
+    '#description' => t('Copy the App Secret of your Facebook App here. This value can be found from your App Dashboard.'),
   );
 
-  $form['fb_settings']['simple_fb_connect_connect_url'] = array(
+  $form['fb_settings']['simple_fb_connect_api_version'] = array(
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#title' => t('API Version'),
+    '#default_value' => variable_get('simple_fb_connect_api_version', NULL),
+    '#description' => t('Copy the API Version of your Facebook App here. This value can be found from your App Dashboard. You may also use a newer version of the API. Available versions can be found at <a href="@url">Facebook Platform Changelog</a>.', array('@url' => 'https://developers.facebook.com/docs/apps/changelog')),
+  );
+
+  $form['fb_settings']['simple_fb_connect_oauth_redirect_url'] = array(
     '#type' => 'textfield',
     '#disabled' => TRUE,
-    '#title' => t('Connect url'),
-    '#description' => t('Copy this value to <em>Site URL</em> and <em>Mobile Site URL</em> of your Facebook App settings.'),
+    '#title' => t('Valid OAuth redirect URIs'),
+    '#description' => t('Copy this value to <em>Valid OAuth redirect URIs</em> field of your Facebook App settings.'),
+    '#default_value' => $GLOBALS['base_url'] . '/user/simple-fb-connect/return',
+  );
+
+  $form['fb_settings']['simple_fb_connect_app_domains'] = array(
+    '#type' => 'textfield',
+    '#disabled' => TRUE,
+    '#title' => t('App Domains'),
+    '#description' => t('Copy this value to <em>App Domains</em> field of your Facebook App settings.'),
+    '#default_value' => $_SERVER['SERVER_NAME'],
+  );
+
+  $form['fb_settings']['simple_fb_connect_site_url'] = array(
+    '#type' => 'textfield',
+    '#disabled' => TRUE,
+    '#title' => t('Site URL'),
+    '#description' => t('Copy this value to <em>Site URL</em> field of your Facebook App settings.'),
     '#default_value' => $GLOBALS['base_url'],
   );
 
   $form['module_settings'] = array(
     '#type' => 'fieldset',
     '#title' => t('Simple FB Connect configurations'),
-    '#description' => t('These settings allow you to configure how Simple FB Connect module behaves on your Drupal site')
+    '#description' => t('These settings allow you to configure how Simple FB Connect module behaves on your Drupal site'),
   );
 
   $form['module_settings']['simple_fb_connect_post_login_url'] = array(
@@ -106,5 +134,25 @@ function simple_fb_connect_api_keys_settings($form, &$form_state) {
     $form['module_settings']['simple_fb_connect_disabled_roles']['#description'] = t('No roles found.');
   }
 
+  $logout_actions = array(
+    0 => t('Log out from Drupal site only'),
+    1 => t('Log out from both Drupal site and Facebook'),
+  );
+  $form['module_settings']['simple_fb_connect_logout_action'] = array(
+    '#type' => 'radios',
+    '#title' => t('Logout settings'),
+    '#options' => $logout_actions,
+    '#default_value' => variable_get('simple_fb_connect_logout_action', 0),
+    '#description' => t('Should Drupal logout also log the user out from Facebook?'),
+  );
   return system_settings_form($form);
+}
+
+/**
+ * Validates module settings form.
+ */
+function simple_fb_connect_api_keys_settings_validate($form, &$form_state) {
+  if (!preg_match('/^v[2-9]\.[0-9]{1,2}$/', $form_state['values']['simple_fb_connect_api_version'])) {
+    form_set_error('simple_fb_connect_api_version', t('Invalid API version. The syntax for API version is for example <em>v2.8</em>'));
+  }
 }

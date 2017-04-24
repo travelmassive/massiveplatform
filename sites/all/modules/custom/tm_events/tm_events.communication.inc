@@ -256,14 +256,18 @@ function tm_events_communication_form($event) {
 
   // Only show company option if the event has a company
   if ($company != null) {
-    $num_followers = tm_organizations_get_num_followers($company->nid);
-    $options['company_followers'] = t('Company followers (' . tm_events_pluralize_members($num_followers) . ')');
+    if (tm_events_check_permission_edit_event($user, $event)) {
+      $num_followers = tm_organizations_get_num_followers($company->nid);
+      $options['company_followers'] = t('Company followers (' . tm_events_pluralize_members($num_followers) . ')');
+    }
   }
 
   // Member event - select followers
   if (($chapter == null) && ($company == null) && (tm_events_check_published_chapter_leader($event, $user->uid) == null)) {
-    $num_followers = tm_users_get_num_followers($user->uid);
-    $options['member_followers'] = t('My followers (' . tm_events_pluralize_members($num_followers) . ')');
+    if (tm_events_check_permission_edit_event($user, $event)) {
+      $num_followers = tm_users_get_num_followers($user->uid);
+      $options['member_followers'] = t('My followers (' . tm_events_pluralize_members($num_followers) . ')');
+    }
   }
 
   // Recipient options

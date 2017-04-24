@@ -299,7 +299,7 @@ function tm_events_communication_form($event) {
     '#default_value' => true,
   );
 
-  if ($chapter == null) {
+  if (($chapter == null) or (sizeof($chapter_nids) == 0)) {
     $form['approved_members']['#type'] = 'hidden';
   }
 

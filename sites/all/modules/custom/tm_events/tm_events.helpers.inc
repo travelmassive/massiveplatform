@@ -552,6 +552,26 @@ function tm_events_get_chapter_members_not_registered($event_id, $chapter_id) {
 }
 
 /**
+ * Helper method
+ * Get members in array of chapters who haven't registered to event 
+ */
+function tm_events_get_chapter_members_not_registered_multiple($event_id, $chapter_ids) {
+
+  $uids = array();
+  foreach ($chapter_ids as $chapter_id) {
+    $chapter_uids = tm_events_get_chapter_members_not_registered($event_id, $chapter_id);
+    $uids = array_merge($uids, $chapter_uids);
+  }
+
+  // get unique uids
+  $unique_uids = array_unique($uids);
+
+  // return unique uids
+  return $unique_uids;
+
+}
+
+/**
  * Helper method to get array of chapters event is published to
  */
 function tm_events_get_published_chapters($event) {

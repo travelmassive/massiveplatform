@@ -2,14 +2,14 @@
 
 // tm_chapters.helpers.inc - chapter helper methods
 
-/* Helper method get the number of members in a chapter 
+/**
+ * Helper method get the number of members in a chapter 
  *  Will include non-approved members in the count
  */
 function _tm_chapters_get_num_members($chapter_id) {
     $flag = flag_get_flag('signup');
     return $flag->get_count($chapter_id);
 }
-
 
 /**
  * Helper method return number of approved and unapproved members
@@ -36,7 +36,6 @@ function _tm_chapters_get_membership_counts($chapter_id) {
   return $membership_counts;
 
 }
-
 
 /**
  * Helper method to return formal name of chapter
@@ -98,3 +97,47 @@ function tm_chapters_get_all_chapter_shortcodes() {
   return $chapters_shortcodes;
 
 }
+
+/**
+ * Helper method
+ * Get uids of all chapter members
+ */
+function _tm_chapters_get_chapter_member_uids($chapter_id) {
+
+  $chapterflag = flag_get_flag('signup', NULL);
+
+  $members_in_chapter = array();
+
+  $results = db_select('flagging', 'f')
+    ->fields('f')
+    ->condition('fid', $chapterflag->fid ,'=')
+    ->condition('entity_id', $chapter_id ,'=')
+    ->execute();
+  while ($result = $results->fetchAssoc()){
+    $members_in_chapter[] = $result['uid'];
+  }
+
+  // return ids of members in chapter
+  return $members_in_chapter;
+}
+
+/**
+ * Helper method
+ * Get unique uids of all chapter members from array of chapters
+ */
+function _tm_chapters_get_chapter_member_uids_multiple($chapter_ids) {
+
+  $uids = array();
+  foreach ($chapter_ids as $chapter_id) {
+    $chapter_uids = _tm_chapters_get_chapter_member_uids($chapter_id);
+    $uids = array_merge($uids, $chapter_uids);
+  }
+
+  // get unique uids (member can be a member of multiple chapters)
+  $unique_uids = array_unique($uids);
+
+  // return unique uids
+  return $unique_uids;
+
+}
+

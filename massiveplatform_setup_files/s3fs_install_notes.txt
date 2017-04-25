@@ -34,7 +34,7 @@ s3cmd -c ~/.s3cfg sync . s3://BUCKETNAME/s3fs-public/
 4. Add to setttings.php
 
 /**
- * s3fs AWS settings:
+ * AWS s3fs settings:
  */
 $conf['awssdk2_access_key'] = "ACCESSKEY";
 $conf['awssdk2_secret_key'] = "SECRETKEY";

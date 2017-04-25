@@ -43,7 +43,11 @@ $conf['awssdk2_secret_key'] = "SECRETKEY";
 5. Install s3fs module and library
 
 drush en s3fs
-drush en s3fs_file_proxy # if you want to preserve old links ie: from emails
+
+- Note: s3fs_file_proxy needs modifying to correctly catch image styles
+Instead, we preserve the banner folders so old emails can still refer to them directly
+site/default/files/styles/banner/public/images/events
+site/default/files/styles/banner/public/images/chapters 
 
 - Install aws library
 
@@ -108,8 +112,14 @@ location ~ (^/s3/files/styles/|^/sites/.*/files/styles/) {
 
 Should be working.
 
+Note: Use the image derivates patch. This seems to prevent the first time 404 when new style is requested.
+
+$conf['tm_image_module_derivatives_patch'] = true; // apply image derivates patch 
+
+
 
 10. Troubleshooting
 
 select count(*) from file_managed where uri like 's3://%'; <- incorrectly migrated
 select count(*) from file_managed where uri like 'public://%';
+

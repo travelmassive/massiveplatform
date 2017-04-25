@@ -288,19 +288,31 @@ function tm_status_updates_fetch_meta_image($image_url) {
     imagedestroy($src);
 
     // save image to file
-    if (imagejpeg($dst, drupal_realpath($image_file_path), $image_quality) === true) {
+    // note: imagejpeg doesn't appear to support file resources so using output buffer capture instead
+    ob_start();
+    if (imagejpeg($dst, null, $image_quality) === true) {
       
+      // get image from output buffer
+      $final_image = ob_get_contents();
+      ob_end_clean();
+
+      // write to file
+      file_put_contents($image_file_path, $final_image);
+
+      // cleanup
       imagedestroy($dst);
       return $image_file_path;
 
     } else {
       
       // error saving file
+      ob_end_clean();
       imagedestroy($dst);
       return null;
     }
 
   } catch (Exception $e) {
+    ob_end_clean();
     return null;
   } 
 

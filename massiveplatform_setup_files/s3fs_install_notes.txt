@@ -1,0 +1,115 @@
+
+Installation notes for migrating production server to s3fs module
+
+see: https://www.drupal.org/project/s3fs
+
+Note: s3fs_migrate module did not work, so instead this method does a manual copy (step 3) with s3cmd.
+
+
+1. Create AWS S3 Bucket 
+
+- Create s3fs-public folder - ie: BUCKETNAME/s3fs-public
+- Enable 'make public' on folder
+
+
+2. Remove files greater than 250 characters
+
+- s3fs tables support maximum length 250 chars for uri
+
+cd sites/default/files
+find -regextype posix-extended -regex '.{250,}'
+
+- Remove any files from user account
+select * from file_managed where uri like '%LONGFILENAME%'; <- find uid of long filename
+
+
+3. Sync drupal files folder with s3cmd
+
+- Install s3cmd
+
+cd sites/default/files
+s3cmd -c ~/.s3cfg sync . s3://BUCKETNAME/s3fs-public/
+
+
+4. Add to setttings.php
+
+/**
+ * s3fs AWS settings:
+ */
+$conf['awssdk2_access_key'] = "ACCESSKEY";
+$conf['awssdk2_secret_key'] = "SECRETKEY";
+
+
+5. Install s3fs module and library
+
+drush en s3fs
+drush en s3fs_file_proxy # if you want to preserve old links ie: from emails
+
+- Install aws library
+
+mkdir sites/all/libraries/awssdk2
+cd sites/all/libraries/awssdk2
+wget https://github.com/aws/aws-sdk-php/releases/download/2.7.25/aws.zip
+unzip aws.zip
+
+- Configure s3fs
+
+Go to admin/config/media/s3fs
+
+Check Always serve files from S3 via HTTPS
+Check Use S3 for public:// files
+Set S3 Bucket Name 
+Set S3 Region
+
+
+6. Sync s3 to s3fs_files table
+
+drush s3fs-rc
+
+(Note: don't run copy local public files to s3, as we do this with s3sync)
+
+7. Update branding urls in settings.php
+
+Add aws url to branding elements in settings.php
+
+example:
+
+$conf['tm_branding_assets_base_path'] = 'https://BUCKETNAME.s3.amazonaws.com/s3fs-public/site_branding'; // path to site_branding assets 
+
+Also update following:
+
+tm_branding_apple_touch_icon_path
+tm_branding_frontpage_image
+tm_branding_header_logo
+tm_branding_footer_logo
+tm_branding_search_page_banner
+
+8. Setup Nginx
+
+# before location /
+# s3fs
+location ~* ^/(s3fs-css|s3fs-js)/(.*) {
+  set $s3_base_path 'BUCKETNAME.s3.amazonaws.com/s3fs-public';
+  set $file_path $2;
+
+  resolver 8.8.4.4 8.8.8.8 valid=300s;
+  resolver_timeout 10s;
+
+  proxy_set_header Authorization "";
+  proxy_pass http://$s3_base_path/$file_path;
+}
+
+# add to styles
+location ~ (^/s3/files/styles/|^/sites/.*/files/styles/) {
+	try_files $uri @rewrite;
+}
+
+9. Test
+
+Should be working.
+
+
+10. Troubleshooting
+
+select count(*) from file_managed where uri like 's3://%'; <- incorrectly migrated
+select count(*) from file_managed where uri like 'public://%';

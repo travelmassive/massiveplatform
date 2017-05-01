@@ -117,8 +117,12 @@ Note: Use the image derivates patch. This seems to prevent the first time 404 wh
 $conf['tm_image_module_derivatives_patch'] = true; // apply image derivates patch 
 
 
+10. Set up for cloudfront
 
-10. Troubleshooting
+Install cloudfront and load from bucket
+Use CNAME in s3fs settings
+
+11. Troubleshooting
 
 select count(*) from file_managed where uri like 's3://%'; <- incorrectly migrated
 select count(*) from file_managed where uri like 'public://%';

@@ -13,6 +13,83 @@ include_once 'tm_meta.features.inc';
  */
 function tm_meta_metatag_metatags_view_alter(&$output, $instance, $options) {
 	
+	if ($instance == "user:user") {
+
+		// get base image url
+		$image_base_url = tm_meta_get_image_base_url();
+
+		// og:image
+		$orig_uri = str_replace($image_base_url, "public:/", $output["og:image"]['#attached']['drupal_add_html_head'][0][0]['#value']);
+		$default_image_uri =_tm_users_get_default_avatar($orig_uri, $options['entity']->uid);
+		$output["og:image"]['#attached']['drupal_add_html_head'][0][0]['#value'] = tm_meta_image_style_url("avatar", $default_image_uri);
+		
+		// image_src
+		$orig_uri = str_replace($image_base_url, "public:/", $output["image_src"]['#attached']['drupal_add_html_head'][0][0]['#value']);
+		$default_image_uri =_tm_users_get_default_avatar($orig_uri, $options['entity']->uid);
+		$output["image_src"]['#attached']['drupal_add_html_head'][0][0]['#value'] = tm_meta_image_style_url("avatar", $default_image_uri);
+
+	}
+
+	if ($instance == "node:chapter") {
+
+		// get base image url
+		$image_base_url = tm_meta_get_image_base_url();
+
+		// og:image
+		$orig_uri = str_replace($image_base_url, "public:/", $output["og:image"]['#attached']['drupal_add_html_head'][0][0]['#value']);
+		$default_image_uri =_tm_chapters_get_default_image($orig_uri, $options['entity']->nid);
+		$output["og:image"]['#attached']['drupal_add_html_head'][0][0]['#value'] = tm_meta_image_style_url("banner", $default_image_uri);
+		
+		// image_src
+		$orig_uri = str_replace($image_base_url, "public:/", $output["image_src"]['#attached']['drupal_add_html_head'][0][0]['#value']);
+		$default_image_uri =_tm_chapters_get_default_image($orig_uri, $options['entity']->nid);
+		$output["image_src"]['#attached']['drupal_add_html_head'][0][0]['#value'] = tm_meta_image_style_url("banner", $default_image_uri);
+
+	}
+
+	if ($instance == "node:organization") {
+
+		// get base image url
+		$image_base_url = tm_meta_get_image_base_url();
+
+		// og:image
+		$orig_uri = str_replace($image_base_url, "public:/", $output["og:image"]['#attached']['drupal_add_html_head'][0][0]['#value']);
+		$default_image_uri =_tm_organizations_get_default_image($orig_uri, $options['entity']->nid);
+		$output["og:image"]['#attached']['drupal_add_html_head'][0][0]['#value'] = tm_meta_image_style_url("banner", $default_image_uri);
+		
+		// image_src
+		$orig_uri = str_replace($image_base_url, "public:/", $output["image_src"]['#attached']['drupal_add_html_head'][0][0]['#value']);
+		$default_image_uri =_tm_organizations_get_default_image($orig_uri, $options['entity']->nid);
+		$output["image_src"]['#attached']['drupal_add_html_head'][0][0]['#value'] = tm_meta_image_style_url("banner", $default_image_uri);
+
+	}
+
+	if ($instance == "node:event") {
+
+		// get base image url
+		$image_base_url = tm_meta_get_image_base_url();
+		
+		// og:image
+		$orig_uri = str_replace($image_base_url, "public:/", $output["og:image"]['#attached']['drupal_add_html_head'][0][0]['#value']);
+		$default_image_uri =_tm_events_get_default_image($orig_uri, $options['entity']->nid);
+		$output["og:image"]['#attached']['drupal_add_html_head'][0][0]['#value'] = tm_meta_image_style_url("banner", $default_image_uri);
+		
+		// image_src
+		$orig_uri = str_replace($image_base_url, "public:/", $output["image_src"]['#attached']['drupal_add_html_head'][0][0]['#value']);
+		$default_image_uri =_tm_events_get_default_image($orig_uri, $options['entity']->nid);
+		$output["image_src"]['#attached']['drupal_add_html_head'][0][0]['#value'] = tm_meta_image_style_url("banner", $default_image_uri);
+
+	}
+
+}
+
+
+/**
+ * Helper method to get correct base url
+ * Supports s3fs module
+ */
+function tm_meta_get_image_base_url() {
+
 	global $base_url;
 
 	// default image path
@@ -44,62 +121,20 @@ function tm_meta_metatag_metatags_view_alter(&$output, $instance, $options) {
 			$image_base_url = $s3_base_url_protocol . "://" . $s3_base_domain . "/" . $s3_base_path;
 		}
 	}
-	
-	if ($instance == "user:user") {
 
-	
-		// og:image
-		$orig_uri = str_replace($image_base_url, "public:/", $output["og:image"]['#attached']['drupal_add_html_head'][0][0]['#value']);
-		$default_image_uri =_tm_users_get_default_avatar($orig_uri, $options['entity']->uid);
-		$output["og:image"]['#attached']['drupal_add_html_head'][0][0]['#value'] = image_style_url("avatar", $default_image_uri);
-		
-		// image_src
-		$orig_uri = str_replace($image_base_url, "public:/", $output["image_src"]['#attached']['drupal_add_html_head'][0][0]['#value']);
-		$default_image_uri =_tm_users_get_default_avatar($orig_uri, $options['entity']->uid);
-		$output["image_src"]['#attached']['drupal_add_html_head'][0][0]['#value'] = image_style_url("avatar", $default_image_uri);
+	return $image_base_url;
+}
 
-	}
 
-	if ($instance == "node:chapter") {
+/**
+ * Wrapper for image_style_url
+ * Repalce double encoded space
+ * ie: %2520 -> %20
+ * This appears to be caused by metatag.inc:350
+ */
+function tm_meta_image_style_url($style_name, $path) {
 
-		// og:image
-		$orig_uri = str_replace($image_base_url, "public:/", $output["og:image"]['#attached']['drupal_add_html_head'][0][0]['#value']);
-		$default_image_uri =_tm_chapters_get_default_image($orig_uri, $options['entity']->nid);
-		$output["og:image"]['#attached']['drupal_add_html_head'][0][0]['#value'] = image_style_url("banner", $default_image_uri);
-		
-		// image_src
-		$orig_uri = str_replace($image_base_url, "public:/", $output["image_src"]['#attached']['drupal_add_html_head'][0][0]['#value']);
-		$default_image_uri =_tm_chapters_get_default_image($orig_uri, $options['entity']->nid);
-		$output["image_src"]['#attached']['drupal_add_html_head'][0][0]['#value'] = image_style_url("banner", $default_image_uri);
-
-	}
-
-	if ($instance == "node:organization") {
-
-		// og:image
-		$orig_uri = str_replace($image_base_url, "public:/", $output["og:image"]['#attached']['drupal_add_html_head'][0][0]['#value']);
-		$default_image_uri =_tm_organizations_get_default_image($orig_uri, $options['entity']->nid);
-		$output["og:image"]['#attached']['drupal_add_html_head'][0][0]['#value'] = image_style_url("banner", $default_image_uri);
-		
-		// image_src
-		$orig_uri = str_replace($image_base_url, "public:/", $output["image_src"]['#attached']['drupal_add_html_head'][0][0]['#value']);
-		$default_image_uri =_tm_organizations_get_default_image($orig_uri, $options['entity']->nid);
-		$output["image_src"]['#attached']['drupal_add_html_head'][0][0]['#value'] = image_style_url("banner", $default_image_uri);
-
-	}
-
-	if ($instance == "node:event") {
-
-		// og:image
-		$orig_uri = str_replace($image_base_url, "public:/", $output["og:image"]['#attached']['drupal_add_html_head'][0][0]['#value']);
-		$default_image_uri =_tm_events_get_default_image($orig_uri, $options['entity']->nid);
-		$output["og:image"]['#attached']['drupal_add_html_head'][0][0]['#value'] = image_style_url("banner", $default_image_uri);
-		
-		// image_src
-		$orig_uri = str_replace($image_base_url, "public:/", $output["image_src"]['#attached']['drupal_add_html_head'][0][0]['#value']);
-		$default_image_uri =_tm_events_get_default_image($orig_uri, $options['entity']->nid);
-		$output["image_src"]['#attached']['drupal_add_html_head'][0][0]['#value'] = image_style_url("banner", $default_image_uri);
-
-	}
-
+	$url = image_style_url($style_name, $path);
+	$url = str_replace("%2520", "%20", $url);
+	return $url;
 }

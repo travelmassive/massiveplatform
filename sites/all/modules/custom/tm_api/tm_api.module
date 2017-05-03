@@ -131,7 +131,7 @@ function tm_api_stats() {
 
   // number of member countries
   $result = db_query("SELECT DISTINCT field_user_country_iso2 from {field_data_field_user_country} ORDER BY field_user_country_iso2 ASC");
-  $member_countries = $result->fetchAllKeyed();
+  $member_countries = $result->fetchAllKeyed(0,0);
   $num_member_countries = (sizeof($member_countries));
   $api_data["num_member_countries"] = $num_member_countries;
 

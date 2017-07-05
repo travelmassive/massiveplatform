@@ -1054,6 +1054,21 @@ function image_style_url($style_name, $path) {
     $file_url .= (strpos($file_url, '?') !== FALSE ? '&' : '?') . drupal_http_build_query($token_query);
   }
 
+  // Create derivated image if it doesn't exist.
+  // Check for $conf["tm_image_module_derivatives_patch"]
+  global $conf;
+  if (isset($conf["tm_image_module_derivatives_patch"])) {
+    if ($conf["tm_image_module_derivatives_patch"] == true) {
+  
+      if (!file_exists($file_url) && !file_exists($uri)) {
+        if (file_exists($path)) {
+          $current_style = image_style_load($style_name);
+          image_style_create_derivative($current_style, $path, $uri);
+        }
+      }
+    }
+  }
+
   return $file_url;
 }
 

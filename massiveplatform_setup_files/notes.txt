@@ -1,5 +1,42 @@
 Installation and setup notes
 
+PHP 7 (7.0) Support:
+
+Fully support PHP 7.0 in Drupal 7:
+
+- https://www.drupal.org/node/2656548
+
+Detecting issues:
+
+- https://github.com/sstalle/php7cc
+composer global require sstalle/php7cc
+php7cc /path/to/massiveplatform/
+
+- https://www.drupal.org/node/2635876#comment-11137329
+Quick tip: This will find all Uniform Variable Syntax issues.
+grep -rn -e "->\$[a-zA-Z0-9_]*\[" /path/to/massiveplatform/
+
+Known issues:
+
+1. sites/all/modules/custom/field_group.module
+Causes "drush fd" to show modules as overridden
+Cause is Uniform Variable Syntax issue (see below)
+Patched with field_group-php7-2661484-massive.patch (support PHP5 and PHP7)
+
+2. modules/filter.api.php
+Contains sample code (line 205 and 237) which contains regex e modifier (deprecated).
+This is ok as it's sample code (https://www.drupal.org/node/2843864)
+
+3. sites/all/libraries/awssdk2/Doctrine/Common/Cache/RiakCache.php
+Contains soft-reserved name "object" (Line 26) (might not be compatible in upcoming PHP release) 
+Only effects if using s3fs module
+
+4. sites/all/modules/contrib/taxonomy_csv/import/taxonomy_csv.import.line.api.inc
+Contains illegal break (Line 377).
+Only effects importing taxonomy from csv (can fix manually)
+
+-----
+
 utf8mb4 support:
 
 As of Drupal 7.50 ut8mb4 support is in core: 

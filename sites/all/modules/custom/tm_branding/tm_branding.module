@@ -312,7 +312,7 @@ function tm_branding_check_brand($site_brand, $account) {
 
 			// if no ip, break
 			if ($match_ip == null) {
-				break;
+				$match_ip = "127.0.0.1"; // break; php 7
 			}
 
 			// lookup geoip info

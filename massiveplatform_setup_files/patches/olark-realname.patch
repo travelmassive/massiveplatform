@@ -1,0 +1,18 @@
+--- olark.module	2017-08-27 16:24:22.000000000 +0000
++++ olark.module	2017-08-27 16:24:16.000000000 +0000
+@@ -46,13 +46,14 @@
+   }
+ 
+   global $user;
++  $account = user_load($user->uid);
+   $setting = array('olark' => array());
+ 
+   // If the user is logged in, let's get some pertinent information and
+   // pass it along as well.
+   if ($user->uid) {
+     $setting['olark']['uid'] = $user->uid;
+-    $setting['olark']['name'] = $user->name;
++    $setting['olark']['name'] = $account->realname; // $user->name;
+     $setting['olark']['mail'] = $user->mail;
+     $setting['olark']['roles'] = t('roles @roles', array('@roles' => implode(', ', $user->roles)));
+     $setting['olark']['userpage'] = url('user/' . $user->uid, array('absolute' => TRUE));

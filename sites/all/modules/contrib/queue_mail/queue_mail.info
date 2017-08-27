@@ -9,9 +9,9 @@ configure = admin/config/system/queue_mail
 ; was added to core.
 dependencies[] = system (>=7.12)
 
-; Information added by Drupal.org packaging script on 2016-06-28
-version = "7.x-1.5"
+; Information added by Drupal.org packaging script on 2017-07-10
+version = "7.x-1.6"
 core = "7.x"
 project = "queue_mail"
-datestamp = "1467109743"
+datestamp = "1499717344"
 

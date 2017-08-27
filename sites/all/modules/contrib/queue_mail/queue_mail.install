@@ -39,7 +39,10 @@ function queue_mail_requirements($phase) {
           '1 mail currently queued for sending.',
           '@count mails currently queued for sending.') : t('Mail queue is empty'),
         'severity' => $queue_length > 0 ? REQUIREMENT_INFO : REQUIREMENT_OK,
-        'description' => t('Sending of queued mails happens on cron. You can <a href="@cron_link">run cron manually</a>.', array('@cron_link' => url('admin/reports/status/run-cron', array('query' => drupal_get_destination())))),
+        'description' => variable_get('queue_mail_send_on_cron', TRUE) ?
+          t('Sending of queued mails happens on cron. You can <a href="@cron_link">run cron manually</a>.',
+          array('@cron_link' => url('admin/reports/status/run-cron', array('query' => drupal_get_destination())))) :
+          t('Sending of queued mails on cron is disabled.'),
       );
       break;
   }

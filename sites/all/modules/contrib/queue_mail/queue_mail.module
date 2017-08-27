@@ -114,9 +114,10 @@ function queue_mail_send($message = array()) {
   // Sending was originally requested and was not canceled.
   else {
     $message['result'] = $system->mail($message);
-    // Log errors.
+    // Log errors and throw exception so that failed item remains in queue.
     if (!$message['result']) {
-      watchdog('mail', 'Error sending e-mail (from %from to %to).', array('%from' => $message['from'], '%to' => $message['to']), WATCHDOG_ERROR);
+      throw new Exception(t('Error sending e-mail (from %from to %to).',
+        array('%from' => $message['from'], '%to' => $message['to'])));
     }
   }
 

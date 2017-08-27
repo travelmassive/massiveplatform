@@ -55,9 +55,16 @@ function drush_queue_mail_send_all() {
     $end = time() + $timeout;
     $queue = _queue_mail_get_queue();
     while ((($timeout == 0) || time() < $end) && ($item = $queue->claimItem())) {
-      $function($item->data);
-      $queue->deleteItem($item);
-      $sent_mails_count++;
+      try {
+        $function($item->data);
+        $queue->deleteItem($item);
+        $sent_mails_count++;
+      }
+      catch (Exception $e) {
+        // In case of exception log it and leave the item in the queue
+        // to be processed again later.
+        watchdog_exception('queue_mail', $e);
+      }
     }
   }
   // Restore the user.

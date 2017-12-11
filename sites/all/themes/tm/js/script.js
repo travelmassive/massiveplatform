@@ -916,3 +916,27 @@
   }
 
 });})(jQuery, Drupal, this, this.document);
+
+
+// Show CTA banners (tm_subscription, tm_subscription_user)
+(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){
+
+  // Show the CTA banner (organization)
+  $('.show-cta-banner').on('click', function(e) {
+    $("#tm-subscriptions-cta-banner").show();
+    var cookie = ['tm_subscriptions_hide_organization_cta=0; domain=.', window.location.host.toString(), '; path=/;'].join('');
+    document.cookie = cookie;
+  });
+
+  // Show the CTA banner (user)
+  $('.show-cta-banner-user').on('click', function(e) {
+    $("#tm-subscriptions-cta-banner").show();
+    var cookie = ['tm_subscriptions_hide_user_cta=0; domain=.', window.location.host.toString(), '; path=/;'].join('');
+    document.cookie = cookie;
+  });
+
+
+});})(jQuery, Drupal, this, this.document);
+
+
+

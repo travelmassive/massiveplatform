@@ -132,8 +132,23 @@ function tm_payments_process_event_payment($event, $member) {
 		$log_user_http_user_agent = $_SERVER['HTTP_USER_AGENT'];
 	}
 
+	// chapter code
+	$chapter_code = "";
+	if (isset($event->field_chapter[LANGUAGE_NONE][0])) {
+		$event_chapter_nid = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
+		$event_chapter = node_load($event_chapter_nid);
+		if ($event_chapter != null) {
+			if (isset($event_chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['safe_value'])) {
+				$chapter_code = $event_chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['safe_value'];
+			}
+		}
+	}
+
+    // chapter commission
+    $chapter_commission = _tm_payments_get_event_commission($event);
+
 	// url-ify the data for the POST
-	$fields = array("stripe_token" => $stripe_token, "stripe_email" => $stripe_email, "stripe_currency" => $stripe_currency, "stripe_amount" => $stripe_amount, "event_id" => $event_id, "user_id" => $user_id, "user_email" => $user->mail, "log_user_ip" => $log_user_ip, "log_user_http_user_agent" => $log_user_http_user_agent, "user_first_name" => $user_first_name, "user_last_name" => $user_last_name, "event_title" => $event_title, "display_amount" => $display_amount, "event_url" => $event_url, "event_label" => $event_label);
+	$fields = array("stripe_token" => $stripe_token, "stripe_email" => $stripe_email, "stripe_currency" => $stripe_currency, "stripe_amount" => $stripe_amount, "event_id" => $event_id, "user_id" => $user_id, "user_email" => $user->mail, "log_user_ip" => $log_user_ip, "log_user_http_user_agent" => $log_user_http_user_agent, "user_first_name" => $user_first_name, "user_last_name" => $user_last_name, "event_title" => $event_title, "display_amount" => $display_amount, "event_url" => $event_url, "event_label" => $event_label, "chapter_code" => $chapter_code, "chapter_commission" => $chapter_commission);
 
 	$fields_string = http_build_query($fields);
 

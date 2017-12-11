@@ -53,19 +53,19 @@ function tm_users_strongarm() {
           'weight' => '80',
         ),
         'ckeditor' => array(
-          'weight' => '4',
+          'weight' => '3',
         ),
         'mimemail' => array(
-          'weight' => '2',
+          'weight' => '1',
         ),
         'redirect' => array(
-          'weight' => '5',
+          'weight' => '4',
         ),
         'metatags' => array(
-          'weight' => '6',
+          'weight' => '5',
         ),
         'contact' => array(
-          'weight' => '3',
+          'weight' => '2',
         ),
         'tm_connect_settings' => array(
           'weight' => '80',

@@ -422,7 +422,7 @@ function tm_users_get_approved_member_label($type = "singular") {
 
   global $conf;
 
-  // plural
+   // plural
    if ($type == "plural") {
      $unapproved_label = "Approved Members";
      if (isset($conf["tm_approved_labels"])) {
@@ -476,6 +476,18 @@ function tm_users_get_organization_profiles($uid) {
   foreach ($rows as $row) {
     $nids[] = $row->entity_id;
   }
+
+  // if subscriptions enabled, put subscribed companies at front of list
+  if (module_exists("tm_subscriptions")) {
+    $company_nids = tm_subscriptions_get_users_subscribed_companies($uid);
+    foreach ($nids as $check_nid) {
+      if (!in_array($check_nid, $company_nids)) {
+        $company_nids[] = $check_nid;
+      }
+    }
+    $nids = $company_nids;
+  }
+
   return $nids;
 }
 
@@ -489,7 +501,21 @@ function tm_users_get_friends($uid) {
   return $results;
 }
 
+/**
+ * Get taxononomy tid of a user
+ * Return tid or null if not found
+ */
+function tm_users_get_taxonomy_tid($uid) {
 
+  $query = "SELECT field_segment_tid FROM field_data_field_segment WHERE entity_type = 'user' AND entity_id = :uid LIMIT 1";
+  $rows = db_query($query, array(':uid' => $uid))->fetchAll();
 
+  // return result
+  foreach ($rows as $row) {
+    return $row->field_segment_tid;
+  }
 
+  // none
+  return null;
+}
 

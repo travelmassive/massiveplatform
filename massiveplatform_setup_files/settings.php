@@ -84,6 +84,8 @@ $conf['tm_twitter_consumer_secret'] = '';
 /** ACCOUNT MENU **/
 // $conf['tm_users_account_menu_links'] = array("Visit Massive" => "http://massiveplatform.com"); // array of account links (optional)
 // $conf['tm_users_chapter_leader_menu_links'] = array("Chapter Leader Resources" => "https://example.massiveplatform.com/blog/chapter-leader-resources/"); // array of account links (optional)
+$conf['tm_users_subscriber_menu_links'] = array("VIP Lounge" => "/pro");
+$conf['tm_users_company_subscriber_menu_links'] = array("VIP Lounge" => "/pro");
 
 /** WORDPRESS FEEDME **/
 /** This calls a module hosted on wordpress to embed blog (plus other) content based on current page **/
@@ -702,7 +704,7 @@ $conf["tm_payments_reports_help_message"] = "Here's your ticket sales for this e
 */
 
 /* SUBSCRIPTION PAYMENT SETTINGS */
-/** Optional subscription payments settings **/
+/* Enable tm_subscriptions */
 /** Note: this requires a stripe payments endpoint which is not provided in this distribution **/
 /** If you would like to process event payments, please get in contact with the author. **/
 /*
@@ -726,6 +728,7 @@ $conf["tm_subscriptions_reports_help_message"] = "Here's a receipt of your payme
 // US
 $conf["tm_subscriptions_organization_enabled"] = true; // enable subscription payments
 $conf["tm_subscriptions_organization_label"] = "Premium Account"; // label to call a subscription account
+$conf["tm_subscriptions_organization_label_noun"] = "Premium Member"; // label when applied
 $conf["tm_subscriptions_organization_label_short"] = "Premium"; // short label to call a subscription account
 $conf["tm_subscriptions_organization_cta_renewal_period"] = 30; // number of days to who renewal cta
 $conf["tm_subscriptions_organization_payment_success_message"] = "Thanks for your payment. Your company profile has been upgraded to premium.";// message to display after successful payment
@@ -814,6 +817,107 @@ $conf["tm_subscriptions_organization"]["AU"] = $conf["tm_subscriptions_organizat
 $conf["tm_subscriptions_organization"]["AU"]["price"] = 49;
 $conf["tm_subscriptions_organization"]["AU"]["currency"] = "aud"; // lowercase
 $conf["tm_subscriptions_organization"]["AU"]["subscription_type"] = "ORG_1YR_AU";
+*/
+
+/* USER SUBSCRIPTION PAYMENT SETTINGS */
+/* Enable tm_subscriptions_user */
+/*
+// User subscriptions 
+$conf["tm_subscriptions_user_enabled"] = true; // enable subscription payments
+$conf["tm_subscriptions_user_cta_min_events"] = 1; // minimum number of events attended
+$conf["tm_subscriptions_user_cta_min_account_age"] = 7; // minimum account age
+$conf["tm_subscriptions_user_cta_min_following"] = 1; // minimum followers
+$conf["tm_subscriptions_user_default_country"] = "US"; // country to return if user doesn't have one
+$conf["tm_subscriptions_user_enable_billing_address"] = false; // enable billing address
+$conf["tm_subscriptions_user_label"] = "Pro Membership"; // label to call a subscription account
+$conf["tm_subscriptions_user_label_noun"] = "Pro Member"; // label when applied to account
+$conf["tm_subscriptions_user_label_short"] = "Pro"; // short label to call a subscription account
+$conf["tm_subscriptions_user_cta_renewal_period"] = 30; // number of days to show renewal cta
+$conf["tm_subscriptions_user_payment_success_message"] = "Thanks for your payment. Your account has been upgraded to Pro."; // message to display after successful payment
+$conf["tm_subscriptions_user_renewed_success_message"] = "Thanks for your payment. Your pro subscription has been renewed."; // message to display after renewing subscription 
+$conf["tm_subscriptions_user_cta_text"] = "Upgrade to Pro Membership";
+$conf["tm_subscriptions_user_expired_message"] = "Your Pro Membership has expired.";
+$conf["tm_subscriptions_user_default"] = "US"; // optional - use this country as default price
+$conf["tm_subscriptions_user"] = array();
+$conf["tm_subscriptions_user"]["US"] = array();
+$conf["tm_subscriptions_user"]["US"]["private"] = false; // only show pricing if partner code applied
+$conf["tm_subscriptions_user"]["US"]["price"] = 99; // price to purchase
+$conf["tm_subscriptions_user"]["US"]["price_renew"] = 79; // price to renew
+$conf["tm_subscriptions_user"]["US"]["price_label"] = "Upgrade to Pro Membership for $99.";
+$conf["tm_subscriptions_user"]["US"]["price_label_renew"] = "Renew your membership now and save $20.";
+$conf["tm_subscriptions_user"]["US"]["currency"] = "usd"; // lowercase
+$conf["tm_subscriptions_user"]["US"]["currency_prefix"] = "\$"; // ie: GBP £ 
+$conf["tm_subscriptions_user"]["US"]["currency_symbol"] = "\$"; // ie: £
+$conf["tm_subscriptions_user"]["US"]["subscription_type"] = "PRO_1YR_US";
+$conf["tm_subscriptions_user"]["US"]["subscription_label"] = "Pro Membership";
+$conf["tm_subscriptions_user"]["US"]["subscription_expires"] = "+1 YEAR"; // 
+$conf["tm_subscriptions_user"]["US"]["stripe_description"] = "Pro Membership (1 Year)";
+$conf["tm_subscriptions_user"]["US"]["partner_codes"] = array("EARLYACCESS" => "59", "VIP" => "20"); // uppercase
+$conf["tm_subscriptions_user"]["US"]["learn_more_url"] = "http://example.massiveplatform.com/blog/pro-membership-early-access/";
+$conf["tm_subscriptions_user"]["US"]["support_url"] = "http://example.massiveplatform.com/blog/pro-membership-early-access/";
+$conf["tm_subscriptions_user"]["US"]["html"] = "<center><h2>Support Your Community.</h2>
+<p style='font-size: larger;'>Join __NUM_SUBSCRIBED_MEMBERS__ other members with a Pro Membership. <a class='show-subscriptions-payment' target='_blank' href='http://example.massiveplatform.com/blog/pro-membership/'>View Benefits</a></p>
+<div id='tm-subscriptions-payment' style='display: __PAYMENT_DISPLAY__;'>
+<button class='payment-button bttn bttn-secondary bttn-m'>Purchase Membership</button> <br>
+<span style='color: #888; font-size: 10pt; line-height: 2rem;'>__PRICING_LABEL__</span>
+</div>
+</center>
+<span style='float: right;'><a class='hide-cta-banner-user' style='color: #888;' href='#'>No, thanks</a></span>";
+$conf["tm_subscriptions_user"]["US"]["html_renew"] = "<center><h2>Your subscription expires in __SUBSCRIPTION_EXPIRES_TEXT__.</h2>
+<p style='font-size: larger;'>Join __NUM_SUBSCRIBED_MEMBERS__ other members with a Pro Membership. <a target='_blank' href='http://example.massiveplatform.com/blog/pro-membership/'>View Benefits</a></p>
+<button class='payment-button bttn bttn-secondary bttn-m'>Renew Subscription</button> <br>
+<span style='color: #888; font-size: 10pt; line-height: 2rem;'>__PRICING_LABEL__</span></center>
+<span style='float: right;'><a class='hide-cta-banner' style='color: #888;' href='#'>No, thanks</a></span>";
+$conf["tm_subscriptions_user"]["US"]["email_replyto"] = "support@massiveplatform.com"; // where should reply to emails go
+$conf["tm_subscriptions_user"]["US"]["email_bcc"] = ""; // where should reply to emails go
+$conf["tm_subscriptions_user"]["US"]["email_purchase_subject"] = "Thanks for purchasing a Pro Membership";
+$conf["tm_subscriptions_user"]["US"]["email_purchase_message"] = "Dear __FIRST_NAME__
+
+Thanks for purchasing a Pro Membership subscription.
+
+View your <a href='__VIEW_PAYMENTS_URL__'>payment receipt</a> online.
+
+To view your account, visit the link below:
+
+<a href='__USER_PROFILE_URL__'>__USER_PROFILE_URL__</a>
+
+__EMAIL_SIGNOFF__
+";
+$conf["tm_subscriptions_user"]["US"]["email_renewed_subject"] = "Thanks for renewing your Pro Membership subscription";
+$conf["tm_subscriptions_user"]["US"]["email_renewed_message"] = "Dear __FIRST_NAME__
+
+Thanks for renewing your Pro Membership subscription.
+
+View your <a href='__VIEW_PAYMENTS_URL__'>payment receipt</a> online.
+
+To view your account, visit the link below:
+
+<a href='__USER_PROFILE_URL__'>__USER_PROFILE_URL__</a>
+
+__EMAIL_SIGNOFF__
+";
+$conf["tm_subscriptions_user"]["US"]["email_reminder_subject"] = "Renew your Pro Membership";
+$conf["tm_subscriptions_user"]["US"]["email_reminder_message"] = "Dear __FIRST_NAME__
+
+Your Pro Membership subscription expires in __SUBSCRIPTION_EXPIRES_TEXT__ (__SUBSCRIPTION_EXPIRES_DATE__).
+
+To renew your subscription, simply sign in to your account and view your profile:
+
+<a href='__USER_PROFILE_URL__'>__USER_PROFILE_URL__</a>
+
+__EMAIL_SIGNOFF__
+";
+$conf["tm_subscriptions_user"]["US"]["email_expired_subject"] = "Your Pro Membership subscription has expired";
+$conf["tm_subscriptions_user"]["US"]["email_expired_message"] = "Dear __FIRST_NAME__
+
+Your Pro Membership subscription has expired.
+
+To renew your subscription, simply sign in to your account and view your profile:
+
+<a href='__USER_PROFILE_URL__'>__USER_PROFILE_URL__</a>
+
+__EMAIL_SIGNOFF__
+";
 */
 
 /** DISCUSSION SETTINGS **/

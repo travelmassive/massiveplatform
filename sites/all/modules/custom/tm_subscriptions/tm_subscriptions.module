@@ -123,6 +123,12 @@ function tm_subscriptions_form_alter(&$form, $form_state, $form_id) {
     return;
   }
 
+  // Don't show if ajax request (ie: saving image)
+  $ajax_request = false;
+  if (strpos(current_path(), 'ajax') !== false) {
+      $ajax_request = true;
+  }
+
   // Show Account Details for subscribers
   $organization = $form_state['node'];
   $is_new_organization = (!isset($organization->nid) || isset($organization->is_new));
@@ -157,10 +163,12 @@ function tm_subscriptions_form_alter(&$form, $form_state, $form_id) {
   if ($subscription_date != "") {
     $subscription_message = "Your " . $conf["tm_subscriptions_organization_label"] . " is registered until " . $subscription_date_text . " (" . $expires_text . ")";
     $form['#groups']['group_company_account_details']->format_settings['instance_settings']['description'] .= "<a name='company-account-details'/><br>" . $subscription_message;
-    drupal_set_message($subscription_message, 'help-tip');
+    if (!$ajax_request) { 
+      drupal_set_message($subscription_message, 'help-tip');
+    }
   }
  
-
+ 
   $organization_owner = user_load($organization->uid);
 
   // Set default contact

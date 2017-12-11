@@ -173,9 +173,11 @@ function tm_users_field_group_info() {
       10 => 'field_link_strava',
       11 => 'tm_ds_user_stats',
       12 => 'tm_ds_user_featured',
-      13 => 'tm_ds_connection_actions',
-      14 => 'group_location_wrapper',
-      15 => 'group_user_qa_wrapper',
+      13 => 'tm_ds_subscription_user_cta_ds',
+      14 => 'tm_ds_subscription_user_badge_ds',
+      15 => 'tm_ds_connection_actions',
+      16 => 'group_location_wrapper',
+      17 => 'group_user_qa_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -269,7 +271,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_user_profile';
   $field_group->data = array(
     'label' => 'About',
-    'weight' => '31',
+    'weight' => '46',
     'children' => array(
       0 => 'field_about_me',
       1 => 'field_avatar',
@@ -337,7 +339,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_user_profile';
   $field_group->data = array(
     'label' => 'Elsewhere',
-    'weight' => '33',
+    'weight' => '48',
     'children' => array(
       0 => 'field_link_facebook',
       1 => 'field_link_linkedin',
@@ -373,7 +375,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_user_profile';
   $field_group->data = array(
     'label' => 'A little more about you',
-    'weight' => '32',
+    'weight' => '47',
     'children' => array(
       0 => 'field_user_question_1',
       1 => 'field_user_question_2',
@@ -466,7 +468,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '37',
+    'weight' => '39',
     'children' => array(
       0 => 'field_location_city',
     ),
@@ -527,8 +529,10 @@ function tm_users_field_group_info() {
     'weight' => '34',
     'children' => array(
       0 => 'field_facebook_signin_id',
-      1 => 'timezone',
-      2 => 'group_form_basic_settings',
+      1 => 'field_user_subscription_date',
+      2 => 'timezone',
+      3 => 'group_form_basic_settings',
+      4 => 'group_user_account_details',
     ),
     'format_type' => 'htab',
     'format_settings' => array(
@@ -613,7 +617,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_user_edit';
   $field_group->data = array(
     'label' => 'Privacy',
-    'weight' => '38',
+    'weight' => '39',
     'children' => array(
       0 => 'field_user_disable_public_index',
       1 => 'field_user_has_private_profile',
@@ -674,7 +678,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'QA',
-    'weight' => '36',
+    'weight' => '38',
     'children' => array(
       0 => 'group_user_qa',
     ),
@@ -737,7 +741,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_user_edit';
   $field_group->data = array(
     'label' => 'Connect',
-    'weight' => '37',
+    'weight' => '38',
     'children' => array(
       0 => 'tm_connect_settings',
     ),

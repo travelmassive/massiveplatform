@@ -51,10 +51,6 @@ function tm_chapters_leaders_chapter_save($chapter) {
 		->condition('deleted',0,'=')
 		->execute();
 		if ($chapters->rowCount() == 1) {
-			
-			// set static variable for so roles are not preserved in tm_users_user_presave
-			$tm_resigning_chapter_leader = &drupal_static("tm_resigning_chapter_leader");
-			$tm_resigning_chapter_leader = true;
 
 			// don't edit admin or moderator roles unless editing themselves
 			$account = user_load($retired_leader);

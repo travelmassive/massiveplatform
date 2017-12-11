@@ -143,6 +143,8 @@
     &.tm-payment-gateway-logo:before { @extend .icon-tick; }
     &.tm-ds-subscription-organization-badge-ds:before { @extend .icon-2017-subscriber; font-size: 16pt;}
     &.tm-ds-subscription-organization-cta-ds:before { @extend .icon-2017-subscribe-cta; font-size: 16pt;}
+    &.tm-ds-subscription-user-badge-ds:before { @extend .icon-2017-subscriber; font-size: 16pt;}
+    &.tm-ds-subscription-user-cta-ds:before { @extend .icon-2017-subscribe-cta; font-size: 16pt;}
 
     &.field-link-facebook,
     &.field-link-linkedin,

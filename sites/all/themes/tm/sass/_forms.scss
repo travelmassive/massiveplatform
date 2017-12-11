@@ -546,12 +546,29 @@ select {
     width: 50%;
   }
   .tmeventstime{
+    display: inline-block;
+    min-width: 3.5rem;
+    margin-left: 8px;
     font-size: smaller;
     color: #888;
   }
   .tmeventslink{
+    font-size: smaller;
+    float: right;
+    margin-top: 2px;
+  }
+  .tmeventtaxonomy {
+    display: none;
   }
  } 
+}
+
+@media #{$medium-up} {
+  #edit-userlist{
+    .tmeventtaxonomy {
+      display: inline !important;
+    }
+  }
 }
 
 /* Signup page */

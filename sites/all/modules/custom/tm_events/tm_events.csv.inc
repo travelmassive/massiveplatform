@@ -41,7 +41,7 @@ function tm_events_download_csv($nid){
   $csvname = str_replace(array(","," "), "_", $csvname); // replace spaces and ,
   date_default_timezone_set($oldzone);
 
-  // determine if we show the email addres or not
+  // determine if we show the email address or not
   $show_email = false;
   if ((in_array('administrator', array_values($user->roles)))
     	or (in_array('moderator', array_values($user->roles)))
@@ -67,13 +67,26 @@ function tm_events_download_csv($nid){
 
   // puts a header row across the top of the csv
   if ($show_email) {
-  	$item = array(t('First name'),t('Last name'),t('Email'),t('RSVP Type'),t('SubscribeEventAnnouncements'),t('Country'),t('City'),t('Organization'),t('Role'),t('Website'),t('Segment'),t('MemberSince'));
+  	$item = array(t('First name'),t('Last name'),t('Email'),t('RSVP Type'),t('SubscribeEventAnnouncements'),t('Country'),t('City'),t('Organization'),t('Role'),t('Website'),t('Segment'),t('MemberSince'),t('MemberType'));
   } else {
-  	$item = array(t('First name'),t('Last name'),t('RSVP Type'),t('Country'),t('City'),t('Organization'),t('Role'),t('Website'),t('Segment'),t('MemberSince'));
+  	$item = array(t('First name'),t('Last name'),t('RSVP Type'),t('Country'),t('City'),t('Organization'),t('Role'),t('Website'),t('Segment'),t('MemberSince'),t('MemberType'));
   }
 
   fputcsv($fh, $item);
 
+  // outside of loop for better performance
+  $module_exists_tm_subscriptions_user = module_exists("tm_subscriptions_user");
+  $module_exists_tm_subscriptions = module_exists("tm_subscriptions");
+
+  // preload flags
+  if ($module_exists_tm_subscriptions_user) {
+    $user_subscription_enable_flag = flag_get_flag('user_subscription_enable', NULL);
+  }
+
+  if ($module_exists_tm_subscriptions) {
+    $organization_subscription_enable_flag = flag_get_flag('organization_subscription_enable', NULL);
+  }
+  
   // list of users
   $query = db_select('flagging', 'f')
     ->fields('f')
@@ -82,6 +95,7 @@ function tm_events_download_csv($nid){
     ->groupBy('uid');
   $query->addExpression('GROUP_CONCAT(DISTINCT fid)', 'flag_list');
   $users = $query->execute();
+
   while ($user_row = $users->fetchAssoc()){
 
     $account = user_load($user_row['uid']);
@@ -128,7 +142,7 @@ function tm_events_download_csv($nid){
       $term = taxonomy_term_load($account->field_segment[$language][0]['tid']);
       // load parent term
       $parent_terms = taxonomy_get_parents($term->tid);
-      if (sizeof($parent_terms > 0)) {
+      if (sizeof($parent_terms) > 0) {
         $parent_term = current($parent_terms);
         $item[] = $parent_term->name. " > " . $term->name;
       } else {
@@ -137,6 +151,46 @@ function tm_events_download_csv($nid){
     }
     else $item[] = t('none');
     $item[] = date('j M Y',$user_row['timestamp']);
+
+    // guest member or approved
+    $member_type = "Guest Member";
+    if (in_array("approved user", $account->roles)) {
+      $member_type = "Approved Member";
+    }
+    if (in_array("chapter leader", $account->roles)) {
+      $member_type = "Chapter Leader";
+    }
+
+    // member type - show user subscription, or override with business subscription
+
+    // user subscription
+    // use flag lookup directly for performance
+    if ($module_exists_tm_subscriptions_user) {
+      if ($user_subscription_enable_flag->is_flagged($account->uid)) {
+        $member_type = $conf["tm_subscriptions_user_label_noun"];
+      }
+    }
+
+    // company subscription
+    // use flag lookup directly for performance
+    if ($module_exists_tm_subscriptions) {
+
+      // get list of subscribed companies
+      $subscribed_companies = array();
+      $nids = tm_organizations_get_users_companies($account->uid);
+      foreach ($nids as $nid) {
+
+        // use direct flag lookup for performance
+        if ($organization_subscription_enable_flag->is_flagged($nid)) {
+          $subscribed_companies[] = $nid;
+        }
+      }
+
+      if (sizeof($subscribed_companies) > 0) {
+        $member_type = $conf["tm_subscriptions_organization_label_noun"];
+      }
+    }
+    $item[] = $member_type;
 
     // remove commas from any input data
     $new_item = array();

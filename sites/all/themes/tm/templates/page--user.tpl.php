@@ -109,6 +109,18 @@ if (sizeof($request_uri_parts) == 3) {
           <?php print render($title_suffix); ?>
           <?php print render($page['header']); ?>
           <?php print $messages; ?>
+          <?php
+          // tm_subscriptions_user call to action banner
+          // check that module is enabled and user is logged in
+          if (module_exists("tm_subscriptions_user")) {
+            if ($user->uid > 0) {
+              if (isset($tm_theme_user_id)) { 
+                $subscription_cta = tm_subscriptions_user_cta_banner($tm_theme_user_id);
+                print $subscription_cta;
+              }
+            }
+          }
+          ?>
           <?php if(module_exists("tm_status_updates")) { print tm_status_updates_render_theme(); } ?>
           <?php //print render($tabs); ?>
           <?php print render($page['help']); ?>

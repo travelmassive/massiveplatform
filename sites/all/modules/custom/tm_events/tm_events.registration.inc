@@ -8,6 +8,8 @@
 function tm_events_manage_registrations_form($event){
 
   global $user;
+  global $conf;
+
   $event = node_load(arg(2)); // /events/manage-registrations/1234
   $form = array();
 
@@ -55,7 +57,13 @@ function tm_events_manage_registrations_form($event){
     $users = $query->execute();
 
     $useroptions = array();
-    while ($attendee_user = $users->fetchAssoc()){
+
+    // outside of loop for better performance
+    $module_exists_tm_subscriptions_user = module_exists("tm_subscriptions_user");
+    $module_exists_tm_subscriptions = module_exists("tm_subscriptions");
+
+    while ($attendee_user = $users->fetchAssoc()) {
+
       $account = user_load($attendee_user['uid']);
       // set profile url (either friendly url or community url)
       $profile_url = drupal_get_path_alias("user/" . $account->uid);
@@ -64,9 +72,49 @@ function tm_events_manage_registrations_form($event){
       $flagged_time = format_interval($difference, 1) . " ago";
 
       $flag_list = explode(",", $attendee_user['flag_list']); // get flag list
-      $useroptions[$attendee_user['uid']] = 
-        '<span class="tmeventuser">'.tm_events_username($account).'</span>'.
-        '<span class="tmeventstatus">'.tm_events_status($flag_list).' <span class="tmeventstime">'.$flagged_time.'</span> | <span class="tmeventslink"><a target="_blank" href="/' . $profile_url . '">view profile</a></span></span>';
+
+      // user subscription
+      $subscriber_text = "";
+      if ($module_exists_tm_subscriptions_user) {
+        if (tm_subscriptions_is_user_subscription_enabled($account->uid)) {
+          $subscriber_text = "<span style='font-weight: normal;' class='tm-user-menu-subscription-badge'>" . strtoupper($conf["tm_subscriptions_user_label_short"]) . "</span>";
+        }
+      }
+
+      // company subscription
+      if ($module_exists_tm_subscriptions) {
+        $company_nids = tm_subscriptions_get_users_subscribed_companies($account->uid);
+        if (sizeof($company_nids) > 0) {
+          $subscriber_text = "<span style='font-weight: normal;' class='tm-user-menu-subscription-badge'>" . strtoupper($conf["tm_subscriptions_organization_label_short"]) . "</span>";
+        }
+      }
+
+      // taxonomy
+      $taxonomy_text = "";
+      if (isset($account->field_segment[LANGUAGE_NONE][0]['tid'])){
+        $term = taxonomy_term_load($account->field_segment[LANGUAGE_NONE][0]['tid']);
+        // load parent term
+        $parent_terms = taxonomy_get_parents($term->tid);
+        if (sizeof($parent_terms) > 0) {
+          $parent_term = current($parent_terms);
+          $taxonomy_text = "<span><i> - " . $parent_term->name . "</i></span>"; // $parent_term->name
+        } else {
+          $taxonomy_text = "<span><i> - " . $term->name . "</i></span>";
+        }
+      }
+
+      // render row
+      $row_html = '<span class="tmeventuser">';
+      $row_html .= tm_events_username($account);
+      $row_html .= '<span class="tmeventtaxonomy">' . $taxonomy_text . '</span>';
+      $row_html .= '</span>';
+      $row_html .= '<span class="tmeventstatus">'.tm_events_status($flag_list).'</span>';
+      $row_html .= '<span class="tmeventstime"> '.$flagged_time.'</span>';
+      $row_html .= $subscriber_text;
+      $row_html .= '<span class="tmeventslink"><a target="_blank" href="/' . $profile_url . '">view profile</a></span>';
+
+      $useroptions[$attendee_user['uid']] = $row_html;
+
     }
 
     $form['userlist'] = array(

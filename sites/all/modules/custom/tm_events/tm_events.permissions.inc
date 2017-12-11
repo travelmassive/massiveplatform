@@ -338,6 +338,13 @@ function _tm_events_check_create_member_event($check_user) {
     return true;
   }
 
+  // check for subscription account (ie: premium member)
+  if (module_exists("tm_subscriptions_user")) {
+    if (tm_subscriptions_is_user_subscription_enabled($check_user->uid)) {
+      return true;
+    }
+  }
+
   // no access 
   return false;
 }

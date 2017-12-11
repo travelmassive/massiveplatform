@@ -17,6 +17,11 @@ function tm_users_drush_command() {
 		),
 	);
 
+	$items['tm-generate-newsletter-csv'] = array(
+		'description' => 'Generate the global newsletter csv.',
+		'callback' => 'tm_users_download_global_newsletter_csv_drush'
+	);
+
 	return $items;
 }
 
@@ -103,6 +108,26 @@ function tm_users_assign_missing_approval_flags_drush() {
 	}
 
 	drush_print("Completed.");
+
+}
+
+/**
+ * Generate global Newsletter Subscribers csv 
+ */
+function tm_users_download_global_newsletter_csv_drush(){
+
+	drush_print("Generating newsletter CSV.");
+
+	// generate csv
+	$starttime = microtime(true);
+	$csv = tm_users_download_global_newsletter_generate(true);
+
+	// save to cache for one week
+	cache_set('tm-users-global-newsletter-csv', $csv, 'cache', time() + (60 * 60 * 24 * 7));
+	$endtime = microtime(true);
+	$timediff = $endtime - $starttime;
+	drush_print("Done (" . round($timediff, 2) . " seconds). Saved to cache key tm-users-global-newsletter-csv");
+	drush_print("You can fetch the CSV from admin/export_global_newsletter");
 
 }
 

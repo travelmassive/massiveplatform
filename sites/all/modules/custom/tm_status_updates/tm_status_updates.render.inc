@@ -340,7 +340,7 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 	$flag = $flag_types[$result->fid];
 
 	// make sure we want to display this flag
-	$show_flags = array("approval_approved_by", "event_register", "event_waitlist", "signup", "follow_members", "follow_organizations", "tm_sponsor", "organization_subscription_enable");
+	$show_flags = array("approval_approved_by", "event_register", "event_waitlist", "signup", "follow_members", "follow_organizations", "tm_sponsor", "organization_subscription_enable", "user_subscription_enable");
 	if (!in_array($flag->name, $show_flags)) {
 		return "";
 	}
@@ -554,6 +554,47 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 			
 			$html = tm_status_updates_render_flag_feed($flagged_node_url, $image_url, $feed_title, "", $details);
 			break;
+
+		// USER HAS SUBSCRIPTION
+	   	case "user_subscription_enable":
+
+			// get image url
+			$image_uri = _tm_users_get_avatar_uri($flagged_user);
+			$image_url = image_style_url("avatar", $image_uri);
+
+			// Show user's home chapter as location
+			if (isset($flagged_user->field_home_chapter[LANGUAGE_NONE][0]['target_id'])) {
+				$home_chapter = node_load($flagged_user->field_home_chapter[LANGUAGE_NONE][0]['target_id']);
+
+				if ($home_chapter != false) {
+
+					// check if chapter is group
+					$chapter_is_group = false;
+					if (isset($home_chapter->field_chapter_is_group[LANGUAGE_NONE][0]['value'])) {
+						$chapter_is_group = ($home_chapter->field_chapter_is_group[LANGUAGE_NONE][0]['value']);
+					}
+
+					// if not group, use the chapter as location
+					if (!$chapter_is_group) {
+						$details["location_text"] = $home_chapter->title;
+						$details["location_url"] = "/" . drupal_get_path_alias("node/" . $home_chapter->nid);
+					}
+				}
+				
+			}
+
+			// Show user's location field if no home chapter
+			if (!isset($details["location_text"])) {
+				if (isset($flagged_user->field_location_city[LANGUAGE_NONE][0]['value'])) {
+					$flagged_user_location = $flagged_user->field_location_city[LANGUAGE_NONE][0]['value'];
+					$details["location_text"] = $flagged_user_location;
+				}
+			}
+
+			$feed_title = l($flagged_user_name, $flagged_user_url) . " upgraded to a " . $conf["tm_subscriptions_user_label"];
+			$html = tm_status_updates_render_flag_feed($flagged_user_url, $image_url, $feed_title, $feed_info, $details);
+			break;
+
 	}
 
 	return $html;

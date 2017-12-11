@@ -835,6 +835,9 @@
 /* Unapproved label */
 .text_approved:before { @extend .icon-tick; margin-right: 0.2rem;}
 
+/* Subscriber label */
+.text_subscriber:before { @extend .icon-2017-subscriber; font-size: 1.2rem; margin-bottom: -0.5rem; margin-right: 0.2rem; vertical-align: bottom;}
+
 /* tm_chat - hide spinning launcher button */
 .ifc-launcher-button { display: none !important; }
 .iflychat-icon-chat { display: block !important; }

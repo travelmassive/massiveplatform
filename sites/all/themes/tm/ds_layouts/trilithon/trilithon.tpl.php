@@ -22,17 +22,6 @@
  * - $second_column_classes: String of classes that can be used to style the "Second column" region.
  */
 ?>
-<?php
-  // tm_subscriptions call to action banner
-  if (module_exists("tm_subscriptions")) {
-    if (isset($nid)) {
-      if (tm_subscriptions_check_show_organization_cta($nid, $uid)) {
-        $subscription_cta = tm_subscriptions_organization_cta_banner($nid);
-        print $subscription_cta;
-      }
-    }
-  }
-?>
 <<?php print $layout_wrapper; print $layout_attributes; ?> class="trilithon <?php print $classes;?> clearfix">
 
   <!-- Needed to activate contextual links -->

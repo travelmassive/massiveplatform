@@ -61,8 +61,21 @@ function tm_chapters_download_csv(){
   fputs($fh,$message,strlen($message));
 
   // puts a header row across the top of the csv
-  $item = array(t('First name'),t('Last name'),t('Email'),t('SubscribeChapterNewsletter'),t('SubscribeGlobalNewsletter'),t('SubscribeChapterAnnouncements'),t('Country'),t('City'),t('Organization'),t('Role'),t('Website'),t('Segment'),t('MemberSince'),t('Events'),t('Waitlists'), t('ApprovalStatus'));
+  $item = array(t('First name'),t('Last name'),t('Email'),t('SubscribeChapterNewsletter'),t('SubscribeGlobalNewsletter'),t('SubscribeChapterAnnouncements'),t('Country'),t('City'),t('Organization'),t('Role'),t('Website'),t('Segment'),t('MemberSince'),t('Events'),t('Waitlists'), t('MemberType'));
   fputcsv($fh, $item);
+
+  // outside of loop for better performance
+  $module_exists_tm_subscriptions_user = module_exists("tm_subscriptions_user");
+  $module_exists_tm_subscriptions = module_exists("tm_subscriptions");
+
+  // preload flags
+  if ($module_exists_tm_subscriptions_user) {
+    $user_subscription_enable_flag = flag_get_flag('user_subscription_enable', NULL);
+  }
+
+  if ($module_exists_tm_subscriptions) {
+    $organization_subscription_enable_flag = flag_get_flag('organization_subscription_enable', NULL);
+  }
 
   // list of users
   $users = db_select('flagging', 'f')
@@ -128,12 +141,46 @@ function tm_chapters_download_csv(){
     $num_waitlists = tm_chapters_get_num_events_for_member($account->uid, $chapter->nid, "event_waitlist");
     $item[] = $num_waitlists;
 
-    // approved or not
-    if (!in_array("approved user", $account->roles)) { 
-      $item[] = "not approved";
-    } else {
-      $item[] = "approved";
+    // guest member or approved
+    $member_type = "Guest Member";
+    if (in_array("approved user", $account->roles)) {
+      $member_type = "Approved Member";
     }
+    if (in_array("chapter leader", $account->roles)) {
+      $member_type = "Chapter Leader";
+    }
+
+    // member type - show user subscription, or override with business subscription
+
+    // user subscription
+    // use flag lookup directly for performance
+    if ($module_exists_tm_subscriptions_user) {
+      if ($user_subscription_enable_flag->is_flagged($account->uid)) {
+        $member_type = $conf["tm_subscriptions_user_label_noun"];
+      }
+    }
+
+    // company subscription
+    // use flag lookup directly for performance
+    if ($module_exists_tm_subscriptions) {
+
+      // get list of subscribed companies
+      $subscribed_companies = array();
+      $nids = tm_organizations_get_users_companies($account->uid);
+      foreach ($nids as $nid) {
+
+        // use direct flag lookup for performance
+        if ($organization_subscription_enable_flag->is_flagged($nid)) {
+          $subscribed_companies[] = $nid;
+        }
+      }
+
+      if (sizeof($subscribed_companies) > 0) {
+        $member_type = $conf["tm_subscriptions_organization_label_noun"];
+      }
+    }
+    $item[] = $member_type;
+    
 
     // remove commas from any input data
     $new_item = array();

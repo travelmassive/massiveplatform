@@ -112,9 +112,14 @@ function tm_theme_html_head_alter(&$head_elements) {
         $now = new DateTime(null, new DateTimeZone('UTC'));
         user_cookie_save(array('site_branding_partner_timestamp'=>$now->getTimestamp()));
 
-        // set partner code for subscriptions
+        // set partner code for subscriptions (organizations)
         if (module_exists("tm_subscriptions")) {
           tm_subscriptions_set_partner_cookie();
+        }
+
+        // set partner code for subscriptions (user)
+        if (module_exists("tm_subscriptions_user")) {
+          tm_subscriptions_user_set_partner_cookie();
         }
 
         drupal_goto("/");
@@ -163,6 +168,7 @@ function tm_theme_preprocess_html(&$variables, $hook) {
   if (drupal_is_front_page()) {
     tm_theme_add_meta_tags_front_page();
   }
+
 }
 
 /**
@@ -532,3 +538,20 @@ function tm_theme_ds_pre_render_alter(&$layout_render_array, $context) {
   
 }
 
+/**
+ * Implement hook_preprocess_page
+ * Insert node and user variables into templates
+ */
+function tm_theme_preprocess_page(&$variables) {
+
+  // add user_id for tm_subscriptions_user for use in page--user.tpl.php
+  if (arg(0) == "node") {
+    $variables['tm_theme_node_id'] = arg(1);
+  }
+
+  // add user_id for tm_subscriptions_user for use in page--user.tpl.php
+  if (arg(0) == "user") {
+    $variables['tm_theme_user_id'] = arg(1);
+  }
+  
+}

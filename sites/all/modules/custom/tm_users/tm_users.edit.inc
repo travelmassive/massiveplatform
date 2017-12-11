@@ -63,7 +63,6 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
 
   // Allow users to cancel their accounts
   // Note: Chapter leaders and moderators don't get the link as they may have content
-  // Todo: With subscription model, warn user of any active subscriptions
   // See: https://github.com/travelmassive/massiveplatform/issues/81
   if ((!in_array("chapter leader", $user->roles)) && (!in_array("moderator", $user->roles)) && (!in_array("administrator", $user->roles))) {
 

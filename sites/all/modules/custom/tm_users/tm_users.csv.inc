@@ -36,7 +36,7 @@ function tm_users_download_chapter_leaders_csv_check() {
 	return false;
 }
 
-/*
+/**
  * Global Newsletter Subscribers function 
  */
 function tm_users_download_global_newsletter_csv(){
@@ -55,13 +55,42 @@ function tm_users_download_global_newsletter_csv(){
 	drupal_add_http_header('Content-Type', 'text/csv; utf-8');
 	drupal_add_http_header('Content-Disposition', 'attachment; filename = '.$csvname);
 
-	$fh = fopen('php://output', 'w');
+	// check cache
+	$cache = cache_get('tm-users-global-newsletter-csv', 'cache');
+	if (!empty($cache)) {
+		echo $cache->data;
+	} else {
+		echo "Please run drush tm-generate-newsletter-csv to generate csv";
+	}
+}
+
+/*
+ * Global Newsletter Subscribers function 
+ */
+function tm_users_download_global_newsletter_generate($drush_progress = false) {
+
+	// outside of loop for better performance
+    $module_exists_tm_subscriptions_user = module_exists("tm_subscriptions_user");
+    $module_exists_tm_subscriptions = module_exists("tm_subscriptions");
+
+    // preload flags
+    $approval_approved_by_flag = flag_get_flag('approval_approved_by');
+
+	if ($module_exists_tm_subscriptions_user) {
+		$user_subscription_enable_flag = flag_get_flag('user_subscription_enable', NULL);
+	}
+
+	if ($module_exists_tm_subscriptions) {
+		$organization_subscription_enable_flag = flag_get_flag('organization_subscription_enable', NULL);
+	}
+
+	$fh = fopen('php://memory', 'w');
 
 	// lookup approved member role id
 	$approved_member_role = user_role_load_by_name("approved user")->rid;
 
 	// puts a header row across the top of the csv
-	$item = array(t('First name'),t('Last name'), t('Email'), t('Country Code'), t('Location'), t('Home Chapter'), t('Home Chapter Country'), t('User ID'), t('Account Age (Days)'), t('Last Active (Days)'), t('Joined Chapters'), t('Approved Status'), t('Profile URL'), t('First Organization Profile'), t('Organization Profile URL'));
+	$item = array(t('First name'),t('Last name'), t('Email'), t('Country Code'), t('Location'), t('Home Chapter'), t('Home Chapter Country'), t('User ID'), t('Account Age (Days)'), t('Last Active (Days)'), t('Joined Chapters'), t('Approved Status'), t('Profile URL'), t('First Organization Profile'), t('Organization Profile URL'), t('Days Since Approved'), t('Member Subscription Type'), t('Organization Subscription Type'), t('Show Member Subscription CTA'), t('Show Organization Subscription CTA'), t('User Segment L1'), t('User Segment L2'), t('Organization Segment L1'), t('Organization Segment L2'),);
 	fputcsv($fh, $item);
 
 	// fetch newsletter subscribers
@@ -82,7 +111,16 @@ where n.value = 1 order by ud.uid asc";
 
 	// perform query
 	$query = db_query($global_newsletter_sql);
+	$count = 1;
 	while ($row = $query->fetchAssoc()) {
+
+		// show progress in drush
+		if ($drush_progress) {
+			if (($count % 1000) == 0) {
+				drush_print("Processed " . $count . " rows...");
+			}
+		}
+		$count++;
 
 		$user_id = $row["uid"];
 
@@ -113,8 +151,8 @@ where n.value = 1 order by ud.uid asc";
 		$account_profile_url_absolute = url($account_profile_url,array('absolute'=>true));
 		$row[] = $account_profile_url_absolute;
 
-
 		// include whether account has a organization profile
+		// will put first subscribed organization
 		$organization_profile_nids = tm_users_get_organization_profiles($user_id);
 		if ($organization_profile_nids == null) {
 			$row[] = "";
@@ -128,6 +166,7 @@ where n.value = 1 order by ud.uid asc";
 		}
 
 		// include organizations profile url
+		// will put first subscribed organization
 		if ($organization_profile_nids == null) {
 			$row[] = "";
 		} else {
@@ -136,11 +175,131 @@ where n.value = 1 order by ud.uid asc";
 			$row[] = $organization_profile_url_absolute;
 		}
 
+		// days since approved
+		// get list of people who approved
+      	$who_approved = flag_get_entity_flags("user", $user_id, "approval_approved_by");
+      	if (sizeof($who_approved) > 0) {
+
+      		// sort by flag time
+      		usort($who_approved, function($a, $b){
+        		return ($a->timestamp > $b->timestamp) ? -1 : 1;
+      		});
+
+      		$latest_approved_flag = $who_approved[0];
+      		$approved_difference = time() - $latest_approved_flag->timestamp;
+      		$days_since_approved = intval(($approved_difference) / (60 * 60 * 24));
+      		$row[] = $days_since_approved;
+		} else {
+			$row[] = -1; // never approved
+		}
+
+		// member subscription type
+		// use flag lookup directly for performance
+		$user_subscription_type = "";
+		if ($module_exists_tm_subscriptions_user) {
+			if ($user_subscription_enable_flag->is_flagged($user_id)) {
+				$user_subscription_type = tm_subscriptions_user_get_type($user_id);
+			}
+		}
+		$row[] = $user_subscription_type;
+
+		// company subscription type
+		// will put first subscribed organization
+		$company_subscription_type = "";
+		if ($module_exists_tm_subscriptions) {
+
+			// get list of subscribed companies
+			$subscribed_companies = array();
+			$nids = tm_organizations_get_users_companies($user_id);
+			foreach ($nids as $nid) {
+
+				// use direct flag lookup for performance
+				if ($organization_subscription_enable_flag->is_flagged($nid)) {
+					$subscribed_companies[] = $nid;
+				}
+			}
+
+			if (sizeof($subscribed_companies) > 0) {
+				$company_subscription_type = tm_subscriptions_get_type($subscribed_companies[0]);
+			}
+		}
+		$row[] = $company_subscription_type;
+
+		// show membership subscription CTA
+		$show_membership_cta = 0; // default false
+		if ($module_exists_tm_subscriptions_user) {
+			if (tm_subscriptions_check_show_user_cta($user_id, $user_id, true)) {
+				$show_membership_cta = 1; // user will be displayed a CTA
+			}
+		}
+		$row[] = $show_membership_cta;
+
+		// show organization subscription CTA
+		$show_organization_membership_cta = 0; // default false
+		if (sizeof($organization_profile_nids) > 0) {
+			if ($module_exists_tm_subscriptions) {
+				if (tm_subscriptions_check_show_organization_cta($organization_profile_nids[0], $user_id, true)) {
+					$show_organization_membership_cta = 1; // user will be displayed a CTA
+				}
+			}
+		}
+		$row[] = $show_organization_membership_cta;
+
+		// user segment
+		$user_segment_l1 = "";
+		$user_segment_l2 = "";
+		$field_segment_tid = tm_users_get_taxonomy_tid($user_id);
+		if ($field_segment_tid != null){
+			$term = taxonomy_term_load($field_segment_tid);
+			// load parent term
+			$parent_terms = taxonomy_get_parents($term->tid);
+			if (sizeof($parent_terms) > 0) {
+				$parent_term = current($parent_terms);
+				$user_segment_l1 = $parent_term->name;
+				$user_segment_l2 = $term->name;
+			} else {
+				$user_segment_l1 = $term->name;
+				$user_segment_l2 = "";
+			}
+		}
+		$row[] = $user_segment_l1;
+		$row[] = $user_segment_l2;
+
+		// company segment
+		$company_segment_l1 = "";
+		$company_segment_l2 = "";
+		if (sizeof($organization_profile_nids) > 0) {
+			$field_segment_tid = tm_organizations_get_taxonomy_tid($organization_profile_nids[0]);
+			if ($field_segment_tid != null){
+				$term = taxonomy_term_load($field_segment_tid);
+				// load parent term
+				$parent_terms = taxonomy_get_parents($term->tid);
+				if (sizeof($parent_terms) > 0) {
+					$parent_term = current($parent_terms);
+					$company_segment_l1 = $parent_term->name;
+					$company_segment_l2 = $term->name;
+				} else {
+					$company_segment_l1 = $term->name;
+					$company_segment_l2 = "";
+				}
+			}
+		}
+		$row[] = $company_segment_l1;
+		$row[] = $company_segment_l2;
+
 		fputcsv($fh, $row);
 	}
 
+	rewind($fh);
+
+	// put it all in a variable
+	$csv = stream_get_contents($fh);
+
 	// close file handle
 	fclose($fh);
+
+	// return csv
+	return $csv;
 }
 
 /**

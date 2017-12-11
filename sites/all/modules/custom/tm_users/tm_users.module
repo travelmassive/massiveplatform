@@ -338,7 +338,12 @@ function tm_users_user_presave(&$edit, $account, $category) {
 
   // Don't act on new users without a uid yet
   if (!isset($account->uid)) {
-    return true;
+    return;
+  }
+
+  // Don't modify administrators' forms
+  if (in_array('administrator', $account->roles)) {
+    return;
   }
 
   // Check that moderator can edit account
@@ -351,90 +356,57 @@ function tm_users_user_presave(&$edit, $account, $category) {
     }
   }
 
-  // ITEM 1
-  // If the user is already approved then overwrite role to approved when they save profile.
-  // Reason: if user signs up, and in middle of editing profile is approved, then
+  // Preserve approved status if editing own account
+  // If user signs up, and in middle of editing profile is approved, then
   // saving their profile would overwrite the approved role (making them unapproved).
-  // This method fixes this edge case.
-  // see: https://github.com/travelmassive/massiveplatform/issues/68
-  // 
-  // ITEM 2
-  // Strip spaces from URL fields
+  // This method fixes this edge case
   if ($account->uid == $user->uid) {
-
-    // don't mess with administrators' forms
-    if (in_array('administrator', $user->roles)) {
-      return;
+    if (in_array("approved user", $account->original->roles) 
+      and !in_array("approved user", $account->roles)) {
+      $role = user_role_load_by_name("approved user");
+      $edit['roles'][$role->rid] = "approved user";
     }
+  }
 
-    // if the user is already approved then override to be approved
-    if (in_array('approved user', $user->roles)) {
-      if ($role = user_role_load_by_name('approved user')) {
-
-        // set approved user role
-        $edit['roles'][$role->rid] = $role->rid;
-
-        // below is a hammer if we need it
-        // unset($edit["roles"]);
+  // Trim all URL fields
+  // Otherwise a blank space causes the link to be rendered blank
+  $field_names = array("field_link_website", "field_link_twitter", "field_link_linkedin", "field_link_facebook", "field_link_instagram", "field_link_youtube", "field_link_vimeo", "field_link_snapchat");
+  foreach ($field_names as $field_name) {
+     if (isset($edit[$field_name][LANGUAGE_NONE][0]['url'])) {
+      if (trim($edit[$field_name][LANGUAGE_NONE][0]['url']) == "") {
+        $edit[$field_name][LANGUAGE_NONE] = array();
       }
     }
+  }
 
-    // preserve roles
-    // except if modifying via tm_chapters.leaders.inc - set variable tm_resigning_chapter_leader
-    $resigning_chapter_leader = drupal_static("tm_resigning_chapter_leader");
-    if (($resigning_chapter_leader == null) or ($resigning_chapter_leader == false)) {
-      $preserve_roles = array("chapter leader", "moderator", "export-global-newsletter-csv", "access-google-analytics-report", "brand-editor", "discuss-moderator", "discuss-administrator");
-      foreach($preserve_roles as $preserve_role) {
-        if (in_array($preserve_role, $user->roles)) {
-          if ($role = user_role_load_by_name($preserve_role)) {
-            $edit['roles'][$role->rid] = $role->rid;
-          }
-        }
-      }
-    } 
-    drupal_static_reset("tm_resigning_chapter_leader");
+  // Trim about field
+  // Remove it if it's empty (stop user from entering a space)
+  if (isset($edit['field_about_me'][LANGUAGE_NONE][0]['value'])) {
+    $trimmed = trim($edit['field_about_me'][LANGUAGE_NONE][0]['value']);
+    // save trimmed value
+    $edit['field_about_me'][LANGUAGE_NONE][0]['value'] = $trimmed;
+  }
 
-    // Trim all URL fields
-    // Otherwise a blank space causes the link to be rendered blank
-    $field_names = array("field_link_website", "field_link_twitter", "field_link_linkedin", "field_link_facebook", "field_link_instagram", "field_link_youtube", "field_link_vimeo", "field_link_snapchat");
-    foreach ($field_names as $field_name) {
-       if (isset($edit[$field_name][LANGUAGE_NONE][0]['url'])) {
-        if (trim($edit[$field_name][LANGUAGE_NONE][0]['url']) == "") {
-          $edit[$field_name][LANGUAGE_NONE] = array();
-        }
-      }
+  // Trim user cover video field
+  if (isset($edit['field_user_cover_video'][LANGUAGE_NONE][0]['value'])) {
+    $trimmed = trim($edit['field_user_cover_video'][LANGUAGE_NONE][0]['value']);
+    // save trimmed value
+    $edit['field_user_cover_video'][LANGUAGE_NONE][0]['value'] = $trimmed;
+  }
+
+  // Trim first_name, last_name, job role, organization name, city
+  // Otherwise a blank space causes the link to be rendered blank
+  $field_names = array("field_user_first_name", "field_user_last_name", "field_job_role", "field_job_organization", "field_location_city");
+  foreach ($field_names as $field_name) {
+    if (isset($edit[$field_name][LANGUAGE_NONE][0]['value'])) {
+      $trimmed = trim($edit[$field_name][LANGUAGE_NONE][0]['value']);
+      $edit[$field_name][LANGUAGE_NONE][0]['value'] = $trimmed;
     }
-
-    // Trim about field
-    // Remove it if it's empty (stop user from entering a space)
-    if (isset($edit['field_about_me'][LANGUAGE_NONE][0]['value'])) {
-      $trimmed = trim($edit['field_about_me'][LANGUAGE_NONE][0]['value']);
-      // save trimmed value
-      $edit['field_about_me'][LANGUAGE_NONE][0]['value'] = $trimmed;
-    }
-
-    // Trim user cover video field
-    if (isset($edit['field_user_cover_video'][LANGUAGE_NONE][0]['value'])) {
-      $trimmed = trim($edit['field_user_cover_video'][LANGUAGE_NONE][0]['value']);
-      // save trimmed value
-      $edit['field_user_cover_video'][LANGUAGE_NONE][0]['value'] = $trimmed;
-    }
-
-    // Trim first_name, last_name, job role, organization name, city
-    // Otherwise a blank space causes the link to be rendered blank
-    $field_names = array("field_user_first_name", "field_user_last_name", "field_job_role", "field_job_organization", "field_location_city");
-    foreach ($field_names as $field_name) {
-      if (isset($edit[$field_name][LANGUAGE_NONE][0]['value'])) {
-        $trimmed = trim($edit[$field_name][LANGUAGE_NONE][0]['value']);
-        $edit[$field_name][LANGUAGE_NONE][0]['value'] = $trimmed;
-      }
-    }
-   
-    // store reason for joining
-    if (isset($edit['reason_for_joining'])) {
-      $edit['field_reason_for_joining'][LANGUAGE_NONE][0]['value'] = trim($edit['reason_for_joining']);
-    }
-
+  }
+ 
+  // Store reason for joining
+  if (isset($edit['reason_for_joining'])) {
+    $edit['field_reason_for_joining'][LANGUAGE_NONE][0]['value'] = trim($edit['reason_for_joining']);
   }
 
   // Filter friendly URL

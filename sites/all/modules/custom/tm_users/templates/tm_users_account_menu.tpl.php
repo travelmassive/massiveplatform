@@ -102,6 +102,7 @@ $image = theme('image_style', array(
       <li><?php print l(t('Invite members'), 'invite'); ?></li>
       
       <?php
+      // user links
       if (isset($conf["tm_users_account_menu_links"])) {
         foreach($conf["tm_users_account_menu_links"] as $account_menu_title => $account_menu_link) {
           print "<li>" . l(t($account_menu_title), $account_menu_link, array('fragment' => '', 'external' =>true)) . "</li>";
@@ -109,9 +110,45 @@ $image = theme('image_style', array(
       }
       ?>
 
+      <?php
+
+      // join user subscriber and company subscriber links
+      $subscriber_links = array();
+
+      // subscriber links
+      if (module_exists("tm_subscriptions_user")) {
+        if (tm_subscriptions_is_user_subscription_enabled($loaded->uid)) { 
+          if (isset($conf["tm_users_subscriber_menu_links"])) {
+            foreach($conf["tm_users_subscriber_menu_links"] as $account_menu_title => $account_menu_link) {
+              $subscriber_links[$account_menu_title] = $account_menu_link;
+            }
+          }
+        }
+      }
+
+      // company subscriber links
+      if (module_exists("tm_subscriptions")) {
+        $subscribed_companies = tm_subscriptions_get_users_subscribed_companies($loaded->uid);
+        if (sizeof($subscribed_companies) > 0) {
+          if (isset($conf["tm_users_company_subscriber_menu_links"])) {
+            foreach($conf["tm_users_company_subscriber_menu_links"] as $account_menu_title => $account_menu_link) {
+                $subscriber_links[$account_menu_title] = $account_menu_link;
+            }
+          }
+        }
+      }
+
+      // print links
+      foreach($subscriber_links as $account_menu_title => $account_menu_link) {
+        print "<li>" . l(t($account_menu_title), $account_menu_link, array('fragment' => '', 'external' =>true)) . "</li>";
+      }
+
+      ?>
+
       <?php if (in_array("chapter leader", $loaded->roles) or in_array("moderator", $loaded->roles)): ?>
       <?php if (isset($conf["tm_users_chapter_leader_menu_links"])): ?>
           <?php
+            // chapter leader links
             foreach($conf["tm_users_chapter_leader_menu_links"] as $account_menu_title => $account_menu_link) {
               print "<li>" . l(t($account_menu_title), $account_menu_link, array('fragment' => '', 'external' =>true)) . "</li>";
             }

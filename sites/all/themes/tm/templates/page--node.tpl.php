@@ -119,6 +119,36 @@ if (sizeof($request_uri_parts) == 3) {
           <?php print render($title_suffix); ?>
           <?php print render($page['header']); ?>
           <?php print $messages; ?>
+          <?php
+
+          // tm_subscriptions call to action banner
+          // only shows on organization pages 
+          // check that module is enabled and user is logged in
+          $subscription_cta = "";
+          if (module_exists("tm_subscriptions")) {
+            if ($user->uid > 0) {
+              if (isset($tm_theme_node_id)) {
+                if (tm_subscriptions_check_show_organization_cta($tm_theme_node_id, $user->uid)) {
+                  $subscription_cta = tm_subscriptions_organization_cta_banner($tm_theme_node_id);
+                  print $subscription_cta;
+                }
+              }
+            }
+          }
+
+          // tm_subscriptions_user call to action banner
+          // displays on events and chapter pages
+          // check that module is enabled and user is logged in
+          if (module_exists("tm_subscriptions_user")) {
+            if ($user->uid > 0) {
+              if (isset($tm_theme_node_id)) {
+                $subscription_cta = tm_subscriptions_user_cta_banner_node($user->uid, $tm_theme_node_id);
+                print $subscription_cta;
+              }
+            }
+          }
+          
+          ?> 
           <?php if(module_exists("tm_status_updates")) { print tm_status_updates_render_theme(); } ?>
           <?php //print render($tabs); ?>
           <?php print render($page['help']); ?>

@@ -5,7 +5,7 @@
 /**
  * Check if we show a CTA to the user
  */
-function tm_subscriptions_check_show_organization_cta($nid, $uid) {
+function tm_subscriptions_check_show_organization_cta($nid, $uid, $drush_command = false) {
 
 	global $conf;
 
@@ -15,9 +15,18 @@ function tm_subscriptions_check_show_organization_cta($nid, $uid) {
 	}
 
 	// check if user is logged in
-	if (!user_is_logged_in()) {
+	if (!$drush_command and !user_is_logged_in()) {
 		return false;
 	}
+
+	// check we are viewing organization
+	$node = node_load($nid);
+	if ($node == null) {
+		return false;
+	}
+	if ($node->type != "organization") {
+		return false;
+	}	
 
 	// check if organization is already subscribed
 	if (tm_subscriptions_is_organization_subscription_enabled($nid)) {
@@ -123,27 +132,6 @@ function tm_subscriptions_get_subscription_expires_text($organization) {
 }
 
 /**
- * Helper method to get chapter referer id from organization
- */
-function tm_subscriptions_get_referer_id($organization) {
-
-	$referer_code = "";
-	$owner_uid = $organization->uid;
-	$owner_account = user_load($organization->uid);
-	if ($owner_account != null) {
-		if (sizeof($owner_account->field_home_chapter) > 0) {
-			$chapter_id = $owner_account->field_home_chapter[LANGUAGE_NONE][0]['target_id'];
-			$home_chapter = node_load($chapter_id);
-			if ($home_chapter != null) {
-				$referer_code = "chapter-" . $home_chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['value'];
-			}
-		}
-	}
-
-	return $referer_code;
-}
-
-/**
  * Check if organization subscription enabled
  */
 function tm_subscriptions_is_organization_subscription_enabled($nid) {
@@ -228,7 +216,11 @@ function tm_subscriptions_get_partner_code() {
 /**
  * Set partner code and company url cookie
  * Drupal.visitor.subscription_partner
+ * Drupal.visitor.subscription_account_first_name
  * Drupal.visitor.subscription_company_url
+ * Drupal.visitor.subscription_company_name
+ * Drupal.visitor.subscription_company_segment_l1
+ * Drupal.visitor.subscription_company_segment_l2
  */
 function tm_subscriptions_set_partner_cookie($nid = null) {
 
@@ -245,8 +237,45 @@ function tm_subscriptions_set_partner_cookie($nid = null) {
 
 	// set subscription_company_url if nid set
 	if ($nid != null) {
+
+		// load company
+		$company = node_load($nid);
+
+		// first name
+		global $user;
+		$account = user_load($user->uid);
+		$first_name = $account->field_user_first_name[LANGUAGE_NONE][0]['value'];
+		setcookie("Drupal.visitor.subscription_first_name", $first_name, strtotime($cookie_time), "/");
+
+		// uri
 		$uri = $conf["tm_email_server_http"] . "://" . $conf["tm_email_server_url_domain"] . "/" . drupal_get_path_alias('node/' . $nid);
 		setcookie("Drupal.visitor.subscription_company_url", $uri, strtotime($cookie_time), "/");
+
+		// company name
+		$company_name = $company->title;
+		setcookie("Drupal.visitor.subscription_company_name", $company_name, strtotime($cookie_time), "/");
+
+		// company segment
+		$company_segment_l1 = "";
+		$company_segment_l2 = "";
+		$field_segment_tid = tm_organizations_get_taxonomy_tid($nid);
+		if ($field_segment_tid != null){
+			$term = taxonomy_term_load($field_segment_tid);
+			// load parent term
+			$parent_terms = taxonomy_get_parents($term->tid);
+			if (sizeof($parent_terms) > 0) {
+				$parent_term = current($parent_terms);
+				$company_segment_l1 = $parent_term->name;
+				$company_segment_l2 = $term->name;
+			} else {
+				$company_segment_l1 = $term->name;
+				$company_segment_l2 = "";
+			}
+		}
+
+		setcookie("Drupal.visitor.subscription_company_segment_l1", $company_segment_l1, strtotime($cookie_time), "/");
+		setcookie("Drupal.visitor.subscription_company_segment_l2", $company_segment_l2, strtotime($cookie_time), "/");
+
 
 	}
 }
@@ -264,7 +293,7 @@ function tm_subscriptions_organization_days_until_expiry($organization) {
 		return -1;
 	}
 
-	// calcualte expiry
+	// calculate expiry
 	$current_date = new DateTime('now', new DateTimeZone('UTC'));
 	$subscription_datetime = new DateTime($subscription_date, new DateTimeZone("UTC"));
 	$seconds_until_expiry = $subscription_datetime->format('U') - $current_date->format('U');
@@ -301,3 +330,72 @@ function tm_subscriptions_check_organization_renewal_period($organization) {
 	return ($days_until_expiry <= $renewal_period_days);
 }
 
+/**
+ * Check if user has a subscribed organization
+ * Return array of subscribed companies
+ */
+function tm_subscriptions_get_users_subscribed_companies($uid) {
+
+	// preload flag
+	$organization_subscription_enable = flag_get_flag('organization_subscription_enable', NULL);
+
+	$subscribed_companies = array();
+	$nids = tm_organizations_get_users_companies($uid);
+	foreach ($nids as $nid) {
+
+		// use direct flag lookup for performance
+		if ($organization_subscription_enable->is_flagged($nid)) {
+			$subscribed_companies[] = $nid;
+		}
+	}
+
+	return $subscribed_companies;
+}
+
+/**
+ * Get subscription type for a organization id
+ * Quick database method
+ */
+function tm_subscriptions_get_type($nid) {
+
+	$val = db_select('field_data_field_company_subscription_type', 'f')
+		->fields('f', array('field_company_subscription_type_value'))
+		->condition('entity_type', 'node')
+		->condition('entity_id', $nid)
+		->execute()
+		->fetchField();
+	
+	return $val;
+}
+
+/**
+ * Helper method to get chapter of organization
+ * Returns owner's home chapter code, or first joined chapter
+ * Returns empty string if no chapter code
+ */
+function tm_subscriptions_get_chapter_code($organization) {
+
+	$chapter_code = "";
+	$owner_uid = $organization->uid;
+	$account = user_load($organization->uid);
+	
+	// check for home chapter
+	if (sizeof($account->field_home_chapter) > 0) {
+		$chapter_id = $account->field_home_chapter[LANGUAGE_NONE][0]['target_id'];
+		$home_chapter = node_load($chapter_id);
+		if ($home_chapter != null) {
+			$chapter_code = $home_chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['value'];
+		}
+	} else {
+		// use first chapter
+		$chapter_nids = tm_users_get_chapters($account);
+		if (sizeof($chapter_nids) > 0) {
+			$first_chapter = node_load($chapter_ids[0]);
+			if ($first_chapter != null) {
+				$chapter_code = $first_chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['value'];
+			}
+		}
+	}
+
+	return $chapter_code;
+}

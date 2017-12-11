@@ -117,6 +117,7 @@ function tm_users_assign_missing_approval_flags_drush() {
 function tm_users_download_global_newsletter_csv_drush(){
 
 	drush_print("Generating newsletter CSV.");
+	drush_print("Fetching query data...");
 
 	// generate csv
 	$starttime = microtime(true);

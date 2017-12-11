@@ -112,12 +112,19 @@ where n.value = 1 order by ud.uid asc";
 	// perform query
 	$query = db_query($global_newsletter_sql);
 	$count = 1;
+	$starttime = microtime(true);
 	while ($row = $query->fetchAssoc()) {
 
 		// show progress in drush
 		if ($drush_progress) {
 			if (($count % 1000) == 0) {
-				drush_print("Processed " . $count . " rows...");
+
+				$endtime = microtime(true);
+				$timediff = $endtime - $starttime;
+				$per_second = round(1000 / $timediff, 2);
+				drush_print("Processed " . $count . " rows... (" . $per_second . "/s)");
+				$starttime = microtime(true);
+				
 			}
 		}
 		$count++;

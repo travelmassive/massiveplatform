@@ -86,6 +86,22 @@ function tm_users_download_global_newsletter_generate($drush_progress = false) {
 		$organization_subscription_enable_flag_id = $organization_subscription_enable_flag->fid;
 	}
 
+	// preload all taxonomies
+	$vocabulary = taxonomy_vocabulary_machine_name_load("tm_segments");
+	$taxonomy_terms = entity_load('taxonomy_term', FALSE, array('vid' => $vocabulary->vid));
+	$taxonomy_parents = array();
+
+	// preload parent terms
+	foreach ($taxonomy_terms as $taxonomy_obj) {
+		$parent_terms = taxonomy_get_parents($taxonomy_obj->tid);
+		if (sizeof($parent_terms) > 0) {
+			$taxonomy_parents[$taxonomy_obj->tid] = $parent_terms;
+		} else {
+			$taxonomy_parents[$taxonomy_obj->tid] = array();
+		}
+
+	}	
+
 	$fh = fopen('php://memory', 'w');
 
 	// lookup approved member role id
@@ -251,9 +267,9 @@ where n.value = 1 order by ud.uid asc";
 		$user_segment_l2 = "";
 		$field_segment_tid = tm_users_get_taxonomy_tid($user_id);
 		if ($field_segment_tid != null){
-			$term = taxonomy_term_load($field_segment_tid);
+			$term = $taxonomy_terms[$field_segment_tid]; // taxonomy_term_load($field_segment_tid);
 			// load parent term
-			$parent_terms = taxonomy_get_parents($term->tid);
+			$parent_terms = $taxonomy_parents[$term->tid]; // taxonomy_get_parents($term->tid);
 			if (sizeof($parent_terms) > 0) {
 				$parent_term = current($parent_terms);
 				$user_segment_l1 = $parent_term->name;
@@ -272,9 +288,9 @@ where n.value = 1 order by ud.uid asc";
 		if (sizeof($organization_profile_nids) > 0) {
 			$field_segment_tid = tm_organizations_get_taxonomy_tid($organization_profile_nids[0]);
 			if ($field_segment_tid != null){
-				$term = taxonomy_term_load($field_segment_tid);
+				$term = $taxonomy_terms[$field_segment_tid]; // taxonomy_term_load($field_segment_tid);
 				// load parent term
-				$parent_terms = taxonomy_get_parents($term->tid);
+				$parent_terms = $taxonomy_parents[$term->tid]; // taxonomy_get_parents($term->tid);
 				if (sizeof($parent_terms) > 0) {
 					$parent_term = current($parent_terms);
 					$company_segment_l1 = $parent_term->name;

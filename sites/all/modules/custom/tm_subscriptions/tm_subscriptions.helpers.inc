@@ -26,7 +26,7 @@ function tm_subscriptions_check_show_organization_cta($nid, $uid, $drush_command
 		$organization = node_load($nid);
 	}
 	else {
-		$account = node_load($nid, null, true); // don't load from cache when running from drush (performance)
+		$organization = node_load($nid, null, true); // don't load from cache when running from drush (performance)
 	}
 
 	if ($organization == null) {

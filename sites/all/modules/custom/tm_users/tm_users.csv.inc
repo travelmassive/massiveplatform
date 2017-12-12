@@ -80,8 +80,10 @@ function tm_users_download_global_newsletter_generate($drush_progress = false) {
 		$user_subscription_enable_flag = flag_get_flag('user_subscription_enable', NULL);
 	}
 
+	$organization_subscription_enable_flag_id = null;
 	if ($module_exists_tm_subscriptions) {
 		$organization_subscription_enable_flag = flag_get_flag('organization_subscription_enable', NULL);
+		$organization_subscription_enable_flag_id = $organization_subscription_enable_flag->fid;
 	}
 
 	$fh = fopen('php://memory', 'w');
@@ -158,9 +160,12 @@ where n.value = 1 order by ud.uid asc";
 		$account_profile_url_absolute = url($account_profile_url,array('absolute'=>true));
 		$row[] = $account_profile_url_absolute;
 
+		// fetch organizations 
+		// subscribed company will put first subscribed organization
+		$organization_profile_nids = tm_users_get_organization_profiles($user_id, $organization_subscription_enable_flag_id);
+
 		// include whether account has a organization profile
-		// will put first subscribed organization
-		$organization_profile_nids = tm_users_get_organization_profiles($user_id);
+		// get company name
 		if ($organization_profile_nids == null) {
 			$row[] = "";
 		} else {
@@ -215,19 +220,8 @@ where n.value = 1 order by ud.uid asc";
 		$company_subscription_type = "";
 		if ($module_exists_tm_subscriptions) {
 
-			// get list of subscribed companies
-			$subscribed_companies = array();
-			$nids = tm_organizations_get_users_companies($user_id);
-			foreach ($nids as $nid) {
-
-				// use direct flag lookup for performance
-				if ($organization_subscription_enable_flag->is_flagged($nid)) {
-					$subscribed_companies[] = $nid;
-				}
-			}
-
-			if (sizeof($subscribed_companies) > 0) {
-				$company_subscription_type = tm_subscriptions_get_type($subscribed_companies[0]);
+			if (sizeof($organization_profile_nids) > 0) {
+				$company_subscription_type = tm_subscriptions_get_type($organization_profile_nids[0]);
 			}
 		}
 		$row[] = $company_subscription_type;

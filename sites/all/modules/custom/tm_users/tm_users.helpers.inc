@@ -467,25 +467,30 @@ function tm_users_get_unapproved_member_label($type = "singular") {
 /**
  * Get array or user's organization profiles
  */
-function tm_users_get_organization_profiles($uid) {
+function tm_users_get_organization_profiles($uid, $join_flag_id = null) {
 
-  $query = "SELECT entity_id FROM field_data_field_owner WHERE entity_type = 'node' AND bundle = 'organization' AND field_owner_target_id = :uid";
-  $rows = db_query($query, array(':uid' => $uid))->fetchAll();
+  // prepare query
+  if ($join_flag_id == null) {
 
+    // ordinary query
+    $query = "SELECT entity_id FROM field_data_field_owner WHERE entity_type = 'node' AND bundle = 'organization' AND field_owner_target_id = :uid";
+    $rows = db_query($query, array(':uid' => $uid))->fetchAll();
+  } else {
+
+    // sort by flag id
+    // use with tm_subscriptions
+    $query = "SELECT fd.entity_id, f.fid FROM field_data_field_owner fd
+    LEFT JOIN flagging f ON f.entity_id = fd.entity_id 
+    AND ((f.fid = :fid) OR (f.fid IS NULL)) 
+    WHERE fd.entity_type = 'node' AND fd.bundle = 'organization'
+    AND fd.field_owner_target_id = :uid
+    ORDER by fd.entity_id ASC";
+  $rows = db_query($query, array(':fid' => $fid, ':uid' => $uid))->fetchAll();
+}
+   
   $nids = array();
   foreach ($rows as $row) {
     $nids[] = $row->entity_id;
-  }
-
-  // if subscriptions enabled, put subscribed companies at front of list
-  if (module_exists("tm_subscriptions")) {
-    $company_nids = tm_subscriptions_get_users_subscribed_companies($uid);
-    foreach ($nids as $check_nid) {
-      if (!in_array($check_nid, $company_nids)) {
-        $company_nids[] = $check_nid;
-      }
-    }
-    $nids = $company_nids;
   }
 
   return $nids;

@@ -27,7 +27,15 @@ function tm_subscriptions_check_show_user_cta($uid, $signed_in_uid, $drush_comma
 	} else {
 		$account = user_load($uid, true); // don't load from cache when running from drush (performance)
 	}
-	$signed_in_account = user_load($signed_in_uid);
+
+	// load signed in account
+	if ($signed_in_uid == $uid) {
+		$signed_in_account = $account;
+	} else if (!$drush_command) {
+		$signed_in_account = user_load($signed_in_uid);
+	} else {
+		$signed_in_account = user_load($signed_in_uid, true); // don't load from cache when running from drush (performance)
+	}
 
 	// check if user is already subscribed
 	if (tm_subscriptions_is_user_subscription_enabled($uid)) {

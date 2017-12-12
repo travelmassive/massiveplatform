@@ -15,8 +15,10 @@ function tm_subscriptions_check_show_user_cta($uid, $signed_in_uid, $drush_comma
 	}
 
 	// check if user is logged in
-	if (!$drush_command and !user_is_logged_in()) {
-		return false;
+	if (!$drush_command) {
+		if (!user_is_logged_in()) {
+			return false;
+		}
 	}
 
 	// load account

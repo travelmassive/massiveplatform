@@ -189,18 +189,18 @@ where n.value = 1 order by ud.uid asc";
 
 		// days since approved
 		// get list of people who approved
-      	$who_approved = flag_get_entity_flags("user", $user_id, "approval_approved_by");
-      	if (sizeof($who_approved) > 0) {
+		$who_approved = flag_get_entity_flags("user", $user_id, "approval_approved_by");
+		if (sizeof($who_approved) > 0) {
 
-      		// sort by flag time
-      		usort($who_approved, function($a, $b){
-        		return ($a->timestamp > $b->timestamp) ? -1 : 1;
-      		});
+			// sort by flag time
+			usort($who_approved, function($a, $b){
+				return ($a->timestamp > $b->timestamp) ? -1 : 1;
+			});
 
-      		$latest_approved_flag = $who_approved[0];
-      		$approved_difference = time() - $latest_approved_flag->timestamp;
-      		$days_since_approved = intval(($approved_difference) / (60 * 60 * 24));
-      		$row[] = $days_since_approved;
+			$latest_approved_flag = $who_approved[0];
+			$approved_difference = time() - $latest_approved_flag->timestamp;
+			$days_since_approved = intval(($approved_difference) / (60 * 60 * 24));
+			$row[] = $days_since_approved;
 		} else {
 			$row[] = -1; // never approved
 		}

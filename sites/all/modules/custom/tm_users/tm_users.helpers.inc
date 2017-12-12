@@ -475,6 +475,7 @@ function tm_users_get_organization_profiles($uid, $join_flag_id = null) {
     // ordinary query
     $query = "SELECT entity_id FROM field_data_field_owner WHERE entity_type = 'node' AND bundle = 'organization' AND field_owner_target_id = :uid";
     $rows = db_query($query, array(':uid' => $uid))->fetchAll();
+
   } else {
 
     // sort by flag id
@@ -485,7 +486,8 @@ function tm_users_get_organization_profiles($uid, $join_flag_id = null) {
     WHERE fd.entity_type = 'node' AND fd.bundle = 'organization'
     AND fd.field_owner_target_id = :uid
     ORDER by fd.entity_id ASC";
-  $rows = db_query($query, array(':fid' => $fid, ':uid' => $uid))->fetchAll();
+    $rows = db_query($query, array(':fid' => $fid, ':uid' => $uid))->fetchAll();
+
 }
    
   $nids = array();

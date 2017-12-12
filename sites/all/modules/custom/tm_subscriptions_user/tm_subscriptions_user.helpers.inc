@@ -47,7 +47,6 @@ function tm_subscriptions_check_show_user_cta($uid, $signed_in_uid, $drush_comma
 	}
 
 	// check that subscriptions are enabled in this country
-	$account = user_load($uid);
 	$subscription = tm_subscriptions_get_user_subscription($account);
 	if ($subscription == null) {
 		return false;

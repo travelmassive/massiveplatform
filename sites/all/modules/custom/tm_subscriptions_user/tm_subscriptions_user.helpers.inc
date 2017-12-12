@@ -22,7 +22,11 @@ function tm_subscriptions_check_show_user_cta($uid, $signed_in_uid, $drush_comma
 	}
 
 	// load account
-	$account = user_load($uid);
+	if (!$drush_command) {
+		$account = user_load($uid);
+	} else {
+		$account = user_load($uid, true); // don't load from cache when running from drush (performance)
+	}
 	$signed_in_account = user_load($signed_in_uid);
 
 	// check if user is already subscribed

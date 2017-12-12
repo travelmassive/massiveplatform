@@ -20,11 +20,11 @@ function tm_subscriptions_check_show_organization_cta($nid, $uid, $drush_command
 	}
 
 	// check we are viewing organization
-	$node = node_load($nid);
-	if ($node == null) {
+	$organization = node_load($nid);
+	if ($organization == null) {
 		return false;
 	}
-	if ($node->type != "organization") {
+	if ($organization->type != "organization") {
 		return false;
 	}	
 
@@ -32,7 +32,6 @@ function tm_subscriptions_check_show_organization_cta($nid, $uid, $drush_command
 	if (tm_subscriptions_is_organization_subscription_enabled($nid)) {
 
 		// check if in renewal period
-		$organization = node_load($nid);
 		if (!tm_subscriptions_check_organization_renewal_period($organization)) {
 			return false;
 		}
@@ -44,7 +43,6 @@ function tm_subscriptions_check_show_organization_cta($nid, $uid, $drush_command
 	}
 
 	// check that subscriptions are enabled in this country
-	$organization = node_load($nid);
 	$subscription = tm_subscriptions_get_organization_subscription($organization);
 	if ($subscription == null) {
 		return false;

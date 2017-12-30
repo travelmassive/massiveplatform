@@ -375,7 +375,7 @@ Default is $conf[\'tm_branding_footer_html\']',
     'bundle' => 'site_brand',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The front page footer (displayed below main footer)<br>
+    'description' => 'The front page footer (displayed above main footer)<br>
 Add sponsor images or other branding here.<br>
 Default is $conf[\'tm_branding_footer_level1_html\']',
     'display' => array(
@@ -418,7 +418,7 @@ Default is $conf[\'tm_branding_footer_level1_html\']',
     'bundle' => 'site_brand',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The secondary page level footer (displayed below main footer)<br>
+    'description' => 'The secondary page level footer (displayed above main footer)<br>
 Displayed on all pages except front page (ie: profile pages, event listings, etc).<br>
 Default is $conf[\'tm_branding_footer_level2_html\']',
     'display' => array(
@@ -1928,7 +1928,7 @@ This will override any match criteria.');
   t('Text label for background video.<br>
 Will be displayed at top left of screen.<br>
 Default is $conf[\'tm_branding_frontpage_video_text\']');
-  t('The front page footer (displayed below main footer)<br>
+  t('The front page footer (displayed above main footer)<br>
 Add sponsor images or other branding here.<br>
 Default is $conf[\'tm_branding_footer_level1_html\']');
   t('The header logo (SVG Format).<br>
@@ -1937,7 +1937,7 @@ Default is: $conf[\'tm_branding_header_logo\']');
 Default is: $conf[\'tm_branding_footer_logo\']');
   t('The main footer block.<br>
 Default is $conf[\'tm_branding_footer_html\']');
-  t('The secondary page level footer (displayed below main footer)<br>
+  t('The secondary page level footer (displayed above main footer)<br>
 Displayed on all pages except front page (ie: profile pages, event listings, etc).<br>
 Default is $conf[\'tm_branding_footer_level2_html\']');
   t('The top level menu links.<br>

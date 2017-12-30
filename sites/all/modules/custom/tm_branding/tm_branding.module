@@ -809,6 +809,29 @@ function tm_branding_replace_vars($element) {
 	$element = str_replace("__CURRENT_YEAR__", date("Y"), $element);
 	$element = str_replace("__FOOTER_LOGO_URL__", tm_branding_get_conf("tm_branding_footer_logo"), $element);
 	
+	// lookup and replace stats
+	if (module_exists("tm_api")) {
+
+		// fetch api data
+		$api_data = tm_api_stats_get_data();
+
+		// parse text
+		$element = str_replace("__STATS_NUM_MEMBERS__", number_format($api_data["num_members"]), $element);
+		$element = str_replace("__STATS_NUM_MEMBERS_ROUNDED__", number_format(floor(round($api_data["num_members"]/1000))*1000), $element);
+		$element = str_replace("__STATS_NUM_COUNTRIES__", $api_data["num_member_countries"], $element);
+		$element = str_replace("__STATS_NUM_CHAPTER_COUNTRIES__", $api_data["num_chapter_countries"], $element);
+		$element = str_replace("__STATS_NUM_CHAPTERS__", number_format($api_data["num_chapters"]), $element);
+		$element = str_replace("__STATS_NUM_ORGANIZATIONS__", number_format($api_data["num_organizations"]), $element);
+		$element = str_replace("__STATS_NUM_ORGANIZATIONS_ROUNDED__", number_format(floor(round($api_data["num_organizations"]/1000))*1000), $element);
+		$element = str_replace("__STATS_NUM_EVENTS__", number_format($api_data["num_events"]), $element);
+		$element = str_replace("__STATS_NUM_CONNECTIONS__", number_format($api_data["num_connections"]), $element);
+		$element = str_replace("__STATS_NUM_CONNECTIONS_ROUNDED__", number_format(floor(round($api_data["num_connections"]/1000))*1000), $element);
+		$element = str_replace("__STATS_NUM_CHAPTER_LEADERS__", number_format($api_data["num_chapter_leaders"]), $element);
+		$element = str_replace("__STATS_NUM_EVENTS_PAST_YEAR__", number_format($api_data["num_events_past_year"]), $element);
+		$element = str_replace("__STATS_NUM_EVENT_REGISTRATIONS_PAST_YEAR__", number_format($api_data["num_event_registrations_past_year"]), $element);
+		$element = str_replace("__STATS_NUM_EVENTS_TOTAL__", number_format($api_data["num_events"]), $element);
+	}
+	
 	return $element;
 }
 

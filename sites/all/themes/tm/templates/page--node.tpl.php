@@ -164,7 +164,12 @@ if (sizeof($request_uri_parts) == 3) {
   </main>
 
   <footer id="footer" role="contentinfo">
+    <?php 
+    // only show on view
+    if ((arg(1) == "") or (is_numeric(arg(1)) and (arg(2) == ""))) {
+      echo tm_branding_get_element("footer_level2_html");
+    } 
+    ?>
     <?php echo tm_branding_get_element("footer_html"); ?>
-    <?php echo tm_branding_get_element("footer_level2_html"); ?>
   </footer>
 </div>

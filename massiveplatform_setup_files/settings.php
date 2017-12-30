@@ -482,69 +482,44 @@ $conf["tm_branding_menu_html"] = "
   <li class='menu-368'><a href='/events'>Events</a></li>
   <li class='menu-1456'><a href='/community'>People</a></li>
   <li class='menu-1363'><a href='/companies'>Companies</a></li>
-  <li class='menu-1457 last'><a href='/blog/'>News</a></li>
+  <li class='menu-1457 last'><a href='/blog/'>Blog</a></li>
 </ul>";
 
 // footer html 
 $conf['tm_branding_footer_html'] = "
-<div class='row'>
-  <nav id='foot-nav' role='navigation'>
-    <div class='inner'>
+<div id='tm_footer_2018_container'>
+  <div id='tm_footer_2018_inner'>
+  <div id='tm_footer_2018_lhs'></div>
+  <div id='tm_footer_2018_rhs'></div>
+  <a title='Home' rel='home' href='__FRONTPAGE_URL__'><img id='tm_footer_2018_logo' src='__FOOTER_LOGO_URL__' alt='Home' width='140' height='64'></a>
+  <p class='tm_footer_2018_slogan'>A Community Platform.</p>
+  <p class='tm_footer_2018_stats'><a href='/community'>__STATS_NUM_MEMBERS__ members</a> / <a href='/chapters'>__STATS_NUM_CHAPTERS__ chapters</a> / <a href='/companies'><span class='stats_num_connections'>__STATS_NUM_ORGANIZATIONS__</span> companies</a></p>
+  <p class='tm_footer_2018_main_links'><a href='/blog/about-us/'>About</a> / <a href='/blog/membership/'>Membership</a> / <a href='/sponsors'>Sponsors</a></p>
+  <ul class='tm_footer_2018_links'>
+    <li class='tm_menu first'><a href='http://twitter.com/' title='Massive on Twitter' class='twitter tm_icon' target='_blank'></a></li>
+    <li class='tm_menu'><a href='https://www.facebook.com/' title='Massive on Facebook' class='facebook tm_icon' target='_blank'></a></li>
+    <li class='tm_menu'><a href='http://instagram.com/' title='Massive on Instagram' class='instagram tm_icon' target='_blank'></a></li>
+    <li class='tm_menu'><a href='http://www.linkedin.com/' title='Massive on Linkedin' class='linkedin tm_icon' target='_blank'></a></li>
+    <li class='tm_menu'><a href='https://www.youtube.com/' title='Massive on YouTube' class='youtube tm_icon' target='_blank'></a></li>
+    <li class='tm_menu'><a href='https://vimeo.com/' title='Massive on Vimeo' class='vimeo tm_icon' target='_blank'></a></li>
+    <li class='tm_menu last'><a href='https://www.snapchat.com/' title='Massive on Snapchat' class='snapchat tm_icon' target='_blank'></a></li>
+  </ul>
 
-      <section class='foot'>
-        <h2>More Massive</h2>
-          <ul class='links'>
-          <li class='menu first'><a href='/blog/about-us/'>About</a></li>
-          <li class='menu-770'><a href='/contact' class='active-trail active'>Contact</a></li>
-          <li class='menu-770'><a href='/blog/community-values/' class='active-trail active'>Community Values</a></li>
-          <li class='menu-770'><a href='/blog/start-a-chapter-guide/'>Start A Chapter</a></li>
-          <li class='menu-770'><a href='/blog/media-kit/'>Media kit</a></li>
-          <li class='menu-770'><a href='/sponsors'>Sponsors</a></li>
-          <li class='menu-770 last'><a href='/blog'>Blog</a></li>
-        </ul>
-      </section>
+  <p class='tm_footer_2018_made_with'>Made with <span style='color: red;'>♥</span> around the world.</p>
+  <p class='tm_footer_2018_minor_links'><a href='/blog/community-values/'>Community Values</a>
+  <br><a href='/contact'>Contact</a><p>
+</div>
 
-      <section class='social'>
-        <h2>Follow us</h2>
-        <ul class='links'>
-          <li class='menu-339 first'><a href='http://twitter.com/' title='Massive on Twitter' class='twitter' target='_blank'>Twitter</a></li>
-          <li class='menu-340'><a href='https://www.facebook.com/' title='Massive on Facebook' class='facebook' target='_blank'>Facebook</a></li>
-          <li class='menu-337'><a href='http://instagram.com/' title='See Massive on Instagram' class='instagram' target='_blank'>Instagram</a></li>
-          <li class='menu-338'><a href='http://www.linkedin.com/' title='Massive on Linkedin' class='linkedin' target='_blank'>Linkedin</a></li>
-          <li class='menu-1478'><a href='https://www.youtube.com/' title='See Massive on YouTube' class='youtube' target='_blank'>YouTube</a></li>
-          <li class='menu-1479'><a href='https://vimeo.com/' title='Massive on Vimeo' class='vimeo' target='_blank'>Vimeo</a></li>
-          <li class='menu-1603 last'><a href='https://www.snapchat.com/' title='Massive on Snapchat' class='snapchat' target='_blank'>Snapchat</a></li>
-        </ul>
-      </section>
-
-    </div>
-  </nav>
-
-  <div id='foot-credits'>
-    <p>
-      <strong class='logo'>
-      <a title='Home' rel='home' href='__FRONTPAGE_URL__'>
-      <img src='__FOOTER_LOGO_URL__' alt='Home' width='104' height='48' />
-      <span>__SITE_NAME__</span>
-      </a>
-      </strong>
-      <small><time datetime='2011/__CURRENT_YEAR__'>&copy; 2011-__CURRENT_YEAR__ All Rights Reserved</time>Example Company LLC</small>
-      </p>
-      <p>Powered by <a href='http://massiveplatform.com'>Massive Platform</a><br>
-      Made with <span style='color: #e93f33 !important;'>&hearts;</span> around the world
-      <br><span style='font-size: 9pt;'><a href='/content/terms-use'>Terms</a> &middot; <a href='/content/privacy-policy'>Privacy</a>
-      </span>
-    </p>
-  </div>
-
+<div id='tm_footer_2018_base'>
+  <span class='tm_footer_2018_copyright'><time datetime='2011/__CURRENT_YEAR__'>© 2011-__CURRENT_YEAR__ All Rights Reserved</time> Example Company LLC</span>
+  <br>
+  <span id='tm_footer_2018_powered_by'><a href='http://massiveplatform.com'><span style='color: #75b5b1;'>☁️</span> Powered by Massive Platform</a></span>
+  <span class='tm_footer_2018_terms'> | <a href='/content/terms-use'>Terms</a> · <a href='/content/privacy-policy'>Privacy</a></span>
+</div>
 </div>";
 
 // front page sub-footer html
-$conf["tm_branding_footer_level1_html"] = "
-<section id='footer-sponsors'>
-  <span class='sponsors-headline' style='float: left;'>COMMUNITY SPONSORS</span>
-  <span style='float: left; padding-left: 1.2rem;'><a href='https://joviam.com'><img alt='Joviam cloud hosting' style='height: 25px;' src='__ASSETS_BASE_PATH__/assets/joviam_logo.png'></span>
-</section>";
+$conf["tm_branding_footer_level1_html"] = "";
 
 // secondary level sub-footer html (ie: non frontpage)
 $conf["tm_branding_footer_level2_html"] = "";
@@ -754,8 +729,12 @@ $conf["tm_subscriptions_organization"]["US"]["partner_codes"] = array("MASSIVE" 
 $conf["tm_subscriptions_organization"]["US"]["learn_more_url"] = "http://example.massiveplatform.com/blog/upgrade-to-premium/";
 $conf["tm_subscriptions_organization"]["US"]["support_url"] = "http://example.massiveplatform.com/blog/premium-support/";
 $conf["tm_subscriptions_organization"]["US"]["html"] = "<center><h2>Generate Leads and More Revenue.</h2>
-<p style='font-size: larger;'>Promote your business to __NUM_MEMBERS_ROUNDED__ members with a Premium account. <a target='_blank' href=''>Learn more</a></p><button class='payment-button bttn bttn-secondary bttn-m'>Upgrade to Premium</button> <br>
-<span style='color: #888; font-size: 10pt; line-height: 2rem;'>__PRICING_LABEL__</span></center>
+<p style='font-size: larger;'>Promote your business to __NUM_MEMBERS_ROUNDED__ members with a Premium account. <a class='show-subscriptions-payment' target='_blank' href=''>Learn more</a></p>
+<div id='tm-subscriptions-payment' style='display: __PAYMENT_DISPLAY__;'>
+<button class='payment-button bttn bttn-secondary bttn-m'>Upgrade to Premium</button> <br>
+<span style='color: #888; font-size: 10pt; line-height: 2rem;'>__PRICING_LABEL__</span>
+</div>
+</center>
 <span style='float: right;'><a class='hide-cta-banner' style='color: #888;' href='#'>No, thanks</a></span>";
 $conf["tm_subscriptions_organization"]["US"]["html_renew"] = "<center><h2>Your subscription expires in __SUBSCRIPTION_EXPIRES_TEXT__.</h2>
 <p style='font-size: larger;'>Renew your Subscription. <a target='_blank' href=''>Learn more</a></p><button class='payment-button bttn bttn-secondary bttn-m'>Renew Subscription</button> <br>

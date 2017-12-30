@@ -141,12 +141,16 @@
 
   <footer id="footer" role="contentinfo">
     <?php 
+
+      // front and secondary footers
+      if ($is_front) {
+        echo tm_branding_get_element("footer_level1_html");
+      } else {
+        echo tm_branding_get_element("footer_level2_html");
+      }
+
+      // footer
       echo tm_branding_get_element("footer_html");
-    if ($is_front) {
-      echo tm_branding_get_element("footer_level1_html");
-    } else {
-      echo tm_branding_get_element("footer_level2_html");
-    }
     ?>
   </footer>
 </div>

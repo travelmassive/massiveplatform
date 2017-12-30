@@ -1,0 +1,362 @@
+<?php
+
+/**
+ * @file
+ * Discource SSO primary module file.
+ * Extended by Ian C for Massive Platform
+ */
+
+/**
+ * Todo: logout user from forum if unapproved, change role as chapter leader, etc.
+ */
+
+/** DISCOURSE SETTINGS **/
+/** Optional discussion module, powered by Discourse **/
+/*$conf["tm_discourse_enable_sso"] = true;
+$conf["tm_discourse_admin_uids"] = array(123);
+$conf["tm_discourse_moderator_uids"] = array(123);
+$conf["tm_discourse_sso_sync_url"] = 'https://discourse.massiveplatform.com/';
+$conf["tm_discourse_sso_sync_check_certificate"] = true;
+$conf["tm_discourse_sso_sync_process_timeout"] = 10;
+$conf["tm_discourse_sso_api_key"] = "api_key";
+$conf["tm_discourse_sso_api_username"] = "system";
+$conf["tm_discourse_sso_unaproved_message"] = "You need to be an approved member of the community before you can join our discussions.";
+$conf["tm_discourse_sso_anonymous_message"] = "Please <a href='/user/login'>log in</a> to your account to join our discussions.";
+$conf["tm_discourse_sso_custom_groups"] = array("vips" => array(123));
+$conf["tm_discourse_sso_ignore_users"] = array();
+*/
+
+include_once "discourse_sso.api.inc";
+include_once "discourse_sso.helpers.inc";
+include_once "discourse_sso.drush.inc";
+
+// Variables names.
+define('DISCOURSE_SSO_URL', 'discourse_sso_url');
+define('DISCOURSE_SSO_SECRET', 'discourse_sso_secret');
+
+/**
+ * Variables that stores default values for other variables.
+ *
+ * They should be used in settings.php file.
+ *
+ * Example of usage:
+ *   $conf['discourse_sso_url_default'] = '[default-value]';
+ *   $conf['discourse_sso_secret_default'] = '[default-value]';
+ */
+define('DISCOURSE_SSO_URL_DEFAULT', 'discourse_sso_url_default');
+define('DISCOURSE_SSO_SECRET_DEFAULT', 'discourse_sso_secret_default');
+
+// Block's delta.
+define('DISCOURSE_SSO_LINK_BLOCK', 'discourse_link');
+
+/**
+ * Implements hook_permission().
+ */
+function discourse_sso_permission() {
+  $permissions = array(
+    'access discourse sso' => array(
+      'title' => t('Access Discourse SSO'),
+      'description' => t('Provide user an access to Discourse SSO endpoint and Discourse forum link (block).'),
+    ),
+  );
+  return $permissions;
+}
+
+/**
+ * Implements hook_menu().
+ */
+function discourse_sso_menu() {
+  $items['discourse/sso'] = array(
+    'title' => 'Discourse SSO endpoint',
+    'description' => 'Single Sign On endpoint used by Discourse.',
+    'page callback' => 'discourse_sso_endpoint',
+    'access callback' => 'discourse_sso_endpoint_access',
+    'type' => MENU_CALLBACK,
+    'file' => 'discourse_sso.endpoint.inc',
+    'file path' => drupal_get_path('module', 'discourse_sso') . '/includes',
+  );
+  $items['admin/config/services/discourse-sso'] = array(
+    'title' => 'Discourse SSO',
+    'description' => 'Configure Discourse SSO settings.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('discourse_sso_admin_form'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'discourse_sso.admin.inc',
+    'file path' => drupal_get_path('module', 'discourse_sso') . '/includes',
+  );
+  return $items;
+}
+
+/**
+ * Authenticate Discourse SSO request.
+ *
+ * Menu access callback function for discourse/sso.
+ *
+ * @return bool
+ *   Returns TRUE if the authentication was successful, FALSE otherwise.
+ */
+function discourse_sso_endpoint_access() {
+
+  // Don't allow guest users
+  if (!user_is_logged_in()) {
+    global $conf;
+    drupal_set_message($conf["tm_discourse_sso_anonymous_message"], "help-tip");
+    drupal_goto("/");
+    return;
+  }
+
+  // Allow just for the users with appropriate permissions.
+  if (!user_access('access discourse sso')) {
+    return FALSE;
+  }
+
+  // Get SSO input parameters.
+  $payload = discourse_sso_get_payload();
+  $sig = discourse_sso_get_signature();
+
+  // Check SSO input parameters.
+  if ($payload === FALSE || $sig == FALSE) {
+    // One of the SSO input parameters is missing, so report unsuccessful
+    // validation.
+    return FALSE;
+  }
+
+  $valid_signature = discourse_sso_validate_signature($payload, $sig);
+  $valid_nonce = discourse_sso_validate_nonce($payload);
+
+  return $valid_signature && $valid_nonce;
+}
+
+/**
+ * Get payload/sso from $_GET variable.
+ *
+ * Checks the payload existence + reports if it's missing.
+ *
+ * @return string|bool
+ *   Returns payload or FALSE if it's missing.
+ */
+function discourse_sso_get_payload() {
+  if (isset($_GET['sso'])) {
+    return $_GET['sso'];
+  }
+  else {
+    // Notify a user + log the error.
+    drupal_set_message(t('Payload (the sso parameter in url query) is not set.'), 'error');
+    watchdog('discourse_sso', 'Payload (the sso parameter in url query) is not set.', array(), WATCHDOG_ERROR);
+    return FALSE;
+  }
+}
+
+/**
+ * Get signature/sig from $_GET variable.
+ *
+ * Checks the signature existence + reports if it's missing.
+ *
+ * @return string|bool
+ *   Returns signature or FALSE if it's missing.
+ */
+function discourse_sso_get_signature() {
+  if (isset($_GET['sig'])) {
+    return $_GET['sig'];
+  }
+  else {
+    // Notify a user + log the error.
+    drupal_set_message(t('Signature (the sig parameter in url query) is not set.'), 'error');
+    watchdog('discourse_sso', 'Signature (the sig parameter in url query) is not set.', array(), WATCHDOG_ERROR);
+    return FALSE;
+  }
+}
+
+/**
+ * Validate payload signature (the secret key is used for signing).
+ *
+ * Reports if it's not valid.
+ *
+ * @param string $payload
+ *   Base64 encoded and Url encoded data (containing nonce parameter).
+ * @param string $sig
+ *   Payload signature.
+ *
+ * @return bool
+ *   Returns TRUE if the validation was successful, FALSE otherwise.
+ */
+function discourse_sso_validate_signature($payload, $sig) {
+  $sso_secret = discourse_sso_get_secret();
+  $payload = urldecode($payload);
+  $generated_signature = hash_hmac("sha256", $payload, $sso_secret);
+
+  $valid = $generated_signature === $sig;
+  if (!$valid) {
+    // Notify a user + log the error.
+    drupal_set_message(t('Payload signature provided as an url query parameter (sig): "@signature" is not valid.', array('@signature' => $sig)), 'error');
+    watchdog('discourse_sso', 'Payload signature provided as an url query parameter (sig): "@signature" is not valid.', array('@signature' => $sig), WATCHDOG_ERROR);
+  }
+
+  return $valid;
+}
+
+/**
+ * Validate nonce paramater that should be contained within payload data.
+ *
+ * Reports if it's not valid.
+ *
+ * @param string $payload
+ *   Base64 encoded and Url encoded data (containing nonce parameter).
+ *
+ * @return bool
+ *   Returns TRUE if the validation was successful, FALSE otherwise.
+ */
+function discourse_sso_validate_nonce($payload) {
+  $valid = discourse_sso_get_nonce($payload) !== FALSE;
+  if (!$valid) {
+    // Notify a user + log the error.
+    drupal_set_message(t('Payload "@payload" doesn\'t contain nonce parameter.', array('@payload' => $payload)), 'error');
+    watchdog('discourse_sso', 'Payload "@payload" doesn\'t contain nonce parameter.', array('@payload' => $payload), WATCHDOG_ERROR);
+  }
+
+  return $valid;
+}
+
+/**
+ * Get/extract nonce parameter from payload.
+ *
+ * @param string $payload
+ *   Base64 encoded and Url encoded data (containing nonce parameter).
+ *
+ * @return string|bool
+ *   Returns nonce parameter or FALSE if it's missing.
+ */
+function discourse_sso_get_nonce($payload) {
+  $nonce = &drupal_static(__FUNCTION__, '');
+
+  if (empty($nonce)) {
+    // Get clean payload.
+    $payload = urldecode($payload);
+    $payload = base64_decode($payload);
+
+    // Parse payload data.
+    $query = array();
+    parse_str($payload, $query);
+
+    // Get nonce parameter.
+    if (isset($query["nonce"])) {
+      $nonce = $query["nonce"];
+    }
+    else {
+      // Nonce parameter is missing.
+      return FALSE;
+    }
+  }
+
+  return $nonce;
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function discourse_sso_block_info() {
+  $blocks[DISCOURSE_SSO_LINK_BLOCK] = array(
+    'info' => t('Discourse forum link'),
+  );
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function discourse_sso_block_view($delta = '') {
+  $block = array();
+
+  // Allow just for the users with appropriate permissions.
+  if (!user_access('access discourse sso')) {
+    return $block;
+  }
+
+  switch ($delta) {
+    case DISCOURSE_SSO_LINK_BLOCK:
+      $block = discourse_sso_get_link_block();
+      break;
+  }
+  return $block;
+}
+
+/**
+ * Get block with discourse forum link.
+ *
+ * @return array
+ *   An array describing the block.
+ */
+function discourse_sso_get_link_block() {
+  $block = array();
+
+  // No subject.
+  $block['subject'] = NULL;
+
+  // Link to the discourse forum site automatic login url.
+  $block['content'] = array(
+    '#type' => 'link',
+    '#title' => t('Forum'),
+    '#href' => discourse_sso_get_url() . '/session/sso',
+  );
+
+  return $block;
+}
+
+/**
+ * Get discourse sso url.
+ *
+ * If the url is not set, the default value loaded from default variable is
+ * used.
+ *
+ * @return string
+ *   An url address of discourse site.
+ */
+function discourse_sso_get_url() {
+  $sso_url_default_value = variable_get(DISCOURSE_SSO_URL_DEFAULT, '');
+  $sso_url = variable_get(DISCOURSE_SSO_URL, $sso_url_default_value);
+
+  return $sso_url;
+}
+
+/**
+ * Get discourse sso secret.
+ *
+ * If the secret is not set, the default value loaded from default variable is
+ * used.
+ *
+ * @return string
+ *   A secret used for cryptography.
+ */
+function discourse_sso_get_secret() {
+  $sso_secret_default_value = variable_get(DISCOURSE_SSO_SECRET_DEFAULT, '');
+  $sso_secret = variable_get(DISCOURSE_SSO_SECRET, $sso_secret_default_value);
+
+  return $sso_secret;
+}
+
+/**
+ * Sign out of discourse when user signs out
+ */
+function discourse_sso_user_logout($account) {
+  discourse_sso_helper_logout_user($account->uid);
+}
+
+/**
+ * Sign out of discourse when user role changes
+ */
+function discourse_sso_user_update(&$edit, $account, $category) {
+
+  // if user roles have changed then log out the user
+  $array_diff1 = (array_diff_key($account->roles, $account->original->roles));
+  $array_diff2 = (array_diff_key($account->original->roles, $account->roles));
+
+  if ((sizeof($array_diff1) > 0) or (sizeof($array_diff2) > 0)) {
+    discourse_sso_helper_logout_user($account->uid);
+  }
+
+}
+
+
+

@@ -920,13 +920,6 @@ __EMAIL_SIGNOFF__
 ";
 */
 
-/** DISCUSSION SETTINGS **/
-/** Optional discussion module, powered by Vanilla Forums.
-/*
-$conf['tm_discuss_full_path'] = "discussions"; // where vanilla is installed
-$conf['tm_discuss_enable_feedme'] = true; // show recent discussions for a chapter or member
-**/
-
 /** MARKETPLACE/JOBS SETTINGS **/
 /** Optional jobs board, powered by Jobskee. **/
 /*
@@ -936,6 +929,22 @@ $conf['tm_marketplace_cookie_secret_key'] = 'randomstringabc'; // must match job
 $conf['tm_marketplace_cookie_secret_iv'] = 'randomstring123'; // must match jobskee config
 $conf['tm_marketplace_enable_feedme'] = true; // embed marketplace jobs into chapter and company pages
 $conf['tm_marketplace_feedme_url'] = '/jobs/api/search/'; // url for search
+*/
+
+/** DISCOURSE SETTINGS **/
+/** Optional discussion module, powered by Discourse **/
+/*$conf["tm_discourse_enable_sso"] = true;
+$conf["tm_discourse_admin_uids"] = array(123);
+$conf["tm_discourse_moderator_uids"] = array(123);
+$conf["tm_discourse_sso_sync_url"] = 'https://discourse.massiveplatform.com/';
+$conf["tm_discourse_sso_sync_check_certificate"] = true;
+$conf["tm_discourse_sso_sync_process_timeout"] = 10;
+$conf["tm_discourse_sso_api_key"] = "api_key";
+$conf["tm_discourse_sso_api_username"] = "system";
+$conf["tm_discourse_sso_unaproved_message"] = "You need to be an approved member of the community before you can join our discussions.";
+$conf["tm_discourse_sso_anonymous_message"] = "Please <a href='/user/login'>log in</a> to your account to join our discussions.";
+$conf["tm_discourse_sso_custom_groups"] = array("vips" => array(123));
+$conf["tm_discourse_sso_ignore_users"] = array();
 */
 
 /** CHAT **/

@@ -595,6 +595,7 @@ function tm_base_init() {
     "/admin/tm_reports/chapters_report/export",
     "/admin/tm_reports/industry_report/export",
     "/admin/global_insights",
+    "/admin/export_chapter_insights",
     "/admin/export_global_newsletter",
     "/admin/export_chapter_leaders");
 

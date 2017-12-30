@@ -11,6 +11,7 @@ include_once 'tm_reports.chapter.inc';
 include_once 'tm_reports.event.inc';
 include_once 'tm_reports.helpers.inc';
 include_once 'tm_reports.display.inc';
+include_once 'tm_reports.csv.inc';
 
 /**
  * Hook_menu()
@@ -57,6 +58,14 @@ function tm_reports_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('tm_reports_event_insights'),
     'access callback' => 'tm_reports_event_insights_check_permission',
+    'type' => MENU_CALLBACK,
+   );
+
+   $items['admin/export_chapter_insights'] = array(
+    'title' => 'Export all chapter insights',
+    'page callback' => 'tm_reports_download_chapter_insights_csv',
+    'page arguments' => array(1),
+    'access callback' => 'tm_reports_user_is_moderator',
     'type' => MENU_CALLBACK,
    );
 

@@ -7,91 +7,42 @@
  */
 function tm_reports_drush_command() {
 
-	$items['tm-reports-global-rankings'] = array(
-	  'description' => 'Run global rankings report',
-	  'callback' => 'tm_reports_global_rankings_drush',
+	$items['tm-reports-chapter-insights'] = array(
+	  'description' => 'Run and display chapter insights report',
+	  'callback' => 'tm_reports_chapter_insights_drush',
+	);
+
+	$items['tm-reports-chapter-insights-cache'] = array(
+	  'description' => 'Run and cache chapter insights report',
+	  'callback' => 'tm_reports_chapter_insights_cache',
 	);
 
 	return $items;
 }
 
 /**
- * Run global reports
+ * Run global reports and output
  */
-function tm_reports_global_rankings_drush() {
+function tm_reports_chapter_insights_drush() {
 
-	// Get all chapters
-	$query = "SELECT nid, title FROM node WHERE type = 'chapter' AND status = 1 ORDER BY title ASC";
-	$results = db_query($query)->fetchAll();
-	$chapter_nids = array();
-	foreach ($results as $result) {
-	  $chapter_nids[$result->title] = $result->nid;
-	}
-
-	// get continents
-	$continents = countries_get_continents();
-
-	$rows = array();
-	$first_row = true;
-	foreach ($chapter_nids as $title => $nid) {
-
-		drush_print("Calculating report for chapter: " . $title . "...");
-		$chapter = node_load($nid);
-
-		// fetch results
-		$chapter_results = _tm_reports_get_chapter_insights($nid);
-
-		// get country and continent
-		$country_code = "NONE";
-		$country_name = "NONE";
-		$continent_code = "NONE";
-		$continent_name = "NONE";
-		if (isset($chapter->field_country[LANGUAGE_NONE][0]['iso2'])) {
-			$country_code = $chapter->field_country[LANGUAGE_NONE][0]['iso2'];
-			$country = country_load($country_code);
-			$country_name = str_replace(",", " - ", $country->name);
-			$continent_code = str_replace(",", " - ", $country->continent);
-			$continent_name = str_replace(",", " - ", $continents[$continent_code]);
-		}
-
-		// create header row
-		if ($first_row) {
-			$row = array("chapter_name", "country_name", "continent_name", "country_code", "continent_code");
-			foreach ($chapter_results['data_values'] as $key => $value) {
-				$row[] = str_replace(",", "", $key);
-			}
-			$first_row = false;
-			$rows[] = $row;
-		}
-
-		// create data row
-		$row = array($chapter->title, $country_name, $continent_name, $country_code, $continent_code);
-		foreach ($chapter_results['data_values'] as $key => $value) {
-			$row[] = str_replace(",", "", $value);
-		}
-		$rows[] = $row;
-	}
-
-	drush_print("\nCSV export...");
-
-	// print column labels
-	drush_print();
-	drush_print("#Column names");
-	drush_print("column name, description");
-	drush_print("chapter_name, Chapter Name");
-	drush_print("country_name, Country Name");
-	drush_print("continent_name, Continent Name");
-	drush_print("country_code, Country Code");
-	drush_print("continent_code, Continent Code");
-	foreach ($chapter_results['data_labels'] as $key => $value) {
-		drush_print($key . ", " . $value);
-	}
+	// get data and fetch new
+	$rows = tm_reports_chapter_insights_get_data(true, true);
 
 	// print in csv format
-	drush_print();
-	drush_print("#Report data");
+	drush_print("#Chapter insights");
 	foreach ($rows as $row) {
 		drush_print(implode(",", $row));
 	}
+}
+
+/**
+ * Cache global reports and cache
+ */
+function tm_reports_chapter_insights_cache() {
+
+	// get data
+	drush_print("\nProcessing chapter insights...");
+	$rows = tm_reports_chapter_insights_get_data(true);
+	drush_print("Done.");
 }
 

@@ -947,13 +947,3 @@ $conf["tm_discourse_sso_custom_groups"] = array("vips" => array(123));
 $conf["tm_discourse_sso_ignore_users"] = array();
 */
 
-/** CHAT **/
-/* Optional iFlyChat integration with tm_chat module */
-/*
-$conf["tm_chat_embed_menu_path"] = "chat"; // path of embedded chat
-$conf["tm_chat_embed_room_id"] = 1; // id of the room to embed
-$conf["tm_chat_embed_access_roles"] = array("chapter leader"); // role allowed for chat
-$conf["tm_chat_embed_side_panel_html"] = "<h2>Chat Room</h2><p>Welcome to our chat room!</p>"; // include an optional side panel
-
-*/
-

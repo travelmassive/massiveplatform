@@ -536,6 +536,7 @@ function tm_reports_views_default_views() {
   $handler = $view->new_display('page', 'Chapters Report', 'chapters_report');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'Chapters Report';
+  $handler->display->display_options['enabled'] = FALSE;
   $handler->display->display_options['defaults']['group_by'] = FALSE;
   $handler->display->display_options['group_by'] = TRUE;
   $handler->display->display_options['defaults']['cache'] = FALSE;
@@ -959,6 +960,7 @@ function tm_reports_views_default_views() {
 
   /* Display: Chapters Report Export */
   $handler = $view->new_display('views_data_export', 'Chapters Report Export', 'chapters_report_export');
+  $handler->display->display_options['enabled'] = FALSE;
   $handler->display->display_options['defaults']['group_by'] = FALSE;
   $handler->display->display_options['group_by'] = TRUE;
   $handler->display->display_options['defaults']['query'] = FALSE;
@@ -1151,6 +1153,7 @@ function tm_reports_views_default_views() {
   $handler = $view->new_display('page', 'Industry Report', 'industry_report');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'Industry Report';
+  $handler->display->display_options['enabled'] = FALSE;
   $handler->display->display_options['defaults']['group_by'] = FALSE;
   $handler->display->display_options['group_by'] = TRUE;
   $handler->display->display_options['defaults']['cache'] = FALSE;
@@ -1363,6 +1366,7 @@ function tm_reports_views_default_views() {
 
   /* Display: Industry Report Export */
   $handler = $view->new_display('views_data_export', 'Industry Report Export', 'industry_report_export');
+  $handler->display->display_options['enabled'] = FALSE;
   $handler->display->display_options['defaults']['group_by'] = FALSE;
   $handler->display->display_options['group_by'] = TRUE;
   $handler->display->display_options['defaults']['query'] = FALSE;

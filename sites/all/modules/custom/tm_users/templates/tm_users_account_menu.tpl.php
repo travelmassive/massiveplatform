@@ -219,7 +219,7 @@ $image = theme('image_style', array(
         <li><?php print l(t('Add event'), 'node/add/event'); ?></li>
         <li><?php print l(t('Add chapter'), 'node/add/chapter'); ?></li>
         <li><?php print l(t('All ' . strtolower(tm_users_get_unapproved_member_label("plural"))), 'admin/unapproved-members'); ?></li>
-        <li><?php print l(t('Community reports'), 'admin/tm_reports'); ?></li>
+        <li><?php print l(t('Chapter leaders'), 'admin/tm_reports'); ?></li>
         <li><?php print l(t('Global insights'), 'admin/global_insights'); ?></li>
         <?php if (in_array("brand-editor", $loaded->roles) or in_array("administrator", $loaded->roles)): ?>
           <li><?php print l(t('Manage branding'), 'admin/branding'); ?></li>

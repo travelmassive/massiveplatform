@@ -791,7 +791,7 @@ You can renew it by signing in to your account and viewing your company profile:
 __EMAIL_SIGNOFF__
 ";
 
-// AU
+// Example: Australian pricing
 $conf["tm_subscriptions_organization"]["AU"] = $conf["tm_subscriptions_organization"]["US"];
 $conf["tm_subscriptions_organization"]["AU"]["price"] = 49;
 $conf["tm_subscriptions_organization"]["AU"]["currency"] = "aud"; // lowercase

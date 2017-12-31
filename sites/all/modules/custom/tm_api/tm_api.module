@@ -80,7 +80,7 @@ function tm_api_test() {
 // return api stats data in json format
 function tm_api_stats() {
 
-  $data = tm_api_stats_get_data();
+  $api_data = tm_api_stats_get_data();
   tm_api_return_json($api_data);
 
 }

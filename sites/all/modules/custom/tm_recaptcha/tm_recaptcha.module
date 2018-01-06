@@ -51,13 +51,11 @@ function tm_recaptcha_form_alter(&$form, &$form_state, $form_id) {
       $widget_settings['size'] = 'invisible';
       $invisible_captcha_js = "
         function gCaptureSubmit(token) {
-          console.log(grecaptcha.getResponse());
           document.getElementById('" . $form['#id'] . "').submit();
         }
 
         (function($) {
           $(document).ready(function() {
-            console.log('Ready'); // todo
             $('#edit-submit').on('click', function(e) {
               e.preventDefault();
               grecaptcha.execute();

@@ -936,5 +936,5 @@ $conf["tm_repatcha_size"] = "normal"; // normal or compact
 $conf["tm_repatcha_type"] = "recaptcha"; // invisible or recaptcha
 $conf["tm_repatcha_theme"] = "light"; // light or dark
 $conf["tm_repatcha_users"] = "anonymous"; // all or anonymous
-$conf["tm_recaptcha_user_message"] = "You must complete the reCAPTCHA to submit this form." // display if user does not complete recaptcha
-$conf["tm_recaptcha_error_message"] = "Oops, a problem occured with Google reCAPTHCA"; // display if error processing
+$conf["tm_recaptcha_user_message"] = "You must complete the reCAPTCHA to submit this form."; // display if user does not complete recaptcha
+$conf["tm_recaptcha_error_message"] = "Oops, a problem occured with Google reCAPTHCA."; // display if error processing

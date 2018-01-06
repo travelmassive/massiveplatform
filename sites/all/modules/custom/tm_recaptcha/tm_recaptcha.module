@@ -123,11 +123,13 @@ function tm_recaptcha_validate_submission($form, &$form_state) {
   // Google think this is the bad submission, return form error (aha!)
   if (!$secret) {
     // There is no Google reCAPTCHA secret key defined.
-    form_set_error('submit', t('Oops, a problem occured with Google reCAPTHCA'));
+    // Oops, a problem occured with Google reCAPTHCA
+    form_set_error('submit', t($conf["tm_recaptcha_error_message"]));
   }
   if (!$answer) {
     // Google reCAPTCHA does not accept this submission. Try again please, or contact to Site support services
-    form_set_error('submit', t('You must complete the reCAPTCHA to submit this form.'));
+    // You must complete the reCAPTCHA to submit this form.
+    form_set_error('submit', t($conf["tm_recaptcha_user_message"]));
   }
 }
 

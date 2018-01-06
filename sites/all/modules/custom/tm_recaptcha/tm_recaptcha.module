@@ -91,7 +91,7 @@ function tm_recaptcha_form_alter(&$form, &$form_state, $form_id) {
 
     $style = "margin-top: 1rem; margin-bottom: 1rem;";
     if ($form_id == "user_register_form") {
-      $style = "margin: 0 auto; width: 304px; margin-top: 1rem; margin-bottom: 1rem;";
+      $style = "margin: 0 auto; width: 320px; margin-top: 1rem; margin-bottom: 1rem;";
     }
 
     $container = '<div style="' . $style . '" class="aaa g-recaptcha" data-size="' .

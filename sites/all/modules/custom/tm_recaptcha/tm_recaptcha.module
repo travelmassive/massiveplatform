@@ -114,8 +114,9 @@ function tm_recaptcha_form_alter(&$form, &$form_state, $form_id) {
  */
 function tm_recaptcha_validate_submission($form, &$form_state) {
 
-  $tune = variable_get('g_captcha');
-  $secret = !empty($tune['secret_key']) ? $tune['secret_key'] : '';
+  global $conf;
+
+  $secret = $conf["tm_repatcha_private_key"];
   $response = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : '';
   $remote_ip = ip_address();
 
@@ -124,13 +125,11 @@ function tm_recaptcha_validate_submission($form, &$form_state) {
   if (!$secret) {
     // There is no Google reCAPTCHA secret key defined.
     // Oops, a problem occured with Google reCAPTHCA
-    global $conf;
     form_set_error('submit', t($conf["tm_recaptcha_error_message"]));
   }
   if (!$answer) {
     // Google reCAPTCHA does not accept this submission. Try again please, or contact to Site support services
     // You must complete the reCAPTCHA to submit this form.
-    global $conf;
     form_set_error('submit', t($conf["tm_recaptcha_user_message"]));
   }
 }

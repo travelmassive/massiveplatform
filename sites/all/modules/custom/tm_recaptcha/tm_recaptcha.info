@@ -1,0 +1,6 @@
+name = TM Recaptcha
+description = Recaptcha
+core = 7.x
+package = TM Recaptcha
+version = 7.x-1.0
+project = tm_recaptcha

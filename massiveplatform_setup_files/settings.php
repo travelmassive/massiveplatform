@@ -926,3 +926,14 @@ $conf["tm_discourse_sso_custom_groups"] = array("vips" => array(123));
 $conf["tm_discourse_sso_ignore_users"] = array();
 */
 
+/** RECPATCHA SETTINGS **/
+/** Provided by tm_recaptcha **/
+/** Sign up at https://www.google.com/recaptcha **/
+$conf["tm_repatcha_public_key"] = "public_key"; // Google reCAPTCHA public key
+$conf["tm_repatcha_private_key"] = "private_key"; // Google reCAPTCHA private key
+$conf["tm_repatcha_form_ids"] = array("contact_site_form", "user_pass" , "user_register_form", "tm_chapters_contact_form", "tm_events_contact_form"); // form_ids to apply to
+$conf["tm_repatcha_size"] = "normal"; // normal or compact
+$conf["tm_repatcha_type"] = "recaptcha"; // invisible or recaptcha
+$conf["tm_repatcha_theme"] = "light"; // light or dark
+$conf["tm_repatcha_users"] = "anonymous"; // all or anonymous
+

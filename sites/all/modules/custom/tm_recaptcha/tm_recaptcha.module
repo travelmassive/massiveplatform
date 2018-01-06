@@ -1,0 +1,185 @@
+<?php 
+
+/**
+ * @file
+ * Code for the TM Recaptcha
+ */
+
+// adapted from g_recaptcha module
+// https://www.drupal.org/project/g_captcha
+
+/**
+ * Implements hook_form_alter().
+ */
+function tm_recaptcha_form_alter(&$form, &$form_state, $form_id) {
+
+  global $conf;
+
+  // check if logged in users get recaptcha
+  if ($conf["tm_repatcha_users"] == "anonymous") {
+    if (user_is_logged_in()) {
+      return;
+    }
+  }
+
+  // check if form has recaptcha
+  if (in_array($form_id, $conf["tm_repatcha_form_ids"])) {
+
+    // Load G Captcha settings
+    $key = $conf["tm_repatcha_public_key"];
+    $widget_settings = [];
+    $widget_settings['type'] = $conf["tm_repatcha_type"];
+    $widget_settings['size'] = $conf["tm_repatcha_size"];
+    $widget_settings['theme'] = $conf["tm_repatcha_theme"];
+
+    // Build ID for G Captcha container
+    $form_name = 'google_recaptcha_' . $form_id;
+
+    // Include API
+    $endpoint = 'https://www.google.com/recaptcha/api.js';
+    $api = array(
+      'data' => $endpoint,
+      'scope' => 'header',
+      'type' => 'external',
+      'defer' => TRUE,
+      // and we waiting when 'async' param will be in core....
+    );
+
+    $widget_settings['size'] = $form_id == 'user_login_block' ? 'compact' : $widget_settings['size'];
+    $form['#attached']['js'][] = $api;
+    if ($widget_settings['type'] == 'invisible') {
+      $widget_settings['size'] = 'invisible';
+      $invisible_captcha_js = "
+        function gCaptureSubmit(token) {
+          console.log(grecaptcha.getResponse());
+          document.getElementById('" . $form['#id'] . "').submit();
+        }
+
+        (function($) {
+          $(document).ready(function() {
+            console.log('Ready'); // todo
+            $('#edit-submit').on('click', function(e) {
+              e.preventDefault();
+              grecaptcha.execute();
+            });
+          });
+
+        })(jQuery);
+      ";
+      $invisible_captcha_load = array(
+        'data' => $invisible_captcha_js,
+        'scope' => 'footer',
+        'type' => 'inline',
+        'weight' => 99999999,
+      );
+      $form['#attached']['js'][] = $invisible_captcha_load;
+    } else {
+      $captcha_js = 'grecaptcha.render("' . $form_name . '", {
+        "sitekey" : "' . $key . '",
+        "size" : "' . $widget_settings['size'] . '",
+        "theme" : "' . $widget_settings['theme'] . '"});
+      ';
+      $recaptcha_load = array(
+        'data' => 'var google_recaptcha_onload = function() {' . $captcha_js . '};',
+        'scope' => 'footer',
+        'group' => JS_DEFAULT,
+        'type' => 'inline',
+        '#weight' => 99999999,
+      );
+      $form['#attached']['js'][] = $recaptcha_load;
+    }
+
+    $style = "margin-top: 1rem; margin-bottom: 1rem;";
+    if ($form_id == "user_register_form") {
+      $style = "margin: 0 auto; width: 304px; margin-top: 1rem; margin-bottom: 1rem;";
+    }
+
+    $container = '<div style="' . $style . '" class="aaa g-recaptcha" data-size="' .
+      $widget_settings['size'] . '" data-theme="' . $widget_settings['theme'] .
+      '" data-callback="gCaptureSubmit" data-sitekey="' . $key . '" id="' . $form_name .
+      '"></div>';
+
+    $form['actions']['submit']['#prefix'] = empty($form['actions']['submit']['#prefix']) ? $container : $container . $form['actions']['submit']['#prefix'];
+
+    $form['#validate'][] = 'tm_recaptcha_validate_submission';
+  }
+}
+
+/**
+ * Additional validation function for protected form
+ * Here we ask from Google - is this submission ok?
+ *
+ * @param $form
+ * @param $form_state
+ */
+function tm_recaptcha_validate_submission($form, &$form_state) {
+
+  $tune = variable_get('g_captcha');
+  $secret = !empty($tune['secret_key']) ? $tune['secret_key'] : '';
+  $response = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : '';
+  $remote_ip = ip_address();
+
+  $answer = tm_recaptcha_ask_google($secret, $response, $remote_ip);
+  // Google think this is the bad submission, return form error (aha!)
+  if (!$secret) {
+    // There is no Google reCAPTCHA secret key defined.
+    form_set_error('submit', t('Oops, a problem occured with Google reCAPTHCA'));
+  }
+  if (!$answer) {
+    // Google reCAPTCHA does not accept this submission. Try again please, or contact to Site support services
+    form_set_error('submit', t('You must complete the reCAPTCHA to submit this form.'));
+  }
+}
+
+/**
+ * Ask from Google is this submission ok
+ * https://developers.google.com/recaptcha/docs/verify
+ *
+ * @param $secret
+ * @param $response
+ * @return bool
+ */
+function tm_recaptcha_ask_google($secret, $response, $remoteip) {
+
+  $tune = variable_get('g_captcha');
+  $answer = FALSE;
+  $request_data = array(
+    'secret' => $secret,
+    'response' => $response,
+    'remoteip' => $remoteip,
+  );
+
+  $ch = curl_init('https://www.google.com/recaptcha/api/siteverify');
+
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+  curl_setopt($ch, CURLOPT_POST, TRUE);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $request_data);
+
+  $response = curl_exec($ch);
+  curl_close($ch);
+
+  $response = json_decode($response, TRUE);
+
+  if ($response['success'] == FALSE) {
+
+    $error_codes = array(
+      'missing-input-secret' => 'The secret parameter is missing.',
+      'invalid-input-secret' => 'The secret parameter is invalid or malformed.',
+      'missing-input-response' => 'The response parameter is missing.',
+      'invalid-input-response' => 'The response parameter is invalid or malformed.',
+    );
+
+    if (!empty($response['error-codes'])) {
+      $log_vars = array(
+        '@error' => $error_codes[$response['error-codes'][0]],
+        '@remoteip' => $remoteip,
+      );
+      watchdog('Google reCAPTCHA', 'Google service returned error "@error". Site visitor address: @remoteip', $log_vars, WATCHDOG_WARNING);
+    }
+  }
+  elseif ($response['success'] == TRUE) {
+    $answer = TRUE;
+  }
+
+  return $answer;
+}

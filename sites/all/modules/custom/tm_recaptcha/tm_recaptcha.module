@@ -144,7 +144,6 @@ function tm_recaptcha_validate_submission($form, &$form_state) {
  */
 function tm_recaptcha_ask_google($secret, $response, $remoteip) {
 
-  $tune = variable_get('g_captcha');
   $answer = FALSE;
   $request_data = array(
     'secret' => $secret,

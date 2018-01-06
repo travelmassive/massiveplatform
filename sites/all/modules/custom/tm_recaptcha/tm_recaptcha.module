@@ -14,11 +14,16 @@
 function tm_recaptcha_form_alter(&$form, &$form_state, $form_id) {
 
   global $conf;
+  global $user;
 
   // check if logged in users get recaptcha
   if ($conf["tm_repatcha_users"] == "anonymous") {
     if (user_is_logged_in()) {
-      return;
+      $account = user_load($user->uid);
+      if (!in_array("non-validated", $account->roles)) {
+        // if user is logged in and email verified, skip
+        return;
+      }
     }
   }
 

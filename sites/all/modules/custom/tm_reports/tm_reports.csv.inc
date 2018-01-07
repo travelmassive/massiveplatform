@@ -100,7 +100,7 @@ function tm_reports_chapter_insights_get_data($drush_command = false, $fetch_new
 	}
 
 	// return api data in json format
-  	cache_set('tm-reports-all-chapter-insights', $rows, 'cache', time() + 60 * 60 * 12); // 12 hours
+  	cache_set('tm-reports-all-chapter-insights', $rows, 'cache', time() + (60 * 60 * 25)); // 25 hours
   	return $rows;
 }
 

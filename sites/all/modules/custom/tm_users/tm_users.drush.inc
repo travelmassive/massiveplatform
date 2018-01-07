@@ -123,8 +123,8 @@ function tm_users_download_global_newsletter_csv_drush(){
 	$starttime = microtime(true);
 	$csv = tm_users_download_global_newsletter_generate(true);
 
-	// save to cache for one week
-	cache_set('tm-users-global-newsletter-csv', $csv, 'cache', time() + (60 * 60 * 24 * 7));
+	// save to cache 25 hours
+	cache_set('tm-users-global-newsletter-csv', $csv, 'cache', time() + (60 * 60 * 25));
 	$endtime = microtime(true);
 	$timediff = $endtime - $starttime;
 	drush_print("Done (" . round($timediff, 2) . " seconds). Saved to cache key tm-users-global-newsletter-csv");

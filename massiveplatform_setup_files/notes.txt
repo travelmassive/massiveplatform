@@ -1,6 +1,7 @@
 Installation and setup notes
 
 PHP 7 (7.0) Support:
+--------------------
 
 Fully support PHP 7.0 in Drupal 7:
 
@@ -35,9 +36,9 @@ Only effects if using s3fs module
 Contains illegal break (Line 377).
 Only effects importing taxonomy from csv (can fix manually)
 
------
 
 utf8mb4 support:
+----------------
 
 As of Drupal 7.50 ut8mb4 support is in core: 
 
@@ -85,85 +86,21 @@ To turn it off, run:
 
 drush vset drupal_all_databases_are_utf8mb4 1
 
------
 
-Commit: following 56c77d2dda576508475c179c64abcf086e0b0b19
-This commit removes old, unused modules and tables from the datbase.
-You MUST run these commands first before pulling the commit.
+How to edit SASS stylesheets with Compass
+-----------------------------------------
 
-Step 1. Cleanup old modules:
+To edit SASS stylesheets you'll need compass installed:
 
-drush pm-disable admin_menu backup_migrate migrate migrate_extras tm_sample_content masquerade
-drush pm-uninstall admin_menu backup_migrate migrate migrate_extras tm_sample_content masquerade openlayers;
+https://www.drupal.org/node/2353067#comment-9535245
+sudo gem install sass -v 3.2.19
+sudo gem install compass -v 0.12.6
 
-Step 2. Clean up old modules SQL:
+Run "compass watch sites/all/themes/tm" to update css files
 
-# remove migrate tables
-
-drop table migrate_map_tmchapter;
-drop table migrate_map_tmcompany;
-drop table migrate_map_tmevent;
-drop table migrate_map_tmpage;
-drop table migrate_map_tmpartnerevent;
-drop table migrate_map_tmuser;
-drop table migrate_message_tmchapter;
-drop table migrate_message_tmcompany;
-drop table migrate_message_tmevent;
-drop table migrate_message_tmpage;
-drop table migrate_message_tmpartnerevent;
-drop table migrate_message_tmuser;
-drop table migrate_status;
-drop table migrate_field_mapping;
-drop table migrate_group;
-drop table migrate_log;
-
-# unused fields
-
-drop table field_data_field_ol_locator_address;
-drop table field_data_field_ol_locator_geofield;
-drop table field_revision_field_ol_locator_address;
-drop table field_revision_field_ol_locator_geofield;
-drop table field_deleted_data_49;
-drop table field_deleted_revision_49;
-
-# old (event) registration module
-
-drop table registration;
-drop table registration_entity;
-drop table registration_state;
-drop table registration_type;
-drop table cache_entity_registration;
-drop table cache_entity_registration_state;
-drop table cache_entity_registration_type;
-
-# developer access backtracemodule
-
-drop table adb;
-
-# openlayers
-
-drop table openlayers_maps;
-drop table openlayers_projections;
-drop table openlayers_styles;
-drop table openlayers_layers;
-
-# admin_menu
-
-drop table cache_admin_menu;
-
-# masquerade
-
-drop table masquerade;
-drop table masquerade_users;
-
-# honeypot_user
-
-drop table honeypot_user;
-
-
------
 
 How to manually flag someone to attend an event:
+------------------------------------------------
 
 Change the userid and event id accordingly.
 
@@ -172,7 +109,4 @@ Change the userid and event id accordingly.
 
 # example for paid event
 # drush php-eval '$account = user_load(34757); $content_id = 16555; $event_paid = flag_get_flag("event_paid"); $event_paid->flag('flag', $content_id, $account, null); $event_register = flag_get_flag("event_register"); $event_register->flag('flag', $content_id, $account, null);'
-
-
-------
 

@@ -16,6 +16,11 @@ function tm_recaptcha_form_alter(&$form, &$form_state, $form_id) {
   global $conf;
   global $user;
 
+  // special case, ignore twitter sign up
+  if (arg(0) == "tm_twitter") {
+    return;
+  }
+
   // check if logged in users get recaptcha
   if ($conf["tm_repatcha_users"] == "anonymous") {
     if (user_is_logged_in()) {

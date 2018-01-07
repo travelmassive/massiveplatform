@@ -42,6 +42,12 @@ function tm_recaptcha_form_alter(&$form, &$form_state, $form_id) {
 
     // Include API
     $endpoint = 'https://www.google.com/recaptcha/api.js';
+
+     // Language
+    if ($conf["tm_repatcha_language"] != "us") {
+      $endpoint .= '?hl=' . $conf["tm_repatcha_language"];
+    }
+
     $api = array(
       'data' => $endpoint,
       'scope' => 'header',
@@ -59,9 +65,9 @@ function tm_recaptcha_form_alter(&$form, &$form_state, $form_id) {
           document.getElementById('" . $form['#id'] . "').submit();
         }
 
-        (function($) {
-          $(document).ready(function() {
-            $('#edit-submit').on('click', function(e) {
+        (function(jQuery) {
+          jQuery(document).ready(function() {
+            jQuery('#edit-submit').on('click', function(e) {
               e.preventDefault();
               grecaptcha.execute();
             });
@@ -97,9 +103,10 @@ function tm_recaptcha_form_alter(&$form, &$form_state, $form_id) {
       $style = "margin: 0 auto; width: 320px; margin-top: 1rem; margin-bottom: 1rem;";
     }
 
+    // data-callback="gCaptureSubmit" 
     $container = '<div style="' . $style . '" class="aaa g-recaptcha" data-size="' .
       $widget_settings['size'] . '" data-theme="' . $widget_settings['theme'] .
-      '" data-callback="gCaptureSubmit" data-sitekey="' . $key . '" id="' . $form_name .
+      '" data-sitekey="' . $key . '" id="' . $form_name .
       '"></div>';
 
     $form['actions']['submit']['#prefix'] = empty($form['actions']['submit']['#prefix']) ? $container : $container . $form['actions']['submit']['#prefix'];
@@ -172,6 +179,7 @@ function tm_recaptcha_ask_google($secret, $response, $remoteip) {
       'invalid-input-secret' => 'The secret parameter is invalid or malformed.',
       'missing-input-response' => 'The response parameter is missing.',
       'invalid-input-response' => 'The response parameter is invalid or malformed.',
+      'timeout-or-duplicate' => 'Timeout or duplicate.',
     );
 
     if (!empty($response['error-codes'])) {

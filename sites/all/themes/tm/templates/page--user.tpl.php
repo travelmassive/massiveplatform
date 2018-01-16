@@ -145,8 +145,10 @@ if (sizeof($request_uri_parts) == 3) {
       // hide for specific URL path
       if (isset($conf['tm_branding_hide_footer_level2_on_urls'])) {
         $url_path = explode("?", $_SERVER["REQUEST_URI"])[0];
-        if (in_array($url_path, $conf['tm_branding_hide_footer_level2_on_urls'])) {
-          $show_footer_level2_html = false;
+        foreach($conf['tm_branding_hide_footer_level2_on_urls'] as $check_url) {
+          if (strpos($url_path, $check_url) !== false) {
+            $show_footer_level2_html = false;
+          }
         }
       }
 

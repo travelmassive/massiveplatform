@@ -459,6 +459,8 @@ $conf['tm_geoip_maxmind_db'] = '/usr/local/share/GeoIP/GeoIP2-City.mmd'; // path
 /** SITE BRANDING **/
 //Base site branding
 $conf['tm_branding_enabled'] = true; // set to false to disable brand processing and only use config variables
+$conf['tm_branding_hide_footer_level2_on_events'] = false; // hide level 2 branding on events or not
+$conf['tm_branding_hide_footer_level2_on_urls'] = array('/sponsored-content'); // hide level 2 branding on urls
 $conf['tm_branding_frontpage_url'] = '/'; // link to frontpage url
 $conf['tm_branding_assets_base_path'] = '/sites/default/files/site_branding'; // path to site_branding assets 
 $conf['tm_branding_favicon'] = '/sites/default/files/site_branding/apple_touch_icons/apple-touch-icon-72x72.png'; // default favicon (ico)

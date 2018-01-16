@@ -167,7 +167,32 @@ if (sizeof($request_uri_parts) == 3) {
     <?php 
     // only show on view
     if ((arg(1) == "") or (is_numeric(arg(1)) and (arg(2) == ""))) {
-      echo tm_branding_get_element("footer_level2_html");
+      
+      // show footer level 2 branding
+      $show_footer_level2_html = true;
+
+      // hide on events
+      if ($node->type == "event") {
+        if (isset($conf["tm_branding_hide_footer_level2_on_events"])) {
+          if ($conf["tm_branding_hide_footer_level2_on_events"]) {
+            $show_footer_level2_html = false;
+          }
+        }
+      }
+
+      // hide for specific URL path
+      if (isset($conf['tm_branding_hide_footer_level2_on_urls'])) {
+        $url_path = explode("?", $_SERVER["REQUEST_URI"])[0];
+        if (in_array($url_path, $conf['tm_branding_hide_footer_level2_on_urls'])) {
+          $show_footer_level2_html = false;
+        }
+      }
+      
+      // display footer level 2
+      if ($show_footer_level2_html) {
+        echo tm_branding_get_element("footer_level2_html");
+      }
+      
     } 
     ?>
     <?php echo tm_branding_get_element("footer_html"); ?>

@@ -247,10 +247,19 @@ function _tm_reports_views_pre_render_chapter_report(&$view) {
  * Calculate stats for chapter
  * NOTE: Cached
  */
-function _tm_reports_get_chapter_insights($chapter_id, $ignore_cache = false) {
+function _tm_reports_get_chapter_insights($chapter_ids, $ignore_cache = false) {
+
+  // prepare array if only one chapter
+  if (!is_array($chapter_ids)) {
+    $chapter_ids = array($chapter_ids);
+  }
+
+  // check if array
+  // max key length is 250 chars (memcached) so lets md5 it so we get 32 char
+  $chapter_ids_key = md5(implode("-", $chapter_ids)); 
 
   // check cache
-  $cache = cache_get('tm-reports-get-chapter-insights-' . $chapter_id, 'cache');
+  $cache = cache_get('tm-reports-get-chapter-insights-' . $chapter_ids_key, 'cache');
   if (!empty($cache) and (!$ignore_cache)) {
     return $cache->data;
   }
@@ -271,7 +280,7 @@ function _tm_reports_get_chapter_insights($chapter_id, $ignore_cache = false) {
   $query->entityCondition('entity_type', 'node')
     ->entityCondition('bundle', 'event')
     ->propertyCondition('status', 1)
-    ->fieldCondition('field_chapter', 'target_id', $chapter_id)
+    ->fieldCondition('field_chapter', 'target_id', $chapter_ids)
     ->fieldCondition('field_event_date', 'value2', $current_date->format('Y-m-d H:i:s'), '>=')
     ->fieldOrderBy('field_event_date', 'value2', 'ASC')
     ->range(0,1);
@@ -306,7 +315,7 @@ function _tm_reports_get_chapter_insights($chapter_id, $ignore_cache = false) {
   $query->entityCondition('entity_type', 'node')
     ->entityCondition('bundle', 'event')
     ->propertyCondition('status', 1)
-    ->fieldCondition('field_chapter', 'target_id', $chapter_id)
+    ->fieldCondition('field_chapter', 'target_id', $chapter_ids)
     ->fieldCondition('field_event_date', 'value2', $current_date->format('Y-m-d H:i:s'), '<=')
     ->fieldOrderBy('field_event_date', 'value2', 'DESC')
     ->range(0,1);
@@ -319,9 +328,9 @@ function _tm_reports_get_chapter_insights($chapter_id, $ignore_cache = false) {
   $query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 
   LEFT JOIN field_data_field_chapter on field_data_field_chapter.entity_id = e.entity_id
   WHERE field_data_field_chapter.entity_type = 'node'
-  AND field_data_field_chapter.field_chapter_target_id = :chapter_id
+  AND field_data_field_chapter.field_chapter_target_id IN (:chapter_ids)
   AND e.entity_type = 'node' AND field_event_date_value >= NOW();";
-  $query = db_query($query_sql, array(':chapter_id' => $chapter_id))->fetch();
+  $query = db_query($query_sql, array(':chapter_ids' => $chapter_ids))->fetch();
   $insights["num_events_upcoming"] = $query->total;
 
   $last_event_time = "No past events";
@@ -342,33 +351,33 @@ function _tm_reports_get_chapter_insights($chapter_id, $ignore_cache = false) {
   $query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 
   LEFT JOIN field_data_field_chapter on field_data_field_chapter.entity_id = e.entity_id
   WHERE field_data_field_chapter.entity_type = 'node'
-  AND field_data_field_chapter.field_chapter_target_id = :chapter_id
+  AND field_data_field_chapter.field_chapter_target_id IN (:chapter_ids)
   AND e.entity_type = 'node' AND field_event_date_value >= DATE_SUB(NOW(),INTERVAL 1 YEAR);";
-  $query = db_query($query_sql, array(':chapter_id' => $chapter_id))->fetch();
+  $query = db_query($query_sql, array(':chapter_ids' => $chapter_ids))->fetch();
   $insights["num_events_past_12_months"] = $query->total;
 
   // NUMBER OF EVENTS PAST ALL TIME
   $query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 
   LEFT JOIN field_data_field_chapter on field_data_field_chapter.entity_id = e.entity_id
   WHERE field_data_field_chapter.entity_type = 'node'
-  AND field_data_field_chapter.field_chapter_target_id = :chapter_id
+  AND field_data_field_chapter.field_chapter_target_id IN (:chapter_ids)
   AND e.entity_type = 'node' AND field_event_date_value <= NOW();";
-  $query = db_query($query_sql, array(':chapter_id' => $chapter_id))->fetch();
+  $query = db_query($query_sql, array(':chapter_ids' => $chapter_ids))->fetch();
   $insights["num_events_past_total"] = $query->total;
 
   // NEW MEMBERS PAST 30 DAYS
-  $query_sql = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id AND timestamp >= :time_ago";
-  $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':time_ago' => $days_ago_30))->fetch();
+  $query_sql = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_type = 'node' AND f.entity_id IN (:chapter_ids) AND timestamp >= :time_ago";
+  $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_ids' => $chapter_ids, ':time_ago' => $days_ago_30))->fetch();
   $insights["members_30_days_total"] = $query->total;
 
   // NEW MEMBERS PAST 90 DAYS
-  $query_sql = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id AND timestamp >= :time_ago";
-  $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':time_ago' => $days_ago_90))->fetch();
+  $query_sql = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_type = 'node' AND f.entity_id IN (:chapter_ids) AND timestamp >= :time_ago";
+  $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_ids' => $chapter_ids, ':time_ago' => $days_ago_90))->fetch();
   $insights["members_90_days_total"] = $query->total;
 
    // MEMBERSHIP GROWTH % PAST 30 DAYS
-  $query_sql = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id AND timestamp < :time_ago";
-  $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':time_ago' => $days_ago_30))->fetch();
+  $query_sql = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_type = 'node' AND f.entity_id IN (:chapter_ids) AND timestamp < :time_ago";
+  $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_ids' => $chapter_ids, ':time_ago' => $days_ago_30))->fetch();
   $members_30_days_ago = $query->total;
   $members_30_days_pct = 0;
   if ($members_30_days_ago > 0) {      
@@ -377,8 +386,8 @@ function _tm_reports_get_chapter_insights($chapter_id, $ignore_cache = false) {
   $insights["members_30_days_pct"] = $members_30_days_pct;
 
   // MEMBERSHIP GROWTH % PAST 90 DAYS
-  $query_sql = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id AND timestamp < :time_ago";
-  $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':time_ago' => $days_ago_90))->fetch();
+  $query_sql = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_type = 'node' AND f.entity_id IN (:chapter_ids) AND timestamp < :time_ago";
+  $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_ids' => $chapter_ids, ':time_ago' => $days_ago_90))->fetch();
   $members_90_days_ago = $query->total;
   $members_90_days_pct = 0;
   if ($members_90_days_ago > 0) {      
@@ -387,8 +396,8 @@ function _tm_reports_get_chapter_insights($chapter_id, $ignore_cache = false) {
   $insights["members_90_days_pct"] = $members_90_days_pct;
 
   // TOTAL MEMBERS
-  $query_sql = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
-  $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id))->fetch();
+  $query_sql = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_type = 'node' AND f.entity_id IN (:chapter_ids)";
+  $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_ids' => $chapter_ids))->fetch();
   $members_total = $query->total;
   if ($members_total == 0) {
     $members_total = 1; // prevent div0
@@ -396,8 +405,8 @@ function _tm_reports_get_chapter_insights($chapter_id, $ignore_cache = false) {
   $insights["members_total"] = $members_total;
 
   // TOTAL APPROVED MEMBERS
-  $query_sql = "SELECT COUNT(DISTINCT users_roles.uid) total FROM {flagging} f RIGHT JOIN users_roles ON users_roles.uid = f.uid WHERE users_roles.rid = :role_id AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
-  $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
+  $query_sql = "SELECT COUNT(DISTINCT users_roles.uid) total FROM {flagging} f RIGHT JOIN users_roles ON users_roles.uid = f.uid WHERE users_roles.rid = :role_id AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id IN (:chapter_ids)";
+  $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_ids' => $chapter_ids, ':role_id' => $approved_role->rid))->fetch();
   $members_approved_total = $query->total;
   $insights["members_approved_total"] = $members_approved_total;
   if ($members_approved_total == 0) { 
@@ -428,8 +437,8 @@ function _tm_reports_get_chapter_insights($chapter_id, $ignore_cache = false) {
   RIGHT JOIN field_data_field_segment on f.uid = field_data_field_segment.entity_id 
   WHERE field_data_field_segment.entity_id is not null
   AND users_roles.rid = :role_id
-  AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
-  $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
+  AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id IN (:chapter_ids)";
+  $query = db_query($query_sql, array(':fid' => $flag->fid, ':chapter_ids' => $chapter_ids, ':role_id' => $approved_role->rid))->fetch();
   $insights["members_approved_with_segment"] = $query->total;
 
   // NUM MEMBERS WITHOUT A SEGMENT
@@ -443,28 +452,28 @@ function _tm_reports_get_chapter_insights($chapter_id, $ignore_cache = false) {
   $insights["members_with_segment_pct"] = $members_with_segment_pct;
 
   // NUMBER OF SIGNED IN MEMBERS TODAY (APPROVED)
-  $query = "SELECT COUNT(DISTINCT users.uid) amount FROM users RIGHT JOIN users_roles ON users_roles.uid = users.uid RIGHT JOIN {flagging} f ON f.uid = users.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(access) > DATE_SUB(NOW(), INTERVAL 1 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
-  $signed_in_today_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
+  $query = "SELECT COUNT(DISTINCT users.uid) amount FROM users RIGHT JOIN users_roles ON users_roles.uid = users.uid RIGHT JOIN {flagging} f ON f.uid = users.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(access) > DATE_SUB(NOW(), INTERVAL 1 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id IN (:chapter_ids) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id IN (:chapter_ids)";
+  $signed_in_today_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_ids' => $chapter_ids, ':role_id' => $approved_role->rid))->fetch();
   $insights["num_signedin_members_24_hours_chapter"] = $signed_in_today_chapter->amount;
 
   // NUMBER OF SIGNED IN MEMBERS 7 DAYS (APPROVED)
-  $query = "SELECT COUNT(DISTINCT users.uid) amount FROM users RIGHT JOIN users_roles ON users_roles.uid = users.uid RIGHT JOIN {flagging} f ON f.uid = users.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(access) > DATE_SUB(NOW(), INTERVAL 7 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
-  $signed_in_7_days_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
+  $query = "SELECT COUNT(DISTINCT users.uid) amount FROM users RIGHT JOIN users_roles ON users_roles.uid = users.uid RIGHT JOIN {flagging} f ON f.uid = users.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(access) > DATE_SUB(NOW(), INTERVAL 7 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id IN (:chapter_ids)";
+  $signed_in_7_days_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_ids' => $chapter_ids, ':role_id' => $approved_role->rid))->fetch();
   $insights["num_signedin_members_7_days_chapter"] = $signed_in_7_days_chapter->amount;
 
   // NUMBER OF SIGNED IN MEMBERS 30 DAYS (APPROVED)
-  $query = "SELECT COUNT(DISTINCT users.uid) amount FROM users RIGHT JOIN users_roles ON users_roles.uid = users.uid RIGHT JOIN {flagging} f ON f.uid = users.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(access) > DATE_SUB(NOW(), INTERVAL 30 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
-  $signed_in_30_days_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
+  $query = "SELECT COUNT(DISTINCT users.uid) amount FROM users RIGHT JOIN users_roles ON users_roles.uid = users.uid RIGHT JOIN {flagging} f ON f.uid = users.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(access) > DATE_SUB(NOW(), INTERVAL 30 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id IN (:chapter_ids)";
+  $signed_in_30_days_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_ids' => $chapter_ids, ':role_id' => $approved_role->rid))->fetch();
   $insights["num_signedin_members_30_days_chapter"] = $signed_in_30_days_chapter->amount;
 
   // NUMBER OF SIGNED IN MEMBERS 90 DAYS (APPROVED)
-  $query = "SELECT COUNT(DISTINCT users.uid) amount FROM users RIGHT JOIN users_roles ON users_roles.uid = users.uid RIGHT JOIN {flagging} f ON f.uid = users.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(access) > DATE_SUB(NOW(), INTERVAL 90 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
-  $signed_in_90_days_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
+  $query = "SELECT COUNT(DISTINCT users.uid) amount FROM users RIGHT JOIN users_roles ON users_roles.uid = users.uid RIGHT JOIN {flagging} f ON f.uid = users.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(access) > DATE_SUB(NOW(), INTERVAL 90 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id IN (:chapter_ids)";
+  $signed_in_90_days_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_ids' => $chapter_ids, ':role_id' => $approved_role->rid))->fetch();
   $insights["num_signedin_members_90_days_chapter"] = $signed_in_90_days_chapter->amount;
 
   // NUMBER OF MEMBERS WHO HAVEN'T SIGNED IN SINCE 90 DAYS (APPROVED)
-  $query = "SELECT COUNT(DISTINCT users.uid) amount FROM users RIGHT JOIN users_roles ON users_roles.uid = users.uid RIGHT JOIN {flagging} f ON f.uid = users.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(access) < DATE_SUB(NOW(), INTERVAL 90 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id = :chapter_id";
-  $signed_in_older_than_90_days_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id, ':role_id' => $approved_role->rid))->fetch();
+  $query = "SELECT COUNT(DISTINCT users.uid) amount FROM users RIGHT JOIN users_roles ON users_roles.uid = users.uid RIGHT JOIN {flagging} f ON f.uid = users.uid WHERE users_roles.rid = :role_id AND FROM_UNIXTIME(access) < DATE_SUB(NOW(), INTERVAL 90 DAY) AND f.fid = :fid AND f.entity_type = 'node' AND f.entity_id IN (:chapter_ids)";
+  $signed_in_older_than_90_days_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_ids' => $chapter_ids, ':role_id' => $approved_role->rid))->fetch();
   $insights["num_signedin_members_older_than_90_days_chapter"] = $signed_in_older_than_90_days_chapter->amount;
 
   // % OF SIGNED IN MEMBERS TODAY
@@ -483,8 +492,8 @@ function _tm_reports_get_chapter_insights($chapter_id, $ignore_cache = false) {
   $insights["pct_signedin_members_older_than_90_days_chapter"] = (100 - round(($signed_in_90_days_chapter->amount / $members_approved_total) * 100, 0));
 
   // NUMBER OF MEMBERS WITH HOME CHAPTER
-  $query = "SELECT COUNT(*) AS amount FROM flagging f RIGHT JOIN field_data_field_home_chapter hc ON hc.entity_id = f.uid WHERE f.fid = :fid AND f.entity_id = :chapter_id AND hc.field_home_chapter_target_id = :chapter_id";
-  $num_members_with_home_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id))->fetch();
+  $query = "SELECT COUNT(*) AS amount FROM flagging f RIGHT JOIN field_data_field_home_chapter hc ON hc.entity_id = f.uid WHERE f.fid = :fid AND f.entity_id IN (:chapter_ids) AND hc.field_home_chapter_target_id IN (:chapter_ids)";
+  $num_members_with_home_chapter = db_query($query, array(':fid' => $flag->fid, ':chapter_ids' => $chapter_ids))->fetch();
   $insights["num_members_with_home_chapter"] = $num_members_with_home_chapter->amount;
   $insights["pct_members_with_home_chapter"] = round(($insights["num_members_with_home_chapter"] / $members_total) * 100, 0);
   $insights["num_members_without_home_chapter"] = $members_total - $num_members_with_home_chapter->amount;
@@ -492,20 +501,20 @@ function _tm_reports_get_chapter_insights($chapter_id, $ignore_cache = false) {
 
   // NUMBER OF TOTAL EVENT REGISTRATIONS
   $flag_event_register = flag_get_flag('event_register', NULL);
-  $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
-  $num_event_registrations = db_query($query, array(':fid' => $flag_event_register->fid, ':chapter_id' => $chapter_id))->fetch();
+  $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id IN (:chapter_ids)) AND fid = :fid";
+  $num_event_registrations = db_query($query, array(':fid' => $flag_event_register->fid, ':chapter_ids' => $chapter_ids))->fetch();
   $insights["num_event_registrations"] = $num_event_registrations->amount;
 
   // NUMBER OF TOTAL EVENT WAITLISTS
   $flag_event_waitlist = flag_get_flag('event_waitlist', NULL);
-  $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
-  $num_event_waitlists = db_query($query, array(':fid' => $flag_event_waitlist->fid, ':chapter_id' => $chapter_id))->fetch();
+  $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id IN (:chapter_ids)) AND fid = :fid";
+  $num_event_waitlists = db_query($query, array(':fid' => $flag_event_waitlist->fid, ':chapter_ids' => $chapter_ids))->fetch();
   $insights["num_event_waitlists"] = $num_event_waitlists->amount;
 
   // NUMBER OF TOTAL EVENT PAYMENTS
   $flag_event_paid = flag_get_flag('event_paid', NULL);
-  $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
-  $num_event_payments = db_query($query, array(':fid' => $flag_event_paid->fid, ':chapter_id' => $chapter_id))->fetch();
+  $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id IN (:chapter_ids)) AND fid = :fid";
+  $num_event_payments = db_query($query, array(':fid' => $flag_event_paid->fid, ':chapter_ids' => $chapter_ids))->fetch();
   if ($num_event_payments->amount > 0) {
     $insights["num_event_payments"] = $num_event_payments->amount;
   } else {
@@ -513,15 +522,15 @@ function _tm_reports_get_chapter_insights($chapter_id, $ignore_cache = false) {
   }
 
   // NUMBER OF UNIQUE EVENT REGISTRATIONS
-  $query = "SELECT COUNT(DISTINCT(uid)) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
-  $num_unique_chapter_event_registrations = db_query($query, array(':fid' => $flag_event_register->fid, ':chapter_id' => $chapter_id))->fetch();
+  $query = "SELECT COUNT(DISTINCT(uid)) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id IN (:chapter_ids)) AND fid = :fid";
+  $num_unique_chapter_event_registrations = db_query($query, array(':fid' => $flag_event_register->fid, ':chapter_ids' => $chapter_ids))->fetch();
   $insights["num_unique_chapter_event_registrations"] = $num_unique_chapter_event_registrations->amount;
   $insights["pct_unique_chapter_event_registrations"] = round(($insights["num_unique_chapter_event_registrations"] / $members_approved_total) * 100, 0);
 
   // FREQUENCY OF EVENTS
   $flag = flag_get_flag('event_register', NULL);
-  $query_sql = "SELECT AVG(amount) AS total FROM (SELECT uid, COUNT(uid) AS amount FROM flagging f WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND f.fid = :fid GROUP BY uid) AS t2";
-  $query = db_query($query_sql, array("chapter_id" => $chapter_id, ":fid" => $flag->fid))->fetch();
+  $query_sql = "SELECT AVG(amount) AS total FROM (SELECT uid, COUNT(uid) AS amount FROM flagging f WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id IN (:chapter_ids)) AND f.fid = :fid GROUP BY uid) AS t2";
+  $query = db_query($query_sql, array("chapter_ids" => $chapter_ids, ":fid" => $flag->fid))->fetch();
   $avg_event_registeration_frequency = round($query->total, 1);
   $insights['avg_event_registeration_frequency'] = $avg_event_registeration_frequency;
 
@@ -531,18 +540,18 @@ function _tm_reports_get_chapter_insights($chapter_id, $ignore_cache = false) {
   $signup_flag = flag_get_flag('signup', NULL);
 
   // get outbound follows (total follows from chapter members)
-  $query_sql = "SELECT COUNT(uid) AS total FROM flagging f WHERE f.fid = :follow_fid AND f.uid IN (SELECT uid FROM flagging f2 WHERE f2.entity_id = :chapter_id AND f2.fid = :signup_fid)";
-  $query = db_query($query_sql, array(":chapter_id" => $chapter_id, ":follow_fid" => $follow_flag->fid, ":signup_fid" => $signup_flag->fid))->fetch();
+  $query_sql = "SELECT COUNT(uid) AS total FROM flagging f WHERE f.fid = :follow_fid AND f.uid IN (SELECT uid FROM flagging f2 WHERE f2.entity_id IN (:chapter_ids) AND f2.fid = :signup_fid)";
+  $query = db_query($query_sql, array(":chapter_ids" => $chapter_ids, ":follow_fid" => $follow_flag->fid, ":signup_fid" => $signup_flag->fid))->fetch();
   $total_chapter_member_connections_outbound = $query->total;
 
   // get inbound follows (total following of chapter members)
-  $query_sql = "SELECT SUM(fc.count) AS total FROM flag_counts fc WHERE fc.fid = :follow_fid AND entity_id IN (SELECT uid FROM flagging f2 WHERE f2.entity_id = :chapter_id AND f2.fid = :signup_fid)";
-  $query = db_query($query_sql, array(":chapter_id" => $chapter_id, ":follow_fid" => $follow_flag->fid, ":signup_fid" => $signup_flag->fid))->fetch();
+  $query_sql = "SELECT SUM(fc.count) AS total FROM flag_counts fc WHERE fc.fid = :follow_fid AND entity_id IN (SELECT uid FROM flagging f2 WHERE f2.entity_id IN (:chapter_ids) AND f2.fid = :signup_fid)";
+  $query = db_query($query_sql, array(":chapter_ids" => $chapter_ids, ":follow_fid" => $follow_flag->fid, ":signup_fid" => $signup_flag->fid))->fetch();
   $total_chapter_member_connections_inbound = $query->total;
 
   // chapter members following organizations
-  $query_sql = "SELECT COUNT(uid) AS total FROM flagging f WHERE f.fid = :follow_fid AND f.uid IN (SELECT uid FROM flagging f2 WHERE f2.entity_id = :chapter_id AND f2.fid = :signup_fid)";
-  $query = db_query($query_sql, array(":chapter_id" => $chapter_id, ":follow_fid" => $follow_organizations_flag->fid, ":signup_fid" => $signup_flag->fid))->fetch();
+  $query_sql = "SELECT COUNT(uid) AS total FROM flagging f WHERE f.fid = :follow_fid AND f.uid IN (SELECT uid FROM flagging f2 WHERE f2.entity_id IN (:chapter_ids) AND f2.fid = :signup_fid)";
+  $query = db_query($query_sql, array(":chapter_ids" => $chapter_ids, ":follow_fid" => $follow_organizations_flag->fid, ":signup_fid" => $signup_flag->fid))->fetch();
   $total_chapter_member_connections_organizations = $query->total;
 
   $total_chapter_member_connections = $total_chapter_member_connections_outbound + $total_chapter_member_connections_inbound + $total_chapter_member_connections_organizations;
@@ -551,8 +560,8 @@ function _tm_reports_get_chapter_insights($chapter_id, $ignore_cache = false) {
   // RETURN DATA
   $data_labels = tm_reports_get_insights_labels();
   $results = ["data_values" => $insights, "data_labels" => $data_labels];
-  cache_set('tm-reports-get-chapter-insights-' . $chapter_id, $results, 'cache', time() + 900); // 15 mins
-  cache_set('tm-reports-get-chapter-insights-display-' . $chapter_id, $results, 'cache'); // uptdate permanent display cache for public chapter pages
+  cache_set('tm-reports-get-chapter-insights-' . $chapter_ids_key, $results, 'cache', time() + 900); // 15 mins
+  cache_set('tm-reports-get-chapter-insights-display-' . $chapter_ids_key, $results, 'cache'); // uptdate permanent display cache for public chapter pages
 
   return $results;
 }

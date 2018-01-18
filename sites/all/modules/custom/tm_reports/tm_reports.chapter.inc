@@ -247,7 +247,9 @@ function _tm_reports_views_pre_render_chapter_report(&$view) {
  * Calculate stats for chapter
  * NOTE: Cached
  */
-function _tm_reports_get_chapter_insights($chapter_ids, $ignore_cache = false) {
+function _tm_reports_get_chapter_insights($chapter_ids, $ignore_cache = false, $cache_seconds = 900) {
+
+  $chapter_ids = _tm_chapters_get_chapters_in_continent("OC");
 
   // prepare array if only one chapter
   if (!is_array($chapter_ids)) {
@@ -560,7 +562,7 @@ function _tm_reports_get_chapter_insights($chapter_ids, $ignore_cache = false) {
   // RETURN DATA
   $data_labels = tm_reports_get_insights_labels();
   $results = ["data_values" => $insights, "data_labels" => $data_labels];
-  cache_set('tm-reports-get-chapter-insights-' . $chapter_ids_key, $results, 'cache', time() + 900); // 15 mins
+  cache_set('tm-reports-get-chapter-insights-' . $chapter_ids_key, $results, 'cache', time() + $cache_seconds); // 15 mins
   cache_set('tm-reports-get-chapter-insights-display-' . $chapter_ids_key, $results, 'cache'); // uptdate permanent display cache for public chapter pages
 
   return $results;

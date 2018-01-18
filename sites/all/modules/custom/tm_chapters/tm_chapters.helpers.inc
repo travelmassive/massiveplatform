@@ -141,3 +141,64 @@ function _tm_chapters_get_chapter_member_uids_multiple($chapter_ids) {
 
 }
 
+/**
+ * Helper method
+ * Get array of countries that have a chapter
+ */
+function _tm_chapters_get_countries_with_chapters() {
+
+  // number of chapter countries
+  $result = db_query("SELECT DISTINCT iso2, name from {field_data_field_country} f LEFT JOIN {countries_country} c ON f.field_country_iso2 = c.iso2 WHERE f.bundle = 'chapter' AND c.iso2 IS NOT NULL ORDER BY name ASC");
+  $results = $result->fetchAll();
+
+  $countries = array();
+  foreach ($results as $result) {
+    $countries[] = $result->iso2;
+  }
+  
+  return $countries;
+}
+
+
+/**
+ * Helper method
+ * Get chapters in a country
+ */
+function _tm_chapters_get_chapters_in_country($country_iso2) {
+
+  $query = "SELECT entity_id FROM field_data_field_country WHERE bundle = 'chapter' AND field_country_iso2 = :country_iso2 AND deleted = 0";
+  $results = db_query($query, array(':country_iso2' => $country_iso2))->fetchAll();
+
+  $chapter_uids = array();
+  foreach ($results as $result) {
+    $chapter_uids[] = $result->entity_id;
+  }
+
+  return $chapter_uids;
+}
+
+/**
+ * Helper method
+ * Get chapters in a country
+ * Continents: 
+ * AF = Africa
+ * AN = Antarctica
+ * AS = Asia
+ * EU = Europe
+ * NA = North America
+ * OC = Oceania
+ * SA = South Africa
+ */
+function _tm_chapters_get_chapters_in_continent($continent) {
+
+  $query = "SELECT field_data_field_country.entity_id FROM field_data_field_country LEFT JOIN countries_country ON countries_country.iso2 = field_data_field_country.field_country_iso2 AND field_data_field_country.bundle = 'chapter' AND field_data_field_country.deleted = 0 WHERE countries_country.continent = :continent";
+  $results = db_query($query, array(':continent' => $continent))->fetchAll();
+
+  $chapter_uids = array();
+  foreach ($results as $result) {
+    $chapter_uids[] = $result->entity_id;
+  }
+
+  return $chapter_uids;
+}
+

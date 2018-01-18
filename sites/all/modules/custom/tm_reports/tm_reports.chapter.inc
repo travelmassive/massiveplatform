@@ -532,7 +532,7 @@ function _tm_reports_get_chapter_insights($chapter_ids, $ignore_cache = false, $
   // FREQUENCY OF EVENTS
   $flag = flag_get_flag('event_register', NULL);
   $query_sql = "SELECT AVG(amount) AS total FROM (SELECT uid, COUNT(uid) AS amount FROM flagging f WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id IN (:chapter_ids)) AND f.fid = :fid GROUP BY uid) AS t2";
-  $query = db_query($query_sql, array("chapter_ids" => $chapter_ids, ":fid" => $flag->fid))->fetch();
+  $query = db_query($query_sql, array(":chapter_ids" => $chapter_ids, ":fid" => $flag->fid))->fetch();
   $avg_event_registeration_frequency = round($query->total, 1);
   $insights['avg_event_registeration_frequency'] = $avg_event_registeration_frequency;
 

@@ -14,10 +14,24 @@ function tm_reports_user_is_moderator() {
  * Get Industry Segment Data from a chapter, event or global (approved members)
  * Note: CACHED
  */
-function _tm_reports_get_industry_segment_data($node_id = "", $node_type = "chapter") {
+function _tm_reports_get_industry_segment_data($node_ids = "", $node_type = "chapter") {
+
+  // empty node ids
+  if ($node_ids == "") {
+    $node_ids = array();
+  }
+
+  // prepare array if only one chapter
+  if (!is_array($node_ids)) {
+    $node_ids = array($node_ids);
+  }
+
+  // check if array
+  // max key length is 250 chars (memcached) so lets md5 it so we get 32 char
+  $node_ids_key = md5(implode("-", $node_ids)); 
 
   // check cache
-  $cache = cache_get('tm-reports-get-industry-segment-data-' . $node_type . "-" . $node_id, 'cache');
+  $cache = cache_get('tm-reports-get-industry-segment-data-' . $node_type . "-" . $node_ids_key, 'cache');
   if (!empty($cache)) {
     return $cache->data;
   }
@@ -25,8 +39,7 @@ function _tm_reports_get_industry_segment_data($node_id = "", $node_type = "chap
   $approved_role = user_role_load_by_name("approved user");
 
   // SQL - Join to Chapter or Event
-  if (($node_id != "") and ($node_type == "chapter")) {
-    $chapter = node_load($node_id);
+  if ((sizeof($node_ids) > 0) and ($node_type == "chapter")) {
     $flag = flag_get_flag('signup', NULL);
     
     $query = "select count(users.uid) as total, taxonomy_term_data.tid as segment_tid, taxonomy_term_data.name from users
@@ -37,21 +50,20 @@ function _tm_reports_get_industry_segment_data($node_id = "", $node_type = "chap
   left join users_roles ON users_roles.uid = users.uid 
   where users_roles.rid = :role_id
   and fid = :fid
-  and flagging.entity_id = :chapter_nid
+  and flagging.entity_id IN (:chapter_nids)
   and flagging.entity_type = 'node'
   and field_data_field_segment.entity_type = 'user'
   and taxonomy_term_data.tid is not null
   group by segment_tid
   order by name";
 
-    $rows = db_query($query, array(':fid' => $flag->fid, ':role_id' => $approved_role->rid, ':chapter_nid' => $chapter->nid))->fetchAll();
+    $rows = db_query($query, array(':fid' => $flag->fid, ':role_id' => $approved_role->rid, ':chapter_nids' => $node_ids))->fetchAll();
 
   }
 
   // SQL - Join to Event
   // Ignore approved role - guests can also join events
-  if (($node_id != "") and ($node_type == "event")) {
-    $event = node_load($node_id);
+  if ((sizeof($node_ids) > 0) and ($node_type == "event")) {
     $flag = flag_get_flag('event_register', NULL);
     
     $query = "select count(users.uid) as total, taxonomy_term_data.tid as segment_tid, taxonomy_term_data.name from users
@@ -60,19 +72,19 @@ function _tm_reports_get_industry_segment_data($node_id = "", $node_type = "chap
   left join taxonomy_term_hierarchy on taxonomy_term_hierarchy.tid = field_data_field_segment.field_segment_tid 
   left join taxonomy_term_data ON (IF (taxonomy_term_hierarchy.parent > 0, taxonomy_term_hierarchy.parent, taxonomy_term_hierarchy.tid) = taxonomy_term_data.tid)
   where fid = :fid
-  and flagging.entity_id = :event_nid
+  and flagging.entity_id IN (:event_nids)
   and flagging.entity_type = 'node'
   and field_data_field_segment.entity_type = 'user'
   and taxonomy_term_data.tid is not null
   group by segment_tid
   order by name";
 
-    $rows = db_query($query, array(':fid' => $flag->fid, ':event_nid' => $event->nid))->fetchAll();
+    $rows = db_query($query, array(':fid' => $flag->fid, ':event_nids' => $node_ids))->fetchAll();
 
   }
 
   // SQL - Global
-  if ($node_id == "") {
+  if (sizeof($node_ids) == 0) {
 
     $query = "select count(users.uid) as total, taxonomy_term_data.tid as segment_tid, taxonomy_term_data.name from users
   left join field_data_field_segment on users.uid = field_data_field_segment.entity_id
@@ -97,7 +109,7 @@ function _tm_reports_get_industry_segment_data($node_id = "", $node_type = "chap
 
   // RETURN DATA
   $data_labels = tm_reports_get_insights_labels();
-  cache_set('tm-reports-get-industry-segment-data-' . $node_type . "-" . $node_id, $segment_data, 'cache', time() + 900); // 15 mins
+  cache_set('tm-reports-get-industry-segment-data-' . $node_type . "-" . $node_ids_key, $segment_data, 'cache', time() + 900); // 15 mins
   return $segment_data;
 }
 
@@ -113,7 +125,8 @@ function _tm_reports_flagging_time_series($node_id, $flag_id, $entity_type = "no
 
   // check cache
   if (is_array($node_id)) {
-    $cache_key_node_id = implode("_", $node_id);
+    // max key length is 250 chars (memcached) so lets md5 it so we get 32 char
+    $cache_key_node_id = md5(implode("-", $node_id)); 
   } else {
     $cache_key_node_id = $node_id;
   }
@@ -401,10 +414,21 @@ function _tm_reports_helper_pad_dayofyear_grouped_data($rows) {
 /**
  * Get event attendance frequency
  */
-function _tm_reports_event_registration_frequency($node_id = null, $node_type = "chapter", $aggregate = false) {
+function _tm_reports_event_registration_frequency($node_ids = null, $node_type = "chapter", $aggregate = false) {
+  
+  // prepare array if only one chapter
+  if ($node_ids != null) {
+    if (!is_array($node_ids)) {
+      $node_ids = array($node_ids);
+    }
+  }
+
+  // check if array
+  // max key length is 250 chars (memcached) so lets md5 it so we get 32 char
+  $node_ids_key = md5(implode("-", $node_ids));
 
   // check cache
-  $cache_key = "tm-reports-event-registration-frequency-" . $node_type . "-" . $node_id . "-" . $aggregate;
+  $cache_key = "tm-reports-event-registration-frequency-" . $node_type . "-" . $node_ids_key . "-" . $aggregate;
   $cache_key = str_replace(" ", "-", $cache_key);
   $cache = cache_get($cache_key, 'cache');
   if (!empty($cache)) {
@@ -414,18 +438,18 @@ function _tm_reports_event_registration_frequency($node_id = null, $node_type = 
   // SQL
   $flag_event_register = flag_get_flag('event_register', NULL);
 
-  if ($node_id == null) {
+  if ($node_ids == null) {
     // global
     $query = "SELECT amount, COUNT(*) AS freq FROM (SELECT uid, COUNT(uid) AS amount FROM flagging f WHERE f.fid = :fid group by uid) AS t2 GROUP BY amount ORDER BY amount ASC";
     $rows = db_query($query, array(":fid" => $flag_event_register->fid) )->fetchAll();
   } elseif ($node_type == "chapter") {
     // member of chapter
-    $query = "SELECT amount, COUNT(*) AS freq FROM (SELECT uid, COUNT(uid) AS amount FROM flagging f WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND f.fid = :fid GROUP BY uid) as t2 GROUP BY amount ORDER BY amount ASC";
-    $rows = db_query($query, array(":chapter_id" => $node_id, ":fid" => $flag_event_register->fid) )->fetchAll();
+    $query = "SELECT amount, COUNT(*) AS freq FROM (SELECT uid, COUNT(uid) AS amount FROM flagging f WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id IN (:chapter_ids)) AND f.fid = :fid GROUP BY uid) as t2 GROUP BY amount ORDER BY amount ASC";
+    $rows = db_query($query, array(":chapter_ids" => $node_ids, ":fid" => $flag_event_register->fid) )->fetchAll();
   } elseif ($node_type == "event") {
     // attending event
-    $query = "SELECT amount, COUNT(*) AS freq FROM (SELECT uid, COUNT(uid) AS amount FROM flagging f WHERE uid IN (SELECT uid FROM flagging f2 WHERE entity_id = :event_id AND f2.fid = :fid) AND f.fid = :fid GROUP BY uid) as t2 GROUP BY amount ORDER BY amount ASC";
-    $rows = db_query($query, array(":event_id" => $node_id, ":fid" => $flag_event_register->fid) )->fetchAll();
+    $query = "SELECT amount, COUNT(*) AS freq FROM (SELECT uid, COUNT(uid) AS amount FROM flagging f WHERE uid IN (SELECT uid FROM flagging f2 WHERE entity_id IN (:event_ids) AND f2.fid = :fid) AND f.fid = :fid GROUP BY uid) as t2 GROUP BY amount ORDER BY amount ASC";
+    $rows = db_query($query, array(":event_ids" => $node_ids, ":fid" => $flag_event_register->fid) )->fetchAll();
   } else {
     return;
   }

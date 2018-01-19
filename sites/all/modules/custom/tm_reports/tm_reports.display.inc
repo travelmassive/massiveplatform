@@ -403,10 +403,10 @@ EOT;
 /**
  * Generate Chapter / Global Segments Pie Chart via Google Charts
  */
-function _tm_reports_insights_segments_html($node_id = "", $node_type = "chapter") {
+function _tm_reports_insights_segments_html($node_ids = "", $node_type = "chapter") {
 
   // // Step 1. Get segment data
-  $segment_data = _tm_reports_get_industry_segment_data($node_id, $node_type);
+  $segment_data = _tm_reports_get_industry_segment_data($node_ids, $node_type);
 
   // Step 2. Format in Google chart
   $html = <<<EOT

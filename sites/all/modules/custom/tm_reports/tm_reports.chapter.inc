@@ -33,7 +33,7 @@ function tm_reports_chapter_insights_redirect($nid) {
 }
 
 /**
- * Generate chapter stats for chapter leader 
+ * Generate chapter stats a chapter or chapters
  */
 function tm_reports_chapter_insights($nid) {
 
@@ -46,6 +46,26 @@ function tm_reports_chapter_insights($nid) {
     return;
   }
 
+  $chapter = node_load($nid);
+  $return_link_title = "View chapter";
+  $return_link_url = url('node/'.$nid, array('absolute' => TRUE));
+  return tm_reports_chapter_insights_form($nid, $chapter->title, $return_link_title, $return_link_url);
+
+}
+
+/**
+ * Generate chapter stats a chapter or chapters
+ */
+function tm_reports_chapter_insights_form($nids, $report_title, $return_link_title, $return_link_url) {
+
+  global $user;
+  global $conf;
+  
+  // get node array
+  if (!is_array($nids)) {
+    $nids = array($nids);
+  }
+
   $segment_label = "Industry Segment";
   if (isset($conf["tm_segment_label"])) {
     $segment_label = $conf["tm_segment_label"];
@@ -55,8 +75,7 @@ function tm_reports_chapter_insights($nid) {
   $flag_event_register = flag_get_flag('event_register', NULL);
   $flag_event_waitlist = flag_get_flag('event_waitlist', NULL);
   $flag_event_paid = flag_get_flag('event_paid', NULL);
-  $chapter = node_load($nid);
-  $return_link = l(t('View chapter'), url('node/'.$nid, array('absolute' => TRUE)));
+  $return_link = l(t($return_link_title), $return_link_url);
 
   // Generate HTML
   $html = _tm_reports_insights_js_css_header();
@@ -69,28 +88,28 @@ function tm_reports_chapter_insights($nid) {
   // Insights
   $html .= "<section class='contained contained-block'>";
   $html .= "<header class='contained-head'>
-            <h1 class='prime-title'>" . $chapter->title . " Insights &middot; <span style='color: #0068a8;'>" . $return_link . "</span></h1>
+            <h1 class='prime-title'>" . $report_title . " Insights &middot; <span style='color: #0068a8;'>" . $return_link . "</span></h1>
             </header>";
-  $html .= _tm_reports_insights_table_html($chapter->nid);
+  $html .= _tm_reports_insights_table_html($nids);
   $html .= "</section>";
 
   // New Members
   $html .= "<section class='contained contained-block'>";
   $html .= "<header class='contained-head'>
-            <h1 class='prime-title'>New Members - " . $chapter->title . "</h1>
+            <h1 class='prime-title'>New Members - " . $report_title . "</h1>
             </header>";
-  $html .= _tm_reports_insights_flagging_chart_html($chapter->nid, $flag_signup->fid, "", "New Members", "Month", "insights_signups");
+  $html .= _tm_reports_insights_flagging_chart_html($nids, $flag_signup->fid, "", "New Members", "Month", "insights_signups");
   $html .= "</section>";
 
   // Event Registrations
-  $chapter_event_nids = _tm_reports_get_chapter_event_nids($chapter->nid);
+  $chapter_event_nids = _tm_reports_get_chapter_event_nids($nids);
 
   // Show event charts if chapter has had events
   if (sizeof($chapter_event_nids) > 0) {
 
     $html .= "<section class='contained contained-block'>";
     $html .= "<header class='contained-head'>
-              <h1 class='prime-title'>Event Registrations - " . $chapter->title . "</h1>
+              <h1 class='prime-title'>Event Registrations - " . $report_title . "</h1>
               </header>";
     $html .= _tm_reports_insights_flagging_chart_html($chapter_event_nids, $flag_event_register->fid, "", "Event Registrations", "Month", "insights_event_registrations");
     $html .= "</section>";
@@ -98,15 +117,15 @@ function tm_reports_chapter_insights($nid) {
     // Event Waitlists
     // Only display is chapter has had waitlisted members
     $flag_event_waitlist = flag_get_flag('event_waitlist', NULL);
-    $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
-    $num_event_waitlists = db_query($query, array(':fid' => $flag_event_waitlist->fid, ':chapter_id' => $chapter->nid))->fetch();
+    $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id IN (:chapter_ids)) AND fid = :fid";
+    $num_event_waitlists = db_query($query, array(':fid' => $flag_event_waitlist->fid, ':chapter_ids' => $nids))->fetch();
     if ($num_event_waitlists->amount > 0) {
 
       // ? $insights["num_event_payments"] = $num_event_payments->amount;  
 
       $html .= "<section class='contained contained-block'>";
       $html .= "<header class='contained-head'>
-                <h1 class='prime-title'>Event Waitlists - " . $chapter->title . "</h1>
+                <h1 class='prime-title'>Event Waitlists - " . $report_title . "</h1>
                 </header>";
       $html .= _tm_reports_insights_flagging_chart_html($chapter_event_nids, $flag_event_waitlist->fid, "", "Event Waitlists", "Month", "insights_event_waitlists");
       $html .= "</section>";
@@ -115,24 +134,24 @@ function tm_reports_chapter_insights($nid) {
 
     // Event Payments
     // Only display if payments have been made
-    $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id) AND fid = :fid";
-    $num_event_payments = db_query($query, array(':fid' => $flag_event_paid->fid, ':chapter_id' => $chapter->nid))->fetch();
+    $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id IN (:chapter_ids)) AND fid = :fid";
+    $num_event_payments = db_query($query, array(':fid' => $flag_event_paid->fid, ':chapter_ids' => $nids))->fetch();
     if ($num_event_payments->amount > 0) {
 
       $html .= "<section class='contained contained-block'>";
       $html .= "<header class='contained-head'>
-                <h1 class='prime-title'>Event Payments - " . $chapter->title . "</h1>
+                <h1 class='prime-title'>Event Payments - " . $report_title . "</h1>
                 </header>";
-      $html .= _tm_reports_insights_flagging_chart_html(_tm_reports_get_chapter_event_nids($chapter->nid), $flag_event_paid->fid, "", "Event Payments", "Month", "insights_event_payments");
+      $html .= _tm_reports_insights_flagging_chart_html(_tm_reports_get_chapter_event_nids($nids), $flag_event_paid->fid, "", "Event Payments", "Month", "insights_event_payments");
       $html .= "</section>";
     }
 
     // Registration frequency
     $html .= "<section class='contained contained-block'>";
     $html .= "<header class='contained-head'>
-              <h1 class='prime-title'>Number of Events Members Have Attended - " . $chapter->title . "</h1>
+              <h1 class='prime-title'>Number of Events Members Have Attended - " . $report_title . "</h1>
               </header>";
-    $html .= _tm_reports_insights_event_registration_frequency_html($chapter->nid, "chapter", true);
+    $html .= _tm_reports_insights_event_registration_frequency_html($nids, "chapter", true);
     $html .= "</section>";
 
   }
@@ -140,9 +159,9 @@ function tm_reports_chapter_insights($nid) {
   // Industry Segments
   $html .= "<section class='contained contained-block'>";
   $html .= "<header class='contained-head'>
-            <h1 class='prime-title'>" . $segment_label . " - " . $chapter->title . "</h1>
+            <h1 class='prime-title'>" . $segment_label . " - " . $report_title . "</h1>
             </header>";
-  $html .= _tm_reports_insights_segments_html($chapter->nid);
+  $html .= _tm_reports_insights_segments_html($nids);
   $html .= "</section>";
 
   // Close article
@@ -248,8 +267,6 @@ function _tm_reports_views_pre_render_chapter_report(&$view) {
  * NOTE: Cached
  */
 function _tm_reports_get_chapter_insights($chapter_ids, $ignore_cache = false, $cache_seconds = 900) {
-
-  $chapter_ids = _tm_chapters_get_chapters_in_continent("OC");
 
   // prepare array if only one chapter
   if (!is_array($chapter_ids)) {

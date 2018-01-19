@@ -497,11 +497,15 @@ function _tm_reports_event_registration_frequency($node_ids = null, $node_type =
 /**
  * Get all event nids for a chapter (does not include published events)
  */
-function _tm_reports_get_chapter_event_nids($chapter_id) {
+function _tm_reports_get_chapter_event_nids($chapter_ids) {
+
+  if (!is_array($chapter_ids)) {
+    $chapter_ids = array($chapter_ids);
+  }
 
   $event_nids = array();
-  $query = "SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id";
-  $results = db_query($query, array(':chapter_id' => $chapter_id))->fetchAll();
+  $query = "SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id IN (:chapter_ids)";
+  $results = db_query($query, array(':chapter_ids' => $chapter_ids))->fetchAll();
   foreach ($results as $result) {
     $event_nids[] = $result->nid;
   }

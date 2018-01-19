@@ -273,7 +273,6 @@ function _tm_reports_get_chapter_insights($chapter_ids, $ignore_cache = false, $
     $chapter_ids = array($chapter_ids);
   }
 
-  // check if array
   // max key length is 250 chars (memcached) so lets md5 it so we get 32 char
   $chapter_ids_key = md5(implode("-", $chapter_ids)); 
 

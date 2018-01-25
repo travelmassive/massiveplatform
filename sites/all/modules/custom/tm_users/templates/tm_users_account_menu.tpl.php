@@ -221,6 +221,9 @@ $image = theme('image_style', array(
         <li><?php print l(t('All ' . strtolower(tm_users_get_unapproved_member_label("plural"))), 'admin/unapproved-members'); ?></li>
         <li><?php print l(t('Chapter leaders'), 'admin/tm_reports'); ?></li>
         <li><?php print l(t('Global insights'), 'admin/global_insights'); ?></li>
+        <?php if (module_exists("tm_commissions")): ?>
+        <li><?php print l(t('Chapter commissions'), '/chapters/all-chapters/commissions'); ?></li>
+        <?php endif; ?>
         <?php if (in_array("brand-editor", $loaded->roles) or in_array("administrator", $loaded->roles)): ?>
           <li><?php print l(t('Manage branding'), 'admin/branding'); ?></li>
         <?php endif; ?>

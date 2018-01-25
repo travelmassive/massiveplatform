@@ -941,3 +941,11 @@ $conf["tm_repatcha_users"] = "anonymous"; // all or anonymous
 $conf["tm_repatcha_language"] = "us"; // language (default us)
 $conf["tm_recaptcha_user_message"] = "You must complete the reCAPTCHA to submit this form."; // display if user does not complete recaptcha
 $conf["tm_recaptcha_error_message"] = "Oops, a problem occured with Google reCAPTHCA."; // display if error processing
+
+/** COMMISSION REPORTINGS **/
+$conf["tm_commissions_reports_url"] = "https://localdev.massiveplatform.com/payments/report_commissions.php"; // external commission reports
+$conf["tm_commissions_reports_help_message"] = "Learn how your chapter can earn commissions on sales in our community.";
+$conf["tm_commissions_confirm_terms_text"] = "This report is for chapter leaders only.";
+$conf["tm_commissions_footer_text"] = "<i>The above information is confidential and for chapter leaders only.<br>Commissions exclude processing and forex fees.</i>"; // display terms in footer
+
+

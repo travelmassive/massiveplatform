@@ -807,6 +807,19 @@ function _tm_more_actions_process($field, $title = NULL) {
           ))
         );
 
+        if (module_exists("tm_commissions")) {
+          // view chapter commissions
+          $link_path = $current_uri.'/commissions';
+          $links['chaptertools'][] = array(
+            'wrapper_class' => array('chapter_stats'),
+            'content' => l(t('Commissions'), $link_path, array(
+              'attributes' => array( 
+              'title' => t('Commissions')
+              )
+            ))
+          );
+        }
+        
       }
     }
   }

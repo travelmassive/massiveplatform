@@ -8,6 +8,7 @@
 function tm_commissions_reports_chapter_commissions_confirm($nid) {
 
   global $conf;
+  global $user;
 
   // Check we have a node
   $nid = _orig_nid();
@@ -22,8 +23,12 @@ function tm_commissions_reports_chapter_commissions_confirm($nid) {
   // Create form
   $form = array();
 
+  // Swap in first name
+  $account = user_load($user->uid);
+  $terms_text = str_replace("__first_name__", $account->field_user_first_name[LANGUAGE_NONE][0]['value'], $conf["tm_commissions_confirm_terms_text"]); 
+
   // Display terms
-  $html = "<p>" . $conf["tm_commissions_confirm_terms_text"] . "</p>";
+  $html = "<p>" . $terms_text . "</p>";
 
   // Agree and cancel buttons
   $html .= '<input onClick="document.location=\'/' . $chapter_url . '/commissions/365\'" type="submit" id="edit-submit" name="op" value="I agree" class="form-submit">';
@@ -41,12 +46,17 @@ function tm_commissions_reports_chapter_commissions_confirm($nid) {
 function tm_commissions_reports_all_chapter_commissions_confirm() {
 
   global $conf;
+  global $user;
 
   // Create form
   $form = array();
 
+  // Swap in first name
+  $account = user_load($user->uid);
+  $terms_text = str_replace("__first_name__", $account->field_user_first_name[LANGUAGE_NONE][0]['value'], $conf["tm_commissions_confirm_terms_text"]); 
+
   // Display terms
-  $html = "<p>" . $conf["tm_commissions_confirm_terms_text"] . "</p>";
+  $html = "<p>" . $terms_text . "</p>";
 
   // Agree and cancel buttons
   $html .= '<input onClick="document.location=\'/chapters/all-chapters/commissions/365\'" type="submit" id="edit-submit" name="op" value="I agree" class="form-submit">';

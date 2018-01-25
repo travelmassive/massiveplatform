@@ -945,7 +945,7 @@ $conf["tm_recaptcha_error_message"] = "Oops, a problem occured with Google reCAP
 /** COMMISSION REPORTINGS **/
 $conf["tm_commissions_reports_url"] = "https://localdev.massiveplatform.com/payments/report_commissions.php"; // external commission reports
 $conf["tm_commissions_reports_help_message"] = "Learn how your chapter can earn commissions on sales in our community.";
-$conf["tm_commissions_confirm_terms_text"] = "This report is for chapter leaders only.";
+$conf["tm_commissions_confirm_terms_text"] = "Hi __first_name__,<br><br>This report is confidential and for chapter leaders only.";
 $conf["tm_commissions_footer_text"] = "<i>The above information is confidential and for chapter leaders only.<br>Commissions exclude processing and forex fees.</i>"; // display terms in footer
 
 

@@ -37,6 +37,14 @@ function tm_subscriptions_check_show_user_cta($uid, $signed_in_uid, $drush_comma
 		$signed_in_account = user_load($signed_in_uid, true); // don't load from cache when running from drush (performance)
 	}
 
+	// user must be approved
+	if ($conf["tm_subscriptions_user_cta_approved_account"]) {
+		if (!in_array("approved user", $signed_in_account->roles)) {
+			return false;
+		}
+	}
+	
+
 	// check if user is already subscribed
 	if (tm_subscriptions_is_user_subscription_enabled($uid)) {
 

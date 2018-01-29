@@ -233,7 +233,7 @@ function tm_commissions_reports_chapter_commissions($nid) {
   if ($results->max_results == 1) {
       $html .= "<i>The maximum result limit (" . sizeof($commissions) . ") has been reached.</i><br>";
   } else {
-      $html .= "<i>" . (sizeof($commissions) . " total transactions</i><br>");
+      $html .= "<i>" . sizeof($commissions) . " total transactions</i><br>";
   }
 
   // Legend
@@ -421,7 +421,7 @@ function tm_commissions_reports_all_chapter_commissions() {
   if ($results->max_results == 1) {
       $html .= "<i>The maximum result limit (" . sizeof($commissions) . ") has been reached.</i><br>";
   } else {
-      $html .= "<i>" . (sizeof($commissions) . " total transactions</i><br>");
+      $html .= "<i>" . sizeof($commissions) . " total transactions</i><br>";
   }
 
   // Legend
@@ -646,8 +646,8 @@ function tm_commissions_reports_region_commissions() {
     $more_details_html .= "<br>&mdash;<br><strong>Details</strong>";
     $more_details_html .= "<br>Customer: " . strip_tags($commission->customer_name);
     $more_details_html .= "<br>Type: " . strip_tags($commission->item_type);
-    $more_details_html .= "<br>Commission: " .  tm_commissions_currency_symbol($commission->currency) . tm_commissions_format_number($commission->$internal_amount_varname) . " " . strtoupper($commission->currency) . " &rarr; " . $internal_code . " (" . $commission_pct . "%)";
     $more_details_html .= "<br>Description: " . strip_tags($commission->item_description);
+    $more_details_html .= "<br>Allocated: " .  tm_commissions_currency_symbol($commission->currency) . tm_commissions_format_number($commission->$internal_amount_varname) . " " . strtoupper($commission->currency) . " &rarr; " . $internal_code . " (" . $commission_pct . "%)";
     if ($commission->invoice_id != "") {
       $more_details_html .= "<br>Invoice ID: " . $commission->invoice_id;
     }
@@ -668,7 +668,7 @@ function tm_commissions_reports_region_commissions() {
   if ($results->max_results == 1) {
       $html .= "<i>The maximum result limit (" . sizeof($commissions) . ") has been reached.</i><br>";
   } else {
-      $html .= "<i>" . (sizeof($commissions) . " total transactions</i><br>");
+      $html .= "<i>" . sizeof($commissions) . " total transactions</i><br>";
   }
 
   // Legend

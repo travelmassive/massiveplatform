@@ -119,6 +119,12 @@ function tm_subscriptions_process_user_payment($account) {
   	// set partner code
   	$partner_code = $pricing["partner_code"];
 
+  	// country code
+  	$country_code = "";
+  	if (isset($account->field_user_country[LANGUAGE_NONE][0]['iso2'])) {
+  		$country_code = $account->field_user_country[LANGUAGE_NONE][0]['iso2'];
+  	}
+
   	// log info
   	$log_user_ip = tm_geoip_get_real_visitor_ip(); // $_SERVER["REMOTE_ADDR"];
 	$log_user_http_user_agent = "none";
@@ -127,7 +133,7 @@ function tm_subscriptions_process_user_payment($account) {
 	}
 
 	// url-ify the data for the POST
-	$fields = array("stripe_token" => $stripe_token, "stripe_email" => $stripe_email, "stripe_currency" => $stripe_currency, "stripe_amount" => $stripe_amount, "entity_id" => $entity_id, "entity_type" => $entity_type, "user_id" => $user_id, "user_email" => $stripe_email, "log_user_ip" => $log_user_ip, "log_user_http_user_agent" => $log_user_http_user_agent, "user_first_name" => $user_first_name, "user_last_name" => $user_last_name, "entity_title" => $entity_title, "display_amount" => $display_amount, "subscription_type" => $subscription_type, "subscription_label" => $subscription_label, "referer_code" => $referer_code, "partner_code" => $partner_code);
+	$fields = array("stripe_token" => $stripe_token, "stripe_email" => $stripe_email, "stripe_currency" => $stripe_currency, "stripe_amount" => $stripe_amount, "entity_id" => $entity_id, "entity_type" => $entity_type, "user_id" => $user_id, "user_email" => $stripe_email, "log_user_ip" => $log_user_ip, "log_user_http_user_agent" => $log_user_http_user_agent, "user_first_name" => $user_first_name, "user_last_name" => $user_last_name, "entity_title" => $entity_title, "display_amount" => $display_amount, "subscription_type" => $subscription_type, "subscription_label" => $subscription_label, "referer_code" => $referer_code, "partner_code" => $partner_code, "country_code" => $country_code);
 
 	$fields_string = http_build_query($fields);
 

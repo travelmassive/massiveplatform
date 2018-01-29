@@ -805,6 +805,7 @@ $conf["tm_subscriptions_organization"]["AU"]["subscription_type"] = "ORG_1YR_AU"
 /*
 // User subscriptions 
 $conf["tm_subscriptions_user_enabled"] = true; // enable subscription payments
+$conf["tm_subscriptions_user_cta_approved_account"] = true; // only allow approved accounts to upgrade
 $conf["tm_subscriptions_user_cta_min_events"] = 1; // minimum number of events attended
 $conf["tm_subscriptions_user_cta_min_account_age"] = 7; // minimum account age
 $conf["tm_subscriptions_user_cta_min_following"] = 10; // minimum following

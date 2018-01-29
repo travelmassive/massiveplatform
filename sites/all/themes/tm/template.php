@@ -75,7 +75,7 @@ function tm_preprocess_html(&$variables, $hook) {
   }
 
   // Add .page-payment-reports class to commissions page (tm_commissions)
-  if (arg(0) == 'chapters' && arg(2) == 'commissions') {
+  if (arg(0) == 'chapters' && (arg(2) == 'commissions' || arg(2) == 'commissions-by-region')) {
     $variables['classes_array'][] = 'page-payment-reports';
   }
 

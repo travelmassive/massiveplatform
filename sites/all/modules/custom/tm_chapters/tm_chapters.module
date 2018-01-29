@@ -169,7 +169,7 @@ function tm_chapters_page_alter(&$page) {
     // don't show on special chapters page
     // ie: invitations, contact, unapproved-members, insights, export
     if (sizeof($url_parts) == 3) {
-      if (in_array($url_parts[2], array("invitations", "message", "unapproved-members", "insights", "export", "announcement", "commissions"))) {
+      if (in_array($url_parts[2], array("invitations", "message", "unapproved-members", "insights", "export", "announcement", "commissions", "commissions-by-region"))) {
         return;
       }
 

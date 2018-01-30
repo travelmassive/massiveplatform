@@ -456,8 +456,8 @@ function tm_subscriptions_user_get_chapter_code($account) {
 		}
 	} else {
 		// use first chapter
-		$chapter_nids = tm_users_get_chapters($account);
-		if (sizeof($chapter_nids) > 0) {
+		$chapter_ids = tm_users_get_chapters($account);
+		if (sizeof($chapter_ids) > 0) {
 			$first_chapter = node_load($chapter_ids[0]);
 			if ($first_chapter != null) {
 				$chapter_code = $first_chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['value'];
@@ -466,4 +466,43 @@ function tm_subscriptions_user_get_chapter_code($account) {
 	}
 
 	return $chapter_code;
+}
+
+/**
+ * Helper method to get country of subscriber
+ * Returns home chapter country code, or first joined chapter
+ * Returns empty string if no chapter code
+ */
+function tm_subscriptions_user_get_country_code($account) {
+
+	$country_code = "";
+
+	// get country code of user account
+	if (isset($account->field_user_country[LANGUAGE_NONE][0]['iso2'])) {
+  		$country_code = $account->field_user_country[LANGUAGE_NONE][0]['iso2'];
+  	}
+
+	// check for home chapter
+	if (sizeof($account->field_home_chapter) > 0) {
+		$chapter_id = $account->field_home_chapter[LANGUAGE_NONE][0]['target_id'];
+		$home_chapter = node_load($chapter_id);
+		if ($home_chapter != null) {
+			if (isset($home_chapter->field_country[LANGUAGE_NONE][0]['iso2'])) {
+  				$country_code = $home_chapter->field_country[LANGUAGE_NONE][0]['iso2'];
+  			}
+		}
+	} else {
+		// use first chapter
+		$chapter_ids = tm_users_get_chapters($account);
+		if (sizeof($chapter_ids) > 0) {
+			$first_chapter = node_load($chapter_ids[0]);
+			if ($first_chapter != null) {
+				if (isset($first_chapter->field_country[LANGUAGE_NONE][0]['iso2'])) {
+  					$country_code = $first_chapter->field_country[LANGUAGE_NONE][0]['iso2'];
+  				}
+			}
+		}
+	}
+
+	return $country_code;
 }

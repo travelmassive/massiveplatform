@@ -221,9 +221,20 @@ function tm_commissions_reports_chapter_commissions($nid) {
       $payment_status = "Refunded";
       $payment_status_class = "refunded";
     }
-    $html .=  "<td><span class='tm-payments-report-status " . $payment_status_class . "' onClick='javascript:jq_alert(\"\", \"The ID for this commission is &mdash; " . $commission->id . "\");'>" . $payment_status . "</span></td>";
+
+    // more details
+    $more_details_html = tm_commissions_generate_detail_html($commission, "chapter_amount", $commission->chapter_code, "chapter");
+    $html .=  "<td><span class='tm-payments-report-status " . $payment_status_class . "' " . "' onClick='javascript:jq_alert(\"\", \"" . $more_details_html . "\");'>" . $payment_status . "</span></td>";
+
     $created_at = new DateTime($commission->created_at);
-    $html .=  "<td class='tm-payments-report-extra'>" . $created_at->format('Y-m-d') . "</td>";
+
+    // show days ago if this month
+    if ($month_count == 1) {
+      $html .= "<td><i>" . _tm_event_time_elapsed($commission->seconds_ago) . " ago</i></td>";
+    } else {
+      $html .=  "<td><i>" . $created_at->format('Y-m-d') . "</i></td>";
+    }
+
     $html .=  "</tr>";
   }
 
@@ -404,7 +415,10 @@ function tm_commissions_reports_all_chapter_commissions() {
       $payment_status = "Refunded";
       $payment_status_class = "refunded";
     }
-    $html .=  "<td><span class='tm-payments-report-status " . $payment_status_class . "' " . "' onClick='javascript:jq_alert(\"\", \"The ID for this commission is &mdash; " . $commission->id . "\");'>" . $payment_status . "</span></td>";
+
+    // more details
+    $more_details_html = tm_commissions_generate_detail_html($commission, "chapter_amount", $commission->chapter_code, "all_chapters");
+    $html .=  "<td><span class='tm-payments-report-status " . $payment_status_class . "' " . "' onClick='javascript:jq_alert(\"\", \"" . $more_details_html . "\");'>" . $payment_status . "</span></td>";
 
     // show days ago if this month
     if ($month_count == 1) {
@@ -641,24 +655,15 @@ function tm_commissions_reports_region_commissions() {
     }
 
     // more details
-    $commission_pct = round(($commission->$internal_amount_varname / $commission->total_amount) * 100, 0);
-    $more_details_html = "The ID for this commission is &mdash; " . $commission->id;
-    $more_details_html .= "<br>&mdash;<br><strong>Details</strong>";
-    $more_details_html .= "<br>Customer: " . strip_tags($commission->customer_name);
-    $more_details_html .= "<br>Type: " . strip_tags($commission->item_type);
-    $more_details_html .= "<br>Description: " . strip_tags($commission->item_description);
-    $more_details_html .= "<br>Allocated: " .  tm_commissions_currency_symbol($commission->currency) . tm_commissions_format_number($commission->$internal_amount_varname) . " " . strtoupper($commission->currency) . " &rarr; " . $internal_code . " (" . $commission_pct . "%)";
-    if ($commission->invoice_id != "") {
-      $more_details_html .= "<br>Invoice ID: " . $commission->invoice_id;
-    }
-    if ($commission->charge_id != "") {
-      $more_details_html .= "<br>Charge ID: " . $commission->charge_id;
-    }
-
+    $more_details_html = tm_commissions_generate_detail_html($commission, $internal_amount_varname, $internal_code, "region");
     $html .=  "<td><span class='tm-payments-report-status " . $payment_status_class . "' " . "' onClick='javascript:jq_alert(\"\", \"" . $more_details_html . "\");'>" . $payment_status . "</span></td>";
 
-    // show date
-    $html .=  "<td><i>" . $created_at->format('Y-m-d') . "</i></td>";
+    // show days ago if this month
+    if ($month_count == 1) {
+      $html .= "<td><i>" . _tm_event_time_elapsed($commission->seconds_ago) . " ago</i></td>";
+    } else {
+      $html .=  "<td><i>" . $created_at->format('Y-m-d') . "</i></td>";
+    }
     $html .=  "</tr>";
   }
 
@@ -832,6 +837,62 @@ function tm_commissions_generate_menu_links($show_chapters = "all_chapters") {
 
   return $chapter_links_html . $region_links_html;
 
+}
+
+/**
+ * Helper method to generate details text for commission
+ * Types: chapter, all_chapters, region
+ */
+function tm_commissions_generate_detail_html($commission, $varname, $code, $show_details = "chapter") {
+
+  // calculate commission
+  $commission_pct = 0;
+  if ($commission->total_amount > 0) {
+    $commission_pct = round(($commission->$varname / $commission->total_amount) * 100, 0);
+  }
+  
+  // show id
+  $more_details_html = "";
+  $more_details_html .= "<strong>Commission Details</strong>";
+ 
+  // date
+  $created_at = new DateTime($commission->created_at);
+  $created_at_text = $created_at->format('Y-m-d');
+  $more_details_html .= "<br><small>ID: " . $commission->id . " / Date: " . $created_at_text . "</small>";
+
+  // dash
+  $more_details_html .= "<br>&mdash;";
+
+  // chapter
+  if ($show_details == "chapter") {
+    $more_details_html .= "<br>Customer: " . strip_tags($commission->customer_name);
+    $more_details_html .= "<br>Type: " . strip_tags($commission->item_type);
+    $more_details_html .= "<br>Description: " . strip_tags($commission->item_description);
+    $more_details_html .= "<br>Commission: " .  tm_commissions_currency_symbol($commission->currency) . tm_commissions_format_number($commission->$varname) . " " . strtoupper($commission->currency) . " &rarr; " . $code . " (" . $commission_pct . "%)";
+  }
+
+  // all_chapters
+  if ($show_details == "all_chapters") {
+    $more_details_html .= "<br>Type: " . strip_tags($commission->item_type);
+    $more_details_html .= "<br>Description: " . strip_tags($commission->item_description);
+    $more_details_html .= "<br>Commission: " .  tm_commissions_currency_symbol($commission->currency) . tm_commissions_format_number($commission->$varname) . " " . strtoupper($commission->currency) . " &rarr; " . $code . " (" . $commission_pct . "%)";
+  }
+
+  // show extra details
+  if ($show_details == "region") {
+    $more_details_html .= "<br>Customer: " . strip_tags($commission->customer_name);
+    $more_details_html .= "<br>Type: " . strip_tags($commission->item_type);
+    $more_details_html .= "<br>Description: " . strip_tags($commission->item_description);
+    $more_details_html .= "<br>Commission: " .  tm_commissions_currency_symbol($commission->currency) . tm_commissions_format_number($commission->$varname) . " " . strtoupper($commission->currency) . " &rarr; " . $code . " (" . $commission_pct . "%)";
+    if ($commission->invoice_id != "") {
+      $more_details_html .= "<br>Invoice ID: " . $commission->invoice_id;
+    }
+    if ($commission->charge_id != "") {
+      $more_details_html .= "<br>Charge ID: " . $commission->charge_id;
+    }
+  }
+  
+  return $more_details_html;
 }
 
 

@@ -119,10 +119,7 @@ function tm_subscriptions_process_organization_payment($node, $member) {
   	$partner_code = $pricing["partner_code"];
 
   	// country code
-  	$country_code = "";
-  	if (isset($node->field_country[LANGUAGE_NONE][0]['iso2'])) {
-  		$country_code = $node->field_country[LANGUAGE_NONE][0]['iso2'];
-  	}
+  	$country_code = tm_subscriptions_get_country_code($node);
 
   	// log info
   	$log_user_ip = tm_geoip_get_real_visitor_ip(); // $_SERVER["REMOTE_ADDR"];

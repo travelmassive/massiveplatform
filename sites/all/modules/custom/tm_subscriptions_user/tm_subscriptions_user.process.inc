@@ -120,11 +120,8 @@ function tm_subscriptions_process_user_payment($account) {
   	$partner_code = $pricing["partner_code"];
 
   	// country code
-  	$country_code = "";
-  	if (isset($account->field_user_country[LANGUAGE_NONE][0]['iso2'])) {
-  		$country_code = $account->field_user_country[LANGUAGE_NONE][0]['iso2'];
-  	}
-
+  	$country_code = tm_subscriptions_user_get_country_code($account);
+  	
   	// log info
   	$log_user_ip = tm_geoip_get_real_visitor_ip(); // $_SERVER["REMOTE_ADDR"];
 	$log_user_http_user_agent = "none";

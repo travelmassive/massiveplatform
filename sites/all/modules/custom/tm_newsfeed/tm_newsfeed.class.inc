@@ -462,6 +462,7 @@ class TmNewsfeedEmail
 
 		// process results
 		usort($results, 'sort_seconds_ago');
+		$results = array_reverse($results); // show newest first
 		$results = array_slice($results, 0, 3);
 
 		foreach($results as $result) {

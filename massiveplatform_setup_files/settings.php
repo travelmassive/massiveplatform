@@ -951,5 +951,5 @@ $conf["tm_commissions_footer_text"] = "<i>The above information is confidential 
 $conf["tm_commissions_regional_confirm_terms_text"] = "Hi __first_name__,<br><br>This report is confidential and for regional leaders only.";
 $conf["tm_commissions_regional_footer_text"] = "<i>The above information is confidential and for regional leaders only.<br>Commissions exclude processing and forex fees.</i>"; // display terms in footer for regional reports
 $conf["tm_commissions_show_currency_symbol"] = true; // show currency symbol in commission reports
-$conf["tm_commissions_display_internal"] = array("NAM" => "North America", "EU" => "Europe", "AF" => "Africa", "AS" => "Asia", "LATAM" => "Latin America", "OC" => "Oceania");
+$conf["tm_commissions_display_internal"] = array("NA" => "North America", "EU" => "Europe", "AF" => "Africa", "AS" => "Asia", "LATAM" => "Latin America", "OC" => "Oceania");
 $conf["tm_commissions_users_who_can_access_region_reports"] = array(); // users who can access additional reports

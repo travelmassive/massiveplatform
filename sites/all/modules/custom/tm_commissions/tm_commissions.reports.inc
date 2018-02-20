@@ -893,8 +893,9 @@ function tm_commissions_generate_detail_html($commission, $varname, $code, $show
   }
   
   // replace '
-  $more_details_html = str_replace("'", "", $more_details_html);
-  
+  $more_details_html = str_replace("'", "&#39;", $more_details_html);
+  $more_details_html = str_replace("\"", "&#34;", $more_details_html);
+
   return $more_details_html;
 }
 

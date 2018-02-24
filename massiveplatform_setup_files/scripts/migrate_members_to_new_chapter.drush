@@ -34,6 +34,7 @@ $joining_uids = _tm_chapters_get_chapter_member_uids($join_chapter_id);
 
 // loop through each member of old chapter
 $count = 1;
+$count_moved = 0;
 foreach($leaving_uids as $uid) {
 
 	// load account
@@ -56,6 +57,7 @@ foreach($leaving_uids as $uid) {
 			drush_print("Result: false");
 			print_r($signup_flag->errors);
 		}
+		$count_moved++;
 	} else {
 		drush_print($count . ": uid " . $uid . " already a member of chapter_id " . $join_chapter_id . "!");
 	}
@@ -64,4 +66,7 @@ foreach($leaving_uids as $uid) {
 
 }
 
+// print stats
+drush_print("Moved " . $count_moved . " members");
+drush_print($count - $count_moved . " people were already members of the new chapter");
 drush_print("Done");

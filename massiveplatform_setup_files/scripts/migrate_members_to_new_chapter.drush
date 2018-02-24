@@ -1,0 +1,65 @@
+#!/usr/bin/env drush
+
+# Simple script to move users from one chapter to another
+
+// setup
+$leave_chapter_id = 14976;
+$join_chapter_id = 14427;
+
+// load
+$leave_chapter = node_load($leave_chapter_id);
+$join_chapter = node_load($join_chapter_id);
+
+// verify chapters
+if ($leave_chapter == null) {
+	drush_print("Invalid chapter_id: " . $leave_chapter_id);
+	return;
+}
+
+if ($leave_chapter == null) {
+	drush_print("Invalid chapter_id: " . $join_chapter_id);
+	return;
+}
+
+// print chapter
+drush_print("Leaving chapter_id: " . $leave_chapter_id . " - " . $leave_chapter->title);
+drush_print("Joining chapter_id: " . $join_chapter_id . " - " . $join_chapter->title);
+
+// load signup flag
+$signup_flag = flag_get_flag("signup"); 
+
+// get uids in chapters
+$leaving_uids = _tm_chapters_get_chapter_member_uids($leave_chapter_id);
+$joining_uids = _tm_chapters_get_chapter_member_uids($join_chapter_id);
+
+// loop through each member of old chapter
+$count = 1;
+foreach($leaving_uids as $uid) {
+
+	// load account
+	$account = user_load($uid);
+
+	// leave old chapter
+	drush_print($count . ": uid " . $uid . " leaving chapter_id " . $leave_chapter_id);
+	$result = $signup_flag->flag('unflag', $leave_chapter_id, $account, true);
+	if ($result == false) {
+		drush_print("Result: false");
+		print_r($signup_flag->errors);
+	}
+	
+
+	// if not already in chapter, join it
+	if (!in_array($uid, $joining_uids)) {
+		drush_print($count . ": uid " . $uid . " joining chapter_id " . $join_chapter_id);
+		$result = $signup_flag->flag('flag', $join_chapter_id, $account, true);
+		if ($result == false) {
+			drush_print("Result: false");
+			print_r($signup_flag->errors);
+		}
+	}	
+
+	$count++;
+
+}
+
+drush_print("Done");

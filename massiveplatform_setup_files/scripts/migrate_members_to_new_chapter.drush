@@ -56,7 +56,9 @@ foreach($leaving_uids as $uid) {
 			drush_print("Result: false");
 			print_r($signup_flag->errors);
 		}
-	}	
+	} else {
+		drush_print($count . ": uid " . $uid . " already a member of chapter_id " . $join_chapter_id . "!");
+	}
 
 	$count++;
 

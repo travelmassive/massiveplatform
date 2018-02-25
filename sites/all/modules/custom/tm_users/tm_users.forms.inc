@@ -279,6 +279,13 @@ function tm_users_form_contact_site_form_alter(&$form, &$form_state, $form_id) {
     '#required' => true
   );
 
+  // set default value from url
+  if (isset($_GET["default"])) {
+    if (array_key_exists($_GET["default"], $contact_list)) {
+      $form['contact_list']['#default_value'] = $_GET["default"];
+    }
+  }
+
   // catch spam
   $form['fullname'] = array(
     '#title'    => t('Name'),

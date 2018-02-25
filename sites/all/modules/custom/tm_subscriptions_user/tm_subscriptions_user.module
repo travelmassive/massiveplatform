@@ -331,8 +331,13 @@ function tm_subscriptions_user_invite_link() {
   // hide for subsequent page loads
   setcookie("tm_subscriptions_hide_user_cta", 0, strtotime('+30 days'), "/", "." . $conf["tm_email_server_url_domain"]);
 
-  // go to partner link
-  drupal_goto("user/" . $user->uid);
+  // pass on partner code
+  if (isset($_GET["partner"])) {
+    $partner_code = $_GET["partner"];
+    drupal_goto("user/" . $user->uid, array('query' => array('partner' => $partner_code)));
+  } else {
+    drupal_goto("user/" . $user->uid);
+  }
 
   return;
 

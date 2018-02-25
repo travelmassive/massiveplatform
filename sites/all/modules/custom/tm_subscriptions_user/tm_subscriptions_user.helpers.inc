@@ -256,7 +256,7 @@ function tm_subscriptions_user_get_partner_code() {
 	if (isset($_GET["partner"])) {
 		$partner_code = $_GET["partner"];
 
-		// TODO if arriving at a ?partner= link then we show the CTA
+		// If arriving at a ?partner= link then we show the CTA
 		// set static variable
 		$tm_force_show_cta = &drupal_static("tm_force_show_cta");
 		$tm_force_show_cta = true;

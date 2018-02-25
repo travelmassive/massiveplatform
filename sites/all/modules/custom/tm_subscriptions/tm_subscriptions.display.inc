@@ -81,9 +81,12 @@ function tm_subscriptions_organization_cta_banner($node_id) {
 	$country_pricing = tm_subscriptions_get_organization_subscription_price($node);
 	$country_subscription = tm_subscriptions_get_organization_subscription($node);
 
+	// retrive static variable from tm_subscriptions_user_get_partner_code if ?partner code 
+	$tm_force_show_cta = &drupal_static("tm_force_show_cta");
+
 	// get cookie
 	$wrapper_style = "";
-	if (isset($_COOKIE["tm_subscriptions_hide_organization_cta"])) {
+	if ((!$tm_force_show_cta) and (isset($_COOKIE["tm_subscriptions_hide_organization_cta"]))) {
 		if ($_COOKIE["tm_subscriptions_hide_organization_cta"] == 1) {
 			$wrapper_style = "display: none";
 		}

@@ -269,6 +269,14 @@ function tm_subscriptions_user_invite_link() {
   // load account
   $account = user_load($user->uid);
 
+  // check subscriptions are enabled
+  if ($conf["tm_subscriptions_user_enabled"] == false) {
+    drupal_get_messages();
+    drupal_set_message("Sorry, membership activation is currently unavailable. Please try again later or <a href='/contact'>contact us</a>.", "help-tip");
+    drupal_goto("user/" . $user->uid);
+    return;
+  }
+
   // check if user is already subscribed
   if (tm_subscriptions_is_user_subscription_enabled($user->uid)) {
     

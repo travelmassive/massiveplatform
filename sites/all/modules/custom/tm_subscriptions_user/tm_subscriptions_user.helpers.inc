@@ -44,7 +44,6 @@ function tm_subscriptions_check_show_user_cta($uid, $signed_in_uid, $drush_comma
 		}
 	}
 	
-
 	// check if user is already subscribed
 	if (tm_subscriptions_is_user_subscription_enabled($uid)) {
 
@@ -72,6 +71,15 @@ function tm_subscriptions_check_show_user_cta($uid, $signed_in_uid, $drush_comma
 	$subscription = tm_subscriptions_get_user_subscription($account);
 	if ($subscription == null) {
 		return false;
+	}
+
+	// allow showing CTA if member goes via /membership/invite link
+	// retrive cookie set in from tm_subscriptions_user_invite_link
+	// this bypasses check for chapter leader, company subscription, events, followers and account age
+	if (isset($_COOKIE["tm_subscriptions_invite_user_cta"])) {
+		if ($_COOKIE["tm_subscriptions_invite_user_cta"] == 1) {
+			return true;
+		}
 	}
 
 	// if subscription is private

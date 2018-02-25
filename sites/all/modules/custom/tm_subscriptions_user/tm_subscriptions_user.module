@@ -43,6 +43,12 @@ function tm_subscriptions_user_menu() {
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
+  $items['membership/invite'] = array(
+    'title' => 'Membership invitation',
+    'page callback' => 'tm_subscriptions_user_invite_link',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
 
 	return $items;
 }
@@ -242,4 +248,84 @@ function tm_subscriptions_user_flag_unflag($flag, $entity_id, $account, $flaggin
   $subscription_role = user_role_load_by_name('subscriber');
   user_multiple_role_edit(array($entity_id), 'remove_role', $subscription_role->rid);
  
+}
+
+/**
+ * Show the CTA if a member visits the /membership/invite link
+ */
+function tm_subscriptions_user_invite_link() {
+
+  global $user;
+  global $conf;
+
+  // make sure we are logged in
+  if (!user_is_logged_in()) {
+    drupal_get_messages();
+    drupal_set_message("Please sign in to your account to access the " . $conf["tm_subscriptions_user_label"] . " invitation.", "help-tip");
+    drupal_goto("/");
+    return;
+  }
+
+  // load account
+  $account = user_load($user->uid);
+
+  // check if user is already subscribed
+  if (tm_subscriptions_is_user_subscription_enabled($user->uid)) {
+    
+    $subscription_date = tm_subscriptions_user_get_subscription_date($account);
+    $subscription_date_text = date('Y-m-d', strtotime($subscription_date));
+    $expires_text = tm_subscriptions_user_get_subscription_expires_text($account);
+
+    $subscription_message = "";
+    if ($subscription_date != "") {
+      $subscription_message = "Your " . $conf["tm_subscriptions_user_label"] . " is registered until " . $subscription_date_text . " (" . $expires_text . ")";
+    } else {
+      $subscription_message = "You already have a " . $conf["tm_subscriptions_user_label"] . " subscription";
+    }
+
+    drupal_get_messages();
+    drupal_set_message($subscription_message, "help-tip");
+
+    drupal_goto("user/" . $user->uid);
+    return;
+  }
+
+  // check if user must be approved
+  if ($conf["tm_subscriptions_user_cta_approved_account"]) {
+    if (!in_array("approved user", $account->roles)) {
+      drupal_get_messages();
+      drupal_set_message("You need an approved account to upgrade your membership.", "help-tip");
+      drupal_goto("user/" . $user->uid);
+      return;
+    }
+  }
+
+  // check not chapter leader
+  if (in_array("chapter leader", $account->roles)) {
+      drupal_get_messages();
+      drupal_set_message("Your membership is complimentary as a Chapter Leader. Share the <a href='/membership/invite'>invitation link</a> with your members.", "help-tip");
+      drupal_goto("user/" . $user->uid);
+      return;
+  }
+
+  // check that subscriptions are enabled in this country
+  $subscription = tm_subscriptions_get_user_subscription($account);
+  if ($subscription == null) {
+    drupal_get_messages();
+    drupal_set_message($conf["tm_subscriptions_user_label"] . " is not available in your country.", "help-tip");
+    drupal_goto("user/" . $user->uid);
+    return;
+  }
+
+  // set cookie for subsequent page loads
+  setcookie("tm_subscriptions_invite_user_cta", 1, strtotime('+30 days'), "/", "." . $conf["tm_email_server_url_domain"]);
+
+  // hide for subsequent page loads
+  setcookie("tm_subscriptions_hide_user_cta", 0, strtotime('+30 days'), "/", "." . $conf["tm_email_server_url_domain"]);
+
+  // go to partner link
+  drupal_goto("user/" . $user->uid);
+
+  return;
+
 }

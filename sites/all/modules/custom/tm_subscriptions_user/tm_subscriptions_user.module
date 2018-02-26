@@ -261,7 +261,7 @@ function tm_subscriptions_user_invite_link() {
   // make sure we are logged in
   if (!user_is_logged_in()) {
     drupal_get_messages();
-    drupal_set_message("Please sign in to your account to access the " . $conf["tm_subscriptions_user_label"] . " invitation.", "help-tip");
+    drupal_set_message("Please <a href='user/login?destination=membership/invite'>sign in</a> to your account to access the " . $conf["tm_subscriptions_user_label"] . " invitation.", "help-tip");
     drupal_goto("/");
     return;
   }

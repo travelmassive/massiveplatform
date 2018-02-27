@@ -633,3 +633,41 @@ function tm_base_init() {
     // otherwise, user is admin
   }
 }
+
+/**
+ * Implement hook_file_insert()
+ * Remove annoying characters from filenames
+ * Helpful for gmail images, CDNs, etc
+ */
+function tm_base_file_insert($file) {
+
+  global $conf;
+
+  // default characters
+  // can override with optional config variable $conf["tm_base_annoying_filename_chars"]
+  $annoying_filename_chars = array(" " => "_", "+" => "", "&" => "", "?" => "", "#" => "", "%" => "", "!" => "");
+  if (isset($conf["tm_base_annoying_filename_chars"])) {
+    $remove_annoying_filename_chars = $conf["tm_base_annoying_filename_chars"];
+  }
+
+  $original_filename = $file->filename;
+  $new_filename = $file->filename;
+  $new_uri = $file->uri;
+
+  // check for and change annoying characters
+  foreach ($annoying_filename_chars as $char => $replace) {
+    $new_filename = str_replace($char, $replace, $new_filename);
+    $new_uri = str_replace($char, $replace, $new_uri);
+  }
+
+  // if filename changed, move the file and add to watchdog
+  if ($new_filename != $original_filename) {
+    $file->filename = $new_filename;
+    $file = file_move($file, $new_uri);
+    watchdog('file', t('%source has been renamed to %destination', array(
+      '%source' => $original_filename,
+      '%destination' => $file->filename,
+    )));
+  }
+}
+

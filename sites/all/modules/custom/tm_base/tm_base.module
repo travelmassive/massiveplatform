@@ -636,8 +636,9 @@ function tm_base_init() {
 
 /**
  * Implement hook_file_insert()
- * Remove annoying characters from filenames
+ * Remove troublesome characters from filenames
  * Helpful for gmail images, CDNs, etc
+ * Todo: UTF8 handling?
  */
 function tm_base_file_insert($file) {
 
@@ -645,9 +646,9 @@ function tm_base_file_insert($file) {
 
   // default characters
   // can override with optional config variable $conf["tm_base_annoying_filename_chars"]
-  $annoying_filename_chars = array(" " => "_", "+" => "", "&" => "", "?" => "", "#" => "", "%" => "", "!" => "");
-  if (isset($conf["tm_base_annoying_filename_chars"])) {
-    $remove_annoying_filename_chars = $conf["tm_base_annoying_filename_chars"];
+  $change_filename_chars = array(" " => "_", "+" => "", "&" => "", "?" => "", "#" => "", "%" => "", "!" => "");
+  if (isset($conf["tm_base_change_filename_chars"])) {
+    $change_filename_chars = $conf["tm_base_change_filename_chars"];
   }
 
   $original_filename = $file->filename;
@@ -655,7 +656,7 @@ function tm_base_file_insert($file) {
   $new_uri = $file->uri;
 
   // check for and change annoying characters
-  foreach ($annoying_filename_chars as $char => $replace) {
+  foreach ($change_filename_chars as $char => $replace) {
     $new_filename = str_replace($char, $replace, $new_filename);
     $new_uri = str_replace($char, $replace, $new_uri);
   }

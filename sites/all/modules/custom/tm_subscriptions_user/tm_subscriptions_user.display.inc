@@ -51,15 +51,30 @@ function tm_subscriptions_user_user_view($account, $view_mode, $langcode) {
  */
 function tm_subscriptions_user_cta_banner_node($user_id, $node_id) {
 
+	global $conf;
 	$node = node_load($node_id);
 
 	if ($node == null) {
 		return;
 	}
 
-	// only show on event and chapters
-	if (($node->type == "event") or ($node->type == "chapter")) {
-		return tm_subscriptions_user_cta_banner($user_id);
+	// show for events that don't have payments
+	if ($node->type == "event")  {
+		if ($conf["tm_subscriptions_user_cta_event_pages"] == true) {
+			if (module_exists("tm_payments")) {
+				if (!_tm_payments_is_payment_enabled($node)) {
+					return;
+				}
+			}
+			return tm_subscriptions_user_cta_banner($user_id);
+		}
+	}
+	
+	// show for chapters
+	if ($node->type == "chapter") {
+		if ($conf["tm_subscriptions_user_cta_chapter_pages"] == true) {
+			return tm_subscriptions_user_cta_banner($user_id);
+		}
 	}
 }
 

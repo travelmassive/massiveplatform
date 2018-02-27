@@ -591,11 +591,14 @@ function tm_branding_get_brand_element($site_brand, $element_name) {
 		return $element;
 	}
 
-	// frontpage block
+	// top block
 	// note: changed use of field_brand_frontpage_block_html to top block
 	if ($element_name == "top_block_html") {
 		if (isset($site_brand->field_brand_frontpage_block_html[LANGUAGE_NONE][0]['value'])) {
-			$element = $site_brand->field_brand_frontpage_block_html[LANGUAGE_NONE][0]['value'];
+			// exclude edit pages
+			if (strpos(current_path(), "/edit") === false) {
+				$element = $site_brand->field_brand_frontpage_block_html[LANGUAGE_NONE][0]['value'];
+			}
 		}
 	}
 

@@ -107,6 +107,12 @@ if (sizeof($request_uri_parts) == 3) {
     </div>
   </header>
 
+  <?php
+    // render top block
+    $top_block_html = tm_branding_get_element("top_block_html");
+    if ($top_block_html != "") { echo $top_block_html; }
+  ?>
+
   <main id="main" role="main">
     <div class="row">
       <div id="content" role="main">

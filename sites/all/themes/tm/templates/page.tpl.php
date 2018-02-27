@@ -60,6 +60,12 @@
     </div>
   </header>
 
+  <?php
+    // render top block
+    $top_block_html = tm_branding_get_element("top_block_html");
+    if ($top_block_html != "") { echo $top_block_html; }
+  ?>
+
   <main id="main" role="main">
     <div class="row">
       <div id="content" role="main">
@@ -80,21 +86,8 @@
             <?php endif; ?>
           </header>
           <div class="column">
+
             <?php print render($page['content']); ?>
-
-
-            <?php
-            // frontpage block
-            if ($is_front) {
-            $frontpage_block_html = tm_branding_get_element("frontpage_block_html");
-            if ($frontpage_block_html != "") { ?>
-            <div class="column first" style='margin: auto; text-align: center;' id="frontpage_block" style="float: left;">
-              <?php echo $frontpage_block_html; ?>
-            </div>
-            <?php 
-              } // end if frontpage_block_html
-            } // end if is front
-            ?>
 
             <div class="trilithon" id="frontpage_feed" style="margin-top: 64px;">
 

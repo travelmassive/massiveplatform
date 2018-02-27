@@ -506,9 +506,8 @@ Default is: $conf[\'tm_branding_footer_logo\']',
     'bundle' => 'site_brand',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Custom html block for frontpage.<br>
-Will be displayed above the newsfeeds.<br>
-Default is $conf[\'tm_branding_frontpage_block_html\']',
+    'description' => 'Custom html block for top of page.
+Default is $conf[\'tm_branding_top_block_html\']',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -527,7 +526,7 @@ Default is $conf[\'tm_branding_frontpage_block_html\']',
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_brand_frontpage_block_html',
-    'label' => 'Frontpage block html',
+    'label' => 'Top block html',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -1867,7 +1866,7 @@ Default is $conf[\'tm_branding_favicon\']');
   t('Front page background image, displayed on mobile devices or if video disabled.<br>
 If using a front page video, this should be the first frame of the video.<br>
 Default is $conf[\'tm_branding_frontpage_image\']');
-  t('Frontpage block html');
+  t('Top block html');
   t('Frontpage image');
   t('Frontpage opacity');
   t('Frontpage video link');

@@ -470,7 +470,7 @@ $conf['tm_branding_frontpage_opacity'] = 0.8; // frontpage image/video opacity
 $conf['tm_branding_frontpage_video_url'] = ''; // frontpage video url (ie: 720p mp4 stream url from vimeo). Leave blank to disable
 $conf['tm_branding_frontpage_video_text'] = 'Check out our awesome events'; // label for frontpage video
 $conf['tm_branding_frontpage_video_link'] = '/events'; // link for frontpage video
-$conf['tm_branding_frontpage_block_html'] = '<div style="padding: 2rem; color: #fff;">This is a custom frontpage block</div>'; // front page block html
+$conf['tm_branding_top_block_html'] = ''; // top block example: <div><div class="row"><div id="content" role="top"><section>This is a top block</section></div></div></div>
 $conf['tm_branding_header_logo'] = '/sites/default/files/site_branding/header_logo/default_header_logo.svg'; // default header logo (svg)
 $conf['tm_branding_footer_logo'] = '/sites/default/files/site_branding/footer_logo/default_footer_logo.svg'; // default footer logo (svg)
 $conf['tm_branding_search_page_banner'] = '/sites/default/files/site_branding/search_banner/default_search_banner.png'; // banner image to show on search page

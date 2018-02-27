@@ -58,21 +58,21 @@ function tm_subscriptions_user_cta_banner_node($user_id, $node_id) {
 		return;
 	}
 
+	// show for chapters
+	if ($node->type == "chapter") {
+		if ($conf["tm_subscriptions_user_cta_chapter_pages"] == true) {
+			return tm_subscriptions_user_cta_banner($user_id);
+		}
+	}
+
 	// show for events that don't have payments
 	if ($node->type == "event")  {
 		if ($conf["tm_subscriptions_user_cta_event_pages"] == true) {
 			if (module_exists("tm_payments")) {
-				if (!_tm_payments_is_payment_enabled($node)) {
+				if (_tm_payments_is_payment_enabled($node)) {
 					return;
 				}
 			}
-			return tm_subscriptions_user_cta_banner($user_id);
-		}
-	}
-	
-	// show for chapters
-	if ($node->type == "chapter") {
-		if ($conf["tm_subscriptions_user_cta_chapter_pages"] == true) {
 			return tm_subscriptions_user_cta_banner($user_id);
 		}
 	}

@@ -148,7 +148,7 @@ function tm_subscriptions_user_node_view_alter(&$build) {
   }
 
   // check object
-  if (($node->type == "event") or ($node->type == "chapter")) {
+  if ($node->type == "chapter") {
    
     if (tm_subscriptions_check_show_user_cta($user->uid, $user->uid)) {
 

@@ -138,6 +138,18 @@ function tm_organizations_views_default_views() {
   $handler->display->display_options['relationships']['flag_content_rel']['flag'] = 'organization_subscription_enable';
   $handler->display->display_options['relationships']['flag_content_rel']['user_scope'] = 'any';
   $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: Flags: Flagged */
+  $handler->display->display_options['sorts']['flagged']['id'] = 'flagged';
+  $handler->display->display_options['sorts']['flagged']['table'] = 'flagging';
+  $handler->display->display_options['sorts']['flagged']['field'] = 'flagged';
+  $handler->display->display_options['sorts']['flagged']['relationship'] = 'flag_content_rel';
+  $handler->display->display_options['sorts']['flagged']['order'] = 'DESC';
+  /* Sort criterion: Flags: Flagged time */
+  $handler->display->display_options['sorts']['timestamp']['id'] = 'timestamp';
+  $handler->display->display_options['sorts']['timestamp']['table'] = 'flagging';
+  $handler->display->display_options['sorts']['timestamp']['field'] = 'timestamp';
+  $handler->display->display_options['sorts']['timestamp']['relationship'] = 'flag_content_rel';
+  $handler->display->display_options['sorts']['timestamp']['order'] = 'DESC';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';

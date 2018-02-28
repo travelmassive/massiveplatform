@@ -129,6 +129,14 @@ function tm_organizations_views_default_views() {
   $handler->display->display_options['relationships']['field_country_iso2']['id'] = 'field_country_iso2';
   $handler->display->display_options['relationships']['field_country_iso2']['table'] = 'field_data_field_country';
   $handler->display->display_options['relationships']['field_country_iso2']['field'] = 'field_country_iso2';
+  /* Relationship: Flags: organization_subscription_enable */
+  $handler->display->display_options['relationships']['flag_content_rel']['id'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel']['table'] = 'node';
+  $handler->display->display_options['relationships']['flag_content_rel']['field'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel']['label'] = 'organization_subscription_enabled';
+  $handler->display->display_options['relationships']['flag_content_rel']['required'] = 0;
+  $handler->display->display_options['relationships']['flag_content_rel']['flag'] = 'organization_subscription_enable';
+  $handler->display->display_options['relationships']['flag_content_rel']['user_scope'] = 'any';
   $handler->display->display_options['defaults']['sorts'] = FALSE;
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';

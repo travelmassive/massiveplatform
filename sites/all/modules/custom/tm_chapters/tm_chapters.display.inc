@@ -207,7 +207,8 @@ function _tm_ds_chapter_stats($field, $title = NULL) {
 
   // rely on the permanent cache stored by _tm_reports_get_chapter_insights
   // run drush tm-chapters-update-display-stats-cache to update
-  $cache = cache_get('tm-reports-get-chapter-insights-display-' . $nid, 'cache');
+  $chapter_ids_key = md5($nid); 
+  $cache = cache_get('tm-reports-get-chapter-insights-display-' . $chapter_ids_key, 'cache');
   if (empty($cache)) {
     return;
   }

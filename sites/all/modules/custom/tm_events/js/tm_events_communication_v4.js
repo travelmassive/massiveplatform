@@ -224,15 +224,15 @@ tm_communication_send_recipient_emails = function() {
           // Sent at least one email
           if (return_data.sent > 0) {
           	
-          	$('#event-email-attendees-submit').val("Successfully sent " + return_data.sent + " emails.");
+          	$('#event-email-attendees-submit').val("Successfully sent announcement.");
 	          $('#event-email-attendees-submit').attr("disabled", true);
 	          $('#event-email-attendees-confirm').attr("disabled", true);
 	          $('#edit-recipients').attr("disabled", true);
 
           	tm_communications_completed = true;
-          	$.prompt("<b>We successfully sent " + return_data.sent + " emails.</b><br>It may take a few minutes to deliver them all.", 
+          	$.prompt("Congratulations, your announcement has been sent.<br><br><em>Tip: It may take a few minutes for your emails to be delivered. If you use gmail, check the 'Promotions' tab.</em>", 
 					 	{ buttons: { "View event": true},
-					  title: 'Good job, your announcement has been sent',
+					  title: 'Your event announcement is on its way...',
 						  submit: function(e,v,m,f){
 						    if (v == true) {
 						    	window.location = "/" + Drupal.settings.tm_events.event_url;

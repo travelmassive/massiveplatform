@@ -404,13 +404,62 @@ function tm_chapters_send_emails($recipients, $subject, $message, $chapter_image
 
   }
 
-
   // Remove any duplicates
   $user_ids = array_unique($user_ids);
 
-  // send the emails
-  // We use a cron queue tm_chapter_announcements to send emails in the background.
+  // Send the emails
+  // We use a cron queue tm_event_announcements_process to send emails in the background.
+  $queue = DrupalQueue::get('tm_chapter_announcements_process');  
+  $queue->createItem(["user_ids" => $user_ids,
+                    "subject" => $subject,
+                    "message" => $message,
+                    "event_image_src" => $event_image_src,
+                    "event_image_link" => $event_image_link,
+                    "replyto" => $replyto,
+                    "chapterid" => $chapterid]);
+
+  // return number of recipients
+  // note: we can't return how many people we sent to as this is now handled in a queue
+  return sizeof($user_ids);
+
+}
+
+/**
+ * Implements hook_cron_queue_info().
+ */
+function tm_chapters_cron_queue_info() {
+  $queues = array();
+  $queues['tm_chapter_announcements_process'] = array(
+    'worker callback' => 'tm_chapters_process_emails_cron', //function to call for each item
+    'time' => 600, //seconds to spend working on the queue (Ian - should be ok for up to 10,000 recipients)
+  );
+  $queues['tm_chapter_announcements'] = array(
+    'worker callback' => 'tm_chapters_send_email_cron', //function to call for each item
+    'time' => 120, //seconds to spend working on the queue
+  );
+  return $queues;
+}
+
+/**
+ * Cron call back to send announcement emails
+ *
+ */
+function tm_chapters_process_emails_cron($item) {
+
+  global $conf;
+  
+  // Get data
+  $user_ids = $item["user_ids"];
+  $subject = $item["subject"];
+  $message = $item["message"];
+  $event_image_src = $item["event_image_src"];
+  $event_image_link = $item["event_image_link"];
+  $replyto = $item["replyto"];
+  $chapterid = $item["chapterid"];
+
+  // Process emails
   $original_message = $message;
+  $sendcount = 0;
   foreach ($user_ids as $user_id) {
 
     $user_account = user_load($user_id);
@@ -442,28 +491,16 @@ function tm_chapters_send_emails($recipients, $subject, $message, $chapter_image
                         "chapter_image_link" => $chapter_image_link,
                         "replyto" => $replyto,
                         "chapterid" => $chapterid]);
-      
-      // below is the non queue method
-      //tm_events_send_email($user_account->uid, $user_account->mail, $subject, $message, $chapter_image_src, $chapter_image_link, $chapterid);
     }
 
   }
 
-  // return sendcount
-  print(json_encode(array("sent" => $sendcount)));
+  // copy announcement email to a specific address
+  // include email sent count
+  if (isset($conf["tm_announcement_copy_email"])) {
+      tm_chapters_send_email(null, $conf["tm_announcement_copy_email"], "[Copy] " . $subject . " (" . $sendcount  ." sent)" , $message, $chapter_image_src, $chapter_image_link, $chapterid, $replyto);
+  }
 
-}
-
-/**
- * Implements hook_cron_queue_info().
- */
-function tm_chapters_cron_queue_info() {
-  $queues = array();
-  $queues['tm_chapter_announcements'] = array(
-    'worker callback' => 'tm_chapters_send_email_cron', //function to call for each item
-    'time' => 120, //seconds to spend working on the queue
-  );
-  return $queues;
 }
 
 /**
@@ -635,16 +672,12 @@ function tm_chapters_send_emails_ajax() {
     }
   }
 
-  // copy announcement email to a specific address
-  if (isset($conf["tm_announcement_copy_email"])) {
-      tm_chapters_send_email(null, $conf["tm_announcement_copy_email"], "[Copy] " . $subject, $message, $chapter_image_src, $chapter_image_link, $chapterid, $replyto);
-  }
-
   $sendcount = tm_chapters_send_emails($recipients, $subject, $message, $chapter_image_src, $chapter_image_link, $chapterid, $replyto, $approved_members);
 
   // indicate success to the js ajax handler
   // todo: return a nicer json response and parse it in the js
-  print($sendcount);
+  print(json_encode(array("sent" => $sendcount)));
+
 }
 
 /**

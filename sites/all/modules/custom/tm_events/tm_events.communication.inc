@@ -438,7 +438,6 @@ function tm_events_send_emails($recipients, $subject, $message, $event_image_src
   $chapterflag = flag_get_flag('signup', NULL);
   $follow_members = flag_get_flag('follow_members', NULL);
   $follow_organizations = flag_get_flag('follow_organizations', NULL);
-  $sendcount = 0;
 
   // support multiple chapter ids
   // ie: chapterid = 123 (single)
@@ -611,9 +610,59 @@ function tm_events_send_emails($recipients, $subject, $message, $event_image_src
   // Remove any duplicates
   $user_ids = array_unique($user_ids);
 
-  // send the emails
-  // We use a cron queue tm_event_announcements to send emails in the background.
+  // Send the emails
+  // We use a cron queue tm_event_announcements_process to send emails in the background.
+  $queue = DrupalQueue::get('tm_event_announcements_process');  
+  $queue->createItem(["user_ids" => $user_ids,
+                    "subject" => $subject,
+                    "message" => $message,
+                    "event_image_src" => $event_image_src,
+                    "event_image_link" => $event_image_link,
+                    "replyto" => $replyto,
+                    "eventid" => $eventid]);
+
+  // return number of recipients
+  // note: we can't return how many people we sent to as this is now handled in a queue
+  return sizeof($user_ids);
+
+}
+
+/**
+ * Implements hook_cron_queue_info().
+ */
+function tm_events_cron_queue_info() {
+  $queues = array();
+  $queues['tm_event_announcements_process'] = array(
+    'worker callback' => 'tm_events_process_emails_cron', //function to call for each item
+    'time' => 600, //seconds to spend working on the queue (Ian - should be ok for up to 10,000 recipients)
+  );
+  $queues['tm_event_announcements'] = array(
+    'worker callback' => 'tm_events_send_email_cron', //function to call for each item
+    'time' => 120, //seconds to spend working on the queue
+  );
+  return $queues;
+}
+
+/**
+ * Cron call back to send announcement emails
+ *
+ */
+function tm_events_process_emails_cron($item) {
+
+  global $conf;
+
+  // Get data
+  $user_ids = $item["user_ids"];
+  $subject = $item["subject"];
+  $message = $item["message"];
+  $event_image_src = $item["event_image_src"];
+  $event_image_link = $item["event_image_link"];
+  $replyto = $item["replyto"];
+  $eventid = $item["eventid"];
+
+  // Process emails
   $original_message = $message;
+  $sendcount = 0;
   foreach ($user_ids as $user_id) {
 
     $user_account = user_load($user_id);
@@ -645,28 +694,16 @@ function tm_events_send_emails($recipients, $subject, $message, $event_image_src
                         "event_image_link" => $event_image_link,
                         "replyto" => $replyto,
                         "eventid" => $eventid]);
-      
-      // below is the non queue method
-      //tm_events_send_email($user_account->uid, $user_account->mail, $subject, $message, $event_image_src, $event_image_link, $eventid);
     }
 
   }
 
-  // return sendcount
-  print(json_encode(array("sent" => $sendcount)));
+  // send copy announcement email to a specific address
+  // include email sent count
+  if (isset($conf["tm_announcement_copy_email"])) {
+      tm_events_send_email(null, $conf["tm_announcement_copy_email"], "[Copy] " . $subject . " (" . $sendcount . " sent)", $message, $event_image_src, $event_image_link, $eventid, $replyto);
+  }
 
-}
-
-/**
- * Implements hook_cron_queue_info().
- */
-function tm_events_cron_queue_info() {
-  $queues = array();
-  $queues['tm_event_announcements'] = array(
-    'worker callback' => 'tm_events_send_email_cron', //function to call for each item
-    'time' => 120, //seconds to spend working on the queue
-  );
-  return $queues;
 }
 
 /**
@@ -844,16 +881,12 @@ function tm_events_send_emails_ajax() {
     }
   }
 
-  // copy announcement email to a specific address
-  if (isset($conf["tm_announcement_copy_email"])) {
-      tm_events_send_email(null, $conf["tm_announcement_copy_email"], "[Copy] " . $subject, $message, $event_image_src, $event_image_link, $eventid, $replyto);
-  }
-
   $sendcount = tm_events_send_emails($recipients, $subject, $message, $event_image_src, $event_image_link, $eventid, $chapterid, $replyto, $approved_members);
 
   // indicate success to the js ajax handler
   // todo: return a nicer json response and parse it in the js
-  print($sendcount);
+  print(json_encode(array("sent" => $sendcount)));
+
 }
 
 /**

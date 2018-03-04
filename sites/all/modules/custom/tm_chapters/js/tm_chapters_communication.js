@@ -206,15 +206,15 @@ tm_chapter_communication_send_recipient_emails = function() {
           // Sent at least one email
           if (return_data.sent > 0) {
           	
-          	$('#chapter-email-members-submit').val("Successfully sent " + return_data.sent + " emails.");
+          	$('#chapter-email-members-submit').val("Successfully sent announcement.");
 	          $('#chapter-email-members-submit').attr("disabled", true);
 	          $('#chapter-email-members-confirm').attr("disabled", true);
 	          $('#edit-recipients').attr("disabled", true);
 
           	tm_communications_completed = true;
-          	$.prompt("<b>We successfully sent " + return_data.sent + " emails.</b><br>It may take a few minutes to deliver them all.", 
+          	$.prompt("Congratulations, your announcement has been sent.<br><br><em>Tip: It may take a few minutes for your emails to be delivered. If you use gmail, check the 'Promotions' tab.</em>", 
 					 	{ buttons: { "View chapter": true},
-					  title: 'Sweet! Your announcement has been sent',
+					  title: 'Your chapter announcement is on its way...',
 						  submit: function(e,v,m,f){
 						    if (v == true) {
 						    	window.location = "/" + Drupal.settings.tm_chapters.chapter_url;

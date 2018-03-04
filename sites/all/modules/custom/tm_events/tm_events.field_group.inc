@@ -350,8 +350,9 @@ function tm_events_field_group_info() {
       6 => 'field_chapter',
       7 => 'field_event_company',
       8 => 'field_event_cover_video',
-      9 => 'title',
-      10 => 'path',
+      9 => 'field_rsvp_link_title',
+      10 => 'title',
+      11 => 'path',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -444,7 +445,6 @@ function tm_events_field_group_info() {
       1 => 'field_event_type',
       2 => 'field_event_hide_organizers',
       3 => 'field_event_reassign_owner',
-      4 => 'field_event_discuss_category_id',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

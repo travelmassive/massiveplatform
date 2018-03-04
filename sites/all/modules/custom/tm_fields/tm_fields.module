@@ -2103,7 +2103,7 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
       case 'event':
         $result = _tm_event_display_flag($entity->nid);
         
-        // Only show the button for travel massive events.
+        // Only show the button for managed events.
         // The other events will have an external RSVP link.
         if ($result == 'show_external_rsvp') {
           return;

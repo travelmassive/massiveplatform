@@ -332,6 +332,11 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
 	 ':input[name="field_external_rsvp[und]"]' => array('value' => '1'),
 	),
 	);
+  $form['field_rsvp_link_title']['#states'] = array(
+  'visible' => array(
+   ':input[name="field_external_rsvp[und]"]' => array('value' => '1'),
+  ),
+  );
 
 	// POPULATE AND SET EVENT TYPES
 	$event_types = array();
@@ -446,7 +451,14 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
     $form['actions']['submit']['#value'] = t('Add event');
   }
 
-  // STEP 8. Add js prompt if event is new and user returned via back button
+  // STEP 9. RSVP LINK TEXT
+  ////////////
+  $form['field_rsvp_link_title'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = "RSVP";
+  if (!$perm_is_moderator_or_admin) {
+    unset($form['field_rsvp_link_title']);
+  }
+
+  // STEP 10. Add js prompt if event is new and user returned via back button
   //////////
   if ($is_new_event) {
     drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_add_event.js');

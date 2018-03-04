@@ -64,7 +64,9 @@ function tm_events_manage_registrations_form($event){
 
     while ($attendee_user = $users->fetchAssoc()) {
 
+      // load account
       $account = user_load($attendee_user['uid']);
+
       // set profile url (either friendly url or community url)
       $profile_url = drupal_get_path_alias("user/" . $account->uid);
 
@@ -77,7 +79,7 @@ function tm_events_manage_registrations_form($event){
       $subscriber_text = "";
       if ($module_exists_tm_subscriptions_user) {
         if (tm_subscriptions_is_user_subscription_enabled($account->uid)) {
-          $subscriber_text = "<span style='font-weight: normal;' class='tm-user-menu-subscription-badge'>" . strtoupper($conf["tm_subscriptions_user_label_short"]) . "</span>";
+          $subscriber_text = "<span style='font-weight: normal;' class='tm-user-menu-subscription-badge'> " . strtoupper($conf["tm_subscriptions_user_label_short"]) . "</span>";
         }
       }
 
@@ -85,8 +87,13 @@ function tm_events_manage_registrations_form($event){
       if ($module_exists_tm_subscriptions) {
         $company_nids = tm_subscriptions_get_users_subscribed_companies($account->uid);
         if (sizeof($company_nids) > 0) {
-          $subscriber_text = "<span style='font-weight: normal;' class='tm-user-menu-subscription-badge'>" . strtoupper($conf["tm_subscriptions_organization_label_short"]) . "</span>";
+          $subscriber_text = "<span style='font-weight: normal;' class='tm-user-menu-subscription-badge'> " . strtoupper($conf["tm_subscriptions_organization_label_short"]) . "</span>";
         }
+      }
+
+      // chapter leader
+      if (in_array("chapter leader", $account->roles)) {
+          $subscriber_text = "<span style='font-weight: normal;' class='tm-user-menu-subscription-badge'> Chapter Leader</span>";
       }
 
       // taxonomy

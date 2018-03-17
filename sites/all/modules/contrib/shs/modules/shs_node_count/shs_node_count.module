@@ -1,0 +1,109 @@
+<?php
+
+/**
+ * @file
+ * Node count functionality for Simple hierarchical select.
+ */
+
+/**
+ * Implements hook_field_widget_info_alter().
+ */
+function shs_node_count_field_widget_info_alter(&$info) {
+  if (empty($info['taxonomy_shs'])) {
+    return;
+  }
+  // Add "a"node_count" setting to a shs widgets.
+  $info['taxonomy_shs']['settings']['shs'] += array(
+    'node_count' => FALSE,
+  );
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function shs_node_count_form_field_ui_field_edit_form_alter(&$form, &$form_state, $form_id) {
+  if (empty($form['instance']['widget']['settings']['shs'])) {
+    return;
+  }
+  $settings_form = &$form['instance']['widget']['settings']['shs'];
+  $settings = &$form['#instance']['widget']['settings']['shs'];
+
+  $settings_form['node_count'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Display number of nodes'),
+    '#description' => t('Display the number of nodes associated with the term.'),
+    '#default_value' => empty($settings['node_count']) ? FALSE : $settings['node_count'],
+    '#weight' => -1,
+  );
+}
+
+/**
+ * Implements hook_shs_term_get_children_alter().
+ */
+function shs_node_count_shs_term_get_children_alter(&$terms, &$alter_options) {
+  if (empty($alter_options['settings']['node_count']) || empty($alter_options['settings']['language']) || !isset($alter_options['parent'])) {
+    // Nothing to do here.
+    return;
+  }
+  $langcode = $alter_options['settings']['language']->language;
+  $term = (object) array(
+    'vid' => $alter_options['vid'],
+    'tid' => 0,
+  );
+  $format = variable_get('shs_node_count_format', '%s (%d)');
+  foreach ($terms as &$item) {
+    array_walk($item[$langcode][$alter_options['parent']], function (&$name, $key) use ($term, $format) {
+      $term->tid = $key;
+      $count = shs_node_count_term_get_node_count($term, TRUE);
+      $name = sprintf($format, $name, $count);
+    });
+  }
+}
+
+/**
+ * Helper function to count number of nodes associated to a term.
+ *
+ * @param object $term
+ *   The term object.
+ * @param boolean $count_children
+ *   If set to TRUE, nodes in child terms are counted also.
+ *
+ * @return int
+ *   Number of nodes within the term.
+ */
+function shs_node_count_term_get_node_count($term, $count_children = FALSE) {
+  $num_nodes = &drupal_static(__FUNCTION__, array());
+
+  // Maybe this needs some more caching and value-updates on node_save()/
+  // _update()/delete().
+  if (empty($num_nodes["{$term->tid}:{$count_children}"])) {
+    $index_table = 'taxonomy_index';
+    if (module_exists('taxonomy_entity_index')) {
+      $index_table = 'taxonomy_entity_index';
+    }
+
+    // Count nodes associated to this term.
+    $num_nodes["{$term->tid}:{$count_children}"] = db_select($index_table, 'ti')
+            ->fields('ti')
+            ->condition('tid', $term->tid)
+            ->execute()
+            ->rowCount();
+
+    if ($count_children) {
+      $tids = array();
+      $tree = taxonomy_get_tree($term->vid, $term->tid);
+      foreach ($tree as $child_term) {
+        $tids[] = $child_term->tid;
+      }
+      if (count($tids)) {
+        $num_nodes["{$term->tid}:{$count_children}"] += db_select($index_table, 'ti')
+                ->fields('ti')
+                ->condition('tid', $tids, 'IN')
+                ->execute()
+                ->rowCount();
+      }
+    }
+  }
+
+  return isset($num_nodes["{$term->tid}:{$count_children}"]) ? $num_nodes["{$term->tid}:{$count_children}"] : 0;
+}

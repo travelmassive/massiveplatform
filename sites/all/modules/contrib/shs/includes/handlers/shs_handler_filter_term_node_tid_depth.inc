@@ -87,8 +87,14 @@ class shs_handler_filter_term_node_tid_depth extends shs_handler_filter_term_nod
     }
 
     // Now build the subqueries.
-    $subquery = db_select('taxonomy_index', 'tn');
-    $subquery->addField('tn', 'nid');
+    if (module_exists('taxonomy_entity_index')) {
+      $subquery = db_select('taxonomy_entity_index', 'tn');
+      $subquery->addField('tn', 'entity_id');
+    }
+    else {
+      $subquery = db_select('taxonomy_index', 'tn');
+      $subquery->addField('tn', 'nid');
+    }
     $where = db_or()->condition('tn.tid', $this->value, $operator);
     $last = "tn";
 

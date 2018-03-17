@@ -3,14 +3,19 @@
 * Styles for formatted output of shs module.
 */
 
+.field-type-entityreference ul.shs-hierarchy,
 .field-type-taxonomy-term-reference ul.shs-hierarchy {
   list-style: none;
   margin: 0;
   padding: 0;
 }
+.field-type-entityreference ul.shs-hierarchy li,
 .field-type-taxonomy-term-reference .links ul.shs-hierarchy li {
+  float: left;
   padding: 0 5px 0 0;
+  white-space: nowrap;
 }
+.field-type-entityreference ul.shs-hierarchy li.last,
 .field-type-taxonomy-term-reference .links ul.shs-hierarchy li.last {
   padding: 0;
 }

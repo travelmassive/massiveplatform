@@ -28,14 +28,43 @@ function shs_menu() {
  * Implements hook_js().
  */
 function shs_js() {
-  return array(
+  $settings = array(
     'json' => array(
       'callback' => 'shs_json',
-      'access callback'  => 'user_access',
+      'access callback' => 'user_access',
       'access arguments' => array('access content'),
-      'dependencies' => array('taxonomy'),
+      'includes' => array('path'),
+      'dependencies' => array('taxonomy', 'field', 'field_sql_storage'),
     ),
   );
+  drupal_alter('shs_js_info', $settings);
+  return $settings;
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function shs_requirements($phase) {
+  $requirements = array();
+  $t = get_t();
+
+  if ($phase !== 'runtime' || !module_exists('chosen')) {
+    return $requirements;
+  }
+  if (($info = drupal_get_library('chosen', 'chosen')) === FALSE) {
+    return $requirements;
+  }
+  // Chosen version should be at least 1.0.
+  if (version_compare($info['version'], '1.1.0') < 0) {
+    $requirements['shs'] = array(
+      'title' => $t('Simple hierarchical select: chosen integration'),
+      'description' => $t('If you would like to use chosen with Simple hierarchical select you need to install at least version 1.1.0 of !chosen_library.', array('!chosen_library' => l('Chosen', 'http://harvesthq.github.io/chosen/'))),
+      'severity' => REQUIREMENT_WARNING,
+      'value' => $t('Chosen library too old (installed version is !version)', array('!version' => $info['version'])),
+    );
+  }
+
+  return $requirements;
 }
 
 /**
@@ -80,17 +109,19 @@ function shs_json_callbacks() {
     'shs_json_term_get_children' => array(
       'callback' => 'shs_json_term_get_children',
       'arguments' => array(
-        'vid' => 'is_numeric',
+        'vid' => 'shs_json_validation_vocabulary_identifier',
         'parent' => 'is_array',
         'settings' => 'is_array',
+        'field' => 'is_string',
       ),
     ),
     'shs_json_term_add' => array(
       'callback' => 'shs_json_term_add',
       'arguments' => array(
-        'vid' => 'is_numeric',
+        'vid' => 'shs_json_validation_vocabulary_identifier',
         'parent' => 'is_numeric',
         'name' => 'is_string',
+        'field' => 'is_string',
       ),
     ),
   );
@@ -116,16 +147,17 @@ function _shs_json_callback_get_arguments($callback, $arguments) {
   // Get arguments from callback definition.
   $callback_arguments = $callback['arguments'];
   foreach ($arguments as $key => $value) {
-    if (isset($callback_arguments[$key])) {
-      $argument_valid = TRUE;
-      if ((($validation_function = $callback_arguments[$key]) !== FALSE) && function_exists($validation_function)) {
-        // Validate argument.
-        $argument_valid = $validation_function($value);
-      }
-      if ($argument_valid) {
-        // Add argument and its value to the result list.
-        $result[$key] = $value;
-      }
+    if (!isset($callback_arguments[$key])) {
+      continue;
+    }
+    $argument_valid = TRUE;
+    if ((($validation_function = $callback_arguments[$key]) !== FALSE) && function_exists($validation_function)) {
+      // Validate argument.
+      $argument_valid = $validation_function($value);
+    }
+    if ($argument_valid) {
+      // Add argument and its value to the result list.
+      $result[$key] = $value;
     }
   }
   return $result;
@@ -135,26 +167,93 @@ function _shs_json_callback_get_arguments($callback, $arguments) {
  * Implements hook_views_data_alter().
  */
 function shs_views_data_alter(&$data) {
-  // Get a list of all field instances with widget type "taxonomy_shs".
-  $instances = _shs_get_instances('node');
-  foreach ($instances as $field_instances) {
-    foreach ($field_instances as $field_name => $instance) {
-      // Replace filter handler for this field.
-      if (!empty($data["field_data_{$field_name}"]["{$field_name}_tid"]['filter']['handler'])) {
-        $data["field_data_{$field_name}"]["{$field_name}_tid"]['filter']['handler'] = 'shs_handler_filter_term_node_tid';
-      }
-    }
-  }
-
   // Add filter handler for term ID with depth.
   $data['node']['shs_term_node_tid_depth'] = array(
     'help' => t('Display content if it has the selected taxonomy terms, or children of the selected terms. Due to additional complexity, this has fewer options than the versions without depth. Optionally the filter will use a simple hierarchical select for the selection of terms.'),
     'real field' => 'nid',
     'filter' => array(
-      'title' => t('Has taxonomy terms (with depth; %type)', array('%type' => 'Simple hierarchical select')),
+      'title' => t('Has taxonomy terms (with depth; @type)', array('@type' => 'Simple hierarchical select')),
       'handler' => 'shs_handler_filter_term_node_tid_depth',
     ),
   );
+}
+
+/**
+ * Implements hook_field_views_data_alter().
+ */
+function shs_field_views_data_alter(&$result, &$field, $module) {
+  if (empty($field['columns']) || !in_array($field['type'], array('taxonomy_term_reference', 'entityreference'))) {
+    return;
+  }
+  if ($field['type'] == 'entityreference' && (empty($field['settings']['target_type']) || $field['settings']['target_type'] != 'taxonomy_term')) {
+    // Do not change entityreference fields that do not reference terms.
+    return;
+  }
+  $field_column = key($field['columns']);
+  foreach ($result as $key => $group) {
+    $field_identifier = sprintf('%s_%s', $field['field_name'], $field_column);
+    if (empty($group[$field_identifier]) || empty($group[$field_identifier]['filter']['handler'])) {
+      // Only modify field definitions for the primary column.
+      continue;
+    }
+    // Replace handler.
+    $result[$key][$field_identifier]['filter']['handler'] = ($field['type'] == 'entityreference') ? 'shs_handler_filter_entityreference' : 'shs_handler_filter_term_node_tid';
+  }
+}
+
+/**
+ * Implements hook_conditional_fields_states_handlers_alter().
+ */
+function shs_conditional_fields_states_handlers_alter(&$handlers) {
+  $handlers += array(
+    'shs_conditional_fields_states_handler_shs' => array(
+      array(
+        'tid' => array(
+          '#type' => 'select',
+        ),
+      ),
+    ),
+  );
+}
+
+/**
+ * States handler for simple hierarchical selects.
+ */
+function shs_conditional_fields_states_handler_shs($field, $field_info, &$options, &$state) {
+  switch ($options['values_set']) {
+    case CONDITIONAL_FIELDS_DEPENDENCY_VALUES_WIDGET:
+    case CONDITIONAL_FIELDS_DEPENDENCY_VALUES_AND:
+      if (empty($state[$options['state']][$options['selector']])) {
+        return;
+      }
+      $old_state = $state[$options['state']][$options['selector']];
+      if (isset($old_state['value'][0]['tid'])) {
+        // Completly remove old state.
+        unset($state[$options['state']][$options['selector']]);
+        $options['selector'] .= '-0-tid';
+        $state[$options['state']][$options['selector']] = $old_state;
+        $state[$options['state']][$options['selector']]['value'] = $old_state['value'][0]['tid'];
+      }
+      return;
+
+    case CONDITIONAL_FIELDS_DEPENDENCY_VALUES_XOR:
+      $select_states[$options['state']][] = 'xor';
+
+    case CONDITIONAL_FIELDS_DEPENDENCY_VALUES_REGEX:
+      $regex = TRUE;
+    case CONDITIONAL_FIELDS_DEPENDENCY_VALUES_NOT:
+    case CONDITIONAL_FIELDS_DEPENDENCY_VALUES_OR:
+      foreach ($options['values'] as $value) {
+        $select_states[$options['state']][] = array(
+          $options['selector'] => array(
+            $options['condition'] => empty($regex) ? array($value) : $options['value'],
+          ),
+        );
+      }
+      break;
+  }
+
+  $state = $select_states;
 }
 
 /**
@@ -164,10 +263,9 @@ function shs_field_widget_info() {
   return array(
     'taxonomy_shs' => array(
       'label' => t('Simple hierarchical select'),
-      'field types' => array('taxonomy_term_reference'),
+      'field types' => array('taxonomy_term_reference', 'entityreference'),
       'settings' => array(
         'shs' => array(
-          'node_count' => FALSE,
           'create_new_terms' => FALSE,
           'create_new_levels' => FALSE,
           'force_deepest' => FALSE,
@@ -178,7 +276,48 @@ function shs_field_widget_info() {
 }
 
 /**
- * Implements hook__field_widget_settings_form().
+ * Implements hook_form_FORM_ID_alter().
+ */
+function shs_form_field_ui_field_settings_form_alter(&$form, &$form_state, $form_id) {
+  if (module_exists('entityreference') && $form['field']['type']['#value'] == 'entityreference' && $form['field']['settings']['#instance']['widget']['type'] == 'taxonomy_shs') {
+    $form['field']['settings']['#field']['settings']['target_type'] = 'taxonomy_term';
+    $form['field']['settings']['#process'][] = 'shs_entityreference_field_settings_process';
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function shs_form_field_ui_field_edit_form_alter(&$form, &$form_state, $form_id) {
+  if (module_exists('entityreference') && $form['#field']['type'] == 'entityreference' && $form['#instance']['widget']['type'] == 'taxonomy_shs') {
+    $form['#field']['settings']['target_type'] = 'taxonomy_term';
+    $form['field']['settings']['#process'][] = 'shs_entityreference_field_settings_process';
+  }
+}
+
+/**
+ * Additional processing function for the entityreference field settings form.
+ *
+ * @param array $form
+ *   Form structure to process.
+ * @param array $form_state
+ *   Current form state.
+ *
+ * @return array
+ *   Processed form structure.
+ */
+function shs_entityreference_field_settings_process($form, $form_state) {
+  if (!empty($form['target_type'])) {
+    // Reduce list of available target types to taxonomy terms.
+    $form['target_type']['#options'] = array(
+      'taxonomy_term' => t('Taxonomy term'),
+    );
+  }
+  return $form;
+}
+
+/**
+ * Implements hook_field_widget_settings_form().
  */
 function shs_field_widget_settings_form($field, $instance) {
   $widget = $instance['widget'];
@@ -193,29 +332,26 @@ function shs_field_widget_settings_form($field, $instance) {
     '#collapsed' => FALSE,
     '#tree' => TRUE,
   );
-  $form['shs']['node_count'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Display number of nodes'),
-    '#description' => t('Display the number of nodes associated with the term.'),
-    '#default_value' => empty($settings['shs']['node_count']) ? FALSE : $settings['shs']['node_count'],
-  );
-  $form['shs']['create_new_terms'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Allow creating new terms'),
-    '#description' => t('If checked the user will be able to create new terms (permission to edit terms in this vocabulary must be set).'),
-    '#default_value' => empty($settings['shs']['create_new_terms']) ? FALSE : $settings['shs']['create_new_terms'],
-  );
-  $form['shs']['create_new_levels'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Allow creating new levels'),
-    '#description' => t('If checked the user will be able to create new children for items which do not have any children yet (permission to edit terms in this vocabulary must be set).'),
-    '#default_value' => empty($settings['shs']['create_new_levels']) ? FALSE : $settings['shs']['create_new_levels'],
-    '#states' => array(
-      'visible' => array(
-        ':input[name="instance[widget][settings][shs][create_new_terms]"]' => array('checked' => TRUE),
+
+  if ($field['type'] != 'entityreference' || ($field['type'] == 'entityreference' && !empty($field['settings']['handler_settings']['target_bundles']) && count($field['settings']['handler_settings']['target_bundles']) == 1)) {
+    $form['shs']['create_new_terms'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Allow creating new terms'),
+      '#description' => t('If checked the user will be able to create new terms (permission to edit terms in this vocabulary must be set).'),
+      '#default_value' => empty($settings['shs']['create_new_terms']) ? FALSE : $settings['shs']['create_new_terms'],
+    );
+    $form['shs']['create_new_levels'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Allow creating new levels'),
+      '#description' => t('If checked the user will be able to create new children for items which do not have any children yet (permission to edit terms in this vocabulary must be set).'),
+      '#default_value' => empty($settings['shs']['create_new_levels']) ? FALSE : $settings['shs']['create_new_levels'],
+      '#states' => array(
+        'visible' => array(
+          ':input[name="instance[widget][settings][shs][create_new_terms]"]' => array('checked' => TRUE),
+        ),
       ),
-    ),
-  );
+    );
+  }
   $form['shs']['force_deepest'] = array(
     '#type' => 'checkbox',
     '#title' => t('Force selection of deepest level'),
@@ -252,50 +388,88 @@ function shs_field_widget_error($element, $error, $form, &$form_state) {
  * Implements hook_field_widget_form().
  */
 function shs_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+  $field_column = key($field['columns']);
   // Get value.
   $element_value = NULL;
-  if (!empty($items[$delta]['tid'])) {
-    // Use saved value from database or cache.
-    $element_value = $items[$delta]['tid'];
+  $submitted_value = NULL;
+  if (!empty($form_state['values']) && !empty($element['#parents'])) {
+    $submitted_value = drupal_array_get_nested_value($form_state['values'], $element['#parents']);
   }
-  elseif (!empty($form_state['values'][$element['#field_name']][$element['#language']][$delta]['tid'])) {
+  if (!empty($items[$delta][$field_column])) {
+    // Use saved value from database or cache.
+    $element_value = $items[$delta][$field_column];
+  }
+  elseif (!empty($submitted_value)) {
     // Use value from form_state (for example for fields with cardinality = -1).
-    $element_value = $form_state['values'][$element['#field_name']][$element['#language']][$delta]['tid'];
+    $element_value = array('tid' => $submitted_value);
   }
 
-  // Get vocabulary.
-  $allowed_values = reset($field['settings']['allowed_values']);
-  if (empty($allowed_values['vocabulary']) || ($vocabulary = taxonomy_vocabulary_machine_name_load($allowed_values['vocabulary'])) === FALSE) {
-    // No vocabulary selected yet or vocabulary not found.
+  // Get vocabulary names from allowed values.
+  if ($field['type'] == 'entityreference') {
+    if ('views' === $field['settings']['handler']) {
+      $vocabulary_names = array();
+      $view_settings = $field['settings']['handler_settings']['view'];
+      // Try to load vocabularies from view filter.
+      $vocabulary_names = _shs_entityreference_views_get_vocabularies($view_settings['view_name'], $view_settings['display_name']);
+    }
+    else {
+      $vocabulary_names = $field['settings']['handler_settings']['target_bundles'];
+    }
+  }
+  else {
+    $allowed_values = reset($field['settings']['allowed_values']);
+    $vocabulary_names = empty($allowed_values['vocabulary']) ? FALSE : $allowed_values['vocabulary'];
+  }
+  if (empty($vocabulary_names) && (empty($field['settings']['handler']) || ('views' !== $field['settings']['handler']))) {
+    // No vocabulary selected yet.
     return array();
   }
+  if (!is_array($vocabulary_names)) {
+    $vocabulary_names = array($vocabulary_names);
+  }
+  $vocabularies = array();
+  foreach ($vocabulary_names as $vocabulary_name) {
+    if (($vocabulary = taxonomy_vocabulary_machine_name_load($vocabulary_name)) === FALSE) {
+      // Vocabulary not found. Stop here.
+      return array();
+    }
+    $vocabularies[] = $vocabulary;
+  }
 
-  // Check if term exists (may be deleted).
+  // Check if term exists (the term could probably be deleted meanwhile).
   if ($element_value && (($term = taxonomy_term_load($element_value)) === FALSE)) {
     $element_value = 0;
   }
 
-  if (!user_access('edit terms in ' . $vocabulary->vid)) {
-    // Update setting based on permission.
+  if (count($vocabularies) > 1 || !isset($vocabulary) || (isset($vocabulary) && !user_access('edit terms in ' . $vocabulary->vid))) {
+    // Creating new terms is allowed only with proper permission and if only one
+    // vocabulary is selected as source.
     $instance['widget']['settings']['shs']['create_new_terms'] = FALSE;
   }
+  $instance['widget']['settings']['shs']['test_create_new_terms'] = module_implements('shs_add_term_access');
   $instance['widget']['settings']['shs']['required'] = $element['#required'];
 
-  // Element is required and there is no initial value.
-  if (empty($element_value) && $element['#required']) {
-    // Load list of options.
-    $options = shs_term_get_children($vocabulary->vid, 0);
-    if (count($options)) {
-      // Set element value to first available option.
-      $option_keys = array_keys($options);
-      $element_value = reset($option_keys);
+  // Prepare the list of options.
+  if ($field['type'] == 'entityreference') {
+    // Get current selection handler.
+    $handler = entityreference_get_selection_handler($field, $instance, $element['#entity_type'], $element['#entity']);
+    $referencable_entities = $handler->getReferencableEntities();
+    $options = array(
+      '_none' => empty($element['#required']) ? t('- None -', array(), array('context' => 'shs')) : t('- Select a value -', array(), array('context' => 'shs')),
+    );
+    foreach ($referencable_entities as $v_name => $terms) {
+      $options += $terms;
     }
   }
-
+  else {
+    $properties = _options_properties('select', FALSE, $element['#required'], !empty($element_value));
+    $options = _options_get_options($field, $instance, $properties, $element['#entity_type'], $element['#entity']);
+  }
   // Create element.
   $element += array(
-    '#type' => 'textfield',
+    '#type' => 'select',
     '#default_value' => empty($element_value) ? NULL : $element_value,
+    '#options' => $options,
     '#attributes' => array(
       'class' => array('shs-enabled'),
     ),
@@ -304,10 +478,15 @@ function shs_field_widget_form(&$form, &$form_state, $field, $instance, $langcod
     '#element_validate' => array('shs_field_widget_validate'),
     '#after_build' => array('shs_field_widget_afterbuild'),
     '#shs_settings' => $instance['widget']['settings']['shs'],
-    '#shs_vocabulary' => $vocabulary,
+    '#shs_vocabularies' => $vocabularies,
   );
 
-  return array('tid' => $element);
+  $return = array($field_column => $element);
+  if (!empty($element['#title'])) {
+    // Set title to "parent" element to enable label translation.
+    $return['#title'] = $element['#title'];
+  }
+  return $return;
 }
 
 /**
@@ -324,10 +503,11 @@ function shs_field_widget_afterbuild($element, &$form_state) {
   }
 
   $parents = array();
-  // Get value from element.
-  if (!empty($form_state['values'][$element['#field_name']][$element['#language']][$element['#delta']]['tid'])) {
+  // Get default value from form state and set it to element.
+  $default_value = drupal_array_get_nested_value($form_state['values'], $element['#parents']);
+  if (!empty($default_value)) {
     // Use value from form_state (for example for fields with cardinality = -1).
-    $element['#default_value'] = $form_state['values'][$element['#field_name']][$element['#language']][$element['#delta']];
+    $element['#default_value'] = $default_value;
   }
 
   // Add main Javascript behavior and style only once.
@@ -341,10 +521,11 @@ function shs_field_widget_afterbuild($element, &$form_state) {
   // Create Javascript settings for the element only if it hasn't been added
   // before.
   if (empty($js_added[$element['#name']][$js_hash])) {
-    $element_value = $element['#default_value']['tid'];
+    $element_value = $element['#default_value'];
 
-    if (empty($element_value)) {
-      // Add fake parent for new items.
+    // Ensure field is rendered if it is required but not selected.
+    if (empty($element_value) || $element_value == '_none') {
+      // Add fake parent for new items or field required submit fail.
       $parents[] = array('tid' => 0);
     }
     else {
@@ -355,19 +536,35 @@ function shs_field_widget_afterbuild($element, &$form_state) {
       }
     }
 
+    $vocabularies = $element['#shs_vocabularies'];
+    $vocabulary_identifier = NULL;
+    if (count($vocabularies) == 1) {
+      // Get ID from first (and only) vocabulary.
+      $vocabulary_identifier = $vocabularies[0]->vid;
+    }
+    else {
+      $vocabulary_identifier = array(
+        'field_name' => $element['#field_name'],
+      );
+    }
+
     // Create settings needed for our js magic.
     $settings_js = array(
       'shs' => array(
         "{$element['#name']}" => array(
           $js_hash => array(
-            'vid' => $element['#shs_vocabulary']->vid,
+            'vid' => $vocabulary_identifier,
             'settings' => $element['#shs_settings'],
             'default_value' => $element['#default_value'],
             'parents' => array_reverse($parents),
+            'any_label' => empty($element['#required']) ? t('- None -', array(), array('context' => 'shs')) : t('- Select a value -', array(), array('context' => 'shs')),
+            'any_value' => '_none',
           ),
         ),
       ),
     );
+    // Allow other modules to alter these settings.
+    drupal_alter(array('shs_js_settings', "shs_{$element['#field_name']}_js_settings"), $settings_js, $element['#field_name'], $vocabulary_identifier);
 
     // Add settings.
     drupal_add_js($settings_js, 'setting');
@@ -378,6 +575,7 @@ function shs_field_widget_afterbuild($element, &$form_state) {
     $js_added[$element['#name']][$js_hash] = TRUE;
   }
 
+  unset($element['#needs_validation']);
   return $element;
 }
 
@@ -386,29 +584,62 @@ function shs_field_widget_afterbuild($element, &$form_state) {
  */
 function shs_field_widget_validate($element, &$form_state, $form) {
   $field_name = $element['#field_name'];
-  $field_language = $element['#language'];
+  $instance = field_widget_instance($element, $form_state);
 
-  if (empty($form_state['field'][$field_name][$field_language]['instance']['widget'])) {
+  if (empty($instance['widget'])) {
     return;
   }
-  $field = $form_state['field'][$field_name][$field_language];
-  $instance = $field['instance'];
-  $settings = empty($instance['widget']['settings']['shs']) ? array() : $instance['widget']['settings']['shs'];
 
+  // Load default settings.
+  $settings = empty($instance['widget']['settings']['shs']) ? array() : $instance['widget']['settings']['shs'];
+  if (!empty($element['#shs_settings'])) {
+    // Use settings directly applied to widget (possibly overridden in
+    // hook_field_widget_form_alter() or
+    // hook_field_widget_WIDGET_TYPE_form_alter()).
+    $settings = $element['#shs_settings'];
+  }
   // Do we want to force the user to select terms from the deepest level?
   $force_deepest_level = empty($settings['force_deepest']) ? FALSE : $settings['force_deepest'];
-  $value = empty($element['#value']) ? 0 : $element['#value'];
+  $field = field_widget_field($element, $form_state);
+
+  $value = empty($element['#value']) ? '_none' : $element['#value'];
+  if ($value == '_none') {
+    unset($element['#value']);
+    form_set_value($element, NULL, $form_state);
+  }
+  if ($element['#required'] && $value == '_none') {
+    $element_name = empty($element['#title']) ? $instance['label'] : $element['#title'];
+    form_error($element, t('!name field is required.', array('!name' => $element_name)));
+    return;
+  }
   if ($force_deepest_level && $value) {
-    // Get vocabulary.
-    $allowed_values = reset($field['field']['settings']['allowed_values']);
-    if (empty($allowed_values['vocabulary']) || ($vocabulary = taxonomy_vocabulary_machine_name_load($allowed_values['vocabulary'])) === FALSE) {
-      // No vocabulary selected yet or vocabulary not found.
-      form_error($element, t('Vocabulary %machine_name is configured as source for field %field_name but could not be found.', array('%machine_name' => $allowed_values['vocabulary'], '%field_name' => $field_name)));
+    // Get vocabulary names from allowed values.
+    if ($field['type'] == 'entityreference') {
+      $vocabulary_names = $field['settings']['handler_settings']['target_bundles'];
     }
-    // Does the selected term has any children?
-    $children = shs_term_get_children($vocabulary->vid, $value);
-    if (count($children)) {
-      form_error($element, t('You need to select a term from the deepest level.'));
+    else {
+      $allowed_values = reset($field['settings']['allowed_values']);
+      $vocabulary_names = empty($allowed_values['vocabulary']) ? FALSE : $allowed_values['vocabulary'];
+    }
+    if (empty($vocabulary_names)) {
+      // No vocabulary selected yet.
+      form_error($element, t('No vocabulary is configured as source for field %field_name.', array('%field_name' => $instance['label'], '%field_machine_name' => $field_name)));
+    }
+    if (!is_array($vocabulary_names)) {
+      $vocabulary_names = array($vocabulary_names);
+    }
+    foreach ($vocabulary_names as $vocabulary_name) {
+      if (($vocabulary = taxonomy_vocabulary_machine_name_load($vocabulary_name)) === FALSE) {
+        // Vocabulary not found. Stop here.
+        form_error($element, t('Vocabulary %machine_name is configured as source for field %field_name but could not be found.', array('%machine_name' => $vocabulary_name, '%field_name' => $instance['label'], '%field_machine_name' => $field_name)));
+        return;
+      }
+      // Does the selected term has any children?
+      $children = shs_term_get_children($vocabulary->vid, $value);
+      if (count($children)) {
+        form_error($element, t('You need to select a term from the deepest level in field %field_name.', array('%field_name' => $instance['label'], '%field_machine_name' => $field_name)));
+        return;
+      }
     }
   }
 }
@@ -420,7 +651,7 @@ function shs_field_formatter_info() {
   return array(
     'shs_default' => array(
       'label' => t('Simple hierarchy'),
-      'field types' => array('taxonomy_term_reference'),
+      'field types' => array('taxonomy_term_reference', 'entityreference'),
       'settings' => array(
         'linked' => FALSE,
       ),
@@ -468,18 +699,31 @@ function shs_field_formatter_settings_summary($field, $instance, $view_mode) {
  * Implements hook_field_formatter_prepare_view().
  */
 function shs_field_formatter_prepare_view($entity_type, $entities, $field, $instances, $langcode, &$items, $displays) {
+  $field_column = key($field['columns']);
   foreach ($entities as $entity_id => $entity) {
+    if (empty($instances[$entity_id]['widget']['type']) || $instances[$entity_id]['widget']['type'] != 'taxonomy_shs') {
+      return;
+    }
     foreach ($items[$entity_id] as $delta => $item) {
       $items[$entity_id][$delta]['parents'] = array();
       // Load list of parent terms.
-      $parents = taxonomy_get_parents_all($item['tid']);
+      $parents = taxonomy_get_parents_all($item[$field_column]);
       // Remove current term from list.
       array_shift($parents);
+      if (module_exists('i18n_taxonomy')) {
+        // Localize terms.
+        $parents = i18n_taxonomy_localize_terms($parents);
+      }
       foreach (array_reverse($parents) as $parent) {
         $items[$entity_id][$delta]['parents'][$parent->tid] = $parent;
       }
       // Load term.
-      $items[$entity_id][$delta]['term'] = taxonomy_term_load($item['tid']);
+      $term_current = taxonomy_term_load($item[$field_column]);
+      if (module_exists('i18n_taxonomy')) {
+        // Localize current term.
+        $term_current = i18n_taxonomy_localize_terms($term_current);
+      }
+      $items[$entity_id][$delta]['term'] = $term_current;
     }
   }
 }
@@ -491,10 +735,14 @@ function shs_field_formatter_view($entity_type, $entity, $field, $instance, $lan
   $elements = array();
   $settings = $display['settings'];
 
+  if (empty($items) || $instance['widget']['type'] != 'taxonomy_shs') {
+    return $elements;
+  }
+
   switch ($display['type']) {
     case 'shs_default':
       foreach ($items as $delta => $item) {
-        if (empty($item['tid'])) {
+        if (empty($item['term'])) {
           continue;
         }
         $list_items = array();
@@ -533,98 +781,138 @@ function shs_field_formatter_view($entity_type, $entity, $field, $instance, $lan
  * The structure is stored in the database cache as well as in drupal_static().
  * Cache has the following structure:
  * <code>
- *   [$parent] => array(
- *     [0] => array(tid1, tid2, tid3), // !$node_count.
- *     [1] => array('tid1 (x)', 'tid2 (x)', 'tid3 (x)'), // $node_count.
- *   ),
+ *   [$parent] => array(),
  * </code>
  *
- * @param <int> $vid
- *   ID of vocabulary the term is associated to.
+ * @param <mixed> $identifier
+ *   Either a vocabulary ID or an array with the following keys:
+ *   - field_name: Name of field which sends the request.
  * @param <int> $parent
  *   ID of parent term.
  * @param <array> $settings
- *   Additional settings (for example "display node count").
+ *   Additional settings (for example "language", etc.,).
  * @param <boolean> $reset
  *   If TRUE, rebuild the cache for the given $vid and $parent.
  *
  * @return <array>
  *   List of child terms keyed by term id.
  */
-function shs_term_get_children($vid, $parent = 0, $settings = array(), $reset = FALSE) {
-  $terms = &drupal_static(__FUNCTION__, array());
-  $node_count = !empty($settings['node_count']) && variable_get('taxonomy_maintain_index_table', TRUE);
+function shs_term_get_children($identifier, $parent = 0, $settings = array(), $reset = FALSE) {
+  global $language;
+  $langcode = $language->language;
+  if (empty($settings['language']->language)) {
+    $settings['language'] = $language;
+  }
+  else {
+    $langcode = $settings['language']->language;
+  }
 
-  if ($reset || ($vid && empty($terms[$vid][$parent][$node_count]))) {
+  $vocabularies = array();
+  $vocabulary_cache_key = NULL;
+  if (is_numeric($identifier)) {
+    $vocabulary_cache_key = $identifier;
+    if (($vocabulary = taxonomy_vocabulary_load($identifier)) === FALSE) {
+      watchdog('Simple hierarchical select', 'Unknown vocabulary with ID !vid used to get terms.', array('!vid' => $identifier));
+      return array();
+    }
+    $vocabularies[$vocabulary->machine_name] = $identifier;
+  }
+  elseif (is_array($identifier) && !empty($identifier['field_name'])) {
+    $vocabulary_cache_key = $identifier['field_name'];
+  }
+
+  $terms = &drupal_static(__FUNCTION__, array());
+
+  if ($reset || ($vocabulary_cache_key && empty($terms[$vocabulary_cache_key][$langcode][$parent]))) {
     // Initialize list.
-    $terms[$vid][$parent] = array(
-      0 => array(),
-      1 => array(),
-    );
-    $cache_key = "shs:{$vid}";
+    $terms[$vocabulary_cache_key][$langcode][$parent] = array();
+    $cache_key = "shs:{$vocabulary_cache_key}";
     // Get cached values.
     $cache = cache_get($cache_key);
-    if ($reset || !$cache || ($cache->expire && time() > $cache->expire) || empty($cache->data[$parent][$node_count])) {
+    if ($reset || !$cache || ($cache->expire && time() > $cache->expire) || empty($cache->data[$langcode][$parent])) {
       // Cache is empty or data has become outdated or the parent is not cached.
       if ($cache) {
         // Cache exists and is not yet expired but $parent is missing.
-        $terms[$vid] = $cache->data;
+        $terms[$vocabulary_cache_key] = $cache->data;
       }
       if ($reset) {
-        $terms[$vid][$parent] = array(
-          0 => array(),
-          1 => array(),
-        );
+        $terms[$vocabulary_cache_key][$langcode][$parent] = array();
       }
-      // Get term children (only first level).
-      $tree = taxonomy_get_tree($vid, $parent, 1);
-      foreach ($tree as $term) {
-        $terms[$vid][$parent][0][$term->tid] = $term->name;
-        if ($node_count) {
-          // Count nodes associated to this term (and its children).
-          $num_nodes = _shs_term_get_node_count($term, TRUE);
-          // Update term label.
-          $terms[$vid][$parent][1][$term->tid] = t('!term_name (!node_count)', array('!term_name' => $term->name, '!node_count' => $num_nodes));
+
+      if (!is_numeric($vocabulary_cache_key) && is_array($identifier)) {
+        // Get list of vocabularies from field configuration.
+        $field = field_info_field($identifier['field_name']);
+        if (!empty($field['settings']['handler_settings']['target_bundles'])) {
+          foreach ($field['settings']['handler_settings']['target_bundles'] as $vocabulary_name) {
+            if (($vocabulary = taxonomy_vocabulary_machine_name_load($vocabulary_name)) !== FALSE) {
+              $vocabularies[$vocabulary_name] = $vocabulary->vid;
+            }
+          }
+        }
+      }
+
+      foreach ($vocabularies as $name => $vid) {
+        // Get term children (only first level).
+        // Only load entities if i18n_taxonomy or entity_translation is
+        // installed.
+        $load_entities = module_exists('i18n_taxonomy') || module_exists('entity_translation');
+        $tree = taxonomy_get_tree($vid, $parent, 1, $load_entities);
+        foreach ($tree as $term) {
+          $term_name = $term->name;
+          if (module_exists('i18n_taxonomy')) {
+            $term_name = i18n_taxonomy_term_name($term, $langcode);
+          }
+          else if (module_exists('entity_translation')) {
+            $term_name = entity_label('taxonomy_term', $term);
+          }
+          $terms[$vocabulary_cache_key][$langcode][$parent][$term->tid] = $term_name;
         }
       }
       // Set cached data.
-      cache_set($cache_key, $terms[$vid], 'cache', CACHE_PERMANENT);
+      cache_set($cache_key, $terms[$vocabulary_cache_key], 'cache', CACHE_PERMANENT);
     }
     else {
       // Use cached data.
-      $terms[$vid] = $cache->data;
+      $terms[$vocabulary_cache_key] = $cache->data;
     }
   }
   // Allow other module to modify the list of terms.
   $alter_options = array(
-    'vid' => $vid,
+    'vid' => $vocabulary_cache_key,
     'parent' => $parent,
     'settings' => $settings,
   );
   drupal_alter('shs_term_get_children', $terms, $alter_options);
 
-  return empty($terms[$vid][$parent][$node_count]) ? array() : $terms[$vid][$parent][$node_count];
+  return empty($terms[$vocabulary_cache_key][$langcode][$parent]) ? array() : $terms[$vocabulary_cache_key][$langcode][$parent];
 }
 
 /**
  * JSON callback to get the list of children of a term.
  *
- * @param <int> $vid
+ * @param int $vid
  *   ID of vocabulary the term is associated to.
- * @param <int> $parent
- *   ID of parent term.
- * @param <array> $settings
+ * @param array $parent
+ *   List of parent terms.
+ * @param array $settings
  *   Additional settings (for example "display node count").
+ * @param string $field
+ *   Name of field requesting the term list (DOM element name).
  *
- * @return <array>
+ * @return array
  *   Associative list of child terms.
  *
  * @see shs_term_get_children()
  */
-function shs_json_term_get_children($vid, $parent = array(), $settings = array()) {
+function shs_json_term_get_children($vid, $parent = array(), $settings = array(), $field = NULL) {
   $scope = $result = array();
   foreach ($parent as $tid) {
     $scope[] = shs_term_get_children($vid, $tid, $settings);
+    if (shs_add_term_access($vid, $tid, $field)) {
+      $result[] = array(
+        'vid' => $vid,
+      );
+    }
   }
 
   // Rewrite result set to preserve original sort of terms through JSON request.
@@ -633,35 +921,84 @@ function shs_json_term_get_children($vid, $parent = array(), $settings = array()
       $result[] = array(
         'tid' => $tid,
         'label' => $label,
+        'has_children' => shs_term_has_children($tid, $vid),
       );
     }
   }
 
   return $result;
 }
+
+/**
+ * Check if a term has any children.
+ *
+ * Copied from taxonomy_get_children() but just checks existence instead of
+ * loading terms.
+ */
+function shs_term_has_children($tid, $vid) {
+  $query = db_select('taxonomy_term_data', 't');
+  $query->addExpression(1);
+  $query->join('taxonomy_term_hierarchy', 'h', 'h.tid = t.tid');
+  $query->condition('h.parent', $tid);
+  if ($vid) {
+    $query->condition('t.vid', $vid);
+  }
+  $query->range(0, 1);
+
+  return (bool) $query->execute()->fetchField();
+}
+
+/**
+ * Return access to create new terms.
+ *
+ * @param int $vid
+ *   ID of vocabulary to create the term in.
+ * @param int $parent
+ *   ID of parent term (0 for top level).
+ * @param string $field
+ *   Name of field requesting the term list (DOM element name).
+ * @param object $account
+ *   The user to check access for.
+ *
+ * @return bool
+ *   TRUE or FALSE based on if user can create a term.
+ */
+function shs_add_term_access($vid, $parent = NULL, $field = NULL, $account = NULL) {
+  global $user;
+  if (!$account) {
+    $account = $user;
+  }
+  $access = module_invoke_all('shs_add_term_access', $vid, $parent, $field, $account);
+  return !in_array(FALSE, $access, TRUE) && (user_access('edit terms in ' . $vid, $account) || in_array(TRUE, $access));
+}
+
 /**
  * Adds a term with ajax.
  *
- * @param <int> $vid
+ * @param int $vid
  *   ID of vocabulary to create the term in.
- * @param <int> $parent
+ * @param int $parent
  *   ID of parent term (0 for top level).
- * @param <string> $term_name
+ * @param string $term_name
  *   Name of new term.
+ * @param string $field
+ *   Name of field requesting the term list (DOM element name).
  *
- * @return <mixed>
+ * @return mixed
  *   Array with tid and name or FALSE on error.
  */
-function shs_json_term_add($vid, $parent, $term_name) {
-  if (!user_access('edit terms in ' . $vid)) {
+function shs_json_term_add($vid, $parent, $term_name, $field = NULL) {
+  global $language_content;
+  if (!shs_add_term_access($vid, $parent, $field)) {
     // Sorry, but this user may not add a term to this vocabulary.
     return FALSE;
   }
 
   $term = (object) array(
-    'vid' => $vid,
-    'parent' => $parent,
-    'name' => check_plain(filter_xss($term_name)),
+            'vid' => $vid,
+            'parent' => $parent,
+            'name' => str_replace('&amp;', '&', filter_xss($term_name)),
+            'language' => $language_content->language,
   );
   // Save term.
   $status = taxonomy_term_save($term);
@@ -674,20 +1011,22 @@ function shs_json_term_add($vid, $parent, $term_name) {
  * Implements hook_hook_taxonomy_term_insert().
  */
 function shs_taxonomy_term_insert($term) {
-  // Update vocabulary cache for the terms parents.
-  foreach ($term->parent as $parent) {
-    shs_term_get_children($term->vid, $parent, array('node_count' => TRUE), TRUE);
+  if (empty($term->parent)) {
+    return;
   }
+  // Clear shs cache for current vocabulary.
+  cache_clear_all("shs:{$term->vid}", 'cache');
 }
 
 /**
  * Implements hook_hook_taxonomy_term_update().
  */
 function shs_taxonomy_term_update($term) {
-  // Update vocabulary cache for the terms parents.
-  foreach ($term->parent as $parent) {
-    shs_term_get_children($term->vid, $parent, array('node_count' => TRUE), TRUE);
+  if (empty($term->parent)) {
+    return;
   }
+  // Clear shs cache for current vocabulary.
+  cache_clear_all("shs:{$term->vid}", 'cache');
 }
 
 /**
@@ -701,8 +1040,11 @@ function shs_form_taxonomy_overview_terms_alter(&$form, &$form_state, $form_id) 
  * Implements hook_hook_taxonomy_term_delete().
  */
 function shs_form_taxonomy_overview_terms_submit(&$form, &$form_state) {
-  // Update vocabulary cache for the terms parents.
-  shs_term_get_children($form_state['complete form']['#vocabulary']->vid, 0, array('node_count' => TRUE), TRUE);
+  if (empty($form_state['complete form']['#vocabulary']->vid)) {
+    return;
+  }
+  // Clear shs cache for current vocabulary.
+  cache_clear_all("shs:{$form_state['complete form']['#vocabulary']->vid}", 'cache');
 }
 
 /**
@@ -716,21 +1058,11 @@ function shs_form_taxonomy_form_term_alter(&$form, &$form_state, $form_id) {
 }
 
 /**
- * Implements hook_hook_taxonomy_term_delete().
+ * Submit callback for term form.
  */
 function shs_form_taxonomy_form_term_submit(&$form, &$form_state) {
-  // Update vocabulary cache for the terms parents.
-  $parents = db_select('taxonomy_term_hierarchy', 'tth')
-          ->fields('tth', array('parent'))
-          ->condition('tid', $form_state['term']->tid)
-          ->execute()
-          ->fetchAll();
-  if ($parents) {
-    // Update vocabulary cache for the terms parents.
-    foreach ($parents as $parent) {
-      shs_term_get_children($form_state['term']->vid, $parent->parent, array('node_count' => TRUE), TRUE);
-    }
-  }
+  // Clear shs cache for current vocabulary.
+  cache_clear_all("shs:{$form_state['term']->vid}", 'cache');
 }
 
 /**
@@ -768,49 +1100,6 @@ function _shs_get_instances($entity_type, $bundle = NULL) {
 }
 
 /**
- * Helper function to count number of nodes associated to a term.
- *
- * @param <object> $term
- *   The term object.
- * @param <boolean> $count_children
- *   If set to TRUE, nodes in child terms are counted also.
- *
- * @return <int>
- *   Number of nodes within the term.
- */
-function _shs_term_get_node_count($term, $count_children = FALSE) {
-  $num_nodes = &drupal_static(__FUNCTION__, array());
-
-  // Maybe this needs some more caching and value-updates on node_save()/
-  // _update()/delete().
-  if (empty($num_nodes["{$term->tid}:{$count_children}"])) {
-    // Count nodes associated to this term.
-    $num_nodes["{$term->tid}:{$count_children}"] = db_select('taxonomy_index', 'ti')
-            ->fields('ti')
-            ->condition('tid', $term->tid)
-            ->execute()
-            ->rowCount();
-
-    if ($count_children) {
-      $tids = array();
-      $tree = taxonomy_get_tree($term->vid, $term->tid);
-      foreach ($tree as $child_term) {
-        $tids[] = $child_term->tid;
-      }
-      if (count($tids)) {
-        $num_nodes["{$term->tid}:{$count_children}"] += db_select('taxonomy_index', 'ti')
-                ->fields('ti')
-                ->condition('tid', $tids, 'IN')
-                ->execute()
-                ->rowCount();
-      }
-    }
-  }
-
-  return isset($num_nodes["{$term->tid}:{$count_children}"]) ? $num_nodes["{$term->tid}:{$count_children}"] : 0;
-}
-
-/**
  * Helper function to create a pseudo hash needed for javascript settings.
  *
  * @param <int> $length
@@ -829,4 +1118,48 @@ function _shs_create_hash($length = 8) {
     $hash .= chr($values[mt_rand(0, $max)]);
   }
   return $hash;
+}
+
+/**
+ * Helper function to validate the vocabulary identifier coming from JSON.
+ *
+ * @param mixed $identifier
+ *   Either a vocabulary ID or an array with the following keys:
+ *   - field_name: Name of field which sends the request.
+ *
+ * @return boolean
+ *   TRUE if validation passes, otherwise FALSE.
+ */
+function shs_json_validation_vocabulary_identifier($identifier) {
+  return TRUE;
+}
+
+/**
+ * Helper function to get the vocabularies used as filter in entityreference
+ * views.
+ *
+ * @param string $view_name
+ *   Name of view.
+ * @param string $display_id
+ *   Name of display.
+ *
+ * return string[]
+ *   List of vocabulary identifiers.
+ */
+function _shs_entityreference_views_get_vocabularies($view_name, $display_id) {
+  $view = views_get_view($view_name);
+  if (empty($view)) {
+    // Failed to load view.
+    return array();
+  }
+  $filters = $view->get_items('filter', $display_id);
+  $vocabularies = array();
+  foreach ($filters as $key => $filter) {
+    if (('taxonomy_vocabulary' !== $filter['table']) || ('machine_name' !== $key)) {
+      continue;
+    }
+    $vocabularies = array_keys($filter['value']) + $vocabularies;
+  }
+
+  return $vocabularies;
 }

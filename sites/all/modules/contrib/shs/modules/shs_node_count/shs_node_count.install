@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Installation tasks for "SHS node count".
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function shs_node_count_uninstall() {
+  variable_del('shs_node_count_format');
+}

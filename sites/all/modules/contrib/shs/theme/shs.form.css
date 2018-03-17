@@ -7,6 +7,10 @@
   margin-top: 4px;
   vertical-align: top;
 }
+.shs-wrapper-processed .has-children {
+  background: url("images/arrow.png") no-repeat scroll right center transparent;
+  margin-right: 5px;
+}
 .shs-term-add-new-wrapper {
   display: inline-block;
   margin: 0 0 0 10px;

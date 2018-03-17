@@ -883,6 +883,10 @@ function tm_events_send_emails_ajax() {
 
   $sendcount = tm_events_send_emails($recipients, $subject, $message, $event_image_src, $event_image_link, $eventid, $chapterid, $replyto, $approved_members);
 
+  // flag announcement last sent
+  flag('unflag', 'announcement_last_sent', $eventid, $user);
+  flag('flag', 'announcement_last_sent', $eventid, $user);
+
   // indicate success to the js ajax handler
   // todo: return a nicer json response and parse it in the js
   print(json_encode(array("sent" => $sendcount)));

@@ -280,6 +280,7 @@ function tm_chapters_communication_form($chapter) {
 function tm_chapters_test_email_ajax(){
 
   global $conf;
+  global $user;
 
   if (!isset($_POST['subject'])) return FALSE;
   if (!isset($_POST['message'])) return FALSE;
@@ -673,6 +674,10 @@ function tm_chapters_send_emails_ajax() {
   }
 
   $sendcount = tm_chapters_send_emails($recipients, $subject, $message, $chapter_image_src, $chapter_image_link, $chapterid, $replyto, $approved_members);
+
+  // flag announcement last sent
+  flag('unflag', 'announcement_last_sent', $chapterid, $user);
+  flag('flag', 'announcement_last_sent', $chapterid, $user);
 
   // indicate success to the js ajax handler
   // todo: return a nicer json response and parse it in the js

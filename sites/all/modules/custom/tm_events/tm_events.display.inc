@@ -330,3 +330,104 @@ function _tm_date_pretty_timezone_name($timezone) {
 
   return $timezone_name;
 }
+
+/**
+ * Display announcement reminder to event editors
+ */
+function tm_events_show_announcement_tip($event) {
+
+  global $conf;
+
+  // don't show if in preview mode
+  if (isset($event->field_event_is_preview_mode[LANGUAGE_NONE][0]['value'])) {
+    if ($event->field_event_is_preview_mode[LANGUAGE_NONE][0]['value'] == 1) {
+      return;
+    }
+  }
+
+  // don't show if if external rsvp restricted
+  if (isset($event->field_external_rsvp[LANGUAGE_NONE][0]['value'])) {
+    if ($event->field_external_rsvp[LANGUAGE_NONE][0]['value'] == 1) {
+      if ($conf["tm_event_restrict_announcement_rsvp"]) {
+        return;
+      }
+    }
+  }
+
+  // get last sent announcement
+  $has_sent_announcement = false;
+  $announcement_last_sent_flagged = flag_get_entity_flags("node", $event->nid, "announcement_last_sent");
+  $seconds_since_announcement_sent = -1;
+  if (sizeof($announcement_last_sent_flagged) > 0) {
+    $has_sent_announcement = true;
+    $flagged_last = array_pop($announcement_last_sent_flagged);
+    $seconds_since_announcement_sent = time() - $flagged_last->timestamp;
+  }
+
+  // time since start and end of event
+  $event_date = field_get_items('node',$event,'field_event_date');
+  $current_date = new DateTime('now', new DateTimeZone('UTC'));
+  $event_timezone = _tm_get_event_timezone($event);
+  $event_datetime_start = new DateTime($event_date[0]['value'], new DateTimeZone($event_timezone));
+  $event_datetime_end = new DateTime($event_date[0]['value2'], new DateTimeZone($event_timezone));
+  $seconds_since_event_start = $current_date->format('U') - $event_datetime_start->format('U');
+  $seconds_since_event_end = $current_date->format('U') - $event_datetime_end->format('U');
+
+  // get event time two days before
+  $event_datetime_two_days_before = new DateTime($event_date[0]['value'], new DateTimeZone($event_timezone));
+  $event_datetime_two_days_before->modify('-2 day');
+  $seconds_since_event_two_days_start = $current_date->format('U') - $event_datetime_two_days_before->format('U');
+
+  // is past event
+  $is_past_event = ($seconds_since_event_end > 0);
+
+  // event is within 2 days and no announcement
+  $is_in_two_days_no_announcement = false;
+  if (!$is_past_event and ($seconds_since_event_start + (60 * 60 * 24 * 2)) > 0) {
+    if (($seconds_since_announcement_sent == -1) or ($seconds_since_announcement_sent > $seconds_since_event_two_days_start)) {
+          $is_in_two_days_no_announcement = true;
+    }
+  }
+
+  // get type of event
+  if (isset($event->field_chapter[LANGUAGE_NONE][0])) {
+    $typeof_event = "chapter_event";
+    $chapter_id = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
+  } elseif (isset($event->field_event_company[LANGUAGE_NONE][0])){
+    $typeof_event = "company_event";
+    $company_id = $event->field_event_company[LANGUAGE_NONE][0]['target_id'];
+  } else {
+    $typeof_event = "member_event";
+  }
+
+  // event announcement link
+  $send_announcement_link = "/events/send-announcement/" . $event->nid;
+
+  // show reminder message
+  if (!$is_past_event and !$has_sent_announcement and !$is_in_two_days_no_announcement) {
+
+    // set message
+    $to_your = "your followers";
+    if ($typeof_event == "chapter_event") {
+      $to_your = "your members";
+    }
+    $message = "Tell " . $to_your . " about this event &mdash; <a href='" . $send_announcement_link . "'>Send an announcement</a>";
+    drupal_set_message($message, "help-tip");
+  }
+
+  // two days before
+  if ($is_in_two_days_no_announcement) {
+    $message = "Your event is in less than two days. Send a reminder to increase attendance &mdash; <a href='" . $send_announcement_link . "'>Send an announcement</a>";
+    drupal_set_message($message, "help-tip");
+  }
+
+  // post event reminder message for chapter events
+  // only show reminder within 90 days
+  if ($is_past_event and ($typeof_event == "chapter_event")) {
+    if ($seconds_since_event_end < (60 * 60 * 24 * 90)) {
+      $message = $conf["tm_event_post_reminder_message"]; 
+      drupal_set_message($message, "help-tip");
+    }
+  }
+  
+}

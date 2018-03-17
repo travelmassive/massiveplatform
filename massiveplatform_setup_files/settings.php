@@ -177,6 +177,8 @@ $conf['tm_event_restrict_announcement_rsvp'] = true; // if true, don't allow mem
 $conf["tm_event_approved_members_default"] = 1; // (default = 1) set default of approved members checkbox
 $conf["tm_event_approved_members_title"] = "Approved Members Only"; // optional - set the title for approved members checkbox
 $conf["tm_event_approved_members_description"] = "Check this box if you want to restrict registration and waitlist to members who are approved. Guest members won't be able to register."; // optional - set the description for the approved members description
+$conf["tm_event_post_reminder_message"] = "Share what happened with the community &mdash; <a target='_blank' href=''>post event photos</a> on the Forum, or <a target='_blank' href=''>submit a blog article</a>."; // message displayed to chapter leaders after event
+
 
 /** SIGNUP PAGE SETTINGS **/
 /** Provides a list of validated options on the signup page to indicate how the user connects with the community **/

@@ -596,6 +596,21 @@ function _tm_more_actions_process($field, $title = NULL) {
             )
           ))
         );
+
+        // Display when last sent announcement
+        $announcement_last_sent_flagged = flag_get_entity_flags("node", $nid, "announcement_last_sent");
+        if (sizeof($announcement_last_sent_flagged) > 0) {
+          $flagged_last = array_pop($announcement_last_sent_flagged);
+          $difference = time() - $flagged_last->timestamp;
+          $flagged_time = format_interval($difference, 1) . " ago";
+          $who_sent = user_load($flagged_last->uid);
+          $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Sent " . $flagged_time . " by " . $who_sent->name . "</span><br>";
+          $links['manageattendees'][] = array(
+            'wrapper_class' => array('contactattendees'),
+            'content' => t($last_sent_text),
+          );
+        }
+
       }
     }
   }
@@ -794,6 +809,21 @@ function _tm_more_actions_process($field, $title = NULL) {
               )
             ))
           );
+
+          // Display when last sent announcement
+          $announcement_last_sent_flagged = flag_get_entity_flags("node", $node->nid, "announcement_last_sent");
+          if (sizeof($announcement_last_sent_flagged) > 0) {
+            $flagged_last = array_pop($announcement_last_sent_flagged);
+            $difference = time() - $flagged_last->timestamp;
+            $flagged_time = format_interval($difference, 1) . " ago";
+            $who_sent = user_load($flagged_last->uid);
+            $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Sent " . $flagged_time . " by " . $who_sent->name . "</span><br>";
+            $links['chaptertools'][] = array(
+              'wrapper_class' => array('chapter_stats'),
+              'content' => t($last_sent_text),
+            );
+          }
+
         }
 
         // view stats

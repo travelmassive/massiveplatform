@@ -10,6 +10,16 @@
 function tm_flags_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: 'flag announcement_last_sent'.
+  $permissions['flag announcement_last_sent'] = array(
+    'name' => 'flag announcement_last_sent',
+    'roles' => array(
+      'approved user' => 'approved user',
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'flag',
+  );
+
   // Exported permission: 'flag approval_approved_by'.
   $permissions['flag approval_approved_by'] = array(
     'name' => 'flag approval_approved_by',
@@ -164,6 +174,16 @@ function tm_flags_user_default_permissions() {
       'administrator' => 'administrator',
       'chapter leader' => 'chapter leader',
       'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag announcement_last_sent'.
+  $permissions['unflag announcement_last_sent'] = array(
+    'name' => 'unflag announcement_last_sent',
+    'roles' => array(
+      'approved user' => 'approved user',
+      'authenticated user' => 'authenticated user',
     ),
     'module' => 'flag',
   );

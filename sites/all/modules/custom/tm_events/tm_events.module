@@ -277,6 +277,8 @@ function tm_events_preprocess_field(&$variables) {
  */
 function tm_events_node_view($node, $view_mode, $langcode) {
 
+  global $user;
+
   // Check event
   if ($node->type != 'event') {
     return;
@@ -305,6 +307,11 @@ function tm_events_node_view($node, $view_mode, $langcode) {
       user_cookie_save(array('chapter_referral_id'=>$chapter_id));
     }
 
+    // show reminder to send announcement
+    // exclude external rsvp events
+    if (tm_events_check_permission_edit_event($user, $node)) {
+      tm_events_show_announcement_tip($node);
+    }
+
   }
-  
 }

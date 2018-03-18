@@ -165,7 +165,7 @@ function simple_fb_connect_redirect_to_fb() {
  * Facebook returns the user here after user has authenticated in FB.
  */
 function simple_fb_connect_return_from_fb() {
-  // Validate configuartion.
+  // Validate configuration.
   if (!simple_fb_connect_initialize()) {
     drupal_goto('user');
   }
@@ -187,7 +187,13 @@ function simple_fb_connect_return_from_fb() {
 
   // Check that user authorized our app to access user's email address.
   if (!simple_fb_connect_check_permission($fb_session, 'email')) {
-    drupal_set_message(t('Facebook login failed. This site requires permission to get your email address from Facebook. Please try again.'), 'error');
+    $site_name = variable_get('site_name');
+    if ($site_name) {
+      drupal_set_message(t("Facebook login failed. @site_name requires permission to get your email address from Facebook. Please try again and give the permission.", array('@site_name' => $site_name)), "error");
+    }
+    else {
+      drupal_set_message(t("Facebook login failed. This site requires permission to get your email address from Facebook. Please try again and give the permission."), "error");
+    }
 
     // Preserve the post login URL from the previous attempt.
     $post_login_url = simple_fb_connect_get_post_login_url();
@@ -230,7 +236,7 @@ function simple_fb_connect_return_from_fb() {
   if ($drupal_user) {
     if (simple_fb_connect_login_user($drupal_user)) {
       $post_login_url = simple_fb_connect_get_post_login_url();
-      simple_fb_connect_go_to_redirect_url($post_login_url);
+      simple_fb_connect_go_to_redirect_url($post_login_url, $drupal_user);
     }
     else {
       simple_fb_connect_destroy_session();
@@ -246,18 +252,18 @@ function simple_fb_connect_return_from_fb() {
       if ($redirect_to_user_form) {
         drupal_set_message(t("Please take a moment to confirm your account details. Since you logged in with Facebook, you don't need to update your password."));
         $post_login_url = 'user/' . $drupal_user->uid . '/edit';
-        simple_fb_connect_go_to_redirect_url($post_login_url);
+        simple_fb_connect_go_to_redirect_url($post_login_url, $drupal_user);
       }
       // If user wasn't redirected to user form, use the normal post login path.
       $post_login_url = simple_fb_connect_get_post_login_url();
-      simple_fb_connect_go_to_redirect_url($post_login_url);
+      simple_fb_connect_go_to_redirect_url($post_login_url, $drupal_user);
     }
     else {
       // New user was successfully created but the account is blocked.
       drupal_set_message(t('You will receive an email when a site administrator activates your account.'), 'warning');
       $post_login_url = simple_fb_connect_get_post_login_url();
       simple_fb_connect_destroy_session();
-      simple_fb_connect_go_to_redirect_url($post_login_url);
+      simple_fb_connect_go_to_redirect_url($post_login_url, $drupal_user);
     }
   }
   else {
@@ -742,25 +748,24 @@ function simple_fb_connect_create_user(GraphObject $fb_profile, FacebookSession 
       $fields['language'] = $language->language;
     }
 
-    // If user pictures are enabled, try to get the profile picture from FB.
-    if (variable_get('user_pictures', 0)) {
-      $fid = simple_fb_connect_get_fb_profile_pic($fb_session);
-      if ($fid) {
-        $fields['picture'] = $fid;
-      }
-    }
-
     // Allow other modules to modify $fields array before the new user is saved.
     drupal_alter("simple_fb_connect_register", $fields, $fb_profile);
 
     // The first parameter is left blank so a new user is created.
-    if ($account = user_save('', $fields)) {
+    $account = user_save('', $fields);
+    if ($account) {
+      // If user pictures are enabled, try to get the profile picture from FB.
+      if (variable_get('user_pictures', 0)) {
+        if ($fid = simple_fb_connect_get_fb_profile_pic($fb_session)) {
+          // Set owner of profile picture.
+          $file = file_load($fid);
+          $file->uid = $account->uid;
+          file_save($file);
 
-      // Now that user ID is known, set owner of profile picture.
-      if (!empty($account->picture)) {
-        $file = file_load($account->picture);
-        $file->uid = $account->uid;
-        file_save($file);
+          // Add the file as user profile picture.
+          $edit = array('picture' => $file);
+          $account = user_save($account, $edit);
+        }
       }
 
       // Log new user creation.
@@ -770,6 +775,8 @@ function simple_fb_connect_create_user(GraphObject $fb_profile, FacebookSession 
         array('@username' => $drupal_username_generated),
         WATCHDOG_NOTICE
       );
+
+      drupal_set_message(t("New user account %username created.", array('%username' => $drupal_username_generated)));
 
       // Invoke a registration event if Rules module is enabled.
       if (module_exists('rules')) {
@@ -837,7 +844,6 @@ function simple_fb_connect_login_user($drupal_user) {
       boost_set_cookie($drupal_user->uid);
     }
 
-    drupal_set_message(t('You are now logged in as %username', array('%username' => $drupal_user->name)));
     return TRUE;
   }
 
@@ -987,13 +993,26 @@ function simple_fb_connect_save_post_login_url() {
  * The input parameter might contain a query parameter. This function
  * will parse the URL and handle the query parameters correctly.
  *
+ * Other modules can modify the destination URL by implementing
+ * hook_simple_fb_connect_redirect_url().
+ *
  * @param string $post_login_url
  *   Post login URL.
+ * @param $account
+ *   Drupal user that was logged in via Simple FB Connect.
  */
-function simple_fb_connect_go_to_redirect_url($post_login_url) {
-  // Extract URL parts and use it to redirect to the post login URL.
+function simple_fb_connect_go_to_redirect_url($post_login_url, $account) {
+  // Extract URL parts and use them to define the post login URL.
   $url_parts = drupal_parse_url($post_login_url);
-  drupal_goto($url_parts['path'], array('query' => $url_parts['query']));
+  $path = $url_parts['path'];
+  $options = array('query' => $url_parts['query']);
+
+  // Allow other modules to modify the destination URL.
+  if (count(module_implements('simple_fb_connect_redirect_url')) > 0) {
+    list($path, $options) = module_invoke_all('simple_fb_connect_redirect_url', $path, $options, $account);
+  }
+
+  drupal_goto($path, $options);
 }
 
 /**

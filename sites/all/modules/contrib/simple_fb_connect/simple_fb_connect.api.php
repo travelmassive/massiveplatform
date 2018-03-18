@@ -141,3 +141,36 @@ function hook_simple_fb_connect_registration($drupal_user) {
     );
   }
 }
+
+/**
+ * This hook allows other modules to modify the post login URL.
+ *
+ * @param $path
+ *   Path for the subsequent drupal_goto() call.
+ * @param $options
+ *   Options for the subsequent drupal_goto() call.
+ * @param $drupal_user
+ *   Drupal user that was logged in via Simple FB Connect.
+ *
+ * @return
+ *   A two element array, with the possibly modified $path and $options.
+ *
+ * @see https://api.drupal.org/api/drupal/includes%21common.inc/function/url/7.x
+ */
+function hook_simple_fb_connect_redirect_url($path, $options, $drupal_user) {
+  // This example hook implementation shows how to switch the language according
+  // to user's language preference.
+
+  global $language;
+  $user_language = $drupal_user->language;
+
+  if (isset($user_language) && isset($language->language) && $user_language != $language->language) {
+    // Verify user language exists and is enabled.
+    $languages = language_list();
+    if (isset($languages[$user_language]) && $languages[$user_language]->enabled) {
+      $options['language'] = $languages[$user_language];
+    }
+  }
+
+  return [$path, $options];
+}

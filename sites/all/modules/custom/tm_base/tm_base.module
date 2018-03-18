@@ -675,6 +675,7 @@ function tm_base_file_insert($file) {
 /**
  * Preserve event and chapter images
  * So announcement emails are not broken if image is changed after being sent
+ * Will result in watchdog messages 'The file %path was not deleted, because it does not exist.'
  * See: https://drupal.stackexchange.com/questions/2090/how-to-keep-underlying-file-when-deleting-a-filefield-value
  */
 function tm_base_file_delete($file) {
@@ -683,12 +684,12 @@ function tm_base_file_delete($file) {
 
   // preserve event image files
   if (preg_match('/\/images\/events\//', $file->uri)) {
-    $file->uri = NULL;
+    $file->uri = $file->uri . '_DONOTDELETE';
   }
 
   // preserve chapter image files
   if (preg_match('/\/images\/chapters\//', $file->uri)) {
-    $file->uri = NULL;
+    $file->uri = $file->uri . '_DONOTDELETE';
   }
 
 }

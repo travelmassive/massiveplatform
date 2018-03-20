@@ -544,7 +544,7 @@ function tm_chapters_community_management_reports_drush() {
 		$body = str_replace("__CHAPTER_INSIGHTS_URL__", $chapter_insights_url, $body);
 		$body = str_replace("__REPORT_DATE__", date("j F", time() - (60*60*12)), $body);
 		$body = str_replace("__APPROVAL_REMINDER_MESSAGE__", $approval_reminder_message, $body);
-		$body = str_replace("__EVENT_PAYMENTS_MESSAGE__", "", $body); // $event_payments_message, $body);
+		$body = str_replace("__EVENT_PAYMENTS_MESSAGE__", $event_payments_message, $body);
 		$body = str_replace("__COMMISSIONS_SUMMARY__", $commissions_summary, $body);
 
 		// insert stats

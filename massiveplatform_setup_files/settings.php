@@ -343,7 +343,7 @@ $conf["tm_chapters_leader_weekly_report"] = "Hi __SALUTATION__,
 <br>New members in past 30 days: __MEMBERS_30_DAYS_TOTAL__
 <br>Growth in past 30 days: __MEMBERS_30_DAYS_PCT__%
 <br>Growth in past 90 days: __MEMBERS_90_DAYS_PCT__%
-<br>All time event registrations: __NUM_EVENT_REGISTRATIONS__ __EVENT_PAYMENTS_MESSAGE__
+<br>All time event registrations: __NUM_EVENT_REGISTRATIONS__
 <br>Total member connections: __TOTAL_CHAPTER_MEMBER_CONNECTIONS__
 <br>
 <br>__COMMISSIONS_SUMMARY__

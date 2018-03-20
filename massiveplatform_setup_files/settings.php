@@ -336,7 +336,7 @@ $conf["tm_chapters_leader_no_events_warning"] = "Hi __SALUTATION__,
 $conf["tm_chapters_leader_weekly_report_subject"] = "You've got stats. Weekly report for __CHAPTER_NAME____SUBJECT_STATS__";
 $conf["tm_chapters_leader_weekly_report"] = "Hi __SALUTATION__,
 <br>
-<br>Here's your chapter's statistics as of this week (__REPORT_DATE__):
+<br>Here's a summary of your <a href='__SERVER_HTTP__://__SERVER_NAME__/__CHAPTER_INSIGHTS_URL__'>chapter's statistics</a> as of this week (__REPORT_DATE__):
 <br>
 <br>Total members: __MEMBERS_TOTAL__ (__MEMBERS_APPROVED_PCT__% approved)
 <br>Events in past 12 months: __NUM_EVENTS_PAST_12_MONTHS__
@@ -346,9 +346,8 @@ $conf["tm_chapters_leader_weekly_report"] = "Hi __SALUTATION__,
 <br>All time event registrations: __NUM_EVENT_REGISTRATIONS__ __EVENT_PAYMENTS_MESSAGE__
 <br>Total member connections: __TOTAL_CHAPTER_MEMBER_CONNECTIONS__
 <br>
-<br>Find dozens more trends and stats on your Chapter Insights page:
+<br>__COMMISSIONS_SUMMARY__
 <br>
-<br><a href='__SERVER_HTTP__://__SERVER_NAME__/__CHAPTER_INSIGHTS_URL__'>__SERVER_NAME__/__CHAPTER_INSIGHTS_URL__</a>
 <br>__APPROVAL_REMINDER_MESSAGE__
 <br>Let us know what you think about these stats! Reply to this email to get in touch.
 <br>";
@@ -947,6 +946,8 @@ $conf["tm_recaptcha_error_message"] = "Oops, a problem occured with Google reCAP
 
 /** COMMISSION REPORTINGS **/
 $conf["tm_commissions_reports_url"] = "https://localdev.massiveplatform.com/payments/report_commissions.php"; // external commission reports
+$conf["tm_commissions_summary_url"] = "https://localdev.massiveplatform.com/payments/report_commissions_summary.php"; // external commission summary
+$conf["tm_commissions_summary_days"] = 30; // number of days to report on
 $conf["tm_commissions_reports_help_message"] = "Learn how your chapter can earn commissions on sales in our community.";
 $conf["tm_commissions_confirm_terms_text"] = "Hi __first_name__,<br><br>This report is confidential and for chapter leaders only.";
 $conf["tm_commissions_footer_text"] = "<i>The above information is confidential and for chapter leaders only.<br>Commissions exclude processing and forex fees.</i>"; // display terms in footer

@@ -5,6 +5,7 @@
  */
 
 include_once 'tm_commissions.reports.inc';
+include_once 'tm_commissions.summary.inc';
 
 
 function tm_commissions_menu() {

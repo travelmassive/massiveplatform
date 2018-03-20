@@ -520,6 +520,14 @@ function tm_chapters_community_management_reports_drush() {
 			}
 		}
 
+		// commissions
+		$commissions_summary = "";
+		if (module_exists("tm_commissions")) {
+			$shortcode = $chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['safe_value'];
+			$days = $conf["tm_commissions_summary_days"];
+			$commissions_summary = tm_commissions_reports_chapter_summary($nid, $shortcode, $days);
+		}
+
 		// prepare subject and body
 		$subject = $conf["tm_chapters_leader_weekly_report_subject"];
 		$subject = str_replace("__SITE_NAME__", $conf["tm_site_name"], $subject);
@@ -536,7 +544,8 @@ function tm_chapters_community_management_reports_drush() {
 		$body = str_replace("__CHAPTER_INSIGHTS_URL__", $chapter_insights_url, $body);
 		$body = str_replace("__REPORT_DATE__", date("j F", time() - (60*60*12)), $body);
 		$body = str_replace("__APPROVAL_REMINDER_MESSAGE__", $approval_reminder_message, $body);
-		$body = str_replace("__EVENT_PAYMENTS_MESSAGE__", $event_payments_message, $body);
+		$body = str_replace("__EVENT_PAYMENTS_MESSAGE__", "", $body); // $event_payments_message, $body);
+		$body = str_replace("__COMMISSIONS_SUMMARY__", $commissions_summary, $body);
 
 		// insert stats
 		foreach ($report_data["data_values"] as $key => $value) {

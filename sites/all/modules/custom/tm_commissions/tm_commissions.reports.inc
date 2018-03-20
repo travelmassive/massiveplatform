@@ -761,12 +761,12 @@ function tm_commissions_format_string($string, $length) {
 /**
  * Helper method to get currency symbol
  */
-function tm_commissions_currency_symbol($currency) {
+function tm_commissions_currency_symbol($currency, $force = false) {
 
   global $conf;
 
   // check if we show currency symbol
-  if (!$conf["tm_commissions_show_currency_symbol"]) {
+  if (!$force and !$conf["tm_commissions_show_currency_symbol"]) {
     return "";
   }
 

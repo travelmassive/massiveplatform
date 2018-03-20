@@ -165,7 +165,9 @@ function tm_events_send_contact_email($event_organizer_emails, $subject, $body, 
   $message .= "<br>";
   $message .= "<br>Name: " . $name;
   $message .= "<br>Subject: " . check_plain($subject);
-  $message .= "<br>Message: " . check_plain($body);
+  $message .= "<p><strong>Message:</strong><br>";
+  $message .= str_replace("\n", "<br>", check_plain($body)); // add line breaks
+  $message .= "</p>";
   $message .= "<br>Member's profile: <a href='" . $member_url . "'>" . $member_url . "</a>";
   $message .= "<br>Member's email: " . $reply;
   $message .= "<br>";

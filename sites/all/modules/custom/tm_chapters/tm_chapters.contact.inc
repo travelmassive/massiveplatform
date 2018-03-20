@@ -103,7 +103,6 @@ function tm_chapters_send_contact_email($chapter_leader_emails, $subject, $body,
     $reply = $user->mail;
     $send = FALSE;
     
-
     // CONSTRUCT MESSAGE
     $member_url = url('user/'.$user->uid, array('absolute'=>TRUE));
     $chapter_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('node/' . $chapter->nid);
@@ -114,7 +113,9 @@ function tm_chapters_send_contact_email($chapter_leader_emails, $subject, $body,
     $message .= "<br>";
     $message .= "<br>Name: " . $name;
     $message .= "<br>Subject: " . check_plain($subject);
-    $message .= "<br>Message: " . check_plain($body);
+    $message .= "<p><strong>Message:</strong><br>";
+    $message .= str_replace("\n", "<br>", check_plain($body)); // add line breaks
+    $message .= "</p>";
     $message .= "<br>Member's profile: <a href='" . $member_url . "'>" . $member_url . "</a>";
     $message .= "<br>Member's email: " . $reply;
     $message .= "<br>";

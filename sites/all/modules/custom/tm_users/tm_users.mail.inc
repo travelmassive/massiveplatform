@@ -147,9 +147,9 @@ function _tm_users_mail_alter_contact_page_mail(&$mail_form) {
   $message .= str_replace("\n", "<br>", $custom_message); // add line breaks
   $message .= "</p>";
   if (user_is_logged_in()) {
-      $message .= "Member's profile: <a href='" . $member_url . "'>" . $member_url . "</a><br>";
+      $message .= "<br>Member's profile: <a href='" . $member_url . "'>" . $member_url . "</a>";
   } 
-  $message .= "Reply email: " . check_plain($mail_form['params']['mail']);
+  $message .= "<br>Reply email: " . check_plain($mail_form['params']['mail']);
   $message .= "<br>";
   $message .= "<br>To reply directly, just reply to this email.";
   $message .= "<br>";

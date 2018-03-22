@@ -20,8 +20,8 @@ function tm_commissions_reports_chapter_summary($nid, $chapter_code, $days = 30)
 	// construct summary
 
 	// Example:
-	// Congratulations! Your chapter has earned $1150 AUD in the past 30 days. View your commissions.
-	// Your chapter has a balance of $1150 USD and $550 AUD. View your commissions.
+	// Congratulations! Your chapter has earned $1150 AUD in the past 30 days. View commissions.
+	// Your chapter has a balance of $1150 USD and $550 AUD. View commissions.
 	// Chapters have earned a total of than $4,800 from community sales in the past 30 days. View all commissions.
 
 	// Get summary
@@ -32,7 +32,7 @@ function tm_commissions_reports_chapter_summary($nid, $chapter_code, $days = 30)
 	$MAX_LIMIT = 1000000;
 
 	// view commisions link
-	$view_chapter_commissions_text = "<a href='__SERVER_HTTP__://__SERVER_NAME__/chapters/" . drupal_get_path_alias("node/" . $nid) . "/commissions'>View your commissions</a>";
+	$view_chapter_commissions_text = "<a href='__SERVER_HTTP__://__SERVER_NAME__/chapters/" . drupal_get_path_alias("node/" . $nid) . "/commissions'>View commissions</a>";
 	$view_all_commissions_text = "<a href='__SERVER_HTTP__://__SERVER_NAME__/chapters/all-chapters/commissions'>View all commissions</a>";
 
 	// commissions

@@ -494,9 +494,9 @@ function tm_chapters_community_management_reports_drush() {
 		$chapter_insights_url = drupal_get_path_alias('node/' . $chapter->nid) . "/insights";
 
 		// subject stats
-		// report > 50 members joined in a day
+		// report members joined in 30 days
 		$subject_stats = "";
-		if ($report_data["data_values"]["members_30_days_total"] >= 0) {
+		if ($report_data["data_values"]["members_30_days_total"] > 0) {
 			$new_members = "new members";
 			if ($report_data["data_values"]["members_30_days_total"] == 1) {
 				$new_members = "new member";

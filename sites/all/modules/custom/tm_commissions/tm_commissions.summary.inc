@@ -2,7 +2,9 @@
 
 // tm_commissions.summary.inc - commission summary methods
 
-
+/**
+ * Return summary of commissions for a chapter
+ */
 function tm_commissions_reports_chapter_summary($nid, $chapter_code, $days = 30) {
 
 	global $conf;
@@ -61,7 +63,8 @@ function tm_commissions_reports_chapter_summary($nid, $chapter_code, $days = 30)
 		$summary_text .= "Congratulations! Your chapter has earned " . $total_text . " in the past " . $days . " days &mdash; " . $view_chapter_commissions_text . "\n";
 	}
 
-	// balance	
+	// balance
+	$has_balance = false;
 	if (!$has_commissions) {
 		if (sizeof($summary->balance) > 0) {
 			$total_parts = array();
@@ -71,6 +74,7 @@ function tm_commissions_reports_chapter_summary($nid, $chapter_code, $days = 30)
 
 				// check limits
 				if (($balance->total > 0) and ($balance->total < $MAX_LIMIT)) {
+					$has_balance = true;
 					$total_parts[] = tm_commissions_currency_symbol($balance->currency, true) . $balance->total . " " . $balance->currency;
 				}
 			}
@@ -104,7 +108,11 @@ function tm_commissions_reports_chapter_summary($nid, $chapter_code, $days = 30)
 	
 	// add breaks
 	$summary_text = str_replace("\n", "<br>\n", $summary_text);
-	return $summary_text;
+
+	// return result
+	$result = array("has_commissions" => $has_commissions, "has_balance" => $has_balance, "summary_text" => $summary_text);
+
+	return $result;
 }
 
 /**

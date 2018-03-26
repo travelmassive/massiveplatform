@@ -525,7 +525,18 @@ function tm_chapters_community_management_reports_drush() {
 		if (module_exists("tm_commissions")) {
 			$shortcode = $chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['safe_value'];
 			$days = $conf["tm_commissions_summary_days"];
-			$commissions_summary = tm_commissions_reports_chapter_summary($nid, $shortcode, $days);
+
+			// get results
+			$commissions_result = tm_commissions_reports_chapter_summary($nid, $shortcode, $days);
+			$has_commission = $commissions_result["has_commission"];
+			$has_balance = $commissions_result["has_balance"];
+			$commissions_summary = $commissions_result["summary_text"];
+
+			// notify user they have earned commissions
+			// ie: Weekly insights for Sydney - you have commissions
+			if ($has_commission) {
+				$subject_stats = " - you have commissions";
+			}
 		}
 
 		// prepare subject and body

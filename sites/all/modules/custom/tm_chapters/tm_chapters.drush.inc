@@ -496,12 +496,16 @@ function tm_chapters_community_management_reports_drush() {
 		// subject stats
 		// report > 50 members joined in a day
 		$subject_stats = "";
-		if ($report_data["data_values"]["members_30_days_total"] >= 50) {
-			$subject_stats = " (" . $report_data["data_values"]["members_30_days_total"] . " new members past month)";
+		if ($report_data["data_values"]["members_30_days_total"] >= 0) {
+			$new_members = "new members";
+			if ($report_data["data_values"]["members_30_days_total"] == 1) {
+				$new_members = "new member";
+			}
+			$subject_stats = " - " . $report_data["data_values"]["members_30_days_total"] . " " . $new_members;
 		}
-		// report > 20% growth
-		if (($report_data["data_values"]["members_30_days_pct"] >= 20) and ($report_data["data_values"]["members_30_days_pct"] < 1000)) {
-			$subject_stats = " (" . $report_data["data_values"]["members_30_days_pct"] . "% growth past month)";
+		// report > 10% growth
+		if (($report_data["data_values"]["members_30_days_pct"] >= 10) and ($report_data["data_values"]["members_30_days_pct"] < 1000)) {
+			$subject_stats = " - " . $report_data["data_values"]["members_30_days_pct"] . "% growth past month";
 		}
 
 		// approval link
@@ -528,11 +532,11 @@ function tm_chapters_community_management_reports_drush() {
 
 			// get results
 			$commissions_result = tm_commissions_reports_chapter_summary($nid, $shortcode, $days);
-			$has_commission = $commissions_result["has_commission"];
+			$has_commission = $commissions_result["has_commissions"];
 			$has_balance = $commissions_result["has_balance"];
 			$commissions_summary = $commissions_result["summary_text"];
 
-			// notify user they have earned commissions
+			// notify chapter leader they have earned commissions
 			// ie: Weekly insights for Sydney - you have commissions
 			if ($has_commission) {
 				$subject_stats = " - you have commissions";

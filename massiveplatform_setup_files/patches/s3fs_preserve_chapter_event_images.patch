@@ -1,0 +1,23 @@
+--- S3fsStreamWrapper.inc	2018-03-26 15:14:03.000000000 +0000
++++ S3fsStreamWrapper.inc.massiveplatform	2018-03-26 15:13:59.000000000 +0000
+@@ -857,6 +857,20 @@
+    * @see http://php.net/manual/en/streamwrapper.unlink.php
+    */
+   public function unlink($uri) {
++
++    // Massive Platform patch
++    // Don't remove event or chapter images from CDN as old emails may contain them
++
++    // preserve event image files
++    if (preg_match('/\/images\/events\//', $uri)) {
++      return TRUE;
++    }
++
++    // preserve chapter image files
++    if (preg_match('/\/images\/chapters\//', $uri)) {
++      return TRUE;
++    }
++
+     $this->_assert_constructor_called();
+     $this->_debug("unlink($uri) called.");
+ 

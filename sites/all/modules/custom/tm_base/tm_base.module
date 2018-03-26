@@ -676,6 +676,7 @@ function tm_base_file_insert($file) {
  * Preserve event and chapter images
  * So announcement emails are not broken if image is changed after being sent
  * Will result in watchdog messages 'The file %path was not deleted, because it does not exist.'
+ * Note: If using s3fs you need to apply 's3fs_preserve_chapter_event_images.patch'
  * See: https://drupal.stackexchange.com/questions/2090/how-to-keep-underlying-file-when-deleting-a-filefield-value
  */
 function tm_base_file_delete($file) {

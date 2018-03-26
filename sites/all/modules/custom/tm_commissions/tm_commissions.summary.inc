@@ -5,6 +5,8 @@
 
 function tm_commissions_reports_chapter_summary($nid, $chapter_code, $days = 30) {
 
+	global $conf;
+
 	$results = tm_commissions_get_chapter_commissions_summary($chapter_code, $days);
 
 	// check we got a result
@@ -34,6 +36,11 @@ function tm_commissions_reports_chapter_summary($nid, $chapter_code, $days = 30)
 	// view commisions link
 	$view_chapter_commissions_text = "<a href='__SERVER_HTTP__://__SERVER_NAME__/chapters/" . drupal_get_path_alias("node/" . $nid) . "/commissions'>View commissions</a>";
 	$view_all_commissions_text = "<a href='__SERVER_HTTP__://__SERVER_NAME__/chapters/all-chapters/commissions'>View all commissions</a>";
+
+	// extra text
+	if (isset($conf["tm_commissions_summary_extra_text"])) {
+		$view_all_commissions_text .= $conf["tm_commissions_summary_extra_text"];
+	}
 
 	// commissions
 	$has_commissions = false;

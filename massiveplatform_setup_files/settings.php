@@ -956,3 +956,4 @@ $conf["tm_commissions_regional_footer_text"] = "<i>The above information is conf
 $conf["tm_commissions_show_currency_symbol"] = true; // show currency symbol in commission reports
 $conf["tm_commissions_display_internal"] = array("NA" => "North America", "EU" => "Europe", "AF" => "Africa", "AS" => "Asia", "LATAM" => "Latin America", "OC" => "Oceania");
 $conf["tm_commissions_users_who_can_access_region_reports"] = array(); // users who can access additional reports
+$conf["tm_commissions_summary_extra_text"] = " or <a href=''>learn more</a>"; // add text to commission summary 

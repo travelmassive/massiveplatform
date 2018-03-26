@@ -501,11 +501,11 @@ function tm_chapters_community_management_reports_drush() {
 			if ($report_data["data_values"]["members_30_days_total"] == 1) {
 				$new_members = "new member";
 			}
-			$subject_stats = " - " . $report_data["data_values"]["members_30_days_total"] . " " . $new_members;
+			$subject_stats = " - " . $report_data["data_values"]["members_30_days_total"] . " " . $new_members . " past 30 days";
 		}
 		// report > 10% growth
 		if (($report_data["data_values"]["members_30_days_pct"] >= 10) and ($report_data["data_values"]["members_30_days_pct"] < 1000)) {
-			$subject_stats = " - " . $report_data["data_values"]["members_30_days_pct"] . "% growth past month";
+			$subject_stats = " - " . $report_data["data_values"]["members_30_days_pct"] . "% growth past 30 days";
 		}
 
 		// approval link

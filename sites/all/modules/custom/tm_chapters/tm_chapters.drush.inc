@@ -539,7 +539,7 @@ function tm_chapters_community_management_reports_drush() {
 			// notify chapter leader they have earned commissions
 			// ie: Weekly insights for Sydney - you have commissions
 			if ($has_commission) {
-				$subject_stats = " - you have commissions";
+				$subject_stats = " - your chapter has earned commissions";
 			}
 		}
 

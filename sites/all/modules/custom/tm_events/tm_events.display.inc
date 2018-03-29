@@ -425,8 +425,10 @@ function tm_events_show_announcement_tip($event) {
   // only show reminder within 90 days
   if ($is_past_event and ($typeof_event == "chapter_event")) {
     if ($seconds_since_event_end < (60 * 60 * 24 * 90)) {
-      $message = $conf["tm_event_post_reminder_message"]; 
-      drupal_set_message($message, "help-tip");
+      if (isset($conf["tm_event_post_reminder_message"])) {
+        $message = $conf["tm_event_post_reminder_message"]; 
+        drupal_set_message($message, "help-tip");
+      }
     }
   }
   

@@ -648,6 +648,13 @@ $conf['tm_newsfeed_email_quotes'] = array(
 $conf['tm_newsfeed_feedback_base'] = 'Feedback? Suggestions?';
 $conf['tm_newsfeed_feedback_link_text'] = 'Let us know';
 
+// show profile views (provided by tm_track_views)
+$conf['tm_newsfeed_min_viewers_week'] = 2; // minimum number of profile viewers (week)
+$conf['tm_newsfeed_min_viewers_month'] = 5; // minimum number of profile viewers (month)
+$conf['tm_newsfeed_min_viewers_popular'] = 10; // how many viewers to be popular
+$conf['tm_newsfeed_prefix_viewers_month'] = "People are interested in you &mdash; ";
+$conf['tm_newsfeed_prefix_viewers_popular'] = "You're popular &mdash; ";
+
 
 /* EVENT PAYMENT SETTINGS */
 /** Optional event payments settings **/

@@ -158,7 +158,9 @@ function tm_track_views_how_many_viewed($entity_id, $entity_type, $exclude_uid, 
 	global $conf;
 
 	// enumerate entity_type
-	$entity_type = tm_track_views_enumerate_entity_type($entity_type);
+	if (!is_numeric($entity_type)) {
+		$entity_type = tm_track_views_enumerate_entity_type($entity_type);
+	}
 
 	// get number of views
 	$max_seconds = 0; // $past_days * 24 * 60 * 60;

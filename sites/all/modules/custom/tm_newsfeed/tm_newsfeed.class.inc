@@ -176,6 +176,31 @@ class TmNewsfeedEmail
 		// create an array of other tips that apply to the user
 		// and select a random one for inclusion in the email
 		$tips = array();
+
+		// show how many people have viewed your profile in the past week
+		if (module_exists("tm_track_views")) {
+
+			// check past 7 days
+			$num_views = tm_track_views_how_many_viewed($uid, 1, $uid, 7);
+			$min_views = $conf["tm_newsfeed_min_viewers_week"];
+			$popular_views = $conf["tm_newsfeed_min_viewers_popular"];
+			if ($num_views >= $min_views) {
+				$popular_text = "";
+				if ($num_views >= $popular_views) {
+					$popular_text = $conf["tm_newsfeed_prefix_viewers_popular"];
+				}
+				$tip =  "<em>" . $popular_text . $num_views . " members have viewed <a href='" . $edit_url . "'>your profile</a> in the past week.</em>";
+				return $tip;
+			} else {
+				// check past month
+				$num_views = tm_track_views_how_many_viewed($uid, 1, $uid, 30); // try 30 days
+				$min_views_month = $conf["tm_newsfeed_min_viewers_month"];
+				if ($num_views >= $min_views) {
+					$tip =  "<em>" . $conf["tm_newsfeed_prefix_viewers_month"] . $num_views . " members have viewed <a href='" . $edit_url . "'>your profile</a> in the past month.</em>";
+					return $tip;
+				}
+			}
+		}
 		
 		// no followers
 		$following_no_one = (0 == db_query("select count(*) from flagging where fid=1 and uid = :uid", array(":uid" => $uid))->fetchField());

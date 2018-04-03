@@ -81,6 +81,11 @@ function tm_track_views_views_pre_execute(&$view) {
 		return;
 	}
 
+	// Detect ajax request
+	if (strpos(current_path(), 'ajax') !== false) {
+		return;
+	}
+
 	global $conf;
 	global $user;
 

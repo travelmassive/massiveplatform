@@ -2,14 +2,7 @@
 
 // tm_track_views.module
 
-// permission who can view what
-// allow chapter leaders
-// link to views from profile page
-// show num views past 30 days (configurable)
-// allow blurring if pro user
-// help methods for other modules
-// help tip when viewing
-
+include_once 'tm_track_views.features.inc';
 include_once 'tm_track_views.tracking.inc';
 include_once 'tm_track_views.display.inc';
 

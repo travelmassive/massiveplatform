@@ -2907,7 +2907,7 @@ Icons
 .form-download.edit:before,
 .form-submit.edit:before, .image-edit-button:before, .icon-my-location, .icon-mobile, .icon-menu, #prime-nav .browse-wrapper .toggle:before, .icon-map, .icon-map-marker, .tm-status-update-location:before, #tm-status-update-location-field:before, .contained-block .detail-item.field-location:before, .contained-block .detail-item.location:before, .icon-list, .icon-linkedin, #foot-nav .linkedin:before, .contained-block .detail-item.field-link-linkedin:before, .icon-image, .icon-home, .icon-history, .icon-grid, .icon-google-plus, .icon-globe, .contained-block .detail-item.field-link-website:before, .icon-github, .icon-flickr, .icon-feed, .icon-facebook, #foot-nav .facebook:before, .contained-block .detail-item.field-link-facebook:before, .facebook-login:before, .icon-expand, .icon-email, .icon-download, .form-download:before, .icon-disc-cancel, .icon-description, .contained-block .detail-item.field-about-me:before, .contained-block .detail-item.about-me:before, .contained-block .detail-item.body:before, .icon-cog, .bttn.settings:before, .bttn-group a.settings:before, .page-views .tabs-primary a.settings:before, .page-search .tabs-primary a.settings:before, .pager li a.settings:before, .pager .settings.pager-current:before, .views-exposed-form .settings.form-type-select:before, .settings.facebook-login:before, .settings.twitter-login:before,
 .form-download.settings:before,
-.form-submit.settings:before, .icon-clock, .contained-block .detail-item.field-date-event:before, .icon-circle-warning, .messages.warning:before, .warning.messages--status:before, .warning.messages--warning:before, .warning.messages--error:before, .icon-circle-success, .icon-circle-question, .contained-block .detail-item.tm-ds-event-refund-policy:before, .icon-circle-play, .tm-frontpage-video-play:before, .icon-circle-info, .messages.help-tip:before, .help-tip.messages--status:before, .help-tip.messages--warning:before, .help-tip.messages--error:before, .contained-block .detail-item.tm-ds-event-message:before, .icon-circle-error, .messages.error:before, .error.messages--status:before, .error.messages--warning:before, .error.messages--error:before, .icon-cancel, .icon-arr-up, .icon-arr-tail-up, .icon-arr-tail-right, .icon-arr-tail-left, .icon-arr-tail-down, .icon-arr-right, .icon-arr-right-last, .icon-arr-left, .icon-arr-left-first, .icon-arr-down, .icon-add, .icon-connection, .contained-block .detail-item.tm-ds-connection-actions:before, .contained-block .detail-item.tm-ds-organization-follow-message:before, .icon-youtube, #foot-nav .youtube:before, .contained-block .detail-item.field-link-youtube:before, .icon-vimeo, #foot-nav .vimeo:before, .contained-block .detail-item.field-link-vimeo:before, .icon-snapchat, #foot-nav .snapchat:before, .contained-block .detail-item.field-link-snapchat:before, .social .icon-snapchat, .social #foot-nav .snapchat:before, #foot-nav .social .snapchat:before, .social .contained-block .detail-item.field-link-snapchat:before, .contained-block .social .detail-item.field-link-snapchat:before, .icon-strava, .contained-block .detail-item.field-link-strava:before, .icon-2016-tick, .icon-2016-flame, .icon-2016-credit-card, .icon-2016-lightening, .icon-2016-play, .icon-2016-heart-outline, .icon-2016-globe, .icon-2016-megaphone, .icon-2016-bell, .icon-2016-comment-bubble, #prime-nav .newsfeed-wrapper .toggle:before, .icon-2016-up-arrow, .icon-2016-down-arrow, .icon-2016-plane, .icon-2016-eye, .tm-status-update-views:before, .icon-2016-flames, .tm-status-update-popular:before, .icon-2016-tag, .tm-status-update-promoted:before, .icon-2016-qr-code, .icon-2016-flag, .icon-2016-chart, .contained-block .detail-item.tm-ds-chapter-stats:before, .icon-2016-heart, .icon-2016-star, .icon-2016-star-outline, .icon-2016-dots, .tm-status-update-actions:before, .icon-2017-subscriber, .organization-sticker-icon:before, .contained-block .detail-item.tm-ds-subscription-organization-badge-ds:before, .contained-block .detail-item.tm-ds-subscription-user-badge-ds:before, .text_subscriber:before, .tm-user-menu-subscription-badge:before, .icon-2017-subscribe-cta, .contained-block .detail-item.tm-ds-subscription-organization-cta-ds:before, .contained-block .detail-item.tm-ds-subscription-user-cta-ds:before, [class^="icon-"], [class*=" icon-"] {
+.form-submit.settings:before, .icon-clock, .contained-block .detail-item.field-date-event:before, .icon-circle-warning, .messages.warning:before, .warning.messages--status:before, .warning.messages--warning:before, .warning.messages--error:before, .icon-circle-success, .icon-circle-question, .contained-block .detail-item.tm-ds-event-refund-policy:before, .icon-circle-play, .tm-frontpage-video-play:before, .icon-circle-info, .messages.help-tip:before, .help-tip.messages--status:before, .help-tip.messages--warning:before, .help-tip.messages--error:before, .contained-block .detail-item.tm-ds-event-message:before, .icon-circle-error, .messages.error:before, .error.messages--status:before, .error.messages--warning:before, .error.messages--error:before, .icon-cancel, .icon-arr-up, .icon-arr-tail-up, .icon-arr-tail-right, .icon-arr-tail-left, .icon-arr-tail-down, .icon-arr-right, .icon-arr-right-last, .icon-arr-left, .icon-arr-left-first, .icon-arr-down, .icon-add, .icon-connection, .contained-block .detail-item.tm-ds-connection-actions:before, .contained-block .detail-item.tm-ds-organization-follow-message:before, .icon-youtube, #foot-nav .youtube:before, .contained-block .detail-item.field-link-youtube:before, .icon-vimeo, #foot-nav .vimeo:before, .contained-block .detail-item.field-link-vimeo:before, .icon-snapchat, #foot-nav .snapchat:before, .contained-block .detail-item.field-link-snapchat:before, .social .icon-snapchat, .social #foot-nav .snapchat:before, #foot-nav .social .snapchat:before, .social .contained-block .detail-item.field-link-snapchat:before, .contained-block .social .detail-item.field-link-snapchat:before, .icon-strava, .contained-block .detail-item.field-link-strava:before, .icon-2016-tick, .icon-2016-flame, .icon-2016-credit-card, .icon-2016-lightening, .icon-2016-play, .icon-2016-heart-outline, .icon-2016-globe, .icon-2016-megaphone, .icon-2016-bell, .icon-2016-comment-bubble, #prime-nav .newsfeed-wrapper .toggle:before, .icon-2016-up-arrow, .icon-2016-down-arrow, .icon-2016-plane, .icon-2016-eye, .tm-status-update-views:before, .contained-block .detail-item.tm-ds-track-viewers:before, .contained-block .detail-item.tm-ds-track-company-viewers:before, .icon-2016-flames, .tm-status-update-popular:before, .icon-2016-tag, .tm-status-update-promoted:before, .icon-2016-qr-code, .icon-2016-flag, .icon-2016-chart, .contained-block .detail-item.tm-ds-chapter-stats:before, .icon-2016-heart, .icon-2016-star, .icon-2016-star-outline, .icon-2016-dots, .tm-status-update-actions:before, .icon-2017-subscriber, .organization-sticker-icon:before, .contained-block .detail-item.tm-ds-subscription-organization-badge-ds:before, .contained-block .detail-item.tm-ds-subscription-user-badge-ds:before, .text_subscriber:before, .tm-user-menu-subscription-badge:before, .icon-2017-subscribe-cta, .contained-block .detail-item.tm-ds-subscription-organization-cta-ds:before, .contained-block .detail-item.tm-ds-subscription-user-cta-ds:before, [class^="icon-"], [class*=" icon-"] {
   font-family: 'tm-icons';
   speak: none;
   font-style: normal;
@@ -3425,7 +3425,7 @@ Icons
 }
 
 /* line 432, ../sass/_type.scss */
-.icon-2016-eye, .tm-status-update-views:before {
+.icon-2016-eye, .tm-status-update-views:before, .contained-block .detail-item.tm-ds-track-viewers:before, .contained-block .detail-item.tm-ds-track-company-viewers:before {
   content: "\e65f";
 }
 
@@ -4467,8 +4467,18 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   filter: blur(2px);
 }
 
-/* Payments form message */
+/* Blur filter for jq_alert (large) */
 /* line 589, ../sass/_base.scss */
+.tm-blur-filter-large {
+  -webkit-filter: blur(4px);
+  -moz-filter: blur(4px);
+  -o-filter: blur(4px);
+  -ms-filter: blur(4px);
+  filter: blur(4px);
+}
+
+/* Payments form message */
+/* line 598, ../sass/_base.scss */
 .tm-payments-edit-form-message {
   background-color: #1ABC9C;
   color: #fff;
@@ -4477,7 +4487,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   margin-bottom: 0.5rem;
 }
 
-/* line 597, ../sass/_base.scss */
+/* line 606, ../sass/_base.scss */
 .tm-payments-edit-form-message a {
   color: #fff;
   font-weight: bold;
@@ -4485,7 +4495,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 }
 
 /* Event registration and chapter announcement tips */
-/* line 606, ../sass/_base.scss */
+/* line 615, ../sass/_base.scss */
 .tm-event-send-announcement-tips,
 .tm-chapters-send-announcement-tips,
 .tm-event-manage-registrations-tips {
@@ -4499,7 +4509,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 }
 
 /* Announcement steps */
-/* line 617, ../sass/_base.scss */
+/* line 626, ../sass/_base.scss */
 .tm-event-send-announcement-step, .tm-chapter-send-announcement-step {
   color: #ffffff;
   padding-top: 0.5rem;
@@ -4509,7 +4519,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 }
 
 /* Chapter sticker for external events */
-/* line 626, ../sass/_base.scss */
+/* line 635, ../sass/_base.scss */
 .chapter-sticker-icon, .organization-sticker-icon {
   width: auto !important;
   white-space: nowrap;
@@ -4517,7 +4527,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   padding-right: 0.5rem !important;
 }
 
-/* line 635, ../sass/_base.scss */
+/* line 644, ../sass/_base.scss */
 .organization-sticker-icon:before {
   font-size: 16pt;
   position: relative;
@@ -4525,18 +4535,18 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 }
 
 /* Checkboxes in forms */
-/* line 644, ../sass/_base.scss */
+/* line 653, ../sass/_base.scss */
 .page-node-edit .form-type-checkbox {
   margin-top: 1.0rem !important;
 }
 
-/* line 647, ../sass/_base.scss */
+/* line 656, ../sass/_base.scss */
 .page-node-add .form-type-checkbox {
   margin-top: 1.0rem !important;
 }
 
 /* Alternative dates for online event */
-/* line 652, ../sass/_base.scss */
+/* line 661, ../sass/_base.scss */
 .date-alternative {
   color: #51616e;
   border-left: 2px solid #EEE;
@@ -4545,7 +4555,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 }
 
 /* Payment reports */
-/* line 660, ../sass/_base.scss */
+/* line 669, ../sass/_base.scss */
 .tm-payments-report-table, .tm-subscriptions-report-table {
   width: 100%;
   margin-top: 0px;
@@ -4554,98 +4564,98 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   background-color: #FFF;
 }
 
-/* line 668, ../sass/_base.scss */
+/* line 677, ../sass/_base.scss */
 .tm-payments-report-table table, .tm-subscriptions-report-table table {
   cellspacing: 4px;
 }
 
-/* line 672, ../sass/_base.scss */
+/* line 681, ../sass/_base.scss */
 .tm-payments-report-table th, .tm-subscriptions-report-table th {
   border-bottom: 1px solid #888;
   background-color: #fff;
 }
 
-/* line 677, ../sass/_base.scss */
+/* line 686, ../sass/_base.scss */
 .tm-payments-report-table tr, .tm-subscriptions-report-table tr {
   border-radius: 2px;
   background-color: #fff;
 }
 
-/* line 682, ../sass/_base.scss */
+/* line 691, ../sass/_base.scss */
 .tm-payments-report-table td, .tm-subscriptions-report-table td {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   font-size: smaller;
 }
 
-/* line 688, ../sass/_base.scss */
+/* line 697, ../sass/_base.scss */
 .tm-payments-report-extra, .tm-subscriptions-report-extra {
   white-space: nowrap;
 }
 
-/* line 692, ../sass/_base.scss */
+/* line 701, ../sass/_base.scss */
 .tm-payments-report-status, .tm-subscriptions-report-status {
   border-radius: 4px;
 }
 
-/* line 696, ../sass/_base.scss */
+/* line 705, ../sass/_base.scss */
 .tm-payments-report-status, .tm-subscriptions-report-status {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
   white-space: nowrap;
 }
 
-/* line 702, ../sass/_base.scss */
+/* line 711, ../sass/_base.scss */
 .tm-payments-report-status.paid, .tm-subscriptions-report-status.paid {
   background-color: #007CB9;
   color: #fff;
 }
 
-/* line 707, ../sass/_base.scss */
+/* line 716, ../sass/_base.scss */
 .tm-payments-report-status.refunded, .tm-subscriptions-report-status.refunded {
   /* background-color: #E94B35; */
   background-color: #888;
   color: #fff;
 }
 
-/* line 713, ../sass/_base.scss */
+/* line 722, ../sass/_base.scss */
 .tm-payments-report-status.paid_out, .tm-subscriptions-report-status.paid_out {
   background-color: #00BD9C;
   color: #fff;
 }
 
-/* line 718, ../sass/_base.scss */
+/* line 727, ../sass/_base.scss */
 .tm-subscriptions-report-edit {
   font-size: smaller;
   text-decoration: underline;
   font-weight: normal;
 }
 
-/* line 724, ../sass/_base.scss */
+/* line 733, ../sass/_base.scss */
 .tm-subscriptions-report-add {
   font-weight: bold;
 }
 
 @media print {
-  /* line 729, ../sass/_base.scss */
+  /* line 738, ../sass/_base.scss */
   .tm-subscriptions-report-edit, .tm-subscriptions-report-add {
     display: none;
   }
 }
 @media only screen and (max-width: 500px) {
-  /* line 733, ../sass/_base.scss */
+  /* line 742, ../sass/_base.scss */
   .tm-payments-report-extra {
     display: none;
   }
 }
 /* Status updates */
-/* line 740, ../sass/_base.scss */
+/* line 749, ../sass/_base.scss */
 .tm-status-update-promoted {
   margin-right: 0.5rem;
   color: #FFA600;
   margin-top: -2px;
 }
-/* line 744, ../sass/_base.scss */
+/* line 753, ../sass/_base.scss */
 .tm-status-update-promoted:before {
   position: relative;
   top: 2px;
@@ -4653,48 +4663,48 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   font-size: 12pt;
 }
 
-/* line 747, ../sass/_base.scss */
+/* line 756, ../sass/_base.scss */
 .tm-status-update-location {
   margin-right: 0.5rem;
 }
-/* line 749, ../sass/_base.scss */
+/* line 758, ../sass/_base.scss */
 .tm-status-update-location:before {
   font-size: 8pt;
   margin-right: 0.2em;
 }
 
-/* line 753, ../sass/_base.scss */
+/* line 762, ../sass/_base.scss */
 #tm-status-update-location-field:before {
   font-size: 9pt;
   margin-right: -0.2em;
 }
 
-/* line 756, ../sass/_base.scss */
+/* line 765, ../sass/_base.scss */
 .tm-status-update-location a {
   text-decoration: none;
 }
 
-/* line 760, ../sass/_base.scss */
+/* line 769, ../sass/_base.scss */
 .tm-status-update-location a:hover {
   text-decoration: underline;
 }
 
-/* line 764, ../sass/_base.scss */
+/* line 773, ../sass/_base.scss */
 .tm-status-update-details {
   color: #888;
 }
 
-/* line 768, ../sass/_base.scss */
+/* line 777, ../sass/_base.scss */
 .tm-status-update-details a {
   color: #888;
 }
 
-/* line 772, ../sass/_base.scss */
+/* line 781, ../sass/_base.scss */
 .tm-status-update-views {
   margin-right: 0.5rem;
   margin-top: -2px;
 }
-/* line 775, ../sass/_base.scss */
+/* line 784, ../sass/_base.scss */
 .tm-status-update-views:before {
   font-size: 12pt;
   position: relative;
@@ -4702,12 +4712,12 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   margin-right: 0.2rem;
 }
 
-/* line 778, ../sass/_base.scss */
+/* line 787, ../sass/_base.scss */
 .tm-status-update-popular {
   margin-right: 0.5rem;
   margin-top: -2px;
 }
-/* line 781, ../sass/_base.scss */
+/* line 790, ../sass/_base.scss */
 .tm-status-update-popular:before {
   font-size: 12pt;
   position: relative;
@@ -4716,7 +4726,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   color: #F1805A;
 }
 
-/* line 785, ../sass/_base.scss */
+/* line 794, ../sass/_base.scss */
 .tm-status-update-actions:before {
   font-size: 18pt;
   position: relative;
@@ -4724,49 +4734,49 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
   margin-right: 0.2rem;
 }
 
-/* line 788, ../sass/_base.scss */
+/* line 797, ../sass/_base.scss */
 li.tm-status-update-actions-dropdown {
   list-style-type: none;
   position: absolute;
   right: 12px;
 }
 
-/* line 794, ../sass/_base.scss */
+/* line 803, ../sass/_base.scss */
 .tm-status-update-actions-dropdown-menu li {
   padding: 0px !important;
   box-shadow: none !important;
 }
 
-/* line 799, ../sass/_base.scss */
+/* line 808, ../sass/_base.scss */
 .tm-status-update-actions a {
   text-decoration: underline;
 }
 
-/* line 803, ../sass/_base.scss */
+/* line 812, ../sass/_base.scss */
 .tm-status-update-time {
   color: #888 !important;
   font-weight: normal !important;
 }
 
-/* line 808, ../sass/_base.scss */
+/* line 817, ../sass/_base.scss */
 .tm-status-update-posted-by {
   color: #888 !important;
   font-weight: normal !important;
 }
 
-/* line 813, ../sass/_base.scss */
+/* line 822, ../sass/_base.scss */
 .tm-status-update-separator {
   margin-left: 0.2rem;
   color: #888 !important;
 }
 
-/* line 818, ../sass/_base.scss */
+/* line 827, ../sass/_base.scss */
 .tm-status-updates-loader li {
   list-style-type: none;
 }
 
 /* Status update link previews */
-/* line 824, ../sass/_base.scss */
+/* line 833, ../sass/_base.scss */
 .tm-status-update-preview {
   min-height: 112px;
   margin-top: 16px;
@@ -4776,12 +4786,12 @@ li.tm-status-update-actions-dropdown {
   border-radius: 4px;
 }
 
-/* line 833, ../sass/_base.scss */
+/* line 842, ../sass/_base.scss */
 .status-update-container .tm-status-update-preview {
   margin-left: 80px;
 }
 
-/* line 837, ../sass/_base.scss */
+/* line 846, ../sass/_base.scss */
 img.tm-status-update-preview-image {
   float: left;
   width: 96px;
@@ -4794,7 +4804,7 @@ img.tm-status-update-preview-image {
   margin-top: -1px;
 }
 
-/* line 849, ../sass/_base.scss */
+/* line 858, ../sass/_base.scss */
 .tm-status-update-preview-body {
   overflow: hidden;
   padding: 8px;
@@ -4803,14 +4813,14 @@ img.tm-status-update-preview-image {
   font-size: 14px;
 }
 
-/* line 857, ../sass/_base.scss */
+/* line 866, ../sass/_base.scss */
 .tm-status-update-preview h4 {
   margin-top: 0px;
   margin-bottom: 4px;
 }
 
 /* reference: https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container */
-/* line 863, ../sass/_base.scss */
+/* line 872, ../sass/_base.scss */
 .tm-wrap-long-text {
   /* These are technically the same, but use both */
   overflow-wrap: break-word;
@@ -4826,42 +4836,42 @@ img.tm-status-update-preview-image {
 }
 
 @media only screen and (max-width: 650px) {
-  /* line 882, ../sass/_base.scss */
+  /* line 891, ../sass/_base.scss */
   .status-update-container {
     padding-right: 2.2rem !important;
   }
 
-  /* line 883, ../sass/_base.scss */
+  /* line 892, ../sass/_base.scss */
   .tm-status-update-preview {
     width: 100%;
     margin-left: 0px;
     margin-top: 16px;
   }
 
-  /* line 884, ../sass/_base.scss */
+  /* line 893, ../sass/_base.scss */
   .tm-status-update-details {
     padding-right: 2.2rem;
   }
 
-  /* line 885, ../sass/_base.scss */
+  /* line 894, ../sass/_base.scss */
   .status-update-container .tm-status-update-preview {
     margin-left: 0px;
   }
 
-  /* line 886, ../sass/_base.scss */
+  /* line 895, ../sass/_base.scss */
   p.status-updates {
     margin-bottom: 16px;
   }
 }
 @media only screen and (max-width: 395px) {
-  /* line 890, ../sass/_base.scss */
+  /* line 899, ../sass/_base.scss */
   .tm-status-update-preview {
     margin-top: 16px;
   }
 }
 /* Hide search icon on small screen */
 @media only screen and (max-width: 320px) {
-  /* line 895, ../sass/_base.scss */
+  /* line 904, ../sass/_base.scss */
   .search-wrapper {
     display: none;
   }
@@ -6536,110 +6546,110 @@ td.views-field-access {
 .contained-block .detail-item.tm-ds-subscription-user-cta-ds:before {
   font-size: 16pt;
 }
-/* line 153, ../sass/_modules.scss */
+/* line 155, ../sass/_modules.scss */
 .contained-block .detail-item.field-link-facebook, .contained-block .detail-item.field-link-linkedin, .contained-block .detail-item.field-link-twitter, .contained-block .detail-item.field-link-instagram, .contained-block .detail-item.field-link-website {
   word-wrap: break-word;
 }
-/* line 157, ../sass/_modules.scss */
+/* line 159, ../sass/_modules.scss */
 .contained-block .detail-item .detail-venue-name {
   font-weight: 800;
 }
-/* line 161, ../sass/_modules.scss */
+/* line 163, ../sass/_modules.scss */
 .contained-block .detail-item .detail-venue-link {
   margin: 1rem 0 0 0;
 }
-/* line 168, ../sass/_modules.scss */
+/* line 170, ../sass/_modules.scss */
 .contained-block .detail-item .detail-add-calendar {
   margin: 1rem 0 0 0;
 }
-/* line 176, ../sass/_modules.scss */
+/* line 178, ../sass/_modules.scss */
 .contained-block .detail-item p {
   margin: 0 0 1rem 0;
 }
-/* line 178, ../sass/_modules.scss */
+/* line 180, ../sass/_modules.scss */
 .contained-block .detail-item p:last-child {
   margin: 0;
 }
-/* line 182, ../sass/_modules.scss */
+/* line 184, ../sass/_modules.scss */
 .contained-block .detail-item dl {
   margin: 0;
   padding: 0;
 }
-/* line 185, ../sass/_modules.scss */
+/* line 187, ../sass/_modules.scss */
 .contained-block .detail-item dl dt {
   font-weight: 800;
   margin: 0;
 }
-/* line 189, ../sass/_modules.scss */
+/* line 191, ../sass/_modules.scss */
 .contained-block .detail-item dl dd {
   margin: 0 0 1rem 0;
 }
-/* line 191, ../sass/_modules.scss */
+/* line 193, ../sass/_modules.scss */
 .contained-block .detail-item dl dd:last-child {
   margin: 0;
 }
-/* line 198, ../sass/_modules.scss */
+/* line 200, ../sass/_modules.scss */
 .contained-block .more-link {
   padding: 0 1rem 1rem 2.5rem;
   margin: 0 0 1rem 0;
 }
-/* line 206, ../sass/_modules.scss */
+/* line 208, ../sass/_modules.scss */
 .contained-block .view-empty {
   padding: 0 1rem;
   margin: 0 0 1rem 0;
   color: #79828c;
 }
-/* line 210, ../sass/_modules.scss */
+/* line 212, ../sass/_modules.scss */
 .contained-block .view-empty p {
   margin: 0 0 1rem 0;
 }
-/* line 212, ../sass/_modules.scss */
+/* line 214, ../sass/_modules.scss */
 .contained-block .view-empty p:last-child {
   margin: 0;
 }
 @media only screen and (min-width: 69.063rem) {
-  /* line 219, ../sass/_modules.scss */
+  /* line 221, ../sass/_modules.scss */
   .contained-block .contained-head {
     padding: 2rem 2rem 1.5rem 2rem;
   }
-  /* line 222, ../sass/_modules.scss */
+  /* line 224, ../sass/_modules.scss */
   .contained-block .detail-item {
     padding: 0 2rem 1rem 3.5rem;
   }
-  /* line 224, ../sass/_modules.scss */
+  /* line 226, ../sass/_modules.scss */
   .contained-block .detail-item:before {
     left: 2rem;
   }
-  /* line 227, ../sass/_modules.scss */
+  /* line 229, ../sass/_modules.scss */
   .contained-block .detail-item:last-child {
     margin-bottom: 2rem;
   }
-  /* line 230, ../sass/_modules.scss */
+  /* line 232, ../sass/_modules.scss */
   .contained-block .detail-item .detail-venue-name {
     padding-right: 7rem;
   }
-  /* line 233, ../sass/_modules.scss */
+  /* line 235, ../sass/_modules.scss */
   .contained-block .detail-item .detail-venue-link {
     position: absolute;
     top: 0;
     right: 2rem;
     margin: 0;
   }
-  /* line 239, ../sass/_modules.scss */
+  /* line 241, ../sass/_modules.scss */
   .contained-block .detail-item .detail-add-calendar {
     position: absolute;
     top: 0;
     right: 2rem;
     margin: 0;
   }
-  /* line 246, ../sass/_modules.scss */
+  /* line 248, ../sass/_modules.scss */
   .contained-block .view-empty {
     padding: 0 2rem;
     margin: 0 0 2rem 0;
   }
 }
 
-/* line 253, ../sass/_modules.scss */
+/* line 255, ../sass/_modules.scss */
 .card.contained, .node-form > div.card,
 #user-profile-form > div.card,
 #user-register-form > div.card, #content .card.search-form {
@@ -6647,7 +6657,7 @@ td.views-field-access {
   background: transparent;
   position: relative;
 }
-/* line 257, ../sass/_modules.scss */
+/* line 259, ../sass/_modules.scss */
 .card.contained > a, .node-form > div.card > a,
 #user-profile-form > div.card > a,
 #user-register-form > div.card > a, #content .card.search-form > a {
@@ -6655,20 +6665,20 @@ td.views-field-access {
   display: table;
   color: #213040;
 }
-/* line 262, ../sass/_modules.scss */
+/* line 264, ../sass/_modules.scss */
 .card.contained.node-event > a, .node-form > div.card.node-event > a,
 #user-profile-form > div.card.node-event > a,
 #user-register-form > div.card.node-event > a, #content .card.node-event.search-form > a {
   padding-right: 2.25rem;
 }
-/* line 265, ../sass/_modules.scss */
+/* line 267, ../sass/_modules.scss */
 .card.contained .media, .node-form > div.card .media,
 #user-profile-form > div.card .media,
 #user-register-form > div.card .media, #content .card.search-form .media {
   float: left;
   margin: 0 0.75rem 0 0;
 }
-/* line 269, ../sass/_modules.scss */
+/* line 271, ../sass/_modules.scss */
 .card.contained .cover, .node-form > div.card .cover,
 #user-profile-form > div.card .cover,
 #user-register-form > div.card .cover, #content .card.search-form .cover {
@@ -6676,14 +6686,14 @@ td.views-field-access {
   position: relative;
   z-index: 1;
 }
-/* line 273, ../sass/_modules.scss */
+/* line 275, ../sass/_modules.scss */
 .card.contained .cover img, .node-form > div.card .cover img,
 #user-profile-form > div.card .cover img,
 #user-register-form > div.card .cover img, #content .card.search-form .cover img {
   display: block;
   border-radius: 0.25rem 0.25rem 0 0;
 }
-/* line 278, ../sass/_modules.scss */
+/* line 280, ../sass/_modules.scss */
 .card.contained .avatar, .node-form > div.card .avatar,
 #user-profile-form > div.card .avatar,
 #user-register-form > div.card .avatar, #content .card.search-form .avatar {
@@ -6696,7 +6706,7 @@ td.views-field-access {
   text-transform: uppercase;
   font-weight: 800;
 }
-/* line 289, ../sass/_modules.scss */
+/* line 291, ../sass/_modules.scss */
 .card.contained .badge-chapter, .node-form > div.card .badge-chapter,
 #user-profile-form > div.card .badge-chapter,
 #user-register-form > div.card .badge-chapter, #content .card.search-form .badge-chapter {
@@ -6710,7 +6720,7 @@ td.views-field-access {
   display: inline-block;
   padding-bottom: 0.5rem;
 }
-/* line 299, ../sass/_modules.scss */
+/* line 301, ../sass/_modules.scss */
 .card.contained .badge-chapter:before, .node-form > div.card .badge-chapter:before,
 #user-profile-form > div.card .badge-chapter:before,
 #user-register-form > div.card .badge-chapter:before, #content .card.search-form .badge-chapter:before {
@@ -6720,7 +6730,7 @@ td.views-field-access {
   vertical-align: bottom;
   width: 0;
 }
-/* line 306, ../sass/_modules.scss */
+/* line 308, ../sass/_modules.scss */
 .card.contained .badge-chapter:after, .node-form > div.card .badge-chapter:after,
 #user-profile-form > div.card .badge-chapter:after,
 #user-register-form > div.card .badge-chapter:after, #content .card.search-form .badge-chapter:after {
@@ -6735,7 +6745,7 @@ td.views-field-access {
   background-size: cover;
   border-radius: 0.125rem 0 0 0;
 }
-/* line 319, ../sass/_modules.scss */
+/* line 321, ../sass/_modules.scss */
 .card.contained .badge-cal, .node-form > div.card .badge-cal,
 #user-profile-form > div.card .badge-cal,
 #user-register-form > div.card .badge-cal, #content .card.search-form .badge-cal {
@@ -6743,7 +6753,7 @@ td.views-field-access {
   width: 4rem;
   height: 4rem;
 }
-/* line 323, ../sass/_modules.scss */
+/* line 325, ../sass/_modules.scss */
 .card.contained .badge-cal .month, .node-form > div.card .badge-cal .month,
 #user-profile-form > div.card .badge-cal .month,
 #user-register-form > div.card .badge-cal .month, #content .card.search-form .badge-cal .month {
@@ -6754,7 +6764,7 @@ td.views-field-access {
   font-size: 0.875rem;
   line-height: 1.5rem;
 }
-/* line 331, ../sass/_modules.scss */
+/* line 333, ../sass/_modules.scss */
 .card.contained .badge-cal .day, .node-form > div.card .badge-cal .day,
 #user-profile-form > div.card .badge-cal .day,
 #user-register-form > div.card .badge-cal .day, #content .card.search-form .badge-cal .day {
@@ -6766,7 +6776,7 @@ td.views-field-access {
   padding-bottom: 0.25rem;
   letter-spacing: -0.0625rem;
 }
-/* line 345, ../sass/_modules.scss */
+/* line 347, ../sass/_modules.scss */
 .card.contained .badge-organization, .node-form > div.card .badge-organization,
 #user-profile-form > div.card .badge-organization,
 #user-register-form > div.card .badge-organization, #content .card.search-form .badge-organization,
@@ -6779,7 +6789,7 @@ td.views-field-access {
   height: 4rem;
   display: block;
 }
-/* line 349, ../sass/_modules.scss */
+/* line 351, ../sass/_modules.scss */
 .card.contained .badge-organization img, .node-form > div.card .badge-organization img,
 #user-profile-form > div.card .badge-organization img,
 #user-register-form > div.card .badge-organization img, #content .card.search-form .badge-organization img,
@@ -6792,7 +6802,7 @@ td.views-field-access {
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 355, ../sass/_modules.scss */
+/* line 357, ../sass/_modules.scss */
 .card.contained .badge-flagfeed, .node-form > div.card .badge-flagfeed,
 #user-profile-form > div.card .badge-flagfeed,
 #user-register-form > div.card .badge-flagfeed, #content .card.search-form .badge-flagfeed {
@@ -6800,7 +6810,7 @@ td.views-field-access {
   height: 4rem;
   display: block;
 }
-/* line 359, ../sass/_modules.scss */
+/* line 361, ../sass/_modules.scss */
 .card.contained .badge-flagfeed img, .node-form > div.card .badge-flagfeed img,
 #user-profile-form > div.card .badge-flagfeed img,
 #user-register-form > div.card .badge-flagfeed img, #content .card.search-form .badge-flagfeed img {
@@ -6808,7 +6818,7 @@ td.views-field-access {
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 365, ../sass/_modules.scss */
+/* line 367, ../sass/_modules.scss */
 .card.contained .badge-wordpress-feedme, .node-form > div.card .badge-wordpress-feedme,
 #user-profile-form > div.card .badge-wordpress-feedme,
 #user-register-form > div.card .badge-wordpress-feedme, #content .card.search-form .badge-wordpress-feedme {
@@ -6816,7 +6826,7 @@ td.views-field-access {
   height: 4rem;
   display: block;
 }
-/* line 369, ../sass/_modules.scss */
+/* line 371, ../sass/_modules.scss */
 .card.contained .badge-wordpress-feedme img, .node-form > div.card .badge-wordpress-feedme img,
 #user-profile-form > div.card .badge-wordpress-feedme img,
 #user-register-form > div.card .badge-wordpress-feedme img, #content .card.search-form .badge-wordpress-feedme img {
@@ -6824,7 +6834,7 @@ td.views-field-access {
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 375, ../sass/_modules.scss */
+/* line 377, ../sass/_modules.scss */
 .card.contained .badge-marketplace-feedme, .node-form > div.card .badge-marketplace-feedme,
 #user-profile-form > div.card .badge-marketplace-feedme,
 #user-register-form > div.card .badge-marketplace-feedme, #content .card.search-form .badge-marketplace-feedme {
@@ -6832,7 +6842,7 @@ td.views-field-access {
   height: 4rem;
   display: block;
 }
-/* line 379, ../sass/_modules.scss */
+/* line 381, ../sass/_modules.scss */
 .card.contained .badge-marketplace-feedme img, .node-form > div.card .badge-marketplace-feedme img,
 #user-profile-form > div.card .badge-marketplace-feedme img,
 #user-register-form > div.card .badge-marketplace-feedme img, #content .card.search-form .badge-marketplace-feedme img {
@@ -6840,7 +6850,7 @@ td.views-field-access {
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 385, ../sass/_modules.scss */
+/* line 387, ../sass/_modules.scss */
 .card.contained .badge-search-result, .node-form > div.card .badge-search-result,
 #user-profile-form > div.card .badge-search-result,
 #user-register-form > div.card .badge-search-result, #content .card.search-form .badge-search-result {
@@ -6848,7 +6858,7 @@ td.views-field-access {
   height: 4rem;
   display: block;
 }
-/* line 389, ../sass/_modules.scss */
+/* line 391, ../sass/_modules.scss */
 .card.contained .badge-search-result img, .node-form > div.card .badge-search-result img,
 #user-profile-form > div.card .badge-search-result img,
 #user-register-form > div.card .badge-search-result img, #content .card.search-form .badge-search-result img {
@@ -6856,7 +6866,7 @@ td.views-field-access {
   max-width: 100%;
   border-radius: 0.25rem;
 }
-/* line 395, ../sass/_modules.scss */
+/* line 397, ../sass/_modules.scss */
 .card.contained .teaser, .node-form > div.card .teaser,
 #user-profile-form > div.card .teaser,
 #user-register-form > div.card .teaser, #content .card.search-form .teaser {
@@ -6865,13 +6875,13 @@ td.views-field-access {
   vertical-align: middle;
   padding-right: 1.75rem;
 }
-/* line 400, ../sass/_modules.scss */
+/* line 402, ../sass/_modules.scss */
 .card.contained .teaser p, .node-form > div.card .teaser p,
 #user-profile-form > div.card .teaser p,
 #user-register-form > div.card .teaser p, #content .card.search-form .teaser p {
   margin: 0;
 }
-/* line 402, ../sass/_modules.scss */
+/* line 404, ../sass/_modules.scss */
 .card.contained .prime-title, .node-form > div.card .prime-title,
 #user-profile-form > div.card .prime-title,
 #user-register-form > div.card .prime-title, #content .card.search-form .prime-title {
@@ -6882,7 +6892,7 @@ td.views-field-access {
   padding: 0;
   letter-spacing: normal;
 }
-/* line 411, ../sass/_modules.scss */
+/* line 413, ../sass/_modules.scss */
 .card.contained .meta, .node-form > div.card .meta,
 #user-profile-form > div.card .meta,
 #user-register-form > div.card .meta, #content .card.search-form .meta {
@@ -6891,26 +6901,26 @@ td.views-field-access {
   line-height: 1.25rem;
   display: block;
 }
-/* line 417, ../sass/_modules.scss */
+/* line 419, ../sass/_modules.scss */
 .card.contained .meta span:after, .node-form > div.card .meta span:after,
 #user-profile-form > div.card .meta span:after,
 #user-register-form > div.card .meta span:after, #content .card.search-form .meta span:after {
   content: ', ';
 }
-/* line 422, ../sass/_modules.scss */
+/* line 424, ../sass/_modules.scss */
 .card.contained .meta span:last-of-type:after, .node-form > div.card .meta span:last-of-type:after,
 #user-profile-form > div.card .meta span:last-of-type:after,
 #user-register-form > div.card .meta span:last-of-type:after, #content .card.search-form .meta span:last-of-type:after {
   content: '';
 }
-/* line 427, ../sass/_modules.scss */
+/* line 429, ../sass/_modules.scss */
 .card.contained .extra, .node-form > div.card .extra,
 #user-profile-form > div.card .extra,
 #user-register-form > div.card .extra, #content .card.search-form .extra {
   position: absolute;
   top: 0.5rem;
 }
-/* line 431, ../sass/_modules.scss */
+/* line 433, ../sass/_modules.scss */
 .card.contained .chapter-sticker, .node-form > div.card .chapter-sticker,
 #user-profile-form > div.card .chapter-sticker,
 #user-register-form > div.card .chapter-sticker, #content .card.search-form .chapter-sticker, .card.contained .organization-sticker, .node-form > div.card .organization-sticker,
@@ -6926,7 +6936,7 @@ td.views-field-access {
   font-size: 0.75rem;
   width: 4rem;
 }
-/* line 443, ../sass/_modules.scss */
+/* line 445, ../sass/_modules.scss */
 .card.contained .chapter-sticker, .node-form > div.card .chapter-sticker,
 #user-profile-form > div.card .chapter-sticker,
 #user-register-form > div.card .chapter-sticker, #content .card.search-form .chapter-sticker {
@@ -6941,14 +6951,14 @@ td.views-field-access {
   -o-transform-origin: top right;
   transform-origin: top right;
 }
-/* line 451, ../sass/_modules.scss */
+/* line 453, ../sass/_modules.scss */
 .card.contained .organization-sticker, .node-form > div.card .organization-sticker,
 #user-profile-form > div.card .organization-sticker,
 #user-register-form > div.card .organization-sticker, #content .card.search-form .organization-sticker {
   position: relative;
   right: -1.5rem;
 }
-/* line 455, ../sass/_modules.scss */
+/* line 457, ../sass/_modules.scss */
 .card.contained .chapter-sticker-icon-text, .node-form > div.card .chapter-sticker-icon-text,
 #user-profile-form > div.card .chapter-sticker-icon-text,
 #user-register-form > div.card .chapter-sticker-icon-text, #content .card.search-form .chapter-sticker-icon-text, .card.contained .organization-sticker-icon-text, .node-form > div.card .organization-sticker-icon-text,
@@ -6956,13 +6966,13 @@ td.views-field-access {
 #user-register-form > div.card .organization-sticker-icon-text, #content .card.search-form .organization-sticker-icon-text {
   display: none;
 }
-/* line 459, ../sass/_modules.scss */
+/* line 461, ../sass/_modules.scss */
 .node-chapter .card.contained .extra, .node-chapter .node-form > div.card .extra,
 .node-chapter #user-profile-form > div.card .extra,
 .node-chapter #user-register-form > div.card .extra, .node-chapter #content .card.search-form .extra, #content .node-chapter .card.search-form .extra {
   display: none;
 }
-/* line 464, ../sass/_modules.scss */
+/* line 466, ../sass/_modules.scss */
 .team-list .card.contained, .team-list .node-form > div.card,
 .team-list #user-profile-form > div.card,
 .team-list #user-register-form > div.card, .team-list #content .card.search-form, #content .team-list .card.search-form, .related-list .card.contained, .related-list .node-form > div.card,
@@ -6971,7 +6981,7 @@ td.views-field-access {
   margin-bottom: 0;
   border-radius: 0;
 }
-/* line 469, ../sass/_modules.scss */
+/* line 471, ../sass/_modules.scss */
 .team-list .card.contained > a, .team-list .node-form > div.card > a,
 .team-list #user-profile-form > div.card > a,
 .team-list #user-register-form > div.card > a, .team-list #content .card.search-form > a, #content .team-list .card.search-form > a, .related-list .card.contained > a, .related-list .node-form > div.card > a,
@@ -6995,7 +7005,7 @@ td.views-field-access {
   -o-transition-delay: 0, 0, 0, 0;
   transition-delay: 0, 0, 0, 0;
 }
-/* line 476, ../sass/_modules.scss */
+/* line 478, ../sass/_modules.scss */
 .team-list .card.contained > a:hover, .team-list .node-form > div.card > a:hover,
 .team-list #user-profile-form > div.card > a:hover,
 .team-list #user-register-form > div.card > a:hover, .team-list #content .card.search-form > a:hover, #content .team-list .card.search-form > a:hover, .related-list .card.contained > a:hover, .related-list .node-form > div.card > a:hover,
@@ -7005,7 +7015,7 @@ td.views-field-access {
   background-color: rgba(127, 190, 218, 0.2);
   color: #007eb5;
 }
-/* line 483, ../sass/_modules.scss */
+/* line 485, ../sass/_modules.scss */
 .team-list .card.contained .extra, .team-list .node-form > div.card .extra,
 .team-list #user-profile-form > div.card .extra,
 .team-list #user-register-form > div.card .extra, .team-list #content .card.search-form .extra, #content .team-list .card.search-form .extra, .related-list .card.contained .extra, .related-list .node-form > div.card .extra,
@@ -7014,7 +7024,7 @@ td.views-field-access {
   right: 2.25rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 464, ../sass/_modules.scss */
+  /* line 466, ../sass/_modules.scss */
   .team-list .card.contained, .team-list .node-form > div.card,
   .team-list #user-profile-form > div.card,
   .team-list #user-register-form > div.card, .team-list #content .card.search-form, #content .team-list .card.search-form, .related-list .card.contained, .related-list .node-form > div.card,
@@ -7024,7 +7034,7 @@ td.views-field-access {
   }
 }
 @media only screen and (min-width: 69.063rem) {
-  /* line 492, ../sass/_modules.scss */
+  /* line 494, ../sass/_modules.scss */
   .team-list .card.contained > a, .team-list .node-form > div.card > a,
   .team-list #user-profile-form > div.card > a,
   .team-list #user-register-form > div.card > a, .team-list #content .card.search-form > a, #content .team-list .card.search-form > a, .related-list .card.contained > a, .related-list .node-form > div.card > a,
@@ -7033,7 +7043,7 @@ td.views-field-access {
     padding-left: 2rem;
     padding-right: 4rem;
   }
-  /* line 496, ../sass/_modules.scss */
+  /* line 498, ../sass/_modules.scss */
   .team-list .card.contained .extra, .team-list .node-form > div.card .extra,
   .team-list #user-profile-form > div.card .extra,
   .team-list #user-register-form > div.card .extra, .team-list #content .card.search-form .extra, #content .team-list .card.search-form .extra, .related-list .card.contained .extra, .related-list .node-form > div.card .extra,
@@ -7042,7 +7052,7 @@ td.views-field-access {
     right: 3.25rem;
   }
 }
-/* line 505, ../sass/_modules.scss */
+/* line 507, ../sass/_modules.scss */
 .grid .card.contained > a, .grid .node-form > div.card > a,
 .grid #user-profile-form > div.card > a,
 .grid #user-register-form > div.card > a, .grid #content .card.search-form > a, #content .grid .card.search-form > a {
@@ -7054,7 +7064,7 @@ td.views-field-access {
   -o-transition: -o-transform 0.1s ease-in-out;
   transition: transform 0.1s ease-in-out;
 }
-/* line 511, ../sass/_modules.scss */
+/* line 513, ../sass/_modules.scss */
 .grid .card.contained > a:hover, .grid .node-form > div.card > a:hover,
 .grid #user-profile-form > div.card > a:hover,
 .grid #user-register-form > div.card > a:hover, .grid #content .card.search-form > a:hover, #content .grid .card.search-form > a:hover {
@@ -7066,46 +7076,46 @@ td.views-field-access {
   -o-transform: scale(1.05);
   transform: scale(1.05);
 }
-/* line 517, ../sass/_modules.scss */
+/* line 519, ../sass/_modules.scss */
 .grid .card.contained .extra, .grid .node-form > div.card .extra,
 .grid #user-profile-form > div.card .extra,
 .grid #user-register-form > div.card .extra, .grid #content .card.search-form .extra, #content .grid .card.search-form .extra {
   right: 1.75rem;
 }
 @media only screen and (min-width: 34.063rem) {
-  /* line 503, ../sass/_modules.scss */
+  /* line 505, ../sass/_modules.scss */
   .grid .card.contained, .grid .node-form > div.card,
   .grid #user-profile-form > div.card,
   .grid #user-register-form > div.card, .grid #content .card.search-form, #content .grid .card.search-form {
     text-align: center;
   }
-  /* line 523, ../sass/_modules.scss */
+  /* line 525, ../sass/_modules.scss */
   .grid .card.contained > a, .grid .node-form > div.card > a,
   .grid #user-profile-form > div.card > a,
   .grid #user-register-form > div.card > a, .grid #content .card.search-form > a, #content .grid .card.search-form > a {
     display: block;
     padding: 0 0 2rem 0;
   }
-  /* line 527, ../sass/_modules.scss */
+  /* line 529, ../sass/_modules.scss */
   .grid .card.contained.node-event > a, .grid .node-form > div.card.node-event > a,
   .grid #user-profile-form > div.card.node-event > a,
   .grid #user-register-form > div.card.node-event > a, .grid #content .card.node-event.search-form > a, #content .grid .card.node-event.search-form > a {
     padding-right: 0;
   }
-  /* line 530, ../sass/_modules.scss */
+  /* line 532, ../sass/_modules.scss */
   .grid .card.contained .media, .grid .node-form > div.card .media,
   .grid #user-profile-form > div.card .media,
   .grid #user-register-form > div.card .media, .grid #content .card.search-form .media, #content .grid .card.search-form .media {
     float: none;
     margin: 0 0 1rem 0;
   }
-  /* line 534, ../sass/_modules.scss */
+  /* line 536, ../sass/_modules.scss */
   .grid .card.contained .cover, .grid .node-form > div.card .cover,
   .grid #user-profile-form > div.card .cover,
   .grid #user-register-form > div.card .cover, .grid #content .card.search-form .cover, #content .grid .card.search-form .cover {
     display: block;
   }
-  /* line 537, ../sass/_modules.scss */
+  /* line 539, ../sass/_modules.scss */
   .grid .card.contained .avatar, .grid .node-form > div.card .avatar,
   .grid #user-profile-form > div.card .avatar,
   .grid #user-register-form > div.card .avatar, .grid #content .card.search-form .avatar, #content .grid .card.search-form .avatar {
@@ -7115,7 +7125,7 @@ td.views-field-access {
     background-color: #FFF;
     margin: -4rem auto 0 auto;
   }
-  /* line 544, ../sass/_modules.scss */
+  /* line 546, ../sass/_modules.scss */
   .grid .card.contained .badge-chapter, .grid .node-form > div.card .badge-chapter,
   .grid #user-profile-form > div.card .badge-chapter,
   .grid #user-register-form > div.card .badge-chapter, .grid #content .card.search-form .badge-chapter, #content .grid .card.search-form .badge-chapter {
@@ -7124,7 +7134,7 @@ td.views-field-access {
     font-size: 1.25rem;
     padding-bottom: 1rem;
   }
-  /* line 549, ../sass/_modules.scss */
+  /* line 551, ../sass/_modules.scss */
   .grid .card.contained .badge-chapter:after, .grid .node-form > div.card .badge-chapter:after,
   .grid #user-profile-form > div.card .badge-chapter:after,
   .grid #user-register-form > div.card .badge-chapter:after, .grid #content .card.search-form .badge-chapter:after, #content .grid .card.search-form .badge-chapter:after {
@@ -7132,21 +7142,21 @@ td.views-field-access {
     width: 1rem;
     border-radius: 0.25rem 0 0 0;
   }
-  /* line 555, ../sass/_modules.scss */
+  /* line 557, ../sass/_modules.scss */
   .grid .card.contained .badge-cal, .grid .node-form > div.card .badge-cal,
   .grid #user-profile-form > div.card .badge-cal,
   .grid #user-register-form > div.card .badge-cal, .grid #content .card.search-form .badge-cal, #content .grid .card.search-form .badge-cal {
     width: 6rem;
     height: 6rem;
   }
-  /* line 558, ../sass/_modules.scss */
+  /* line 560, ../sass/_modules.scss */
   .grid .card.contained .badge-cal .month, .grid .node-form > div.card .badge-cal .month,
   .grid #user-profile-form > div.card .badge-cal .month,
   .grid #user-register-form > div.card .badge-cal .month, .grid #content .card.search-form .badge-cal .month, #content .grid .card.search-form .badge-cal .month {
     font-size: 1.25rem;
     line-height: 2rem;
   }
-  /* line 562, ../sass/_modules.scss */
+  /* line 564, ../sass/_modules.scss */
   .grid .card.contained .badge-cal .day, .grid .node-form > div.card .badge-cal .day,
   .grid #user-profile-form > div.card .badge-cal .day,
   .grid #user-register-form > div.card .badge-cal .day, .grid #content .card.search-form .badge-cal .day, #content .grid .card.search-form .badge-cal .day {
@@ -7155,7 +7165,7 @@ td.views-field-access {
     padding-bottom: 0.5rem;
     letter-spacing: -0.125rem;
   }
-  /* line 570, ../sass/_modules.scss */
+  /* line 572, ../sass/_modules.scss */
   .grid .card.contained .badge-organization, .grid .node-form > div.card .badge-organization,
   .grid #user-profile-form > div.card .badge-organization,
   .grid #user-register-form > div.card .badge-organization, .grid #content .card.search-form .badge-organization, #content .grid .card.search-form .badge-organization,
@@ -7168,7 +7178,7 @@ td.views-field-access {
     width: 6rem;
     height: 6rem;
   }
-  /* line 574, ../sass/_modules.scss */
+  /* line 576, ../sass/_modules.scss */
   .grid .card.contained .teaser, .grid .node-form > div.card .teaser,
   .grid #user-profile-form > div.card .teaser,
   .grid #user-register-form > div.card .teaser, .grid #content .card.search-form .teaser, #content .grid .card.search-form .teaser {
@@ -7176,21 +7186,21 @@ td.views-field-access {
     width: auto;
     padding: 0 1rem;
   }
-  /* line 579, ../sass/_modules.scss */
+  /* line 581, ../sass/_modules.scss */
   .grid .card.contained .prime-title, .grid .node-form > div.card .prime-title,
   .grid #user-profile-form > div.card .prime-title,
   .grid #user-register-form > div.card .prime-title, .grid #content .card.search-form .prime-title, #content .grid .card.search-form .prime-title {
     font-size: 1.5rem;
     line-height: 1.16667;
   }
-  /* line 584, ../sass/_modules.scss */
+  /* line 586, ../sass/_modules.scss */
   .grid .card.contained .meta, .grid .node-form > div.card .meta,
   .grid #user-profile-form > div.card .meta,
   .grid #user-register-form > div.card .meta, .grid #content .card.search-form .meta, #content .grid .card.search-form .meta {
     font-size: 1rem;
     line-height: 1.5;
   }
-  /* line 588, ../sass/_modules.scss */
+  /* line 590, ../sass/_modules.scss */
   .grid .card.contained .extra, .grid .node-form > div.card .extra,
   .grid #user-profile-form > div.card .extra,
   .grid #user-register-form > div.card .extra, .grid #content .card.search-form .extra, #content .grid .card.search-form .extra {
@@ -7199,7 +7209,7 @@ td.views-field-access {
     left: 0.5rem;
     right: auto;
   }
-  /* line 594, ../sass/_modules.scss */
+  /* line 596, ../sass/_modules.scss */
   .grid .card.contained .chapter-sticker, .grid .node-form > div.card .chapter-sticker,
   .grid #user-profile-form > div.card .chapter-sticker,
   .grid #user-register-form > div.card .chapter-sticker, .grid #content .card.search-form .chapter-sticker, #content .grid .card.search-form .chapter-sticker, .grid .card.contained .organization-sticker, .grid .node-form > div.card .organization-sticker,
@@ -7214,14 +7224,14 @@ td.views-field-access {
     -o-transform: rotate(0);
     transform: rotate(0);
   }
-  /* line 600, ../sass/_modules.scss */
+  /* line 602, ../sass/_modules.scss */
   .grid .card.contained .organization-sticker, .grid .node-form > div.card .organization-sticker,
   .grid #user-profile-form > div.card .organization-sticker,
   .grid #user-register-form > div.card .organization-sticker, .grid #content .card.search-form .organization-sticker, #content .grid .card.search-form .organization-sticker {
     position: initial;
     right: 0rem;
   }
-  /* line 604, ../sass/_modules.scss */
+  /* line 606, ../sass/_modules.scss */
   .grid .card.contained .chapter-sticker-icon-text, .grid .node-form > div.card .chapter-sticker-icon-text,
   .grid #user-profile-form > div.card .chapter-sticker-icon-text,
   .grid #user-register-form > div.card .chapter-sticker-icon-text, .grid #content .card.search-form .chapter-sticker-icon-text, #content .grid .card.search-form .chapter-sticker-icon-text, .grid .card.contained .organization-sticker-icon-text, .grid .node-form > div.card .organization-sticker-icon-text,

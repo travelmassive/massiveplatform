@@ -195,6 +195,50 @@ function tm_organizations_field_default_field_bases() {
     'type' => 'text',
   );
 
+  // Exported field_base: 'field_company_payment_commission'.
+  $field_bases['field_company_payment_commission'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_company_payment_commission',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(
+      'decimal_separator' => '.',
+      'precision' => 10,
+      'scale' => 2,
+    ),
+    'translatable' => 0,
+    'type' => 'number_decimal',
+  );
+
+  // Exported field_base: 'field_company_payments_enabled'.
+  $field_bases['field_company_payments_enabled'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_company_payments_enabled',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'enabled' => 'Payments Enabled',
+        'disabled' => 'Payments Disabled',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
   // Exported field_base: 'field_company_subscription_date'.
   $field_bases['field_company_subscription_date'] = array(
     'active' => 1,

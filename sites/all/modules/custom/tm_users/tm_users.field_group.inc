@@ -176,8 +176,9 @@ function tm_users_field_group_info() {
       13 => 'tm_ds_subscription_user_cta_ds',
       14 => 'tm_ds_subscription_user_badge_ds',
       15 => 'tm_ds_connection_actions',
-      16 => 'group_location_wrapper',
-      17 => 'group_user_qa_wrapper',
+      16 => 'tm_ds_track_viewers',
+      17 => 'group_location_wrapper',
+      18 => 'group_user_qa_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -468,7 +469,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '39',
+    'weight' => '40',
     'children' => array(
       0 => 'field_location_city',
     ),
@@ -678,7 +679,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'QA',
-    'weight' => '38',
+    'weight' => '39',
     'children' => array(
       0 => 'group_user_qa',
     ),

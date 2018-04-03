@@ -93,6 +93,22 @@ function tm_fields_ds_fields_info($entity_type) {
       )
     )
   );
+
+  // provided by tm_track_views
+  $fields['tm_ds_track_viewers'] = array(
+    'title' => t('Who viewed my profile'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('user|*'),
+    'function' => '_tm_ds_track_viewers_wrapper'
+  );
+
+  // provided by tm_track_views
+  $fields['tm_ds_track_company_viewers'] = array(
+    'title' => t('Who viewed my company profile'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('organization|*'),
+    'function' => '_tm_ds_track_viewers_wrapper'
+  );
   
   return array($entity_type => $fields);
 }
@@ -2654,3 +2670,18 @@ function tm_fields_google_analytics_report_link($path) {
 
   return $google_analytics_report_link;
 }
+
+/**
+ * Check that tm_track_views is enabled first
+ */
+function _tm_ds_track_viewers_wrapper($field, $title = NULL) {
+
+  // call ds function in tm_track_views.display
+  if (module_exists("tm_track_views")) {
+    return _tm_ds_track_viewers($field, $title);
+  }
+
+  // tm_track_views not enabled
+  return "";
+}
+

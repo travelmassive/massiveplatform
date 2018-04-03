@@ -145,6 +145,8 @@
     &.tm-ds-subscription-organization-cta-ds:before { @extend .icon-2017-subscribe-cta; font-size: 16pt;}
     &.tm-ds-subscription-user-badge-ds:before { @extend .icon-2017-subscriber; font-size: 16pt;}
     &.tm-ds-subscription-user-cta-ds:before { @extend .icon-2017-subscribe-cta; font-size: 16pt;}
+    &.tm-ds-track-viewers:before { @extend .icon-2016-eye; }
+    &.tm-ds-track-company-viewers:before { @extend .icon-2016-eye; }
 
     &.field-link-facebook,
     &.field-link-linkedin,

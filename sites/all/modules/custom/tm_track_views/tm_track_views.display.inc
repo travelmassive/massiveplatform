@@ -1,0 +1,193 @@
+<?php
+
+// tm_track_views.display.inc
+
+/**
+ * Render how many people have viewed your profile
+ * Called from _tm_ds_track_viewers_wrapper in tm_fields.module
+ */
+function _tm_ds_track_viewers($field, $title = NULL) {
+
+	global $conf;
+	global $user;
+
+	// get entity
+	$entity = $field['entity'];
+
+	// get entity_id and entity_type
+	if (isset($entity->uid)) {
+		$entity_id = $entity->uid;
+		$entity_type = "user";
+	}
+	if (isset($entity->nid)) {
+		$entity_id = $entity->nid;
+		$entity_type = "node";
+		if ($entity->type != "organization") {
+			return;
+		}
+	}
+
+	// only show to logged in user
+	if (!user_is_logged_in()) {
+		return;
+	}
+
+	// only show for your own profile
+	if ($entity_type == "user") {
+		if ($entity_id != $user->uid) {
+			return;
+		}
+	}
+	if ($entity_type == "node") {
+		if (!tm_organizations_is_company_profile_manager($user->uid, $entity_id)) {
+			return;
+		}
+	}
+
+	// get number of views
+	$num_unique_viewers = tm_track_views_how_many_viewed($entity_id, $entity_type, $user->uid, $conf["tm_track_views_store_days"]);
+
+	// don't display if no viewers
+	if ($num_unique_viewers == 0) {
+		return "";
+	}
+
+	// pluralize
+	$member_text = "member";
+	if ($num_unique_viewers > 1) {
+		$member_text = "members";
+	}
+
+	// link
+	$link = "/user/" . $entity_id . "/viewers";
+	if ($entity_type == "node") {
+		$link = "/company/" . $entity_id . "/viewers";
+	}
+
+	// render message
+	$html = "Your profile has been viewed by " . $num_unique_viewers . " " . $member_text . " &middot; <a href='" . $link . "'>Who visited</a>";
+
+	return $html;
+}
+
+/**
+ * Implements hook_views_pre_execute().
+ * Check permissions
+ */
+function tm_track_views_views_pre_execute(&$view) {
+
+	// validate
+	if (($view->current_display != 'who_viewed_member_profile') and ($view->current_display != 'who_viewed_company_profile')) {
+		return;
+	}
+
+	global $conf;
+	global $user;
+
+	// prepare vars
+	$entity_id = arg(1); // ie: user/123/viewed
+	$current_display = $view->current_display; // who_viewed_member_profile or who_viewed_company_profile
+	$entity_type = "user";
+	if (arg(0) != "user") {
+		$entity_type = "node";
+	}
+
+	// check permission
+	$result = tm_track_views_check_permission($current_display, $entity_id, $user);
+	if ($result == false) {
+		return;
+	}
+
+	// add return link to profile
+	$profile_url = drupal_get_path_alias($entity_type . '/'. $entity_id);
+
+	// profile label
+	$profile_label = "View your profile";
+
+	// members name
+	if ($entity_type == "user") {
+		$entity = user_load($entity_id);
+		if ($entity != null) {
+			$user_first_name = $entity->field_user_first_name[LANGUAGE_NONE][0]['value'];
+			$user_last_name = $entity->field_user_last_name[LANGUAGE_NONE][0]['value'];
+			$profile_label = strip_tags($user_first_name . " " . $user_last_name);
+		}
+	}
+
+	// node title
+	if ($entity_type == "node") {
+		$entity = node_load($entity_id);
+		if ($entity != null) {
+			$profile_label = trim(strip_tags($entity->title));
+		}
+	}
+
+	// set js
+	$js_setting = array(
+		'tm_track_views_title' => array(
+			'profile_url' => $profile_url,
+			'profile_label' => $profile_label,
+		),
+	);
+	drupal_add_js($js_setting, 'setting');
+	drupal_add_js(drupal_get_path('module', 'tm_track_views') . '/js/tm_track_views_title.js');
+
+	// get number of views
+	$num_unique_viewers = tm_track_views_how_many_viewed($entity_id, $entity_type, $user->uid, $conf["tm_track_views_store_days"]);
+	if ($num_unique_viewers == 0) {
+		$help_message = "Nobody has viewed your profile yet.";
+	} else {
+		$help_message = "These members have viewed your profile in the past " . $conf["tm_track_views_store_days"] . " days.";
+	}
+
+	// show help tip
+	drupal_set_message($help_message, 'help-tip');
+
+	// always allow chapter leaders, moderators to view
+	if ((in_array("chapter leader", $user->roles)) or (in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles))) {
+		return;
+	}
+
+	// allow all members to see who has viewed their profile
+	if ($conf["tm_track_views_display_mode"] == "all") {
+		return;
+	}
+
+	// only allow approved members to see who has viewed profile
+	if ($conf["tm_track_views_display_mode"] == "approved") {
+		$message = $conf["tm_track_views_approved_message"];
+		if (in_array("approved user", $user->roles)) {
+			return;
+		}
+	}
+
+	// only allow subscribed members to see who has viewed profile
+	if ($conf["tm_track_views_display_mode"] == "subscribed") {
+		$message = $conf["tm_track_views_subscription_message"];
+		if (module_exists("tm_subscriptions")) {
+			if (tm_subscriptions_is_organization_subscription_enabled($entity_id)) {
+				return;
+			}
+		}
+		if (module_exists("tm_subscriptions_user")) {
+			if (tm_subscriptions_is_user_subscription_enabled($user->uid)) {
+				return;
+			}
+		}
+	}
+
+	// add view profile link
+	$message .= '<p></p><div class="more-link"><a href="/user/' . $user->uid . '" class="bttn bttn-secondary bttn-m" title="View my profile">View my profile</a></div>';
+
+	// add display message to js
+	$js_setting = array(
+		'tm_track_views' => array(
+			'display_message' => $message,
+		),
+	);
+	
+	// insert display js
+	drupal_add_js($js_setting, 'setting');
+	drupal_add_js(drupal_get_path('module', 'tm_track_views') . '/js/tm_track_views_display.js');
+
+}

@@ -188,7 +188,8 @@ function tm_organizations_field_group_info() {
       11 => 'tm_ds_tm_sponsor',
       12 => 'tm_ds_organization_follow_message',
       13 => 'tm_ds_organization_stats',
-      14 => 'group_location_wrapper',
+      14 => 'tm_ds_track_company_viewers',
+      15 => 'group_location_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -306,7 +307,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '14',
+    'weight' => '15',
     'children' => array(
       0 => 'field_location_city',
       1 => 'field_country',

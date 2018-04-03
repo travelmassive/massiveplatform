@@ -111,7 +111,7 @@ Change the userid and event id accordingly.
 # drush php-eval '$account = user_load(34757); $content_id = 16555; $event_paid = flag_get_flag("event_paid"); $event_paid->flag('flag', $content_id, $account, null); $event_register = flag_get_flag("event_register"); $event_register->flag('flag', $content_id, $account, null);'
 
 
-How to manually a subscription payment for a ompany:
+How to manually a subscription payment for a company:
 ------------------------------------------------
 
 Change the user id and nodeid accordingly.

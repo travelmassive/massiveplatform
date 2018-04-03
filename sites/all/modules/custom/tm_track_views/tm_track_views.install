@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function tm_track_views_schema() {
+  $schema = array();
+  $schema['tm_track_views'] = array(
+    'description' => 'The count views of node for every user.',
+    'fields' => array(
+      'id' => array(
+        'description' => 'The unique ID.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'entity_id' => array(
+        'description' => 'The entity_id ID.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'entity_type' => array(
+        'description' => 'The entity_id type.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'uid' => array(
+        'description' => 'The user ID who viewed the entity.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'timestamp' => array(
+        'description' => 'The Unix timestamp when the node was view.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0, 
+      ),
+    ),
+    'primary key' => array('id'),     
+    'indexes' => array(
+      'entity_id_uid' => array('uid', 'entity_id', 'entity_type'),
+      'timestamp' => array('timestamp'),  
+    ),  
+  );
+  return $schema;
+}
+

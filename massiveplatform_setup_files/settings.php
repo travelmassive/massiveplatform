@@ -957,3 +957,10 @@ $conf["tm_commissions_show_currency_symbol"] = true; // show currency symbol in 
 $conf["tm_commissions_display_internal"] = array("NA" => "North America", "EU" => "Europe", "AF" => "Africa", "AS" => "Asia", "LATAM" => "Latin America", "OC" => "Oceania");
 $conf["tm_commissions_users_who_can_access_region_reports"] = array(); // users who can access additional reports
 $conf["tm_commissions_summary_extra_text"] = " or <a href=''>learn more</a>"; // add text to commission summary 
+
+/** WHO'S VIEWED YOUR PROFILE **/
+$conf["tm_track_views_store_days"] = 90; // how many days to store profile views
+$conf["tm_track_views_display_mode"] = "all"; // options = all, approved, subscribed
+$conf["tm_track_views_display_unapproved"] = true; // show unapproved members
+$conf["tm_track_views_approved_message"] = "You need to be an Approved Member to see who's viewed your profile.";
+$conf["tm_track_views_subscription_message"] = "Upgrade to a <a href='/membership/invite'>Pro Membership</a> to see who viewed you.";

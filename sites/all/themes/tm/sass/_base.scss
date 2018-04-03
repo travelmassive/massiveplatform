@@ -585,6 +585,15 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
     filter: blur(2px);
 }
 
+/* Blur filter for jq_alert (large) */
+.tm-blur-filter-large {
+    -webkit-filter: blur(4px);
+    -moz-filter: blur(4px);
+    -o-filter: blur(4px);
+    -ms-filter: blur(4px);
+    filter: blur(4px);
+}
+
 /* Payments form message */
 .tm-payments-edit-form-message {
   background-color: #1ABC9C;

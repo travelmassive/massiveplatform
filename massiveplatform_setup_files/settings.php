@@ -646,6 +646,8 @@ $conf['tm_newsfeed_email_quotes'] = array(
 // start of feedback line and text of link
 $conf['tm_newsfeed_feedback_base'] = 'Feedback? Suggestions?';
 $conf['tm_newsfeed_feedback_link_text'] = 'Let us know';
+$conf['tm_newsfeed_feedback_link_url'] = '__BASE_URL__contact__UTM_CAMPAIGN__';
+$conf['tm_newsfeed_thankyou_phrase'] = "Cheers,";
 
 // show profile views (provided by tm_track_views)
 $conf['tm_newsfeed_min_viewers_week'] = 2; // minimum number of profile viewers (week)

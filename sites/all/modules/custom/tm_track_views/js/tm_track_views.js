@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-  var tm_track_view_ajax = function(entity_id, entity_type) {
+  function tm_track_view_ajax(entity_id, entity_type) {
     var tm_track_views_path = Drupal.settings.tm_track_views.path;
     $.ajax({
       type: 'GET',

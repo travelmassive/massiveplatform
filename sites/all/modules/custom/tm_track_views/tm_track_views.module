@@ -120,6 +120,8 @@ function tm_track_views_views_query_alter(&$view, &$query) {
  */
 function tm_track_views_cron() {
 
+	global $conf;
+
 	// run once a day
 	$run_cron_every = 24 * 60 * 60;
 
@@ -144,7 +146,7 @@ function tm_track_views_cron() {
 function tm_track_views_flush_old_entries($max_seconds_age) {
 
 	db_delete('tm_track_views')
-		->condition('timestamp', 'NOW() - ' . $max_seconds_age, '<')
+		->condition('timestamp', REQUEST_TIME - $max_seconds_age, '<')
 		->execute();
 }
 
@@ -193,3 +195,22 @@ function tm_track_views_enumerate_entity_type($entity_type) {
 	return 0;
 }
 
+/**
+ * Developer test method
+ * Create sample data for user visits
+ */
+function _tm_track_views_generate_sample_data($min_uid = 1, $max_uid = 100, $max_visits = 100, $max_days = 360) {
+
+	$entity_type = 1;
+	for ($uid = $min_uid; $uid <= $max_uid; $uid++) {
+
+		$num_visits = rand(0,$max_visits);
+		for ($j = 0; $j < $num_visits; $j++) {
+
+			$timestamp = rand(REQUEST_TIME - rand(0,($max_days*24*60*60)), REQUEST_TIME);
+			$entity_id = rand($min_uid, $max_uid);
+			tm_track_views_db($entity_id, $entity_type, $uid, $timestamp);
+		}
+	}
+
+}

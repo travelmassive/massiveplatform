@@ -79,13 +79,13 @@ function tm_track_views_ajax($entity_id, $entity_type) {
  * Track views in database
  * Enumerated entity_type: user = 1, node = 2
  */
-function tm_track_views_db($entity_id, $entity_type, $uid) {
+function tm_track_views_db($entity_id, $entity_type, $uid, $timestamp = REQUEST_TIME) {
 	
 	$fields = array(
 		'entity_id' => $entity_id,
 		'entity_type' => $entity_type,
 		'uid' => $uid,
-		'timestamp' => REQUEST_TIME,
+		'timestamp' => $timestamp,
 	);
 
 	$result = drupal_write_record('tm_track_views', $fields);

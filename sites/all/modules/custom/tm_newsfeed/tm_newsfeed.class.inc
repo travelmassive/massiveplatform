@@ -192,6 +192,10 @@ class TmNewsfeedEmail
 		// add base url
 		$email = str_replace("__BASE_URL__", tm_newfeed_absolute_url("/"), $email);
 
+		// add utm_campaign
+		$email = str_replace("__UTM_CAMPAIGN__", tm_newsfeed_utm_campaign(), $email);
+
+
 		// set the subject base text
 		$subject_base = $conf['tm_newsfeed_subject_base'];
 		$date_interval = date_diff(date_create($start_date), date_create($end_date));

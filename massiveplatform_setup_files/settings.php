@@ -588,7 +588,6 @@ $conf["tm_newsfeed_discuss_enabled"] = false; // enable discussions newsfeed
 $conf["tm_newsfeed_discuss_api_url"] = ""; // url for discussions api
 $conf["tm_newsfeed_discuss_cache"] = 60; // how long to cache results in seconds
 // $conf["tm_newsfeed_discuss_api_userpass"] = "user:pass"; // uncomment to use basic httpauth 
-// $conf["tm_newsfeed_discuss_classes"] = array(); // optional: always include categories with these classes
 
 // base email subject line
 $conf['tm_newsfeed_subject_base'] = "What's happening in the community";
@@ -651,7 +650,7 @@ $conf['tm_newsfeed_feedback_link_text'] = 'Let us know';
 // show profile views (provided by tm_track_views)
 $conf['tm_newsfeed_min_viewers_week'] = 2; // minimum number of profile viewers (week)
 $conf['tm_newsfeed_min_viewers_month'] = 5; // minimum number of profile viewers (month)
-$conf['tm_newsfeed_min_viewers_popular'] = 10; // how many viewers to be popular
+$conf['tm_newsfeed_min_viewers_popular'] = 10; // how many viewers to be popular in a week
 $conf['tm_newsfeed_prefix_viewers_month'] = "People are interested in you &mdash; ";
 $conf['tm_newsfeed_prefix_viewers_popular'] = "You're popular &mdash; ";
 

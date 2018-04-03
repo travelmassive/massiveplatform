@@ -171,7 +171,7 @@ function tm_track_views_how_many_viewed($entity_id, $entity_type, $exclude_uid, 
 		$role = user_role_load_by_name("approved user");
 		$query .= " INNER JOIN {users_roles} users_roles ON tm_track_views.uid = users_roles.uid AND users_roles.rid = " . $role->rid;
 	}
-	$query .= " WHERE entity_type = :entity_type AND entity_id = :entity_id AND tm_track_views.uid != :uid AND timestamp < NOW() - :max_seconds";
+	$query .= " WHERE entity_type = :entity_type AND entity_id = :entity_id AND tm_track_views.uid != :uid AND timestamp < UNIX_TIMESTAMP() - :max_seconds";
 
 	// fetch result
 	$result = db_query($query, array(":entity_type" => $entity_type, ":entity_id" => $entity_id, ":uid" => $exclude_uid, ":max_seconds" => $max_seconds))->fetch();

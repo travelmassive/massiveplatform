@@ -195,7 +195,7 @@ class TmNewsfeedEmail
 				// check past month
 				$num_views = tm_track_views_how_many_viewed($uid, 1, $uid, 30); // try 30 days
 				$min_views_month = $conf["tm_newsfeed_min_viewers_month"];
-				if ($num_views >= $min_views) {
+				if ($num_views >= $min_views_month) {
 					$tip =  "<em>" . $conf["tm_newsfeed_prefix_viewers_month"] . $num_views . " members have viewed <a href='" . $edit_url . "'>your profile</a> in the past month.</em>";
 					return $tip;
 				}

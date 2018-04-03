@@ -17,10 +17,49 @@ class TmNewsfeedEmailGenerator
 		return "Debug log:\n" . implode("\n", $this->_debug_log);
 	}
 
+	public function fetch_stats() {
+
+		global $tm_stats;
+
+		// prefetch stats
+		$tm_stats = array();
+
+		// ALL MEMBERS
+		$query_sql = "SELECT COUNT(*) total FROM {users} u";
+		$query = db_query($query_sql)->fetch();
+		$members_total = $query->total;
+		$tm_stats["members_total"] = $members_total;
+
+		// ALL APPROVED MEMBERS
+		$approved_role = $role = user_role_load_by_name("approved user");
+		$query_sql = "SELECT COUNT(DISTINCT u.uid) total FROM {users} u RIGHT JOIN users_roles ON users_roles.uid = u.uid WHERE users_roles.rid = :role_id";
+		$query = db_query($query_sql, array(':role_id' => $approved_role->rid))->fetch();
+		$members_approved_total = $query->total;
+		$tm_stats["members_approved_total"] = $members_approved_total;
+
+		// TOTAL UNAPPROVED MEMBERS
+		$members_unapproved_total = $members_total - $members_approved_total;
+		$tm_stats["members_unapproved_total"] = $members_unapproved_total;
+
+		// ROUNDED TO THOUSANDS
+		$tm_stats["members_total_rounded"] = number_format(floor(round($tm_stats["members_total"]/1000,4))*1000);
+		$tm_stats["members_approved_total_rounded"] = number_format(floor(round($tm_stats["members_approved_total"]/1000,4))*1000);
+		$tm_stats["members_unapproved_total_rounded"] = number_format(floor(round($tm_stats["members_unapproved_total"]/1000,4))*1000);
+
+		// SHORTED TO K
+		$tm_stats["members_total_k"] = str_replace(",000", "k", $tm_stats["members_total_rounded"]);
+		$tm_stats["members_approved_total_k"] = str_replace(",000", "k", $tm_stats["members_approved_total_rounded"]);
+		$tm_stats["members_unapproved_total_k"] = str_replace(",000", "k", $tm_stats["members_unapproved_total_rounded"]);
+
+	}
+
 	public function start($user_ids, $start_date, $end_date) {
 
 		global $conf;
 		global $debug_timer;
+
+		// fetch stats
+		$this->fetch_stats();
 
 		// debug info
 		$this->debug(print_r('#users: '. count($user_ids), true));
@@ -80,6 +119,7 @@ class TmNewsfeedEmail
 
 		global $conf;
 		global $debug_timer;
+		global $tm_stats;
 
 		// process inputs
 		$debug_timer['03a_user_load'] = time();
@@ -118,21 +158,39 @@ class TmNewsfeedEmail
 		}
 		$email = str_replace("__EMAIL_CONTENT__", $content, $email);
 
+		$email = str_replace("__QUOTE_OF_THE_DAY_PREFIX__", $conf['tm_newsfeed_email_quote_prefix'], $email);
 		$quote = $conf['tm_newsfeed_email_quotes'][array_rand($conf['tm_newsfeed_email_quotes'])];
 		$email = str_replace("__QUOTE_OF_THE_DAY__", $quote['text'], $email);
-		$email = str_replace("__QUOTE_OF_THE_DAY_AUTHOR__", $quote['author'], $email);
+		if (isset($quote['author'])) {
+			$email = str_replace("__QUOTE_OF_THE_DAY_AUTHOR__", " - " . $quote['author'], $email);
+		} else {
+			$email = str_replace("__QUOTE_OF_THE_DAY_AUTHOR__", "", $email);
+		}
 
 		$feedback_base = $conf['tm_newsfeed_feedback_base'];
 		$feedback_link_text = $conf['tm_newsfeed_feedback_link_text'];
-		$feedback = "$feedback_base <a href='".tm_newfeed_absolute_url("contact").tm_newsfeed_utm_campaign()."'>$feedback_link_text</a>";
+		$feedback_link_url = $conf['tm_newsfeed_feedback_link_url'];
+		$feedback = "$feedback_base <a href='".$feedback_link_url."'>$feedback_link_text</a>";
 		$email = str_replace("__LET_US_KNOW_FEEDBACK__", $feedback, $email);
 
-		$email = str_replace("__THANK_YOU_PHRASE__", "Cheers", $email);
+		$email = str_replace("__THANK_YOU_PHRASE__", $conf["tm_newsfeed_thankyou_phrase"], $email);
 		$email = str_replace("__PLATFORM_NAME__", $conf['tm_site_name'], $email);
 
 		// strip all exclamation marks as they trigger spam filters
 		$email = str_replace("!", "", $email);
 		$email = str_replace("$", "", $email);
+
+		// add stats
+		$email = str_replace("__STATS_MEMBERS_TOTAL__", $tm_stats["members_total"], $email);
+		$email = str_replace("__STATS_MEMBERS_TOTAL_ROUNDED__", $tm_stats["members_total_rounded"], $email);
+		$email = str_replace("__STATS_MEMBERS_TOTAL_K__", $tm_stats["members_total_k"], $email);
+
+		$email = str_replace("__STATS_MEMBERS_APPROVED_TOTAL__", $tm_stats["members_approved_total"], $email);
+		$email = str_replace("__STATS_MEMBERS_APPROVED_ROUNDED__", $tm_stats["members_approved_total_rounded"], $email);
+		$email = str_replace("__STATS_MEMBERS_APPROVED_TOTAL_K__", $tm_stats["members_approved_total_k"], $email);
+
+		// add base url
+		$email = str_replace("__BASE_URL__", tm_newfeed_absolute_url("/"), $email);
 
 		// set the subject base text
 		$subject_base = $conf['tm_newsfeed_subject_base'];
@@ -201,12 +259,28 @@ class TmNewsfeedEmail
 				}
 			}
 		}
-		
-		// no followers
-		$following_no_one = (0 == db_query("select count(*) from flagging where fid=1 and uid = :uid", array(":uid" => $uid))->fetchField());
-		if ($following_no_one){
-			$tips[] = $conf["tm_newsfeed_email_tip_not_following"];
+			
+		// find members
+		$follow_members_url = "search";
+		// if member has segment, link to search in segment
+		$field_segment_tid = db_query("select field_segment_tid from field_data_field_segment where entity_type = 'user' and entity_id = :uid", array(":uid" => $uid))->fetchField();
+		if ($field_segment_tid != null) {
+			$segment_name = db_query("select name from taxonomy_term_data where tid = :tid", array(":tid" => $field_segment_tid))->fetchField();
+			if ($segment_name != "") {
+				if (strpos($segment_name, " ") > 0) {
+					$segment_name = '"' . $segment_name . '"'; // add quotes if segment name has spaces
+				}
+				$follow_members_url = "search?query=segment:" . strip_tags($segment_name) . "|people";
+			}
 		}
+
+		// get absolute url with utm_campaign
+		$follow_members_url = tm_newfeed_absolute_url($follow_members_url);
+		
+		// construct not following message and insert follow members url
+		$find_members_message = $conf["tm_newsfeed_email_tip_find_members"];
+		$find_members_message = str_replace("__FOLLOW_MEMBERS_URL__", $follow_members_url, $find_members_message);
+		$tips[] = $find_members_message;
 
 		// no chapters
 		$no_chapters = (0 == db_query("select count(*) from flagging where fid=3 and uid = :uid", array(":uid" => $uid))->fetchField());
@@ -251,20 +325,21 @@ class TmNewsfeedEmail
 			}
 		}
 
-		// about me
-		if (sizeof($account->field_about_me) == 0) {
-			$tips[] = "Share a little bit " . l(t('about yourself'), $edit_url) . " so other members know why they should connect with you.";
-		}
+
+		// other conditions
+
+		// no followers
+		// $following_no_one = (0 == db_query("select count(*) from flagging where fid=1 and uid = :uid", array(":uid" => $uid))->fetchField());
+
+		// no about me
+		// if (sizeof($account->field_about_me) == 0) {}
 
 		// no location
-		if ((sizeof($account->field_location_city) == 0) or (sizeof($account->field_user_country) == 0)) {
-			$tips[] = "Share " . l(t('where you are located'), $edit_url) . " so local members can find you.";
-		}
-
+		// if ((sizeof($account->field_location_city) == 0) or (sizeof($account->field_user_country) == 0)) {}
+		
 		// no job role
-		if (sizeof($account->field_job_role) == 0) {
-			$tips[] = "Fill out your " . l(t('job role'), $edit_url) . " so other professionals can find your profile.";
-		}
+		// if (sizeof($account->field_job_role) == 0) {}
+
 
 		// more tips
 		if(isset($conf["tm_newsfeed_email_more_tips"])) {
@@ -648,11 +723,11 @@ class TmNewsfeedEmailTemplates
 	__EMAIL_CONTENT__
 </div>
 <div class="email-end">
-	<p>Quote of the day:<br>
-	"__QUOTE_OF_THE_DAY__" - <em>__QUOTE_OF_THE_DAY_AUTHOR__</em>
+	<p>__QUOTE_OF_THE_DAY_PREFIX__<br>
+	"__QUOTE_OF_THE_DAY__" <em>__QUOTE_OF_THE_DAY_AUTHOR__</em>
 	</p>
 	<p>__LET_US_KNOW_FEEDBACK__</p>
-	<p>__THANK_YOU_PHRASE__,<br>The __PLATFORM_NAME__ Team</p>
+	<p>__THANK_YOU_PHRASE__<br>The __PLATFORM_NAME__ Team</p>
 </div>
 EOT;
 
@@ -680,7 +755,10 @@ function tm_newfeed_absolute_url($path) {
 
 	// We can't rely on url($url,array('absolute'=>true)) as calling from drush command
 	// Instead we construct the url from conf variables
-	$absolute_url = $conf['tm_email_server_http'] . "://" . $conf['tm_email_server_url_domain'] . "/" . drupal_get_path_alias($path);
+	$absolute_url = $conf['tm_email_server_http'] . ":SLASHSLASH" . $conf['tm_email_server_url_domain'] . "/" . drupal_get_path_alias($path);
+
+	$absolute_url = str_replace("//", "/", $absolute_url);
+	$absolute_url = str_replace(":SLASHSLASH", "://", $absolute_url);
 
 	return $absolute_url;
 }

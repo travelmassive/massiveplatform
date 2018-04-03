@@ -602,11 +602,11 @@ $conf['tm_newsfeed_subject_extra_fallbacks'] = array(
   );
 
 // email tips
-$conf["tm_newsfeed_email_tip_not_approved"] = "Your profile is not approved - please complete your <a href='__USER_PROFILE_URL__'>profile</a> and request approval";
-$conf["tm_newsfeed_email_tip_not_following"] = "You aren't following anyone - connect with other members in the community to receive updates";
-$conf["tm_newsfeed_email_tip_no_chapter"] = "You haven't joined a chapter yet - join a chapter near you to receive local updates.";
+$conf["tm_newsfeed_email_tip_not_approved"] = "<b>Join over __STATS_MEMBERS_APPROVED_TOTAL__ Approved Members &mdash; </b> complete your <a href='__USER_PROFILE_URL____UTM_CAMPAIGN__'>profile</a> and unlock more features.";
+$conf["tm_newsfeed_email_tip_find_members"] = "Find members you <a href='__FOLLOW_MEMBERS_URL__'>share an interest with<a> to build your network.";
+$conf["tm_newsfeed_email_tip_no_chapter"] = "Join your <a href='__BASE_URL__chapters/map'>nearest chapter<a> to receive updates on upcoming events.";
 $conf['tm_newsfeed_email_more_tips'] = array(); // create additional tips that will be cycled through
-$conf['tm_newsfeed_email_more_tips'][] = "Post a status update to share your latest news with your followers.";
+$conf['tm_newsfeed_email_more_tips'][] = "Take a look at our new <a href='__BASE_URL__blog/'>blog</a>.";
 
 // the headers for the email sections
 $conf['tm_newsfeed_email_section_headers'] = array(

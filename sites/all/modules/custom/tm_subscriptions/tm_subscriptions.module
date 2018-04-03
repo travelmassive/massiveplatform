@@ -129,6 +129,13 @@ function tm_subscriptions_form_alter(&$form, $form_state, $form_id) {
       $ajax_request = true;
   }
 
+  // if tm_subscriptions not enabled, hide all subscription fields
+  if ($conf["tm_subscriptions_organization_enabled"] == false) {
+    field_group_hide_field_groups($form, array('group_company_account_details'));
+    unset($form['field_company_subscription_type']);
+    unset($form['field_company_subscription_date']);
+  }
+
   // Show Account Details for subscribers
   $organization = $form_state['node'];
   $is_new_organization = (!isset($organization->nid) || isset($organization->is_new));

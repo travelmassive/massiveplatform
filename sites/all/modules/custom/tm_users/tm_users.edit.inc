@@ -125,6 +125,14 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
     $form['field_segment'][LANGUAGE_NONE][0]['tid']['#description'] = $conf['tm_segment_user_description'];
   }
 
+  // Hide subscriptions fields if tm_subscriptions_user not enabled
+  if (!module_exists("tm_subscriptions_user")) {
+    unset($form['field_user_subscription_type']); // hide subscription type
+    unset($form['field_user_subscription_date']); // hide subscription end date
+    unset($form['field_user_account_phone']); // hide subscription type
+    unset($form['field_user_account_receipt']); // hide subscription type
+  }
+
 }
 
 /**

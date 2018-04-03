@@ -178,6 +178,14 @@ function tm_subscriptions_user_form_user_profile_form_alter(&$form, &$form_state
     $ajax_request = true;
   }
 
+  // if tm_subscriptions_user not enabled, hide subscription fields
+  if ($conf["tm_subscriptions_user_enabled"] == false) {
+    field_group_hide_field_groups($form, array('group_user_account_details'));
+    unset($form['field_user_subscription_type']); // hide subscription type
+    unset($form['field_user_subscription_date']); // hide subscription end date
+    return;
+  }
+
   // Show Account Details for subscribers
   $account = $form['#user'];
   $perm_is_moderator_or_admin = ((in_array("moderator", $user->roles)) || (in_array("administrator", $user->roles)));

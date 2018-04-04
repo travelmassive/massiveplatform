@@ -149,7 +149,6 @@ function tm_track_views_views_pre_execute(&$view) {
 	drupal_set_message($help_message, 'help-tip');
 
 	// always allow chapter leaders, moderators to view
-	// todo: limit to their own results
 	if ((in_array("chapter leader", $user->roles)) or (in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles))) {
 		return;
 	}

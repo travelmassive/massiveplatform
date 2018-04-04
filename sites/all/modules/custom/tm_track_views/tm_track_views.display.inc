@@ -182,6 +182,9 @@ function tm_track_views_views_pre_execute(&$view) {
 		}
 	}
 
+	// blur inline css (before js loads)
+	drupal_add_css('#main {-webkit-filter: blur(4px); -moz-filter: blur(4px); -o-filter: blur(4px); -ms-filter: blur(4px); filter: blur(4px);}', 'inline');
+
 	// add view profile link
 	$message .= '<p></p><div class="more-link"><a href="/user/' . $user->uid . '" class="bttn bttn-secondary bttn-m" title="View my profile">View my profile</a></div>';
 

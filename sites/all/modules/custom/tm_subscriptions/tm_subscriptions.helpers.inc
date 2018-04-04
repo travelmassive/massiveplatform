@@ -293,7 +293,7 @@ function tm_subscriptions_set_partner_cookie($nid = null) {
 		setcookie("Drupal.visitor.subscription_company_segment_l2", $company_segment_l2, strtotime($cookie_time), "/");
 
 		// set price_label from subscription
-		// ie: Upgrade to Pro Membership for $99.
+		// ie: Buy A Business Membership for $899.
 		$subscription = tm_subscriptions_get_organization_subscription($company);
 		if ($subscription != null) {
 			$price_label = $subscription["price_label"];

@@ -292,7 +292,14 @@ function tm_subscriptions_set_partner_cookie($nid = null) {
 		setcookie("Drupal.visitor.subscription_company_segment_l1", $company_segment_l1, strtotime($cookie_time), "/");
 		setcookie("Drupal.visitor.subscription_company_segment_l2", $company_segment_l2, strtotime($cookie_time), "/");
 
-
+		// set price_label from subscription
+		// ie: Upgrade to Pro Membership for $99.
+		$subscription = tm_subscriptions_get_organization_subscription($company);
+		if ($subscription != null) {
+			$price_label = $subscription["price_label"];
+			setcookie("Drupal.visitor.subscription_company_price_label", $price_label, strtotime($cookie_time), "/");
+		}
+		
 	}
 }
 

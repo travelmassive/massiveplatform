@@ -107,7 +107,11 @@ function tm_track_views_views_query_alter(&$view, &$query) {
 	$query->add_relationship('tm_track_views', $join, 'users');
 
 	// don't show own views
-	$query->add_where(0, "tm_track_views.uid", $user->uid, "!=");
+	$exlude_uid = $user->uid;
+	if ($entity_type == 1) {
+		$exlude_uid = $entity_id;
+	}
+	$query->add_where(0, "tm_track_views.uid", $exlude_uid, "!=");
 
 	// order by max(timestamp) so most recent view of user appears first
 	// (need to enable aggregation in query to support this)

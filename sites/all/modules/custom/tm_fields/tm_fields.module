@@ -1873,7 +1873,7 @@ function _tm_more_actions_process($field, $title = NULL) {
 
         // get number of viewers
         $max_view_days = $conf["tm_track_views_store_days"];
-        $num_views = tm_track_views_how_many_viewed($field['entity']->nid, "node", $user->uid, $max_view_days);
+        $num_views = tm_track_views_how_many_viewed($field['entity']->nid, "node", $field['entity']->uid, $max_view_days);
 
         if ($num_views > 0) {
 

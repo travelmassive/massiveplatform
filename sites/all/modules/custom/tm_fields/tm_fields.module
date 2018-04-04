@@ -1075,7 +1075,33 @@ function _tm_more_actions_process($field, $title = NULL) {
         }
       }
 
-      // 4. REASON FOR JOINING
+      // 4. WHO HAS VIEWED PROFILE
+      if (module_exists("tm_track_views")) {
+        if (in_array("moderator", $user->roles) or in_array("administrator", $user->roles)) {
+        
+          // get number of viewers  
+          $max_view_days = $conf["tm_track_views_store_days"];
+          $num_views = tm_track_views_how_many_viewed($targetuser->uid, "user", $targetuser->uid, $max_view_days);
+          
+          if ($num_views > 0) {
+
+            $num_views_plural = "members";
+            if ($num_views == 1) {
+              $num_views_plural = "member";
+            }
+
+            $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Viewed by <a style='display: inline; padding: 0rem;' href='/user/" . $targetuser->uid . "/viewers'>" . $num_views .  " " . $num_views_plural . "</span>";
+
+            $links['moderate'][] = array(
+              'wrapper_class' => array('approve'),
+              'content' => t($menu_text),
+            );
+          }
+          
+        }
+      }
+
+      // 5. REASON FOR JOINING
       if (isset($targetuser->field_reason_for_joining[LANGUAGE_NONE][0]['value'])) {
         $reason_for_joining = strip_tags($targetuser->field_reason_for_joining[LANGUAGE_NONE][0]['value']);
         if (trim($reason_for_joining) != "") {
@@ -1088,7 +1114,7 @@ function _tm_more_actions_process($field, $title = NULL) {
         }
       }
 
-      // 5. Show Facebook signin
+      // 6. Show Facebook signin
       if (isset($targetuser->field_facebook_signin_link[LANGUAGE_NONE][0]['value'])) {
         $facebook_signin_link = strip_tags($targetuser->field_facebook_signin_link[LANGUAGE_NONE][0]['value']);
         if (trim($facebook_signin_link) != "") {
@@ -1101,7 +1127,7 @@ function _tm_more_actions_process($field, $title = NULL) {
         }
       }
 
-      // 6. Show any possible duplicate logins
+      // 7. Show any possible duplicate logins
       if (isset($conf["tm_users_check_duplicate_accounts"])) {
         if ($conf["tm_users_check_duplicate_accounts"] == true) {
 
@@ -1136,9 +1162,7 @@ function _tm_more_actions_process($field, $title = NULL) {
         }
       }
       
-
-
-      // 7. Show email address to chapter leader if unapproved
+      // 8. Show email address to chapter leader if unapproved
       // Always show to moderators
       $targetuser = user_load($uid);
       if ((!in_array("approved user", $targetuser->roles) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid, true))) or (in_array("moderator", $user->roles))) {
@@ -1156,7 +1180,7 @@ function _tm_more_actions_process($field, $title = NULL) {
         );
       }
 
-      // 8. Show last activity time if in your chapter and IP to moderator
+      // 9. Show last activity time if in your chapter and IP to moderator
       if (tm_users_member_in_users_chapter($targetuser->uid, $user->uid, true) or (in_array("moderator", $user->roles))) {
 
         // Get last active time    
@@ -1209,7 +1233,7 @@ function _tm_more_actions_process($field, $title = NULL) {
         );
       }
 
-      // 9. Show if user has set profile to private
+      // 10. Show if user has set profile to private
       if (in_array("moderator", $user->roles) or in_array("administrator", $user->roles)) {
         if (isset($targetuser->field_user_has_private_profile[LANGUAGE_NONE][0]['value'])) {
           if ($targetuser->field_user_has_private_profile[LANGUAGE_NONE][0]['value']) {
@@ -1839,6 +1863,38 @@ function _tm_more_actions_process($field, $title = NULL) {
     }
   }
   // END View organization subscription payments
+
+  // START View organization viewers
+  if (module_exists("tm_track_views")) {
+    if (isset($field['entity']->type) && $field['entity']->type == 'organization') {
+
+      // Check if is moderator or administrator
+      if (in_array("administrator", $user->roles) or in_array("moderator", $user->roles)) {
+
+        // get number of viewers
+        $max_view_days = $conf["tm_track_views_store_days"];
+        $num_views = tm_track_views_how_many_viewed($field['entity']->nid, "node", $user->uid, $max_view_days);
+
+        if ($num_views > 0) {
+
+          $num_views_plural = "members";
+          if ($num_views == 1) {
+            $num_views_plural = "member";
+          }
+        
+          $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Viewed by <a style='display: inline; padding: 0rem;' href='/company/" . $field['entity']->nid . "/viewers'>" . $num_views .  " " . $num_views_plural . "</span>";
+
+          $links['edition'][] = array(
+            'wrapper_class' => array('edit'),
+            'content' => t($menu_text),
+          );
+        }
+
+      }
+
+    }
+  }
+  // END View organization viewers
 
   // START View user subscription details
   if (module_exists("tm_subscriptions_user") && (!isset($field['entity']->nid) && $flag_link = flag_create_link('user_subscription_enable', $field['entity']->uid))) {

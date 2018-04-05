@@ -90,7 +90,6 @@ function tm_subscriptions_user_cta_banner($user_id) {
 	}
 
 	// get country pricing and subscription
-	$country_pricing = tm_subscriptions_get_user_subscription_price($account);
 	$country_subscription = tm_subscriptions_get_user_subscription($account);
 
 	// retrive static variable from tm_subscriptions_user_get_partner_code if ?partner code 
@@ -138,13 +137,7 @@ function tm_subscriptions_user_cta_banner($user_id) {
 	$inner_html = str_replace("__NUM_SUBSCRIBED_MEMBERS__", $num_subscribed_members_amount, $inner_html);
 
 	// get pricing label
-	$pricing_label = tm_subscriptions_get_user_subscription_field($account, "price_label");
-	if (tm_subscriptions_check_user_renewal_period($account)) {
-		$pricing_label = tm_subscriptions_get_user_subscription_field($account, "price_label_renew");
-	}
-	if ($country_pricing["saving_message"] != "") {
-		$pricing_label = $country_pricing["subscription_label"] . " - " . $country_pricing["saving_message"]; // use saving message if partner code applied
-	}
+	$pricing_label = tm_subscriptions_get_user_pricing_label($account);
 	$inner_html = str_replace("__PRICING_LABEL__", $pricing_label, $inner_html);
 
 	// display pricing

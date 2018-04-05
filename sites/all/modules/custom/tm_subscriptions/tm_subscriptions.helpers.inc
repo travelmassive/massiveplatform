@@ -294,10 +294,9 @@ function tm_subscriptions_set_partner_cookie($nid = null) {
 
 		// set price_label from subscription
 		// ie: Buy A Business Membership for $899.
-		$subscription = tm_subscriptions_get_organization_subscription($company);
-		if ($subscription != null) {
-			$price_label = $subscription["price_label"];
-			setcookie("Drupal.visitor.subscription_company_price_label", $price_label, strtotime($cookie_time), "/");
+		$pricing_label = tm_subscriptions_get_organization_pricing_label($company);
+		if ($pricing_label != "") {
+			setcookie("Drupal.visitor.subscription_company_price_label", $pricing_label, strtotime($cookie_time), "/");
 		}
 		
 	}
@@ -463,4 +462,3 @@ function tm_subscriptions_get_country_code($organization) {
 
 	return $country_code;
 }
-

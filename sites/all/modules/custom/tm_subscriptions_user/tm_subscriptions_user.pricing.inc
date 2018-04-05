@@ -75,3 +75,22 @@ function _tm_subscriptions_user_get_api_amount($amount, $currency) {
     return $stripe_amount;
 }
 
+/**
+ * Helper method to get pricing label
+ * ie: Upgrade to Pro Membership for $99.
+ */
+function tm_subscriptions_get_user_pricing_label($account) {
+
+	$pricing_label = tm_subscriptions_get_user_subscription_field($account, "price_label");
+	if (tm_subscriptions_check_user_renewal_period($account)) {
+		$pricing_label = tm_subscriptions_get_user_subscription_field($account, "price_label_renew");
+	}
+	
+	$country_pricing = tm_subscriptions_get_user_subscription_price($account);
+	if ($country_pricing["saving_message"] != "") {
+		$pricing_label = $country_pricing["subscription_label"] . " - " . $country_pricing["saving_message"]; // use saving message if partner code applied
+	}
+
+	return $pricing_label;
+}
+

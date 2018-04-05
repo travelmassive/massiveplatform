@@ -351,10 +351,9 @@ function tm_subscriptions_user_set_partner_cookie($uid = null) {
 
 		// set price_label from subscription
 		// ie: Upgrade to Pro Membership for $99.
-		$subscription = tm_subscriptions_get_user_subscription($account);
-		if ($subscription != null) {
-			$price_label = $subscription["price_label"];
-			setcookie("Drupal.visitor.subscription_account_price_label", $price_label, strtotime($cookie_time), "/");
+		$pricing_label = tm_subscriptions_get_user_pricing_label($account);
+		if ($pricing_label != "") {
+			setcookie("Drupal.visitor.subscription_account_price_label", $pricing_label, strtotime($cookie_time), "/");
 		}
 	}
 }

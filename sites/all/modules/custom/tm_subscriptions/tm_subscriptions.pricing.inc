@@ -75,3 +75,22 @@ function _tm_subscriptions_get_api_amount($amount, $currency) {
     return $stripe_amount;
 }
 
+/**
+ * Helper method to get pricing label
+ * ie: Buy A Business Membership for $899.
+ * ie: Business Membership (Partner Discount) - Save 24%
+ */
+function tm_subscriptions_get_organization_pricing_label($node) {
+
+	$pricing_label = tm_subscriptions_get_organization_subscription_field($node, "price_label");
+	if (tm_subscriptions_check_organization_renewal_period($node)) {
+		$pricing_label = tm_subscriptions_get_organization_subscription_field($node, "price_label_renew");
+	}
+
+	$country_pricing = tm_subscriptions_get_organization_subscription_price($node);
+	if ($country_pricing["saving_message"] != "") {
+		$pricing_label = $country_pricing["subscription_label"] . " - " . $country_pricing["saving_message"]; // use saving message if partner code applied
+	}
+	
+	return $pricing_label;
+}

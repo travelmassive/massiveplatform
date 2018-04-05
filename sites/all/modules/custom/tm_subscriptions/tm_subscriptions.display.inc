@@ -78,11 +78,19 @@ function tm_subscriptions_organization_cta_banner($node_id) {
 	}
 
 	// get country pricing and subscription
-	$country_pricing = tm_subscriptions_get_organization_subscription_price($node);
 	$country_subscription = tm_subscriptions_get_organization_subscription($node);
 
 	// retrive static variable from tm_subscriptions_user_get_partner_code if ?partner code 
 	$tm_force_show_cta = &drupal_static("tm_force_show_cta");
+
+	// check age
+	$node_created = $node->created;
+	if (!$tm_force_show_cta and isset($conf["tm_subscriptions_organization_cta_days_display"])) {
+		$show_cta_after_days = $conf["tm_subscriptions_organization_cta_days_display"];
+		if (time() - ($show_cta_after_days * 24 * 60 * 60) < $node_created) {
+			return;
+		}
+	}
 
 	// get cookie
 	$wrapper_style = "";
@@ -122,13 +130,7 @@ function tm_subscriptions_organization_cta_banner($node_id) {
 	$inner_html = str_replace("__NUM_MEMBERS_ROUNDED__", $num_members_amount, $inner_html);
 
 	// get pricing label
-	$pricing_label = tm_subscriptions_get_organization_subscription_field($node, "price_label");
-	if (tm_subscriptions_check_organization_renewal_period($node)) {
-		$pricing_label = tm_subscriptions_get_organization_subscription_field($node, "price_label_renew");
-	}
-	if ($country_pricing["saving_message"] != "") {
-		$pricing_label = $country_pricing["subscription_label"] . " - " . $country_pricing["saving_message"]; // use saving message if partner code applied
-	}
+	$pricing_label = tm_subscriptions_get_organization_pricing_label($node);
 	$inner_html = str_replace("__PRICING_LABEL__", $pricing_label, $inner_html);
 
 	// display pricing

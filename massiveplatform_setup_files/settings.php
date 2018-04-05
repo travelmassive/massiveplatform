@@ -713,6 +713,7 @@ $conf["tm_subscriptions_reports_help_message"] = "Here's a receipt of your payme
 // ORGANIZATION SUBSCRIPTIONS
 // US
 $conf["tm_subscriptions_organization_enabled"] = true; // enable subscription payments
+$conf["tm_subscriptions_organization_cta_days_display"] = 5; // how long to wait until cta displayed on profile
 $conf["tm_subscriptions_organization_label"] = "Premium Account"; // label to call a subscription account
 $conf["tm_subscriptions_organization_label_noun"] = "Premium Member"; // label when applied
 $conf["tm_subscriptions_organization_label_short"] = "Premium"; // short label to call a subscription account

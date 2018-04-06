@@ -347,7 +347,6 @@ $conf["tm_chapters_leader_weekly_report"] = "Hi __SALUTATION__,
 <br>Total member connections: __TOTAL_CHAPTER_MEMBER_CONNECTIONS__
 <br>
 <br>__COMMISSIONS_SUMMARY__
-<br>
 <br>__APPROVAL_REMINDER_MESSAGE__
 <br>Let us know what you think about these stats! Reply to this email to get in touch.
 <br>";

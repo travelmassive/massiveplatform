@@ -60,7 +60,7 @@ function tm_commissions_reports_chapter_summary($nid, $chapter_code, $days = 30)
 		}
 
 		$total_text = _tm_commissions_format_multiple_currencies($total_parts);
-		$summary_text .= "Congratulations!<br>Your chapter has earned " . $total_text . " in the past " . $days . " days &mdash; " . $view_chapter_commissions_text . "\n";
+		$summary_text .= "<strong>Congratulations...</strong><br>Your chapter has earned " . $total_text . " in the past " . $days . " days &mdash; " . $view_chapter_commissions_text . "\n";
 	}
 
 	// balance

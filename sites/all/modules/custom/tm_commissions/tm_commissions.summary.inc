@@ -36,7 +36,7 @@ function tm_commissions_reports_chapter_summary($nid, $chapter_code, $days = 30)
 	$MAX_LIMIT = 1000000;
 
 	// view commisions link
-	$view_chapter_commissions_text = "<a href='__SERVER_HTTP__://__SERVER_NAME__/chapters/" . drupal_get_path_alias("node/" . $nid) . "/commissions'>View commissions</a>";
+	$view_chapter_commissions_text = "<a href='__SERVER_HTTP__://__SERVER_NAME__/" . drupal_get_path_alias("node/" . $nid) . "/commissions'>View commissions</a>";
 	$view_all_commissions_text = "<a href='__SERVER_HTTP__://__SERVER_NAME__/chapters/all-chapters/commissions'>View all commissions</a>";
 
 	// extra text
@@ -60,7 +60,7 @@ function tm_commissions_reports_chapter_summary($nid, $chapter_code, $days = 30)
 		}
 
 		$total_text = _tm_commissions_format_multiple_currencies($total_parts);
-		$summary_text .= "Congratulations! Your chapter has earned " . $total_text . " in the past " . $days . " days &mdash; " . $view_chapter_commissions_text . "\n";
+		$summary_text .= "Congratulations!<br>Your chapter has earned " . $total_text . " in the past " . $days . " days &mdash; " . $view_chapter_commissions_text . "\n";
 	}
 
 	// balance

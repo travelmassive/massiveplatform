@@ -534,12 +534,12 @@ function tm_chapters_community_management_reports_drush() {
 			$commissions_result = tm_commissions_reports_chapter_summary($nid, $shortcode, $days);
 			$has_commission = $commissions_result["has_commissions"];
 			$has_balance = $commissions_result["has_balance"];
-			$commissions_summary = $commissions_result["summary_text"];
+			$commissions_summary = $commissions_result["summary_text"] . "<br>";
 
 			// notify chapter leader they have earned commissions
 			// ie: Weekly insights for Sydney - you have commissions
 			if ($has_commission) {
-				$subject_stats = " - your chapter has earned commissions";
+				$subject_stats = " - Your chapter has earned commissions";
 			}
 		}
 

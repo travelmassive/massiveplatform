@@ -655,6 +655,7 @@ $conf['tm_newsfeed_min_viewers_month'] = 5; // minimum number of profile viewers
 $conf['tm_newsfeed_min_viewers_popular'] = 10; // how many viewers to be popular in a week
 $conf['tm_newsfeed_prefix_viewers_month'] = "People are interested in you &mdash; ";
 $conf['tm_newsfeed_prefix_viewers_popular'] = "You're popular &mdash; ";
+$conf['tm_newsfeed_who_visited_label'] = "who visited";
 
 
 /* EVENT PAYMENT SETTINGS */
@@ -973,3 +974,5 @@ $conf["tm_track_views_display_mode"] = "all"; // options = all, approved, subscr
 $conf["tm_track_views_display_unapproved"] = true; // show unapproved members
 $conf["tm_track_views_approved_message"] = "You need to be an Approved Member to see who's viewed your profile.";
 $conf["tm_track_views_subscription_message"] = "Upgrade to a <a href='/membership/invite'>Pro Membership</a> to see who viewed you.";
+$conf["tm_track_views_see_who_viewed_label"] = "Who visited";
+

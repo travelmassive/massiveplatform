@@ -242,6 +242,13 @@ class TmNewsfeedEmail
 		// show how many people have viewed your profile in the past week
 		if (module_exists("tm_track_views")) {
 
+			// profile views url
+			$profile_views_url = tm_newfeed_absolute_url("user/" . $uid . "/viewers") . tm_newsfeed_utm_campaign();
+			$profile_views_label = "who visited"; // default
+			if (isset($conf["tm_newsfeed_who_visited_label"])) {
+				$profile_views_label = $conf["tm_newsfeed_who_visited_label"];
+			}
+
 			// check past 7 days
 			$num_views = tm_track_views_how_many_viewed($uid, 1, $uid, 7);
 			$min_views = $conf["tm_newsfeed_min_viewers_week"];
@@ -251,14 +258,14 @@ class TmNewsfeedEmail
 				if ($num_views >= $popular_views) {
 					$popular_text = $conf["tm_newsfeed_prefix_viewers_popular"];
 				}
-				$tip =  "<em>" . $popular_text . $num_views . " members have viewed <a href='" . $edit_url . "'>your profile</a> in the past week.</em>";
+				$tip =  "<em>" . $popular_text . $num_views . " members have viewed <a href='" . $edit_url . "'>your profile</a> in the past week (<a href='" . $profile_views_url . "'>" . $profile_views_label . "</a>).</em>";
 				return $tip;
 			} else {
 				// check past month
 				$num_views = tm_track_views_how_many_viewed($uid, 1, $uid, 30); // try 30 days
 				$min_views_month = $conf["tm_newsfeed_min_viewers_month"];
 				if ($num_views >= $min_views_month) {
-					$tip =  "<em>" . $conf["tm_newsfeed_prefix_viewers_month"] . $num_views . " members have viewed <a href='" . $edit_url . "'>your profile</a> in the past month.</em>";
+					$tip =  "<em>" . $conf["tm_newsfeed_prefix_viewers_month"] . $num_views . " members have viewed <a href='" . $edit_url . "'>your profile</a> in the past month (<a href='" . $profile_views_url . "'>" . $profile_views_label . "</a>).</em>";
 					return $tip;
 				}
 			}

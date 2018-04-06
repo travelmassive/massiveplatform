@@ -65,7 +65,11 @@ function _tm_ds_track_viewers($field, $title = NULL) {
 	}
 
 	// render message
-	$html = "Your profile has been viewed by " . $num_unique_viewers . " " . $member_text . " &middot; <a href='" . $link . "'>Who visited</a>";
+	$profile_views_label = "Who visited"; // default
+	if (isset($conf["tm_track_views_see_who_viewed_label"])) {
+		$profile_views_label = $conf["tm_track_views_see_who_viewed_label"];
+	}
+	$html = "Your profile has been viewed by " . $num_unique_viewers . " " . $member_text . " &middot; <a href='" . $link . "'>" . $profile_views_label . "</a>";
 
 	return $html;
 }

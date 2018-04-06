@@ -128,11 +128,13 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
 		}
 
 		// Set tips
-		if (isset($conf['tm_event_types_edit_tips']['community'])) {
-			drupal_get_messages("help-tip");
-			drupal_set_message($conf['tm_event_types_edit_tips']['community'], "help-tip");
-		}
-
+    if (!$ajax_request) {
+      if (isset($conf['tm_event_types_edit_tips']['community'])) {
+        drupal_get_messages("help-tip");
+        drupal_set_message($conf['tm_event_types_edit_tips']['community'], "help-tip");
+      }
+    }
+		
   	// Set organizers
 		$opts = array('_none' => t('- None -'))  + _load_organizers_per_chapter($chapter_id);
 		foreach ($opts as $uid => $name) {
@@ -179,10 +181,12 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
 		}
 
 		// Set tips
-		if (isset($conf['tm_event_types_edit_tips']['company'])) {
-			drupal_get_messages("help-tip");
-			drupal_set_message($conf['tm_event_types_edit_tips']['company'], "help-tip");
-		}
+    if (!$ajax_request) {
+  		if (isset($conf['tm_event_types_edit_tips']['company'])) {
+  			drupal_get_messages("help-tip");
+  			drupal_set_message($conf['tm_event_types_edit_tips']['company'], "help-tip");
+  		}
+    }
 
 		// Set organizers
     $company = node_load($company_id);
@@ -239,10 +243,12 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
 		}
 
 		// Set tips
-		if (isset($conf['tm_event_types_edit_tips']['member'])) {
-			drupal_get_messages("help-tip");
-			drupal_set_message($conf['tm_event_types_edit_tips']['member'], "help-tip");
-		}
+    if (!$ajax_request) {
+  		if (isset($conf['tm_event_types_edit_tips']['member'])) {
+  			drupal_get_messages("help-tip");
+  			drupal_set_message($conf['tm_event_types_edit_tips']['member'], "help-tip");
+  		}
+    }
 
 		// Set timezone
 		if (($is_new_event) && ($user->timezone != null)) {

@@ -513,7 +513,7 @@ function tm_chapters_community_management_reports_drush() {
 		$approval_reminder_message = "";
 		$min_approval_members_pct = $conf["tm_chapters_leader_weekly_report_min_approved"];
 		if ($report_data["data_values"]["members_approved_pct"] < $min_approval_members_pct) {
-			$approval_reminder_message .= "Your " . $conf["tm_approved_label_plural"] . " is below " . $min_approval_members_pct . "%. Please take a moment to review your <a href='__SERVER_HTTP__://__SERVER_NAME__/" . $unapproved_members_link . "'>" . $conf["tm_unapproved_label_plural"] . "</a> and pending requests.<br>";
+			$approval_reminder_message .= "<br>Your " . $conf["tm_approved_label_plural"] . " is below " . $min_approval_members_pct . "%. Please take a moment to review your <a href='__SERVER_HTTP__://__SERVER_NAME__/" . $unapproved_members_link . "'>" . $conf["tm_unapproved_label_plural"] . "</a> and pending requests.<br>";
 		}
 
 		// num_event_payments

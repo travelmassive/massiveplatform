@@ -217,7 +217,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
         $chapter_id = $event->field_chapter['und'][0]['target_id'];
         $chapter = node_load($chapter_id);
       
-        if (isset($node->field_chapter_leaders[LANGUAGE_NONE])) {
+        if (isset($chapter->field_chapter_leaders[LANGUAGE_NONE])) {
           foreach($chapter->field_chapter_leaders[LANGUAGE_NONE] as $chapter_leader) {
             $notify_ids[] = $chapter_leader['target_id'];
           }

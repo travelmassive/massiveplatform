@@ -102,7 +102,7 @@ function tm_commissions_reports_chapter_summary($nid, $chapter_code, $days = 30)
 		}
 		if (sizeof($total_parts) > 0) {
 			$total_text = _tm_commissions_format_multiple_currencies($total_parts);
-			$summary_text .= "<i>Combined, all chapters have earned a total of " . $total_text . " from community sales in the past " . $days . " days &mdash; " . $view_all_commissions_text . "</i>\n";
+			$summary_text .= "Combined, all chapters have earned a total of " . $total_text . " from community sales in the past " . $days . " days &mdash; " . $view_all_commissions_text . "\n";
 		}
 	}
 	

@@ -348,7 +348,7 @@ $conf["tm_chapters_leader_weekly_report"] = "Hi __SALUTATION__,
 <br>
 <br>__COMMISSIONS_SUMMARY__
 __APPROVAL_REMINDER_MESSAGE__
-Let us know what you think about these stats! Reply to this email to get in touch.
+<br>Let us know what you think about these stats! Reply to this email to get in touch.
 <br>";
 $conf["tm_chapters_leader_weekly_report_min_approved"] = 80; // display approval reminder messsage if approval % is below this
 $conf["tm_chapters_announcements_enabled"] = true; // allow chapter announcements

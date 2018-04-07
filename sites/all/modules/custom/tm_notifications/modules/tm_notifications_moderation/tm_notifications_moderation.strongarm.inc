@@ -29,6 +29,7 @@ function tm_notifications_moderation_strongarm() {
 <br>
 <br>Name: __REPORTED_FULL_NAME__
 <br>Profile: <a href="__SERVER_HTTP__://__SERVER_NAME__/__REPORTED_PROFILE_URL__">__SERVER_NAME__/__REPORTED_PROFILE_URL__</a>
+<br>ID: __REPORTED_PROFILE_ID__
 <br>Reason: __REPORT_REASON__
 __REPORT_MESSAGE__
 <br>
@@ -62,6 +63,7 @@ __REPORT_MESSAGE__
 <br>
 <br>Name: __REPORTED_ORGANIZATION_NAME__
 <br>Profile: <a href="__SERVER_HTTP__://__SERVER_NAME__/__REPORTED_PROFILE_URL__">__SERVER_NAME__/__REPORTED_PROFILE_URL__</a>
+<br>ID: __REPORTED_PROFILE_ID__
 <br>Reason: __REPORT_REASON__
 __REPORT_MESSAGE__
 <br>

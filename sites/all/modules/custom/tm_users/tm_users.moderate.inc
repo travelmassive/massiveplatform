@@ -24,6 +24,7 @@ function tm_users_moderate_non_community_profile($user){
   $approving_user = user_uid_optional_load();
   // set profile url (either friendly url or community url)
   $profile_url = drupal_get_path_alias("user/" . $user->uid);
+  $profile_uid = $user->uid;
 
   $moderator_first_name = $approving_user->field_user_first_name['und'][0]['value'];
 
@@ -46,7 +47,7 @@ function tm_users_moderate_non_community_profile($user){
   $community_values_url = $conf["tm_community_values_url"];
   $membership_criteria_message = $conf["tm_notification_moderation_non_community_message"];
 
-  tm_notifications_notify('user_approval_non_community', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe, '__COMMUNITY_VALUES_URL__' => $community_values_url, '__REPLY_TO__' => $reply_to, '__MODERATION_MEMBERSHIP_CRITERIA__' => $membership_criteria_message, 'hide_branding_message' => true));
+  tm_notifications_notify('user_approval_non_community', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe, '__COMMUNITY_VALUES_URL__' => $community_values_url, '__REPLY_TO__' => $reply_to, '__MODERATION_MEMBERSHIP_CRITERIA__' => $membership_criteria_message, 'hide_branding_message' => true));
 
   // flag the user their profile does not meet community values
   flag('unflag', 'moderate_non_community_profile', $user->uid, $approving_user);
@@ -92,6 +93,7 @@ function tm_users_moderate_report_member($reported_user) {
 	// Reported user
   $reported_profile_url = drupal_get_path_alias("user/" . $reported_user->uid);
 	$reported_full_name = $reported_user->field_user_first_name[LANGUAGE_NONE][0]['safe_value'] . " " . $reported_user->field_user_last_name[LANGUAGE_NONE][0]['safe_value'];
+  $reported_profile_id = $reported_user->uid;
 
 	// Report reason 
   $report_reason = trim($_GET["reason"]);
@@ -119,7 +121,7 @@ function tm_users_moderate_report_member($reported_user) {
       // load the user to notify
       $moderator_user = user_load($moderator_id);
 
-      tm_notifications_notify('user_report_member', $moderator_user, array('reporting_user' => $reporting_user, 'reported_user' => $reported_user, '__REPORTING_PROFILE_URL__' => $reporting_profile_url, '__REPORTED_PROFILE_URL__' => $reported_profile_url, '__REPORT_REASON__' => $report_reason_safe, '__REPORT_MESSAGE__' => $report_message_safe, '__COMMUNITY_VALUES_URL__' => $community_values_url, '__REPLY_TO__' => $reply_to, '__REPORTING_FULL_NAME__' => $reporting_full_name, '__REPORTED_FULL_NAME__' => $reported_full_name, '__REPORTING_EMAIL__' => $reporting_user_mail, 'hide_branding_message' => true));
+      tm_notifications_notify('user_report_member', $moderator_user, array('reporting_user' => $reporting_user, 'reported_user' => $reported_user, '__REPORTING_PROFILE_URL__' => $reporting_profile_url, '__REPORTED_PROFILE_URL__' => $reported_profile_url, '__REPORTED_PROFILE_ID__' => $reported_profile_id, '__REPORT_REASON__' => $report_reason_safe, '__REPORT_MESSAGE__' => $report_message_safe, '__COMMUNITY_VALUES_URL__' => $community_values_url, '__REPLY_TO__' => $reply_to, '__REPORTING_FULL_NAME__' => $reporting_full_name, '__REPORTED_FULL_NAME__' => $reported_full_name, '__REPORTING_EMAIL__' => $reporting_user_mail, 'hide_branding_message' => true));
   }
 
   // flag user

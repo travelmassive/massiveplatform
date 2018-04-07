@@ -31,7 +31,7 @@ function tm_notifications_messaging_strongarm() {
 <br>
 <br><strong>You can respond to __USER_FIRST_NAME__ by replying directly to this email.</strong>
 <br>
-<br>View their profile: <a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br>View their profile: <a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>
 <br>
 <br>__EMAIL_SIGNOFF__

@@ -106,6 +106,8 @@ function tm_notifications_form_user_profile_form_alter(&$form, &$form_state) {
     $sort = array();
     foreach ($notifications as $name => $value) {
       $sort[$name] = $value['description'] . "";
+      // put chapter leader notifications at bottom of notifications
+      $sort[$name] = str_replace("[Chapter Leaders]", "_[Chapter Leaders]", $sort[$name]);
     }
     array_multisort($notifications, SORT_DESC, SORT_NUMERIC, $sort);
     
@@ -177,8 +179,12 @@ function tm_notifications_form_user_profile_form_alter(&$form, &$form_state) {
 
       // format set title for non-chapter leaders
       $title = $notif->getLabel($value['title']);
-      if ($change_overide) { 
-        $title = str_replace("[Chapter Leaders]", "Events &rarr; ", $title);
+      if ($change_overide) {
+        if (strpos($notif->getName(), "event") !== false) {
+          $title = str_replace("[Chapter Leaders]", "Events &rarr; ", $title);
+        }
+        $title = str_replace("[Chapter Leaders]", "Chapter &rarr; ", $title);
+        $title = str_replace("[Moderation]", "Moderation &rarr; ", $title);
       }
 
       if ($change_allowed) {

@@ -26,7 +26,7 @@ function tm_notifications_new_follower_strongarm() {
 <br>__FOLLOWER_MESSAGE__
 <br>You can view their profile here:
 <br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>
 __MESSAGING_INSTRUCTIONS__
 <br>__EMAIL_SIGNOFF__
@@ -52,7 +52,7 @@ __MESSAGING_INSTRUCTIONS__
 <br>__FOLLOWER_MESSAGE__
 <br>You can view their profile here:
 <br>
-<a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>
 <br>__EMAIL_SIGNOFF__
 ',

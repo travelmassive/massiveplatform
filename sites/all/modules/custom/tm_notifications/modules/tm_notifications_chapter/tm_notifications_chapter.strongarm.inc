@@ -27,7 +27,7 @@ function tm_notifications_chapter_strongarm() {
 <br>
 <br>You can view their profile here:
 <br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>
 <br>__APPROVED_BY_MESSAGE__
 <br>
@@ -56,7 +56,7 @@ function tm_notifications_chapter_strongarm() {
 __WELCOME_MESSAGE__
 <br>We hope you can learn, share, and connect with other like-minded __MEMBERS_LABEL__ through local chapter events in [node:title].
 <br>
-<br>PS: If you are a new member, please ensure that you\'ve filled out your profile so the Chapter Leaders can approve your account.
+<br>PS: If you are a new member, please ensure that you\'ve completed <a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">your profile</a> so the Chapter Leaders can approve your account.
 <br>
 <br>__EMAIL_SIGNOFF__
 ',

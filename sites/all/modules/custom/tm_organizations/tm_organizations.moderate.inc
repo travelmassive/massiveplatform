@@ -20,6 +20,7 @@ function tm_organizations_moderate_report_organization($reported_organization) {
   // Reported organization
   $reported_profile_url = drupal_get_path_alias("node/" . $reported_organization->nid);
   $reported_organization_name = check_plain($reported_organization->title);
+  $reported_profile_id = $reported_organization->nid;
 
   // Report reason 
   $report_reason = trim($_GET["reason"]);
@@ -47,7 +48,7 @@ function tm_organizations_moderate_report_organization($reported_organization) {
       // load the user to notify
       $moderator_user = user_load($moderator_id);
 
-      tm_notifications_notify('user_report_organization', $moderator_user, array('reporting_user' => $reporting_user, 'reported_organization' => $reported_organization, '__REPORTING_PROFILE_URL__' => $reporting_profile_url, '__REPORTED_PROFILE_URL__' => $reported_profile_url, '__REPORT_REASON__' => $report_reason_safe, '__REPORT_MESSAGE__' => $report_message_safe, '__COMMUNITY_VALUES_URL__' => $community_values_url, '__REPLY_TO__' => $reply_to, '__REPORTING_FULL_NAME__' => $reporting_full_name, '__REPORTED_ORGANIZATION_NAME__' => $reported_organization_name, '__REPORTING_EMAIL__' => $reporting_user_mail));
+      tm_notifications_notify('user_report_organization', $moderator_user, array('reporting_user' => $reporting_user, 'reported_organization' => $reported_organization, '__REPORTING_PROFILE_URL__' => $reporting_profile_url, '__REPORTED_PROFILE_URL__' => $reported_profile_url, '__REPORTED_PROFILE_ID__' => $reported_profile_id, '__REPORT_REASON__' => $report_reason_safe, '__REPORT_MESSAGE__' => $report_message_safe, '__COMMUNITY_VALUES_URL__' => $community_values_url, '__REPLY_TO__' => $reply_to, '__REPORTING_FULL_NAME__' => $reporting_full_name, '__REPORTED_ORGANIZATION_NAME__' => $reported_organization_name, '__REPORTING_EMAIL__' => $reporting_user_mail, 'hide_branding_message' => true));
   }
 
   // flag user

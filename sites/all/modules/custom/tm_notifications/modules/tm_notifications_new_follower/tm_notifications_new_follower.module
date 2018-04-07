@@ -67,6 +67,7 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
     
     // set profile url (either friendly url or community url)
     $profile_url = drupal_get_path_alias("user/" . $who_followed->uid);
+    $profile_uid = $who_followed->uid;
 
     // workaround: if we are following automatically via tm_inivitations, then
     // drupal_get_path_alias will return 'user/uid' for the newly created user. 
@@ -144,7 +145,7 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
     }
 
     // Notification options
-    $notification_options = array('user' => $followed_user, '__PROFILE_URL__' => $profile_url, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__MESSAGING_INSTRUCTIONS__' => $messaging_instructions, '__FOLLOWER_MESSAGE__' => $follower_message, 'reply_to_member' => $reply_to_member);
+    $notification_options = array('user' => $followed_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__MESSAGING_INSTRUCTIONS__' => $messaging_instructions, '__FOLLOWER_MESSAGE__' => $follower_message, 'reply_to_member' => $reply_to_member);
 
     // If reply_to is set
     if ($reply_to != "") {
@@ -191,9 +192,10 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
 
       // set profile url (either friendly url or community url)
       $profile_url = drupal_get_path_alias("user/" . $who_followed->uid);
+      $profile_uid = $who_followed->uid;
 
       // notify the user that they have a new follower
-      tm_notifications_notify('new_organization_follower', $organizational_owner, array('user' => $organizational_owner, 'node' => $followed_organization, '__PROFILE_URL__' => $profile_url, '__FOLLOWER_MESSAGE__' => $follower_message));
+      tm_notifications_notify('new_organization_follower', $organizational_owner, array('user' => $organizational_owner, 'node' => $followed_organization, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__FOLLOWER_MESSAGE__' => $follower_message));
     }
 
   }

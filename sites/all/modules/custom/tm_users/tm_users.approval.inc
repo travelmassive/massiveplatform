@@ -19,6 +19,7 @@ function tm_users_approve($user) {
     $approving_user = user_uid_optional_load();
     // set profile url (either friendly url or community url)
     $profile_url = drupal_get_path_alias("user/" . $user->uid);
+    $profile_uid = $user->uid;
 
     $approval_text = "Your account has been approved by " . $approving_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . ".";
 
@@ -43,7 +44,7 @@ function tm_users_approve($user) {
 
     global $conf;
     $approval_welcome_message = $conf["tm_notification_approval_welcome_message"];
-    tm_notifications_notify('user_approved', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__APPROVAL_INTRO_TEXT__' => $approval_text, '__REPLY_TO__' => $reply_to, '__APPROVAL_WELCOME_MESSAGE__' => $approval_welcome_message));
+    tm_notifications_notify('user_approved', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__APPROVAL_INTRO_TEXT__' => $approval_text, '__REPLY_TO__' => $reply_to, '__APPROVAL_WELCOME_MESSAGE__' => $approval_welcome_message));
 
     // Remove any moderation flags the user has
 
@@ -143,6 +144,7 @@ function tm_users_request_approval($user) {
 
   // set profile url (either friendly url or community url)
   $profile_url = drupal_get_path_alias("user/" . $user->uid);
+  $profile_uid = $user->uid;
 
   // get reason for approving and store update user object
   $reason_for_joining = trim($_GET["reason_for_joining"]);
@@ -214,7 +216,7 @@ function tm_users_request_approval($user) {
   foreach ($moderator_ids as $uid) {
 
       $notify_user = user_load($uid);
-      tm_notifications_notify('user_requested_approval', $notify_user, array('user' => $notify_user, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__PROFILE_URL__' => $profile_url, '__REASON_FOR_JOINING__' => $reason_for_joining_safe));
+      tm_notifications_notify('user_requested_approval', $notify_user, array('user' => $notify_user, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__REASON_FOR_JOINING__' => $reason_for_joining_safe));
   }
 
   // flag user as having requested approval
@@ -240,6 +242,7 @@ function tm_users_approval_need_more_info($user){
   $approving_user = user_uid_optional_load();
   // set profile url (either friendly url or community url)
   $profile_url = drupal_get_path_alias("user/" . $user->uid);
+  $profile_uid = $user->uid;
 
   $moderator_first_name = $approving_user->field_user_first_name['und'][0]['value'];
 
@@ -259,7 +262,7 @@ function tm_users_approval_need_more_info($user){
     $reply_to = $approving_user->mail;
   }
 
-  tm_notifications_notify('user_approval_need_more_info', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe, '__REPLY_TO__' => $reply_to));
+  tm_notifications_notify('user_approval_need_more_info', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe, '__REPLY_TO__' => $reply_to));
 
   // unflag then flag again
   flag('unflag', 'approval_need_more_info', $user->uid, $approving_user);
@@ -287,6 +290,7 @@ function tm_users_approval_is_company_or_brand($user){
   $approving_user = user_uid_optional_load();
   // set profile url (either friendly url or community url)
   $profile_url = drupal_get_path_alias("user/" . $user->uid);
+  $profile_uid = $user->uid;
 
   $moderator_first_name = $approving_user->field_user_first_name['und'][0]['value'];
 
@@ -306,7 +310,7 @@ function tm_users_approval_is_company_or_brand($user){
     $reply_to = $approving_user->mail;
   }
 
-  tm_notifications_notify('user_approval_is_company_or_brand', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe, '__REPLY_TO__' => $reply_to));
+  tm_notifications_notify('user_approval_is_company_or_brand', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe, '__REPLY_TO__' => $reply_to));
 
   // flag the user that its a company or brand
   flag('unflag', 'approval_is_company_or_brand', $user->uid, $approving_user);

@@ -68,12 +68,16 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
 
     $node = node_load($entity_id);
 
-    // Only for event nodes.
+    // Only for chapter nodes.
     if ($node->type == 'chapter') {
 
       // send welcome message to the user
       // set profile url (either friendly url or community url)
       $who_joined = user_load($account->uid);
+
+      // get profile url
+      $profile_url = drupal_get_path_alias("user/" . $who_joined->uid);
+      $profile_uid = $who_joined->uid;
 
       // get user first name and last name
       // we can't always rely on current-user token as user can sign up to chapters on signup
@@ -106,8 +110,7 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
 
       $chapter_image_html = tm_notifications_render_hero_image_html($chapter_image_src, $chapter_url, $chapter_name);
 
-
-      tm_notifications_notify('user_chapter_join_welcome_member', $account, array('node' => $node, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__WELCOME_MESSAGE__' => $welcome_message, '__CHAPTER_NAME__' => $chapter_name, '__HERO_IMAGE__' => $chapter_image_html));
+      tm_notifications_notify('user_chapter_join_welcome_member', $account, array('node' => $node, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__WELCOME_MESSAGE__' => $welcome_message, '__CHAPTER_NAME__' => $chapter_name, '__HERO_IMAGE__' => $chapter_image_html, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid));
 
       // notify each owner of the chapter that they have a new member
       $approved_by_message = "As they are a new member to " . $conf["tm_site_name"] . ", please take the time to review their profile and ensure it's valid before approving them.";
@@ -141,9 +144,7 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
           // if the chapter doesn't have any chapter leaders
           if ($leader == null) { continue; }
 
-          $profile_url = drupal_get_path_alias("user/" . $who_joined->uid);
-
-          tm_notifications_notify('user_chapter_join_notify_leaders', $leader, array('node' => $node, 'user' => $leader, '__PROFILE_URL__' => $profile_url, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__APPROVED_BY_MESSAGE__' => $approved_by_message, '__HERO_IMAGE__' => $chapter_image_html));
+          tm_notifications_notify('user_chapter_join_notify_leaders', $leader, array('node' => $node, 'user' => $leader, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__APPROVED_BY_MESSAGE__' => $approved_by_message, '__HERO_IMAGE__' => $chapter_image_html));
         }
       }
     }

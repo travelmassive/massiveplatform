@@ -27,7 +27,7 @@ function tm_notifications_events_strongarm() {
 <br>__REGISTER_PAYMENT_NOTE__
 <br>You can view their profile here:
 <br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>
 <br>Here\'s the link to your event:
 <br>
@@ -58,7 +58,7 @@ function tm_notifications_events_strongarm() {
 <br>
 <br>You can view their profile here:
 <br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>
 <br>Here\'s the link to your event:
 <br>
@@ -87,7 +87,7 @@ function tm_notifications_events_strongarm() {
 <br>
 <br>You can view their profile here:
 <br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>
 <br>Here\'s the link to your event:
 <br>
@@ -117,11 +117,11 @@ function tm_notifications_events_strongarm() {
 <br>
 <br>You can view their profile here:
 <br>
-<br><a href="__SERVER_HTTP://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>
 <br>Here\'s the link to your event:
 <br>
-<a href="__SERVER_HTTP://__SERVER_NAME__/__EVENT_URL__">__SERVER_NAME__/__EVENT_URL__</a>
+<a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">__SERVER_NAME__/__EVENT_URL__</a>
 <br>
 <br>__EMAIL_SIGNOFF__
 ',

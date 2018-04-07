@@ -34,7 +34,7 @@ __MODERATOR_MESSAGE__
 <br><strong>What you need to do:</strong>
 <br>Please sign in and personalize your profile information. Here\'s a link to you public profile:
 <br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>
 <br><strong>Once you\'ve personalized your account, we\'ll be able to approve you and you can add your company profile.</strong>
 <br>
@@ -76,7 +76,7 @@ __MODERATOR_MESSAGE__
 <br><strong>What you need to do:</strong>
 <br>Please sign in and complete your profile information. Here\'s a link to you public profile:
 <br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>
 <br>Here\'s some tips to get approved:
 <br>* Tell us about yourself in the "About me" section
@@ -115,7 +115,7 @@ __MODERATOR_MESSAGE__
 <br>
 <br>You can view your profile here:
 <br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>
 <br>__APPROVAL_WELCOME_MESSAGE__
 <br>
@@ -145,7 +145,7 @@ __MODERATOR_MESSAGE__
 <br>__USER_FIRST_NAME__ __USER_LAST_NAME__ has requested approval of their account:
 <br>
 <br>Please review their profile here:
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>
 <br>Reason for joining: __REASON_FOR_JOINING__
 <br>
@@ -176,9 +176,9 @@ __MODERATOR_MESSAGE__
 <br>
 <br>
 <br><strong>What you need to do:</strong>
-<br>If you meet the membership guidelines, please update your profile information to demonstrate clearly how you meet the criteria. Here\'s a link to you public profile:
+<br>If you meet the membership guidelines, please update your profile information to demonstrate clearly how you meet the criteria. Here\'s a link to your public profile:
 <br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__PROFILE_URL__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>
 <br><strong>I\'ve updated my account, what next?</strong>
 <br>When you\'re ready for us to review your account, select "Approve my account" from your account menu so we can check it out.

@@ -454,19 +454,19 @@ function tm_subscriptions_user_get_type($uid) {
 
 /**
  * Helper method to get chapter of subscriber
- * Returns home chapter code, or first joined chapter
- * Returns empty string if no chapter code
+ * Returns home chapter, or first joined chapter
+ * Returns null if no chapter
  */
-function tm_subscriptions_user_get_chapter_code($account) {
+function tm_subscriptions_user_get_chapter($account) {
 
-	$chapter_code = "";
+	$chapter = null;
 
 	// check for home chapter
 	if (sizeof($account->field_home_chapter) > 0) {
 		$chapter_id = $account->field_home_chapter[LANGUAGE_NONE][0]['target_id'];
 		$home_chapter = node_load($chapter_id);
 		if ($home_chapter != null) {
-			$chapter_code = $home_chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['value'];
+			$chapter = $home_chapter;
 		}
 	} else {
 		// use first chapter
@@ -474,11 +474,28 @@ function tm_subscriptions_user_get_chapter_code($account) {
 		if (sizeof($chapter_ids) > 0) {
 			$first_chapter = node_load($chapter_ids[0]);
 			if ($first_chapter != null) {
-				$chapter_code = $first_chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['value'];
+				$chapter = $first_chapter;
 			}
 		}
 	}
 
+	return $chapter;
+}
+
+/**
+ * Helper method to get chapter code of subscriber
+ * Returns home chapter code, or first joined chapter
+ * Returns empty string if no chapter code
+ */
+function tm_subscriptions_user_get_chapter_code($account) {
+
+	$chapter_code = "";
+	$chapter = tm_subscriptions_user_get_chapter($account);
+	if ($chapter != null) {
+		if (isset($chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['value'])) {
+			$chapter_code = $chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['value'];
+		}
+	}
 	return $chapter_code;
 }
 

@@ -237,6 +237,12 @@ function tm_subscriptions_process_user_payment($account) {
 			tm_subscriptions_user_send_notification($account, "purchase", $user_first_name);
 		}
 
+		// Send chapter leader notifications
+		if (module_exists("tm_notifications_subscriptions_user")) {
+			$notify_chapter = tm_subscriptions_user_get_chapter($account);
+			tm_notifications_subscriptions_user_notify_chapter_leaders($account, $notify_chapter, $is_renewed, $subscription_label);
+		}
+
 		// Set success message and redirect to page
 		$success_message .= " <a href='/payment/reports/subscription-payments-member/" . $account->uid . "'>View payment receipt</a>";
 		drupal_set_message($success_message);

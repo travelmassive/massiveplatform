@@ -1,0 +1,5 @@
+<?php
+
+function tm_notifications_subscriptions_user_uninstall() {
+  tm_notifications_preferences_purge_bulk(array('subscriptions_user_notify_chapter_leaders'));
+}

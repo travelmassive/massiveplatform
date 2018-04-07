@@ -1,0 +1,14 @@
+name = TM Notifications User Subscriptions
+description = Travel Massive notification system for user subscriptions.
+core = 7.x
+package = TM Notifications
+version = 7.x-1.0-dev
+project = tm_notifications
+dependencies[] = ctools
+dependencies[] = features
+dependencies[] = strongarm
+dependencies[] = tm_notifications
+dependencies[] = tm_subscriptions_user
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:2
+features[variable][] = tm_notifications__subscriptions_user_notify_chapter_leaders

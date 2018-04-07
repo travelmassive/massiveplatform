@@ -209,7 +209,7 @@ function _tm_subscriptions_user_badge_ds($field, $title = NULL) {
 
 			// show renewal
 			if (tm_subscriptions_check_user_renewal_period($account)) {
-				$html .= " (Expires in " . tm_subscriptions_get_user_expires_text($account) . ")";
+				$html .= " (Expires in " . tm_subscriptions_user_get_subscription_expires_text($account) . ")";
 			}
 
 			// show support link

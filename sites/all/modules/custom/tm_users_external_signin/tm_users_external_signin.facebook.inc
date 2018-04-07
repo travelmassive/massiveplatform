@@ -6,14 +6,19 @@ use Facebook\FacebookRequest;
 use Facebook\FacebookRequestException;
 
 /**
- * Implemet hook_simple_fb_connect_scope_info($scope)
+ * Implement hook_simple_fb_connect_scope_info($scope)
  */
 function tm_users_external_signin_simple_fb_connect_scope_info($scope) {
-	$scope[] = "public_profile";
-	$scope[] = "user_about_me";
-	$scope[] = "user_location";
-	$scope[] = "user_work_history";
-	$scope[] = "user_website";
+  $scope[] = "public_profile";
+  $scope[] = "user_location";
+
+  // Deprecated by Facebook April 4 2018
+  // See: https://developers.facebook.com/docs/facebook-login/permissions/
+  // See: https://developers.facebook.com/docs/graph-api/reference/user
+  // $scope[] = "user_about_me";
+  // $scope[] = "user_work_history";
+  // $scope[] = "user_website";
+
 	return $scope;
 }
 
@@ -90,7 +95,13 @@ function tm_users_external_signin_facebook_sync($drupal_user, $method) {
 
   	$user_updated = false;
 
-    $request = new FacebookRequest($fb_session, 'GET', '/me?fields=first_name,last_name,about,location,website,work,link,cover');
+    // Deprecated by Facebook April 4 2018
+    // See: https://developers.facebook.com/docs/facebook-login/permissions/
+    // See: https://developers.facebook.com/docs/graph-api/reference/user
+    // $request = new FacebookRequest($fb_session, 'GET', '/me?fields=first_name,last_name,about,location,website,work,link,cover');
+    // Deprecated: about, website, work
+
+    $request = new FacebookRequest($fb_session, 'GET', '/me?fields=first_name,last_name,location,link,cover');
     $object = $request->execute()->getGraphObject();
     $obj_array = $request->execute()->getGraphObject()->asArray();
 
@@ -126,7 +137,10 @@ function tm_users_external_signin_facebook_sync($drupal_user, $method) {
     }
 
     // About me (requires permission - user_about_me)
-    if ($object->getProperty('about') != null) {
+    // Deprecated by Facebook April 4 2018
+    // See: https://developers.facebook.com/docs/facebook-login/permissions/
+    // See: https://developers.facebook.com/docs/graph-api/reference/user
+    /*if ($object->getProperty('about') != null) {
     	if (($method == "register") or ($method == "login" and !isset($drupal_user->field_about_me[LANGUAGE_NONE][0]['value']))) {
 	    	$about_me = $object->getProperty('about');
 	    	if (strlen($about_me) > 0) {
@@ -134,10 +148,13 @@ function tm_users_external_signin_facebook_sync($drupal_user, $method) {
 	    		$drupal_user->field_about_me[LANGUAGE_NONE][0]['value'] = $about_me;
 	    	}
     	}
-    }
+    }*/
 
+    // Deprecated by Facebook April 4 2018
+    // See: https://developers.facebook.com/docs/facebook-login/permissions/
+    // See: https://developers.facebook.com/docs/graph-api/reference/user
     // Organization and job role (requires permission - work_history)
-    if ($object->getProperty('work') != null) {
+    /*if ($object->getProperty('work') != null) {
 
     	if (isset($obj_array['work'][0]->employer->name)) {
     		$job_organization = $obj_array['work'][0]->employer->name;
@@ -154,7 +171,7 @@ function tm_users_external_signin_facebook_sync($drupal_user, $method) {
     			$drupal_user->field_job_role[LANGUAGE_NONE][0]['value'] = $job_role;
     		}
     	}
-    }
+    }*/
     
     // Country Location (requires permission - user_location)
     if ($object->getProperty('location') != null) {
@@ -183,7 +200,10 @@ function tm_users_external_signin_facebook_sync($drupal_user, $method) {
     }
 
     // Website (requires permission website)
-    if ($object->getProperty('website') != "") {
+    // Deprecated by Facebook April 4 2018
+    // See: https://developers.facebook.com/docs/facebook-login/permissions/
+    // See: https://developers.facebook.com/docs/graph-api/reference/user
+    /*if ($object->getProperty('website') != "") {
       $parts = preg_split('/\s+/', $object->getProperty('website'));
       $first_website = $parts[0];
       $website = substr($first_website, 0, 255);
@@ -193,7 +213,7 @@ function tm_users_external_signin_facebook_sync($drupal_user, $method) {
           $drupal_user->field_link_website[LANGUAGE_NONE][0]['url'] = $website;
         }
       }
-    }
+    }*/
 
   	// Save Facebook profile picture
     if ($conf['tm_signin_facebook_sync_avatar']) {

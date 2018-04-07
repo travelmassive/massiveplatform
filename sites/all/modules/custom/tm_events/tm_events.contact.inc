@@ -157,6 +157,7 @@ function tm_events_send_contact_email($event_organizer_emails, $subject, $body, 
 
   // CONSTRUCT MESSAGE
   $member_url = url('user/'.$user->uid, array('absolute'=>TRUE));
+  $member_url_uid = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/user/" . $user->uid;
   $event_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('node/' . $event->nid);
 
   $message = "Hi, a member just sent a message via your Event contact form:";
@@ -168,7 +169,7 @@ function tm_events_send_contact_email($event_organizer_emails, $subject, $body, 
   $message .= "<p><strong>Message:</strong><br>";
   $message .= str_replace("\n", "<br>", check_plain($body)); // add line breaks
   $message .= "</p>";
-  $message .= "<br>Member's profile: <a href='" . $member_url . "'>" . $member_url . "</a>";
+  $message .= "<br>Member's profile: <a href='" . $member_url_uid . "'>" . $member_url . "</a>";
   $message .= "<br>Member's email: " . $reply;
   $message .= "<br>";
   $message .= "<br>To respond, just reply to this email.";

@@ -135,6 +135,7 @@ function _tm_users_mail_alter_contact_page_mail(&$mail_form) {
 
   // CONSTRUCT MESSAGE
   $member_url = url('user/'.$user->uid, array('absolute'=>TRUE));
+  $member_url_uid = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/user/" . $user->uid;
   $message = "Hi, a member just sent a message via the site contact form:";
   $message .= "<br>";
   if ($contact_re != "") {
@@ -147,7 +148,7 @@ function _tm_users_mail_alter_contact_page_mail(&$mail_form) {
   $message .= str_replace("\n", "<br>", $custom_message); // add line breaks
   $message .= "</p>";
   if (user_is_logged_in()) {
-      $message .= "<br>Member's profile: <a href='" . $member_url . "'>" . $member_url . "</a>";
+      $message .= "<br>Member's profile: <a href='" . $member_url_uid . "'>" . $member_url . "</a>";
   } 
   $message .= "<br>Reply email: " . check_plain($mail_form['params']['mail']);
   $message .= "<br>";

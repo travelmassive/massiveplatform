@@ -16,7 +16,7 @@ $count = 0;
 $count_change_leader = 0;
 $count_change_member = 0;
 
-$drush_print("Processing " . sizeof($results) . " users...");
+drush_print("Processing " . sizeof($results) . " users...");
 foreach ($results as $result) {
 
 	$count++;

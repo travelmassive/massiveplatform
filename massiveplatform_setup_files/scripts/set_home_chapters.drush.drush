@@ -9,18 +9,20 @@ if (!$confirm) {
 }
 
 // fetch all users
-$result = db_query('SELECT uid, name, timezone FROM {users} WHERE uid > 0 ORDER BY uid');
+$results = db_query('SELECT uid FROM {users} WHERE uid > 0 ORDER BY uid')->fetchAll();
 
 // process each user
 $count = 0;
 $count_change_leader = 0;
 $count_change_member = 0;
-while ($record = $result->fetch()) {
+
+$drush_print("Processing " . sizeof($results) . " users...");
+foreach ($results as $result) {
 
 	$count++;
 
 	// get uid
-	$user_id = $record->uid;
+	$user_id = $result->uid;
 
 	// load user
 	$account = user_load($user_id);
@@ -65,7 +67,7 @@ while ($record = $result->fetch()) {
 	}
 	
 	// If is a chapter leader, set first chapter
-	if (sizeof($chapters_leader_nids)) {
+	if (sizeof($chapters_leader_nids) > 0) {
 		$account->field_home_chapter[LANGUAGE_NONE][0]['target_id'] = $chapters_leader_nids[0];
 		drush_print("User: " . $user_id . " is chapter leader, setting home chapter to " . $chapters_leader_nids[0]);
 		if ($confirm) {

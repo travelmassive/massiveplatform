@@ -98,16 +98,20 @@ function tm_reports_get_insights_labels() {
   "event_total_registrations" => "Total event registrations",
   "event_total_waitlist" => "Total event waitlists",
   "event_total_payments" => "Total event payments",
-  "num_profile_views_7_days" => "Member profile views (signed in members) (7 Days)",
-  "num_profile_views_30_days" => "Member profile views (signed in members) (30 Days)",
-  "num_profile_views_90_days" => "Member profile views (signed in members) (90 Days)",
-  "num_unique_profile_views_7_days" => "Unique Member profile views (signed in members) (7 Days)",
-  "num_unique_profile_views_30_days" => "Unique Member profile views (signed in members) (30 Days)",
-  "num_unique_profile_views_90_days" => "Unique Member profile views (signed in members) (90 Days)",
-  "num_chapter_views_7_days" => "Chapter views (signed in members) (7 Days)",
   "num_chapter_views_30_days" => "Chapter views (signed in members) (30 Days)",
   "num_chapter_views_90_days" => "Chapter views (signed in members) (90 Days)",
   ];
+
+  // Generate track_views labels
+  $entity_types = array("member_profile" => "Member profile", "event" => "Event", "organization" => "Organization", "chapter" => "Chapter");
+  $day_ranges = array(7, 30, 90);
+  foreach ($entity_types as $entity_type => $entity_label) {
+    foreach ($day_ranges as $day_range) {
+      $data_labels["num_" . $entity_type . "_views_" . $day_range . "_days"] = $entity_label . " views (signed in members) (" . $day_range . " Days)";
+      $data_labels["num_unique_" . $entity_type . "_views_" . $day_range . "_days"] = "Unique " . $entity_label . " views (signed in members) (" . $day_range . " Days)";
+    }
+  }
+
   return $data_labels;
 }
 

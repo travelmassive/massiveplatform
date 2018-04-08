@@ -482,35 +482,57 @@ function _tm_reports_get_global_insights() {
   // TRACK VIEWS
   if (module_exists("tm_track_views")) {
     
-    // unique profile views 7 days
+    // member profile views 7 days
     $query = "SELECT COUNT(uid) AS amount FROM tm_track_views WHERE entity_type = 1 AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 7 DAY)";
     $num_profile_views_7_days = db_query($query)->fetch();
-    $insights["num_profile_views_7_days"] = $num_profile_views_7_days->amount;
+    $insights["num_member_profile_views_7_days"] = $num_profile_views_7_days->amount;
 
-    // unique profile views 30 days
+    // member profile views 30 days
     $query = "SELECT COUNT(uid) AS amount FROM tm_track_views WHERE entity_type = 1 AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 30 DAY)";
     $num_profile_views_30_days = db_query($query)->fetch();
-    $insights["num_profile_views_30_days"] = $num_profile_views_30_days->amount;
+    $insights["num_member_profile_views_30_days"] = $num_profile_views_30_days->amount;
 
-    // unique profile views 90 days
+    // member profile views 90 days
     $query = "SELECT COUNT(uid) AS amount FROM tm_track_views WHERE entity_type = 1 AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 90 DAY)";
     $num_profile_views_90_days = db_query($query)->fetch();
-    $insights["num_profile_views_90_days"] = $num_profile_views_90_days->amount;
+    $insights["num_member_profile_views_90_days"] = $num_profile_views_90_days->amount;
 
-    // unique profile views 7 days
+    // unique member profile views 7 days
     $query = "SELECT COUNT(DISTINCT uid, entity_id) AS amount FROM tm_track_views WHERE entity_type = 1 AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 7 DAY)";
     $num_unique_profile_views_7_days = db_query($query)->fetch();
-    $insights["num_unique_profile_views_7_days"] = $num_unique_profile_views_7_days->amount;
+    $insights["num_unique_member_profile_views_7_days"] = $num_unique_profile_views_7_days->amount;
 
-    // unique profile views 30 days
+    // unique member profile views 30 days
     $query = "SELECT COUNT(DISTINCT uid, entity_id) AS amount FROM tm_track_views WHERE entity_type = 1 AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 30 DAY)";
     $num_unique_profile_views_30_days = db_query($query)->fetch();
-    $insights["num_unique_profile_views_30_days"] = $num_unique_profile_views_30_days->amount;
+    $insights["num_unique_member_profile_views_30_days"] = $num_unique_profile_views_30_days->amount;
 
-    // unique profile views 90 days
+    // unique member profile views 90 days
     $query = "SELECT COUNT(DISTINCT uid, entity_id) AS amount FROM tm_track_views WHERE entity_type = 1 AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 90 DAY)";
     $num_unique_profile_views_90_days = db_query($query)->fetch();
-    $insights["num_unique_profile_views_90_days"] = $num_unique_profile_views_90_days->amount;
+    $insights["num_unique_member_profile_views_90_days"] = $num_unique_profile_views_90_days->amount;
+
+    // organization, event, chapters
+    $node_types = array("event", "organization", "chapter");
+    $day_ranges = array(7, 30, 90);
+
+    // all profile views
+    foreach ($node_types as $node_type) {
+      foreach ($day_ranges as $day_range) {
+        $query = "SELECT COUNT(entity_id) AS amount FROM tm_track_views INNER JOIN node ON node.nid = entity_id AND entity_type = 2 AND node.type = :node_type WHERE timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL " . $day_range . " DAY)";
+        $track_views_query = db_query($query, array(":node_type" => $node_type))->fetch();
+        $insights["num_" . $node_type . "_views_" . $day_range . "_days"] = $track_views_query->amount;
+      }
+    }
+
+    // unique profile views
+    foreach ($node_types as $node_type) {
+      foreach ($day_ranges as $day_range) {
+        $query = "SELECT COUNT(DISTINCT tm_track_views.uid) AS amount FROM tm_track_views INNER JOIN node ON node.nid = entity_id AND entity_type = 2 AND node.type = :node_type WHERE timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL " . $day_range . " DAY)";
+        $track_views_query = db_query($query, array(":node_type" => $node_type))->fetch();
+        $insights["num_unique_" . $node_type . "_views_" . $day_range . "_days"] = $track_views_query->amount;
+      }
+    }
 
   }
 

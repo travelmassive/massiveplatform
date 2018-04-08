@@ -13,7 +13,7 @@ if ($confirm_opt == null) {
 
 # UID Range
 $min_uid = drush_get_option('min-uid', 1);
-$max_uid = drush_get_option('max-uid', 1000000);
+$max_uid = drush_get_option('max-uid', 20000);
 drush_print("Min UID: " . $min_uid . " (set with --min-uid=1)");
 drush_print("Max UID: " . $max_uid . " (set with --max-uid=10000)");
 

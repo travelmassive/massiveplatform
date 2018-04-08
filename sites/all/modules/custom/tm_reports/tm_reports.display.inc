@@ -108,7 +108,6 @@ function tm_reports_get_insights_labels() {
   foreach ($entity_types as $entity_type => $entity_label) {
     foreach ($day_ranges as $day_range) {
       $data_labels["num_" . $entity_type . "_views_" . $day_range . "_days"] = $entity_label . " views (signed in members) (" . $day_range . " Days)";
-      $data_labels["num_unique_" . $entity_type . "_views_" . $day_range . "_days"] = "Unique " . $entity_label . " views (signed in members) (" . $day_range . " Days)";
     }
   }
 

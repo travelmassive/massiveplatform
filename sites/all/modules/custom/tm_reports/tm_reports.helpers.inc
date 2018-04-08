@@ -425,7 +425,10 @@ function _tm_reports_event_registration_frequency($node_ids = null, $node_type =
 
   // check if array
   // max key length is 250 chars (memcached) so lets md5 it so we get 32 char
-  $node_ids_key = md5(implode("-", $node_ids));
+  $node_ids_key = "no-node-id";
+  if ($node_ids != null) {
+    $node_ids_key = md5(implode("-", $node_ids));
+  }
 
   // check cache
   $cache_key = "tm-reports-event-registration-frequency-" . $node_type . "-" . $node_ids_key . "-" . $aggregate;

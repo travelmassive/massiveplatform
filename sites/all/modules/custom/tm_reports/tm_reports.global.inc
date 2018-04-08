@@ -479,6 +479,41 @@ function _tm_reports_get_global_insights() {
   $num_logins_twitter = $query->total;
   $insights['num_logins_twitter'] = $num_logins_twitter;
 
+  // TRACK VIEWS
+  if (module_exists("tm_track_views")) {
+    
+    // unique profile views 7 days
+    $query = "SELECT COUNT(entity_id) AS amount FROM tm_track_views WHERE entity_type = 1 AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 7 DAY)";
+    $num_profile_views_7_days = db_query($query)->fetch();
+    $insights["num_profile_views_7_days"] = $num_profile_views_7_days->amount;
+
+    // unique profile views 30 days
+    $query = "SELECT COUNT(entity_id) AS amount FROM tm_track_views WHERE entity_type = 1 AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 30 DAY)";
+    $num_profile_views_30_days = db_query($query)->fetch();
+    $insights["num_profile_views_30_days"] = $num_profile_views_30_days->amount;
+
+    // unique profile views 90 days
+    $query = "SELECT COUNT(entity_id) AS amount FROM tm_track_views WHERE entity_type = 1 AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 90 DAY)";
+    $num_profile_views_90_days = db_query($query)->fetch();
+    $insights["num_profile_views_90_days"] = $num_profile_views_90_days->amount;
+
+    // unique profile views 7 days
+    $query = "SELECT COUNT(DISTINCT(entity_id)) AS amount FROM tm_track_views WHERE entity_type = 1 AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 7 DAY)";
+    $num_unique_profile_views_7_days = db_query($query)->fetch();
+    $insights["num_unique_profile_views_7_days"] = $num_unique_profile_views_7_days->amount;
+
+    // unique profile views 30 days
+    $query = "SELECT COUNT(DISTINCT(entity_id)) AS amount FROM tm_track_views WHERE entity_type = 1 AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 30 DAY)";
+    $num_unique_profile_views_30_days = db_query($query)->fetch();
+    $insights["num_unique_profile_views_30_days"] = $num_unique_profile_views_30_days->amount;
+
+    // unique profile views 90 days
+    $query = "SELECT COUNT(DISTINCT(entity_id)) AS amount FROM tm_track_views WHERE entity_type = 1 AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 90 DAY)";
+    $num_unique_profile_views_90_days = db_query($query)->fetch();
+    $insights["num_unique_profile_views_90_days"] = $num_unique_profile_views_90_days->amount;
+
+  }
+
   // RETURN DATA
   $data_labels = tm_reports_get_insights_labels();
   $results = ["data_values" => $insights, "data_labels" => $data_labels];

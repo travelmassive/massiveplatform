@@ -489,7 +489,7 @@ function _tm_reports_get_global_insights() {
     $query = "SELECT COUNT(DISTINCT uid, entity_id) AS amount FROM tm_track_views WHERE entity_type = 1 AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 7 DAY)";
     $num_unique_profile_views_7_days = db_query($query)->fetch()->amount;
 
-    $insights["num_member_profile_views_7_days"] = $num_profile_views_7_days . " / " . $num_unique_profile_views_7_days . " (uv)";
+    $insights["num_member_profile_views_7_days"] = $num_profile_views_7_days . " / " . $num_unique_profile_views_7_days . " UVs";
 
     // member profile views 30 days
     $query = "SELECT COUNT(uid) AS amount FROM tm_track_views WHERE entity_type = 1 AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 30 DAY)";
@@ -497,7 +497,7 @@ function _tm_reports_get_global_insights() {
 
     $query = "SELECT COUNT(DISTINCT uid, entity_id) AS amount FROM tm_track_views WHERE entity_type = 1 AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 30 DAY)";
     $num_unique_profile_views_30_days = db_query($query)->fetch()->amount;
-    $insights["num_member_profile_views_30_days"] = $num_profile_views_30_days . " / " . $num_unique_profile_views_30_days . " (uv)";
+    $insights["num_member_profile_views_30_days"] = $num_profile_views_30_days . " / " . $num_unique_profile_views_30_days . " UVs";
 
     // member profile views 90 days
     $query = "SELECT COUNT(uid) AS amount FROM tm_track_views WHERE entity_type = 1 AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 90 DAY)";
@@ -505,7 +505,7 @@ function _tm_reports_get_global_insights() {
 
     $query = "SELECT COUNT(DISTINCT uid, entity_id) AS amount FROM tm_track_views WHERE entity_type = 1 AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 90 DAY)";
     $num_unique_profile_views_90_days = db_query($query)->fetch()->amount;
-    $insights["num_member_profile_views_90_days"] = $num_profile_views_90_days . " / " . $num_unique_profile_views_90_days . " (uv)";
+    $insights["num_member_profile_views_90_days"] = $num_profile_views_90_days . " / " . $num_unique_profile_views_90_days . " UVs";
 
     // organization, event, chapters
     $node_types = array("event", "organization", "chapter");
@@ -526,7 +526,7 @@ function _tm_reports_get_global_insights() {
         $track_views_amount_unique = $track_views_query->amount;
 
         // show all and unique ie: 10 / 5 (UV)
-        $insights["num_" . $node_type . "_views_" . $day_range . "_days"] = $track_views_amount . " / " . $track_views_amount_unique  . " (uv)";
+        $insights["num_" . $node_type . "_views_" . $day_range . "_days"] = $track_views_amount . " / " . $track_views_amount_unique  . " UVs";
 
       }
     }

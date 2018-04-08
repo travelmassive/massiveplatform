@@ -141,7 +141,7 @@ function tm_chapters_flag_unflag($flag, $entity_id, $account, $flagging) {
 
   // check if user is no longer in their home chapter
   $home_chapter_id = $user->field_home_chapter[LANGUAGE_NONE][0]['target_id'];
-  if (array_search($home_chapter_id, $chapters_nids) !== true) {
+  if (array_search($home_chapter_id, $chapters_nids) === true) {
     // Remove home chapter
     $user->field_home_chapter[LANGUAGE_NONE] = array();
     user_save($user);

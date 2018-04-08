@@ -30,7 +30,52 @@ foreach ($results as $result) {
 	// load user
 	$account = user_load($user_id);
 
-	// nothing to do if user already has a home chapter
+	// If chapter leader, fetch list of chapters the user is a leader of
+	$chapters_leader_nids = array();
+	if (in_array("chapter leader", $account->roles) == true) {
+		// Fetch list of chapters the user is a leader of
+		$query = new EntityFieldQuery();
+		$query->entityCondition('entity_type', 'node')
+		->entityCondition('bundle', 'chapter')
+		->propertyCondition('status', NODE_PUBLISHED)
+		->fieldCondition('field_chapter_leaders', 'target_id', $account->uid, '=');
+
+		$result = $query->execute();
+		if (isset($result['node'])) {
+			$chapters_leader_nids = array_keys($result['node']);
+		}
+	}
+	
+	// If is a chapter leader, set first chapter (regardless if they have another home chapter)
+	if (sizeof($chapters_leader_nids) > 0) {
+
+		// Fetch list of chapters the user has joined
+		$flags = flag_get_user_flags("node", null, $user_id);
+		$chapters_nids = array();
+		foreach ($flags as $flag_name => $flag) {
+			if ($flag_name == "signup") {
+				foreach($flag as $f) {
+					$chapters_nids[] = $f->entity_id;
+				}
+			}
+		}
+
+		$previous_home_chapter = "none";
+		if (sizeof($account->field_home_chapter) > 0) {
+			$previous_home_chapter = $account->field_home_chapter[LANGUAGE_NONE][0]['target_id'];
+		}
+
+		$account->field_home_chapter[LANGUAGE_NONE][0]['target_id'] = $chapters_leader_nids[0];
+		drush_print("User: " . $user_id . " is chapter leader, setting home chapter to " . $chapters_leader_nids[0] . " (member of " . sizeof($chapters_nids) . " chapters, previous home chapter: " . $previous_home_chapter . ")");
+		if ($confirm) {
+			// call field_attach_update so we don't trigger user_update hooks
+			field_attach_update('user', $account);
+		}
+		$count_change_leader++;
+		continue;
+	}
+
+	// Nothing to do if user already has a home chapter
 	if (sizeof($account->field_home_chapter) > 0) {
 		drush_print("User: " . $user_id . " already has home chapter " . $account->field_home_chapter[LANGUAGE_NONE][0]['target_id']);
 		continue;
@@ -50,34 +95,6 @@ foreach ($results as $result) {
 	// If user has not joined any chapters, we can continue
 	if ((sizeof($chapters_nids)) == 0) {
 		drush_print("User: " . $user_id . " is not a member of any chapters");
-		continue;
-	}
-
-	// If chapter leader, fetch list of chapters the user is a leader of
-	$chapters_leader_nids = array();
-	if (in_array("chapter leader", $account->roles) == true) {
-		// Fetch list of chapters the user is a leader of
-		$query = new EntityFieldQuery();
-		$query->entityCondition('entity_type', 'node')
-		->entityCondition('bundle', 'chapter')
-		->propertyCondition('status', NODE_PUBLISHED)
-		->fieldCondition('field_chapter_leaders', 'target_id', $account->uid, '=');
-
-		$result = $query->execute();
-		if (isset($result['node'])) {
-			$chapters_leader_nids = array_keys($result['node']);
-		}
-	}
-	
-	// If is a chapter leader, set first chapter
-	if (sizeof($chapters_leader_nids) > 0) {
-		$account->field_home_chapter[LANGUAGE_NONE][0]['target_id'] = $chapters_leader_nids[0];
-		drush_print("User: " . $user_id . " is chapter leader, setting home chapter to " . $chapters_leader_nids[0] . " (member of " . sizeof($chapters_nids) . " chapters)");
-		if ($confirm) {
-			// call field_attach_update so we don't trigger user_update hooks
-			field_attach_update('user', $account);
-		}
-		$count_change_leader++;
 		continue;
 	}
 

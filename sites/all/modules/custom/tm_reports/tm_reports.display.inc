@@ -98,15 +98,15 @@ function tm_reports_get_insights_labels() {
   "event_total_registrations" => "Total event registrations",
   "event_total_waitlist" => "Total event waitlists",
   "event_total_payments" => "Total event payments",
-  "num_profile_views_7_days" => "Total profile views (signed in members) (7 Days)",
-  "num_profile_views_30_days" => "Total profile views (signed in members) (30 Days)",
-  "num_profile_views_90_days" => "Total profile views (signed in members) (90 Days)",
+  "num_profile_views_7_days" => "Profile views (signed in members) (7 Days)",
+  "num_profile_views_30_days" => "Profile views (signed in members) (30 Days)",
+  "num_profile_views_90_days" => "Profile views (signed in members) (90 Days)",
   "num_unique_profile_views_7_days" => "Unique profile views (signed in members) (7 Days)",
   "num_unique_profile_views_30_days" => "Unique profile views (signed in members) (30 Days)",
   "num_unique_profile_views_90_days" => "Unique profile views (signed in members) (90 Days)",
-  "num_chapter_views_7_days" => "Total Chapter views (signed in members) (7 Days)",
-  "num_chapter_views_30_days" => "Total Chapter views (signed in members) (30 Days)",
-  "num_chapter_views_90_days" => "Total Chapter views (signed in members) (90 Days)",
+  "num_chapter_views_7_days" => "Chapter views (signed in members) (7 Days)",
+  "num_chapter_views_30_days" => "Chapter views (signed in members) (30 Days)",
+  "num_chapter_views_90_days" => "Chapter views (signed in members) (90 Days)",
   ];
   return $data_labels;
 }

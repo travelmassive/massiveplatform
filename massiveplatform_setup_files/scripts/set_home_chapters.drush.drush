@@ -4,8 +4,11 @@
 
 # Confirm
 $confirm = false;
-if (!$confirm) {
-	drush_print("Running simulation (not saving)...");
+$confirm_opt = drush_get_option('confirm');
+if ($confirm_opt == null) {
+	drush_print("Running simulation (not saving). Use --confirm to save account changes.");
+} else {
+	$confirm = true;
 }
 
 // fetch all users
@@ -29,7 +32,7 @@ foreach ($results as $result) {
 
 	// nothing to do if user already has a home chapter
 	if (sizeof($account->field_home_chapter) > 0) {
-		drush_print("User: " . $user_id . " already has home chapter " . $$account->field_home_chapter[LANGUAGE_NONE][0]['target_id']);
+		drush_print("User: " . $user_id . " already has home chapter " . $account->field_home_chapter[LANGUAGE_NONE][0]['target_id']);
 		continue;
 	}
 
@@ -69,9 +72,10 @@ foreach ($results as $result) {
 	// If is a chapter leader, set first chapter
 	if (sizeof($chapters_leader_nids) > 0) {
 		$account->field_home_chapter[LANGUAGE_NONE][0]['target_id'] = $chapters_leader_nids[0];
-		drush_print("User: " . $user_id . " is chapter leader, setting home chapter to " . $chapters_leader_nids[0]);
+		drush_print("User: " . $user_id . " is chapter leader, setting home chapter to " . $chapters_leader_nids[0] . " (member of " . sizeof($chapters_nids) . " chapters)");
 		if ($confirm) {
-			user_save($account);
+			// call field_attach_update so we don't trigger user_update hooks
+			field_attach_update('user', $account);
 		}
 		$count_change_leader++;
 		continue;
@@ -79,9 +83,10 @@ foreach ($results as $result) {
 
 	// Set first chapter
 	$account->field_home_chapter[LANGUAGE_NONE][0]['target_id'] = $chapters_nids[0];
-	drush_print("User: " . $user_id . " has no home chapter, setting home chapter to " . $chapters_nids[0]);
+	drush_print("User: " . $user_id . " has no home chapter, setting home chapter to " . $chapters_nids[0] . " (member of " . sizeof($chapters_nids) . " chapters)");
 	if ($confirm) {
-		user_save($account);
+		// call field_attach_update so we don't trigger user_update hooks
+		field_attach_update('user', $account);
 	}
 	$count_change_member++;
 	continue;

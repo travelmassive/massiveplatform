@@ -68,8 +68,13 @@ foreach ($results as $result) {
 			$previous_home_chapter = $account->field_home_chapter[LANGUAGE_NONE][0]['target_id'];
 		}
 
+		$change_text = "";
+		if ($previous_home_chapter != $chapters_leader_nids[0]) {
+			$change_text = " [CHANGED]";
+		}
+
 		$account->field_home_chapter[LANGUAGE_NONE][0]['target_id'] = $chapters_leader_nids[0];
-		drush_print("User: " . $user_id . " is chapter leader, setting home chapter to " . $chapters_leader_nids[0] . " (member of " . sizeof($chapters_nids) . " chapters, previous home chapter: " . $previous_home_chapter . ")");
+		drush_print("User: " . $user_id . " is chapter leader, setting home chapter to " . $chapters_leader_nids[0] . " (member of " . sizeof($chapters_nids) . " chapters, previous home chapter: " . $previous_home_chapter . ")" . $change_text);
 		if ($confirm) {
 			// call field_attach_update so we don't trigger user_update hooks
 			field_attach_update('user', $account);

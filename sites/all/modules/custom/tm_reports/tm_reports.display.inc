@@ -107,9 +107,6 @@ function tm_reports_get_insights_labels() {
   "num_chapter_views_7_days" => "Total Chapter views (signed in members) (7 Days)",
   "num_chapter_views_30_days" => "Total Chapter views (signed in members) (30 Days)",
   "num_chapter_views_90_days" => "Total Chapter views (signed in members) (90 Days)",
-  "num_unique_chapter_views_7_days" => "Unique Chapter views (signed in members) (7 Days)",
-  "num_unique_chapter_views_30_days" => "Unique Chapter views (signed in members) (30 Days)",
-  "num_unique_chapter_views_90_days" => "Unique Chapter views (signed in members) (90 Days)",
   ];
   return $data_labels;
 }

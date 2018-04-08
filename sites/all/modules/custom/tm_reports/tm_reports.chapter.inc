@@ -579,32 +579,32 @@ function _tm_reports_get_chapter_insights($chapter_ids, $ignore_cache = false, $
   if (module_exists("tm_track_views")) {
     
     // chapter views 7 days
-    $query = "SELECT COUNT(entity_id) AS amount FROM tm_track_views WHERE entity_type = 2 AND entity_id IN (:chapter_ids) AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 7 DAY)";
+    $query = "SELECT COUNT(uid) AS amount FROM tm_track_views WHERE entity_type = 2 AND entity_id IN (:chapter_ids) AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 7 DAY)";
     $num_chapter_views_7_days = db_query($query, array(":chapter_ids" => $chapter_ids))->fetch();
     $insights["num_chapter_views_7_days"] = $num_chapter_views_7_days->amount;
 
     // chapter views 30 days
-    $query = "SELECT COUNT(entity_id) AS amount FROM tm_track_views WHERE entity_type = 2 AND entity_id IN (:chapter_ids) AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 30 DAY)";
+    $query = "SELECT COUNT(uid) AS amount FROM tm_track_views WHERE entity_type = 2 AND entity_id IN (:chapter_ids) AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 30 DAY)";
     $num_chapter_views_30_days = db_query($query, array(":chapter_ids" => $chapter_ids))->fetch();
     $insights["num_chapter_views_30_days"] = $num_chapter_views_30_days->amount;
 
     // chapter views 90 days
-    $query = "SELECT COUNT(entity_id) AS amount FROM tm_track_views WHERE entity_type = 2 AND entity_id IN (:chapter_ids) AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 90 DAY)";
+    $query = "SELECT COUNT(uid) AS amount FROM tm_track_views WHERE entity_type = 2 AND entity_id IN (:chapter_ids) AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 90 DAY)";
     $num_chapter_views_90_days = db_query($query, array(":chapter_ids" => $chapter_ids))->fetch();
     $insights["num_chapter_views_90_days"] = $num_chapter_views_90_days->amount;
 
     // unique chapter views 7 days
-    $query = "SELECT COUNT(DISTINCT(entity_id)) AS amount FROM tm_track_views WHERE entity_type = 2 AND entity_id IN (:chapter_ids) AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 7 DAY)";
+    $query = "SELECT COUNT(DISTINCT(uid)) AS amount FROM tm_track_views WHERE entity_type = 2 AND entity_id IN (:chapter_ids) AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 7 DAY)";
     $num_unique_chapter_views_7_days = db_query($query, array(":chapter_ids" => $chapter_ids))->fetch();
     $insights["num_unique_chapter_views_7_days"] = $num_unique_chapter_views_7_days->amount;
 
     // unique chapter views 30 days
-    $query = "SELECT COUNT(DISTINCT(entity_id)) AS amount FROM tm_track_views WHERE entity_type = 2 AND entity_id IN (:chapter_ids) AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 30 DAY)";
+    $query = "SELECT COUNT(DISTINCT(uid)) AS amount FROM tm_track_views WHERE entity_type = 2 AND entity_id IN (:chapter_ids) AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 30 DAY)";
     $num_unique_chapter_views_30_days = db_query($query, array(":chapter_ids" => $chapter_ids))->fetch();
     $insights["num_unique_chapter_views_30_days"] = $num_unique_chapter_views_30_days->amount;
 
     // unique chapter views 90 days
-    $query = "SELECT COUNT(DISTINCT(entity_id)) AS amount FROM tm_track_views WHERE entity_type = 2 AND entity_id IN (:chapter_ids) AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 90 DAY)";
+    $query = "SELECT COUNT(DISTINCT(uid)) AS amount FROM tm_track_views WHERE entity_type = 2 AND entity_id IN (:chapter_ids) AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 90 DAY)";
     $num_unique_chapter_views_90_days = db_query($query, array(":chapter_ids" => $chapter_ids))->fetch();
     $insights["num_unique_chapter_views_90_days"] = $num_unique_chapter_views_90_days->amount;
 

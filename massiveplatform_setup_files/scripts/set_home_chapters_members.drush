@@ -11,8 +11,14 @@ if ($confirm_opt == null) {
 	$confirm = true;
 }
 
+# UID Range
+$min_uid = drush_get_option('min-uid', 1);
+$max_uid = drush_get_option('max-uid', 1000000);
+drush_print("Min UID: " . $min_uid . " (set with --min-uid=1)");
+drush_print("Max UID: " . $max_uid . " (set with --max-uid=10000)");
+
 // fetch all users
-$results = db_query('SELECT uid FROM {users} WHERE uid > 0 ORDER BY uid')->fetchAll();
+$results = db_query('SELECT uid FROM {users} WHERE users.uid >= ' . $min_uid . ' AND users.uid <= ' . $max_uid . ' ORDER BY uid')->fetchAll();
 
 // process each user
 $count = 0;

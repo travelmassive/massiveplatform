@@ -755,7 +755,7 @@ $conf["tm_subscriptions_organization"]["US"]["html_renew"] = "<center><h2>Your s
 $conf["tm_subscriptions_organization"]["US"]["email_replyto"] = "support@massiveplatform.com"; // where should reply to emails go
 $conf["tm_subscriptions_organization"]["US"]["email_bcc"] = ""; // where should reply to emails go
 $conf["tm_subscriptions_organization"]["US"]["email_purchase_subject"] = "Thanks for purchasing a Premium Subscription";
-$conf["tm_subscriptions_organization"]["US"]["email_purchase_message"] = "Dear __FIRST_NAME__
+$conf["tm_subscriptions_organization"]["US"]["email_purchase_message"] = "Dear __FIRST_NAME__,
 
 Thanks for purchasing a Premium Company subscription.
 
@@ -768,7 +768,7 @@ To view your company profile, visit the link below:
 __EMAIL_SIGNOFF__
 ";
 $conf["tm_subscriptions_organization"]["US"]["email_renewed_subject"] = "Thanks for renewing your Premium Subscription";
-$conf["tm_subscriptions_organization"]["US"]["email_renewed_message"] = "Dear __FIRST_NAME__
+$conf["tm_subscriptions_organization"]["US"]["email_renewed_message"] = "Dear __FIRST_NAME__,
 
 Thanks for renewing your Premium Company subscription.
 
@@ -781,7 +781,7 @@ To view your company profile, visit the link below:
 __EMAIL_SIGNOFF__
 ";
 $conf["tm_subscriptions_organization"]["US"]["email_reminder_subject"] = "Renew your Premium Subscription";
-$conf["tm_subscriptions_organization"]["US"]["email_reminder_message"] = "Dear __FIRST_NAME__
+$conf["tm_subscriptions_organization"]["US"]["email_reminder_message"] = "Dear __FIRST_NAME__,
 
 Your Premium Company subscription expires in __SUBSCRIPTION_EXPIRES_TEXT__ (__SUBSCRIPTION_EXPIRES_DATE__).
 
@@ -792,7 +792,7 @@ To renew your subscription, simply sign in to your account and view your company
 __EMAIL_SIGNOFF__
 ";
 $conf["tm_subscriptions_organization"]["US"]["email_expired_subject"] = "Your Premium Subscription has expired";
-$conf["tm_subscriptions_organization"]["US"]["email_expired_message"] = "Dear __FIRST_NAME__
+$conf["tm_subscriptions_organization"]["US"]["email_expired_message"] = "Dear __FIRST_NAME__,
 
 Your Premium Company subscription has expired.
 
@@ -864,7 +864,7 @@ $conf["tm_subscriptions_user"]["US"]["html_renew"] = "<center><h2>Your subscript
 $conf["tm_subscriptions_user"]["US"]["email_replyto"] = "support@massiveplatform.com"; // where should reply to emails go
 $conf["tm_subscriptions_user"]["US"]["email_bcc"] = ""; // where should reply to emails go
 $conf["tm_subscriptions_user"]["US"]["email_purchase_subject"] = "Thanks for purchasing a Pro Membership";
-$conf["tm_subscriptions_user"]["US"]["email_purchase_message"] = "Dear __FIRST_NAME__
+$conf["tm_subscriptions_user"]["US"]["email_purchase_message"] = "Dear __FIRST_NAME__,
 
 Thanks for purchasing a Pro Membership subscription.
 
@@ -877,7 +877,7 @@ To view your account, visit the link below:
 __EMAIL_SIGNOFF__
 ";
 $conf["tm_subscriptions_user"]["US"]["email_renewed_subject"] = "Thanks for renewing your Pro Membership subscription";
-$conf["tm_subscriptions_user"]["US"]["email_renewed_message"] = "Dear __FIRST_NAME__
+$conf["tm_subscriptions_user"]["US"]["email_renewed_message"] = "Dear __FIRST_NAME__,
 
 Thanks for renewing your Pro Membership subscription.
 
@@ -890,7 +890,7 @@ To view your account, visit the link below:
 __EMAIL_SIGNOFF__
 ";
 $conf["tm_subscriptions_user"]["US"]["email_reminder_subject"] = "Renew your Pro Membership";
-$conf["tm_subscriptions_user"]["US"]["email_reminder_message"] = "Dear __FIRST_NAME__
+$conf["tm_subscriptions_user"]["US"]["email_reminder_message"] = "Dear __FIRST_NAME__,
 
 Your Pro Membership subscription expires in __SUBSCRIPTION_EXPIRES_TEXT__ (__SUBSCRIPTION_EXPIRES_DATE__).
 
@@ -901,7 +901,7 @@ To renew your subscription, simply sign in to your account and view your profile
 __EMAIL_SIGNOFF__
 ";
 $conf["tm_subscriptions_user"]["US"]["email_expired_subject"] = "Your Pro Membership subscription has expired";
-$conf["tm_subscriptions_user"]["US"]["email_expired_message"] = "Dear __FIRST_NAME__
+$conf["tm_subscriptions_user"]["US"]["email_expired_message"] = "Dear __FIRST_NAME__,
 
 Your Pro Membership subscription has expired.
 

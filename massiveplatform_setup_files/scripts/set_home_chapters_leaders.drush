@@ -1,6 +1,6 @@
 #!/usr/bin/env drush
 
-# Simple script to set home chapter for users without a home chapter
+# Simple script to set home chapter for chapter leaders without a home chapter
 
 # Confirm
 $confirm = false;
@@ -30,22 +30,25 @@ foreach ($results as $result) {
 	// load user
 	$account = user_load($user_id);
 
+	// only work on chapter leaders
+	if (in_array("chapter leader", $account->roles) != true) {
+		continue;
+	}
+
 	// If chapter leader, fetch list of chapters the user is a leader of
 	$chapters_leader_nids = array();
-	if (in_array("chapter leader", $account->roles) == true) {
-		// Fetch list of chapters the user is a leader of
-		$query = new EntityFieldQuery();
-		$query->entityCondition('entity_type', 'node')
-		->entityCondition('bundle', 'chapter')
-		->propertyCondition('status', NODE_PUBLISHED)
-		->fieldCondition('field_chapter_leaders', 'target_id', $account->uid, '=');
+	// Fetch list of chapters the user is a leader of
+	$query = new EntityFieldQuery();
+	$query->entityCondition('entity_type', 'node')
+	->entityCondition('bundle', 'chapter')
+	->propertyCondition('status', NODE_PUBLISHED)
+	->fieldCondition('field_chapter_leaders', 'target_id', $account->uid, '=');
 
-		$result = $query->execute();
-		if (isset($result['node'])) {
-			$chapters_leader_nids = array_keys($result['node']);
-		}
+	$result = $query->execute();
+	if (isset($result['node'])) {
+		$chapters_leader_nids = array_keys($result['node']);
 	}
-	
+
 	// If is a chapter leader, set first chapter (regardless if they have another home chapter)
 	if (sizeof($chapters_leader_nids) > 0) {
 
@@ -75,43 +78,11 @@ foreach ($results as $result) {
 		continue;
 	}
 
-	// Nothing to do if user already has a home chapter
-	if (sizeof($account->field_home_chapter) > 0) {
-		drush_print("User: " . $user_id . " already has home chapter " . $account->field_home_chapter[LANGUAGE_NONE][0]['target_id']);
-		continue;
-	}
-
-	// Fetch list of chapters the user has joined
-	$flags = flag_get_user_flags("node", null, $user_id);
-	$chapters_nids = array();
-	foreach ($flags as $flag_name => $flag) {
-		if ($flag_name == "signup") {
-			foreach($flag as $f) {
-				$chapters_nids[] = $f->entity_id;
-			}
-		}
-	}
-
-	// If user has not joined any chapters, we can continue
-	if ((sizeof($chapters_nids)) == 0) {
-		drush_print("User: " . $user_id . " is not a member of any chapters");
-		continue;
-	}
-
-	// Set first chapter
-	$account->field_home_chapter[LANGUAGE_NONE][0]['target_id'] = $chapters_nids[0];
-	drush_print("User: " . $user_id . " has no home chapter, setting home chapter to " . $chapters_nids[0] . " (member of " . sizeof($chapters_nids) . " chapters)");
-	if ($confirm) {
-		// call field_attach_update so we don't trigger user_update hooks
-		field_attach_update('user', $account);
-	}
-	$count_change_member++;
+	drush_print("User: " . $user_id . " is chapter leader, but has no chapters.");
 	continue;
+
 }
 
-drush_print("Processed " . $count . " users...");
 drush_print("Updated " . $count_change_leader . " chapter leaders...");
-drush_print("Updated " . $count_change_member . " members...");
 drush_print("Done.");
-
 

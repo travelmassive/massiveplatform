@@ -111,7 +111,7 @@ function tm_users_download_global_newsletter_generate($drush_progress = false) {
 	$chapter_leader_role = user_role_load_by_name("chapter leader")->rid;
 
 	// puts a header row across the top of the csv
-	$item = array(t('First name'),t('Last name'), t('Email'), t('Country Code'), t('Location'), t('Home Chapter'), t('Home Chapter Country'), t('User ID'), t('Account Age (Days)'), t('Last Active (Days)'), t('Days Since Approved'), t('Event Registrations'), t('Joined Chapters'), t('Approved Status'), t('Member Subscription Type'), t('Organization Subscription Type'), t('Show Member Subscription CTA'), t('Show Organization Subscription CTA'), t('Profile URL'), t('First Organization Profile'), t('Organization Profile URL'), t('User Segment L1'), t('User Segment L2'), t('Organization Segment L1'), t('Organization Segment L2'),);
+	$item = array(t('First name'),t('Last name'), t('Email'), t('Country Code'), t('Location'), t('Home Chapter'), t('Home Chapter Country'), t('User ID'), t('Account Age (Days)'), t('Last Active (Days)'), t('Days Since Approved'), t('Event Registrations'), t('Joined Chapters'), t('Member Status'), t('Member Subscription Type'), t('Organization Subscription Type'), t('Show Member Subscription CTA'), t('Show Organization Subscription CTA'), t('Profile URL'), t('First Organization Profile'), t('Organization Profile URL'), t('User Segment L1'), t('User Segment L2'), t('Organization Segment L1'), t('Organization Segment L2'),);
 	fputcsv($fh, $item);
 
 	// fetch newsletter subscribers
@@ -195,12 +195,22 @@ where n.value = 1 order by ud.uid asc";
 		$joined_chapters = tm_users_get_users_chapters_shortcodes($chapter_shortcodes, $signup_flag, $user_id);
 		$row[] = implode(" ", $joined_chapters);
 
+		// check if chapter leader
+		$is_chapter_leader = tm_users_userid_has_roleid($user_id, $chapter_leader_role);
+
 		// include approval status
 		$approved_status = tm_users_userid_has_roleid($user_id, $approved_member_role);
-		if ($approved_status == true) {
-			$row[] = "approved";
+
+		// member type
+		// chapter leader, approved, or not approved
+		if ($is_chapter_leader) {
+			$row[] = "chapter leader";
 		} else {
-			$row[] = "not approved";
+			if ($approved_status == true) {
+				$row[] = "approved";
+			} else {
+				$row[] = "not approved";
+			}
 		}
 
 		// member subscription type
@@ -233,11 +243,10 @@ where n.value = 1 order by ud.uid asc";
 		$row[] = $show_membership_cta;
 
 		// show organization subscription CTA
+		// don't show CTA if chapter leader (in newsletter)
 		$show_organization_membership_cta = 0; // default false
 		if (sizeof($organization_profile_nids) > 0) {
 			if ($module_exists_tm_subscriptions) {
-				// if chapter leader, turn off CTA in newsletter
-				$is_chapter_leader = tm_users_userid_has_roleid($user_id, $chapter_leader_role);
 				if (!$is_chapter_leader and tm_subscriptions_check_show_organization_cta($organization_profile_nids[0], $user_id, true)) {
 					$show_organization_membership_cta = 1; // user will be displayed a CTA
 				}

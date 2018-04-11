@@ -204,9 +204,13 @@ function _tm_users_get_field_value($field) {
 /**
  *  Get count of followers for a user
  */
-function tm_users_get_num_followers($uid) {
+function tm_users_get_num_followers($uid, $flag = null) {
 
-  $flag = flag_get_flag("follow_members");
+  // allow passing flag for performance
+  if ($flag == null) {
+    $flag = flag_get_flag("follow_members");
+  }
+
   $query = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.entity_id = :uid AND f.entity_type = 'user'";
   $result = db_query($query, array(':fid' => $flag->fid, ':uid' => $uid))->fetch();
   return $result->total;
@@ -215,9 +219,13 @@ function tm_users_get_num_followers($uid) {
 /**
  * Get count of how many people user is following
  */
-function tm_users_get_num_following($uid) {
+function tm_users_get_num_following($uid, $flag = null) {
 
-  $flag = flag_get_flag("follow_members");
+  // allow passing flag for performance
+  if ($flag == null) {
+    $flag = flag_get_flag("follow_members");
+  }
+  
   $query = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.uid = :uid AND f.entity_type = 'user'";
   $result = db_query($query, array(':fid' => $flag->fid, ':uid' => $uid))->fetch();
   return $result->total;
@@ -226,9 +234,13 @@ function tm_users_get_num_following($uid) {
 /**
  * Get count of how many events user has registered for
  */
-function tm_users_get_num_registered_events($uid) {
+function tm_users_get_num_registered_events($uid, $flag = null) {
 
-  $flag = flag_get_flag("event_register");
+  // allow passing flag for performance
+  if ($flag == null) {
+     $flag = flag_get_flag("event_register");
+  }
+ 
   $query = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.uid = :uid AND f.entity_type = 'node'";
   $result = db_query($query, array(':fid' => $flag->fid, ':uid' => $uid))->fetch();
   return $result->total;
@@ -258,10 +270,14 @@ function tm_users_get_all_moderators() {
 /**
  * Helper method to get all chapters user is a member of
  */
-function tm_users_get_chapters($user) {
+function tm_users_get_chapters($user, $signup_flag = null) {
+
+  // allow passing flag for performance
+  if ($signup_flag == null) {
+    $signup_flag = flag_get_flag("signup", NULL);
+  }
 
   // query flagging table for signup flag with user
-  $signup_flag = flag_get_flag("signup", NULL);
   $query = "SELECT entity_id FROM {flagging} f WHERE f.fid = :fid AND f.entity_type='node' AND f.uid=:uid";
   $rows = db_query($query, array(':fid' => $signup_flag->fid, ':uid' => $user->uid))->fetchAll();
 
@@ -488,7 +504,7 @@ function tm_users_get_organization_profiles($uid, $join_flag_id = null) {
     ORDER by fd.entity_id ASC";
     $rows = db_query($query, array(':fid' => $fid, ':uid' => $uid))->fetchAll();
 
-}
+  }
    
   $nids = array();
   foreach ($rows as $row) {

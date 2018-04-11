@@ -108,7 +108,7 @@ function tm_users_download_global_newsletter_generate($drush_progress = false) {
 	$approved_member_role = user_role_load_by_name("approved user")->rid;
 
 	// puts a header row across the top of the csv
-	$item = array(t('First name'),t('Last name'), t('Email'), t('Country Code'), t('Location'), t('Home Chapter'), t('Home Chapter Country'), t('User ID'), t('Account Age (Days)'), t('Last Active (Days)'), t('Joined Chapters'), t('Approved Status'), t('Profile URL'), t('First Organization Profile'), t('Organization Profile URL'), t('Days Since Approved'), t('Member Subscription Type'), t('Organization Subscription Type'), t('Show Member Subscription CTA'), t('Show Organization Subscription CTA'), t('User Segment L1'), t('User Segment L2'), t('Organization Segment L1'), t('Organization Segment L2'),);
+	$item = array(t('First name'),t('Last name'), t('Email'), t('Country Code'), t('Location'), t('Home Chapter'), t('Home Chapter Country'), t('User ID'), t('Account Age (Days)'), t('Last Active (Days)'), t('Joined Chapters'), t('Approved Status'), t('Profile URL'), t('First Organization Profile'), t('Organization Profile URL'), t('Event Registrations'), t('Days Since Approved'), t('Member Subscription Type'), t('Organization Subscription Type'), t('Show Member Subscription CTA'), t('Show Organization Subscription CTA'), t('User Segment L1'), t('User Segment L2'), t('Organization Segment L1'), t('Organization Segment L2'),);
 	fputcsv($fh, $item);
 
 	// fetch newsletter subscribers
@@ -126,6 +126,9 @@ where n.value = 1 order by ud.uid asc";
 
 	// get signup flag
 	$signup_flag = flag_get_flag("signup", NULL);
+
+	// get event register flag
+	$event_register_flag = flag_get_flag("event_register");
 
 	// perform query
 	$query = db_query($global_newsletter_sql);
@@ -202,6 +205,10 @@ where n.value = 1 order by ud.uid asc";
 			$organization_profile_url_absolute = url($organization_profile_url,array('absolute'=>true));
 			$row[] = $organization_profile_url_absolute;
 		}
+
+		// number of events registered for
+		$num_events = tm_users_get_num_registered_events($user_id, $event_register_flag);
+		$row[] = $num_events;
 
 		// days since approved
 		// get list of people who approved

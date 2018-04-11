@@ -108,7 +108,7 @@ function tm_users_download_global_newsletter_generate($drush_progress = false) {
 	$approved_member_role = user_role_load_by_name("approved user")->rid;
 
 	// puts a header row across the top of the csv
-	$item = array(t('First name'),t('Last name'), t('Email'), t('Country Code'), t('Location'), t('Home Chapter'), t('Home Chapter Country'), t('User ID'), t('Account Age (Days)'), t('Last Active (Days)'), t('Joined Chapters'), t('Approved Status'), t('Profile URL'), t('First Organization Profile'), t('Organization Profile URL'), t('Event Registrations'), t('Days Since Approved'), t('Member Subscription Type'), t('Organization Subscription Type'), t('Show Member Subscription CTA'), t('Show Organization Subscription CTA'), t('User Segment L1'), t('User Segment L2'), t('Organization Segment L1'), t('Organization Segment L2'),);
+	$item = array(t('First name'),t('Last name'), t('Email'), t('Country Code'), t('Location'), t('Home Chapter'), t('Home Chapter Country'), t('User ID'), t('Account Age (Days)'), t('Last Active (Days)'), t('Days Since Approved'), t('Event Registrations'), t('Joined Chapters'), t('Approved Status'), t('Member Subscription Type'), t('Organization Subscription Type'), t('Show Member Subscription CTA'), t('Show Organization Subscription CTA'), t('Profile URL'), t('First Organization Profile'), t('Organization Profile URL'), t('User Segment L1'), t('User Segment L2'), t('Organization Segment L1'), t('Organization Segment L2'),);
 	fputcsv($fh, $item);
 
 	// fetch newsletter subscribers
@@ -152,6 +152,10 @@ where n.value = 1 order by ud.uid asc";
 
 		$user_id = $row["uid"];
 
+		// fetch organizations 
+		// subscribed company will put first subscribed organization
+		$organization_profile_nids = tm_users_get_organization_profiles($user_id, $organization_subscription_enable_flag_id);
+
 		// days since last active
 		$last_visit_timestamp = tm_geoip_get_users_last_visit_time($user_id);
 		if ($last_visit_timestamp != null) {
@@ -160,55 +164,6 @@ where n.value = 1 order by ud.uid asc";
 		} else {
 			$row[] = -1; // never logged in
 		}
-
-		// get joined chapters
-		// ie: SYD,NYC,BNE
-		$joined_chapters = tm_users_get_users_chapters_shortcodes($chapter_shortcodes, $signup_flag, $user_id);
-		$row[] = implode(" ", $joined_chapters);
-
-		// include approval status
-		$approved_status = tm_users_userid_has_roleid($user_id, $approved_member_role);
-		if ($approved_status == true) {
-			$row[] = "approved";
-		} else {
-			$row[] = "not approved";
-		}
-
-		// include profile url
-		$account_profile_url = drupal_get_path_alias("user/" . $user_id);
-		$account_profile_url_absolute = url($account_profile_url,array('absolute'=>true));
-		$row[] = $account_profile_url_absolute;
-
-		// fetch organizations 
-		// subscribed company will put first subscribed organization
-		$organization_profile_nids = tm_users_get_organization_profiles($user_id, $organization_subscription_enable_flag_id);
-
-		// include whether account has a organization profile
-		// get company name
-		if ($organization_profile_nids == null) {
-			$row[] = "";
-		} else {
-			$company_title = tm_organizations_get_title($organization_profile_nids[0]);
-			if ($company_title != "") {
-				$row[] = strip_tags(trim($company_title));
-			} else {
-				$row[] = "";
-			}
-		}
-
-		// include organizations profile url
-		// will put first subscribed organization
-		if ($organization_profile_nids == null) {
-			$row[] = "";
-		} else {
-			$organization_profile_url = drupal_get_path_alias("node/" . $organization_profile_nids[0]);
-			$organization_profile_url_absolute = url($organization_profile_url,array('absolute'=>true));
-			$row[] = $organization_profile_url_absolute;
-		}
-
-		// number of events registered for
-		$num_events = tm_users_get_num_registered_events($user_id, $event_register_flag);
-		$row[] = $num_events;
 
 		// days since approved
 		// get list of people who approved
@@ -228,6 +183,23 @@ where n.value = 1 order by ud.uid asc";
 			$row[] = -1; // never approved
 		}
 
+		// number of events registered for
+		$num_events = tm_users_get_num_registered_events($user_id, $event_register_flag);
+		$row[] = $num_events;
+
+		// get joined chapters
+		// ie: SYD,NYC,BNE
+		$joined_chapters = tm_users_get_users_chapters_shortcodes($chapter_shortcodes, $signup_flag, $user_id);
+		$row[] = implode(" ", $joined_chapters);
+
+		// include approval status
+		$approved_status = tm_users_userid_has_roleid($user_id, $approved_member_role);
+		if ($approved_status == true) {
+			$row[] = "approved";
+		} else {
+			$row[] = "not approved";
+		}
+
 		// member subscription type
 		// use flag lookup directly for performance
 		$user_subscription_type = "";
@@ -242,7 +214,6 @@ where n.value = 1 order by ud.uid asc";
 		// will put first subscribed organization
 		$company_subscription_type = "";
 		if ($module_exists_tm_subscriptions) {
-
 			if (sizeof($organization_profile_nids) > 0) {
 				$company_subscription_type = tm_subscriptions_get_type($organization_profile_nids[0]);
 			}
@@ -268,6 +239,34 @@ where n.value = 1 order by ud.uid asc";
 			}
 		}
 		$row[] = $show_organization_membership_cta;
+
+		// include profile url
+		$account_profile_url = drupal_get_path_alias("user/" . $user_id);
+		$account_profile_url_absolute = url($account_profile_url,array('absolute'=>true));
+		$row[] = $account_profile_url_absolute;
+
+		// include whether account has a organization profile
+		// get company name
+		if ($organization_profile_nids == null) {
+			$row[] = "";
+		} else {
+			$company_title = tm_organizations_get_title($organization_profile_nids[0]);
+			if ($company_title != "") {
+				$row[] = strip_tags(trim($company_title));
+			} else {
+				$row[] = "";
+			}
+		}
+
+		// include organizations profile url
+		// will put first subscribed organization
+		if ($organization_profile_nids == null) {
+			$row[] = "";
+		} else {
+			$organization_profile_url = drupal_get_path_alias("node/" . $organization_profile_nids[0]);
+			$organization_profile_url_absolute = url($organization_profile_url,array('absolute'=>true));
+			$row[] = $organization_profile_url_absolute;
+		}
 
 		// user segment
 		$user_segment_l1 = "";

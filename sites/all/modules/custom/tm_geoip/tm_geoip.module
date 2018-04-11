@@ -172,7 +172,7 @@ function tm_geoip_get_real_visitor_ip() {
  */
 function tm_geoip_get_users_last_visit_time($uid) {
 
-	$query = "SELECT last_visit as last_visit FROM ip_tracker WHERE uid = :uid ORDER BY last_visit DESC LIMIT 1";
+	$query = "SELECT GREATEST(first_visit,last_visit) as last_visit FROM ip_tracker WHERE uid = :uid ORDER BY last_visit DESC LIMIT 1";
 	$row = db_query($query, array(':uid' => $uid))->fetch();
 
 	// get result

@@ -193,19 +193,14 @@ where n.value = 1 order by ud.uid asc";
 		$num_events = tm_users_get_num_registered_events($user_id, $event_register_flag);
 		$row[] = $num_events;
 
-		// country region
-		if ($row["country"] != "") {
-			$row[] = $chapter_regions[$row["country"]];
-		} else {
-			$row[] = "";
-		}
-
 		// home chapter region, or country region
 		if ($row["home_chapter_country"] != "") {
 			$row[] = $chapter_regions[$row["home_chapter_country"]];
 		} else if ($row["country"] != "") {
 			$row[] = $chapter_regions[$row["country"]];
 		} else {
+			$row[] = "";
+		}
 
 		// get joined chapters
 		// ie: SYD,NYC,BNE

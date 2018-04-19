@@ -111,7 +111,7 @@ function tm_users_download_global_newsletter_generate($drush_progress = false) {
 	$chapter_leader_role = user_role_load_by_name("chapter leader")->rid;
 
 	// puts a header row across the top of the csv
-	$item = array(t('First name'),t('Last name'), t('Email'), t('Country Code'), t('Location'), t('Home Chapter'), t('Home Chapter Country'), t('User ID'), t('Account Age (Days)'), t('Last Active (Days)'), t('Days Since Approved'), t('Event Registrations'), t('Home Chapter Region'), t('Joined Chapters'), t('Member Status'), t('Member Subscription Type'), t('Organization Subscription Type'), t('Show Member Subscription CTA'), t('Show Organization Subscription CTA'), t('Profile URL'), t('First Organization Profile'), t('Organization Profile URL'), t('User Segment L1'), t('User Segment L2'), t('Organization Segment L1'), t('Organization Segment L2'),);
+	$item = array(t('First name'),t('Last name'), t('Email'), t('Country Code'), t('Location'), t('Home Chapter'), t('Home Chapter Country'), t('User ID'), t('Account Age (Days)'), t('Last Active (Days)'), t('Days Since Approved'), t('Event Registrations'), t('Region Code'), t('Joined Chapters'), t('Member Status'), t('Member Subscription Type'), t('Organization Subscription Type'), t('Show Member Subscription CTA'), t('Show Organization Subscription CTA'), t('Profile URL'), t('First Organization Profile'), t('Organization Profile URL'), t('User Segment L1'), t('User Segment L2'), t('Organization Segment L1'), t('Organization Segment L2'),);
 	fputcsv($fh, $item);
 
 	// fetch newsletter subscribers
@@ -193,12 +193,19 @@ where n.value = 1 order by ud.uid asc";
 		$num_events = tm_users_get_num_registered_events($user_id, $event_register_flag);
 		$row[] = $num_events;
 
-		// home chapter region
-		if ($row["home_chapter_country"] != "") {
-			$row[] = $chapter_regions[$row["home_chapter_country"]];
+		// country region
+		if ($row["country"] != "") {
+			$row[] = $chapter_regions[$row["country"]];
 		} else {
 			$row[] = "";
 		}
+
+		// home chapter region, or country region
+		if ($row["home_chapter_country"] != "") {
+			$row[] = $chapter_regions[$row["home_chapter_country"]];
+		} else if ($row["country"] != "") {
+			$row[] = $chapter_regions[$row["country"]];
+		} else {
 
 		// get joined chapters
 		// ie: SYD,NYC,BNE

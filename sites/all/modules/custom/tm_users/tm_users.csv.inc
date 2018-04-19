@@ -111,7 +111,7 @@ function tm_users_download_global_newsletter_generate($drush_progress = false) {
 	$chapter_leader_role = user_role_load_by_name("chapter leader")->rid;
 
 	// puts a header row across the top of the csv
-	$item = array(t('First name'),t('Last name'), t('Email'), t('Country Code'), t('Location'), t('Home Chapter'), t('Home Chapter Country'), t('User ID'), t('Account Age (Days)'), t('Last Active (Days)'), t('Days Since Approved'), t('Event Registrations'), t('Joined Chapters'), t('Member Status'), t('Member Subscription Type'), t('Organization Subscription Type'), t('Show Member Subscription CTA'), t('Show Organization Subscription CTA'), t('Profile URL'), t('First Organization Profile'), t('Organization Profile URL'), t('User Segment L1'), t('User Segment L2'), t('Organization Segment L1'), t('Organization Segment L2'),);
+	$item = array(t('First name'),t('Last name'), t('Email'), t('Country Code'), t('Location'), t('Home Chapter'), t('Home Chapter Country'), t('User ID'), t('Account Age (Days)'), t('Last Active (Days)'), t('Days Since Approved'), t('Event Registrations'), t('Home Chapter Region'), t('Joined Chapters'), t('Member Status'), t('Member Subscription Type'), t('Organization Subscription Type'), t('Show Member Subscription CTA'), t('Show Organization Subscription CTA'), t('Profile URL'), t('First Organization Profile'), t('Organization Profile URL'), t('User Segment L1'), t('User Segment L2'), t('Organization Segment L1'), t('Organization Segment L2'),);
 	fputcsv($fh, $item);
 
 	// fetch newsletter subscribers
@@ -126,6 +126,9 @@ where n.value = 1 order by ud.uid asc";
 	
 	// get array of chapter shortcodes to lookup
 	$chapter_shortcodes = tm_chapters_get_all_chapter_shortcodes();
+
+	// get array of chapter and regions
+	$chapter_regions = _tm_chapters_get_all_country_regions();
 
 	// get signup flag
 	$signup_flag = flag_get_flag("signup", NULL);
@@ -189,6 +192,13 @@ where n.value = 1 order by ud.uid asc";
 		// number of events registered for
 		$num_events = tm_users_get_num_registered_events($user_id, $event_register_flag);
 		$row[] = $num_events;
+
+		// home chapter region
+		if ($row["country"] != "") {
+			$row[] = $chapter_regions[$row["country"]];
+		} else {
+			$row[] = "";
+		}
 
 		// get joined chapters
 		// ie: SYD,NYC,BNE
@@ -371,7 +381,7 @@ function tm_users_download_chapter_leaders_csv(){
 	$fh = fopen('php://output', 'w');
 
 	// puts a header row across the top of the csv
-	$item = array(t('First name'),t('Last name'),t('Country Code'),t('Location'),t('Chapter'),t('Chapter Country'),t('Email'));
+	$item = array(t('First name'),t('Last name'),t('Country Code'),t('Location'),t('Chapter'),t('Chapter Country'),t('Email'),t('Region'));
 
 	fputcsv($fh, $item);
 
@@ -386,9 +396,20 @@ function tm_users_download_chapter_leaders_csv(){
 	left join field_data_field_country on field_data_field_country.entity_id = chapter.nid and field_data_field_country.bundle = 'chapter'
 	where field_chapter_leaders_target_id is not null";
 
+	// get array of chapter and regions
+	$chapter_regions = _tm_chapters_get_all_country_regions();
+
 	// perform query
 	$query = db_query($chapter_leaders_list_sql);
 	while ($row = $query->fetchAssoc()) {
+
+		// add region to row
+		if ($row["country"] != null) {
+			$row[] = $chapter_regions[$row["country"]];
+		} else {
+			$row[] = "";
+		}
+		
 		fputcsv($fh, $row);
 	}
 

@@ -202,3 +202,20 @@ function _tm_chapters_get_chapters_in_continent($continent) {
   return $chapter_uids;
 }
 
+/**
+ * Helper method
+ * Get list of countries and regions
+ * We refer to countries_country table
+ */
+function _tm_chapters_get_all_country_regions() {
+
+  $query = "SELECT iso2, continent FROM countries_country";
+  $results = db_query($query)->fetchAll();
+
+  $regions = array();
+  foreach ($results as $result) {
+    $regions[$result->iso2] = $result->continent;
+  }
+
+  return $regions;
+}

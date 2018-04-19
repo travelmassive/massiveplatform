@@ -194,8 +194,8 @@ where n.value = 1 order by ud.uid asc";
 		$row[] = $num_events;
 
 		// home chapter region
-		if ($row["country"] != "") {
-			$row[] = $chapter_regions[$row["country"]];
+		if ($row["home_chapter_country"] != "") {
+			$row[] = $chapter_regions[$row["home_chapter_country"]];
 		} else {
 			$row[] = "";
 		}
@@ -404,8 +404,8 @@ function tm_users_download_chapter_leaders_csv(){
 	while ($row = $query->fetchAssoc()) {
 
 		// add region to row
-		if ($row["country"] != null) {
-			$row[] = $chapter_regions[$row["country"]];
+		if ($row["chapter_country"] != null) {
+			$row[] = $chapter_regions[$row["chapter_country"]];
 		} else {
 			$row[] = "";
 		}

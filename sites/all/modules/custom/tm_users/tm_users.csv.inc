@@ -111,7 +111,7 @@ function tm_users_download_global_newsletter_generate($drush_progress = false) {
 	$chapter_leader_role = user_role_load_by_name("chapter leader")->rid;
 
 	// puts a header row across the top of the csv
-	$item = array(t('first_name'),t('last_name'), t('email'), t('Country_Code'), t('Location'), t('Home_Chapter'), t('Home_Chapter_Country'), t('User_ID'), t('Account_Age_Days'), t('Last_Active_Days'), t('Days Since_Approved'), t('Event_Registrations'), t('Region_Code'), t('Joined_Chapters'), t('Member_Status'), t('Member_Subscription_Type'), t('Organization_Subscription_Type'), t('Show_Member_Subscription_CTA'), t('Show_Organization_Subscription_CTA'), t('Profile_URL'), t('First_Organization_Profile'), t('Organization_Profile_URL'), t('User_Segment_L1'), t('User_Segment_L2'), t('Organization_Segment_L1'), t('Organization_Segment_L2'),);
+	$item = array(t('First_Name'),t('Last_Name'), t('Email'), t('Country_Code'), t('Location'), t('Home_Chapter'), t('Home_Chapter_Country'), t('User_ID'), t('Account_Age_Days'), t('Last_Active_Days'), t('Days_Since_Approved'), t('Event_Registrations'), t('Region_Code'), t('Joined_Chapters'), t('Member_Status'), t('Member_Subscription_Type'), t('Organization_Subscription_Type'), t('Show_Member_Subscription_CTA'), t('Show_Organization_Subscription_CTA'), t('Profile_URL'), t('First_Organization_Profile'), t('Organization_Profile_URL'), t('User_Segment_L1'), t('User_Segment_L2'), t('Organization_Segment_L1'), t('Organization_Segment_L2'),);
 	fputcsv($fh, $item);
 
 	// fetch newsletter subscribers
@@ -383,7 +383,7 @@ function tm_users_download_chapter_leaders_csv(){
 	$fh = fopen('php://output', 'w');
 
 	// puts a header row across the top of the csv
-	$item = array(t('first_name'),t('last_name'),t('Chapter_Leader_Country_Code'),t('Chapter_Leader_Location'),t('Chapter_Leader_Chapter'),t('Chapter_Leader_Chapter_Country'),t('email'),t('Chapter_Leader_Region_Code'));
+	$item = array(t('First_Name'),t('Last_Name'),t('Chapter_Leader_Country_Code'),t('Chapter_Leader_Location'),t('Chapter_Leader_Chapter'),t('Chapter_Leader_Chapter_Country'),t('Email'),t('Chapter_Leader_Region_Code'));
 
 	fputcsv($fh, $item);
 

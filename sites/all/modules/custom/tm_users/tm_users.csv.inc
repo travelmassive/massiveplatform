@@ -111,7 +111,7 @@ function tm_users_download_global_newsletter_generate($drush_progress = false) {
 	$chapter_leader_role = user_role_load_by_name("chapter leader")->rid;
 
 	// puts a header row across the top of the csv
-	$item = array(t('First name'),t('Last name'), t('Email'), t('Country Code'), t('Location'), t('Home Chapter'), t('Home Chapter Country'), t('User ID'), t('Account Age (Days)'), t('Last Active (Days)'), t('Days Since Approved'), t('Event Registrations'), t('Region Code'), t('Joined Chapters'), t('Member Status'), t('Member Subscription Type'), t('Organization Subscription Type'), t('Show Member Subscription CTA'), t('Show Organization Subscription CTA'), t('Profile URL'), t('First Organization Profile'), t('Organization Profile URL'), t('User Segment L1'), t('User Segment L2'), t('Organization Segment L1'), t('Organization Segment L2'),);
+	$item = array(t('first_name'),t('last_name'), t('email'), t('Country_Code'), t('Location'), t('Home_Chapter'), t('Home_Chapter_Country'), t('User_ID'), t('Account_Age_Days'), t('Last_Active_Days'), t('Days Since_Approved'), t('Event_Registrations'), t('Region_Code'), t('Joined_Chapters'), t('Member_Status'), t('Member_Subscription_Type'), t('Organization_Subscription_Type'), t('Show_Member_Subscription_CTA'), t('Show_Organization_Subscription_CTA'), t('Profile_URL'), t('First_Organization_Profile'), t('Organization_Profile_URL'), t('User_Segment_L1'), t('User_Segment_L2'), t('Organization_Segment_L1'), t('Organization_Segment_L2'),);
 	fputcsv($fh, $item);
 
 	// fetch newsletter subscribers
@@ -383,7 +383,7 @@ function tm_users_download_chapter_leaders_csv(){
 	$fh = fopen('php://output', 'w');
 
 	// puts a header row across the top of the csv
-	$item = array(t('First name'),t('Last name'),t('Country Code'),t('Location'),t('Chapter'),t('Chapter Country'),t('Email'),t('Region'));
+	$item = array(t('first_name'),t('last_name'),t('Country_Code'),t('Location'),t('Chapter'),t('Chapter_Country'),t('email'),t('Region_Code'));
 
 	fputcsv($fh, $item);
 

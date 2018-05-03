@@ -383,7 +383,7 @@ function tm_users_download_chapter_leaders_csv(){
 	$fh = fopen('php://output', 'w');
 
 	// puts a header row across the top of the csv
-	$item = array(t('first_name'),t('last_name'),t('Country_Code'),t('Location'),t('Chapter'),t('Chapter_Country'),t('email'),t('Region_Code'));
+	$item = array(t('first_name'),t('last_name'),t('Chapter_Leader_Country_Code'),t('Chapter_Leader_Location'),t('Chapter_Leader_Chapter'),t('Chapter_Leader_Chapter_Country'),t('email'),t('Chapter_Leader_Region_Code'));
 
 	fputcsv($fh, $item);
 

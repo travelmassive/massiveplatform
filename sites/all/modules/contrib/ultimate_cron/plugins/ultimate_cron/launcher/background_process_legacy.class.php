@@ -800,7 +800,7 @@ class UltimateCronBackgroundProcessLegacyLauncher extends UltimateCronLauncher {
 
     }
     catch (Throwable $e) {
-      watchdog_exception('bgpl_launcher', $e, 'Error executing %job: @error', array('%job' => $job->name, '@error' => (string) $e), WATCHDOG_ERROR);
+      ultimate_cron_watchdog_throwable('bgpl_launcher', $e, 'Error executing %job: @error', array('%job' => $job->name, '@error' => (string) $e), WATCHDOG_ERROR);
       $job->sendSignal('background_process_legacy_dont_log');
       $log_entry->finish();
       $job->unlock($lock_id);

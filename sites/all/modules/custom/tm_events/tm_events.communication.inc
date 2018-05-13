@@ -667,6 +667,11 @@ function tm_events_process_emails_cron($item) {
 
     $user_account = user_load($user_id);
 
+    // check that account exists
+    if ($user_account == false) {
+      continue; 
+    }
+
     // if approved_members then check approval status of user
     if ($approved_members) {
       if (!in_array('approved user', $user_account->roles)) {

@@ -155,6 +155,12 @@ class TMNotification {
    * @return Boolean
    */
   public function isEnabled($uid) {
+
+    // ensure we have a uid
+    if ($uid == null) {
+      return false;
+    }
+
     $result = db_query('SELECT value FROM {tm_notifications} WHERE bundle = :notification_name AND uid = :uid', array(
       ':notification_name' => $this->name,
       ':uid' => $uid

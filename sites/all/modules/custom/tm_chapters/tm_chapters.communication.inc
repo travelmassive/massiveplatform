@@ -443,9 +443,32 @@ function tm_chapters_cron_queue_info() {
 
 /**
  * Cron call back to send announcement emails
- *
+ * Wrapper to tm_chapters_process_emails_cron_run($item) with exception handling
+ * 
  */
 function tm_chapters_process_emails_cron($item) {
+
+  try {
+    tm_chapters_process_emails_cron_run($item);
+  }
+  catch (Exception $e) {
+    // If the process fails, log and the queue handler will remove the item.
+    try {
+      watchdog_exception("tm_events", $e, "tm_chapters_process_emails_cron_run(): Queue item @item_id failed with message @message", array(
+          '@item_id' => $item->item_id,
+          '@message' => (string) $e,
+        ), WATCHDOG_ERROR);
+    } catch (Exception $e) {
+      // do nothing
+    }
+  }
+}
+
+/**
+ * Cron call back to send announcement emails
+ *
+ */
+function tm_chapters_process_emails_cron_run($item) {
 
   global $conf;
   
@@ -464,6 +487,11 @@ function tm_chapters_process_emails_cron($item) {
   foreach ($user_ids as $user_id) {
 
     $user_account = user_load($user_id);
+
+    // check that account exists
+    if ($user_account == false) {
+      continue; 
+    }
 
     // if approved_members then check approval status of user
     if ($approved_members) {
@@ -506,9 +534,32 @@ function tm_chapters_process_emails_cron($item) {
 
 /**
  * Cron call back to send announcement emails
- *
+ * Wrapper to tm_chapters_send_email_cron_run($item) with exception handling
+ * 
  */
 function tm_chapters_send_email_cron($item) {
+
+  try {
+    tm_chapters_send_email_cron_run($item);
+  }
+  catch (Exception $e) {
+    // If the process fails, log and the queue handler will remove the item.
+    try {
+      watchdog_exception("tm_events", $e, "tm_chapters_send_email_cron_run(): Queue item @item_id failed with message @message", array(
+          '@item_id' => $item->item_id,
+          '@message' => (string) $e,
+        ), WATCHDOG_ERROR);
+    } catch (Exception $e) {
+      // do nothing
+    }
+  }
+}
+
+/**
+ * Cron call back to send announcement emails
+ *
+ */
+function tm_chapters_send_email_cron_run($item) {
   tm_chapters_send_email($item["uid"], $item["email"], $item["subject"], $item["message"], $item["chapter_image_src"], $item["chapter_image_link"], $item["chapterid"], $item["replyto"]);
 }
 

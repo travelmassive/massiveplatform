@@ -645,9 +645,32 @@ function tm_events_cron_queue_info() {
 
 /**
  * Cron call back to send announcement emails
- *
+ * Wrapper to tm_events_process_emails_cron_run($item) with exception handling
+ * 
  */
 function tm_events_process_emails_cron($item) {
+
+  try {
+    tm_events_process_emails_cron_run($item);
+  }
+  catch (Exception $e) {
+    // If the process fails, log and the queue handler will remove the item.
+    try {
+      watchdog_exception("tm_events", $e, "tm_events_process_emails_cron_run(): Queue item @item_id failed with message @message", array(
+          '@item_id' => $item->item_id,
+          '@message' => (string) $e,
+        ), WATCHDOG_ERROR);
+    } catch (Exception $e) {
+      // do nothing
+    }
+  }
+}
+
+/**
+ * Cron call back to send announcement emails
+ *
+ */
+function tm_events_process_emails_cron_run($item) {
 
   global $conf;
 
@@ -713,9 +736,32 @@ function tm_events_process_emails_cron($item) {
 
 /**
  * Cron call back to send announcement emails
- *
+ * Wrapper to tm_events_send_email_cron_run($item) with exception handling
+ * 
  */
 function tm_events_send_email_cron($item) {
+
+  try {
+    tm_events_send_email_cron_run($item);
+  } 
+  catch (Exception $e) {
+    // If the process fails, log and the queue handler will remove the item.
+    try {
+      watchdog_exception("tm_events", $e, "tm_events_send_email_cron_run(): Queue item @item_id failed with message @message", array(
+          '@item_id' => $item->item_id,
+          '@message' => (string) $e,
+        ), WATCHDOG_ERROR);
+    } catch (Exception $e) {
+      // do nothing
+    }
+  }
+}
+
+/**
+ * Cron call back to send announcement emails
+ *
+ */
+function tm_events_send_email_cron_run($item) {
   tm_events_send_email($item["uid"], $item["email"], $item["subject"], $item["message"], $item["event_image_src"], $item["event_image_link"], $item["eventid"], $item["replyto"]);
 }
 

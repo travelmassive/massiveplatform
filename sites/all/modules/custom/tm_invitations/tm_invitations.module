@@ -495,9 +495,32 @@ function tm_invitations_cron_queue_info() {
 
 /**
  * Cron call back to send invitation emails
- *
+ * Wrapper to tm_invitations_send_email_cron_run($item) with exception handling
+ * 
  */
 function tm_invitations_send_email_cron($item) {
+
+  try {
+    tm_invitations_send_email_cron_run($item);
+  }
+  catch (Exception $e) {
+    // If the process fails, log and the queue handler will remove the item.
+    try {
+      watchdog_exception("tm_invitations", $e, "tm_invitations_send_email_cron_run(): Queue item @item_id failed with message @message", array(
+          '@item_id' => $item->item_id,
+          '@message' => (string) $e,
+        ), WATCHDOG_ERROR);
+    } catch (Exception $e) {
+      // do nothing
+    }
+  }
+}
+
+/**
+ * Cron call back to send invitation emails
+ *
+ */
+function tm_invitations_send_email_cron_run($item) {
   tm_invitations_send_email($item["email"], $item["inviter_name"], $item["inviter_uid"], $item["custom_message"], $item["chapter_name"], $item["server_name"]);
 }
 

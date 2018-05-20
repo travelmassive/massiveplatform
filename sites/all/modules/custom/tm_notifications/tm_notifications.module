@@ -369,7 +369,7 @@ function tm_notifications_cronapi() {
   $items = array();
   $items['tm_notifications_scheduled_worker_run'] = array(
     'title' => t('Run scheduled workers'),
-    'callback' => 'tm_notifications_scheduled_worker_run',
+    'callback' => 'tm_notifications_scheduled_worker',
     'enabled' => TRUE,
     'scheduler' => array(
       'name' => 'crontab',
@@ -383,26 +383,54 @@ function tm_notifications_cronapi() {
 
 /**
  * Cron worker.
+ * If the process fails, log and the queue handler will remove the item
+ */
+function tm_notifications_scheduled_worker() {
+
+  try {
+    tm_notifications_scheduled_worker_run();
+  } catch (Exception $e) {
+    watchdog_exception("tm_notifications", $e, "tm_notifications_scheduled_worker(): Failed with message @message", array(
+        '@message' => (string) $e,
+      ), WATCHDOG_ERROR);
+  }
+}
+
+
+/**
+ * Cron worker.
  */
 function tm_notifications_scheduled_worker_run() {
+
   $now = new DateTime(null, new DateTimeZone('UTC'));
-  
+
   $result = db_query('SELECT * FROM {tm_notifications_worker_schedule} WHERE status = :status AND schedule_date <= :date', array(
     'status' => 1 ,
     'date' => $now->format('Y-m-d H:i:s')
   ))->fetchAll();
   
   foreach ($result as $notification) {
-    $data = @unserialize($notification->data);
-    $fn = $notification->worker;
-    
-    if (function_exists($fn)) {
-      $fn($data);
+
+    // If the process fails, log and the scheduled item will be removed.
+    try {
+
+      $data = @unserialize($notification->data);
+      $fn = $notification->worker;
+      
+      if (function_exists($fn)) {
+        $fn($data);
+      }
+
+    } catch (Exception $e) {
+      watchdog_exception("tm_notifications", $e, "tm_notifications_scheduled_worker_run(): Failed with message @message", array(
+          '@message' => (string) $e,
+        ), WATCHDOG_ERROR);
     }
     
     // Clean rows.
     tm_notifications_schedule_remove($notification->identifier);
   }
+
 }
 
 /**

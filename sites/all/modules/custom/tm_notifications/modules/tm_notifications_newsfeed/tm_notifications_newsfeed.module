@@ -126,12 +126,24 @@ function tm_notifications_newsfeed_worker($data, $notif_type) {
  * Implement worker method for schedule notification
  */
 function tm_notifications_newsfeed_daily_worker($data) {
-  tm_notifications_newsfeed_worker($data, "daily");
+  try {
+    tm_notifications_newsfeed_worker($data, "daily");
+  } catch (Exception $e) {
+    watchdog_exception("tm_notifications", $e, "tm_notifications_newsfeed_daily_worker(): Worker failed with message @message", array(
+    '@message' => (string) $e,
+    ), WATCHDOG_ERROR);
+  }
 }
 
 /**
  * Implement worker method for schedule notification
  */
 function tm_notifications_newsfeed_weekly_worker($data) {
-  tm_notifications_newsfeed_worker($data, "weekly");
+  try {
+    tm_notifications_newsfeed_worker($data, "weekly");
+  } catch (Exception $e) {
+    watchdog_exception("tm_notifications", $e, "tm_notifications_newsfeed_weekly_worker(): Worker failed with message @message", array(
+    '@message' => (string) $e,
+    ), WATCHDOG_ERROR);
+  }
 }

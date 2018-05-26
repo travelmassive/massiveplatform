@@ -542,3 +542,22 @@ function tm_users_get_taxonomy_tid($uid) {
   return null;
 }
 
+/**
+ * Get last modified time for a user
+ * Return tid or null if not found
+ */
+function tm_users_get_last_modified_time($uid) {
+
+  $query = "SELECT field_last_modified_timestamp_value FROM field_data_field_last_modified_timestamp WHERE entity_type = 'user' AND entity_id = :uid LIMIT 1";
+  $rows = db_query($query, array(':uid' => $uid))->fetchAll();
+
+  // return result
+  foreach ($rows as $row) {
+    return $row->field_last_modified_timestamp_value;
+  }
+
+  // none
+  return null;
+}
+
+

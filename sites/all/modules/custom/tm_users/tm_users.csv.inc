@@ -111,7 +111,7 @@ function tm_users_download_global_newsletter_generate($drush_progress = false) {
 	$chapter_leader_role = user_role_load_by_name("chapter leader")->rid;
 
 	// puts a header row across the top of the csv
-	$item = array(t('First_Name'),t('Last_Name'), t('Email'), t('Country_Code'), t('Location'), t('Home_Chapter'), t('Home_Chapter_Country'), t('User_ID'), t('Account_Age_Days'), t('Last_Active_Days'), t('Days_Since_Approved'), t('Event_Registrations'), t('Region_Code'), t('Joined_Chapters'), t('Member_Status'), t('Member_Subscription_Type'), t('Organization_Subscription_Type'), t('Show_Member_Subscription_CTA'), t('Show_Organization_Subscription_CTA'), t('Profile_URL'), t('First_Organization_Profile'), t('Organization_Profile_URL'), t('User_Segment_L1'), t('User_Segment_L2'), t('Organization_Segment_L1'), t('Organization_Segment_L2'),);
+	$item = array(t('First_Name'),t('Last_Name'), t('Email'), t('Country_Code'), t('Location'), t('Home_Chapter'), t('Home_Chapter_Country'), t('User_ID'), t('Account_Age_Days'), t('Last_Active_Days'), t('Last_Updated_Days'), t('Days_Since_Approved'), t('Event_Registrations'), t('Region_Code'), t('Joined_Chapters'), t('Member_Status'), t('Member_Subscription_Type'), t('Organization_Subscription_Type'), t('Show_Member_Subscription_CTA'), t('Show_Organization_Subscription_CTA'), t('Profile_URL'), t('First_Organization_Profile'), t('Organization_Profile_URL'), t('User_Segment_L1'), t('User_Segment_L2'), t('Organization_Segment_L1'), t('Organization_Segment_L2'),);
 	fputcsv($fh, $item);
 
 	// fetch newsletter subscribers
@@ -169,6 +169,15 @@ where n.value = 1 order by ud.uid asc";
 			$row[] = $days_since_last_visit;
 		} else {
 			$row[] = -1; // never logged in
+		}
+
+		// days since last modified
+		$last_modified_timestamp = tm_users_get_last_modified_time($user_id);
+		if ($last_modified_timestamp != null) {
+			$days_since_last_modified = intval((time() - $last_modified_timestamp) / (60 * 60 * 24));
+			$row[] = $days_since_last_modified;
+		} else {
+			$row[] = -1; // never modified
 		}
 
 		// days since approved

@@ -264,8 +264,11 @@ group by
 	-- mysql cheat, so entities only appear once (can't use distinct because 'created' values are different)
 	updates.entity_id
 order by
-	entity_followers_weighted desc,
-	updates.created desc
+	-- use the following two lines to sort by followers:
+	-- entity_followers_weighted desc,
+	-- updates.created desc
+	-- order randomly
+	rand()
 
 SQL;
 

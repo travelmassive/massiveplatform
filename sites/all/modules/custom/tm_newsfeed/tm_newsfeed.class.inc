@@ -599,7 +599,7 @@ class TmNewsfeedEmail
 		$items = array();
 		$results = tm_newsfeed_discourse_fetch_for_user($user_id);
 		$base_url = $conf["tm_newsfeed_discourse_base_url"];
-		$max_topics = 4;
+		$max_topics = 3;
 		$topic_count = 0;
 
 		try {

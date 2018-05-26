@@ -1,14 +1,14 @@
 <?php
 
-// tm_newsfeed.discuss.inc - discussions methods
+// tm_newsfeed.discourse.inc - discourse forum methods
 
-function tm_newsfeed_discuss_fetch() {
+function tm_newsfeed_discourse_fetch() {
 
 	global $conf;
 
 	// check cache
-	$cache_key = 'tm-newsfeed-discuss-fetch';
-	if ($conf["tm_newsfeed_discuss_cache"] > 0) {
+	$cache_key = 'tm-newsfeed-discourse-fetch';
+	if ($conf["tm_newsfeed_discourse_cache"] > 0) {
 		$cache = cache_get($cache_key, 'cache');
 		if (!empty($cache)) {
 			try {
@@ -26,7 +26,8 @@ function tm_newsfeed_discuss_fetch() {
 	$curl_timeout = $conf["tm_newsfeed_curl_timeout"];
 
 	// url
-	$url = $conf["tm_newsfeed_discuss_api_url"];
+	// use /latest.json api
+	$url = $conf["tm_newsfeed_discourse_base_url"] . "/latest.json";
 
 	//set the url, number of POST vars, POST data
 	$CURLOPT_SSL_VERIFYHOST = 0; 
@@ -37,8 +38,8 @@ function tm_newsfeed_discuss_fetch() {
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 	// basic http auth
-	if (isset($conf["tm_newsfeed_discuss_api_userpass"])) {
-		curl_setopt($ch, CURLOPT_USERPWD, $conf["tm_newsfeed_discuss_api_userpass"]);
+	if (isset($conf["tm_newsfeed_discourse_api_userpass"])) {
+		curl_setopt($ch, CURLOPT_USERPWD, $conf["tm_newsfeed_discourse_api_userpass"]);
 	}
 	curl_setopt($ch, CURLOPT_VERBOSE, false);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $CURLOPT_SSL_VERIFYHOST);
@@ -57,8 +58,8 @@ function tm_newsfeed_discuss_fetch() {
 	curl_close($ch);
 
 	// return api data in json format
-	if ($conf["tm_newsfeed_discuss_cache"] > 0) {
-		cache_set($cache_key, $result, 'cache', time() + $conf["tm_newsfeed_discuss_cache"]);
+	if ($conf["tm_newsfeed_discourse_cache"] > 0) {
+		cache_set($cache_key, $result, 'cache', time() + $conf["tm_newsfeed_discourse_cache"]);
 	}
 	
 	// return result
@@ -70,11 +71,11 @@ function tm_newsfeed_discuss_fetch() {
 	
 }
 
-// fetch discussion newsfeed for a user
-function tm_newsfeed_discuss_fetch_for_user($user_id) {
+// fetch discourse newsfeed for a user
+function tm_newsfeed_discourse_fetch_for_user($user_id) {
 
 	// Fetch results for user
-	$results = tm_newsfeed_discuss_fetch();
+	$results = tm_newsfeed_discourse_fetch();
 
 	return $results;
 }

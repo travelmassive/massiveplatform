@@ -407,7 +407,7 @@ class TmNewsfeedEmail
 			$content = $content . $this->tm_newsfeed_email_populate_jobs($search_country, $start_date, $end_date);
 		}
 
-		if ($conf['tm_newsfeed_discuss_enabled']) {
+		if ($conf['tm_newsfeed_discourse_enabled']) {
 			$debug_timer['16_start_discussions'] = time();
 			$content = $content . $this->tm_newsfeed_email_populate_discussions($user_id);
 		}
@@ -594,31 +594,45 @@ class TmNewsfeedEmail
 
 
 	public function tm_newsfeed_email_populate_discussions($user_id) {
+
+		global $conf;
 		$items = array();
-		$results = tm_newsfeed_discuss_fetch_for_user($user_id);
+		$results = tm_newsfeed_discourse_fetch_for_user($user_id);
+		$base_url = $conf["tm_newsfeed_discourse_base_url"];
+		$max_topics = 4;
+		$topic_count = 0;
 
-		if (count($results) < 1) return "";
+		try {
 
-		// process results
-		// usort($results, 'sort_discussions');
-		$results = array_slice($results, 0, 3);
-
-		foreach($results as $result) {
-			$href = $result->url;
-			$link = $result->discussion_name;
-
-			$text = "";
-			$num_replies = $result->count_comments;
-
-			if ($num_replies > 1) {
-				$text = " ($num_replies replies)";
-			} elseif ($num_replies == 1) {
-				$text = " (1 reply)";
-			} else {
-				$text = " (Be the first to reply)";
+			// get topics
+			$topics = $results->topic_list->topics;
+			if (count($topics) < 1) {
+				return "";
 			}
 
-			$items[] = array("href" => $href, "link" => $link, "text" => $text);
+			// get topics with at least one reply, or at least one like
+			foreach($topics as $topic) {
+				if ($topic_count >= $max_topics) {
+					continue;
+				}
+				if (($topic->posts_count > 1) or ($topic->like_count > 0)) {
+
+					if ($topic->posts_count == 2) {
+						$text = " (1 reply)";
+					} elseif ($topic->posts_count > 2) {
+						$text = " (" . ($topic->posts_count - 1) . " replies)";
+					} else {
+						$text = " (Be the first to reply)";
+					}
+					$href = $base_url . "/t/" . $topic->slug . "/" . $topic->id;
+					$link = strip_tags($topic->title);
+					$items[] = array("href" => $href, "link" => $link, "text" => $text);
+
+					$topic_count ++;
+				}
+			}
+		} catch (Exception $e) {
+			// do nothing
 		}
 
 		return $this->tm_newsfeed_email_populate_section('discussions', $items);

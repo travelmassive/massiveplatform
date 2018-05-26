@@ -583,10 +583,10 @@ $conf["tm_newsfeed_blog_enabled"] = false; // enable blog newsfeed
 $conf["tm_newsfeed_blog_api_url"] = ""; // url for blog api
 $conf["tm_newsfeed_blog_cache"] = 60; // how long to cache results in seconds
 // $conf["tm_newsfeed_blog_api_userpass"] = "user:pass"; // uncomment to use basic httpauth 
-$conf["tm_newsfeed_discuss_enabled"] = false; // enable discussions newsfeed
-$conf["tm_newsfeed_discuss_api_url"] = ""; // url for discussions api
-$conf["tm_newsfeed_discuss_cache"] = 60; // how long to cache results in seconds
-// $conf["tm_newsfeed_discuss_api_userpass"] = "user:pass"; // uncomment to use basic httpauth 
+$conf["tm_newsfeed_discourse_enabled"] = false; // enable discourse forum newsfeed
+$conf["tm_newsfeed_discourse_base_url"] = ""; // base url of your discourse url
+$conf["tm_newsfeed_discourse_cache"] = 60; // how long to cache results in seconds
+// $conf["tm_newsfeed_discourse_api_userpass"] = "user:pass"; // uncomment to use basic httpauth
 
 // base email subject line
 $conf['tm_newsfeed_subject_base'] = "What's happening in the community";

@@ -99,10 +99,8 @@ function tm_chapters_form_alter(&$form, &$form_state, $form_id) {
     unset($form['field_chapter_is_group']);
   }
 
-  // Only allow moderators and administrators to link to discussion category
-  if (!(in_array("moderator", $user->roles)) or (!in_array("administrator", $user->roles))) {
-    unset($form['field_discuss_category_id']);
-  }
+  // Hide discussion category (deprecated)
+  unset($form['field_discuss_category_id']);
 
   // hide cover video field if not enabled
   if (!$conf["tm_cover_videos_enabled"]) {

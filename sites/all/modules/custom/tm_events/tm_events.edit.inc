@@ -300,9 +300,6 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
     // Hide organizers
     $form['field_event_hide_organizers']['#access'] = false;
 
-    // Hide discuss category id (deprecated)
-    unset($form['field_event_discuss_category_id']);
-
     // Hide moderator settings
     field_group_hide_field_groups($form, array('group_moderator_fields'));
 
@@ -467,6 +464,9 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
   if ($is_new_event) {
     drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_add_event.js');
   }
+
+  // Hide discuss category id (deprecated)
+  unset($form['field_event_discuss_category_id']);
 
 }
 

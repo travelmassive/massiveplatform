@@ -58,37 +58,26 @@ if (sizeof($request_uri_parts) == 3) {
       </h1>
       <nav id="prime-nav" role="navigation">
         <h1><?= t('Primary navigation'); ?></h1>
+
+         <div class='topnav-search-container'>
+          <div class='topnav-search-inner'>
+            <i class='topnav-search-icon'></i>
+            <form method="GET" action="/search"><input type='text' id='topnav-search-textfield' name='query' placeholder='<?php print $conf['tm_search_api_placeholder_text'];?>' value='' size='40' maxlength='255' class='form-text' autocomplete='off'></form>
+          </div>
+        </div>
+
         <ul class="prime-nav-wrappers">
-          <?php if ($main_menu): ?>
           <li class="browse-wrapper" data-dropd-wrapper>
-            <h2><a class="toggle" href="#browse-menu-blk" data-dropd-toggle><span class="hide"><?= t('Browse'); ?></span></a></h2>
-            <div id="browse-menu-blk" class="inner dropd dropd-right" data-dropd>
+            <h2><a class="toggle" href="#topnav-links-dropdown" data-dropd-toggle><span class="hide"><?= t('Browse'); ?></span></a></h2>
+            <div id="topnav-links-dropdown" class="inner dropd dropd-right" data-dropd>
               <?php echo tm_branding_get_element("menu_html"); ?>
             </div>
           </li>
-          <?php endif; ?>
           <?php if (module_exists("tm_status_updates") and ($conf["tm_status_updates_enabled"])) : ?>
           <li class="newsfeed-wrapper">
             <h2><a class="toggle" href="/newsfeed"><span class="hide"><?= t('Newsfeed'); ?></span></a></h2>
           </li>
           <?php endif; ?>
-          <li class="search-wrapper" data-dropd-wrapper>
-            <h2><a class="toggle" href="#search-menu-blk" data-dropd-toggle><span class="hide"><?= t('Search'); ?></span></a></h2>
-            <div id="search-menu-blk" class="inner dropd dropd-right" data-dropd>
-              <?php
-                // display search form in menu
-                $search_form ="<p>Site search disabled</p>";
-                if (module_exists("tm_search_api")) {
-                  global $tm_search_api_form_template;
-                  $search_form = $tm_search_api_form_template;
-                } elseif (module_exists("search")) { 
-                  $sf = drupal_get_form('search_form');
-                  $search_form = render($sf);
-                }
-                print $search_form;
-              ?>
-            </div>
-          </li>
           <li class="account-wrapper" data-dropd-wrapper>
             <?php print($page['account_menu']); ?>
           </li>
@@ -96,6 +85,14 @@ if (sizeof($request_uri_parts) == 3) {
       </nav>
     </div>
   </header>
+
+  <div class="top-navbar">
+    <div class="row">
+      <section>
+        <?php echo tm_branding_get_element("navbar_html"); ?>
+      </section>
+    </div>
+  </div>
 
   <?php
     // render top block

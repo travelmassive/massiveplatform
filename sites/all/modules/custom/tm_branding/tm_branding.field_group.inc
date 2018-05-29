@@ -107,6 +107,9 @@ function tm_branding_field_group_info() {
       11 => 'field_brand_menu_html',
       12 => 'field_brand_search_page_banner',
       13 => 'field_brand_search_page_link',
+      14 => 'field_brand_navbar_html',
+      15 => 'field_brand_fp_block_anon_html',
+      16 => 'field_brand_fp_block_user_html',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

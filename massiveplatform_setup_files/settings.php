@@ -364,6 +364,7 @@ $conf["tm_chapters_announcements_signoff"] = "Cheers,<br>"; // default signoff t
 $conf["tm_theme_meta_color"] = "#007DB7"; // Set the theme color for mobile Android, iOS 
 
 /** SEARCH SETTINGS **/
+$conf["tm_search_api_placeholder_text"] = "Enter a name, city, event or company ..."; // placeholder text for search box in site header
 $conf["tm_search_api_sort_method"] = "followers"; // sort by: followers, newest, or default
 $conf["tm_search_api_results_per_page"] = 10; // how many results to show per page
 $conf["tm_search_api_max_search_terms"] = 8; // max terms allowed in search
@@ -477,9 +478,27 @@ $conf['tm_branding_search_page_banner'] = '/sites/default/files/site_branding/se
 $conf['tm_branding_search_page_link'] = ''; // link for search page banner
 $conf['tm_branding_email_footer_html'] = ''; // insert text into email notification (excluding event announcements) 
 
-// site navigation links
-$conf["tm_branding_menu_html"] = "
+// site navigation links (navbar)
+$conf["tm_branding_navbar_html"] = '
+<span class="topnav-links-lhs">
+<a href="/chapters">Chapters</a> 
+<a style="margin-left: 0.5rem;" href="/events">Events</a> 
+<a style="margin-left: 0.5rem;" href="/community">People</a> 
+<a style="margin-left: 0.5rem; margin-right: 0.25rem;" href="/companies">Companies</a> 
+</span>
+<span class="topnav-links-rhs">
+<a href="/blog/">Blog</a> 
+</span>
+';
+
+// user subscription link for site navbar
+$conf["tm_branding_navbar_html_show_subscription_cta"] = "<a style='margin-left: 0.25rem;' href='/blog/pro-membership/'><span style='font-size: smaller; background-color: #fff; color: #037cb7; border-radius: 2px; padding: 2px; padding-left: 4px; padding-right: 4px;'>Pro Membership</a></a>";
+$conf["tm_branding_navbar_html_no_subscription_cta"] = "";
+
+// site navigation links (menu dropdown)
+$conf['tm_branding_menu_html'] = "
 <ul class='links'>
+  <li><a href='/search' style='color: #037cb7;'><span class='topnav-links-search'></span> Search</a></li>
   <li class='menu-1383 first'><a href='/chapters'>Chapters</a></li>
   <li class='menu-368'><a href='/events'>Events</a></li>
   <li class='menu-1456'><a href='/community'>People</a></li>

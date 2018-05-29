@@ -8,8 +8,15 @@ global $user;
 
 <section id="welcome">
 	<header class="hd" style="margin-top: 3em;">
-		<h1 class="prime-title"><?php print check_plain($homepage_title) ?></h1>
-		<p class="subtitle"><?php print check_plain($homepage_description) ?></p>
+    <?php
+      $user_first_name = "Guest";
+      if (user_is_logged_in()) { 
+        $user_loaded = user_load($user->uid);
+        $user_first_name = $user_loaded->field_user_first_name[LANGUAGE_NONE][0]['value'];
+      }
+    ?>
+		<h1 class="prime-title"><?php print (str_replace("__FIRST_NAME__", $user_first_name, $homepage_title)); ?></h1>
+		<p class="subtitle"><?php print ($homepage_description) ?></p>
 	</header>
 	<div class="bd">
     <?php

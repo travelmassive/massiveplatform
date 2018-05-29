@@ -50,7 +50,7 @@ You can reference __ASSETS_BASE_PATH__/assets/filename.ext in html template<br>'
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 27,
+      'weight' => 30,
     ),
   );
 
@@ -136,7 +136,7 @@ Default is $conf[\'tm_branding_email_footer_html\']',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 21,
+      'weight' => 22,
     ),
   );
 
@@ -366,7 +366,7 @@ Default is $conf[\'tm_branding_footer_html\']',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 18,
+      'weight' => 19,
     ),
   );
 
@@ -409,7 +409,7 @@ Default is $conf[\'tm_branding_footer_level1_html\']',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 19,
+      'weight' => 20,
     ),
   );
 
@@ -452,7 +452,7 @@ Default is $conf[\'tm_branding_footer_level2_html\']',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 20,
+      'weight' => 21,
     ),
   );
 
@@ -539,7 +539,7 @@ Default is $conf[\'tm_branding_top_block_html\']',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 24,
+      'weight' => 25,
     ),
   );
 
@@ -887,7 +887,7 @@ Default is $conf[\'tm_branding_include_css\']',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 25,
+      'weight' => 28,
     ),
   );
 
@@ -929,7 +929,7 @@ Default is $conf[\'tm_branding_include_js\']<br><br>',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 26,
+      'weight' => 29,
     ),
   );
 
@@ -1111,6 +1111,7 @@ This is helpful if you want to match only 50% of visitors with a rule.',
         'label' => 'above',
         'module' => 'entityreference',
         'settings' => array(
+          'bypass_access' => FALSE,
           'link' => FALSE,
         ),
         'type' => 'entityreference_label',
@@ -1224,7 +1225,7 @@ This is helpful if you want to match only 50% of visitors with a rule.',
     'bundle' => 'site_brand',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The top level menu links.<br>
+    'description' => 'The top level menu links in the dropdown.<br>
 Default is $conf[\'tm_branding_menu_html\']',
     'display' => array(
       'default' => array(
@@ -1244,7 +1245,49 @@ Default is $conf[\'tm_branding_menu_html\']',
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_brand_menu_html',
-    'label' => 'Menu html',
+    'label' => 'Menu (dropdown) html',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 18,
+    ),
+  );
+
+  // Exported field_instance: 'node-site_brand-field_brand_navbar_html'.
+  $field_instances['node-site_brand-field_brand_navbar_html'] = array(
+    'bundle' => 'site_brand',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'The top level navbar links.<br>
+Default is $conf[\'tm_branding_navbar_html\']',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 47,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_brand_navbar_html',
+    'label' => 'Navbar html',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -1355,7 +1398,7 @@ Default is $conf[\'tm_branding_search_page_banner\']',
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 22,
+      'weight' => 23,
     ),
   );
 
@@ -1414,7 +1457,7 @@ Default is $conf[\'tm_branding_search_page_link\']',
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 23,
+      'weight' => 24,
     ),
   );
 
@@ -1519,6 +1562,7 @@ This will override any match criteria.',
         'label' => 'above',
         'module' => 'entityreference',
         'settings' => array(
+          'bypass_access' => FALSE,
           'link' => FALSE,
         ),
         'type' => 'entityreference_label',
@@ -1841,9 +1885,8 @@ Branding will be enabled for any matching test criteria.<br>
 This will be enabled even if the branding is not activated.');
   t('Cookie Valid For');
   t('Custom css');
-  t('Custom html block for frontpage.<br>
-Will be displayed above the newsfeeds.<br>
-Default is $conf[\'tm_branding_frontpage_block_html\']');
+  t('Custom html block for top of page.
+Default is $conf[\'tm_branding_top_block_html\']');
   t('Custom js');
   t('Define a probability of returning a valid match if the rule matches a criteria.<br>
 This is helpful if you want to match only 50% of visitors with a rule.');
@@ -1866,7 +1909,6 @@ Default is $conf[\'tm_branding_favicon\']');
   t('Front page background image, displayed on mobile devices or if video disabled.<br>
 If using a front page video, this should be the first frame of the video.<br>
 Default is $conf[\'tm_branding_frontpage_image\']');
-  t('Top block html');
   t('Frontpage image');
   t('Frontpage opacity');
   t('Frontpage video link');
@@ -1907,7 +1949,8 @@ example: "partner-company" will match the URL "/partner-company"<br>');
   t('Match referer domain');
   t('Match user chapter');
   t('Match user\'s chapters.<br>');
-  t('Menu html');
+  t('Menu (dropdown) html');
+  t('Navbar html');
   t('Number of days the partner or referer cookie will be valid for.<br>
 Set to 0 to never expire (default)');
   t('Order in which the brand directive is processed.
@@ -1939,8 +1982,11 @@ Default is $conf[\'tm_branding_footer_html\']');
   t('The secondary page level footer (displayed above main footer)<br>
 Displayed on all pages except front page (ie: profile pages, event listings, etc).<br>
 Default is $conf[\'tm_branding_footer_level2_html\']');
-  t('The top level menu links.<br>
+  t('The top level menu links in the dropdown.<br>
 Default is $conf[\'tm_branding_menu_html\']');
+  t('The top level navbar links.<br>
+Default is $conf[\'tm_branding_navbar_html\']');
+  t('Top block html');
 
   return $field_instances;
 }

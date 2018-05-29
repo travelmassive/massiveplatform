@@ -670,6 +670,13 @@ function tm_branding_get_brand_element($site_brand, $element_name) {
 		}
 	}
 
+	// navbar_html
+	if ($element_name == "navbar_html") {
+		if (isset($site_brand->field_brand_navbar_html[LANGUAGE_NONE][0]['value'])) {
+			$element = $site_brand->field_navbar_html[LANGUAGE_NONE][0]['value'];
+		}
+	}
+
 	// replace vars
 	$element = tm_branding_replace_vars($element);
 
@@ -784,6 +791,21 @@ function tm_branding_get_base_element($element_name, $extra = null) {
 		$element = tm_branding_get_conf("tm_branding_email_footer_html");
 	}
 
+	// navbar_html
+	if ($element_name == "navbar_html") {
+		$element = tm_branding_get_conf("tm_branding_navbar_html");
+
+		// show subscription CTA if enabled
+		if (module_exists("tm_subscriptions_user")) {
+			global $user;
+			if (tm_subscriptions_check_show_user_cta($user->uid, $user->uid, false)) {
+				$element = str_replace("__USER_SUBSCRIPTION_CTA__", $conf["tm_branding_navbar_html_show_subscription_cta"], $element);
+			} else {
+				$element = str_replace("__USER_SUBSCRIPTION_CTA__", $conf["tm_branding_navbar_html_no_subscription_cta"], $element);
+			}
+		}
+	}
+
 	// replace vars
 	$element = tm_branding_replace_vars($element);
 
@@ -808,6 +830,7 @@ function tm_branding_get_conf($key) {
 function tm_branding_replace_vars($element) {
 
 	global $conf;
+	global $user;
 
 	$element = str_replace("__SITE_NAME__", $conf["tm_site_name"], $element);
 	$element = str_replace("__FRONTPAGE_URL__", $conf["tm_branding_frontpage_url"], $element);

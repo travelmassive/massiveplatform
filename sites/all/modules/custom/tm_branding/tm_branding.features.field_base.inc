@@ -635,6 +635,25 @@ function tm_branding_field_default_field_bases() {
     'type' => 'text_long',
   );
 
+  // Exported field_base: 'field_brand_navbar_html'.
+  $field_bases['field_brand_navbar_html'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_brand_navbar_html',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'text_long',
+  );
+
   // Exported field_base: 'field_brand_process_order'.
   $field_bases['field_brand_process_order'] = array(
     'active' => 1,

@@ -995,6 +995,32 @@ img.tm-status-update-preview-image {
   @media #{$small-up} {
     display: none;
   }
+  .more {
+    display: block;
+    position: relative;
+    text-align: center;
+    font-style: normal;
+    color: tint($primary-color, 40%);
+    margin: 0.5rem 0;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    &:before,
+    &:after {
+      position: absolute;
+      top: 50%;
+      z-index: 1;
+      height: 1px;
+      width: 40%;
+      content: '';
+      background: tint($primary-color, 90%);
+    }
+    &:before {
+      left: 0;
+    }
+    &:after {
+      right: 0;
+    }
+  }
 }
 
 .topnav-links-search:before {
@@ -1010,10 +1036,3 @@ img.tm-status-update-preview-image {
   font-size: 12pt;
 }
 
-.links-seperator {
-  width: 100%;
-  border-top: 1px solid #ddd;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  padding: 0;
-}

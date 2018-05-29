@@ -4992,8 +4992,37 @@ img.tm-status-update-preview-image {
     display: none;
   }
 }
+/* line 998, ../sass/_base.scss */
+#topnav-links-dropdown .more {
+  display: block;
+  position: relative;
+  text-align: center;
+  font-style: normal;
+  color: #79828c;
+  margin: 0.5rem 0;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+/* line 1008, ../sass/_base.scss */
+#topnav-links-dropdown .more:before, #topnav-links-dropdown .more:after {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  height: 1px;
+  width: 40%;
+  content: '';
+  background: #e8eaeb;
+}
+/* line 1017, ../sass/_base.scss */
+#topnav-links-dropdown .more:before {
+  left: 0;
+}
+/* line 1020, ../sass/_base.scss */
+#topnav-links-dropdown .more:after {
+  right: 0;
+}
 
-/* line 1000, ../sass/_base.scss */
+/* line 1026, ../sass/_base.scss */
 .topnav-links-search:before {
   content: "\e610";
   font-family: 'tm-icons';
@@ -5005,15 +5034,6 @@ img.tm-status-update-preview-image {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 12pt;
-}
-
-/* line 1013, ../sass/_base.scss */
-.links-seperator {
-  width: 100%;
-  border-top: 1px solid #ddd;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  padding: 0;
 }
 
 /* line 3, ../sass/_buttons.scss */

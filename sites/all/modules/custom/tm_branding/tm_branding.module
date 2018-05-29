@@ -796,14 +796,20 @@ function tm_branding_get_base_element($element_name, $extra = null) {
 		$element = tm_branding_get_conf("tm_branding_navbar_html");
 
 		// show subscription CTA if enabled
-		if (module_exists("tm_subscriptions_user")) {
-			global $user;
-			if (tm_subscriptions_check_show_user_cta($user->uid, $user->uid, false)) {
-				$element = str_replace("__USER_SUBSCRIPTION_CTA__", $conf["tm_branding_navbar_html_show_subscription_cta"], $element);
-			} else {
-				$element = str_replace("__USER_SUBSCRIPTION_CTA__", $conf["tm_branding_navbar_html_no_subscription_cta"], $element);
+		// otherwise, insert anon template
+		if (user_is_logged_in()) {
+			if (module_exists("tm_subscriptions_user")) {
+				global $user;
+				if (tm_subscriptions_check_show_user_cta($user->uid, $user->uid, false)) {
+					$element = str_replace("__USER_SUBSCRIPTION_CTA__", $conf["tm_branding_navbar_html_show_subscription_cta"], $element);
+				} else {
+					$element = str_replace("__USER_SUBSCRIPTION_CTA__", $conf["tm_branding_navbar_html_hide_subscription_cta"], $element);
+				}
 			}
+		} else {
+			$element = str_replace("__USER_SUBSCRIPTION_CTA__", $conf["tm_branding_navbar_html_anon_user"], $element);
 		}
+		
 	}
 
 	// replace vars

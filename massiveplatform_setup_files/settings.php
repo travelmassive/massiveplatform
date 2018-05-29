@@ -491,9 +491,10 @@ $conf["tm_branding_navbar_html"] = '
 </span>
 ';
 
-// user subscription link for site navbar
+// contextual links for site navbar
 $conf["tm_branding_navbar_html_show_subscription_cta"] = "<a style='margin-left: 0.25rem;' href='/blog/pro-membership/'><span style='font-size: smaller; background-color: #fff; color: #037cb7; border-radius: 2px; padding: 2px; padding-left: 4px; padding-right: 4px;'>Pro Membership</a></a>";
-$conf["tm_branding_navbar_html_no_subscription_cta"] = "";
+$conf["tm_branding_navbar_html_hide_subscription_cta"] = "";
+$conf["tm_branding_navbar_html_anon_user"] = "";
 
 // site navigation links (menu dropdown)
 $conf['tm_branding_menu_html'] = "

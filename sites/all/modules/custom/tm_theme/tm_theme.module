@@ -416,6 +416,9 @@ function tm_theme_user_view($account, $view_mode, $langcode) {
   // Add additional user meta tags
   tm_theme_add_meta_tags_user(arg(1));
 
+  // Protect pii data if using google analytics
+  tm_theme_ga_protect_pii_user($account, $view_mode, $langcode);
+
 }
 
 /**
@@ -561,28 +564,53 @@ function tm_theme_preprocess_page(&$variables) {
 
 /**
  * Helper method to protect pii data from being sent to GA
+ */
+function tm_theme_ga_protect_pii_user($account, $view_mode, $langcode) {
+
+  if ($view_mode != "full") {
+    return;
+  }
+
+  global $base_url;
+  $ga_settings = array();
+  $ga_settings["set_user_url"] = $base_url . "/user/" . $account->uid;
+  $ga_settings["set_title"] = 'User Profile Page ' . $account->uid;
+
+  // set in js before google_analytics
+  drupal_add_js("var tm_ga_settings_profile = " . json_encode($ga_settings) . ";", array(
+  'type' => 'inline',
+  'scope' => 'header',
+  'weight' => 1));
+}
+
+/**
+ * Helper method to protect pii data from being sent to GA
  * Use with google_analytics module - set in 'Code snippet (before)':
- * if (typeof(Drupal.settings.ga.set_url) != "undefined") {
- *  ga.set('set', 'location', Drupal.settings.ga.set_url);
+ * if (typeof(tm_ga_settings.set_page_url != "undefined") {
+ *  ga.set('set', 'location', tm_ga_settings.set_page_url);
  * }
- * if (typeof(Drupal.settings.ga.set_title) != "undefined") {
- *  ga.set('set', 'title', Drupal.settings.ga.set_title);
+ * if (typeof(tm_ga_settings.set_title) != "undefined") {
+ *  ga.set('set', 'title', tm_ga_settings.set_title);
+ * }
+ * if (typeof(tm_ga_settings_profile.set_page_url != "undefined") {
+ *  ga.set('set', 'location', tm_ga_settings_profile.set_page_url);
+ * }
+ * if (typeof(tm_ga_settings_profile.set_title) != "undefined") {
+ *  ga.set('set', 'title', tm_ga_settings_profile.set_title);
  * }
  */
 function tm_theme_ga_protect_pii(&$head_elements) {
 
   global $base_url;
+  $ga_settings = array();
 
-  // remove username from url and title in user profile page
-  if (arg(0) == 'user') {
-    $profile_uid = arg(1);
-    if ($profile_uid != null) {
-      drupal_add_js(array('ga' => array('set_url' => $base_url . "/user/" . $profile_uid)), 'setting');
-      drupal_add_js(array('ga' => array('set_title' => 'User Profile Page ' . $profile_uid)), 'setting');
-    }
-  } else {
-    // strip all query parameters
-    drupal_add_js(array('ga' => array('set_url' => $base_url . "/" . request_path())), 'setting');
-  }
-  
+  // remove all query parameters
+  $ga_settings["set_page_url"] = $base_url . "/" . request_path();
+
+  // set in js before google_analytics
+  drupal_add_js("var tm_ga_settings = " . json_encode($ga_settings) . ";", array(
+  'type' => 'inline',
+  'scope' => 'header',
+  'weight' => 1));
+
 }

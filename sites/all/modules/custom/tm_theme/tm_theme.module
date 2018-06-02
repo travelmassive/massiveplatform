@@ -417,7 +417,7 @@ function tm_theme_user_view($account, $view_mode, $langcode) {
   tm_theme_add_meta_tags_user(arg(1));
 
   // Protect pii data if using google analytics
-  tm_theme_ga_protect_pii_user($account, $view_mode, $langcode);
+  tm_theme_ga_protect_pii_user($account);
 
 }
 
@@ -564,40 +564,25 @@ function tm_theme_preprocess_page(&$variables) {
 
 /**
  * Helper method to protect pii data from being sent to GA
- */
-function tm_theme_ga_protect_pii_user($account, $view_mode, $langcode) {
-
-  if ($view_mode != "full") {
-    return;
-  }
-
-  global $base_url;
-  $ga_settings = array();
-  $ga_settings["set_user_url"] = $base_url . "/user/" . $account->uid;
-  $ga_settings["set_title"] = 'User Profile Page ' . $account->uid;
-
-  // set in js before google_analytics
-  drupal_add_js("var tm_ga_settings_profile = " . json_encode($ga_settings) . ";", array(
-  'type' => 'inline',
-  'scope' => 'header',
-  'weight' => 1));
-}
-
-/**
- * Helper method to protect pii data from being sent to GA
  * Use with google_analytics module - set in 'Code snippet (before)':
- * if (typeof(tm_ga_settings.set_page_url != "undefined") {
- *  ga.set('set', 'location', tm_ga_settings.set_page_url);
- * }
- * if (typeof(tm_ga_settings.set_title) != "undefined") {
- *  ga.set('set', 'title', tm_ga_settings.set_title);
- * }
- * if (typeof(tm_ga_settings_profile.set_page_url != "undefined") {
- *  ga.set('set', 'location', tm_ga_settings_profile.set_page_url);
- * }
- * if (typeof(tm_ga_settings_profile.set_title) != "undefined") {
- *  ga.set('set', 'title', tm_ga_settings_profile.set_title);
- * }
+
+ if (typeof(tm_ga) != "undefined") {
+   if (typeof(tm_ga.set_location) != "undefined") {
+    ga('set', 'location', tm_ga.set_location);
+   }
+   if (typeof(tm_ga.set_title) != "undefined") {
+    ga('set', 'title', tm_ga.set_title);
+   }
+ }
+ 
+if (typeof(tm_ga_user) != "undefined") {
+   if (typeof(tm_ga_user.set_location) != "undefined") {
+    ga('set', 'location', tm_ga_user.set_location);
+   }
+   if (typeof(tm_ga_user.set_title) != "undefined") {
+    ga('set', 'title', tm_ga_user.set_title);
+   }
+}
  */
 function tm_theme_ga_protect_pii(&$head_elements) {
 
@@ -608,9 +593,26 @@ function tm_theme_ga_protect_pii(&$head_elements) {
   $ga_settings["set_page_url"] = $base_url . "/" . request_path();
 
   // set in js before google_analytics
-  drupal_add_js("var tm_ga_settings = " . json_encode($ga_settings) . ";", array(
+  drupal_add_js("var tm_ga = " . json_encode($ga_settings) . ";", array(
   'type' => 'inline',
   'scope' => 'header',
-  'weight' => 1));
-
+  'weight' => -10));
 }
+
+/**
+ * Helper method to protect pii data from being sent to GA
+ */
+function tm_theme_ga_protect_pii_user($account) {
+
+  global $base_url;
+  $ga_settings = array();
+  $ga_settings["set_location"] = $base_url . "/user/" . $account->uid;
+  $ga_settings["set_title"] = 'User Profile Page ' . $account->uid;
+
+  // set in js before google_analytics
+  drupal_add_js("var tm_ga_user = " . json_encode($ga_settings) . ";", array(
+  'type' => 'inline',
+  'scope' => 'header',
+  'weight' => -10));
+}
+

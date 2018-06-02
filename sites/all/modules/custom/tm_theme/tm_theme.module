@@ -590,7 +590,7 @@ function tm_theme_ga_protect_pii(&$head_elements) {
   $ga_settings = array();
 
   // remove all query parameters
-  $ga_settings["set_page_url"] = $base_url . "/" . request_path();
+  $ga_settings["set_location"] = $base_url . "/" . request_path();
 
   // set in js before google_analytics
   drupal_add_js("var tm_ga = " . json_encode($ga_settings) . ";", array(

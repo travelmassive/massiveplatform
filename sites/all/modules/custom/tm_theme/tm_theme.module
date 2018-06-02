@@ -590,7 +590,7 @@ function tm_theme_ga_protect_pii(&$head_elements) {
   $ga_settings = array();
 
   // remove all query parameters
-  $ga_settings["set_location"] = $base_url . "/" . request_path();
+  $ga_settings["set_location"] = $base_url . "/" . request_path() . tm_theme_ga_protect_pii_allowed_query_string();
 
   // set in js before google_analytics
   drupal_add_js("var tm_ga = " . json_encode($ga_settings) . ";", array(
@@ -606,7 +606,7 @@ function tm_theme_ga_protect_pii_user($account) {
 
   global $base_url;
   $ga_settings = array();
-  $ga_settings["set_location"] = $base_url . "/user/" . $account->uid;
+  $ga_settings["set_location"] = $base_url . "/user/" . $account->uid . tm_theme_ga_protect_pii_allowed_query_string();
   $ga_settings["set_title"] = 'User Profile Page ' . $account->uid;
 
   // set in js before google_analytics
@@ -615,4 +615,52 @@ function tm_theme_ga_protect_pii_user($account) {
   'scope' => 'header',
   'weight' => -10));
 }
+
+/**
+ * Helper method to add any allowed paramaters to query url
+ */
+function tm_theme_ga_protect_pii_allowed_query_string() {
+
+  global $conf;
+
+  // default allowed params
+  $allowed_params = array("utm_campaign", "utm_source", "utm_medium");
+  if (isset($conf["tm_google_analytics_allowed_params"])) {
+    $allowed_params = $conf["tm_google_analytics_allowed_params"];
+  }
+
+  $add_params = array();
+  $query_params = drupal_get_query_parameters();
+  foreach($allowed_params as $param) {
+    if (isset($query_params[$param])) {
+      $add_params[$param] = tm_theme_ga_protect_pii_strip_email($query_params[$param]);
+    }
+  }
+
+  // if allowed params exist then add them to the location
+  $query_strings = array();
+  if (sizeof($add_params) > 0) {
+    foreach ($add_params as $add_param => $value) {
+      $query_strings[] = $add_param . "=" . strip_tags($value);
+    }
+    return "?" . implode("&", $query_strings);
+  }
+
+  // no parameters
+  return "";
+
+}
+
+/**
+ * Helper method to redact any email addresses
+ */
+function tm_theme_ga_protect_pii_strip_email($str) {
+
+  // strip any string with @
+  if ((strpos($str, "@")) !== false) {
+    return "";
+  }
+  return $str;
+}
+
 

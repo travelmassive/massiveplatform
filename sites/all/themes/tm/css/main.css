@@ -6289,7 +6289,7 @@ select:disabled {
 
 /* line 509, ../sass/_forms.scss */
 .messages.help-tip, .help-tip.messages--status, .help-tip.messages--warning, .help-tip.messages--error {
-  background: #007db7;
+  background: #FF5944;
   color: #FFF;
 }
 

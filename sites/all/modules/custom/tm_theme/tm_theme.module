@@ -623,29 +623,34 @@ function tm_theme_ga_protect_pii_allowed_query_string() {
 
   global $conf;
 
-  // default allowed params
-  $allowed_params = array("utm_campaign", "utm_source", "utm_medium");
-  if (isset($conf["tm_google_analytics_allowed_params"])) {
-    $allowed_params = $conf["tm_google_analytics_allowed_params"];
-  }
+  try {
 
-  $add_params = array();
-  $query_params = drupal_get_query_parameters();
-  foreach($allowed_params as $param) {
-    if (isset($query_params[$param])) {
-      $add_params[$param] = tm_theme_ga_protect_pii_strip_email($query_params[$param]);
+    // default allowed params
+    $allowed_params = array("utm_campaign", "utm_source", "utm_medium");
+    if (isset($conf["tm_google_analytics_allowed_params"])) {
+      $allowed_params = $conf["tm_google_analytics_allowed_params"];
     }
-  }
 
-  // if allowed params exist then add them to the location
-  $query_strings = array();
-  if (sizeof($add_params) > 0) {
-    foreach ($add_params as $add_param => $value) {
-      $query_strings[] = $add_param . "=" . strip_tags($value);
+    $add_params = array();
+    $query_params = drupal_get_query_parameters();
+    foreach($allowed_params as $param) {
+      if (isset($query_params[$param])) {
+        $add_params[$param] = tm_theme_ga_protect_pii_strip_email($query_params[$param]);
+      }
     }
-    return "?" . implode("&", $query_strings);
-  }
 
+    $query_strings = array();
+    if (sizeof($add_params) > 0) {
+      foreach ($add_params as $add_param => $value) {
+        $query_strings[] = $add_param . "=" . strip_tags($value);
+      }
+      return "?" . implode("&", $query_strings);
+    }
+
+  } catch (Exception $e) {
+    return "";
+  }
+  
   // no parameters
   return "";
 

@@ -216,8 +216,16 @@ function tm_base_stats_format($num) {
     return $num;
   }
 
-  // more than a thousand
-  $k_format = floor(round(($num / 1000.0)*10,2)) / 10 . "k";
+  // less than 50,000
+  if ($num < 50000) {
+    $k_format = floor(round(($num / 1000.0)*10,2)) / 10 . "k";
+  }
+
+  // more than 50,000 (omit decimal)
+  if ($num >= 50000) {
+    $k_format = floor(floor(round(($num / 1000.0)*10,2)) / 10) . "k";
+  }
+
   return $k_format;
 }
 

@@ -64,7 +64,7 @@
     if ($top_block_html != "") { echo $top_block_html; }
   ?>
 
-  <main id="main" role="main" class="frontpage">
+  <main id="main" role="main">
     <div class="row">
       <div id="content" role="main">
         <section>

@@ -455,7 +455,7 @@ $conf["tm_google_analytics_report_path"] = "https://analytics.google.com/analyti
 /** GEO IP MODULE **/
 /** Enable maxmind for geoip **/
 $conf['tm_geoip_maxmind_db'] = '/usr/local/share/GeoIP/GeoIP2-City.mmd'; // path to maxmind geoip datbase
-// $conf['tm_geoip_fake_ip'] = '183.108.246.31'; // simulate a visitor ip address for testing geoip module
+//$conf['tm_geoip_fake_ip'] = '183.108.246.31'; // simulate a visitor ip address for testing geoip module
 
 /** SITE BRANDING **/
 //Base site branding

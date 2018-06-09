@@ -626,7 +626,7 @@ function tm_theme_ga_protect_pii_allowed_query_string() {
   try {
 
     // default allowed params
-    $allowed_params = array("utm_campaign", "utm_source", "utm_medium");
+    $allowed_params = array("utm_campaign", "utm_source", "utm_medium", "utm_term", "utm_content");
     if (isset($conf["tm_google_analytics_allowed_params"])) {
       $allowed_params = $conf["tm_google_analytics_allowed_params"];
     }

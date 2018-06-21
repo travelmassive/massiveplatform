@@ -1,0 +1,18 @@
+diff --git a/sites/all/modules/contrib/link/link.module b/sites/all/modules/contrib/link/link.module
+index 059ec43..46a2e95 100644
+--- a/sites/all/modules/contrib/link/link.module
++++ b/sites/all/modules/contrib/link/link.module
+@@ -604,6 +604,13 @@ function _link_sanitize(&$item, $delta, &$field, $instance, &$entity) {
+     $title = '';
+   }
+ 
++  // Massive Platform patch - allow moderator to override rsvp title
++  if (isset($entity->field_rsvp_link_title[LANGUAGE_NONE][0]['safe_value'])) {
++    if (trim($entity->field_rsvp_link_title[LANGUAGE_NONE][0]['safe_value']) != "") {
++      $title = $entity->field_rsvp_link_title[LANGUAGE_NONE][0]['safe_value'];
++    }
++  }
++
+   // Replace title tokens.
+   if ($title && $instance['settings']['enable_tokens']) {
+     $text_tokens = token_scan($title);

@@ -604,6 +604,13 @@ function _link_sanitize(&$item, $delta, &$field, $instance, &$entity) {
     $title = '';
   }
 
+  // Massive Platform patch - allow moderator to override rsvp title
+  if (isset($entity->field_rsvp_link_title[LANGUAGE_NONE][0]['safe_value'])) {
+    if (trim($entity->field_rsvp_link_title[LANGUAGE_NONE][0]['safe_value']) != "") {
+      $title = $entity->field_rsvp_link_title[LANGUAGE_NONE][0]['safe_value'];
+    }
+  }
+
   // Replace title tokens.
   if ($title && $instance['settings']['enable_tokens']) {
     $text_tokens = token_scan($title);

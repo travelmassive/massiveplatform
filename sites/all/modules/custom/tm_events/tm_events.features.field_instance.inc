@@ -578,6 +578,60 @@ function tm_events_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-event-field_event_custom_banner'.
+  $field_instances['node-event-field_event_custom_banner'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Add a custom banner at the top of the event.<br>
+Provide HTML markup or a template alias.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 58,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_custom_banner',
+    'label' => 'Custom Banner',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 3,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 9,
+    ),
+  );
+
   // Exported field_instance: 'node-event-field_event_date'.
   $field_instances['node-event-field_event_date'] = array(
     'bundle' => 'event',
@@ -2506,6 +2560,8 @@ This will be displayed to the member on the event page and included in the autom
   // Included for use with string extractors like potx.
   t('(Moderator) RSVP link text');
   t('<span id=\'tm-event-edit-company-description\'>The company hosting this event.</span>');
+  t('Add a custom banner at the top of the event.<br>
+Provide HTML markup or a template alias.');
   t('Allow Chapter Leaders to send announcements');
   t('Allow featured members to download the attendee list');
   t('Allow featured members to receive event notifications');
@@ -2521,6 +2577,7 @@ This will be displayed to the member on the event page and included in the autom
   t('Check this option if you want to restrict displaying the event location to registered attendees only.');
   t('Check this to indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)');
   t('Cover Video');
+  t('Custom Banner');
   t('Description');
   t('Event Chapter');
   t('Event Company');

@@ -433,3 +433,28 @@ function tm_events_show_announcement_tip($event) {
   }
   
 }
+
+/**
+ * Helper method to get the custom markup banner to display
+ */
+function tm_events_get_custom_banner($node) {
+
+  global $conf;
+  $custom_banner = "";
+
+  // get custom markup
+  if (isset($node->field_event_custom_banner[LANGUAGE_NONE][0]['value'])) {
+    $custom_banner = trim($node->field_event_custom_banner[LANGUAGE_NONE][0]['value']);
+  }
+
+  // replace template aliases
+  if ($custom_banner != "") {
+    if (isset($conf["tm_event_custom_banner_templates"])) {
+      foreach($conf["tm_event_custom_banner_templates"] as $template_name => $markup) {
+        $custom_banner = str_replace("__" . $template_name . "__", $markup, $custom_banner);
+      }
+    }
+  }
+
+  return trim($custom_banner);
+}

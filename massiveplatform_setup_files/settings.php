@@ -178,6 +178,8 @@ $conf["tm_event_approved_members_default"] = 1; // (default = 1) set default of 
 $conf["tm_event_approved_members_title"] = "Approved Members Only"; // optional - set the title for approved members checkbox
 $conf["tm_event_approved_members_description"] = "Check this box if you want to restrict registration and waitlist to members who are approved. Guest members won't be able to register."; // optional - set the description for the approved members description
 $conf["tm_event_post_reminder_message"] = "Share what happened with the community &mdash; <a target='_blank' href=''>post event photos</a> on the Forum, or <a target='_blank' href=''>submit a blog article</a>."; // message displayed to chapter leaders after event
+$conf["tm_event_custom_banner_templates"] = array(); // custom event banner template alias
+$conf["tm_event_custom_banner_templates"]["example"] = "<h1>Call this template with __EXAMPLE__</h1>"; 
 
 
 /** SIGNUP PAGE SETTINGS **/

@@ -300,6 +300,9 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
     // Hide organizers
     $form['field_event_hide_organizers']['#access'] = false;
 
+    // Custom banner
+    $form['field_event_custom_banner']['#access'] = false;
+
     // Hide moderator settings
     field_group_hide_field_groups($form, array('group_moderator_fields'));
 

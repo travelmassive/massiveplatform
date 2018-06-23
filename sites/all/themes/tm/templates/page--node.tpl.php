@@ -124,11 +124,23 @@ if (sizeof($request_uri_parts) == 3) {
           <?php print $messages; ?>
           <?php
 
+          // custom call to action banner for events
+          // display on view mode, and supresses any subscription CTAs
+          $custom_banner = "";
+          if ((arg(1) == "") or (is_numeric(arg(1)) and (arg(2) == ""))) {
+            if (isset($tm_theme_node_id)) {
+              if ($node->type == "event") {
+                $custom_banner = tm_events_get_custom_banner($node);
+              }
+              print $custom_banner;
+            }
+          }
+
           // tm_subscriptions call to action banner
           // only shows on organization pages 
           // check that module is enabled and user is logged in
           $subscription_cta = "";
-          if (module_exists("tm_subscriptions")) {
+          if (module_exists("tm_subscriptions") and ($custom_banner == "")) {
             if ($user->uid > 0) {
               if (isset($tm_theme_node_id)) {
                 if (tm_subscriptions_check_show_organization_cta($tm_theme_node_id, $user->uid)) {
@@ -142,7 +154,7 @@ if (sizeof($request_uri_parts) == 3) {
           // tm_subscriptions_user call to action banner
           // displays on events and chapter pages
           // check that module is enabled and user is logged in
-          if (module_exists("tm_subscriptions_user")) {
+          if (module_exists("tm_subscriptions_user") and ($custom_banner == "")) {
             if ($user->uid > 0) {
               if (isset($tm_theme_node_id)) {
                 $subscription_cta = tm_subscriptions_user_cta_banner_node($user->uid, $tm_theme_node_id);

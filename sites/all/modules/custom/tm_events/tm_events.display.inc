@@ -451,7 +451,7 @@ function tm_events_get_custom_banner($node) {
   if ($custom_banner != "") {
     if (isset($conf["tm_event_custom_banner_templates"])) {
       foreach($conf["tm_event_custom_banner_templates"] as $template_name => $markup) {
-        $custom_banner = str_replace("__" . $template_name . "__", $markup, $custom_banner);
+        $custom_banner = str_ireplace("__" . $template_name . "__", $markup, $custom_banner);
       }
     }
   }

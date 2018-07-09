@@ -199,7 +199,7 @@ function _tm_payments_get_partner_code($event_id, $set_message = false) {
 		$display_partner_code = trim($_GET["partner"]);
 		$partner_code = strtoupper(trim($_GET["partner"]));
 
-		setcookie("Drupal_visitor_event_partner_code", $event_id . "_" . $partner_code, strtotime('+30 days'), "/", "." . $conf["tm_email_server_url_domain"]);
+		setcookie("Drupal.visitor.event_partner_code", $event_id . "_" . $partner_code, strtotime('+30 days'), "/", "." . $conf["tm_email_server_url_domain"]);
 
 		// set message
 		if ($set_message) {

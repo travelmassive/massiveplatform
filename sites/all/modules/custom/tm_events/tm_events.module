@@ -310,7 +310,12 @@ function tm_events_node_view($node, $view_mode, $langcode) {
     // show reminder to send announcement
     // exclude external rsvp events
     if (tm_events_check_permission_edit_event($user, $node)) {
-      tm_events_show_announcement_tip($node);
+
+      // dont show tips if custom banner showing
+      $custom_banner = tm_events_get_custom_banner($node);
+      if ($custom_banner == "") {
+         tm_events_show_announcement_tip($node);
+      }
     }
 
   }

@@ -101,6 +101,10 @@ function tm_payments_node_view($node, $view_mode, $langcode) {
   // display partner code applied message
   if ($node->type == 'event' && $view_mode == 'full') {
     $partner_code = _tm_payments_get_partner_code($node->nid, true);
+    // redirect to clean URL if partner code is provided
+    if (isset($_GET["partner"])) {
+      drupal_goto("node/" . $node->nid);
+    }
   }
 }
 

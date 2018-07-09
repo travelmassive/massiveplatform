@@ -121,3 +121,15 @@ function _tm_payments_refund_policy($field, $title = NULL) {
 	
 	return $policy;
 }
+
+/**
+ * Implement hook_node_view
+ */
+function tm_payments_node_view($node, $view_mode, $langcode) {
+	
+	// display partner code applied message
+	if ($node->type == 'event' && $view_mode == 'full') {
+		$partner_code = _tm_payments_is_payment_enabled($node, true);
+	}
+}
+

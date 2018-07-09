@@ -709,6 +709,8 @@ $conf["tm_payments_commission_default_member"] = "70"; // default commission % f
 $conf["tm_payments_reports_url"] = ""; // external payment reports
 $conf["tm_payments_reports_secret_token"] = "randomstring123"; // secret token to verify payment report 
 $conf["tm_payments_reports_help_message"] = "Here's your ticket sales for this event."; // message to show user
+$conf["tm_payments_event_partner_codes"] = array(); // custom partner codes for event tickets
+$conf["tm_payments_event_partner_codes"]["EXAMPLE"] = array("partner_code" => "Example", "display_amount" => 10, "partner_label" => "Partner Ticket", "partner_message" => "Partner discount applied");
 */
 
 /* SUBSCRIPTION PAYMENT SETTINGS */

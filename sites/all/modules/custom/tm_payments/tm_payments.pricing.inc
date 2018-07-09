@@ -46,7 +46,17 @@ function _tm_payments_get_registration_price($event, $ticket_number = null, $tim
 		$event_label = $early_bird_label;
 	}
 
-	// STEP 4. CALCULATE SAVING MESSAGE
+	// STEP 4. PARTNER CODE
+	$partner_code = _tm_payments_get_partner_code($event->nid);
+	if ($partner_code != "") {
+		$early_bird_enabled = true;
+		$display_amount = $partner_code["display_amount"];
+		$event_label = "Partner Ticket";
+		$early_bird_label = $partner_code["partner_label"];
+		$early_bird_message = $partner_code["partner_message"];
+	}
+
+	// STEP 5. CALCULATE SAVING MESSAGE
 	$saving_message = "";
 	if ($regular_amount > $display_amount) {
 		$discount_amt = $regular_amount - $display_amount;
@@ -54,7 +64,7 @@ function _tm_payments_get_registration_price($event, $ticket_number = null, $tim
 		$saving_message = "Save " . floor($discount_pct) . "%";
 	}
 
-	// STEP 5. CALCUALTE STRIPE AMOUNT
+	// STEP 6. CALCULATE STRIPE AMOUNT
 	$stripe_amount = _tm_payments_get_api_amount($display_amount, $currency);
 	
 	// return pricing array
@@ -171,4 +181,59 @@ function _tm_payments_get_early_bird_price($event, $ticket_number = null, $times
 	// Step 9. Return early bird price and message
 	return array("enabled" => true, "early_bird_price" => $early_bird_amount, "message" => $early_bird_message, "label" => $early_bird_label);
 
+}
+
+/**
+ * Get partner code
+ * from ?partner= or from cookie Drupal_visitor_event_partner_code
+ */
+function _tm_payments_get_partner_code($event_id, $set_message = false) {
+
+	global $conf;
+	$partner_code = "";
+
+	// check ?partner=
+	if (isset($_GET["partner"])) {
+
+		// set partner code
+		$display_partner_code = trim($_GET["partner"]);
+		$partner_code = strtoupper(trim($_GET["partner"]));
+
+		setcookie("Drupal_visitor_event_partner_code", $event_id . "_" . $partner_code, strtotime('+30 days'), "/", "." . $conf["tm_email_server_url_domain"]);
+
+		// set message
+		if ($set_message) {
+			drupal_get_messages("help-tip");
+			if (isset($conf["tm_payments_event_partner_codes"][$partner_code])) {
+				drupal_set_message("Way to go! The partner code <em>" . strip_tags($display_partner_code) . "</em> has been applied to this event.", "help-tip");
+			} else {
+				drupal_set_message("Sorry, the partner code <em>" . strip_tags($display_partner_code) . "</em> is not valid or has expired.", "help-tip");
+			}
+		}
+
+	} elseif (isset($_COOKIE['Drupal_visitor_event_partner_code'])) {
+
+		// check cookie
+		// must match event
+		// ie: 1234_code
+		$parts = explode("_", $_COOKIE['Drupal_visitor_event_partner_code'], 2);
+		$partner_event_id = $parts[0];
+		$partner_code = "";
+		if (isset($parts[1])) {
+			$partner_code = $parts[1];
+		}
+		
+		// Check event_id
+		if ($partner_event_id != $event_id) {
+			return "";
+		}
+	}
+
+	// get partner code from $conf['tm_payments_event_partner_codes']
+	if (isset($conf["tm_payments_event_partner_codes"][$partner_code])) {
+		return $conf["tm_payments_event_partner_codes"][$partner_code];
+	}
+
+	// partner code not found
+	return "";
 }

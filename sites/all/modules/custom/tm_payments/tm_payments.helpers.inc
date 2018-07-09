@@ -8,6 +8,14 @@
  */
 function _tm_payments_is_payment_enabled($event) {
 
+	// Check partner code for free ticket
+	$partner_code = _tm_payments_get_partner_code($event->nid);
+	if ($partner_code != "") {
+		if ($partner_code["display_amount"] == 0) {
+			return false;
+		}
+	}
+
 	if (isset($event->field_event_payment_enabled[LANGUAGE_NONE][0]['value'])) {
 		return ($event->field_event_payment_enabled[LANGUAGE_NONE][0]['value'] == 1);
 	}

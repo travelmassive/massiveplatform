@@ -160,7 +160,7 @@
   <body class="<?php print $classes; ?>" <?php print $attributes;?>>
     
   <?php 
-    if ($is_front) {
+    if ($is_front and ($frontpage_image != "")) {
       print($bg_video_body_html); // <video> embed
       if ($frontpage_video_url != "") { // show video controls
   ?>

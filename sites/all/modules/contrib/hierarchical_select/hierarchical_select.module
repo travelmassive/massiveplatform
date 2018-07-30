@@ -1662,7 +1662,7 @@ function _hierarchical_select_hierarchy_generate($config, $selection, $required,
   // Build the lineage.
   //
 
-  $start_lineage = microtime();
+  $start_lineage = microtime(TRUE);
 
   // If save_linage is enabled, reconstruct the lineage. This is necessary
   // because e.g. the taxonomy module stores the terms by order of weight and
@@ -1745,14 +1745,14 @@ function _hierarchical_select_hierarchy_generate($config, $selection, $required,
     $hierarchy->lineage = _hierarchical_select_hierarchy_enforce_deepest($hierarchy->lineage, $config['module'], $config['params']);
   }
 
-  $end_lineage = microtime();
+  $end_lineage = microtime(TRUE);
 
 
   //
   // Build the levels.
   //
 
-  $start_levels = microtime();
+  $start_levels = microtime(TRUE);
 
   // Start building the levels, initialize with the root level.
   $hierarchy->levels[0] = module_invoke($config['module'], 'hierarchical_select_root_level', $config['params']);
@@ -1935,12 +1935,12 @@ function _hierarchical_select_hierarchy_generate($config, $selection, $required,
   }
 
   // Calculate the time it took to generate the levels.
-  $end_levels = microtime();
+  $end_levels = microtime(TRUE);
 
   // Add child information.
-  $start_childinfo = microtime();
+  $start_childinfo = microtime(TRUE);
   $hierarchy = _hierarchical_select_hierarchy_add_childinfo($hierarchy, $config);
-  $end_childinfo = microtime();
+  $end_childinfo = microtime(TRUE);
 
   // Calculate the time it took to build the hierarchy object.
   $hierarchy->build_time['total'] = ($end_childinfo - $start_lineage) * 1000;
@@ -2138,7 +2138,7 @@ function _hierarchical_select_hierarchy_enforce_deepest($lineage, $module, $para
  */
 function _hierarchical_select_dropbox_generate($config, $selection) {
   $dropbox = new stdClass();
-  $start = microtime();
+  $start = microtime(TRUE);
 
   $dropbox->title = (!empty($config['dropbox']['title'])) ? filter_xss_admin($config['dropbox']['title']) : t('All selections');
   $dropbox->lineages = array();
@@ -2198,7 +2198,7 @@ function _hierarchical_select_dropbox_generate($config, $selection) {
   }
 
   // Calculate the time it took to build the dropbox object.
-  $dropbox->build_time = (microtime() - $start) * 1000;
+  $dropbox->build_time = (microtime(TRUE) - $start) * 1000;
 
   return $dropbox;
 }

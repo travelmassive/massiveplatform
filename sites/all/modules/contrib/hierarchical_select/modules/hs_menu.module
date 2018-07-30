@@ -148,7 +148,7 @@ function hs_menu_hierarchical_select_root_level($params) {
   if (isset($params['type'])) {
     $type_menus = variable_get('menu_options_' . $params['type'], array('main-menu' => 'main-menu'));
     while ($menu = $result->fetchObject()) {
-      if (in_array($menu->menu_name, $type_menus)) {
+      if (in_array($menu->menu_name, $type_menus, TRUE)) {
         $menus[$menu->menu_name . ':0'] = $menu->title;
       }
     }

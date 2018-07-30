@@ -65,7 +65,8 @@ class CronRule {
    *   Skew for @ flag.
    */
   public function __construct($rule, $time, $skew) {
-    $this->rule = $rule;
+    // Trim the rule to avoid infinite loops in later processing.
+    $this->rule = trim($rule);
     $this->time = $time;
     $this->skew = $skew;
   }
@@ -238,6 +239,9 @@ class CronRule {
    *   Crontab rule.
    */
   public function rebuildRule($intervals) {
+    if (!is_array($intervals['parts'])) {
+      return FALSE;
+    }
     return implode(' ', $intervals['parts']);
   }
 
@@ -377,6 +381,12 @@ class CronRule {
     $time = $this->time;
     $last_schedule = $this->getLastSchedule();
     $next_schedule = NULL;
+
+    // If the rule can't be parsed we don't proceed as this could lead to an
+    // infinite loop.
+    if (!$this->parseRule()) {
+      return $next_schedule;
+    }
 
     // Do a binary search for the next schedule.
     $interval = 86400 * 30;

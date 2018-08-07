@@ -95,9 +95,58 @@ if (sizeof($request_uri_parts) == 3) {
   </div>
 
   <?php
+
+  // Custom Messages
+
+  // TM_SUBSCRIPTIONS_USER CTA
+  // check that module is enabled and user is logged in
+  $subscription_cta = "";
+  if (module_exists("tm_subscriptions_user")) {
+    if ($user->uid > 0) {
+      if (isset($tm_theme_user_id)) { 
+        $subscription_cta = tm_subscriptions_user_cta_banner($tm_theme_user_id);
+      }
+    }
+  }
+
+  
+  // Check to see if viewing own profile
+  $is_viewing_own_profile = false;
+  if ($user->uid > 0) {
+    if (isset($tm_theme_user_id)) { 
+      if ($user->uid == $tm_theme_user_id) {
+        $is_viewing_own_profile = true;
+      }
+    }
+  }
+
+  // TOP_BLOCK BRANDING
+  // only render if no subscription cta
+  // also check for exclusion of url in $conf['tm_branding_hide_top_block_on_urls']
+  $top_block_html = "";
+  $show_top_block_html = !$is_viewing_own_profile;
+  if ($subscription_cta == "") {
+
+    // hide top block for specific URL path
+    if (isset($conf['tm_branding_hide_top_block_on_urls'])) {
+      $url_path = explode("?", $_SERVER["REQUEST_URI"])[0];
+      foreach($conf['tm_branding_hide_top_block_on_urls'] as $check_url) {
+        if (strpos($url_path, $check_url) !== false) {
+          $show_top_block_html = false;
+        }
+      }
+    }
+
     // render top block
-    $top_block_html = tm_branding_get_element("top_block_html");
-    if ($top_block_html != "") { echo $top_block_html; }
+    if ($show_top_block_html) {
+      $top_block_html = tm_branding_get_element("top_block_html");
+    }
+    
+  }
+
+  // render top block
+  print $top_block_html;
+
   ?>
 
   <main id="main" role="main">
@@ -112,18 +161,7 @@ if (sizeof($request_uri_parts) == 3) {
           <?php print render($title_suffix); ?>
           <?php print render($page['header']); ?>
           <?php print $messages; ?>
-          <?php
-          // tm_subscriptions_user call to action banner
-          // check that module is enabled and user is logged in
-          if (module_exists("tm_subscriptions_user")) {
-            if ($user->uid > 0) {
-              if (isset($tm_theme_user_id)) { 
-                $subscription_cta = tm_subscriptions_user_cta_banner($tm_theme_user_id);
-                print $subscription_cta;
-              }
-            }
-          }
-          ?>
+          <?php print $subscription_cta; ?>
           <?php if(module_exists("tm_status_updates")) { print tm_status_updates_render_theme(); } ?>
           <?php //print render($tabs); ?>
           <?php print render($page['help']); ?>

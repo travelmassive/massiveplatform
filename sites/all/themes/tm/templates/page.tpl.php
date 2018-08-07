@@ -59,9 +59,37 @@
   </div>
 
   <?php
-    // render top block
+
+  // TOP_BLOCK BRANDING
+  // also check for exclusion of url in $conf['tm_branding_hide_top_block_on_urls']
+  $top_block_html = "";
+  $show_top_block_html = true;
+  
+  // hide top block for specific URL path
+  if (isset($conf['tm_branding_hide_top_block_on_urls'])) {
+
+    // special case check for front page
+    if (drupal_is_front_page() and in_array("__FRONTPAGE__", $conf['tm_branding_hide_top_block_on_urls'])) {
+      $show_top_block_html = false;
+    } else {
+      // check for url
+      $url_path = explode("?", $_SERVER["REQUEST_URI"])[0];
+      foreach($conf['tm_branding_hide_top_block_on_urls'] as $check_url) {
+        if (strpos($url_path, $check_url) !== false) {
+          $show_top_block_html = false;
+        }
+      }
+    }
+  }
+
+  // render top block
+  if ($show_top_block_html) {
     $top_block_html = tm_branding_get_element("top_block_html");
-    if ($top_block_html != "") { echo $top_block_html; }
+  }
+
+  // display top block
+  print $top_block_html;
+
   ?>
 
   <main id="main" role="main">

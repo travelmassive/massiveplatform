@@ -615,6 +615,12 @@ class TmNewsfeedEmail
 				if ($topic_count >= $max_topics) {
 					continue;
 				}
+				// check if ignoring topic
+				if (isset($conf['tm_newsfeed_discourse_ignore_topics'])) {
+					if (in_array($topic->id, $conf['tm_newsfeed_discourse_ignore_topics'])) {
+						continue;
+					}	
+				}
 				if (($topic->posts_count > 1) or ($topic->like_count > 0)) {
 
 					if ($topic->posts_count == 2) {

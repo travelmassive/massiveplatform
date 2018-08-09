@@ -610,6 +610,7 @@ $conf["tm_newsfeed_discourse_enabled"] = false; // enable discourse forum newsfe
 $conf["tm_newsfeed_discourse_base_url"] = ""; // base url of your discourse url
 $conf["tm_newsfeed_discourse_cache"] = 60; // how long to cache results in seconds
 // $conf["tm_newsfeed_discourse_api_userpass"] = "user:pass"; // uncomment to use basic httpauth
+// $conf["tm_newsfeed_discourse_ignore_topics"] = array(123); // ignore discourse topics
 
 // base email subject line
 $conf['tm_newsfeed_subject_base'] = "What's happening in the community";

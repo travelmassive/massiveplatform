@@ -178,3 +178,59 @@ function tm_users_user_insert(&$edit, $account, $category) {
 
 }
 
+/**
+ * Implements hook_form_form_id_form_alter().
+ */
+function tm_users_form_user_register_form_alter(&$form, &$form_state, $form_id) {
+  $form['#validate'][] = 'tm_users_user_register_validate_email';
+}
+
+/**
+ * Checks if the domain in the email address is on a list of allowed domains.
+ */
+function tm_users_user_register_validate_email(&$form, &$form_state) {
+  // Ignore validation if registration already has an error.
+  $errors = form_get_errors();
+  if (!empty($errors)) {
+    return;
+  }
+
+  global $conf;
+  $email = $form_state['values']['mail']; // username@example.com
+  $email_parts = explode('@', $form_state['values']['mail']); // username, emample.com
+  $username_parts = explode('+', $email_parts[0]); // username+label@example.com
+  $email_without_plus = $username_parts[0] . "@" . $email_parts[1]; // username@example.com
+
+  // check config
+  if ((!isset($conf['tm_users_disallow_email_usernames'])) or (!isset($conf['tm_users_disallow_email_addresses']))) {
+    return;
+  }
+
+  // email username start or ends with
+  foreach ($conf["tm_users_disallow_email_usernames"] as $check_email) {
+
+    // check username starts with
+    if ((stripos($email_parts[0], $check_email) !== false) and (stripos($email_parts[0], $check_email) == 0)) {
+      form_set_error('account', 'Please register with a personal email address.<br>Shared emails such as ' . $email . ' are not supported.');
+      return;
+    }
+
+    // check username ends with
+    if ((stripos($email_parts[0], $check_email) !== false) and (stripos($email_parts[0], $check_email) == (strlen($email_parts[0]) - strlen($check_email)))) {
+      form_set_error('account', 'Please register with a personal email address.<br>Shared or emails such as ' . $email . ' are not supported.');
+      return;
+    }
+  }
+
+  // entire email address
+  foreach ($conf["tm_users_disallow_email_addresses"] as $check_email) {
+
+    // check full email and without +
+    if ((stripos($email, $check_email) !== false) or (stripos($email_without_plus, $check_email) !== false)) {
+      form_set_error('account', 'Sorry, there was a problem creating your account. Please contact support.');
+      return;
+    }
+
+  }
+}
+

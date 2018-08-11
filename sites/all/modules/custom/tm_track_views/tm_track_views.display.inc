@@ -191,6 +191,11 @@ function tm_track_views_views_pre_execute(&$view) {
 		}
 	}
 
+	// always allow event owners to see who viewed
+	if ($view->current_display == 'who_viewed_event') {
+		return;
+	}
+
 	// blur inline css (before js loads)
 	drupal_add_css('#main {-webkit-filter: blur(4px); -moz-filter: blur(4px); -o-filter: blur(4px); -ms-filter: blur(4px); filter: blur(4px);}', 'inline');
 

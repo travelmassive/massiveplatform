@@ -640,31 +640,32 @@ function _tm_more_actions_process($field, $title = NULL) {
 
       // check permission
       $show_menu_item = tm_events_check_permission_announce_event($user, $field['entity']);
+      if ($show_menu_item) {
 
-      if ($node->field_external_rsvp[LANGUAGE_NONE][0]['value']) {
+        if ($node->field_external_rsvp[LANGUAGE_NONE][0]['value']) {
 
-        $links['manageattendees'][] = array(
-          'wrapper_class' => array('contactattendees'),
-          'content' => l(t('Event insights'), "javascript:jq_alert('Get detailed reporting', 'Manage your attendee list and view detailed insights by enabling <i>Allow members to RSVP instantly</i> in your event settings.')", array(
-                            'fragment' => '',
-                            'external'=>true,
-                            'attributes' => array('title' => t('Event insights'))
-                        ))
+          $links['manageattendees'][] = array(
+            'wrapper_class' => array('contactattendees'),
+            'content' => l(t('Event insights'), "javascript:jq_alert('Get detailed reporting', 'Manage your attendee list and view detailed insights by enabling <i>Allow members to RSVP instantly</i> in your event settings.')", array(
+                              'fragment' => '',
+                              'external'=>true,
+                              'attributes' => array('title' => t('Event insights'))
+                          ))
+            );
+
+        } else {
+
+          $links['manageattendees'][] = array(
+            'wrapper_class' => array('managersvp'),
+            'content' => l(t('Event insights'), 'events/insights/' . $nid, array(
+              'attributes' => array( 
+              'title' => t('Event insights')
+              )
+            ))
           );
-
-      } else {
-
-        $links['manageattendees'][] = array(
-          'wrapper_class' => array('managersvp'),
-          'content' => l(t('Event insights'), 'events/insights/' . $nid, array(
-            'attributes' => array( 
-            'title' => t('Event insights')
-            )
-          ))
-        );
-      
+        
+        }
       }
-
     }
   }
   // END event insights

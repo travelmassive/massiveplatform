@@ -1122,7 +1122,7 @@ function _tm_more_actions_process($field, $title = NULL) {
               $num_views_plural = "member";
             }
 
-            $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Viewed by <a style='display: inline; padding: 0rem;' href='/user/" . $targetuser->uid . "/viewers'>" . $num_views .  " " . $num_views_plural . "</a></span>";
+            $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'><a style='display: inline; padding: 0rem;' href='/user/" . $targetuser->uid . "/viewers'>Viewed by " . $num_views .  " " . $num_views_plural . "</a></span>";
 
             $links['moderate'][] = array(
               'wrapper_class' => array('approve'),
@@ -1914,7 +1914,7 @@ function _tm_more_actions_process($field, $title = NULL) {
             $num_views_plural = "member";
           }
         
-          $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Viewed by <a style='display: inline; padding: 0rem;' href='/company/" . $field['entity']->nid . "/viewers'>" . $num_views .  " " . $num_views_plural . "</a></span>";
+          $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'><a style='display: inline; padding: 0rem;' href='/company/" . $field['entity']->nid . "/viewers'>Viewed by " . $num_views .  " " . $num_views_plural . "</a></span>";
 
           $links['edition'][] = array(
             'wrapper_class' => array('edit'),

@@ -630,9 +630,9 @@ function _tm_more_actions_process($field, $title = NULL) {
       }
     }
   }
-  // END contact attendees and event insights
+  // END contact attendees
 
-  // START event attendees
+  // START event insights
   if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
     $node = menu_get_object();
     
@@ -668,6 +668,37 @@ function _tm_more_actions_process($field, $title = NULL) {
     }
   }
   // END event insights
+
+  // START View event viewers
+  if (module_exists("tm_track_views")) {
+    if (isset($field['entity']->type) && $field['entity']->type == 'event') {
+
+      // Check if is moderator or administrator
+      if (tm_events_check_permission_edit_event($user, $field['entity'])) {
+
+        // get number of viewers
+        $max_view_days = $conf["tm_track_views_store_days"];
+        $num_views = tm_track_views_how_many_viewed($field['entity']->nid, "node", $user->uid, $max_view_days);
+
+        if ($num_views > 0) {
+
+          $num_views_plural = "members";
+          if ($num_views == 1) {
+            $num_views_plural = "member";
+          }
+        
+          $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Viewed by <a style='display: inline; padding: 0rem;' href='/event/" . $field['entity']->nid . "/viewers'>" . $num_views .  " " . $num_views_plural . "</a></span>";
+
+          $links['manageattendees'][] = array(
+            'wrapper_class' => array('viewers'),
+            'content' => t($menu_text),
+          );
+
+        }
+      }
+    }
+  }
+  // END View event viewers
 
   // START ticket sales
   if (module_exists("tm_payments")) {

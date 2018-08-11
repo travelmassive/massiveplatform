@@ -81,7 +81,7 @@ function _tm_ds_track_viewers($field, $title = NULL) {
 function tm_track_views_views_pre_execute(&$view) {
 
 	// validate
-	if (($view->current_display != 'who_viewed_member_profile') and ($view->current_display != 'who_viewed_company_profile')) {
+	if (($view->current_display != 'who_viewed_member_profile') and ($view->current_display != 'who_viewed_company_profile') and ($view->current_display != 'who_viewed_event')) {
 		return;
 	}
 
@@ -141,12 +141,18 @@ function tm_track_views_views_pre_execute(&$view) {
 	drupal_add_js($js_setting, 'setting');
 	drupal_add_js(drupal_get_path('module', 'tm_track_views') . '/js/tm_track_views_title.js');
 
+	// set label
+	$label = "profile"; // for members and company profiles
+	if ($view->current_display == 'who_viewed_event') {
+		$label = "event";
+	}
+
 	// get number of views
 	$num_unique_viewers = tm_track_views_how_many_viewed($entity_id, $entity_type, $user->uid, $conf["tm_track_views_store_days"]);
 	if ($num_unique_viewers == 0) {
-		$help_message = "Nobody has viewed your profile yet.";
+		$help_message = "Nobody has viewed your " . $label . " yet.";
 	} else {
-		$help_message = "These members have viewed your profile in the past " . $conf["tm_track_views_store_days"] . " days.";
+		$help_message = "These members have viewed your " . $label . " in the past " . $conf["tm_track_views_store_days"] . " days.";
 	}
 
 	// show help tip

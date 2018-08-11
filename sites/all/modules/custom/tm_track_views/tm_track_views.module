@@ -56,6 +56,17 @@ function tm_track_views_check_permission($current_display, $entity_id, $user) {
 		}
 	}
 
+	// who_viewed_event
+	if ($current_display == 'who_viewed_event') {
+		
+		// check user has permission to edit event
+		$entity = node_load($entity_id);
+		if (!tm_events_check_permission_edit_event($user, $entity)) {
+			drupal_access_denied();
+			return false;
+		}
+	}
+
 	// grant permission
 	return true;
 
@@ -68,7 +79,7 @@ function tm_track_views_check_permission($current_display, $entity_id, $user) {
 function tm_track_views_views_query_alter(&$view, &$query) {
 
 	// validate
-	if (($view->current_display != 'who_viewed_member_profile') and ($view->current_display != 'who_viewed_company_profile')) {
+	if (($view->current_display != 'who_viewed_member_profile') and ($view->current_display != 'who_viewed_company_profile') and ($view->current_display != 'who_viewed_event')) {
 		return;
 	}
 
@@ -81,7 +92,13 @@ function tm_track_views_views_query_alter(&$view, &$query) {
 	// who_viewed_company_profile
 	if ($view->current_display == 'who_viewed_company_profile') {
 		$entity_type = 2;
-		$entity_id = arg(1); // ie: users/123/viewed
+		$entity_id = arg(1); // ie: company/123/viewed
+	}
+
+	// who_viewed_event
+	if ($view->current_display == 'who_viewed_event') {
+		$entity_type = 2;
+		$entity_id = arg(1); // ie: event/123/viewed
 	}
 
 	// views development

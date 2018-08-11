@@ -189,6 +189,7 @@ function tm_users_form_user_register_form_alter(&$form, &$form_state, $form_id) 
  * Checks if the domain in the email address is on a list of allowed domains.
  */
 function tm_users_user_register_validate_email(&$form, &$form_state) {
+  
   // Ignore validation if registration already has an error.
   $errors = form_get_errors();
   if (!empty($errors)) {

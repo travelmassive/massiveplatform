@@ -349,14 +349,16 @@ function tm_chapters_moderation_chapters_list_ajax() {
 		$chapter = node_load($nid);
 		$html .= "<option value='" . $nid . "'>" . strip_tags($chapter->title) . "</option>\n";
 	}
-	$disabled_label = "(already a member)";
-	if ($moderation_mode == "remove") {
-		$disabled_label = "(not a member)";
+
+	// show all available chapters when adding	
+	if ($moderation_mode == "add") {
+		$disabled_label = "(already a member)";
+		foreach ($disabled_chapters as $nid) {
+			$chapter = node_load($nid);
+			$html .= "<option value='" . $nid . "' disabled>" . strip_tags($chapter->title) . " " . $disabled_label . "</option>\n";
+		}
 	}
-	foreach ($disabled_chapters as $nid) {
-		$chapter = node_load($nid);
-		$html .= "<option value='" . $nid . "' disabled>" . strip_tags($chapter->title) . " " . $disabled_label . "</option>\n";
-	}
+	
 	$html .= "</select>";
 	print $html;
 	

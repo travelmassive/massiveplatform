@@ -270,7 +270,7 @@ function tm_chapters_preprocess_flag(&$variables) {
 			jQuery(document).ready(function($) {
 				$( ".flag" ).unbind("click");
 				$( ".flag" ).bind("click.confirm", function(event) {
-					jq_alert(null, "Sorry, you are unable to join this chapter.<br>Please visit our <a href=\'' . $conf["tm_community_values_url"] . '\'>Community Guidelines</a> for assistance.");
+					jq_alert(null, "Sorry, you are unable to join this chapter at this time.<br>Please visit our <a href=\'' . $conf["tm_community_values_url"] . '\'>Community Guidelines</a> for assistance.");
 					event.preventDefault();
 				});
 			});

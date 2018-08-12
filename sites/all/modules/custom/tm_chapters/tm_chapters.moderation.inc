@@ -42,7 +42,7 @@ function tm_chapters_moderation_chapters_add_member() {
 
 	// check user and chapter
 	if (($user_to_moderate == null) or ($add_to_chapter == null)) {
-		drupal_set_message(t('Oops, an error occurred performing the action (invalid selection).'), 'error');
+		drupal_set_message(t('Oops, an error occurred performing the action (not a valid selection).'), 'error');
 		drupal_goto("/" . drupal_get_path_alias("user/" . $user_to_moderate->uid));
 	}
 
@@ -140,7 +140,7 @@ function tm_chapters_moderation_chapters_remove_member() {
 
 	// check user and chapter
 	if (($user_to_moderate == null) or ($remove_from_chapter == null)) {
-		drupal_set_message(t('Oops, an error occurred performing the action (invalid selection).'), 'error');
+		drupal_set_message(t('Oops, an error occurred performing the action (not a valid selection).'), 'error');
 		drupal_goto("/" . drupal_get_path_alias("user/" . $user_to_moderate->uid));
 	}
 

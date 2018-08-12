@@ -40,7 +40,7 @@
     name = decodeURIComponent(name);  
 
     var message = "Select chapter &mdash; <div id='moderation_chapters_list' style='display: inline-block'>Loading...</div>";
-    message = message + "<p>The member will be prevented from joining the chapter or registering for any new chapter events.</p>";
+    message = message + "<p>The member will not be able to join the chapter or register for new chapter events.</p>";
 
     $.prompt(message, { 
       buttons: { "Remove from chapter": true, "Cancel": false },

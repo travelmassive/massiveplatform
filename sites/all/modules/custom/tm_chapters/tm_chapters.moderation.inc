@@ -19,20 +19,14 @@ function tm_chapters_user_view($account, $view_mode, $langcode) {
 }
 
 /**
- * Add member to a chapter
+ * Add member to a chapter callback
  * examples:
  * chapters/moderation-chapter-add-member/10507/13737?message=welcome
  */
-function tm_chapters_moderation_chapters_add_member() {
+function tm_chapters_moderation_chapters_add_member_callback() {
 
 	global $user;
 	$moderator = user_load($user->uid);
-
-	// check permissions
-	if ((!in_array("chapter leader", $moderator->roles) and (!in_array("moderator", $moderator->roles)))) {
-		drupal_set_message(t('You don\'t have permission to peform this action.'), 'error');
-		drupal_goto("/");
-	}
 
 	// user to moderate
 	$user_to_moderate = user_load(arg(2));
@@ -40,8 +34,43 @@ function tm_chapters_moderation_chapters_add_member() {
 	// chapter to add
 	$add_to_chapter = node_load(arg(3));
 
+	tm_chapters_moderation_chapters_add_member($user_to_moderate, $add_to_chapter, $moderator);
+}
+
+/**
+ * Remove member to a chapter
+ * examples:
+ * chapters/moderation-chapter-remove-member/10507/13737
+ */
+function tm_chapters_moderation_chapters_remove_member_callback() {
+
+	global $user;
+	$moderator = user_load($user->uid);
+
+	// user to moderate
+	$user_to_moderate = user_load(arg(2));
+
+	// chapter to remove
+	$remove_from_chapter = node_load(arg(3));
+
+	tm_chapters_moderation_chapters_remove_member($user_to_moderate, $remove_from_chapter, $moderator);
+}
+
+/**
+ * Add member to a chapter
+ */
+function tm_chapters_moderation_chapters_add_member($user_to_moderate, $add_to_chapter, $moderator, $is_console = false) {
+
+	// check permissions
+	if ((!in_array("chapter leader", $moderator->roles) and (!in_array("moderator", $moderator->roles)))) {
+		if ($is_console) { return false; }
+		drupal_set_message(t('You don\'t have permission to peform this action.'), 'error');
+		drupal_goto("/");
+	}
+
 	// check user and chapter
 	if (($user_to_moderate == null) or ($add_to_chapter == null)) {
+		if ($is_console) { return false; }
 		drupal_set_message(t('Oops, an error occurred performing the action (not a valid selection).'), 'error');
 		drupal_goto("/" . drupal_get_path_alias("user/" . $user_to_moderate->uid));
 	}
@@ -50,12 +79,14 @@ function tm_chapters_moderation_chapters_add_member() {
 	// get list of chapters user is leading
 	$members_chapters = tm_users_get_chapters($user_to_moderate);
 	if (in_array($add_to_chapter->nid, $members_chapters)) {
+		if ($is_console) { return false; }
 		drupal_set_message(t('This member is already a member of ' . tm_chapters_formal_name($add_to_chapter) . '.'), 'error');
 		drupal_goto("/" . drupal_get_path_alias("user/" . $user_to_moderate->uid));
 	}
 
 	// user must be chapter leader, community manager, or moderator of the chapter
 	if ((!tm_users_is_chapter_leader($moderator->uid, $add_to_chapter->nid, $check_community_manager = true)) and (!in_array("moderator", $moderator->roles))) {
+		if ($is_console) { return false; }
 		drupal_set_message(t('You don\'t have permission to moderate this member.'), 'error');
 		drupal_goto("/" . drupal_get_path_alias("user/" . $user_to_moderate->uid));
 	}
@@ -108,44 +139,37 @@ function tm_chapters_moderation_chapters_add_member() {
       flag('flag', 'signup', $add_to_chapter->nid, $user_to_moderate);
     }
 
+    // console return
+    if ($is_console) { return true; }
     
 	// notify moderator and redirect to members 
 	$chapter_url = drupal_get_path_alias("node/" . $add_to_chapter->nid);
     drupal_set_message('You added ' . $full_name . ' to <a href="/' . $chapter_url . '">' .tm_chapters_formal_name($add_to_chapter) . '</a>.');
     drupal_goto("user/" . $user_to_moderate->uid);
-	return;
 }
 
 /**
  * Remove member to a chapter
- * examples:
- * chapters/moderation-chapter-remove-member/10507/13737
  */
-function tm_chapters_moderation_chapters_remove_member() {
-
-	global $user;
-	$moderator = user_load($user->uid);
+function tm_chapters_moderation_chapters_remove_member($user_to_moderate, $remove_from_chapter, $moderator, $is_console = false) {
 
 	// check permissions
 	if ((!in_array("chapter leader", $moderator->roles) and (!in_array("moderator", $moderator->roles)))) {
+		if ($is_console) { return false; }
 		drupal_set_message(t('You don\'t have permission to peform this action.'), 'error');
 		drupal_goto("/");
 	}
 
-	// user to moderate
-	$user_to_moderate = user_load(arg(2));
-
-	// chapter to remove
-	$remove_from_chapter = node_load(arg(3));
-
 	// check user and chapter
 	if (($user_to_moderate == null) or ($remove_from_chapter == null)) {
+		if ($is_console) { return false; }
 		drupal_set_message(t('Oops, an error occurred performing the action (not a valid selection).'), 'error');
 		drupal_goto("/" . drupal_get_path_alias("user/" . $user_to_moderate->uid));
 	}
 
 	// check user not chapter leader or moderator
 	if ((in_array("chapter leader", $user_to_moderate->roles) or (in_array("moderator", $user_to_moderate->roles)))) {
+		if ($is_console) { return false; }
 		drupal_set_message(t('You can\'t remove a chapter leader or moderator from a chapter.'), 'error');
 		drupal_goto("/" . drupal_get_path_alias("user/" . $user_to_moderate->uid));
 	}
@@ -154,12 +178,14 @@ function tm_chapters_moderation_chapters_remove_member() {
 	// get list of chapters user is leading
 	$members_chapters = tm_users_get_chapters($user_to_moderate);
 	if (!in_array($remove_from_chapter->nid, $members_chapters)) {
+		if ($is_console) { return false; }
 		drupal_set_message(t('This member is not a member of ' . tm_chapters_formal_name($remove_from_chapter) . '.'), 'error');
 		drupal_goto("/" . drupal_get_path_alias("user/" . $user_to_moderate->uid));
 	}
 
 	// user must be chapter leader, community manager, or moderator of the chapter
 	if ((!tm_users_is_chapter_leader($moderator->uid, $remove_from_chapter->nid, $check_community_manager = true)) and (!in_array("moderator", $moderator->roles))) {
+		if ($is_console) { return false; }
 		drupal_set_message(t('You don\'t have permission to moderate this member.'), 'error');
 		drupal_goto("/" . drupal_get_path_alias("user/" . $user_to_moderate->uid));
 	}
@@ -193,11 +219,13 @@ function tm_chapters_moderation_chapters_remove_member() {
       flag('unflag', 'signup', $remove_from_chapter->nid, $user_to_moderate);
     }
     
+    // console return
+    if ($is_console) { return true; }
+
 	// notify moderator and redirect to members 
 	$chapter_url = drupal_get_path_alias("node/" . $remove_from_chapter->nid);
     drupal_set_message('You removed ' . $full_name . ' from <a href="/' . $chapter_url . '">' .tm_chapters_formal_name($remove_from_chapter) . '</a>.');
     drupal_goto("user/" . $user_to_moderate->uid);
-	return;
 }
 
 /**

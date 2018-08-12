@@ -89,13 +89,13 @@ function tm_chapters_menu() {
   );
   $items['chapters/moderation-chapter-add-member/%/%'] = array(
     'title' => 'Add member to chapter',
-    'page callback' => 'tm_chapters_moderation_chapters_add_member',
+    'page callback' => 'tm_chapters_moderation_chapters_add_member_callback',
     'access arguments' => array('approve users'),
     'type' => MENU_CALLBACK,
   );
    $items['chapters/moderation-chapter-remove-member/%/%'] = array(
     'title' => 'Remove member from chapter',
-    'page callback' => 'tm_chapters_moderation_chapters_remove_member',
+    'page callback' => 'tm_chapters_moderation_chapters_remove_member_callback',
     'access arguments' => array('approve users'),
     'type' => MENU_CALLBACK,
   );

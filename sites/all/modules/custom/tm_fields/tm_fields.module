@@ -2157,6 +2157,43 @@ function _tm_more_actions_process($field, $title = NULL) {
     }
   }
   // END google analytics report link
+
+
+  // START add member to chapter
+  if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
+
+    // Only show to chapter leader or moderator
+    if (((in_array("chapter leader", $user->roles) or (in_array("moderator", $user->roles)))) 
+      and ($targetuser->uid != $user->uid)) {
+
+      // Only show if user is not in the members chapter, or is a moderator
+      $leading_chapters = tm_users_get_chapters_leading($user);
+      $members_chapters = tm_users_get_chapters($targetuser);
+      $chapters_available_to_add = array_diff($leading_chapters, $members_chapters);
+    
+      if ((sizeof($chapters_available_to_add) > 0) or (in_array("moderator", $user->roles))) {
+
+        // Get user name
+        $first_name = strip_tags($targetuser->field_user_first_name[LANGUAGE_NONE][0]['value']);
+        $last_name = strip_tags($targetuser->field_user_last_name[LANGUAGE_NONE][0]['value']);
+        $full_name = $first_name . " " . $last_name;
+
+        $links['approve'][] = array(
+          'wrapper_class' => array('chapter_tools'),
+          'content' => l(t('Add to chapter'), 'javascript:jq_add_member_to_chapter(' . $targetuser->uid . ', "' . htmlentities($full_name) . '")',
+            array(
+            'fragment' => '',
+            'external'=> true,
+            'attributes' => array(
+              'title' => t('Add to chapter')
+            )
+          ))
+        );
+      }
+
+    }
+  }
+  // END add member to chapter
   
   return theme('more_actions', array('links' => $links));
 }

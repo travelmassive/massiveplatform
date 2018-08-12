@@ -219,3 +219,19 @@ function _tm_chapters_get_all_country_regions() {
 
   return $regions;
 }
+
+/**
+ * Return list of all chapter ids
+ */
+function tm_chapters_get_all_chapters() {
+
+  // Get all chapters
+  $query = "SELECT nid, title FROM node WHERE type = 'chapter' AND status = 1 ORDER BY title";
+  $results = db_query($query)->fetchAll();
+  $chapter_nids = array();
+  foreach ($results as $result) {
+    $chapter_nids[] = $result->nid;
+  }
+
+  return $chapter_nids;
+}

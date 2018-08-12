@@ -10,6 +10,18 @@
 function tm_flags_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: 'flag add_member_to_chapter'.
+  $permissions['flag add_member_to_chapter'] = array(
+    'name' => 'flag add_member_to_chapter',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
+      'chapter leader' => 'chapter leader',
+      'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
   // Exported permission: 'flag announcement_last_sent'.
   $permissions['flag announcement_last_sent'] = array(
     'name' => 'flag announcement_last_sent',
@@ -172,6 +184,18 @@ function tm_flags_user_default_permissions() {
     'name' => 'flag tm_sponsor',
     'roles' => array(
       'administrator' => 'administrator',
+      'chapter leader' => 'chapter leader',
+      'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag add_member_to_chapter'.
+  $permissions['unflag add_member_to_chapter'] = array(
+    'name' => 'unflag add_member_to_chapter',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
       'chapter leader' => 'chapter leader',
       'moderator' => 'moderator',
     ),

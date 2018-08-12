@@ -64,90 +64,124 @@ function tm_notifications_chapter_tm_notif_info() {
 function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flagging) {
 
   // We want to target the signup flag on nodes.
-  if ($flag->name == 'signup' && $flag->entity_type == 'node') {
+  if ($flag->name != 'signup' or $flag->entity_type != 'node') {
+    return;
+  }
 
-    $node = node_load($entity_id);
+  // Only for chapter nodes
+  $node = node_load($entity_id);
+  if ($node->type != 'chapter') {
+    return;
+  }
 
-    // Only for chapter nodes.
-    if ($node->type == 'chapter') {
+  global $conf;
 
-      // send welcome message to the user
-      // set profile url (either friendly url or community url)
-      $who_joined = user_load($account->uid);
+  // send welcome message to the user
+  // set profile url (either friendly url or community url)
+  $who_joined = user_load($account->uid);
 
-      // get profile url
-      $profile_url = drupal_get_path_alias("user/" . $who_joined->uid);
-      $profile_uid = $who_joined->uid;
+  // get profile url
+  $profile_url = drupal_get_path_alias("user/" . $who_joined->uid);
+  $profile_uid = $who_joined->uid;
 
-      // get user first name and last name
-      // we can't always rely on current-user token as user can sign up to chapters on signup
-      $first_name = strip_tags($who_joined->field_user_first_name['und'][0]['value']);
-      $last_name = strip_tags($who_joined->field_user_last_name['und'][0]['value']);
+  // get user first name and last name
+  // we can't always rely on current-user token as user can sign up to chapters on signup
+  $first_name = strip_tags($who_joined->field_user_first_name[LANGUAGE_NONE][0]['value']);
+  $last_name = strip_tags($who_joined->field_user_last_name[LANGUAGE_NONE][0]['value']);
 
-      // get welcome message
-      $welcome_message = "";
-      if (isset($node->field_join_chapter_message['und'][0]['value'])) {
-        $welcome_message = trim(strip_tags(check_plain($node->field_join_chapter_message['und'][0]['value'])));
-        $welcome_message = str_replace("\n", "<br>", $welcome_message); // add line breaks
-        if ($welcome_message != "") {
-          $welcome_message = "<br><strong>Here's a welcome message from your local Chapter Leaders:</strong><p>" . $welcome_message . "</p>";
-        }
-      }
+   // get formal chapter name
+  $chapter_name = tm_chapters_formal_name($node);
 
-      // get formal chapter name
-      $chapter_name = tm_chapters_formal_name($node);
+  // get welcome message
+  $welcome_message = "";
+  $join_action = "Welcome to"; // ... chapter name
+  $intro_message = "<br>You're in!<br><br>Thanks for joining the <a href='__SERVER_HTTP__://__SERVER_NAME__/node/" . $node->nid . "'>" . $chapter_name . " Chapter</a>.";
+  $chapter_join_action = "joined";
+  $added_by_message = "";
 
-      // Chapter hero image
-      global $conf;
-      if (isset($node->field_image[LANGUAGE_NONE][0]['uri'])) {
-        $chapter_image_src = image_style_url("banner", $node->field_image[LANGUAGE_NONE][0]['uri']);
-      } else {
-        $default_image_uri = _tm_chapters_get_default_image($conf["tm_images_default_field_image"], $node->nid);
-        $chapter_image_src = image_style_url("banner", $default_image_uri);
-      }
+  // if added to chapter, add moderator name and message
+  $static_add_member_moderator_first_name = &drupal_static("tm_add_member_moderator_first_name");
+  $static_add_member_moderator_last_name = &drupal_static("tm_add_member_moderator_last_name");
+  $static_add_member_moderator_message = &drupal_static("tm_add_member_moderator_message");
 
-      $chapter_url = $conf["tm_email_server_http"] . "://" . $conf["tm_email_server_url_domain"] . "/" . drupal_get_path_alias('node/' . $node->nid);
+  // add moderator name
+  if ($static_add_member_moderator_first_name != null) {
+    $join_action = $static_add_member_moderator_first_name . " added you to"; // ... chapter name
+    $intro_message = "<br>You've been added to the <a href='__SERVER_HTTP__://__SERVER_NAME__/node/" . $node->nid . "'>" . $chapter_name . " Chapter</a> by " . $static_add_member_moderator_first_name . ".";
+    $added_by_message = "<br>This member was added by " . $static_add_member_moderator_first_name . " " . $static_add_member_moderator_last_name . ".";
+    $chapter_join_action = "was added to";
+  }
 
-      $chapter_image_html = tm_notifications_render_hero_image_html($chapter_image_src, $chapter_url, $chapter_name);
-
-      tm_notifications_notify('user_chapter_join_welcome_member', $account, array('node' => $node, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__WELCOME_MESSAGE__' => $welcome_message, '__CHAPTER_NAME__' => $chapter_name, '__HERO_IMAGE__' => $chapter_image_html, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid));
-
-      // notify each owner of the chapter that they have a new member
-      $approved_by_message = "As they are a new member to " . $conf["tm_site_name"] . ", please take the time to review their profile and ensure it's valid before approving them.";
-
-      if (in_array("approved user", $who_joined->roles)) {
-
-        // get who approved
-        $flag = flag_get_flag('approval_approved_by');
-        $who_flagged = flag_get_entity_flags("user", $who_joined->uid, "approval_approved_by");
-        usort($who_flagged, function($a, $b){  // sort by flag time
-          return ($a->timestamp > $b->timestamp) ? -1 : 1;
-        });
-
-        // show who approved
-        $approved_by_message = "This member is already approved.";
-        if (sizeof($who_flagged) > 0) {
-          $flagger = $who_flagged[0];
-          $flagged_user = user_load($flagger->uid);
-          if ($flagged_user->uid > 0) {
-            $approved_by_message = "This member was approved by " . $flagged_user->field_user_first_name[LANGUAGE_NONE][0]['safe_value'] . " " . $flagged_user->field_user_last_name[LANGUAGE_NONE][0]['safe_value'] . ".";
-          }
-        }
-
-      }
-
-      if (isset($node->field_chapter_leaders[LANGUAGE_NONE])) {
-        foreach ($node->field_chapter_leaders[LANGUAGE_NONE] as $leader) {
-          $leader = user_load($leader['target_id']);
-
-          // don't send notification if the user is null
-          // if the chapter doesn't have any chapter leaders
-          if ($leader == null) { continue; }
-
-          tm_notifications_notify('user_chapter_join_notify_leaders', $leader, array('node' => $node, 'user' => $leader, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__APPROVED_BY_MESSAGE__' => $approved_by_message, '__HERO_IMAGE__' => $chapter_image_html));
-        }
-      }
+  // add moderator message
+  if ($static_add_member_moderator_message != null) {
+    $welcome_message = $static_add_member_moderator_message;
+  }
+ 
+  if (isset($node->field_join_chapter_message[LANGUAGE_NONE][0]['value'])) {
+    $chapter_welcome_message = trim(strip_tags(check_plain($node->field_join_chapter_message[LANGUAGE_NONE][0]['value'])));
+    $chapter_welcome_message = str_replace("\n", "<br>", $chapter_welcome_message); // add line breaks
+    if ($chapter_welcome_message != "") {
+      $welcome_message .= "<br><strong>Here's a welcome message from your local Chapter Leaders:</strong><p>" . $chapter_welcome_message . "</p>";
     }
   }
+
+  // Chapter hero image
+  if (isset($node->field_image[LANGUAGE_NONE][0]['uri'])) {
+    $chapter_image_src = image_style_url("banner", $node->field_image[LANGUAGE_NONE][0]['uri']);
+  } else {
+    $default_image_uri = _tm_chapters_get_default_image($conf["tm_images_default_field_image"], $node->nid);
+    $chapter_image_src = image_style_url("banner", $default_image_uri);
+  }
+
+  $chapter_url = $conf["tm_email_server_http"] . "://" . $conf["tm_email_server_url_domain"] . "/" . drupal_get_path_alias('node/' . $node->nid);
+
+  $chapter_image_html = tm_notifications_render_hero_image_html($chapter_image_src, $chapter_url, $chapter_name);
+
+  // unapproved message
+  $unapproved_message = "";
+  if (!in_array("approved user", $who_joined->roles)) {
+    $unapproved_message = 'PS: Please ensure that you\'ve completed <a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">your profile</a> so the Chapter Leaders can approve your account.';
+  }
+
+  // notify the member
+  tm_notifications_notify('user_chapter_join_welcome_member', $account, array('node' => $node, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__WELCOME_MESSAGE__' => $welcome_message, '__CHAPTER_NAME__' => $chapter_name, '__HERO_IMAGE__' => $chapter_image_html, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__UNAPPROVED_MESSAGE__' => $unapproved_message, '__JOIN_ACTION__' => $join_action, '__INTRO_MESSAGE__' => $intro_message));
+
+  // notify each owner of the chapter that they have a new member
+  $approved_by_message = "As they are a new member to " . $conf["tm_site_name"] . ", please take the time to review their profile and ensure it's valid before approving them.";
+
+  if (in_array("approved user", $who_joined->roles)) {
+
+    // get who approved
+    $flag = flag_get_flag('approval_approved_by');
+    $who_flagged = flag_get_entity_flags("user", $who_joined->uid, "approval_approved_by");
+    usort($who_flagged, function($a, $b){  // sort by flag time
+      return ($a->timestamp > $b->timestamp) ? -1 : 1;
+    });
+
+    // show who approved
+    $approved_by_message = "This member is already approved.";
+    if (sizeof($who_flagged) > 0) {
+      $flagger = $who_flagged[0];
+      $flagged_user = user_load($flagger->uid);
+      if ($flagged_user->uid > 0) {
+        $approved_by_message = "This member was approved by " . $flagged_user->field_user_first_name[LANGUAGE_NONE][0]['safe_value'] . " " . $flagged_user->field_user_last_name[LANGUAGE_NONE][0]['safe_value'] . ".";
+      }
+    }
+
+  }
+
+  // notify chapter leaders
+  if (isset($node->field_chapter_leaders[LANGUAGE_NONE])) {
+    foreach ($node->field_chapter_leaders[LANGUAGE_NONE] as $leader) {
+      $leader = user_load($leader['target_id']);
+
+      // don't send notification if the user is null
+      // if the chapter doesn't have any chapter leaders
+      if ($leader == null) { continue; }
+
+      tm_notifications_notify('user_chapter_join_notify_leaders', $leader, array('node' => $node, 'user' => $leader, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__APPROVED_BY_MESSAGE__' => $approved_by_message, '__HERO_IMAGE__' => $chapter_image_html, '__CHAPTER_NAME__' => $chapter_name, '__JOIN_ACTION__' => $chapter_join_action, '__ADDED_BY_MESSAGE__' => $added_by_message));
+    }
+  }
+
 }
 

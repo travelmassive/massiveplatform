@@ -13,7 +13,7 @@ include_once 'tm_chapters.helpers.inc';
 include_once 'tm_chapters.leaders.inc';
 include_once 'tm_chapters.drush.inc';
 include_once 'tm_chapters.communication.inc';
-
+include_once 'tm_chapters.moderation.inc';
 
 /**
  * Implement hook_init()
@@ -79,6 +79,18 @@ function tm_chapters_menu() {
     'title' => t('Send chapters emails'),
     'page callback' => 'tm_chapters_send_emails_ajax',
     'access callback' => 'tm_chapters_check_announcement_callback',
+    'type' => MENU_CALLBACK,
+  );
+  $items['chapters/moderation-chapter-list-ajax/%/%'] = array(
+    'title' => 'Chapter list ajax',
+    'page callback' => 'tm_chapters_moderation_chapters_list_ajax',
+    'access arguments' => array('approve users'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['chapters/moderation-chapter-add-member/%/%'] = array(
+    'title' => 'Add member to chapter',
+    'page callback' => 'tm_chapters_moderation_chapters_add_member',
+    'access arguments' => array('approve users'),
     'type' => MENU_CALLBACK,
   );
   return $items;

@@ -44,23 +44,20 @@ function tm_chapters_moderation_chapters_add_member() {
 	if (($user_to_moderate == null) or ($add_to_chapter == null)) {
 		drupal_set_message(t('Oops, an error occurred performing the action (invalid parameters).'), 'error');
 		drupal_goto("/" . drupal_get_path_alias("user/" . $user_to_moderate->uid));
-		return;
 	}
 
 	// check user not in chapter already
 	// get list of chapters user is leading
-	$members_chapters = tm_users_get_chapters_leading($user_to_moderate);
+	$members_chapters = tm_users_get_chapters($user_to_moderate);
 	if (in_array($add_to_chapter->nid, $members_chapters)) {
 		drupal_set_message(t('This member is already a member of ' . tm_chapters_formal_name($add_to_chapter) . '.'), 'error');
 		drupal_goto("/" . drupal_get_path_alias("user/" . $user_to_moderate->uid));
-		return;
 	}
 
 	// user must be chapter leader, community manager, or moderator of the chapter
 	if ((!tm_users_is_chapter_leader($moderator->uid, $add_to_chapter->nid, $check_community_manager = true)) and (!in_array("moderator", $moderator->roles))) {
 		drupal_set_message(t('You don\'t have permission to moderate this member.'), 'error');
 		drupal_goto("/" . drupal_get_path_alias("user/" . $user_to_moderate->uid));
-		return;
 	}
 
 	// add message into member welcome email
@@ -98,7 +95,7 @@ function tm_chapters_moderation_chapters_add_member() {
 	$full_name = $first_name . " " . $last_name;
 
 	// flag member
-	flag('unflag', 'remove_member_to_chapter', $add_to_chapter->nid, $user_to_moderate);
+	flag('unflag', 'remove_member_from_chapter', $add_to_chapter->nid, $user_to_moderate);
 	flag('unflag', 'add_member_to_chapter', $add_to_chapter->nid, $user_to_moderate); 
 	flag('flag', 'add_member_to_chapter', $add_to_chapter->nid, $user_to_moderate); 
 
@@ -119,6 +116,169 @@ function tm_chapters_moderation_chapters_add_member() {
 	return;
 }
 
+/**
+ * Remove member to a chapter
+ * examples:
+ * chapters/moderation-chapter-remove-member/10507/13737
+ */
+function tm_chapters_moderation_chapters_remove_member() {
+
+	global $user;
+	$moderator = user_load($user->uid);
+
+	// check permissions
+	if ((!in_array("chapter leader", $moderator->roles) and (!in_array("moderator", $moderator->roles)))) {
+		drupal_set_message(t('You don\'t have permission to peform this action.'), 'error');
+		drupal_goto("/");
+	}
+
+	// user to moderate
+	$user_to_moderate = user_load(arg(2));
+
+	// chapter to remove
+	$remove_from_chapter = node_load(arg(3));
+
+	// check user and chapter
+	if (($user_to_moderate == null) or ($remove_from_chapter == null)) {
+		drupal_set_message(t('Oops, an error occurred performing the action (invalid parameters).'), 'error');
+		drupal_goto("/" . drupal_get_path_alias("user/" . $user_to_moderate->uid));
+	}
+
+	// check user not chapter leader or moderator
+	if ((in_array("chapter leader", $user_to_moderate->roles) or (in_array("moderator", $user_to_moderate->roles)))) {
+		drupal_set_message(t('You can\'t remove a chapter leader or moderator from a chapter.'), 'error');
+		drupal_goto("/" . drupal_get_path_alias("user/" . $user_to_moderate->uid));
+	}
+
+	// check user not in chapter
+	// get list of chapters user is leading
+	$members_chapters = tm_users_get_chapters($user_to_moderate);
+	if (!in_array($remove_from_chapter->nid, $members_chapters)) {
+		drupal_set_message(t('This member is not a member of ' . tm_chapters_formal_name($remove_from_chapter) . '.'), 'error');
+		drupal_goto("/" . drupal_get_path_alias("user/" . $user_to_moderate->uid));
+	}
+
+	// user must be chapter leader, community manager, or moderator of the chapter
+	if ((!tm_users_is_chapter_leader($moderator->uid, $remove_from_chapter->nid, $check_community_manager = true)) and (!in_array("moderator", $moderator->roles))) {
+		drupal_set_message(t('You don\'t have permission to moderate this member.'), 'error');
+		drupal_goto("/" . drupal_get_path_alias("user/" . $user_to_moderate->uid));
+	}
+
+	// moderator first name
+	$moderator_first_name = strip_tags($moderator->field_user_first_name[LANGUAGE_NONE][0]['value']);
+	$static_remove_member_moderator_first_name = &drupal_static("tm_remove_member_moderator_first_name");
+	$static_remove_member_moderator_first_name = $moderator_first_name;
+
+	// moderator last name
+	$moderator_last_name = strip_tags($moderator->field_user_last_name[LANGUAGE_NONE][0]['value']);
+	$static_remove_member_moderator_last_name = &drupal_static("tm_remove_member_moderator_last_name");
+	$static_remove_member_moderator_last_name = $moderator_last_name;
+
+	// get full name
+	$first_name = strip_tags($user_to_moderate->field_user_first_name[LANGUAGE_NONE][0]['value']);
+	$last_name = strip_tags($user_to_moderate->field_user_last_name[LANGUAGE_NONE][0]['value']);
+	$full_name = $first_name . " " . $last_name;
+
+	// flag member
+	flag('unflag', 'remove_member_from_chapter', $remove_from_chapter->nid, $user_to_moderate);
+	flag('unflag', 'add_member_to_chapter', $remove_from_chapter->nid, $user_to_moderate); 
+	flag('flag', 'remove_member_from_chapter', $remove_from_chapter->nid, $user_to_moderate); 
+
+	// log in watchdog
+	watchdog('tm_chapters', 'Member ' . $full_name . ' (uid: ' . $user_to_moderate->uid . ') removed from chapter ' . $remove_from_chapter->title . ' (nid: ' . $remove_from_chapter->nid . ') by ' . $moderator_first_name . ' (uid: ' . $moderator->uid . ')');
+
+	// remove from chapter
+    $signup_flag = flag_get_flag('signup');
+    if ($signup_flag->is_flagged($remove_from_chapter->nid, $user_to_moderate->uid)) {
+      flag('unflag', 'signup', $remove_from_chapter->nid, $user_to_moderate);
+    }
+    
+	// notify moderator and redirect to members 
+	$chapter_url = drupal_get_path_alias("node/" . $remove_from_chapter->nid);
+    drupal_set_message('You removed ' . $full_name . ' from <a href="/' . $chapter_url . '">' .tm_chapters_formal_name($remove_from_chapter) . '</a>.');
+    drupal_goto("user/" . $user_to_moderate->uid);
+	return;
+}
+
+/**
+ * Implements hook_flag_validate()
+ * Check if user can join chapter
+ */
+function tm_chapters_flag_validate($action, $flag, $entity_id, $account, $skip_permission_check, $flagging) {
+
+	// skip if permission check set
+	if ($skip_permission_check) {
+		return;
+	}
+
+	// check flag signup
+	if (($action == 'flag') and ($flag->name == 'signup')) {
+
+		// load flag
+		$remove_member_from_chapter_flag = flag_get_flag('remove_member_from_chapter');
+
+		// check if member is removed from chapter
+		if ($remove_member_from_chapter_flag->is_flagged($entity_id, $account->uid)) {
+			drupal_set_message("Sorry, you are unable to join this chapter.", "warning");
+			return(array('access-denied' => t('Sorry, you are unable to join this chapter.')));
+		}
+	}
+
+	// check event register
+	if (($action == 'flag') and (($flag->name == 'event_register') or ($flag->name == 'event_waitlist'))) {
+
+		// load flag
+		$remove_member_from_chapter_flag = flag_get_flag('remove_member_from_chapter');
+
+		// get chapter of event
+		$entity = node_load($entity_id);
+		$chapter_id = _tm_event_get_chapter_id($entity);
+	
+		if ($chapter_id != null) {
+			if ($remove_member_from_chapter_flag->is_flagged($chapter_id, $account->uid)) {
+				drupal_set_message("Sorry, you are unable to register for this event.", "warning");
+				drupal_goto("node/" . $entity_id);
+			}
+		}
+	}
+}
+
+/**
+ * Implementation hook tm_flags_preprocess_flag
+ * Prevent joining chapter if member has been removed from it
+ */
+function tm_chapters_preprocess_flag(&$variables) {
+
+	$flag = &$variables['flag'];
+	$action = $variables['action'];
+	$entity_id = $variables['entity_id'];
+	$flag_css_name = str_replace('_', '-', $flag->name);
+	$uid = $variables['user']->uid;
+
+	// check for signup flag
+	if (($flag->name == "signup") && ($action == "flag")) {
+
+		// load removed from chapter flag
+		$remove_member_from_chapter_flag = flag_get_flag('remove_member_from_chapter');
+
+		// check if member is removed the chapter
+		if ($remove_member_from_chapter_flag->is_flagged($entity_id, $uid)) {
+
+			global $conf;
+			$variables['flag_button_class'] = 'flag-limit follow bttn bttn-secondary bttn-m';
+			drupal_add_js('
+			jQuery(document).ready(function($) {
+				$( ".flag" ).unbind("click");
+				$( ".flag" ).bind("click.confirm", function(event) {
+					jq_alert(null, "Sorry, you are unable to join this chapter.<br>Please visit our <a href=\'' . $conf["tm_community_values_url"] . '\'>Community Guidelines</a> for assistance.");
+					event.preventDefault();
+				});
+			});
+			', 'inline');
+			return true;
+		}
+	}
+}
 
 /**
  * Render html options list for chapter moderation

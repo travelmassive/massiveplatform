@@ -169,6 +169,18 @@ function tm_flags_user_default_permissions() {
     'module' => 'flag',
   );
 
+  // Exported permission: 'flag remove_member_from_chapter'.
+  $permissions['flag remove_member_from_chapter'] = array(
+    'name' => 'flag remove_member_from_chapter',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
+      'chapter leader' => 'chapter leader',
+      'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
   // Exported permission: 'flag signup'.
   $permissions['flag signup'] = array(
     'name' => 'flag signup',
@@ -332,6 +344,18 @@ function tm_flags_user_default_permissions() {
     'name' => 'unflag moderate_report_organization',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag remove_member_from_chapter'.
+  $permissions['unflag remove_member_from_chapter'] = array(
+    'name' => 'unflag remove_member_from_chapter',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
+      'chapter leader' => 'chapter leader',
       'moderator' => 'moderator',
     ),
     'module' => 'flag',

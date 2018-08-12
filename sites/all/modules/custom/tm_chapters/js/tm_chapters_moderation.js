@@ -34,4 +34,28 @@
 
   }
 
+  // allow chapter leader to remove member from their chapter
+  jq_remove_member_to_chapter = function(uid, name) {
+    
+    name = decodeURIComponent(name);  
+
+    var message = "Select chapter &mdash; <div id='moderation_chapters_list' style='display: inline-block'>Loading...</div>";
+    message = message + "<p>The member will be prevented from joining the chapter or registering for any new chapter events.</p>";
+
+    $.prompt(message, { 
+      buttons: { "Remove from chapter": true, "Cancel": false },
+      title: "Remove " + name + " from chapter?",
+      loaded: function() {
+        // load available chapters list
+        $("#moderation_chapters_list").load("/chapters/moderation-chapter-list-ajax/" + uid + "/remove");
+      },
+      submit: function(e,v,m,f){
+        if (v == true) {
+          window.location = '/chapters/moderation-chapter-remove-member/' + uid + '/' + $("#moderation_chapter_ids option:selected").val();
+        }
+      }
+    });
+
+  }
+
 });})(jQuery, Drupal, this, this.document);

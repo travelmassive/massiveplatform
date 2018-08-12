@@ -119,6 +119,17 @@ function _tm_payments_preprocess_flag_register_flag(&$variables) {
 		}
     }
 
+    // check if member is removed the chapter
+    $remove_member_from_chapter_flag = flag_get_flag('remove_member_from_chapter');
+	$check_entity = node_load($entity_id);
+	$check_chapter_id = _tm_event_get_chapter_id($check_entity);
+	if ($check_chapter_id != null) {
+		if ($remove_member_from_chapter_flag->is_flagged($check_chapter_id, $uid)) {
+			$variables['link_text'] = 'Buy Ticket';
+			return;
+		}
+	}
+
 	// STEP 3. GET PRICING
 	$member = user_load($uid);
 	$user_id = $member->uid;

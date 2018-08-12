@@ -1443,178 +1443,6 @@ function _tm_more_actions_process($field, $title = NULL) {
     }
   }
   // END moderate community values link
-
-
-  // START report member profile link
-  if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
-
-    // Don't show flag for administrators or own acccount
-    if (!in_array("administrator", $targetuser->roles) and ($uid != $user->uid)) {
-
-      // Step 1. Show report flag to approved members
-      if (tm_users_moderate_report_check($user)) {
-
-        $community_values_url = $conf["tm_community_values_url"];
-
-        $links['approve'][] = array(
-          'wrapper_class' => array('approve'),
-          'content' => l(t('Report'), 'javascript:void(0);',
-            array(
-            'fragment' => '',
-            'external'=> true,
-            'attributes' => array(
-              'title' => t('Report'),
-              'onClick' => 'javascript:jq_confirm_report_member(' . $uid . ', \'' . $community_values_url . '\')'
-            )
-          ))
-        );
-      }
-
-      // Step 2. Show who flagged this member to moderators and chapter leaders
-      $who_flagged = array();
-      if ((in_array("moderator", $user->roles) or user_access('administer'))
-      or (in_array("chapter leader", $user->roles))) {
-
-        // show last time request info was flagged
-        $flag = flag_get_flag('moderate_report_member');
-
-        // get list of people who flagged
-        $who_flagged = flag_get_entity_flags("user", $uid, "moderate_report_member");
-
-        // sort by flag time
-        usort($who_flagged, function($a, $b){
-          return ($a->timestamp > $b->timestamp) ? -1 : 1;
-        });
-
-        $menu_text = "";
-        foreach ($who_flagged as $flagger) {
-          $difference = time() - $flagger->timestamp;
-          $flagged_time = format_interval($difference, 1) . " ago";
-          $flagged_user = user_load($flagger->uid);
-          $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Reported by " . l($flagged_user->field_user_first_name[LANGUAGE_NONE][0]['value'], "/" . drupal_get_path_alias("user/" . $flagged_user->uid), array('attributes' => array('target' => '_blank', 'class' => array('report-flagged-link')))) . " " . $flagged_time . "</span><br>";
-        }
-        
-        $links['approve'][] = array(
-          'wrapper_class' => array('approve'),
-          'content' => t($menu_text),
-        );
-      }
-
-      // Step 3. Show unflag link to moderators
-      if (sizeof($who_flagged) > 0) {
-
-        if (in_array("moderator", $user->roles) or user_access('administer')) {
-
-          $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>" . l("Issue resolved", 'javascript:void(0);',
-              array('fragment' => '','external'=>true, 'attributes' => array('onClick' => 'javascript:jq_confirm_report_member_resolved(' . $uid . ');', 'class' => array('report-flagged-link')))) . "</span><br>";
-
-           $links['approve'][] = array(
-            'wrapper_class' => array('approve'),
-            'content' => t($menu_text),
-          );
-        }
-      }
-
-    }
-  }
-  // END report member profile link
-
-  // START report organization profile link
-  if (isset($field['entity']->type) && $field['entity']->type == 'organization') {
-
-     // Keep track of org nid
-     $organization_nid = $field['entity']->nid;
-
-    // Don't show flag for profiles that you manage
-    if (!tm_organizations_is_company_profile_manager($user->uid, $organization_nid)) {
-
-      // Step 1. Show report flag to approved members
-      if (tm_organizations_moderate_report_check($user)) {
-
-        $community_values_url = $conf["tm_community_values_url"];
-
-        $links['approve'][] = array(
-          'wrapper_class' => array('approve'),
-          'content' => l(t('Report'), 'javascript:void(0);',
-            array(
-            'fragment' => '',
-            'external'=> true,
-            'attributes' => array(
-              'title' => t('Report'),
-              'onClick' => 'javascript:jq_confirm_report_organization(' . $organization_nid . ', \'' . $community_values_url . '\')'
-            )
-          ))
-        );
-      }
-
-      // Step 2. Show who flagged this profile to moderators and chapter leaders
-      $who_flagged = array();
-      if ((in_array("moderator", $user->roles) or user_access('administer'))
-      or (in_array("chapter leader", $user->roles))) {
-
-        // show last time request info was flagged
-        $flag = flag_get_flag('moderate_report_organization');
-
-        // get list of people who flagged
-        $who_flagged = flag_get_entity_flags("node", $organization_nid, "moderate_report_organization");
-
-        // sort by flag time
-        usort($who_flagged, function($a, $b){
-          return ($a->timestamp > $b->timestamp) ? -1 : 1;
-        });
-
-        $menu_text = "";
-        foreach ($who_flagged as $flagger) {
-          $difference = time() - $flagger->timestamp;
-          $flagged_time = format_interval($difference, 1) . " ago";
-          $flagged_user = user_load($flagger->uid);
-          $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Reported by " . l($flagged_user->field_user_first_name[LANGUAGE_NONE][0]['value'], "/" . drupal_get_path_alias("user/" . $flagged_user->uid), array('attributes' => array('target' => '_blank', 'class' => array('report-flagged-link')))) . " " . $flagged_time . "</span><br>";
-        }
-        
-        $links['approve'][] = array(
-          'wrapper_class' => array('approve'),
-          'content' => t($menu_text),
-        );
-      }
-
-      // Step 3. Show unflag link to moderators
-      if (sizeof($who_flagged) > 0) {
-
-        if (in_array("moderator", $user->roles) or user_access('administer')) {
-
-          $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>" . l("Issue resolved", '',
-              array('fragment' => 'javascript:void(0);','external'=>true, 'attributes' => array('onClick' => 'javascript:jq_confirm_report_organization_resolved(' . $organization_nid . ');', 'class' => array('report-flagged-link')))) . "</span><br>";
-
-           $links['approve'][] = array(
-            'wrapper_class' => array('approve'),
-            'content' => t($menu_text),
-          );
-        }
-      }
-
-    }
-  }
-  // END report organization profile link
-
-  // START cancel member profile link
-  if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
-
-    // Only show to administrator or moderator
-    if (((in_array("administrator", $user->roles) or (in_array("moderator", $user->roles)))) 
-      and ($targetuser->uid != $user->uid)) {
-
-      $links['approve'][] = array(
-        'wrapper_class' => array('approve'),
-        'content' => l(t('Cancel account'), '/user/' . $targetuser->uid . '/cancel',
-          array(
-          'attributes' => array(
-            'title' => t('Cancel account'),
-          )
-        ))
-      );
-    }
-  }
-  // END cancel account profile link
  
   // START Add member event link
   if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
@@ -2194,6 +2022,213 @@ function _tm_more_actions_process($field, $title = NULL) {
     }
   }
   // END add member to chapter
+
+
+  // START remove member from chapter
+  if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
+
+    // Only show to chapter leader or moderator
+    if ((in_array("chapter leader", $user->roles) or (in_array("moderator", $user->roles))) 
+      and ($targetuser->uid != $user->uid)) {
+
+      // Dont allow removal of chapter leader or moderator
+      if (!in_array("chapter leader", $targetuser->roles) and (!in_array("moderator", $targetuser->roles))) {
+
+        // Only show if user is in the members chapter, or is a moderator
+        if (tm_users_member_in_users_chapter($targetuser->uid, $user->uid) or (in_array("moderator", $user->roles))) {
+
+          // Get user name
+          $first_name = strip_tags($targetuser->field_user_first_name[LANGUAGE_NONE][0]['value']);
+          $last_name = strip_tags($targetuser->field_user_last_name[LANGUAGE_NONE][0]['value']);
+          $full_name = $first_name . " " . $last_name;
+
+          $links['approve'][] = array(
+            'wrapper_class' => array('chapter_tools'),
+            'content' => l(t('Remove from chapter'), 'javascript:jq_remove_member_to_chapter(' . $targetuser->uid . ', "' . htmlentities($full_name) . '")',
+              array(
+              'fragment' => '',
+              'external'=> true,
+              'attributes' => array(
+                'title' => t('Remove from chapter')
+              )
+            ))
+          );
+        }
+      }
+    }
+  }
+  // END remove member from chapter
+
+  // START report member profile link
+  if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
+
+    // Don't show flag for administrators or own acccount
+    if (!in_array("administrator", $targetuser->roles) and ($uid != $user->uid)) {
+
+      // Step 1. Show report flag to approved members
+      if (tm_users_moderate_report_check($user)) {
+
+        $community_values_url = $conf["tm_community_values_url"];
+
+        $links['approve'][] = array(
+          'wrapper_class' => array('approve'),
+          'content' => l(t('Report'), 'javascript:void(0);',
+            array(
+            'fragment' => '',
+            'external'=> true,
+            'attributes' => array(
+              'title' => t('Report'),
+              'onClick' => 'javascript:jq_confirm_report_member(' . $uid . ', \'' . $community_values_url . '\')'
+            )
+          ))
+        );
+      }
+
+      // Step 2. Show who flagged this member to moderators and chapter leaders
+      $who_flagged = array();
+      if ((in_array("moderator", $user->roles) or user_access('administer'))
+      or (in_array("chapter leader", $user->roles))) {
+
+        // show last time request info was flagged
+        $flag = flag_get_flag('moderate_report_member');
+
+        // get list of people who flagged
+        $who_flagged = flag_get_entity_flags("user", $uid, "moderate_report_member");
+
+        // sort by flag time
+        usort($who_flagged, function($a, $b){
+          return ($a->timestamp > $b->timestamp) ? -1 : 1;
+        });
+
+        $menu_text = "";
+        foreach ($who_flagged as $flagger) {
+          $difference = time() - $flagger->timestamp;
+          $flagged_time = format_interval($difference, 1) . " ago";
+          $flagged_user = user_load($flagger->uid);
+          $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Reported by " . l($flagged_user->field_user_first_name[LANGUAGE_NONE][0]['value'], "/" . drupal_get_path_alias("user/" . $flagged_user->uid), array('attributes' => array('target' => '_blank', 'class' => array('report-flagged-link')))) . " " . $flagged_time . "</span><br>";
+        }
+        
+        $links['approve'][] = array(
+          'wrapper_class' => array('approve'),
+          'content' => t($menu_text),
+        );
+      }
+
+      // Step 3. Show unflag link to moderators
+      if (sizeof($who_flagged) > 0) {
+
+        if (in_array("moderator", $user->roles) or user_access('administer')) {
+
+          $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>" . l("Issue resolved", 'javascript:void(0);',
+              array('fragment' => '','external'=>true, 'attributes' => array('onClick' => 'javascript:jq_confirm_report_member_resolved(' . $uid . ');', 'class' => array('report-flagged-link')))) . "</span><br>";
+
+           $links['approve'][] = array(
+            'wrapper_class' => array('approve'),
+            'content' => t($menu_text),
+          );
+        }
+      }
+
+    }
+  }
+  // END report member profile link
+
+  // START report organization profile link
+  if (isset($field['entity']->type) && $field['entity']->type == 'organization') {
+
+     // Keep track of org nid
+     $organization_nid = $field['entity']->nid;
+
+    // Don't show flag for profiles that you manage
+    if (!tm_organizations_is_company_profile_manager($user->uid, $organization_nid)) {
+
+      // Step 1. Show report flag to approved members
+      if (tm_organizations_moderate_report_check($user)) {
+
+        $community_values_url = $conf["tm_community_values_url"];
+
+        $links['approve'][] = array(
+          'wrapper_class' => array('approve'),
+          'content' => l(t('Report'), 'javascript:void(0);',
+            array(
+            'fragment' => '',
+            'external'=> true,
+            'attributes' => array(
+              'title' => t('Report'),
+              'onClick' => 'javascript:jq_confirm_report_organization(' . $organization_nid . ', \'' . $community_values_url . '\')'
+            )
+          ))
+        );
+      }
+
+      // Step 2. Show who flagged this profile to moderators and chapter leaders
+      $who_flagged = array();
+      if ((in_array("moderator", $user->roles) or user_access('administer'))
+      or (in_array("chapter leader", $user->roles))) {
+
+        // show last time request info was flagged
+        $flag = flag_get_flag('moderate_report_organization');
+
+        // get list of people who flagged
+        $who_flagged = flag_get_entity_flags("node", $organization_nid, "moderate_report_organization");
+
+        // sort by flag time
+        usort($who_flagged, function($a, $b){
+          return ($a->timestamp > $b->timestamp) ? -1 : 1;
+        });
+
+        $menu_text = "";
+        foreach ($who_flagged as $flagger) {
+          $difference = time() - $flagger->timestamp;
+          $flagged_time = format_interval($difference, 1) . " ago";
+          $flagged_user = user_load($flagger->uid);
+          $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Reported by " . l($flagged_user->field_user_first_name[LANGUAGE_NONE][0]['value'], "/" . drupal_get_path_alias("user/" . $flagged_user->uid), array('attributes' => array('target' => '_blank', 'class' => array('report-flagged-link')))) . " " . $flagged_time . "</span><br>";
+        }
+        
+        $links['approve'][] = array(
+          'wrapper_class' => array('approve'),
+          'content' => t($menu_text),
+        );
+      }
+
+      // Step 3. Show unflag link to moderators
+      if (sizeof($who_flagged) > 0) {
+
+        if (in_array("moderator", $user->roles) or user_access('administer')) {
+
+          $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>" . l("Issue resolved", '',
+              array('fragment' => 'javascript:void(0);','external'=>true, 'attributes' => array('onClick' => 'javascript:jq_confirm_report_organization_resolved(' . $organization_nid . ');', 'class' => array('report-flagged-link')))) . "</span><br>";
+
+           $links['approve'][] = array(
+            'wrapper_class' => array('approve'),
+            'content' => t($menu_text),
+          );
+        }
+      }
+
+    }
+  }
+  // END report organization profile link
+
+  // START cancel member profile link
+  if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
+
+    // Only show to administrator or moderator
+    if (((in_array("administrator", $user->roles) or (in_array("moderator", $user->roles)))) 
+      and ($targetuser->uid != $user->uid)) {
+
+      $links['approve'][] = array(
+        'wrapper_class' => array('approve'),
+        'content' => l(t('Cancel account'), '/user/' . $targetuser->uid . '/cancel',
+          array(
+          'attributes' => array(
+            'title' => t('Cancel account'),
+          )
+        ))
+      );
+    }
+  }
+  // END cancel account profile link
   
   return theme('more_actions', array('links' => $links));
 }

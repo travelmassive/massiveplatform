@@ -111,7 +111,7 @@ function tm_chapters_moderation_chapters_add_member($user_to_moderate, $add_to_c
 		$message = strip_tags(trim($_GET["message"]));
 		if ($message != "") {
 			// moderator message
-			$message_html = "<i>Message from " . $moderator_first_name . ":</i><p><i>";
+			$message_html = "<br><i>Message from " . $moderator_first_name . ":</i><p><i>";
 			$message_html .= $message;
 			$message_html .= "</i></p>";
 

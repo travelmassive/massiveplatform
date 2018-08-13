@@ -325,8 +325,8 @@ function tm_chapters_moderation_chapters_list_ajax() {
 	// moderation_mode - add or remove
 	$moderation_mode = arg(3);
 
-	// get list of chapters user is leading
-	$chapters = tm_users_get_chapters_leading($user);
+	// get list of chapters user is leading or is community manager of
+	$chapters = tm_users_get_chapters_leading($user, true);
 
 	// if user is moderator
 	if (in_array("moderator", $account->roles)) {

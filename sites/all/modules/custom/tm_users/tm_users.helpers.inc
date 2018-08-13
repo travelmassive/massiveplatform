@@ -293,9 +293,9 @@ function tm_users_get_chapters($user, $signup_flag = null) {
 /**
  * Helper method to get all chapters user is a leader of
  */
-function tm_users_get_chapters_leading($user) {
+function tm_users_get_chapters_leading($user, $is_community_manager = false) {
 
-  // Step 2. Fetch list of chapters the user is a leader of
+  // Fetch list of chapters the user is a leader of
   $chapters_leader_nids = array();
   $query = new EntityFieldQuery();
   $query->entityCondition('entity_type', 'node')
@@ -306,6 +306,24 @@ function tm_users_get_chapters_leading($user) {
   $result = $query->execute();
   if (isset($result['node'])) {
     $chapters_leader_nids = array_keys($result['node']);
+  }
+
+  // Fetch list of chapters the user is a community manager of
+  if ($is_community_manager) {
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'chapter')
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->fieldCondition('field_community_managers', 'target_id', $user->uid, '=');
+
+    $result = $query->execute();
+    if (isset($result['node'])) {
+      foreach (array_keys($result['node']) as $nid) {
+        if (!in_array($nid, $chapters_leader_nids)) {
+           $chapters_leader_nids[] = $nid;
+        }
+      }
+    }
   }
 
   return $chapters_leader_nids;

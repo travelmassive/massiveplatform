@@ -2037,22 +2037,28 @@ function _tm_more_actions_process($field, $title = NULL) {
         // Only show if user is in the members chapter, or is a moderator
         if (tm_users_member_in_users_chapter($targetuser->uid, $user->uid) or (in_array("moderator", $user->roles))) {
 
-          // Get user name
-          $first_name = strip_tags($targetuser->field_user_first_name[LANGUAGE_NONE][0]['value']);
-          $last_name = strip_tags($targetuser->field_user_last_name[LANGUAGE_NONE][0]['value']);
-          $full_name = $first_name . " " . $last_name;
+          // Display if member has joined at least one chapter
+          $members_chapters = tm_users_get_chapters($targetuser);
+          if (sizeof($members_chapters) > 0) {
 
-          $links['approve'][] = array(
-            'wrapper_class' => array('chapter_tools'),
-            'content' => l(t('Remove from chapter'), 'javascript:jq_remove_member_to_chapter(' . $targetuser->uid . ', "' . htmlentities($full_name) . '")',
-              array(
-              'fragment' => '',
-              'external'=> true,
-              'attributes' => array(
-                'title' => t('Remove from chapter')
-              )
-            ))
-          );
+            // Get user name
+            $first_name = strip_tags($targetuser->field_user_first_name[LANGUAGE_NONE][0]['value']);
+            $last_name = strip_tags($targetuser->field_user_last_name[LANGUAGE_NONE][0]['value']);
+            $full_name = $first_name . " " . $last_name;
+
+            $links['approve'][] = array(
+              'wrapper_class' => array('chapter_tools'),
+              'content' => l(t('Remove from chapter'), 'javascript:jq_remove_member_to_chapter(' . $targetuser->uid . ', "' . htmlentities($full_name) . '")',
+                array(
+                'fragment' => '',
+                'external'=> true,
+                'attributes' => array(
+                  'title' => t('Remove from chapter')
+                )
+              ))
+            );
+
+          }
         }
       }
     }

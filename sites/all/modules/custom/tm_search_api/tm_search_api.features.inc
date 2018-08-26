@@ -51,6 +51,9 @@ function tm_search_api_default_search_api_index() {
         "node:field_organizer" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "user" },
         "node:field_segment:name" : { "type" : "text" },
         "node:field_segment:parent:name" : { "type" : "list\\u003Ctext\\u003E" },
+        "node:flag_event_register_count" : { "type" : "integer" },
+        "node:flag_follow_organizations_count" : { "type" : "integer" },
+        "node:flag_signup_count" : { "type" : "integer" },
         "node:flag_tm_sponsor" : { "type" : "boolean" },
         "node:nid" : { "type" : "integer" },
         "node:title" : { "type" : "text", "boost" : "5.0" },
@@ -90,6 +93,7 @@ function tm_search_api_default_search_api_index() {
         "user:field_user_question_4" : { "type" : "text" },
         "user:field_user_question_5" : { "type" : "text" },
         "user:flag_featured_member" : { "type" : "boolean" },
+        "user:flag_follow_members_count" : { "type" : "integer" },
         "user:mail" : { "type" : "text" },
         "user:name" : { "type" : "text", "boost" : "5.0" },
         "user:uid" : { "type" : "integer" }
@@ -681,6 +685,30 @@ function tm_search_api_default_search_api_server() {
             "table" : "search_api_db_tm_search_multi_index",
             "column" : "user_field_user_has_private_profile",
             "type" : "boolean",
+            "boost" : "1.0"
+          },
+          "user:flag_follow_members_count" : {
+            "table" : "search_api_db_tm_search_multi_index",
+            "column" : "user_flag_follow_members_count",
+            "type" : "integer",
+            "boost" : "1.0"
+          },
+          "node:flag_follow_organizations_count" : {
+            "table" : "search_api_db_tm_search_multi_index",
+            "column" : "node_flag_follow_organizations_count",
+            "type" : "integer",
+            "boost" : "1.0"
+          },
+          "node:flag_signup_count" : {
+            "table" : "search_api_db_tm_search_multi_index",
+            "column" : "node_flag_signup_count",
+            "type" : "integer",
+            "boost" : "1.0"
+          },
+          "node:flag_event_register_count" : {
+            "table" : "search_api_db_tm_search_multi_index",
+            "column" : "node_flag_event_register_count",
+            "type" : "integer",
             "boost" : "1.0"
           }
         }

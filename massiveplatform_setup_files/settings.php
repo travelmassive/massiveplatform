@@ -387,7 +387,7 @@ $conf['tm_search_meta_og_title'] = "Massive Search";
 $conf['tm_search_meta_description'] = "Search our community.";
 $conf['tm_search_meta_opensearch_title'] = "example.massiveplatform.com"; // title for opensearch header link
 $conf['tm_search_api_example_search'] = "Sydney"; // example search option is user tries empty search
-// $conf['tm_search_api_solr_bf'] = "add(is_node$flag_signup_count)^10 add(is_user$flag_follow_members_count) add(is_node$flag_event_register_count) add(is_node$flag_follow_organizations_count)";
+// $conf['tm_search_api_solr_bf'] = 'add(is_node$flag_signup_count)^10 add(is_user$flag_follow_members_count) add(is_node$flag_event_register_count) add(is_node$flag_follow_organizations_count)';
 
 // example search tips
 // customise these examples to suit your community segments and data

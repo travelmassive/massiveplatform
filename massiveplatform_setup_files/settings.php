@@ -489,10 +489,18 @@ $conf["tm_branding_navbar_html"] = '
 <a href="/chapters">Chapters</a> 
 <a style="margin-left: 0.5rem;" href="/events">Events</a> 
 <a style="margin-left: 0.5rem;" href="/community">People</a> 
-<a style="margin-left: 0.5rem; margin-right: 0.25rem;" href="/companies">Companies</a> 
+<a style="margin-left: 0.5rem;" href="/companies">Companies</a>
 </span>
 <span class="topnav-links-rhs">
-<a href="/blog/">Blog</a> 
+<a href="#">Shop</a> 
+<a style="margin-left: 0.5rem;" href="#">Forum</a>
+<div class="topnav-dropdown">
+  <a style="margin-left: 0.5rem;" class="topnav-dropdown-link" href="javascript:void(0);">More <span class="topnav-dropdown-arrow topnav-dropdown-arrow-down"></span></a>
+    <div class="topnav-dropdown-content">
+      <a href="/blog/">Blog</a>
+      <a href="/blog/about-us">About us</a>
+    </div>
+</div>
 </span>
 ';
 
@@ -509,7 +517,11 @@ $conf['tm_branding_menu_html'] = "
   <li class='menu-368'><a href='/events'>Events</a></li>
   <li class='menu-1456'><a href='/community'>People</a></li>
   <li class='menu-1363'><a href='/companies'>Companies</a></li>
-  <li class='menu-1457 last'><a href='/blog/'>Blog</a></li>
+  <li><div style='border-bottom: 1px solid #e9ebeb; margin-top: 4px; margin-bottom: 4px'></div></li>
+  <li><a href='#'>Store</a></li>
+  <li><a href='#'>Forum</a></li>
+  <li><a href='/blog/'>Blog</a></li>
+  <li><a href='/blog/about-us'>About Us</a></li>
 </ul>";
 
 // footer html 

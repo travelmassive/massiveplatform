@@ -155,3 +155,22 @@ function tm_search_api_entity_property_info_alter(&$info) {
     }
   }
 }
+
+/**
+ * Boost results by flag counts
+ * https://www.finalist.nl/techblog/2015/06/improving-search-result-with-search-api-solr-custom-boosting/
+ */
+function tm_search_api_search_api_solr_query_alter(array &$call_args, SearchApiQueryInterface $query) {
+
+  global $conf;
+
+  // default
+  $bf = "add(is_node$flag_signup_count) add(is_user$flag_follow_members_count) add(is_node$flag_event_register_count)^100 add(is_node$flag_follow_organizations_count)";
+
+  // allow custom boost in config
+  if (isset($conf["tm_search_api_solr_bf"])) {
+    $bf = $conf["tm_search_api_solr_bf"];
+  }
+
+  $call_args['params']['bf'][] = $bf;
+}

@@ -88,4 +88,70 @@ function tm_search_api_page_access() {
 	return true;
 }
 
+/**
+ * Get the flag count for a given node.
+ * http://matthewgrasmick.com/posts/adding-flag-count-field-search-api-solr-index
+ */
+function tm_search_api_get_flag_count($entity, $options, $name, $entity_type, &$info) {
 
+  if ($entity_type == 'node') {
+    $entity_id = $entity->nid;
+    $entity_type = 'node';
+  }
+  if ($entity_type == 'user') {
+    $entity_id = $entity->uid;
+  }
+
+  $query = db_select('flag_counts' ,'fc');
+  $query->fields('fc', array('count'));
+  $query->condition('fc.fid', $info['data']['flag']->fid);
+  $query->condition('fc.entity_type', $entity_type);
+  $query->condition('fc.entity_id', $entity_id);
+  $count = $query->execute()->fetchColumn();
+ 
+  return !empty($count) ? $count : 0;
+}
+
+/**
+ * Implements hook_entity_property_info_alter().
+ * http://matthewgrasmick.com/posts/adding-flag-count-field-search-api-solr-index
+ */
+function tm_search_api_entity_property_info_alter(&$info) {
+  if (isset($info['node']['bundles'])) {
+    // For each content type.
+    foreach ($info['node']['bundles'] as $bundle_type => $bundle) {
+      // Find all applicable flags for this content type.
+      $flags = flag_get_flags('node', $bundle_type);
+      // For each applicable flag.
+      foreach ($flags as $fid => $flag) {
+        $info['node']['bundles'][$bundle_type]['properties']['flag_' . $flag->name . '_count'] = array(
+          'label' => t('@title Flag Count', array('@title' => $flag->title)),
+          'description' => t('The total number of @title flags for this node.', array('@title' => $flag->title)),
+          'type' => 'integer',
+          'getter callback' => 'tm_search_api_get_flag_count',
+          'computed' => TRUE,
+          'data' => array('flag' => $flag),
+        );
+      }
+    }
+  }
+
+  if (isset($info['user']['bundles'])) {
+    // For each content type.
+    foreach ($info['user']['bundles'] as $bundle_type => $bundle) {
+      // Find all applicable flags for this content type.
+      $flags = flag_get_flags('user', $bundle_type);
+      // For each applicable flag.
+      foreach ($flags as $fid => $flag) {
+        $info['user']['bundles'][$bundle_type]['properties']['flag_' . $flag->name . '_count'] = array(
+          'label' => t('@title Flag Count', array('@title' => $flag->title)),
+          'description' => t('The total number of @title flags for this user.', array('@title' => $flag->title)),
+          'type' => 'integer',
+          'getter callback' => 'tm_search_api_get_flag_count',
+          'computed' => TRUE,
+          'data' => array('flag' => $flag),
+        );
+      }
+    }
+  }
+}

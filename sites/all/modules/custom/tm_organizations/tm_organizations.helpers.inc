@@ -38,22 +38,18 @@ function tm_organizations_is_company_profile_manager($uid, $company_nid) {
  */
 function tm_organizations_get_users_companies($uid) {
 
-  $query = new EntityFieldQuery();
-  $markup = '';
-  $query->entityCondition('entity_type', 'node')
-    ->entityCondition('bundle', 'organization')
-    ->propertyCondition('status', NODE_PUBLISHED)
-    ->fieldCondition('field_owner', 'target_id', $uid, '=');
+  // Faster query thatn EntityFieldQuery()
+  $query = "SELECT entity_id FROM field_data_field_owner WHERE bundle = 'organization' AND deleted = 0 AND field_owner_target_id = :uid";
+  $rows = db_query($query, array(':uid' => $uid))->fetchAll();
 
-  $result = $query->execute();
-
-  if (isset($result['node'])) {
-    $companies_nids = array_keys($result['node']);
-    return $companies_nids;
+  // return result
+  $companies_nids = array();
+  foreach ($rows as $row) {
+    $companies_nids[] = $row->entity_id;
   }
 
-  // no companies
-  return array();
+  // return companies
+  return $companies_nids;
 }
 
 /**

@@ -24,6 +24,7 @@ function tm_chapters_download_csv_check_permission() {
 }
 
 
+
 /**
  * Download Chapter CSV function 
  */
@@ -41,6 +42,7 @@ function tm_chapters_download_csv(){
   // Get chapter
   $chapter = node_load($nid);
 
+  // create filename
   $oldzone = date_default_timezone_get();
   date_default_timezone_set(drupal_get_user_timezone());
   $csvname = $chapter->title.'_'.date('M_d_Y_Gi',time()) . ".csv";
@@ -50,10 +52,32 @@ function tm_chapters_download_csv(){
   drupal_add_http_header('Content-Type', 'text/csv; utf-8');
   drupal_add_http_header('Content-Disposition', 'attachment; filename = '.$csvname);
   
-  $fh = fopen('php://output', 'w');
+  // check cache
+  $cache = cache_get('tm-chapters-members-csv-' . $chapter->nid, 'cache');
+  if (!empty($cache)) {
+    echo $cache->data;
+  } else {
+    echo "Please run drush tm-chapters-members-csv-cache to generate csv";
+  }
+
+}
+
+
+/**
+ * Generate Chapters CSV
+ */
+function tm_chapters_members_csv_generate($nid) {
+
+  global $conf;
+
+  // Get chapter
+  $chapter = node_load($nid);
+
+  // Create memory file handler
+  $fh = fopen('php://memory', 'w');
 
   // put information use reminder
-  global $conf;
+ 
   $message = "# IMPORTANT: Please care about our members' privacy.";
   $message .= "\n# Under the " . $conf['tm_site_name'] . " Privacy Terms you cannot transfer personal data (name or email) to sponsors or 3rd parties.";
   $message .= "\n# Please use the SubscribeChapterNewsletter field to manage external email newsletter subscriptions.\n\n";
@@ -190,5 +214,15 @@ function tm_chapters_download_csv(){
 
     fputcsv($fh, $new_item);
   } 
+
+  rewind($fh);
+
+  // put it all in a variable
+  $csv = stream_get_contents($fh);
+
+  // close file handle
   fclose($fh);
+
+  // return csv
+  return $csv;
 }

@@ -41,6 +41,14 @@ function tm_chapters_drush_command() {
 		),
 	);
 
+	$items['tm-chapters-members-csv-cache'] = array(
+		'description' => 'Update chapter csv for all chapters.',
+		'callback' => 'tm_chapters_members_csv_drush',
+		'options' => array(
+			'confirm' => 'Confirm that you want to proceed',
+		),
+	);
+
 	return $items;
 }
 
@@ -652,6 +660,54 @@ function tm_chapters_update_display_stats_cache_drush() {
 	}
 
 	drush_print("Completed.");
+}
+
+/**
+ * Generate chapter members csv 
+ */
+function tm_chapters_members_csv_drush(){
+
+	drush_print("Generating members CSV.");
+
+	// check confirm
+	$confirm = false;
+	$confirm_opt = drush_get_option('confirm');
+	if ($confirm_opt != null) {
+		$confirm = ($confirm_opt == "true");
+	}
+	if ($confirm_opt == null) {
+		drush_print("Usage: drush tm-chapters-members-csv-cache --confirm=true");
+		return;
+	}
+	if ($confirm == false) {
+		drush_print("Not confirmed, exiting.");
+		return;
+	}
+
+	// update members csv cache for all chapters
+	$query = "SELECT nid, title FROM node WHERE type = :chapter AND status = 1 ORDER BY title";
+	$results = db_query($query, array(":chapter" => "chapter"))->fetchAll();
+	$chapter_nids = array();
+	foreach ($results as $result) {
+
+		// load chapter
+		$chapter = node_load($result->nid);
+		drush_print("Updating members csv cache for " . $chapter->title . "...");
+
+		// generate csv
+		$starttime = microtime(true);
+		$csv = tm_chapters_members_csv_generate($chapter->nid);
+
+		// save to cache 25 hours
+		cache_set('tm-chapters-members-csv-' . $chapter->nid, $csv, 'cache', time() + (60 * 60 * 25));
+		$endtime = microtime(true);
+		$timediff = $endtime - $starttime;
+		drush_print("Done (" . round($timediff, 2) . " seconds). Saved to cache key tm-chapters-members-csv-" . $chapter->nid);
+
+	}
+
+	drush_print("Completed.");
+
 }
 
 

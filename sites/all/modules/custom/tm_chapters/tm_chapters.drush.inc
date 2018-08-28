@@ -684,6 +684,9 @@ function tm_chapters_members_csv_drush(){
 		return;
 	}
 
+	// calculate time
+	$totaltime = microtime(true);
+
 	// update members csv cache for all chapters
 	$query = "SELECT nid, title FROM node WHERE type = :chapter AND status = 1 ORDER BY title";
 	$results = db_query($query, array(":chapter" => "chapter"))->fetchAll();
@@ -706,6 +709,10 @@ function tm_chapters_members_csv_drush(){
 
 	}
 
+	// completed time
+	$endtime = microtime(true);
+	$timediff = $endtime - $totaltime;
+	drush_print("Total time " . round($timediff, 2) . " seconds");
 	drush_print("Completed.");
 
 }

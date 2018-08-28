@@ -190,6 +190,8 @@ function tm_chapters_members_csv_generate($nid) {
 
       // get list of subscribed companies
       $subscribed_companies = array();
+
+      // todo: investigate performance of calling tm_organizations_get_users_companies()
       $nids = tm_organizations_get_users_companies($account->uid);
       foreach ($nids as $nid) {
 

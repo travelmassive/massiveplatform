@@ -634,6 +634,9 @@ function tm_chapters_community_management_remove_all_managers_drush() {
  */
 function tm_chapters_update_display_stats_cache_drush() {
 
+	// cache for 1 day
+	$cache_seconds = 60 * 60 * 24;
+
 	// check confirm
 	$confirm = false;
 	$confirm_opt = drush_get_option('confirm');
@@ -656,7 +659,7 @@ function tm_chapters_update_display_stats_cache_drush() {
 	foreach ($results as $result) {
 	  $chapter = node_load($result->nid);
 	  drush_print("Updating display stats cache for " . $chapter->title . "...");
-	  _tm_reports_get_chapter_insights($chapter->nid, true);
+	  _tm_reports_get_chapter_insights($chapter->nid, true, $cache_seconds);
 	}
 
 	drush_print("Completed.");

@@ -363,11 +363,14 @@ var delay = (function(){
  */
 function _tm_reports_insights_table_html($node_id = "", $node_type = "chapter") {
 
+  // cache for 1 day
+  $cache_seconds = 60 * 60 * 24;
+
   // Step 1. Get chapter insight data or global data
   if ($node_id == "") {
     $data = _tm_reports_get_global_insights();
   } elseif ($node_type == "chapter") {
-    $data = _tm_reports_get_chapter_insights($node_id);
+    $data = _tm_reports_get_chapter_insights($node_id, true, $cache_seconds); // no cache
   } elseif ($node_type == "event") {
     $data = _tm_reports_get_event_insights($node_id, true); // no cache
   }

@@ -38,6 +38,9 @@ function tm_reports_download_chapter_insights_csv(){
  */
 function tm_reports_chapter_insights_get_data($drush_command = false, $fetch_new = false) {
 
+	// cache for 1 day
+	$cache_seconds = 60 * 60 * 24;
+
 	// check cache
   	$cache = cache_get('tm-reports-all-chapter-insights', 'cache');
   	if ((!$fetch_new) and (!empty($cache))) {
@@ -66,7 +69,7 @@ function tm_reports_chapter_insights_get_data($drush_command = false, $fetch_new
 		$chapter = node_load($nid);
 
 		// fetch results
-		$chapter_results = _tm_reports_get_chapter_insights($nid);
+		$chapter_results = _tm_reports_get_chapter_insights($nid, true, $cache_seconds);
 
 		// get country and continent
 		$country_code = "NONE";

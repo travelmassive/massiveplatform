@@ -207,7 +207,7 @@ function tm_events_moderation_events_list_ajax() {
 
 	// no results
 	if ((count($display_events) == 0) and (count($registered_events)) and (count($waitlisted_events))) {
-		$html = "No upcoming events";
+		$html = "No upcoming events <script>jQuery('.jqidefaultbutton').hide();</script>";
 		print $html;
 		return;
 	}
@@ -225,6 +225,10 @@ function tm_events_moderation_events_list_ajax() {
 		}
 
 		$html .= "<option value='" . $nid . "'>" . $event_label . "</option>\n";
+	}
+
+	if (count($display_events) == 0) {
+		$html .= "<option>Choose an event</option>\n";
 	}
 
 	// show all available chapters when adding	
@@ -252,6 +256,12 @@ function tm_events_moderation_events_list_ajax() {
 	}
 	
 	$html .= "</select>";
+
+	// no available events to add - hide apply button
+	if (count($display_events) == 0) {
+		$html .= "<script>jQuery('.jqidefaultbutton').hide();</script>";
+	}
+
 	print $html;
 
 }

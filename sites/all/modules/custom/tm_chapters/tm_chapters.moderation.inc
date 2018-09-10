@@ -366,7 +366,7 @@ function tm_chapters_moderation_chapters_list_ajax() {
 
 	// no results
 	if (count($display_chapters) == 0) {
-		$html = "No available chapters";
+		$html = "No available chapters <script>jQuery('.jqidefaultbutton').hide();</script>";
 		print $html;
 		return;
 	}

@@ -49,7 +49,8 @@ button {
   &.settings {
     width: 3rem;
     &:before {
-      @extend .icon-cog;
+      @extend .icon-2016-dots;
+      font-size: 24pt;
     }
   }
   &.communication {

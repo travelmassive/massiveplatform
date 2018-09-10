@@ -2065,6 +2065,63 @@ function _tm_more_actions_process($field, $title = NULL) {
   }
   // END remove member from chapter
 
+  // START register member to event
+  if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
+
+    // Only show to chapter leader or moderator
+    if (((in_array("chapter leader", $user->roles) or (in_array("moderator", $user->roles)))) 
+      and ($targetuser->uid != $user->uid)) {
+
+      // get list of chapters user is leading or is community manager of
+      $leading_chapters = tm_users_get_chapters_leading($user, true);
+
+      // get list of chapter
+      $members_chapters = tm_users_get_chapters($targetuser);
+
+      // get list of leading chapters that member is in
+      if (sizeof($members_chapters) > 0) {
+        $leading_members_chapters = array();
+        foreach($members_chapters as $chapter_id) {
+          if (in_array($chapter_id, $leading_chapters)) {
+            $leading_members_chapters[] = $chapter_id;
+          }
+        }
+      } else {
+        // member is not in any chapter
+        $leading_members_chapters = $leading_chapters;
+      }
+      
+      // get list of upcoming events in chapters
+      $upcoming_events = array();
+      if (sizeof($leading_members_chapters) > 0) {
+        $upcoming_events = tm_events_get_future_events_for_chapters($leading_members_chapters);
+      }
+    
+      // if chapter has upcoming events, or user is moderator
+      if ((sizeof($upcoming_events) > 0) or (in_array("moderator", $user->roles))) {
+
+        // Get user name
+        $first_name = strip_tags($targetuser->field_user_first_name[LANGUAGE_NONE][0]['value']);
+        $last_name = strip_tags($targetuser->field_user_last_name[LANGUAGE_NONE][0]['value']);
+        $full_name = $first_name . " " . $last_name;
+
+        $links['approve'][] = array(
+          'wrapper_class' => array('chapter_tools'),
+          'content' => l(t('Register to event'), 'javascript:jq_register_member_to_event(' . $targetuser->uid . ', "' . htmlentities($full_name) . '")',
+            array(
+            'fragment' => '',
+            'external'=> true,
+            'attributes' => array(
+              'title' => t('Register to event')
+            )
+          ))
+        );
+      }
+
+    }
+  }
+  // END register member to event
+
   // START report member profile link
   if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
 

@@ -193,8 +193,18 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
       
   }
 
+  // if registered to event by moderator, add moderator name and message
+  // set in tm_events_moderation_events_register_member()
+  $static_register_member_moderator_first_name = &drupal_static("tm_register_member_moderator_first_name");
+  $static_register_member_moderator_last_name = &drupal_static("tm_register_member_moderator_last_name");
+  $static_register_member_moderator_message = &drupal_static("tm_register_member_moderator_message");
+
   // User Registered for Event
-  if (($GLOBALS['user']->uid == $flagging->uid)) {
+  // Or user was added by a moderator
+  if (($GLOBALS['user']->uid == $flagging->uid) or ($static_register_member_moderator_first_name != null)) {
+
+    // get profile full name
+    $profile_full_name = tm_users_get_full_name($account->uid);
 
     // work out who to notify
     // either: 
@@ -274,6 +284,12 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
       $register_payment_note = "<br><strong>Payment received:</strong> " . $event_pricing["currency_symbol"] . $event_pricing["display_amount"] . " (excludes processing fees)<br>";
     }
 
+     // let other organizers know who registered this member
+    $registered_by_message = "";
+    if ($static_register_member_moderator_first_name != null) {
+      $registered_by_message = "<br>This member was registered by " . $static_register_member_moderator_first_name . " " . $static_register_member_moderator_last_name . ".";
+    }
+
     foreach ($notify_ids as $notify_id) {
 
       // load the user to notify
@@ -281,22 +297,22 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
 
       // events_register_flag
       if (($flag_or_unflag == "flag") && ($flag->name == 'event_register')) {
-        tm_notifications_notify('events_register_flag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url, '__REGISTER_ACTION_SUBJECT__' => $register_action_subject, '__REGISTER_ACTION_BODY__' => $register_action_body, '__REGISTER_PAYMENT_NOTE__' => $register_payment_note));
+        tm_notifications_notify('events_register_flag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url, '__REGISTER_ACTION_SUBJECT__' => $register_action_subject, '__REGISTER_ACTION_BODY__' => $register_action_body, '__REGISTER_PAYMENT_NOTE__' => $register_payment_note, '__PROFILE_FULL_NAME__' => $profile_full_name, '__REGISTERED_BY_MESSAGE__' => $registered_by_message));
       }
 
       // events_register_unflag
       if (($flag_or_unflag == "unflag") && ($flag->name == 'event_register')) {
-        tm_notifications_notify('events_register_unflag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url));
+        tm_notifications_notify('events_register_unflag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url, '__PROFILE_FULL_NAME__' => $profile_full_name));
       }
 
       // waitlist_register_flag
       if (($flag_or_unflag == "flag") && ($flag->name == 'event_waitlist')) {
-        tm_notifications_notify('events_waitlist_flag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url));
+        tm_notifications_notify('events_waitlist_flag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url, '__PROFILE_FULL_NAME__' => $profile_full_name));
       }
 
        // waitlist_register_unflag
       if (($flag_or_unflag == "unflag") && ($flag->name == 'event_waitlist')) {
-        tm_notifications_notify('events_waitlist_unflag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url));
+        tm_notifications_notify('events_waitlist_unflag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url, '__PROFILE_FULL_NAME__' => $profile_full_name));
       }
       
     }
@@ -331,6 +347,13 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
     // Adjust text for paid ticket
     $member_register_subject = "You are now registered for";
     $member_register_intro = "You are now signed up to attend the event";
+
+    // If registered by chapter leader or moderator
+    if ($static_register_member_moderator_first_name != null) {
+      $member_register_subject = $static_register_member_moderator_first_name . " registered you for";
+      $member_register_intro = $static_register_member_moderator_first_name . " has registered you for";
+    }
+
     $member_register_payment_note = "";
     if ($paid_for_event && $event_pricing != null) {
 
@@ -358,7 +381,13 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
     // calendar link
     $event_calendar_link = "events/download-calendar/" . $event->nid;
 
-    tm_notifications_notify('events_register_flag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url, '__MAP_LINK__' => $map_link_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time, '__REGISTER_EVENT_MESSAGE__' => $message, '__REGISTER_SUBJECT__' => $member_register_subject, '__REGISTER_INTRO__' => $member_register_intro, '__REGISTER_PAYMENT_NOTE__' => $member_register_payment_note, '__EVENT_CALENDAR_LINK__' => $event_calendar_link));
+    // add moderator message
+    $moderator_message = "";
+    if ($static_register_member_moderator_message != null) {
+      $moderator_message = $static_register_member_moderator_message;
+    }
+
+    tm_notifications_notify('events_register_flag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url, '__MAP_LINK__' => $map_link_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time, '__REGISTER_EVENT_MESSAGE__' => $message, '__REGISTER_SUBJECT__' => $member_register_subject, '__REGISTER_INTRO__' => $member_register_intro, '__REGISTER_PAYMENT_NOTE__' => $member_register_payment_note, '__EVENT_CALENDAR_LINK__' => $event_calendar_link, '__MODERATOR_MESSAGE__' => $moderator_message));
   }
 
   // events_register_unflag

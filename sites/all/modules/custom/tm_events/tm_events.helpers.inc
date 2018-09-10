@@ -623,3 +623,40 @@ function _tm_event_get_chapter_id($event) {
 
 }
 
+/**
+ * Helper method get all future events for chapter(s)
+ * Returns array of event_id, event_title, chapter_id, and chapter_short_code
+ */
+function tm_events_get_future_events_for_chapters($chapter_ids = null, $include_external_rsvp = false) {
+
+  // Step 1. Get all future events for a chapter
+  $query = "SELECT nid, title, field_chapter_target_id, field_chapter_shortcode_value FROM node
+  LEFT JOIN field_data_field_chapter ON node.nid = field_data_field_chapter.entity_id
+  LEFT JOIN field_data_field_chapter_shortcode ON field_data_field_chapter.field_chapter_target_id = field_data_field_chapter_shortcode.entity_id
+  LEFT JOIN field_data_field_external_rsvp ON node.nid = field_data_field_external_rsvp.entity_id  
+  LEFT JOIN field_data_field_event_date ON node.nid = field_data_field_event_date.entity_id
+  WHERE node.type = 'event'";
+
+  if ($chapter_ids != null) {
+    $query .= " AND field_data_field_chapter.field_chapter_target_id IN (" . implode(",", $chapter_ids) . ")";
+  }
+
+  if (!$include_external_rsvp) {
+     $query .= " AND field_external_rsvp_value = 0";
+  }
+
+  $query .= " AND field_event_date_value > DATE_SUB(NOW(), INTERVAL 1 DAY)
+  ORDER BY field_event_date_value ASC";
+
+  // Get rows
+  $rows = db_query($query)->fetchAll();
+
+  $event_ids = array();
+  foreach ($rows as $row) {
+    $event_ids[$row->nid] = array("event_id" => $row->nid, "event_title" => $row->title, "chapter_id" => $row->field_chapter_target_id  , "chapter_short_code" => $row->field_chapter_shortcode_value);
+  }
+
+  // return results
+  return $event_ids;
+}
+

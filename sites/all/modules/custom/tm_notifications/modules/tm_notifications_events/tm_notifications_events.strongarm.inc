@@ -20,10 +20,11 @@ function tm_notifications_events_strongarm() {
     'change_allowed' => 1,
     'change_allowed_roles' => array("chapter leader"),
     'email' => array(
-      'subject' => '[current-user:field_user_first_name] [current-user:field_user_last_name] __REGISTER_ACTION_SUBJECT__ [node:title]',
+      'subject' => '__PROFILE_FULL_NAME__ __REGISTER_ACTION_SUBJECT__ [node:title]',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>[current-user:field_user_first_name] [current-user:field_user_last_name] __REGISTER_ACTION_BODY__ [node:title].
+<br>__PROFILE_FULL_NAME__ __REGISTER_ACTION_BODY__ [node:title].
+__REGISTERED_BY_MESSAGE__
 <br>__REGISTER_PAYMENT_NOTE__
 <br>You can view their profile here:
 <br>
@@ -51,10 +52,10 @@ function tm_notifications_events_strongarm() {
     'change_allowed' => 1,
     'change_allowed_roles' => array("chapter leader"),
     'email' => array(
-      'subject' => '[current-user:field_user_first_name] [current-user:field_user_last_name] just un-registered for [node:title]',
+      'subject' => '__PROFILE_FULL_NAME__ just un-registered for [node:title]',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>[current-user:field_user_first_name] [current-user:field_user_last_name] just removed their registration for your event [node:title].
+<br>__PROFILE_FULL_NAME__ just removed their registration for your event [node:title].
 <br>
 <br>You can view their profile here:
 <br>
@@ -80,10 +81,10 @@ function tm_notifications_events_strongarm() {
     'change_allowed' => 1,
     'change_allowed_roles' => array("chapter leader"),
     'email' => array(
-      'subject' => '[current-user:field_user_first_name] [current-user:field_user_last_name] just registered for the waitlist to [node:title]',
+      'subject' => '__PROFILE_FULL_NAME__ just registered for the waitlist to [node:title]',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>[current-user:field_user_first_name] [current-user:field_user_last_name] just signed up to the waiting list for your event [node:title].
+<br>__PROFILE_FULL_NAME__ just signed up to the waiting list for your event [node:title].
 <br>
 <br>You can view their profile here:
 <br>
@@ -110,10 +111,10 @@ function tm_notifications_events_strongarm() {
     'change_allowed' => 1,
     'change_allowed_roles' => array("chapter leader"),
     'email' => array(
-      'subject' => '[current-user:field_user_first_name] [current-user:field_user_last_name] just un-registered from the waitlist for [node:title]',
+      'subject' => '__PROFILE_FULL_NAME__ just un-registered from the waitlist for [node:title]',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>[current-user:field_user_first_name] [current-user:field_user_last_name] just removed their waiting list registration for your event [node:title].
+<br>__PROFILE_FULL_NAME__ just removed their waiting list registration for your event [node:title].
 <br>
 <br>You can view their profile here:
 <br>
@@ -144,6 +145,7 @@ function tm_notifications_events_strongarm() {
 <br>
 <br>__REGISTER_INTRO__ [node:title].
 <br>
+__MODERATOR_MESSAGE__
 <br>Here\'s the event details to keep handy:
 <br>
 <br>[node:title]

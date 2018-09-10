@@ -18,6 +18,7 @@ include_once 'tm_events.permissions.inc';
 include_once 'tm_events.edit.inc';
 include_once 'tm_events.flags.inc';
 include_once 'tm_events.ical.inc';
+include_once 'tm_events.moderation.inc';
 
 /*
 * Implements hook_menu()
@@ -72,12 +73,23 @@ function tm_events_menu() {
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
-
   $items['events/download-ical/%'] = array(
     'title' => t('Download iCal'),
     'page callback' => 'tm_events_download_ical',
     'page arguments' => array(2),
     'access callback' => 'tm_events_download_ical_check',
+    'type' => MENU_CALLBACK,
+  );
+  $items['events/moderation-event-list-ajax/%/%'] = array(
+    'title' => 'Event list ajax',
+    'page callback' => 'tm_events_moderation_events_list_ajax',
+    'access arguments' => array('approve users'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['events/moderation-event-register-member/%/%'] = array(
+    'title' => 'Register member to event',
+    'page callback' => 'tm_events_moderation_events_register_member_callback',
+    'access arguments' => array('approve users'),
     'type' => MENU_CALLBACK,
   );
   return $items;

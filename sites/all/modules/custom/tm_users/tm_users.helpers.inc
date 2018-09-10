@@ -343,7 +343,25 @@ function tm_users_get_users_events($user) {
       }
     }
   }
+ 
+  return $event_nids;
+}
 
+/**
+ * Helper method to get events a member is waitlisted for
+ */
+function tm_users_get_users_events_waitlisted($user) {
+
+  $flags = flag_get_user_flags("node", null, $user->uid);
+  $event_nids = array();
+  foreach ($flags as $flag_name => $flag) {
+    if ($flag_name == "event_waitlist") {
+      foreach($flag as $f) {
+        $event_nids[] = $f->entity_id;
+      }
+    }
+  }
+ 
   return $event_nids;
 }
 
@@ -578,4 +596,26 @@ function tm_users_get_last_modified_time($uid) {
   return null;
 }
 
+/**
+ * Helper method to get full name of user
+ */
+function tm_users_get_full_name($uid) {
+
+  // load user
+  $account = user_load($uid);
+  if ($account == null) {
+    return "Anonymous";
+  }
+
+  $full_name = "User";
+  if (isset($account->field_user_first_name[LANGUAGE_NONE][0]['value'])) {
+    $full_name = strip_tags($account->field_user_first_name[LANGUAGE_NONE][0]['value']);
+  }
+
+  if (isset($account->field_user_last_name[LANGUAGE_NONE][0]['value'])) {
+    $full_name .= " " . strip_tags($account->field_user_last_name[LANGUAGE_NONE][0]['value']);
+  }
+
+  return $full_name;
+}
 

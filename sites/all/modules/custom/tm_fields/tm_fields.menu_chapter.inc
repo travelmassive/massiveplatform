@@ -84,7 +84,7 @@ function _tm_more_actions_process_chapter_menu($field, $title, &$links, &$menu_i
         );
 
         // unapproved members
-        $unapproved_label = tm_users_get_unapproved_member_label("plural");
+        $unapproved_label = "Review " . tm_users_get_unapproved_member_label("plural");
         $link_path = $current_uri.'/unapproved-members';
         $links['chapter'][] = array(
           'wrapper_class' => array('chapter_unapproved_members'),

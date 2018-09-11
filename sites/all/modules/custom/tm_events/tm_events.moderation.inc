@@ -227,10 +227,6 @@ function tm_events_moderation_events_list_ajax() {
 		$html .= "<option value='" . $nid . "'>" . $event_label . "</option>\n";
 	}
 
-	if (count($display_events) == 0) {
-		$html .= "<option>Choose an event</option>\n";
-	}
-
 	// show all available chapters when adding	
 	if ($moderation_mode == "register") {
 		

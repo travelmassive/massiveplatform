@@ -12,7 +12,7 @@
       <?php if (empty($section)) continue; ?>
       <ul class="dropd-menu">
         <?php foreach ($section as $link) : ?>
-        <li class="<?php print implode(' ', $link['wrapper_class']); ?>">
+        <li class="<?php if (isset($link['wrapper_class'])) { print implode(' ', $link['wrapper_class']); } ?>">
           <?php print $link['content']; ?>
         </li>
         <?php endforeach; ?>

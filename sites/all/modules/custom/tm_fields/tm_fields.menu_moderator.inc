@@ -14,66 +14,6 @@ function _tm_more_actions_process_moderator_menu($field, $title, &$links, &$menu
   
   $base = $base_root . request_uri();
 
-  // START approve link
-  //drupal_set_message("<pre>".print_r($menu_item,TRUE)."</pre>");
-  if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
-    if (isset($menu_item['page_arguments'][0]->uid)){
-      if (!in_array("approved user", $targetuser->roles)){
-
-        // Need approve users access
-        if (user_access("approve users")){
-
-          // Show approval tool if:
-          // 1. if user is a moderator or administrator
-          // 2. or if they are chapter leader and the member is signed up their chapter
-          // 3. or if they are a community manager and the member is a chapter they community manage
-          if ((in_array("moderator", $user->roles) or user_access('administer')) 
-          or ((in_array("chapter leader", $user->roles))) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid, true))) {
-
-            // Check if user can be approved
-            // Note: users can request if score > 50
-            // We allow approval if score >= 50 to give a bit of flexibility
-            $user_score = tm_users_signup_score($targetuser->uid);
-            $score_threshold = 50; 
-            
-            if (($user_score >= $score_threshold) or (in_array("moderator", $user->roles) or user_access('administer'))) {
-
-              // Show approve user link
-              $community_values_url = $conf["tm_community_values_url"];
-              $links['user'][] = array(
-                'moderator' => array('moderator_approve'),
-                'content' => l(t('Approve member'), "javascript:jq_confirm_approve_member(" . $targetuser->uid . ", '" . $community_values_url . "')", array(
-                  'fragment' => '',
-                  'external'=>true,
-                  'attributes' => array(
-                    'title' => t('Approve member')
-                  )
-                ))
-              );
-
-            } else {
-
-              // Incomplete profile
-              $links['user'][] = array(
-                'wrapper_class' => array('moderator_approve_message'),
-                'content' => l(t('Approve member'), "javascript:jq_alert('Incomplete Profile', 'Sorry, you can\'t approve this member as their profile is only " . $user_score . "% complete.')", array(
-                  'fragment' => '',
-                  'external'=>true,
-                  'attributes' => array(
-                    'title' => t('Approve member')
-                  )
-                ))
-              );
-
-            }
-
-          }
-        }
-      }
-    }
-  }
-  // END approve link
-
   // START unapprove link
   if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
     if (isset($menu_item['page_arguments'][0]->uid)){
@@ -416,7 +356,7 @@ function _tm_more_actions_process_moderator_menu($field, $title, &$links, &$menu
       if ((in_array("moderator", $user->roles) or user_access('administer')) 
         or ((in_array("chapter leader", $user->roles))) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid, true))) {
 
-        $links['moderator'][] = array(
+        $links['user'][] = array(
           'wrapper_class' => array('moderator_flag_is_company_or_brand'),
           'content' => l(t('Flag: Is company or brand'), 'javascript:jq_confirm_company_profile(' . $targetuser->uid . ')',
             array(
@@ -447,7 +387,7 @@ function _tm_more_actions_process_moderator_menu($field, $title, &$links, &$menu
           $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Flagged by " . $flagged_user->field_user_first_name['und'][0]['value'] . " " . $flagged_time . "</span><br>";
         }
         
-        $links['moderator'][] = array(
+        $links['user'][] = array(
           'wrapper_class' => array('moderator_flagged_by'),
           'content' => t($menu_text),
         );

@@ -195,7 +195,7 @@ $image = theme('image_style', array(
       <ul class="dropd-menu dropdown-company-profiles">
         <?php print $company_profiles; ?>
         <?php if (tm_organizations_check_user_can_create_company($loaded->uid)): ?>
-        <li><?php print l(t('Add company profile'), 'node/add/organization'); ?></li>
+        <li><?php print l(t('Add company page'), 'node/add/organization'); ?></li>
         <?php endif; ?>
       </ul>
       <?php endif; ?>

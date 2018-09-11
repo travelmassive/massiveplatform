@@ -129,17 +129,21 @@ function _tm_more_actions_process_user_subscriptions_menu($field, $title, &$link
       // Check if is moderator or administrator
       $is_moderator_or_administrator = (in_array("administrator", $user->roles) or in_array("moderator", $user->roles));
 
-      // Check if company has made payment
+      // Check if user has made payment
       if (tm_subscriptions_is_user_subscription_paid($field['entity']->uid)) {
 
-        $links['subscription_user'][] = array(
-        'wrapper_class' => array('subscription_user_view_payments'),
-        'content' => l(t('View payments'), '/payment/reports/subscription-payments-member/' . $field['entity']->uid, array(
-          'attributes' => array(
-            'title' => t('View payments for @account', array('@account' => $field['entity']->name))
-          )
-        )));
+        // If moderator or you are looking at your own profile
+        if ($is_moderator_or_administrator or ($targetuser->uid == $user->uid)) {
 
+          $links['subscription_user'][] = array(
+          'wrapper_class' => array('subscription_user_view_payments'),
+          'content' => l(t('View payments'), '/payment/reports/subscription-payments-member/' . $field['entity']->uid, array(
+            'attributes' => array(
+              'title' => t('View payments for @account', array('@account' => $field['entity']->name))
+            )
+          )));
+
+        }
       }
     }
   }

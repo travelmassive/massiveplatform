@@ -47,7 +47,7 @@ function tm_reports_chapter_insights_cache() {
 
 	// get data
 	drush_print("\nProcessing chapter insights...");
-	$rows = tm_reports_chapter_insights_get_data(true);
+	$rows = tm_reports_chapter_insights_get_data(true, true);
 	drush_print("Done.");
 }
 

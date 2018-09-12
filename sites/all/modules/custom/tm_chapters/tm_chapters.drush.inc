@@ -635,7 +635,7 @@ function tm_chapters_community_management_remove_all_managers_drush() {
 function tm_chapters_update_display_stats_cache_drush() {
 
 	// cache for 1 day
-	$cache_seconds = 60 * 60 * 24;
+	$cache_seconds = 60 * 60 * 25;
 
 	// check confirm
 	$confirm = false;

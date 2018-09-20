@@ -1,0 +1,2 @@
+# populate default values for field_data_field_event_is_promoted
+insert into field_data_field_event_is_promoted(entity_type, bundle, deleted, entity_id, revision_id, language, delta, field_event_is_promoted_value) SELECT 'node', type, 0, nid, vid, 'und', 0, 0 from node where type = 'event';

@@ -446,6 +446,7 @@ function tm_events_field_group_info() {
       2 => 'field_event_hide_organizers',
       3 => 'field_event_reassign_owner',
       4 => 'field_event_custom_banner',
+      5 => 'field_event_is_promoted',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

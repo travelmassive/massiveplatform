@@ -20,7 +20,7 @@
 
     $.prompt(message, { 
       buttons: { "Add to chapter": true, "Cancel": false },
-      title: "Add " + name + " to chapter?",
+      title: "Add " + name + " to chapter",
       loaded: function() {
         // load available chapters list
         $("#moderation_chapters_list").load("/chapters/moderation-chapter-list-ajax/" + uid + "/add");
@@ -44,7 +44,7 @@
 
     $.prompt(message, { 
       buttons: { "Remove from chapter": true, "Cancel": false },
-      title: "Remove " + name + " from chapter?",
+      title: "Remove " + name + " from chapter",
       loaded: function() {
         // load available chapters list
         $("#moderation_chapters_list").load("/chapters/moderation-chapter-list-ajax/" + uid + "/remove");

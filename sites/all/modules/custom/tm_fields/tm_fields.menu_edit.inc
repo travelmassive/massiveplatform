@@ -14,7 +14,7 @@ function _tm_more_actions_process_edit_menu($field, $title, &$links, &$menu_item
 
   $base = $base_root . request_uri();
 
-   // Is it a user
+  // Is it a user
   if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
     if (isset($menu_item['page_arguments'][0]->uid)) {
       $edit_menu = menu_get_item('user/' . $targetuser->uid . '/edit');

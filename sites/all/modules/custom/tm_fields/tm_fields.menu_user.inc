@@ -110,5 +110,4 @@ function _tm_more_actions_process_user_menu($field, $title, &$links, &$menu_item
   }
   // END requested approval note
 
-
 }

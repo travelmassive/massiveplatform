@@ -20,7 +20,7 @@
 
     $.prompt(message, { 
       buttons: { "Register to event": true, "Cancel": false },
-      title: "Register " + name + " to event?",
+      title: "Register " + name + " to event",
       loaded: function() {
         // load available events list
         $("#moderation_events_list").load("/events/moderation-event-list-ajax/" + uid + "/register");

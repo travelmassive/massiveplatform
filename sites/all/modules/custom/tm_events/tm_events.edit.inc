@@ -322,6 +322,8 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
     $form['field_event_company']['#weight'] = 7;
     $form['#group_children']['field_event_company'] = 'group_moderator_fields';
 
+    $form['field_event_custom_banner']['#weight'] = 8;
+
     drupal_add_js('jQuery(document).ready(function () { jQuery("#tm-event-edit-company-description").html("The company listing this event.<br><b>Listing a sponsor? See the <i>Event Sponsors</i> section."); });', 'inline');
 
   }

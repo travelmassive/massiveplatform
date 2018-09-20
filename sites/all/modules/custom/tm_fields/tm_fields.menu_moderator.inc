@@ -280,7 +280,7 @@ function _tm_more_actions_process_moderator_menu($field, $title, &$links, &$menu
 
             $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Profile set to private</span>";
 
-            $links['user'][] = array(
+            $links['moderator'][] = array(
               'wrapper_class' => array('moderator_profile_private'),
               'content' => t($menu_text),
             );

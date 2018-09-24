@@ -61,7 +61,7 @@ function tm_payments_field_default_field_instances() {
     'required' => 0,
     'settings' => array(
       'max' => '',
-      'min' => 0,
+      'min' => 1,
       'prefix' => '',
       'suffix' => '',
       'user_register_form' => FALSE,
@@ -239,7 +239,7 @@ This might help to improve card validation in certain regions.<br>',
     'required' => 0,
     'settings' => array(
       'max' => '',
-      'min' => 0,
+      'min' => 1,
       'prefix' => '',
       'suffix' => '',
       'user_register_form' => FALSE,

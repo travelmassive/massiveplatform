@@ -521,7 +521,6 @@
 		e.preventDefault();
 		// /jobs/search/example
 		var marketplace_path = "marketplace";
-		console.log(Drupal.settings.tm_search.marketplace_path);
 		if (typeof Drupal.settings.tm_search.marketplace_path !== 'undefined') {
 			marketplace_path = Drupal.settings.tm_search.marketplace_path;
 		}

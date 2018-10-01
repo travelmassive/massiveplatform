@@ -5128,19 +5128,24 @@ img.tm-status-update-preview-image {
 }
 
 /* line 1099, ../sass/_base.scss */
-.views-field-title {
+td.views-field-title {
   padding-left: 1rem;
 }
 
 /* line 1100, ../sass/_base.scss */
-.views-field-score {
+td.views-field-score {
   padding-left: 1rem;
 }
 
 /* line 1101, ../sass/_base.scss */
-.views-field-comment {
+td.views-field-comment {
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+/* line 1102, ../sass/_base.scss */
+td.views-field-realname {
+  max-width: 5rem;
 }
 
 /* line 3, ../sass/_buttons.scss */

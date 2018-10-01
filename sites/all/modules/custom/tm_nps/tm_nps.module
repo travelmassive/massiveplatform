@@ -119,10 +119,17 @@ function tm_nps_display_index() {
 
 	drupal_add_js('jQuery(document).ready(function () { setTimeout(function() { jq_net_promoter_score("' . $conf["tm_site_name"] . '","' . drupal_get_path_alias() . '" );}, 500); });', 'inline');
 
+	// html
+	$html = "<center>
+	<div id='tm_nps_index_container' style='padding-top: 3rem;'>
+	<span id='tm_nps_index_message'>Please take a moment to <a href='/review'>review us</a> and provide feedback.</span>
+	<span id='tm_nps_index_submitting' style='display: none;'><img src='/sites/all/themes/tm/images/load-more-ajax-loader.gif'></span>
+	</div>";
+
 	// create form
 	$form['html'] = array(
 		'#type' => 'item',
-		'#markup' => "",
+		'#markup' => $html,
 		);
 	return $form;
 

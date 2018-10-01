@@ -211,6 +211,16 @@ A score above 0 is good. A score above 50 is excellent, and above 70 is exceptio
     7 => '7',
     5 => '5',
   );
+  $handler->display->display_options['defaults']['header'] = FALSE;
+  /* Header: Global: Text area */
+  $handler->display->display_options['header']['area']['id'] = 'area';
+  $handler->display->display_options['header']['area']['table'] = 'views';
+  $handler->display->display_options['header']['area']['field'] = 'area';
+  $handler->display->display_options['header']['area']['content'] = '<h2>Member Reviews &mdash; All Chapters</h2>
+
+👉 Share our <a target="_blank" href="/review">Review Page</a> with members to get feedback.
+';
+  $handler->display->display_options['header']['area']['format'] = 'full_html';
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   /* Relationship: TM NPS: User uid */
   $handler->display->display_options['relationships']['uid']['id'] = 'uid';

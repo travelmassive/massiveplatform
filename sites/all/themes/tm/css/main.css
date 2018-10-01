@@ -5140,6 +5140,7 @@ img.tm-status-update-preview-image {
 /* line 1101, ../sass/_base.scss */
 .views-field-comment {
   padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 /* line 3, ../sass/_buttons.scss */

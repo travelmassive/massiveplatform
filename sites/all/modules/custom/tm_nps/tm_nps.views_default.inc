@@ -86,7 +86,10 @@ function tm_nps_views_default_views() {
   $handler->display->display_options['header']['area']['id'] = 'area';
   $handler->display->display_options['header']['area']['table'] = 'views';
   $handler->display->display_options['header']['area']['field'] = 'area';
-  $handler->display->display_options['header']['area']['content'] = '<i>Share our <a target="_blank" href="/review">Review Page</a> with members to get feedback.</i>';
+  $handler->display->display_options['header']['area']['content'] = '<h2>Member Reviews</h2>
+
+👉 Share our <a target="_blank" href="/review">Review Page</a> with members to get feedback.
+';
   $handler->display->display_options['header']['area']['format'] = 'full_html';
   /* Footer: Global: Text area */
   $handler->display->display_options['footer']['area']['id'] = 'area';

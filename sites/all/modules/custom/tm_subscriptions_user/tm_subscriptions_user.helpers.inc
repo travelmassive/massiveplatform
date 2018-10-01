@@ -28,6 +28,11 @@ function tm_subscriptions_check_show_user_cta($uid, $signed_in_uid, $drush_comma
 		$account = user_load($uid, true); // don't load from cache when running from drush (performance)
 	}
 
+	// check not reported
+	if (tm_users_is_member_reported($uid) {
+		return false;
+	}
+
 	// load signed in account
 	if ($signed_in_uid == $uid) {
 		$signed_in_account = $account;

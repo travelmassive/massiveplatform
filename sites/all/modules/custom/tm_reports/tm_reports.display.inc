@@ -100,6 +100,7 @@ function tm_reports_get_insights_labels() {
   "event_total_payments" => "Total event payments",
   "num_chapter_views_30_days" => "Chapter views (signed in members) (30 Days)",
   "num_chapter_views_90_days" => "Chapter views (signed in members) (90 Days)",
+  "net_promoter_score" => "Net Promoter Score (NPS)"
   ];
 
   // Generate track_views labels

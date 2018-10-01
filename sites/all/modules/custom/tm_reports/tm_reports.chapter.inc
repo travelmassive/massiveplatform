@@ -284,6 +284,9 @@ function _tm_reports_get_chapter_insights($chapter_ids, $ignore_cache = false, $
 
   $insights = array();
 
+  // Net Promoter Score
+  $insights["net_promoter_score"] = tm_nps_calc_chapter_score($chapter_ids);
+
   $flag = flag_get_flag('signup', NULL);
   $approved_role = user_role_load_by_name("approved user");
   $days_ago_30 = time() - (60 * 60 * 24 * 30); // 30 days ago

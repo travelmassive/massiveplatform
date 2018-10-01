@@ -157,7 +157,7 @@ A score above 0 is good. A score above 50 is excellent, and above 70 is exceptio
   $handler->display->display_options['header']['area']['field'] = 'area';
   $handler->display->display_options['header']['area']['content'] = '<h2>Member Feedback</h2>
 
-👉 Share our <a target="_blank" href="/feedback">Feedback Page</a> with members to get feedback.
+👉 Share our <a target="_blank" href="/feedback">Feedback Page</a> to gather helpful feedback from the community.
 ';
   $handler->display->display_options['header']['area']['format'] = 'full_html';
   $handler->display->display_options['defaults']['relationships'] = FALSE;
@@ -228,7 +228,7 @@ A score above 0 is good. A score above 50 is excellent, and above 70 is exceptio
   $handler->display->display_options['header']['area']['field'] = 'area';
   $handler->display->display_options['header']['area']['content'] = '<h2>Member Feedback &mdash; All Chapters</h2>
 
-👉 Share our <a target="_blank" href="/feedback">Feedback Page</a> with members to get feedback.
+👉 Share our <a target="_blank" href="/feedback">Feedback Page</a> to gather helpful feedback from the community.
 ';
   $handler->display->display_options['header']['area']['format'] = 'full_html';
   $handler->display->display_options['defaults']['relationships'] = FALSE;

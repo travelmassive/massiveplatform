@@ -5145,7 +5145,8 @@ td.views-field-comment {
 
 /* line 1102, ../sass/_base.scss */
 td.views-field-realname {
-  max-width: 5rem;
+  min-width: 12rem;
+  max-width: 12rem;
 }
 
 /* line 3, ../sass/_buttons.scss */

@@ -148,7 +148,7 @@ function _tm_more_actions_process_moderator_menu($field, $title, &$links, &$menu
         $nps_comment = "";
         if ($nps_result->comment != "") {
           $nps_safe_comment = str_replace('"', "", str_replace("'", "&apos;", strip_tags($nps_result->comment)));
-          $nps_comment = " (<a class='report-flagged-link' href='javascript:jq_alert(\"Member Rating: " . $nps_result->score . "\", \"<i>Feedback &mdash; &ldquo;" . $nps_safe_comment . "&rdquo;</i>\");'>feedback</a>)";
+          $nps_comment = " (<a class='report-flagged-link' href='javascript:jq_alert(\"Member Feedback Rating: " . $nps_result->score . " out of 10\", \"<i>Feedback &mdash; &ldquo;" . $nps_safe_comment . "&rdquo;</i>\");'>feedback</a>)";
         }
         $menu_text = "<div style='font-size: smaller; font-style: italic; padding-left: 2em; background-color: #efefef;'>Member Rating: <span style='color: #888; font-style: normal;'>" . $nps_result->score .  $nps_comment . "</span></div>";
 

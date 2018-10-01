@@ -78,7 +78,7 @@ function tm_nps_views_pre_render(&$view) {
 			$chapter_link = " <a href='/feedback/results/" . $first_chapter->nid . "'>View " . strip_tags($first_chapter->title) . " feedback</a>";
 		}
 
-		$message = "For all chapters, the overall Net Promoter Score (NPS) is " . $nps . " " . $nps_label . " &mdash; based on " . number_format($total_reviews) . " member ratings." . $chapter_link;
+		$message = "As a benchmark, the overall Net Promoter Score (NPS) is " . $nps . " " . $nps_label . " &mdash; based on " . number_format($total_reviews) . " member ratings." . $chapter_link;
 		drupal_set_message($message, "help-tip");
 	}
 
@@ -97,7 +97,7 @@ function tm_nps_views_pre_render(&$view) {
 		$total_reviews = tm_nps_get_num_chapter_reviews($chapter->nid);
 		$nps_label = tm_nps_label($nps);
 
-		$message = "The Net Promoter Score (NPS) of " . strip_tags($chapter->title) . " is " . $nps . " " . $nps_label . " &mdash; based on " . number_format($total_reviews) . " member ratings. <a href='/feedback/results/all'>View all chapters</a>";
+		$message = tm_chapters_formal_name($chapter) . " has a Net Promoter Score (NPS) of " . $nps . " " . $nps_label . " &mdash; based on " . number_format($total_reviews) . " member ratings. <a href='/feedback/results/all'>View all chapters</a>";
 
 		if ($total_reviews == 0) {
 			$message = "Your chapter does not have any member feedback. Share the <a target='_blank' href='/feedback'>Feedback Page</a> with your members. <a href='/feedback/results/all'>View all chapters</a>";
@@ -244,9 +244,28 @@ function tm_nps_calc_global_score() {
 /**
  * Fetch NPS of a chapter
  */
-function tm_nps_calc_chapter_score($chapter_id) {
+function tm_nps_calc_chapter_score($chapter_ids) {
 
-	$query = "SELECT CAST(((SUM(CASE WHEN score BETWEEN 9 AND 10 THEN 1 ELSE 0 END) * 1.0 - SUM(CASE WHEN score BETWEEN 0 AND 6 THEN 1 ELSE 0 END)) / COUNT(*) * 100) AS signed) NPS
+	// calculate on multiple or single chapters
+
+	if (is_array($chapter_ids)) {
+
+		$query = "SELECT CAST(((SUM(CASE WHEN score BETWEEN 9 AND 10 THEN 1 ELSE 0 END) * 1.0 - SUM(CASE WHEN score BETWEEN 0 AND 6 THEN 1 ELSE 0 END)) / COUNT(*) * 100) AS signed) NPS
+		FROM (SELECT t1.uid, t1.chapter_id, t1.score, t1.timestamp
+		FROM tm_nps t1
+		JOIN (
+		  SELECT uid, MAX(timestamp) AS timestamp
+		  FROM tm_nps
+		  WHERE chapter_id IN (" . implode(",", $chapter_ids) . ")  
+		  GROUP BY uid) AS t2
+		  ON t1.uid = t2.uid AND t1.timestamp = t2.timestamp) AS tm_nps_max_scores";
+
+		// fetch result
+		$result = db_query($query)->fetch();
+
+	} else {
+
+		$query = "SELECT CAST(((SUM(CASE WHEN score BETWEEN 9 AND 10 THEN 1 ELSE 0 END) * 1.0 - SUM(CASE WHEN score BETWEEN 0 AND 6 THEN 1 ELSE 0 END)) / COUNT(*) * 100) AS signed) NPS
 		FROM (SELECT t1.uid, t1.chapter_id, t1.score, t1.timestamp
 		FROM tm_nps t1
 		JOIN (
@@ -255,9 +274,12 @@ function tm_nps_calc_chapter_score($chapter_id) {
 		  WHERE chapter_id = :chapter_id
 		  GROUP BY uid) AS t2
 		  ON t1.uid = t2.uid AND t1.timestamp = t2.timestamp) AS tm_nps_max_scores";
+		
+		// fetch result
+		$result = db_query($query, array(":chapter_id" => $chapter_ids))->fetch();
+	}
 
-	// fetch result
-	$result = db_query($query, array(":chapter_id" => $chapter_id))->fetch();
+	
 
 	if ($result == null) {
 		return null;

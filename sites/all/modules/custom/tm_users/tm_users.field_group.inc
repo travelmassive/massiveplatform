@@ -532,6 +532,7 @@ function tm_users_field_group_info() {
       1 => 'field_user_subscription_date',
       2 => 'timezone',
       3 => 'group_form_basic_settings',
+      4 => 'group_user_account_details',
     ),
     'format_type' => 'htab',
     'format_settings' => array(

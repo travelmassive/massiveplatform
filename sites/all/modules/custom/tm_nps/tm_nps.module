@@ -1,0 +1,319 @@
+<?php
+/**
+ * @file
+ * Code for the TM NPS feature.
+ */
+
+include_once 'tm_nps.features.inc';
+
+// tm_nps.module
+include_once 'tm_nps.views.inc'; 
+
+/**
+ * Implements hook_menu().
+ */
+function tm_nps_menu() {
+	$items = array();
+
+	$items['review'] = array(
+		'title' => 'Review Us',
+		'page callback' => 'tm_nps_display_index',
+		'access arguments' => array('access content')
+	);
+
+	$items['review/submit'] = array(
+		'page callback' => 'tm_nps_submit_review',
+		'access callback' => 'user_is_logged_in',
+	);
+
+	return $items;
+}
+
+/**
+ * Helper method to classify NPS score
+ */
+function tm_nps_label($nps) {
+
+	if ($nps < 0) {
+		return "🤔";
+	}
+
+	if ($nps > 70) {
+		return "😍";
+	}
+
+	if ($nps > 50) {
+		return "🙌";
+	}
+
+	// > 0
+	return "👍";
+}
+
+/**
+* Implements hook_views_pre_render().
+*/
+function tm_nps_views_pre_render(&$view) {
+
+	global $conf;
+	global $user;
+
+	// don't act on ajax requests
+	if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+  		return;
+	}
+
+	// global score
+	if ($view->current_display == 'tm_nps_report_global') {
+
+		$nps = round(tm_nps_calc_global_score(),1);
+		$total_reviews = tm_nps_get_num_reviews();
+		$nps_label = tm_nps_label($nps);
+
+		// get first chapter leading
+		$leading_chapter_nids = tm_users_get_chapters_leading($user);
+		$chapter_link = "";
+		if (sizeof($leading_chapter_nids) > 0) {
+			$first_chapter = node_load($leading_chapter_nids[0]);
+			$chapter_link = " <a href='/review/results/" . $first_chapter->nid . "'>View " . strip_tags($first_chapter->title) . " reviews</a>";
+		}
+
+		$message = "Our overall Net Promoter Score (NPS) is " . $nps . " " . $nps_label . " &mdash; based on " . $total_reviews . " member reviews." . $chapter_link;
+		drupal_set_message($message, "help-tip");
+	}
+
+	// chapter score
+	if ($view->current_display == 'tm_nps_report_chapter') {
+
+		$chapter = node_load(arg(2));
+		if ($chapter == null) { 
+			return;
+		}
+		if ($chapter->type != "chapter") {
+			return;
+		}
+
+		$nps = round(tm_nps_calc_chapter_score($chapter->nid), 1);
+		$total_reviews = tm_nps_get_num_chapter_reviews($chapter->nid);
+		$nps_label = tm_nps_label($nps);
+
+		$message = "The Net Promoter Score (NPS) of " . strip_tags($chapter->title) . " is " . $nps . " " . $nps_label . " &mdash; based on " . $total_reviews . " member reviews. <a href='/review/results/all'>View all chapters</a>";
+
+		if ($total_reviews == 0) {
+			$message = "Your chapter does not have any reviews yet. Please share the <a target='_blank' href='/review'>Review Page</a> to get feedback from your members. <a href='/review/results/all'>View all reviews</a>";
+		}
+
+		drupal_set_message($message, "help-tip");
+	}
+
+}
+
+function tm_nps_display_index() {
+
+	global $conf;
+
+	if (!user_is_logged_in()) {
+		drupal_set_message("Please <a href='/user/login?destination=/review'>log in</a> to submit a review");
+		drupal_goto("/");
+	}
+
+	drupal_add_js('jQuery(document).ready(function () { setTimeout(function() { jq_net_promoter_score("' . $conf["tm_site_name"] . '","' . drupal_get_path_alias() . '" );}, 500); });', 'inline');
+
+	// create form
+	$form['html'] = array(
+		'#type' => 'item',
+		'#markup' => "",
+		);
+	return $form;
+
+}
+
+function tm_nps_submit_review() {
+
+	global $user;
+	global $conf;
+
+	$score = null;
+	if (isset($_GET["score"])) {
+		$score = $_GET["score"];
+	}
+	if ($score == 'undefined') {
+		$score = null;
+	}
+	if ($score == "") {
+		$score = null;
+	}
+
+	$comment = null;
+	if (isset($_GET["comment"])) {
+		$comment = $_GET["comment"];
+	}
+
+	$chapter_id = null;
+	$account = user_load($user->uid);
+	if (isset($account->field_home_chapter[LANGUAGE_NONE][0]['target_id'])) {
+		$chapter_id = $account->field_home_chapter[LANGUAGE_NONE][0]['target_id'];
+	}
+
+	$url = "/";
+	if (isset($_SERVER['HTTP_REFERER'])) {
+		$full_url = $_SERVER['HTTP_REFERER'];
+		$url = parse_url($full_url, PHP_URL_PATH);
+	}
+	
+	// record
+	tm_nps_submit_review_db($user->uid, $score, $comment, $chapter_id, $url);
+
+	// set message
+	drupal_set_message("Thanks for sharing your feedback.");
+	if ($url == "/review") {
+		$url = "/";
+	}
+	drupal_goto($url);
+
+}
+
+
+function tm_nps_submit_review_db($uid, $score, $comment, $chapter_id, $url, $timestamp = null) {
+
+	if ($timestamp == null) {
+		$timestamp = time();
+	}
+
+	$fields = array(
+		'uid' => $uid,
+		'score' => $score,
+		'comment' => trim($comment),
+		'chapter_id' => $chapter_id,
+		'url' => $url,
+		'timestamp' => $timestamp
+	);
+
+	$result = drupal_write_record('tm_nps', $fields);
+	return $result;
+}
+
+
+/**
+ * Fetch how many people have viewed a profile in the past days
+ */
+function tm_nps_get_user_score($uid) {
+
+	$query = "SELECT * from tm_nps WHERE uid = :uid ORDER BY timestamp DESC LIMIT 1";
+
+	// fetch result
+	$result = db_query($query, array(":uid" => $uid))->fetch();
+
+	return $result;
+}
+
+/**
+ * Calculate NPS globally
+ */
+function tm_nps_calc_global_score() {
+
+	// Calc NPS: https://jegtnes.com/blog/calculating-a-net-promoter-score-nps-in-sqlite-postgresql-and-mysql/
+	// Group-wise maximum: https://dev.mysql.com/doc/refman/8.0/en/example-maximum-column-group-row.html
+
+	$query = "SELECT CAST(((SUM(CASE WHEN score BETWEEN 9 AND 10 THEN 1 ELSE 0 END) * 1.0 - SUM(CASE WHEN score BETWEEN 0 AND 6 THEN 1 ELSE 0 END)) / COUNT(*) * 100) AS signed) NPS 
+		FROM (SELECT t1.uid, t1.chapter_id, t1.score, t1.timestamp
+		FROM tm_nps t1
+		JOIN (
+		  SELECT uid, MAX(timestamp) AS timestamp
+		  FROM tm_nps
+		  GROUP BY uid) AS t2
+		  ON t1.uid = t2.uid AND t1.timestamp = t2.timestamp) AS tm_nps_max_scores";
+
+	// fetch result
+	$result = db_query($query)->fetch();
+
+	if ($result == null) {
+		return null;
+	}
+	
+	return $result->NPS;
+}
+
+/**
+ * Fetch NPS of a chapter
+ */
+function tm_nps_calc_chapter_score($chapter_id) {
+
+	$query = "SELECT CAST(((SUM(CASE WHEN score BETWEEN 9 AND 10 THEN 1 ELSE 0 END) * 1.0 - SUM(CASE WHEN score BETWEEN 0 AND 6 THEN 1 ELSE 0 END)) / COUNT(*) * 100) AS signed) NPS
+		FROM (SELECT t1.uid, t1.chapter_id, t1.score, t1.timestamp
+		FROM tm_nps t1
+		JOIN (
+		  SELECT uid, MAX(timestamp) AS timestamp
+		  FROM tm_nps
+		  WHERE chapter_id = :chapter_id
+		  GROUP BY uid) AS t2
+		  ON t1.uid = t2.uid AND t1.timestamp = t2.timestamp) AS tm_nps_max_scores";
+
+	// fetch result
+	$result = db_query($query, array(":chapter_id" => $chapter_id))->fetch();
+
+	if ($result == null) {
+		return null;
+	}
+
+	return $result->NPS;
+}
+
+/**
+ * Fetch number of NPS reviews
+ */
+function tm_nps_get_num_reviews() {
+
+	$query = "SELECT COUNT(*) as total_reviews from tm_nps";
+
+	// fetch result
+	$result = db_query($query)->fetch();
+
+	if ($result == null) {
+		return null;
+	}
+
+	return $result->total_reviews;
+}
+
+/**
+ * Fetch number of NPS reviews of chapter
+ */
+function tm_nps_get_num_chapter_reviews($chapter_id) {
+
+	$query = "SELECT COUNT(*) as total_reviews from tm_nps WHERE chapter_id = :chapter_id";
+
+	// fetch result
+	$result = db_query($query, array(":chapter_id" => $chapter_id))->fetch();
+
+	if ($result == null) {
+		return null;
+	}
+
+	return $result->total_reviews;
+}
+
+
+/**
+ * Developer test method
+ * Create sample data for nps scores
+ */
+function _tm_nps_generate_sample_data($max_days = 360) {
+
+	$comments = array("I like the platform", "You can do better", "It's a great network", "I made some good connections", "You should host more events", "", "A random comment", "");
+
+	// get all chapters
+	$chapter_nids = tm_chapters_get_all_chapters();
+
+	// get all members in chapter
+	foreach($chapter_nids as $chapter_nid) {
+		drush_print("Chapter_nid: " . $chapter_nid);
+		$uids = _tm_chapters_get_chapter_member_uids($chapter_nid);
+		foreach($uids as $uid) {
+			$score = rand(0,10);
+			$timestamp = rand(REQUEST_TIME - rand(0,($max_days*24*60*60)), REQUEST_TIME);
+			tm_nps_submit_review_db($uid, $score, $comments[array_rand($comments)], $chapter_nid, "", $timestamp);
+		}
+	}
+}
+

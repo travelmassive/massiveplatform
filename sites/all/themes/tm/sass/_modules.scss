@@ -147,6 +147,8 @@
     &.tm-ds-subscription-user-cta-ds:before { @extend .icon-2017-subscribe-cta; font-size: 16pt;}
     &.tm-ds-track-viewers:before { @extend .icon-2016-eye; }
     &.tm-ds-track-company-viewers:before { @extend .icon-2016-eye; }
+    &.field-user-testimonial:before { @extend .icon-2016-heart-outline; font-size: 16pt;}
+    &.field-company-testimonial:before { @extend .icon-2016-heart-outline; font-size: 16pt;}
 
     &.field-link-facebook,
     &.field-link-linkedin,

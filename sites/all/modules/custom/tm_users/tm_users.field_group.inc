@@ -171,14 +171,13 @@ function tm_users_field_group_info() {
       8 => 'field_link_vimeo',
       9 => 'field_link_youtube',
       10 => 'field_link_strava',
-      11 => 'tm_ds_user_stats',
-      12 => 'tm_ds_user_featured',
-      13 => 'tm_ds_subscription_user_cta_ds',
-      14 => 'tm_ds_subscription_user_badge_ds',
-      15 => 'tm_ds_connection_actions',
-      16 => 'tm_ds_track_viewers',
-      17 => 'group_location_wrapper',
-      18 => 'group_user_qa_wrapper',
+      11 => 'field_user_testimonial',
+      12 => 'tm_ds_user_stats',
+      13 => 'tm_ds_user_featured',
+      14 => 'tm_ds_connection_actions',
+      15 => 'tm_ds_track_viewers',
+      16 => 'group_location_wrapper',
+      17 => 'group_user_qa_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -469,7 +468,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '40',
+    'weight' => '39',
     'children' => array(
       0 => 'field_location_city',
     ),
@@ -533,7 +532,6 @@ function tm_users_field_group_info() {
       1 => 'field_user_subscription_date',
       2 => 'timezone',
       3 => 'group_form_basic_settings',
-      4 => 'group_user_account_details',
     ),
     'format_type' => 'htab',
     'format_settings' => array(
@@ -562,11 +560,12 @@ function tm_users_field_group_info() {
     'label' => 'User edit',
     'weight' => '0',
     'children' => array(
-      0 => 'group_user_account',
-      1 => 'group_user_notifications',
-      2 => 'group_user_privacy',
-      3 => 'group_user_profile',
-      4 => 'group_user_twitter_settings',
+      0 => 'group_user_feedback',
+      1 => 'group_user_account',
+      2 => 'group_user_notifications',
+      3 => 'group_user_privacy',
+      4 => 'group_user_profile',
+      5 => 'group_user_twitter_settings',
     ),
     'format_type' => 'htabs',
     'format_settings' => array(
@@ -577,6 +576,34 @@ function tm_users_field_group_info() {
     ),
   );
   $field_groups['group_user_edit|user|user|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_user_feedback|user|user|form';
+  $field_group->group_name = 'group_user_feedback';
+  $field_group->entity_type = 'user';
+  $field_group->bundle = 'user';
+  $field_group->mode = 'form';
+  $field_group->parent_name = 'group_user_edit';
+  $field_group->data = array(
+    'label' => 'Review',
+    'weight' => '39',
+    'children' => array(
+      0 => 'field_user_testimonial',
+    ),
+    'format_type' => 'htab',
+    'format_settings' => array(
+      'label' => 'Review',
+      'instance_settings' => array(
+        'required_fields' => 1,
+        'classes' => '',
+        'description' => 'Leave some feedback for us.',
+      ),
+      'formatter' => 'open',
+    ),
+  );
+  $field_groups['group_user_feedback|user|user|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -618,7 +645,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_user_edit';
   $field_group->data = array(
     'label' => 'Privacy',
-    'weight' => '39',
+    'weight' => '38',
     'children' => array(
       0 => 'field_user_disable_public_index',
       1 => 'field_user_has_private_profile',
@@ -679,7 +706,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'QA',
-    'weight' => '39',
+    'weight' => '38',
     'children' => array(
       0 => 'group_user_qa',
     ),
@@ -708,7 +735,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_user_qa_wrapper';
   $field_group->data = array(
     'label' => 'QA',
-    'weight' => '17',
+    'weight' => '26',
     'children' => array(
       0 => 'field_user_question_1',
       1 => 'field_user_question_2',
@@ -742,7 +769,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_user_edit';
   $field_group->data = array(
     'label' => 'Connect',
-    'weight' => '38',
+    'weight' => '37',
     'children' => array(
       0 => 'tm_connect_settings',
     ),
@@ -781,6 +808,7 @@ function tm_users_field_group_info() {
   t('Privacy');
   t('Profile');
   t('QA');
+  t('Review');
   t('Summary');
   t('User edit');
 

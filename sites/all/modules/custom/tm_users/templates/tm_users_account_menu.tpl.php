@@ -99,8 +99,25 @@ $image = theme('image_style', array(
     <ul class="dropd-menu dropdown-account-settings">
       <li><?php print l(t('Account settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-account-options')); ?></li>
       <li><?php print l(t('Notification settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-notifications-options')); ?></li>
+      <?php if (in_array("approved user", $loaded->roles)) { ?>
       <li><?php print l(t('Invite members'), 'invite'); ?></li>
-      
+      <?php } // ?>
+
+      <?php 
+      // show review link
+      if (in_array("approved user", $loaded->roles)) { 
+        $user_review_min_age = 30; // 30 days
+        if (isset($conf["tm_users_review_min_age"])) {
+          $user_review_min_age = $conf["tm_users_review_min_age"];
+        }
+        $account_age_days = ((time() - $loaded->created) / (60 * 60 * 24));
+        if ($account_age_days > $user_review_min_age) { ?>
+      <li><a href='javascript:jq_net_promoter_score("<?php print($conf["tm_site_name"]);?>");'>Review us</a></li>
+      <?php 
+        } // end if
+      } // end if
+      ?>
+
       <?php
       // user links
       if (isset($conf["tm_users_account_menu_links"])) {
@@ -221,6 +238,7 @@ $image = theme('image_style', array(
         <li><?php print l(t('All ' . strtolower(tm_users_get_unapproved_member_label("plural"))), 'admin/unapproved-members'); ?></li>
         <li><?php print l(t('Chapter leaders'), 'admin/tm_reports'); ?></li>
         <li><?php print l(t('Global insights'), 'admin/global_insights'); ?></li>
+        <li><?php print l(t('Member reviews'), 'reviews/results/all'); ?></li>
         <?php if (module_exists("tm_commissions")): ?>
         <li><?php print l(t('Chapter commissions'), '/chapters/all-chapters/commissions'); ?></li>
         <?php endif; ?>

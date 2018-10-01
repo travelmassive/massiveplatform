@@ -619,3 +619,11 @@ function tm_users_get_full_name($uid) {
   return $full_name;
 }
 
+/**
+ * Helper method if member is reported
+ */
+function tm_users_is_member_reported($uid) {
+  $moderate_report_member_flagged = flag_get_entity_flags("user", $uid, "moderate_report_member");
+  return (sizeof($moderate_report_member_flagged) > 0);
+}
+

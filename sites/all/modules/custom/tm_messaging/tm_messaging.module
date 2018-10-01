@@ -321,6 +321,14 @@ function tm_messaging_make_send_message_link($my_user, $their_user) {
 
       }
 
+      // if user has been reported, limit messaging
+      $moderate_report_member_flagged = flag_get_entity_flags("user", $my_uid, "moderate_report_member");
+      if (sizeof($moderate_report_member_flagged) > 0) {
+        $html = "<a href='javascript:void(0);' onClick='jq_alert(\"Messaging Unavailable\", \"Sorry, this service is not available.\")'>Send " . $first_name . " a message</a>";
+        return $html;
+      }  
+
+
       // all ok
       $html = "<a href='javascript:void(0);' onClick='jq_connection_email($my_uid, $their_uid, \"" . rawurlencode($their_name) . "\");'>Send " . $first_name . " a message</a>";     
     }

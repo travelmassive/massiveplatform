@@ -134,6 +134,17 @@ function _tm_more_actions_process_chapter_menu($field, $title, &$links, &$menu_i
           ))
         );
 
+        // view nps
+        $link_path = '/review/results/' . $node->nid;
+        $links['chapter'][] = array(
+          'wrapper_class' => array('net_promoter_score'),
+          'content' => l(t('Member reviews'), $link_path, array(
+            'attributes' => array( 
+            'title' => t('Member reviews')
+            )
+          ))
+        );
+
         if (module_exists("tm_commissions")) {
           // view chapter commissions
           $link_path = $current_uri.'/commissions';

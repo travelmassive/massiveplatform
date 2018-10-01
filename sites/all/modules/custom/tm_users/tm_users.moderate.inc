@@ -164,6 +164,11 @@ function tm_users_moderate_report_check() {
     return false;
   }
 
+  // If already reported, don't allow reporting
+  if (tm_users_is_member_reported($user->uid)) {
+    return false;
+  }
+
   // ok
   return true;
 }

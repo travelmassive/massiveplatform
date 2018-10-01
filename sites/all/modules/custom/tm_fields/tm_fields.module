@@ -364,15 +364,35 @@ function _tm_communication_actions_process($field, $title = NULL) {
         // check if user logged in
         if ($user->uid > 0) {
 
-          // show contact leaders form
-          $links['contactleaders'][] = array(
-            'wrapper_class' => array('contactleaders'),
-            'content' => l(t('Message chapter leaders'), $link_path, array(
-              'attributes' => array(
-              'title' => t('Message chapter leaders')
-              )
-            ))
-          );
+          // if user has been reported, limit messaging
+          $moderate_report_member_flagged = flag_get_entity_flags("user", $user->uid, "moderate_report_member");
+
+          if (sizeof($moderate_report_member_flagged) > 0) {
+
+            // messaging restricted
+            $links['contactleaders'][] = array(
+              'wrapper_class' => array('contactleaders'),
+              'content' => l(t('Message chapter leaders'), 'javascript:jq_alert("Messaging Unavailable", "Sorry, this service is not available.")', array(
+                'external' => true,
+                'attributes' => array(
+                'title' => t('Message chapter leaders')
+                )
+              ))
+            );
+
+          } else {
+
+            // show contact leaders form
+            $links['contactleaders'][] = array(
+              'wrapper_class' => array('contactleaders'),
+              'content' => l(t('Message chapter leaders'), $link_path, array(
+                'attributes' => array(
+                'title' => t('Message chapter leaders')
+                )
+              ))
+            );
+
+          }
 
         } else {
 

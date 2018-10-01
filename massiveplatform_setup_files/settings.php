@@ -88,6 +88,8 @@ $conf['tm_twitter_consumer_secret'] = '';
 // $conf['tm_users_chapter_leader_menu_links'] = array("Chapter Leader Resources" => "https://example.massiveplatform.com/blog/chapter-leader-resources/"); // array of account links (optional)
 $conf['tm_users_subscriber_menu_links'] = array("VIP Lounge" => "/pro");
 $conf['tm_users_company_subscriber_menu_links'] = array("VIP Lounge" => "/pro");
+// $conf['tm_users_testimonial_description'] = ""; // description for testimonial in user settings
+// $conf['tm_users_review_min_age'] = 30; // how long the user has been a member until we show the review tab
 
 /** WORDPRESS FEEDME **/
 /** This calls a module hosted on wordpress to embed blog (plus other) content based on current page **/

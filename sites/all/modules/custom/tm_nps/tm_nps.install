@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function tm_nps_schema() {
+  $schema = array();
+  $schema['tm_nps'] = array(
+    'description' => 'Net Promoter Score.',
+    'fields' => array(
+      'id' => array(
+        'description' => 'The unique ID.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'uid' => array(
+        'description' => 'The user ID who scored.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'score' => array(
+        'description' => 'The score between 0 and 10.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'comment' => array(
+        'description' => 'Optional comment.',
+        'type' => 'text',
+        'not null' => FALSE,
+      ),
+      'chapter_id' => array(
+        'description' => 'The member home chapter ID.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'url' => array(
+        'description' => 'The url the user was on when they reviewed.',
+        'type' => 'varchar',
+        'length' => 256,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'timestamp' => array(
+        'description' => 'The Unix timestamp when the node was view.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0, 
+      ),
+    ),
+    'primary key' => array('id'),     
+    'indexes' => array(
+      'uid_score' => array('uid', 'score'),
+      'chapter_id' => array('chapter_id'),
+      'chapter_timestamp' => array('chapter_id', 'timestamp'),
+      'timestamp' => array('timestamp'),  
+    ),  
+  );
+  return $schema;
+}
+

@@ -107,6 +107,18 @@ function tm_organizations_node_presave($node) {
 
   }
 
+  // Trim testimonial
+  if (isset($node->field_company_testimonial[LANGUAGE_NONE][0]['value'])) {
+    $trimmed = trim($node->field_company_testimonial[LANGUAGE_NONE][0]['value']);
+    if ($trimmed != "") {
+      // save trimmed value
+      $node->field_company_testimonial[LANGUAGE_NONE][0]['value'] = $trimmed;
+    } else {
+      // remove empty value
+      $node->field_company_testimonial = null;
+    }
+  }
+
 }
 
 /**

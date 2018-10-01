@@ -142,6 +142,22 @@ function _tm_more_actions_process_moderator_menu($field, $title, &$links, &$menu
         }
       }
 
+      // 4.5 Net Promoter Score
+      $nps_result = _tm_nps_get_user_score($targetuser->uid);
+      if ($nps_result != null) {
+        $nps_comment = "";
+        if ($nps_result->comment != "") {
+          $nps_safe_comment = str_replace('"', "", str_replace("'", "&apos;", strip_tags($nps_result->comment)));
+          $nps_comment = " (<a class='report-flagged-link' href='javascript:jq_alert(\"Net Promoter Score: " . $nps_result->score . "\", \"<i>Feedback &mdash; &ldquo;" . $nps_safe_comment . "&rdquo;</i>\");'>feedback</a>)";
+        }
+        $menu_text = "<div style='font-size: smaller; font-style: italic; padding-left: 2em; background-color: #efefef;'>Net Promoter Score: <span style='color: #888; font-style: normal;'>" . $nps_result->score .  $nps_comment . "</span></div>";
+
+        $links['user_info'][] = array(
+          'wrapper_class' => array('moderator_review_rating'),
+          'content' => t($menu_text),
+        );
+      }
+
       // 5. REASON FOR JOINING
       if (isset($targetuser->field_reason_for_joining[LANGUAGE_NONE][0]['value'])) {
         $reason_for_joining = strip_tags($targetuser->field_reason_for_joining[LANGUAGE_NONE][0]['value']);

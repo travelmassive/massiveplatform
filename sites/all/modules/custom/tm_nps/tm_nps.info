@@ -1,0 +1,16 @@
+name = TM Net Promoter Score
+description = TM Net Promoter Score
+core = 7.x
+package = TM NPS
+version = 7.x-1.0-dev
+project = tm_nps
+dependencies[] = views
+dependencies[] = views_load_more
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features[views_view][] = tm_nps
+files[] = tm_nps.module
+files[] = tm_nps.install
+files[] = views/tm_nps.views.inc
+files[] = views/tm_nps.views_default.inc
+project path = sites/all/modules/custom

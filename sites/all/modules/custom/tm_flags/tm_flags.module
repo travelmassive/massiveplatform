@@ -138,6 +138,11 @@ function _tm_flags_flag_limits(&$variables) {
   global $conf;
   global $user;
   $initialized = &drupal_static(__FUNCTION__, array());
+ 
+  // if user has been reported, limit flags
+  if (tm_users_is_member_reported($user->uid)) {
+    $tm_limit = true;
+  }
 
   // Additional quota for approved members
   $mfr_limit_quota = 0;
@@ -356,14 +361,9 @@ function _tm_flags_flag_limits(&$variables) {
       $variables['flag_button_class'] = 'flag-limit follow bttn bttn-secondary bttn-m';
       drupal_add_js('
       jQuery(document).ready(function($) {
-        $( ".flag-limit" ).click(function() {
-          $( ".flag-limit-message" ).remove();
+        $( ".flag-limit" ).unbind().click(function() {
           var message = $( ".flag-limit span.flag-action" ).text();
-          $("<div class=\"flag-limit-message\">" + message + " limit reached.</div>").fadeToggle( "200", "linear" ).insertBefore( ".actions-menu" );
-
-          setTimeout(function() {
-            $(".flag-limit-message").fadeOut("slow");
-          }, 5000); 
+          jq_alert(message + " limit reached", "Sorry, you can\'t perform this action.");
         }); 
       });
       ', 'inline');

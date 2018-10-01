@@ -108,10 +108,11 @@ function tm_organizations_field_group_info() {
     'label' => 'Account Details',
     'weight' => '2',
     'children' => array(
-      0 => 'field_company_account_receipt',
-      1 => 'field_company_account_contact',
-      2 => 'field_company_account_email',
-      3 => 'field_company_account_phone',
+      0 => 'field_company_account_contact',
+      1 => 'field_company_account_email',
+      2 => 'field_company_account_phone',
+      3 => 'field_company_account_receipt',
+      4 => 'field_company_testimonial',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -145,7 +146,6 @@ function tm_organizations_field_group_info() {
       2 => 'field_company_newsfeed_tags',
       3 => 'field_company_newsfeed_url',
       4 => 'field_company_subscription_type',
-      5 => 'field_company_subscription_on',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -183,13 +183,12 @@ function tm_organizations_field_group_info() {
       6 => 'field_link_snapchat',
       7 => 'field_link_vimeo',
       8 => 'field_link_youtube',
-      9 => 'tm_ds_subscription_organization_cta_ds',
-      10 => 'tm_ds_subscription_organization_badge_ds',
-      11 => 'tm_ds_tm_sponsor',
-      12 => 'tm_ds_organization_follow_message',
-      13 => 'tm_ds_organization_stats',
-      14 => 'tm_ds_track_company_viewers',
-      15 => 'group_location_wrapper',
+      9 => 'field_company_testimonial',
+      10 => 'tm_ds_tm_sponsor',
+      11 => 'tm_ds_organization_follow_message',
+      12 => 'tm_ds_organization_stats',
+      13 => 'tm_ds_track_company_viewers',
+      14 => 'group_location_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -307,7 +306,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '15',
+    'weight' => '14',
     'children' => array(
       0 => 'field_location_city',
       1 => 'field_country',

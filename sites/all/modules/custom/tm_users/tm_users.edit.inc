@@ -12,6 +12,7 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   if (!user_is_logged_in()) { return; }
 
   // Don't allow moderators to edit other moderators or admin accounts
+  global $conf;
   global $user;
   $user_id = $form['#user']->uid;
 
@@ -72,7 +73,6 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   }
 
   // Show additional link fields based on $conf['tm_users_link_fields']
-  global $conf;
   $all_fields = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat', 'strava');
   if (isset($conf["tm_users_link_fields"])) {
     $show_link_fields = $conf["tm_users_link_fields"];
@@ -131,6 +131,32 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
     unset($form['field_user_subscription_date']); // hide subscription end date
     unset($form['field_user_account_phone']); // hide subscription type
     unset($form['field_user_account_receipt']); // hide subscription type
+  }
+
+  $review_description = "<h2>Tell us what you think.</h2>Please take a moment to <a class='tm_nps_review_link' href='/review'>review us</a> &mdash; we appreciate your feedback.";
+  $form['#groups']['group_user_feedback']->format_settings['instance_settings']['description'] = $review_description;
+
+
+  // Set testimonial description 
+  if (isset($conf["tm_users_testimonial_description"])) {
+      $form['field_user_testimonial'][LANGUAGE_NONE][0]['value']['#description'] = $conf["tm_users_testimonial_description"] . "<br><br>";
+  } else {
+    $testimonial_description = $form['field_user_testimonial'][LANGUAGE_NONE][0]['value']['#description'];
+    $testimonial_description = str_replace("__site_name__", $conf["tm_site_name"], $testimonial_description);
+    $form['field_user_testimonial'][LANGUAGE_NONE][0]['value']['#description'] = $testimonial_description;
+  }
+
+  // hide user review to guests and new members
+  if ((!in_array("moderator", $user->roles)) and (!in_array("administrator", $user->roles))) {
+    $user_review_min_age = 30; // 30 days
+    if (isset($conf["tm_users_review_min_age"])) {
+      $user_review_min_age = $conf["tm_users_review_min_age"];
+    }
+    $account_age_days = ((time() - $form['#user']->created) / (60 * 60 * 24));
+    $is_approved = in_array("approved user", $form['#user']->roles);
+    if (($account_age_days < $user_review_min_age) or (!$is_approved)) {
+      field_group_hide_field_groups($form, array('group_user_feedback'));
+    }
   }
 
 }

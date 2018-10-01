@@ -31,6 +31,7 @@ dependencies[] = user
 dependencies[] = user_cancel_password_confirm
 dependencies[] = views
 dependencies[] = views_load_more
+dependencies[] = tm_nps
 features[context][] = community_page
 features[context][] = leaders_page
 features[ctools][] = context:context:3

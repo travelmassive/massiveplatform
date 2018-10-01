@@ -45,7 +45,7 @@ function tm_subscriptions_check_show_user_cta($uid, $signed_in_uid, $drush_comma
 	}
 
 	// check not reported
-	if (tm_users_is_member_reported($uid) {
+	if (tm_users_is_member_reported($uid)) {
 		return false;
 	}
 	

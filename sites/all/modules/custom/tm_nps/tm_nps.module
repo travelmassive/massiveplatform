@@ -168,8 +168,10 @@ function tm_nps_submit_feedback() {
 		$url = parse_url($full_url, PHP_URL_PATH);
 	}
 	
-	// record
-	tm_nps_submit_feedback_db($user->uid, $score, $comment, $chapter_id, $url);
+	// record if score or comment provided
+	if (($score != null) or ($comment != null)) {
+		tm_nps_submit_feedback_db($user->uid, $score, $comment, $chapter_id, $url);
+	}
 
 	// set message
 	drupal_set_message("Thanks for sharing your feedback.");

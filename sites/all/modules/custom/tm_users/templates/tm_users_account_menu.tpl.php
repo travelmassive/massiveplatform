@@ -100,12 +100,14 @@ $image = theme('image_style', array(
       <li><?php print l(t('Account settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-account-options')); ?></li>
       <li><?php print l(t('Notification settings'), 'user/' . $loaded->uid . '/edit', array('fragment' => 'user-notifications-options')); ?></li>
       <?php if (in_array("approved user", $loaded->roles)) { ?>
+      <?php if (!tm_users_is_member_reported($loaded->uid)) { ?>
       <li><?php print l(t('Invite members'), 'invite'); ?></li>
+      <?php } // ?>
       <?php } // ?>
 
       <?php 
       // show review link
-      if (in_array("approved user", $loaded->roles)) { 
+      if (in_array("approved user", $loaded->roles) and (!(tm_users_is_member_reported($loaded->uid)))) { 
         $user_review_min_age = 30; // 30 days
         if (isset($conf["tm_users_review_min_age"])) {
           $user_review_min_age = $conf["tm_users_review_min_age"];

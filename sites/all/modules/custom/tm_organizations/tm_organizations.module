@@ -143,6 +143,11 @@ function tm_organizations_check_user_can_create_company($uid) {
     return false;
   }
 
+  // Reported members cannot create companies
+  if (tm_users_is_member_reported($account->uid)) {
+    return false;
+  }
+
   // Chapter leaders, moderators can always create companies
   if (in_array("chapter leader", $account->roles) or in_array("moderator", $account->roles)) {
     return true;

@@ -111,9 +111,15 @@ function tm_nps_views_pre_render(&$view) {
 function tm_nps_display_index() {
 
 	global $conf;
+	global $user;
 
 	if (!user_is_logged_in()) {
 		drupal_set_message("Please <a href='/user/login?destination=/feedback'>log in</a> to share feedback");
+		drupal_goto("/");
+	}
+
+	// redirect if member is reported
+	if (tm_users_is_member_reported($user->uid)) {
 		drupal_goto("/");
 	}
 

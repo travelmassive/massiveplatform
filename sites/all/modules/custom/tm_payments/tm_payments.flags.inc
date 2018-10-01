@@ -130,6 +130,12 @@ function _tm_payments_preprocess_flag_register_flag(&$variables) {
 		}
 	}
 
+	// check if member is reported
+	if (tm_users_is_member_reported($uid)) {
+		$variables['link_text'] = 'Buy Ticket';
+		return;
+	}
+
 	// STEP 3. GET PRICING
 	$member = user_load($uid);
 	$user_id = $member->uid;

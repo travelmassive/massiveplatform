@@ -133,7 +133,7 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
     unset($form['field_user_account_receipt']); // hide subscription type
   }
 
-  $review_description = "<h2>Tell us what you think.</h2>Please take a moment to <a class='tm_nps_review_link' href='/feedback'>" . strtolower($conf["tm_users_review_label"]) . "</a> &mdash; we listen to all suggestions.";
+  $review_description = "<h2>Tell us what you think</h2>Please take a moment to <a class='tm_nps_review_link' href='/feedback'>" . strtolower($conf["tm_users_review_label"]) . "</a>";
   $form['#groups']['group_user_feedback']->format_settings['instance_settings']['description'] = $review_description;
 
 
@@ -157,6 +157,11 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
     if (($account_age_days < $user_review_min_age) or (!$is_approved)) {
       field_group_hide_field_groups($form, array('group_user_feedback'));
     }
+  }
+
+  // hide review if member is reported
+  if (tm_users_is_member_reported($user->uid)) {
+    field_group_hide_field_groups($form, array('group_user_feedback'));
   }
 
 }

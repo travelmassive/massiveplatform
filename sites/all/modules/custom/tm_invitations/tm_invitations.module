@@ -132,8 +132,14 @@ function chapter_invitations_page() {
  * Invitations form
  */
 function tm_invitations_invite_form($form, &$form_state) {
+  
   global $conf;
   global $user;
+
+  // Reported members cannot invite
+  if (tm_users_is_member_reported($user->uid)) {
+    drupal_goto("/");
+  }
 
   $description = 'Email addresses must be separated by comma, space or newline.';
   if(!user_access('tm invite unlimited')) {

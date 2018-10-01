@@ -177,7 +177,7 @@ A score above 0 is good. A score above 50 is excellent, and above 70 is exceptio
   $handler->display->display_options['fields']['score']['id'] = 'score';
   $handler->display->display_options['fields']['score']['table'] = 'tm_nps';
   $handler->display->display_options['fields']['score']['field'] = 'score';
-  $handler->display->display_options['fields']['score']['label'] = 'Likely to Recommend (10-0)';
+  $handler->display->display_options['fields']['score']['label'] = 'Rating (10-0)';
   /* Field: TM NPS: Comment */
   $handler->display->display_options['fields']['comment']['id'] = 'comment';
   $handler->display->display_options['fields']['comment']['table'] = 'tm_nps';
@@ -247,7 +247,7 @@ A score above 0 is good. A score above 50 is excellent, and above 70 is exceptio
   $handler->display->display_options['fields']['score']['id'] = 'score';
   $handler->display->display_options['fields']['score']['table'] = 'tm_nps';
   $handler->display->display_options['fields']['score']['field'] = 'score';
-  $handler->display->display_options['fields']['score']['label'] = 'Likely to Recommend (10-0)';
+  $handler->display->display_options['fields']['score']['label'] = 'Rating (10-0)';
   /* Field: TM NPS: Comment */
   $handler->display->display_options['fields']['comment']['id'] = 'comment';
   $handler->display->display_options['fields']['comment']['table'] = 'tm_nps';

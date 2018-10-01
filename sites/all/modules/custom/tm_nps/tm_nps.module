@@ -78,7 +78,7 @@ function tm_nps_views_pre_render(&$view) {
 			$chapter_link = " <a href='/review/results/" . $first_chapter->nid . "'>View " . strip_tags($first_chapter->title) . " reviews</a>";
 		}
 
-		$message = "Our overall Net Promoter Score (NPS) is " . $nps . " " . $nps_label . " &mdash; based on " . $total_reviews . " member reviews." . $chapter_link;
+		$message = "Our overall Net Promoter Score (NPS) is " . $nps . " " . $nps_label . " &mdash; based on " . number_format($total_reviews) . " member reviews." . $chapter_link;
 		drupal_set_message($message, "help-tip");
 	}
 
@@ -97,7 +97,7 @@ function tm_nps_views_pre_render(&$view) {
 		$total_reviews = tm_nps_get_num_chapter_reviews($chapter->nid);
 		$nps_label = tm_nps_label($nps);
 
-		$message = "The Net Promoter Score (NPS) of " . strip_tags($chapter->title) . " is " . $nps . " " . $nps_label . " &mdash; based on " . $total_reviews . " member reviews. <a href='/review/results/all'>View all chapters</a>";
+		$message = "The Net Promoter Score (NPS) of " . strip_tags($chapter->title) . " is " . $nps . " " . $nps_label . " &mdash; based on " . number_format($total_reviews) . " member reviews. <a href='/review/results/all'>View all chapters</a>";
 
 		if ($total_reviews == 0) {
 			$message = "Your chapter does not have any reviews yet. Please share the <a target='_blank' href='/review'>Review Page</a> to get feedback from your members. <a href='/review/results/all'>View all reviews</a>";

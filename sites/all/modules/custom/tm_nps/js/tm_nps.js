@@ -53,7 +53,7 @@
           $('#tm_nps_index_message').hide();
           $('#tm_nps_index_submitting').show();
           var nps_score = $('input[name=tm_nps]:checked').val();
-          window.location = '/review/submit?score=' + nps_score + '&comment=' + $("#form_nps_comment").val();
+          window.location = '/feedback/submit?score=' + nps_score + '&comment=' + $("#form_nps_comment").val();
         }
       }
     });

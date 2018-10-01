@@ -134,13 +134,13 @@ function _tm_more_actions_process_chapter_menu($field, $title, &$links, &$menu_i
           ))
         );
 
-        // view nps
-        $link_path = '/review/results/' . $node->nid;
+        // view nps results
+        $link_path = '/feedback/results/' . $node->nid;
         $links['chapter'][] = array(
-          'wrapper_class' => array('net_promoter_score'),
-          'content' => l(t('Member reviews'), $link_path, array(
+          'wrapper_class' => array('member_feedback_results'),
+          'content' => l(t('Member feedback'), $link_path, array(
             'attributes' => array( 
-            'title' => t('Member reviews')
+            'title' => t('Member feedback')
             )
           ))
         );

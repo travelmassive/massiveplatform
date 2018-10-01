@@ -112,7 +112,7 @@ $image = theme('image_style', array(
         }
         $account_age_days = ((time() - $loaded->created) / (60 * 60 * 24));
         if ($account_age_days > $user_review_min_age) { ?>
-      <li><a href='javascript:jq_net_promoter_score("<?php print($conf["tm_site_name"]);?>");'>Review us</a></li>
+      <li><a href='javascript:jq_net_promoter_score("<?php print($conf["tm_site_name"]);?>");'><?php print($conf["tm_users_review_label"]);?></a></li>
       <?php 
         } // end if
       } // end if
@@ -238,7 +238,7 @@ $image = theme('image_style', array(
         <li><?php print l(t('All ' . strtolower(tm_users_get_unapproved_member_label("plural"))), 'admin/unapproved-members'); ?></li>
         <li><?php print l(t('Chapter leaders'), 'admin/tm_reports'); ?></li>
         <li><?php print l(t('Global insights'), 'admin/global_insights'); ?></li>
-        <li><?php print l(t('Member reviews'), 'review/results/all'); ?></li>
+        <li><?php print l(t('Member feedback'), 'feedback/results/all'); ?></li>
         <?php if (module_exists("tm_commissions")): ?>
         <li><?php print l(t('Chapter commissions'), '/chapters/all-chapters/commissions'); ?></li>
         <?php endif; ?>

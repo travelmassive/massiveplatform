@@ -15,14 +15,14 @@ include_once 'tm_nps.views.inc';
 function tm_nps_menu() {
 	$items = array();
 
-	$items['review'] = array(
-		'title' => 'Review Us',
+	$items['feedback'] = array(
+		'title' => 'Give Us Feedback',
 		'page callback' => 'tm_nps_display_index',
 		'access arguments' => array('access content')
 	);
 
-	$items['review/submit'] = array(
-		'page callback' => 'tm_nps_submit_review',
+	$items['feedback/submit'] = array(
+		'page callback' => 'tm_nps_submit_feedback',
 		'access callback' => 'user_is_logged_in',
 	);
 
@@ -75,10 +75,10 @@ function tm_nps_views_pre_render(&$view) {
 		$chapter_link = "";
 		if (sizeof($leading_chapter_nids) > 0) {
 			$first_chapter = node_load($leading_chapter_nids[0]);
-			$chapter_link = " <a href='/review/results/" . $first_chapter->nid . "'>View " . strip_tags($first_chapter->title) . " reviews</a>";
+			$chapter_link = " <a href='/feedback/results/" . $first_chapter->nid . "'>View " . strip_tags($first_chapter->title) . " feedback</a>";
 		}
 
-		$message = "Our overall Net Promoter Score (NPS) is " . $nps . " " . $nps_label . " &mdash; based on " . number_format($total_reviews) . " member reviews." . $chapter_link;
+		$message = "For all chapters, the overall Net Promoter Score (NPS) is " . $nps . " " . $nps_label . " &mdash; based on " . number_format($total_reviews) . " member ratings." . $chapter_link;
 		drupal_set_message($message, "help-tip");
 	}
 
@@ -97,10 +97,10 @@ function tm_nps_views_pre_render(&$view) {
 		$total_reviews = tm_nps_get_num_chapter_reviews($chapter->nid);
 		$nps_label = tm_nps_label($nps);
 
-		$message = "The Net Promoter Score (NPS) of " . strip_tags($chapter->title) . " is " . $nps . " " . $nps_label . " &mdash; based on " . number_format($total_reviews) . " member reviews. <a href='/review/results/all'>View all chapters</a>";
+		$message = "The Net Promoter Score (NPS) of " . strip_tags($chapter->title) . " is " . $nps . " " . $nps_label . " &mdash; based on " . number_format($total_reviews) . " member ratings. <a href='/feedback/results/all'>View all chapters</a>";
 
 		if ($total_reviews == 0) {
-			$message = "Your chapter does not have any reviews yet. Please share the <a target='_blank' href='/review'>Review Page</a> to get feedback from your members. <a href='/review/results/all'>View all reviews</a>";
+			$message = "Your chapter does not have any member feedback. Share the <a target='_blank' href='/feedback'>Feedback Page</a> with your members. <a href='/feedback/results/all'>View all chapters</a>";
 		}
 
 		drupal_set_message($message, "help-tip");
@@ -113,7 +113,7 @@ function tm_nps_display_index() {
 	global $conf;
 
 	if (!user_is_logged_in()) {
-		drupal_set_message("Please <a href='/user/login?destination=/review'>log in</a> to submit a review");
+		drupal_set_message("Please <a href='/user/login?destination=/feedback'>log in</a> to share feedback");
 		drupal_goto("/");
 	}
 
@@ -122,7 +122,7 @@ function tm_nps_display_index() {
 	// html
 	$html = "<center>
 	<div id='tm_nps_index_container' style='padding-top: 3rem;'>
-	<span id='tm_nps_index_message'>Please take a moment to <a href='/review'>review us</a> and provide feedback.</span>
+	<span id='tm_nps_index_message'>Let us know what you think &mdash; <a href='/feedback'>" . strtolower($conf["tm_users_review_label"]) . "</a>.</span>
 	<span id='tm_nps_index_submitting' style='display: none;'><img src='/sites/all/themes/tm/images/load-more-ajax-loader.gif'></span>
 	</div>";
 
@@ -135,7 +135,7 @@ function tm_nps_display_index() {
 
 }
 
-function tm_nps_submit_review() {
+function tm_nps_submit_feedback() {
 
 	global $user;
 	global $conf;
@@ -169,11 +169,11 @@ function tm_nps_submit_review() {
 	}
 	
 	// record
-	tm_nps_submit_review_db($user->uid, $score, $comment, $chapter_id, $url);
+	tm_nps_submit_feedback_db($user->uid, $score, $comment, $chapter_id, $url);
 
 	// set message
 	drupal_set_message("Thanks for sharing your feedback.");
-	if ($url == "/review") {
+	if ($url == "/feedback") {
 		$url = "/";
 	}
 	drupal_goto($url);
@@ -181,7 +181,7 @@ function tm_nps_submit_review() {
 }
 
 
-function tm_nps_submit_review_db($uid, $score, $comment, $chapter_id, $url, $timestamp = null) {
+function tm_nps_submit_feedback_db($uid, $score, $comment, $chapter_id, $url, $timestamp = null) {
 
 	if ($timestamp == null) {
 		$timestamp = time();
@@ -319,7 +319,7 @@ function _tm_nps_generate_sample_data($max_days = 360) {
 		foreach($uids as $uid) {
 			$score = rand(0,10);
 			$timestamp = rand(REQUEST_TIME - rand(0,($max_days*24*60*60)), REQUEST_TIME);
-			tm_nps_submit_review_db($uid, $score, $comments[array_rand($comments)], $chapter_nid, "", $timestamp);
+			tm_nps_submit_feedback_db($uid, $score, $comments[array_rand($comments)], $chapter_nid, "", $timestamp);
 		}
 	}
 }

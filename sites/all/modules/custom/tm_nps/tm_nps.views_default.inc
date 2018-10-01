@@ -150,6 +150,16 @@ A score above 0 is good. A score above 50 is excellent, and above 70 is exceptio
     7 => '7',
     5 => '5',
   );
+  $handler->display->display_options['defaults']['header'] = FALSE;
+  /* Header: Global: Text area */
+  $handler->display->display_options['header']['area']['id'] = 'area';
+  $handler->display->display_options['header']['area']['table'] = 'views';
+  $handler->display->display_options['header']['area']['field'] = 'area';
+  $handler->display->display_options['header']['area']['content'] = '<h2>Member Feedback</h2>
+
+👉 Share our <a target="_blank" href="/feedback">Feedback Page</a> with members to get feedback.
+';
+  $handler->display->display_options['header']['area']['format'] = 'full_html';
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   /* Relationship: TM NPS: Chapter id */
   $handler->display->display_options['relationships']['chapter_id']['id'] = 'chapter_id';
@@ -200,7 +210,7 @@ A score above 0 is good. A score above 50 is excellent, and above 70 is exceptio
   $handler->display->display_options['arguments']['chapter_id']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['chapter_id']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['chapter_id']['summary_options']['items_per_page'] = '25';
-  $handler->display->display_options['path'] = 'review/results/%';
+  $handler->display->display_options['path'] = 'feedback/results/%';
 
   /* Display: Net Promoter Score (Global) */
   $handler = $view->new_display('page', 'Net Promoter Score (Global)', 'tm_nps_report_global');
@@ -216,9 +226,9 @@ A score above 0 is good. A score above 50 is excellent, and above 70 is exceptio
   $handler->display->display_options['header']['area']['id'] = 'area';
   $handler->display->display_options['header']['area']['table'] = 'views';
   $handler->display->display_options['header']['area']['field'] = 'area';
-  $handler->display->display_options['header']['area']['content'] = '<h2>Member Reviews &mdash; All Chapters</h2>
+  $handler->display->display_options['header']['area']['content'] = '<h2>Member Feedback &mdash; All Chapters</h2>
 
-👉 Share our <a target="_blank" href="/review">Review Page</a> with members to get feedback.
+👉 Share our <a target="_blank" href="/feedback">Feedback Page</a> with members to get feedback.
 ';
   $handler->display->display_options['header']['area']['format'] = 'full_html';
   $handler->display->display_options['defaults']['relationships'] = FALSE;
@@ -261,7 +271,7 @@ A score above 0 is good. A score above 50 is excellent, and above 70 is exceptio
   $handler->display->display_options['fields']['created']['label'] = 'When';
   $handler->display->display_options['fields']['created']['date_format'] = 'time ago';
   $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
-  $handler->display->display_options['path'] = 'review/results/all';
+  $handler->display->display_options['path'] = 'feedback/results/all';
   $export['tm_nps'] = $view;
 
   return $export;

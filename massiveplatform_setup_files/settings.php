@@ -90,6 +90,7 @@ $conf['tm_users_subscriber_menu_links'] = array("VIP Lounge" => "/pro");
 $conf['tm_users_company_subscriber_menu_links'] = array("VIP Lounge" => "/pro");
 // $conf['tm_users_testimonial_description'] = ""; // description for testimonial in user settings
 // $conf['tm_users_review_min_age'] = 30; // how long the user has been a member until we show the review tab
+$conf["tm_users_review_label"] = "Share feedback"; // title for feedback link in user menu
 
 /** WORDPRESS FEEDME **/
 /** This calls a module hosted on wordpress to embed blog (plus other) content based on current page **/

@@ -78,7 +78,7 @@ function tm_nps_views_pre_render(&$view) {
 			$chapter_link = " <a href='/feedback/results/" . $first_chapter->nid . "'>View " . strip_tags($first_chapter->title) . " feedback</a>";
 		}
 
-		$message = "As a benchmark, the overall Net Promoter Score (NPS) is " . $nps . " " . $nps_label . " &mdash; based on " . number_format($total_reviews) . " member ratings." . $chapter_link;
+		$message = "The overall Net Promoter Score (NPS) of our community is " . $nps . " " . $nps_label . " &mdash; based on " . number_format($total_reviews) . " member ratings." . $chapter_link;
 		drupal_set_message($message, "help-tip");
 	}
 

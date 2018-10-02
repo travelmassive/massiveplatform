@@ -1097,8 +1097,10 @@ img.tm-status-update-preview-image {
 .tm_nps_container label { color: #fff; }
 .page-feedback #page-title { display: none;}
 .form-item-field-user-testimonial-und-0-value label { font-size: 1rem; }
-.views-table .views-field-title { padding-left: 1rem;}
-.views-table .views-field-score { padding-left: 1rem;}
-.views-table .views-field-comment { padding-left: 1rem; padding-right: 1rem;}
-.views-field-realname { min-width: 12rem; max-width: 12rem; }
+@media #{$medium-up} {
+  .views-table .views-field-title { padding-left: 1rem;}
+  .views-table .views-field-score { padding-left: 1rem;}
+  .views-table .views-field-comment { padding-left: 1rem; padding-right: 1rem;}
+  .views-field-realname { min-width: 12rem; max-width: 12rem; }
+}
 

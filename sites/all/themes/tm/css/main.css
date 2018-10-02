@@ -5132,28 +5132,29 @@ img.tm-status-update-preview-image {
   font-size: 1rem;
 }
 
-/* line 1100, ../sass/_base.scss */
-.views-table .views-field-title {
-  padding-left: 1rem;
-}
+@media only screen and (min-width: 65.063rem) {
+  /* line 1101, ../sass/_base.scss */
+  .views-table .views-field-title {
+    padding-left: 1rem;
+  }
 
-/* line 1101, ../sass/_base.scss */
-.views-table .views-field-score {
-  padding-left: 1rem;
-}
+  /* line 1102, ../sass/_base.scss */
+  .views-table .views-field-score {
+    padding-left: 1rem;
+  }
 
-/* line 1102, ../sass/_base.scss */
-.views-table .views-field-comment {
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
+  /* line 1103, ../sass/_base.scss */
+  .views-table .views-field-comment {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 
-/* line 1103, ../sass/_base.scss */
-.views-field-realname {
-  min-width: 12rem;
-  max-width: 12rem;
+  /* line 1104, ../sass/_base.scss */
+  .views-field-realname {
+    min-width: 12rem;
+    max-width: 12rem;
+  }
 }
-
 /* line 3, ../sass/_buttons.scss */
 button:hover, button:focus {
   outline: none;

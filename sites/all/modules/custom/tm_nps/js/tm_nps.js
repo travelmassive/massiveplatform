@@ -16,10 +16,10 @@
     updateFeedbackLabel = function(val) {
       var nps_score = $('input[name=tm_nps]:checked').val();
       if (nps_score > 6) { 
-      	$('#tm_nps_feedback_label').text('How can we be better?');
+      	$('#tm_nps_feedback_label').text('How can we do better?');
       }
-      if (nps_score > 7) { 
-      	$('#tm_nps_feedback_label').text('How can we be even better?');
+      if (nps_score > 8) { 
+      	$('#tm_nps_feedback_label').text('How can we do even better?');
       }
       if (nps_score < 5) { 
       	$('#tm_nps_feedback_label').text('How can we improve?');

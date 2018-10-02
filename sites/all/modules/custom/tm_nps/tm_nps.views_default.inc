@@ -28,6 +28,7 @@ function tm_nps_views_default_views() {
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['disable_sql_rewrite'] = TRUE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['pager']['type'] = 'load_more';
   $handler->display->display_options['pager']['options']['items_per_page'] = '50';
@@ -97,8 +98,8 @@ function tm_nps_views_default_views() {
   $handler->display->display_options['footer']['area']['content'] = '<br><br>
 <h3>What is Net Promoter Score (NPS)?</h3>
 
-NPS, or Net Promoter Score, is a popular way to measure customer satisfaction for brands.
-Members rate from 10-0 based on how likely they are to recommend us to their friends of colleagues (10 = very likely, 0 = unlikely).
+NPS, or Net Promoter Score, is a popular way to measure membership satisfaction.
+Members rate from 10-0 based on how likely they are to recommend us to their friends or colleagues (10 = very likely, 0 = unlikely).
 
 <h3>How is NPS calculated?</h3>
 

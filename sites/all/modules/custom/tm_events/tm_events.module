@@ -42,7 +42,7 @@ function tm_events_menu() {
     'type' => MENU_CALLBACK,
   );
    $items['events/download-csv/%'] = array(
-    'title' => t(''),
+    'title' => t('Download Attendee List'),
     'page callback' => 'tm_events_download_csv',
     'page arguments' => array(2),
     'access callback' => 'tm_events_download_csv_check',

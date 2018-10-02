@@ -24,6 +24,20 @@ function tm_chapters_download_csv_check_permission() {
 }
 
 /**
+ * Add html meta tags
+ * Called from tm/themes/template.php
+ */
+function tm_chapters_preprocess_html(&$variables, $hook) {
+
+  global $conf;
+
+  // add body tag
+  if ((arg(0) == "chapters") and (arg(2) == "export")) {
+    $variables['classes_array'][] = "page-chapter-download-csv";
+  }
+}
+
+/**
  * Display terms of use before downloading member data
  */
 function tm_chapters_download_csv() {

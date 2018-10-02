@@ -56,7 +56,7 @@ function tm_chapters_menu() {
     'type' => MENU_CALLBACK,
   );
   $items['chapters/%/export'] = array(
-    'title' => t(''),
+    'title' => t('Download Member List'),
     'page callback' => 'tm_chapters_download_csv',
     'access callback' => 'tm_chapters_download_csv_check_permission',
     'type' => MENU_CALLBACK,

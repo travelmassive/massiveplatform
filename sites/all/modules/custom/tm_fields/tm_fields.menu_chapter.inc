@@ -48,13 +48,13 @@ function _tm_more_actions_process_chapter_menu($field, $title, &$links, &$menu_i
         );
 
         // Display when last downloaded
-        $announcement_last_sent_flagged = flag_get_entity_flags("node", $nid, "download_member_csv");
-        if (sizeof($announcement_last_sent_flagged) > 0) {
-          $flagged_last = array_pop($announcement_last_sent_flagged);
+        $download_last_flagged = flag_get_entity_flags("node", $nid, "download_member_csv");
+        if (sizeof($download_last_flagged) > 0) {
+          $flagged_last = array_shift($download_last_flagged);
           $difference = time() - $flagged_last->timestamp;
           $flagged_time = format_interval($difference, 1) . " ago";
           $who_sent = user_load($flagged_last->uid);
-          $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Downloaded " . $flagged_time . " by " . l($who_sent->field_user_first_name[LANGUAGE_NONE][0]['value'], "/" . drupal_get_path_alias("user/" . $who_sent->uid), array('attributes' => array('target' => '_blank', 'class' => array('report-flagged-link')))) . "</span><br>";
+          $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>" . $flagged_time . " by " . l($who_sent->field_user_first_name[LANGUAGE_NONE][0]['value'], "/" . drupal_get_path_alias("user/" . $who_sent->uid), array('attributes' => array('target' => '_blank', 'class' => array('report-flagged-link')))) . "</span><br>";
           $links['chapter'][] = array(
             'wrapper_class' => array('last_downloaded_members'),
             'content' => t($last_sent_text),
@@ -125,13 +125,13 @@ function _tm_more_actions_process_chapter_menu($field, $title, &$links, &$menu_i
           // Display when last sent announcement
           $announcement_last_sent_flagged = flag_get_entity_flags("node", $node->nid, "announcement_last_sent");
           if (sizeof($announcement_last_sent_flagged) > 0) {
-            $flagged_last = array_pop($announcement_last_sent_flagged);
+            $flagged_last = array_shift($announcement_last_sent_flagged);
             $difference = time() - $flagged_last->timestamp;
             $flagged_time = format_interval($difference, 1) . " ago";
             $who_sent = user_load($flagged_last->uid);
             $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Sent " . $flagged_time . " by " . l($who_sent->field_user_first_name[LANGUAGE_NONE][0]['value'], "/" . drupal_get_path_alias("user/" . $who_sent->uid), array('attributes' => array('target' => '_blank', 'class' => array('report-flagged-link')))) . "</span><br>";
-            $links['chaptertools'][] = array(
-              'wrapper_class' => array('chapter_stats'),
+            $links['chapter'][] = array(
+              'wrapper_class' => array('chapter_announcement'),
               'content' => t($last_sent_text),
             );
           }

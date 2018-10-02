@@ -41,9 +41,16 @@ function tm_events_menu() {
     'access callback' => 'tm_events_check_permission_callback',
     'type' => MENU_CALLBACK,
   );
-  $items['events/download-csv/%'] = array(
-    'title' => t('Download RSVPs'),
+   $items['events/download-csv/%'] = array(
+    'title' => t(''),
     'page callback' => 'tm_events_download_csv',
+    'page arguments' => array(2),
+    'access callback' => 'tm_events_download_csv_check',
+    'type' => MENU_CALLBACK,
+  );
+  $items['events/download-csv/%/confirm'] = array(
+    'title' => t('Download RSVPs'),
+    'page callback' => 'tm_events_download_csv_confirm',
     'page arguments' => array(2),
     'access callback' => 'tm_events_download_csv_check',
     'type' => MENU_CALLBACK,

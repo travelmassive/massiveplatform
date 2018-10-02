@@ -75,6 +75,17 @@ function tm_flags_user_default_permissions() {
     'module' => 'flag',
   );
 
+  // Exported permission: 'flag download_member_csv'.
+  $permissions['flag download_member_csv'] = array(
+    'name' => 'flag download_member_csv',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'chapter leader' => 'chapter leader',
+      'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
   // Exported permission: 'flag event_register'.
   $permissions['flag event_register'] = array(
     'name' => 'flag event_register',
@@ -263,6 +274,17 @@ function tm_flags_user_default_permissions() {
     'roles' => array(
       'authenticated user' => 'authenticated user',
       'non-validated' => 'non-validated',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag download_member_csv'.
+  $permissions['unflag download_member_csv'] = array(
+    'name' => 'unflag download_member_csv',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'chapter leader' => 'chapter leader',
+      'moderator' => 'moderator',
     ),
     'module' => 'flag',
   );

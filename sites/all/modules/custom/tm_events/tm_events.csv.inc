@@ -26,10 +26,43 @@ function tm_events_download_csv_check() {
 
 }
 
+/**
+ * Display terms of use before downloading member data
+ */
+function tm_events_download_csv($nid) {
+
+  global $conf;
+  global $user;
+
+  // Event url
+  $event_url = drupal_get_path_alias("node/" . $nid);
+
+  // Create form
+  $form = array();
+
+  // Swap in first name
+  $account = user_load($user->uid);
+  $terms_text = str_replace("__first_name__", $account->field_user_first_name[LANGUAGE_NONE][0]['value'], $conf["tm_terms_event_data_terms_text"]); 
+
+  // Display terms
+  $html = "<p>" . $terms_text . "</p>";
+
+  // Agree and cancel buttons
+  $html .= '<input onClick="document.getElementById(\'tm_show_after_terms_agree\').style.display = \'block\'; document.location=\'/events/download-csv/' . $nid . '/confirm\'" type="submit" id="edit-submit" name="op" value="I agree" class="form-submit">';
+  $html .= ' <input onClick="document.location=\'/' . $event_url . '\'" type="submit" value="Cancel" class="form-submit">';
+
+  $html .= "<br><br><span id='tm_show_after_terms_agree' style='display: none;'>Your download is starting &mdash; you can return to your <a href='/" . $event_url . "'>event page</a>.</span>";
+ 
+  $form['confirm_agreement'] = array('#markup' => $html);
+
+  return $form;
+
+}
+
 /*
  * RSVP Download function 
  */
-function tm_events_download_csv($nid){
+function tm_events_download_csv_confirm($nid){
 
 	global $conf;
 	global $user;
@@ -48,6 +81,11 @@ function tm_events_download_csv($nid){
     	or (in_array('chapter leader', array_values($user->roles)))) {
   	$show_email = true;
   }
+
+  // flag event as having downlaoded data
+  $flag = flag_get_flag('download_member_csv');
+  $flag->flag("unflag", $nid); // unflag so we can flag again
+  $flag->flag("flag", $nid);
 
   // csv header
   drupal_add_http_header('Content-Type', 'text/csv; utf-8');

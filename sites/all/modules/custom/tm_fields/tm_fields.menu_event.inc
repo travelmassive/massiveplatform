@@ -168,6 +168,21 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
             )
           ))
         );
+
+        // Display when last downloaded
+        $announcement_last_sent_flagged = flag_get_entity_flags("node", $nid, "download_member_csv");
+        if (sizeof($announcement_last_sent_flagged) > 0) {
+          $flagged_last = array_pop($announcement_last_sent_flagged);
+          $difference = time() - $flagged_last->timestamp;
+          $flagged_time = format_interval($difference, 1) . " ago";
+          $who_sent = user_load($flagged_last->uid);
+          $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Downloaded " . $flagged_time . " by " . l($who_sent->field_user_first_name[LANGUAGE_NONE][0]['value'], "/" . drupal_get_path_alias("user/" . $who_sent->uid), array('attributes' => array('target' => '_blank', 'class' => array('report-flagged-link')))) . "</span><br>";
+          $links['event'][] = array(
+            'wrapper_class' => array('last_downloaded_attendees'),
+            'content' => t($last_sent_text),
+          );
+        }
+
       }
     }
   }

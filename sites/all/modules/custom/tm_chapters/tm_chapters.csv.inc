@@ -23,12 +23,51 @@ function tm_chapters_download_csv_check_permission() {
 
 }
 
+/**
+ * Display terms of use before downloading member data
+ */
+function tm_chapters_download_csv() {
+
+  global $conf;
+  global $user;
+
+  // Check we have a node
+  $nid = _orig_nid();
+  if($nid == 0) {
+    print drupal_not_found();
+    return;
+  }
+
+  // Chapter url
+  $chapter_url = drupal_get_path_alias("node/" . $nid);
+
+  // Create form
+  $form = array();
+
+  // Swap in first name
+  $account = user_load($user->uid);
+  $terms_text = str_replace("__first_name__", $account->field_user_first_name[LANGUAGE_NONE][0]['value'], $conf["tm_terms_chapter_data_terms_text"]); 
+
+  // Display terms
+  $html = "<p>" . $terms_text . "</p>";
+
+  // Agree and cancel buttons
+  $html .= '<input onClick="document.getElementById(\'tm_show_after_terms_agree\').style.display = \'block\'; document.location=\'/' . $chapter_url . '/export/confirm\'" type="submit" id="edit-submit" name="op" value="I agree" class="form-submit">';
+  $html .= ' <input onClick="document.location=\'/' . $chapter_url . '\'" type="submit" value="Cancel" class="form-submit">';
+
+  $html .= "<br><br><span id='tm_show_after_terms_agree' style='display: none;'>Your download is starting &mdash; you can return to your <a href='/" . $chapter_url . "'>chapter page</a>.</span>";
+ 
+  $form['confirm_agreement'] = array('#markup' => $html);
+
+  return $form;
+
+}
 
 
 /**
  * Download Chapter CSV function 
  */
-function tm_chapters_download_csv(){
+function tm_chapters_download_csv_confirm(){
 
   global $user;
   global $conf;
@@ -41,6 +80,13 @@ function tm_chapters_download_csv(){
 
   // Get chapter
   $chapter = node_load($nid);
+
+  // flag chapter as having downlaoded data
+  if ($chapter != null) {
+    $flag = flag_get_flag('download_member_csv');
+    $flag->flag("unflag", $chapter->nid); // unflag so we can flag again
+    $flag->flag("flag", $chapter->nid);
+  }
 
   // create filename
   $oldzone = date_default_timezone_get();

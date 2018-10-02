@@ -92,6 +92,10 @@ $conf['tm_users_company_subscriber_menu_links'] = array("VIP Lounge" => "/pro");
 // $conf['tm_users_review_min_age'] = 30; // how long the user has been a member until we show the review tab
 $conf["tm_users_review_label"] = "Share feedback"; // title for feedback link in user menu
 
+/** DATA ACCESS TERMS OF USE **/
+$conf["tm_terms_chapter_data_terms_text"] = "Hi __first_name__,<br><br>This data is confidential and for chapter leaders only.<br><br>Under our Privacy Terms you cannot transfer personal data (including name or email) to sponsors or 3rd parties."; // terms to show to chapter leader prior to downloading member data 
+$conf["tm_terms_event_data_terms_text"] = "Hi __first_name__,<br><br>This data is confidential and for the event organizers only.<br><br>Under our Privacy Terms laws you cannot transfer personal data (including name or email) to sponsors or 3rd parties."; // terms to show to chapter leader prior to downloading member data 
+
 /** WORDPRESS FEEDME **/
 /** This calls a module hosted on wordpress to embed blog (plus other) content based on current page **/
 /** You will need this wordpress plugin: https://github.com/travelmassive/massiveplatform-wordpress-feedme **/

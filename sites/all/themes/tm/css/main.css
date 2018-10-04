@@ -5143,6 +5143,7 @@ img.tm-status-update-preview-image {
 @media only screen and (min-width: 65.063rem) {
   /* line 1103, ../sass/_base.scss */
   .views-table .views-field-title {
+    min-width: 8rem;
     padding-left: 1rem;
   }
 
@@ -5158,9 +5159,14 @@ img.tm-status-update-preview-image {
   }
 
   /* line 1106, ../sass/_base.scss */
-  .views-field-realname {
+  .views-table .views-field-realname {
     min-width: 12rem;
     max-width: 12rem;
+  }
+
+  /* line 1107, ../sass/_base.scss */
+  .views-table .views-field-created {
+    min-width: 10rem;
   }
 }
 /* line 3, ../sass/_buttons.scss */

@@ -162,6 +162,8 @@ function tm_nps_submit_feedback() {
 		$comment = $_GET["comment"];
 	}
 
+	// set active chapter
+	// either home chapter, or chapter of most recently joined event
 	$chapter_id = null;
 	$account = user_load($user->uid);
 	if (isset($account->field_home_chapter[LANGUAGE_NONE][0]['target_id'])) {

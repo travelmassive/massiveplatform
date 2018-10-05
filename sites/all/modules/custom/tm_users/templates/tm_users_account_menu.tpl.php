@@ -107,14 +107,14 @@ $image = theme('image_style', array(
 
       <?php 
       // show review link
-      if (in_array("approved user", $loaded->roles) and (!(tm_users_is_member_reported($loaded->uid)))) { 
+      if ($conf["tm_users_feedback_show_menu"] and in_array("approved user", $loaded->roles) and (!(tm_users_is_member_reported($loaded->uid)))) { 
         $user_review_min_age = 30; // 30 days
         if (isset($conf["tm_users_review_min_age"])) {
           $user_review_min_age = $conf["tm_users_review_min_age"];
         }
         $account_age_days = ((time() - $loaded->created) / (60 * 60 * 24));
         if ($account_age_days > $user_review_min_age) { ?>
-      <li><a href='javascript:jq_net_promoter_score("<?php print($conf["tm_site_name"]);?>");'><?php print($conf["tm_users_review_label"]);?></a></li>
+      <li><a href='javascript:jq_net_promoter_score("<?php print($conf["tm_site_name"]);?>");'><?php print($conf["tm_users_feedback_label"]);?></a></li>
       <?php 
         } // end if
       } // end if

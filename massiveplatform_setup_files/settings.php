@@ -88,9 +88,10 @@ $conf['tm_twitter_consumer_secret'] = '';
 // $conf['tm_users_chapter_leader_menu_links'] = array("Chapter Leader Resources" => "https://example.massiveplatform.com/blog/chapter-leader-resources/"); // array of account links (optional)
 $conf['tm_users_subscriber_menu_links'] = array("VIP Lounge" => "/pro");
 $conf['tm_users_company_subscriber_menu_links'] = array("VIP Lounge" => "/pro");
-// $conf['tm_users_testimonial_description'] = ""; // description for testimonial in user settings
+// $conf['tm_users_review_description'] = ""; // description for testimonial in user settings
 // $conf['tm_users_review_min_age'] = 30; // how long the user has been a member until we show the review tab
-$conf["tm_users_review_label"] = "Share feedback"; // title for feedback link in user menu
+$conf['tm_users_feedback_show_menu'] = true; // show feedback link in user menu and review tab
+$conf["tm_users_feedback_label"] = "Share feedback"; // title for feedback link in user menu
 
 /** DATA ACCESS TERMS OF USE **/
 $conf["tm_terms_chapter_data_terms_text"] = "Hi __first_name__,<br><br>This data is confidential and for chapter leaders only.<br><br>Under our Privacy Terms you cannot transfer personal data (including name or email) to sponsors or 3rd parties."; // terms to show to chapter leader prior to downloading member data 

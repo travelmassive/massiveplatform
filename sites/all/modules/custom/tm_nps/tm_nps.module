@@ -13,10 +13,13 @@ include_once 'tm_nps.views.inc';
  * Implements hook_menu().
  */
 function tm_nps_menu() {
+
+	global $conf;
+
 	$items = array();
 
 	$items['feedback'] = array(
-		'title' => 'Give Us Feedback',
+		'title' => $conf["tm_users_feedback_label"],
 		'page callback' => 'tm_nps_display_index',
 		'access arguments' => array('access content')
 	);
@@ -128,7 +131,7 @@ function tm_nps_display_index() {
 	// html
 	$html = "<center>
 	<div id='tm_nps_index_container' style='padding-top: 3rem;'>
-	<span id='tm_nps_index_message'>Let us know what you think &mdash; <a href='/feedback'>" . strtolower($conf["tm_users_review_label"]) . "</a>.</span>
+	<span id='tm_nps_index_message'>Let us know what you think &mdash; <a href='/feedback'>" . strtolower($conf["tm_users_feedback_label"]) . "</a>.</span>
 	<span id='tm_nps_index_submitting' style='display: none;'><img src='/sites/all/themes/tm/images/load-more-ajax-loader.gif'></span>
 	</div>";
 
@@ -143,8 +146,8 @@ function tm_nps_display_index() {
 
 function tm_nps_submit_feedback() {
 
-	global $user;
 	global $conf;
+	global $user;
 
 	$score = null;
 	if (isset($_GET["score"])) {
@@ -162,14 +165,11 @@ function tm_nps_submit_feedback() {
 		$comment = $_GET["comment"];
 	}
 
-	// set active chapter
-	// either home chapter, or chapter of most recently joined event
-	$chapter_id = null;
-	$account = user_load($user->uid);
-	if (isset($account->field_home_chapter[LANGUAGE_NONE][0]['target_id'])) {
-		$chapter_id = $account->field_home_chapter[LANGUAGE_NONE][0]['target_id'];
-	}
+	// get active chapter
+	// chapter of most recently registered event, or home chapter
+	$chapter_id = tm_nps_get_active_chapter($user->uid);
 
+	// get url
 	$url = "/";
 	if (isset($_SERVER['HTTP_REFERER'])) {
 		$full_url = $_SERVER['HTTP_REFERER'];
@@ -188,6 +188,53 @@ function tm_nps_submit_feedback() {
 	}
 	drupal_goto($url);
 
+}
+
+/**
+ * Helper method to get active chapter of a member
+ * Return chapter of most recently registered event, or home chapter
+ */
+function tm_nps_get_active_chapter($uid) {
+
+	$event_flags = array();
+	$event_flags[] = flag_get_flag('event_register')->fid;
+	$event_flags[] = flag_get_flag('event_waitlist')->fid;
+	$event_flags[] = flag_get_flag('event_paid')->fid;
+
+	// fetch all events of member
+	$event_ids = array();
+	$query = "SELECT entity_id FROM flagging WHERE entity_type = 'node' AND fid IN (" . implode(",", $event_flags) . ") AND uid = :uid ORDER BY timestamp DESC LIMIT 1";
+	$rows = db_query($query, array(':uid' => $uid))->fetchAll();
+		foreach ($rows as $row) {
+		$event_ids[] = $row->entity_id;
+	}
+
+	// member has registered for an event
+	if (sizeof($event_ids) > 0) {
+	
+		// load event
+		$event = node_load($event_ids[0]);
+		if ($event == null) {
+			return null;
+		}
+
+		// get chapter id of event (null if no chapter)
+		$chapter_id = _tm_event_get_chapter_id($event);
+		if ($chapter_id != null) {
+			return $chapter_id;
+		}
+	}
+
+	// either home chapter, or chapter of most recently joined event
+	$chapter_id = null;
+	$account = user_load($uid);
+	if (isset($account->field_home_chapter[LANGUAGE_NONE][0]['target_id'])) {
+		$chapter_id = $account->field_home_chapter[LANGUAGE_NONE][0]['target_id'];
+		return $chapter_id;
+	}
+
+	// no active chapter
+	return null;
 }
 
 
@@ -331,7 +378,6 @@ function tm_nps_get_num_chapter_reviews($chapter_id) {
 
 	return $result->total_reviews;
 }
-
 
 /**
  * Developer test method

@@ -133,13 +133,17 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
     unset($form['field_user_account_receipt']); // hide subscription type
   }
 
-  $review_description = "<h2>Tell us what you think</h2>Please take a moment to <a class='tm_nps_review_link' href='/feedback'>" . strtolower($conf["tm_users_review_label"]) . "</a>";
-  $form['#groups']['group_user_feedback']->format_settings['instance_settings']['description'] = $review_description;
-
+  // Add feedback link
+  if ($conf["tm_users_feedback_show_menu"]) {
+    $review_description = "<h2>Tell us what you think</h2>Please take a moment to <a class='tm_nps_review_link' href='/feedback'>" . strtolower($conf["tm_users_feedback_label"]) . "</a>";
+    $form['#groups']['group_user_feedback']->format_settings['instance_settings']['description'] = $review_description;
+  } else {
+    $form['#groups']['group_user_feedback']->format_settings['instance_settings']['description'] = "";
+  }
 
   // Set testimonial description 
-  if (isset($conf["tm_users_testimonial_description"])) {
-      $form['field_user_testimonial'][LANGUAGE_NONE][0]['value']['#description'] = $conf["tm_users_testimonial_description"] . "<br><br>";
+  if (isset($conf["tm_users_review_description"])) {
+      $form['field_user_testimonial'][LANGUAGE_NONE][0]['value']['#description'] = $conf["tm_users_review_description"] . "<br><br>";
   } else {
     $testimonial_description = $form['field_user_testimonial'][LANGUAGE_NONE][0]['value']['#description'];
     $testimonial_description = str_replace("__site_name__", $conf["tm_site_name"], $testimonial_description);

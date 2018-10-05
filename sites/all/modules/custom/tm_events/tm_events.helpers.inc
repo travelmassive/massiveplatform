@@ -659,4 +659,3 @@ function tm_events_get_future_events_for_chapters($chapter_ids = null, $include_
   // return results
   return $event_ids;
 }
-

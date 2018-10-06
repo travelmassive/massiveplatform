@@ -177,6 +177,7 @@ A score above 0 is good. A score above 50 is excellent, and above 70 is exceptio
   $handler->display->display_options['fields']['realname']['field'] = 'realname';
   $handler->display->display_options['fields']['realname']['relationship'] = 'uid';
   $handler->display->display_options['fields']['realname']['label'] = 'Member Name';
+  $handler->display->display_options['fields']['realname']['empty'] = 'Account Removed';
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -248,6 +249,7 @@ A score above 0 is good. A score above 50 is excellent, and above 70 is exceptio
   $handler->display->display_options['fields']['realname']['field'] = 'realname';
   $handler->display->display_options['fields']['realname']['relationship'] = 'uid';
   $handler->display->display_options['fields']['realname']['label'] = 'Member Name';
+  $handler->display->display_options['fields']['realname']['empty'] = 'Account Removed';
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';

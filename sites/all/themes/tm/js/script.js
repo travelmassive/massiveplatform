@@ -636,7 +636,7 @@
       title: confirm_title,
       submit: function(e,v,m,f){
         if (v == true) {
-          window.location = '/user/' + uid + '/confirm_cancel_account?feedback=' + $("#cancel_account_feedback").val();
+          window.location = '/user/' + uid + '/confirm_cancel_account?member-feedback=' + $("#cancel_account_feedback").val();
         }
       }
     });

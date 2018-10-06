@@ -71,8 +71,8 @@ function tm_users_confirm_cancel_account($account) {
 
     // feedback
     $feedback = "";
-    if (isset($_GET["feedback"])) {
-      $feedback = trim($_GET["feedback"]);
+    if (isset($_GET["member-feedback"])) {
+      $feedback = trim($_GET["member-feedback"]);
     }
 
     // notify administrator

@@ -164,14 +164,12 @@ function tm_theme_html_head_alter(&$head_elements) {
     drupal_add_js(drupal_get_path('module', 'tm_nps') . '/js/tm_nps.js');
   }
 
-  // show rating popup if ?review_us
-  if (isset($_GET["review_us"])) {
+  // show rating popup if ?feedback
+  if (isset($_GET["feedback"])) {
     if (!user_is_logged_in()) {
-     drupal_add_js('jQuery(document).ready(function () { setTimeout(function() { jq_alert(null, "Please <a href=\"/user/login?destination=' . drupal_get_path_alias() . '%3Freview_us\">log in</a> to submit a review.") }); });', 'inline');
-    } else if (in_array("approved user", $user->roles)) {
-      drupal_add_js('jQuery(document).ready(function () { setTimeout(function() { jq_net_promoter_score("' . $conf["tm_site_name"] . '","' . drupal_get_path_alias() . '" );}, 500); });', 'inline');
+      drupal_set_message($conf["tm_users_feedback_cta"] . "<a href='/user/login?destination=" . drupal_get_path_alias() . "%3Ffeedback'>Please log in to share feedback</a>.");
     } else {
-        drupal_set_message("You need to be an " . $conf["tm_approved_label"] . " to submit a review");
+      drupal_add_js('jQuery(document).ready(function () { setTimeout(function() { jq_net_promoter_score("' . $conf["tm_site_name"] . '","' . drupal_get_path_alias() . '" );}, 500); });', 'inline');
     }
   }
 

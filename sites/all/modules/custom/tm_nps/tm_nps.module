@@ -117,7 +117,8 @@ function tm_nps_display_index() {
 	global $user;
 
 	if (!user_is_logged_in()) {
-		drupal_set_message("Please <a href='/user/login?destination=/feedback'>log in</a> to share feedback");
+		drupal_get_messages();
+		drupal_set_message($conf["tm_users_feedback_cta"] . "<a href='/user/login?destination=/feedback'>Please log in to share feedback</a>.");
 		drupal_goto("/");
 	}
 
@@ -192,14 +193,35 @@ function tm_nps_submit_feedback() {
 
 /**
  * Helper method to get active chapter of a member
- * Return chapter of most recently registered event, or home chapter
+ * Return chapter (if viewing page or event), chapter of most recently registered event, or home chapter
  */
 function tm_nps_get_active_chapter($uid) {
+
+	global $base_url;
 
 	$event_flags = array();
 	$event_flags[] = flag_get_flag('event_register')->fid;
 	$event_flags[] = flag_get_flag('event_waitlist')->fid;
 	$event_flags[] = flag_get_flag('event_paid')->fid;
+
+	// If feedback submitted when viewing page of chapter
+	// validate and use Drupal_visitor_chapter_referral_id
+	if (isset($_SERVER["HTTP_REFERER"])) {
+		if (((strpos($_SERVER["HTTP_REFERER"], $base_url . "/chapters/")) === 0) or
+		((strpos($_SERVER["HTTP_REFERER"], $base_url . "/events/")) === 0)) {
+
+			// Use chapter referral cookie
+			if (isset($_COOKIE["Drupal_visitor_chapter_referral_id"])) {
+				$chapter_id = $_COOKIE["Drupal_visitor_chapter_referral_id"];
+				$chapter = node_load($chapter_id);
+				if ($chapter != null) {
+					if ($chapter->type == "chapter") {
+						return $chapter_id;
+					}
+				}
+			}
+		}
+	}
 
 	// fetch all events of member
 	$event_ids = array();

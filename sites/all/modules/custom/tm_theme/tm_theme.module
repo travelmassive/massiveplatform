@@ -168,6 +168,7 @@ function tm_theme_html_head_alter(&$head_elements) {
   if (isset($_GET["feedback"])) {
     if (!user_is_logged_in()) {
       drupal_set_message($conf["tm_users_feedback_cta"] . "<a href='/user/login?destination=" . drupal_get_path_alias() . "%3Ffeedback'>Please log in to share feedback</a>.");
+      drupal_goto(drupal_get_path_alias());
     } else {
       drupal_add_js('jQuery(document).ready(function () { setTimeout(function() { jq_net_promoter_score("' . $conf["tm_site_name"] . '","' . drupal_get_path_alias() . '" );}, 500); });', 'inline');
     }

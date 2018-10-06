@@ -104,7 +104,7 @@ function tm_nps_views_pre_render(&$view) {
 
 		if ($total_reviews == 0) {
 			$chapter_feedback_url = drupal_get_path_alias("node/" . $chapter->nid) . "?feedback";
-			$message = "Your chapter does not have any member feedback. Share this <a target='_blank' href='/" . $chapter_feedback_url . "'>Feedback Link</a> with your members. <a href='/feedback/results/all'>View all chapters</a>";
+			$message = "Your chapter does not have any member feedback. Share your <a target='_blank' href='/" . $chapter_feedback_url . "'>feedback link</a> with your members. <a href='/feedback/results/all'>View all chapters</a>";
 		}
 
 		drupal_set_message($message, "help-tip");

@@ -183,7 +183,7 @@ A score above 0 is good. A score above 50 is excellent, and above 70 is exceptio
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['relationship'] = 'chapter_id';
-  $handler->display->display_options['fields']['title']['label'] = 'Home Chapter';
+  $handler->display->display_options['fields']['title']['label'] = 'Chapter';
   /* Field: TM NPS: Score */
   $handler->display->display_options['fields']['score']['id'] = 'score';
   $handler->display->display_options['fields']['score']['table'] = 'tm_nps';
@@ -255,7 +255,7 @@ A score above 0 is good. A score above 50 is excellent, and above 70 is exceptio
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['relationship'] = 'chapter_id';
-  $handler->display->display_options['fields']['title']['label'] = 'Home Chapter';
+  $handler->display->display_options['fields']['title']['label'] = 'Chapter';
   /* Field: TM NPS: Score */
   $handler->display->display_options['fields']['score']['id'] = 'score';
   $handler->display->display_options['fields']['score']['table'] = 'tm_nps';

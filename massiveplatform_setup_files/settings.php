@@ -375,6 +375,8 @@ $conf["tm_chapters_announcements_signoff"] = "Cheers,<br>"; // default signoff t
 
 /** THEME SETTINGS **/
 $conf["tm_theme_meta_color"] = "#007DB7"; // Set the theme color for mobile Android, iOS 
+// $conf["tm_theme_js_header_scripts"] = array("public://google_tag/google_tag.script.js"); // Array of scripts that will be put in header (optional)
+$conf["tm_theme_js_footer_scripts"] = array("sites/all/modules/contrib/ckeditor/includes/ckeditor.utils.js", "//cdn.ckeditor.com/4.4.3/full-all/ckeditor.js"); // Array of scripts that will be forced to bottom of footer (after Drupal.settings) 
 
 /** SEARCH SETTINGS **/
 $conf["tm_search_api_placeholder_text"] = "Enter a name, city, event or company ..."; // placeholder text for search box in site header

@@ -33,7 +33,6 @@
     <link rel="apple-touch-icon" sizes="144x144" href="<?php echo tm_branding_get_base_element("apple_touch_icon", "apple-touch-icon-144x144.png");?>"/>
     <link rel="apple-touch-icon" sizes="152x152" href="<?php echo tm_branding_get_base_element("apple_touch_icon", "apple-touch-icon-152x152.png");?>"/>
     
-    <link type="text/plain" rel="author" href="<?php print $base_path . path_to_theme(); ?>/humans.txt" />
     <link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
 
     <?php print $styles; ?>
@@ -54,6 +53,9 @@
     
     <!-- http://writing.colin-gourlay.com/safely-using-ready-before-including-jquery/ -->
     <script type="text/javascript">(function(w,d,u){w.readyQ=[];w.bindReadyQ=[];function p(x,y){if(x=="ready"){w.bindReadyQ.push(y);}else{w.readyQ.push(x);}};var a={ready:p,bind:p};w.$=w.jQuery=function(f){if(f===d||f===u){return a}else{p(f)}}})(window,document)</script>
+
+    <!-- Header JS -->
+    <?php print $scripts; ?>
 
     <?php
       // include brand css
@@ -213,8 +215,8 @@
     <?php endif; ?>
     <?php print $page_top; ?>
     <?php print $page; ?>
-    <?php print $scripts; ?>
     <?php print $page_bottom; ?>
+    <?php print (drupal_get_js('tm_after_footer')); ?>
 
     <?php
       // include brand js

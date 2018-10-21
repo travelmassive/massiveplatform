@@ -38,59 +38,6 @@ function tm_theme_html_head_alter(&$head_elements) {
   	);
   }
 
-  // add impromptu js for better alert box handling
-  // see: http://trentrichardson.com/Impromptu/
-  // https://github.com/trentrichardson/jQuery-Impromptu
-  drupal_add_js(drupal_get_path('theme', 'tm') . '/js/jquery-impromptu.js', array('group' => JS_THEME));
-
-  drupal_add_css(drupal_get_path('theme', 'tm') . '/css/jquery-impromptu.css', array('group' => CSS_THEME));
-
-  // impromptu pure css theme effects admin theme
-  // allow on /user for profile editing
-  if (!path_is_admin(current_path()) or ($url_parts[1] == "user") or ($url_parts[1] == "node")) {
-    drupal_add_css(drupal_get_path('theme', 'tm') . '/css/jquery-impromptu.pure.css', array('group' => CSS_THEME));
-  }
-
-  // if not front page add sticky header
-  // also ignore node or user edit pages as account menu is obscured when using sticky header
-  if (!drupal_is_front_page()) {
-    drupal_add_js(drupal_get_path('theme', 'tm') . '/js/jquery.sticky.js', array('group' => JS_THEME));
-  }
-
-  // add EU cookie consent
-  // https://silktide.com/tools/cookie-consent
-  if (isset($conf["tm_cookieconsent_enable"])) {
-    if ($conf["tm_cookieconsent_enable"] == true) {
-
-      $show_cookie_consent = true;
-
-      // If tm_cookieconsent_check_geoip_is_eu check geoip
-      if (isset($conf["tm_cookieconsent_check_geoip_is_eu"])) {
-        if ($conf["tm_cookieconsent_check_geoip_is_eu"]) {
-          $visitor_ip = tm_geoip_get_real_visitor_ip();
-          $geoip_info = tm_geoip_lookup($visitor_ip);
-
-          if ($geoip_info != null) {
-            if (isset($geoip_info["continent"]["code"])) {
-
-              // set cookie consent to false if not EU
-              if ($geoip_info["continent"]["code"] != "EU") {
-                $show_cookie_consent = false;
-              }
-            }
-          } // end if geoip_info not null
-        } // end if tm_cookieconsent_check_geoip_is_eu enabled
-      } // end if tm_cookieconsent_check_geoip_is_eu set
-      
-      if ($show_cookie_consent) {
-        $privacy_url = $conf["tm_cookieconsent_privacy_url"];
-        drupal_add_js(drupal_get_path('theme', 'tm') . '/js/cookieconsent.v2.min.js', array('group' => JS_THEME));
-        drupal_add_js('window.cookieconsent_options = {"message":"We use cookies to ensure you get the best experience on our website. ","dismiss":"Ok","learnMore":"Learn more","link":"' . $privacy_url . '","theme":"dark-top"};', 'inline');
-      }
-     
-    }
-  }
-
   // fix css for administrator on edit page
   if (in_array("administrator", $user->roles)) {
     drupal_add_css ('.fieldset-legend { position: relative !important; }', 'inline');
@@ -150,6 +97,72 @@ function tm_theme_html_head_alter(&$head_elements) {
     }
   }
 
+}
+
+/**
+ * Add js and html meta tags
+ */
+function tm_theme_preprocess_html(&$variables, $hook) {
+
+  global $conf;
+
+  if (drupal_is_front_page()) {
+    tm_theme_add_meta_tags_front_page();
+  }
+
+  // add impromptu js for better alert box handling
+  // see: http://trentrichardson.com/Impromptu/
+  // https://github.com/trentrichardson/jQuery-Impromptu
+  drupal_add_js(drupal_get_path('theme', 'tm') . '/js/jquery-impromptu.js', array('group' => JS_THEME));
+  drupal_add_css(drupal_get_path('theme', 'tm') . '/css/jquery-impromptu.css', array('group' => CSS_THEME));
+
+  // impromptu pure css theme effects admin theme
+  // allow on /user for profile editing
+  $url_parts = explode('/', request_uri());
+  if (!path_is_admin(current_path()) or ($url_parts[1] == "user") or ($url_parts[1] == "node")) {
+    drupal_add_css(drupal_get_path('theme', 'tm') . '/css/jquery-impromptu.pure.css', array('group' => CSS_THEME));
+  }
+
+  // if not front page add sticky header
+  // also ignore node or user edit pages as account menu is obscured when using sticky header
+  if (!drupal_is_front_page()) {
+    drupal_add_js(drupal_get_path('theme', 'tm') . '/js/jquery.sticky.js', array('group' => JS_THEME));
+  }
+
+  // add EU cookie consent
+  // https://silktide.com/tools/cookie-consent
+  if (isset($conf["tm_cookieconsent_enable"])) {
+    if ($conf["tm_cookieconsent_enable"] == true) {
+
+      $show_cookie_consent = true;
+
+      // If tm_cookieconsent_check_geoip_is_eu check geoip
+      if (isset($conf["tm_cookieconsent_check_geoip_is_eu"])) {
+        if ($conf["tm_cookieconsent_check_geoip_is_eu"]) {
+          $visitor_ip = tm_geoip_get_real_visitor_ip();
+          $geoip_info = tm_geoip_lookup($visitor_ip);
+
+          if ($geoip_info != null) {
+            if (isset($geoip_info["continent"]["code"])) {
+
+              // set cookie consent to false if not EU
+              if ($geoip_info["continent"]["code"] != "EU") {
+                $show_cookie_consent = false;
+              }
+            }
+          } // end if geoip_info not null
+        } // end if tm_cookieconsent_check_geoip_is_eu enabled
+      } // end if tm_cookieconsent_check_geoip_is_eu set
+      
+      if ($show_cookie_consent) {
+        $privacy_url = $conf["tm_cookieconsent_privacy_url"];
+        drupal_add_js(drupal_get_path('theme', 'tm') . '/js/cookieconsent.v2.min.js', array('group' => JS_THEME));
+        drupal_add_js('window.cookieconsent_options = {"message":"We use cookies to ensure you get the best experience on our website. ","dismiss":"Ok","learnMore":"Learn more","link":"' . $privacy_url . '","theme":"dark-top"};', 'inline');
+      }
+     
+    }
+  }
+
   // Add support for HTTP Live Streaming
   // hls.js
   if (drupal_is_front_page()) {
@@ -172,19 +185,6 @@ function tm_theme_html_head_alter(&$head_elements) {
     } else {
       drupal_add_js('jQuery(document).ready(function () { setTimeout(function() { jq_net_promoter_score("' . $conf["tm_site_name"] . '","' . drupal_get_path_alias() . '" );}, 500); });', 'inline');
     }
-  }
-
-}
-
-/**
- * Add html meta tags
- */
-function tm_theme_preprocess_html(&$variables, $hook) {
-
-  global $conf;
-
-  if (drupal_is_front_page()) {
-    tm_theme_add_meta_tags_front_page();
   }
 
 }
@@ -611,6 +611,7 @@ function tm_theme_ga_protect_pii(&$head_elements) {
   drupal_add_js("var tm_ga = " . json_encode($ga_settings) . ";", array(
   'type' => 'inline',
   'scope' => 'header',
+  'group' => JS_LIBRARY * 2, // same group as google_tag
   'weight' => -10));
 }
 
@@ -628,6 +629,7 @@ function tm_theme_ga_protect_pii_user($account) {
   drupal_add_js("var tm_ga_user = " . json_encode($ga_settings) . ";", array(
   'type' => 'inline',
   'scope' => 'header',
+  'group' => JS_LIBRARY * 2, // same group as google_tag
   'weight' => -10));
 }
 
@@ -683,4 +685,40 @@ function tm_theme_ga_protect_pii_strip_email($str) {
   return $str;
 }
 
+/**
+ * Put all scripts in footer, unless they are inline or in list
+ * See html.tpl.php for location where scripts are rendered
+ * See http://pixel-whip.com/drupal-load-scripts-last.html
+ */
+function tm_theme_js_alter(&$javascript) {
 
+  global $conf;
+
+  // Collect the scripts we want in to remain in the header scope
+  $header_scripts = array();
+  if (isset($conf["tm_theme_js_header_scripts"])) {
+    $header_scripts = $conf["tm_theme_js_header_scripts"];
+  }
+
+  // Array of script that will always go after the footer scripts
+  $footer_scripts = array();
+  if (isset($conf["tm_theme_js_footer_scripts"])) {
+    $footer_scripts = $conf["tm_theme_js_footer_scripts"];
+  }
+ 
+  foreach ($javascript as $key => &$script) {
+
+    // Change the default scope of all other scripts to footer.
+    // We assume if the script is scoped to header it was done so by default.
+    if (($script['type'] != 'inline') and ($script['scope'] == 'header') and (!in_array($script['data'], $header_scripts))) {
+      $script['scope'] = 'footer';
+    }
+
+    // Move certain scripts to after footer
+    if (in_array($script['data'], $footer_scripts)) {
+      $script['scope'] = 'tm_after_footer';
+    }
+
+  }
+
+}

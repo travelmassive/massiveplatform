@@ -69,7 +69,7 @@ $conf['tm_signin_facebook_sync_avatar'] = true; // sync avatar picture
 $conf['tm_signin_facebook_sync_cover'] = true; // sync cover picture
 $conf['tm_users_check_duplicate_accounts'] = true; // check for duplicate accounts and show message to user
 $conf['tm_users_disallow_email_usernames'] = array('info', 'hello'); // emails cant start or end with these
-$conf['tm_users_disallow_email_addresses'] = array(''); // list of email addresses that can't sign up
+$conf['tm_users_disallow_email_addresses'] = array(); // list of email addresses that can't sign up
 
 /** FACEBOOK OAUTH **/
 $conf['simple_fb_connect_appid'] = ""; // app id - create one at https://developers.facebook.com/apps

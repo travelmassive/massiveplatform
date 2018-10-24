@@ -651,6 +651,7 @@ function tm_users_field_group_info() {
       0 => 'field_user_disable_public_index',
       1 => 'field_user_has_private_profile',
       2 => 'field_user_disable_chat',
+      3 => 'field_user_disable_analytics',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

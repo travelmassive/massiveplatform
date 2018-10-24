@@ -6584,6 +6584,13 @@ a.cancel_account_link {
 }
 
 /* line 648, ../sass/_forms.scss */
+.field-name-field-user-disable-analytics {
+  margin-left: 2rem;
+  margin-bottom: 2rem;
+  margin-right: 1rem;
+}
+
+/* line 654, ../sass/_forms.scss */
 td.views-field-access {
   white-space: nowrap;
 }

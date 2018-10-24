@@ -1474,6 +1474,52 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
     ),
   );
 
+  // Exported field_instance: 'user-user-field_user_disable_analytics'.
+  $field_instances['user-user-field_user_disable_analytics'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Disable 3rd party analytics tools when you are logged in.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 48,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'user',
+    'field_name' => 'field_user_disable_analytics',
+    'label' => 'Turn off analytics',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 11,
+    ),
+  );
+
   // Exported field_instance: 'user-user-field_user_disable_chat'.
   $field_instances['user-user-field_user_disable_chat'] = array(
     'bundle' => 'user',
@@ -1519,7 +1565,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 11,
+      'weight' => 12,
     ),
   );
 
@@ -2061,6 +2107,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
   t('Country');
   t('Cover Image');
   t('Cover Video');
+  t('Disable 3rd party analytics tools when you are logged in.');
   t('Disable site chat');
   t('Facebook');
   t('Facebook Signin ID');
@@ -2108,6 +2155,7 @@ Your testimonial will be displayed on your profile page.
 <br><strong>Providing information about your company?</strong> Please add a <a target=\'_blank\' class=\'cancel\' href="/companies">company profile</a>.');
   t('The name of your business, company, or organization.
 <br>Once your account is approved you can add a <a target=\'_blank\' class=\'cancel\' href="/companies">company profile</a>.');
+  t('Turn off analytics');
   t('Twitter');
   t('Vimeo');
   t('Website');

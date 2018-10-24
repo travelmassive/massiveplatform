@@ -231,6 +231,8 @@ function tm_users_user_update(&$edit, $account, $category) {
  */
 function _tm_users_modify_profile_form(&$form, $form_state, $form_id) {
 
+  global $conf;
+
   // get current user
   $user = user_load($form['#user']->uid);
 
@@ -270,7 +272,6 @@ function _tm_users_modify_profile_form(&$form, $form_state, $form_id) {
   hide($form['revalidate']);
 
   // set site specific help text for friendly url
-  global $conf;
   
   // set title of user profile questions from config
   $form['field_user_question_1'][LANGUAGE_NONE][0]['value']['#title'] = $conf["tm_field_user_question_1_title"];
@@ -297,6 +298,19 @@ function _tm_users_modify_profile_form(&$form, $form_state, $form_id) {
   if (!in_array("approved user", $user->roles) or (!module_exists("tm_chat"))) {
     hide($form['field_user_disable_chat']);
   }
+
+  // Set disable analytics label
+  if (isset($conf["tm_users_disable_analytics_label"])) {
+    $form['field_user_disable_analytics'][LANGUAGE_NONE]['#title'] = $conf["tm_users_disable_analytics_label"];
+  }
+
+  // Set disable analytics description
+  if (isset($conf["tm_users_disable_analytics_description"])) {
+    print_r($form['field_user_disable_analytics'][LANGUAGE_NONE]['#title']);
+    $form['field_user_disable_analytics'][LANGUAGE_NONE]['#description'] = $conf["tm_users_disable_analytics_description"];
+  }
+
+
   
 }
 

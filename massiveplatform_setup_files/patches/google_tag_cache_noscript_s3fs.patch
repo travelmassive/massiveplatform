@@ -1,19 +1,26 @@
-222c222,237
-<   $noscript = @file_get_contents($url);
----
-> 
->   // Massive Platform Patch
->   // If using s3fs, load noscript from cache for performance
->   if (module_exists("s3fs")) {
->     $cache = cache_get('tm-google-tag-noscript', 'cache');
->     if (!empty($cache)) {
->       $noscript = $cache->data;
->     } else {
->       // generate noscript tag and cache for 1 day
->       module_load_include('inc', 'google_tag', 'includes/snippet');
->       $noscript = _google_tag_noscript_snippet();
->       cache_set('tm-google-tag-noscript', $noscript, 'cache', time() + (60 * 60 * 24));
->     }
->   } else {
->     $noscript = @file_get_contents($url);
->   }
+--- google_tag.module.orig	2018-10-25 21:14:05.000000000 +0000
++++ google_tag.module	2018-10-25 22:05:46.000000000 +0000
+@@ -219,7 +219,22 @@
+   // Add noscript snippet to page_top region.
+   $type = 'noscript';
+   $url = "$base_path/google_tag/{$realm_name}google_tag.$realm_key$type.js";
+-  $noscript = @file_get_contents($url);
++
++  // Massive Platform Patch
++  // If using s3fs, load noscript from cache for performance
++  if (module_exists("s3fs")) {
++    $cache = cache_get('tm-google-tag-noscript', 'cache');
++    if (!empty($cache)) {
++      $noscript = $cache->data;
++    } else {
++      // generate noscript tag and cache for 1 day
++      module_load_include('inc', 'google_tag', 'includes/snippet');
++      $noscript = _google_tag_noscript_snippet();
++      cache_set('tm-google-tag-noscript', $noscript, 'cache', time() + (60 * 60 * 24));
++    }
++  } else {
++    $noscript = @file_get_contents($url);
++  }
+ 
+   if ($noscript) {
+     // Note: for any theme that follows the pattern of core html.tpl.php in the

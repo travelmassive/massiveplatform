@@ -1,0 +1,19 @@
+222c222,237
+<   $noscript = @file_get_contents($url);
+---
+> 
+>   // Massive Platform Patch
+>   // If using s3fs, load noscript from cache for performance
+>   if (module_exists("s3fs")) {
+>     $cache = cache_get('tm-google-tag-noscript', 'cache');
+>     if (!empty($cache)) {
+>       $noscript = $cache->data;
+>     } else {
+>       // generate noscript tag and cache for 1 day
+>       module_load_include('inc', 'google_tag', 'includes/snippet');
+>       $noscript = _google_tag_noscript_snippet();
+>       cache_set('tm-google-tag-noscript', $noscript, 'cache', time() + (60 * 60 * 24));
+>     }
+>   } else {
+>     $noscript = @file_get_contents($url);
+>   }

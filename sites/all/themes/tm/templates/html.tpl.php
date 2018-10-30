@@ -217,7 +217,8 @@
     <?php print $page; ?>
     <?php print $page_bottom; ?>
     <?php print (drupal_get_js('tm_after_footer')); ?>
-
+    <?php if($_SERVER["REQUEST_URI"] == "/chapters/map") { ?><script>L.Icon.Default.imagePath = "/sites/all/libraries/leaflet/images/";</script><?php } ?>
+    
     <?php
       // include brand js
       $tm_branding_js = tm_branding_get_element("include_js");

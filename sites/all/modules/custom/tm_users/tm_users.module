@@ -676,3 +676,35 @@ function tm_users_user_logout($account) {
   }  
 }
 
+/**
+ * Hook for google_tag manager
+ * Allow member with privacy setting to disable analytics
+ */
+function tm_users_google_tag_insert_alter(&$satisfied) {
+
+  global $user;
+
+  // acknowledge HTTP_DNT
+  // https://en.wikipedia.org/wiki/Do_Not_Track
+  if (isset($_SERVER['HTTP_DNT'])) {
+    if ($_SERVER['HTTP_DNT'] == 1) {
+      $satisfied = false; 
+      return;
+    }
+  }
+
+  // todo: acknowledge a no_analytics cookie for logged out users
+  if (!user_is_logged_in()) {
+    return;
+  }
+
+  $account = user_load($user->uid);
+
+  // if user has opted out of analytics, turn it off
+  if (isset($account->field_user_disable_analytics[LANGUAGE_NONE][0]['value'])) {
+    if ($account->field_user_disable_analytics[LANGUAGE_NONE][0]['value'] == 1) {
+      $satisfied = false;
+    }
+  }
+}
+

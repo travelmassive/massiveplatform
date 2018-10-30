@@ -101,7 +101,6 @@ $conf["tm_terms_event_data_terms_text"] = "Hi __first_name__,<br><br>This data i
 /** USER PRIVACY **/
 $conf["tm_users_disable_analytics_label"] = "Turn off analytics";
 $conf["tm_users_disable_analytics_description"] = "We use 3rd party analytics to measure traffic and improve our services.<br>If you prefer, you can disable sending data to these services.";
-$conf["tm_users_disable_analytics_modules"] = array('google_tag'); // Array of modules to disable (ie: google_tag)
 
 /** WORDPRESS FEEDME **/
 /** This calls a module hosted on wordpress to embed blog (plus other) content based on current page **/

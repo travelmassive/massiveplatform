@@ -299,18 +299,27 @@ function _tm_users_modify_profile_form(&$form, $form_state, $form_id) {
     hide($form['field_user_disable_chat']);
   }
 
-  // Set disable analytics label
-  if (isset($conf["tm_users_disable_analytics_label"])) {
-    $form['field_user_disable_analytics'][LANGUAGE_NONE]['#title'] = $conf["tm_users_disable_analytics_label"];
+  // If google_tag module exists, set disable analytics label and description
+  if (module_exists("google_tag")) {
+
+    if (isset($conf["tm_users_disable_analytics_label"])) {
+      $form['field_user_disable_analytics'][LANGUAGE_NONE]['#title'] = $conf["tm_users_disable_analytics_label"];
+    }
+
+    if (isset($conf["tm_users_disable_analytics_description"])) {
+      $form['field_user_disable_analytics'][LANGUAGE_NONE]['#description'] = $conf["tm_users_disable_analytics_description"];
+    }
+
+    if (isset($_SERVER['HTTP_DNT'])) {
+      if ($_SERVER['HTTP_DNT'] == 1) {
+        $form['field_user_disable_analytics'][LANGUAGE_NONE]['#default_value'] = true;
+        $form['field_user_disable_analytics'][LANGUAGE_NONE]['#disabled'] = true;
+      }
+    }
+    
+  } else {
+    hide($form['field_user_disable_analytics']);
   }
-
-  // Set disable analytics description
-  if (isset($conf["tm_users_disable_analytics_description"])) {
-    print_r($form['field_user_disable_analytics'][LANGUAGE_NONE]['#title']);
-    $form['field_user_disable_analytics'][LANGUAGE_NONE]['#description'] = $conf["tm_users_disable_analytics_description"];
-  }
-
-
   
 }
 

@@ -188,3 +188,4 @@ function tm_users_moderate_report_resolved_check() {
   // ok
   return true;
 }
+

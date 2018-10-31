@@ -1,10 +1,10 @@
-name = TM Widgets
-description = TM Widgets
+name = TM Insights
+description = TM Insights
 core = 7.x
-package = TM Widgets
+package = TM Insights
 version = 7.x-1.0-dev
-project = tm_widgets
-files[] = tm_widgets.module
+project = tm_insights
+files[] = tm_insights.module
 dependencies[] = tm_fields
 dependencies[] = tm_users
 dependencies[] = tm_chapters

@@ -21,9 +21,9 @@
 }
 
 .insightsMessage { 
-	padding-right: 1rem;
-	padding-left: 1rem;
-	padding-bottom: 1rem;
+	padding-right: 2rem;
+	padding-left: 2rem;
+	padding-bottom: 2rem;
 }
 
 @media only screen and (max-width: 600px) {

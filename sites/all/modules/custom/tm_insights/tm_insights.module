@@ -93,7 +93,14 @@ function tm_insights_form() {
       }
     }
 
-    $html .= '<option value="CHAPTER-' . $chapter->entity_id . '">' . $region_names[$chapter->region] . ' &gt; ' . $chapter->country . ' &gt; ' . $chapter->title . '</option>';
+    // Europe > Montenegro (ie: chapter is country)
+    if ($chapter->country == $chapter->title) {
+       $html .= '<option value="CHAPTER-' . $chapter->entity_id . '">' . $region_names[$chapter->region] . ' &gt; ' . $chapter->country . '</option>';
+     } else {
+      // Europe > United Kingdom > London
+       $html .= '<option value="CHAPTER-' . $chapter->entity_id . '">' . $region_names[$chapter->region] . ' &gt; ' . $chapter->country . ' &gt; ' . $chapter->title . '</option>';
+     }
+   
 
   }
 

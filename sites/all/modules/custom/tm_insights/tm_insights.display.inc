@@ -5,7 +5,7 @@
 /**
  * Generate Insights Table via Google Charts
  */
-function _tm_insights_table_html($data_pairs, $table_name, $sort_column = -1, $sort_ascending = 'true') {
+function _tm_insights_table_html($data_pairs, $table_name, $data_type = 'string', $sort_column = -1, $sort_ascending = 'true') {
 
 	// Step 2. Format in Google chart
 	$html = '<div id="' . $table_name . '" style="width: 100%;"></div>';
@@ -15,12 +15,20 @@ function _tm_insights_table_html($data_pairs, $table_name, $sort_column = -1, $s
 function drawTable() {
   var data = new google.visualization.DataTable();
   data.addColumn('string', 'Description');
-  data.addColumn('string', 'Value');
+EOT;
+
+$html .= "data.addColumn('" . $data_type . "', 'Value');";
+
+$html .= <<<EOT
   data.addRows([
 EOT;
 
 	foreach ($data_pairs as $data_pair) {
-	$html .= "['" . $data_pair[0] . "', '" . $data_pair[1] . "'],";
+		if ($data_type == 'number') {
+			$html .= "['" . $data_pair[0] . "', " . $data_pair[1] . "],";
+		} else {
+			$html .= "['" . $data_pair[0] . "', '" . $data_pair[1] . "'],";
+		}
 	}
 
   	$html .= "]);";

@@ -3,6 +3,7 @@
 .messages--help-tip { margin-left: 0.2rem !important; margin-right: 0.2rem; }
 
 .google-visualization-table-tr-head { display: none; }
+.google-visualization-table-td-number { text-align: left !important; }
 
 .insightsSelect {
 	width: 400px;

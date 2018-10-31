@@ -23,7 +23,7 @@
       <nav id="prime-nav" role="navigation">
         <h1><?= t('Primary navigation'); ?></h1>
 
-        <div class='topnav-search-container' <?php if (arg(0) == "search") { echo "style='display: none;'"; } ?>>
+        <div class='topnav-search-container' <?php if ((arg(0) == "search") or (arg(0) == "insights")) { echo "style='display: none;'"; } ?>>
           <div class='topnav-search-inner'>
             <i class='topnav-search-icon'></i>
             <form method="GET" action="/search"><input type='text' id='topnav-search-textfield' name='query' placeholder='<?php print $conf['tm_search_api_placeholder_text'];?>' value='' size='40' maxlength='255' class='form-text' autocomplete='off'></form>

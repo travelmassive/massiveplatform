@@ -265,7 +265,7 @@ function tm_insights_reach_results() {
   $html .= "<header class='contained-head'>
             <h1 class='prime-title'>MEMBER REACH &gt; " . $title_text . "</span></h1>";
   $html .= "</header>";
-  $html .= _tm_insights_table_html($insights, "chapters_insights");
+  $html .= _tm_insights_table_html($insights, "chapters_insights", "number");
   $html .= "</section>";
 
   // STEP 6. RENDER INDUSTRY SEGMENTATION
@@ -274,7 +274,7 @@ function tm_insights_reach_results() {
     $html .= "<header class='contained-head'>
               <h1 class='prime-title'>Industry Membership &gt; " . $title_text . "</span></h1>";
     $html .= "</header>";
-    $html .= _tm_insights_table_html($industry_insights, "segment_insights", "number", 1, 'false');
+    $html .= _tm_insights_table_html($industry_insights, "segment_insights", "number", 1, "false");
     $html .= "</section>";
 
     $html .= "<section class='contained contained-block'>";

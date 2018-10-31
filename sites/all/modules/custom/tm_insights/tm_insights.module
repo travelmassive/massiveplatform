@@ -73,7 +73,9 @@ function tm_insights_form() {
 
   $last_region = null;
   $last_country = null;
-  foreach($all_chapters as $chapter) {
+  for ($i = 0; $i < sizeof($all_chapters); $i++) {
+
+    $chapter = $all_chapters[$i];
 
     // All Countries in Region
     if ($chapter->region != $last_region) {
@@ -84,7 +86,11 @@ function tm_insights_form() {
     // All Chapters in Country
     if ($chapter->country != $last_country) {
       $last_country = $chapter->country;
-      $html .= '<option value="COUNTRY-' . $chapter->iso2 . '">' . $region_names[$chapter->region] . ' &gt; ' . $chapter->country . ' &gt; All Chapters</option>';
+      if ($i < sizeof($all_chapters) -1) {
+        if ($all_chapters[$i+1]->country == $last_country) {
+          $html .= '<option value="COUNTRY-' . $chapter->iso2 . '">' . $region_names[$chapter->region] . ' &gt; ' . $chapter->country . ' &gt; All Chapters</option>';
+        }
+      }
     }
 
     $html .= '<option value="CHAPTER-' . $chapter->entity_id . '">' . $region_names[$chapter->region] . ' &gt; ' . $chapter->country . ' &gt; ' . $chapter->title . '</option>';

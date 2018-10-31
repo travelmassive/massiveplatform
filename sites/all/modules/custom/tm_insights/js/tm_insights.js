@@ -2,7 +2,7 @@
 (function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){
   
   // Chosen
-  $(".insightsSelect").chosen({placeholder_text_multiple: "Filter by region, country, or chapter"});
+  $(".insightsSelect").chosen({placeholder_text_multiple: "Filter by region, country, or chapter"}, { width: '100%' });
 
   // Logic
   $(".insightsSelect").change(function(){

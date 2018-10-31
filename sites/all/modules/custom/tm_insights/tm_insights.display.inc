@@ -66,7 +66,7 @@ var delay = (function(){
 /**
  * Generate Segments Pie Chart via Google Charts
  */
-function _tm_insights_segments_html($segment_data, $ratio) {
+function _tm_insights_segments_html($segment_data, $normalize) {
 
 	global $conf;
 

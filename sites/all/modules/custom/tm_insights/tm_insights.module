@@ -35,11 +35,6 @@ function tm_insights_form() {
   
   global $conf;
 
-  // set help tip
-  if (isset($conf["tm_insights_public_message"])) {
-    drupal_set_message($conf["tm_insights_public_message"], "help-tip");
-  }
-
   // load js
   drupal_add_js('https://www.google.com/jsapi', 'external');
   drupal_add_js(drupal_get_path('module', 'tm_insights') . '/js/tm_insights.js');
@@ -52,7 +47,7 @@ function tm_insights_form() {
  
   // Start html
   $html = "";
-  $redraw_functions = array("chapters_insights");
+  $redraw_functions = array("drawChart", "chapters_insights");
   $html .= _tm_insights_js_redraw_function($redraw_functions);
 
   // Start article
@@ -117,6 +112,7 @@ function tm_insights_form() {
  */
 function tm_insights_reach_results() {
 
+  global $conf;
   $titles = array();
   $html = "";
 
@@ -222,14 +218,13 @@ function tm_insights_reach_results() {
     $insights[] = array("Connections", $chapter_insights['data_values']['total_chapter_member_connections']);
   }
 
+  // event info
   $insights[] = array("Event registrations", $chapter_insights['data_values']['num_event_registrations']);
+  if ($chapter_insights['data_values']['num_events_upcoming'] > 0) {
+    $insights[] = array("Upcoming events", $chapter_insights['data_values']['num_events_upcoming']);
 
-  if ($chapter_insights['data_values']['num_events_upcoming'] == 0) {
-    $chapter_insights['data_values']['num_events_upcoming'] = "None";
   }
-  $insights[] = array("Upcoming events", $chapter_insights['data_values']['num_events_upcoming']);
   $insights[] = array("Events in past 12 months", $chapter_insights['data_values']['num_events_past_12_months']);
-
 
   // STEP 3. FETCH DATA
   $industry_insights = array();
@@ -244,8 +239,9 @@ function tm_insights_reach_results() {
   
   // segments
   $industry_data = _tm_reports_get_industry_segment_data($chapter_ids);
+  $normalize = 100/$members_with_segment_pct;
   foreach($industry_data as $data) {
-    $industry_insights[] = array($data['name'], intval($data['total'] * (100/$members_with_segment_pct)));
+    $industry_insights[] = array($data['name'], intval($data['total'] * $normalize));
   }
 
   // STEP 4. GENERATE TITLE
@@ -261,7 +257,7 @@ function tm_insights_reach_results() {
   // STEP 5. RENDER INSIGHTS
   $html .= "<section class='contained contained-block'>";
   $html .= "<header class='contained-head'>
-            <h1 class='prime-title'>" . $title_text . "</span></h1>";
+            <h1 class='prime-title'>OVERVIEW - " . $title_text . "</span></h1>";
   $html .= "</header>";
   $html .= _tm_insights_table_html($insights, "chapters_insights");
   $html .= "</section>";
@@ -270,19 +266,29 @@ function tm_insights_reach_results() {
   if (sizeof($industry_data) > 0) {
     $html .= "<section class='contained contained-block'>";
     $html .= "<header class='contained-head'>
-              <h1 class='prime-title'>Industry Membership</span></h1>";
+              <h1 class='prime-title'>Industry Membership - " . $title_text . "</span></h1>";
     $html .= "</header>";
     $html .= _tm_insights_table_html($industry_insights, "segment_insights");
     $html .= "</section>";
 
-     $html .= "<section class='contained contained-block'>";
+    $html .= "<section class='contained contained-block'>";
     $html .= "<header class='contained-head'>
-              <h1 class='prime-title'>Industry Membership (VISUAL)</span></h1>";
+              <h1 class='prime-title'>Industry Membership (VISUAL) - " . $title_text . "</span></h1>";
     $html .= "</header>";
-    $html .= _tm_insights_segments_html($industry_data, 100/$members_with_segment_pct);
+    $html .= _tm_insights_segments_html($industry_data, $normalize);
     $html .= "</section>";
   }
-  
+
+  // STEP 7. INFO
+  if (isset($conf["tm_insights_public_message"])) {
+    $html .= "<section class='contained contained-block'>";
+    $html .= "<header class='contained-head'>
+              <h1 class='prime-title'>" . $conf["tm_insights_public_heading"] . "</h1>";
+    $html .= "</header>";
+    $html .= "<div class='insightsMessage'>" . $conf["tm_insights_public_message"] . "</div>";
+    $html .= "</section>";
+  }
+ 
   // output html
   echo $html;
   drupal_exit();

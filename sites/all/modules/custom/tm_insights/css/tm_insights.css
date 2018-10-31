@@ -5,7 +5,8 @@
 .google-visualization-table-tr-head { display: none; }
 
 .insightsSelect {
-  width: 400px ;
+	width: 400px;
+	margin: auto;
 }
 
 #insightsInput {
@@ -16,4 +17,21 @@
 
 #insightsInput h1 { 
   text-align: center;
+}
+
+.insightsMessage { 
+	padding-right: 1rem;
+	padding-left: 1rem;
+	padding-bottom: 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+
+	.insightsSelect {
+		width: 300px;
+	}
+
+	#insightsInput {
+		width: 300px;
+	}
 }

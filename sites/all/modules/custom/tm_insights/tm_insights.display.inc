@@ -5,7 +5,7 @@
 /**
  * Generate Insights Table via Google Charts
  */
-function _tm_insights_table_html($data_pairs, $table_name, $sort_column = -1, $sort_ascending = true) {
+function _tm_insights_table_html($data_pairs, $table_name, $sort_column = -1, $sort_ascending = 'true') {
 
 	// Step 2. Format in Google chart
 	$html = '<div id="' . $table_name . '" style="width: 100%;"></div>';

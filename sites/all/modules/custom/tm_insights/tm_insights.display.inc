@@ -5,7 +5,7 @@
 /**
  * Generate Insights Table via Google Charts
  */
-function _tm_insights_table_html($data_pairs, $table_name) {
+function _tm_insights_table_html($data_pairs, $table_name, $sort_column = -1, $sort_ascending = true) {
 
 	// Step 2. Format in Google chart
 	$html = '<div id="' . $table_name . '" style="width: 100%;"></div>';
@@ -25,7 +25,7 @@ EOT;
 
   	$html .= "]);";
 	$html .= "var table = new google.visualization.Table(document.getElementById('" . $table_name . "'));";
-	$html .= "table.draw(data, {showRowNumber: false, sort: false, width: '100%'});";
+	$html .= "table.draw(data, {sort: false, sortColumn: " . $sort_column . ", sortAscending: " . $sort_ascending . ", width: '100%'});";
 	$html .= "}";
 	$html .= "drawTable();";
 	$html .= "</script>";

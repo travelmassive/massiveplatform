@@ -1033,6 +1033,7 @@ $conf["tm_track_views_subscription_message"] = "Upgrade to a <a href='/membershi
 $conf["tm_track_views_see_who_viewed_label"] = "Who visited";
 
 /** COMMUNITY INSIGHTS SETTINGS **/
+// $conf["tm_insights_public_heading"] = "Welcome";
 // $conf["tm_insights_public_message"] = "Welcome to our community insights page.";
 // $conf["tm_insights_default_color_hash"] = "123"; // default report color_hash
 

@@ -218,7 +218,9 @@ function tm_insights_reach_results() {
   }
 
   // company pages
-  $insights[] = array("Company pages", $chapter_insights['data_values']['num_organizations']);
+  if (isset($chapter_insights['data_values']['num_organizations'])) {
+    $insights[] = array("Company pages", $chapter_insights['data_values']['num_organizations']);
+  }
 
   // connections
   if ($all_chapters) {

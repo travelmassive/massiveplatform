@@ -83,7 +83,7 @@ function drawChart() {
 EOT;
 
 	foreach ($segment_data as $segment) {
-		$html .= "['" . str_replace("'", "", $segment["name"]) . "'," . intval($segment["total"] * $ratio) . "],";
+		$html .= "['" . str_replace("'", "", $segment["name"]) . "'," . intval($segment["total"] * $normalize) . "],";
 	}
 	$html .= <<<EOT
 ]);

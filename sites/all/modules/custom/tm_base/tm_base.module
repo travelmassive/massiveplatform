@@ -722,3 +722,21 @@ function tm_base_get_all_regions() {
   return $regions;
 }
 
+/**
+ * Helper method
+ * Get list of countries names
+ * We refer to countries_country table
+ */
+function tm_base_get_all_country_names() {
+
+  $query = "SELECT iso2, name FROM countries_country";
+  $results = db_query($query)->fetchAll();
+
+  $countries = array();
+  foreach ($results as $result) {
+    $countries[$result->iso2] = $result->name;
+  }
+
+  return $countries;
+}
+

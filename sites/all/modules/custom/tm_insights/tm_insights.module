@@ -123,6 +123,7 @@ function tm_insights_reach_results() {
   $html = "";
 
   $region_names = tm_base_get_all_regions();
+  $country_names = tm_base_get_all_country_names();
 
   // STEP 1. PARSE INPUT DATA
   $chapter_ids = array();
@@ -147,7 +148,7 @@ function tm_insights_reach_results() {
         if ((strpos($input, "REGION-")) === 0) {
           $parts = explode("REGION-", $input);
           if (sizeof($parts) > 1) {
-            $titles[] = "ALL CHAPTERS IN " . strtoupper($region_names[$parts[1]]);
+            $titles[] = strtoupper($region_names[$parts[1]]);
             $ids = _tm_chapters_get_chapters_in_continent(strip_tags($parts[1]));
             $all_chapters_in = true;
             foreach ($ids as $id) {
@@ -160,7 +161,7 @@ function tm_insights_reach_results() {
         if ((strpos($input, "COUNTRY-")) === 0) {
           $parts = explode("COUNTRY-", $input);
           if (sizeof($parts) > 1) {
-            $titles[] = "ALL CHAPTERS IN " . $parts[1];
+            $titles[] = $country_names[$parts[1]];
             $ids = _tm_chapters_get_chapters_in_country(strip_tags($parts[1]));
             $all_chapters_in = true;
             foreach ($ids as $id) {
@@ -251,10 +252,6 @@ function tm_insights_reach_results() {
 
   // STEP 4. GENERATE TITLE
   $title_text = implode(" + ", $titles);
-  $title_text = str_replace("ALL CHAPTERS IN", "", $title_text);
-  if ($all_chapters_in) {
-    $title_text = "ALL CHAPTERS IN " . $title_text;
-  }
   if ($all_chapters) {
     $title_text = "ALL CHAPTERS";
   }
@@ -262,7 +259,7 @@ function tm_insights_reach_results() {
   // STEP 5. RENDER INSIGHTS
   $html .= "<section class='contained contained-block'>";
   $html .= "<header class='contained-head'>
-            <h1 class='prime-title'>OVERVIEW - " . $title_text . "</span></h1>";
+            <h1 class='prime-title'>MEMBER REACH &gt; " . $title_text . "</span></h1>";
   $html .= "</header>";
   $html .= _tm_insights_table_html($insights, "chapters_insights");
   $html .= "</section>";
@@ -271,14 +268,14 @@ function tm_insights_reach_results() {
   if (sizeof($industry_data) > 0) {
     $html .= "<section class='contained contained-block'>";
     $html .= "<header class='contained-head'>
-              <h1 class='prime-title'>Industry Membership - " . $title_text . "</span></h1>";
+              <h1 class='prime-title'>Industry Membership &gt; " . $title_text . "</span></h1>";
     $html .= "</header>";
     $html .= _tm_insights_table_html($industry_insights, "segment_insights");
     $html .= "</section>";
 
     $html .= "<section class='contained contained-block'>";
     $html .= "<header class='contained-head'>
-              <h1 class='prime-title'>Industry Membership (VISUAL) - " . $title_text . "</span></h1>";
+              <h1 class='prime-title'>Visual &gt; " . $title_text . "</span></h1>";
     $html .= "</header>";
     $html .= _tm_insights_segments_html($industry_data, $normalize);
     $html .= "</section>";

@@ -102,6 +102,10 @@ function tm_insights_form() {
 
   $html .= '<div id="insightsResults"></div>';
 
+  if (module_exists("tm_nps")) {
+      $html .= "<center><span class='insightsNPS' style='font-size: smaller; color: #888;'>We love data. Feel free to <a href='/feedback'>share your feedback</a> with us.</span></center>";
+  }
+
   $html .= "</article>";
 
   $form['html'] =  array(

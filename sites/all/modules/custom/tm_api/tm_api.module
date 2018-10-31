@@ -62,7 +62,7 @@ function tm_api_home() {
     <br>api/public/chapter_leaders - list of chapter leaders
     <br>
     <br>All results as returned as JSON. For JSONP append ?callback=myfunction to the URL.
-    <br>For help please email team@travelmassive.com</p>");
+    </p>");
    drupal_exit();
 }
 

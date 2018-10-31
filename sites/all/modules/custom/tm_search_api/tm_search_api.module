@@ -165,7 +165,7 @@ function tm_search_api_search_api_solr_query_alter(array &$call_args, SearchApiQ
   global $conf;
 
   // default
-  $bf = "add(is_node$flag_signup_count) add(is_user$flag_follow_members_count) add(is_node$flag_event_register_count)^100 add(is_node$flag_follow_organizations_count)";
+  $bf = 'add(is_node$flag_signup_count) add(is_user$flag_follow_members_count) add(is_node$flag_event_register_count)^100 add(is_node$flag_follow_organizations_count)';
 
   // allow custom boost in config
   if (isset($conf["tm_search_api_solr_bf"])) {

@@ -717,7 +717,7 @@ function tm_base_get_all_regions() {
   "EU" => "Europe",
   "NA" => "North America",
   "OC" => "Oceania",
-  "SA" => "South Africa");
+  "SA" => "South America");
 
   return $regions;
 }

@@ -704,3 +704,21 @@ function tm_base_file_delete($file) {
 
 }
 
+/**
+ * Helper method
+ * Get list of regions
+ */
+function tm_base_get_all_regions() {
+
+  $regions = array(
+  "AF" => "Africa",
+  "AN" => "Antarctica",
+  "AS" => "Asia",
+  "EU" => "Europe",
+  "NA" => "North America",
+  "OC" => "Oceania",
+  "SA" => "South Africa");
+
+  return $regions;
+}
+

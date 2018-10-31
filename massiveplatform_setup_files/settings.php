@@ -1032,3 +1032,8 @@ $conf["tm_track_views_approved_message"] = "You need to be an Approved Member to
 $conf["tm_track_views_subscription_message"] = "Upgrade to a <a href='/membership/invite'>Pro Membership</a> to see who viewed you.";
 $conf["tm_track_views_see_who_viewed_label"] = "Who visited";
 
+/** WIDGET SETTINGS **/
+$conf["tm_widgets_chosen_css_uri"] = "/sites/all/modules/custom/tm_widgets/lib/css/chosen.min.css";
+$conf["tm_widgets_chosen_js_uri"] = "/sites/all/modules/custom/tm_widgets/lib/js/chosen.jquery.min.js";
+$conf["tm_widgets_jquery_js_uri"] = "/sites/all/modules/custom/tm_widgets/lib/js/jquery-3.3.1.min.js";
+

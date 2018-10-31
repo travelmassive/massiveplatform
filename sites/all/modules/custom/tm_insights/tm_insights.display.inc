@@ -66,80 +66,90 @@ var delay = (function(){
 /**
  * Generate Segments Pie Chart via Google Charts
  */
-function _tm_insights_segments_html($segment_data) {
+function _tm_insights_segments_html($segment_data, $ratio) {
 
-  // Step 2. Format in Google chart
-  $html = <<<EOT
+	global $conf;
+
+  	// Format in Google chart
+	$random_number = rand(0,1000);
+	$html = <<<EOT
 <div id="insights_segments" style="width: 100%; height: 700px;"></div>
-<div style='padding: 8px; text-align: right;'><a href='?reports_color_hash={$random_number}'>Randomize chart color</a> | <a href='?reports_color_hash='>Reset</a></div>
+<div style='padding: 8px; text-align: right;'><a href='?reports_color_hash={$random_number}'>Try a new color</a> | <a href='?reports_color_hash='>Reset</a></div>
 <script>
-google.setOnLoadCallback(drawChart);
+//google.setOnLoadCallback(drawChart);
 function drawChart() {
   var data = google.visualization.arrayToDataTable([
   ['Segment', 'Members'],
 EOT;
 
-  foreach ($segment_data as $segment) {
-    $html .= "['" . str_replace("'", "", $segment["name"]) . "'," . $segment["total"] . "],";
-  }
-  $html .= <<<EOT
-  ]);
+	foreach ($segment_data as $segment) {
+		$html .= "['" . str_replace("'", "", $segment["name"]) . "'," . intval($segment["total"] * $ratio) . "],";
+	}
+	$html .= <<<EOT
+]);
 
 EOT;
   
-  // Report chart colors
-  // If ?reports_color_hash is provided, create a unique color code for each segment
-  // This is so segment colors are consistent across all graphs regardless of order in the chart
-  // ie: 0: { color: '#014eff' },
-  // ie: 1: { color: '#ab6754' }
-  // default is off
-  $color_hash = null;
+	// Report chart colors
+	// If ?reports_color_hash is provided, create a unique color code for each segment
+	// This is so segment colors are consistent across all graphs regardless of order in the chart
+	// ie: 0: { color: '#014eff' },
+	// ie: 1: { color: '#ab6754' }
+	// default is off
+	$color_hash = null;
 
-  // get from cookie
-  if (isset($_COOKIE['Drupal_visitor_tm_reports_color_hash'])) {
-   $color_hash = $_COOKIE['Drupal_visitor_tm_reports_color_hash'];
-  }
+	// get from cookie
+	if (isset($_COOKIE['Drupal_visitor_tm_reports_color_hash'])) {
+		$color_hash = $_COOKIE['Drupal_visitor_tm_reports_color_hash'];
+	}
 
-  // ie: 
-  // ?chart_color_hash
-  // ?chart_color_hash = 123
-  if (isset($_GET["reports_color_hash"])) {
-    $color_hash = $_GET["reports_color_hash"];
-    if ($color_hash == "") {
-      $color_hash = null;
-    }
-    user_cookie_save(array("tm_reports_color_hash" => $color_hash));
-  }
+	// ie: 
+	// ?chart_color_hash
+	// ?chart_color_hash = 123
+	if (isset($_GET["reports_color_hash"])) {
+		$color_hash = $_GET["reports_color_hash"];
+		if ($color_hash == "") {
+	  		$color_hash = null;
+		}
+		user_cookie_save(array("tm_reports_color_hash" => $color_hash));
+	}
 
-  if ($color_hash != null) {
-    $count = 0;
-    $color_parts = array();
-    foreach ($segment_data as $segment) {
-      $color_parts[] = $count++ . ": { color: '#" . _tm_insights_string_color_code($segment["name"] . $color_hash) . "' }";
-    }
-    $html .= "var slices = {" . implode(", ", $color_parts) . "};";
-  } else {
-    $html .= "var slices = {};";
-  }
+	// allow setting in conf
+	if ($color_hash == null) {
+		if (isset($conf["tm_insights_default_color_hash"])) {
+			$color_hash = $conf["tm_insights_default_color_hash"];
+		}
+	}
 
-  $random_number = rand(0,1000);
-  $html .= <<<EOT
-  var options = { 'slices': slices };
-  var chart = new google.visualization.PieChart(document.getElementById('insights_segments'));
-  chart.draw(data, options);
+	if ($color_hash != null) {
+		$count = 0;
+		$color_parts = array();
+		foreach ($segment_data as $segment) {
+			$color_parts[] = $count++ . ": { color: '#" . _tm_insights_string_color_code($segment["name"] . $color_hash) . "' }";
+		}
+		$html .= "var slices = {" . implode(", ", $color_parts) . "};";
+	} else {
+		$html .= "var slices = {};";
+  	}
+
+	$html .= <<<EOT
+	var options = { 'slices': slices, pieHole: 0.4};
+	var chart = new google.visualization.PieChart(document.getElementById('insights_segments'));
+	chart.draw(data, options);
 }
+drawChart();
 </script>
 EOT;
 
-  return $html;
+	return $html;
 }
 
 /**
  * Helper method to convert string to color code
  */
 function _tm_insights_string_color_code($str) {
-  // ref: http://stackoverflow.com/questions/3724111/how-can-i-convert-strings-to-an-html-color-code-hash
-  $code = dechex(crc32($str));
-  $code = substr($code, 0, 6);
-  return $code;
+	// ref: http://stackoverflow.com/questions/3724111/how-can-i-convert-strings-to-an-html-color-code-hash
+	$code = dechex(crc32($str));
+	$code = substr($code, 0, 6);
+	return $code;
 }

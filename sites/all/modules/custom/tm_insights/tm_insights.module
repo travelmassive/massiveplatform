@@ -64,7 +64,7 @@ function tm_insights_form() {
   FROM field_data_field_country 
   LEFT JOIN countries_country ON countries_country.iso2 = field_data_field_country.field_country_iso2 
   LEFT JOIN node ON field_data_field_country.entity_id = node.nid 
-  WHERE field_data_field_country.bundle = 'chapter' AND field_data_field_country.deleted = 0 ORDER BY countries_country.continent";
+  WHERE field_data_field_country.bundle = 'chapter' AND field_data_field_country.deleted = 0 ORDER BY countries_country.continent, countries_country.iso2";
   $all_chapters = db_query($query)->fetchAll();
 
   $chapter_uids = array();
@@ -245,11 +245,7 @@ function tm_insights_reach_results() {
   // segments
   $industry_data = _tm_reports_get_industry_segment_data($chapter_ids);
   foreach($industry_data as $data) {
-    if ($data['total'] == intval($data['total'] * (100/$members_with_segment_pct))) {
-      $industry_insights[] = array($data['name'], $data['total'] . " " . tm_insights_pluralize_members($data['total']));
-    } else {
-      $industry_insights[] = array($data['name'], $data['total'] . "-" . intval($data['total'] * (100/$members_with_segment_pct)) . " " . tm_insights_pluralize_members(intval($data['total'] * (100/$members_with_segment_pct))));
-    }
+    $industry_insights[] = array($data['name'], intval($data['total'] * (100/$members_with_segment_pct)));
   }
 
   // STEP 4. GENERATE TITLE
@@ -274,16 +270,16 @@ function tm_insights_reach_results() {
   if (sizeof($industry_data) > 0) {
     $html .= "<section class='contained contained-block'>";
     $html .= "<header class='contained-head'>
-              <h1 class='prime-title'>Industry Segments</span></h1>";
+              <h1 class='prime-title'>Industry Membership</span></h1>";
     $html .= "</header>";
     $html .= _tm_insights_table_html($industry_insights, "segment_insights");
     $html .= "</section>";
 
      $html .= "<section class='contained contained-block'>";
     $html .= "<header class='contained-head'>
-              <h1 class='prime-title'>Industry Segments</span></h1>";
+              <h1 class='prime-title'>Industry Membership (VISUAL)</span></h1>";
     $html .= "</header>";
-    $html .= _tm_insights_segments_html($industry_data);
+    $html .= _tm_insights_segments_html($industry_data, 100/$members_with_segment_pct);
     $html .= "</section>";
   }
   

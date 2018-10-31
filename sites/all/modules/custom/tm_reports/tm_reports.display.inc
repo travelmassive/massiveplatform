@@ -479,7 +479,7 @@ EOT;
 
   $random_number = rand(0,1000);
   $html .= <<<EOT
-  var options = { 'slices': slices };
+  var options = { 'slices': slices, pieHole: 0.4 };
   var chart = new google.visualization.PieChart(document.getElementById('insights_segments'));
   chart.draw(data, options);
 }

@@ -245,7 +245,11 @@ function tm_insights_reach_results() {
   
   // segments
   $industry_data = _tm_reports_get_industry_segment_data($chapter_ids);
-  $normalize = 100/$members_with_segment_pct;
+  $total = 1;
+  foreach ($industry_data as $data) {
+    $total = $total + $data['total'];
+  }
+  $normalize = $chapter_insights['data_values']['members_total']/$total;
   foreach($industry_data as $data) {
     $industry_insights[] = array($data['name'], intval($data['total'] * $normalize));
   }

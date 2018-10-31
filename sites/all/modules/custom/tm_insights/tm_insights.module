@@ -84,7 +84,7 @@ function tm_insights_form() {
     // All Chapters in Country
     if ($chapter->country != $last_country) {
       $last_country = $chapter->country;
-      $html .= '<option value="COUNTRY-' . $chapter->iso2 . '"><' . $region_names[$chapter->region] . ' &gt; ' . $chapter->country . ' &gt; All Chapters</option>';
+      $html .= '<option value="COUNTRY-' . $chapter->iso2 . '">' . $region_names[$chapter->region] . ' &gt; ' . $chapter->country . ' &gt; All Chapters</option>';
     }
 
     $html .= '<option value="CHAPTER-' . $chapter->entity_id . '">' . $region_names[$chapter->region] . ' &gt; ' . $chapter->country . ' &gt; ' . $chapter->title . '</option>';
@@ -196,11 +196,10 @@ function tm_insights_reach_results() {
 
  
   // fetch chapter stats
-  $cache_seconds = 0;
   if ($all_chapters) {
     $chapter_insights = _tm_reports_get_global_insights();
   } else {
-    $chapter_insights = _tm_reports_get_chapter_insights($chapter_ids, true, $cache_seconds);
+    $chapter_insights = _tm_reports_get_chapter_insights($chapter_ids, true);
   }
 
   // total members

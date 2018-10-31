@@ -14,7 +14,6 @@
 
     const urlParams = new URLSearchParams(window.location.search);
     const color_hash = urlParams.get('reports_color_hash');
-    console.log(color_hash);
 
     $.ajax({
       url: "/insights/callbacks/reach",

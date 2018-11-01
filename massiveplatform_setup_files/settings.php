@@ -1038,4 +1038,5 @@ $conf["tm_track_views_see_who_viewed_label"] = "Who visited";
 // $conf["tm_insights_default_color_hash"] = "123"; // default report color_hash
 // $conf["tm_insights_og_description"] = ""; // meta description
 // $conf["tm_insights_og_image"] = ""; // og image
+// $conf["tm_insights_show_nps"] = true; // show net promoter score
 

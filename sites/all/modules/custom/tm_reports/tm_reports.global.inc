@@ -149,6 +149,9 @@ function _tm_reports_get_global_insights() {
   $approved_role = user_role_load_by_name("approved user");
   $days_ago_30 = time() - (60 * 60 * 24 * 30); // 30 days ago
   $days_ago_90 = time() - (60 * 60 * 24 * 90); // 90 days ago
+
+  // NET PROMOTER SCORE
+  $insights["net_promoter_score"] = tm_nps_calc_global_score();
   
   // NUMBER OF FUTURE EVENTS
   $query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 

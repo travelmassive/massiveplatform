@@ -318,6 +318,45 @@ function tm_insights_reach_results() {
 }
 
 /**
+ * Add html meta tags
+ * Called from tm/themes/template.php
+ */
+function tm_insights_preprocess_html(&$variables, $hook) {
+
+  global $conf;
+
+  if (current_path() != "insights") {
+    return;
+  }
+  
+  // og:image
+  if (isset($conf['tm_insights_og_image'])) {
+    $meta = array(
+      '#tag' => 'meta', 
+      '#attributes' => array(
+        'name' => 'og:image', 
+        'content' => $conf['tm_insights_og_image'],
+      ),
+    );
+    drupal_add_html_head($meta, 'og:image');
+  }
+
+  // description
+  if (isset($conf['tm_insights_og_description'])) {
+    $meta = array(
+      '#tag' => 'meta', 
+      '#attributes' => array(
+        'name' => 'description',
+        'property' => 'og:description',
+        'content' => $conf['tm_insights_og_description'],
+      ),
+    );
+    drupal_add_html_head($meta, 'description');
+  }
+
+}
+
+/**
  * Helper method
  */
 function tm_insights_pluralize_members($num) {

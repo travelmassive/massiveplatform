@@ -8,6 +8,8 @@
 .insightsSelect {
 	width: 400px;
 	margin: auto;
+	height: 28px;
+	color: #fff;
 }
 
 #insightsInput {

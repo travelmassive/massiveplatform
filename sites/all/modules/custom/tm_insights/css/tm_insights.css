@@ -28,6 +28,10 @@
 	padding-bottom: 2rem;
 }
 
+.insightsNPS { 
+	display: none;
+}
+
 @media only screen and (max-width: 600px) {
 
 	.insightsSelect {
@@ -38,3 +42,4 @@
 		width: 300px;
 	}
 }
+

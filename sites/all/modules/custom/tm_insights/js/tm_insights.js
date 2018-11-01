@@ -12,6 +12,8 @@
   // Call Insights
   function doinsights() {
 
+    $(".insightsNPS").hide();
+
     const urlParams = new URLSearchParams(window.location.search);
     const color_hash = urlParams.get('reports_color_hash');
 
@@ -25,6 +27,7 @@
       dataType: "html",
       success: function (data) {
         $('#insightsResults').html(data);
+        $(".insightsNPS").show();
       },
       error: function (xhr, status) {
         $('#insightsResults').html("<center>Sorry, there was a problem fetching the results. Try again later.</center>");

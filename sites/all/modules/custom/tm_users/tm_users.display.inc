@@ -99,6 +99,25 @@ function tm_users_user_view($account, $view_mode, $langcode) {
       }
     }
   }
+
+  // Unapproved members - add noindex metatag if member is not approved
+  if ($view_mode == "full") {
+
+    if (!in_array('approved user', $account->roles)) {
+
+      // also add no-index
+      $noindex_meta_tag = array(
+        '#tag' => 'meta',
+        '#attributes' => array(
+        'name' => 'robots',
+        'content' => 'noindex, nofollow',
+        ),
+      );
+      drupal_add_html_head($noindex_meta_tag, 'user_profile_meta_robots');
+
+    }
+  }
+
 }
 
 /** 

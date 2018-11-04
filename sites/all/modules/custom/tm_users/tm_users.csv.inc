@@ -140,6 +140,7 @@ where n.value = 1 order by ud.uid asc";
 	$query = db_query($global_newsletter_sql);
 	$count = 1;
 	$starttime = microtime(true);
+	$row_count = 0;
 	while ($row = $query->fetchAssoc()) {
 
 		// show progress in drush
@@ -345,8 +346,9 @@ where n.value = 1 order by ud.uid asc";
 		$row[] = $company_segment_l1;
 		$row[] = $company_segment_l2;
 
-		// AB Group
-		$row[] = rand(1,2);
+		// AB Group (1 to 100)
+		$row[] = ($row_count % 100) + 1;
+		$row_count++;
 
 		fputcsv($fh, $row);
 	}

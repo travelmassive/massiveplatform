@@ -12,7 +12,7 @@ function tm_insights_menu() {
    $items = array();
 
    $items['insights'] = array(
-    'title' => 'Community insights',
+    'title' => 'Community Insights',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('tm_insights_form'),
     'access arguments' => array('access content'),

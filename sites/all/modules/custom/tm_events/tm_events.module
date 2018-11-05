@@ -232,9 +232,18 @@ function tm_events_page_alter(&$page) {
   // ie: /node/123/attendees
   if ((arg(0) == "node") and is_numeric(arg(1)) and (arg(2) == "attendees")) {
 
+    // Valid node
+    $event = node_load(arg(1));
+    if ($event == null) {
+      return;
+    }
+    if ($event->type != 'event') {
+      return;
+    }
+
     // Must be logged in
     if (!user_is_logged_in()) {
-      $message = "You must be <a href='/user/login?destination=/node/" . arg(1) . "/attendees'>signed in</a> to see who is attending this event.";
+      $message = "Please <a href='/user/login?destination=/node/" . arg(1) . "/attendees'>log in</a> to your account to see who is attending.";
       drupal_set_message($message, 'help-tip');
       drupal_goto("node/" . arg(1));
     }

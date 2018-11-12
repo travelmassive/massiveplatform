@@ -6,12 +6,18 @@
  */
 
 /**
-* Implements hook_field_schema().
-*/
+ * Implements hook_field_schema().
+ */
 function tzfield_field_schema($field) {
   return array(
     'columns' => array(
-      'value' => array('type' => 'varchar', 'length' => 32, 'not null' => FALSE, 'sortable' => TRUE, 'description' => 'Time zone identifier from the tz database.'),
+      'value' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => FALSE,
+        'sortable' => TRUE,
+        'description' => 'Time zone identifier from the tz database.',
+      ),
     ),
     'indexes' => array(
       'value' => array('value'),

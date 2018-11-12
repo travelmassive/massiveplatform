@@ -3,10 +3,10 @@ description = Populate Time zone field from Geofield
 core = 7.x
 dependencies[] = tzfield
 dependencies[] = geofield
+files[] = tzfield_geofield.test
 
-; Information added by Drupal.org packaging script on 2015-03-25
-version = "7.x-1.1"
+; Information added by Drupal.org packaging script on 2018-11-10
+version = "7.x-1.2"
 core = "7.x"
 project = "tzfield"
-datestamp = "1427269138"
-
+datestamp = "1541808484"

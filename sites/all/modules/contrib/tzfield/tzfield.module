@@ -60,7 +60,7 @@ function tzfield_field_validate($entity_type, $entity, $field, $instance, $langc
     if (!empty($item['value']) && !isset($options[$item['value']])) {
       $errors[$field['field_name']][$langcode][$delta][] = array(
         'error' => 'tzfield_illegal_value',
-        'message' => t('%name: This time zone is not valid.', array('%name' => t($instance['label']))),
+        'message' => t('%name: This time zone is not valid.', array('%name' => $instance['label'])),
       );
     }
   }
@@ -86,7 +86,7 @@ function tzfield_field_formatter_info() {
     'tzfield_date' => array(
       'label' => 'Formatted current date',
       'field types' => array('tzfield'),
-      'settings' =>  array(
+      'settings' => array(
         'format' => 'T',
       ),
     ),
@@ -127,6 +127,37 @@ function tzfield_field_widget_form(&$form, &$form_state, $field, $instance, $lan
 }
 
 /**
+ * Implements hook_field_widget_options_select_form_alter().
+ */
+function tzfield_field_widget_options_select_form_alter(&$element, &$form_state, $context) {
+  if (!module_exists('timezone_picker') || $context['field']['type'] != 'tzfield') {
+    return;
+  }
+  $element['#map_id'] = drupal_html_id('timezone-picker');
+  $element['#suffix'] = theme('timezone_map', array(
+    'map_id' => $element['#map_id'],
+    'map_src' => file_create_url(drupal_get_path('module', 'timezone_picker') . '/images/map.png'),
+  ));
+  $element['#attached']['library'][] = array('timezone_picker', 'jquery.timezone-picker');
+  $element['#attached']['css'][] = drupal_get_path('module', 'timezone_picker') . '/timezone-picker.css';
+  $element['#attached']['js'][] = drupal_get_path('module', 'timezone_picker') . '/timezone-picker.js';
+  $element['#after_build'][] = 'tzfield_timezone_picker_after_build';
+}
+
+/**
+ * After-build callback for time zone picker.
+ */
+function tzfield_timezone_picker_after_build($element) {
+  $settings['target'] = '#' . $element['#id'];
+  $settings['pin'] = '.timezone-picker-pin';
+  $element['#attached']['js'][] = array(
+    'data' => array('timezonePicker' => array($element['#map_id'] => $settings)),
+    'type' => 'setting',
+  );
+  return $element;
+}
+
+/**
  * Retrieve an array of autocomplete suggestions.
  */
 function tzfield_autocomplete($field_name, $string = '', $arg4 = '', $arg5 = '') {
@@ -137,7 +168,7 @@ function tzfield_autocomplete($field_name, $string = '', $arg4 = '', $arg5 = '')
     $string .= '/' . $arg5;
   }
   $string = preg_replace(';[^a-z0-9/_-];i', '', str_replace(' ', '_', trim($string)));
-  drupal_json_output($string ? preg_grep(';'. $string .';i', tzfield_options_list(field_info_field($field_name))) : array());
+  drupal_json_output($string ? preg_grep(';' . $string . ';i', tzfield_options_list(field_info_field($field_name))) : array());
 }
 
 /**
@@ -171,12 +202,13 @@ function tzfield_field_formatter_view($entity_type, $entity, $field, $instance, 
         $element[$delta] = array('#markup' => $item['value']);
       }
       break;
+
     case 'tzfield_date':
       foreach ($items as $delta => $item) {
         // If the date format string contains a character that requires HTML
         // encoding, then for plain text output from this formatter, you will
         // need to HTML decode it.
-        $element[$delta] = array('#markup' => $item['value'] ? check_plain(date_create('now', timezone_open($item['value']))->format($display['settings']['format'])) : '');
+        $element[$delta]['#markup'] = $item['value'] ? check_plain(format_date(REQUEST_TIME, 'custom', $display['settings']['format'], $item['value'])) : '';
       }
       break;
   }
@@ -208,7 +240,7 @@ function tzfield_field_formatter_settings_summary($field, $instance, $view_mode)
   if ($instance['display'][$view_mode]['type'] == 'tzfield_date') {
     $summary = t('Format string: %format<br />Sample date: %date', array(
       '%format' => $instance['display'][$view_mode]['settings']['format'],
-      '%date' => date_create()->format($instance['display'][$view_mode]['settings']['format']),
+      '%date' => format_date(REQUEST_TIME, 'custom', $instance['display'][$view_mode]['settings']['format']),
     ));
   }
   return $summary;
@@ -245,7 +277,11 @@ function tzfield_content_migrate_instance_alter(&$instance) {
     $instance['widget']['module'] = 'options';
   }
   // Use new date formatter.
-  $formats = array('abbreviation' => 'T', 'medium' => variable_get('date_format_medium', 'D, m/d/Y - H:i'), 'rfc2822' => 'r');
+  $formats = array(
+    'abbreviation' => 'T',
+    'medium' => variable_get('date_format_medium', 'D, m/d/Y - H:i'),
+    'rfc2822' => 'r',
+  );
   foreach ($instance['display'] as $view_mode => $display) {
     if ($display['module'] == 'tzfield' && isset($formats[$display['type']])) {
       $instance['display'][$view_mode]['type'] = 'tzfield_date';

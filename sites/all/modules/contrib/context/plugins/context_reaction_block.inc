@@ -452,7 +452,10 @@ class context_reaction_block extends context_reaction {
     $blocks = $this->get_blocks();
     $block_count = 0;
     foreach ($blocks as $region => $block_list) {
-      $block_count += count($block_list);
+      // Ensure the $block_list variable is countable.
+      if (is_array($block_list) || $block_list instanceof Countable) {
+        $block_count += count($block_list);
+      }
     }
     // Add 2 to make sure there's space at either end of the block list
     return round(($block_count + 2) / 2);

@@ -13,7 +13,6 @@ function tm_intercom_page_alter(&$page) {
 
 	if (user_is_logged_in()) {
 		
-
 		global $conf;
 		global $user;
 

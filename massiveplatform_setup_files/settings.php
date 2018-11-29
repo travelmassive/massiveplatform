@@ -1040,3 +1040,5 @@ $conf["tm_track_views_see_who_viewed_label"] = "Who visited";
 // $conf["tm_insights_og_image"] = ""; // og image
 // $conf["tm_insights_show_nps"] = true; // show net promoter score
 
+/** INTERCOM **/
+// $conf['tm_intercom_app_id'] = ''; // intercom app_id for tm_intercom module

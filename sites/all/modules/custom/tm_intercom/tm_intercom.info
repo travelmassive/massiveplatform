@@ -1,0 +1,8 @@
+name = TM Intercom Variables
+description = TM Intercom Variables
+core = 7.x
+package = TM Intercom
+version = 7.x-1.0-dev
+project = tm_intercom
+files[] = tm_intercom.module
+project path = sites/all/modules/custom

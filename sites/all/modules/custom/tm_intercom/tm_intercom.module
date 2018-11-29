@@ -1,0 +1,70 @@
+<?php
+/**
+ * @file
+ * Code for the TM Intercom Feature
+ */
+
+/**
+ * Implement hook_page_alter()
+ * Add intercom javascript variables for logged in users
+ * See: https://developers.intercom.com/installing-intercom/docs/javascript-api-attributes-objects
+ */
+function tm_intercom_page_alter(&$page) {
+
+	if (user_is_logged_in()) {
+		
+
+		global $conf;
+		global $user;
+
+		// load user
+		$account = user_load($user->uid);
+
+		// create settings
+		$settings = array();
+		$settings['app_id'] = $conf['tm_intercom_app_id'];
+		$settings['user_id'] = $account->uid;
+		$settings['email'] = $account->mail;
+		$settings['created_at'] = $account->created;
+
+		// avatar
+		$avatar_uri = _tm_users_get_avatar_uri($account);
+		$image_url = image_style_url("avatar", $avatar_uri);
+		$settings['avatar'] = array('type' => 'avatar', 'image_url' => $image_url);
+
+		// name
+		$full_name = "User";
+		if (isset($account->field_user_first_name[LANGUAGE_NONE][0]['value'])) {
+			$full_name = strip_tags($account->field_user_first_name[LANGUAGE_NONE][0]['value']);
+		}
+		if (isset($account->field_user_last_name[LANGUAGE_NONE][0]['value'])) {
+			$full_name .= " " . strip_tags($account->field_user_last_name[LANGUAGE_NONE][0]['value']);
+		}
+		$settings['name'] = $full_name;
+
+		// unsubscribed_from_emails
+		$notif = new TMNotification("global_newsletter");
+		$settings['unsubscribed_from_emails'] = !$notif->isEnabled($account->uid);
+
+		// company
+		/* company: {
+			company_id: "6",
+			created_at: 1394531169,
+			name: "Blue Sun",
+			monthly_spend: 49,
+			plan: "Pro",
+			size: 85,
+			website: "http://example.com",
+			industry: "Manufacturing"
+		} */
+
+		// include js
+		drupal_add_js('window.intercomSettings = ' . json_encode($settings) . '; console.log(window.intercomSettings)', array(
+			'type' => 'inline',
+			'scope' => 'footer',
+		));
+
+	}
+  
+}
+

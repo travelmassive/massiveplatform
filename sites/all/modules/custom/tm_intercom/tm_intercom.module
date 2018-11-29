@@ -46,20 +46,63 @@ function tm_intercom_page_alter(&$page) {
 		$notif = new TMNotification("global_newsletter");
 		$settings['unsubscribed_from_emails'] = !$notif->isEnabled($account->uid);
 
-		// company
-		/* company: {
-			company_id: "6",
-			created_at: 1394531169,
-			name: "Blue Sun",
-			monthly_spend: 49,
-			plan: "Pro",
-			size: 85,
-			website: "http://example.com",
-			industry: "Manufacturing"
-		} */
+		// custom variables
+
+		// profile url
+		$account_profile_url = drupal_get_path_alias("user/" . $account->uid);
+		$settings['tm_profile_url'] = url($account_profile_url,array('absolute'=>true));
+
+		// first company page
+		$settings['tm_company_page'] = null;
+		$organization_profile_nids = tm_organizations_get_users_companies($account->uid);
+		if (sizeof($organization_profile_nids) > 0) {
+			$company_page_url = drupal_get_path_alias("node/" . $organization_profile_nids[0]);
+			$settings['tm_company_page'] = url($company_page_url,array('absolute'=>true));
+		}
+	
+		// guest member or approved
+		$member_type = "Guest Member";
+		if (in_array("approved user", $account->roles)) {
+			$member_type = "Approved Member";
+		}
+		if (in_array("chapter leader", $account->roles)) {
+			$member_type = "Chapter Leader";
+		}
+
+		// user subscription
+		// use flag lookup directly for performance
+		if (module_exists('tm_subscriptions_user')) {
+			$user_subscription_enable_flag = flag_get_flag('user_subscription_enable', NULL);
+			if ($user_subscription_enable_flag->is_flagged($account->uid)) {
+				$member_type = $conf["tm_subscriptions_user_label_noun"];
+			}
+		}
+
+		// company subscription
+		// use flag lookup directly for performance
+		if (module_exists('tm_subscriptions')) {
+
+			// get list of subscribed companies
+			$subscribed_companies = array();
+			foreach ($organization_profile_nids as $nid) {
+
+				// use direct flag lookup for performance
+				$organization_subscription_enable_flag = flag_get_flag('organization_subscription_enable', NULL);
+				if ($organization_subscription_enable_flag->is_flagged($nid)) {
+					$subscribed_companies[] = $nid;
+				}
+			}
+
+			if (sizeof($subscribed_companies) > 0) {
+				$member_type = $conf["tm_subscriptions_organization_label_noun"];
+			}
+		}
+
+		$settings['tm_member_type'] = $member_type;
+
 
 		// include js
-		drupal_add_js('window.intercomSettings = ' . json_encode($settings) . '; console.log(window.intercomSettings)', array(
+		drupal_add_js('window.intercomSettings = ' . json_encode($settings), array(
 			'type' => 'inline',
 			'scope' => 'footer',
 		));

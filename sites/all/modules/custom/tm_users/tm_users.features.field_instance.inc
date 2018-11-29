@@ -24,7 +24,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 26,
+        'weight' => 28,
       ),
       'grid' => array(
         'label' => 'above',

@@ -100,12 +100,7 @@ function tm_intercom_page_alter(&$page) {
 		$settings['tm_member_type'] = $member_type;
 
 		// HMAC using SHA-256
-		$hmac = hash_hmac(
-			'sha256', // hash function
-			$account->uid, // user's id
-			$conf['tm_intercom_hmac_secret_key'] // secret key (keep safe!)
-			);
-		$settings['user_hash'] = $hmac;
+		$settings['user_hash'] = tm_intercom_hmac($account->uid);
 
 
 		// include js
@@ -118,3 +113,18 @@ function tm_intercom_page_alter(&$page) {
   
 }
 
+/**
+ * Helper method to generate hmac verification
+ */
+function tm_intercom_hmac($uid) {
+	
+	global $conf;
+
+	$hmac = hash_hmac(
+		'sha256', // hash function
+		$uid, // user's id
+		$conf['tm_intercom_hmac_secret_key'] // secret key (keep safe!)
+		);
+
+	return $hmac;
+}

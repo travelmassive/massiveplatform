@@ -659,8 +659,15 @@ function tm_users_set_application_cookies() {
       $img_uri = $conf["tm_images_default_path"] . $cover_files[$image_index];
     }
   }
-
   user_cookie_save(array('user_avatar_uri' => image_style_url("avatar", $img_uri)));
+
+  // User ID
+  user_cookie_save(array('user_id' => $user->uid));
+
+  // Hmac verification (for tm_intercom module)
+  if (module_exists("tm_intercom")) {
+    user_cookie_save(array('intercom_hmac' => tm_intercom_hmac($user->uid)));
+  }
   
 }
 
@@ -669,7 +676,7 @@ function tm_users_set_application_cookies() {
  */
 function tm_users_user_logout($account) {
 
-  $unset_cookies = array("Drupal.visitor.anonymous_visitor", "Drupal.visitor.approved_member", "Drupal.visitor.user_profile_uri", "Drupal.visitor.user_avatar_uri");
+  $unset_cookies = array("Drupal.visitor.anonymous_visitor", "Drupal.visitor.approved_member", "Drupal.visitor.user_profile_uri", "Drupal.visitor.user_avatar_uri", "Drupal.visitor.user_id", "Drupal.visitor.intercom_hmac");
   foreach ($unset_cookies as $cookie_name) {
     unset($_COOKIE[str_replace(".", "_", $cookie_name)]);
     setcookie($cookie_name, '', time() - 3600, "/");

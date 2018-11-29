@@ -100,6 +100,14 @@ function tm_intercom_page_alter(&$page) {
 
 		$settings['tm_member_type'] = $member_type;
 
+		// HMAC using SHA-256
+		$hmac = hash_hmac(
+			'sha256', // hash function
+			$account->uid, // user's id
+			$conf['tm_intercom_hmac_secret_key'] // secret key (keep safe!)
+			);
+		$settings['user_hash'] = $hmac;
+
 
 		// include js
 		drupal_add_js('window.intercomSettings = ' . json_encode($settings), array(

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * tm_organizations.ds.inc
@@ -55,8 +56,30 @@ function tm_organizations_ds_field_settings_info() {
         ),
       ),
     ),
-    'tm_ds_tm_sponsor' => array(
+    'tm_ds_subscription_organization_cta_ds' => array(
+      'weight' => '2',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_tm_default',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'tm_ds_subscription_organization_badge_ds' => array(
       'weight' => '1',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_tm_default',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
+    'tm_ds_tm_sponsor' => array(
+      'weight' => '4',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -77,7 +100,7 @@ function tm_organizations_ds_field_settings_info() {
       ),
     ),
     'tm_ds_organization_stats' => array(
-      'weight' => '3',
+      'weight' => '6',
       'label' => 'above',
       'format' => 'default',
       'formatter_settings' => array(
@@ -119,7 +142,7 @@ function tm_organizations_ds_field_settings_info() {
       ),
     ),
     'tm_ds_track_company_viewers' => array(
-      'weight' => '4',
+      'weight' => '8',
       'label' => 'above',
       'format' => 'default',
       'formatter_settings' => array(
@@ -291,14 +314,6 @@ function tm_organizations_ds_field_settings_info() {
         ),
       ),
     ),
-    'field_company_testimonial' => array(
-      'formatter_settings' => array(
-        'ft' => array(
-          'func' => 'theme_ds_field_tm_default',
-          'lb-col' => TRUE,
-        ),
-      ),
-    ),
   );
   $export['node|organization|full'] = $ds_fieldsetting;
 
@@ -451,37 +466,39 @@ function tm_organizations_ds_layout_settings_info() {
   $ds_layout->layout = 'trilithon';
   $ds_layout->settings = array(
     'regions' => array(
-      'header_media' => array(
-        0 => 'field_image',
-      ),
       'first_column' => array(
-        1 => 'tm_ds_organization_follow_message',
-        4 => 'tm_ds_tm_sponsor',
-        8 => 'body',
-        9 => 'tm_ds_organization_stats',
-        12 => 'tm_ds_track_company_viewers',
+        0 => 'tm_ds_organization_follow_message',
+        4 => 'tm_ds_subscription_organization_badge_ds',
+        6 => 'tm_ds_subscription_organization_cta_ds',
+        10 => 'body',
+        12 => 'tm_ds_tm_sponsor',
         14 => 'field_link_website',
         15 => 'group_details_wrapper',
-        16 => 'field_link_twitter',
+        16 => 'tm_ds_organization_stats',
         17 => 'group_events_wrapper',
-        19 => 'field_link_facebook',
-        21 => 'field_link_linkedin',
-        22 => 'field_link_instagram',
-        24 => 'field_link_youtube',
-        25 => 'field_link_vimeo',
-        26 => 'field_link_snapchat',
-        27 => 'field_company_testimonial',
-        28 => 'group_location_wrapper',
-        30 => 'field_location_city',
-        31 => 'field_country',
-        32 => 'event_list',
+        19 => 'field_link_twitter',
+        20 => 'tm_ds_track_company_viewers',
+        23 => 'field_link_facebook',
+        24 => 'field_link_linkedin',
+        25 => 'field_link_instagram',
+        26 => 'field_link_youtube',
+        27 => 'field_link_vimeo',
+        28 => 'field_link_snapchat',
+        30 => 'field_company_testimonial',
+        31 => 'field_location_city',
+        32 => 'field_country',
+        33 => 'event_list',
+        34 => 'group_location_wrapper',
+      ),
+      'header_media' => array(
+        1 => 'field_image',
       ),
       'header_body' => array(
-        2 => 'field_avatar',
-        3 => 'ds_flag_follow_organizations',
-        6 => 'title',
-        7 => 'tm_ds_anon_flag_placeholder',
-        10 => 'tm_ds_more_actions',
+        2 => 'ds_flag_follow_organizations',
+        3 => 'field_avatar',
+        7 => 'title',
+        8 => 'tm_ds_anon_flag_placeholder',
+        9 => 'tm_ds_more_actions',
         11 => 'field_segment',
         13 => 'group_action_menu_wrapper',
         29 => 'group_action_menu',
@@ -489,44 +506,46 @@ function tm_organizations_ds_layout_settings_info() {
       'second_column' => array(
         5 => 'field_owner',
         18 => 'members_following',
-        20 => 'group_managed_by_wrapper',
-        23 => 'group_community_wrapper',
+        21 => 'group_managed_by_wrapper',
+        22 => 'group_community_wrapper',
       ),
     ),
     'fields' => array(
-      'field_image' => 'header_media',
       'tm_ds_organization_follow_message' => 'first_column',
-      'field_avatar' => 'header_body',
+      'field_image' => 'header_media',
       'ds_flag_follow_organizations' => 'header_body',
-      'tm_ds_tm_sponsor' => 'first_column',
+      'field_avatar' => 'header_body',
+      'tm_ds_subscription_organization_badge_ds' => 'first_column',
       'field_owner' => 'second_column',
+      'tm_ds_subscription_organization_cta_ds' => 'first_column',
       'title' => 'header_body',
       'tm_ds_anon_flag_placeholder' => 'header_body',
-      'body' => 'first_column',
-      'tm_ds_organization_stats' => 'first_column',
       'tm_ds_more_actions' => 'header_body',
+      'body' => 'first_column',
       'field_segment' => 'header_body',
-      'tm_ds_track_company_viewers' => 'first_column',
+      'tm_ds_tm_sponsor' => 'first_column',
       'group_action_menu_wrapper' => 'header_body',
       'field_link_website' => 'first_column',
       'group_details_wrapper' => 'first_column',
-      'field_link_twitter' => 'first_column',
+      'tm_ds_organization_stats' => 'first_column',
       'group_events_wrapper' => 'first_column',
       'members_following' => 'second_column',
-      'field_link_facebook' => 'first_column',
+      'field_link_twitter' => 'first_column',
+      'tm_ds_track_company_viewers' => 'first_column',
       'group_managed_by_wrapper' => 'second_column',
+      'group_community_wrapper' => 'second_column',
+      'field_link_facebook' => 'first_column',
       'field_link_linkedin' => 'first_column',
       'field_link_instagram' => 'first_column',
-      'group_community_wrapper' => 'second_column',
       'field_link_youtube' => 'first_column',
       'field_link_vimeo' => 'first_column',
       'field_link_snapchat' => 'first_column',
-      'field_company_testimonial' => 'first_column',
-      'group_location_wrapper' => 'first_column',
       'group_action_menu' => 'header_body',
+      'field_company_testimonial' => 'first_column',
       'field_location_city' => 'first_column',
       'field_country' => 'first_column',
       'event_list' => 'first_column',
+      'group_location_wrapper' => 'first_column',
     ),
     'classes' => array(),
     'wrappers' => array(

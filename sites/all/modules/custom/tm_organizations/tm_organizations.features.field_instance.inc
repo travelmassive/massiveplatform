@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * tm_organizations.features.field_instance.inc
@@ -29,7 +30,7 @@ function tm_organizations_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',
-        'weight' => 2,
+        'weight' => 3,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -653,6 +654,122 @@ example: http://exampleblog.com/feed/',
   );
 
   // Exported field_instance:
+  // 'node-organization-field_company_payment_commission'.
+  $field_instances['node-organization-field_company_payment_commission'] = array(
+    'bundle' => 'organization',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Fix the default commission percentage for events created by this company.
+<br>Note: Does not include bank fees, forex or other charges.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 2,
+          'thousand_separator' => '',
+        ),
+        'type' => 'number_decimal',
+        'weight' => 20,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_company_payment_commission',
+    'label' => 'Company payment commission (%)',
+    'required' => 0,
+    'settings' => array(
+      'max' => 100,
+      'min' => 0,
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 59,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'node-organization-field_company_payments_enabled'.
+  $field_instances['node-organization-field_company_payments_enabled'] = array(
+    'bundle' => 'organization',
+    'default_value' => array(
+      0 => array(
+        'value' => 'disabled',
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Set whether company can create paid events.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 19,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_company_payments_enabled',
+    'label' => 'Enable Event Payments',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 58,
+    ),
+  );
+
+  // Exported field_instance:
   // 'node-organization-field_company_subscription_date'.
   $field_instances['node-organization-field_company_subscription_date'] = array(
     'bundle' => 'organization',
@@ -796,7 +913,7 @@ Your testimonial will be displayed on your company page.',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',
-        'weight' => 13,
+        'weight' => 15,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1127,7 +1244,7 @@ Displays a short message to followers on your company page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_facebook',
-        'weight' => 7,
+        'weight' => 9,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1205,7 +1322,7 @@ Displays a short message to followers on your company page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_instagram',
-        'weight' => 9,
+        'weight' => 11,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1282,7 +1399,7 @@ Displays a short message to followers on your company page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_linkedin',
-        'weight' => 8,
+        'weight' => 10,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1360,7 +1477,7 @@ Displays a short message to followers on your company page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_snapchat',
-        'weight' => 12,
+        'weight' => 14,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1437,7 +1554,7 @@ Displays a short message to followers on your company page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_twitter',
-        'weight' => 6,
+        'weight' => 7,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1515,7 +1632,7 @@ Displays a short message to followers on your company page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_vimeo',
-        'weight' => 11,
+        'weight' => 13,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1670,7 +1787,7 @@ Displays a short message to followers on your company page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_youtube',
-        'weight' => 10,
+        'weight' => 12,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1992,14 +2109,18 @@ Example: your business number, or tax id');
 Example: #news #tech');
   t('Allow this company to list events without requiring the minimum follower count.');
   t('City');
+  t('Company payment commission (%)');
   t('Contact email');
   t('Contact person');
   t('Country');
   t('Cover Image');
   t('Cover Video');
   t('Description');
+  t('Enable Event Payments');
   t('Enable events');
   t('Facebook');
+  t('Fix the default commission percentage for events created by this company.
+<br>Note: Does not include bank fees, forex or other charges.');
   t('Friendly URL');
   t('Give something back to members who follow your company.<br>
 Displays a short message to followers on your company page.<br><br>');
@@ -2025,6 +2146,7 @@ example: http://exampleblog.com/feed/');
   t('Provide a cover image to be displayed behind your company logo.
 <br>To support retina displays, upload your image sized to 1610x906');
   t('Select up to five members who can manage this listing.');
+  t('Set whether company can create paid events.');
   t('Share a Testimonial');
   t('Snapchat');
   t('Subscription Renewal Date');

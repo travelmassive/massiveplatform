@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * tm_organizations.field_group.inc
@@ -184,11 +185,13 @@ function tm_organizations_field_group_info() {
       7 => 'field_link_vimeo',
       8 => 'field_link_youtube',
       9 => 'field_company_testimonial',
-      10 => 'tm_ds_tm_sponsor',
-      11 => 'tm_ds_organization_follow_message',
-      12 => 'tm_ds_organization_stats',
-      13 => 'tm_ds_track_company_viewers',
-      14 => 'group_location_wrapper',
+      10 => 'tm_ds_subscription_organization_cta_ds',
+      11 => 'tm_ds_subscription_organization_badge_ds',
+      12 => 'tm_ds_tm_sponsor',
+      13 => 'tm_ds_organization_follow_message',
+      14 => 'tm_ds_organization_stats',
+      15 => 'tm_ds_track_company_viewers',
+      16 => 'group_location_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -306,7 +309,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '14',
+    'weight' => '16',
     'children' => array(
       0 => 'field_location_city',
       1 => 'field_country',

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * tm_users.features.field_instance.inc
@@ -23,7 +24,7 @@ function tm_users_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 24,
+        'weight' => 26,
       ),
       'grid' => array(
         'label' => 'above',
@@ -596,7 +597,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_facebook',
-        'weight' => 30,
+        'weight' => 32,
       ),
       'grid' => array(
         'label' => 'above',
@@ -667,7 +668,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_instagram',
-        'weight' => 32,
+        'weight' => 34,
       ),
       'grid' => array(
         'label' => 'above',
@@ -738,7 +739,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_linkedin',
-        'weight' => 31,
+        'weight' => 33,
       ),
       'grid' => array(
         'label' => 'above',
@@ -809,7 +810,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_snapchat',
-        'weight' => 35,
+        'weight' => 37,
       ),
       'grid' => array(
         'label' => 'above',
@@ -879,7 +880,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_strava',
-        'weight' => 36,
+        'weight' => 38,
       ),
       'grid' => array(
         'label' => 'above',
@@ -943,7 +944,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_twitter',
-        'weight' => 29,
+        'weight' => 31,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1014,7 +1015,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_vimeo',
-        'weight' => 34,
+        'weight' => 36,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1084,7 +1085,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_link',
-        'weight' => 28,
+        'weight' => 30,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1155,7 +1156,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_youtube',
-        'weight' => 33,
+        'weight' => 35,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1332,7 +1333,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'hs_taxonomy',
         'settings' => array(),
         'type' => 'hs_taxonomy_term_reference_hierarchical_text',
-        'weight' => 27,
+        'weight' => 29,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1483,9 +1484,8 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
+        'type' => 'hidden',
         'weight' => 48,
       ),
       'grid' => array(
@@ -2058,7 +2058,7 @@ Your testimonial will be displayed on your profile page.
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',
-        'weight' => 37,
+        'weight' => 39,
       ),
       'grid' => array(
         'label' => 'above',

@@ -118,13 +118,15 @@ function tm_intercom_page_alter(&$page) {
  */
 function tm_intercom_user_logout($account) {
 
+	global $conf;
+
 	// shutdown intercom 
 	// see: https://developers.intercom.com/installing-intercom/docs/intercom-javascript
 	foreach ($_COOKIE as $cookie_name => $value) {
 		$parts = explode('-', $cookie_name);
 		if ($parts[0] == 'intercom') {
 			unset($_COOKIE[$cookie_name]);
-			setcookie($cookie_name, '', time() - 3600, "/");
+			setcookie($cookie_name, '', time() - 3600, "/", $conf["tm_intercom_cookie_domain"]);
 		}
 	}
 }

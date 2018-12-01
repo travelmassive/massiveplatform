@@ -664,6 +664,16 @@ function tm_users_set_application_cookies() {
   // User ID
   user_cookie_save(array('user_id' => $user->uid));
 
+  // User full name
+  $full_name = "User";
+  if (isset($loaded->field_user_first_name[LANGUAGE_NONE][0]['value'])) {
+    $full_name = strip_tags($loaded->field_user_first_name[LANGUAGE_NONE][0]['value']);
+  }
+  if (isset($loaded->field_user_last_name[LANGUAGE_NONE][0]['value'])) {
+    $full_name .= " " . strip_tags($loaded->field_user_last_name[LANGUAGE_NONE][0]['value']);
+  }
+  user_cookie_save(array('user_full_name' => $full_name));
+
   // Hmac verification (for tm_intercom module)
   if (module_exists("tm_intercom")) {
     user_cookie_save(array('intercom_hash' => tm_intercom_hmac($user->uid)));

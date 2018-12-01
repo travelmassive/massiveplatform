@@ -686,7 +686,7 @@ function tm_users_set_application_cookies() {
  */
 function tm_users_user_logout($account) {
 
-  $unset_cookies = array("Drupal.visitor.anonymous_visitor", "Drupal.visitor.approved_member", "Drupal.visitor.user_profile_uri", "Drupal.visitor.user_avatar_uri", "Drupal.visitor.user_id", "Drupal.visitor.intercom_hash");
+  $unset_cookies = array("Drupal.visitor.anonymous_visitor", "Drupal.visitor.approved_member", "Drupal.visitor.user_profile_uri", "Drupal.visitor.user_avatar_uri", "Drupal.visitor.user_id", "Drupal.visitor.user_full_name", "Drupal.visitor.intercom_hash");
   foreach ($unset_cookies as $cookie_name) {
     unset($_COOKIE[str_replace(".", "_", $cookie_name)]);
     setcookie($cookie_name, '', time() - 3600, "/");

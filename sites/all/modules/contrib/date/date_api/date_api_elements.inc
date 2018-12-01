@@ -464,7 +464,12 @@ function date_select_element_value_callback($element, $input = FALSE, &$form_sta
   );
   foreach ($granularity as $field) {
     if ($field != 'timezone') {
-      $return[$field] = date_is_date($date) ? $date->format($formats[$field]) : '';
+      if (date_is_date($date)) {
+        $return[$field] = $date->format($formats[$field]);
+      }
+      else {
+        $return = array();
+      }
     }
   }
   return $return;
@@ -488,7 +493,7 @@ function date_select_element_process($element, &$form_state, $form) {
   $date = NULL;
   $granularity = date_format_order($element['#date_format']);
 
-  if (is_array($element['#default_value'])) {
+  if (array_key_exists('#default_value', $element) && is_array($element['#default_value'])) {
     $date = date_select_input_date($element, $element['#default_value']);
   }
   elseif (!empty($element['#default_value'])) {

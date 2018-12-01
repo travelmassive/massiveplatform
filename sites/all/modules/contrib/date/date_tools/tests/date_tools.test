@@ -97,6 +97,7 @@ class DateToolsTestCase extends DrupalWebTestCase {
       'granularity[]' => array('year', 'month', 'day', 'hour', 'minute'),
       'tz_handling' => 'site',
       'year_range' => '2010:+2',
+      'weight' => -100,
     );
     $this->drupalPost('admin/config/date/tools/date_wizard', $edit, t('Save'));
     $this->assertText('Your date field Test has been created.', 'Create a date field using the Date Wizard.');

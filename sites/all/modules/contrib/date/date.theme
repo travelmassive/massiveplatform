@@ -29,8 +29,8 @@
  *    example: 'date.217.field_date.3.test'
  *
  *  $entity->date_repeat_show
- *    If true, tells the theme to show all the computed values of a repeating
- *    date. If not true or not set, only the start date and the repeat rule
+ *    If TRUE, tells the theme to show all the computed values of a repeating
+ *    date. If not TRUE or not set, only the start date and the repeat rule
  *    will be displayed.
  *
  *  $dates['format']
@@ -177,7 +177,7 @@ function theme_date_display_combination($variables) {
   elseif ($date1 == $date2 || empty($date2)) {
     $output .= theme('date_display_single', array(
       'date' => $date1,
-      'timezone' => $timezone,
+      'timezone' => $has_time_string ? $timezone : '',
       'attributes' => $attributes,
       'rdf_mapping' => $rdf_mapping,
       'add_rdf' => $add_rdf,
@@ -221,7 +221,7 @@ function theme_date_display_combination($variables) {
     $output .= theme('date_display_range', array(
       'date1' => $date1,
       'date2' => $date2,
-      'timezone' => $timezone,
+      'timezone' => $has_time_string ? $timezone : '',
       'attributes' => $attributes,
       'rdf_mapping' => $rdf_mapping,
       'add_rdf' => $add_rdf,
@@ -251,7 +251,7 @@ function template_preprocess_date_display_single(&$variables) {
     $variables['attributes'] = $variables['attributes'] + $base_attributes;
   }
 
-  // Pass along microdata attributes, or set display to false if none are set.
+  // Pass along microdata attributes, or set display to FALSE if none are set.
   if (!empty($variables['add_microdata'])) {
     // Because the Entity API integration for Date has a variable data
     // structure depending on whether there is an end value, the attributes
@@ -315,7 +315,7 @@ function template_preprocess_date_display_range(&$variables) {
     }
   }
 
-  // Pass along microdata attributes, or set display to false if none are set.
+  // Pass along microdata attributes, or set display to FALSE if none are set.
   if ($variables['add_microdata']) {
     if (!empty($variables['microdata']['value']['#attributes'])) {
       $variables['microdata']['value']['#attributes']['content'] = $variables['dates']['value']['formatted_iso'];
@@ -477,9 +477,9 @@ function theme_date_form_element($variables) {
 function theme_date_display_remaining($variables) {
   $remaining_days = $variables['remaining_days'];
   $output = '';
-  $show_remaining_text = t('The upcoming date less then 1 day.');
+  $show_remaining_text = t('Less than 1 day remaining');
   if ($remaining_days) {
-    $show_remaining_text = format_plural($remaining_days, 'To event remaining 1 day', 'To event remaining @count days');
+    $show_remaining_text = format_plural($remaining_days, '1 day remaining', '@count days remaining');
   }
 
   return '<div class="date-display-remaining"><span class="date-display-remaining">' . $show_remaining_text . '</span></div>';

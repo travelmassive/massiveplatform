@@ -311,7 +311,7 @@ class DateObject extends DateTime {
    * @return object
    *   A merged date object.
    */
-  public function merge(FeedsDateTime $other) {
+  public function merge(DateObject $other) {
     $other_tz = $other->getTimezone();
     $this_tz = $this->getTimezone();
     // Figure out which timezone to use for combination.
@@ -385,7 +385,7 @@ class DateObject extends DateTime {
    * @param bool $force
    *   Whether or not to limit the granularity. Defaults to FALSE.
    *
-   * @return string|false
+   * @return string|bool
    *   Returns the formatted date string on success or FALSE on failure.
    */
   public function format($format, $force = FALSE) {
@@ -998,8 +998,8 @@ class DateObject extends DateTime {
   public function difference($date2_in, $measure = 'seconds', $absolute = TRUE) {
     // Create cloned objects or original dates will be impacted by the
     // date_modify() operations done in this code.
-    $date1 = clone($this);
-    $date2 = clone($date2_in);
+    $date1 = clone $this;
+    $date2 = clone $date2_in;
     if (is_object($date1) && is_object($date2)) {
       $diff = date_format($date2, 'U') - date_format($date1, 'U');
       if ($diff == 0) {
@@ -1845,9 +1845,11 @@ function date_format_interval($date, $granularity = 2, $display_ago = TRUE) {
  *   The current time as a date object.
  */
 function date_now($timezone = NULL, $reset = FALSE) {
-  $static_var = __FUNCTION__ . $timezone;
   if ($timezone instanceof DateTimeZone) {
     $static_var = __FUNCTION__ . $timezone->getName();
+  }
+  else {
+    $static_var = __FUNCTION__ . $timezone;
   }
 
   if ($reset) {
@@ -2060,8 +2062,8 @@ function date_week_range($week, $year) {
   date_modify($min_date, '-' . strval((7 + $day_wday - $first_day) % 7) . ' days');
 
   // Move forwards to the last day of the week.
-  $max_date = clone($min_date);
-  date_modify($max_date, '+6 days');
+  $max_date = clone $min_date;
+  date_modify($max_date, '+6 days +23 hours +59 minutes +59 seconds');
 
   if (date_format($min_date, 'Y') != $year) {
     $min_date = new DateObject($year . '-01-01 00:00:00');
@@ -2097,8 +2099,8 @@ function date_iso_week_range($week, $year) {
   }
 
   // Move forwards to the last day of the week.
-  $max_date = clone($min_date);
-  date_modify($max_date, '+6 days');
+  $max_date = clone $min_date;
+  date_modify($max_date, '+6 days +23 hours +59 minutes +59 seconds');
   return array($min_date, $max_date);
 }
 
@@ -2148,7 +2150,7 @@ function date_week($date) {
 
   // Remove the leap week if it's present.
   if ($date_year > intval($parts[0])) {
-    $last_date = clone($date);
+    $last_date = clone $date;
     date_modify($last_date, '-7 days');
     $week = date_format($last_date, 'W') + 1;
   }
@@ -2821,27 +2823,21 @@ function date_is_all_day($string1, $string2, $granularity = 'second', $increment
   // maximum possible (59), or 0.
   switch ($granularity) {
     case 'second':
-      $min_match = $time1 == '00:00:00'
-        || ($hour1 == 0 && $min1 == 0 && $sec1 == 0);
-      $max_match = $time2 == '00:00:00'
-        || ($hour2 == 23 && in_array($min2, array($max_minutes, 59)) && in_array($sec2, array($max_seconds, 59)))
-        || ($hour1 == 0 && $hour2 == 0 && $min1 == 0 && $min2 == 0 && $sec1 == 0 && $sec2 == 0);
+      $min_match = ($hour1 == 0 && $min1 == 0 && $sec1 == 0);
+      $max_match = ($hour2 == 23 && in_array($min2, array($max_minutes, 59)) && in_array($sec2, array($max_seconds, 59)))
+        || ($date1 != $date2 && $hour1 == 0 && $hour2 == 0 && $min1 == 0 && $min2 == 0 && $sec1 == 0 && $sec2 == 0);
       break;
 
     case 'minute':
-      $min_match = $time1 == '00:00:00'
-        || ($hour1 == 0 && $min1 == 0);
-      $max_match = $time2 == '00:00:00'
-        || ($hour2 == 23 && in_array($min2, array($max_minutes, 59)))
-        || ($hour1 == 0 && $hour2 == 0 && $min1 == 0 && $min2 == 0);
+      $min_match = ($hour1 == 0 && $min1 == 0);
+      $max_match = ($hour2 == 23 && in_array($min2, array($max_minutes, 59)))
+        || ($date1 != $date2 && $hour1 == 0 && $hour2 == 0 && $min1 == 0 && $min2 == 0);
       break;
 
     case 'hour':
-      $min_match = $time1 == '00:00:00'
-        || ($hour1 == 0);
-      $max_match = $time2 == '00:00:00'
-        || ($hour2 == 23)
-        || ($hour1 == 0 && $hour2 == 0);
+      $min_match = ($hour1 == 0);
+      $max_match = ($hour2 == 23)
+        || ($date1 != $date2 && $hour1 == 0 && $hour2 == 0);
       break;
 
     default:

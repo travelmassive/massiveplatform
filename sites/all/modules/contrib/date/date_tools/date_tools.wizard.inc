@@ -112,6 +112,12 @@ function date_tools_wizard_form() {
     '#title' => t('Date timezone handling'),
     '#description' => t("Timezone handling should be set to 'none' for granularity without time elements."),
   );
+  $form['field']['advanced']['weight'] = array(
+    '#type' => 'textfield',
+    '#default_value' => '-4',
+    '#title' => t('Weight'),
+    '#description' => t("Set the field weight."),
+  );
   $form['calendar'] = array(
     '#type' => 'select',
     '#default_value' => module_exists('calendar'),
@@ -238,7 +244,7 @@ function date_tools_wizard_build($form_values) {
     'label' => $label,
     'bundle' => $bundle,
     // Move the date right below the title.
-    'weight' => -4,
+    'weight' => $weight,
     'widget' => array(
       'type' => $widget_type,
       // Increment for minutes and seconds, can be 1, 5, 10, 15, or 30.
@@ -252,7 +258,7 @@ function date_tools_wizard_build($form_values) {
         'label_position' => 'above',
         'repeat_collapsed' => 0,
       ),
-      'weight' => -4,
+      'weight' => $weight,
     ),
     'settings' => array(
       'default_value' => 'now',

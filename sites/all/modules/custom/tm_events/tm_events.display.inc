@@ -295,9 +295,11 @@ function _tm_date_get_date_format($user, $event) {
   if (isset($event->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
     $chapter_id = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
     $chapter = node_load($chapter_id);
-    $chapter_country_code = $chapter->field_country[LANGUAGE_NONE][0]['iso2'];
-    if (in_array($chapter_country_code, $country_codes_with_12_hours)) {
-      $time_format = "g:i a"; // ie: 2:00 pm
+    if (isset($chapter->field_country)) {
+      $chapter_country_code = $chapter->field_country[LANGUAGE_NONE][0]['iso2'];
+      if (in_array($chapter_country_code, $country_codes_with_12_hours)) {
+        $time_format = "g:i a"; // ie: 2:00 pm
+      }
     }
   }
   

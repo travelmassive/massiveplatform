@@ -214,8 +214,10 @@ function _tm_get_event_timezone($event) {
     if (isset($event->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
       $chapter = node_load($event->field_chapter[LANGUAGE_NONE][0]['target_id']);
       // If chapter has timezone set
-      if ($chapter->field_chapter_timezone != null) {
-        $event_timezone = $chapter->field_chapter_timezone[LANGUAGE_NONE][0]['value'];
+      if (isset($chapter->field_chapter_timezone)) {
+        if ($chapter->field_chapter_timezone != null) {
+          $event_timezone = $chapter->field_chapter_timezone[LANGUAGE_NONE][0]['value'];
+        }
       }
     }
 

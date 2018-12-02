@@ -456,7 +456,7 @@ class DateRepeatFormTestCase extends DrupalWebTestCase {
     $edit = array();
     $edit['fields[_add_new_field][label]'] = 'Test';
     $edit['fields[_add_new_field][field_name]'] = 'test';
-    $edit['fields[_add_new_field][weight]'] = '-4';
+    $edit['fields[_add_new_field][weight]'] = '-100';
     $edit['fields[_add_new_field][type]'] = $type;
     $edit['fields[_add_new_field][widget_type]'] = $widget;
 

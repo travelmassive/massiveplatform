@@ -1043,4 +1043,5 @@ $conf["tm_track_views_see_who_viewed_label"] = "Who visited";
 /** INTERCOM **/
 // $conf['tm_intercom_app_id'] = ''; // intercom app_id for tm_intercom module
 // $conf['tm_intercom_hmac_secret_key'] = ''; // verification key
+// $conf['tm_intercom_cookie_domain'] = '.massiveplatform.com'; // domain for 'intercom-' cookies with .
 

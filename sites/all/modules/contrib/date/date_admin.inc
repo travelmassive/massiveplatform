@@ -440,7 +440,7 @@ function _date_field_widget_settings_form($field, $instance) {
     '#description' => $description,
   );
   $form['advanced']['text_parts'] = array(
-    '#theme' => $widget['type'] == 'date_select' ? 'date_text_parts' : '',
+    '#theme' => $widget['type'] == 'date_select' ? 'date_text_parts' : NULL,
   );
   $text_parts = (array) $settings['text_parts'];
   foreach (date_granularity_names() as $key => $value) {

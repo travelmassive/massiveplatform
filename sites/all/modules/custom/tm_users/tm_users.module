@@ -659,8 +659,25 @@ function tm_users_set_application_cookies() {
       $img_uri = $conf["tm_images_default_path"] . $cover_files[$image_index];
     }
   }
-
   user_cookie_save(array('user_avatar_uri' => image_style_url("avatar", $img_uri)));
+
+  // User ID
+  user_cookie_save(array('user_id' => $user->uid));
+
+  // User full name
+  $full_name = "User";
+  if (isset($loaded->field_user_first_name[LANGUAGE_NONE][0]['value'])) {
+    $full_name = strip_tags($loaded->field_user_first_name[LANGUAGE_NONE][0]['value']);
+  }
+  if (isset($loaded->field_user_last_name[LANGUAGE_NONE][0]['value'])) {
+    $full_name .= " " . strip_tags($loaded->field_user_last_name[LANGUAGE_NONE][0]['value']);
+  }
+  user_cookie_save(array('user_full_name' => $full_name));
+
+  // Hmac verification (for tm_intercom module)
+  if (module_exists("tm_intercom")) {
+    user_cookie_save(array('intercom_hash' => tm_intercom_hmac($user->uid)));
+  }
   
 }
 
@@ -669,7 +686,7 @@ function tm_users_set_application_cookies() {
  */
 function tm_users_user_logout($account) {
 
-  $unset_cookies = array("Drupal.visitor.anonymous_visitor", "Drupal.visitor.approved_member", "Drupal.visitor.user_profile_uri", "Drupal.visitor.user_avatar_uri");
+  $unset_cookies = array("Drupal.visitor.anonymous_visitor", "Drupal.visitor.approved_member", "Drupal.visitor.user_profile_uri", "Drupal.visitor.user_avatar_uri", "Drupal.visitor.user_id", "Drupal.visitor.user_full_name", "Drupal.visitor.intercom_hash");
   foreach ($unset_cookies as $cookie_name) {
     unset($_COOKIE[str_replace(".", "_", $cookie_name)]);
     setcookie($cookie_name, '', time() - 3600, "/");

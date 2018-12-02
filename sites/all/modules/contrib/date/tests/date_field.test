@@ -84,8 +84,8 @@ abstract class DateFieldBasic extends DrupalWebTestCase {
       'field_name' => $field_name,
       'label' => $label,
       'bundle' => $bundle,
-      // Move the date right below the title.
-      'weight' => -4,
+      // Move the date to the top.
+      'weight' => -100,
       'widget' => array(
         'type' => $widget_type,
         // Increment for minutes and seconds, can be 1, 5, 10, 15, or 30.
@@ -100,7 +100,7 @@ abstract class DateFieldBasic extends DrupalWebTestCase {
           'label_position' => 'above',
           'repeat_collapsed' => 0,
         ),
-        'weight' => -4,
+        'weight' => -100,
       ),
       'settings' => array(
         'default_value' => $default_value,
@@ -202,8 +202,8 @@ abstract class DateFieldBasic extends DrupalWebTestCase {
       'field_name' => $field_name,
       'label' => $label,
       'bundle' => $bundle,
-      // Move the date right below the title.
-      'weight' => -4,
+      // Move the date to the top.
+      'weight' => -100,
       'widget' => array(
         'type' => $widget_type,
         // Increment for minutes and seconds, can be 1, 5, 10, 15, or 30.
@@ -218,7 +218,7 @@ abstract class DateFieldBasic extends DrupalWebTestCase {
           'label_position' => 'above',
           'repeat_collapsed' => 0,
         ),
-        'weight' => -4,
+        'weight' => -100,
       ),
       'settings' => array(
         'default_value' => $default_value,

@@ -217,7 +217,9 @@ function date_all_day_date_combo_process_alter(&$element, &$form_state, $context
 
     $from = $element['#default_value']['value'];
     $to = !empty($element['#default_value']['value2']) ? $element['#default_value']['value2'] : $element['#default_value']['value'];
-    $date_is_all_day = date_is_all_day($from, $to);
+    $granularity = date_granularity_precision($context['field']['settings']['granularity']);
+    $increment = isset($context['instance']['widget']['settings']['increment']) ? $context['instance']['widget']['settings']['increment'] : 1;
+    $date_is_all_day = date_is_all_day($from, $to, $granularity, $increment);
     $all_day = !empty($form_state['values']['all_day']) || $date_is_all_day;
     $element['all_day'] = array(
       '#title' => t('All Day'),
@@ -395,9 +397,11 @@ function date_all_day_date_combo_validate_date_start_alter(&$date, &$form_state,
  * they are converted back to the database timezone and stored.
  */
 function date_all_day_date_combo_validate_date_end_alter(&$date, &$form_state, $context) {
-  // If this is an 'All day' value, set the time to midnight.
+  // If this is an 'All day' value, set the time as close to midnight as
+  // possible.
   if (!empty($context['element']['#date_is_all_day'])) {
-    $date->setTime(0, 0, 0);
+    $increment = isset($context['instance']['widget']['settings']['increment']) ? $context['instance']['widget']['settings']['increment'] : 1;
+    $date->setTime(23, 60 - $increment, 59);
   }
 }
 

@@ -194,7 +194,7 @@ function theme_date_calendar_day($variables) {
 function theme_date_time_ago($variables) {
   $start_date = $variables['start_date'];
   $end_date = $variables['end_date'];
-  $use_end_date = isset($variables['use_end_date']) ? $variables['use_end_date'] : false;
+  $use_end_date = isset($variables['use_end_date']) ? $variables['use_end_date'] : FALSE;
   $interval = !empty($variables['interval']) ? $variables['interval'] : 2;
   $display = isset($variables['interval_display']) ? $variables['interval_display'] : 'time ago';
 

@@ -15,10 +15,11 @@ function date_field_formatter_info() {
       'field types' => array('date', 'datestamp', 'datetime'),
       'settings' => array(
         'format_type' => 'long',
+        'custom_date_format' => '',
+        'fromto' => 'both',
         'multiple_number' => '',
         'multiple_from' => '',
         'multiple_to' => '',
-        'fromto' => 'both',
         'show_remaining_days' => FALSE,
       ),
     ),
@@ -28,7 +29,7 @@ function date_field_formatter_info() {
       'settings' => array(
         'interval' => 2,
         'interval_display' => 'time ago',
-        'use_end_date' => false,
+        'use_end_date' => FALSE,
       ),
     ),
     'date_plain' => array(
@@ -109,8 +110,8 @@ function date_field_formatter_settings_summary($field, $instance, $view_mode) {
  *     example: 'date:217:field_date:3:test'
  *
  *   $entity->date_repeat_show
- *     If true, tells the theme to show all the computed values
- *     of a repeating date. If not true or not set, only the
+ *     If TRUE, tells the theme to show all the computed values
+ *     of a repeating date. If not TRUE or not set, only the
  *     start date and the repeat rule will be displayed.
  */
 function date_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
@@ -375,7 +376,7 @@ function date_field_validate($entity_type, $entity, $field, $instance, $langcode
         $process = date_process_values($field, $instance);
         $date1 = new DateObject($item['value'], $item['timezone'], date_type_format($field['type']));
         if (count($process) == 1 || (empty($item['value2']) && $item['value2'] !== 0)) {
-          $date2 = clone($date1);
+          $date2 = clone $date1;
         }
         else {
           $date2 = new DateObject($item['value2'], $item['timezone'], date_type_format($field['type']));

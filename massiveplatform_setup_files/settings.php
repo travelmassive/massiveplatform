@@ -1045,7 +1045,7 @@ $conf["tm_track_views_see_who_viewed_label"] = "Who visited";
 // $conf['tm_intercom_hmac_secret_key'] = ''; // verification key
 // $conf['tm_intercom_cookie_domain'] = '.massiveplatform.com'; // domain for 'intercom-' cookies with .
 
-/** Accelerated Mobile Pages **/
+/** Accelerated Mobile Pages (AMP) **/
 $conf["tm_amp_favicon_url"] = "/sites/default/files/site_branding/apple_touch_icons/apple-touch-icon.png";
 $conf["tm_amp_logo_url"] = "/sites/default/files/site_branding/apple_touch_icons/apple-touch-icon-114x114.png";
 $conf["tm_amp_google_analytics_id"] = "UA-XXXXXXXX-X"; // Google Analytics ID

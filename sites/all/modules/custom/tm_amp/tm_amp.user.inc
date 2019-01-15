@@ -154,7 +154,7 @@ function tm_amp_render_user($user_id) {
 	}
 
 	if ($num_following > 0) {
-		$extra_info .= '<li><a href="/user/' . $user_id . '/following">' . $num_following . ' following</li>';
+		$extra_info .= '<li><a href="/user/' . $user_id . '/following">' . $num_following . ' following</a></li>';
 	}
 
 	if ($num_events > 0) {

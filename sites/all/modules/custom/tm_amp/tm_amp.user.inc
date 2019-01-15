@@ -146,7 +146,7 @@ function tm_amp_render_user($user_id) {
 	}
 
 	if ($home_chapter_title != "") {
-	$extra_info .= '<li>Member of <a href="/' . drupal_get_path_alias('node/' . $home_chapter->nid) . '">' . tm_chapters_formal_name($home_chapter) . '</a></li>';
+	$extra_info .= '<li>Member of <a href="/' . drupal_get_path_alias('node/' . $home_chapter->nid) . '?amp">' . tm_chapters_formal_name($home_chapter) . '</a></li>';
 	}
 
 	if ($num_followers > 0) {

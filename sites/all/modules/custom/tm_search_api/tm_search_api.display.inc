@@ -375,7 +375,10 @@ function tm_search_api_render_result_user($result, $results_user, $search_query,
 	$result_title = l("People > " . $results_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . " " . $results_user->field_user_last_name[LANGUAGE_NONE][0]['value'], $result_url, array('attributes' => array('target'=>$href_target)));
 
 	// about
-	$result_text = $results_user->field_about_me[LANGUAGE_NONE][0]['safe_value'];
+	$result_text = "";
+	if (isset($results_user->field_about_me[LANGUAGE_NONE][0]['safe_value'])) {
+		$result_text = $results_user->field_about_me[LANGUAGE_NONE][0]['safe_value'];
+	}
 
 	// location
 	if (sizeof($results_user->field_location_city) > 0) {

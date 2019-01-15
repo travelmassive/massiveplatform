@@ -236,6 +236,7 @@ function tm_amp_render_chapter_meta($node, $canonical_url, $description, $image_
 
 	$meta = str_replace("__CANONICAL_URL__", $canonical_url, $meta);
 	$meta = str_replace("__NAME__", str_replace('"', "", tm_chapters_formal_name($node)), $meta);
+	$description = str_replace("<br>", "\n", $description);
 	$meta = str_replace("__DESCRIPTION__", str_replace('"', "", $description), $meta);
 
 	// country

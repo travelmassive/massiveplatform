@@ -195,6 +195,7 @@ function tm_amp_render_event_meta($node, $canonical_url, $description, $location
 
 	$meta = str_replace("__CANONICAL_URL__", $canonical_url, $meta);
 	$meta = str_replace("__NAME__", str_replace('"', "", tm_chapters_formal_name($node)), $meta);
+	$description = str_replace("<br>", "\n", $description);
 	$meta = str_replace("__DESCRIPTION__", str_replace('"', "", $description), $meta);
 	$location_text = str_replace("  ", " ", str_replace('"', "", str_replace("\n", " ", $location_text))); // quick clean up
 	$meta = str_replace("__LOCATION__", $location_text, $meta);

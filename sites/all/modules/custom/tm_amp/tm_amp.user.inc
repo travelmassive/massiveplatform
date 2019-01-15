@@ -248,6 +248,7 @@ function tm_amp_render_user_meta($account, $canonical_url, $first_name, $last_na
 	$meta = str_replace("__CANONICAL_URL__", $canonical_url, $meta);
 	$meta = str_replace("__GIVEN_NAME__", str_replace('"', "", $first_name), $meta);
 	$meta = str_replace("__FAMILY_NAME__", str_replace('"', "", $last_name), $meta);
+	$about_me = str_replace("<br>", "\n", $about_me);
 	$meta = str_replace("__DESCRIPTION__", str_replace('"', "", $about_me), $meta);
 
 	// country

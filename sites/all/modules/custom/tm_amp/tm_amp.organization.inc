@@ -196,6 +196,7 @@ function tm_amp_render_organization_meta($node, $canonical_url, $description, $l
 
 	$meta = str_replace("__CANONICAL_URL__", $canonical_url, $meta);
 	$meta = str_replace("__NAME__", str_replace('"', "", strip_tags($node->title)), $meta);
+	$description = str_replace("<br>", "\n", $description);
 	$meta = str_replace("__DESCRIPTION__", str_replace('"', "", $description), $meta);
 
 	// location, country

@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * @file
+ * Code for the TM AMP feature.
+ */
+
+include_once 'tm_amp.front_page.inc';
+include_once 'tm_amp.user.inc';
+include_once 'tm_amp.organization.inc';
+include_once 'tm_amp.chapter.inc';
+include_once 'tm_amp.event.inc';
+include_once 'tm_amp.helpers.inc';
+
+
+/**
+ * Front page AMP
+ */
+function tm_amp_display_front_page() {
+
+	$html = tm_amp_render_front_page();
+	print $html;
+	drupal_exit();
+}
+
+/**
+ * User profile AMP
+ */
+function tm_amp_display_user($user_id) {
+
+	$html = tm_amp_render_user($user_id);
+	print $html;
+	drupal_exit();
+}
+
+/**
+ * Node page AMP
+ * Organization, chapter, event
+ */
+function tm_amp_display_node($node_id) {
+
+	$node = node_load($node_id);
+	if ($node != null) {
+
+		if ($node->type == "organization") {
+			$html = tm_amp_render_organization($node_id);
+			print $html;
+			drupal_exit();
+		}
+
+		if ($node->type == "chapter") {
+			$html = tm_amp_render_chapter($node_id);
+			print $html;
+			drupal_exit();
+		}
+
+		if ($node->type == "event") {
+			$html = tm_amp_render_event($node_id);
+			print $html;
+			drupal_exit();
+		}
+	}
+
+	if ($node == null) {
+		print("Oops, an error occured (invalid id). <a href='/'>Return home</a>.");
+		drupal_exit();
+	}
+}
+

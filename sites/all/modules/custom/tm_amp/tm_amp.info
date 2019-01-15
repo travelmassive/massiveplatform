@@ -1,0 +1,8 @@
+name = TM AMP
+description = TM Accelerate Mobile Pages (AMP)
+core = 7.x
+package = TM AMP
+version = 7.x-1.0-dev
+project = tm_amp
+files[] = tm_amp.module
+project path = sites/all/modules/custom

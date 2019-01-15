@@ -1045,3 +1045,45 @@ $conf["tm_track_views_see_who_viewed_label"] = "Who visited";
 // $conf['tm_intercom_hmac_secret_key'] = ''; // verification key
 // $conf['tm_intercom_cookie_domain'] = '.massiveplatform.com'; // domain for 'intercom-' cookies with .
 
+/** Accelerated Mobile Pages **/
+$conf["tm_amp_favicon_url"] = "/sites/default/files/site_branding/apple_touch_icons/apple-touch-icon.png";
+$conf["tm_amp_logo_url"] = "/sites/default/files/site_branding/apple_touch_icons/apple-touch-icon-114x114.png";
+$conf["tm_amp_google_analytics_id"] = "UA-XXXXXXXX-X"; // Google Analytics ID
+$conf["tm_amp_client_id_api_tag"] = '<meta name="amp-google-client-id-api" content="googleanalytics">'; // or leave blank. See: https://support.google.com/analytics/answer/7486764?hl=en
+
+// Front page
+$conf["tm_amp_front_page_pre_heading"] = "<a href='/user/login?destination=/'>Log in</a> or <a href='/user/register'>Sign Up</a>";
+$conf["tm_amp_front_page_heading"] = "Massive Platform";
+$conf["tm_amp_front_page_sub_heading"] = "We are awesome";
+$conf["tm_amp_front_page_image_url"] = "/sites/default/files/styles/banner_grid/public/default_images/default_cover_event_2.jpg";
+$conf["tm_amp_front_page_image_width"] = 454;
+$conf["tm_amp_front_page_image_height"] = 256;
+$conf["tm_amp_front_page_welcome_message"] = "Welcome to our community!";
+
+// Front page meta
+$conf["tm_amp_front_page_meta_description"] = "Massive Platform";
+$conf["tm_amp_front_page_meta_location"] = "World-wide";
+$conf["tm_amp_front_page_meta_image_url"] = "/sites/default/files/styles/banner_grid/public/default_images/default_cover_event_2.jpg";
+$conf["tm_amp_front_page_meta_image_width"] = 454;
+$conf["tm_amp_front_page_meta_image_height"] = 256;
+
+// Sidebar
+$conf["tm_amp_sidebar_twitter_url"] = "https://twitter.com/";
+$conf["tm_amp_sidebar_facebook_url"] = "https://facebook.com/";
+$conf["tm_amp_sidebar_instagram_url"] = "https://instagram.com/";
+$conf["tm_amp_sidebar_top_links"] = '<li class="ampstart-nav-item "><a class="ampstart-nav-link" href="/?amp">Home</a></li>
+          <li class="ampstart-nav-item "><a class="ampstart-nav-link" href="/chapters">Chapters</a></li>
+          <li class="ampstart-nav-item "><a class="ampstart-nav-link" href="/events">Events</a></li>
+          <li class="ampstart-nav-item "><a class="ampstart-nav-link" href="/community">People</a></li>
+          <li class="ampstart-nav-item "><a class="ampstart-nav-link" href="/companies">Companies</a></li>';
+$conf["tm_amp_sidebar_second_links"] = '<li class="ampstart-faq-item"><a href="/blog/about-us" class="text-decoration-none">About</a></li>
+        <li class="ampstart-faq-item"><a href="/contact" class="text-decoration-none">Contact</a></li>';
+
+// Footer
+$conf["tm_amp_footer_copyright"] = "Massive Platform";
+$conf["tm_amp_footer_text"] = '';
+$conf["tm_amp_footer_links"] = '<ul class="list-reset flex flex-wrap mb3">
+        <li class="px1"><a class="text-decoration-none ampstart-label" href="/blog/about-us">About</a></li>
+        <li class="px1"><a class="text-decoration-none ampstart-label" href="/contact">Contact</a></li>
+        <li class="px1"><a class="text-decoration-none ampstart-label" href="/content/terms-use">Terms</a></li>
+      </ul>';

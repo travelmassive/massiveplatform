@@ -187,6 +187,53 @@ function tm_theme_preprocess_html(&$variables, $hook) {
     }
   }
 
+  // show AMP if ?amp
+  if (module_exists("tm_amp")) {
+
+    // only display on page views
+    if (isset($variables['page']['#type'])) {
+      if ($variables['page']['#type'] == 'page') {
+
+         if (isset($_GET["amp"])) {
+
+          // front page
+          if (drupal_is_front_page()) { 
+            tm_amp_display_front_page();
+          }
+
+          // node
+          if (arg(0) == 'node' && is_numeric(arg(1))) {
+            tm_amp_display_node(arg(1));
+          }
+
+          // user
+          if (arg(0) == 'user' && is_numeric(arg(1))) {
+            tm_amp_display_user(arg(1));
+          }
+
+        } else {
+          
+          if (drupal_is_front_page() 
+            or ((arg(0) == 'node' or arg(0) == 'user') && is_numeric(arg(1)))) {
+
+            // <link rel="amphtml" href="https://www.example.com/url/to/amp/document.html">
+            $amp_url = $conf["tm_email_server_http"] . "://" . $_SERVER["HTTP_HOST"] . request_uri() . "?amp";
+            $meta = array(
+              '#tag' => 'link', 
+              '#attributes' => array(
+              'rel' => 'amphtml', 
+              'href' => $amp_url,
+              ),
+            );
+            drupal_add_html_head($meta, 'amphtml');
+
+          }
+        }
+
+      }
+    }
+  }
+
 }
 
 /**

@@ -35,7 +35,7 @@ function tm_amp_insert_template_vars($html, $user_id = null) {
 		global $base_url;
 		$ga_extra_params = ',
           "page_title": "User Profile Page ' . $user_id . '",
-          "page_location": "' . $base_url . "/user/" . $user_id . '"';
+          "page_location": "' . $base_url . "/user/" . $user_id . '?amp"';
 	}
 	$html = str_replace("__GA_TRACKING_EXTRA_PARAMS__", $ga_extra_params, $html);
 

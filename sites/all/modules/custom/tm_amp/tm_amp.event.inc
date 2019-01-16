@@ -197,8 +197,8 @@ function tm_amp_render_event_meta($node, $canonical_url, $description, $location
 	$meta = str_replace("__NAME__", tm_amp_escape_string(tm_chapters_formal_name($node)), $meta);
 	$description = tm_amp_escape_string(str_replace("<br>", "\n", $description));
 	$meta = str_replace("__DESCRIPTION__", tm_amp_escape_string($description), $meta);
-	$location_text = str_replace("  ", " ", str_replace("\n", " ", $location_text)); // quick clean up
 	$meta = str_replace("__LOCATION_NAME__", tm_amp_escape_string($location_name), $meta);
+	$location_address = str_replace("  ", " ", str_replace("\n", " ", $location_address));
 	$meta = str_replace("__LOCATION_ADDRESS__", tm_amp_escape_string($location_address), $meta);
 
 	// start date

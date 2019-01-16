@@ -1064,7 +1064,8 @@ $conf["tm_amp_front_page_welcome_message"] = "Welcome to our community!";
 
 // Front page meta
 $conf["tm_amp_front_page_meta_description"] = "Massive Platform";
-$conf["tm_amp_front_page_meta_location"] = "World-wide";
+$conf["tm_amp_front_page_meta_location_name"] = "Massive Platform HQ";
+$conf["tm_amp_front_page_meta_location_address"] = "123 Massive Avenue, Some City, State";
 $conf["tm_amp_front_page_meta_image_url"] = "/sites/default/files/styles/banner_grid/public/default_images/default_cover_event_2.jpg";
 $conf["tm_amp_front_page_meta_image_width"] = 454;
 $conf["tm_amp_front_page_meta_image_height"] = 256;

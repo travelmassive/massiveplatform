@@ -87,7 +87,11 @@ function tm_amp_render_front_page_meta($canonical_url) {
     "mainEntityOfPage": "__CANONICAL_URL__",
     "name": "__NAME__",
     "description": "__DESCRIPTION__",
-    "location": "__LOCATION__",
+    "location": {
+        "@type": "Place",
+        "name": "__LOCATION_NAME__",
+        "address": "__LOCATION_ADDRESS__"
+    },
     "logo": {
       "@type": "ImageObject",
       "url": "__IMAGE_URL__",
@@ -100,8 +104,8 @@ function tm_amp_render_front_page_meta($canonical_url) {
 	$meta = str_replace("__CANONICAL_URL__", $canonical_url, $meta);
 	$meta = str_replace("__NAME__", str_replace('"', "", $conf["tm_site_name"]), $meta);
 	$meta = str_replace("__DESCRIPTION__", str_replace('"', "", $conf["tm_amp_front_page_meta_description"]), $meta);
-	$meta = str_replace("__LOCATION__", str_replace('"', "", $conf["tm_amp_front_page_meta_location"]), $meta);
-
+	$meta = str_replace("__LOCATION_NAME__", tm_amp_escape_string($conf["tm_amp_front_page_meta_location_name"]), $meta);
+	$meta = str_replace("__LOCATION_ADDRESS__", tm_amp_escape_string($conf["tm_amp_front_page_meta_location_address"]), $meta);
 
 	// image
 	$meta = str_replace("__IMAGE_URL__", $conf["tm_amp_front_page_meta_image_url"], $meta);

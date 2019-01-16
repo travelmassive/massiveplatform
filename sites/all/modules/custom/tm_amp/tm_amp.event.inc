@@ -86,7 +86,8 @@ function tm_amp_render_event($node_id) {
 	$extra_info .= "<li>" . t('When').': '.strip_tags($event_date) . "</li>";
 
 	// location (can be hidden)
-	$location_meta = "";
+	$location_name = "";
+	$location_address = "";
 	$location_text = "";
 	if (isset($node->field_event_hide_location[LANGUAGE_NONE][0]['value'])) {
 		if ($node->field_event_hide_location[LANGUAGE_NONE][0]['value'] != 1) {
@@ -94,18 +95,13 @@ function tm_amp_render_event($node_id) {
 			if ($node->field_event_venue_name != null) {
 				$extra_info .= "<li>" . t('Venue').': '.$node->field_event_venue_name[LANGUAGE_NONE][0]['value'];
 				$location_text = strip_tags($node->field_event_venue_name[LANGUAGE_NONE][0]['value']);
-				$location_meta = $location_text;
+				$location_name = $location_text;
 			}
 			if ($node->field_location != null) {
 				$location_text = $node->field_location[LANGUAGE_NONE][0]['value'];
-				$location_text = str_replace("\r", ", ", $location_text);
+				$location_text = str_replace("\r\n", ", ", $location_text);
 				$extra_info .= "<li>" . t('Location').': '. $location_text . "</li>";
-				
-				if ($location_meta != "") {
-					$location_meta .= ", ";
-				}
-				$location_meta .= $location_text;
-
+				$location_address = $location_text;
 			}
 		} else {
 			$extra_info .= "<li>Only attendees can view the location</li>";
@@ -145,7 +141,7 @@ function tm_amp_render_event($node_id) {
 	$html = str_replace("__PAGE_EXTRA__", $extra_info, $html);
 
 	// Insert meta data
-	$meta_data = tm_amp_render_event_meta($node, $canonical_url, $description, $location_text, $img_url);
+	$meta_data = tm_amp_render_event_meta($node, $canonical_url, $description, $location_name, $location_address, $img_url);
 	$html = str_replace("__META_DATA__", $meta_data, $html);
 
 	// Youtube
@@ -173,19 +169,22 @@ function tm_amp_render_event($node_id) {
 /**
  * Render meta data
  */
-function tm_amp_render_event_meta($node, $canonical_url, $description, $location_text, $image_url) {
+function tm_amp_render_event_meta($node, $canonical_url, $description, $location_name, $location_address, $image_url) {
 
 	$meta = '<script type="application/ld+json">
   {
     "@context": "http://schema.org",
     "@type": "Event",
-    "datePublished": "__DATE_PUBLISHED__",
-    "dateModified": "__DATE_MODIFIED__",
     "mainEntityOfPage": "__CANONICAL_URL__",
+    "url": "__CANONICAL_URL__",
     "name": "__NAME__",
     "startDate": "__START_DATE__",__END_DATE__
     "description": "__DESCRIPTION__",
-    "location": "__LOCATION__",
+    "location": {
+        "@type": "Place",
+        "name": "__LOCATION_NAME__",
+        "address": "__LOCATION_ADDRESS__"
+    },
     "image": {
       "@type": "ImageObject",
       "url": "__IMAGE_URL__",
@@ -196,11 +195,12 @@ function tm_amp_render_event_meta($node, $canonical_url, $description, $location
 </script>';
 
 	$meta = str_replace("__CANONICAL_URL__", $canonical_url, $meta);
-	$meta = str_replace("__NAME__", str_replace('"', "", tm_chapters_formal_name($node)), $meta);
-	$description = str_replace("<br>", "\n", $description);
-	$meta = str_replace("__DESCRIPTION__", str_replace('"', "", $description), $meta);
-	$location_text = str_replace("  ", " ", str_replace('"', "", str_replace("\n", " ", $location_text))); // quick clean up
-	$meta = str_replace("__LOCATION__", $location_text, $meta);
+	$meta = str_replace("__NAME__", tm_amp_escape_string(tm_chapters_formal_name($node)), $meta);
+	$description = tm_amp_escape_string(str_replace("<br>", "\n", $description));
+	$meta = str_replace("__DESCRIPTION__", tm_amp_escape_string($description), $meta);
+	$location_text = str_replace("  ", " ", str_replace("\n", " ", $location_text)); // quick clean up
+	$meta = str_replace("__LOCATION_NAME__", tm_amp_escape_string($location_name), $meta);
+	$meta = str_replace("__LOCATION_ADDRESS__", tm_amp_escape_string($location_address), $meta);
 
 	// start date
 	$event_date = field_get_items('node',$node,'field_event_date');
@@ -223,29 +223,6 @@ function tm_amp_render_event_meta($node, $canonical_url, $description, $location
 	$meta = str_replace("__IMAGE_URL__", $image_url, $meta);
 	$meta = str_replace("__IMAGE_HEIGHT__", 906, $meta);
 	$meta = str_replace("__IMAGE_WIDTH__", 1610, $meta);
-
-	// published and modified times
-	$time_format = "Y-m-d\TH:i:s-00:00";
-	$published_dt = new Datetime(null, new DateTimeZone('UTC'));
-	$published_dt->setTimestamp($node->created);
-	$published_time = $published_dt->format($time_format); //"2016-01-19T10:38:35-08:00";
-	$meta = str_replace("__DATE_PUBLISHED__", $published_time, $meta);
-
-	// check last update time
-	$last_update = null;
-	if (module_exists("tm_status_updates")) {
-    	$last_update = tm_status_updates_get_last_update_timestamp($node->type, $node->nid);
-  	}
-
-	// get most recent update between status update and last changed
-	$last_changed = $node->changed;
-	$most_recent = max(array($last_update, $last_changed));
-
-	// updated
-	$updated_dt = new Datetime(null, new DateTimeZone('UTC'));
-	$updated_dt->setTimestamp($most_recent);
-	$updated_time = $updated_dt->format($time_format); //"2016-01-19T10:38:35-08:00";
-	$meta = str_replace("__DATE_MODIFIED__", $updated_time, $meta);
 
 	return $meta;
 

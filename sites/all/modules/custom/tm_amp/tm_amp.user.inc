@@ -223,9 +223,8 @@ function tm_amp_render_user_meta($account, $canonical_url, $first_name, $last_na
   {
     "@context": "http://schema.org",
     "@type": "Person",
-    "datePublished": "__DATE_PUBLISHED__",
-    "dateModified": "__DATE_MODIFIED__",
     "mainEntityOfPage": "__CANONICAL_URL__",
+    "url": "__CANONICAL_URL__",
     "givenName": "__GIVEN_NAME__",
     "familyName": "__FAMILY_NAME__",
     "description": "__DESCRIPTION__",
@@ -234,7 +233,7 @@ function tm_amp_render_user_meta($account, $canonical_url, $first_name, $last_na
     	 "name": "__COUNTRY__"
     },
     "jobTitle": "__JOB_ROLE__",
-    "hasOccupation": {
+    "memberOf": {
     	 "@type": "Organization",
     	 "name": "__JOB_ORGANIZATION__"
     },
@@ -248,10 +247,10 @@ function tm_amp_render_user_meta($account, $canonical_url, $first_name, $last_na
 </script>';
 
 	$meta = str_replace("__CANONICAL_URL__", $canonical_url, $meta);
-	$meta = str_replace("__GIVEN_NAME__", str_replace('"', "", $first_name), $meta);
-	$meta = str_replace("__FAMILY_NAME__", str_replace('"', "", $last_name), $meta);
+	$meta = str_replace("__GIVEN_NAME__", tm_amp_escape_string($first_name), $meta);
+	$meta = str_replace("__FAMILY_NAME__", tm_amp_escape_string($last_name), $meta);
 	$about_me = str_replace("<br>", "\n", $about_me);
-	$meta = str_replace("__DESCRIPTION__", str_replace('"', "", $about_me), $meta);
+	$meta = str_replace("__DESCRIPTION__", tm_amp_escape_string($about_me), $meta);
 
 	// country
 	$country_name = "";
@@ -279,23 +278,6 @@ function tm_amp_render_user_meta($account, $canonical_url, $first_name, $last_na
 	$meta = str_replace("__IMAGE_URL__", $image_url, $meta);
 	$meta = str_replace("__IMAGE_HEIGHT__", 512, $meta);
 	$meta = str_replace("__IMAGE_WIDTH__", 512, $meta);
-
-	// published and modified times
-	$time_format = "Y-m-d\TH:i:s-00:00";
-	$published_dt = new Datetime(null, new DateTimeZone('UTC'));
-	$published_dt->setTimestamp($account->created);
-	$published_time = $published_dt->format($time_format); //"2016-01-19T10:38:35-08:00";
-	$meta = str_replace("__DATE_PUBLISHED__", $published_time, $meta);
-
-	// check last update time
-	$last_update = tm_users_get_update_timestamp($account->uid);
-	if ($last_update == null) {
-		$last_update = $account->created;
-	}
-	$updated_dt = new Datetime(null, new DateTimeZone('UTC'));
-	$updated_dt->setTimestamp($last_update);
-	$updated_time = $updated_dt->format($time_format); //"2016-01-19T10:38:35-08:00";
-	$meta = str_replace("__DATE_MODIFIED__", $updated_time, $meta);
 
 	return $meta;
 

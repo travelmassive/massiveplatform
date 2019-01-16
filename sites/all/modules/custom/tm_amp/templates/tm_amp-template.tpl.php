@@ -62,7 +62,7 @@ __CUSTOM_SCRIPTS__
   <header class="ampstart-headerbar fixed flex justify-start items-center top-0 left-0 right-0 pl2 pr4 ">
     <div role="button" aria-label="open Sidebarar" on="tap:header-sidebar.toggle" tabindex="0" class="ampstart-navbar-trigger  pr2  ">☰
     </div>
-        <amp-img src="__AMP_LOGO_URL__" width="100" height="61.3" layout="fixed" class="my0 mx-auto " alt="__SITE_NAME__"></amp-img>
+        <amp-img src="__AMP_LOGO_URL__" width="__AMP_LOGO_WIDTH__" height="__AMP_LOGO_HEIGHT__" layout="fixed" class="my0 mx-auto " alt="__SITE_NAME__"></amp-img>
   </header>
 
 <!-- Start Sidebar -->

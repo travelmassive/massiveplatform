@@ -1048,6 +1048,8 @@ $conf["tm_track_views_see_who_viewed_label"] = "Who visited";
 /** Accelerated Mobile Pages (AMP) **/
 $conf["tm_amp_favicon_url"] = "/sites/default/files/site_branding/apple_touch_icons/apple-touch-icon.png";
 $conf["tm_amp_logo_url"] = "/sites/default/files/site_branding/apple_touch_icons/apple-touch-icon-114x114.png";
+$conf["tm_amp_logo_width"] = 100;
+$conf["tm_amp_logo_height"] = 61.3;
 $conf["tm_amp_google_analytics_id"] = "UA-XXXXXXXX-X"; // Google Analytics ID
 $conf["tm_amp_client_id_api_tag"] = '<meta name="amp-google-client-id-api" content="googleanalytics">'; // or leave blank. See: https://support.google.com/analytics/answer/7486764?hl=en
 

@@ -11,6 +11,8 @@ function tm_amp_insert_template_vars($html, $user_id = null) {
 
 	$html = str_replace("__FAVICON_URL__", $conf["tm_amp_favicon_url"], $html);
 	$html = str_replace("__AMP_LOGO_URL__", $conf["tm_amp_logo_url"], $html);
+	$html = str_replace("__AMP_LOGO_WIDTH__", $conf["tm_amp_logo_width"], $html);
+	$html = str_replace("__AMP_LOGO_HEIGHT__", $conf["tm_amp_logo_height"], $html);
 	$html = str_replace("__SITE_NAME__", $conf["tm_site_name"], $html);
 	$html = str_replace("__PAGE_FOOTER_TEXT__", $conf["tm_amp_footer_text"], $html);
 	$html = str_replace("__PAGE_FOOTER_LINKS__", $conf["tm_amp_footer_links"], $html);

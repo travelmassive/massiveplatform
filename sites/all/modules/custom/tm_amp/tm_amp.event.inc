@@ -113,7 +113,7 @@ function tm_amp_render_event($node_id) {
 		foreach ($node->field_event_sponsors[LANGUAGE_NONE] as $arr) {
 			$sponsor = node_load($arr['target_id']);
 			$sponsor_profile_url = drupal_get_path_alias("node/" . $arr['target_id']);
-			$external_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . $sponsor_profile_url;
+			$external_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . $sponsor_profile_url . "?amp";
 			$sponsor_links[] = l(t($sponsor->title), $external_url);
 		}
 		$extra_info .= "<li>Sponsors: " . implode(", ", $sponsor_links) . "</li>";

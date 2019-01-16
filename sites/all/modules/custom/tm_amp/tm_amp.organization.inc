@@ -72,6 +72,7 @@ function tm_amp_render_organization($node_id) {
 
 	// description
 	$description = "";
+	$description_linked = "";
 	if (isset($node->body[LANGUAGE_NONE][0]['value'])) {
 		$description = strip_tags($node->body[LANGUAGE_NONE][0]['value']);
 		$description = str_replace("\n", "<br>", $description); // add line breaks

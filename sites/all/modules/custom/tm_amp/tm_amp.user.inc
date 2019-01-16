@@ -85,6 +85,7 @@ function tm_amp_render_user($user_id) {
 
 	// about me
 	$about_me = "";
+	$about_me_linked = "";
 	if (isset($account->field_about_me[LANGUAGE_NONE][0]['value'])) {
 		$about_me = strip_tags($account->field_about_me[LANGUAGE_NONE][0]['value']);
 		$about_me = str_replace("\n", "<br>", $about_me); // add line breaks

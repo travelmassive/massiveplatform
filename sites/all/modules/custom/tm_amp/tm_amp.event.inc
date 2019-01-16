@@ -57,7 +57,7 @@ function tm_amp_render_event($node_id) {
 	$html = str_replace("__PAGE_IMAGE__", $img_url, $html);
 	$html = str_replace("__PAGE_IMAGE_WIDTH__", 454, $html);
 	$html = str_replace("__PAGE_IMAGE_HEIGHT__", 256, $html);
-	$html = str_replace("__PAGE_IMAGE_LAYOUT", 'layout="responsive"', $html);
+	$html = str_replace("__PAGE_IMAGE_LAYOUT__", 'layout="responsive"', $html);
 	$html = str_replace("__PAGE_IMAGE_ALT__", $title, $html);
 
 	// description

@@ -5,7 +5,7 @@
 /**
  * Insert common variables
  */
-function tm_amp_insert_template_vars($html) {
+function tm_amp_insert_template_vars($html, $user_id = null) {
 
 	global $conf;
 
@@ -17,13 +17,25 @@ function tm_amp_insert_template_vars($html) {
 	$html = str_replace("__COPYRIGHT_NAME__", $conf["tm_amp_footer_copyright"], $html);
 	$html = str_replace("__YEAR__", date('Y'), $html);
 	$html = str_replace("__AMP_CLIENT_ID_API_TAG__", $conf["tm_amp_client_id_api_tag"], $html);
-	$html = str_replace("__GA_TRACKING_ID__", $conf["tm_amp_google_analytics_id"], $html);
 	$html = str_replace("__SIDEBAR_TOP_LINKS__", $conf["tm_amp_sidebar_top_links"], $html);
 	$html = str_replace("__SIDEBAR_SECOND_LINKS__", $conf["tm_amp_sidebar_second_links"], $html);
 	$html = str_replace("__TWITTER_URL__", $conf["tm_amp_sidebar_twitter_url"], $html);
 	$html = str_replace("__FACEBOOK_URL__", $conf["tm_amp_sidebar_facebook_url"], $html);
 	$html = str_replace("__INSTAGRAM_URL__", $conf["tm_amp_sidebar_instagram_url"], $html);
 	$html = str_replace("__SITE_DOMAIN__", $_SERVER["HTTP_HOST"], $html);
+
+	// Google Analytics
+	$html = str_replace("__GA_TRACKING_ID__", $conf["tm_amp_google_analytics_id"], $html);
+
+	// Protect pii on user pages
+	$ga_extra_params = "";
+	if ($user_id != null) {
+		global $base_url;
+		$ga_extra_params = ',
+		"page_title": "User Profile Page ' . $user_id . '",
+        "page_location": "' . $base_url . "/user/" . $user_id . '"';
+	}
+	$html = str_replace("__GA_TRACKING_EXTRA_PARAMS__", $ga_extra_params, $html);
 
 	return $html;
 }

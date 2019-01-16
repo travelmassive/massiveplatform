@@ -42,7 +42,9 @@ __CUSTOM_SCRIPTS__
   "vars" : {
     "gtag_id": "__GA_TRACKING_ID__",
     "config" : {
-      "__GA_TRACKING_ID__": { "groups": "default" }
+      "__GA_TRACKING_ID__": { 
+        "groups": "default"__GA_TRACKING_EXTRA_PARAMS__
+      }
     }
   }
 }

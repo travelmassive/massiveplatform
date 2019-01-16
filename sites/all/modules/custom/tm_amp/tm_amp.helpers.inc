@@ -80,6 +80,7 @@ function tm_amp_get_youtube_id($youtube_url) {
 function tm_amp_escape_string($str) {
 	$json_encoded = json_encode($str);
 	$json_encoded = trim($json_encoded,'"'); // remove the " at start and end
+	$json_encoded = str_replace('\n\n', "\n", $json_encoded); // replace escaped \n with new line
 	$json_encoded = str_replace('\r\n', "\n", $json_encoded); // replace escaped \n with new line
 	return $json_encoded;
 }

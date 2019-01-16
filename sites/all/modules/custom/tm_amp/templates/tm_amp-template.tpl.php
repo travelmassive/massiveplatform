@@ -118,7 +118,7 @@ __CUSTOM_SCRIPTS__
   <!-- Start Footer -->
   <footer class="ampstart-footer flex flex-column items-center px3 ">
 
-    <p class="mb1 px3"><a href='__CANONICAL_URL__'>View Non-AMP Version at __SITE_DOMAIN__</a></p>
+    <p class="mb1 px3"><a href='__CANONICAL_URL__'>View Non-AMP Version</a></p>
     __PAGE_FOOTER_TEXT__
     <nav class="ampstart-footer-nav">
       __PAGE_FOOTER_LINKS__

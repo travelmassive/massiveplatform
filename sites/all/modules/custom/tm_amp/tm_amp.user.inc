@@ -231,12 +231,12 @@ function tm_amp_render_user_meta($account, $canonical_url, $first_name, $last_na
     "description": "__DESCRIPTION__",
     "nationality": {
     	"@type": "Country",
-    	 "name": "__COUNTRY__",
+    	 "name": "__COUNTRY__"
     },
     "jobTitle": "__JOB_ROLE__",
     "hasOccupation": {
     	 "@type": "Organization",
-    	 "name": "__JOB_ORGANIZATION__",
+    	 "name": "__JOB_ORGANIZATION__"
     },
     "image": {
       "@type": "ImageObject",

@@ -200,7 +200,7 @@ function _tm_amp_chapter_stats($node_id) {
 
 	if ($num_events_upcoming > 0) {
 		if ($num_events_upcoming > 1) { $upcoming_events_text = "New Events"; }
-		$html .= "<li><a href='/node/" . $node_id . "'>" . $num_events_upcoming . " " . $upcoming_events_text . "</a></li>";
+		$html .= "<li><a href='/" . drupal_get_path_alias("node/" . $node_id) . "'>" . $num_events_upcoming . " " . $upcoming_events_text . "</a></li>";
 	} elseif ($num_past_events > 0) {
 		if ($num_past_events > 1) { 
 			$past_events_text = "Past Events";

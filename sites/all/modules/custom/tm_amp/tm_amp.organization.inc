@@ -76,9 +76,10 @@ function tm_amp_render_organization($node_id) {
 		$description = strip_tags($node->body[LANGUAGE_NONE][0]['value']);
 		$description = str_replace("\n", "<br>", $description); // add line breaks
 		$description = preg_replace("/[-]{4,10}/", "<br>", $description); // replace ---- with hr
+		$description_linked = tm_base_linkify($description, ["http", "https", "mail", "twitter"], ["rel" => "nofollow"]); // add links
 	}
 
-	$html = str_replace("__PAGE_DESCRIPTION__", $description, $html);
+	$html = str_replace("__PAGE_DESCRIPTION__", $description_linked, $html);
 
 	// extra
 	$num_followers = tm_organizations_get_num_followers($node_id);

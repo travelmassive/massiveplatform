@@ -119,7 +119,7 @@ function tm_amp_render_user($user_id) {
 	
 	$industry_segment = $user_segment_l1;
 	if ($user_segment_l2 != "") {
-		$industry_segment .= " &gt; " . $user_segment_l1;
+		$industry_segment .= " &gt; " . $user_segment_l2;
 	}
 
 	// home chapter

@@ -108,7 +108,7 @@ function tm_amp_render_organization($node_id) {
 	
 	$industry_segment = $organization_segment_l1;
 	if ($organization_segment_l2 != "") {
-		$industry_segment .= " &gt; " . $organization_segment_l1;
+		$industry_segment .= " &gt; " . $organization_segment_l2;
 	}
 
 	$extra_info = '<section class="px3 mb4">

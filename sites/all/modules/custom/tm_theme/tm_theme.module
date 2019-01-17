@@ -217,8 +217,11 @@ function tm_theme_preprocess_html(&$variables, $hook) {
             or ((arg(0) == 'node' or arg(0) == 'user') && is_numeric(arg(1)))) {
 
             // <link rel="amphtml" href="https://www.example.com/url/to/amp/document.html">
-            $request_uri_no_query_string = strtok($_SERVER["REQUEST_URI"],'?');
-            $amp_url = $conf["tm_email_server_http"] . "://" . $_SERVER["HTTP_HOST"] . $request_uri_no_query_string . "?amp";
+            $request_uri = "";
+            if (!drupal_is_front_page()) {
+              $request_uri = drupal_get_path_alias(arg(0) . "/" . arg(1)); // ie: /user/123
+            }
+            $amp_url = $conf["tm_email_server_http"] . "://" . $_SERVER["HTTP_HOST"] . "/" . $request_uri . "?amp";
             $meta = array(
               '#tag' => 'link', 
               '#attributes' => array(

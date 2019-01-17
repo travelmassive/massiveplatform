@@ -217,7 +217,8 @@ function tm_theme_preprocess_html(&$variables, $hook) {
             or ((arg(0) == 'node' or arg(0) == 'user') && is_numeric(arg(1)))) {
 
             // <link rel="amphtml" href="https://www.example.com/url/to/amp/document.html">
-            $amp_url = $conf["tm_email_server_http"] . "://" . $_SERVER["HTTP_HOST"] . request_uri() . "?amp";
+            $request_uri_no_query_string = strtok($_SERVER["REQUEST_URI"],'?');
+            $amp_url = $conf["tm_email_server_http"] . "://" . $_SERVER["HTTP_HOST"] . $request_uri_no_query_string . "?amp";
             $meta = array(
               '#tag' => 'link', 
               '#attributes' => array(

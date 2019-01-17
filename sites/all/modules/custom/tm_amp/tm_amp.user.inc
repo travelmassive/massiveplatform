@@ -81,7 +81,7 @@ function tm_amp_render_user($user_id) {
 	$html = str_replace("__PAGE_IMAGE_WIDTH__", 128, $html);
 	$html = str_replace("__PAGE_IMAGE_HEIGHT__", 128, $html);
 	$html = str_replace("__PAGE_IMAGE_LAYOUT__", '', $html);
-	$html = str_replace("__PAGE_IMAGE_ALT__", $full_name, $html);
+	$html = str_replace("__PAGE_IMAGE_ALT__", tm_amp_escape_string($full_name), $html);
 
 	// about me
 	$about_me = "";

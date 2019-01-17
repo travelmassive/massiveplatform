@@ -96,9 +96,9 @@ __CUSTOM_SCRIPTS__
 <!-- End Sidebar -->
   <!-- End Navbar -->
     <main id="content" role="main" class="">
-      <article class="massive-article">
+      <article class="massive-article pt4">
         <header>
-          <span class="ampstart-subtitle block px3 pt2 mb2">__PAGE_PRE_HEADING__</span>
+          <span class="ampstart-subtitle block px3 pt4 mb2">__PAGE_PRE_HEADING__</span>
           <h1 class="mb1 px3">__PAGE_HEADING__</h1>
 
   <!-- Start byline -->

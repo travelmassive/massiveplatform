@@ -621,6 +621,14 @@ function tm_theme_preprocess_page(&$variables) {
   if (arg(0) == "user") {
     $variables['tm_theme_user_id'] = arg(1);
   }
+
+  // don't display taxonomy pages
+  if (arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2))) {
+    global $user;
+    if (!in_array("administrator", $user->roles)) {
+      drupal_goto("/");
+    }
+  }
   
 }
 

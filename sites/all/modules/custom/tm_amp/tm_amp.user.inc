@@ -89,7 +89,7 @@ function tm_amp_render_user($user_id) {
 	if (isset($account->field_about_me[LANGUAGE_NONE][0]['value'])) {
 		$about_me = strip_tags($account->field_about_me[LANGUAGE_NONE][0]['value']);
 		$about_me = str_replace("\n", "<br>", $about_me); // add line breaks
-    	$about_me = preg_replace("/[-]{4,10}/", "<br>", $about_me); // replace ---- with hr
+    	$about_me = preg_replace("/[-]{4,10}/", "", $about_me); // replace ----
 		$about_me_linked = tm_base_linkify($about_me, ["http", "https", "mail", "twitter"], ["rel" => "nofollow"]); // add links
 	}
 	$html = str_replace("__PAGE_DESCRIPTION__", $about_me_linked, $html);

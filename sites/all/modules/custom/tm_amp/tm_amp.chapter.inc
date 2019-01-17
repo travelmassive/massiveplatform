@@ -62,7 +62,7 @@ function tm_amp_render_chapter($node_id) {
 	if (isset($node->body[LANGUAGE_NONE][0]['value'])) {
 		$description = strip_tags($node->body[LANGUAGE_NONE][0]['value']);
 		$description = str_replace("\n", "<br>", $description); // add line breaks
-		$description = preg_replace("/[-]{4,10}/", "<br>", $description); // replace ---- with hr
+		$description = preg_replace("/[-]{4,10}/", "", $description); // replace ----
 		$description_linked = tm_base_linkify($description, ["http", "https", "mail", "twitter"], ["rel" => "nofollow"]); // add links
 	}
 

@@ -478,7 +478,7 @@ function theme_ds_field_tm_default($variables) {
     $rendered_item = drupal_render($item);
     $rendered_item = str_replace("\n", "<br>", $rendered_item); // add line breaks
     $rendered_item = preg_replace("/[-]{4,10}/", "<div class='tm_field_hr'></div>", $rendered_item); // replace ---- with hr
-    $output .= tm_base_linkify($rendered_item, ["http", "https", "mail", "twitter"], ["rel" => "nofollow", "target" => "_blank"]); // add links
+    $output .= tm_base_linkify($rendered_item, ["http", "https", "mail", "twitter"], ["rel" => "nofollow noopener", "target" => "_blank"]); // add links
   }
   $output .= '</div>';
 

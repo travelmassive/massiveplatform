@@ -37,7 +37,7 @@ $display_url = check_plain($display_url);
 
 // show snapchat url
 if (($snapchat_url != "") && ($url != "")) { ?>
-<a href="<?php print $snapchat_url; ?>" rel="nofollow" target="_blank"><?php print $display_url; ?></a>
+<a href="<?php print $snapchat_url; ?>" rel="nofollow noopener" target="_blank"><?php print $display_url; ?></a>
 <?php } else { ?>
 <script>try { document.getElementsByClassName("field-link-snapchat")[0].style.display = 'none'; } catch(err) {};</script>
 <?php } ?>

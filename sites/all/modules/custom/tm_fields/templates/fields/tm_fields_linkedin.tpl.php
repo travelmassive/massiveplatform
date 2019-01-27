@@ -64,7 +64,7 @@ $linkedin_url = check_url($linkedin_url);
 $display_url = check_plain($display_url);
 
 if (($linkedin_url != "") && ($url != "")) { ?>
-<a href="<?php print $linkedin_url; ?>" rel="nofollow" target="_blank"><?php print $display_url; ?></a>
+<a href="<?php print $linkedin_url; ?>" rel="nofollow noopener" target="_blank"><?php print $display_url; ?></a>
 <?php } else { ?>
 <script>try { document.getElementsByClassName("field-link-linkedin")[0].style.display = 'none'; } catch(err) {};</script>
 <?php } ?>

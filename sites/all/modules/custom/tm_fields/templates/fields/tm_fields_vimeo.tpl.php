@@ -53,7 +53,7 @@ $vimeo_url = check_url($vimeo_url);
 $display_url = check_plain($display_url);
 
 if (($vimeo_url != "") && ($url != "")) { ?>
-<a href="<?php print $vimeo_url; ?>" rel="nofollow" target="_blank"><?php print $display_url; ?></a>
+<a href="<?php print $vimeo_url; ?>" rel="nofollow noopener" target="_blank"><?php print $display_url; ?></a>
 <?php } else { ?>
 <script>try { document.getElementsByClassName("field-link-vimeo")[0].style.display = 'none'; } catch(err) {};</script>
 <?php } ?>

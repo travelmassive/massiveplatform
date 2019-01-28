@@ -146,6 +146,9 @@ function tm_chapters_members_csv_generate($nid) {
 
   // puts a header row across the top of the csv
   $item = array(t('First name'),t('Last name'),t('Email'),t('SubscribeChapterNewsletter'),t('SubscribeGlobalNewsletter'),t('SubscribeChapterAnnouncements'),t('Country'),t('City'),t('Organization'),t('Role'),t('Website'),t('Segment'),t('MemberSince'),t('Events'),t('Waitlists'), t('MemberType'));
+  foreach ($conf["tm_users_link_fields"] as $field_name) {
+    $item[] = ucwords($field_name);
+  }
   fputcsv($fh, $item);
 
   // outside of loop for better performance
@@ -266,7 +269,16 @@ function tm_chapters_members_csv_generate($nid) {
       }
     }
     $item[] = $member_type;
-    
+
+    // add user fields
+    foreach ($conf["tm_users_link_fields"] as $field_name) {
+      $obj_field_name = "field_link_" . $field_name;
+      if (isset($account->$obj_field_name[LANGUAGE_NONE][0]['url'])) {
+        $item[] = strip_tags($account->$obj_field_name[LANGUAGE_NONE][0]['url']);
+      } else {
+        $item[] = "";
+      }
+    }
 
     // remove commas from any input data
     $new_item = array();

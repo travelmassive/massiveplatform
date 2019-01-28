@@ -34,7 +34,7 @@ if (!$found_match) {
 // strava username
 // Anything not starting with http or www
 if (!$found_match) {
-	if (($strava_url == "") and (strpos(strtolower($url), "http") === FALSE) and (strpos(strtolower($url), "www") === FALSE)) {
+	if (($strava_url == "") and (strpos(strtolower($url), "http") === FALSE) and (strpos(strtolower($url), "www") === FALSE) and (strpos(strtolower($url), "%20") === FALSE) and (strtolower($url) != "n/a")) {
 		$strava_url = "https://www.strava.com/athletes/" . $url;
 		$found_match = true;
 	}

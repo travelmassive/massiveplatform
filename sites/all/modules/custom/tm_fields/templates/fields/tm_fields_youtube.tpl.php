@@ -34,7 +34,7 @@ if (!$found_match) {
 // youtube user
 // Anything not starting with http or www
 if (!$found_match) {
-	if (($youtube_url == "") and (strpos(strtolower($url), "http") === FALSE) and (strpos(strtolower($url), "www") === FALSE)) {
+	if (($youtube_url == "") and (strpos(strtolower($url), "http") === FALSE) and (strpos(strtolower($url), "www") === FALSE) and (strpos(strtolower($url), "%20") === FALSE) and (strtolower($url) != "n/a")) {
 		$youtube_url = "https://youtube.com/user/" . $url;
 		$found_match = true;
 	}

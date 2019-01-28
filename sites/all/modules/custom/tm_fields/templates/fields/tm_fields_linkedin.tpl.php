@@ -45,7 +45,7 @@ if (!$found_match) {
 // linkedin username
 // Anything not starting with http or www
 if (!$found_match) {
-	if (($linkedin_url == "") and (strpos(strtolower($url), "http") === FALSE) and (strpos(strtolower($url), "www") === FALSE)) {
+	if (($linkedin_url == "") and (strpos(strtolower($url), "http") === FALSE) and (strpos(strtolower($url), "www") === FALSE) and (strpos(strtolower($url), "%20") === FALSE) and (strtolower($url) != "n/a")) {
 		$linkedin_url = "https://www.linkedin.com/in/" . $url;
 		$found_match = true;
 	}

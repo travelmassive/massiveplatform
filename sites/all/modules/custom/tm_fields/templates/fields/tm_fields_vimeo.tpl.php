@@ -34,7 +34,7 @@ if (!$found_match) {
 // vimeo username
 // Anything not starting with http or www
 if (!$found_match) {
-	if (($vimeo_url == "") and (strpos(strtolower($url), "http") === FALSE) and (strpos(strtolower($url), "www") === FALSE)) {
+	if (($vimeo_url == "") and (strpos(strtolower($url), "http") === FALSE) and (strpos(strtolower($url), "www") === FALSE) and (strpos(strtolower($url), "%20") === FALSE) and (strtolower($url) != "n/a")) {
 		$vimeo_url = "https://vimeo.com/" . $url;
 		$found_match = true;
 	}

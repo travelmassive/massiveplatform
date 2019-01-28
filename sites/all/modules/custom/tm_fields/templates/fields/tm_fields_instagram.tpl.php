@@ -56,7 +56,7 @@ if (!$found_match) {
 // instagramname
 // Anything not starting with http or www
 if (!$found_match) {
-	if (($instagram_url == "") and (strpos(strtolower($url), "http") === FALSE) and (strpos(strtolower($url), "www") === FALSE)) {
+	if (($instagram_url == "") and (strpos(strtolower($url), "http") === FALSE) and (strpos(strtolower($url), "www") === FALSE) and (strpos(strtolower($url), "%20") === FALSE) and (strtolower($url) != "n/a")) {
 		$instagram_url = "https://instagram.com/" . $url;
 		$found_match = true;
 	}

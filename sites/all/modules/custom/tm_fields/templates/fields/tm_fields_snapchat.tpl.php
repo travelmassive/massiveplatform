@@ -23,7 +23,7 @@ $found_match = false;
 // Case 1
 // snapchat username
 if (!$found_match) {
-	if (($snapchat_url == "") and (strpos(strtolower($url), "http") === FALSE) and (strpos(strtolower($url), "www") === FALSE)) {
+	if (($snapchat_url == "") and (strpos(strtolower($url), "http") === FALSE) and (strpos(strtolower($url), "www") === FALSE) and (strpos(strtolower($url), "%20") === FALSE) and (strtolower($url) != "na")) {
 		$display_url = trim($url);
 		// https://www.snapchat.com/add/travelmassive
 		$snapchat_url = "https://www.snapchat.com/add/" . trim($url);

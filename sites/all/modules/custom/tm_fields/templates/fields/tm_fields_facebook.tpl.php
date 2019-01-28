@@ -44,7 +44,7 @@ if (!$found_match) {
 // facebook username
 // Anything not starting with http or www
 if (!$found_match) {
-	if (($facebook_url == "") and (strpos(strtolower($url), "http") === FALSE) and (strpos(strtolower($url), "www") === FALSE)) {
+	if (($facebook_url == "") and (strpos(strtolower($url), "http") === FALSE) and (strpos(strtolower($url), "www") === FALSE) and (strpos(strtolower($url), "%20") === FALSE) and (strtolower($url) != "n/a")) {
 		$facebook_url = "https://facebook.com/" . $url;
 		$found_match = true;
 	}

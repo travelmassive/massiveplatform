@@ -53,7 +53,7 @@ tm_chapter_communication_send_emails = function(form_action) {
 	var inputEmail = $('#edit-reply-to').val().replace(/ /g,'');
 	if (inputEmail != "") {
 	  var isValid = true;
-	  var emailReg = /^([\w-\.\+]+@([\w-]+\.)+[\w-]{2,4})?$/;
+	  var emailReg = /^([\w-\.\+]+@([\w-]+\.)+[\w-]{2,10})?$/;
 	  if(!emailReg.test(inputEmail)){
 	      isValid = false;
 	      $('#chapter-test-email-submit').val("Send test email");
@@ -92,7 +92,7 @@ tm_chapter_communication_send_test_email = function() {
 	  var inputEmail = $('#edit-testemail').val().replace(/ /g,'');;
 	  if (inputEmail != "") {
 	    var isValid = true;
-	    var emailReg = /^([\w-\.\+]+@([\w-]+\.)+[\w-]{2,4})?$/;
+	    var emailReg = /^([\w-\.\+]+@([\w-]+\.)+[\w-]{2,10})?$/;
 	    if(!emailReg.test(inputEmail)){
 	        isValid = false;
 	        jq_alert(null, "Oops, your test email address is not valid.");

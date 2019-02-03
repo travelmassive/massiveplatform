@@ -11,6 +11,18 @@ $url = str_replace("@", "", $url); // remove @ from @username
 $url = str_ireplace("http//", "http://", $url); // replace http// with http:// in url
 $url = str_ireplace("https//", "http://", $url); // replace https// with https:// in url
 
+// special case https://www.facebook.com/profile.php?id=123
+// if not profile id, strip arguments
+if (strpos($url, "facebook.com/profile.php?") === FALSE) {
+	$full_url = ltrim($url, "?");
+	$parts = explode("?", $full_url);
+	$url = $parts[0];
+}
+if ((strpos($url, "profile.php") === FALSE) and (strpos($url, ".php") !== FALSE)) {
+	$url = "";
+	$found_match = true;
+}
+
 $facebook_url = "";
 $display_url = "";
 $found_match = false;

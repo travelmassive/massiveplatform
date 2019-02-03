@@ -963,7 +963,7 @@ function tm_fields_field_formatter_view($entity_type, $entity, $field, $instance
         $element[$delta] = array(
           '#theme' => 'tm_fields_facebook', 
           '#title' => $item['title'], 
-          '#url' => _tm_fields_full_url($item, false), // remove ? arguments
+          '#url' => _tm_fields_full_url($item, true), // keep ? arguments
         );
      }
     break;

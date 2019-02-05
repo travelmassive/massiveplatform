@@ -10,7 +10,10 @@ use Facebook\FacebookRequestException;
  */
 function tm_users_external_signin_simple_fb_connect_scope_info($scope) {
   $scope[] = "public_profile";
-  $scope[] = "user_location";
+  
+  // Disabled Feb 5 2019
+  // Requires additional Facebook developer accreditaotn
+  // $scope[] = "user_location";
 
   // Deprecated by Facebook April 4 2018
   // See: https://developers.facebook.com/docs/facebook-login/permissions/
@@ -101,7 +104,7 @@ function tm_users_external_signin_facebook_sync($drupal_user, $method) {
     // $request = new FacebookRequest($fb_session, 'GET', '/me?fields=first_name,last_name,about,location,website,work,link,cover');
     // Deprecated: about, website, work
 
-    $request = new FacebookRequest($fb_session, 'GET', '/me?fields=first_name,last_name,location,link,cover');
+    $request = new FacebookRequest($fb_session, 'GET', '/me?fields=first_name,last_name,link,cover');
     $object = $request->execute()->getGraphObject();
     $obj_array = $request->execute()->getGraphObject()->asArray();
 
@@ -174,7 +177,8 @@ function tm_users_external_signin_facebook_sync($drupal_user, $method) {
     }*/
     
     // Country Location (requires permission - user_location)
-    if ($object->getProperty('location') != null) {
+    // Disabled February 2018 as requires additional Facebook approval 
+    /*if ($object->getProperty('location') != null) {
 
     	if (isset($obj_array['location']->name)) {
     		if (($method == "register") or ($method == "login" and !isset($drupal_user->field_location_city[LANGUAGE_NONE][0]['value']))) {
@@ -197,7 +201,7 @@ function tm_users_external_signin_facebook_sync($drupal_user, $method) {
     			}
     		}
     	}
-    }
+    }*/
 
     // Website (requires permission website)
     // Deprecated by Facebook April 4 2018

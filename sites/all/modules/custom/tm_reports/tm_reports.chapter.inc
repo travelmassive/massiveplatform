@@ -526,6 +526,11 @@ function _tm_reports_get_chapter_insights($chapter_ids, $ignore_cache = false, $
   $num_event_registrations = db_query($query, array(':fid' => $flag_event_register->fid, ':chapter_ids' => $chapter_ids))->fetch();
   $insights["num_event_registrations"] = $num_event_registrations->amount;
 
+  // NUMBER OF TOTAL EVENT REGISTRATIONS PAST 12 MONTHS
+  $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id IN (:chapter_ids)) AND fid = :fid AND timestamp >= UNIX_TIMESTAMP(DATE_SUB(NOW(),INTERVAL 1 YEAR))";
+  $num_event_registrations_12_months = db_query($query, array(':fid' => $flag_event_register->fid, ':chapter_ids' => $chapter_ids))->fetch();
+  $insights["num_event_registrations_12_months"] = $num_event_registrations_12_months->amount;
+
   // NUMBER OF TOTAL EVENT WAITLISTS
   $flag_event_waitlist = flag_get_flag('event_waitlist', NULL);
   $query = "SELECT COUNT(uid) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id IN (:chapter_ids)) AND fid = :fid";
@@ -547,6 +552,11 @@ function _tm_reports_get_chapter_insights($chapter_ids, $ignore_cache = false, $
   $num_unique_chapter_event_registrations = db_query($query, array(':fid' => $flag_event_register->fid, ':chapter_ids' => $chapter_ids))->fetch();
   $insights["num_unique_chapter_event_registrations"] = $num_unique_chapter_event_registrations->amount;
   $insights["pct_unique_chapter_event_registrations"] = round(($insights["num_unique_chapter_event_registrations"] / $members_approved_total) * 100, 0);
+
+  // NUMBER OF UNIQUE EVENT REGISTRATIONS PAST 12 MONTHS
+  $query = "SELECT COUNT(DISTINCT(uid)) AS amount FROM flagging WHERE entity_id IN (SELECT entity_id AS nid FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id IN (:chapter_ids)) AND fid = :fid AND timestamp >= UNIX_TIMESTAMP(DATE_SUB(NOW(),INTERVAL 1 YEAR))";
+  $num_unique_chapter_event_registrations_12_months = db_query($query, array(':fid' => $flag_event_register->fid, ':chapter_ids' => $chapter_ids))->fetch();
+  $insights["num_unique_chapter_event_registrations_12_months"] = $num_unique_chapter_event_registrations_12_months->amount;
 
   // FREQUENCY OF EVENTS
   $flag = flag_get_flag('event_register', NULL);

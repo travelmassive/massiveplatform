@@ -1090,3 +1090,10 @@ $conf["tm_amp_footer_links"] = '<ul class="list-reset flex flex-wrap mb3">
         <li class="px1"><a class="text-decoration-none ampstart-label" href="/contact">Contact</a></li>
         <li class="px1"><a class="text-decoration-none ampstart-label" href="/content/terms-use">Terms</a></li>
       </ul>';
+
+/** LEADERBOARD **/
+$conf['tm_leaderboard_global_show_results'] = 50; // how many results to show for global
+$conf['tm_leaderboard_og_image'] = "";
+$conf['tm_leaderboard_og_desription'] = "The top performing chapters.";
+$conf['tm_leaderboard_chapter_leaders_tip'] = "Only chapter leaders can see all rankings. If you need help to improve your ranking, get in touch with our community team.";
+

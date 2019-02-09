@@ -1,0 +1,9 @@
+name = TM Leaderboard
+description = TM Leaderboard
+core = 7.x
+package = TM Leaderboard
+version = 7.x-1.0-dev
+project = tm_leaderboard
+files[] = tm_leaderboard.module
+dependencies[] = tm_chapters
+project path = sites/all/modules/custom

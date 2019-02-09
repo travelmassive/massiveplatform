@@ -1,0 +1,58 @@
+#page-title { display: none; }
+#main { min-height: 800px; }
+.messages--help-tip { margin-left: 0.2rem !important; margin-right: 0.2rem; }
+
+#leaderboard {
+  width: 100%;
+  margin: auto;
+  margin-bottom: 2rem;
+}
+
+#leaderboard h1 { 
+  text-align: center;
+}
+
+#leaderboard table {
+	background-color: #fff;
+}
+
+#leaderboard table tr {
+	border-bottom: 1px solid #eee;
+}
+
+#leaderboard table th {
+	text-align: center;
+}
+
+#leaderboard table th.left {
+	text-align: left;
+}
+
+#leaderboard table td {
+	text-align: center;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+#leaderboard table td.left {
+	text-align: left;
+}
+
+#leaderboard_links {
+	text-align: right;
+}
+
+img.leaderboard_avatar {
+	width: 32px;
+	height: 32px;
+	border-radius: 16px;
+	vertical-align: middle;
+	margin-left: 0px;
+}
+
+@media only screen and (max-width: 600px) {
+
+	.hide_narrow {
+		display: none;
+	}
+}

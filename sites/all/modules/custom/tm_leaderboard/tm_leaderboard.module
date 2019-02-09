@@ -1,0 +1,91 @@
+<?php
+
+// tm_leaderboard.module
+
+include_once 'tm_leaderboard.display.inc';
+include_once 'tm_leaderboard.scores.inc';
+
+/**
+ * Implement hook_menu()
+ */
+function tm_leaderboard_menu() {
+
+   $items = array();
+
+   $items['leaderboard'] = array(
+    'title' => 'Chapter Leaderboard',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('tm_leaderboard_form'),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+   );
+
+   return $items;
+}
+
+/**
+ * Show leaderboard
+ */
+function tm_leaderboard_form() {
+  
+  global $conf;
+
+  // Load css
+  drupal_add_css(drupal_get_path('module', 'tm_leaderboard') . '/css/tm_leaderboard.css');
+ 
+  // Start html
+  $html = "";
+
+  // Start article
+  $html .= "<article class='trilithon node view-mode-full node-by-viewer clearfix'>";
+
+  $html .= tm_leaderboard_render();
+
+  $html .= "</article>";
+
+  $form['html'] =  array(
+    '#type' => 'markup',
+    '#markup' => $html);
+
+  return $form;
+
+}
+
+/**
+ * Add html meta tags
+ * Called from tm/themes/template.php
+ */
+function tm_leaderboard_preprocess_html(&$variables, $hook) {
+
+  global $conf;
+
+  if (current_path() != "leaderboard") {
+    return;
+  }
+  
+  // og:image
+  if (isset($conf['tm_insights_og_image'])) {
+    $meta = array(
+      '#tag' => 'meta', 
+      '#attributes' => array(
+        'name' => 'og:image', 
+        'content' => $conf['tm_leaderboard_og_image'],
+      ),
+    );
+    drupal_add_html_head($meta, 'og:image');
+  }
+
+  // description
+  if (isset($conf['tm_leaderboard_og_description'])) {
+    $meta = array(
+      '#tag' => 'meta', 
+      '#attributes' => array(
+        'name' => 'description',
+        'property' => 'og:description',
+        'content' => $conf['tm_leaderboard_og_description'],
+      ),
+    );
+    drupal_add_html_head($meta, 'description');
+  }
+
+}

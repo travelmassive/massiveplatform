@@ -86,7 +86,7 @@ function tm_reports_chapter_insights_get_data($drush_command = false, $fetch_new
 
 		// create header row
 		if ($first_row) {
-			$row = array("chapter_name", "country_name", "continent_name", "country_code", "continent_code");
+			$row = array("chapter_id", "chapter_name", "country_name", "continent_name", "country_code", "continent_code");
 			foreach ($chapter_results['data_values'] as $key => $value) {
 				$row[] = str_replace(",", "", $key);
 			}
@@ -95,7 +95,7 @@ function tm_reports_chapter_insights_get_data($drush_command = false, $fetch_new
 		}
 
 		// create data row
-		$row = array($chapter->title, $country_name, $continent_name, $country_code, $continent_code);
+		$row = array($chapter->nid, $chapter->title, $country_name, $continent_name, $country_code, $continent_code);
 		foreach ($chapter_results['data_values'] as $key => $value) {
 			$row[] = str_replace(",", "", $value);
 		}
@@ -106,5 +106,3 @@ function tm_reports_chapter_insights_get_data($drush_command = false, $fetch_new
   	cache_set('tm-reports-all-chapter-insights', $rows, 'cache', time() + (60 * 60 * 25)); // 25 hours
   	return $rows;
 }
-
-

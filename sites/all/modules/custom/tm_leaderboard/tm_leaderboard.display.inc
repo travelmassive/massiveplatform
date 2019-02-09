@@ -194,8 +194,6 @@ function tm_leaderboard_render_chapter_leaders($chapter) {
 			$user_url = drupal_get_path_alias("user/" . $account->uid);
 
 			$html .= "<a target='_blank' href='" . $user_url . "'><img class='leaderboard_avatar' src='" . $img_url . "'></a> ";
-			$html .= "<a target='_blank' href='" . $user_url . "'><img class='leaderboard_avatar' src='" . $img_url . "'></a> ";
-			$html .= "<a target='_blank' href='" . $user_url . "'><img class='leaderboard_avatar' src='" . $img_url . "'></a> ";
 		}
 	}
 

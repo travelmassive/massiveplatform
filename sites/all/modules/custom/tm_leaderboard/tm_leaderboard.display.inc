@@ -141,7 +141,7 @@ function tm_leaderboard_render() {
 			$html .= "<span class='leaderboard_label green'>New Chapter</span>";
 		}
 		else if ($chapter_leaders_html == "") {
-			$html .= "<span class='leaderboard_label red'>" . $conf["tm_leaderboard_label_chapter_needed"] . "</span>";
+			$html .= "<span class='leaderboard_label blue'>" . $conf["tm_leaderboard_label_chapter_needed"] . "</span>";
 		}
 		else if ($cache->data[$chapter_name_index][$column_name_lookup["num_events_past_12_months"]] == 0) {
 			$html .= "<span class='leaderboard_label red'>" . $conf["tm_leaderboard_label_no_events"] . "</span>";

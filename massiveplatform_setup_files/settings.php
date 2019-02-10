@@ -1099,7 +1099,7 @@ $conf['tm_leaderboard_score_extra_guests_weight'] = 5; // scoring weight
 $conf['tm_leaderboard_score_extra_guests_max'] = 100; // maximum extra guests
 $conf['tm_leaderboard_score_members_weight'] = 1; // scoring weight
 $conf['tm_leaderboard_og_image'] = "";
-$conf['tm_leaderboard_og_desription'] = "The top performing chapters.";
+$conf['tm_leaderboard_og_description'] = "The top performing chapters.";
 $conf['tm_leaderboard_chapter_leaders_tip'] = "Only chapter leaders can see all rankings. If you need help to improve your ranking, get in touch with our community team.";
 $conf['tm_leaderboard_chapter_leaders_tip'] = "Only chapter leaders can see this page. If you need help to improve your ranking, get in touch with our community team.";
 $conf["tm_leaderboard_label_chapter_needed"] = "<a target='_blank' href='/blog/start-a-chapter-guide'>Needs a Leader</a>";

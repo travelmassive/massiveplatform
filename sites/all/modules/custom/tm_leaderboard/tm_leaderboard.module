@@ -131,7 +131,7 @@ function tm_leaderboard_preprocess_html(&$variables, $hook) {
   }
   
   // og:image
-  if (isset($conf['tm_insights_og_image'])) {
+  if (isset($conf['tm_leaderboard_og_image'])) {
     $meta = array(
       '#tag' => 'meta', 
       '#attributes' => array(

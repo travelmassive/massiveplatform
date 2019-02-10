@@ -65,4 +65,11 @@ img.leaderboard_avatar {
 	.hide_narrow {
 		display: none;
 	}
+
+	#leaderboard .chapter_name {
+		width: 12rem;
+		display: inline-block;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 }

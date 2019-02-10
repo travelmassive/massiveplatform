@@ -130,7 +130,7 @@ function tm_leaderboard_render() {
 		$html .= "<td><strong>" . $ranking . ".</strong></td>";
 
 		$chapter_url = drupal_get_path_alias("node/" . $chapter_id);
-		$html .= "<td nowrap class='left'><a target='_blank' href='" . $chapter_url ."'>" . $chapter_name . "</a></td>";
+		$html .= "<td nowrap class='left'><span class='chapter_name'><a target='_blank' href='" . $chapter_url ."'>" . $chapter_name . "</a></a></td>";
 
 		$html .= "<td nowrap class='left hide_narrow'>";
 		$html .= tm_leaderboard_render_chapter_leaders($chapter);

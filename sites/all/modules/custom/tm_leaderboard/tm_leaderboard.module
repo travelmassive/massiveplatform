@@ -63,7 +63,7 @@ function tm_leaderboard_form() {
 
   // Fetch leaderboard from cache if available
   $cache = cache_get('tm-leaderboard-' . $cache_key, 'cache');
-  if (!empty($cache)) {
+  if (!empty($cache) and (!isset($_GET["nocache"]))) {
     $leaderboard_html = $cache->data;
   } else {
     $leaderboard_html = tm_leaderboard_render();

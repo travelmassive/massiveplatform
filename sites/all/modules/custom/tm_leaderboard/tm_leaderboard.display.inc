@@ -138,7 +138,11 @@ function tm_leaderboard_render() {
 
 		$html .= "<td class='hide_narrow' nowrap>" . $cache->data[$chapter_name_index][$column_name_lookup["members_total"]] . "</td>";
 		$html .= "<td class='hide_narrow' nowrap>" . $cache->data[$chapter_name_index][$column_name_lookup["num_events_past_12_months"]] . "</td>";
-		$html .= "<td class='hide_narrow' nowrap>" . $cache->data[$chapter_name_index][$column_name_lookup["num_event_registrations_12_months"]] . "</td>";
+
+		// both registered and extra guests
+		$total_attendees = ($cache->data[$chapter_name_index][$column_name_lookup["num_event_registrations_12_months"]] + $cache->data[$chapter_name_index][$column_name_lookup["num_event_registrations_12_months_extra_guests"]]);
+
+		$html .= "<td class='hide_narrow' nowrap>" . $total_attendees . "</td>";
 		$html .= "<td>" . $score . "</td>";
 
 		$html .= "</tr>";

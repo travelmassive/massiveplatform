@@ -74,7 +74,7 @@ function tm_leaderboard_calculate_chapter_score($column_name_lookup, $data) {
 	// overall scores
 	$score = ($num_events_past_12_months * $conf["tm_leaderboard_score_event_weight"]) 
 	+ ($num_event_registrations_12_months * $conf["tm_leaderboard_score_registrations_weight"])
-	+ ($num_event_registrations_12_months_extra_guests * $conf["tm_leaderboard_score_registrations_weight_extra_guests"])
+	+ ($num_event_registrations_12_months_extra_guests * $conf["tm_leaderboard_score_extra_guests_weight"])
 	+ ($members_approved_total * $conf["tm_leaderboard_score_members_weight"]);
 	
 	// round score

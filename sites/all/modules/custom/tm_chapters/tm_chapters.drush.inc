@@ -532,8 +532,18 @@ function tm_chapters_community_management_reports_drush() {
 			}
 		}
 
+		// num guests members
+		$membership_counts = _tm_chapters_get_membership_counts($chapter->nid);
+      	$members_unapproved_total = $membership_counts["members_unapproved_total"];
+      	$guest_members_stat = "";
+      	if ($members_unapproved_total > 0) {
+      		$guest_members_stat = "<br>Guest members: " . $members_unapproved_total . " (<a href='__SERVER_HTTP__://__SERVER_NAME__/" . $unapproved_members_link . "'>please review</a>)";
+      	}
+
 		// commissions
+		// Feb 2019 - retired
 		$commissions_summary = "";
+		/*$commissions_summary = "";
 		if (module_exists("tm_commissions")) {
 			$shortcode = $chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['safe_value'];
 			$days = $conf["tm_commissions_summary_days"];
@@ -549,7 +559,7 @@ function tm_chapters_community_management_reports_drush() {
 			if ($has_commission) {
 				$subject_stats = " - Your chapter has earned commissions";
 			}
-		}
+		}*/
 
 		// prepare subject and body
 		$subject = $conf["tm_chapters_leader_weekly_report_subject"];
@@ -557,6 +567,7 @@ function tm_chapters_community_management_reports_drush() {
 		$subject = str_replace("__CHAPTER_NAME__", $chapter_name, $subject);
 		$subject = str_replace("__REPORT_DATE__", date("j F", time() - (60*60*12)), $subject);
 		$subject = str_replace("__SUBJECT_STATS__", $subject_stats, $subject);
+		$subject = str_replace("__SALUTATION__", $salutation, $subject);
 
 		$body = $conf["tm_chapters_leader_weekly_report"];
 		$body = str_replace("__SALUTATION__", $salutation, $body);
@@ -569,6 +580,9 @@ function tm_chapters_community_management_reports_drush() {
 		$body = str_replace("__APPROVAL_REMINDER_MESSAGE__", $approval_reminder_message, $body);
 		$body = str_replace("__EVENT_PAYMENTS_MESSAGE__", $event_payments_message, $body);
 		$body = str_replace("__COMMISSIONS_SUMMARY__", $commissions_summary, $body);
+		$body = str_replace("__REVIEW_GUESTS_URL__", $unapproved_members_link, $body);
+		$body = str_replace("__TOTAL_CHAPTER_GUEST_MEMBERS__", $members_unapproved_total, $body);
+		$body = str_replace("__GUEST_MEMBERS_STAT__", $guest_members_stat, $body);
 
 		// insert stats
 		foreach ($report_data["data_values"] as $key => $value) {

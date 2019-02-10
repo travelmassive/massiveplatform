@@ -1096,6 +1096,7 @@ $conf['tm_leaderboard_global_show_results'] = 50; // how many results to show fo
 $conf['tm_leaderboard_score_event_weight'] = 10; // scoring weight
 $conf['tm_leaderboard_score_registrations_weight'] = 5; // scoring weight
 $conf['tm_leaderboard_score_extra_guests_weight'] = 5; // scoring weight
+$conf['tm_leaderboard_score_extra_guests_max'] = 100; // maximum extra guests
 $conf['tm_leaderboard_score_members_weight'] = 1; // scoring weight
 $conf['tm_leaderboard_og_image'] = "";
 $conf['tm_leaderboard_og_desription'] = "The top performing chapters.";

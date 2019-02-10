@@ -146,7 +146,7 @@ class TmNewsfeedEmail
 			$chapter_id = $chapter_leaders_needed[array_rand($chapter_leaders_needed)];
 			$chapter_needed = node_load($chapter_id);
 			if ($chapter_needed != null) {
-				$chapter_leaders_needed_message = "<p><a href='" . tm_newfeed_absolute_url("node/" . $chapter_id) . tm_newsfeed_utm_campaign() . "'>" . tm_chapters_formal_name($chapter_needed) . "</a> is looking for a <a href='" . $conf["tm_newsfeed_leader_needed_link"] ."'>Chapter Leader</a>" . $conf["tm_newsfeed_leader_needed_cta"] . "</p>";
+				$chapter_leaders_needed_message = "<p><a href='" . tm_newfeed_absolute_url("node/" . $chapter_id) . tm_newsfeed_utm_campaign() . "'>" . tm_chapters_formal_name($chapter_needed) . "</a> is looking for a <a href='" . $conf["tm_newsfeed_leader_needed_link"] . tm_newsfeed_utm_campaign() . "'>Chapter Leader</a>" . $conf["tm_newsfeed_leader_needed_cta"] . "</p>";
 			}
 		}
 		$email = str_replace("__CHAPTER_LEADER_NEEDED__", $chapter_leaders_needed_message, $email);

@@ -3,6 +3,37 @@
 // tm_commissions.reports.inc - commission report methods
 
 /**
+ * Display message if user needs role to access
+ * example to add role:
+ * drush user-add-role "pro chapter leader" --mail=demo@example.massiveplatform.com
+ */
+function tm_commissions_reports_request_access_message() {
+
+  global $conf;
+  global $user;
+
+  // Create form
+  $form = array();
+
+  // Swap in first name
+  $account = user_load($user->uid);
+  $terms_text = str_replace("__first_name__", $account->field_user_first_name[LANGUAGE_NONE][0]['value'], $conf["tm_commissions_role_required_message"]); 
+
+  // Display terms
+  $html = "<p>" . $terms_text . "</p>";
+
+  // Agree and cancel buttons
+  $html .= '<input onClick="document.location=\'' . $conf["tm_commissions_role_required_learn_more_url"] . '\'" type="submit" id="edit-submit" name="op" value="Learn more" class="form-submit">';
+  $html .= ' <input onClick="window.history.back()" type="submit" value="Cancel" class="form-submit">';
+
+
+  $form['confirm_agreement'] = array('#markup' => $html);
+
+  return $form;
+
+}
+
+/**
  * Display terms of use before displaying commissions
  */
 function tm_commissions_reports_chapter_commissions_confirm($nid) {

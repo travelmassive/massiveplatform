@@ -62,6 +62,13 @@ function tm_commissions_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  $items['chapters/all-chapters/commissions/message'] = array(
+    'title' => $conf["tm_commissions_role_required_title"],
+    'page callback' => 'tm_commissions_reports_request_access_message',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
 	return $items;
 }
 
@@ -70,6 +77,7 @@ function tm_commissions_menu() {
  */
 function tm_commissions_access_commissions_check() {
 
+  global $conf;
   global $user;
 
   // require signed in user
@@ -81,16 +89,22 @@ function tm_commissions_access_commissions_check() {
   $account = user_load($user->uid);
   $nid = _orig_nid();
 
+  // allow moderator and admin
+  if ((in_array("moderator", $account->roles)) or (in_array("administrator", $account->roles))) {
+    return true;
+  }
+
+  // check if has role
+  $access_role = $conf["tm_commissions_role_required"];
+  if ((!in_array($access_role, $account->roles))) {
+    drupal_goto("/chapters/all-chapters/commissions/message");
+  }
+
   // is chapter leader of chapter, moderator or admin
   if ($nid != null) {
     if (tm_users_is_chapter_leader($account->uid, $nid)) {
       return true;
     }
-  }
-
-  // allow moderator and admin
-  if ((in_array("moderator", $account->roles)) or (in_array("administrator", $account->roles))) {
-    return true;
   }
 
   // allow chapter leader to access all chapters reports
@@ -132,5 +146,3 @@ function tm_commissions_access_region_commissions_check() {
 
   return false;
 }
-
-?>

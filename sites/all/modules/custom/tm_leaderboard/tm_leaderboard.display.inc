@@ -191,7 +191,7 @@ function tm_leaderboard_render_chapter_leaders($chapter) {
 
 			// Set avatar
 			$avatar_url = image_style_url("avatar", _tm_users_get_avatar_uri($account));
-			$img_url = file_create_url($avatar_url);
+			$img_url = str_replace("'", "%27", file_create_url($avatar_url)); // to fix
 			$user_url = drupal_get_path_alias("user/" . $account->uid);
 
 			$html .= "<a target='_blank' href='" . $user_url . "'><img class='leaderboard_avatar' src='" . $img_url . "'></a> ";

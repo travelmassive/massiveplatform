@@ -139,6 +139,18 @@ class TmNewsfeedEmail
 
 		$email = str_replace("__USER_FIRST_NAME__", strip_tags($user_name), $email);
 
+		// chapter leaders needed
+		$chapter_leaders_needed_message = "";
+		$chapter_leaders_needed = tm_newsfeed_get_chapter_leaders_needed($user_id);
+		if ($chapter_leaders_needed > 0) {
+			$chapter_id = $chapter_leaders_needed[array_rand($chapter_leaders_needed)];
+			$chapter_needed = node_load($chapter_id);
+			if ($chapter_needed != null) {
+				$chapter_leaders_needed_message = "<p><a href='" . tm_newfeed_absolute_url("node/" . $chapter_id) . tm_newsfeed_utm_campaign() . "'>" . tm_chapters_formal_name($chapter_needed) . "</a> is looking for a <a href='" . $conf["tm_newsfeed_leader_needed_link"] ."'>Chapter Leader</a>" . $conf["tm_newsfeed_leader_needed_cta"] . "</p>";
+			}
+		}
+		$email = str_replace("__CHAPTER_LEADER_NEEDED__", $chapter_leaders_needed_message, $email);
+
 		$opening_line = $conf['tm_newsfeed_email_opening_lines'][array_rand($conf['tm_newsfeed_email_opening_lines'])];
 		$email = str_replace("__OPENING_LINE__", $opening_line, $email);
 
@@ -746,6 +758,7 @@ class TmNewsfeedEmailTemplates
 <div class="email-intro">
 	<p>__GREETING__ __USER_FIRST_NAME__</p>
 	<p>__OPENING_LINE__</p>
+	__CHAPTER_LEADER_NEEDED__
 </div>
 <div class="email-tip">
 	<p>__EMAIL_TIP__</p>

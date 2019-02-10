@@ -710,6 +710,9 @@ $conf['tm_newsfeed_prefix_viewers_month'] = "People are interested in you &mdash
 $conf['tm_newsfeed_prefix_viewers_popular'] = "You're popular &mdash; ";
 $conf['tm_newsfeed_who_visited_label'] = "who visited";
 
+// chapter leader needed link and call to action
+$conf['tm_newsfeed_leader_needed_link'] = "https://example.massiveplatform.com/blog/start-a-chapter-guide/";
+$conf['tm_newsfeed_leader_needed_cta'] = "&mdash; learn how to get involved.";
 
 /* EVENT PAYMENT SETTINGS */
 /** Optional event payments settings **/

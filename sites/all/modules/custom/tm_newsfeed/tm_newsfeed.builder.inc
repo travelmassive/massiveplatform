@@ -46,6 +46,26 @@ function tm_newsfeed_select_tip($user_id, $start_date, $end_date) {
 	return $results->fetchAll();
 }
 
+function tm_newsfeed_get_chapter_leaders_needed($user_id) {
+	
+	$chapter_ids = array();
+
+	$results = db_query_range(TmNewsFeedSqlLibrary::sql('tm_sql_no_leaders'), 0, 10,
+		array(":user_id" => $user_id)
+		);
+	foreach ($results->fetchAll() as $result) {
+		$chapter_ids[] = $result->chapter_id;
+	}
+
+	$results = db_query_range(TmNewsFeedSqlLibrary::sql('tm_sql_leaders_wanted'), 0, 10,
+		array(":user_id" => $user_id)
+		);
+	foreach ($results->fetchAll() as $result) {
+		$chapter_ids[] = $result->chapter_id;
+	}
+
+	return $chapter_ids;
+}
 
 /**
 * 
@@ -445,6 +465,39 @@ left join (select count(*) as 'count' from node where node.type='organization') 
 where
 	users.uid = :user_id
 	and :start_date < :end_date  -- temp
+
+SQL;
+
+
+public static $tm_sql_no_leaders = <<<SQL
+
+select 
+	entity_id as chapter_id
+from 
+	(select f.entity_id, field_chapter_leaders_target_id
+	from flagging f
+	left join field_data_field_chapter_leaders 
+	on field_data_field_chapter_leaders.entity_id = f.entity_id 
+	where f.fid = __FID_SIGNUP__
+	and f.entity_type='node' 
+	and f.uid=:user_id) 
+as leaders_of_users_chapters 
+where leaders_of_users_chapters.field_chapter_leaders_target_id is null
+
+SQL;
+
+
+public static $tm_sql_leaders_wanted = <<<SQL
+
+select
+	f.entity_id as chapter_id 
+from flagging f 
+left join field_data_field_chapter_leaders_needed 
+on field_data_field_chapter_leaders_needed.entity_id = f.entity_id 
+where f.fid = __FID_SIGNUP__
+and f.entity_type='node' 
+and f.uid=:user_id
+and field_chapter_leaders_needed_value = 1
 
 SQL;
 

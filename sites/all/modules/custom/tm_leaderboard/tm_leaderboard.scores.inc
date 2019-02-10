@@ -48,6 +48,8 @@ function tm_leaderboard_calculate_scores() {
  */
 function tm_leaderboard_calculate_chapter_score($column_name_lookup, $data) {
 
+	global $conf;
+
 	// total members
 	$members_total = $data[$column_name_lookup["members_total"]];
 
@@ -67,7 +69,7 @@ function tm_leaderboard_calculate_chapter_score($column_name_lookup, $data) {
 	$members_approved_total = $data[$column_name_lookup["members_approved_total"]];
 
 	// overall scores
-	$score = ($num_events_past_12_months * 100) + ($num_event_registrations_12_months * 10) + ($members_approved_total / 2);
+	$score = ($num_events_past_12_months * $conf["tm_leaderboard_score_event_weight"]) + ($num_event_registrations_12_months * $conf["tm_leaderboard_score_registrations_weight"]) + ($members_approved_total * $conf["tm_leaderboard_score_members_weight"]);
 	
 	// round score
 	$score = round($score / 10, 0);

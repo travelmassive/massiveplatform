@@ -202,7 +202,6 @@ function tm_leaderboard_render_chapter_leaders($chapter) {
 
 /**
  * Sample data
- * 
  */
 function tm_leaderboard_get_test_data() {
 

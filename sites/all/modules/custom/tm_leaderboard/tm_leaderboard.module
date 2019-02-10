@@ -104,6 +104,7 @@ function tm_leaderboard_form() {
     <a href='/leaderboard'>Top " . $conf["tm_leaderboard_global_show_results"] . "</a> &middot; 
     <a href='/leaderboard?region=AS'>Asia</a>  &middot;
     <a href='/leaderboard?region=AF'>Africa</a>  &middot;
+    <a href='/leaderboard?region=EU'>Europe</a>  &middot;
     <a href='/leaderboard?region=NA'>North America</a>  &middot;
     <a href='/leaderboard?region=SA'>South America</a>  &middot;
     <a href='/leaderboard?region=OC'>Oceania</a>";

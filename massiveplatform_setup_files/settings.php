@@ -1101,4 +1101,7 @@ $conf['tm_leaderboard_score_members_weight'] = 1; // scoring weight
 $conf['tm_leaderboard_og_image'] = "";
 $conf['tm_leaderboard_og_desription'] = "The top performing chapters.";
 $conf['tm_leaderboard_chapter_leaders_tip'] = "Only chapter leaders can see all rankings. If you need help to improve your ranking, get in touch with our community team.";
-
+$conf['tm_leaderboard_chapter_leaders_tip'] = "Only chapter leaders can see this page. If you need help to improve your ranking, get in touch with our community team.";
+$conf["tm_leaderboard_label_chapter_needed"] = "<a target='_blank' href='/blog/start-a-chapter-guide'>Needs a Leader</a>";
+$conf["tm_leaderboard_label_no_events"] = "<a target='_blank' href='/blog/start-a-chapter-guide/#responsibilities'>Need Help?</a>";
+$conf["tm_leaderboard_label_more_events"] = "<a target='_blank' href='/blog/start-a-chapter-guide/#responsibilities'>Plan an Event</a>";

@@ -60,6 +60,41 @@ img.leaderboard_avatar {
 	margin-left: 0px;
 }
 
+.leaderboard_label {
+	font-size: 12px;
+	color: #888;
+	margin-left: 0.4rem;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+    font-weight: normal;
+    border-radius: 2px;
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+    white-space: nowrap;
+    float: left;
+    margin-bottom: 0.2rem;
+}
+
+.leaderboard_label a {
+	color: #fff !important;
+	text-decoration: underline !important;
+}
+
+.leaderboard_label.blue {
+	color: #fff;
+	background-color: #007eb5;	
+}
+
+.leaderboard_label.green {
+	color: #fff;
+	background-color: #88ac00;
+}
+
+.leaderboard_label.red {
+	color: #fff;
+	background-color: #bd0053;
+}
+
 @media only screen and (max-width: 600px) {
 
 	.hide_narrow {

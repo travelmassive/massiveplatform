@@ -86,7 +86,7 @@ function tm_reports_chapter_insights_get_data($drush_command = false, $fetch_new
 
 		// create header row
 		if ($first_row) {
-			$row = array("chapter_id", "chapter_name", "country_name", "continent_name", "country_code", "continent_code");
+			$row = array("chapter_id", "chapter_name", "country_name", "continent_name", "country_code", "continent_code", "chapter_age_days");
 			foreach ($chapter_results['data_values'] as $key => $value) {
 				$row[] = str_replace(",", "", $key);
 			}
@@ -95,7 +95,9 @@ function tm_reports_chapter_insights_get_data($drush_command = false, $fetch_new
 		}
 
 		// create data row
-		$row = array($chapter->nid, $chapter->title, $country_name, $continent_name, $country_code, $continent_code);
+		$datediff = time() - $chapter->created;
+		$chapter_days_old = round($datediff / (60 * 60 * 24));
+		$row = array($chapter->nid, $chapter->title, $country_name, $continent_name, $country_code, $continent_code, $chapter_days_old);
 		foreach ($chapter_results['data_values'] as $key => $value) {
 			$row[] = str_replace(",", "", $value);
 		}

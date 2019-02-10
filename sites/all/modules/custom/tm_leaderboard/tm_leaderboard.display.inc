@@ -133,7 +133,22 @@ function tm_leaderboard_render() {
 		$html .= "<td nowrap class='left'><span class='chapter_name'><a target='_blank' href='" . $chapter_url ."'>" . $chapter_name . "</a></a></td>";
 
 		$html .= "<td nowrap class='left hide_narrow'>";
-		$html .= tm_leaderboard_render_chapter_leaders($chapter);
+		$chapter_leaders_html = tm_leaderboard_render_chapter_leaders($chapter);
+		$html .= $chapter_leaders_html;
+
+		// chapter labels
+		if ($cache->data[$chapter_name_index][$column_name_lookup["chapter_age_days"]] < 180) {
+			$html .= "<span class='leaderboard_label green'>New Chapter</span>";
+		}
+		else if ($chapter_leaders_html == "") {
+			$html .= "<span class='leaderboard_label red'>" . $conf["tm_leaderboard_label_chapter_needed"] . "</span>";
+		}
+		else if ($cache->data[$chapter_name_index][$column_name_lookup["num_events_past_12_months"]] == 0) {
+			$html .= "<span class='leaderboard_label red'>" . $conf["tm_leaderboard_label_no_events"] . "</span>";
+		} else if ($cache->data[$chapter_name_index][$column_name_lookup["num_events_past_12_months"]] <= 2) {
+			$html .= "<span class='leaderboard_label blue'>" . $conf["tm_leaderboard_label_more_events"] . "</span>";
+		}
+		
 		$html .= "</td>";
 
 		$html .= "<td class='hide_narrow' nowrap>" . $cache->data[$chapter_name_index][$column_name_lookup["members_total"]] . "</td>";

@@ -29,17 +29,49 @@ function tm_leaderboard_menu() {
 function tm_leaderboard_form() {
   
   global $conf;
+  global $user;
 
   // Load css
   drupal_add_css(drupal_get_path('module', 'tm_leaderboard') . '/css/tm_leaderboard.css');
  
+  // Check access to all rankings
+  if (isset($_GET["showall"])) {
+    if (!in_array("chapter leader", $user->roles) and !in_array("moderator", $user->roles)) {
+      drupal_set_message("Sorry, you don't have access to global leaderboard", "warning");
+      drupal_goto("/leaderboard");
+    }
+  }
+
   // Start html
   $html = "";
 
   // Start article
   $html .= "<article class='trilithon node view-mode-full node-by-viewer clearfix'>";
 
-  $html .= tm_leaderboard_render();
+  // Set cache key
+  $cache_key = "";
+  if (isset($_GET["region"])) {
+    $cache_key = $_GET["region"];
+  }
+  if (isset($_GET["country"])) {
+    $cache_key = $_GET["country"];
+  }
+  if (isset($_GET["showall"])) {
+    $cache_key = "showall";
+    drupal_set_message($conf["tm_leaderboard_chapter_leaders_tip"], "help-tip");
+  }
+
+  // Fetch leaderboard from cache if available
+  $cache = cache_get('tm-leaderboard-' . $cache_key, 'cache');
+  if (!empty($cache)) {
+    $leaderboard_html = $cache->data;
+  } else {
+    $leaderboard_html = tm_leaderboard_render();
+    cache_set('tm-leaderboard-' . $cache_key, $leaderboard_html, 'cache', time() + 300);
+  }
+
+  // Render leaderboard
+  $html .= $leaderboard_html;
 
   $html .= "</article>";
 

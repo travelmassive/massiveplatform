@@ -71,13 +71,8 @@ function tm_leaderboard_render() {
 	// show all
 	$showall = false;
 	if (isset($_GET["showall"])) {
-		if (!in_array("chapter leader", $user->roles) and !in_array("moderator", $user->roles)) {
-			drupal_set_message("Sorry, you don't have access to global leaderboard", "warning");
-			drupal_goto("/leaderboard");
-		}
 		$showall = true;
 		$page_title = "Chapter Leaderboard &mdash; All Rankings";
-		drupal_set_message($conf["tm_leaderboard_chapter_leaders_tip"], "help-tip");
 	}
 
 	$html = "";

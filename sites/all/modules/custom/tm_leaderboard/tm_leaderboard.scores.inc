@@ -60,7 +60,7 @@ function tm_leaderboard_calculate_chapter_score($column_name_lookup, $data) {
 	$num_event_registrations_12_months = $data[$column_name_lookup["num_event_registrations_12_months"]];
 
 	// registrations (extra guests)
-	$num_event_registrations_12_months_extra_guests = min($conf['tm_leaderboard_score_extra_guests_max'], intval($data[$column_name_lookup["num_event_registrations_12_months_extra_guests"]]));
+	$num_event_registrations_12_months_extra_guests = min($conf['tm_leaderboard_score_extra_guests_max'], $data[$column_name_lookup["num_event_registrations_12_months_extra_guests"]]);
 
 	// member connections
 	$total_chapter_member_connections = $data[$column_name_lookup["total_chapter_member_connections"]];

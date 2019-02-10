@@ -36,10 +36,26 @@ function tm_leaderboard_form() {
  
   // Check access to all rankings
   if (isset($_GET["showall"])) {
-    if (!in_array("chapter leader", $user->roles) and !in_array("moderator", $user->roles)) {
-      drupal_set_message("Sorry, you don't have access to global leaderboard", "warning");
+
+    if (!user_is_logged_in()) {
+      drupal_set_message("Please <a href='/user/login?destination=/leaderboard?showall'>sign in</a> to view all chapter rankings", "warning");
       drupal_goto("/leaderboard");
+      return;
     }
+
+    if (!in_array("chapter leader", $user->roles) and !in_array("moderator", $user->roles)) {
+      drupal_goto("/leaderboard");
+      return;
+    }
+  }
+
+  // Check cache
+  $cache = cache_get('tm-reports-all-chapter-insights', 'cache');
+  if (empty($cache)) {
+    $form['html'] =  array(
+    '#type' => 'markup',
+    '#markup' => "Sorry, the Chapter Leaderboard is not available right now. Please check back later.");
+    return $form;
   }
 
   // Start html
@@ -72,6 +88,25 @@ function tm_leaderboard_form() {
 
   // Render leaderboard
   $html .= $leaderboard_html;
+
+  // Additional links
+  // Not cached
+  if (!isset($_GET["showall"])) {
+    if (in_array("chapter leader", $user->roles) or in_array("moderator", $user->roles)) {
+      $html .= "<div id='leaderboard_links_chapter_leader'>";
+      $html .= "<a class='bttn bttn-secondary bttn-m off' href='/leaderboard?showall'>See All Rankings</a>";
+      $html .= "</div>";
+    }
+  }
+
+  $html .= "<div id='leaderboard_links'>
+    Leaderboards &mdash; 
+    <a href='/leaderboard'>Top " . $conf["tm_leaderboard_global_show_results"] . "</a> &middot; 
+    <a href='/leaderboard?region=AS'>Asia</a>  &middot;
+    <a href='/leaderboard?region=AF'>Africa</a>  &middot;
+    <a href='/leaderboard?region=NA'>North America</a>  &middot;
+    <a href='/leaderboard?region=SA'>South America</a>  &middot;
+    <a href='/leaderboard?region=OC'>Oceania</a>";
 
   $html .= "</article>";
 

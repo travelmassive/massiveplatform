@@ -10,7 +10,7 @@ function tm_leaderboard_render() {
 	// check cache
 	$cache = cache_get('tm-reports-all-chapter-insights', 'cache');
 	if (empty($cache)) {
-		return "Sorry, the Chapter Leaderboard is not available right now. Please check back later.";
+		return "The Chapter Leaderboard is not available right now.";
 	}
 
 	// test data
@@ -150,19 +150,6 @@ function tm_leaderboard_render() {
 	}
 
 	$html .= "</table>";
-
-	$html .= "<div id='leaderboard_links'>
-		Leaderboards &mdash; 
-		<a href='/leaderboard'>Top " . $conf["tm_leaderboard_global_show_results"] . "</a> &middot; 
-		<a href='/leaderboard?region=AS'>Asia</a>  &middot;
-		<a href='/leaderboard?region=AF'>Africa</a>  &middot;
-		<a href='/leaderboard?region=NA'>North America</a>  &middot;
-		<a href='/leaderboard?region=SA'>South America</a>  &middot;
-		<a href='/leaderboard?region=OC'>Oceania</a>";
-
-	if (in_array("chapter leader", $user->roles) or in_array("moderator", $user->roles)) {
-		$html .= "<br><i>Chapter Leaders</i> &mdash; <a href='/leaderboard?showall'>See All Rankings</a>";
-	}
 
 	$html .= '</div>';
 

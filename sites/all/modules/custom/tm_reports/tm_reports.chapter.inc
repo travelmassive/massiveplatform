@@ -527,7 +527,7 @@ function _tm_reports_get_chapter_insights($chapter_ids, $ignore_cache = false, $
   $insights["num_event_registrations"] = $num_event_registrations->amount;
 
   // NUMBER OF TOTAL EXTRA-GUESTS
-  $query = "SELECT SUM(field_event_extra_guests_value) AS amount FROM field_data_field_event_extra_guests WHERE entity_id IN (SELECT entity_id FROM field_data_field_chapter WHERE field_chapter_target_id IN (:chapter_ids))";
+  $query = "SELECT IFNULL(SUM(field_event_extra_guests_value),0) AS amount FROM field_data_field_event_extra_guests WHERE entity_id IN (SELECT entity_id FROM field_data_field_chapter WHERE field_chapter_target_id IN (:chapter_ids))";
   $num_event_registrations_extra_guests = db_query($query, array(':chapter_ids' => $chapter_ids))->fetch();
   $insights["num_event_registrations_extra_guests"] = $num_event_registrations_extra_guests->amount;
 
@@ -537,7 +537,7 @@ function _tm_reports_get_chapter_insights($chapter_ids, $ignore_cache = false, $
   $insights["num_event_registrations_12_months"] = $num_event_registrations_12_months->amount;
 
   // NUMBER OF TOTAL EXTRA GUESTS PAST 12 MONTHS
-  $query = "SELECT SUM(field_event_extra_guests_value) AS amount FROM field_data_field_event_extra_guests WHERE entity_id IN (SELECT field_data_field_chapter.entity_id FROM field_data_field_chapter LEFT JOIN field_data_field_event_date ON field_data_field_event_date.entity_id = field_data_field_chapter.entity_id WHERE field_chapter_target_id IN (:chapter_ids) AND field_event_date_value >= DATE_SUB(NOW(), INTERVAL 1 YEAR))";
+  $query = "SELECT IFNULL(SUM(field_event_extra_guests_value),0) AS amount FROM field_data_field_event_extra_guests WHERE entity_id IN (SELECT field_data_field_chapter.entity_id FROM field_data_field_chapter LEFT JOIN field_data_field_event_date ON field_data_field_event_date.entity_id = field_data_field_chapter.entity_id WHERE field_chapter_target_id IN (:chapter_ids) AND field_event_date_value >= DATE_SUB(NOW(), INTERVAL 1 YEAR))";
   $num_event_registrations_12_months_extra_guests = db_query($query, array(':chapter_ids' => $chapter_ids))->fetch();
   $insights["num_event_registrations_12_months_extra_guests"] = $num_event_registrations_12_months_extra_guests->amount;
 

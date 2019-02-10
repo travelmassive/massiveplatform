@@ -38,8 +38,18 @@
 	text-align: left;
 }
 
+#leaderboard_links_chapter_leader {
+	text-align: center;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+}
+
+#leaderboard_links_chapter_leader .button {
+
+}
+
 #leaderboard_links {
-	text-align: right;
+	text-align: center;
 }
 
 img.leaderboard_avatar {

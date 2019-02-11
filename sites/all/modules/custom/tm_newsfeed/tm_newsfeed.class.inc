@@ -141,12 +141,16 @@ class TmNewsfeedEmail
 
 		// chapter leaders needed
 		$chapter_leaders_needed_message = "";
-		$chapter_leaders_needed = tm_newsfeed_get_chapter_leaders_needed($user_id);
-		if ($chapter_leaders_needed > 0) {
-			$chapter_id = $chapter_leaders_needed[array_rand($chapter_leaders_needed)];
-			$chapter_needed = node_load($chapter_id);
-			if ($chapter_needed != null) {
-				$chapter_leaders_needed_message = "<p><a href='" . tm_newfeed_absolute_url("node/" . $chapter_id) . tm_newsfeed_utm_campaign() . "'>" . tm_chapters_formal_name($chapter_needed) . "</a> is looking for a <a href='" . $conf["tm_newsfeed_leader_needed_link"] . tm_newsfeed_utm_campaign() . "'>Chapter Leader</a>" . $conf["tm_newsfeed_leader_needed_cta"] . "</p>";
+		if ($conf["tm_newsfeed_leader_needed_enabled"] == true) {
+			$debug_timer['04.1a_tm_newsfeed_get_chapter_leaders_needed'] = time();
+			$chapter_leaders_needed = tm_newsfeed_get_chapter_leaders_needed($user_id);
+			$debug_timer['04.1b_done'] = time();
+			if ($chapter_leaders_needed > 0) {
+				$chapter_id = $chapter_leaders_needed[array_rand($chapter_leaders_needed)];
+				$chapter_needed = node_load($chapter_id);
+				if ($chapter_needed != null) {
+					$chapter_leaders_needed_message = "<p><a href='" . tm_newfeed_absolute_url("node/" . $chapter_id) . tm_newsfeed_utm_campaign() . "'>" . tm_chapters_formal_name($chapter_needed) . "</a> is looking for a <a href='" . $conf["tm_newsfeed_leader_needed_link"] . tm_newsfeed_utm_campaign() . "'>Chapter Leader</a>" . $conf["tm_newsfeed_leader_needed_cta"] . "</p>";
+				}
 			}
 		}
 		$email = str_replace("__CHAPTER_LEADER_NEEDED__", $chapter_leaders_needed_message, $email);

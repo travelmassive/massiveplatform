@@ -268,7 +268,7 @@ function tm_notifications_mail($key, &$message, $params) {
   $subject = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $subject);  
   $subject = str_replace("__SITE_NAME__", $conf["tm_site_name"], $subject);  
 
-  $message['subject'] = check_plain($subject);
+  $message['subject'] = strip_tags($subject); // check_plain($subject);
 
 
   // STEP 5. REPLACE BODY AND FOOTER IN HTML TEMPLATE

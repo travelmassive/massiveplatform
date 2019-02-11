@@ -711,7 +711,7 @@ $conf['tm_newsfeed_prefix_viewers_popular'] = "You're popular &mdash; ";
 $conf['tm_newsfeed_who_visited_label'] = "who visited";
 
 // chapter leader needed link and call to action
-$conf['tm_newsfeed_leader_needed_enabled'] = true; // whether to enable call out for chapter leader
+$conf['tm_newsfeed_leader_needed_enabled'] = true;
 $conf['tm_newsfeed_leader_needed_link'] = "https://example.massiveplatform.com/blog/start-a-chapter-guide/";
 $conf['tm_newsfeed_leader_needed_cta'] = "&mdash; learn how to get involved.";
 

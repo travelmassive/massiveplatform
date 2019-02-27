@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * tm_subscriptions_user.strongarm.inc

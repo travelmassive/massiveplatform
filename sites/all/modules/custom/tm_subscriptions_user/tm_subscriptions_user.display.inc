@@ -3,6 +3,73 @@
 // tm_user_subscriptions.display.inc - display methods
 
 /**
+ * Implements template_preprocess_page()
+ */
+function tm_subscriptions_user_preprocess_page(&$variables) {
+
+	global $conf;
+	global $user;
+
+	// Show pro member CTA
+	if (current_path() == "subscribers") {
+		if (tm_subscriptions_is_user_subscription_enabled($user->uid)) {
+			$message = $conf["tm_subscriptions_user_subscribers_page_message_subscribed"];
+		} else {
+			$message = $conf["tm_subscriptions_user_subscribers_page_message"];
+		}
+		drupal_set_message($message, "help-tip");
+	}
+}
+
+/**
+ * Implement views_post_execute
+ */
+function tm_subscriptions_user_views_post_execute(&$view) {
+
+	global $conf;
+
+	if ($view->name == 'subscribed_members') {
+		if (isset($conf["tm_subscriptions_user_subscribers_page_title"])) {
+			$view->build_info['title'] = $conf["tm_subscriptions_user_subscribers_page_title"];
+		}
+	}
+}
+
+/**
+ * Implement hook form alter
+ */
+function tm_subscriptions_user_form_alter(&$form, $form_state, $form_id) {
+
+  global $conf;
+
+  // Alter subscribers view dropdowns
+  if (isset($form_state['view'])) {
+
+    if ($form_state['view']->name == 'subscribed_members') {
+
+      // Limit countries dropdown to users countries
+      $output = '';
+      $output = cache_get('views-exposed-form-subscribers-countries', 'cache');
+      if (empty($output)) {
+        $approved_member_role = user_role_load_by_name("subscriber")->rid;
+        $result = db_query("SELECT * FROM (SELECT DISTINCT iso2, name, entity_id from {field_data_field_user_country} f LEFT JOIN {countries_country} c ON f.field_user_country_iso2 = c.iso2 WHERE f.bundle = 'user' AND c.iso2 IS NOT NULL) as countries_with_users INNER JOIN {users_roles} u ON u.uid = countries_with_users.entity_id AND u.rid = " . intval($approved_member_role) . " ORDER BY name ASC");
+        $defaultoptions = array('All'=>'- Any -');
+        $output = $defaultoptions + $result->fetchAllKeyed();
+        $form['name_list']['#options'] = $output;
+      cache_set('views-exposed-form-subscribers-countries', $output, 'cache', time() + 3600);
+      } else{
+        $form['name_list']['#options'] = $output->data;
+      }
+
+      // Replace "All" option to more meaningful name
+      $form['name_list']['#options']['All'] = "Country";
+
+    }
+  }
+}
+
+
+/**
  * Impement Hook node view
  * Expire pro account if it has expired and manager of account views it
  */

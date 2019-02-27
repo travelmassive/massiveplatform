@@ -379,7 +379,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
     }
    
     // calendar link
-    $event_calendar_link = "events/download-calendar/" . $event->nid;
+    $event_calendar_link = "events/download-ical/" . $event->nid;
 
     // add moderator message
     $moderator_message = "";

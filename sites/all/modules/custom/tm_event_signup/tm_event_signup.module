@@ -85,6 +85,7 @@ function _tm_event_seats_count($field, $title = NULL) {
     return t('Please RSVP For This Event');
   }
 
+  // Nobody registered yet
   if ($count == 0) {
 
     // Hide count message if event is ticketed
@@ -94,7 +95,7 @@ function _tm_event_seats_count($field, $title = NULL) {
       }
     }
 
-    // No Payment
+    // Seats limited
     if (isset($event->field_signup_limit[LANGUAGE_NONE][0]['value'])) {
       $limit = $event->field_signup_limit[LANGUAGE_NONE][0]['value'];
       $waitlist_flag = flag_get_flag('event_waitlist');
@@ -103,7 +104,7 @@ function _tm_event_seats_count($field, $title = NULL) {
         // event it set to waitlist all attendees
         return t('This is a waitlisted event');
       } else {
-        return t('Be the first to register!');
+        return t($waitlist_count . ' on the waitlist');
       }
     } else {
       return t('Be the first to register!');

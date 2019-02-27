@@ -54,11 +54,11 @@ function tm_users_download_global_newsletter_csv(){
 	// csv header
 	drupal_add_http_header('Content-Type', 'text/csv; utf-8');
 	drupal_add_http_header('Content-Disposition', 'attachment; filename = '.$csvname);
-
 	// check cache
 	$cache = cache_get('tm-users-global-newsletter-csv', 'cache');
 	if (!empty($cache)) {
-		echo $cache->data;
+		$uncompressed = gzuncompress($cache->data);
+		echo $uncompressed;
 	} else {
 		echo "Please run drush tm-generate-newsletter-csv to generate csv";
 	}
@@ -237,20 +237,26 @@ where n.value = 1 order by ud.uid asc";
 
 		// member subscription type
 		// use flag lookup directly for performance
-		$user_subscription_type = "";
+		$user_subscription_type = "none";
 		if ($module_exists_tm_subscriptions_user) {
 			if ($user_subscription_enable_flag->is_flagged($user_id)) {
 				$user_subscription_type = tm_subscriptions_user_get_type($user_id);
+			}
+			if ($user_subscription_type == "") {
+				$user_subscription_type = "none";
 			}
 		}
 		$row[] = $user_subscription_type;
 
 		// company subscription type
 		// will put first subscribed organization
-		$company_subscription_type = "";
+		$company_subscription_type = "none";
 		if ($module_exists_tm_subscriptions) {
 			if (sizeof($organization_profile_nids) > 0) {
 				$company_subscription_type = tm_subscriptions_get_type($organization_profile_nids[0]);
+			}
+			if ($company_subscription_type == "") {
+				$company_subscription_type = "none";
 			}
 		}
 		$row[] = $company_subscription_type;
@@ -361,8 +367,11 @@ where n.value = 1 order by ud.uid asc";
 	// close file handle
 	fclose($fh);
 
-	// return csv
-	return $csv;
+	// compress
+	$compressed = gzcompress($csv, 9);
+
+	// return compressed csv
+	return $compressed;
 }
 
 /**

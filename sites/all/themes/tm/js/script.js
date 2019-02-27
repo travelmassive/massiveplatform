@@ -765,7 +765,7 @@
     var profile_edit_url = "/user/" + current_user_uid + "/edit#user-profile-options";
 
     // prompt to complete profile
-    event.preventDefault();
+    // event.preventDefault();
     $.prompt(confirm_message, {
         title: 'Only ' + approved_member_label_plural + ' can register',
         buttons: { "OK": false, "Edit Profile": true },

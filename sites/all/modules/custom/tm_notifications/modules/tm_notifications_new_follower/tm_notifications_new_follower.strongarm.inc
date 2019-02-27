@@ -48,7 +48,7 @@ __MESSAGING_INSTRUCTIONS__
       'subject' => '[current-user:field_user_first_name] [current-user:field_user_last_name] just followed [node:title] on __SITE_NAME__',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>[current-user:field_user_first_name] [current-user:field_user_last_name] just followed your company profile [node:title] on __SITE_NAME__.
+<br>__USER_FIRST_NAME__ __USER_LAST_NAME__ just followed your company profile [node:title] on __SITE_NAME__.
 <br>__FOLLOWER_MESSAGE__
 <br>You can view their profile here:
 <br>

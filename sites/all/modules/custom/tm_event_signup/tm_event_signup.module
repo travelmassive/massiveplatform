@@ -184,7 +184,12 @@ function tm_event_signup_flag_validate($action, $flag, $entity_id, $account, $sk
   // Only validate the 'signup' flag whenever an 'event' is flagged. Users may always unflag.
   if ($flag->name == 'event_register' && $action == 'flag' && $flagged_entity->type == 'event') {
     $result = _tm_event_display_flag($entity_id);
-    if ($result == "show_waitlist") {
+
+    // Check if added by moderator in tm_events_moderation_events_register_member()
+    $static_register_member_moderator = &drupal_static("tm_register_member_moderator");
+    $is_added_by_moderator = ($static_register_member_moderator != null);
+
+    if (($result == "show_waitlist") and (!$is_added_by_moderator)) {
       drupal_set_message("Sorry, this event is now full.", "warning");
       drupal_goto("node/" . $entity_id);
       return(array('access-denied' => t('Sorry, the signup limit reached.')));

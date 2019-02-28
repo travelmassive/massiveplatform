@@ -116,6 +116,10 @@ function tm_events_moderation_events_register_member($user_to_moderate, $registe
 	$static_register_member_moderator_last_name = &drupal_static("tm_register_member_moderator_last_name");
 	$static_register_member_moderator_last_name = $moderator_last_name;
 
+	// set static variable to check in tm_event_signup_flag_validate()
+	$static_register_member_moderator = &drupal_static("tm_register_member_moderator");
+	$static_register_member_moderator = true;
+
 	if (isset($_GET["message"])) {
 		$message = strip_tags(trim($_GET["message"]));
 		if ($message != "") {

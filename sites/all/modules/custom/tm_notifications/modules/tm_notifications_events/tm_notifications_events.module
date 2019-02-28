@@ -160,7 +160,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
 
   // get user and profile url of who flagged the event
   $who_flagged = user_load($GLOBALS['user']->uid);
-  $profile_url = drupal_get_path_alias("user/" . $who_flagged->uid);
+  $profile_url = drupal_get_path_alias("user/" . $account->uid);
   $profile_uid = $who_flagged->uid;
 
   // TM_PAYMENTS
@@ -287,7 +287,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
      // let other organizers know who registered this member
     $registered_by_message = "";
     if ($static_register_member_moderator_first_name != null) {
-      $registered_by_message = "<br>This member was registered by " . $static_register_member_moderator_first_name . " " . $static_register_member_moderator_last_name . ".";
+      $registered_by_message = "<br><br>This member was registered by " . $static_register_member_moderator_first_name . " " . $static_register_member_moderator_last_name . ".";
     }
 
     foreach ($notify_ids as $notify_id) {
@@ -297,22 +297,22 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
 
       // events_register_flag
       if (($flag_or_unflag == "flag") && ($flag->name == 'event_register')) {
-        tm_notifications_notify('events_register_flag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url, '__REGISTER_ACTION_SUBJECT__' => $register_action_subject, '__REGISTER_ACTION_BODY__' => $register_action_body, '__REGISTER_PAYMENT_NOTE__' => $register_payment_note, '__PROFILE_FULL_NAME__' => $profile_full_name, '__REGISTERED_BY_MESSAGE__' => $registered_by_message));
+        tm_notifications_notify('events_register_flag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $account->uid, '__EVENT_URL__' => $event_url, '__REGISTER_ACTION_SUBJECT__' => $register_action_subject, '__REGISTER_ACTION_BODY__' => $register_action_body, '__REGISTER_PAYMENT_NOTE__' => $register_payment_note, '__PROFILE_FULL_NAME__' => $profile_full_name, '__REGISTERED_BY_MESSAGE__' => $registered_by_message));
       }
 
       // events_register_unflag
       if (($flag_or_unflag == "unflag") && ($flag->name == 'event_register')) {
-        tm_notifications_notify('events_register_unflag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url, '__PROFILE_FULL_NAME__' => $profile_full_name));
+        tm_notifications_notify('events_register_unflag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $account->uid, '__EVENT_URL__' => $event_url, '__PROFILE_FULL_NAME__' => $profile_full_name));
       }
 
       // waitlist_register_flag
       if (($flag_or_unflag == "flag") && ($flag->name == 'event_waitlist')) {
-        tm_notifications_notify('events_waitlist_flag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url, '__PROFILE_FULL_NAME__' => $profile_full_name));
+        tm_notifications_notify('events_waitlist_flag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $account->uid, '__EVENT_URL__' => $event_url, '__PROFILE_FULL_NAME__' => $profile_full_name));
       }
 
        // waitlist_register_unflag
       if (($flag_or_unflag == "unflag") && ($flag->name == 'event_waitlist')) {
-        tm_notifications_notify('events_waitlist_unflag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url, '__PROFILE_FULL_NAME__' => $profile_full_name));
+        tm_notifications_notify('events_waitlist_unflag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $account->uid, '__EVENT_URL__' => $event_url, '__PROFILE_FULL_NAME__' => $profile_full_name));
       }
       
     }

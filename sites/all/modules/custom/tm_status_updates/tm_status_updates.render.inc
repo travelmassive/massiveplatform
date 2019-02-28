@@ -617,6 +617,10 @@ function tm_status_updates_render_results_items($results, $count_viewer_ip, $hid
 	$event_register_flag = flag_get_flag('event_register');
 	$event_register_flag_id = $event_register_flag->fid;
 
+	// preload event_waitlist flag id
+	$event_waitlist_flag = flag_get_flag('event_waitlist');
+	$event_waitlist_flag_id = $event_waitlist_flag->fid;
+
 	// render results
 	$html_items = array();
 	$count_items = 0;
@@ -629,13 +633,14 @@ function tm_status_updates_render_results_items($results, $count_viewer_ip, $hid
 			break;
 		}
 
-		// check if item is an event registration
+		// check if item is an event registration or waitlist
 		// pre load flagged_item
 		$is_event_register_item = false;
 		if ($result->result_type == "flagged_item") {
 			$flagged_item = tm_status_updates_get_flagged_by_id($result->flagging_id);
-			if ($flagged_item->fid == $event_register_flag_id) {
-				$is_event_register_item = true;
+			if (($flagged_item->fid == $event_register_flag_id) or
+			   ($flagged_item->fid == $event_waitlist_flag_id)) {
+				$is_event_item = true;
 			}
 		}
 
@@ -643,7 +648,7 @@ function tm_status_updates_render_results_items($results, $count_viewer_ip, $hid
 		// (exception: event registration)
 		$own_post = ($user->uid == $result->owner_uid);
 		$repeating_post = ($result->owner_uid == $last_user_uid);
-		if ($repeating_post and !$is_event_register_item) {
+		if ($repeating_post and !$is_event_item) {
 			if ($own_post and $hide_own_repeats) {
 				continue;
 			} elseif (!$own_post and $hide_repeat_posters) {

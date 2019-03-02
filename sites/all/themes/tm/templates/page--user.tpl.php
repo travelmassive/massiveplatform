@@ -86,6 +86,8 @@ if (sizeof($request_uri_parts) == 3) {
     </div>
   </header>
 
+  <div class="top-navbar-divider"></div>
+
   <div class="top-navbar">
     <div class="row">
       <section>

@@ -50,6 +50,8 @@
     </div>
   </header>
 
+  <div class="top-navbar-divider"></div>
+
   <div class="top-navbar">
     <div class="row">
       <section>

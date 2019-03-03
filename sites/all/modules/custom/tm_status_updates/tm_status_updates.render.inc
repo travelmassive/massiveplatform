@@ -185,7 +185,7 @@ function tm_status_updates_render_update($result, $count_viewer_ip = null, $show
   	$feed_info = "<span class='status_update'>" . $status_update_html . "</span>";
 
   	// feed image class
-  	$feed_image_class = "status-updates-image-avatar";
+  	$feed_image_class = "status-updates-image";
 
 	// user update
 	if ($entity_type == "user") {
@@ -466,7 +466,7 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 			}
 
 			$feed_title = l($flagging_user_name, $flagging_user_url) . " registered for " . l($event->title, $flagged_node_url);
-			$html = tm_status_updates_render_flag_feed($flagging_user_url, $image_url, $feed_title, "", $details);
+			$html = tm_status_updates_render_flag_feed($flagging_user_url, $image_url, $feed_title, "", $details, "status-updates-image-avatar");
 			break;
 
 	    // MEMBER REGISTERED FOR WAITLIST
@@ -486,7 +486,7 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 			}
 
 			$feed_title = l($flagging_user_name, $flagging_user_url) . " joined the waitlist for " . l($event->title, $flagged_node_url);
-			$html = tm_status_updates_render_flag_feed($flagging_user_url, $image_url, $feed_title, "", $details);
+			$html = tm_status_updates_render_flag_feed($flagging_user_url, $image_url, $feed_title, "", $details, "status-updates-image-avatar");
 			break;
 
 	    // MEMBER JOINED CHAPTER

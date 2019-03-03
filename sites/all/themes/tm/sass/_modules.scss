@@ -284,7 +284,7 @@
     position: relative;
     z-index: 2;
     display: block;
-    background-color: #FFF;
+    // background-color: #FFF;
     border-radius: $global-radius;
     @extend %antialiased;
     text-transform: uppercase;
@@ -353,7 +353,7 @@
     img {
       display: block;
       max-width: 100%;
-      border-radius: $global-radius;
+      border-radius: 50%;
     }
   }
   .badge-flagfeed {
@@ -574,6 +574,9 @@
       .badge-user {
         width: 6rem;
         height: 6rem;
+        img {
+          border-radius: 3rem;
+        }
       }
       .teaser {
         display: block;

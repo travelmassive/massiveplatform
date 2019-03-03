@@ -68,10 +68,13 @@
     .avatar {
       display: block;
       width: 4rem;
-      border-radius: $global-radius;
-      box-shadow: 0 0 0 1px rgba($primary-color, 0.1);
+      // border-radius: $global-radius;
+      // box-shadow: 0 0 0 1px rgba($primary-color, 0.1);
       padding: 0.25rem;
-      background-color: #FFF;
+      // background-color: #FFF;
+      img {
+        border-radius: 50%;
+      }
     }
     strong {
       display: block;

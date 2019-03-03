@@ -184,12 +184,16 @@ function tm_status_updates_render_update($result, $count_viewer_ip = null, $show
   	// feed text
   	$feed_info = "<span class='status_update'>" . $status_update_html . "</span>";
 
+  	// feed image class
+  	$feed_image_class = "status-updates-image-avatar";
+
 	// user update
 	if ($entity_type == "user") {
 
 		$image_uri = _tm_users_get_avatar_uri($posting_user);
 		$image_url = image_style_url("avatar", $image_uri);
 		$feed_title = l($posting_user_name, $entity_url) . " " . $post_action_text;
+		$feed_image_class = "status-updates-image-avatar";
 	}
 
 	// organization update
@@ -198,6 +202,7 @@ function tm_status_updates_render_update($result, $count_viewer_ip = null, $show
 		$image_uri = _tm_organizations_get_avatar_uri($entity);
 		$image_url = image_style_url("avatar", $image_uri);
 		$feed_title = l($entity->title, $entity_url) . " " . $post_action_text;
+		$feed_image_class = "status-updates-image-avatar";
 	}
 
 	// chapter update
@@ -306,7 +311,7 @@ function tm_status_updates_render_update($result, $count_viewer_ip = null, $show
 	}
 
 	// render
-	$html = tm_status_updates_render_flag_feed($entity_url, $image_url, $feed_title, $feed_info, $details);
+	$html = tm_status_updates_render_flag_feed($entity_url, $image_url, $feed_title, $feed_info, $details, $feed_image_class);
 
 	return $html;
 }
@@ -441,7 +446,7 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 			}
 
 			$feed_title = l($flagged_user_name, $flagged_user_url) . " joined the community";
-			$html = tm_status_updates_render_flag_feed($flagged_user_url, $image_url, $feed_title, $feed_info, $details);
+			$html = tm_status_updates_render_flag_feed($flagged_user_url, $image_url, $feed_title, $feed_info, $details, "status-updates-image-avatar");
 			break;
 
 	   	// MEMBER REGISTERED FOR EVENT
@@ -506,7 +511,7 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 
 			$feed_title = l($flagging_user_name, $flagging_user_url) . " followed " . l($flagged_user_name, $flagged_user_url);
 			//$feed_title = l($flagged_user_name, $flagged_user_url) . " was followed by " . l($flagging_user_name, $flagging_user_url);
-			$html = tm_status_updates_render_flag_feed($flagging_user_url, $image_url, $feed_title, "", $details);
+			$html = tm_status_updates_render_flag_feed($flagging_user_url, $image_url, $feed_title, "", $details, "status-updates-image-avatar");
 			break;
 
 	   	// MEMBER FOLLOWED AN ORGANIZATION
@@ -524,7 +529,7 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 			}
 
 			$feed_title = l($flagging_user_name, $flagging_user_url) . " followed " . l($organization->title, $flagged_node_url);
-			$html = tm_status_updates_render_flag_feed($flagged_node_url, $image_url, $feed_title, "", $details);
+			$html = tm_status_updates_render_flag_feed($flagged_node_url, $image_url, $feed_title, "", $details, "status-updates-image-avatar");
 			break;
 
 	   	// ORGANIZATION FLAGGED AS A SPONSOR
@@ -538,7 +543,7 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 
 			$feed_title = l($organization->title, $flagged_node_url) . " just became a sponsor, thanks!";
 			
-			$html = tm_status_updates_render_flag_feed($flagged_node_url, $image_url, $feed_title, "", $details);
+			$html = tm_status_updates_render_flag_feed($flagged_node_url, $image_url, $feed_title, "", $details, "status-updates-image-avatar");
 			break;
 
 	   	// ORGANIZATION HAS SUBSCRIPTION
@@ -552,7 +557,7 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 
 			$feed_title = l($organization->title, $flagged_node_url) . " upgraded to a " . $conf["tm_subscriptions_organization_label"];
 			
-			$html = tm_status_updates_render_flag_feed($flagged_node_url, $image_url, $feed_title, "", $details);
+			$html = tm_status_updates_render_flag_feed($flagged_node_url, $image_url, $feed_title, "", $details, "status-updates-image-avatar");
 			break;
 
 		// USER HAS SUBSCRIPTION
@@ -592,7 +597,7 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 			}
 
 			$feed_title = l($flagged_user_name, $flagged_user_url) . " upgraded to a " . $conf["tm_subscriptions_user_label"];
-			$html = tm_status_updates_render_flag_feed($flagged_user_url, $image_url, $feed_title, $feed_info, $details);
+			$html = tm_status_updates_render_flag_feed($flagged_user_url, $image_url, $feed_title, $feed_info, $details, "status-updates-image-avatar");
 			break;
 
 	}
@@ -636,6 +641,7 @@ function tm_status_updates_render_results_items($results, $count_viewer_ip, $hid
 		// check if item is an event registration or waitlist
 		// pre load flagged_item
 		$is_event_register_item = false;
+		$is_event_item = false;
 		if ($result->result_type == "flagged_item") {
 			$flagged_item = tm_status_updates_get_flagged_by_id($result->flagging_id);
 			if (($flagged_item->fid == $event_register_flag_id) or
@@ -691,7 +697,7 @@ function tm_status_updates_render_results_items($results, $count_viewer_ip, $hid
 /**
  * Render flag feed from template
  */
-function tm_status_updates_render_flag_feed($feed_url, $feed_image_url, $feed_title, $feed_info, $details) {
+function tm_status_updates_render_flag_feed($feed_url, $feed_image_url, $feed_title, $feed_info, $details, $feed_image_class = "status-updates-image") {
 
 	global $tm_status_updates_feed_template;
 
@@ -727,8 +733,10 @@ function tm_status_updates_render_flag_feed($feed_url, $feed_image_url, $feed_ti
 		$feed_url = "/" . $feed_url;
 	}
 
+
 	$html = str_replace("__FEED_URL__", $feed_url, $tm_status_updates_feed_template);
 	$html = str_replace("__FEED_IMAGE_URL__", $feed_image_url, $html);
+	$html = str_replace("__FEED_IMAGE_CLASS__", $feed_image_class, $html);
 	$html = str_replace("__FEED_TITLE__", $feed_title, $html);
 	$html = str_replace("__FEED_INFO__", $feed_info, $html);
 	$html = str_replace("__PREVIEW_LINK__", $preview_link, $html);
@@ -1034,7 +1042,7 @@ $tm_status_updates_feed_template = <<<EOT
 	        <div class="media">
 		        <div class="avatar">
 		        	<span class="badge-status-updates">
-		        		 <a href="__FEED_URL__" class="status-updates"><img class="status-updates-image" typeof="foaf:Image" src="__FEED_IMAGE_URL__" width="256" height="256" alt=""></a>
+		        		 <a href="__FEED_URL__" class="status-updates"><img class="__FEED_IMAGE_CLASS__" typeof="foaf:Image" src="__FEED_IMAGE_URL__" width="256" height="256" alt=""></a>
 		        	</span>
 		        </div>
 	        </div>
@@ -1092,6 +1100,7 @@ $tm_status_updates_feed_template_css = <<<EOT
 .card.status-updates { padding-top: 0.5rem; padding-bottom: 0.5rem;}
 .card.status-updates:hover { background-color: #e7f2f7; }
 img.status-updates-image { max-height: 64px; max-width: 64px; border-radius: 4px; }
+img.status-updates-image-avatar { max-height: 64px; max-width: 64px; border-radius: 50%; }
 .status-updates.newsfeed { border-left: 8px solid #2b75b4; }
 .status-updates.promoted { border-left: 8px solid #ffA700; }
 </style>
@@ -1106,6 +1115,7 @@ $tm_status_updates_feed_template_frontpage_css = <<<EOT
 .card.status-updates { padding-top: 0.5rem; padding-bottom: 0.5rem;}
 .card.status-updates:hover { background-color: #e7f2f7;}
 img.status-updates-image { max-height: 64px; max-width: 64px; border-radius: 4px; }
+img.status-updates-image-avatar { max-height: 64px; max-width: 64px; border-radius: 50%; }
 </style>
 EOT;
 
@@ -1117,6 +1127,7 @@ $tm_status_updates_feed_template_profile_css = <<<EOT
 .prime-title.status-updates a { text-decoration: underline;}
 .card.status-updates { padding-top: 0.5rem; padding-bottom: 0.5rem;}
 img.status-updates-image { max-height: 64px; max-width: 64px; border-radius: 4px; }
+img.status-updates-image-avatar { max-height: 64px; max-width: 64px; border-radius: 50%; }
 li.status-updates.feeditem { background-color: #fff; border-radius: 4px; box-shadow: 0 0.125rem 0 0 rgba(33, 48, 64, 0.1);}
 .tm-status-update-details { font-size: 14px; }
 </style>

@@ -20,7 +20,7 @@
   		}
 
   		if (!has_profile_image) {
-  			change_profile_image_text = "Add photo";
+  			change_profile_image_text = "Add";
   		}
   		
   		// create buttons
@@ -66,7 +66,7 @@
 
     	positionProfilePhotoButton = function() {
     		var profile_image_height = $(".avatar .badge-organization").height();
-			$("#profile-image-edit-button").css({top: profile_image_height - 16, right: 8});
+			$("#profile-image-edit-button").css({top: profile_image_height - 32, left: '33%'});
     	}
 
     	clickEditCoverPhotoButton = function() {

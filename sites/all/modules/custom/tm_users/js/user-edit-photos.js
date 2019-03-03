@@ -64,7 +64,7 @@
 
     	positionProfilePhotoButton = function() {
     		var profile_image_height = $(".avatar .badge-user").height();
-			$("#profile-image-edit-button").css({top: profile_image_height - 16, right: 8});
+			$("#profile-image-edit-button").css({top: profile_image_height - 32, left: '17%'});
     	}
 
     	clickEditCoverPhotoButton = function() {

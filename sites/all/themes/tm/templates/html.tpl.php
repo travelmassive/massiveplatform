@@ -33,7 +33,7 @@
     <link rel="apple-touch-icon" sizes="144x144" href="<?php echo tm_branding_get_base_element("apple_touch_icon", "apple-touch-icon-144x144.png");?>"/>
     <link rel="apple-touch-icon" sizes="152x152" href="<?php echo tm_branding_get_base_element("apple_touch_icon", "apple-touch-icon-152x152.png");?>"/>
     
-    <link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet" type="text/css">
 
     <?php print $styles; ?>
     

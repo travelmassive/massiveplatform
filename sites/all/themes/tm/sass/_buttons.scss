@@ -152,7 +152,7 @@ button {
 
 // Dark grey
 .bttn-primary {
-  color: #FFF !important;
+  color: #FFF;
   background: tint($primary-color, 30%);
   @extend %antialiased;
   box-shadow: inset 0 -2px 0 0 tint($primary-color, 10%);

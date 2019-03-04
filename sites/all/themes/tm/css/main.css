@@ -4462,7 +4462,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 
 /* line 578, ../sass/_base.scss */
 .pager-load-more .ajax-progress-throbber .throbber {
-  width: 16px;
+  width: 24px;
   background: transparent url("../images/load-more-ajax-loader.gif") no-repeat 0px 0px;
 }
 

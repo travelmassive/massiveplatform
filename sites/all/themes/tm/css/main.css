@@ -2832,7 +2832,7 @@ tr.selected td {
 /* line 803, ../sass/components/_misc.scss */
 .progress .filled {
   background-color: #0072b9;
-  background-image: url('../images/progress.gif?1473615570');
+  background-image: url('../images/progress.gif?1551739889');
 }
 
 /* ==========================================================================
@@ -4914,7 +4914,7 @@ img.tm-status-update-preview-image {
   /* line 920, ../sass/_base.scss */
   .topnav-search-container {
     display: block;
-    margin-left: 220px;
+    margin-left: 240px;
   }
 }
 

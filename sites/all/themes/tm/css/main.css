@@ -5360,7 +5360,7 @@ button:hover, button:focus {
 
 /* line 154, ../sass/_buttons.scss */
 .bttn-primary, .bttn-group a, .page-views .tabs-primary a, .page-search .tabs-primary a, .pager li a, .views-exposed-form .form-type-select {
-  color: #FFF !important;
+  color: #FFF;
   background: #636e79;
   box-shadow: inset 0 -2px 0 0 #374453;
 }

@@ -148,6 +148,12 @@ function tm_users_menu() {
     'access callback' => 'tm_users_download_chapter_leaders_csv_check',
     'type' => MENU_CALLBACK,
   );
+  $items['user/lucky'] = array(
+    'title' => 'I\'m feeling lucky',
+    'page callback' => 'tm_users_redirect_to_random_user',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
   
   return $items;
 }
@@ -725,3 +731,56 @@ function tm_users_google_tag_insert_alter(&$satisfied) {
   }
 }
 
+/**
+ * Redirect to a random user account
+ */
+function tm_users_redirect_to_random_user($count_redirects = 0) {
+
+  // keep track of redirects
+  $count_redirects = $count_redirects + 1;
+  if ($count_redirects > 10) {
+    drupal_goto("/");
+    return;
+  }
+
+  // role and register id
+  $approved_role = user_role_load_by_name("approved user"); // $approved_role->rid
+  $register_flag = flag_get_flag("event_register"); // $register_flag->fid
+
+  // select random user who has registered for event in past year
+  $query_sql = "SELECT uid FROM flagging WHERE fid = :fid AND timestamp >= UNIX_TIMESTAMP(DATE_SUB(NOW(),INTERVAL 1 YEAR)) ORDER BY RAND() LIMIT 1";
+  $query = db_query($query_sql, array(':fid' => $register_flag->fid));
+  $results = $query->fetchAll();
+
+  // get results
+  $random_ids = array();
+  foreach ($results as $result) {
+    $random_ids[] = $result->uid;
+  }
+
+  // has random user
+  if (sizeof($random_ids) > 0) {
+
+    // retry if random user
+    $account = user_load($random_ids[0]);
+    if (isset($account->field_user_has_private_profile[LANGUAGE_NONE][0]['value'])) {
+      if ($account->field_user_has_private_profile[LANGUAGE_NONE][0]['value']) {
+        tm_users_redirect_to_random_user($count_redirects);
+        return;
+      }
+    }
+ 
+    // retry if not approved
+    if (!in_array("approved user", $account->roles)) {
+      tm_users_redirect_to_random_user($count_redirects);
+      return;
+    }
+
+    // go to user account
+    drupal_goto("user/" . $random_ids[0]);
+    return;
+  }
+
+  drupal_set_message("Sorry, you don't get lucky today.", "help-tip");
+  drupal_goto("/");
+}

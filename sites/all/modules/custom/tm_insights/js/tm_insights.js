@@ -38,7 +38,7 @@
     });
 
     // Loading image
-    $("#insightsResults").html('<center><img class="tm-status-update-pager-loading-image" src="/sites/all/themes/tm/images/load-more-ajax-loader.gif"></center>');
+    $("#insightsResults").html('<center><img class="tm-status-update-pager-loading-image" src="/sites/all/themes/tm/images/load-more-ajax-loader-2.gif"></center>');
   }
 
   // First load

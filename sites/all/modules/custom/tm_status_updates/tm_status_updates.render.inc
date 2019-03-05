@@ -1020,7 +1020,7 @@ tm_status_updates_loader_timestamp = __LOADER_TIMESTAMP__;</script>
 	<ul class="pager pager-load-more">
 		<li>
 			<a class='tm-status-update-pager-link' href="javascript:void(0);" onClick="tm_status_updates_fetch_more();">Load more</a>
-			<img class="tm-status-update-pager-loading-image" style="display:none; margin-left: 16px; " src='/sites/all/themes/tm/images/load-more-ajax-loader.gif'>
+			<img class="tm-status-update-pager-loading-image" style="display:none; margin-left: 16px; " src='/sites/all/themes/tm/images/load-more-ajax-loader-2.gif'>
 		</li>
 	</ul>
 </div>

@@ -23,7 +23,7 @@
 </div>
 
 <div class="search spinner" style="display: none;">
-	<p><img src='/sites/all/themes/tm/images/load-more-ajax-loader.gif'></p>
+	<p><img src='/sites/all/themes/tm/images/load-more-ajax-loader-2.gif'></p>
 </div>
 
 <div class="search tips">
@@ -40,7 +40,7 @@
 
 <div class="search info">
 	<p id="search-results-text" style="display:none;">Found 5 results</p>
-	<p id="search-results-loading-more" style="display:none;"><img align="left" style="margin-top: 6px; padding-right: 8px;" src='/sites/all/themes/tm/images/load-more-ajax-loader.gif'> Updating results...
+	<p id="search-results-loading-more" style="display:none;"><img align="left" style="margin-top: 6px; padding-right: 8px;" src='/sites/all/themes/tm/images/load-more-ajax-loader-2.gif'> Updating results...
 	</p>
 </div>
 
@@ -113,7 +113,7 @@
 		<li class="pager-next first last">
 			<a href="javascript:void(0);" id="search-load-more">Show more</a>
 			<div style="min-height: 20px; margin-top: 4px;">A
-				<img class="search load-more-spinner" style="display: none;"src='/sites/all/themes/tm/images/load-more-ajax-loader.gif'>
+				<img class="search load-more-spinner" style="display: none;"src='/sites/all/themes/tm/images/load-more-ajax-loader-2.gif'>
 			</span>
 		</li>
 	</ul>

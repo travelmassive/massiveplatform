@@ -134,7 +134,7 @@ function tm_nps_display_index() {
 	$html = "<center>
 	<div id='tm_nps_index_container' style='padding-top: 3rem;'>
 	<span id='tm_nps_index_message'>Let us know what you think &mdash; <a href='/feedback'>" . strtolower($conf["tm_users_feedback_label"]) . "</a>.</span>
-	<span id='tm_nps_index_submitting' style='display: none;'><img src='/sites/all/themes/tm/images/load-more-ajax-loader.gif'></span>
+	<span id='tm_nps_index_submitting' style='display: none;'><img src='/sites/all/themes/tm/images/load-more-ajax-loader-2.gif'></span>
 	</div>";
 
 	// create form

@@ -53,7 +53,7 @@ var tm_update_post_as_images = __POST_AS_IMAGES__;
 
 <div id="tm-status-update-link-preview-container">
 	<div id="tm-status-update-feedback-container">
-		<img id="tm-status-update-feedback-loading-image" style="display:none;" style="width: 16px; height: 11px;" src='/sites/all/themes/tm/images/load-more-ajax-loader.gif'>
+		<img id="tm-status-update-feedback-loading-image" style="display:none;" style="width: 24px; height: 16px;" src='/sites/all/themes/tm/images/load-more-ajax-loader-2.gif'>
 		<span id="tm-status-update-feedback-text"></span>
 	</div>
 	<div id="tm-status-update-link-preview-html"></div>

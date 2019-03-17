@@ -1,3 +1,34 @@
+Date 7.x-2.11-beta2, 2018-10-26
+-------------------------------
+#3009740 by evgeny.chernyavskiy, DamienMcKenna, steinmb: PHP 7.3 compatibility,
+  swtich-continue.
+#1267434 by Ronino, DamienMcKenna, kingandy: Default value for #date_items
+  should be an array in date_field_widget_form().
+#2706965 by DamienMcKenna, arulraj, joelstein: Getting browser autocomplete for
+  date pop fields.
+Reverted #2123039.
+#3010076 by DamienMcKenna, steinmb: Improve coding standards in Date module.
+#3012729 by joseph.olstad, lazzyvn: Bad variable $elent.
+#2843367 by artem0793, Liam Morland, azovsky: String Offset errors on edit page
+  using PHP 7.1.0.
+#2447277 by SebCorbin, steinmb: Performance: replace sylesheets[all][] with
+  attached.
+#2990189 by solotandem, jacob.embree, theaxe, sonnykt: Illegal string offset
+  'value' in date_combo_element_process.
+#2792385 by binoli.addweb, brunodbo, pingwin4eg, joelpittet, DamienMcKenna:
+  Include project namespace in dependency declaration.
+#1138210 by djdevin, kyoder, coltrane, cafuego, JvE: date_sql_handler
+  STR_TO_DATE math incorrect.
+#1415210 by jgullstr, nmudgal, ohthehugemanatee, djdevin, asirjacques,
+  christine1126, steinmb, cydharttha, Jelle_S: Date popup calender doesn't
+  popup when reach to text-field via tab.
+#2894759 by DamienMcKenna, Mansi.AddWeb, hiramanpatil,
+  Michael_Lessard_micles.biz, steinmb: (All Day) : the parantheses are
+  hardcoded.
+#2703401 by jacob.embree, le72, Chris2: Bad assumption about year range format
+  in date_devel_generate().
+
+
 Date 7.x-2.11-beta1, 2018-10-26
 -------------------------------
 #2937071 by DamienMcKenna: Tidy up the CHANGELOG.txt file.

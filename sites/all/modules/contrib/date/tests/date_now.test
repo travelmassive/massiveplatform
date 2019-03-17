@@ -11,7 +11,7 @@
 class DateNowUnitTestCase extends DrupalUnitTestCase {
 
   /**
-   * 
+   *
    */
   public static function getInfo() {
     return array(
@@ -37,7 +37,7 @@ class DateNowUnitTestCase extends DrupalUnitTestCase {
   }
 
   public function testDateNowStringTimezones() {
-    // Test with a string timezone
+    // Test with a string timezone.
     $la_time = date_now('America/Los_Angeles');
     $ny_time = date_now('America/New_York');
 
@@ -48,7 +48,7 @@ class DateNowUnitTestCase extends DrupalUnitTestCase {
   }
 
   public function testDateNowObjectTimezones() {
-    // Test with object timezones
+    // Test with object timezones.
     $la_tz = new DateTimeZone('America/Los_Angeles');
     $ny_tz = new DateTimeZone('America/New_York');
 

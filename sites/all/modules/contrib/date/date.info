@@ -1,9 +1,10 @@
 name = Date
 description = Makes date/time fields available.
-dependencies[] = date_api
+dependencies[] = date:date_api
 package = Date/Time
 core = 7.x
-php = 5.2
+
+; Integration with the migrate module.
 files[] = date.migrate.inc
 
 ; Dependencies for test coverage.
@@ -20,10 +21,9 @@ files[] = tests/date_timezone.test
 files[] = tests/date_views_pager.test
 files[] = tests/date_views_popup.test
 files[] = tests/date_form.test
-files[] = tests/date_entity_metadata_wrappers.test
 
-; Information added by Drupal.org packaging script on 2018-10-26
-version = "7.x-2.11-beta1"
+; Information added by Drupal.org packaging script on 2019-01-22
+version = "7.x-2.11-beta2"
 core = "7.x"
 project = "date"
-datestamp = "1540563829"
+datestamp = "1548172389"

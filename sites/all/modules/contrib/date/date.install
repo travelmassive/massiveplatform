@@ -42,7 +42,6 @@ function date_field_schema($field) {
         'sortable' => TRUE,
         'views' => TRUE,
       );
-      break;
   }
 
   // If a second date is needed for 'End date', make a copy of the first one.
@@ -83,7 +82,7 @@ function date_field_schema($field) {
         'type' => 'int',
         'not null' => FALSE,
         'sortable' => TRUE,
-        'views' => FALSE
+        'views' => FALSE,
       );
     }
   }
@@ -145,13 +144,14 @@ function date_update_7001() {
   $query->condition(db_or()->condition('fc.type', 'date')->condition('fc.type', 'datestamp')->condition('fc.type', 'datetime'));
   $results = $query->execute();
 
+  $allowed_types = array(
+    'date_popup_repeat',
+    'date_text_repeat',
+    'date_select_repeat',
+  );
   foreach ($results as $record) {
     $instance = unserialize($record['data']);
-    if (in_array($instance['widget']['type'], array(
-        'date_popup_repeat',
-        'date_text_repeat',
-        'date_select_repeat'
-      ))) {
+    if (in_array($instance['widget']['type'], $allowed_types)) {
       $instance['widget']['type'] = str_replace('_repeat', '', $instance['widget']['type']);
       db_update('field_config_instance')
         ->fields(array(

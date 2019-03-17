@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * @file
+ * Installation tasks for "Simple hierarchical select".
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function shs_requirements($phase) {
+  $requirements = array();
+  $t = get_t();
+
+  if ($phase !== 'runtime' || !module_exists('chosen')) {
+    return $requirements;
+  }
+  if (($info = drupal_get_library('chosen', 'chosen')) === FALSE) {
+    return $requirements;
+  }
+  // Chosen version should be at least 1.0.
+  if (version_compare($info['version'], '1.1.0') < 0) {
+    $requirements['shs'] = array(
+      'title' => $t('Simple hierarchical select: chosen integration'),
+      'description' => $t('If you would like to use chosen with Simple hierarchical select you need to install at least version 1.1.0 of !chosen_library.', array('!chosen_library' => l($t('Chosen'), 'http://harvesthq.github.io/chosen/'))),
+      'severity' => REQUIREMENT_WARNING,
+      'value' => $t('Chosen library too old (installed version is !version)', array('!version' => $info['version'])),
+    );
+  }
+
+  return $requirements;
+}

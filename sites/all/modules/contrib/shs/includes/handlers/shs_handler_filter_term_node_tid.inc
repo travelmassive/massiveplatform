@@ -12,7 +12,10 @@
  */
 class shs_handler_filter_term_node_tid extends views_handler_filter_term_node_tid {
 
-  function option_definition() {
+  /**
+   * {@inheritdoc}
+   */
+  public function option_definition() {
     $options = parent::option_definition();
 
     $options['type'] = array('default' => 'shs');
@@ -21,7 +24,10 @@ class shs_handler_filter_term_node_tid extends views_handler_filter_term_node_ti
     return $options;
   }
 
-  function extra_options_form(&$form, &$form_state) {
+  /**
+   * {@inheritdoc}
+   */
+  public function extra_options_form(&$form, &$form_state) {
     parent::extra_options_form($form, $form_state);
 
     $form['type']['#options'] += array(
@@ -44,7 +50,10 @@ class shs_handler_filter_term_node_tid extends views_handler_filter_term_node_ti
     }
   }
 
-  function value_form(&$form, &$form_state) {
+  /**
+   * {@inheritdoc}
+   */
+  public function value_form(&$form, &$form_state) {
     global $language;
 
     parent::value_form($form, $form_state);
@@ -65,7 +74,7 @@ class shs_handler_filter_term_node_tid extends views_handler_filter_term_node_ti
       $default_value = empty($this->value) ? 0 : $this->value;
 
       if (!empty($form_state['input'][$identifier])) {
-        $default_value = $form_state['input'][$identifier];
+        $default_value = check_plain($form_state['input'][$identifier]);
         if ($multiple && !is_array($default_value)) {
           $default_value = array($default_value);
         }
@@ -83,7 +92,7 @@ class shs_handler_filter_term_node_tid extends views_handler_filter_term_node_ti
             $default_value = $values;
           }
           $parents_multiple = array();
-          foreach ($default_value as $delta => $tid) {
+          foreach ($default_value as $tid) {
             $parents_multiple[] = $tid;
           }
           $parents[] = array('tid' => $parents_multiple);
@@ -159,7 +168,10 @@ class shs_handler_filter_term_node_tid extends views_handler_filter_term_node_ti
     }
   }
 
-  function admin_summary() {
+  /**
+   * {@inheritdoc}
+   */
+  public function admin_summary() {
     // Set up $this->value_options for the parent summary.
     $this->value_options = array();
 

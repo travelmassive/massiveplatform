@@ -88,4 +88,3 @@ This project has been sponsored by:
 * undpaul
   Drupal experts providing professional Drupal development services.
   Visit http://www.undpaul.de for more information.
-

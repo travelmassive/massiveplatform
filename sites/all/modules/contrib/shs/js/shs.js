@@ -223,6 +223,7 @@
       data: {
         callback: 'shs_json_term_add',
         arguments: {
+          token: settings.token,
           vid: term.vid,
           parent: term.parent,
           name: term.name,

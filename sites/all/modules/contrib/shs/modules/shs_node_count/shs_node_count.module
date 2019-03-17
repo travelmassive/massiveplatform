@@ -65,7 +65,7 @@ function shs_node_count_shs_term_get_children_alter(&$terms, &$alter_options) {
  *
  * @param object $term
  *   The term object.
- * @param boolean $count_children
+ * @param bool $count_children
  *   If set to TRUE, nodes in child terms are counted also.
  *
  * @return int
@@ -84,10 +84,10 @@ function shs_node_count_term_get_node_count($term, $count_children = FALSE) {
 
     // Count nodes associated to this term.
     $num_nodes["{$term->tid}:{$count_children}"] = db_select($index_table, 'ti')
-            ->fields('ti')
-            ->condition('tid', $term->tid)
-            ->execute()
-            ->rowCount();
+      ->fields('ti')
+      ->condition('tid', $term->tid)
+      ->execute()
+      ->rowCount();
 
     if ($count_children) {
       $tids = array();
@@ -97,10 +97,10 @@ function shs_node_count_term_get_node_count($term, $count_children = FALSE) {
       }
       if (count($tids)) {
         $num_nodes["{$term->tid}:{$count_children}"] += db_select($index_table, 'ti')
-                ->fields('ti')
-                ->condition('tid', $tids, 'IN')
-                ->execute()
-                ->rowCount();
+          ->fields('ti')
+          ->condition('tid', $tids, 'IN')
+          ->execute()
+          ->rowCount();
       }
     }
   }

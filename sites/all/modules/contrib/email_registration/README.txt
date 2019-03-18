@@ -18,7 +18,7 @@ Optional steps:
     the token !username with !mailto
 
 3. This automatically generated username is still displayed name for posts,
-    comments, etc. You can allow your useres to change their username by
+    comments, etc. You can allow your users to change their username by
     going to: (Administer -> User Management -> Access Control) and granting
     the permission to "change own username"
     This privilege allows a user to change their username in "My Account".

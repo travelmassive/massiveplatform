@@ -221,10 +221,3 @@ function email_registration_user_login_validate($form, &$form_state) {
     $form_state['values']['name'] = NULL;
   }
 }
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function email_registration_form_user_profile_form_alter(&$form, &$form_state) {
-  $form['account']['name']['#title'] = t('Display name');
-}

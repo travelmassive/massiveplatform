@@ -213,7 +213,22 @@ function tm_api_stats_get_data() {
     $num_profile_views_90_days = db_query($query)->fetch();
     $api_data["num_profile_views_90_days"] = $num_profile_views_90_days->amount;
   }
- 
+
+  // number of new members in past 30 days
+  $query = "SELECT COUNT(*) as amount FROM users WHERE created > UNIX_TIMESTAMP(NOW() - INTERVAL 31 DAY)";
+  $num_new_members_30_days = db_query($query)->fetch();
+  $api_data["num_new_members_30_days"] = $num_new_members_30_days->amount;
+
+  // number of new members in past 90 days
+  $query = "SELECT COUNT(*) as amount FROM users WHERE created > UNIX_TIMESTAMP(NOW() - INTERVAL 90 DAY)";
+  $num_new_members_90_days = db_query($query)->fetch();
+  $api_data["num_new_members_90_days"] = $num_new_members_90_days->amount;
+
+  // number of new members in past year
+  $query = "SELECT COUNT(*) as amount FROM users WHERE created > UNIX_TIMESTAMP(NOW() - INTERVAL 1 YEAR)";
+  $num_new_members_1_year = db_query($query)->fetch();
+  $api_data["num_new_members_1_year"] = $num_new_members_1_year->amount;
+
   // return api data in json format
   cache_set('tm-api-stats', $api_data, 'cache', time() + 900); // 15 mins
   return $api_data;

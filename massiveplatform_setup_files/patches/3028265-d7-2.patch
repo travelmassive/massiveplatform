@@ -1,0 +1,15 @@
+diff --git a/misc/typo3/drupal-security/PharExtensionInterceptor.php b/misc/typo3/drupal-security/PharExtensionInterceptor.php
+index 2e1a0cb..72ff4f4 100644
+--- a/misc/typo3/drupal-security/PharExtensionInterceptor.php
++++ b/misc/typo3/drupal-security/PharExtensionInterceptor.php
+@@ -32,6 +32,10 @@ class PharExtensionInterceptor implements Assertable {
+    *   Thrown when the file is not allowed to execute.
+    */
+   public function assert($path, $command) {
++    if (preg_match('/^phar:\/\/[a-zA-Z0-9_]+\.phar\/.+\.php$/', $path) === 1) {
++      // Lightweight way to whitelist phar aliases, if they contain ".phar" extension
++      return TRUE;
++    }
+     if ($this->baseFileContainsPharExtension($path)) {
+       return TRUE;
+     }

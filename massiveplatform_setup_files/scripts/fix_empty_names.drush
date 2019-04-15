@@ -1,0 +1,57 @@
+#!/usr/bin/env drush
+
+# Simple script to set first and last name fields from user.name
+
+# Confirm
+$confirm = false;
+$confirm_opt = drush_get_option('confirm');
+if ($confirm_opt == null) {
+	drush_print("Running simulation (not saving). Use --confirm to save account changes.");
+} else {
+	$confirm = true;
+}
+
+// fetch users that don't have a first name
+$results = db_query("select * from (select uid, name, entity_id from users left join field_data_field_user_first_name on uid = entity_id and entity_type = 'user') as t where entity_id is  null and uid > 0")->fetchAll();
+
+// process each user
+$count = 0;
+
+drush_print("\n\nProcessing " . sizeof($results) . " users...\n");
+foreach ($results as $result) {
+
+	$count++;
+
+	// get uid
+	$user_id = $result->uid;
+
+	// load user
+	$account = user_load($user_id);
+
+	$parts = explode(" ", $account->name);
+	$account->field_user_first_name[LANGUAGE_NONE][0]['value'] = $parts[0];
+	if (sizeof($parts) > 1) {
+	  $account->field_user_last_name[LANGUAGE_NONE][0]['value'] = implode(" ", array_slice($parts, 1));
+	} else {
+	  $account->field_user_last_name[LANGUAGE_NONE][0]['value'] = "Last Name";
+	}
+
+	// print names
+	drush_print("Updating uid: " . $user_id . " (user.name: '" . $account->name . "')");
+	drush_print("field_user_first_name = '" . $account->field_user_first_name[LANGUAGE_NONE][0]['value'] . "'");
+	drush_print("field_user_last_name = '" . $account->field_user_last_name[LANGUAGE_NONE][0]['value'] . "'");
+
+	if ($confirm) {
+		drush_print("Saving user...");
+		user_save($account);
+	}
+
+	drush_print("---\n");
+	
+	continue;
+
+}
+
+drush_print("Updated " . $count . " user names...");
+drush_print("Done.");
+

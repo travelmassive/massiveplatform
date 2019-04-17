@@ -53,6 +53,8 @@ function tm_users_download_facebook_csv(){
  */
 function tm_users_download_facebook_customers_generate($drush_progress = false) {
 
+	global $conf;
+	
 	$fh = fopen('php://memory', 'w');
 
 	// puts a header row across the top of the csv

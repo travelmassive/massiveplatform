@@ -104,8 +104,8 @@ order by ud.uid asc
 
 		// remove city if home chapter has site name
 		// ie: Massive Live
-		if (stripos($row["city"], $conf["tm_site_name"]) === true) {
-			$row["city"] = "";
+		if (stripos($row["ct"], $conf["tm_site_name"]) !== false) {
+			$row["ct"] = "";
 		}
 
 		// (value) number of events registered for

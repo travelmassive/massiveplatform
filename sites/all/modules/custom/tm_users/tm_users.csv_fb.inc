@@ -41,7 +41,7 @@ function tm_users_download_facebook_csv(){
 	$cache = cache_get('tm-users-facebook-csv', 'cache');
 	if (!empty($cache)) {
 		$uncompressed = gzuncompress($cache->data);
-		echo $uncompressed;
+		echo ltrim($uncompressed); // remove any leading spaces
 	} else {
 		echo "Please run drush tm-generate-facebook-csv to generate csv";
 	}
@@ -54,11 +54,11 @@ function tm_users_download_facebook_csv(){
 function tm_users_download_facebook_customers_generate($drush_progress = false) {
 
 	global $conf;
-	
+
 	$fh = fopen('php://memory', 'w');
 
 	// puts a header row across the top of the csv
-	$item = array('tm_user_id', 'email', 'fn', 'ln', 'city', 'country', 'uid', 'value');
+	$item = array('tm_user_id', 'email', 'fn', 'ln', 'ct', 'country', 'uid', 'value');
 	fputcsv($fh, $item);
 
 	// fetch customer data

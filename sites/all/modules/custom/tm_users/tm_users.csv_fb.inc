@@ -118,8 +118,6 @@ order by ud.uid asc
 	// put it all in a variable
 	$csv = stream_get_contents($fh);
 
-	print_r($csv);
-
 	// close file handle
 	fclose($fh);
 

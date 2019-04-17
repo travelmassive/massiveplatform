@@ -606,7 +606,8 @@ function tm_base_init() {
     "/admin/global_insights",
     "/admin/export_chapter_insights",
     "/admin/export_global_newsletter",
-    "/admin/export_chapter_leaders");
+    "/admin/export_chapter_leaders",
+    "/admin/export_facebook_customers");
 
   // set any other admin pages you want to make available to moderators
   // in $conf["tm_admin_moderator_whitelist"]

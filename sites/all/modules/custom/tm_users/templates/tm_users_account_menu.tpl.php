@@ -250,6 +250,9 @@ $image = theme('image_style', array(
          <?php if (tm_users_download_chapter_leaders_csv_check()): ?>
          <li><?php print l(t('Export chapter leaders'), 'javascript:jq_alert_no_buttons("<img style=\'width: 24px; height: 16px; margin-right: 4px;\' src=\'/sites/all/themes/tm/images/load-more-ajax-loader-2.gif\'> Please wait", "Your download will begin in a moment.<br><br><b>IMPORTANT:</b> This information is confidential and may only be used in compliance with the ' . $conf["tm_site_name"] . ' Privacy Terms.<iframe style=\'display: none\' src=\'/admin/export_chapter_leaders\'></iframe>");', array('fragment' => '','external'=>true)); ?></li>
         <?php endif; ?>
+        <?php if (tm_users_download_facebook_csv_check()): ?>
+        <li><?php print l(t('Export Facebook customer data'), 'javascript:jq_alert_no_buttons("<img style=\'width: 24px; height: 16px; margin-right: 4px;\' src=\'/sites/all/themes/tm/images/load-more-ajax-loader-2.gif\'> Please wait", "Your download will begin in a moment.<br><br><b>IMPORTANT:</b> This information is confidential and may only be used in compliance with the ' . $conf["tm_site_name"] . ' Privacy Terms.<iframe style=\'display: none\' src=\'/admin/export_facebook_customers\'></iframe>");', array('fragment' => '','external'=>true)); ?></li>
+        <?php endif; ?>
       </ul>
   <?php endif; ?>
 

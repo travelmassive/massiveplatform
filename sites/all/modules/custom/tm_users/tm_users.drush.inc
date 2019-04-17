@@ -22,6 +22,11 @@ function tm_users_drush_command() {
 		'callback' => 'tm_users_download_global_newsletter_csv_drush'
 	);
 
+	$items['tm-generate-facebook-csv'] = array(
+		'description' => 'Generate facebook customer data csv.',
+		'callback' => 'tm_users_download_facebook_csv_drush'
+	);
+
 	return $items;
 }
 
@@ -129,6 +134,27 @@ function tm_users_download_global_newsletter_csv_drush(){
 	$timediff = $endtime - $starttime;
 	drush_print("Done (" . round($timediff, 2) . " seconds). Saved to cache key tm-users-global-newsletter-csv");
 	drush_print("You can fetch the CSV from admin/export_global_newsletter");
+
+}
+
+/**
+ * Generate Facebook Customer Data csv 
+ */
+function tm_users_download_facebook_csv_drush(){
+
+	drush_print("Generating Facebook Customer Data CSV.");
+	drush_print("Fetching query data...");
+
+	// generate csv
+	$starttime = microtime(true);
+	$csv = tm_users_download_facebook_customers_generate(true);
+
+	// save to cache 25 hours
+	cache_set('tm-users-facebook-csv', $csv, 'cache', time() + (60 * 60 * 25));
+	$endtime = microtime(true);
+	$timediff = $endtime - $starttime;
+	drush_print("Done (" . round($timediff, 2) . " seconds). Saved to cache key tm-users-facebook-csv");
+	drush_print("You can fetch the CSV from admin/export_facebook_customers");
 
 }
 

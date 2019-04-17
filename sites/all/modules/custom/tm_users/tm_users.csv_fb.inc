@@ -41,7 +41,7 @@ function tm_users_download_facebook_csv(){
 	$cache = cache_get('tm-users-facebook-csv', 'cache');
 	if (!empty($cache)) {
 		$uncompressed = gzuncompress($cache->data);
-		echo ltrim($uncompressed); // remove any leading spaces
+		echo $uncompressed;
 	} else {
 		echo "Please run drush tm-generate-facebook-csv to generate csv";
 	}

@@ -1,4 +1,3 @@
-
 <?php
 
 // tm_events.moderation.inc- event moderation methods

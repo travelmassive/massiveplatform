@@ -59,7 +59,10 @@ function tm_users_download_facebook_customers_generate($drush_progress = false) 
 	$item = array('tm_user_id', 'email', 'fn', 'ln', 'city', 'country', 'uid', 'value');
 	fputcsv($fh, $item);
 
-	// fetch newsletter subscribers
+	// fetch customer data
+	// note: don't include anyone who has opted out of analytics
+	// note: value is determined by number of events attended
+	// note: uid is based on Facebook login
 	$customer_data_sql = "select uid as drupal_uid, mail as email, field_user_first_name_value as fn, field_user_last_name_value as ln, ifnull(SUBSTRING_INDEX(`location_field`, ',', 1), home_chapter) as ct, ifnull(country, home_chapter_country) as country, fbuid as uid from (
 select field_user_first_name_value, field_user_last_name_value, mail, field_user_country_iso2 as country, field_location_city_value as location_field, chapter.title as home_chapter, field_data_field_country.field_country_iso2 as home_chapter_country, ud.uid, field_data_field_facebook_signin_id.field_facebook_signin_id_value as fbuid from (select field_user_first_name_value, field_user_last_name_value, mail, uid, created from users u, field_data_field_user_first_name fn, field_data_field_user_last_name ln where u.uid = fn.entity_id and u.uid = ln.entity_id) as ud 
 left join tm_notifications n on ud.uid = n.uid and n.bundle = 'global_newsletter'

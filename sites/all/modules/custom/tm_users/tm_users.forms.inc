@@ -149,10 +149,7 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
   if ($form_id == 'organization_node_form') {
     
     // Hide row weights unless administrator or moderator
-    global $user;
-    $form['#attached']['js'][] = array(
-      'data' => "(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){ $('.tabledrag-toggle-weight-wrapper').hide(); });})(jQuery, Drupal, this, this.document);",
-      'type' => 'inline',
+    drupal_add_js("(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){ $('.tabledrag-toggle-weight-wrapper').hide(); });})(jQuery, Drupal, this, this.document);", array('type' => 'inline', 'scope' => 'footer'));
     );
 
     // Hide managed by if its first edit
@@ -161,11 +158,7 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
     }
 
     // Add placeholder text for follower message
-    $form['#attached']['js'][] = array(
-      'data' => "(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){ $('#edit-field-follower-message-und-0-value').attr('placeholder', 'Thanks for following us...'); });})(jQuery, Drupal, this, this.document);",
-      'type' => 'inline',
-    );
-
+    drupal_add_js("(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){ $('#edit-field-follower-message-und-0-value').attr('placeholder', 'Thanks for following us...'); });})(jQuery, Drupal, this, this.document);", array('type' => 'inline', 'scope' => 'footer'));
   }
 
   // adjustments to the event add form
@@ -173,10 +166,7 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
   if ($form_id == 'event_node_form') {
     
     // Hide row weights unless administrator or moderator
-    $form['#attached']['js'][] = array(
-      'data' => "(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){ $('.tabledrag-toggle-weight-wrapper').hide(); });})(jQuery, Drupal, this, this.document);",
-      'type' => 'inline',
-    );
+    drupal_add_js("(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){ $('.tabledrag-toggle-weight-wrapper').hide(); });})(jQuery, Drupal, this, this.document);", array('type' => 'inline', 'scope' => 'footer'));
   }
 
   // Modify chapter edit form (can't use hook in tm_chapters)
@@ -190,10 +180,7 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
     }
 
     // Hide row weights unless administrator or moderator
-    $form['#attached']['js'][] = array(
-      'data' => "(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){ $('.tabledrag-toggle-weight-wrapper').hide(); });})(jQuery, Drupal, this, this.document);",
-      'type' => 'inline',
-    );
+    drupal_add_js("(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){ $('.tabledrag-toggle-weight-wrapper').hide(); });})(jQuery, Drupal, this, this.document);", array('type' => 'inline', 'scope' => 'footer'));
   }
 
 }

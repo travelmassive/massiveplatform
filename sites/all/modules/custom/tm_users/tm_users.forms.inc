@@ -150,7 +150,6 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
     
     // Hide row weights unless administrator or moderator
     drupal_add_js("(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){ $('.tabledrag-toggle-weight-wrapper').hide(); });})(jQuery, Drupal, this, this.document);", array('type' => 'inline', 'scope' => 'footer'));
-    );
 
     // Hide managed by if its first edit
     if (!(isset($form['nid']['#value']))) {

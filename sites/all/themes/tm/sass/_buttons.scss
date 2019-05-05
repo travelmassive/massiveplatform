@@ -479,6 +479,7 @@ button {
 
 /* Upvote */
 .bttn.follow.upvote:before { @extend .icon-triangle-up; }
+.follow.on.upvote.flag-processed:before { @extend .icon-triangle-up; }
 .btn_upvote_count { 
   color: #add8e6;
 }

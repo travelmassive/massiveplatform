@@ -50,6 +50,8 @@ function _tm_flags_organization_upvote(&$variables) {
   $num_upvotes = tm_organizations_get_num_followers($entity_id);
   if ($num_upvotes == 0) {
     $num_upvotes = "";
+  } else {
+    $num_upvotes = number_format($num_upvotes);
   }
 
   if (($flag->name == "follow_organizations") && ($action == "flag")) {

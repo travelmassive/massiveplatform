@@ -614,8 +614,9 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
         if ($display_upvotes) {
           $css_classes .= " upvote"; // add upvote css class
           $num_upvotes = tm_organizations_get_num_followers($entity->nid); // get number of upvotes
+          $action_text = "Upvote";
           if ($num_upvotes > 0) {
-            $action_text = 'Upvote <span class="btn_upvote_count">' . $num_upvotes . '</span>';
+            $action_text = 'Upvote <span class="btn_upvote_count">' . number_format($num_upvotes) . '</span>';
           }
         }
         return l($action_text, 'javascript:jq_login_signup_box();', array(

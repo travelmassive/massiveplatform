@@ -231,3 +231,19 @@ function _tm_organizations_get_avatar_uri($organization) {
   return $image_uri;
 }
 
+/**
+ * Implement hook_preprocess_views_view
+ */
+function tm_organizations_preprocess_views_view(&$variables) {
+
+  global $conf;
+
+  $display_upvotes = $conf["tm_organizations_upvote"];
+  $view = $variables['view'];
+
+  if ($view->name == 'member_listings' && $view->current_display == 'members_following_org_page') {
+    $nid = arg(1);
+    $node = node_load($nid);
+    $view->set_title('Members who upvoted ' . htmlentities(strip_tags($node->title)));
+  }
+}

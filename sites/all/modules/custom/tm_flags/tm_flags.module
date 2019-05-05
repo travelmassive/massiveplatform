@@ -22,8 +22,46 @@ function tm_flags_preprocess_flag(&$variables) {
     $flag->unflag_short = "Following";
   }
 
+  // (optional) upvote organization
+  if ($flag->name == "follow_organizations") {
+    _tm_flags_organization_upvote($variables);
+  }
+
   // check for follow and join limits
   return _tm_flags_flag_limits($variables);
+}
+
+function _tm_flags_organization_upvote(&$variables) {
+ 
+  global $conf;
+  $display_upvotes = $conf["tm_organizations_upvote"];
+  if (!$display_upvotes) {
+    return;
+  }
+
+  // Some typing shotcuts:
+  $flag = &$variables['flag'];
+  $action = $variables['action'];
+  $entity_id = $variables['entity_id'];
+  $flag_css_name = str_replace('_', '-', $flag->name);
+  $uid = $variables['user']->uid;
+
+  // Get number of upvotes
+  $num_upvotes = tm_organizations_get_num_followers($entity_id);
+  if ($num_upvotes == 0) {
+    $num_upvotes = "";
+  }
+
+  if (($flag->name == "follow_organizations") && ($action == "flag")) {
+    $flag->flag_short = 'Upvote <span class="btn_upvote_count">' . $num_upvotes . '</span>';
+  }
+
+  if (($flag->name == "follow_organizations") && ($action == "unflag")) {
+    $flag->unflag_short = 'Upvoted <span class="btn_upvote_count">' . $num_upvotes . '</span>';
+  }
+
+  $variables['flag_upvote_class'] = 'upvote';
+
 }
 
 function _tm_flags_unflag_chapter(&$variables) {

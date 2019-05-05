@@ -723,7 +723,7 @@
   }
 
   // allow member to send a short message on follow to organization owners
-  jq_follow_message_organization = function(nid) {
+  jq_follow_message_organization = function(nid, action_type, company_name) {
     
     countChar = function(val) {
       var len = val.value.length;
@@ -739,11 +739,29 @@
       return hellos[Math.floor(Math.random()*hellos.length)];
     }
 
+    // get action
+    if (typeof action_type === 'undefined') {
+      var action_type = "follow";
+    }
+
+    
+    // default: follow
+    var question = "Why do you want to connect?";
+    var buttons_array = { Back: -1, Follow: true };
+    var placeholder_text = randomHello() + " Send a short message. Links will be removed.";
+
+    // upvote
+    if (action_type == "upvote") {
+      var question = "<strong>Confirm upvote &mdash; " + company_name + "</strong>";
+      var buttons_array = { Back: -1, "Upvote": true };
+      var placeholder_text = "If you like, include a message to " + company_name + ".\nAny links will be removed.";
+    }
+
     $.prompt({
       state0: {
         //title: 'Send a follow message',
-        html: "Why do you want to connect? <br><textarea id='form_follow_message' onkeyup='countChar(this);' value='' placeholder='" + randomHello() + " Send a short message. Links will be removed.' rows='2' cols='50'></textarea><div style='float: right;'><span id='charNum' style='font-size: 10pt; color: #888;'>150 chars</span></div><br>",
-        buttons: { Back: -1, Follow: true },
+        html: question + "<br><textarea id='form_follow_message' onkeyup='countChar(this);' value='' placeholder='" + placeholder_text + "' rows='2' cols='50'></textarea><div style='float: right;'><span id='charNum' style='font-size: 10pt; color: #888;'>150 chars</span></div><br>",
+        buttons: buttons_array,
         focus: 1,
         submit:function(e,v,m,f){
           if (v == true) {

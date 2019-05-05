@@ -528,7 +528,13 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 				$image_url = image_style_url("avatar", $organization->field_avatar[LANGUAGE_NONE][0]['uri']);
 			}
 
-			$feed_title = l($flagging_user_name, $flagging_user_url) . " followed " . l($organization->title, $flagged_node_url);
+			// upvote or follow
+			$display_upvotes = $conf["tm_organizations_upvote"];
+			$organization_action_text = "followed";
+			if ($display_upvotes) {
+				$organization_action_text = "upvoted";
+			}
+			$feed_title = l($flagging_user_name, $flagging_user_url) . " " . $organization_action_text . " " . l($organization->title, $flagged_node_url);
 			$html = tm_status_updates_render_flag_feed($flagged_node_url, $image_url, $feed_title, "", $details, "status-updates-image-avatar");
 			break;
 

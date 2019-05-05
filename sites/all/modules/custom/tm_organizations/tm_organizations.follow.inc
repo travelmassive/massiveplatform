@@ -6,9 +6,18 @@
  * Display follow message for organziations
  */
 function tm_fields_organization_follow_message($field) {
-  
+
+  global $conf;
+
   if (!user_is_logged_in()) {
     return;
+  }
+
+  // following, or upvoted
+  $display_upvotes = $conf["tm_organizations_upvote"];
+  $following_text = "are following";
+  if ($display_upvotes) {
+    $following_text = "upvoted";
   }
 
   if ($field['entity']->type == "organization") {
@@ -22,10 +31,10 @@ function tm_fields_organization_follow_message($field) {
       $message = $company->field_follower_message[LANGUAGE_NONE][0]['value'];
       $message = strip_tags(trim($message));
       if ($message != "") {
-        return "You are following " . t($company->title) . "<p class='ds-organization-follow-message-insert'>" . $message . "</p>";
+        return "You " . $following_text . " " . t(strip_tags($company->title)) . "<p class='ds-organization-follow-message-insert'>" . $message . "</p>";
       }
     } else {
-      return "You are following " . t($company->title);
+      return "You " . $following_text . " " . t(strip_tags($company->title));
     }
   }
 
@@ -151,13 +160,22 @@ function _tm_organizations_preprocess_follow_flag(&$variables) {
       return;
     }
 
+    $display_upvotes = $conf["tm_organizations_upvote"];
+    $action_type = "follow";
+    $company_name = "";
+    if ($display_upvotes) {
+      $action_type = "upvote";
+      $company = node_load($entity_id);
+      $company_name = strip_tags($company->title);
+    }
+
     // Enhance the follow button
     $variables['flag_button_class'] = 'flag-limit follow bttn bttn-secondary bttn-m';
     drupal_add_js('
     jQuery(document).ready(function($) {
       $( ".flag-follow-organizations a.flag" ).unbind("click");
       $( ".flag-follow-organizations a.flag" ).bind("click.confirm", function(event) {
-        jq_follow_message_organization(' . $entity_id . ');
+        jq_follow_message_organization(' . $entity_id . ', "' . $action_type . '", "' . htmlentities($company_name) . '");
         return false;
       });
     });
@@ -252,7 +270,12 @@ function tm_organizations_follow_message($following_organization) {
 
   // STEP 5. RETURN USER TO COMPANY PROFILE
   // Note: tm_notifications_new_follower_flag_flag will occur and send recipient a message
-  drupal_set_message("You are now following " . t($following_organization->title));
+  $message = "You are now following " . t($following_organization->title);
+  $display_upvotes = $conf["tm_organizations_upvote"];
+  if ($display_upvotes) {
+    $message = "You upvoted " . t($following_organization->title);
+  }
+  drupal_set_message($message);
   drupal_goto(drupal_get_path_alias('node/' . $following_organization->nid));
 
 }

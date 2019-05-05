@@ -157,7 +157,12 @@ function tm_users_form_alter(&$form, $form_state, $form_id) {
     }
 
     // Add placeholder text for follower message
-    drupal_add_js("(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){ $('#edit-field-follower-message-und-0-value').attr('placeholder', 'Thanks for following us...'); });})(jQuery, Drupal, this, this.document);", array('type' => 'inline', 'scope' => 'footer'));
+    $display_upvotes = $conf["tm_organizations_upvote"];
+    $follow_action = "following";
+    if ($display_upvotes) {
+      $follow_action = "upvoting";
+    }
+    drupal_add_js("(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){ $('#edit-field-follower-message-und-0-value').attr('placeholder', 'Thanks for " . $follow_action . " us...'); });})(jQuery, Drupal, this, this.document);", array('type' => 'inline', 'scope' => 'footer'));
   }
 
   // adjustments to the event add form

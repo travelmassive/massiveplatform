@@ -391,6 +391,13 @@ function tm_organizations_form_alter(&$form, $form_state, $form_id) {
       unset($form['field_company_subscription_date']);
     }
 
+    // upvote
+    $display_upvotes = $conf["tm_organizations_upvote"];
+    if ($display_upvotes) {
+      $form['field_follower_message'][LANGUAGE_NONE][0]['value']['#title'] = "Message for Upvoters (Optional)";
+      $form['field_follower_message'][LANGUAGE_NONE][0]['value']['#description'] = "Give something back to members who upvote your company.<br>Displays a short message to upvoters on your company page.";
+    }
+
   }
   
 }
@@ -451,4 +458,30 @@ function tm_organizations_get_nodes_created($uid) {
   return $nids;
 }
 
+/**
+ * Implement hook_field_group_pre_render_alter
+ * Set field group titles for organization followers if upvoting enabled
+ */
+function tm_organizations_field_group_pre_render_alter(&$element, $group, &$form) {
 
+  global $conf;
+
+  // Check if upvoting turned on
+  $display_upvotes = $conf["tm_organizations_upvote"];
+  if (!$display_upvotes) {
+    return;
+  }
+
+  // Member profile page
+  if ($group->group_name == 'group_following_organizations') {   
+    $element['#prefix'] = str_replace("Following Organizations", "Upvoted", $element['#prefix']);
+  }
+
+  // Company page (check we are viewing a node)
+  if ($group->group_name == 'group_community_wrapper') {
+    if (strpos(current_path(), "node/") === 0) {
+      $element['#prefix'] = str_replace("Followers", "Upvoters", $element['#prefix']);
+    }
+  }
+
+}

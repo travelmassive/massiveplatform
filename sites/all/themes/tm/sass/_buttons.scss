@@ -476,3 +476,9 @@ button {
 .image-edit-button { color: #4d5767; background-color: #fff; border: none; border-radius: 3px; font-size: 14px; padding-left: 4px; padding-right: 4px; opacity: 0.9 !important; border-bottom: 2px #888 solid;}
 .image-edit-button:hover { opacity: 1.0 !important; }
 .image-edit-button:before { @extend .icon-pencil;}
+
+/* Upvote */
+.bttn.follow.upvote:before { @extend .icon-triangle-up; }
+.btn_upvote_count { 
+  color: #add8e6;
+}

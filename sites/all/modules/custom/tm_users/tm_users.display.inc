@@ -415,7 +415,7 @@ function tm_users_menu_companies($uid){
     }
     $company_url = drupal_get_path_alias("node/" . $company->nid);
     $markup .= "<li style='margin-bottom: 4px;'><div style='width: 36px; max-height: 24px; overflow: hidden; float: left; margin-left: 1rem; margin-right: 0.5rem; margin-top: 2px;'>
-    <img align='left' class='tm_menu_organization_image' src='" . image_style_url($style, $img_url) . "'></div><a href='/" . $company_url . "'>" . $company->title . $subscription_html . '</a></li>'; 
+    <img align='left' class='tm_menu_organization_image' src='" . image_style_url($style, $img_url) . "'></div><a href='/" . $company_url . "'>" . strip_tags($company->title) . $subscription_html . '</a></li>'; 
   }
   return $markup;
 }

@@ -40,6 +40,12 @@
  */
 ?>
 
+<?php
+ // allow $flag_upvote_class
+ if (!isset($flag_upvote_class)) {
+  $flag_upvote_class = "";
+ }
+?>
 
 <?php if (isset($event_flag) && $event_flag == "show_closed") : ?>
 
@@ -64,7 +70,7 @@
 
 <li class="<?php print $flag_wrapper_classes; ?>">
 	<?php if ($link_href): ?>
-    <a href="<?php print $link_href; ?>" title="<?php print $link_title; ?>" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?>" rel="nofollow"><span><?php print $link_text; ?></span></a>
+    <a href="<?php print $link_href; ?>" title="<?php print $link_title; ?>" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?> <?php print $flag_upvote_class ?>" rel="nofollow"><span><?php print $link_text; ?></span></a>
   <?php else: ?>
     <div class ="<?php print $flag_button_class; ?>"><span class="<?php print $flag_classes ?>"><?php print $link_text; ?></span></div>
   <?php endif; ?>

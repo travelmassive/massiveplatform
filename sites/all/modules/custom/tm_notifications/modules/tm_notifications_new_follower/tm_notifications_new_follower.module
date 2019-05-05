@@ -164,6 +164,13 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
     $followed_organization = node_load($entity_id);
     $who_followed = user_load($account->uid);
 
+    // action
+    $display_upvotes = $conf["tm_organizations_upvote"];
+    $action_text = "followed";
+    if ($display_upvotes) {
+      $action_text = "upvoted";
+    }
+
     // Check and set follow_organizations_log
     // If previously followed by this organization, don't send another notification
     $flag_log = flag_get_flag('follow_organizations_log', NULL);
@@ -195,7 +202,7 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
       $profile_uid = $who_followed->uid;
 
       // notify the user that they have a new follower
-      tm_notifications_notify('new_organization_follower', $organizational_owner, array('user' => $organizational_owner, 'node' => $followed_organization, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__FOLLOWER_MESSAGE__' => $follower_message, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name));
+      tm_notifications_notify('new_organization_follower', $organizational_owner, array('user' => $organizational_owner, 'node' => $followed_organization, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__FOLLOWER_MESSAGE__' => $follower_message, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__ACTION__' => $action_text));
     }
 
   }

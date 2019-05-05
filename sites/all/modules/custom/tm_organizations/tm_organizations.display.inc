@@ -51,16 +51,23 @@ function tm_organizations_ds_fields_info($entity_type) {
  */
 function _tm_ds_organization_stats($field, $title = NULL) {
 
+  global $conf;
+  $display_upvotes = $conf["tm_organizations_upvote"];
+
   // check if user is flagged
   $node = $field['entity'];
   $nid = $node->nid;
 
   $followers_text = "Follower";
+  if ($display_upvotes) { $followers_text = "Upvote"; }
   $num_followers = tm_organizations_get_num_followers($nid);
 
   $html = "";
   if ($num_followers > 0) {
-    if ($num_followers > 1) { $followers_text = "Followers"; }
+    if ($num_followers > 1) { 
+      $followers_text = "Followers";
+      if ($display_upvotes) { $followers_text = "Upvotes"; }
+    }
     $html = "<div class='tm_stats_container'>";
     $html .= "<a href='/node/" . $nid . "/followers'><span class='tm_stats tm_stats_followers'>" . $num_followers . " <span class='tm_stats_followers_divider'>|</span> " . $followers_text . " </span></a>";
     $html .= "</div>";

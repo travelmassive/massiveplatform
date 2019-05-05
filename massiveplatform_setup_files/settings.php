@@ -1116,3 +1116,7 @@ $conf['tm_leaderboard_chapter_leaders_tip'] = "Only chapter leaders can see this
 $conf["tm_leaderboard_label_chapter_needed"] = "<a target='_blank' href='/blog/start-a-chapter-guide'>Needs a Leader</a>";
 $conf["tm_leaderboard_label_no_events"] = "<a target='_blank' href='/blog/start-a-chapter-guide/#responsibilities'>Need Help?</a>";
 $conf["tm_leaderboard_label_more_events"] = "<a target='_blank' href='/blog/start-a-chapter-guide/#responsibilities'>Plan an Event</a>";
+
+/** UPVOTE ORGANIZATIONS **/
+$conf["tm_organizations_upvote"] = false; // allow upvoting of organizations
+

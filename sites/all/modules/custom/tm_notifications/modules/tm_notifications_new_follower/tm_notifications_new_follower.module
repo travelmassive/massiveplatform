@@ -202,7 +202,7 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
       $profile_uid = $who_followed->uid;
 
       // notify the user that they have a new follower
-      tm_notifications_notify('new_organization_follower', $organizational_owner, array('user' => $organizational_owner, 'node' => $followed_organization, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__FOLLOWER_MESSAGE__' => $follower_message, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__ACTION__' => $action_text));
+      tm_notifications_notify('new_organization_follower', $organizational_owner, array('user' => $organizational_owner, 'node' => $followed_organization, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__FOLLOWER_MESSAGE__' => $follower_message, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__ACTION__' => $action_text, '__PROFILE_NID__' => $followed_organization->nid));
     }
 
   }

@@ -245,16 +245,22 @@ function tm_organizations_follow_message($following_organization) {
   $send_message_safe = str_replace("__NL__", "<br>", $send_message_safe);
   $send_message_safe = str_replace("\n", "<br>", $send_message_safe); // add line breaks
 
+  // follow or upvote
+  $display_upvotes = $conf["tm_organizations_upvote"];
+  $action_text = "follow";
+  if ($display_upvotes) {
+    $action_text = "upvote";
+  }
   // If message too short
   if ((strlen($send_message_safe) < 10) && ($send_message != "")) {
-    drupal_set_message("Oops, follow message is too short", 'warning');
+    drupal_set_message("Oops, " . $action_text . " message is too short", 'warning');
     drupal_goto(drupal_get_path_alias('node/' . $following_organization->nid));
     return;
   }
 
   // If message too long
   if (strlen($send_message_safe) > 200) {
-    drupal_set_message("Oops, follow message is too long", 'warning');
+    drupal_set_message("Oops, " . $action_text . " message is too long", 'warning');
     drupal_goto(drupal_get_path_alias('node/' . $following_organization->nid));
     return;
   }
@@ -271,7 +277,6 @@ function tm_organizations_follow_message($following_organization) {
   // STEP 5. RETURN USER TO COMPANY PROFILE
   // Note: tm_notifications_new_follower_flag_flag will occur and send recipient a message
   $message = "You are now following " . t($following_organization->title);
-  $display_upvotes = $conf["tm_organizations_upvote"];
   if ($display_upvotes) {
     $message = "You upvoted " . t($following_organization->title);
   }

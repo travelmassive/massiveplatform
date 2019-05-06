@@ -48,7 +48,7 @@ __MESSAGING_INSTRUCTIONS__
       'subject' => '__USER_FIRST_NAME__ __USER_LAST_NAME__ just __ACTION__ [node:title] on __SITE_NAME__',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>__USER_FIRST_NAME__ __USER_LAST_NAME__ just __ACTION__ your company profile [node:title] on __SITE_NAME__.
+<br>__USER_FIRST_NAME__ __USER_LAST_NAME__ just __ACTION__ <a href="__SERVER_HTTP__://__SERVER_NAME__/node/__PROFILE_NID__">[node:title]</a> on __SITE_NAME__.
 <br>__FOLLOWER_MESSAGE__
 <br>You can view their profile here:
 <br>

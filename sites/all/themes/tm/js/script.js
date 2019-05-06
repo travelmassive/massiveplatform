@@ -754,7 +754,7 @@
     if (action_type == "upvote") {
       var question = "<strong>Confirm upvote</strong>";
       var buttons_array = { Back: -1, "Upvote": true };
-      var placeholder_text = "If you like, include a message to " + company_name + ". \nAny links will be removed.";
+      var placeholder_text = "If you like, include a message to " + company_name + ". Any links will be removed.";
     }
 
     $.prompt({

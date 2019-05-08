@@ -800,7 +800,7 @@ function tm_users_field_group_info() {
   t('Action menu wrapper');
   t('Basic settings');
   t('Chapters joined');
-  t('Company Profiles');
+  t('Company Pages');
   t('Connect');
   t('Elsewhere');
   t('Events joined');

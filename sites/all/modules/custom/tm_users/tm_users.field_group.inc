@@ -135,14 +135,14 @@ function tm_users_field_group_info() {
   $field_group->mode = 'default';
   $field_group->parent_name = '';
   $field_group->data = array(
-    'label' => 'Company Profiles',
+    'label' => 'Company Pages',
     'weight' => '9',
     'children' => array(
       0 => 'list_users_companies',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
-      'label' => 'Company Profiles',
+      'label' => 'Company Pages',
       'formatter' => 'open',
     ),
   );

@@ -367,6 +367,7 @@ function tm_status_updates_post_update_fetch_wordpress($feed_url) {
 	}
 
 	// Step 2. Parse feed url
+	$data = trim($data);
 	libxml_use_internal_errors(true);
 	$xml = simplexml_load_string($data, 'SimpleXMLElement', LIBXML_NOCDATA);
 	if ($xml === false) {

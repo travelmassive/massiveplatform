@@ -172,10 +172,25 @@ function _tm_more_actions_process_moderator_menu($field, $title, &$links, &$menu
       }
 
       // 6. Show Facebook signin
+      $shown_facebook_login = false;
       if (isset($targetuser->field_facebook_signin_link[LANGUAGE_NONE][0]['value'])) {
         $facebook_signin_link = strip_tags($targetuser->field_facebook_signin_link[LANGUAGE_NONE][0]['value']);
         if (trim($facebook_signin_link) != "") {
+          $shown_facebook_login = true;
           $menu_text = "<div style='font-size: smaller; font-style: italic; padding-left: 2em; background-color: #efefef;'>Signed in with Facebook:<br><span style='color: #888; font-style: normal;'><a style='display: inline; padding: 0rem;' target='_blank' href='" . $facebook_signin_link . "'>view Facebook profile</a></span></div>";
+
+          $links['user_info'][] = array(
+            'wrapper_class' => array('moderator_facebook_login'),
+            'content' => t($menu_text),
+          );
+        }
+      }
+
+      if ((!$shown_facebook_login)
+       and isset($targetuser->field_facebook_signin_id[LANGUAGE_NONE][0]['value'])) {
+        $facebook_signin_id = strip_tags($targetuser->field_facebook_signin_id[LANGUAGE_NONE][0]['value']);
+        if (trim($facebook_signin_id) != "") {
+          $menu_text = "<div style='font-size: smaller; font-style: italic; padding-left: 2em; background-color: #efefef;'>Signed in with Facebook:<br><span style='color: #888; font-style: normal;'>ID: " . $facebook_signin_id . "</span></div>";
 
           $links['user_info'][] = array(
             'wrapper_class' => array('moderator_facebook_login'),

@@ -726,6 +726,8 @@ function tm_events_process_emails_cron_run($item) {
 
   // Process emails
   $original_message = $message;
+  $original_subject = $subject;
+  $original_headline_text = $headline_text;
   $sendcount = 0;
   foreach ($user_ids as $user_id) {
 
@@ -746,8 +748,8 @@ function tm_events_process_emails_cron_run($item) {
     // replace [first_name] token
     $first_name = $user_account->field_user_first_name[LANGUAGE_NONE][0]['value'];
     $message = str_replace("[first_name]", $first_name, $original_message);
-    $subject = str_replace("[first_name]", $first_name, $subject);
-    $headline_text = str_replace("[first_name]", $first_name, $headline_text);
+    $subject = str_replace("[first_name]", $first_name, $original_subject);
+    $headline_text = str_replace("[first_name]", $first_name, $original_headline_text);
 
     // Check user notification is checked: user_chapter_announcements
     $queue = DrupalQueue::get('tm_event_announcements');

@@ -152,7 +152,7 @@ function tm_events_communication_form($event) {
    // If members's email on same domain, set reply to
   // Otherwise, leave blank
   $default_reply_to = "";
-  if (stripos($user->mail, $conf["tm_announcement_reply_email"]) === true) {
+  if (stripos($user->mail, $conf["tm_email_server_url_domain"]) > 0) {
     $default_reply_to = $user->mail;
   }
 

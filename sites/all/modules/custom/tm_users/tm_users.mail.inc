@@ -160,7 +160,7 @@ function _tm_users_mail_alter_contact_page_mail(&$mail_form) {
   $subject = "Contact Form: " . check_plain($mail_form['params']['subject']);
 
   // SEND EMAIL
-  tm_users_send_html_mail($module, $key, $email, $language, $params, $subject, $message, $reply);
+  tm_users_send_html_mail($module, $key, $email, $language, $params, $subject, $message, $reply, $contact_re);
 
   // Don't send via drupal mail
   $mail_form['send'] = false;
@@ -172,7 +172,7 @@ function _tm_users_mail_alter_contact_page_mail(&$mail_form) {
  * Send html email
  * Note for system messages you need to set $mail_form['send'] = false;
  */
-function tm_users_send_html_mail($module, $key, $email, $language, $params, $subject, $message, $reply = NULL) {
+function tm_users_send_html_mail($module, $key, $email, $language, $params, $subject, $message, $reply = NULL, $headline_text = "") {
 
   global $conf;
 
@@ -206,8 +206,11 @@ function tm_users_send_html_mail($module, $key, $email, $language, $params, $sub
   $template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template); 
   $template = str_replace("__EMAIL_BRAND_MESSAGE__", "", $template); // disable brand message
   $template = str_replace("__HERO_IMAGE__", "", $template); // remove hero image
-  $template = str_replace("__HERO_HEADLINE__", "", $template); // remove hero headline
   $template = str_replace("__PREHEADER_TEXT__", "", $template); // preheader text
+
+  // Hero text
+  $headline_html = tm_notifications_render_hero_headline_html($headline_text);
+  $template = str_replace("__HERO_HEADLINE__", $headline_html, $template); // remove hero headline
 
   // STEP 5. LOAD HTML TEMPLATE INTO EMAIL BODY
   $email_message['body'] = $template;

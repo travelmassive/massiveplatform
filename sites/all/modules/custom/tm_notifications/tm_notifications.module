@@ -306,7 +306,7 @@ function tm_notifications_mail($key, &$message, $params) {
   if (isset ($params['tokens']['__HERO_HEADLINE__'])) {
     $hero_headline = $params['tokens']["__HERO_HEADLINE__"];
   }
-  $template = str_replace("__HERO_HEADLINE__", $hero_headline, $template); // insert hero image
+  $template = str_replace("__HERO_HEADLINE__", $hero_headline, $template); // insert hero headline
 
   // Preheader text
   $preheader_text = "";

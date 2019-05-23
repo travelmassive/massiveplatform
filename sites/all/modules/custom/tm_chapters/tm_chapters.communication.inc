@@ -484,6 +484,7 @@ function tm_chapters_process_emails_cron_run($item) {
 
   // Process emails
   $original_message = $message;
+  $original_subject = $subject;
   $sendcount = 0;
   foreach ($user_ids as $user_id) {
 
@@ -504,7 +505,7 @@ function tm_chapters_process_emails_cron_run($item) {
     // replace [first_name] token
     $first_name = $user_account->field_user_first_name[LANGUAGE_NONE][0]['value'];
     $message = str_replace("[first_name]", $first_name, $original_message);
-    $subject = str_replace("[first_name]", $first_name, $subject);
+    $subject = str_replace("[first_name]", $first_name, $original_subject);
 
     // Check user notification is checked: user_chapter_announcements
     $queue = DrupalQueue::get('tm_chapter_announcements');

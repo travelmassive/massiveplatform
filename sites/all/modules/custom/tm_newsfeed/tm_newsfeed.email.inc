@@ -6,7 +6,7 @@
  * Send test newsfeed notificiation
  * Notification emails are sent via scheduled notifications
  */
-function tm_newsfeed_notification_send_test_email($email, $subject, $body) {
+function tm_newsfeed_notification_send_test_email($email, $subject, $body, $preheader_text = "", $headline_text = "") {
 
 	global $conf;
 
@@ -50,6 +50,11 @@ function tm_newsfeed_notification_send_test_email($email, $subject, $body) {
 	$template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template);
 	$template = str_replace("__EMAIL_BRAND_MESSAGE__", "", $template); // disable site branding
 	$template = str_replace("__HERO_IMAGE__", "", $template); // remove hero image
+  	$template = str_replace("__PREHEADER_TEXT__", $preheader_text, $template); // Preheader text
+
+  	// Headline
+  	$headline_html = tm_notifications_render_hero_headline_html($headlin_text);
+  	$template = str_replace("__HERO_HEADLINE__", $headline_html, $template); // Hero headline
 
 	// STEP 5. LOAD HTML TEMPLATE INTO EMAIL BODY
 	$email_message['body'] = $template;

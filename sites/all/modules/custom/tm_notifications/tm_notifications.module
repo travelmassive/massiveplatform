@@ -281,9 +281,9 @@ function tm_notifications_mail($key, &$message, $params) {
 
   // STEP 6. ADD UNSUBSCRIBE LINK
   if (isset($params['tokens']['UNSUBSCRIBE_NOTIFICATION_LINK'])) {
-    $unsubscribe_link = "<a href='__SERVER_HTTP__://__SERVER_NAME__/" . $params['tokens']['UNSUBSCRIBE_NOTIFICATION_LINK'] . "'>Unsubscribe from this notification</a>";
+    $unsubscribe_link = "<a style='text-decoration: underline; color: #9B9B9B;' href='__SERVER_HTTP__://__SERVER_NAME__/" . $params['tokens']['UNSUBSCRIBE_NOTIFICATION_LINK'] . "'>Unsubscribe from this notification</a>";
   } else {
-    $unsubscribe_link = "Update Your Notification Settings at <a href='__SERVER_HTTP__://__SERVER_NAME__'>__SERVER_NAME__</a>";   
+    $unsubscribe_link = "Update Your Notification Settings at <a style='text-decoration: underline; color: #9B9B9B;' href='__SERVER_HTTP__://__SERVER_NAME__'>__SERVER_NAME__</a>";
   }
   $template = str_replace("__UNSUBSCRIBE_LINK__", $unsubscribe_link, $template);
 
@@ -300,6 +300,20 @@ function tm_notifications_mail($key, &$message, $params) {
     $hero_image = $params['tokens']["__HERO_IMAGE__"];
   }
   $template = str_replace("__HERO_IMAGE__", $hero_image, $template); // insert hero image
+
+  // Hero headline
+  $hero_headline = "";
+  if (isset ($params['tokens']['__HERO_HEADLINE__'])) {
+    $hero_headline = $params['tokens']["__HERO_HEADLINE__"];
+  }
+  $template = str_replace("__HERO_HEADLINE__", $hero_headline, $template); // insert hero image
+
+  // Preheader text
+  $preheader_text = "";
+  if (isset ($params['tokens']['__PREHEADER_TEXT__'])) {
+    $preheader_text = $params['tokens']["__PREHEADER_TEXT__"];
+  }
+  $template = str_replace("__PREHEADER_TEXT__", $preheader_text, $template); // insert preheader text
 
   // STEP 7. ADD BRANDING MESSAGE TO FOOTER
   $show_branding = true;
@@ -628,21 +642,81 @@ function tm_notifications_preferences_purge_bulk($notification_names) {
  */
 function tm_notifications_render_hero_image_html($hero_image_src, $hero_image_link = null, $hero_image_alt_text = "image") {
 
-  // strip ' in alt text
+  // Hero image template
+  $hero_image_template = '<tbody>
+    <tr>
+      <td height="18" style="font-size: 1px; line-height: 1px;">&nbsp;</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td valign="top" align="center" style="padding: 0 5px;">
+        __A_TAG_OPEN__<img src="__HERO_IMAGE_SRC__" width="520" height="" alt="__HERO_IMAGE_ALT__" style="border: 0; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; border-radius: 6px; max-width: 100%; height: auto; display: block; Margin: 0 auto; color: #1B1B1B;">__A_TAG_CLOSE__
+      </td>
+    </tr>
+    <tr>
+      <td height="21" style="font-size: 1px; line-height: 1px;">&nbsp;</td>
+    </tr>
+  </tbody>';
+
+  // Link
+  $a_tag_open = "";
+  $a_tag_close = "";
+  if ($hero_image_link != null) {
+    $a_tag_open = '<a href="' . $hero_image_link . '">';
+    $a_tag_close = '</a>';   
+  }
+
+  // Alt text - strip ' in alt text
   $hero_image_alt_text = str_replace("'", "", $hero_image_alt_text);
 
-  $hero_image_html = '<tr><td bgcolor="#ffffff">';
-  if ($hero_image_link != null) {
-    $hero_image_html .= '<a href="' . $hero_image_link . '">';
-  }
+  // Render hero image
+  $hero_image_html = str_replace("__A_TAG_OPEN__", $a_tag_open, $hero_image_template);
+  $hero_image_html = str_replace("__A_TAG_CLOSE__", $a_tag_open, $hero_image_html);
+  $hero_image_html = str_replace("__HERO_IMAGE_SRC__", $hero_image_src, $hero_image_html);
+  $hero_image_html = str_replace("__HERO_IMAGE_ALT__", $hero_image_alt_text, $hero_image_html);
 
-  $hero_image_html .= '<img src="' . $hero_image_src . '" width="600" height="" alt="' . str_replace("'", "", strip_tags($hero_image_alt_text)) . '" border="0" align="center" style="width: 100%; max-width: 600px;">';
-
-  if ($hero_image_link != null) {
-    $hero_image_html .= '</a>';
-  }
-
-  $hero_image_html .= '</td></tr>';
   return $hero_image_html;
 }
 
+/**
+ * Helper method to render hero headline html
+ */
+function tm_notifications_render_hero_headline_html($hero_text) {
+
+  // Hero headline
+  $hero_headline_template = '<tbody>
+  <tr>
+    <td class="pc-xs-fs-30 pc-xs-lh-42 pc-fb-font" style="padding: 0 5px 25px 5px; font-family: \'Lato\', Helvetica, Arial, sans-serif; font-size: 36px; font-weight: 800; line-height: 46px; letter-spacing: -0.6px; color: #1B1B1B; text-align: center;" valign="top">
+      <div style="text-align: left;">__HERO_HEADLINE_TEXT__</div>
+    </td>
+  </tr>
+  <tr>
+    <td height="10" style="font-size: 1px; line-height: 1px;">&nbsp;</td>
+  </tr>
+</tbody>';
+
+  // Render hero
+  $hero_text = strip_tags($hero_text);
+  $hero_headline_html = str_replace("__HERO_HEADLINE_TEXT__", $hero_text, $hero_headline_template);
+
+  return $hero_headline_html;
+}
+
+/**
+ * Helper method to render button
+ */
+function tm_notifications_render_button_html($button_label, $button_url) {
+
+  // Button 
+  $button_template = '<p style="text-align: center; padding-top: 16px; padding-bottom: 24px;"><a style="padding: 13px 17px; border-radius: 8px; background-color: #1595E7; line-height: 24px; text-decoration: none; word-break: break-word; font-weight: 500; display: inline-block; font-family: \'Lato\', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff;" href="__BUTTON_URL__" style="line-height: 24px; text-decoration: none; word-break: break-word; font-weight: 500; display: block; font-family: \'Lato\', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff;">__BUTTON_TEXT__</a></p>';
+
+  $button_text = strip_tags($button_label);
+  $button_url = str_replace('"', "", strip_tags($button_url));
+
+  // Render button
+  $button_html = str_replace("__BUTTON_TEXT__", $button_label, $button_template);
+  $button_html = str_replace("__BUTTON_URL__", $button_url, $button_html);
+
+  return $button_html;
+}

@@ -303,7 +303,7 @@ This link expires in one day and nothing will happen if it is not used.
 <br>__EMAIL_SIGNOFF__
 <br>
 <br>If you are unable to view the button, please use the recovery link below:
-<br>[user:one-time-login-url]/brief
+<p style="word-break: break-all;">[user:one-time-login-url]/brief</p>
 <br>';
   $export['user_mail_password_reset_body'] = $strongarm;
 
@@ -347,7 +347,8 @@ password: Your password
   $strongarm->name = 'user_mail_register_no_approval_required_body';
   $strongarm->value = 'Hi [user:name],
 <br>
-<br>Confirm your email address to complete your __SITE_NAME__ account. It\'s easy - just click the button below.
+<br>Confirm your email address to complete your __SITE_NAME__ account.
+<br>It\'s easy - just click the button below.
 <br>
 <br><div>
   <table cellspacing="0" cellpadding="0"> <tr> 
@@ -366,7 +367,7 @@ password: Your password
 <br>__EMAIL_SIGNOFF__
 <br>
 <br>If you are unable to view the button, please use the confirmation link below:
-<br>[user:validate-url]
+<p style="word-break: break-all;">[user:validate-url]</p>
 <br>
 ';
   $export['user_mail_register_no_approval_required_body'] = $strongarm;

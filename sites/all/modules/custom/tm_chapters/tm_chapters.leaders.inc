@@ -411,6 +411,8 @@ function tm_chapters_leaders_send_notification($notification_emails, $subject, $
 	$template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template); 
 	$template = str_replace("__EMAIL_BRAND_MESSAGE__", "", $template); // disable brand message
 	$template = str_replace("__HERO_IMAGE__", $chapter_image_html, $template); // remove hero image
+	$template = str_replace("__HERO_HEADLINE__", "", $template); // remove hero headline
+	$template = str_replace("__PREHEADER_TEXT__", "", $template); // preheader text
 
 	// STEP 5. LOAD HTML TEMPLATE INTO EMAIL BODY
 	$email_message['body'] = $template;

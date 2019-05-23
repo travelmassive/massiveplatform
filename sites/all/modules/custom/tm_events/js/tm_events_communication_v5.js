@@ -146,6 +146,8 @@ tm_communication_send_test_email = function() {
 	          'replyto': $('#edit-reply-to').val(),
 	          'address': $('#edit-testemail').val(),
 	          'include_cover_image': include_cover_image,
+	          'headline_text': $('#edit-headline-text').val(),
+	          'button_label': $('#edit-button-label').val(),
 	          'first_name': $('[name="test_email_name"]').val()},
 	    url: callback_url}).done(function(return_data) {
 	      if (typeof return_data.sent !== 'undefined') {
@@ -216,6 +218,8 @@ tm_communication_send_recipient_emails = function() {
           'approved_members': $('[name="approved_members"]').val(),
           'eventid': tm_communications_event_id,
           'replyto': $('#edit-reply-to').val(),
+          'headline_text': $('#edit-headline-text').val(),
+          'button_label': $('#edit-button-label').val(),
           'include_cover_image': include_cover_image,
           'address': $('#edit-testemail').val()},
     url: callback_url}).done(function(return_data) {

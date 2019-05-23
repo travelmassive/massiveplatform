@@ -85,10 +85,12 @@ class TmNewsfeedEmailGenerator
 			$email = $e->tm_newsfeed_generate_email($user_id, $start_date, $end_date);
 			$email_subject = $email['subject'];
 			$email_body = $email['body'];
+			$preheader = $email['preheader'];
+			$headline = $email['headline'];
 
 			// only add to notification if we have subject and body
 			if (($email['subject'] != "") and ($email['body'] != "")) {
-				$notifications[] = array("user_id" => $user_id, "subject" => $email_subject, "body" => $email_body);
+				$notifications[] = array("user_id" => $user_id, "subject" => $email_subject, "body" => $email_body, "preheader" => $preheader, "headline" => $headline);
 			}
 
 			// debug info
@@ -232,8 +234,29 @@ class TmNewsfeedEmail
 		}
 
 		$subject = "$subject_base $subject_extra";
-			
-		return array('body' => $email, 'subject' => $subject);
+	
+		// headline text
+		$headline = "";
+		if (isset($conf["tm_newsfeed_headline_text"])) {
+			$headline_text_array = $conf["tm_newsfeed_headline_text"];
+			$headline = $headline_text_array[array_rand($headline_text_array)];
+
+			// daily
+			if ($date_interval->days <= 1) {
+				$headline_text_array = $conf["tm_newsfeed_headline_text_daily"];
+				$headline = $headline_text_array[array_rand($headline_text_array)];
+			}
+		}
+
+
+		// preheader text
+		$preheader = "";
+		if (isset($conf["tm_newsfeed_preheader_text"])) {
+			$preheader_text_array = $conf["tm_newsfeed_preheader_text"];
+			$preheader = $preheader_text_array[array_rand($preheader_text_array)];
+		}
+
+		return array('body' => $email, 'subject' => $subject, 'preheader' => $preheader, 'headline' => $headline);
 	}
 
 
@@ -760,7 +783,7 @@ class TmNewsfeedEmailTemplates
 	/* Templates */
 	public static $newsfeed_email_template = <<<EOT
 <div class="email-intro">
-	<p>__GREETING__ __USER_FIRST_NAME__</p>
+	<p>__GREETING__ __USER_FIRST_NAME__,</p>
 	<p>__OPENING_LINE__</p>
 	__CHAPTER_LEADER_NEEDED__
 </div>

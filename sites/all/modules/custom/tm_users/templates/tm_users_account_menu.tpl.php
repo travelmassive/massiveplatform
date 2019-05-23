@@ -218,7 +218,7 @@ $image = theme('image_style', array(
 
   <?php if (!in_array("approved user", $loaded->roles)) : ?>
     <ul class="dropd-menu">
-      <li><?php print l(t('Add company profile'), 'javascript:jq_alert("How can list my company profile?", "To create a company profile that can be discovered on our <a href=\"/companies\">company listings</a> page, your account needs to be approved first.<br><br><strong>What should I do next?</strong><br>Please complete your personal profile and request approval of your account. Once your account is approved this feature will be enabled.");', array('fragment' => '','external'=>true)); ?></li>
+      <li><?php print l(t('Add company page'), 'javascript:jq_alert("How can list my company profile?", "To create a company profile that can be discovered on our <a href=\"/companies\">company listings</a> page, your account needs to be approved first.<br><br><strong>What should I do next?</strong><br>Please complete your personal profile and request approval of your account. Once your account is approved this feature will be enabled.");', array('fragment' => '','external'=>true)); ?></li>
     </ul>
   <?php endif; ?>
 

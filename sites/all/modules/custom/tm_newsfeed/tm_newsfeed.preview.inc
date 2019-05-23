@@ -84,6 +84,8 @@ function tm_newsfeed_admin_notification_preview() {
 		$html .= "No notification generated (check content feeds).";
 	} else {
 		$html .= "<br><strong>Subject: " . $notifications[0]['subject'] . "</strong>";
+		$html .= "<br><i>Preheader: " . $notifications[0]['preheader'] . "</i>";
+		$html .= "<h1>" . $notifications[0]['headline'] . "</h1>";
 		$html .= "<br>" . $notifications[0]['body'];
 		$html .= "<hr style='border-top: 1px solid #eee;'>";
 		$html .= "<a href='javascript:void(0);' onClick=\"document.getElementById('debug').style.display='block';\">Show developer info</a><div id='debug' style='display: none;'><pre>" . str_replace("\\n", "<br>", $gen->get_debug_log()) . "</pre></div>";

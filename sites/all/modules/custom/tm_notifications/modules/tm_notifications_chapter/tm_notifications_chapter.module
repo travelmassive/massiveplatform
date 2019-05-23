@@ -140,7 +140,7 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
   // unapproved message
   $unapproved_message = "";
   if (!in_array("approved user", $who_joined->roles)) {
-    $unapproved_message = 'PS: Please ensure that you\'ve completed <a href="__SERVER_HTTP__://__SERVER_NAME__/user/' . $who_joined->uid . '">your profile</a> so the Chapter Leaders can approve your account.';
+    $unapproved_message = '<br><br>PS: Please ensure that you\'ve completed <a href="__SERVER_HTTP__://__SERVER_NAME__/user/' . $who_joined->uid . '">your profile</a> so the Chapter Leaders can approve your account.';
   }
 
   // notify the member

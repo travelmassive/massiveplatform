@@ -99,6 +99,9 @@ function tm_notifications_newsfeed_worker($data, $notif_type) {
   $notification = $notifications[0];
   $subject = $notification['subject'];
   $body = $notification['body'];
+  $preheader = $notification['preheader'];
+  $headline = $notification['headline'];
+  $headline_html = tm_notifications_render_hero_headline_html($headline);
 
   // if weekly notification, show daily subscribe link
   if ($notif_type == "weekly") {
@@ -113,11 +116,11 @@ function tm_notifications_newsfeed_worker($data, $notif_type) {
 
   // send notification
   if ($notif_type == "daily") {
-    tm_notifications_notify('daily_newsfeed', $account, array('__NEWSFEED_SUBJECT__' => $subject, '__NEWSFEED_BODY__' => $body));
+    tm_notifications_notify('daily_newsfeed', $account, array('__NEWSFEED_SUBJECT__' => $subject, '__NEWSFEED_BODY__' => $body, '__PREHEADER_TEXT__' => $preheader, '__HERO_HEADLINE__' => $headline_html));
   }
 
   if ($notif_type == "weekly") {
-    tm_notifications_notify('weekly_newsfeed', $account, array('__NEWSFEED_SUBJECT__' => $subject, '__NEWSFEED_BODY__' => $body));
+    tm_notifications_notify('weekly_newsfeed', $account, array('__NEWSFEED_SUBJECT__' => $subject, '__NEWSFEED_BODY__' => $body, '__PREHEADER_TEXT__' => $preheader, '__HERO_HEADLINE__' => $headline_html));
   }
 
 }

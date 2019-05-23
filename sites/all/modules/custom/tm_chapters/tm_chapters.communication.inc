@@ -611,9 +611,9 @@ function tm_chapters_send_email($uid, $email, $subject, $message, $chapter_image
   if ($uid != null) {
      $secret_hash = tm_notifications_generate_secret_hash($uid, "user_chapter_announcements");
      $unsubscribe_url = "user/" . $uid . "/unsubscribe/" . "user_chapter_announcements" . "/" . $secret_hash;
-     $unsubscribe_link = "<a href='__SERVER_HTTP__://__SERVER_NAME__/" . $unsubscribe_url . "'>Unsubscribe from chapter announcements</a>";
+     $unsubscribe_link = "<a style='style='text-decoration: underline; color: #9B9B9B;' href='__SERVER_HTTP__://__SERVER_NAME__/" . $unsubscribe_url . "'>Unsubscribe from chapter announcements</a>";
   } else {
-    $unsubscribe_link = "Update Your Notification Settings at <a href='__SERVER_HTTP__://__SERVER_NAME__'>__SERVER_NAME__</a>"; 
+    $unsubscribe_link = "Update Your Notification Settings at <a style='style='text-decoration: underline; color: #9B9B9B;' href='__SERVER_HTTP__://__SERVER_NAME__'>__SERVER_NAME__</a></span>"; 
   }
   $template = str_replace("__UNSUBSCRIBE_LINK__", $unsubscribe_link, $template);
 
@@ -630,6 +630,8 @@ function tm_chapters_send_email($uid, $email, $subject, $message, $chapter_image
 	$template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
 	$template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template);  
   $template = str_replace("__EMAIL_BRAND_MESSAGE__", "", $template); // disable brand message
+  $template = str_replace("__HERO_HEADLINE__", "", $template); // disable hero headline
+  $template = str_replace("__PREHEADER_TEXT__", "", $template); // disable preheader text
 
   // Chapter image
   // Render with tm_chapters_render_hero_image_html()
@@ -639,6 +641,7 @@ function tm_chapters_send_email($uid, $email, $subject, $message, $chapter_image
   } else {
     $template = str_replace("__HERO_IMAGE__", "", $template); // disable brand message
   }
+ 
 
 	// STEP 5. LOAD HTML TEMPLATE INTO EMAIL BODY
 	$email_message['body'] = $template;

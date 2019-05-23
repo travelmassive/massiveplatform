@@ -22,33 +22,34 @@ function tm_notifications_approval_strongarm() {
       'subject' => 'Action required for approval: Your __SITE_NAME__ account must be an individual profile',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>We can\'t approve your account because it looks like you\'ve created an account for a company or brand. See below for how to get your account approved and how to add a company profile.
+<br>We can\'t approve your account because it looks like you\'ve created an account for a company or brand. See below for how to get your account approved and how to add a company page.
 <br>
 __MODERATOR_MESSAGE__
 <br><strong>Please read carefully:</strong>
-<br>All accounts on __SITE_NAME__ are for individual use. After your account is approved, you can then add and manage your company listing which will be displayed on our <a href="__SERVER_HTTP__://__SERVER_NAME__/companies">company listings page</a>.
+<br>All accounts on __SITE_NAME__ are for individual use. After your account is approved, you can then add and manage your company page which will be displayed on our <a href="__SERVER_HTTP__://__SERVER_NAME__/companies">company directory</a>.
 <br>
-<br><strong>How to add your company profile:</strong>
-<br>First, sign in and update your profile information so it\'s about yourself (not your brand) to get approved. Once your individual account is approved, you can add a company profile by visiting the "Add company" link from your profile menu.
+<br><strong>How to add your company page:</strong>
+<br>First, sign in and update your profile so it\'s about yourself (not your brand) to get approved. Once your individual account is approved, you can add a company page from your account menu.
 <br>
 <br><strong>What you need to do:</strong>
-<br>Please sign in and personalize your profile information. Here\'s a link to you public profile:
+<br>Please sign in and personalize your profile:
 <br>
 <br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>
-<br><strong>Once you\'ve personalized your account, we\'ll be able to approve you and you can add your company profile.</strong>
+<br><strong>Once you\'ve personalized your account, we\'ll be able to approve you and you can add your company page.</strong>
 <br>
 <br>Here\'s some tips to get approved:
-<br>* Provide your real First and Last name if you haven\'t already
-<br>* Tell us about yourself (not your company) in the "About me" section
-<br>* Upload a photo of yourself so members can recognize you
-<br>* Tell us what city you are based in
-<br>* Fill out your profile questions
-<br>* Provide links to your website, Twitter, Facebook or LinkedIn accounts
-<br>
+<ul>
+<li>Provide your real First and Last name if you haven\'t already</li>
+<li>Tell us about yourself (yes, you!) in the "About me" section</li>
+<li>Upload a photo of yourself so members can recognize you</li>
+<li>Tell us what city you are based in</li>
+<li>Fill out your profile questions</li>
+<li>Provide links to your website, Twitter, Facebook or LinkedIn accounts</li>
+</ul>
 <br><strong>I\'ve updated my account, what next?</strong>
-<br>When you\'re ready for us to review your account, select "Approve my account" from your account menu.
-<br>Our team will review your profile and you\'ll be notified when you are approved.
+<br>Tap "Approve my account" from your account menu. Our team will review your profile and you\'ll be notified when you are approved.
+<br>
 <br>If you need any assistance please reply to this email.
 <br>
 <br>__EMAIL_SIGNOFF__
@@ -70,26 +71,27 @@ __MODERATOR_MESSAGE__
       'subject' => 'Action required for approval: Your __SITE_NAME__ profile needs more information',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>Your profile needs to be completed before we can approve your account.
+<br>Your profile needs to be completed before we can approve it.
 <br>
 __MODERATOR_MESSAGE__
 <br><strong>What you need to do:</strong>
-<br>Please sign in and complete your profile information. Here\'s a link to you public profile:
+<br>Please sign in and complete your profile:
 <br>
 <br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>
 <br>Here\'s some tips to get approved:
-<br>* Tell us about yourself in the "About me" section
-<br>* Upload a profile picture so members can recognize you
-<br>* Tell us what city you are based in
-<br>* Fill out your Job Role and Organization Name (if you work for a company)
-<br>* Update your Industry Segment
-<br>* Fill out your profile questions
-<br>* Provide links to your website, Twitter, Facebook or LinkedIn accounts
-<br>
+<ul>
+<li>Tell us about yourself in the "About me" section</li>
+<li>Upload a profile picture so members can recognize you</li>
+<li>Tell us what city you are based in</li>
+<li>Fill out your Job Role and Organization Name</li>
+<li>Update your Industry Segment</li>
+<li>Fill out your profile questions</li>
+<li>Provide links to your website, Twitter, Facebook or LinkedIn accounts</li>
+</ul>
 <br><strong>I\'ve updated my account, what next?</strong>
-<br>When you\'re ready for us to review your account, select "Approve my account" from your account menu.
-<br>Our team will review your profile and you\'ll be notified when you are approved.
+<br>Tap "Approve my account" from your account menu. Our team will review your profile and you\'ll be notified when you are approved.
+<br>
 <br>If you need any assistance please reply to this email.
 <br>
 <br>__EMAIL_SIGNOFF__
@@ -112,7 +114,6 @@ __MODERATOR_MESSAGE__
       'message' => 'Hi [user:field_user_first_name],
 <br>
 <br>__APPROVAL_INTRO_TEXT__
-<br>
 <br>You can view your profile here:
 <br>
 <br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
@@ -144,7 +145,7 @@ __MODERATOR_MESSAGE__
 <br>
 <br>__USER_FIRST_NAME__ __USER_LAST_NAME__ has requested approval of their account:
 <br>
-<br>Please review their profile here:
+<br>Please review their profile:
 <br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>
 <br>Reason for joining: __REASON_FOR_JOINING__
@@ -169,20 +170,19 @@ __MODERATOR_MESSAGE__
       'subject' => 'Action required: Your __SITE_NAME__ profile doesn\'t meet our membership guidelines',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>Thanks for signing up, however it looks like your account doesn\'t meet our <a href="__COMMUNITY_VALUES_URL__">membership guidelines</a>:
+<br>Thanks for signing up, however it looks like your account doesn\'t meet our <a href="__COMMUNITY_VALUES_URL__">membership guidelines</a>.
 <br>
 __MODERATOR_MESSAGE__
 <br>__MODERATION_MEMBERSHIP_CRITERIA__
 <br>
-<br>
 <br><strong>What you need to do:</strong>
-<br>If you meet the membership guidelines, please update your profile information to demonstrate clearly how you meet the criteria. Here\'s a link to your public profile:
+<br>If you meet the membership guidelines, please update your profile to demonstrate clearly how you meet the criteria:
 <br>
 <br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>
 <br><strong>I\'ve updated my account, what next?</strong>
-<br>When you\'re ready for us to review your account, select "Approve my account" from your account menu so we can check it out.
-<br>Our team will review your profile and you\'ll be notified when you are approved.
+<br>Tap "Approve my account" from your account menu. Our team will review your profile and you\'ll be notified when you are approved.
+<br>
 <br>If you need any assistance please reply to this email.
 <br>
 <br><strong>Important:</strong>

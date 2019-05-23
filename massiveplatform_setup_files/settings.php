@@ -248,13 +248,13 @@ If you can\'t find a chapter, why don\'t you consider starting a Massive chapter
 /** MEMBERSHIP CRITERIA PROVIDED IF MEMBER FLAGGED AS NON-COMMUNITY MEMBER **/
 /** Replace COMMUNITY_INDUSTRY with your own industry and customize criteria **/
 $conf["tm_notification_moderation_non_community_message"] = 'To be a member of the Massive community, you must demonstrate one of the following:
-<br>* You are active in the COMMUNITY_INDUSTRY industry (example: startup, service provider)
-<br>* You are active in a field closely related to the COMMUNITY_INDUSTRY industry (example: PR)
-<br>* You are studying COMMUNITY_INDUSTRY or a closely related course
-<br>* Any other criteria that reasonably demonstrates a professional connection to the COMMUNITY_INDUSTRY industry.
-<br>* You can read our community values at https://example.massiveplatform.com/blog/community-values/
-<br>
-<br>
+<ul>
+<li>You are active in the COMMUNITY_INDUSTRY industry (example: startup, service provider)</li>
+<li>You are active in a field closely related to the COMMUNITY_INDUSTRY industry (example: PR)</li>
+<li>You are studying COMMUNITY_INDUSTRY or a closely related course</li>
+<li>Any other criteria that reasonably demonstrates a professional connection to the COMMUNITY_INDUSTRY industry.</li>
+<li>You can read our community values at https://example.massiveplatform.com/blog/community-values/</li>
+</ul>
 <br><strong>But I love COMMUNITY_INDUSTRY, can I join still?</strong>
 <br>Our community provides professional networking and development for members of the COMMUNITY_INDUSTRY industry.';
 
@@ -714,6 +714,13 @@ $conf['tm_newsfeed_who_visited_label'] = "who visited";
 $conf['tm_newsfeed_leader_needed_enabled'] = true;
 $conf['tm_newsfeed_leader_needed_link'] = "https://example.massiveplatform.com/blog/start-a-chapter-guide/";
 $conf['tm_newsfeed_leader_needed_cta'] = " &mdash; learn how to get involved.";
+
+// preheader text
+$conf["tm_newsfeed_preheader_text"] = array("Community highlights. ", "New members and events. ");
+
+// headline text
+$conf["tm_newsfeed_headline_text"] = array("Your weekly briefing.", "Trending this week.");
+$conf["tm_newsfeed_headline_text_daily"] = array("Your daily briefing.");
 
 /* EVENT PAYMENT SETTINGS */
 /** Optional event payments settings **/

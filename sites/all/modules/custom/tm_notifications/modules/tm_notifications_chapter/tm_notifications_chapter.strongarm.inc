@@ -54,8 +54,7 @@ __INTRO_MESSAGE__
 <br>
 __WELCOME_MESSAGE__
 <br>Learn, share, and connect with other like-minded __MEMBERS_LABEL__ through local chapter events in __CHAPTER_NAME__.
-<br>
-<br>__UNAPPROVED_MESSAGE__
+__UNAPPROVED_MESSAGE__
 <br>
 <br>__EMAIL_SIGNOFF__
 ',

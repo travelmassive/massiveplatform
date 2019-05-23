@@ -332,6 +332,8 @@ function tm_notifications_newsfeed_test() {
 	// print notification to output
 	drush_print("-----------------------");
 	drush_print("Subject: " . $notification['subject']);
+	drush_print("Preheader: " . $notification['preheader']);
+	drush_print("Headline: " . $notification['headline']);
 	drush_print("Body:");
 	drush_print($notification['body']);
 	drush_print("-----------------------");
@@ -349,7 +351,7 @@ function tm_notifications_newsfeed_test() {
 
 		// send test email
 		drush_print("Sending test email to: " . $send_to . "...");
-		tm_newsfeed_notification_send_test_email($send_to, $notification['subject'], $notification['body']);
+		tm_newsfeed_notification_send_test_email($send_to, $notification['subject'], $notification['body'], $notification['preheader'], $notification['headline']);
 	}
 
 	drush_print("Done.");

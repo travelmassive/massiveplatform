@@ -27,7 +27,7 @@ function tm_events_communication_form($event) {
   }
 
   // Add javascript for form
-  drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_communication_v4.js');
+  drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_communication_v5.js');
 
   // Add page title and page url to javascript
   $event_url = drupal_get_path_alias('node/'.$event->nid);
@@ -85,18 +85,31 @@ function tm_events_communication_form($event) {
   // Reply to address
   $form['reply_to'] = array(
     '#title' => t('Reply-to:'),
-    '#type' =>'textfield',
-    '#id' => 'edit-reply-to',
-    '#disabled' => true,
-    '#default_value' => $user->mail,
+    '#type' =>'hidden',
+    '#attributes' => array('id' => 'edit-reply-to'),
+    // '#id' => 'edit-reply-to',
+    '#default_value' => "",
     '#description' => 'Any replies to this announcement will be sent to your email address.',
     '#rules' => array('email')
     );
 
-  // Allow chapter leaders, community managers, moderators, administrator to set reply-to
+  // Headline text
+  $example_headlines = array("We can't wait to see you.", "Looking forward to seeing you.", "Secure your spot.", "Meet up with us.", "Join our next event.", "We'd love to see you.");
+  $form['headline_text'] = array(
+    '#title' => t('Headline:'),
+    '#type' =>'textfield',
+    '#id' => 'edit-headline-text',
+    '#disabled' => false,
+    '#default_value' => $example_headlines[array_rand($example_headlines)],
+    '#description' => 'Display a short headline to grab attention &mdash; leave blank for no headline'
+    );
+
+  // Event chapter id
   $event_chapter_id = _tm_event_get_chapter_id($event);
-  if (tm_users_is_chapter_leader($user->uid, $event_chapter_id) or (in_array("chapter leader", $user->roles)) or (in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles))) {
-    $form['reply_to']['#disabled'] = false;
+
+  // Allow moderators, administrator to set reply-to
+  if ((in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles))) {
+    //$form['reply_to']['#type'] = 'textfield';
     $form['reply_to']['#description'] = 'Any replies to this announcement will be sent here. Leave blank for no reply-to address.';
   }
 
@@ -151,6 +164,17 @@ function tm_events_communication_form($event) {
   if ($conf["tm_event_announcement_enable_cover_image"] == false) {
       $form['include_cover_image']['#type'] = 'hidden';
   }
+
+  // Button label
+  $form['button_label'] = array(
+    '#title' => t('Button label:'),
+    '#type' =>'textfield',
+    '#id' => 'edit-button-label',
+    '#disabled' => false,
+    '#default_value' => "",
+    '#attributes' => array('placeholder' => 'Register Now'),
+    '#description' => 'Advanced &mdash; Change the label for the <i>[EVENT_BUTTON]</i>'
+    );
 
   // Separator
   $form['step_2_text'] = array(
@@ -363,6 +387,8 @@ function tm_events_test_email_ajax(){
   if (!isset($_POST['first_name'])) return FALSE;
   if (!isset($_POST['include_cover_image'])) return FALSE;
   if (!isset($_POST['message_format'])) return FALSE;
+  if (!isset($_POST['headline_text'])) return FALSE;
+  if (!isset($_POST['button_label'])) return FALSE;
 
   $subject = '[Test] ' . $_POST['subject'];
   $message = $_POST['message'];
@@ -376,14 +402,27 @@ function tm_events_test_email_ajax(){
     $replyto = trim($_POST['replyto']);
   }
   $message_format = $_POST['message_format'];
+  $headline_text = trim($_POST['headline_text']);
+  $button_label = trim($_POST['button_label']);
 
   // Replace [first_name] token
   $message = str_replace("[first_name]", $first_name, $message);
-  
+
   // If message format is text, add <br>'s
   if ($message_format == "text") {
     $message = str_replace("\n", "<br>", $message);
   }
+
+  // load event
+  $event = node_load($eventid);
+
+  // Replace [EVENT_BUTTON] token
+  if (trim($button_label) == "") {
+    $button_label = "Register Now";
+  }
+  $event_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('node/' . $event->nid);
+  $button_html = tm_notifications_render_button_html($button_label, $event_url);
+  $message = str_ireplace("[EVENT_BUTTON]", $button_html, $message);
 
   // Insert cover image
   // Check if tm_event_announcement_enable_cover_image is enabled
@@ -392,9 +431,6 @@ function tm_events_test_email_ajax(){
   if ($conf['tm_event_announcement_enable_cover_image'] == true) {
     if ($include_cover_image) {
       
-      // load event
-      $event = node_load($eventid);
-
       // get image url
       if (isset($event->field_image[LANGUAGE_NONE][0]['uri'])) {
         $event_image_src = image_style_url("banner", $event->field_image[LANGUAGE_NONE][0]['uri']);
@@ -407,9 +443,9 @@ function tm_events_test_email_ajax(){
       $event_image_link = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('node/' . $event->nid);
 
     }
-  }
+  } 
   
-  $sendcount = tm_events_send_email(null, $email, $subject, $message, $event_image_src, $event_image_link, $eventid, $replyto);
+  $sendcount = tm_events_send_email(null, $email, $subject, $message, $event_image_src, $event_image_link, $eventid, $replyto, $headline_text);
 
   // indicate success to the js ajax handler
   print(json_encode(array("sent" => $sendcount)));
@@ -418,7 +454,7 @@ function tm_events_test_email_ajax(){
 /**
  * Submit function of communication ajax request
  */
-function tm_events_send_emails($recipients, $subject, $message, $event_image_src, $event_image_link, $eventid, $chapterids, $replyto = "", $approved_members = true){
+function tm_events_send_emails($recipients, $subject, $message, $event_image_src, $event_image_link, $eventid, $chapterids, $replyto = "", $approved_members = true, $headline_text = ""){
 
   global $user;
 
@@ -618,6 +654,7 @@ function tm_events_send_emails($recipients, $subject, $message, $event_image_src
                     "message" => $message,
                     "event_image_src" => $event_image_src,
                     "event_image_link" => $event_image_link,
+                    "headline_text" => $headline_text,
                     "replyto" => $replyto,
                     "eventid" => $eventid]);
 
@@ -682,6 +719,7 @@ function tm_events_process_emails_cron_run($item) {
   $event_image_link = $item["event_image_link"];
   $replyto = $item["replyto"];
   $eventid = $item["eventid"];
+  $headline_text = $item["headline_text"];
 
   // Process emails
   $original_message = $message;
@@ -721,6 +759,7 @@ function tm_events_process_emails_cron_run($item) {
                         "event_image_src" => $event_image_src,
                         "event_image_link" => $event_image_link,
                         "replyto" => $replyto,
+                        "headline_text" => $headline_text,
                         "eventid" => $eventid]);
     }
 
@@ -729,7 +768,7 @@ function tm_events_process_emails_cron_run($item) {
   // send copy announcement email to a specific address
   // include email sent count
   if (isset($conf["tm_announcement_copy_email"])) {
-      tm_events_send_email(null, $conf["tm_announcement_copy_email"], "[Copy] " . $subject . " (" . $sendcount . " sent)", $original_message, $event_image_src, $event_image_link, $eventid, $replyto);
+      tm_events_send_email(null, $conf["tm_announcement_copy_email"], "[Copy] " . $subject . " (" . $sendcount . " sent)", $original_message, $event_image_src, $event_image_link, $eventid, $replyto, $headline_text);
   }
 
 }
@@ -762,14 +801,14 @@ function tm_events_send_email_cron($item) {
  *
  */
 function tm_events_send_email_cron_run($item) {
-  tm_events_send_email($item["uid"], $item["email"], $item["subject"], $item["message"], $item["event_image_src"], $item["event_image_link"], $item["eventid"], $item["replyto"]);
+  tm_events_send_email($item["uid"], $item["email"], $item["subject"], $item["message"], $item["event_image_src"], $item["event_image_link"], $item["eventid"], $item["replyto"], $item["headline_text"]);
 }
 
 
 /**
  * Sends out a single email
  */
-function tm_events_send_email($uid, $email, $subject, $message, $event_image_src, $event_image_link, $eventid, $replyto="") {
+function tm_events_send_email($uid, $email, $subject, $message, $event_image_src, $event_image_link, $eventid, $replyto="", $headline_text = "") {
 
 	global $conf;
 
@@ -813,9 +852,9 @@ function tm_events_send_email($uid, $email, $subject, $message, $event_image_src
   if ($uid != null) {
      $secret_hash = tm_notifications_generate_secret_hash($uid, "user_chapter_announcements");
      $unsubscribe_url = "user/" . $uid . "/unsubscribe/" . "user_chapter_announcements" . "/" . $secret_hash;
-     $unsubscribe_link = "<a href='__SERVER_HTTP__://__SERVER_NAME__/" . $unsubscribe_url . "'>Unsubscribe from event announcements</a>";
+     $unsubscribe_link = "<a style='text-decoration: underline; color: #9B9B9B;' href='__SERVER_HTTP__://__SERVER_NAME__/" . $unsubscribe_url . "'>Unsubscribe from event announcements</a>";
   } else {
-    $unsubscribe_link = "Update Your Notification Settings at <a href='__SERVER_HTTP__://__SERVER_NAME__'>__SERVER_NAME__</a>"; 
+    $unsubscribe_link = "Update Your Notification Settings at <a style='text-decoration: underline; color: #9B9B9B;' href='__SERVER_HTTP__://__SERVER_NAME__'>__SERVER_NAME__</a>"; 
   }
   $template = str_replace("__UNSUBSCRIBE_LINK__", $unsubscribe_link, $template);
 
@@ -823,8 +862,8 @@ function tm_events_send_email($uid, $email, $subject, $message, $event_image_src
   $secret_hash = tm_notifications_generate_secret_hash($account->uid, $notification_name); 
   $tokens["UNSUBSCRIBE_NOTIFICATION_LINK"] = "user/" . $account->uid . "/unsubscribe/" . $notification_name . "/" . $secret_hash;
  
-  $unsubscribe_link = "<a href='__SERVER_HTTP__://__SERVER_NAME__/" . $params['tokens']['UNSUBSCRIBE_NOTIFICATION_LINK'] . "'>Unsubscribe from this notification</a>";
-  $template = str_replace("__UNSUBSCRIBE_LINK__", $unsubscribe_link, $template);
+  /*$unsubscribe_link = "<a href='__SERVER_HTTP__://__SERVER_NAME__/" . $params['tokens']['UNSUBSCRIBE_NOTIFICATION_LINK'] . "'>Unsubscribe from this notification</a>";
+  $template = str_replace("__UNSUBSCRIBE_LINK__", $unsubscribe_link, $template);*/
 
 	// Other vars
   $template = str_replace("__SERVER_NAME__", $conf["tm_email_server_url_domain"], $template); 
@@ -841,6 +880,18 @@ function tm_events_send_email($uid, $email, $subject, $message, $event_image_src
   } else {
     $template = str_replace("__HERO_IMAGE__", "", $template); // disable brand message
   }
+
+  // Hero headline
+  // Render with tm_notifications_render_hero_headline_html()
+  if ($headline_text != null) {
+    $event_headline_html = tm_notifications_render_hero_headline_html($headline_text);
+    $template = str_replace("__HERO_HEADLINE__", $event_headline_html, $template);
+  } else {
+    $template = str_replace("__HERO_HEADLINE__", "", $template); // disable headline message
+  }
+
+  // Preheader text
+  $template = str_replace("__PREHEADER_TEXT__", "", $template); // preheader text
 
 	// STEP 5. LOAD HTML TEMPLATE INTO EMAIL BODY
 	$email_message['body'] = $template;
@@ -884,6 +935,8 @@ function tm_events_send_emails_ajax() {
   if (!isset($_POST['chapterid'])) return FALSE;
   if (!isset($_POST['include_cover_image'])) return FALSE;
   if (!isset($_POST['message_format'])) return FALSE;
+  if (!isset($_POST['headline_text'])) return FALSE;
+  if (!isset($_POST['button_label'])) return FALSE;
 
   $subject = $_POST['subject'];
   $message = $_POST['message'];
@@ -902,11 +955,24 @@ function tm_events_send_emails_ajax() {
     $replyto = trim($_POST['replyto']);
   }
   $message_format = $_POST['message_format'];
+  $headline_text = trim($_POST['headline_text']);
+  $button_label = trim($_POST['button_label']);
 
   // If message format is text, add <br>'s
   if ($message_format == "text") {
     $message = str_replace("\n", "<br>", $message);
   }
+
+  // load event
+  $event = node_load($eventid);
+
+  // Replace [EVENT_BUTTON] token
+  if (trim($button_label) == "") {
+    $button_label = "Register Now";
+  }
+  $event_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('node/' . $event->nid);
+  $button_html = tm_notifications_render_button_html($button_label, $event_url);
+  $message = str_ireplace("[EVENT_BUTTON]", $button_html, $message);
 
   // Insert cover image
   // Check if tm_event_announcement_enable_cover_image is enabled
@@ -915,9 +981,6 @@ function tm_events_send_emails_ajax() {
   if ($conf['tm_event_announcement_enable_cover_image'] == true) {
     if ($include_cover_image) {
       
-      // load event
-      $event = node_load($eventid);
-
       // get image url
       if (isset($event->field_image[LANGUAGE_NONE][0]['uri'])) {
         $event_image_src = image_style_url("banner", $event->field_image[LANGUAGE_NONE][0]['uri']);
@@ -932,7 +995,7 @@ function tm_events_send_emails_ajax() {
     }
   }
 
-  $sendcount = tm_events_send_emails($recipients, $subject, $message, $event_image_src, $event_image_link, $eventid, $chapterid, $replyto, $approved_members);
+  $sendcount = tm_events_send_emails($recipients, $subject, $message, $event_image_src, $event_image_link, $eventid, $chapterid, $replyto, $approved_members, $headline_text);
 
   // flag announcement last sent
   flag('unflag', 'announcement_last_sent', $eventid, $user);
@@ -968,16 +1031,16 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
     array('label'=>'hidden',));
   $date = render($view);
 
-  $intro_text = "We're pleased to announce a new event, please see details below:";
+  $intro_text = "We're pleased to announce a new event, here's the details:";
   if (($chapter == null) && ($company == null) && (tm_events_check_published_chapter_leader($event, $user->uid) == null)) {
     $intro_text = "I'd like to invite you to my upcoming event:";
   }
 
-  $prefill = "Hi [first_name],<br><br>";
-  $prefill .= $intro_text . "<br>";
+  $prefill = "<p>Hi [first_name],</p>";
+  $prefill .= "<p>" . $intro_text . "</p>";
   $prefill .= "<ul>";
-  $prefill .= "<li>" . t('Event').': <b>'.$event->title . "</b></li>";
-  $prefill .= "<li>" . t('Date').': '.strip_tags($date) . "</li>";
+  $prefill .= "<li><strong><a href='" . $event_url . "'>" .$event->title . "<a/></strong></li>";
+  $prefill .= "<li>".strip_tags($date) . "</li>";
   if ($event->field_event_venue_name != null) {
     $prefill .= "<li>" . t('Venue').': '.$event->field_event_venue_name[LANGUAGE_NONE][0]['value'];
   }
@@ -998,31 +1061,37 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
       }
       $prefill .= "<li>Sponsors: " . implode(", ", $sponsor_links) . "</li>";
   }
+  $prefill .= "</ul>";
 
-  $prefill .= '<li><b>' . $register_text . '</b> <a href="' . $event_url . '">' . $event_url .'</a></li>';
-
-  // add contact link if html email
+  // Register button
   if ($use_html) {
-    $contact_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('events/message/' . $event->nid);
-    $prefill .= '<li>Questions about this event? <a href="' . $contact_url . '">Send a message</a></li>';
+    $prefill .= '<p>[EVENT_BUTTON]</p>';
+  } else {
+      $prefill .= '<p>' . $register_text . '<a href="' . $event_url . '">' . $event_url .'</a></p>';
   }
 
-
-  $prefill .= "</ul>";
+  $prefill .= "<p>";
   if ($event->body != null) {
     // add line breaks
     $event_message = str_replace("\n", "<br>", $event->body[LANGUAGE_NONE][0]['value']); 
     $prefill .=  $event_message . "<br>";
   }
-  $prefill .= "<br>Cheers";
+
+  // add contact link if html email
+  if ($use_html) {
+    $contact_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('events/message/' . $event->nid);
+    $prefill .= '</p><p>Questions about this event? <a href="' . $contact_url . '">Send a message</a></p>';
+  }
+
+  $prefill .= "<p>Cheers";
 
   // chapter signoff
   if (tm_events_check_published_chapter_leader($event, $user->uid) != null) {
     $chapter_id = tm_events_check_published_chapter_leader($event, $user->uid);
     $published_chapter = node_load($chapter_id);
-    $prefill .= ",<br>- The " . $published_chapter->title . " Team";
+    $prefill .= ",<br><i>&mdash; The " . $published_chapter->title . " Team</i>";
   } elseif ($chapter != null) {
-    $prefill .= ",<br>- The " . $chapter->title  . " Team";
+    $prefill .= ",<br><i>&mdash; The " . $chapter->title  . " Team</i>";
   }
 
   // individual signoff
@@ -1030,15 +1099,18 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
     $loaded = user_load($user->uid);
     $first_name = strip_tags($loaded->field_user_first_name[LANGUAGE_NONE][0]['value']);
     $last_name = strip_tags($loaded->field_user_last_name[LANGUAGE_NONE][0]['value']);
-    $prefill .= ",<br>- " . $first_name . " " . $last_name;
+    $prefill .= ",<br><i>&mdash; " . $first_name . " " . $last_name . "</i>";
   }
 
   // company signoff
   if (($chapter == null) && ($company != null) && (tm_events_check_published_chapter_leader($event, $user->uid) == null)) {
-    $prefill .= ",<br>- " . strip_tags($company->title);
+    $prefill .= ",<br>&mdash; " . strip_tags($company->title);
   }
+  $prefill .= "</p>";
   
   if (!$use_html) {
+    $prefill = str_replace("<p>", "", $prefill);
+    $prefill = str_replace("</p>", "\n\n", $prefill);
     $prefill = str_replace("<br>", "\n", $prefill);
     $prefill = str_replace("<li>", "\n* ", $prefill);
     $prefill = str_replace("</ul>", "\n\n", $prefill);

@@ -220,6 +220,8 @@ function tm_subscriptions_organization_send_email($organization_emails, $subject
 	$template = str_replace("__SITE_NAME__", $conf["tm_site_name"], $template);  
 	$template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template);  
 	$template = str_replace("__EMAIL_BRAND_MESSAGE__", "", $template); // disable brand message
+  	$template = str_replace("__HERO_HEADLINE__", "", $template); // remove hero headline
+    $template = str_replace("__PREHEADER_TEXT__", "", $template); // preheader text
 
 	// Company image
 	// Render with tm_notifications_render_hero_image_html()

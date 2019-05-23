@@ -162,7 +162,7 @@ function tm_chapters_communication_form($chapter) {
     '#attributes' => array('id' => 'edit-reply-to', 'placeholder' => $conf["tm_announcement_reply_email"]),
     // '#id' => 'edit-reply-to',
     '#default_value' => "",
-    '#description' => 'Any replies to this announcement will be sent here. Leave blank for no reply-to address.<br><strong>Important:</strong> Must be <i>name@' . $conf["tm_email_server_url_domain"] . '</i> address to comply with Gmail\'s new sender rules.',
+    '#description' => 'Any replies to this announcement will be sent here. Leave blank for default reply-to address.<br><strong>Important:</strong> Must be <i>name@' . $conf["tm_email_server_url_domain"] . '</i> address to comply with Gmail\'s new sender rules.',
     '#rules' => array('email')
     );
 

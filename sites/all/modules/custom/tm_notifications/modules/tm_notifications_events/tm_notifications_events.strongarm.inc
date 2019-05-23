@@ -55,7 +55,7 @@ __REGISTERED_BY_MESSAGE__
       'subject' => '__PROFILE_FULL_NAME__ just un-registered for [node:title]',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>__PROFILE_FULL_NAME__ just removed their registration for your event [node:title].
+<br>__PROFILE_FULL_NAME__ just removed their registration for your event: [node:title].
 <br>
 <br>You can view their profile here:
 <br>
@@ -84,7 +84,7 @@ __REGISTERED_BY_MESSAGE__
       'subject' => '__PROFILE_FULL_NAME__ just registered for the waitlist to [node:title]',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>__PROFILE_FULL_NAME__ just signed up to the waiting list for your event [node:title].
+<br>__PROFILE_FULL_NAME__ just signed up to the waiting list for your event: [node:title].
 <br>
 <br>You can view their profile here:
 <br>

@@ -346,7 +346,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
 
     // Adjust text for paid ticket
     $member_register_subject = "You are now registered for";
-    $member_register_intro = "You are now signed up to attend the event";
+    $member_register_intro = "You are now signed up to attend the event:";
 
     // If registered by chapter leader or moderator
     if ($static_register_member_moderator_first_name != null) {

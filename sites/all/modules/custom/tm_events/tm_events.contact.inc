@@ -210,7 +210,7 @@ function tm_events_send_contact_email($event_organizer_emails, $subject, $body, 
   $template = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $template);
   $template = str_replace("__EMAIL_BRAND_MESSAGE__", "", $template); // disable brand message
   $template = str_replace("__HERO_IMAGE__", "", $template); // remove hero image
-  $template = str_replace("__HERO_HEADLINE__", "Event Message", $template); // remove hero headline
+  $template = str_replace("__HERO_HEADLINE__", tm_notifications_render_hero_headline_html("Event Message"), $template); // remove hero headline
   $template = str_replace("__PREHEADER_TEXT__", "", $template); // preheader text
 
   // STEP 5. LOAD HTML TEMPLATE INTO EMAIL BODY

@@ -97,28 +97,12 @@ function tm_chapters_communication_form($chapter) {
 
   // Subject field
   $form['subject'] = array(
-    '#title' => t('Subject: '),
+    '#title' => t('Subject '),
     '#type' =>'textfield',
     '#required' => TRUE,
     '#value' => $subject,
+    '#description' => 'Write a short and creative subject line &mdash; 7 words or less will increase your open rate'
     );
-
-  // Reply to address
-  $form['reply_to'] = array(
-    '#title' => t('Reply-to:'),
-    '#type' =>'textfield',
-    '#id' => 'edit-reply-to',
-    '#disabled' => true,
-    '#default_value' => $user->mail,
-    '#description' => 'Any replies to this announcement will be sent to your email address.',
-    '#rules' => array('email')
-    );
-
-  // Allow to set reply-to
-  if (($conf["tm_chapters_announcements_allow_replyto"] == true) or ($perm_is_moderator_or_admin)) {
-    $form['reply_to']['#disabled'] = false;
-    $form['reply_to']['#description'] = 'Any replies to this announcement will be sent here. Leave blank for no reply-to address.';
-  }
 
   // Prefill announcement body text
 
@@ -169,6 +153,22 @@ function tm_chapters_communication_form($chapter) {
   // Check tm_chapters_announcement_enable_cover_image is enabled
   if ($conf["tm_chapters_announcements_enable_cover_image"] == false) {
       $form['include_cover_image']['#type'] = 'hidden';
+  }
+
+  // Reply to address
+  $form['reply_to'] = array(
+    '#title' => t('Reply-to (Moderators only)'),
+    '#type' =>'hidden',
+    '#attributes' => array('id' => 'edit-reply-to', 'placeholder' => $conf["tm_announcement_reply_email"]),
+    // '#id' => 'edit-reply-to',
+    '#default_value' => "",
+    '#description' => 'Any replies to this announcement will be sent here. Leave blank for no reply-to address.<br><strong>Important:</strong> Must be <i>name@' . $conf["tm_email_server_url_domain"] . '</i> address to comply with Gmail\'s new sender rules.',
+    '#rules' => array('email')
+    );
+
+  // Allow moderators, administrator to set reply-to
+  if ($perm_is_moderator_or_admin) {
+    $form['reply_to']['#type'] = 'textfield';
   }
 
   // Separator
@@ -305,6 +305,7 @@ function tm_chapters_test_email_ajax(){
 
   // Replace [first_name] token
   $message = str_replace("[first_name]", $first_name, $message);
+  $subject = str_replace("[first_name]", $first_name, $subject);
   
   // If message format is text, add <br>'s
   if ($message_format == "text") {
@@ -751,7 +752,7 @@ function tm_chapter_announcement_create_prefill_text($chapter, $use_html = true,
 
   // Sign off
   $prefill .= $conf["tm_chapters_announcements_signoff"];
-  $prefill .= "- The " . tm_chapters_formal_name($chapter) . " Team";
+  $prefill .= "<i>&mdash; The " . tm_chapters_formal_name($chapter) . " Team";
 
   // Show chapter leader names
   $leader_uids = array();
@@ -770,6 +771,7 @@ function tm_chapter_announcement_create_prefill_text($chapter, $use_html = true,
     $last = array_pop($chapter_leaders_names);
     $prefill .= " (" . (count($chapter_leaders_names) ? implode(", ", $chapter_leaders_names) . " and " . $last : $last) . ")";
   }
+  $prefill .= "</i>";
 
   // chapter url
   $chapter_url = $conf["tm_email_server_http"] . "://" . $conf["tm_email_server_url_domain"] . "/" . drupal_get_path_alias('node/' . $chapter->nid);
@@ -802,7 +804,7 @@ function tm_chapter_announcement_create_prefill_text($chapter, $use_html = true,
       if ($event != null) {
 
         if ($previous_event == null) {
-          $prefill .= "<br><br><i>PS: Join our upcoming events</i><ul>";
+          $prefill .= "<br><br>PS: Join our upcoming events<ul>";
         }
 
         // event date
@@ -826,6 +828,8 @@ function tm_chapter_announcement_create_prefill_text($chapter, $use_html = true,
   }
 
   if (!$use_html) {
+    $prefill = str_replace("<p>", "", $prefill);
+    $prefill = str_replace("</p>", "\n\n", $prefill);
     $prefill = str_replace("<br>", "\n", $prefill);
     $prefill = str_replace("<li>", "\n* ", $prefill);
     $prefill = str_replace("</ul>", "\n\n", $prefill);

@@ -76,27 +76,17 @@ function tm_events_communication_form($event) {
 
   // Subject field
   $form['subject'] = array(
-    '#title' => t('Subject: '),
+    '#title' => t('Subject'),
     '#type' =>'textfield',
     '#required' => TRUE,
     '#value' => $subject,
-    );
-
-  // Reply to address
-  $form['reply_to'] = array(
-    '#title' => t('Reply-to:'),
-    '#type' =>'hidden',
-    '#attributes' => array('id' => 'edit-reply-to'),
-    // '#id' => 'edit-reply-to',
-    '#default_value' => "",
-    '#description' => 'Any replies to this announcement will be sent to your email address.',
-    '#rules' => array('email')
+    '#description' => 'Write a short and creative subject line &mdash; 7 words or less will increase your open rate'
     );
 
   // Headline text
   $example_headlines = array("We can't wait to see you.", "Looking forward to seeing you.", "Secure your spot.", "Meet up with us.", "Join our next event.", "We'd love to see you.");
   $form['headline_text'] = array(
-    '#title' => t('Headline:'),
+    '#title' => t('Headline'),
     '#type' =>'textfield',
     '#id' => 'edit-headline-text',
     '#disabled' => false,
@@ -106,12 +96,6 @@ function tm_events_communication_form($event) {
 
   // Event chapter id
   $event_chapter_id = _tm_event_get_chapter_id($event);
-
-  // Allow moderators, administrator to set reply-to
-  if ((in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles))) {
-    //$form['reply_to']['#type'] = 'textfield';
-    $form['reply_to']['#description'] = 'Any replies to this announcement will be sent here. Leave blank for no reply-to address.';
-  }
 
   // Prefill announcement body text
 
@@ -165,15 +149,31 @@ function tm_events_communication_form($event) {
       $form['include_cover_image']['#type'] = 'hidden';
   }
 
+  // Reply to address
+  $form['reply_to'] = array(
+    '#title' => t('Reply-to (Moderators only)'),
+    '#type' =>'hidden',
+    '#attributes' => array('id' => 'edit-reply-to', 'placeholder' => $conf["tm_announcement_reply_email"]),
+    // '#id' => 'edit-reply-to',
+    '#default_value' => "",
+    '#description' => 'Any replies to this announcement will be sent here. Leave blank for no reply-to address.<br><strong>Important:</strong> Must be <i>name@' . $conf["tm_email_server_url_domain"] . '</i> address to comply with Gmail\'s new sender rules.',
+    '#rules' => array('email')
+    );
+
+  // Allow moderators, administrator to set reply-to
+  if ((in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles))) {
+    $form['reply_to']['#type'] = 'textfield';
+  }
+
   // Button label
   $form['button_label'] = array(
-    '#title' => t('Button label:'),
+    '#title' => t('Button label'),
     '#type' =>'textfield',
     '#id' => 'edit-button-label',
     '#disabled' => false,
     '#default_value' => "",
     '#attributes' => array('placeholder' => 'Register Now'),
-    '#description' => 'Advanced &mdash; Change the label for the <i>[EVENT_BUTTON]</i>'
+    '#description' => 'Advanced &mdash; Change the label for the <i>[EVENT_BUTTON]</i> which links to your event page.'
     );
 
   // Separator
@@ -407,6 +407,9 @@ function tm_events_test_email_ajax(){
 
   // Replace [first_name] token
   $message = str_replace("[first_name]", $first_name, $message);
+  $subject = str_replace("[first_name]", $first_name, $subject);
+  $headline_text = str_replace("[first_name]", $first_name, $headline_text);
+  $button_label = str_replace("[first_name]", $first_name, $button_label);
 
   // If message format is text, add <br>'s
   if ($message_format == "text") {

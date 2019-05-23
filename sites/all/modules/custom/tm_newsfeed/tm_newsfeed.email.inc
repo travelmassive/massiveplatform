@@ -53,7 +53,7 @@ function tm_newsfeed_notification_send_test_email($email, $subject, $body, $preh
   	$template = str_replace("__PREHEADER_TEXT__", $preheader_text, $template); // Preheader text
 
   	// Headline
-  	$headline_html = tm_notifications_render_hero_headline_html($headlin_text);
+  	$headline_html = tm_notifications_render_hero_headline_html($headline_text);
   	$template = str_replace("__HERO_HEADLINE__", $headline_html, $template); // Hero headline
 
 	// STEP 5. LOAD HTML TEMPLATE INTO EMAIL BODY

@@ -709,7 +709,7 @@ function tm_notifications_render_hero_headline_html($hero_text) {
 function tm_notifications_render_button_html($button_label, $button_url) {
 
   // Button 
-  $button_template = '<p style="text-align: center; padding-top: 16px; padding-bottom: 24px;"><a style="padding: 13px 17px; border-radius: 8px; background-color: #1595E7; line-height: 24px; text-decoration: none; word-break: break-word; font-weight: 500; display: inline-block; font-family: \'Lato\', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff;" href="__BUTTON_URL__" style="line-height: 24px; text-decoration: none; word-break: break-word; font-weight: 500; display: block; font-family: \'Lato\', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff;">__BUTTON_TEXT__</a></p>';
+  $button_template = '<p style="text-align: center; padding-top: 16px; padding-bottom: 24px;"><span style="padding: 13px 17px; border-radius: 8px; background-color: #1595E7; line-height: 24px; word-break: break-word; font-weight: 500; display: inline-block; font-family: \'Lato\', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff;"><a style="text-decoration: none; color: #ffffff;" href="__BUTTON_URL__" style="line-height: 24px; text-decoration: none; word-break: break-word; font-weight: 500; display: block; font-family: \'Lato\', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff;">__BUTTON_TEXT__</a></span></p>';
 
   $button_text = strip_tags($button_label);
   $button_url = str_replace('"', "", strip_tags($button_url));

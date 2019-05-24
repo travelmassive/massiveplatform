@@ -69,9 +69,9 @@ function tm_events_communication_form($event) {
   );
 
   // Create subject
-  $subject = t($conf['tm_site_name'] . ' - ').$event->title;
+  $subject = t($conf['tm_site_name'] . ' - ').strip_tags($event->title);
   if ($chapter != null) {
-    $subject = t($chapter->title . ' ' . $conf['tm_site_name'] . ' - ').$event->title;
+    $subject = strip_tags($event->title);
   }
 
   // Subject field

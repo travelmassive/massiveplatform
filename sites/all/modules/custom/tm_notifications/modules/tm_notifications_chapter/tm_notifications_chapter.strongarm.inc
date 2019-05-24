@@ -23,9 +23,10 @@ function tm_notifications_chapter_strongarm() {
       'subject' => 'New member: __USER_FIRST_NAME__ __JOIN_ACTION__ __CHAPTER_NAME__',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>A new member __USER_FIRST_NAME__ __USER_LAST_NAME__ just joined your chapter [node:title].
+<br>__USER_FIRST_NAME__ __USER_LAST_NAME__ just joined your chapter [node:title].
 <br>
-<br>You can view their profile here:
+__MEMBER_WIDGET__
+Check out their profile and welcome them to the community.
 <br>
 <br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
 <br>

@@ -170,6 +170,23 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
 
   }
 
+  // generate member html
+  $member_name = $first_name . " " . $last_name;
+  $member_titles = array();
+  if (isset($who_joined->field_job_role[LANGUAGE_NONE][0]['value'])) {
+    $member_titles[] = strip_tags(trim($who_joined->field_job_role[LANGUAGE_NONE][0]['value']));
+  }
+  if (isset($who_joined->field_job_organization[LANGUAGE_NONE][0]['value'])) {
+    $member_titles[] = strip_tags(trim($who_joined->field_job_organization[LANGUAGE_NONE][0]['value']));
+  }
+  $member_title = implode(", ", $member_titles);
+  $member_url = "__SERVER_HTTP__://__SERVER_NAME__/user/" . $who_joined->uid;
+  $member_image_src = _tm_users_get_avatar_uri($who_joined);
+  $member_html = tm_notifications_render_member_html($member_name, $member_title, $member_url, $member_image_src);
+
+  // hero headline
+  $hero_headline = tm_notifications_render_hero_headline_html("You've got a new member.");
+
   // notify chapter leaders
   if (isset($node->field_chapter_leaders[LANGUAGE_NONE])) {
     foreach ($node->field_chapter_leaders[LANGUAGE_NONE] as $leader) {
@@ -179,7 +196,7 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
       // if the chapter doesn't have any chapter leaders
       if ($leader == null) { continue; }
 
-      tm_notifications_notify('user_chapter_join_notify_leaders', $leader, array('node' => $node, 'user' => $leader, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__APPROVED_BY_MESSAGE__' => $approved_by_message, '__HERO_IMAGE__' => $chapter_image_html, '__CHAPTER_NAME__' => $chapter_name, '__JOIN_ACTION__' => $chapter_join_action, '__ADDED_BY_MESSAGE__' => $added_by_message));
+      tm_notifications_notify('user_chapter_join_notify_leaders', $leader, array('node' => $node, 'user' => $leader, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__APPROVED_BY_MESSAGE__' => $approved_by_message, '__CHAPTER_NAME__' => $chapter_name, '__JOIN_ACTION__' => $chapter_join_action, '__ADDED_BY_MESSAGE__' => $added_by_message, '__HERO_HEADLINE__' => $hero_headline, '__MEMBER_WIDGET__' => $member_html));
     }
   }
 

@@ -720,3 +720,65 @@ function tm_notifications_render_button_html($button_label, $button_url) {
 
   return $button_html;
 }
+
+/**
+ * Helper method to render member
+ */
+function tm_notifications_render_member_html($member_name, $member_title, $member_url, $member_image_src) {
+
+  // Member template
+  $member_template = '<table border="0" cellpadding="0" cellspacing="0" width="100%" role="presentation">
+  <tbody>
+    <tr>
+      <td class="pc-sm-p-35-30 pc-xs-p-25-20" valign="top" bgcolor="#ffffff" style="padding: 40px; background-color: #ffffff">
+        <table border="0" cellpadding="0" cellspacing="0" style="text-align: center;" width="100%" align="center" role="presentation">
+          <tbody>
+            <tr>
+              <td valign="top" align="center">
+                <a href="__MEMBER_URL__"><img src="__MEMBER_IMAGE_SRC__" width="74" alt="" style="max-width: 74px; height: 74px; border: 0; text-decoration: none; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; display: block; Margin: 0 auto; border-radius: 50%;" height=""></a>
+              </td>
+            </tr>
+            <tr>
+              <td height="10" style="font-size: 1px; line-height: 1px;">&nbsp;</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td class="pc-fb-font" valign="top" style="text-align: center; font-family: \'Lato\', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 500; line-height: 21px; letter-spacing: -0.1px; color: #1B1B1B;"><a href="__MEMBER_URL__">__MEMBER_NAME__</a></td>
+            </tr>
+            <tr>
+              <td height="2" style="font-size: 1px; line-height: 1px;">&nbsp;</td>
+            </tr>
+          </tbody>
+          __MEMBER_TITLE_HTML__
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>';
+
+  // Member title
+  $member_title_template = '<tbody>
+  <tr>
+    <td class="pc-fb-font" valign="top" style="text-align: center; font-family: \'Lato\', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 300; line-height: 20px; letter-spacing: -0.2px; color: #9B9B9B;">__MEMBER_TITLE__</td>
+  </tr>
+</tbody>';
+
+  // Membe name
+   $member_name = strip_tags($member_name);
+
+  // Member title
+  $member_title_html = "";
+  $member_title = strip_tags($member_title);
+  if ($member_title != "") {
+    $member_title_html = str_replace("__MEMBER_TITLE__", $member_title, $member_title_template);
+  }
+ 
+  // Render member
+  $member_html = str_replace("__MEMBER_NAME__", $member_name, $member_template);
+  $member_html = str_replace("__MEMBER_TITLE_HTML__", $member_title_html, $member_html);
+  $member_html = str_replace("__MEMBER_URL__", $member_url, $member_html);
+  $member_html = str_replace("__MEMBER_IMAGE_SRC__", $member_image_src, $member_html);
+
+  return $member_html;
+}

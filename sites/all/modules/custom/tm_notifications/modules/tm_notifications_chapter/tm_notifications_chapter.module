@@ -181,7 +181,8 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
   }
   $member_title = implode(", ", $member_titles);
   $member_url = "__SERVER_HTTP__://__SERVER_NAME__/user/" . $who_joined->uid;
-  $member_image_src = _tm_users_get_avatar_uri($who_joined);
+  $member_avatar_url = image_style_url("avatar", _tm_users_get_avatar_uri($who_joined));
+  $member_image_src = file_create_url($member_avatar_url);
   $member_html = tm_notifications_render_member_html($member_name, $member_title, $member_url, $member_image_src);
 
   // hero headline

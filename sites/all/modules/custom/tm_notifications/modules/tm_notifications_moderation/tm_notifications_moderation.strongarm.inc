@@ -23,20 +23,15 @@ function tm_notifications_moderation_strongarm() {
     ),
     'email' => array(
       'subject' => 'Member reported: __REPORTED_FULL_NAME__',
-      'message' => 'Hi,
-<br>
-<br>The following account was reported by <a href="__SERVER_HTTP__://__SERVER_NAME__/__REPORTING_PROFILE_URL__">__REPORTING_FULL_NAME__</a>:
-<br>
-<br>Name: __REPORTED_FULL_NAME__
-<br>Profile: <a href="__SERVER_HTTP__://__SERVER_NAME__/__REPORTED_PROFILE_URL__">__SERVER_NAME__/__REPORTED_PROFILE_URL__</a>
-<br>ID: __REPORTED_PROFILE_ID__
+      'message' => 'The following account was reported by <a href="__SERVER_HTTP__://__SERVER_NAME__/__REPORTING_PROFILE_URL__">__REPORTING_FULL_NAME__</a>.
+__MEMBER_WIDGET__
+ID: __REPORTED_PROFILE_ID__
 <br>Reason: __REPORT_REASON__
 __REPORT_MESSAGE__
 <br>
-<br><strong>Please review the account and address the reported issue. You can respond to the member who reported this issue by replying to this email.</strong>
+<br><strong>Please review the account and address the reported issue. You can respond to the member who reported by replying to this email.</strong>
 <br>
-<br>
-<br>Community guidelines: __COMMUNITY_VALUES_URL__
+<br>See our <a href="__COMMUNITY_VALUES_URL__">community guidelines</a> for reference.
 <br>
 <br>__EMAIL_SIGNOFF__
 ',
@@ -57,20 +52,17 @@ __REPORT_MESSAGE__
     ),
     'email' => array(
       'subject' => 'Organization reported: __REPORTED_ORGANIZATION_NAME__',
-      'message' => 'Hi,
-<br>
-<br>The following organization profile was reported by <a href="__SERVER_HTTP__://__SERVER_NAME__/__REPORTING_PROFILE_URL__">__REPORTING_FULL_NAME__</a>:
+      'message' => 'The following organization profile was reported by <a href="__SERVER_HTTP__://__SERVER_NAME__/__REPORTING_PROFILE_URL__">__REPORTING_FULL_NAME__</a>.
 <br>
 <br>Name: __REPORTED_ORGANIZATION_NAME__
-<br>Profile: <a href="__SERVER_HTTP__://__SERVER_NAME__/__REPORTED_PROFILE_URL__">__SERVER_NAME__/__REPORTED_PROFILE_URL__</a>
+<br>Profile: <a href="__SERVER_HTTP__://__SERVER_NAME__/node/__REPORTED_PROFILE_ID__">__SERVER_NAME__/__REPORTED_PROFILE_URL__</a>
 <br>ID: __REPORTED_PROFILE_ID__
 <br>Reason: __REPORT_REASON__
 __REPORT_MESSAGE__
 <br>
-<br><strong>Please review the account and address the reported issue. You can respond to the member who reported this issue by replying to this email.</strong>
+<br><strong>Please review the account and address the reported issue. You can respond to the member who reported by replying to this email.</strong>
 <br>
-<br>
-<br>Community guidelines: __COMMUNITY_VALUES_URL__
+<br>See our <a href="__COMMUNITY_VALUES_URL__">community guidelines</a> for reference.
 <br>
 <br>__EMAIL_SIGNOFF__
 ',

@@ -23,13 +23,10 @@ function tm_notifications_new_follower_strongarm() {
       'message' => 'Hi [user:field_user_first_name],
 <br>
 <br>__USER_FIRST_NAME__ __USER_LAST_NAME__ just followed you on __SITE_NAME__.
-<br>__FOLLOWER_MESSAGE__
-<br>You can view their profile here:
-<br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
-<br>
+__MEMBER_WIDGET__
+__FOLLOWER_MESSAGE__
 __MESSAGING_INSTRUCTIONS__
-<br>__EMAIL_SIGNOFF__
+__EMAIL_SIGNOFF__
 ',
     ),
   );
@@ -49,10 +46,9 @@ __MESSAGING_INSTRUCTIONS__
       'message' => 'Hi [user:field_user_first_name],
 <br>
 <br>__USER_FIRST_NAME__ __USER_LAST_NAME__ just __ACTION__ <a href="__SERVER_HTTP__://__SERVER_NAME__/node/__PROFILE_NID__">[node:title]</a> on __SITE_NAME__.
-<br>__FOLLOWER_MESSAGE__
-<br>You can view their profile here:
-<br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
+__MEMBER_WIDGET__
+__FOLLOWER_MESSAGE__
+__FOLLOWER_COUNT_MESSAGE__
 <br>
 <br>__EMAIL_SIGNOFF__
 ',

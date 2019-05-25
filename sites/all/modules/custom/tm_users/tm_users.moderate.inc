@@ -120,6 +120,12 @@ function tm_users_moderate_report_member($reported_user) {
   // Community values url
   $community_values_url = $conf["tm_community_values_url"];
 
+  // Hero headline
+  $hero_headline = tm_notifications_render_hero_headline_html("Member reported.");
+
+  // Member widget
+  $member_widget = tm_notifications_render_member_html($reported_user);
+
   // Notify all moderators
   $moderator_ids = tm_users_get_all_moderators();
   foreach ($moderator_ids as $moderator_id) {
@@ -127,7 +133,7 @@ function tm_users_moderate_report_member($reported_user) {
       // load the user to notify
       $moderator_user = user_load($moderator_id);
 
-      tm_notifications_notify('user_report_member', $moderator_user, array('reporting_user' => $reporting_user, 'reported_user' => $reported_user, '__REPORTING_PROFILE_URL__' => $reporting_profile_url, '__REPORTED_PROFILE_URL__' => $reported_profile_url, '__REPORTED_PROFILE_ID__' => $reported_profile_id, '__REPORT_REASON__' => $report_reason_safe, '__REPORT_MESSAGE__' => $report_message_safe, '__COMMUNITY_VALUES_URL__' => $community_values_url, '__REPLY_TO__' => $reply_to, '__REPORTING_FULL_NAME__' => $reporting_full_name, '__REPORTED_FULL_NAME__' => $reported_full_name, '__REPORTING_EMAIL__' => $reporting_user_mail, 'hide_branding_message' => true));
+      tm_notifications_notify('user_report_member', $moderator_user, array('reporting_user' => $reporting_user, 'reported_user' => $reported_user, '__REPORTING_PROFILE_URL__' => $reporting_profile_url, '__REPORTED_PROFILE_URL__' => $reported_profile_url, '__REPORTED_PROFILE_ID__' => $reported_profile_id, '__REPORT_REASON__' => $report_reason_safe, '__REPORT_MESSAGE__' => $report_message_safe, '__COMMUNITY_VALUES_URL__' => $community_values_url, '__REPLY_TO__' => $reply_to, '__REPORTING_FULL_NAME__' => $reporting_full_name, '__REPORTED_FULL_NAME__' => $reported_full_name, '__REPORTING_EMAIL__' => $reporting_user_mail, '__HERO_HEADLINE__' => $hero_headline, '__MEMBER_WIDGET__' => $member_widget, 'hide_branding_message' => true));
   }
 
   // flag user

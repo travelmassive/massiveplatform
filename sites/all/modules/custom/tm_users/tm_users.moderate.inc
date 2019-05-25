@@ -47,7 +47,13 @@ function tm_users_moderate_non_community_profile($user){
   $community_values_url = $conf["tm_community_values_url"];
   $membership_criteria_message = $conf["tm_notification_moderation_non_community_message"];
 
-  tm_notifications_notify('user_approval_non_community', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe, '__COMMUNITY_VALUES_URL__' => $community_values_url, '__REPLY_TO__' => $reply_to, '__MODERATION_MEMBERSHIP_CRITERIA__' => $membership_criteria_message, 'hide_branding_message' => true));
+  // hero headline
+  $hero_headline = tm_notifications_render_hero_headline_html("Do you meet our membership criteria?");
+
+  // generate member html
+  $member_widget = tm_notifications_render_member_html($user);
+
+  tm_notifications_notify('user_approval_non_community', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe, '__COMMUNITY_VALUES_URL__' => $community_values_url, '__REPLY_TO__' => $reply_to, '__MODERATION_MEMBERSHIP_CRITERIA__' => $membership_criteria_message, '__HERO_HEADLINE__' => $hero_headline, '__MEMBER_WIDGET__' => $member_widget, 'hide_branding_message' => true));
 
   // flag the user their profile does not meet community values
   flag('unflag', 'moderate_non_community_profile', $user->uid, $approving_user);

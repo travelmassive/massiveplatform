@@ -22,21 +22,14 @@ function tm_notifications_approval_strongarm() {
       'subject' => 'Action required for approval: Your __SITE_NAME__ account must be an individual profile',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>We can\'t approve your account because it looks like you\'ve created an account for a company or brand. See below for how to get your account approved and how to add a company page.
+<br>We can\'t approve your account because it looks like you\'ve created an account for a company or brand.
 <br>
 __MODERATOR_MESSAGE__
-<br><strong>Please read carefully:</strong>
-<br>All accounts on __SITE_NAME__ are for individual use. After your account is approved, you can then add and manage your company page which will be displayed on our <a href="__SERVER_HTTP__://__SERVER_NAME__/companies">company directory</a>.
+<br><strong>All accounts on __SITE_NAME__ are for individuals (people).</strong>
 <br>
-<br><strong>How to add your company page:</strong>
-<br>First, sign in and update your profile so it\'s about yourself (not your brand) to get approved. Once your individual account is approved, you can add a company page from your account menu.
-<br>
-<br><strong>What you need to do:</strong>
-<br>Please sign in and personalize your profile:
-<br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
-<br>
-<br><strong>Once you\'ve personalized your account, we\'ll be able to approve you and you can add your company page.</strong>
+<br>Please personalize <a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">your profile</a></strong> &mdash; <i>it only takes a few minutes.</i>
+__MEMBER_WIDGET__
+<strong>Once you\'ve personalized your account, we\'ll be able to approve you and you can add a <a href="__SERVER_HTTP__://__SERVER_NAME__/companies">company page</a>.</strong>
 <br>
 <br>Here\'s some tips to get approved:
 <ul>
@@ -45,7 +38,7 @@ __MODERATOR_MESSAGE__
 <li>Upload a photo of yourself so members can recognize you</li>
 <li>Tell us what city you are based in</li>
 <li>Fill out your profile questions</li>
-<li>Provide links to your website, Twitter, Facebook or LinkedIn accounts</li>
+<li>Provide links to your personal LinkedIn or social media accounts</li>
 </ul>
 <br><strong>I\'ve updated my account, what next?</strong>
 <br>Tap "Approve my account" from your account menu. Our team will review your profile and you\'ll be notified when you are approved.
@@ -74,12 +67,9 @@ __MODERATOR_MESSAGE__
 <br>Your profile needs to be completed before we can approve it.
 <br>
 __MODERATOR_MESSAGE__
-<br><strong>What you need to do:</strong>
-<br>Please sign in and complete your profile:
-<br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
-<br>
-<br>Here\'s some tips to get approved:
+<br>Please complete <a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">your profile</a></strong> &mdash; <i>it only takes a few minutes.</i>
+__MEMBER_WIDGET__
+Here\'s some tips to get approved:
 <ul>
 <li>Tell us about yourself in the "About me" section</li>
 <li>Upload a profile picture so members can recognize you</li>
@@ -87,7 +77,7 @@ __MODERATOR_MESSAGE__
 <li>Fill out your Job Role and Organization Name</li>
 <li>Update your Industry Segment</li>
 <li>Fill out your profile questions</li>
-<li>Provide links to your website, Twitter, Facebook or LinkedIn accounts</li>
+<li>Provide links to your website, or social media accounts</li>
 </ul>
 <br><strong>I\'ve updated my account, what next?</strong>
 <br>Tap "Approve my account" from your account menu. Our team will review your profile and you\'ll be notified when you are approved.
@@ -114,6 +104,7 @@ __MODERATOR_MESSAGE__
       'message' => 'Hi [user:field_user_first_name],
 <br>
 <br>__APPROVAL_INTRO_TEXT__
+__MEMBER_WIDGET__
 <br>You can view your profile here:
 <br>
 <br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
@@ -143,14 +134,17 @@ __MODERATOR_MESSAGE__
       'subject' => 'Approval request: __USER_FIRST_NAME__ __USER_LAST_NAME__ requested approval on __SITE_NAME__',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>__USER_FIRST_NAME__ __USER_LAST_NAME__ has requested approval of their account:
+<br>__USER_FIRST_NAME__ __USER_LAST_NAME__ has requested approval of their account.
+__MEMBER_WIDGET__
+Reason for joining: <i>__REASON_FOR_JOINING__</i>
 <br>
-<br>Please review their profile:
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
+<br><strong>What you need to do:</strong>
+<br>Please review their <a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">profile page</a> and decide if you will approve their membership to our community.
 <br>
-<br>Reason for joining: __REASON_FOR_JOINING__
+<br><strong>How to approve (or flag) their account:</strong>
+<br>To approve the member select the "Approve member" option from their profile page &mdash; or flag their account as incomplete, a company, or if they do not meet our membership criteria.
 <br>
-<br>If you are satisfied with their profile you may approve the account. To approve the account select the "Approve member" option on their profile page menu.
+<br>Thanks for helping to moderate our growing community.
 <br>
 <br>__EMAIL_SIGNOFF__
 ',
@@ -170,23 +164,21 @@ __MODERATOR_MESSAGE__
       'subject' => 'Action required: Your __SITE_NAME__ profile doesn\'t meet our membership guidelines',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>Thanks for signing up, however it looks like your account doesn\'t meet our <a href="__COMMUNITY_VALUES_URL__">membership guidelines</a>.
+<br>Thanks for signing up, however it looks like your account doesn\'t meet our <a href="__COMMUNITY_VALUES_URL__">membership criteria</a>.
 <br>
 __MODERATOR_MESSAGE__
 <br>__MODERATION_MEMBERSHIP_CRITERIA__
 <br>
-<br><strong>What you need to do:</strong>
-<br>If you meet the membership guidelines, please update your profile to demonstrate clearly how you meet the criteria:
-<br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
-<br>
-<br><strong>I\'ve updated my account, what next?</strong>
+<br><strong>I meet the criteria &mdash; what do I need to do?</strong>
+<br>Please update your profile to show how you meet the criteria:
+__MEMBER_WIDGET__
+<strong>I\'ve updated my account, what next?</strong>
 <br>Tap "Approve my account" from your account menu. Our team will review your profile and you\'ll be notified when you are approved.
-<br>
-<br>If you need any assistance please reply to this email.
 <br>
 <br><strong>Important:</strong>
 <br>We may remove your account without further notice if you are unable to respond to this request or meet our community guidelines.
+<br>
+<br>If you need any assistance please reply to this email.
 <br>
 <br>__EMAIL_SIGNOFF__
 <p><small>(Moderator: __MODERATOR_FIRST_NAME__)</small></p>

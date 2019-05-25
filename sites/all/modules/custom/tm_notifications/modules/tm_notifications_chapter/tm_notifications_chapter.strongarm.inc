@@ -26,9 +26,7 @@ function tm_notifications_chapter_strongarm() {
 <br>__USER_FIRST_NAME__ __USER_LAST_NAME__ just joined your chapter [node:title].
 <br>
 __MEMBER_WIDGET__
-Check out their profile and welcome them to the community.
-<br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
+Check out their profile and welcome them to the community 🎉
 <br>
 __ADDED_BY_MESSAGE__
 <br>__APPROVED_BY_MESSAGE__

@@ -42,9 +42,14 @@ function tm_users_approve($user) {
       $reply_to = $approving_user->mail;
     }
 
-    global $conf;
+    // hero headline
+    $hero_headline = tm_notifications_render_hero_headline_html("You're account is approved.");
+
+    // generate member html
+    $member_widget = tm_notifications_render_member_html($user);
+
     $approval_welcome_message = $conf["tm_notification_approval_welcome_message"];
-    tm_notifications_notify('user_approved', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__APPROVAL_INTRO_TEXT__' => $approval_text, '__REPLY_TO__' => $reply_to, '__APPROVAL_WELCOME_MESSAGE__' => $approval_welcome_message));
+    tm_notifications_notify('user_approved', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__APPROVAL_INTRO_TEXT__' => $approval_text, '__REPLY_TO__' => $reply_to, '__APPROVAL_WELCOME_MESSAGE__' => $approval_welcome_message, '__HERO_HEADLINE__' => $hero_headline, "__MEMBER_WIDGET__" => $member_widget));
 
     // Remove any moderation flags the user has
 
@@ -204,8 +209,8 @@ function tm_users_request_approval($user) {
   $moderator_ids = array_unique($moderator_ids);
 
   // notify list of moderators
-  $first_name = $user->field_user_first_name['und'][0]['value'];
-  $last_name = $user->field_user_last_name['und'][0]['value'];
+  $first_name = $user->field_user_first_name[LANGUAGE_NONE][0]['value'];
+  $last_name = $user->field_user_last_name[LANGUAGE_NONE][0]['value'];
 
   // send notification
   $reason_for_joining_safe = strip_tags(check_plain($reason_for_joining));
@@ -213,10 +218,16 @@ function tm_users_request_approval($user) {
     $reason_for_joining_safe = "(not provided)";
   }
 
+  // hero headline
+  $hero_headline = tm_notifications_render_hero_headline_html("Approval request");
+
+  // generate member html
+  $member_widget = tm_notifications_render_member_html($user);
+
   foreach ($moderator_ids as $uid) {
 
       $notify_user = user_load($uid);
-      tm_notifications_notify('user_requested_approval', $notify_user, array('user' => $notify_user, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__REASON_FOR_JOINING__' => $reason_for_joining_safe));
+      tm_notifications_notify('user_requested_approval', $notify_user, array('user' => $notify_user, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__REASON_FOR_JOINING__' => $reason_for_joining_safe, '__HERO_HEADLINE__' => $hero_headline, '__MEMBER_WIDGET__' => $member_widget));
   }
 
   // flag user as having requested approval
@@ -262,7 +273,13 @@ function tm_users_approval_need_more_info($user){
     $reply_to = $approving_user->mail;
   }
 
-  tm_notifications_notify('user_approval_need_more_info', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe, '__REPLY_TO__' => $reply_to));
+  // hero headline
+  $hero_headline = tm_notifications_render_hero_headline_html("Please update your profile.");
+
+  // generate member html
+  $member_widget = tm_notifications_render_member_html($user);
+
+  tm_notifications_notify('user_approval_need_more_info', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe, '__REPLY_TO__' => $reply_to, '__HERO_HEADLINE__' => $hero_headline, '__MEMBER_WIDGET__' => $member_widget));
 
   // unflag then flag again
   flag('unflag', 'approval_need_more_info', $user->uid, $approving_user);
@@ -310,7 +327,13 @@ function tm_users_approval_is_company_or_brand($user){
     $reply_to = $approving_user->mail;
   }
 
-  tm_notifications_notify('user_approval_is_company_or_brand', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe, '__REPLY_TO__' => $reply_to));
+  // hero headline
+  $hero_headline = tm_notifications_render_hero_headline_html("Your profile needs to be about you (not your brand).");
+
+  // generate member html
+  $member_widget = tm_notifications_render_member_html($user);
+
+  tm_notifications_notify('user_approval_is_company_or_brand', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe, '__REPLY_TO__' => $reply_to, '__HERO_HEADLINE__' => $hero_headline, '__MEMBER_WIDGET__' => $member_widget));
 
   // flag the user that its a company or brand
   flag('unflag', 'approval_is_company_or_brand', $user->uid, $approving_user);

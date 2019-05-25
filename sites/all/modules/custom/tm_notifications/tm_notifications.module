@@ -732,7 +732,7 @@ function tm_notifications_render_button_html($button_label, $button_url) {
 /**
  * Helper method to render member
  */
-function tm_notifications_render_member_html($member_name, $member_title, $member_url, $member_image_src) {
+function tm_notifications_render_member_html($account) {
 
   // Member template
   $member_template = '<table border="0" cellpadding="0" cellspacing="0" width="100%" role="presentation">
@@ -743,7 +743,7 @@ function tm_notifications_render_member_html($member_name, $member_title, $membe
           <tbody>
             <tr>
               <td valign="top" align="center">
-                <a href="__MEMBER_URL__"><img src="__MEMBER_IMAGE_SRC__" width="74" alt="" style="max-width: 74px; height: 74px; border: 0; text-decoration: none; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; display: block; Margin: 0 auto; border-radius: 50%;" height=""></a>
+                <a href="__MEMBER_URL__"><img alt="__MEMBER_NAME__" src="__MEMBER_IMAGE_SRC__" width="74" alt="" style="max-width: 74px; height: 74px; border: 0; text-decoration: none; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; display: block; Margin: 0 auto; border-radius: 50%;" height=""></a>
               </td>
             </tr>
             <tr>
@@ -772,16 +772,45 @@ function tm_notifications_render_member_html($member_name, $member_title, $membe
   </tr>
 </tbody>';
 
-  // Membe name
-   $member_name = strip_tags($member_name);
+  // Fist name
+  $first_name = "Member";
+  if (isset($account->field_user_first_name[LANGUAGE_NONE][0]['value'])) {
+    $first_name = strip_tags($account->field_user_first_name[LANGUAGE_NONE][0]['value']);
+  }
+
+  // Last name
+  $last_name = "";
+  if (isset($account->field_user_last_name[LANGUAGE_NONE][0]['value'])) {
+    $last_name .= " " . strip_tags($account->field_user_last_name[LANGUAGE_NONE][0]['value']);
+  }
+
+  // Full name
+  $member_name = $first_name . " " . $last_name;
+  $member_name = str_replace("'", "", $member_name);
 
   // Member title
+  $member_titles = array();
+  if (isset($account->field_job_role[LANGUAGE_NONE][0]['value'])) {
+    $member_titles[] = strip_tags(trim($account->field_job_role[LANGUAGE_NONE][0]['value']));
+  }
+  if (isset($account->field_job_organization[LANGUAGE_NONE][0]['value'])) {
+    $member_titles[] = strip_tags(trim($account->field_job_organization[LANGUAGE_NONE][0]['value']));
+  }
+  $member_title = strip_tags(implode(", ", $member_titles));
+
+  // Member title html
   $member_title_html = "";
-  $member_title = strip_tags($member_title);
   if ($member_title != "") {
     $member_title_html = str_replace("__MEMBER_TITLE__", $member_title, $member_title_template);
   }
- 
+
+  // Member url
+  $member_url = "__SERVER_HTTP__://__SERVER_NAME__/user/" . $account->uid;
+
+  // Avatar
+  $member_avatar_url = image_style_url("avatar", _tm_users_get_avatar_uri($account));
+  $member_image_src = file_create_url($member_avatar_url);
+
   // Render member
   $member_html = str_replace("__MEMBER_NAME__", $member_name, $member_template);
   $member_html = str_replace("__MEMBER_TITLE_HTML__", $member_title_html, $member_html);

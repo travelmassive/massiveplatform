@@ -283,6 +283,7 @@ $conf['tm_event_types_edit_tips']['community'] = "Make your event stand out. Her
 $conf['tm_event_types_edit_tips']['company'] = "Create a company event in our community.<br>Please follow our <a target='_blank' href='" . $conf['tm_community_values_url'] . "'>community guidelines</a>.";
 $conf['tm_event_types_edit_tips']['member'] = "Create a member event in our community.<br>Please follow our <a target='_blank' href='" . $conf['tm_community_values_url'] . "'>community guidelines</a>.";
 $conf['tm_event_types_labels'] = array("workshop" => "workshop"); // optional label when referencing event type. ie: "Attend this workshop" 
+$conf['tm_event_register_headlines'] = array("Hooray, see you there.", "Your spot is confirmed."); // list of headlines to use when member is registered
 
 /** PROFILE AND COMPANY LINK FIELDS **/
 /** Options available: website, twitter, facebook, linkedin, instagram, youtube, vimeo, snapchat **/

@@ -95,7 +95,7 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
   // get welcome message
   $welcome_message = "";
   $join_action = "Welcome to"; // ... chapter name
-  $intro_message = "<br>You're in!<br><br>Thanks for joining the <a href='__SERVER_HTTP__://__SERVER_NAME__/node/" . $node->nid . "'>" . $chapter_name . " Chapter</a>.";
+  $intro_message = "<br>Welcome to the <a href='__SERVER_HTTP__://__SERVER_NAME__/node/" . $node->nid . "'>" . strip_tags(tm_chapters_formal_name($node)) . "</a> community.";
   $chapter_join_action = "joined";
   $added_by_message = "";
 

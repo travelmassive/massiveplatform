@@ -281,14 +281,24 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
     if ($paid_for_event && $event_pricing != null) {
       $register_action_subject = "purchased a ticket to";
       $register_action_body = "just purchased a ticket to your event";
-      $register_payment_note = "<br><strong>Payment received:</strong> " . $event_pricing["currency_symbol"] . $event_pricing["display_amount"] . " (excludes processing fees)<br>";
+      $register_payment_note = "<strong>Payment received:</strong> " . $event_pricing["currency_symbol"] . $event_pricing["display_amount"] . " (excludes processing fees)<br><br>";
     }
 
      // let other organizers know who registered this member
     $registered_by_message = "";
     if ($static_register_member_moderator_first_name != null) {
-      $registered_by_message = "<br><br>This member was registered by " . $static_register_member_moderator_first_name . " " . $static_register_member_moderator_last_name . ".";
+      $registered_by_message = "This member was registered to the event by " . $static_register_member_moderator_first_name . " " . $static_register_member_moderator_last_name . ".<br><br>";
     }
+
+     // hero headline
+    $hero_headline = tm_notifications_render_hero_headline_html("One more person is attending.");
+    $hero_headline_unregister_event = tm_notifications_render_hero_headline_html("An attendee un-registered.");
+    $hero_headline_join_waitlist = tm_notifications_render_hero_headline_html("A member joined the waitlist.");
+    $hero_headline_leave_waitlist = tm_notifications_render_hero_headline_html("A member left the waitlist.");
+
+    // generate member html
+    $account_loaded = user_load($account->uid);
+    $member_widget = tm_notifications_render_member_html($account_loaded);
 
     foreach ($notify_ids as $notify_id) {
 
@@ -297,22 +307,26 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
 
       // events_register_flag
       if (($flag_or_unflag == "flag") && ($flag->name == 'event_register')) {
-        tm_notifications_notify('events_register_flag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $account->uid, '__EVENT_URL__' => $event_url, '__REGISTER_ACTION_SUBJECT__' => $register_action_subject, '__REGISTER_ACTION_BODY__' => $register_action_body, '__REGISTER_PAYMENT_NOTE__' => $register_payment_note, '__PROFILE_FULL_NAME__' => $profile_full_name, '__REGISTERED_BY_MESSAGE__' => $registered_by_message));
+        $hero_headline = tm_notifications_render_hero_headline_html("A member just registered.");
+        tm_notifications_notify('events_register_flag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $account->uid, '__EVENT_URL__' => $event_url, '__REGISTER_ACTION_SUBJECT__' => $register_action_subject, '__REGISTER_ACTION_BODY__' => $register_action_body, '__REGISTER_PAYMENT_NOTE__' => $register_payment_note, '__PROFILE_FULL_NAME__' => $profile_full_name, '__REGISTERED_BY_MESSAGE__' => $registered_by_message, '__HERO_HEADLINE__' => $hero_headline, '__MEMBER_WIDGET__' => $member_widget));
       }
 
       // events_register_unflag
       if (($flag_or_unflag == "unflag") && ($flag->name == 'event_register')) {
-        tm_notifications_notify('events_register_unflag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $account->uid, '__EVENT_URL__' => $event_url, '__PROFILE_FULL_NAME__' => $profile_full_name));
+        $hero_headline = "";
+        tm_notifications_notify('events_register_unflag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $account->uid, '__EVENT_URL__' => $event_url, '__PROFILE_FULL_NAME__' => $profile_full_name, '__HERO_HEADLINE__' => $hero_headline, '__MEMBER_WIDGET__' => $member_widget));
       }
 
       // waitlist_register_flag
       if (($flag_or_unflag == "flag") && ($flag->name == 'event_waitlist')) {
-        tm_notifications_notify('events_waitlist_flag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $account->uid, '__EVENT_URL__' => $event_url, '__PROFILE_FULL_NAME__' => $profile_full_name));
+        $hero_headline = "";
+        tm_notifications_notify('events_waitlist_flag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $account->uid, '__EVENT_URL__' => $event_url, '__PROFILE_FULL_NAME__' => $profile_full_name, '__HERO_HEADLINE__' => $hero_headline, '__MEMBER_WIDGET__' => $member_widget));
       }
 
        // waitlist_register_unflag
       if (($flag_or_unflag == "unflag") && ($flag->name == 'event_waitlist')) {
-        tm_notifications_notify('events_waitlist_unflag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $account->uid, '__EVENT_URL__' => $event_url, '__PROFILE_FULL_NAME__' => $profile_full_name));
+        $hero_headline = "";
+        tm_notifications_notify('events_waitlist_unflag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $account->uid, '__EVENT_URL__' => $event_url, '__PROFILE_FULL_NAME__' => $profile_full_name, '__HERO_HEADLINE__' => $hero_headline, '__MEMBER_WIDGET__' => $member_widget));
       }
       
     }
@@ -340,13 +354,13 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
       $message = trim(strip_tags(check_plain($event->field_register_event_message['und'][0]['value'])));
       $message = str_replace("\n", "<br>", $message); // add line breaks
       if ($message != "") {
-        $message = "<br><strong>Additional Information</strong>: " . $message . "<br>";
+        $message = "<br><strong>Additional Information</strong>:<p>" . $message . "</p>";
       }
     }
 
     // Adjust text for paid ticket
     $member_register_subject = "You are now registered for";
-    $member_register_intro = "You are now signed up to attend the event:";
+    $member_register_intro = "You are now signed up to attend";
 
     // If registered by chapter leader or moderator
     if ($static_register_member_moderator_first_name != null) {
@@ -374,7 +388,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
     drupal_static_reset("tm_flagged_by_auto_register_waitlist");
     if ($tm_flagged_by_auto_register_waitlist != null) {
       if ($tm_flagged_by_auto_register_waitlist == true) {
-        $member_register_intro = "<br>We have automatically registered you due to a cancellation of another member. You were next on the waitlist, so we hope you can make it.</strong><br>" . $member_register_intro;
+        $member_register_intro = "<strong>We have automatically registered you due to a cancellation of another member. You were next on the waitlist, so we hope you can make it.</strong><br><br>" . $member_register_intro;
       }
     }
    
@@ -387,7 +401,15 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
       $moderator_message = $static_register_member_moderator_message;
     }
 
-    tm_notifications_notify('events_register_flag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url, '__MAP_LINK__' => $map_link_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time, '__REGISTER_EVENT_MESSAGE__' => $message, '__REGISTER_SUBJECT__' => $member_register_subject, '__REGISTER_INTRO__' => $member_register_intro, '__REGISTER_PAYMENT_NOTE__' => $member_register_payment_note, '__EVENT_CALENDAR_LINK__' => $event_calendar_link, '__MODERATOR_MESSAGE__' => $moderator_message));
+    // choose a random headline
+    $hero_headline = "";
+    if (isset($conf["tm_event_register_headlines"])) {
+      $headlines = $conf["tm_event_register_headlines"];
+      $headline = $headlines[array_rand($headlines)];
+      $hero_headline = tm_notifications_render_hero_headline_html($headline);
+    }
+
+    tm_notifications_notify('events_register_flag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url, '__MAP_LINK__' => $map_link_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time, '__REGISTER_EVENT_MESSAGE__' => $message, '__REGISTER_SUBJECT__' => $member_register_subject, '__REGISTER_INTRO__' => $member_register_intro, '__REGISTER_PAYMENT_NOTE__' => $member_register_payment_note, '__EVENT_CALENDAR_LINK__' => $event_calendar_link, '__MODERATOR_MESSAGE__' => $moderator_message, '__HERO_HEADLINE__' => $hero_headline));
   }
 
   // events_register_unflag
@@ -404,11 +426,12 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
       $message = trim(strip_tags(check_plain($event->field_waitlist_event_message['und'][0]['value'])));
       $message = str_replace("\n", "<br>", $message); // add line breaks
       if ($message != "") {
-        $message = "<br><strong>Additional Information</strong>: " . $message . "<br>";
+        $message = "<br><strong>Additional Information</strong>: <p>" . $message . "</p>";
       }
     }
 
-    tm_notifications_notify('events_waitlist_flag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time, '__WAITLIST_EVENT_MESSAGE__' => $message));
+    $hero_headline = tm_notifications_render_hero_headline_html("You're on the waitlist.");
+    tm_notifications_notify('events_waitlist_flag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time, '__WAITLIST_EVENT_MESSAGE__' => $message, '__HERO_HEADLINE__' => $hero_headline));
   }
 
   // waitlist_register_unflag

@@ -23,19 +23,11 @@ function tm_notifications_events_strongarm() {
       'subject' => '__PROFILE_FULL_NAME__ __REGISTER_ACTION_SUBJECT__ [node:title]',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>__PROFILE_FULL_NAME__ __REGISTER_ACTION_BODY__ [node:title].
+<br>__PROFILE_FULL_NAME__ __REGISTER_ACTION_BODY__ <a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">[node:title]</a>.
+__MEMBER_WIDGET__
+__REGISTER_PAYMENT_NOTE__
 __REGISTERED_BY_MESSAGE__
-<br>__REGISTER_PAYMENT_NOTE__
-<br>You can view their profile here:
-<br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
-<br>
-<br>Here\'s the link to your event:
-<br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">__SERVER_NAME__/__EVENT_URL__</a>
-<br>
-<br>
-<br>__EMAIL_SIGNOFF__
+__EMAIL_SIGNOFF__
 ',
     ),
   );
@@ -55,17 +47,9 @@ __REGISTERED_BY_MESSAGE__
       'subject' => '__PROFILE_FULL_NAME__ just un-registered for [node:title]',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>__PROFILE_FULL_NAME__ just removed their registration for your event: [node:title].
-<br>
-<br>You can view their profile here:
-<br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
-<br>
-<br>Here\'s the link to your event:
-<br>
-<a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">__SERVER_NAME__/__EVENT_URL__</a>
-<br>
-<br>__EMAIL_SIGNOFF__
+<br>__PROFILE_FULL_NAME__ just un-registered from <a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">[node:title]</a>.
+__MEMBER_WIDGET__
+__EMAIL_SIGNOFF__
 ',
     ),
   );
@@ -81,20 +65,12 @@ __REGISTERED_BY_MESSAGE__
     'change_allowed' => 1,
     'change_allowed_roles' => array("chapter leader"),
     'email' => array(
-      'subject' => '__PROFILE_FULL_NAME__ just registered for the waitlist to [node:title]',
+      'subject' => '__PROFILE_FULL_NAME__ just joined the waitlist for [node:title]',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>__PROFILE_FULL_NAME__ just signed up to the waiting list for your event: [node:title].
-<br>
-<br>You can view their profile here:
-<br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
-<br>
-<br>Here\'s the link to your event:
-<br>
-<a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">__SERVER_NAME__/__EVENT_URL__</a>
-<br>
-<br>__EMAIL_SIGNOFF__
+<br>__PROFILE_FULL_NAME__ just joined the waiting list for <a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">[node:title]</a>.
+__MEMBER_WIDGET__
+__EMAIL_SIGNOFF__
 ',
     ),
   );
@@ -114,17 +90,9 @@ __REGISTERED_BY_MESSAGE__
       'subject' => '__PROFILE_FULL_NAME__ just un-registered from the waitlist for [node:title]',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>__PROFILE_FULL_NAME__ just removed their waiting list registration for your event [node:title].
-<br>
-<br>You can view their profile here:
-<br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
-<br>
-<br>Here\'s the link to your event:
-<br>
-<a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">__SERVER_NAME__/__EVENT_URL__</a>
-<br>
-<br>__EMAIL_SIGNOFF__
+<br>__PROFILE_FULL_NAME__ just left the waiting list for <a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">[node:title]</a>.
+__MEMBER_WIDGET__
+__EMAIL_SIGNOFF__
 ',
     ),
   );
@@ -143,12 +111,13 @@ __REGISTERED_BY_MESSAGE__
       'subject' => '__REGISTER_SUBJECT__ [node:title]',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>__REGISTER_INTRO__ [node:title].
+<br>__REGISTER_INTRO__ <a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">[node:title]</a>.
 <br>
 __MODERATOR_MESSAGE__
-<br>Here\'s the event details to keep handy:
 <br>
-<br>[node:title]
+Here\'s the event details to keep handy &mdash;
+<br>
+<br><strong>[node:title]</strong>
 <br>Date: __EVENT_DATE__
 <br>Start: __EVENT_TIME__
 <br>Venue: [node:field_event_venue_name]
@@ -156,11 +125,8 @@ __MODERATOR_MESSAGE__
 <br><a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_CALENDAR_LINK__">Add to calendar</a>
 <br>
 __REGISTER_EVENT_MESSAGE__
-<br>See who else is attending by visiting the event page:
+<br>See who else is attending, or message the event organizers by visiting the <a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">event page</a>.
 <br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">__SERVER_NAME__/__EVENT_URL__</a>
-<br>
-<br>See you there!
 <br>__EMAIL_SIGNOFF__
 <br>__REGISTER_PAYMENT_NOTE__
 ',
@@ -181,11 +147,9 @@ __REGISTER_EVENT_MESSAGE__
       'subject' => 'You\'ve been un-registered for [node:title]',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>This is a confirmation that you\'ve been un-registered for the event [node:title].
+<br>This is a confirmation that you\'ve been un-registered from <a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">[node:title]</a>.
 <br>
-<br>If you\'d like to register again in the future, please visit the event page:
-<br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">__SERVER_NAME__/__EVENT_URL__</a>
+<br>If you\'d like to register again in the future, visit the event page.
 <br>
 <br>__EMAIL_SIGNOFF__
 ',
@@ -206,14 +170,11 @@ __REGISTER_EVENT_MESSAGE__
       'subject' => 'You\'re on the waitlist to [node:title]',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>This is a confirmation that you\'re on the waiting list for the event [node:title].
+<br>This is a confirmation that you\'re on the waiting list for <a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">[node:title]</a>.
 <br>
 __WAITLIST_EVENT_MESSAGE__
+<br><strong>How does the waitlist work?</strong>
 <br>We\'ll let you know if we\'re able to get you on the attendee list. Because of limited venue or event capacity we might not be able to fit everyone in.
-<br>
-<br>You can view the event details here:
-<br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">__SERVER_NAME__/__EVENT_URL__</a>
 <br>
 <br>__EMAIL_SIGNOFF__
 ',
@@ -234,11 +195,7 @@ __WAITLIST_EVENT_MESSAGE__
       'subject' => 'You\'ve been removed from the waitlist for [node:title]',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>This is a confirmation that we\'ve removed your waiting list registration for the event [node:title].
-<br>
-<br>If you\'d like to register again in the future, please visit the event page:
-<br>
-<br><a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">__SERVER_NAME__/__EVENT_URL__</a>
+<br>This is a confirmation that you have been removed from the waiting list to <a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">[node:title]</a>.
 <br>
 <br>__EMAIL_SIGNOFF__
 ',

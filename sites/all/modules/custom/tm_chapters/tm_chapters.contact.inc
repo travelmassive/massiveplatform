@@ -108,18 +108,16 @@ function tm_chapters_send_contact_email($chapter_leader_emails, $subject, $body,
     $member_url_uid = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/user/" . $user->uid;
     $chapter_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('node/' . $chapter->nid);
 
-    $message = "Hi, a member just sent a message via your Chapter contact form:";
-    $message .= "<br>";
-    $message .= "<br><i>Chapter: <a href='" . $chapter_url . "'>" . $chapter->title . "</a></i>";
-    $message .= "<br>";
-    $message .= "<br>Name: " . $name;
-    $message .= "<br>Subject: " . check_plain($subject);
+    // Member widget
+    $member_widget = tm_notifications_render_member_html($user);
+
+    $message = "Hi, a member just sent a message to <a href='" . $chapter_url . "'>" . strip_tags(tm_chapters_formal_name($chapter)) . "</a>.";
+    $message .= $member_widget;
+    $message .= "Subject: " . check_plain($subject);
+    $message .= "<br>Member's email: " . $reply;
     $message .= "<p><strong>Message:</strong><br>";
     $message .= str_replace("\n", "<br>", check_plain($body)); // add line breaks
     $message .= "</p>";
-    $message .= "<br>Member's profile: <a href='" . $member_url_uid . "'>" . $member_url . "</a>";
-    $message .= "<br>Member's email: " . $reply;
-    $message .= "<br>";
     $message .= "<br>To respond, just reply to this email.";
     $message .= "<br>";
     $message .= "<br>__EMAIL_SIGNOFF__";

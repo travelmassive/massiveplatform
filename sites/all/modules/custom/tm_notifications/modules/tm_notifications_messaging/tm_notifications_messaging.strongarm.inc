@@ -23,16 +23,12 @@ function tm_notifications_messaging_strongarm() {
       'message' => 'Hi [user:field_user_first_name],
 <br>
 <br>__USER_FIRST_NAME__ __USER_LAST_NAME__ just sent you a message on __SITE_NAME__.
-<br>
-<br><strong>Message:</strong>
+__MEMBER_WIDGET__
+<strong>Message:</strong>
 <br>
 <br> __MESSAGE__
 <br>
-<br>
 <br><strong>You can respond to __USER_FIRST_NAME__ by replying directly to this email.</strong>
-<br>
-<br>View their profile: <a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">__SERVER_NAME__/__PROFILE_URL__</a>
-<br>
 <br>
 <br>__EMAIL_SIGNOFF__
 ',

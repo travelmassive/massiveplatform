@@ -224,14 +224,22 @@ class TmNewsfeedEmail
 			$subject_base = $conf['tm_newsfeed_subject_base_weekly'];
 		}
 
-		// issue number
+		
+		// calculate issue number
+		// round to closest day/week of signup
+
+		$issue_num_text = "";
 		if ($date_interval->days <= 1) {
-			$issue_num = intval((time() - $account->created) / (60 * 60 * 24)) + 1;
-			$issue_num_text = "#" . $issue_num;
+			$issue_num = intval(round((time() - $account->created) / (60 * 60 * 24)));
+			if ($issue_num > 0) {
+				$issue_num_text = "#" . $issue_num;
+			}
 		}
 		if ($date_interval->days > 5) {
-			$issue_num = intval((time() - $account->created) / (60 * 60 * 24 * 7)) + 1;
-			$issue_num_text = "#" . $issue_num;
+			$issue_num = intval(round((time() - $account->created) / (60 * 60 * 24 * 7)));
+			if ($issue_num > 0) {
+				$issue_num_text = "#" . $issue_num;
+			}
 		}
 
 		// add extra text

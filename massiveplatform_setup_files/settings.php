@@ -648,13 +648,6 @@ $conf['tm_newsfeed_subject_base'] = "What's happening in the community";
 $conf['tm_newsfeed_subject_base_daily'] = "Your daily community update";
 $conf['tm_newsfeed_subject_base_weekly'] = "This week in the community";
 
-// subject extra text if no updates available to customise with
-$conf['tm_newsfeed_subject_extra_fallbacks'] = array(
-  "(Events to attend + more)",
-  "(Blog posts not to be missed + more)",
-  "(New users to follow + more)"
-  );
-
 // email tips
 $conf["tm_newsfeed_email_tip_not_approved"] = "<b>Join over __STATS_MEMBERS_APPROVED_TOTAL__ Approved Members &mdash; </b> complete your <a href='__USER_PROFILE_URL____UTM_CAMPAIGN__'>profile</a> and unlock more features.";
 $conf["tm_newsfeed_email_tip_find_members"] = "Find members you <a href='__FOLLOW_MEMBERS_URL__'>share an interest with</a> to build your network.";

@@ -141,7 +141,7 @@ Reason for joining: <i>__REASON_FOR_JOINING__</i>
 <br><strong>What you need to do:</strong>
 <br>Please review their <a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">profile page</a> and decide if you will approve their membership to our community.
 <br>
-<br><strong>How to approve (or flag) their account:</strong>
+<br><strong>How to approve (or moderate) their account:</strong>
 <br>To approve the member select the "Approve member" option from their profile page &mdash; or flag their account as incomplete, a company, or if they do not meet our membership criteria.
 <br>
 <br>Thanks for helping to moderate our growing community.

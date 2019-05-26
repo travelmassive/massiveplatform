@@ -245,7 +245,7 @@ class TmNewsfeedEmail
 		// add extra text
 		$subject_extra = $issue_num_text;
 		if (strlen($this->first_update_from) > 0) {
-			$subject_extra = ": Updates from " . strip_tags($this->first_update_from);
+			$subject_extra .= ": Updates from " . strip_tags($this->first_update_from);
 		}
 
 		$subject = "$subject_base $subject_extra";

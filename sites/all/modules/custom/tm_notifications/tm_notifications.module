@@ -316,7 +316,7 @@ function tm_notifications_mail($key, &$message, $params) {
   $template = str_replace("__PREHEADER_TEXT__", $preheader_text, $template); // insert preheader text
 
   // STEP 7. ADD BRANDING MESSAGE TO FOOTER
-  $show_branding = false;
+  $show_branding = true;
 
   // hide branding for event notifications and approval flagging
   if (array_search($key, array('events_register_flag', 'events_register_unflag', 'events_waitlist_flag', 'events_waitlist_unflag', 'events_register_flag_user', 'events_register_unflag_user', 'events_waitlist_flag_user', 'events_waitlist_unflag_user', 'user_approval_need_more_info', 'user_approval_is_company_or_brand', 'user_requested_approval', 'user_approval_non_community', 'user_chapter_join_notify_leaders', 'member_message'))) {

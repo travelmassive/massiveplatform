@@ -377,6 +377,10 @@ $conf["tm_chapters_announcements_subject_prefix"] = "A message from "; // defaul
 $conf["tm_chapters_announcements_enable_cover_image"] = true; // show cover image
 $conf["tm_chapters_announcements_prefill"] = "Hi [first_name],\n\n<p>Here's a short announcement from your local chapter leaders.</p>\n\n"; // default announcement text
 $conf["tm_chapters_announcements_signoff"] = "Cheers,<br>"; // default signoff text
+$conf["tm_chapters_download_csv_role_required"] = "pro chapter leader"; // role required to access csv
+$conf["tm_chapters_download_csv_role_required_title"] = "Download Member List"; // title
+$conf["tm_chapters_download_csv_role_required_message"] = "Hi __first_name__,<br><br>To download the membership list, you will need to sign our Chapter Agreement which sets out terms and conditions for using membership data, and keeping it safe.<br><br>If you have any questions, we'll be glad to assist."; // display message if chapter leader does not have role
+$conf["tm_chapters_download_csv_role_required_learn_more_url"] = "#"; // learn more URL
 
 /** THEME SETTINGS **/
 $conf["tm_theme_meta_color"] = "#007DB7"; // Set the theme color for mobile Android, iOS 

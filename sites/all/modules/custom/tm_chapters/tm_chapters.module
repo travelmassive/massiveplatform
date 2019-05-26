@@ -48,6 +48,9 @@ function tm_chapters_init() {
  * Implements hook_menu()
  */
 function tm_chapters_menu() {
+  
+  global $conf;
+
   $items['chapters/%/message'] = array(
     'title' => t('Message chapter leaders'),
     'page callback' => 'drupal_get_form',
@@ -59,6 +62,12 @@ function tm_chapters_menu() {
     'title' => t('Download Member List'),
     'page callback' => 'tm_chapters_download_csv',
     'access callback' => 'tm_chapters_download_csv_check_permission',
+    'type' => MENU_CALLBACK,
+  );
+  $items['chapters/%/export/message'] = array(
+    'title' => $conf["tm_chapters_download_csv_role_required_title"],
+    'page callback' => 'tm_chapters_download_csv_request_access_message',
+    'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
   $items['chapters/%/export/confirm'] = array(

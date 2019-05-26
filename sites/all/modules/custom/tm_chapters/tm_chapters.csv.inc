@@ -16,10 +16,25 @@ function tm_chapters_download_csv_check_permission() {
   }
 
   // check if:
-  // - chapter leader, or community manager
   // - moderator, or
   // - administrator
-  return (tm_users_is_chapter_leader($user->uid, $nid) or (in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles)));
+  if ((in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles))) {
+    return true;
+  }
+
+  // if chapter leader, or community manager
+  // check if has role
+  if (tm_users_is_chapter_leader($user->uid, $nid)) {
+    $access_role = $conf["tm_chapters_download_csv_role_required"];
+    if ((!in_array($access_role, $user->roles))) {
+          drupal_goto("/" . drupal_get_path_alias("node/" . $nid) . "/export/message");
+    } else {
+      return true;
+    }
+  }
+
+  // access denied
+  return false;
 
 }
 
@@ -35,6 +50,42 @@ function tm_chapters_preprocess_html(&$variables, $hook) {
   if ((arg(0) == "chapters") and (arg(2) == "export")) {
     $variables['classes_array'][] = "page-chapter-download-csv";
   }
+}
+
+/**
+ * Display message if user needs role to access
+ * example to add role:
+ * drush user-add-role "pro chapter leader" --mail=demo@example.massiveplatform.com
+ */
+function tm_chapters_download_csv_request_access_message() {
+
+  global $conf;
+  global $user;
+
+  // Create form
+  $form = array();
+
+  // Only chapter leaders can view message
+  if (!(in_array("chapter leader", $user->roles) or (in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles)))) {
+    drupal_access_denied();
+  }
+
+  // Swap in first name
+  $account = user_load($user->uid);
+  $terms_text = str_replace("__first_name__", $account->field_user_first_name[LANGUAGE_NONE][0]['value'], $conf["tm_chapters_download_csv_role_required_message"]); 
+
+  // Display terms
+  $html = "<p>" . $terms_text . "</p>";
+
+  // Agree and cancel buttons
+  $html .= '<input onClick="document.location=\'' . $conf["tm_chapters_download_csv_role_required_learn_more_url"] . '\'" type="submit" id="edit-submit" name="op" value="Learn more" class="form-submit">';
+  $html .= ' <input onClick="window.history.back()" type="submit" value="Cancel" class="form-submit">';
+
+
+  $form['confirm_agreement'] = array('#markup' => $html);
+
+  return $form;
+
 }
 
 /**
@@ -90,6 +141,12 @@ function tm_chapters_download_csv_confirm(){
   if($nid == 0) {
     print drupal_not_found();
     return;
+  }
+
+  // Additional check if 
+  // check if have permission
+  if (in_array($user->uid, $conf["tm_chapters_users_who_can_access_csv"])) {
+    return true;
   }
 
   // Get chapter

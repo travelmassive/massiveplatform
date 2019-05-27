@@ -173,13 +173,14 @@ function tm_events_communication_form($event) {
   }
 
   // Button label
+  $default_event_button_text = _tm_events_get_default_event_button_label($event->nid);
   $form['button_label'] = array(
     '#title' => t('Button label'),
     '#type' =>'textfield',
     '#id' => 'edit-button-label',
     '#disabled' => false,
     '#default_value' => "",
-    '#attributes' => array('placeholder' => 'Register Now'),
+    '#attributes' => array('placeholder' => $default_event_button_text),
     '#description' => 'Advanced &mdash; Change the label for the <i>[EVENT_BUTTON]</i> which links to your event page.'
     );
 
@@ -426,9 +427,12 @@ function tm_events_test_email_ajax(){
   // load event
   $event = node_load($eventid);
 
+  // default event button text
+  $default_event_button_text = _tm_events_get_default_event_button_label($eventid);
+
   // Replace [EVENT_BUTTON] token
   if (trim($button_label) == "") {
-    $button_label = "Register Now";
+    $button_label = $default_event_button_text;
   }
   $event_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('node/' . $event->nid);
   $button_html = tm_notifications_render_button_html($button_label, $event_url);
@@ -1133,4 +1137,21 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
   }
 
   return $prefill;
+}
+
+/**
+ * Helper method to determine default button label text
+ */
+function _tm_events_get_default_event_button_label($nid) {
+  
+  // Default event button text - "Register Now"
+  // If you have already sent an announcement - "View Event"
+  
+  $default_event_button_text = "Register Now";
+  $announcement_last_sent_flagged = flag_get_entity_flags("node", $nid, "announcement_last_sent");
+  if (sizeof($announcement_last_sent_flagged) > 0) {
+    $default_event_button_text = "View Event";
+  }
+
+  return $default_event_button_text;
 }

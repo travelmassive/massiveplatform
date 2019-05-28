@@ -25,6 +25,11 @@ function tm_search_api_view() {
 		drupal_add_js(array('tm_search' => array('marketplace_path' => $conf["tm_marketplace_menu_path"])), array('type' => 'setting'));
 	}
 
+	// forum
+	if (isset($conf["tm_search_forum_url"])) {
+		drupal_add_js(array('tm_search' => array('forum_path' => $conf["tm_search_forum_url"])), array('type' => 'setting'));
+	}
+
 	// load template
 	$template = file_get_contents(drupal_get_path('module', 'tm_search_api') .'/templates/tm_search_api_form.tpl.php');
 	$template = str_replace("__EXAMPLE_SEARCH__", $conf["tm_search_api_example_search"], $template);

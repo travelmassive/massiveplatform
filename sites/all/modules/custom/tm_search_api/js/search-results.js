@@ -527,16 +527,15 @@
 		window.location = "/" + marketplace_path + "/search/" + encodeURI(getSearchKeywordsFromResults());
 	});
 
-	// search external discussions
-	// todo: refer to a js setting
+	// search external forum
 	$(".search-external-qa").click(function(e) {
 		e.preventDefault();
-		// /discuss/#search?Search=example
-		var discuss_path = "discuss";
-		if (typeof Drupal.settings.tm_search.discuss_path !== 'undefined') {
-			discuss_path = Drupal.settings.tm_search.discuss_path;
+		// /forum/search?q=example
+		var forum_path = "/forum";
+		if (typeof Drupal.settings.tm_search.forum_path !== 'undefined') {
+			forum_path = Drupal.settings.tm_search.forum_path;
 		}
-		window.location = "/" + discuss_path + "/search?Search=" + encodeURI(getSearchKeywordsFromResults());
+		window.location = forum_path + "/search?q=" + encodeURI(getSearchKeywordsFromResults());
 	});
 
 	// search external google

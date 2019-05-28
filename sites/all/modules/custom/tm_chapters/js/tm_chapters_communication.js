@@ -50,7 +50,7 @@ tm_chapter_communication_send_emails = function(form_action) {
 
 	// check subject does not contain ! or $ or ALL CAPS
 	if (($('#edit-subject').val().indexOf("!") != -1) || ($('#edit-subject').val().indexOf("$") != -1) || ($('#edit-subject').val() === $('#edit-subject').val().toUpperCase())) {
-		jq_alert("Your subject line is spammy", "Please ensure your subject line does not contain:<ul><li>! or $ symbols</li><li>ALL CAPITALS</i></li><li>Pushy wording, such as 'Your last chance'</li></ul>");
+		jq_alert("Is your subject line spammy?", "Please ensure your subject line does not contain:<ul><li>! or $ symbols</li><li>ALL CAPITALS</i></li><li>Pushy wording, such as 'Your last chance'</li></ul>");
 		return false;
 	}
 

@@ -72,7 +72,7 @@ tm_communication_event_send_emails = function(form_action) {
 	}
 
 	// check subject does not contain ! or $ or ALL CAPS
-	if (($('#edit-headline-text').val().indexOf("!") != -1) || ($('#edit-headline-text').val().indexOf("$") != -1) || ($('#edit-headline-text').val() === $('#edit-headline-text').val().toUpperCase())) {
+	if (($('#edit-headline-text').val().indexOf("!") != -1) || ($('#edit-headline-text').val().indexOf("$") != -1) || (($('#edit-headline-text').val() === $('#edit-headline-text').val().toUpperCase()) && ($('#edit-headline-text').val().trim() !== ""))) {
 		jq_alert("Your headline is spammy", "Please ensure your headline does not contain:<ul><li>! or $ symbols</li><li>ALL CAPITALS</i></li><li>Pushy wording, ie: 'This is your last chance'</li></ul>");
 		return false;
 	}

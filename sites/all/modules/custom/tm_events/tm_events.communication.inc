@@ -413,6 +413,9 @@ function tm_events_test_email_ajax(){
   $headline_text = trim($_POST['headline_text']);
   $button_label = trim($_POST['button_label']);
 
+  // Remove blank lines created in editor
+  $message = str_replace("<p>&nbsp;</p>", "", $message);
+
   // Replace [first_name] token
   $message = str_replace("[first_name]", $first_name, $message);
   $subject = str_replace("[first_name]", $first_name, $subject);
@@ -975,6 +978,9 @@ function tm_events_send_emails_ajax() {
   $message_format = $_POST['message_format'];
   $headline_text = trim($_POST['headline_text']);
   $button_label = trim($_POST['button_label']);
+
+  // Remove blank lines created in editor
+  $message = str_replace("<p>&nbsp;</p>", "", $message);
 
   // If message format is text, add <br>'s
   if ($message_format == "text") {

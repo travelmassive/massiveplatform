@@ -310,6 +310,9 @@ function tm_chapters_test_email_ajax(){
   }
   $message_format = $_POST['message_format'];
 
+  // Remove blank lines created in editor
+  $message = str_replace("<p>&nbsp;</p>", "", $message);
+
   // Replace [first_name] token
   $message = str_replace("[first_name]", $first_name, $message);
   $subject = str_replace("[first_name]", $first_name, $subject);
@@ -707,6 +710,9 @@ function tm_chapters_send_emails_ajax() {
     $replyto = trim($_POST['replyto']);
   }
   $message_format = $_POST['message_format'];
+
+  // Remove blank lines created in editor
+  $message = str_replace("<p>&nbsp;</p>", "", $message);
 
   // If message format is text, add <br>'s
   if ($message_format == "text") {

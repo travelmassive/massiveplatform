@@ -40,11 +40,7 @@ function _tm_more_actions_process_chapter_menu($field, $title, &$links, &$menu_i
         $link_path = $current_uri.'/export';
         $links['chapter'][] = array(
           'wrapper_class' => array('chapter_download_csv'),
-          'content' => l(t('Download members list'), $link_path, array(
-            'attributes' => array( 
-            'title' => t('Download members list')
-            )
-          ))
+          'content' => '<a href="/' . $link_path . '">Download members list</a>'
         );
 
         // Display when last downloaded
@@ -91,11 +87,7 @@ function _tm_more_actions_process_chapter_menu($field, $title, &$links, &$menu_i
         $link_path = $current_uri.'/invitations';
         $links['chapter'][] = array(
           'wrapper_class' => array('chapter_invitations'),
-          'content' => l(t('Chapter invitations'), $link_path , array(
-            'attributes' => array( 
-            'title' => t('Chapter invitations')
-            )
-          ))
+           'content' => '<a href="/' . $link_path . '">Chapter invitations</a>'
         );
 
         // unapproved members
@@ -103,12 +95,25 @@ function _tm_more_actions_process_chapter_menu($field, $title, &$links, &$menu_i
         $link_path = $current_uri.'/unapproved-members';
         $links['chapter'][] = array(
           'wrapper_class' => array('chapter_unapproved_members'),
-          'content' => l(t($unapproved_label), $link_path , array(
-            'attributes' => array( 
-            'title' => t($unapproved_label)
-            )
-          ))
+          'content' => '<a href="/' . $link_path . '">' . $unapproved_label . '</a>'
         );
+
+        // show unapproved member count
+        $membership_counts = _tm_chapters_get_membership_counts($node->nid);
+        $members_unapproved_total = $membership_counts["members_unapproved_total"];
+        if ($membership_counts["members_unapproved_total"] > 0) {
+
+          $unapproved_members_html = "1 " . $conf["tm_unapproved_label"];
+          if ($membership_counts["members_unapproved_total"] > 1) {
+            $unapproved_members_html = $members_unapproved_total . " " . $conf["tm_unapproved_label_plural"];
+          }
+
+          $links['chapter'][] = array(
+            'wrapper_class' => array('chapter_unapproved_members'),
+            'content' => "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>" . $unapproved_members_html . "</span>" 
+          );
+
+        }
 
         // chapter announcement
         if ($conf['tm_chapters_announcements_enabled']) {
@@ -142,11 +147,7 @@ function _tm_more_actions_process_chapter_menu($field, $title, &$links, &$menu_i
         $link_path = $current_uri.'/insights';
         $links['chapter'][] = array(
           'wrapper_class' => array('chapter_insights'),
-          'content' => l(t('Chapter insights'), $link_path, array(
-            'attributes' => array( 
-            'title' => t('Chapter insights')
-            )
-          ))
+          'content' => '<a href="/' . $link_path . '">Chapter insights</a>'
         );
 
         // view nps results
@@ -165,11 +166,7 @@ function _tm_more_actions_process_chapter_menu($field, $title, &$links, &$menu_i
           $link_path = $current_uri.'/commissions';
           $links['chapter'][] = array(
             'wrapper_class' => array('chapter_commissions'),
-            'content' => l(t('Commissions'), $link_path, array(
-              'attributes' => array( 
-              'title' => t('Commissions')
-              )
-            ))
+            'content' => '<a href="/' . $link_path . '">Commissions</a>'
           );
         }
         

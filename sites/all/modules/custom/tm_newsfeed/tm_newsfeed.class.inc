@@ -151,7 +151,7 @@ class TmNewsfeedEmail
 				$chapter_id = $chapter_leaders_needed[array_rand($chapter_leaders_needed)];
 				$chapter_needed = node_load($chapter_id);
 				if ($chapter_needed != null) {
-					$chapter_leaders_needed_message = "<p><a href='" . tm_newfeed_absolute_url("node/" . $chapter_id) . tm_newsfeed_utm_campaign() . "'>" . tm_chapters_formal_name($chapter_needed) . "</a> is looking for a <a href='" . $conf["tm_newsfeed_leader_needed_link"] . tm_newsfeed_utm_campaign() . "'>Chapter Leader</a>" . $conf["tm_newsfeed_leader_needed_cta"] . "</p>";
+					$chapter_leaders_needed_message = "<p><a href='" . tm_newfeed_absolute_url("node/" . $chapter_id) . tm_newsfeed_utm_campaign() . "'>" . tm_chapters_formal_name($chapter_needed) . "</a> is looking for a <a href='" . $conf["tm_newsfeed_leader_needed_link"] . tm_newsfeed_utm_campaign() . "'>Chapter Leader</a>.</p>";
 				}
 			}
 		}
@@ -312,14 +312,14 @@ class TmNewsfeedEmail
 				if ($num_views >= $popular_views) {
 					$popular_text = $conf["tm_newsfeed_prefix_viewers_popular"];
 				}
-				$tip =  "<em>" . $popular_text . $num_views . " members have viewed <a href='" . $edit_url . "'>your profile</a> in the past week (<a href='" . $profile_views_url . "'>" . $profile_views_label . "</a>).</em>";
+				$tip =  "<em>" . $popular_text . "<a href='" . $profile_views_url . "'>" . $num_views . " members</a> have viewed <a href='" . $edit_url . "'>your profile</a> in the past week.</em>";
 				return $tip;
 			} else {
 				// check past month
 				$num_views = tm_track_views_how_many_viewed($uid, 1, $uid, 30); // try 30 days
 				$min_views_month = $conf["tm_newsfeed_min_viewers_month"];
 				if ($num_views >= $min_views_month) {
-					$tip =  "<em>" . $conf["tm_newsfeed_prefix_viewers_month"] . $num_views . " members have viewed <a href='" . $edit_url . "'>your profile</a> in the past month (<a href='" . $profile_views_url . "'>" . $profile_views_label . "</a>).</em>";
+					$tip =  "<em>" . $conf["tm_newsfeed_prefix_viewers_month"] . "<a href='" . $profile_views_url . "'>" . $num_views . " members</a> have viewed <a href='" . $edit_url . "'>your profile</a> in the past month.</em>";
 					return $tip;
 				}
 			}

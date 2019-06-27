@@ -43,7 +43,7 @@ function tm_users_approve($user) {
     }
 
     // hero headline
-    $hero_headline = tm_notifications_render_hero_headline_html("You're account is approved.");
+    $hero_headline = tm_notifications_render_hero_headline_html("Your account is approved.");
 
     // generate member html
     $member_widget = tm_notifications_render_member_html($user);

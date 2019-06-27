@@ -713,7 +713,7 @@ function tm_notifications_render_button_html($button_label, $button_url) {
   <tbody>
     <tr>
       <td style="padding: 13px 17px; border-radius: 8px; background-color: #1595E7;" bgcolor="#1595E7" valign="top" align="center">
-        <a href="__BUTTON_URL__" style="line-height: 24px; text-decoration: none; word-break: break-word; font-weight: 500; display: block; font-family: \'Lato\', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff;">__BUTTON_TEXT__</a>
+        <a href="__BUTTON_URL__" style="line-height: 24px; text-decoration: none; word-break: break-word; font-weight: 600; display: block; font-family: \'Lato\', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff;">__BUTTON_TEXT__</a>
       </td>
     </tr>
   </tbody>

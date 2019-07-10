@@ -229,6 +229,14 @@ function tm_api_stats_get_data() {
   $num_new_members_1_year = db_query($query)->fetch();
   $api_data["num_new_members_1_year"] = $num_new_members_1_year->amount;
 
+  // number of member subscriptions
+  if (module_exists("tm_subscriptions_user")) {
+    $user_subscription_flag = flag_get_flag('user_subscription_enable');
+    $query = "SELECT COUNT(DISTINCT(uid)) as amount FROM flagging WHERE fid = :fid";
+    $num_subscribers = db_query($query, array(':fid' => $user_subscription_flag->fid))->fetch();
+    $api_data["num_subscribers"] = $num_subscribers->amount;
+  }
+
   // return api data in json format
   cache_set('tm-api-stats', $api_data, 'cache', time() + 900); // 15 mins
   return $api_data;

@@ -134,6 +134,9 @@ function tm_leaderboard_render() {
 			if ($cache->data[$chapter_name_index][$column_name_lookup["members_total"]] >= $chapter_members) {
 				continue;
 			}
+			if ($ranking > 25) {
+				continue;
+			}
 		}
 		
 		// show all

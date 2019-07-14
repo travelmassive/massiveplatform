@@ -72,6 +72,15 @@ function tm_leaderboard_form() {
   if (isset($_GET["country"])) {
     $cache_key = $_GET["country"];
   }
+  if (isset($_GET["members"])) {
+    $chapter_sizes = array(100,250,500,1000); // possible options
+    $chapter_members = intval($_GET["members"]);
+    if (in_array($chapter_members, $chapter_sizes)) {
+      $cache_key = $_GET["members"];
+    } else {
+      $cache_key = "showall";
+    }
+  }
   if (isset($_GET["showall"])) {
     $cache_key = "showall";
     drupal_set_message($conf["tm_leaderboard_chapter_leaders_tip"], "help-tip");

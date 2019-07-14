@@ -94,6 +94,11 @@ img.leaderboard_avatar {
 	background-color: #bd0053;
 }
 
+#leaderboard .subtitle {
+	text-align: center;
+	margin-top: -1rem;
+}
+
 @media only screen and (max-width: 600px) {
 
 	.hide_narrow {

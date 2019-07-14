@@ -43,6 +43,7 @@ function tm_leaderboard_render() {
 	// page title
 	$max_listings = $conf["tm_leaderboard_global_show_results"];
 	$page_title = 'Chapter Leaderboard - Top ' . $max_listings;
+	$sub_title = "";
 
 	// filter by region
 	$regions = tm_base_get_all_regions();
@@ -75,9 +76,25 @@ function tm_leaderboard_render() {
 		$page_title = "Chapter Leaderboard &mdash; All Rankings";
 	}
 
+	// filter by members
+	$chapter_members = "";
+	$chapter_sizes = array(100 => "Micro", 250 => "Small", 500 => "Medium", 1000 => "Large");
+	if (isset($_GET["members"])) {
+		$chapter_members = intval($_GET["members"]);
+		if (array_key_exists($chapter_members, $chapter_sizes)) {
+			$page_title = "Leaderboard &mdash; " . $chapter_sizes[$chapter_members] . " Chapters";
+			$sub_title = "Less than " . $chapter_members . " members";
+		} else {
+			$showall = true;
+		}
+	}
+
 	$html = "";
 	$html .= '<div id="leaderboard">';
   	$html .= '<h1>' . $page_title . '</h1>';
+  	if ($sub_title != "") {
+  		$html .= '<div class="subtitle">' . $sub_title . '</div>';
+  	}
 
   	$html .= "<table width=100%>";
 
@@ -108,6 +125,13 @@ function tm_leaderboard_render() {
 		// filter by country
 		if ($country_code != "") {
 			if ($cache->data[$chapter_name_index][$column_name_lookup["country_code"]] != $country_code) {
+				continue;
+			}
+		}
+
+		// filter by members
+		if ((!$showall) and ($chapter_members != "")) {
+			if ($cache->data[$chapter_name_index][$column_name_lookup["members_total"]] >= $chapter_members) {
 				continue;
 			}
 		}

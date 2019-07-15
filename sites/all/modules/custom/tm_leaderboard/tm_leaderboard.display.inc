@@ -78,7 +78,7 @@ function tm_leaderboard_render() {
 
 	// filter by members
 	$chapter_members = "";
-	$chapter_sizes = array(100 => "Micro", 250 => "Small", 500 => "Medium", 1000 => "Large");
+	$chapter_sizes = array(100 => "Micro", 250 => "Mini", 500 => "Emerging", 1000 => "Large");
 	if (isset($_GET["members"])) {
 		$chapter_members = intval($_GET["members"]);
 		if (array_key_exists($chapter_members, $chapter_sizes)) {

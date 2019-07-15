@@ -540,7 +540,7 @@ function tm_chapters_process_emails_cron_run($item) {
   // copy announcement email to a specific address
   // include email sent count
   if (isset($conf["tm_announcement_copy_email"])) {
-      tm_chapters_send_email(null, $conf["tm_announcement_copy_email"], "[Copy] " . $subject . " (" . $sendcount  ." sent)", $original_message, $chapter_image_src, $chapter_image_link, $chapterid, $replyto);
+      tm_chapters_send_email(null, $conf["tm_announcement_copy_email"], "[Copy] " . $original_subject . " (" . $sendcount  ." sent)", $original_message, $chapter_image_src, $chapter_image_link, $chapterid, $replyto);
   }
 
 }

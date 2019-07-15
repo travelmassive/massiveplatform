@@ -789,7 +789,7 @@ function tm_events_process_emails_cron_run($item) {
   // send copy announcement email to a specific address
   // include email sent count
   if (isset($conf["tm_announcement_copy_email"])) {
-      tm_events_send_email(null, $conf["tm_announcement_copy_email"], "[Copy] " . $subject . " (" . $sendcount . " sent)", $original_message, $event_image_src, $event_image_link, $eventid, $replyto, $headline_text);
+      tm_events_send_email(null, $conf["tm_announcement_copy_email"], "[Copy] " . $original_subject . " (" . $sendcount . " sent)", $original_message, $event_image_src, $event_image_link, $eventid, $replyto, $headline_text);
   }
 
 }

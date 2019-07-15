@@ -574,7 +574,6 @@ function tm_events_node_presave($node) {
     
     // Get Total Attendance
     $total_attendance = intval($node->field_event_total_attendance[LANGUAGE_NONE][0]['value']);
-    $node->field_event_extra_guests[LANGUAGE_NONE][0]['value'] = $total_attendance;
 
     // If Total Attendance is set, update Non-Registered guests field
     if ($total_attendance > 0) {

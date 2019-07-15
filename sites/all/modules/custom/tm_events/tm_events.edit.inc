@@ -569,6 +569,27 @@ function tm_events_node_presave($node) {
   // http://drupal.stackexchange.com/questions/22983/how-can-i-enable-automatic-path-creating-for-all-nodes
   $node->path['pathauto']=1;
 
+  // Update the Non-Registered guests field
+  if (isset($node->field_event_total_attendance[LANGUAGE_NONE][0]['value'])) {
+    
+    // Get Total Attendance
+    $total_attendance = intval($node->field_event_total_attendance[LANGUAGE_NONE][0]['value']);
+    $node->field_event_extra_guests[LANGUAGE_NONE][0]['value'] = $total_attendance;
+
+    // If Total Attendance is set, update Non-Registered guests field
+    if ($total_attendance > 0) {
+
+      // Count number of registrations
+      $flag = flag_get_flag('event_register');
+      $registered_count = $flag->get_count($node->nid);
+
+      $non_registered_guests = $total_attendance - $registered_count;
+      if ($non_registered_guests > 0) {
+        $node->field_event_extra_guests[LANGUAGE_NONE][0]['value'] = $non_registered_guests;
+      }
+    }
+  }
+
 }
 
 /**

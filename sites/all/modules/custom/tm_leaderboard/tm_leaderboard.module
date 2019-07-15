@@ -118,7 +118,6 @@ function tm_leaderboard_form() {
     <a href='/leaderboard?region=SA'>South America</a>  &middot;
     <a href='/leaderboard?region=OC'>Oceania</a>
     <br>Specials &mdash; 
-    <a href='/leaderboard?members=250'>Mini Chapters</a> &middot;
     <a href='/leaderboard?members=500'>Emerging Chapters</a> &middot;
     <a href='/leaderboard?country=US'>US Chapters</a>
     </div>";

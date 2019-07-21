@@ -17,7 +17,8 @@ function tm_subscriptions_get_user_subscription_price($account) {
 
 	// STEP 1. GET REGISTRATION CURRENCY AND PRICE
 	$display_amount = $subscription["price"];
-	if (tm_subscriptions_check_user_renewal_period($account)) {
+	$is_renewal_period = tm_subscriptions_check_user_renewal_period($account);
+	if ($is_renewal_period) {
 		$display_amount = $subscription["price_renew"]; // if in renewal period, show renewal price
 	} 
 	$regular_amount = $display_amount; // keep track of regular price in case we have early bird price
@@ -39,7 +40,11 @@ function tm_subscriptions_get_user_subscription_price($account) {
 		if (isset($subscription["partner_codes"][$partner_code])) {
 			$partner_enabled = true;
 			$display_amount = $subscription["partner_codes"][$partner_code];
-			$subscription_label = $subscription_label . " (Partner Discount)";
+			$purchase_action_text = "Join";
+			if ($is_renewal_period) { 
+				$purchase_action_text = "Renew";
+			}
+			$subscription_label = $purchase_action_text . " today for " . $subscription["currency_prefix"] . $display_amount;
 		}
 	}
 
@@ -88,9 +93,20 @@ function tm_subscriptions_get_user_pricing_label($account) {
 	
 	$country_pricing = tm_subscriptions_get_user_subscription_price($account);
 	if ($country_pricing["saving_message"] != "") {
-		$pricing_label = $country_pricing["subscription_label"] . " - " . $country_pricing["saving_message"]; // use saving message if partner code applied
+		$pricing_label = $country_pricing["subscription_label"] . " — " . $country_pricing["saving_message"]; // use saving message if partner code applied
 	}
 
 	return $pricing_label;
+}
+
+/**
+ * Helper method to get price display 
+ * ie: $99 
+ */
+function tm_subscriptions_get_user_pricing_amount($account) {
+
+	$country_pricing = tm_subscriptions_get_user_subscription_price($account);
+	$pricing_amount = $country_pricing["currency_prefix"] . $country_pricing["display_amount"];
+	return $pricing_amount;
 }
 

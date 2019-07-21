@@ -207,6 +207,10 @@ function tm_subscriptions_user_cta_banner($user_id) {
 	$pricing_label = tm_subscriptions_get_user_pricing_label($account);
 	$inner_html = str_replace("__PRICING_LABEL__", $pricing_label, $inner_html);
 
+	// get pricing amount
+	$pricing_amount = tm_subscriptions_get_user_pricing_amount($account);
+	$inner_html = str_replace("__PRICING_AMOUNT__", $pricing_amount, $inner_html);
+
 	// display pricing
 	$payment_display = "none";
 	if (isset($_COOKIE["tm_subscriptions_show_user_payment"])) {

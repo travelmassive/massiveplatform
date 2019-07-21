@@ -180,6 +180,11 @@ function tm_subscriptions_user_cta_banner($user_id) {
 		$inner_html = $country_subscription["html_renew"];
 	}
 
+	// if account can be renewed and ?preview_subscription_cta
+	if ((tm_subscriptions_user_days_until_expiry($account) > 0) and (isset($_GET["preview_subscription_cta"]))) {
+		$inner_html = $country_subscription["html_renew"];
+	}
+
 	// include template fields
 	$subscription_date = tm_subscriptions_user_get_subscription_date($account);
 	$subscription_date_text = date('Y-m-d', strtotime($subscription_date));

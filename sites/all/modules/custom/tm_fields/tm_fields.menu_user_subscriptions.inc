@@ -117,6 +117,16 @@ function _tm_more_actions_process_user_subscriptions_menu($field, $title, &$link
         );
       }
 
+      // 5. SHOW SUBSCRIPTION CTA BANNER STATUS AND PREVIEW LINK 
+      $show_subscription_cta_status = "CTA banner: hidden";
+      if ((tm_subscriptions_check_show_user_cta($field['entity']->uid, $field['entity']->uid))) { 
+	      $show_subscription_cta_status = "CTA banner: displayed";
+      }
+      $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>" . $show_subscription_cta_status . " &mdash; <a class='report-flagged-link' href='/" . drupal_get_path_alias("user/" . $field['entity']->uid) . "?preview_subscription_cta'>preview</a></span><br>";
+        $links['subscription_user'][] = array(
+          'wrapper_class' => array('subscription_user_cta'),
+          'content' => t($menu_text),
+        );
 
     }
   }

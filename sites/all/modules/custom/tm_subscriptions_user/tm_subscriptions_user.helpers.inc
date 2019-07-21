@@ -49,20 +49,23 @@ function tm_subscriptions_check_show_user_cta($uid, $signed_in_uid, $drush_comma
 		return false;
 	}
 	
+	// allow moderators to view cta 
+	if ($uid != $signed_in_uid) {
+
+		if (!in_array("moderator", $signed_in_account->roles)) {
+			return false;
+		}
+
+		if (isset($_GET["preview_subscription_cta"])) {
+			return true;	
+		}
+	}
+
 	// check if user is already subscribed
 	if (tm_subscriptions_is_user_subscription_enabled($uid)) {
 
 		// check if in renewal period
 		if (!tm_subscriptions_check_user_renewal_period($account)) {
-			return false;
-		}
-	}
-
-	// TODO: check this logic
-	// (note: allow moderators to upgrade other people's accounts)
-	if ($uid != $signed_in_uid) {
-
-		if (!in_array("moderator", $signed_in_account->roles)) {
 			return false;
 		}
 	}
@@ -294,6 +297,7 @@ function tm_subscriptions_user_get_partner_code() {
  * Drupal.visitor.subscription_account_segment_l1
  * Drupal.visitor.subscription_account_segment_l2
  * Drupal.visitor.subscription_account_home_chapter
+ * Drupal.visitor.subscription_account_home_chapter_shortcode
  */
 function tm_subscriptions_user_set_partner_cookie($uid = null) {
 
@@ -324,14 +328,17 @@ function tm_subscriptions_user_set_partner_cookie($uid = null) {
 
 		// home chapter name
 		$home_chapter_name = "";
+		$home_chapter_shortcode = "";
 		if (sizeof($account->field_home_chapter) > 0) {
 			$chapter_id = $account->field_home_chapter[LANGUAGE_NONE][0]['target_id'];
 			$home_chapter = node_load($chapter_id);
 			if ($home_chapter != null) {
 				$home_chapter_name = $home_chapter->title;
+				$home_chapter_shortcode = $home_chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['value'];
 			}
 		}
 		setcookie("Drupal.visitor.subscription_account_home_chapter", $home_chapter_name, strtotime($cookie_time), "/");
+		setcookie("Drupal.visitor.subscription_account_home_chapter_shortcode", $home_chapter_shortcode, strtotime($cookie_time), "/");
 
 		// user segment
 		$user_segment_l1 = "";
@@ -376,7 +383,7 @@ function tm_subscriptions_user_days_until_expiry($account) {
 		return -1;
 	}
 
-	// calcualte expiry
+	// calculate expiry
 	$current_date = new DateTime('now', new DateTimeZone('UTC'));
 	$subscription_datetime = new DateTime($subscription_date, new DateTimeZone("UTC"));
 	$seconds_until_expiry = $subscription_datetime->format('U') - $current_date->format('U');

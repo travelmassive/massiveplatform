@@ -231,10 +231,8 @@ function tm_api_stats_get_data() {
 
   // number of member subscriptions
   if (module_exists("tm_subscriptions_user")) {
-    $user_subscription_flag = flag_get_flag('user_subscription_enable');
-    $query = "SELECT COUNT(DISTINCT(uid)) as amount FROM flagging WHERE fid = :fid";
-    $num_subscribers = db_query($query, array(':fid' => $user_subscription_flag->fid))->fetch();
-    $api_data["num_subscribers"] = $num_subscribers->amount;
+    $num_subscribed_members_amount = flag_get_flag_counts("user_subscription_enable");
+    $api_data["num_subscribers"] = $num_subscribed_members_amount;
   }
 
   // return api data in json format

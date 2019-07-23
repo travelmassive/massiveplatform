@@ -5,6 +5,7 @@ namespace Drupal\Core\Security;
 use TYPO3\PharStreamWrapper\Assertable;
 use TYPO3\PharStreamWrapper\Helper;
 use TYPO3\PharStreamWrapper\Exception;
+use TYPO3\PharStreamWrapper\Manager;
 
 /**
  * An alternate PharExtensionInterceptor to support phar-based CLI tools.
@@ -32,10 +33,6 @@ class PharExtensionInterceptor implements Assertable {
    *   Thrown when the file is not allowed to execute.
    */
   public function assert($path, $command) {
-    if (preg_match('/^phar:\/\/[a-zA-Z0-9_]+\.phar\/.+\.php$/', $path) === 1) {
-      // Lightweight way to whitelist phar aliases, if they contain ".phar" extension
-      return TRUE;
-    }
     if ($this->baseFileContainsPharExtension($path)) {
       return TRUE;
     }
@@ -59,10 +56,11 @@ class PharExtensionInterceptor implements Assertable {
    *   invoked by the phar file.
    */
   private function baseFileContainsPharExtension($path) {
-    $baseFile = Helper::determineBaseFile($path);
-    if ($baseFile === NULL) {
+    $invocation = Manager::instance()->resolve($path);
+    if ($invocation === NULL) {
       return FALSE;
     }
+    $baseName = $invocation->getBaseName();
     // If the stream wrapper is registered by invoking a phar file that does
     // not not have .phar extension then this should be allowed. For
     // example, some CLI tools recommend removing the extension.
@@ -73,10 +71,10 @@ class PharExtensionInterceptor implements Assertable {
     do {
       $caller = array_pop($backtrace);
     } while (empty($caller['file']) && !empty($backtrace));
-    if (isset($caller['file']) && $baseFile === Helper::determineBaseFile($caller['file'])) {
+    if (isset($caller['file']) && $baseName === Helper::determineBaseFile($caller['file'])) {
       return TRUE;
     }
-    $fileExtension = pathinfo($baseFile, PATHINFO_EXTENSION);
+    $fileExtension = pathinfo($baseName, PATHINFO_EXTENSION);
     return strtolower($fileExtension) === 'phar';
   }
 

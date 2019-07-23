@@ -161,6 +161,11 @@ function tm_subscriptions_user_cta_banner($user_id) {
 
 	// retrive static variable from tm_subscriptions_user_get_partner_code if ?partner code 
 	$tm_force_show_cta = &drupal_static("tm_force_show_cta");
+	
+	// if ?preview_subscription_cta is set
+	if (isset($_GET["preview_subscription_cta"])) {
+		$tm_force_show_cta = true;
+	}
 
 	// get cookie
 	$wrapper_style = "";

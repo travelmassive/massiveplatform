@@ -218,9 +218,11 @@ function tm_subscriptions_user_cta_banner($user_id) {
 
 	// display pricing
 	$payment_display = "none";
-	if (isset($_COOKIE["tm_subscriptions_show_user_payment"])) {
-		if ($_COOKIE["tm_subscriptions_show_user_payment"] == 1) {
-			$payment_display = "block";
+	if (!isset($_GET["preview_subscription_cta"])) {
+		if (isset($_COOKIE["tm_subscriptions_show_user_payment"])) {
+			if ($_COOKIE["tm_subscriptions_show_user_payment"] == 1) {
+				$payment_display = "block";
+			}
 		}
 	}
 	$inner_html = str_replace("__PAYMENT_DISPLAY__", $payment_display, $inner_html);

@@ -686,6 +686,7 @@ $conf['tm_newsfeed_email_opening_lines'] = array(
   );
 
 // closing lines to cycle through
+$conf['tm_newsfeed_email_quote_prefix'] = "💡<strong>Did you know?</strong>";
 $conf['tm_newsfeed_email_quotes'] = array(
   array("text" => "Travel makes one modest, you see what a tiny place you occupy in the world.",
         "author" => "Gustave Flaubert"),

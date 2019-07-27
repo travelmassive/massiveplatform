@@ -34,7 +34,7 @@ function tm_users_user_cancel_methods_alter(&$methods) {
   }
 
   // Improve description of methods
-  $methods['user_cancel_reassign']['title'] = 'Delete the account, preserving any events or shared company profiles created.';
+  $methods['user_cancel_reassign']['title'] = 'Delete the account, preserving any events or shared company pages created.';
   $methods['user_cancel_reassign']['description'] = 'Your account will be removed and all account information deleted.';
 
   // These methods are still destructive (ie: on flags) so don't allow these options
@@ -43,7 +43,7 @@ function tm_users_user_cancel_methods_alter(&$methods) {
 
   // The user_cancel_delete is potentially harmful, so restrict to administrator
   if (in_array("administrator", $user->roles)) {
-    $methods['user_cancel_delete']['title'] = 'Delete the account and its content. (Warning: includes any chapters, events, or company profiles created by the user.)';
+    $methods['user_cancel_delete']['title'] = 'Delete the account and its content. (Warning: includes any chapters, events, or company pages created by the user.)';
   } else {
     unset($methods['user_cancel_delete']);
   }
@@ -104,16 +104,16 @@ function tm_users_confirm_cancel_account($account) {
 
 /**
  * Handle hook_user_cancel
- * Preserve shared company profiles, re-assign approval flags, and re-assign files
+ * Preserve shared company pages, re-assign approval flags, and re-assign files
  */
 function tm_users_user_cancel($edit, $account, $method) {
 
   if ($method == "user_cancel_reassign") {
 
-    // STEP 1. Handle company profiles
-    // Reassign or delete company profile if member account is removed
+    // STEP 1. Handle company pages 
+    // Reassign or delete company pages if member account is removed
     // Case 1. Multiple owners - re-assign company to other managers
-    // Case 2. One owner - remove the company profile.
+    // Case 2. One owner - remove the company page.
     // (Chapters, events are assigned to anonymous user)
 
     // Get list of member's company
@@ -132,7 +132,7 @@ function tm_users_user_cancel($edit, $account, $method) {
             $reassigned = true;
             $company->uid = $owner['target_id'];
 
-            $message = "Canceling user account: ownership of company profile " . strip_tags($company->title) . " (nid: " . $company->nid . ") has been assigned from uid " . $company->uid . " to " . $owner['target_id'];
+            $message = "Canceling user account: ownership of company page " . strip_tags($company->title) . " (nid: " . $company->nid . ") has been assigned from uid " . $company->uid . " to " . $owner['target_id'];
             watchdog('tm_users', $message, WATCHDOG_INFO);
 
           }

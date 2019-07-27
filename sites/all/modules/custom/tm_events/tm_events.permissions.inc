@@ -152,7 +152,7 @@ function tm_events_check_permission_edit_event($check_user, $event) {
     }
   }
 
-  // if managing company profile
+  // if managing company page 
   if ($conf["tm_event_company_events_enabled"] == true) {
     if (isset($event->field_event_company[LANGUAGE_NONE][0])) {
       if (tm_organizations_is_company_profile_manager($check_user->uid, $event->field_event_company[LANGUAGE_NONE][0]['target_id'])) { 
@@ -264,7 +264,7 @@ function _tm_events_check_create_company_event($check_user, $company_id) {
     return true;
   }
 
-  // check user is a manager of the company profile
+  // check user is a manager of the company page 
   if (!tm_organizations_is_company_profile_manager($check_user->uid, $company_id)) {
     return false;
   }

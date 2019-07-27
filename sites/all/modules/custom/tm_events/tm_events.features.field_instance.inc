@@ -1549,10 +1549,10 @@ This will be added to the attendee count on the event page.',
     'default_value' => NULL,
     'default_value_function' => '',
     'deleted' => 0,
-    'description' => 'Got an event sponsor? Show their company profile <span style="color: #e93f33 !important;">♥</span> by listing them as a sponsor.<br>
+    'description' => 'Got an event sponsor? Show their company page <span style="color: #e93f33 !important;">♥</span> by listing them as a sponsor.<br>
 <ul>
-<li>To add a sponsor, search and select a company profile page from the dropdown.</li>
-<li>A sponsor must have a company profile in order to be listed as a sponsor.</li>
+<li>To add a sponsor, search and select a company page from the dropdown.</li>
+<li>A sponsor must have a company page in order to be listed as a sponsor.</li>
 <li>Sponsors will also be added to our world-wide <a target="_blank" href="/sponsors">sponsors page</a>.</li>
 </ul>',
     'display' => array(
@@ -2644,10 +2644,10 @@ Provide HTML markup or a template alias.');
   t('Featured members');
   t('Featured members label');
   t('Featured members will be able to download the attendee list from the event settings menu');
-  t('Got an event sponsor? Show their company profile <span style="color: #e93f33 !important;">♥</span> by listing them as a sponsor.<br>
+  t('Got an event sponsor? Show their company page <span style="color: #e93f33 !important;">♥</span> by listing them as a sponsor.<br>
 <ul>
-<li>To add a sponsor, search and select a company profile page from the dropdown.</li>
-<li>A sponsor must have a company profile in order to be listed as a sponsor.</li>
+<li>To add a sponsor, search and select a company page from the dropdown.</li>
+<li>A sponsor must have a company page in order to be listed as a sponsor.</li>
 <li>Sponsors will also be added to our world-wide <a target="_blank" href="/sponsors">sponsors page</a>.</li>
 </ul>');
   t('Help the attendees find the right location by providing a link to a map, for example <a href="http://maps.google.com/">Google Maps</a>.');

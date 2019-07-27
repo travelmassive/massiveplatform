@@ -39,7 +39,7 @@ function tm_status_updates_edit_status_check($account) {
 	$entity_type = $status_update->entity_type;
 	$entity_id = $status_update->entity_id;
 
-	// check if user can edit based on their company profiles, and chapters
+	// check if user can edit based on their company pages, and chapters
 	if (tm_status_updates_check_permission($entity_type, $entity_id, "edit", $user->uid)) {
 		return true;
 	}

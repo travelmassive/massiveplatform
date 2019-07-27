@@ -649,8 +649,8 @@ function tm_chapters_field_default_field_instances() {
     'deleted' => 0,
     'description' => 'Recognize a company as a sponsor of your chapter.<br>
 <ul>
-<li>To add a sponsor, search and select a company profile page from the dropdown.</li>
-<li>A sponsor must have a company profile in order to be listed as a sponsor.</li>
+<li>To add a sponsor, search and select a company page from the dropdown.</li>
+<li>A sponsor must have a company page in order to be listed as a sponsor.</li>
 <li>Sponsors will also be added to our world-wide <a target="_blank" href="/sponsors">sponsors page</a>.</li>
 </ul>',
     'display' => array(
@@ -1497,8 +1497,8 @@ The message will be included in the notification email sent to the member when t
   t('Reason for changing leadership');
   t('Recognize a company as a sponsor of your chapter.<br>
 <ul>
-<li>To add a sponsor, search and select a company profile page from the dropdown.</li>
-<li>A sponsor must have a company profile in order to be listed as a sponsor.</li>
+<li>To add a sponsor, search and select a company page from the dropdown.</li>
+<li>A sponsor must have a company page in order to be listed as a sponsor.</li>
 <li>Sponsors will also be added to our world-wide <a target="_blank" href="/sponsors">sponsors page</a>.</li>
 </ul>');
   t('Select a color that sets this city apart from the others. This color should have enough contrast with a white text layered on top.');

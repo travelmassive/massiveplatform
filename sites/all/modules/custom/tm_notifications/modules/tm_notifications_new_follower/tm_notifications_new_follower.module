@@ -28,7 +28,7 @@ function tm_notifications_new_follower_tm_notif_info() {
 
   $notification['new_organization_follower'] = array(
     'title' => 'New Organization Follower',
-    'description' => 'Notify when someone follows my company profile',
+    'description' => 'Notify when someone follows my company page',
     'use_cron' => FALSE,
     'tokens' => array(
       // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'

@@ -38,7 +38,7 @@ __EMAIL_SIGNOFF__
   $strongarm->api_version = 1;
   $strongarm->name = 'tm_notifications__new_organization_follower';
   $strongarm->value = array(
-    'user_label' => 'Notify when someone follows my company profile',
+    'user_label' => 'Notify when someone follows my company page',
     'default_state' => '1',
     'change_allowed' => 1,
     'email' => array(

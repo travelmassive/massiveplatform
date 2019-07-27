@@ -40,7 +40,7 @@ function tm_status_updates_check_permission($entity_type, $entity_id, $action, $
 		foreach ($companies_nids as $company_nid) {
 			if ($company_nid == $entity_id) {
 				$check_value = true;
-				return true; // this is a manager of the company profile
+				return true; // this is a manager of the company page 
 			}
 		}
 	}

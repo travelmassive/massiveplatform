@@ -116,7 +116,7 @@ function tm_fields_ds_fields_info($entity_type) {
 
   // provided by tm_track_views
   $fields['tm_ds_track_company_viewers'] = array(
-    'title' => t('Who viewed my company profile'),
+    'title' => t('Who viewed my company page'),
     'field_type' => DS_FIELD_TYPE_FUNCTION,
     'ui_limit' => array('organization|*'),
     'function' => '_tm_ds_track_viewers_wrapper'

@@ -46,7 +46,7 @@ function tm_status_updates_update_status_check($account) {
 		return false;
 	}
 
-	// check if user can edit based on their company profiles, and chapters
+	// check if user can edit based on their company pages, and chapters
 	if (tm_status_updates_check_permission($entity_type, $entity_id, "create", $user->uid)) {
 		return true;
 	}

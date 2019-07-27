@@ -353,8 +353,8 @@ class TmNewsfeedEmail
 			$tips[] = $conf["tm_newsfeed_email_tip_no_chapter"];
 		}
 
-		// create company profile
-		// if user has populated field_job_organization, show tip to create a company profile
+		// create company page 
+		// if user has populated field_job_organization, show tip to create a company page 
 		if ((sizeof($account->field_job_organization) > 0) and ($conf["tm_add_company_enabled"])) {
 
 			$is_owner_of = db_query("select count(*) from field_data_field_owner where field_owner_target_id = :uid", array(":uid" => $uid))->fetchField();
@@ -373,7 +373,7 @@ class TmNewsfeedEmail
 				if ($no_match) {
 					$num_companies = number_format(db_query("select count(*) as 'count' from node where node.type='organization'")->fetchField());
 
-					// check if members can create company profiles
+					// check if members can create company pages 
 					$create_company_link = true;
 					if (isset($conf["tm_add_company_enabled"])) {
 					  if ($conf["tm_add_company_enabled"] == false) {

@@ -17,7 +17,7 @@ function tm_users_field_default_field_instances() {
     'default_value' => NULL,
     'deleted' => 0,
     'description' => 'Tell the community about yourself. This information will be <strong>public</strong>.
-<br><strong>Providing information about your company?</strong> Please add a <a target=\'_blank\' class=\'cancel\' href="/companies">company profile</a>.',
+<br><strong>Providing information about your company?</strong> Please add a <a target=\'_blank\' class=\'cancel\' href="/companies">company page</a>.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -71,7 +71,7 @@ function tm_users_field_default_field_instances() {
     'bundle' => 'user',
     'deleted' => 0,
     'description' => '<strong>Provide a photo so other members can recognize you.</strong>
-<br>Logos are not allowed here. You can add a <a href="/companies">company profile</a> once approved.
+<br>Logos are not allowed here. You can add a <a href="/companies">company page</a> once approved.
 <br>Your profile picture will be cropped to a square format.',
     'display' => array(
       'default' => array(
@@ -426,7 +426,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
     'default_value' => NULL,
     'deleted' => 0,
     'description' => 'The name of your business, company, or organization.
-<br>Once your account is approved you can add a <a target=\'_blank\' class=\'cancel\' href="/companies">company profile</a>.',
+<br>Once your account is approved you can add a <a target=\'_blank\' class=\'cancel\' href="/companies">company page</a>.',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -2099,7 +2099,7 @@ Your testimonial will be displayed on your profile page.
 If you are assigning a Facebook ID to another account, you should remove the Facebook ID from the other account.
 <br><br>');
   t('<strong>Provide a photo so other members can recognize you.</strong>
-<br>Logos are not allowed here. You can add a <a href="/companies">company profile</a> once approved.
+<br>Logos are not allowed here. You can add a <a href="/companies">company page</a> once approved.
 <br>Your profile picture will be cropped to a square format.');
   t('About me');
   t('City');
@@ -2152,9 +2152,9 @@ Your testimonial will be displayed on your profile page.
   t('Snapchat');
   t('Strava');
   t('Tell the community about yourself. This information will be <strong>public</strong>.
-<br><strong>Providing information about your company?</strong> Please add a <a target=\'_blank\' class=\'cancel\' href="/companies">company profile</a>.');
+<br><strong>Providing information about your company?</strong> Please add a <a target=\'_blank\' class=\'cancel\' href="/companies">company page</a>.');
   t('The name of your business, company, or organization.
-<br>Once your account is approved you can add a <a target=\'_blank\' class=\'cancel\' href="/companies">company profile</a>.');
+<br>Once your account is approved you can add a <a target=\'_blank\' class=\'cancel\' href="/companies">company page</a>.');
   t('Turn off analytics');
   t('Twitter');
   t('Vimeo');

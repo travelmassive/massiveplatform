@@ -41,7 +41,7 @@ function tm_status_updates_moderate_status_check($account) {
 	$entity_type = $status_update->entity_type;
 	$entity_id = $status_update->entity_id;
 
-	// check if user can moderate based on their company profiles, and chapters
+	// check if user can moderate based on their company pages, and chapters
 	if (tm_status_updates_check_permission($entity_type, $entity_id, "moderate", $user->uid)) {
 		return true;
 	}

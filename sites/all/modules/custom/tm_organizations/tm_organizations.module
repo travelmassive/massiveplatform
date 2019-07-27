@@ -95,7 +95,7 @@ function tm_organizations_node_presave($node) {
       // Re-assign node ownership
       $node->uid = $owner_uid;
 
-      $message = "Ownership of company profile " . strip_tags($node->title) . " (nid: " . $node->nid . ") has been assigned from uid " . $node->uid . " to " . $owner_uid;
+      $message = "Ownership of company page " . strip_tags($node->title) . " (nid: " . $node->nid . ") has been assigned from uid " . $node->uid . " to " . $owner_uid;
       watchdog('tm_organizations', $message, WATCHDOG_INFO);
 
     } else {
@@ -129,7 +129,7 @@ function tm_organizations_check_user_can_create_company($uid) {
   global $conf;
   $account = user_load($uid);
 
-  // If tm_add_company_enabled is false, only moderator can create company profiles
+  // If tm_add_company_enabled is false, only moderator can create company pages 
   if (isset($conf["tm_add_company_enabled"])) {
     if ($conf["tm_add_company_enabled"] == false) {
       if (!in_array("moderator", $account->roles)) {
@@ -185,7 +185,7 @@ function tm_organizations_preprocess_page(&$variables, $hook) {
       if (!user_is_logged_in()) {
         return;
       }
-      $message = "Sorry, you've reached the limit of the number of company profiles you can create.";
+      $message = "Sorry, you've reached the limit of the number of company pages you can create.";
       drupal_set_message($message, 'page_notice');
       drupal_goto("user/" . $user->uid . "/companies");
     }
@@ -203,7 +203,7 @@ function tm_organizations_preprocess_page(&$variables, $hook) {
     // Only a loaded user has values for the fields.
     $loaded = user_load($user->uid);
 
-    // Check if user has created any company profiles
+    // Check if user has created any company pages 
     $user_has_companies = false;
     $query = new EntityFieldQuery();
     $markup = '';
@@ -237,16 +237,16 @@ function tm_organizations_preprocess_page(&$variables, $hook) {
 
     // Option 1. Create a message if user already has a company
     if ($user_has_companies) {
-      $message = "Discover and connect with other companies in the " . $conf["tm_site_name"] . " network. View " . l(t('your company profiles'), 'user/' . $loaded->uid . "/companies") . "";
+      $message = "Discover and connect with other companies in the " . $conf["tm_site_name"] . " network. View " . l(t('your company pages'), 'user/' . $loaded->uid . "/companies") . "";
       drupal_set_message($message, 'page_notice');
       return;
     }
 
-    // Option 2. Show message to user to add a company profile
+    // Option 2. Show message to user to add a company page 
     if (!in_array("approved user", $loaded->roles)) { 
-      $add_profile_html = "<a href='javascript:void(0)' onclick='document.getElementById(\"pending_approval\").style.display = \"block\";'>company profile</a> (pending approval)";
+      $add_profile_html = "<a href='javascript:void(0)' onclick='document.getElementById(\"pending_approval\").style.display = \"block\";'>company page</a> (pending approval)";
       } else {
-        $add_profile_html = "<a href='/node/add/organization'>company profile</a>";
+        $add_profile_html = "<a href='/node/add/organization'>company page</a>";
     }
 
     // Create a message
@@ -258,7 +258,7 @@ function tm_organizations_preprocess_page(&$variables, $hook) {
     }
 
     // Display message
-    $message .= "<div id='pending_approval' style='display: none;'>Your account is currently pending approval by our team. Once we've approved your account, you will be able to add your company profile.</div>";
+    $message .= "<div id='pending_approval' style='display: none;'>Your account is currently pending approval by our team. Once we've approved your account, you will be able to add your company page.</div>";
     drupal_set_message($message, 'page_notice');
 
   }
@@ -269,10 +269,10 @@ function tm_organizations_preprocess_page(&$variables, $hook) {
   if (sizeof($parts) == 3) {
     if (($parts[0] == "user") and ($parts[2] == "companies")) {
       if ($parts[1] == $user->uid) {        
-        $add_profile_html = "<a href='/node/add/organization'>company profile</a>";
-        $message = "You are managing the following company profiles. ";
+        $add_profile_html = "<a href='/node/add/organization'>company page</a>";
+        $message = "You are managing the following company pages. ";
         if (!tm_organizations_check_user_can_create_company($user->uid)) {
-          $message .= "You cannot add any more company profiles.";
+          $message .= "You cannot add any more company pages.";
         } else {
           $message .= "Add a new " . $add_profile_html . ".";
         }

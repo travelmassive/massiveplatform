@@ -142,7 +142,7 @@ function tm_track_views_views_pre_execute(&$view) {
 	drupal_add_js(drupal_get_path('module', 'tm_track_views') . '/js/tm_track_views_title.js');
 
 	// set label
-	$label = "profile"; // for members and company profiles
+	$label = "profile"; // for members and company pages 
 	if ($view->current_display == 'who_viewed_event') {
 		$label = "event";
 	}

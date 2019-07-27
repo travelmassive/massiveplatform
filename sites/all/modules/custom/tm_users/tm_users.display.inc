@@ -390,7 +390,7 @@ function tm_users_menu_companies($uid){
 
   global $conf;
 
-  // get list of company profiles managed by user
+  // get list of company pages managed by user
   $companies_nids = tm_organizations_get_users_companies($uid);
 
   $markup = "";

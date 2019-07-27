@@ -94,10 +94,10 @@ function tm_track_views_views_default_views() {
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   $handler->display->display_options['path'] = 'user/%/viewers';
 
-  /* Display: Page - who viewed your company profile */
-  $handler = $view->new_display('page', 'Page - who viewed your company profile', 'who_viewed_company_profile');
+  /* Display: Page - who viewed your company page */
+  $handler = $view->new_display('page', 'Page - who viewed your company page', 'who_viewed_company_profile');
   $handler->display->display_options['defaults']['title'] = FALSE;
-  $handler->display->display_options['title'] = 'Who\'s viewed your company profile';
+  $handler->display->display_options['title'] = 'Who\'s viewed your company page';
   $handler->display->display_options['defaults']['css_class'] = FALSE;
   $handler->display->display_options['css_class'] = 'user-list grid';
   $handler->display->display_options['defaults']['use_ajax'] = FALSE;

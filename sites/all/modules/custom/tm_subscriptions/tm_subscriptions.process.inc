@@ -77,7 +77,7 @@ function tm_subscriptions_process_organization_payment($node, $member) {
 		$error_message .= "<br>Note: The user was redirected back to the organization page.";
 		tm_subscriptions_notify_payment_error($error_message);
 
-		// Redirect user back to company profile
+		// Redirect user back to company page 
 		$entity_path_alias = drupal_get_path_alias("node/" . $node->nid);
 		drupal_set_message("Oops, the subscription is no longer available.", 'warning');
         drupal_goto($entity_path_alias);

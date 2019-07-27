@@ -14,7 +14,7 @@ function tm_organizations_get_num_followers($nid) {
 }
 
 /**
- * Checks if a user a manager of a company profile
+ * Checks if a user a manager of a company page 
  */
 function tm_organizations_is_company_profile_manager($uid, $company_nid) {
   
@@ -34,7 +34,7 @@ function tm_organizations_is_company_profile_manager($uid, $company_nid) {
 }
 
 /** 
- * Return an array of organization profiles the member is managing
+ * Return an array of company pages the member is managing
  */
 function tm_organizations_get_users_companies($uid) {
 

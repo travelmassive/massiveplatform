@@ -95,7 +95,7 @@ function tm_organizations_add_photo_edit_js($node) {
   global $user;
   global $conf;
 
-  // If viewing company profile, 
+  // If viewing company page 
   if (!(arg(0) == 'node' and is_numeric(arg(1)) and arg(2) == FALSE)) {
     return;
   }

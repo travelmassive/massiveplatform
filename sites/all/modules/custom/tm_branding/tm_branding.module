@@ -298,26 +298,31 @@ function tm_branding_check_brand($site_brand, $account) {
 
 	// Step 9. Match "match_user_non_subscribed"
 	// Will match a user who is not subscribed
+	// Excludes chapter leaders and moderators
 	// Need to set $conf["tm_branding_user_subscription_enabled_fid"]
 	if (in_array("match_user_non_subscribed", $match_methods)) {
 
 		// Must have account
 		if ($account->uid > 0) {
 
-			// require fid lookup of user_subscription_enable
-			if (isset($conf["tm_branding_user_subscription_enabled_fid"])) {
-				
-				// flag id
-				$user_subscription_enabled_fid = $conf["tm_branding_user_subscription_enabled_fid"];
-		
-				// check if member is flagged
-				$query = "SELECT COUNT(flagging_id) AS amount FROM {flagging} f WHERE f.fid = :fid AND entity_id = :uid";
-				$query_fetched = db_query($query, array(':fid' => $user_subscription_enabled_fid, ':uid' => $account->uid))->fetch();
-				$is_subscribed = ($query_fetched->amount > 0);
-								
-				// is not subscribed
-				if (!$is_subscribed) {
-					return (rand(1,100) <= $match_probability);
+			// Exclude chapter leaders and moderators
+			if (!(in_array("chapter leader", $account->roles) or (in_array("moderator", $account->roles)))) {
+
+				// require fid lookup of user_subscription_enable
+				if (isset($conf["tm_branding_user_subscription_enabled_fid"])) {
+					
+					// flag id
+					$user_subscription_enabled_fid = $conf["tm_branding_user_subscription_enabled_fid"];
+			
+					// check if member is flagged
+					$query = "SELECT COUNT(flagging_id) AS amount FROM {flagging} f WHERE f.fid = :fid AND entity_id = :uid";
+					$query_fetched = db_query($query, array(':fid' => $user_subscription_enabled_fid, ':uid' => $account->uid))->fetch();
+					$is_subscribed = ($query_fetched->amount > 0);
+									
+					// is not subscribed
+					if (!$is_subscribed) {
+						return (rand(1,100) <= $match_probability);
+					}
 				}
 			}
 		}

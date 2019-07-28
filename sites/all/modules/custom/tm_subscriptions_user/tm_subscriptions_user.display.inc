@@ -223,21 +223,24 @@ function tm_subscriptions_user_cta_banner($user_id) {
 
 	// display pricing
 	$payment_display = "none";
-	if (!$tm_force_show_cta) {
+	
+	// if ? partner link 
+	if ($tm_force_show_cta) {
+		$payment_display = "block";
+	}
 
-		// if show user payment
-		if (isset($_COOKIE["tm_subscriptions_show_user_payment"])) {
-			if ($_COOKIE["tm_subscriptions_show_user_payment"] == 1) {
-				$payment_display = "block";
-			}
-		}
+	// if show user payment
+	if (isset($_COOKIE["tm_subscriptions_show_user_payment"])) {
+		if ($_COOKIE["tm_subscriptions_show_user_payment"] == 1) { 
+			$payment_display = "block";
+		}       
+	}
 
-		// if via user membership/invite link
-		if (isset($_COOKIE["tm_subscriptions_invite_user_cta"])) {
-			if ($_COOKIE["tm_subscriptions_invite_user_cta"] == 1) {
-				$payment_display = "block";
-			}
-		}
+	// if via user membership/invite link
+	if (isset($_COOKIE["tm_subscriptions_invite_user_cta"])) {
+		if ($_COOKIE["tm_subscriptions_invite_user_cta"] == 1) { 
+			$payment_display = "block";
+		}       
 	}
 
 	$inner_html = str_replace("__PAYMENT_DISPLAY__", $payment_display, $inner_html);

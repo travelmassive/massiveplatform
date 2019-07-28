@@ -427,13 +427,7 @@ function tm_subscriptions_user_get_country($account) {
 
 	global $conf;
 
-	// Step 1. User's country in account
-	if (isset($account->field_user_country[LANGUAGE_NONE][0]['iso2'])) {
-		$country_code = $account->field_user_country[LANGUAGE_NONE][0]['iso2'];
-		return $country_code;
-	}
-
-	// Step 2. Users's home chapter country
+	// Step 1. Users's home chapter country
 	if (isset($account->field_home_chapter[LANGUAGE_NONE][0]['target_id'])) {
 		$home_chapter_id = $account->field_home_chapter[LANGUAGE_NONE][0]['target_id'];
 		$home_chapter = node_load($home_chapter_id);
@@ -441,6 +435,12 @@ function tm_subscriptions_user_get_country($account) {
 			$country_code = $home_chapter->field_country[LANGUAGE_NONE][0]['iso2'];
 			return $country_code;
 		}
+	}
+
+	// Step 2. User's country in account
+	if (isset($account->field_user_country[LANGUAGE_NONE][0]['iso2'])) {
+		$country_code = $account->field_user_country[LANGUAGE_NONE][0]['iso2'];
+		return $country_code;
 	}
 
 	// Step 3. Default country from $conf

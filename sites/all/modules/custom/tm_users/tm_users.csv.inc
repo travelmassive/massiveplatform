@@ -243,7 +243,7 @@ where n.value = 1 order by ud.uid asc";
 				$user_subscription_type = tm_subscriptions_user_get_type($user_id);
 			}
 			if ($user_subscription_type == "") {
-				$user_subscription_type = "none";
+				$user_subscription_type = "flagged";
 			}
 		}
 		$row[] = $user_subscription_type;
@@ -256,7 +256,7 @@ where n.value = 1 order by ud.uid asc";
 				$company_subscription_type = tm_subscriptions_get_type($organization_profile_nids[0]);
 			}
 			if ($company_subscription_type == "") {
-				$company_subscription_type = "none";
+				$company_subscription_type = "flagged";
 			}
 		}
 		$row[] = $company_subscription_type;

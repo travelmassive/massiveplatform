@@ -253,6 +253,11 @@ function tm_subscriptions_user_cta_banner($user_id) {
 		}       
 	}
 
+	// if preview cta 
+	if (isset($_GET["preview_subscription_cta"])) {
+		$payment_display = "none";
+	}
+
 	$inner_html = str_replace("__PAYMENT_DISPLAY__", $payment_display, $inner_html);
 
 	// insert into inner html

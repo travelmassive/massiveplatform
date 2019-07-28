@@ -537,7 +537,7 @@ function tm_branding_field_default_field_bases() {
         'user_in_chapter' => 'User is a member of a chapter',
         'user_in_segment' => 'User is in industry segment',
         'anonymous_user' => 'Only match when logged out',
-        'match_user_non_subscribed' => 'User does not have subscription',
+        'match_user_non_subscribed' => 'User does not have a subscription',
         'match_all' => 'Match all visitors and users',
         'match_partner_cookie' => 'Match partner cookie',
         'match_referer_domain' => 'Match referer domain',

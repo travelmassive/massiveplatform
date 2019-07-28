@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * tm_chapters.field_group.inc
@@ -72,6 +73,35 @@ function tm_chapters_field_group_info() {
     ),
   );
   $field_groups['group_action_menu|node|chapter|full'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_chapter_api|node|chapter|form';
+  $field_group->group_name = 'group_chapter_api';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'chapter';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'API',
+    'weight' => '52',
+    'children' => array(
+      0 => 'field_chapter_api_public_json',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'label' => 'API',
+      'instance_settings' => array(
+        'required_fields' => 0,
+        'id' => '',
+        'classes' => 'group-chapter-api field-group-fieldset',
+        'description' => '',
+      ),
+      'formatter' => 'open',
+    ),
+  );
+  $field_groups['group_chapter_api|node|chapter|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -418,6 +448,7 @@ function tm_chapters_field_group_info() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('API');
   t('About');
   t('Action menu');
   t('Action menu wrapper');

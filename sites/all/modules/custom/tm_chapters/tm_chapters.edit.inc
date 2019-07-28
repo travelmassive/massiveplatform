@@ -112,6 +112,12 @@ function tm_chapters_form_alter(&$form, &$form_state, $form_id) {
     field_group_hide_field_groups($form, array('group_chapter_payments'));
     unset($form['field_chapter_payments_enabled']);
   }
+
+  // only moderators can edit JSON data
+  if (!(in_array("moderator", $user->roles)) or (in_array("administrator", $user->roles))) {
+    field_group_hide_field_groups($form, array('group_chapter_api'));
+    unset($form['field_chapter_api_public_json']);
+  }
     
 }
 

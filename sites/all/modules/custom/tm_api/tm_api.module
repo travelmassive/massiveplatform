@@ -44,6 +44,11 @@ function tm_api_menu() {
       'access arguments' => array('access content')
    );
 
+   $items['api/public/chapter_json'] = array(
+      'page callback' => 'tm_api_chapter_json',
+      'access arguments' => array('access content')
+   );
+
    return $items;
 }
 
@@ -60,6 +65,7 @@ function tm_api_home() {
     <br>api/public/events - upcoming events (optional: ?limit=10 to set limit)
     <br>api/public/members_in_country - member count in country (example: ?country=US,UK)
     <br>api/public/chapter_leaders - list of chapter leaders
+    <br>api/public/chapter_json - public chapter JSON data (example: ?shortcode=SYD)
     <br>
     <br>All results as returned as JSON. For JSONP append ?callback=myfunction to the URL.
     </p>");
@@ -536,6 +542,68 @@ function tm_api_chapter_leaders() {
   cache_set('tm-api-chapter-leaders', $api_data, 'cache', time() + 900); // 15 mins
   tm_api_return_json($api_data);
 
+}
+
+function tm_api_chapter_json() {
+
+  // check shortcode
+  if (!isset($_GET["shortcode"])) {
+      $api_data = _get_empty_api_data();
+      $api_data["error"] = "Requires shortcode";
+      $api_data["success"] = false;
+      tm_api_return_json($api_data);
+      return;
+  }
+
+  // get shortcode (3 letters)
+  $shortcode = substr(strtoupper($_GET["shortcode"]), 0, 3);
+
+  // check cache
+  $cache = cache_get('tm-api-chapter-json-' . $shortcode, 'cache');
+  if (!empty($cache)) {
+    if (!isset($_GET["nocache"])) {
+      tm_api_return_json($cache->data);
+    }
+  }
+
+  // initialize api data
+  $api_data = _get_empty_api_data();
+  $api_data["chapter_json"] = null; // default no value
+
+  // get chapter shortcodes
+  $shortcodes = tm_chapters_get_all_chapter_shortcodes();
+
+  // find chapter
+  $key = array_search($shortcode, $shortcodes);
+  $found_chapter = false;
+  if ($key !== FALSE) {
+    $chapter_nid = $key;
+    $chapter = node_load($chapter_nid);
+    if ($chapter != null) {
+      $found_chapter = true;
+      if (isset($chapter->field_chapter_api_public_json[LANGUAGE_NONE][0]['value'])) {
+        $json = trim($chapter->field_chapter_api_public_json[LANGUAGE_NONE][0]['value']);
+        $json_decoded = json_decode($json);
+        if ($json_decoded == null) {
+          $api_data["error"] = "Invalid JSON";
+          $api_data["success"] = false;
+          $api_data["chapter_json"] = null;
+        } else {
+          $api_data["chapter_json"] = json_decode($json);
+        }
+      }
+    }
+  }
+
+  // if chapter could not be found
+  if (!$found_chapter) {
+    $api_data["error"] = "No chapter with shortcode " . $shortcode;
+    $api_data["success"] = false;
+    $api_data["chapter_json"] = null;
+  }
+ 
+  cache_set('tm-api-chapter-json-' . $shortcode, $api_data, 'cache', time() + 60); // 60 seconds
+  tm_api_return_json($api_data);
 }
 
 // Initial API data

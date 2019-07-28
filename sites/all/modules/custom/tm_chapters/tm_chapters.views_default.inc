@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * tm_chapters.views_default.inc
@@ -43,7 +44,7 @@ function tm_chapters_views_default_views() {
   $handler->display->display_options['sorts']['created']['table'] = 'users';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Filter criterion: User: Active */
+  /* Filter criterion: User: Active status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'users';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -82,7 +83,7 @@ function tm_chapters_views_default_views() {
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: User: Active */
+  /* Filter criterion: User: Active status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'users';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -140,7 +141,7 @@ function tm_chapters_views_default_views() {
   $handler->display->display_options['sorts']['title']['id'] = 'title';
   $handler->display->display_options['sorts']['title']['table'] = 'node';
   $handler->display->display_options['sorts']['title']['field'] = 'title';
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -213,7 +214,7 @@ function tm_chapters_views_default_views() {
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -263,7 +264,7 @@ function tm_chapters_views_default_views() {
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -317,7 +318,7 @@ function tm_chapters_views_default_views() {
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -395,7 +396,7 @@ function tm_chapters_views_default_views() {
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -459,7 +460,7 @@ function tm_chapters_views_default_views() {
   $handler->display->display_options['sorts']['title']['id'] = 'title';
   $handler->display->display_options['sorts']['title']['table'] = 'node';
   $handler->display->display_options['sorts']['title']['field'] = 'title';
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';

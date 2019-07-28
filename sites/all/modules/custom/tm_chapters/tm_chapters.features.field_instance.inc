@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * tm_chapters.features.field_instance.inc
@@ -79,6 +80,61 @@ function tm_chapters_field_default_field_instances() {
       ),
       'type' => 'text_textarea_with_summary',
       'weight' => 3,
+    ),
+  );
+
+  // Exported field_instance: 'node-chapter-field_chapter_api_public_json'.
+  $field_instances['node-chapter-field_chapter_api_public_json'] = array(
+    'bundle' => 'chapter',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'JSON payload for returning information to external public pages and apps.<br>
+Can be referenced via /api/public/chapter_json?shortcode=SYD (cached for 60 seconds)<br>
+For JSONP append &callback=myfunction to the URL<br>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 22,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_chapter_api_public_json',
+    'label' => 'API Public JSON',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 49,
     ),
   );
 
@@ -259,6 +315,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'module' => 'entityreference',
         'settings' => array(
+          'bypass_access' => FALSE,
           'link' => FALSE,
         ),
         'type' => 'entityreference_label',
@@ -285,6 +342,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'module' => 'entityreference',
         'settings' => array(
+          'bypass_access' => FALSE,
           'link' => FALSE,
         ),
         'type' => 'entityreference_label',
@@ -294,6 +352,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'module' => 'entityreference',
         'settings' => array(
+          'bypass_access' => FALSE,
           'link' => FALSE,
         ),
         'type' => 'entityreference_label',
@@ -658,6 +717,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'module' => 'entityreference',
         'settings' => array(
+          'bypass_access' => FALSE,
           'link' => FALSE,
         ),
         'type' => 'entityreference_label',
@@ -812,6 +872,7 @@ function tm_chapters_field_default_field_instances() {
         'label' => 'above',
         'module' => 'entityreference',
         'settings' => array(
+          'bypass_access' => FALSE,
           'link' => FALSE,
         ),
         'type' => 'entityreference_label',
@@ -1465,6 +1526,7 @@ The message will be included in the notification email sent to the member when t
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('API Public JSON');
   t('Add a welcome message to new members when they join your chapter.<br>
 The message will be included in the notification email sent to the member when they join.');
   t('Assign a community manager to the chapter. They will gain chapter leader access to the chapter and its events without being listed as a chapter leader.');
@@ -1488,6 +1550,9 @@ The message will be included in the notification email sent to the member when t
   t('Image');
   t('Increase your exposure with a cover video. 
 <br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM');
+  t('JSON payload for returning information to external public pages and apps.<br>
+Can be referenced via /api/public/chapter_json?shortcode=SYD (cached for 60 seconds)<br>
+For JSONP append &callback=myfunction to the URL<br>');
   t('Linkedin');
   t('Please add a brief explanation for our community managers if you appoint or remove a chapter leader.');
   t('Please enter a unique 3 letter shortcode for this city.');

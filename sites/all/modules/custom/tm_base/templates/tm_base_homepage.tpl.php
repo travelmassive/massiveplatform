@@ -22,6 +22,8 @@ global $user;
   }
 ?>
 
+<div class="tm-front-page-before-stats"></div>
+
 <section id="welcome">
 	<header class="hd" style="margin-top: 3em;">
     <?php
@@ -34,6 +36,7 @@ global $user;
 		<h1 class="prime-title"><?php print (str_replace("__FIRST_NAME__", $user_first_name, $homepage_title)); ?></h1>
 		<p class="subtitle"><?php print ($homepage_description) ?></p>
 	</header>
+  
 	<div class="bd">
     <?php
       // if tm_frontpage_beta_message is set, show message instead of the stats block
@@ -50,6 +53,8 @@ global $user;
 	</div>
 </section>
 
+<div class="tm-front-page-after-stats"></div>
+
 <?php if (!empty($homepage_upcoming_events)): ?>
 <section id="upcoming-events">
   <header class="hd">
@@ -58,3 +63,5 @@ global $user;
   <?php print $homepage_upcoming_events['content']; ?>
 </section>
 <?php endif; ?>
+
+<div class="tm-front-page-after-events"></div>

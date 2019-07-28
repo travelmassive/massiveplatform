@@ -6,6 +6,22 @@
 global $user;
 ?>
 
+<?php
+  // TM_SUBSCRIPTIONS_USER CTA
+  // check that module is enabled and user is logged in
+  if ($user->uid > 0) {
+    if (module_exists("tm_subscriptions_user")) {
+      $subscription_cta = tm_subscriptions_user_cta_banner($user->uid);
+      if ($subscription_cta != "") {
+        // print CTA and JS
+        print $subscription_cta;
+        tm_subscriptions_user_cta_js($user->uid);
+      }
+      
+    }
+  }
+?>
+
 <section id="welcome">
 	<header class="hd" style="margin-top: 3em;">
     <?php

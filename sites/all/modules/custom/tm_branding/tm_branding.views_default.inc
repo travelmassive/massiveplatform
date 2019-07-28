@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * tm_branding.views_default.inc
@@ -42,7 +43,7 @@ function tm_branding_views_default_views() {
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -212,7 +213,7 @@ function tm_branding_views_default_views() {
   $handler->display->display_options['fields']['field_brand_test_enabled']['table'] = 'field_data_field_brand_test_enabled';
   $handler->display->display_options['fields']['field_brand_test_enabled']['field'] = 'field_brand_test_enabled';
   $handler->display->display_options['fields']['field_brand_test_enabled']['type'] = 'list_key';
-  /* Field: Content: Edit link */
+  /* Field: Content: Link to edit content */
   $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
   $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';

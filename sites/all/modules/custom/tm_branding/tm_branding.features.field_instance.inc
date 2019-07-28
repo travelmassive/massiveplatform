@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * tm_branding.features.field_instance.inc
@@ -194,6 +195,7 @@ Default is $conf[\'tm_branding_email_footer_html\']',
         'label' => 'above',
         'module' => 'date',
         'settings' => array(
+          'custom_date_format' => '',
           'format_type' => 'long',
           'fromto' => 'both',
           'multiple_from' => '',

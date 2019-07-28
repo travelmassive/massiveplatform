@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * tm_branding.features.field_base.inc
@@ -103,7 +104,15 @@ function tm_branding_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_brand_enabled_timespan',
-    'indexes' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+        1 => 'value2',
+      ),
+      'value2' => array(
+        0 => 'value2',
+      ),
+    ),
     'locked' => 0,
     'module' => 'date',
     'settings' => array(
@@ -528,6 +537,7 @@ function tm_branding_field_default_field_bases() {
         'user_in_chapter' => 'User is a member of a chapter',
         'user_in_segment' => 'User is in industry segment',
         'anonymous_user' => 'Only match when logged out',
+        'match_user_non_subscribed' => 'User has not subscribed',
         'match_all' => 'Match all visitors and users',
         'match_partner_cookie' => 'Match partner cookie',
         'match_referer_domain' => 'Match referer domain',

@@ -486,6 +486,7 @@ $conf['tm_geoip_maxmind_db'] = '/usr/local/share/GeoIP/GeoIP2-City.mmd'; // path
 /** SITE BRANDING **/
 //Base site branding
 $conf['tm_branding_enabled'] = true; // set to false to disable brand processing and only use config variables
+$conf['tm_branding_user_subscription_enabled_fid'] = 28; // performance lookup for fid of user_subscription_enable  
 $conf['tm_branding_hide_top_block_on_urls'] = array('__FRONTPAGE__', '/community/demo'); // hide top block branding on urls
 $conf['tm_branding_hide_footer_level2_on_events'] = false; // hide level 2 branding on events or not
 $conf['tm_branding_hide_footer_level2_on_urls'] = array('/sponsored-content'); // hide level 2 branding on urls

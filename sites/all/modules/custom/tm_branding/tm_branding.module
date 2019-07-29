@@ -154,7 +154,7 @@ function tm_branding_check_brand($site_brand, $account) {
 
 	// Get match probability
 	// Any matching criteria should return with this probability.
-	// ie: return (rand(1,100) <= $match_probability);
+	// ie: return (tm_branding_rand(1,100) <= $match_probability);
 	$match_probability = 100;
 	if (in_array("match_probability", $match_methods)) {
 		if (isset($site_brand->field_brand_match_probability[LANGUAGE_NONE][0]['value'])) {
@@ -165,7 +165,7 @@ function tm_branding_check_brand($site_brand, $account) {
 	// Step 4. Match "match_all"
 	// Will match any visitor or member
 	if (in_array("match_all", $match_methods)) {
-		return (rand(1,100) <= $match_probability);
+		return (tm_branding_rand(1,100) <= $match_probability);
 	}
 
 	// Step 5. Match "anonymous_user"
@@ -204,14 +204,14 @@ function tm_branding_check_brand($site_brand, $account) {
 			// check if url path matches
 			$request_path = strtolower(request_path());
 			if (in_array($request_path, $match_urls)) {
-				return (rand(1,100) <= $match_probability);
+				return (tm_branding_rand(1,100) <= $match_probability);
 			}
 
 			// check if wildcard path matches
 			foreach($wildcard_urls as $wildcard_url) {
 				$wildcard_match = rtrim($wildcard_url, "*"); // remove wildcard
 				if ((strpos($request_path, $wildcard_match)) === 0) {
-					return (rand(1,100) <= $match_probability);
+					return (tm_branding_rand(1,100) <= $match_probability);
 				}
 			}
 			
@@ -239,7 +239,7 @@ function tm_branding_check_brand($site_brand, $account) {
 
 				// check if partner code matches
 				if (in_array(strtolower($_COOKIE['Drupal_visitor_site_branding_partner']), $match_partners)) {
-					return (rand(1,100) <= $match_probability);
+					return (tm_branding_rand(1,100) <= $match_probability);
 				}
 			}
 		}
@@ -290,7 +290,7 @@ function tm_branding_check_brand($site_brand, $account) {
 
 				// check if referrer domain matches
 				if (in_array(strtolower($referer_domain), $match_domains)) {
-					return (rand(1,100) <= $match_probability);
+					return (tm_branding_rand(1,100) <= $match_probability);
 				}
 			}
 		}
@@ -317,7 +317,7 @@ function tm_branding_check_brand($site_brand, $account) {
 								
 				// is not subscribed
 				if (!$is_subscribed) {
-					return (rand(1,100) <= $match_probability);
+					return (tm_branding_rand(1,100) <= $match_probability);
 				}
 			}
 		}
@@ -373,7 +373,7 @@ function tm_branding_check_brand($site_brand, $account) {
 					if (sizeof($site_brand->field_brand_match_continent[LANGUAGE_NONE]) > 0) {
 						foreach ($site_brand->field_brand_match_continent[LANGUAGE_NONE] as $item) {
 							if ($item['value'] == $geoip_continent) {
-								return (rand(1,100) <= $match_probability);
+								return (tm_branding_rand(1,100) <= $match_probability);
 							}
 						}
 					}
@@ -387,7 +387,7 @@ function tm_branding_check_brand($site_brand, $account) {
 					if (sizeof($site_brand->field_brand_match_country[LANGUAGE_NONE]) > 0) {
 						foreach ($site_brand->field_brand_match_country[LANGUAGE_NONE] as $item) {
 							if ($item['iso2'] == $geoip_country) {
-								return (rand(1,100) <= $match_probability);
+								return (tm_branding_rand(1,100) <= $match_probability);
 							}
 						}
 					}
@@ -415,7 +415,7 @@ function tm_branding_check_brand($site_brand, $account) {
 					if (sizeof($site_brand->field_brand_match_country[LANGUAGE_NONE]) > 0) {
 						foreach ($site_brand->field_brand_match_country[LANGUAGE_NONE] as $item) {
 							if ($item['iso2'] == $users_country) {
-								return (rand(1,100) <= $match_probability);
+								return (tm_branding_rand(1,100) <= $match_probability);
 							}
 						}
 					}
@@ -439,7 +439,7 @@ function tm_branding_check_brand($site_brand, $account) {
 				if (isset($site_brand->field_brand_match_user_chapter[LANGUAGE_NONE])) {
 					foreach ($site_brand->field_brand_match_user_chapter[LANGUAGE_NONE] as $item) {
 						if ($item['target_id'] == $users_home_chapter) {
-							return (rand(1,100) <= $match_probability);
+							return (tm_branding_rand(1,100) <= $match_probability);
 						} 
 					}
 				}
@@ -460,7 +460,7 @@ function tm_branding_check_brand($site_brand, $account) {
 				if (isset($site_brand->field_brand_match_user_chapter[LANGUAGE_NONE])) {
 					foreach ($site_brand->field_brand_match_user_chapter[LANGUAGE_NONE] as $item) {
 						if (in_array($item['target_id'], $users_chapters)) {
-							return (rand(1,100) <= $match_probability);
+							return (tm_branding_rand(1,100) <= $match_probability);
 						} 
 					}
 				}
@@ -480,7 +480,7 @@ function tm_branding_check_brand($site_brand, $account) {
 				if (isset($site_brand->field_brand_match_user_industry[LANGUAGE_NONE])) {
 					foreach ($site_brand->field_brand_match_user_industry[LANGUAGE_NONE] as $item) {
 						if ($item['tid'] == $user_tid) {
-							return (rand(1,100) <= $match_probability);
+							return (tm_branding_rand(1,100) <= $match_probability);
 						} 
 					}
 				}
@@ -938,4 +938,11 @@ function tm_branding_check_timestamp_expired($site_brand, $cookie_key) {
 
 	// Still valid
 	return false;
+}
+
+/**
+ * Helper method to return random number
+ */
+functon tm_branding_rand($min, $max) {
+	return mt_rand($min,$max);
 }

@@ -147,7 +147,7 @@ class TmNewsfeedEmail
 			$debug_timer['04.1a_tm_newsfeed_get_chapter_leaders_needed'] = time();
 			$chapter_leaders_needed = tm_newsfeed_get_chapter_leaders_needed($user_id);
 			$debug_timer['04.1b_done'] = time();
-			if ($chapter_leaders_needed > 0) {
+			if (sizeof($chapter_leaders_needed) > 0) {
 				$chapter_id = $chapter_leaders_needed[array_rand($chapter_leaders_needed)];
 				$chapter_needed = node_load($chapter_id);
 				if ($chapter_needed != null) {

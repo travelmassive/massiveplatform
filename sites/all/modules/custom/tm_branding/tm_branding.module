@@ -949,6 +949,6 @@ function tm_branding_check_timestamp_expired($site_brand, $cookie_key) {
 /**
  * Helper method to return random number
  */
-functon tm_branding_rand($min, $max) {
+function tm_branding_rand($min, $max) {
 	return mt_rand($min,$max);
 }

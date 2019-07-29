@@ -221,6 +221,16 @@ function tm_subscriptions_user_cta_banner($user_id) {
 	$pricing_amount = tm_subscriptions_get_user_pricing_amount($account);
 	$inner_html = str_replace("__PRICING_AMOUNT__", $pricing_amount, $inner_html);
 
+	// get chapter shortcode and set ?ref=
+	// ie ?ref=TOR
+	$shortcode = tm_subscriptions_user_get_chapter_code($account);
+	$inner_html = str_replace("__CHAPTER_SHORTCODE__", $shortcode, $inner_html);
+	if ($shortcode != "") {
+		$inner_html = str_replace("__CHAPTER_SHORTCODE_REF__", "?ref=" . $shortcode, $inner_html);
+	} else {
+		$inner_html = str_replace("__CHAPTER_SHORTCODE_REF__", "", $inner_html);
+	}
+
 	// display pricing
 	$payment_display = "none";
 	
@@ -241,6 +251,11 @@ function tm_subscriptions_user_cta_banner($user_id) {
 		if ($_COOKIE["tm_subscriptions_invite_user_cta"] == 1) { 
 			$payment_display = "block";
 		}       
+	}
+
+	// if preview cta 
+	if (isset($_GET["preview_subscription_cta"])) {
+		$payment_display = "none";
 	}
 
 	$inner_html = str_replace("__PAYMENT_DISPLAY__", $payment_display, $inner_html);

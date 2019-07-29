@@ -504,7 +504,7 @@ function tm_branding_check_brand($site_brand, $account) {
  * Search matching brands in order of priority.
  * Returns base element if no branded elements found.
  */
-function tm_branding_get_element($element_name, $account = null) {
+function tm_branding_get_element($element_name, $account = null, $no_session_cache = false) {
 
 	global $conf;
 	global $user;
@@ -534,7 +534,7 @@ function tm_branding_get_element($element_name, $account = null) {
 
 	// Set site_brands into static variable so we only look it up once per request
 	$site_brands = &drupal_static("tm_site_brands");
-	if (!isset($site_brands['matching'])) {
+	if (!isset($site_brands['matching']) or ($no_session_cache)) {
 		$site_brands['matching'] = tm_branding_get_site_brands($account);
 	}
 

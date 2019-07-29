@@ -333,7 +333,8 @@ function tm_notifications_mail($key, &$message, $params) {
   // display branding
   if (($show_branding) and (isset($params['tokens']['branding_account_uid']))) {
     $branding_account = user_load($params['tokens']['branding_account_uid']);
-    $branding_email_footer_html = tm_branding_get_element("email_footer_html", $branding_account);
+    // call tm_branding_get_element() with no session cache (ie: sending multiple emails)
+    $branding_email_footer_html = tm_branding_get_element("email_footer_html", $branding_account, true);
     $template = str_replace("__EMAIL_BRAND_MESSAGE__", $branding_email_footer_html, $template);
   } else {
     $template = str_replace("__EMAIL_BRAND_MESSAGE__", "", $template);

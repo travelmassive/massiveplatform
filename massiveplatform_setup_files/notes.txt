@@ -111,11 +111,27 @@ Change the userid and event id accordingly.
 # drush php-eval '$account = user_load(34757); $content_id = 16555; $event_paid = flag_get_flag("event_paid"); $event_paid->flag('flag', $content_id, $account, null); $event_register = flag_get_flag("event_register"); $event_register->flag('flag', $content_id, $account, null);'
 
 
-How to manually a subscription payment for a company:
+How to manually add a subscription payment for a company:
 ------------------------------------------------
 
 Change the user id and nodeid accordingly.
 
 # flag company subscription payment
 # drush php-eval '$account = user_load(14840); $content_id = 17443; $subscription_paid = flag_get_flag("organization_subscription_paid"); $subscription_paid->flag("flag", $content_id, $account, true);'
+
+How to export member questions to csv:
+------------------------------------------------
+
+# Replace 1 with 1,2,3 or 4 for question index
+
+SELECT field_user_question_1_value, field_user_country_iso2, concat("https://example.massiveplatform.com/user/", field_revision_field_user_country.entity_id)
+FROM field_data_field_user_question_1
+LEFT JOIN field_revision_field_user_country 
+ON field_revision_field_user_country.entity_id = field_data_field_user_question_1.entity_id
+INTO OUTFILE '/tmp/user_questions_1.csv'
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n';
+
+
 

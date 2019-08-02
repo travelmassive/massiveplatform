@@ -73,7 +73,7 @@ tm_communication_event_send_emails = function(form_action) {
 	if (($('#edit-subject').val().indexOf("!") != -1) || ($('#edit-subject').val().indexOf("$") != -1) || ($('#edit-subject').val() === $('#edit-subject').val().toUpperCase())) {
 		$("#edit-subject").css("border", "2px solid red");
 		var spammy_message = "Please ensure your subject line does not contain:<ul><li>! or $ symbols</li><li>ALL CAPITALS</i></li><li>Pushy wording, such as 'Your last chance'</li></ul>";
-		$.prompt(spammy_message, {title: "Is your subject line spammy?", buttons: {"Ok, I will fix it" : true}});
+		$.prompt(spammy_message, {title: "Is your subject line spammy?", buttons: {"Ok" : true}});
 		$('html, body').animate({scrollTop: $('#edit-subject').offset().top -100 }, 'fast');
 		return false;
 	}
@@ -82,7 +82,7 @@ tm_communication_event_send_emails = function(form_action) {
 	if (($('#edit-headline-text').val().indexOf("!") != -1) || ($('#edit-headline-text').val().indexOf("$") != -1) || (($('#edit-headline-text').val() === $('#edit-headline-text').val().toUpperCase()) && ($('#edit-headline-text').val().trim() !== ""))) {
 		$("#edit-headline-text").css("border", "2px solid red");
 		var spammy_message = "Please ensure your headline does not contain:<ul><li>! or $ symbols</li><li>ALL CAPITALS</i></li><li>Pushy wording, such as 'Your last chance'</li></ul>";
-		$.prompt(spammy_message, {title: "Is your headline spammy?", buttons: {"Ok, I will fix it" : true}});
+		$.prompt(spammy_message, {title: "Is your headline spammy?", buttons: {"Ok" : true}});
 		$('html, body').animate({scrollTop: $('#edit-headline-text').offset().top -100 }, 'fast');
 		return false;
 	}

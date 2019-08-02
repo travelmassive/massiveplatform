@@ -27,7 +27,7 @@ function tm_events_communication_form($event) {
   }
 
   // Add javascript for form
-  drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_communication_v6.js');
+  drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_communication_v7.js');
 
   // Add page title and page url to javascript
   $event_url = drupal_get_path_alias('node/'.$event->nid);

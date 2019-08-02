@@ -65,15 +65,25 @@ tm_communication_event_send_emails = function(form_action) {
 	  return false;
 	}
 
+	// clear error highlighting
+	$("#edit-subject").css("border", "1px #d2d5d8 solid");
+	$("#edit-headline-text").css("border", "1px #d2d5d8 solid");
+
 	// check subject does not contain ! or $ or ALL CAPS
 	if (($('#edit-subject').val().indexOf("!") != -1) || ($('#edit-subject').val().indexOf("$") != -1) || ($('#edit-subject').val() === $('#edit-subject').val().toUpperCase())) {
-		jq_alert("Is your subject line spammy?", "Please ensure your subject line does not contain:<ul><li>! or $ symbols</li><li>ALL CAPITALS</i></li><li>Pushy wording, such as 'Your last chance'</li></ul>");
+		$("#edit-subject").css("border", "2px solid red");
+		var spammy_message = "Please ensure your subject line does not contain:<ul><li>! or $ symbols</li><li>ALL CAPITALS</i></li><li>Pushy wording, such as 'Your last chance'</li></ul>";
+		$.prompt(spammy_message, {title: "Is your subject line spammy?", buttons: {"Ok, I will fix it" : true}});
+		$('html, body').animate({scrollTop: $('#edit-subject').offset().top -100 }, 'fast');
 		return false;
 	}
 
 	// check subject does not contain ! or $ or ALL CAPS
 	if (($('#edit-headline-text').val().indexOf("!") != -1) || ($('#edit-headline-text').val().indexOf("$") != -1) || (($('#edit-headline-text').val() === $('#edit-headline-text').val().toUpperCase()) && ($('#edit-headline-text').val().trim() !== ""))) {
-		jq_alert("Is your headline spammy?", "Please ensure your headline does not contain:<ul><li>! or $ symbols</li><li>ALL CAPITALS</i></li><li>Pushy wording, such as 'Your last chance'</li></ul>");
+		$("#edit-headline-text").css("border", "2px solid red");
+		var spammy_message = "Please ensure your headline does not contain:<ul><li>! or $ symbols</li><li>ALL CAPITALS</i></li><li>Pushy wording, such as 'Your last chance'</li></ul>";
+		$.prompt(spammy_message, {title: "Is your headline spammy?", buttons: {"Ok, I will fix it" : true}});
+		$('html, body').animate({scrollTop: $('#edit-headline-text').offset().top -100 }, 'fast');
 		return false;
 	}
 
@@ -292,6 +302,16 @@ $('#event-email-attendees-submit').click(function (event) {
 	  jq_alert("Have you sent a test email?", "Please confirm first that you are ready to proceed by checking the <strong>I'm ready</strong> checkbox.");
 	  return false;
 	}
+});
+
+// clear error highlighting on focus
+$("#edit-subject").on("focus", function() {
+	$("#edit-subject").css("border", "1px #d2d5d8 solid");
+});
+
+// clear error highlighting on focus
+$("#edit-headline-text").on("focus", function() {
+	$("#edit-headline-text").css("border", "1px #d2d5d8 solid");
 });
 
 // ON PAGE LOAD

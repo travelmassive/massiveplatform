@@ -30,7 +30,7 @@ function tm_users_approve($user) {
     $moderator_message = trim($_GET["moderator_message"]);
     $moderator_message_safe = "";
     if ($moderator_message != "") {
-        $moderator_message_safe = "<br><br><strong>Message from " . $moderator_first_name . ":</strong> " . check_plain($moderator_message) . "";
+        $moderator_message_safe = "<br><br><strong>Message from " . $moderator_first_name . ":</strong> " . check_plain($moderator_message);
         $moderator_message_safe = str_replace("__NL__", "<br>", $moderator_message_safe);
         $approval_text .= $moderator_message_safe;
     }

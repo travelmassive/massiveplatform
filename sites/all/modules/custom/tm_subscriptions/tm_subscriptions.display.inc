@@ -100,7 +100,7 @@ function tm_subscriptions_organization_cta_banner($node_id) {
 		}
 	}
 
-	$wrapper = "<div id='tm-subscriptions-cta-banner' class='company-subscription' style='" . $wrapper_style . "' class='messages--page_notice messages page_notice'>__CONTENT__</div>";
+	$wrapper = "<div id='tm-subscriptions-cta-banner' style='" . $wrapper_style . "' class='messages--page_notice messages page_notice company-subscription'>__CONTENT__</div>";
 
 	// show subscription html
 	$inner_html = $country_subscription["html"];

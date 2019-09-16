@@ -1128,3 +1128,6 @@ $conf["tm_leaderboard_label_more_events"] = "<a target='_blank' href='/blog/star
 /** UPVOTE ORGANIZATIONS **/
 $conf["tm_organizations_upvote"] = false; // allow upvoting of organizations
 
+/** Newsletter Generation **/
+$conf["tm_users_download_csv_member_of_chapters"] = array("SYD"); // array of chapter shortcodes, will add to csv if user is a member of the chapter in new column
+

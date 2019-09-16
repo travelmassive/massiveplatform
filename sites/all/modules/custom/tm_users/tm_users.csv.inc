@@ -69,6 +69,8 @@ function tm_users_download_global_newsletter_csv(){
  */
 function tm_users_download_global_newsletter_generate($drush_progress = false) {
 
+	global $conf;
+
 	// outside of loop for better performance
     $module_exists_tm_subscriptions_user = module_exists("tm_subscriptions_user");
     $module_exists_tm_subscriptions = module_exists("tm_subscriptions");
@@ -110,8 +112,20 @@ function tm_users_download_global_newsletter_generate($drush_progress = false) {
 	// lookup chapter leader role id
 	$chapter_leader_role = user_role_load_by_name("chapter leader")->rid;
 
+	// is in chapter
+	$member_of_chapters = array();
+	if (isset($conf["tm_users_download_csv_member_of_chapters"])) {
+		$member_of_chapters = $conf["tm_users_download_csv_member_of_chapters"];
+	}
+
 	// puts a header row across the top of the csv
 	$item = array(t('First_Name'),t('Last_Name'), t('Email'), t('Country_Code'), t('Location'), t('Home_Chapter'), t('Home_Chapter_Country'), t('User_ID'), t('Account_Age_Days'), t('Last_Active_Days'), t('Last_Updated_Days'), t('Days_Since_Approved'), t('Event_Registrations'), t('Region_Code'), t('Joined_Chapters'), t('Member_Status'), t('Member_Subscription_Type'), t('Organization_Subscription_Type'), t('Show_Member_Subscription_CTA'), t('Show_Organization_Subscription_CTA'), t('Profile_URL'), t('First_Organization_Profile'), t('Organization_Profile_URL'), t('User_Segment_L1'), t('User_Segment_L2'), t('Organization_Segment_L1'), t('Organization_Segment_L2'), t('AB_Group'));
+
+	// Is in chapters
+	foreach ($member_of_chapters as $chapter_shortcode) {
+		$item[] = "Member_" . $chapter_shortcode;
+	}
+
 	fputcsv($fh, $item);
 
 	// fetch newsletter subscribers
@@ -354,6 +368,16 @@ where n.value = 1 order by ud.uid asc";
 
 		// AB Group (1 to 100)
 		$row[] = ($row_count % 100) + 1;
+
+		// Is member of chapter
+		foreach ($member_of_chapters as $chapter_shortcode) {
+			if (array_search($chapter_shortcode, $joined_chapters) !== FALSE) {
+				$row["Member_" . $chapter_shortcode] = "1";
+			} else {
+				$row["Member_" . $chapter_shortcode] = "0";
+			}
+		}
+
 		$row_count++;
 
 		fputcsv($fh, $row);

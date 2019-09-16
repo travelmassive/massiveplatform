@@ -332,7 +332,7 @@ where n.value = 1 order by ud.uid asc";
 			$term = $taxonomy_terms[$field_segment_tid]; // taxonomy_term_load($field_segment_tid);
 			// load parent term
 			$parent_terms = $taxonomy_parents[$term->tid]; // taxonomy_get_parents($term->tid);
-			if (sizeof($parent_terms) > 0) {
+			if (is_array($parent_terms) && (sizeof($parent_terms) > 0)) {
 				$parent_term = current($parent_terms);
 				$user_segment_l1 = $parent_term->name;
 				$user_segment_l2 = $term->name;
@@ -353,7 +353,7 @@ where n.value = 1 order by ud.uid asc";
 				$term = $taxonomy_terms[$field_segment_tid]; // taxonomy_term_load($field_segment_tid);
 				// load parent term
 				$parent_terms = $taxonomy_parents[$term->tid]; // taxonomy_get_parents($term->tid);
-				if (sizeof($parent_terms) > 0) {
+				if (is_array($parent_terms) && (sizeof($parent_terms) > 0)) {
 					$parent_term = current($parent_terms);
 					$company_segment_l1 = $parent_term->name;
 					$company_segment_l2 = $term->name;

@@ -133,5 +133,11 @@ FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n';
 
+How to increase performance of flagging table with many rows
+------------------------------------------------
+
+# improve flag_get_user_flags performance with large tables
+show index from flagging;
+ALTER TABLE `flagging` ADD INDEX `tm_uid` (`uid`);
 
 

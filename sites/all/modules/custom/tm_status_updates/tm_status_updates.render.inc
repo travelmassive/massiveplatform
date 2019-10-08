@@ -951,6 +951,9 @@ function tm_status_updates_render_promoted($num_days = 7, $display_limit = 3) {
 	// promoted updates
 	$promoted_html = "";
 	$promoted_updates = tm_status_updates_get_promoted_updates($num_days);
+	if ($promoted_updates == null) {
+		return "";
+	}
 	if (sizeof($promoted_updates) == 0) {
 		return "";
 	}

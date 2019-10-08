@@ -1128,3 +1128,5 @@ $conf["tm_leaderboard_label_more_events"] = "<a target='_blank' href='/blog/star
 /** UPVOTE ORGANIZATIONS **/
 $conf["tm_organizations_upvote"] = false; // allow upvoting of organizations
 
+/** LISTS **/
+$conf["tm_lists_notification_message"] = "<br>If you like the list, please share or link to it — thanks 🙏<br>";

@@ -140,4 +140,9 @@ How to increase performance of flagging table with many rows
 show index from flagging;
 ALTER TABLE `flagging` ADD INDEX `tm_uid` (`uid`);
 
+How to increase performance of tm_track_views lookups
+------------------------------------------------
+ALTER TABLE `tm_track_views` ADD INDEX `tm_entity_type` (`entity_type`);
+ALTER TABLE `tm_track_views` ADD INDEX `tm_entity_id` (`entity_id`);
+
 

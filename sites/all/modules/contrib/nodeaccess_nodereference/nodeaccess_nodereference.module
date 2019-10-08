@@ -9,6 +9,12 @@
  * Implements hook_node_grants().
  */
 function nodeaccess_nodereference_node_grants($account, $op) {
+
+  // TM patch for performance (don't check for viewing)
+  if ($op == "view") {
+    return array();
+  }
+
   // $grants stores known grants for account/op combos, because the grant
   // calculations can be exhaustive.  Proper caching is also used.
   static $grants = array();

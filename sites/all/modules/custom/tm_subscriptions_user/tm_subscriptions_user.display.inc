@@ -175,7 +175,7 @@ function tm_subscriptions_user_cta_banner($user_id) {
 		}
 	}
 
-	$wrapper = "<div id='tm-subscriptions-cta-banner' style='" . $wrapper_style . "' class='messages--page_notice messages page_notice'>__CONTENT__</div>";
+	$wrapper = "<div id='tm-subscriptions-cta-banner' style='" . $wrapper_style . "' class='messages--page_notice messages page_notice member-subscription'>__CONTENT__</div>";
 
 	// show subscription html
 	$inner_html = $country_subscription["html"];

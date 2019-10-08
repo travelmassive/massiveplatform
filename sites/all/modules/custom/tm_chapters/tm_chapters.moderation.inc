@@ -111,9 +111,9 @@ function tm_chapters_moderation_chapters_add_member($user_to_moderate, $add_to_c
 		$message = strip_tags(trim($_GET["message"]));
 		if ($message != "") {
 			// moderator message
-			$message_html = "<br><strong>Message from " . $moderator_first_name . ":</strong><p><i>";
+			$message_html = "<br><strong>Message from " . $moderator_first_name . ":</strong> ";
 			$message_html .= $message;
-			$message_html .= "</i></p>";
+			$message_html .= "<br>";
 
 			$static_add_member_moderator_message = &drupal_static("tm_add_member_moderator_message");
       		$static_add_member_moderator_message = $message_html;

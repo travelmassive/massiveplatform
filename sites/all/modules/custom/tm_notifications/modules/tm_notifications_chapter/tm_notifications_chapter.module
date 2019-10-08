@@ -121,7 +121,7 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
     $chapter_welcome_message = trim(strip_tags(check_plain($node->field_join_chapter_message[LANGUAGE_NONE][0]['value'])));
     $chapter_welcome_message = str_replace("\n", "<br>", $chapter_welcome_message); // add line breaks
     if ($chapter_welcome_message != "") {
-      $welcome_message .= "<br><strong>Here's a welcome message from your local Chapter Leaders:</strong><p>" . $chapter_welcome_message . "</p>";
+      $welcome_message .= "<br><strong>Here's a welcome message from your local Chapter Leaders:</strong><br><br><i>" . $chapter_welcome_message . "</i><br>";
     }
   }
 
@@ -140,8 +140,60 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
   // unapproved message
   $unapproved_message = "";
   if (!in_array("approved user", $who_joined->roles)) {
-    $unapproved_message = '<br><br>PS: Please ensure that you\'ve completed <a href="__SERVER_HTTP__://__SERVER_NAME__/user/' . $who_joined->uid . '">your profile</a> so the Chapter Leaders can approve your account.';
+    $unapproved_message = '<br>PS: Please ensure that you\'ve completed <a href="__SERVER_HTTP__://__SERVER_NAME__/user/' . $who_joined->uid . '">your profile</a> so we can approve your account.';
   }
+
+  // Fetch the current date  and make sure it's UTC and user-defined timezone.
+  $current_date = new DateTime('now', new DateTimeZone('UTC'));
+
+  // Fetch the nearest upcoming event that references a particular chapter
+  $upcoming_events_html = "";
+  $previous_event = null;
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'event')
+    ->propertyCondition('status', 1)
+    ->fieldCondition('field_chapter', 'target_id', $node->nid)
+    ->fieldCondition('field_event_date', 'value2', $current_date->format('Y-m-d H:i:s'), '>=')
+    ->fieldOrderBy('field_event_date', 'value2', 'ASC');
+  $results = $query->execute();
+
+  foreach ($results as $result) {
+    foreach($result as $nid => $obj) {
+      $event = node_load($nid);
+
+      // ignore preview mode
+      if ($event->field_event_is_preview_mode[LANGUAGE_NONE][0]['value'] == 1) {
+        continue;
+      }
+
+      if ($event != null) {
+
+        if ($previous_event == null) {
+          $upcoming_events_html .= "<br><strong>Join our upcoming events</strong><ul>";
+        }
+
+        // event date
+        $event_date = strtotime($event->field_event_date[LANGUAGE_NONE][0]['value']);
+        $event_date_str = date('l j F Y', $event_date);
+
+        // event url
+        $event_url = $conf["tm_email_server_http"] . "://" . $conf["tm_email_server_url_domain"] . "/" . drupal_get_path_alias('node/' . $event->nid);
+
+        // text
+        $upcoming_events_html .= '<li><a href="' . $event_url . '">' . $event->title . "</a>, " . $event_date_str . "</li>";
+
+        $previous_event = $event;
+        
+      }
+    }
+  }
+  if ($previous_event != null) {
+    $upcoming_events_html .= "\n</ul>";
+  }
+
+  // add upcoming events to welcome message
+  $welcome_message .= $upcoming_events_html;
 
   // notify the member
   tm_notifications_notify('user_chapter_join_welcome_member', $account, array('node' => $node, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__WELCOME_MESSAGE__' => $welcome_message, '__CHAPTER_NAME__' => $chapter_name, '__HERO_IMAGE__' => $chapter_image_html, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__UNAPPROVED_MESSAGE__' => $unapproved_message, '__JOIN_ACTION__' => $join_action, '__INTRO_MESSAGE__' => $intro_message));

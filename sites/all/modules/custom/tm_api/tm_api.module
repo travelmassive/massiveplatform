@@ -1,5 +1,9 @@
 <?php
 
+// API 
+
+include_once 'tm_api.drush.inc';
+
 function tm_api_menu() {
 
    $items = array();
@@ -92,13 +96,15 @@ function tm_api_stats() {
 }
 
 // fetch api stata data
-// cache for 15 mins
-function tm_api_stats_get_data() {
+// cache for 30 mins
+function tm_api_stats_get_data($use_cache = true) {
 
-  // check cache
-  $cache = cache_get('tm-api-stats', 'cache');
-  if (!empty($cache)) {
-    return $cache->data;
+  if ($use_cache) {
+    // check cache
+    $cache = cache_get('tm-api-stats', 'cache');
+    if (!empty($cache)) {
+      return $cache->data;
+    }
   }
 
   // initialize api data
@@ -242,7 +248,7 @@ function tm_api_stats_get_data() {
   }
 
   // return api data in json format
-  cache_set('tm-api-stats', $api_data, 'cache', time() + 900); // 15 mins
+  cache_set('tm-api-stats', $api_data, 'cache', time() + 1800); // 30 mins
   return $api_data;
 }
 

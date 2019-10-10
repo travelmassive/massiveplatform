@@ -339,6 +339,14 @@ function tm_organizations_form_alter(&$form, $form_state, $form_id) {
       // Remove form description
       unset($form['term_node_tid_depth']['#description']);
 
+      // check if disable industry segment
+      $disable_industry_segment = false;
+      if (isset($conf["tm_users_disable_industry_segment"])) {
+        if ($conf["tm_users_disable_industry_segment"] == true) {
+          hide($form['term_node_tid_depth']);
+        }
+      }
+
     }
   }
 

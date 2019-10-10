@@ -287,6 +287,6 @@ function tm_users_form_contact_site_form_alter(&$form, &$form_state, $form_id) {
 
   // hide spam field
   $js = "document.getElementsByClassName('form-item-fullname')[0].style.display = 'none';";
-  drupal_add_js($js, "inline");
+  drupal_add_js($js, array('type' => 'inline', 'scope' => 'footer'));
 
 }

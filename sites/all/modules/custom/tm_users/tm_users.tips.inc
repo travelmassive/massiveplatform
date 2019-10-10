@@ -28,7 +28,7 @@ function tm_users_signup_tips($return_score = false, $uid = null, $show_threshol
    // user edit page
   $edit_url = "user/" . $uid . "/edit";
 
-  // job role (10 points)
+  // about me (10 points)
   $total_points += 10;
   if (sizeof($account->field_about_me) == 0) {
     if ($user_tip == "") {
@@ -49,23 +49,35 @@ function tm_users_signup_tips($return_score = false, $uid = null, $show_threshol
   }
 
   // job role (10 points)
-  $total_points += 10;
-  if (sizeof($account->field_job_role) == 0) {
-    if ($user_tip == "") {
-      $user_tip = "Share your " . l(t('job role'), $edit_url, array('fragment' => 'edit-field-job-role')) . " so like-minded members can connect with you.";
-    }
-  } else {
-    $user_points += 10;
+  $disable_job_role = false;
+  if (isset($conf["tm_users_disable_job_role"])) {
+    $disable_job_role = $conf["tm_users_disable_job_role"];
   }
-
-  // organization (10 points)
-  $total_points += 10;
-  if (sizeof($account->field_job_organization) == 0) {
-    if ($user_tip == "") {
-      $user_tip = "Share the organization " . l(t('where you work'), $edit_url, array('fragment' => 'edit-field-job-organization')) . ", except if you are a top secret agent.";
+  if (!$disable_job_role) {
+    $total_points += 10;
+    if (sizeof($account->field_job_role) == 0) {
+      if ($user_tip == "") {
+        $user_tip = "Share your " . l(t('job role'), $edit_url, array('fragment' => 'edit-field-job-role')) . " so like-minded members can connect with you.";
+      }
+    } else {
+      $user_points += 10;
     }
-  } else {
-    $user_points += 10;
+  }
+ 
+  // organization (10 points)
+  $disable_job_organization = false;
+  if (isset($conf["tm_users_disable_job_organization"])) {
+    $disable_job_organization = $conf["tm_users_disable_job_organization"];
+  }
+  if (!$disable_job_organization) {
+    $total_points += 10;
+    if (sizeof($account->field_job_organization) == 0) {
+      if ($user_tip == "") {
+        $user_tip = "Share the organization " . l(t('where you work'), $edit_url, array('fragment' => 'edit-field-job-organization')) . ", except if you are a top secret agent.";
+      }
+    } else {
+      $user_points += 10;
+    }
   }
 
   // user photo (10 points)
@@ -97,13 +109,20 @@ function tm_users_signup_tips($return_score = false, $uid = null, $show_threshol
   }
 
   // industry segment (10 points)
-  $total_points += 10;
-  if (sizeof($account->field_segment) == 0) {
-    if ($user_tip == "") {
-      $user_tip = "Select an " . l(t('industy segment'), $edit_url, array('fragment' => 'edit-field-segment')) . " to help us connect you with other members.";
+  // organization (10 points)
+  $disable_industry_segment = false;
+  if (isset($conf["tm_users_disable_industry_segment"])) {
+    $disable_industry_segment = $conf["tm_users_disable_industry_segment"];
+  }
+  if (!$disable_industry_segment) {
+    $total_points += 10;
+    if (sizeof($account->field_segment) == 0) {
+      if ($user_tip == "") {
+        $user_tip = "Select an " . l(t('industy segment'), $edit_url, array('fragment' => 'edit-field-segment')) . " to help us connect you with other members.";
+      }
+    } else {
+      $user_points += 10;
     }
-  } else {
-    $user_points += 10;
   }
 
   // profile questions (10 points)

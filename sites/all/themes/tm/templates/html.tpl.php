@@ -34,6 +34,7 @@
     <link rel="apple-touch-icon" sizes="152x152" href="<?php echo tm_branding_get_base_element("apple_touch_icon", "apple-touch-icon-152x152.png");?>"/>
     
     <?php
+    global $conf;
     $fonts_url = "//fonts.googleapis.com/css?family=Lato:300,400,700&display=swap";
     if (isset($conf["tm_theme_google_fonts_url"])) {
       $fonts_url = $conf["tm_theme_google_fonts_url"];

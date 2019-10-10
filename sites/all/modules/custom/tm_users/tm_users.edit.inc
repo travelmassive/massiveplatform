@@ -168,6 +168,32 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
     field_group_hide_field_groups($form, array('group_user_feedback'));
   }
 
+  // optional: disable industry segment, job role, organization for non-moderators
+  if ((!in_array("moderator", $user->roles)) and (!in_array("administrator", $user->roles))) {
+    
+    // industry segment
+    if (isset($conf["tm_users_disable_industry_segment"])) {
+      if ($conf["tm_users_disable_industry_segment"] == true) {
+        unset($form["field_segment"]);
+      }
+    }
+
+    // job role
+    if (isset($conf["tm_users_disable_job_role"])) {
+      if ($conf["tm_users_disable_job_role"] == true) {
+        unset($form["field_job_role"]);
+      }
+    }
+
+    // job organization
+    if (isset($conf["tm_users_disable_job_organization"])) {
+      if ($conf["tm_users_disable_job_organization"] == true) {
+        unset($form["field_job_organization"]);
+      }
+    }
+
+  }
+
 }
 
 /**

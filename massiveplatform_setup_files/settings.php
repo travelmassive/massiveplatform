@@ -289,6 +289,9 @@ $conf['tm_event_register_headlines'] = array("Hooray, see you there.", "Your spo
 /** Options available: website, twitter, facebook, linkedin, instagram, youtube, vimeo, snapchat **/
 $conf["tm_users_link_fields"] = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat'); /* also: strava */
 $conf["tm_organizations_link_fields"] = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo');
+$conf["tm_users_disable_job_role"] = false; // prevent users from editing their job role
+$conf["tm_users_disable_job_organization"] = false; //prevent users from editing their job organisation
+$conf["tm_users_disable_industry_segment"] = false; //prevent users from editing their industry segment
 
 /** RANDOMIZE DEFAULT IMAGES **/
 /** After editing, run drush image-flush and ensure image folder is writeable by web server **/

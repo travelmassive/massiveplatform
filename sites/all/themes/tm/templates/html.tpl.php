@@ -38,6 +38,7 @@
     if (isset($conf["tm_theme_google_fonts_url"])) {
       $fonts_url = $conf["tm_theme_google_fonts_url"];
     }
+    ?>
     <link href="<?php print $fonts_url; ?>" rel="stylesheet" type="text/css">
 
     <?php print $styles; ?>

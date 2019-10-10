@@ -353,10 +353,11 @@ function tm_events_node_view($node, $view_mode, $langcode) {
         drupal_set_message("This event is in Preview mode. Only people with the link can see this event.", "help-tip");
     }
 
-    // if event has chapter, drop cookie to set default chapter on signup page
+    // if event has chapter, drop cookie via javascript to set default chapter on signup page
     if (isset($node->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
       $chapter_id = $node->field_chapter[LANGUAGE_NONE][0]['target_id'];
-      user_cookie_save(array('chapter_referral_id'=>$chapter_id));
+      drupal_add_js(array('chapter_referral_id' => array('id' => $chapter_id)), array('type' => 'setting'));
+      drupal_add_js(drupal_get_path('module', 'tm_chapters') . '/js/tm_chapters_referral.js');
     }
 
     // show reminder to send announcement

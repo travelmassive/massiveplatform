@@ -617,15 +617,14 @@ function tm_users_track_signed_in() {
  */
 function tm_users_set_application_cookies() {
 
-  global $user;
-  global $conf;
-
-  // store user details for other domain hosted apps
-  // Note: when user logs out we unset them in tm_users_user_logout()
+  // Don't set any cookies if logged out
+  // Otherwise we will not be able to cache responses
   if (!user_is_logged_in()) {
-    user_cookie_save(array('anonymous_visitor' => 1));
     return;
   }
+
+  global $user;
+  global $conf;
 
   // load user
   $loaded = user_load($user->uid);

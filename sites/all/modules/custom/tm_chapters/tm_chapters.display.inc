@@ -120,8 +120,10 @@ function tm_chapters_node_view($node, $view_mode) {
     // show help wanted
     tm_chapters_show_help_needed_message($node);
 
-    // drop cookie to set default chapter on signup page
-    user_cookie_save(array('chapter_referral_id'=>$node->nid));
+    // drop cookie via javascript to set default chapter on signup page
+    drupal_add_js(array('chapter_referral_id' => array('id' => $node->nid)), array('type' => 'setting'));
+    drupal_add_js(drupal_get_path('module', 'tm_chapters') . '/js/tm_chapters_referral.js');
+
   }
 }
 

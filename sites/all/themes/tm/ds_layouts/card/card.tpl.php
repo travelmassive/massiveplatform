@@ -34,7 +34,19 @@
       <a href="<?php print url('user/' . $uid); ?>">
     <?php endif; ?>
     <<?php print $media_wrapper; ?> class="media<?php print $media_classes; ?>">
-      <?php print $media; ?>
+      <?php 
+
+        if (isset($nid)) {
+          $cover_id = "node-" . $nid;
+        } else {
+          $cover_id = "user-" . $uid;
+        }
+
+        // insert preloader image
+        $media = tm_theme_trilithon_card_placeholder_image($media, $cover_id);
+        print $media; 
+
+     ?>
     </<?php print $media_wrapper; ?>>
 
     <<?php print $teaser_wrapper; ?> class="teaser<?php print $teaser_classes; ?>">

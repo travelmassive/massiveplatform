@@ -37,9 +37,9 @@
       <?php 
 
         if (isset($nid)) {
-          $cover_id = "node-" . $nid;
+          $cover_id = "cover-node-" . $nid;
         } else {
-          $cover_id = "user-" . $uid;
+          $cover_id = "cover-user-" . $uid;
         }
 
         // insert preloader image

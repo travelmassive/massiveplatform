@@ -24,6 +24,10 @@ function tm_theme_trilithon_full_placeholder_image($media) {
 					fullimage.setAttribute("data-src", "");
 				}
 			 }';
+
+			// minify js
+			$js = str_replace("\n", "", $js);
+			$js = str_replace("\t", "", $js);
 				
 			$media = str_replace('<img typeof="foaf:Image" src=', "<img typeof=\"foaf:Image\" id='preload-cover-image', OnLoad='" . $js . "' src='" . $placeholder_image_data . "', data-src=", $media);
 
@@ -55,6 +59,11 @@ function tm_theme_trilithon_card_placeholder_image($media, $cover_id) {
 					fullimage.setAttribute("data-src", "");
 				}
 			}';
+
+			// minify js
+			$js = str_replace("\n", "", $js);
+			$js = str_replace("\t", "", $js);
+			
 			$media = str_replace('<div class="cover"><img typeof="foaf:Image" src=', "<div class=\"cover\"><img typeof=\"foaf:Image\" id='" . $cover_id . "', OnLoad='" . $js . "' src='" . $placeholder_image_data . "', data-src=", $media);
 
 		}

@@ -231,6 +231,21 @@ function tm_subscriptions_user_cta_banner($user_id) {
 		$inner_html = str_replace("__CHAPTER_SHORTCODE_REF__", "", $inner_html);
 	}
 
+	// members first name
+	$first_name = $account->field_user_first_name[LANGUAGE_NONE][0]['value'];
+	$inner_html = str_replace("__FIRST_NAME__", $first_name, $inner_html);
+
+	// chapter title
+	$home_chapter = tm_subscriptions_user_get_chapter($account);
+	$chapter_title = "community";
+	$chapter_label = "community";
+	if ($home_chapter != null) {
+		$chapter_title = strip_tags($home_chapter->title);
+		$chaptger_label = $chapter_title . " chapter";
+	}
+	$inner_html = str_replace("__CHAPTER_LABEL__", $chapter_label, $inner_html);
+	$inner_html = str_replace("__CHAPTER_TITLE__", $chapter_title, $inner_html);
+
 	// display pricing
 	$payment_display = "none";
 	

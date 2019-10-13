@@ -73,7 +73,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['arguments']['iso2']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['iso2']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['arguments']['iso2']['limit'] = '0';
-  /* Filter criterion: User: Active */
+  /* Filter criterion: User: Active status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'users';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -155,7 +155,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['arguments']['iso2']['limit'] = '0';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: User: Active */
+  /* Filter criterion: User: Active status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'users';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -261,7 +261,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['arguments']['iso2']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['iso2']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['arguments']['iso2']['limit'] = '0';
-  /* Filter criterion: User: Active */
+  /* Filter criterion: User: Active status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'users';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -358,7 +358,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['relationships']['flag_content_rel_2']['user_scope'] = 'any';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: User: Active */
+  /* Filter criterion: User: Active status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'users';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -490,7 +490,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['arguments']['uid']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['uid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['uid']['summary_options']['items_per_page'] = '25';
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -627,7 +627,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['arguments']['uid']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['uid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['uid']['summary_options']['items_per_page'] = '25';
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -657,10 +657,6 @@ function tm_users_views_default_views() {
   $handler->display->display_options['relationships']['flag_content_rel']['field'] = 'flag_content_rel';
   $handler->display->display_options['relationships']['flag_content_rel']['flag'] = 'event_register';
   $handler->display->display_options['relationships']['flag_content_rel']['user_scope'] = 'any';
-  /* Relationship: Entity Reference: Referenced Entity */
-  $handler->display->display_options['relationships']['field_event_featured_members_target_id']['id'] = 'field_event_featured_members_target_id';
-  $handler->display->display_options['relationships']['field_event_featured_members_target_id']['table'] = 'field_data_field_event_featured_members';
-  $handler->display->display_options['relationships']['field_event_featured_members_target_id']['field'] = 'field_event_featured_members_target_id';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Flags: User uid */
   $handler->display->display_options['arguments']['uid']['id'] = 'uid';
@@ -673,19 +669,9 @@ function tm_users_views_default_views() {
   $handler->display->display_options['arguments']['uid']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['uid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['uid']['summary_options']['items_per_page'] = '25';
-  /* Contextual filter: Content: Featured members (field_event_featured_members) */
-  $handler->display->display_options['arguments']['field_event_featured_members_target_id']['id'] = 'field_event_featured_members_target_id';
-  $handler->display->display_options['arguments']['field_event_featured_members_target_id']['table'] = 'field_data_field_event_featured_members';
-  $handler->display->display_options['arguments']['field_event_featured_members_target_id']['field'] = 'field_event_featured_members_target_id';
-  $handler->display->display_options['arguments']['field_event_featured_members_target_id']['default_action'] = 'default';
-  $handler->display->display_options['arguments']['field_event_featured_members_target_id']['default_argument_type'] = 'user';
-  $handler->display->display_options['arguments']['field_event_featured_members_target_id']['default_argument_options']['user'] = FALSE;
-  $handler->display->display_options['arguments']['field_event_featured_members_target_id']['summary']['number_of_records'] = '0';
-  $handler->display->display_options['arguments']['field_event_featured_members_target_id']['summary']['format'] = 'default_summary';
-  $handler->display->display_options['arguments']['field_event_featured_members_target_id']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -716,7 +702,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['css_class'] = 'chapter-list related-list';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -763,7 +749,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['arguments']['field_owner_target_id']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Content: Published status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
@@ -914,7 +900,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['sorts']['created']['table'] = 'users';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Filter criterion: User: Active */
+  /* Filter criterion: User: Active status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'users';
   $handler->display->display_options['filters']['status']['field'] = 'status';

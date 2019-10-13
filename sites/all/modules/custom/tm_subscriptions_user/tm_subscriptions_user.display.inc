@@ -241,7 +241,7 @@ function tm_subscriptions_user_cta_banner($user_id) {
 	$chapter_label = "community";
 	if ($home_chapter != null) {
 		$chapter_title = strip_tags($home_chapter->title);
-		$chaptger_label = $chapter_title . " chapter";
+		$chapter_label = $chapter_title . " chapter";
 	}
 	$inner_html = str_replace("__CHAPTER_LABEL__", $chapter_label, $inner_html);
 	$inner_html = str_replace("__CHAPTER_TITLE__", $chapter_title, $inner_html);

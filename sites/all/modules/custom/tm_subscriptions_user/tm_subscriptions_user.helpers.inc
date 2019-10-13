@@ -479,7 +479,7 @@ function tm_subscriptions_user_get_chapter($account) {
 
 	// Option 1. Find most recent event member has registered for
 	$query = "SELECT entity_id FROM flagging WHERE entity_type = 'node' AND fid IN (" . implode(",", $event_flags) . ") AND uid = :uid ORDER BY timestamp desc";
-	$rows = db_query($query, array(':uid' => $uid))->fetchAll();
+	$rows = db_query($query, array(':uid' => $account->uid))->fetchAll();
 	foreach ($rows as $row) {
 		$event_id = $row->entity_id;
 		$event = node_load($event_id);

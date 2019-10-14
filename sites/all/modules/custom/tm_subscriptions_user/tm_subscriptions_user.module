@@ -337,7 +337,7 @@ function tm_subscriptions_user_invite_link() {
   setcookie("tm_subscriptions_invite_user_cta", 1, strtotime('+30 days'), "/", "." . $conf["tm_email_server_url_domain"]);
 
   // hide for subsequent page loads
-  setcookie("tm_subscriptions_hide_user_cta2", 0, strtotime('+30 days'), "/", "." . $conf["tm_email_server_url_domain"]);
+  setcookie("tm_subscriptions_hide_cta", 0, strtotime('+30 days'), "/", "." . $conf["tm_email_server_url_domain"]);
 
   // pass on partner code
   if (isset($_GET["partner"])) {

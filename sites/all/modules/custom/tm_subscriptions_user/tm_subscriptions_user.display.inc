@@ -125,17 +125,24 @@ function tm_subscriptions_user_cta_banner_node($user_id, $node_id) {
 		return;
 	}
 
-	// show for chapters
+	// show on chapter page if member is in the chapter
 	if ($node->type == "chapter") {
-		return tm_subscriptions_user_cta_banner($user_id);
+		$account = user_load($user_id);
+		if ($account != null) {
+			$chapters = tm_users_get_chapters($account);
+			if (in_array($node_id, $users_chapters)) {
+				return tm_subscriptions_user_cta_banner($user_id, $node);
+			}
+		}
 	}
+	
 }
 
 /**
  * Render subscription CTA banner
  * Called from page--user.tpl.php
  */
-function tm_subscriptions_user_cta_banner($user_id) {
+function tm_subscriptions_user_cta_banner($user_id, $chapter = null) {
 
 	global $conf;
 	global $user;
@@ -169,8 +176,8 @@ function tm_subscriptions_user_cta_banner($user_id) {
 
 	// get cookie
 	$wrapper_style = "";
-	if ((!$tm_force_show_cta) and (isset($_COOKIE["tm_subscriptions_hide_user_cta2"]))) {
-		if ($_COOKIE["tm_subscriptions_hide_user_cta2"] == 1) {
+	if ((!$tm_force_show_cta) and (isset($_COOKIE["tm_subscriptions_hide_cta"]))) {
+		if ($_COOKIE["tm_subscriptions_hide_cta"] == 1) {
 			$wrapper_style = "display: none";
 		}
 	}
@@ -223,7 +230,13 @@ function tm_subscriptions_user_cta_banner($user_id) {
 
 	// get chapter shortcode and set ?ref=
 	// ie ?ref=TOR
-	$shortcode = tm_subscriptions_user_get_chapter_code($account);
+	$shortcode = null;
+	if ($chapter == null) {
+		$shortcode = tm_subscriptions_user_get_chapter_code($account);
+	} elseif (isset($chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['value'])) {
+		$shortcode = $chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['value'];
+	}
+
 	$inner_html = str_replace("__CHAPTER_SHORTCODE__", $shortcode, $inner_html);
 	if ($shortcode != "") {
 		$inner_html = str_replace("__CHAPTER_SHORTCODE_REF__", "?ref=" . $shortcode, $inner_html);
@@ -236,11 +249,13 @@ function tm_subscriptions_user_cta_banner($user_id) {
 	$inner_html = str_replace("__FIRST_NAME__", $first_name, $inner_html);
 
 	// chapter title
-	$home_chapter = tm_subscriptions_user_get_chapter($account);
+	if ($chapter == null) {
+		$chapter = tm_subscriptions_user_get_chapter($account);
+	}
 	$chapter_title = "community";
 	$chapter_label = "community";
 	if ($home_chapter != null) {
-		$chapter_title = strip_tags($home_chapter->title);
+		$chapter_title = strip_tags($chapter->title);
 		$chapter_label = $chapter_title . " chapter";
 	}
 	$inner_html = str_replace("__CHAPTER_LABEL__", $chapter_label, $inner_html);
@@ -446,14 +461,14 @@ jQuery(document).ready(function($) {
 	// Hide the CTA banner
 	$('.hide-cta-banner-user').on('click', function(e) {
 		$("#tm-subscriptions-cta-banner").hide();
-		var cookie = ['tm_subscriptions_hide_user_cta2=1; domain=.', window.location.host.toString(), '; path=/;'].join('');
+		var cookie = ['tm_subscriptions_hide_cta=1; domain=.', window.location.host.toString(), '; path=/;'].join('');
 		document.cookie = cookie;
 	});
 
 	// Show the CTA banner
     $('.show-cta-banner-user').on('click', function(e) {
 		$("#tm-subscriptions-cta-banner").show();
-		var cookie = ['tm_subscriptions_hide_user_cta2=0; domain=.', window.location.host.toString(), '; path=/;'].join('');
+		var cookie = ['tm_subscriptions_hide_cta=0; domain=.', window.location.host.toString(), '; path=/;'].join('');
 		document.cookie = cookie;
 	});
 

@@ -278,7 +278,7 @@ function tm_subscriptions_user_get_partner_code() {
 		$tm_force_show_cta = true;
 
 		// hide for subsequent page loads
-		setcookie("tm_subscriptions_hide_user_cta", 0, strtotime('+30 days'), "/", "." . $conf["tm_email_server_url_domain"]);
+		setcookie("tm_subscriptions_hide_member_cta", 0, strtotime('+30 days'), "/", "." . $conf["tm_email_server_url_domain"]);
 
 
 	} elseif (isset($_COOKIE['Drupal_visitor_subscription_partner'])) {
@@ -466,28 +466,40 @@ function tm_subscriptions_user_get_type($uid) {
 
 /**
  * Helper method to get chapter of subscriber
- * Returns home chapter, or first joined chapter
+ * Returns chapter of most recently registered event, or most recently joined chapter
  * Returns null if no chapter
  */
 function tm_subscriptions_user_get_chapter($account) {
 
 	$chapter = null;
 
-	// check for home chapter
-	if (sizeof($account->field_home_chapter) > 0) {
-		$chapter_id = $account->field_home_chapter[LANGUAGE_NONE][0]['target_id'];
-		$home_chapter = node_load($chapter_id);
-		if ($home_chapter != null) {
-			$chapter = $home_chapter;
-		}
-	} else {
-		// use first chapter
-		$chapter_ids = tm_users_get_chapters($account);
-		if (sizeof($chapter_ids) > 0) {
-			$first_chapter = node_load($chapter_ids[0]);
-			if ($first_chapter != null) {
-				$chapter = $first_chapter;
+	$event_flags = array();
+	$event_flags[] = flag_get_flag('event_register')->fid;
+	$event_flags[] = flag_get_flag('event_paid')->fid;
+
+	// Option 1. Find most recent event member has registered for
+	$query = "SELECT entity_id FROM flagging WHERE entity_type = 'node' AND fid IN (" . implode(",", $event_flags) . ") AND uid = :uid ORDER BY timestamp desc";
+	$rows = db_query($query, array(':uid' => $account->uid))->fetchAll();
+	foreach ($rows as $row) {
+		$event_id = $row->entity_id;
+		$event = node_load($event_id);
+		if ($event != null) {
+			if (isset($event->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
+				$chapter_id = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
+				$chapter = node_load($chapter_id);
+				if ($chapter != null) {
+					return $chapter;
+				}
 			}
+		}
+	}
+
+	// Option 2. Last chapter joined
+	$chapter_ids = tm_users_get_chapters($account);
+	if (sizeof($chapter_ids) > 0) {
+		$first_chapter = node_load($chapter_ids[sizeof($chapter_ids) - 1]);
+		if ($first_chapter != null) {
+			$chapter = $first_chapter;
 		}
 	}
 

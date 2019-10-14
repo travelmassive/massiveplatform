@@ -169,8 +169,8 @@ function tm_subscriptions_user_cta_banner($user_id) {
 
 	// get cookie
 	$wrapper_style = "";
-	if ((!$tm_force_show_cta) and (isset($_COOKIE["tm_subscriptions_hide_user_cta"]))) {
-		if ($_COOKIE["tm_subscriptions_hide_user_cta"] == 1) {
+	if ((!$tm_force_show_cta) and (isset($_COOKIE["tm_subscriptions_hide_member_cta"]))) {
+		if ($_COOKIE["tm_subscriptions_hide_member_cta"] == 1) {
 			$wrapper_style = "display: none";
 		}
 	}
@@ -230,6 +230,21 @@ function tm_subscriptions_user_cta_banner($user_id) {
 	} else {
 		$inner_html = str_replace("__CHAPTER_SHORTCODE_REF__", "", $inner_html);
 	}
+
+	// members first name
+	$first_name = $account->field_user_first_name[LANGUAGE_NONE][0]['value'];
+	$inner_html = str_replace("__FIRST_NAME__", $first_name, $inner_html);
+
+	// chapter title
+	$home_chapter = tm_subscriptions_user_get_chapter($account);
+	$chapter_title = "community";
+	$chapter_label = "community";
+	if ($home_chapter != null) {
+		$chapter_title = strip_tags($home_chapter->title);
+		$chapter_label = $chapter_title . " chapter";
+	}
+	$inner_html = str_replace("__CHAPTER_LABEL__", $chapter_label, $inner_html);
+	$inner_html = str_replace("__CHAPTER_TITLE__", $chapter_title, $inner_html);
 
 	// display pricing
 	$payment_display = "none";
@@ -431,14 +446,14 @@ jQuery(document).ready(function($) {
 	// Hide the CTA banner
 	$('.hide-cta-banner-user').on('click', function(e) {
 		$("#tm-subscriptions-cta-banner").hide();
-		var cookie = ['tm_subscriptions_hide_user_cta=1; domain=.', window.location.host.toString(), '; path=/;'].join('');
+		var cookie = ['tm_subscriptions_hide_member_cta=1; domain=.', window.location.host.toString(), '; path=/;'].join('');
 		document.cookie = cookie;
 	});
 
 	// Show the CTA banner
     $('.show-cta-banner-user').on('click', function(e) {
 		$("#tm-subscriptions-cta-banner").show();
-		var cookie = ['tm_subscriptions_hide_user_cta=0; domain=.', window.location.host.toString(), '; path=/;'].join('');
+		var cookie = ['tm_subscriptions_hide_member_cta=0; domain=.', window.location.host.toString(), '; path=/;'].join('');
 		document.cookie = cookie;
 	});
 

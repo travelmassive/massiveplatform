@@ -130,19 +130,19 @@ function tm_subscriptions_user_cta_banner_node($user_id, $node_id) {
 		$account = user_load($user_id);
 		if ($account != null) {
 			$chapters = tm_users_get_chapters($account);
-			if (in_array($node_id, $users_chapters)) {
+			if (in_array($node_id, $chapters)) {
 				return tm_subscriptions_user_cta_banner($user_id, $node);
 			}
 		}
 	}
-	
+
 }
 
 /**
  * Render subscription CTA banner
  * Called from page--user.tpl.php
  */
-function tm_subscriptions_user_cta_banner($user_id, $chapter = null) {
+function tm_subscriptions_user_cta_banner($user_id, $display_chapter = null) {
 
 	global $conf;
 	global $user;
@@ -231,10 +231,10 @@ function tm_subscriptions_user_cta_banner($user_id, $chapter = null) {
 	// get chapter shortcode and set ?ref=
 	// ie ?ref=TOR
 	$shortcode = null;
-	if ($chapter == null) {
+	if ($display_chapter == null) {
 		$shortcode = tm_subscriptions_user_get_chapter_code($account);
-	} elseif (isset($chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['value'])) {
-		$shortcode = $chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['value'];
+	} elseif (isset($display_chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['value'])) {
+		$shortcode = $display_chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['value'];
 	}
 
 	$inner_html = str_replace("__CHAPTER_SHORTCODE__", $shortcode, $inner_html);
@@ -249,13 +249,13 @@ function tm_subscriptions_user_cta_banner($user_id, $chapter = null) {
 	$inner_html = str_replace("__FIRST_NAME__", $first_name, $inner_html);
 
 	// chapter title
-	if ($chapter == null) {
-		$chapter = tm_subscriptions_user_get_chapter($account);
+	if ($display_chapter == null) {
+		$display_chapter = tm_subscriptions_user_get_chapter($account);
 	}
 	$chapter_title = "community";
 	$chapter_label = "community";
-	if ($home_chapter != null) {
-		$chapter_title = strip_tags($chapter->title);
+	if ($display_chapter != null) {
+		$chapter_title = strip_tags($display_chapter->title);
 		$chapter_label = $chapter_title . " chapter";
 	}
 	$inner_html = str_replace("__CHAPTER_LABEL__", $chapter_label, $inner_html);

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * tm_events.features.field_base.inc
@@ -180,15 +179,7 @@ function tm_events_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_event_date',
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-        1 => 'value2',
-      ),
-      'value2' => array(
-        0 => 'value2',
-      ),
-    ),
+    'indexes' => array(),
     'locked' => 0,
     'module' => 'date',
     'settings' => array(

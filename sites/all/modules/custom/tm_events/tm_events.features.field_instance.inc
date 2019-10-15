@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * tm_events.features.field_instance.inc
@@ -643,6 +644,7 @@ Provide HTML markup or a template alias.',
         'label' => 'above',
         'module' => 'date',
         'settings' => array(
+          'custom_date_format' => '',
           'format_type' => 'long',
           'fromto' => 'both',
           'multiple_from' => '',

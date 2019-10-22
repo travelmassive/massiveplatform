@@ -1,0 +1,119 @@
+<?php
+
+// tm_newsfeed_updates.module
+
+include_once 'tm_newsfeed_updates.controller.inc';
+include_once 'tm_newsfeed_updates.render.inc';
+
+
+/**
+ * Implements hook_menu()
+ */
+function tm_newsfeed_updates_menu() {
+
+  $items = array();
+
+  $items['newsfeed/poll_notifications'] = array(
+    'page callback' => 'tm_newsfeed_updates_poll_notifications',
+    'access arguments' => array('access content')
+  );
+
+  return $items;
+}
+
+/** 
+ * Implement hook_init()
+ */
+function tm_newsfeed_updates_init() {
+
+  global $conf;
+  $initial_delay = 10000; // 10s
+
+  // only show home page for anonymous users
+  if (request_uri() != "/" and !user_is_logged_in()) {
+    return;
+  }
+
+  // don't show on user pages
+  if (strpos(request_uri(), "user/") !== false) {
+    return;
+  }
+
+  // don't show on edit pages
+  if (strpos(request_uri(), "edit/") !== false) {
+    return;
+  }
+
+  // css and js
+  drupal_add_css(drupal_get_path('module', 'tm_newsfeed_updates') . '/css/toasty.min.css');
+  drupal_add_js(drupal_get_path('module', 'tm_newsfeed_updates') . '/js/toasty.min.js');
+
+  // add js
+  drupal_add_js("(function ($, Drupal, window, document, undefined) {
+      jQuery(document).ready(function() { 
+        var timestamp = 0;
+        setTimeout(function() { 
+          if (typeof tm_status_updates_front_page_timestamp !== 'undefined') {
+            timestamp = tm_status_updates_front_page_timestamp;
+          }
+          jQuery.getScript('/newsfeed/poll_notifications?timestamp=' + timestamp);
+        }, " . $initial_delay . ");
+      });
+      })(jQuery, Drupal, this, this.document);", array('type' => 'inline', 'scope' => 'footer'));
+
+}
+
+/**
+ * Get notifications
+ */
+
+function tm_newsfeed_updates_poll_notifications() {
+
+  global $user;
+  global $conf;
+  $js = "";
+
+  // default
+  $display_duration = 8000; // 8s
+  $refresh_interval = 10000; // 10s
+
+  // adjust for anonymous user
+  if (!user_is_logged_in()) {
+    $display_duration = 10000; // 10s
+    $refresh_interval = 30000; // 30s
+  }
+
+  // fetch timestamp from cookie or $_GET
+  $timestamp = 0;
+  if (isset($_COOKIE["Drupal_visitor_newsfeed_updates_timestamp"])) {
+    $timestamp = intval($_COOKIE["Drupal_visitor_newsfeed_updates_timestamp"]);
+  }
+  if (isset($_GET["timestamp"])) {
+    if ($_GET["timestamp"] != 0) {
+      $timestamp = intval($_GET["timestamp"]);
+    }
+  }
+
+  $results = tm_newsfeed_updates_get_combined_feed_global($timestamp, $user->uid, 1);
+
+  // show update
+  if (sizeof($results) > 0) {
+    $result = $results[0];
+    $html = tm_newsfeed_updates_render_flagged_item($result);
+    if ($html != "") {
+      $html = str_replace("\n", "", $html);
+      $timestamp = $result->timestamp;
+      $js .= "var toast = new Toasty({autoClose: true, progressBar: false, duration: " . $display_duration . "}); toast.info('" . $html . "');";
+    }
+  }
+
+  // set timestamp cookie
+  setcookie("Drupal.visitor.newsfeed_updates_timestamp", $timestamp, strtotime('+30 days'), "/", "." . $conf["tm_email_server_url_domain"]);
+
+  // set frefresh interval
+  $js .= "setTimeout(function() { jQuery.getScript('/newsfeed/poll_notifications?timestamp=" . $timestamp . "')}, " . $refresh_interval . ");";
+
+  echo $js;
+}
+
+  

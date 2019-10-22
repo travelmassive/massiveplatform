@@ -1,0 +1,7 @@
+name = TM Newsfeed Updates
+core = 7.x
+package = TM Newsfeed Updates
+version = 7.x-1.0-dev
+project = tm_newsfeed_updates
+dependencies[] = tm_base
+project path = sites/all/modules/custom

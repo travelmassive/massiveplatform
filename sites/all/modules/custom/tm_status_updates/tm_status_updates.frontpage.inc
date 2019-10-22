@@ -52,6 +52,13 @@ function tm_status_updates_show_frontpage_updates($display_num_items = 5, $displ
 	// load js libraries
 	tm_status_updates_display_include_js(true, false, false);
 
+	// set tm_status_updates_front_page_timestamp for tm_newsfeed_updates
+	$latest_timestamp = 0;
+	if (sizeof($all_results["results"]) > 0 ) {
+		$latest_timestamp = $all_results["results"][0]->timestamp;
+	}
+	$newsfeed_html .= "<script>var tm_status_updates_front_page_timestamp = " . $latest_timestamp . ";</script>";
+
 	// return html
 	return $newsfeed_html;
 }

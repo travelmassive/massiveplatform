@@ -27,7 +27,7 @@ function tm_newsfeed_updates_menu() {
 function tm_newsfeed_updates_init() {
 
   global $conf;
-  $initial_delay = 10000; // 10s
+  $initial_delay = 15000; // 15s
 
   // only show home page for anonymous users
   if (request_uri() != "/" and !user_is_logged_in()) {
@@ -74,12 +74,12 @@ function tm_newsfeed_updates_poll_notifications() {
   $js = "";
 
   // default
-  $display_duration = 8000; // 8s
-  $refresh_interval = 10000; // 10s
+  $display_duration = 1000; // 10s
+  $refresh_interval = 15000; // 15s
 
   // adjust for anonymous user
   if (!user_is_logged_in()) {
-    $display_duration = 10000; // 10s
+    $display_duration = 15000; // 15s
     $refresh_interval = 30000; // 30s
   }
 

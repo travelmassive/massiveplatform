@@ -48,7 +48,7 @@ function tm_newsfeed_updates_init() {
   drupal_add_css(drupal_get_path('module', 'tm_newsfeed_updates') . '/css/toasty.min.css');
   drupal_add_js(drupal_get_path('module', 'tm_newsfeed_updates') . '/js/toasty.min.js');
 
-  // drupal_add_js(array('currentUser' => $user->uid), 'setting');
+  // add js
   drupal_add_js("(function ($, Drupal, window, document, undefined) {
       jQuery(document).ready(function() { 
         var timestamp = 0;
@@ -109,7 +109,6 @@ function tm_newsfeed_updates_poll_notifications() {
 
   // set timestamp cookie
   setcookie("Drupal.visitor.newsfeed_updates_timestamp", $timestamp, strtotime('+30 days'), "/", "." . $conf["tm_email_server_url_domain"]);
-  // $js .= " var cookie = ['Drupal.visitor.newsfeed_updates_timestamp=', " . $timestamp . ", '; domain=.', window.location.host.toString(), '; path=/;'].join(''); document.cookie = cookie; ";
 
   // set frefresh interval
   $js .= "setTimeout(function() { jQuery.getScript('/newsfeed/poll_notifications?timestamp=" . $timestamp . "')}, " . $refresh_interval . ");";

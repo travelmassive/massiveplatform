@@ -7,20 +7,27 @@
  */
 function tm_newsfeed_updates_get_combined_feed_global($timestamp = 0, $exclude_uid = 1, $limit = 100) {
 
+	global $conf;
+	
 	// Get list of flags that can be displayed
-	$display_flags = array();
-	$display_flags[] = flag_get_flag('approval_approved_by')->fid;
-	$display_flags[] = flag_get_flag('event_waitlist')->fid;
-	$display_flags[] = flag_get_flag('tm_sponsor')->fid;
-	$display_flags[] = flag_get_flag('follow_members')->fid;
-	$display_flags[] = flag_get_flag('follow_organizations')->fid;
-	$display_flags[] = flag_get_flag('signup')->fid;
-	$display_flags[] = flag_get_flag('event_register')->fid;
-	if (module_exists("tm_subscriptions")) {
-		$display_flags[] = flag_get_flag('organization_subscription_enable')->fid;
-	}
-	if (module_exists("tm_subscriptions_user")) {
-		$display_flags[] = flag_get_flag('user_subscription_enable')->fid;
+	// Check for ids in config first for better performance
+	if (isset($conf["tm_newsfeed_updates_flag_ids"])) {
+		$display_flags = $conf["tm_newsfeed_updates_flag_ids"];
+	} else {
+		$display_flags = array();
+		$display_flags[] = flag_get_flag('approval_approved_by')->fid;
+		$display_flags[] = flag_get_flag('event_waitlist')->fid;
+		$display_flags[] = flag_get_flag('tm_sponsor')->fid;
+		$display_flags[] = flag_get_flag('follow_members')->fid;
+		$display_flags[] = flag_get_flag('follow_organizations')->fid;
+		$display_flags[] = flag_get_flag('signup')->fid;
+		$display_flags[] = flag_get_flag('event_register')->fid;
+		if (module_exists("tm_subscriptions")) {
+			$display_flags[] = flag_get_flag('organization_subscription_enable')->fid;
+		}
+		if (module_exists("tm_subscriptions_user")) {
+			$display_flags[] = flag_get_flag('user_subscription_enable')->fid;
+		}
 	}
 
 	$query = "SELECT timestamp,

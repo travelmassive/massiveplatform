@@ -74,7 +74,7 @@ function tm_newsfeed_updates_poll_notifications() {
   $js = "";
 
   // default
-  $display_duration = 1000; // 10s
+  $display_duration = 10000; // 10s
   $refresh_interval = 15000; // 15s
 
   // adjust for anonymous user

@@ -7,6 +7,8 @@
  */
 function tm_newsfeed_updates_get_combined_feed_global($timestamp = 0, $exclude_uid = 1, $limit = 100) {
 
+	global $conf;
+	
 	// Get list of flags that can be displayed
 	// Check for ids in config first for better performance
 	if (isset($conf["tm_newsfeed_updates_flag_ids"])) {

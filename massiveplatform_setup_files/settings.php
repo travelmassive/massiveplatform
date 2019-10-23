@@ -1142,7 +1142,7 @@ $conf["tm_users_download_csv_member_of_chapters"] = array("SYD"); // array of ch
 
 /** NEWSFEED NOTIFICATIONS **/
 // $conf["tm_newsfeed_updates_beta_testers"] = array(1); // optional array of beta tester uids
-// $conf["tm_newsfeed_updates_flag_ids"] = array(); // optional array of flag ids for performance
+// $conf["tm_newsfeed_updates_flag_ids"] = array(12, 6, 4, 1, 2, 3, 8, 25, 27); // better performance
 $conf["tm_newsfeed_updates_show_unapproved"] = false;
 $conf["tm_newsfeed_updates_initial_delay"] = 15000; // 15s
 $conf["tm_newsfeed_updates_display_duration"] = 10000; // 10s

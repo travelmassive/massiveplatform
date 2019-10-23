@@ -48,15 +48,15 @@ function tm_newsfeed_updates_init() {
   drupal_add_css(drupal_get_path('module', 'tm_newsfeed_updates') . '/css/toasty.css');
   drupal_add_js(drupal_get_path('module', 'tm_newsfeed_updates') . '/js/toasty.min.js');
 
+  // get latest timestamp
+  $latest_timestamp = tm_newsfeed_updates_latest_timestamp();
+
   // add js
   drupal_add_js("(function ($, Drupal, window, document, undefined) {
       jQuery(document).ready(function() { 
         var timestamp = 0;
         setTimeout(function() { 
-          if (typeof tm_status_updates_front_page_timestamp !== 'undefined') {
-            timestamp = tm_status_updates_front_page_timestamp;
-          }
-          jQuery.getScript('/newsfeed/poll_notifications?timestamp=' + timestamp);
+          jQuery.getScript('/newsfeed/poll_notifications?timestamp=" . $latest_timestamp . "');
         }, " . $initial_delay . ");
       });
       })(jQuery, Drupal, this, this.document);", array('type' => 'inline', 'scope' => 'footer'));
@@ -114,6 +114,18 @@ function tm_newsfeed_updates_poll_notifications() {
   $js .= "setTimeout(function() { jQuery.getScript('/newsfeed/poll_notifications?timestamp=" . $timestamp . "')}, " . $refresh_interval . ");";
 
   echo $js;
+}
+
+/**
+ * Get the latest flagging timestamp
+ */
+function tm_newsfeed_updates_latest_timestamp() {
+
+  $query = "SELECT timestamp FROM flagging ORDER BY timestamp DESC LIMIT 1";
+  $result = db_query($query)->fetch();
+  $latest_timestamp = $result->timestamp;
+  return $latest_timestamp;
+
 }
 
   

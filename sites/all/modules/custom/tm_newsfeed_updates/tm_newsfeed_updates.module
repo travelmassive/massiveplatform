@@ -103,7 +103,7 @@ function tm_newsfeed_updates_poll_notifications() {
     if ($html != "") {
       $html = str_replace("\n", "", $html);
       $timestamp = $result->timestamp;
-      $js .= "var toast = new Toasty({autoClose: true, progressBar: false, duration: " . $display_duration . "}); toast.info('" . $html . "');";
+      $js .= "var toast = new Toasty({autoClose: true, progressBar: true, transition: 'slideLeftFade', duration: " . $display_duration . "}); toast.info('" . $html . "');";
     }
   }
 

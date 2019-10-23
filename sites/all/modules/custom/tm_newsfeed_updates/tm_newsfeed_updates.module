@@ -45,7 +45,7 @@ function tm_newsfeed_updates_init() {
   }
 
   // css and js
-  drupal_add_css(drupal_get_path('module', 'tm_newsfeed_updates') . '/css/toasty.min.css');
+  drupal_add_css(drupal_get_path('module', 'tm_newsfeed_updates') . '/css/toasty.css');
   drupal_add_js(drupal_get_path('module', 'tm_newsfeed_updates') . '/js/toasty.min.js');
 
   // add js

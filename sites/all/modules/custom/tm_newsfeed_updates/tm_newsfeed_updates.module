@@ -109,6 +109,12 @@ function tm_newsfeed_updates_poll_notifications() {
     }
   }
 
+  // don't let timestamp be set to future
+  $latest_timestamp = tm_newsfeed_updates_latest_timestamp();
+  if ($timestamp > $latest_timestamp) {
+    $timestamp = $latest_timestamp;
+  }
+
   // get last 10 results
   $results = tm_newsfeed_updates_get_combined_feed_global($timestamp, $user->uid, 10);
  

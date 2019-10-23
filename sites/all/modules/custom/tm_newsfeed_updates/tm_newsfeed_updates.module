@@ -120,21 +120,22 @@ function tm_newsfeed_updates_poll_notifications() {
  
   // try to render a result
   $html = "";
+  $new_timestamp = $timestamp;
   foreach($results as $result) {
       if ($html == "") {
         $html = tm_newsfeed_updates_render_flagged_item($result, true, $show_unapproved);
+        $new_timestamp = $result->timestamp;
       }
   }
 
   // show update
   if ($html != "") {  
     $html = str_replace("\n", "", $html);
-    $timestamp = $result->timestamp;
     $js .= "var toast = new Toasty({autoClose: true, progressBar: " . $conf["tm_newsfeed_updates_progress_bar"] . ", transition: 'slideLeftFade', sounds: { info: '" . $conf["tm_newsfeed_updates_sound_file"] . "' }, enableSounds: " . $conf["tm_newsfeed_updates_sound"] . ", duration: " . $display_duration . "}); toast.info('" . $html . "');";
   }
 
   // set frefresh interval
-  $js .= "setTimeout(function() { jQuery.getScript('/newsfeed/poll_notifications?timestamp=" . $timestamp . "')}, " . $refresh_interval . ");";
+  $js .= "setTimeout(function() { jQuery.getScript('/newsfeed/poll_notifications?timestamp=" . $new_timestamp . "')}, " . $refresh_interval . ");";
 
   echo $js;
 }

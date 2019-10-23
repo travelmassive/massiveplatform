@@ -30,6 +30,7 @@ function tm_newsfeed_updates_init() {
   global $user;
 
   $initial_delay = $conf["tm_newsfeed_updates_initial_delay"];
+  $focus_delay = $conf["tm_newsfeed_updates_focus_delay"];
 
   // beta testers
   if (isset($conf["tm_newsfeed_updates_beta_testers"])) {
@@ -96,7 +97,7 @@ function tm_newsfeed_updates_init() {
         window.addEventListener('focus', function(event) {
           tm_newsfeed_updates_do_poll = true;
           clearTimeout(tm_newsfeed_updates_timeout);
-          jQuery.getScript('/newsfeed/poll_notifications?timestamp=focus');
+          tm_newsfeed_updates_timeout = setTimeout(function() { jQuery.getScript('/newsfeed/poll_notifications?timestamp=focus'); }, " . $focus_delay . ");
         });
 
         window.addEventListener('blur', function(event) {

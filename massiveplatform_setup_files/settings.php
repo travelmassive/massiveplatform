@@ -1140,3 +1140,10 @@ $conf["tm_lists_notification_message"] = "<br>If you like the list, please share
 /** Newsletter Generation **/
 $conf["tm_users_download_csv_member_of_chapters"] = array("SYD"); // array of chapter shortcodes, will add to csv if user is a member of the chapter in new column
 
+/** NEWSFEED NOTIFICATIONS **/
+$conf["tm_newsfeed_initial_delay"] = 15000; // 15s
+$conf["tm_newsfeed_display_duration"] = 10000; // 10s
+$conf["tm_newsfeed_refresh_interval"] = 15000; // 15s
+$conf["tm_newsfeed_progress_bar"] = "true";
+$conf["tm_newsfeed_updates_sound"] = "true";
+$conf["tm_newsfeed_updates_sound_file"] = "/sites/all/modules/custom/tm_newsfeed_updates/includes/sounds/info/1.mp3";

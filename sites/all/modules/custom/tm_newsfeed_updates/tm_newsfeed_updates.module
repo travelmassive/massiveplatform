@@ -27,20 +27,37 @@ function tm_newsfeed_updates_menu() {
 function tm_newsfeed_updates_init() {
 
   global $conf;
-  $initial_delay = $conf["tm_newsfeed_initial_delay"];
+  global $user;
+
+  $initial_delay = $conf["tm_newsfeed_updates_initial_delay"];
+
+  // beta testers
+  if (isset($conf["tm_newsfeed_updates_beta_testers"])) {
+    if (!in_array($user->uid, $conf["tm_newsfeed_updates_beta_testers"])) {
+      return;
+    }
+  }
 
   // only show home page for anonymous users
   if (request_uri() != "/" and !user_is_logged_in()) {
     return;
   }
 
-  // don't show on user pages
-  if (strpos(request_uri(), "user/") !== false) {
-    return;
+  // only show on user and nodes views
+  $current_path = current_path();
+  $parts = explode("/", $current_path);
+  $is_valid_page = false;
+  if (sizeof($parts) == 2) {
+    if (($parts[0] == "user") or ($parts[0] == "node")) {
+      if (is_numeric($parts[1])) {
+        $is_valid_page = true;
+      }
+    }
   }
-
-  // don't show on edit pages
-  if (strpos(request_uri(), "edit/") !== false) {
+  if ($current_path == "frontpage") {
+     $is_valid_page = true;
+  }
+  if (!$is_valid_page) {
     return;
   }
 
@@ -74,8 +91,9 @@ function tm_newsfeed_updates_poll_notifications() {
   $js = "";
 
   // default
-  $display_duration = $conf["tm_newsfeed_display_duration"];
-  $refresh_interval = $conf["tm_newsfeed_refresh_interval"];
+  $display_duration = $conf["tm_newsfeed_updates_display_duration"];
+  $refresh_interval = $conf["tm_newsfeed_updates_refresh_interval"];
+  $show_unapproved = $conf["tm_newsfeed_updates_show_unapproved"];
 
   // adjust for anonymous user
   if (!user_is_logged_in()) {
@@ -83,32 +101,31 @@ function tm_newsfeed_updates_poll_notifications() {
     $refresh_interval = $refresh_interval * 2;
   }
 
-  // fetch timestamp from cookie or $_GET
+  // fetch timestamp from ?timestamp
   $timestamp = 0;
-  if (isset($_COOKIE["Drupal_visitor_newsfeed_updates_timestamp"])) {
-    $timestamp = intval($_COOKIE["Drupal_visitor_newsfeed_updates_timestamp"]);
-  }
   if (isset($_GET["timestamp"])) {
     if ($_GET["timestamp"] != 0) {
       $timestamp = intval($_GET["timestamp"]);
     }
   }
 
-  $results = tm_newsfeed_updates_get_combined_feed_global($timestamp, $user->uid, 1);
-
-  // show update
-  if (sizeof($results) > 0) {
-    $result = $results[0];
-    $html = tm_newsfeed_updates_render_flagged_item($result);
-    if ($html != "") {
-      $html = str_replace("\n", "", $html);
-      $timestamp = $result->timestamp;
-      $js .= "var toast = new Toasty({autoClose: true, progressBar: " . $conf["tm_newsfeed_progress_bar"] . ", transition: 'slideLeftFade', sounds: { info: '" . $conf["tm_newsfeed_updates_sound_file"] . "' }, enableSounds: " . $conf["tm_newsfeed_updates_sound"] . ", duration: " . $display_duration . "}); toast.info('" . $html . "');";
-    }
+  // get last 10 results
+  $results = tm_newsfeed_updates_get_combined_feed_global($timestamp, $user->uid, 10);
+ 
+  // try to render a result
+  $html = "";
+  foreach($results as $result) {
+      if ($html == "") {
+        $html = tm_newsfeed_updates_render_flagged_item($result, true, $show_unapproved);
+      }
   }
 
-  // set timestamp cookie
-  setcookie("Drupal.visitor.newsfeed_updates_timestamp", $timestamp, strtotime('+30 days'), "/", "." . $conf["tm_email_server_url_domain"]);
+  // show update
+  if ($html != "") {  
+    $html = str_replace("\n", "", $html);
+    $timestamp = $result->timestamp;
+    $js .= "var toast = new Toasty({autoClose: true, progressBar: " . $conf["tm_newsfeed_updates_progress_bar"] . ", transition: 'slideLeftFade', sounds: { info: '" . $conf["tm_newsfeed_updates_sound_file"] . "' }, enableSounds: " . $conf["tm_newsfeed_updates_sound"] . ", duration: " . $display_duration . "}); toast.info('" . $html . "');";
+  }
 
   // set frefresh interval
   $js .= "setTimeout(function() { jQuery.getScript('/newsfeed/poll_notifications?timestamp=" . $timestamp . "')}, " . $refresh_interval . ");";

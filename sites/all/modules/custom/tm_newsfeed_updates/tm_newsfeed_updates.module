@@ -65,8 +65,24 @@ function tm_newsfeed_updates_init() {
   drupal_add_css(drupal_get_path('module', 'tm_newsfeed_updates') . '/css/toasty.min.css');
   drupal_add_js(drupal_get_path('module', 'tm_newsfeed_updates') . '/js/toasty.min.js');
 
-  // get latest timestamp
-  $latest_timestamp = tm_newsfeed_updates_latest_timestamp();
+  // don't check timestamp if logged out (due to cache)
+  $latest_timestamp = 0;
+
+  // if user is logged in, use cookie timestamp if activity in past 15 minutes
+  if (user_is_logged_in()) {
+  
+    // get latest timestamp
+    $latest_timestamp = tm_newsfeed_updates_latest_timestamp();
+
+    $cookie_timestamp = 0;
+    if (isset($_COOKIE["Drupal_visitor_newsfeed_updates_timestamp"])) {
+      $cookie_timestamp = intval($_COOKIE["Drupal_visitor_newsfeed_updates_timestamp"]);
+    }
+
+    if (($latest_timestamp - $cookie_timestamp) < (60 * 15)) {
+      $latest_timestamp = $cookie_timestamp;
+    }
+  }
 
   // add js
   drupal_add_js("(function ($, Drupal, window, document, undefined) {
@@ -89,6 +105,9 @@ function tm_newsfeed_updates_poll_notifications() {
   global $user;
   global $conf;
   $js = "";
+
+  // page not cacheable
+  drupal_page_is_cacheable(false);
 
   // default
   $display_duration = $conf["tm_newsfeed_updates_display_duration"];
@@ -115,6 +134,11 @@ function tm_newsfeed_updates_poll_notifications() {
     $timestamp = $latest_timestamp;
   }
 
+  // if timestamp is zero, set to latest
+  if ($timestamp == 0) {
+    $timestamp = $latest_timestamp;
+  }
+
   // get last 10 results
   $results = tm_newsfeed_updates_get_combined_feed_global($timestamp, $user->uid, 10);
  
@@ -136,6 +160,11 @@ function tm_newsfeed_updates_poll_notifications() {
 
   // set frefresh interval
   $js .= "setTimeout(function() { jQuery.getScript('/newsfeed/poll_notifications?timestamp=" . $new_timestamp . "')}, " . $refresh_interval . ");";
+
+  // set timestamp cookie for logged in users
+  if (user_is_logged_in()) {
+    setcookie("Drupal.visitor.newsfeed_updates_timestamp", $new_timestamp, strtotime('+30 days'), "/", "." . $conf["tm_email_server_url_domain"]);
+  }
 
   echo $js;
 }

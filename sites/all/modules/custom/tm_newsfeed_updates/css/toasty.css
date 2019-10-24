@@ -285,4 +285,4 @@
 .card.newsfeed-updates:hover { background-color: #e7f2f7;}
 img.newsfeed-updates-image { max-height: 32px; max-width: 32px; border-radius: 4px; }
 img.newsfeed-updates-image-avatar { max-height: 32px; max-width: 32px; border-radius: 50%;}
-.toast .badge-newsfeed-updates { width: 32px; }
+.toast .avatar { width: 32px; }

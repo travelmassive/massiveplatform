@@ -233,18 +233,48 @@ function tm_base_stats_format($num) {
  * Implements hook_theme()
  */
 function tm_base_theme() {
-  return array(
-    '_tm_homepage' => array(
-      'variables' => array(
-        'homepage_title' => NULL,
-        'homepage_description' => NULL,
-        'homepage_stats_block' => NULL,
-        'homepage_upcoming_events' => NULL
-      ),
-      'template' => 'tm_base_homepage',
-      'path' => drupal_get_path('module', 'tm_base') . '/templates/'
+
+  global $conf;
+
+  $items = array();
+
+  $items['_tm_homepage'] = array(
+    'variables' => array(
+      'homepage_title' => NULL,
+      'homepage_description' => NULL,
+      'homepage_stats_block' => NULL,
+      'homepage_upcoming_events' => NULL
     ),
+    'template' => 'tm_base_homepage',
+    'path' => drupal_get_path('module', 'tm_base') . '/templates/'
   );
+
+  if (isset($conf["tm_users_custom_signup_page"])) {
+    if ($conf["tm_users_custom_signup_page"]) {
+      $items['user_register_form'] = array(
+      'render element' => 'form',
+      'template' => 'user-register',
+      'path' => drupal_get_path('theme', 'tm') . '/templates',
+      'preprocess functions' => array('tm_base_preprocess_custom_user_register_form'),
+      );
+    }
+  }
+
+  return $items;
+}
+
+/**
+ * Preprocess custom user register form
+ */
+function tm_base_preprocess_custom_user_register_form(&$vars) {
+  $args = func_get_args();
+  array_shift($args);
+  $form_state['build_info']['args'] = $args; 
+  $vars['content_attributes_array']['class'][] = 'content';
+  $vars['title_attributes_array']['class'][] = 'content';
+  $vars['attributes_array']['class'][] = 'content';
+  $vars['classes_array'] = array('content');
+  $vars['form'] = drupal_build_form('user_register_form', $form_state['build_info']['args']);
 }
 
 /**

@@ -133,6 +133,14 @@ function _tm_users_modify_register_form(&$form, $form_state, $form_id) {
 function _tm_users_community_validation_callback($element, &$form_state, $form) {
 
   global $conf;
+
+  // check not using custom register page
+  if (isset($conf["tm_users_custom_signup_page"])) {
+    if ($conf["tm_users_custom_signup_page"]) {
+      return;
+    }
+  }
+
   $validation = $conf["tm_community_values_options_validate"];
 
   // Check if form value was set
@@ -158,7 +166,7 @@ function _tm_users_community_validation_callback($element, &$form_state, $form) 
  * Also add reason for joining to users fields
  */
 function tm_users_user_insert(&$edit, $account, $category) {
-  
+
   // need user
   if (!isset($edit['chapter_list'])) {
     return;

@@ -118,6 +118,14 @@ function tm_preprocess_page(&$variables, $hook) {
 
   // On registration page put a twitter link
   if (current_path() == "user/register") {
+
+    // check not rendering custom register page
+    if (isset($conf["tm_users_custom_signup_page"])) {
+      if ($conf["tm_users_custom_signup_page"]) {
+        return;
+      }
+    }
+
     $message = "";
     if (isset($conf["tm_signin_facebook"])) {
       if ($conf["tm_signin_facebook"]) {

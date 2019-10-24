@@ -96,6 +96,7 @@ $chapter_list = array("" => "Select a chapter", "-1" => "Choose later") + $chapt
 
 // add chapter list to registraton form
 $form['chapter_list']=array(
+	'#attributes'=>array('name'=>'chapter_list'),
 	'#type'=>'select',
 	'#title' => t('Home Chapter'),
 	'#options' => $chapter_list,

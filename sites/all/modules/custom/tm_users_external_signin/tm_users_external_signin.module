@@ -112,7 +112,7 @@ function tm_users_external_signin_theme() {
 function tm_users_external_signin_form_user_login_alter(&$form, &$form_state) {
 
   global $conf;
-
+  
   // On registration page put a twitter link
   $message = "";
   if (isset($conf["tm_signin_facebook"])) {

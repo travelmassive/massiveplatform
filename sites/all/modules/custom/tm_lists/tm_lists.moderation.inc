@@ -189,7 +189,7 @@ function tm_lists_moderation_add($entity_type, $entity_id, $list_id, $moderator,
 	// redirect
 	$message = strip_tags($entity_label) . ' has been added to <a href="/lists/' . $list_id . '">' . tm_lists_get_display_list_title($item_list) . '</a>.';
 	if ($preview_mode) {
-		$message .= " Preview mode enabled, so notifications are disabled";
+		$message .= " TPreview mode is on, so notifications are disabled.";
 	}
     drupal_set_message($message);
     drupal_goto("/" . drupal_get_path_alias($entity_type . "/" . $entity_id));
@@ -328,8 +328,8 @@ function tm_lists_moderation_edit_item_ajax($entity_type, $entity_id, $list_id) 
 	global $conf;
 	global $user;
 
-	// check permission
-	if (!tm_lists_user_can_remove_from_list($user, $list_id)) {
+	// check can add to list
+	if (!tm_lists_user_can_add_to_list($user, $list_id)) {
 		$ret = array("result" => false, "error_message" => "You don't have permission to perform this action", "redirect" => null);
 		drupal_json_output($ret);
 		return;
@@ -344,6 +344,15 @@ function tm_lists_moderation_edit_item_ajax($entity_type, $entity_id, $list_id) 
 		$ret = array("result" => false, "error_message" => "Unable to retrieve list item", "redirect" => null);
 		drupal_json_output($ret);
 		return;
+	}
+
+	// if can't remove from list, only allow editing if it's your own item
+	if (!tm_lists_user_can_remove_from_list($user, $list_id)) {
+		if ($list_item->uid != $user->uid) {
+			$ret = array("result" => false, "error_message" => "You can only edit your own list items", "redirect" => null);
+			drupal_json_output($ret);
+			return;
+		}
 	}
 
 	// get comment

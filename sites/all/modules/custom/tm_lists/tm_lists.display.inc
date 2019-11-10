@@ -507,6 +507,7 @@ function tm_lists_render_list_items_html($list_id, $items, $sort_method, $count,
 				$link_label = $parts[0];
 				$parts = explode("&", $link_label);
 				$link_label = $parts[0];
+				$link_label = str_ireplace("www.", "", $link_label);
 			}
 
 			$item_links_html .= "<span class='tm-list-view-item-link'><a class='tm-list-item-link-" . $field . "' " . $link_target . " rel='" . $rel . "' href='" . $link_url . "'>" . $link_label . "</a></span>";

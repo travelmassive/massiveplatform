@@ -38,3 +38,21 @@ function tm_lists_image_default_styles() {
 
   return $styles;
 }
+
+/**
+ * Implements hook_node_info().
+ */
+function tm_lists_node_info() {
+  $items = array(
+    'list' => array(
+      'name' => t('List'),
+      'base' => 'node_content',
+      'description' => t('A list of things'),
+      'has_title' => '1',
+      'title_label' => t('Title'),
+      'help' => '',
+    ),
+  );
+  drupal_alter('node_info', $items);
+  return $items;
+}

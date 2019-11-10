@@ -46,6 +46,7 @@ features[field_instance][] = node-list-field_list_slug_url
 features[field_instance][] = node-list-field_list_social_image
 features[field_instance][] = node-list-field_list_sort_by
 features[image][] = list_newsletter
+features[node][] = list
 features[user_permission][] = create list content
 features[user_permission][] = delete any list content
 features[user_permission][] = delete own list content

@@ -1136,7 +1136,21 @@ $conf["tm_leaderboard_label_more_events"] = "<a target='_blank' href='/blog/star
 $conf["tm_organizations_upvote"] = false; // allow upvoting of organizations
 
 /** LISTS **/
-$conf["tm_lists_notification_message"] = "<br>If you like the list, please share or link to it — thanks 🙏<br>";
+$conf["tm_lists_og_title"] = "Massive Lists"; // og:title for /lists
+$conf["tm_lists_og_image"] = ""; // og:image for /lists
+$conf["tm_lists_og_description"] = "Welcome to our lists"; // og:description for /lists
+$conf["tm_lists_default_list_thumbnail_url"] = "https://localdev.massiveplatform.com/sites/default/files/Global_Gathering_Pink_Thin.png"; // default thumbnail for feedme if there is no og image
+$conf["tm_lists_footer_html"] = "<div class='tm-lists-footer'><p>Like this list? Explore <a href='/lists'>more lists</a>.</p></div>"; // footer
+$conf["tm_lists_per_page"] = 10; // load items per show more
+$conf["tm_lists_notification_message"] = "Congrats on being added to the list!";
+$conf["tm_lists_link_target"] = ""; // ie: "target='_blank'";
+$conf["tm_lists_homepage_intro"] = "<h1>Welcome to our Lists</h1><p>We've curated some lists for you.</p>";
+$conf["tm_lists_pageviews_script"] = '';
+$conf["tm_lists_pageviews_placeholder"] = '';
+$conf["tm_lists_newsletter_intro"] = 'Hey [%first_name|member%],<br>';
+$conf["tm_lists_newsletter_outro"] = 'Like this list? Explore <a href="">more lists</a>.';
+$conf["tm_lists_newsletter_facebook_icon_url"] = '';
+$conf["tm_lists_newsletter_twitter_icon_url"] = '';
 
 /** Newsletter Generation **/
 $conf["tm_users_download_csv_member_of_chapters"] = array("SYD"); // array of chapter shortcodes, will add to csv if user is a member of the chapter in new column

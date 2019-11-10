@@ -1,0 +1,130 @@
+<?php
+/**
+ * @file
+ * Code for the TM Notifications lists feature.
+ */
+
+include_once 'tm_notifications_lists.features.inc';
+
+/**
+ * Implements hook_tm_notif_info()
+ */
+function tm_notifications_lists_tm_notif_info() {
+  $notification = array();
+
+  $notification['added_to_list'] = array(
+    'title' => 'Notify when my profile is featured',
+    'description' => 'Notify when my profile is featured',
+    'use_cron' => FALSE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('user', 'current-user', 'node'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+
+  return $notification;
+}
+
+/**
+ * Notification method
+ */
+function tm_notifications_added_to_list($entity, $list) {
+  
+  global $conf;
+ 
+  // hero headline
+  $hero_text = "You've been featured 🎉";
+  $hero_headline = tm_notifications_render_hero_headline_html($hero_text);
+
+  // list title
+  $list_title = tm_lists_get_display_list_title($list);
+
+  // set in tm_lists_moderation_add()
+  $static_add_member_moderator_first_name = &drupal_static("tm_add_to_list_moderator_first_name");
+  $static_add_member_moderator_last_name = &drupal_static("tm_add_to_list_moderator_last_name");
+
+  // who to contact
+  $contact_users = array();
+
+  // Notification options
+  if (!isset($entity->nid)) {
+    $contact_users[] = $entity;
+    $list_item_name_subject = "You";
+    $list_item_name_intro = "your profile";
+  }
+
+  // For organizations, chapters, or events
+  if (isset($entity->nid)) {
+    
+    // organization owners
+    if ($entity->type == 'organization') {
+      $list_item_name_subject = strip_tags($entity->title);     
+      $list_item_name_intro = $list_item_name_subject;
+   
+      foreach ($entity->field_owner['und'] as $owner) {
+        $contact_users[] = user_load($owner['target_id']);
+      }
+    }
+
+    // chapter leaders
+    if ($entity->type == 'chapter') {
+      $list_item_name_subject = strip_tags($entity->title);
+      $list_item_name_intro = $list_item_name_subject;
+      if (isset($entity->field_chapter_leaders[LANGUAGE_NONE])) {
+        foreach ($entity->field_chapter_leaders[LANGUAGE_NONE] as $leader) {
+          $contact_users[] = user_load($leader['target_id']);
+        }
+      }
+    }
+
+    // event - chapter leaders, or owner
+    if ($entity->type == 'event') {
+      $list_item_name_subject = strip_tags($entity->title);                
+      $list_item_name_intro = $list_item_name_subject;
+
+      // chapter leaders of event
+      if (sizeof($entity->field_chapter) > 0) {
+        if (isset($entity->field_chapter['und'])) {
+          $chapter_id = $entity->field_chapter['und'][0]['target_id'];
+          $chapter = node_load($chapter_id);
+          if (isset($chapter->field_chapter_leaders[LANGUAGE_NONE])) {
+            foreach($chapter->field_chapter_leaders[LANGUAGE_NONE] as $leader) {
+              $contact_users[] = user_load($leader['target_id']);
+            }
+          }
+        }
+      } else {
+        // owner of event
+        $contact_users[] = user_load($entity->uid);
+      }
+    }
+
+    // add a custom message to the notification
+    $add_list_message = "";
+    if (isset($conf["tm_lists_notification_message"])) {
+      $add_list_message = "<br><br>" . $conf["tm_lists_notification_message"];
+    }
+
+    // custom add message
+    if (isset($field_list_message_added[LANGUAGE_NONE][0]['value'])) {
+      $list_message = $field_list_message_added[LANGUAGE_NONE][0]['value'];
+      $list_message = trim($list_message);
+      if ($list_message != "") {
+        $add_list_message = "<br><br>" . $list_message;
+      }
+    }
+
+    // notify members
+    foreach ($contact_users as $contact_user) {
+
+        $first_name = strip_tags($contact_user->field_user_first_name['und'][0]['value']);
+        $last_name = strip_tags($contact_user->field_user_last_name['und'][0]['value']);
+
+        tm_notifications_notify('added_to_list', $contact_user, array('user' => $contact_user, '__LIST_ITEM_NAME_SUBJECT__' => $list_item_name_subject, '__LIST_ITEM_NAME_INTRO__' => $list_item_name_intro, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__LIST_ID__' => $list->nid, '__LIST_TITLE__' => $list_title, '__MODERATOR_NAME__' => $static_add_member_moderator_first_name, '__HERO_HEADLINE__' => $hero_headline, '__ADD_LIST_MESSAGE__' => $add_list_message));
+    }
+  }
+}

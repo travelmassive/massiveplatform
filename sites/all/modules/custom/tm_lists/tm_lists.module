@@ -1,0 +1,145 @@
+<?php
+
+// tm_lists.module
+
+include_once 'tm_lists.edit.inc';
+include_once 'tm_lists.moderation.inc';
+include_once 'tm_lists.helpers.inc';
+include_once 'tm_lists.display.inc';
+include_once 'tm_lists.meta.inc';
+include_once 'tm_lists.controller.inc';
+include_once 'tm_lists.drush.inc';
+include_once 'tm_lists.feedme.inc';
+include_once 'tm_lists.rss.inc';
+include_once 'tm_lists.html_newsletter.inc';
+
+/**
+ * Implements hook_menu().
+ */
+function tm_lists_menu() {
+	$items = array();
+
+	$items['lists'] = array(
+		'title' => 'Lists',
+		'page callback' => 'tm_lists_display_index',
+		'access arguments' => array('access content')
+	);
+
+	$items['lists/%'] = array(
+		'title' => 'View List',
+		'page callback' => 'tm_lists_display_list',
+		'page arguments' => array(1),
+		'access arguments' => array('access content')
+	);
+
+	$items['lists/%/%'] = array(
+		'title' => 'View List',
+		'page callback' => 'tm_lists_display_list',
+		'page arguments' => array(1, 2),
+		'access arguments' => array('access content')
+	);
+
+	$items['lists/%/rss'] = array(
+		'title' => 'RSS Feed',
+		'page callback' => 'tm_lists_display_list_rss',
+		'page arguments' => array(1),
+		'access arguments' => array('access content')
+	);
+
+	$items['lists/%/html_newsletter'] = array(
+		'title' => 'Newsletter HTML',
+		'page callback' => 'tm_lists_display_list_html_newsletter',
+		'page arguments' => array(1),
+		'access arguments' => array('access content')
+	);
+
+	$items['lists/feedme'] = array(
+		'title' => 'Feedme',
+		'page callback' => 'tm_lists_feedme_display',
+		'access arguments' => array('access content')
+	);
+
+	$items['lists/ajax/items'] = array(
+		'page callback' => 'tm_lists_display_list_ajax',
+		'access arguments' => array('access content')
+	);
+
+	$items['lists/moderation-list-ajax/%'] = array(
+		'page callback' => 'tm_lists_moderation_lists_ajax',
+		'page arguments' => array(2),
+		'access arguments' => array('access content')
+	);
+
+	$items['lists/add/%/%/%'] = array(
+		'page callback' => 'tm_lists_moderation_add_callback',
+		'page arguments' => array(2, 3, 4),
+		'access arguments' => array('access content')
+	);
+
+	$items['lists/boost/%/%/%'] = array(
+		'page callback' => 'tm_lists_moderation_boost_callback',
+		'page arguments' => array(2, 3, 4),
+		'access arguments' => array('access content')
+	);
+
+	$items['lists/remove/%/%/%'] = array(
+		'page callback' => 'tm_lists_moderation_remove_callback',
+		'page arguments' => array(2, 3, 4),
+		'access arguments' => array('access content')
+	);
+
+	$items['lists/edit/%/%/%'] = array(
+		'title' => 'Edit list item',
+		'page callback' => 'tm_lists_moderation_edit_item_ajax',
+		'page arguments' => array(2, 3, 4),
+		'access arguments' => array('access content'),
+	);
+
+	$items['lists/edit_form/%/%/%'] = array(
+		'title' => 'Edit form ajax',
+		'page callback' => 'tm_lists_moderation_edit_form_ajax',
+		'page arguments' => array(2, 3, 4),
+		'access arguments' => array('access content'),
+	);
+
+	return $items;
+}
+
+/**
+ * Add js code for chapter leaders and moderators
+ */
+function tm_lists_user_view($account, $view_mode, $langcode) {
+
+	global $user;
+
+	// Add moderation tools for moderator and chapter leader 
+	if ($view_mode == "full") {
+		$account = user_load($user->uid);
+		if (tm_lists_user_can_add_to_lists($account)) {
+			drupal_add_js(drupal_get_path('module', 'tm_lists') . '/js/tm_lists_moderation.js');
+		}
+	}
+}
+
+/**
+ * Add js code for chapter leaders and moderators
+ */
+function tm_lists_node_view($node, $view_mode, $langcode) {
+
+	global $user;
+
+	// Redirect to /lists/123/name-of-list if viewing /node/123
+	if (($view_mode == "full") and ($node->type == "list")) {
+		$list_slug = $node->field_list_slug_url[LANGUAGE_NONE][0]['value'];
+		drupal_goto("lists/" . $node->nid . "/" . $list_slug);
+	}
+
+	// Add moderation tools for moderator and chapter leader 
+	if ($view_mode == "full") {
+		$account = user_load($user->uid);
+		if (tm_lists_user_can_add_to_lists($account)) {
+			drupal_add_js(drupal_get_path('module', 'tm_lists') . '/js/tm_lists_moderation.js');
+		}
+	}
+}
+

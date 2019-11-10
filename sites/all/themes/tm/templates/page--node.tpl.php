@@ -40,6 +40,12 @@
     }
   }
 
+  // Enable lists feedme plugin
+  // Show related lists
+  if (module_exists("tm_lists")) {
+    include './'. path_to_theme() .'/templates/page--lists-feedme.tpl.php';
+  }
+
 ?>
 
 <?php

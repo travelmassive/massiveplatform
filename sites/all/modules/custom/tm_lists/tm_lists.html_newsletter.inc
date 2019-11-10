@@ -84,6 +84,9 @@ function tm_lists_display_list_html_newsletter($list_id) {
 	// base url
 	$base_url = $conf["tm_email_server_http"] . "://" . $conf["tm_email_server_url_domain"];
 
+	// preview text (leave blank)
+	$newsletter_template = str_replace("__LIST_PREVIEW_TEXT__", "", $newsletter_template);
+
 	// headline
 	$newsletter_template = str_replace("__LIST_HEADLINE__", $list_title, $newsletter_template);
 

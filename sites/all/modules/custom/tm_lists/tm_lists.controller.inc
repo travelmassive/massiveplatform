@@ -369,7 +369,7 @@ function tm_lists_get_list_contributors($list_id) {
 
 	$list_id = intval($list_id);
 
-	$query = "SELECT DISTINCT(uid) as uid FROM tm_lists WHERE list_id = " . $list_id . " AND is_published = 1 ORDER BY timestamp desc";
+	$query = "SELECT DISTINCT(uid) AS uid, MAX(timestamp) as timestamp FROM tm_lists WHERE list_id = " . $list_id . " GROUP BY uid ORDER BY timestamp DESC";
 	$results = db_query($query)->fetchAll();
 
 	// return items

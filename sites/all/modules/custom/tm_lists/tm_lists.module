@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @file
+ * Code for the TM Lists feature.
+ */
+
+include_once 'tm_lists.features.inc';
+
 // tm_lists.module
 
 include_once 'tm_lists.edit.inc';

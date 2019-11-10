@@ -11,6 +11,11 @@ function _tm_more_actions_process_lists_menu($field, $title, &$links, &$menu_ite
   global $conf;
   global $user;
   global $base_root;
+
+  // ensure tm_lists enabled
+  if (!module_exists("tm_lists")) {
+    return;
+  }
   
   $base = $base_root . request_uri();
 

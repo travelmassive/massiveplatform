@@ -2,7 +2,7 @@
 
 /**
  * @file
- * tm_list.strongarm.inc
+ * tm_lists.strongarm.inc
  */
 
 /**

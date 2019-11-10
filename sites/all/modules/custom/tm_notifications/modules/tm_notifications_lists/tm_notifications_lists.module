@@ -103,28 +103,30 @@ function tm_notifications_added_to_list($entity, $list) {
       }
     }
 
-    // add a custom message to the notification
-    $add_list_message = "";
-    if (isset($conf["tm_lists_notification_message"])) {
-      $add_list_message = "<br><br>" . $conf["tm_lists_notification_message"];
-    }
+  }
 
-    // custom add message
-    if (isset($field_list_message_added[LANGUAGE_NONE][0]['value'])) {
-      $list_message = $field_list_message_added[LANGUAGE_NONE][0]['value'];
-      $list_message = trim($list_message);
-      if ($list_message != "") {
-        $add_list_message = "<br><br>" . $list_message;
-      }
-    }
+  // add a custom message to the notification
+  $add_list_message = "";
+  if (isset($conf["tm_lists_notification_message"])) {
+    $add_list_message = "<br><br>" . $conf["tm_lists_notification_message"];
+  }
 
-    // notify members
-    foreach ($contact_users as $contact_user) {
-
-        $first_name = strip_tags($contact_user->field_user_first_name['und'][0]['value']);
-        $last_name = strip_tags($contact_user->field_user_last_name['und'][0]['value']);
-
-        tm_notifications_notify('added_to_list', $contact_user, array('user' => $contact_user, '__LIST_ITEM_NAME_SUBJECT__' => $list_item_name_subject, '__LIST_ITEM_NAME_INTRO__' => $list_item_name_intro, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__LIST_ID__' => $list->nid, '__LIST_TITLE__' => $list_title, '__MODERATOR_NAME__' => $static_add_member_moderator_first_name, '__HERO_HEADLINE__' => $hero_headline, '__ADD_LIST_MESSAGE__' => $add_list_message));
+  // custom add message
+  if (isset($field_list_message_added[LANGUAGE_NONE][0]['value'])) {
+    $list_message = $field_list_message_added[LANGUAGE_NONE][0]['value'];
+    $list_message = trim($list_message);
+    if ($list_message != "") {
+      $add_list_message = "<br><br>" . $list_message;
     }
   }
+
+  // notify members
+  foreach ($contact_users as $contact_user) {
+
+      $first_name = strip_tags($contact_user->field_user_first_name['und'][0]['value']);
+      $last_name = strip_tags($contact_user->field_user_last_name['und'][0]['value']);
+
+      tm_notifications_notify('added_to_list', $contact_user, array('user' => $contact_user, '__LIST_ITEM_NAME_SUBJECT__' => $list_item_name_subject, '__LIST_ITEM_NAME_INTRO__' => $list_item_name_intro, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__LIST_ID__' => $list->nid, '__LIST_TITLE__' => $list_title, '__MODERATOR_NAME__' => $static_add_member_moderator_first_name, '__HERO_HEADLINE__' => $hero_headline, '__ADD_LIST_MESSAGE__' => $add_list_message));
+    }
+  
 }

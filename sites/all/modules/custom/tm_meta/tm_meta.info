@@ -30,6 +30,7 @@ features[variable][] = metatag_enable_flagging
 features[variable][] = metatag_enable_node
 features[variable][] = metatag_enable_node__chapter
 features[variable][] = metatag_enable_node__event
+features[variable][] = metatag_enable_node__list
 features[variable][] = metatag_enable_node__organization
 features[variable][] = metatag_enable_node__page
 features[variable][] = metatag_enable_node__site_brand

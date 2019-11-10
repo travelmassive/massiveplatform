@@ -3,5 +3,6 @@
     <div class="lists-index-lists">__LISTS__</div>
 </div>
 
+__CREATE_LIST_LINK__
 
 

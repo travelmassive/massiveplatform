@@ -171,7 +171,7 @@ function tm_lists_moderation_add($entity_type, $entity_id, $list_id, $moderator,
 	// notify member, or owners of company, event, or chapter leaders
 	$preview_mode = $item_list->field_list_preview_mode[LANGUAGE_NONE][0]['value'];
 	if (!$preview_mode) {
-		if (function_exists('tm_notifications_added_to_list')) {
+		if (module_exists('tm_notifications_lists')) {
 			tm_notifications_added_to_list($entity, $item_list);
 		}
 	}

@@ -269,7 +269,7 @@ function tm_lists_display_list_html_newsletter($list_id) {
 	echo "<br><textarea onClick='this.select();' rows='2'>" . $newsletter_template . "</textarea>";
 	echo "</p>";
 	echo "<a style='font-family: Arial; font-size: 9pt; color: #888;' href='?hide_cover_image'>Hide Cover Image</a>";
-	echo "&middot; <a style='font-family: Arial; font-size: 9pt; color: #888;' href='#' onClick='document.getElementById(\"header\").style.display=\"none\"; document.getElementById(\"footer\").style.display=\"none\";'>Presentation Mode</a>";
+	echo " &middot; <a style='font-family: Arial; font-size: 9pt; color: #888;' href='#' onClick='document.getElementById(\"header\").style.display=\"none\"; document.getElementById(\"footer\").style.display=\"none\";'>Presentation Mode</a>";
 	echo "</center></div><br><br>";
 
 	// output RSS

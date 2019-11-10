@@ -115,6 +115,10 @@ img.tm-list-contributor-avatar {
 	text-align: center;
 }
 
+.item-list-load-more {
+	margin-top: 2rem;
+}
+
 /* List Item */
 
 .tm-list-view-item-container {

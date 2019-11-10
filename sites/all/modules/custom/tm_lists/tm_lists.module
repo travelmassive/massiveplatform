@@ -19,6 +19,7 @@ include_once 'tm_lists.drush.inc';
 include_once 'tm_lists.feedme.inc';
 include_once 'tm_lists.rss.inc';
 include_once 'tm_lists.html_newsletter.inc';
+include_once 'tm_lists.sitemap.inc';
 
 /**
  * Implements hook_menu().
@@ -63,6 +64,12 @@ function tm_lists_menu() {
 	$items['lists/feedme'] = array(
 		'title' => 'Feedme',
 		'page callback' => 'tm_lists_feedme_display',
+		'access arguments' => array('access content')
+	);
+
+	$items['lists/sitemap.xml'] = array(
+		'title' => 'Sitemap XML',
+		'page callback' => 'tm_lists_display_sitemap_xml',
 		'access arguments' => array('access content')
 	);
 

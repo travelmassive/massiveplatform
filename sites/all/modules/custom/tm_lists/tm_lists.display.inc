@@ -78,10 +78,10 @@ function tm_lists_display_index() {
 
 	// create form
 	$form['html'] = array(
-    	'#type' => 'item',
-    	'#markup' => $template,
-  	);
-  	return $form;
+		'#type' => 'item',
+		'#markup' => $template,
+		);
+	return $form;
 
 }
 

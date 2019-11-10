@@ -69,6 +69,13 @@ function tm_lists_display_index() {
 	$list_html .= "</ul>";
 	$template = str_replace("__LISTS__", $list_html, $template);
 
+	// create list link
+	$create_list_link = "";
+	if ((in_array("moderator", $user->roles)) or (in_array("list-editor", $user->roles))) {
+		$create_list_link = "<div style='float: right; margin-top: 1.5rem; margin-right: 0.5rem;'><a style='font-size: smaller; color: #888; text-decoration: underline;' href='/node/add/list'>Create list</a></a>";
+	}
+	$template = str_replace("__CREATE_LIST_LINK__", $create_list_link, $template);
+
 	// create form
 	$form['html'] = array(
     	'#type' => 'item',

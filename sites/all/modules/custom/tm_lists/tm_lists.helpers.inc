@@ -152,12 +152,12 @@ function tm_lists_user_check_permission($account, $list_id, $permission = "add")
 
 	// add
 	if ($permission == "add") {
-		$list_roles= $list->field_list_roles_add[LANGUAGE_NONE];
+		$list_roles = $list->field_list_roles_add[LANGUAGE_NONE];
 	}
 
 	// remove
 	if ($permission == "remove") {
-		$list_roles= $list->field_list_roles_remove[LANGUAGE_NONE];
+		$list_roles = $list->field_list_roles_remove[LANGUAGE_NONE];
 	}
 
 	// check roles

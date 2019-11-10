@@ -9,6 +9,12 @@
  * Implements hook_node_grants().
  */
 function nodeaccess_userreference_node_grants($account, $op) {
+
+  // TM patch for performance (don't check for viewing)
+  if ($op == "view") {
+    return array();
+  }
+
   $grants = array();
   $grants['nodeaccess_userreference'][] = $account->uid;
   $grants['nodeaccess_userreference_author'][] = $account->uid;

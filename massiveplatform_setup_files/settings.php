@@ -1139,7 +1139,7 @@ $conf["tm_organizations_upvote"] = false; // allow upvoting of organizations
 $conf["tm_lists_og_title"] = "Massive Lists"; // og:title for /lists
 $conf["tm_lists_og_image"] = ""; // og:image for /lists
 $conf["tm_lists_og_description"] = "Welcome to our lists"; // og:description for /lists
-$conf["tm_lists_default_list_thumbnail_url"] = "https://localdev.massiveplatform.com/sites/default/files/Global_Gathering_Pink_Thin.png"; // default thumbnail for feedme if there is no og image
+$conf["tm_lists_default_list_thumbnail_url"] = ""; // default thumbnail for feedme if there is no og image
 $conf["tm_lists_footer_html"] = "<div class='tm-lists-footer'><p>Like this list? Explore <a href='/lists'>more lists</a>.</p></div>"; // footer
 $conf["tm_lists_per_page"] = 10; // load items per show more
 $conf["tm_lists_notification_message"] = "Congrats on being added to the list!";

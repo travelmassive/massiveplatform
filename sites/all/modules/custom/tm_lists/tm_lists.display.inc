@@ -434,7 +434,15 @@ function tm_lists_render_list_items_html($list_id, $items, $sort_method, $count,
 			}
 
 			// edit items
-			if (tm_lists_user_can_add_to_list($user, $list_id)) {
+			$show_edit_item = false;
+			if (tm_lists_user_can_remove_from_list($user, $list_id)) {
+				$show_edit_item = true;
+			} elseif (tm_lists_user_can_add_to_list($user, $list_id) and ($user->uid == $item->uid)) {
+				$show_edit_item = true; // can edit own item
+			}
+
+			// edit item
+			if ($show_edit_item) {
 				$item_menu .= "<li><a href='javascript:void(0);' onClick='tm_lists_edit_form(\"" . $entity_type . "\", " . $item->entity_id . "," . $list_id . ");'>Edit</a></li>";
 			}
 

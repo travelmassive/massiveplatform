@@ -1,6 +1,6 @@
 --- S3fsStreamWrapper.inc	2018-03-26 15:14:03.000000000 +0000
 +++ S3fsStreamWrapper.inc.massiveplatform	2018-03-26 15:13:59.000000000 +0000
-@@ -857,6 +857,20 @@
+@@ -857,6 +857,25 @@
     * @see http://php.net/manual/en/streamwrapper.unlink.php
     */
    public function unlink($uri) {
@@ -18,6 +18,11 @@
 +      return TRUE;
 +    }
 +
++    // preserve list newsletter image files
++    if (preg_match('/\/styles\/list_newsletter\//', $uri)) {
++      return TRUE;
++    }
++
      $this->_assert_constructor_called();
      $this->_debug("unlink($uri) called.");
- 
+

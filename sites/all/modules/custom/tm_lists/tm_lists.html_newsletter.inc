@@ -273,9 +273,6 @@ function tm_lists_display_list_html_newsletter($list_id) {
 	echo " &middot; <a style='font-family: Arial; font-size: 9pt; color: #888;' href='#' onClick='document.getElementById(\"header\").style.display=\"none\"; document.getElementById(\"footer\").style.display=\"none\";'>Presentation Mode</a>";
 	echo "</center></div><br><br>";
 
-	// output RSS
-	//echo $dom->saveXML();
-	//echo $newsletter_template;
 	drupal_exit();
 
 }

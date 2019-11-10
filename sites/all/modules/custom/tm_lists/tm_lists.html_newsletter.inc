@@ -38,6 +38,13 @@ function tm_lists_display_list_html_newsletter($list_id) {
 		$show_items = 5;
 	}
 
+
+	// hide cover image
+	$hide_cover_image = false;
+	if (isset($_GET["hide_cover_image"])) {
+		$hide_cover_image = true;
+	}
+
 	// load templates
 	$newsletter_template = file_get_contents(drupal_get_path('module', 'tm_lists') .'/templates/tm_list_html_newsletter.tpl.php');
 	$newsletter_image_template = file_get_contents(drupal_get_path('module', 'tm_lists') .'/templates/tm_list_html_newsletter_image.tpl.php');
@@ -86,7 +93,7 @@ function tm_lists_display_list_html_newsletter($list_id) {
 	// cover image and top padding
 	$newsletter_image = "";
 	$top_padding_px = "0px";
-	if (isset($list->field_list_cover_image[LANGUAGE_NONE][0]['uri'])) {
+	if (!$hide_cover_image and isset($list->field_list_cover_image[LANGUAGE_NONE][0]['uri'])) {
 		$image_style_url = image_style_url("list_newsletter", $list->field_list_cover_image[LANGUAGE_NONE][0]['uri']);
     	$image_url = file_create_url($image_style_url);
     	$newsletter_image = str_replace("__LIST_IMAGE_URL__", $image_url, $newsletter_image_template);
@@ -261,7 +268,8 @@ function tm_lists_display_list_html_newsletter($list_id) {
 	echo "<div id='footer'><center><p><span style='font-family: Arial; font-size: smaller;'>HTML (copy/paste)</span>";
 	echo "<br><textarea onClick='this.select();' rows='2'>" . $newsletter_template . "</textarea>";
 	echo "</p>";
-	echo "<a style='font-family: Arial; font-size: 9pt; color: #888;' href='#' onClick='document.getElementById(\"header\").style.display=\"none\"; document.getElementById(\"footer\").style.display=\"none\";'>Presentation Mode</a>";
+	echo "<a style='font-family: Arial; font-size: 9pt; color: #888;' href='?hide_cover_image'>Hide Cover Image</a>";
+	echo "&middot; <a style='font-family: Arial; font-size: 9pt; color: #888;' href='#' onClick='document.getElementById(\"header\").style.display=\"none\"; document.getElementById(\"footer\").style.display=\"none\";'>Presentation Mode</a>";
 	echo "</center></div><br><br>";
 
 	// output RSS

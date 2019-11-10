@@ -112,8 +112,8 @@ function tm_notifications_added_to_list($entity, $list) {
   }
 
   // custom add message
-  if (isset($field_list_message_added[LANGUAGE_NONE][0]['value'])) {
-    $list_message = $field_list_message_added[LANGUAGE_NONE][0]['value'];
+  if (isset($list->field_list_message_added[LANGUAGE_NONE][0]['value'])) {
+    $list_message = $list->field_list_message_added[LANGUAGE_NONE][0]['value'];
     $list_message = trim($list_message);
     if ($list_message != "") {
       $add_list_message = "<br><br>" . $list_message;

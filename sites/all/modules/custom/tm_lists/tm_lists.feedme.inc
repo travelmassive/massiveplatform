@@ -103,10 +103,13 @@ function tm_lists_feedme_render($list_ids, $title, $more_link, $more_text, $show
 		$list_url = "/lists/" . $list_id;
 
 		// list image
+		// try cover first, then sharing image
 		$list_image_url = $conf["tm_lists_default_list_thumbnail_url"];
-  		if (isset($list->field_list_social_image[LANGUAGE_NONE][0]['uri'])) {
-  			$list_image_url = image_style_url("medium", $list->field_list_social_image[LANGUAGE_NONE][0]['uri']);
-    	}
+  		if (isset($list->field_list_cover_image[LANGUAGE_NONE][0]['uri'])) {
+  			$list_image_url = image_style_url("medium", $list->field_list_cover_image[LANGUAGE_NONE][0]['uri']);
+    	} elseif(isset($list->field_list_social_image[LANGUAGE_NONE][0]['uri'])) {
+			$list_image_url = image_style_url("medium", $list->field_list_social_image[LANGUAGE_NONE][0]['uri']);
+		}
 
     	// check if author
     	if ($show_contributor_uid > 0) {

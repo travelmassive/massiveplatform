@@ -219,7 +219,7 @@ function tm_lists_display_list($list_id) {
 			$contributor_url = drupal_get_path_alias("user/" . $contributor_uid);
 			$avatar_url = image_style_url("avatar", _tm_users_get_avatar_uri($contributor));
 			$img_url = str_replace("'", "%27", file_create_url($avatar_url));
-			$contributor_links[] = "<a target='_blank' href='" . $contributor_url . "'><img class='tm-list-contributor-avatar' alt='" . t($full_name) . "' title='" . t($full_name) . "' src='" . $img_url . "'></a>";
+			$contributor_links[] = "<a target='_blank' href='/" . $contributor_url . "'><img class='tm-list-contributor-avatar' alt='" . t($full_name) . "' title='" . t($full_name) . "' src='" . $img_url . "'></a>";
 		}
 	}
 

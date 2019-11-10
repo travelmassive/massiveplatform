@@ -13,9 +13,10 @@
 
 <?php
 
+  global $conf;
+
   // Enable discussion feedme plugin
   // Show recent discussion posts
-  global $conf;
   if (@isset($conf["tm_discuss_enable_feedme"])) {
     if ($conf["tm_discuss_enable_feedme"]) {
       include './'. path_to_theme() .'/templates/page--discuss-feedme.tpl.php';
@@ -24,12 +25,18 @@
   
   // Enable wordpress feedme plugin
   // Show recent blog posts and more
-  global $conf;
   if (@isset($conf["tm_enable_wordpress_feedme"])) {
     if ($conf["tm_enable_wordpress_feedme"]) {
       include './'. path_to_theme() .'/templates/page--wordpress-feedme.tpl.php';
     }
   }
+
+  // Enable lists feedme plugin
+  // Show related lists
+  if (module_exists("tm_lists")) {
+    include './'. path_to_theme() .'/templates/page--lists-feedme.tpl.php';
+  }
+
 ?>
 
 <?php

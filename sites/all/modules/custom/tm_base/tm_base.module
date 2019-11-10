@@ -374,7 +374,13 @@ function tm_base_tokens($type, $tokens, array $data = array(), array $options = 
     }
   }
   if ($type == 'user') {
+
+    if (!isset($data['user'])) {
+      return $replacements;
+    }
+
     $user = $data['user'];
+
     // Loop through each of the available tokens.
     foreach ($tokens as $name => $original) {
       // Find the desired token by name
@@ -672,6 +678,14 @@ function tm_base_init() {
 
     // otherwise, user is admin
   }
+
+  // don't display /node/add index
+  if ($request_path == "/node/add") {
+    if (($perm_is_moderator) && !($perm_is_admin)) {
+      drupal_goto("/");
+    }
+  }
+
 }
 
 /**

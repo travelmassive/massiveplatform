@@ -1,0 +1,13 @@
+name = TM Notifications Lists
+description = Travel Massive notification system for lists.
+core = 7.x
+package = TM Lists
+version = 7.x-1.0-dev
+project = tm_notifications
+dependencies[] = ctools
+dependencies[] = features
+dependencies[] = strongarm
+dependencies[] = tm_notifications
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:2
+features[variable][] = tm_notifications__added_to_list

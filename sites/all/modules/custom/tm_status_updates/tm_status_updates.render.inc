@@ -819,7 +819,7 @@ function tm_status_updates_render_details($details) {
 		$more_html .= "<a class='tm-status-update-actions' href='javascript:void(0);' data-dropd-toggle=''></a>";
 
 		// more-actions
-		$more_html .= "<div class='inner dropd dropd-s dropd-right' data-dropd='' style='top: 24px; min-width: 8rem; wod'>";
+		$more_html .= "<div class='inner dropd dropd-s dropd-right' data-dropd='' style='top: 24px; min-width: 8rem;'>";
 
 		// dropd-menu
 		$more_html .= "<ul class='tm-status-update-actions-dropdown-menu dropd-menu'>";

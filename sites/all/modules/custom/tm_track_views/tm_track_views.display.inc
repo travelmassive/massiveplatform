@@ -81,7 +81,7 @@ function _tm_ds_track_viewers($field, $title = NULL) {
 function tm_track_views_views_pre_execute(&$view) {
 
 	// validate
-	if (($view->current_display != 'who_viewed_member_profile') and ($view->current_display != 'who_viewed_company_profile') and ($view->current_display != 'who_viewed_event')) {
+	if (($view->current_display != 'who_viewed_member_profile') and ($view->current_display != 'who_viewed_company_profile') and ($view->current_display != 'who_viewed_event') and ($view->current_display != 'who_viewed_list')) {
 		return;
 	}
 
@@ -128,6 +128,10 @@ function tm_track_views_views_pre_execute(&$view) {
 		$entity = node_load($entity_id);
 		if ($entity != null) {
 			$profile_label = trim(strip_tags($entity->title));
+		}
+		if ($entity->type == "list") {
+			$list_count = tm_lists_get_num_items($entity_id, 1);
+			$profile_label = str_replace("##", $list_count, $profile_label);
 		}
 	}
 

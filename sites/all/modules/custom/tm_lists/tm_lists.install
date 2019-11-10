@@ -3,14 +3,20 @@
 /**
  * Implements hook_schema().
  */
-function tm_track_views_schema() {
+function tm_lists_schema() {
   $schema = array();
-  $schema['tm_track_views'] = array(
-    'description' => 'The count views of node for every user.',
+  $schema['tm_lists'] = array(
+    'description' => 'Lists',
     'fields' => array(
       'id' => array(
         'description' => 'The unique ID.',
         'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'list_id' => array(
+        'description' => 'The list node ID.',
+        'type' => 'int',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ),
@@ -27,10 +33,15 @@ function tm_track_views_schema() {
         'not null' => TRUE,
       ),
       'uid' => array(
-        'description' => 'The user ID who viewed the entity.',
+        'description' => 'User ID of who added to the list.',
         'type' => 'int',
         'unsigned' => TRUE,
         'not null' => TRUE,
+      ),
+      'comment' => array(
+        'description' => 'Optional comment.',
+        'type' => 'text',
+        'not null' => FALSE,
       ),
       'timestamp' => array(
         'description' => 'The Unix timestamp when the node was view.',
@@ -38,10 +49,24 @@ function tm_track_views_schema() {
         'not null' => TRUE,
         'default' => 0, 
       ),
+      'sort_order' => array(
+        'description' => 'The sort order.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 1, 
+      ),
+      'is_published' => array(
+        'description' => 'List item is published.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
     ),
     'primary key' => array('id'),     
     'indexes' => array(
-      'entity_id_uid' => array('uid', 'entity_id', 'entity_type'),
+      'list_id' => array('list_id'),
+      'entity_id_entity_type' => array('entity_id', 'entity_type'),
+      'list_timestamp' => array('list_id', 'timestamp'),
       'timestamp' => array('timestamp'),  
     ),  
   );

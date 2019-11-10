@@ -19,6 +19,7 @@ include_once 'tm_events.edit.inc';
 include_once 'tm_events.flags.inc';
 include_once 'tm_events.ical.inc';
 include_once 'tm_events.moderation.inc';
+include_once 'tm_events.grants.inc';
 
 /*
 * Implements hook_menu()

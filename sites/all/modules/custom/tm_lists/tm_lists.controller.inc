@@ -16,8 +16,10 @@ function tm_lists_get_lists() {
 	$nids = array();
 	$lists = array();
 	foreach ($rows as $row) {
-		$nids[] = $row->list_id;
-		$lists[] = array("list_id" => $row->list_id, "title" => $row->title, "updated" => $row->timestamp);
+		if ($row->title != "") {
+			$nids[] = $row->list_id;
+			$lists[] = array("list_id" => $row->list_id, "title" => $row->title, "updated" => $row->timestamp);
+		}
 	}
 
 	// Fetch from nodes
@@ -29,9 +31,7 @@ function tm_lists_get_lists() {
 	
 	$rows = db_query($query)->fetchAll();
 	foreach ($rows as $row) {
-		if ($row->nid != null) {
-			$lists[] = array("list_id" => $row->nid, "title" => $row->title, "updated" => $row->changed);
-		}
+		$lists[] = array("list_id" => $row->nid, "title" => $row->title, "updated" => $row->changed);
 	}
 
 	return $lists;

@@ -191,7 +191,7 @@ function tm_lists_display_list_html_newsletter($list_id) {
 		// comment
 		$item_comment = strip_tags($item->comment);
 		$item_comment = str_replace("##", $num_items, $item_comment); // replace ## with position
-		$item_comment = tm_base_linkify($$item_comment, ["http", "https", "mail", "twitter"]);
+		$item_comment = tm_base_linkify($item_comment, ["http", "https", "mail", "twitter"]);
 
 		// replace fields
 		$item_template = $newsletter_item_template;

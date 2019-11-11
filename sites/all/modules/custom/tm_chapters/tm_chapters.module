@@ -310,6 +310,15 @@ function _tm_chapters_check_moderator_delete($chapter_id) {
  */
 function tm_chapters_views_post_execute(&$view) {
 
+  // redirect to /chapters if /chapters/foo
+  if (($view->name == 'chapters')) {
+    if (arg(1) != "") {
+      if ((arg(1) != "sort") and (arg(1) != "map")) {
+         drupal_goto("chapters");
+      }
+    }
+  }
+
   if (($view->name == 'member_listings') and (arg(2) == "members")) {
 
     global $conf;

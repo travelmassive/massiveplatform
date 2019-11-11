@@ -1,5 +1,5 @@
  <style style="text/css">
-	.contained.contained-block.feedme-lists { border-left: 8px solid #3080b2; }
+	.contained.contained-block.feedme-lists { border-left: 8px solid #9a2fe5; }
 	img.feedme-lists-image { max-height: 64px; height: 100%; object-fit: cover;}
 </style>
 <section class="contained contained-block feedme-lists">

@@ -9,8 +9,12 @@ function tm_lists_display_index() {
 	global $conf;
 	global $user;
 
-	$lists = tm_lists_get_lists();
+	// cache for 5 minutes if logged out
+	if (!user_is_logged_in()) {
+		drupal_add_http_header('Cache-Control', 'public, max-age=300');
+	}
 
+	$lists = tm_lists_get_lists();
 	// include css
 	drupal_add_css(drupal_get_path('module', 'tm_lists') . '/css/tm_lists.css');
 
@@ -91,6 +95,10 @@ function tm_lists_display_list($list_id) {
 	global $conf;
 	global $user;
 
+	// cache for 5 minutes if logged out
+	if (!user_is_logged_in()) {
+		drupal_add_http_header('Cache-Control', 'public, max-age=300');
+	}
 	// add rss link
 	$rss_link = array(
 		'#tag' => 'link',
@@ -556,6 +564,11 @@ function tm_lists_display_list_ajax() {
 	global $user;
 	global $conf;
 
+	// cache for 5 minutes if logged out
+	if (!user_is_logged_in()) {
+		drupal_add_http_header('Cache-Control', 'public, max-age=300');
+	}
+	
 	// Step 1. Check input
 	if (!isset($_GET["list_id"])) {
 		return;

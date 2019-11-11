@@ -198,6 +198,10 @@ function tm_lists_get_items_by_id($list_id, $sort_method = "new_items_first", $l
 
 		// Then we select from tm_lists with ids from first query
 		// todo: optimise into single query
+		if (sizeof($ids) == 0) {
+			return array(); // no results
+		}
+		
 		$query = "SELECT * FROM tm_lists WHERE id IN (" . implode(",", $ids) . ") ORDER BY FIELD(id, " . implode(",", $ids) . ")";
 		$results = db_query($query)->fetchAll();
 

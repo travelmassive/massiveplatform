@@ -527,7 +527,7 @@ function tm_lists_render_list_items_html($list_id, $items, $sort_method, $count,
 		if ($sort_method == "flag_count") {
 			$score = tm_lists_get_entity_score($item->entity_type, $entity, $order_flags);
 			if ($score != "") {
-				$item_score_html = "<a " . $link_target . " rel='" . $rel . " href='" . $link_url . "'><span class='tm-list-view-item-score tm_stats tm_stats_followers'>" . $score . "</span></a>";
+				$item_score_html = "<a " . $link_target . " rel='" . $rel . "' href='" . $link_url . "'><span class='tm-list-view-item-score tm_stats tm_stats_followers'>" . $score . "</span></a>";
 			}
 		}
 

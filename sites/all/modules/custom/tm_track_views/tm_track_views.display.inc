@@ -150,6 +150,9 @@ function tm_track_views_views_pre_execute(&$view) {
 	if ($view->current_display == 'who_viewed_event') {
 		$label = "event";
 	}
+	if ($view->current_display == 'who_viewed_list') {
+		$label = "list";
+	}
 
 	// get number of views
 	$num_unique_viewers = tm_track_views_how_many_viewed($entity_id, $entity_type, $user->uid, $conf["tm_track_views_store_days"]);

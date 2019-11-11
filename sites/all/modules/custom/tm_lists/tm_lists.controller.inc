@@ -29,7 +29,9 @@ function tm_lists_get_lists() {
 	
 	$rows = db_query($query)->fetchAll();
 	foreach ($rows as $row) {
-		$lists[] = array("list_id" => $row->nid, "title" => $row->title, "updated" => $row->changed);
+		if ($row->nid != null) {
+			$lists[] = array("list_id" => $row->nid, "title" => $row->title, "updated" => $row->changed);
+		}
 	}
 
 	return $lists;
@@ -201,7 +203,7 @@ function tm_lists_get_items_by_id($list_id, $sort_method = "new_items_first", $l
 		if (sizeof($ids) == 0) {
 			return array(); // no results
 		}
-		
+
 		$query = "SELECT * FROM tm_lists WHERE id IN (" . implode(",", $ids) . ") ORDER BY FIELD(id, " . implode(",", $ids) . ")";
 		$results = db_query($query)->fetchAll();
 

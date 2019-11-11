@@ -522,6 +522,7 @@ function tm_lists_render_list_items_html($list_id, $items, $sort_method, $count,
 		}
 
 		// item flag count
+		$link_url = "/" . drupal_get_path_alias($entity_type . "/" . $item->entity_id);
 		$item_score_html = "";
 		if ($sort_method == "flag_count") {
 			$score = tm_lists_get_entity_score($item->entity_type, $entity, $order_flags);

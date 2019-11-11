@@ -10,6 +10,10 @@ function tm_lists_display_list_rss($list_id) {
 	global $conf;
 	global $user;
 
+	// cache for 5 minutes if logged out
+	if (!user_is_logged_in()) {
+		drupal_add_http_header('Cache-Control', 'public, max-age=300');
+	}
 	// load
 	$list = node_load($list_id);
 

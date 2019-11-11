@@ -9,6 +9,11 @@ function tm_lists_display_sitemap_xml() {
 
 	global $conf;
 
+	// cache for 5 minutes if logged out
+	if (!user_is_logged_in()) {
+		drupal_add_http_header('Cache-Control', 'public, max-age=300');
+	}
+	
 	// get lists
 	$lists = tm_lists_get_lists();
 

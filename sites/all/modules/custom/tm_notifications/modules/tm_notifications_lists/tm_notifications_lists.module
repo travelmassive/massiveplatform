@@ -54,7 +54,7 @@ function tm_notifications_added_to_list($entity, $list) {
   if (!isset($entity->nid)) {
     $contact_users[] = $entity;
     $list_item_name_subject = "You";
-    $list_item_name_intro = "your profile";
+    $list_item_name_intro = "Your profile";
   }
 
   // For organizations, chapters, or events

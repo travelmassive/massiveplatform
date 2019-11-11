@@ -22,10 +22,13 @@ function tm_notifications_lists_strongarm() {
       'subject' => '__LIST_ITEM_NAME_SUBJECT__ just got featured on __SITE_NAME__',
       'message' => 'Hi __USER_FIRST_NAME__,
 <br>
-<br>Congratulations, __LIST_ITEM_NAME_INTRO__ has just been featured in <a href="__SERVER_HTTP__://__SERVER_NAME__/lists/__LIST_ID__">__LIST_TITLE__</a> on __SITE_NAME__.
+<br>__LIST_ITEM_NAME_INTRO__ has just been featured in on __SITE_NAME__ —
+<br>
+<strong><a href="__SERVER_HTTP__://__SERVER_NAME__/lists/__LIST_ID__">__LIST_TITLE__</a></strong>
 __ADD_LIST_MESSAGE__
 <br>
 <br>You were added to the list by __MODERATOR_NAME__.
+<br>
 <br>
 __EMAIL_SIGNOFF__
 ',

@@ -476,7 +476,11 @@ function tm_lists_moderation_send_unsent_notifications($list_id) {
 	// get items that have not had notifications sent
 	$unsent_items = tm_lists_get_list_unsent_notification_items($list_id);
 
-	// send notificatio
+	// tm_add_to_list_id
+	$tm_add_to_list_id = &drupal_static("tm_add_to_list_id");
+	$tm_add_to_list_id = $list_id;
+
+	// send notifications
 	$sent_notifications = 0;
 	foreach ($unsent_items as $item) {
 
@@ -487,6 +491,22 @@ function tm_lists_moderation_send_unsent_notifications($list_id) {
 		} else {
 			$entity = node_load($item->entity_id);
 		}
+
+		// load moderator who added item to list
+		$moderator = user_load($item->uid);
+		if ($moderator == null) {
+			continue;
+		}
+
+		// moderator first name
+		$moderator_first_name = strip_tags($moderator->field_user_first_name[LANGUAGE_NONE][0]['value']);
+		$static_add_member_moderator_first_name = &drupal_static("tm_add_to_list_moderator_first_name");
+		$static_add_member_moderator_first_name = $moderator_first_name;
+
+		// moderator last name
+		$moderator_last_name = strip_tags($moderator->field_user_last_name[LANGUAGE_NONE][0]['value']);
+		$static_add_member_moderator_last_name = &drupal_static("tm_add_to_list_moderator_last_name");
+		$static_add_member_moderator_last_name = $moderator_last_name;
 
 		// sent notification
 		if ($entity != null) {

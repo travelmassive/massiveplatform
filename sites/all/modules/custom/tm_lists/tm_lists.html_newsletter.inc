@@ -68,6 +68,7 @@ function tm_lists_display_list_html_newsletter($list_id) {
 	$num_items = tm_lists_get_num_items($list->nid, 1);
 	$list_description = str_replace("##", $num_items, $list_description);
 	$list_description = strip_tags($list_description);
+	$list_description = str_replace("\n", "</p>\n<p>", $list_description);
 	$list_description = "<p>" . $list_description . "</p>";
 	$list_description = tm_base_linkify($list_description, ["http", "https", "mail", "twitter"]);
 	$list_description = $conf["tm_lists_newsletter_intro"] . $list_description;

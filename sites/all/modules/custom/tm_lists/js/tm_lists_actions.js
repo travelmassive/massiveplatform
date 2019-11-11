@@ -100,4 +100,20 @@
     });
   }
 
+  // sent notifications
+  tm_lists_send_unsent_notifications = function(list_id, count) {
+
+    var message = "Send notifications for " + count + " items (added in Preview Mode).";
+    $.prompt(message, { 
+      buttons: { "Send Notifications": true, "Cancel": false },
+      title: null,
+      submit: function(e,v,m,f){
+        if (v == true) {
+          window.location = '/lists/send_unsent_notifications/' + list_id;
+        }
+      }
+    });
+
+  }
+
 });})(jQuery, Drupal, this, this.document);

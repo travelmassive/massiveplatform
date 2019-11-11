@@ -355,7 +355,25 @@ function tm_lists_update_timestamp($item_id) {
 			WHERE id = :item_id";
 		db_query($query, 
 		array(':timestamp' => time(), 
-			  ':id' => $item_id));
+			  ':item_id' => $item_id));
+		return true;
+	} catch (Exception $e) {
+		return false;
+	}
+}
+
+/**
+ * Update list item notification timestamp
+ */
+function tm_lists_update_timestamp_notified($item_id) {
+
+	try {
+		$query = "UPDATE tm_lists SET 
+			timestamp_notified = :timestamp
+			WHERE id = :item_id";
+		db_query($query, 
+		array(':timestamp' => time(), 
+			  ':item_id' => $item_id));
 		return true;
 	} catch (Exception $e) {
 		return false;
@@ -397,6 +415,23 @@ function tm_lists_get_latest_timestamp($list_id) {
 	}
 
 	return null;
+}
+
+/**
+ * Get list items that have not been notified
+ */
+function tm_lists_get_list_unsent_notification_items($list_id) {
+
+	$query = "SELECT * FROM tm_lists WHERE list_id = :list_id AND timestamp_notified = 0";
+	$results = db_query($query, array(':list_id' => $list_id))->fetchAll();
+
+	// no items
+	if (sizeof($results) == 0) {
+		return array();
+	}
+
+	// return items
+	return $results;
 }
 
 /**

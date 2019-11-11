@@ -2,6 +2,11 @@
 	display: none;
 }
 
+.lists-index-intro {
+	text-align: center;
+	padding-bottom: 2rem;
+}
+
 ul.tm-lists-index {
     list-style-type: none;
     margin: auto;
@@ -72,9 +77,8 @@ ul.tm-lists-index li {
 .tm-list-meta-data {
 	margin-top: 2rem;
 	padding-top: 1rem;
-	border-top: 1px solid #ddd;
 	vertical-align: middle;
-	display; flex;
+	text-align: center;
 }
 
 .tm-list-pageviews {
@@ -82,7 +86,6 @@ ul.tm-lists-index li {
 }
 
 .tm-list-contributors {
-	
 	color: #213040;
 	margin-left: 2rem;
 }
@@ -191,6 +194,19 @@ img.tm-list-contributor-avatar {
 }
 
 @media screen and (max-width: 800px) {
+	.tm-list-meta-data {
+		display: flex;
+		flex-direction: column;
+	}
+	.tm-list-pageviews { 
+		margin-top: 0.5rem ;
+	}
+	.tm-list-contributors {
+		margin-top: 0.75rem;
+	}
+	.tm-list-last-updated {
+		margin-top: 0.5rem;
+	}
 	.tm-list-view-item-container {
 		flex-direction: column;
 	}

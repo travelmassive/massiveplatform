@@ -234,7 +234,7 @@
                                   <table border="0" cellpadding="0" cellspacing="0" width="100%" role="presentation">
                                     <tbody>
                                       <tr>
-                                        <td class="pc-sm-p-10-0 pc-fb-font" valign="top" style="padding: 10px 20px; font-family: 'Fira Sans', Helvetica, Arial, sans-serif; font-size: 24px; font-weight: 700; line-height: 34px; letter-spacing: -0.4px; color: #151515">__LIST_HEADLINE__</td>
+                                        <td class="pc-sm-p-10-0 pc-fb-font" valign="top" style="padding: 10px 20px; font-family: 'Fira Sans', Helvetica, Arial, sans-serif; font-size: 28px; font-weight: 700; line-height: 36px; letter-spacing: -0.4px; color: #151515; text-align: center">__LIST_HEADLINE__</td>
                                       </tr>
                                     </tbody>
                                     <tbody>

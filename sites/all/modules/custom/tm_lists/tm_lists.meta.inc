@@ -115,7 +115,10 @@ function tm_lists_add_list_meta_tags($node) {
   drupal_add_html_head($meta, 'og:updated_time');
 
   // og:description
-  $description = strip_tags(trim($node->field_list_description[LANGUAGE_NONE][0]['value']));
+  $description = "";
+  if (isset($node->field_list_description[LANGUAGE_NONE][0]['value'])) {
+    $description = strip_tags(trim($node->field_list_description[LANGUAGE_NONE][0]['value']));
+  }
   
   // use short description if available
   if (isset($node->field_list_description[LANGUAGE_NONE][0]['value'])) {

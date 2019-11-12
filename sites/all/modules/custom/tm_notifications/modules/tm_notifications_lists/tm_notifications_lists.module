@@ -205,7 +205,7 @@ function tm_notifications_added_to_list_notify_creators($entity, $list) {
     }
 
     // don't notify if you're added, or own the item that is added (you'll get a notification anyway)
-    if ($entity->uid == $user->uid) {
+    if ($contact_user->uid == $entity->uid) {
         continue;
     }
 

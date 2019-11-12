@@ -44,7 +44,7 @@ function tm_lists_schema() {
         'not null' => FALSE,
       ),
       'timestamp' => array(
-        'description' => 'The Unix timestamp when the node was view.',
+        'description' => 'The Unix timestamp when the item was created.',
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0, 
@@ -60,6 +60,12 @@ function tm_lists_schema() {
         'type' => 'int',
         'unsigned' => TRUE,
         'not null' => TRUE,
+      ),
+      'timestamp_notified' => array(
+        'description' => 'The Unix timestamp when a notification was sent for the item.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0, 
       ),
     ),
     'primary key' => array('id'),     

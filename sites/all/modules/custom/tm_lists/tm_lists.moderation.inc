@@ -172,9 +172,13 @@ function tm_lists_moderation_add($entity_type, $entity_id, $list_id, $moderator,
 	$preview_mode = $item_list->field_list_preview_mode[LANGUAGE_NONE][0]['value'];
 	if (!$preview_mode) {
 		if (module_exists('tm_notifications_lists')) {
+			tm_lists_update_timestamp_notified($insert_id); // set notification timestamp
 			tm_notifications_added_to_list($entity, $item_list);
 		}
 	}
+
+	// notify list creators
+	tm_notifications_added_to_list_notify_creators($entity, $item_list);
 
     // console return
     if ($is_console) { return true; }
@@ -436,4 +440,86 @@ function tm_lists_moderation_boost_callback($entity_type, $entity_id, $list_id) 
 	// error boosting
 	drupal_set_message(t('Unable to boost list item.'), 'error');
 	drupal_goto("/node/" . $list_id); // redirect to list 
+}
+
+/**
+ * Send notifications for items that were added oin preview mode
+ * Restrict to list editors
+ */
+function tm_lists_moderation_send_unsent_notifications($list_id) {
+
+	global $user;
+
+	// check permission
+	if (!tm_lists_user_can_edit_list($user, $list_id)) {
+		drupal_set_message(t('You don\'t have permission to perform this action.'), 'error');
+		drupal_goto("/node/" . $list_id); // redirect to list 
+	}
+
+	// check notifications enabled
+	if (!module_exists('tm_notifications_lists')) {
+		drupal_set_message(t('Oops, an error occurred performing the action (tm_notifications_lists not enabled)'), 'error');
+		drupal_goto("/node/" . $list_id); // redirect to list 
+	}
+
+	// check list
+	$item_list = node_load($list_id);
+	if ($item_list == null) {
+		drupal_set_message(t('Oops, an error occurred performing the action (invalid list)'), 'error');
+		drupal_goto("/node/" . $list_id); // redirect to list 
+	}
+
+	// check not preview mode
+	$preview_mode = $item_list->field_list_preview_mode[LANGUAGE_NONE][0]['value'];
+	if ($preview_mode == 1) {
+		drupal_set_message(t('Oops, an error occurred performing the action (list in preview mode)'), 'error');
+		drupal_goto("/node/" . $list_id); // redirect to list 
+	}
+
+	// get items that have not had notifications sent
+	$unsent_items = tm_lists_get_list_unsent_notification_items($list_id);
+
+	// tm_add_to_list_id
+	$tm_add_to_list_id = &drupal_static("tm_add_to_list_id");
+	$tm_add_to_list_id = $list_id;
+
+	// send notifications
+	$sent_notifications = 0;
+	foreach ($unsent_items as $item) {
+
+		// load entity
+		$entity = null;
+		if ($item->entity_type == 1) {
+			$entity = user_load($item->entity_id);
+		} else {
+			$entity = node_load($item->entity_id);
+		}
+
+		// load moderator who added item to list
+		$moderator = user_load($item->uid);
+		if ($moderator == null) {
+			continue;
+		}
+
+		// moderator first name
+		$moderator_first_name = strip_tags($moderator->field_user_first_name[LANGUAGE_NONE][0]['value']);
+		$static_add_member_moderator_first_name = &drupal_static("tm_add_to_list_moderator_first_name");
+		$static_add_member_moderator_first_name = $moderator_first_name;
+
+		// moderator last name
+		$moderator_last_name = strip_tags($moderator->field_user_last_name[LANGUAGE_NONE][0]['value']);
+		$static_add_member_moderator_last_name = &drupal_static("tm_add_to_list_moderator_last_name");
+		$static_add_member_moderator_last_name = $moderator_last_name;
+
+		// sent notification
+		if ($entity != null) {
+			tm_lists_update_timestamp_notified($item->id); // set notification timestamp
+			tm_notifications_added_to_list($entity, $item_list);
+			$sent_notifications++;
+		}
+	}
+
+	// sent
+	drupal_set_message('Sent ' . $sent_notifications . ' notifications to item owners.');
+	drupal_goto("/lists/" . $list_id); // redirect to list 
 }

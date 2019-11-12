@@ -116,6 +116,13 @@ function tm_lists_menu() {
 		'access arguments' => array('access content'),
 	);
 
+	$items['lists/send_unsent_notifications/%'] = array(
+		'title' => 'Edit form ajax',
+		'page callback' => 'tm_lists_moderation_send_unsent_notifications',
+		'page arguments' => array(2),
+		'access arguments' => array('access content'),
+	);
+
 	return $items;
 }
 

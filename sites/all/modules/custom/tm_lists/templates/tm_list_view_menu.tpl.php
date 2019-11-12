@@ -5,8 +5,9 @@
 <ul class='tm-list-item-actions-dropdown-menu dropd-menu' style='white-space: nowrap;'>
 <li><a href='/node/__LIST_ID__/edit'>Edit list</a></li>
 __WHO_VIEWED__
+__SEND_NOTIFICATIONS__
+<li><a target='_blank' href='/lists/__LIST_ID__/html_newsletter'>HTML Newsletter</a></li>
 <li><a target='_blank' href='/lists/__LIST_ID__/rss'>RSS feed</a></li>
-<li><a target='_blank' href='/lists/__LIST_ID__/html_newsletter'>Newsletter HTML</a></li>
 <li><a href='/lists'>All lists</a></li>
 </ul>
 </div>

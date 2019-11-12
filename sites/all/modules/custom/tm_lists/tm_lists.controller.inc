@@ -16,8 +16,10 @@ function tm_lists_get_lists() {
 	$nids = array();
 	$lists = array();
 	foreach ($rows as $row) {
-		$nids[] = $row->list_id;
-		$lists[] = array("list_id" => $row->list_id, "title" => $row->title, "updated" => $row->timestamp);
+		if ($row->title != "") {
+			$nids[] = $row->list_id;
+			$lists[] = array("list_id" => $row->list_id, "title" => $row->title, "updated" => $row->timestamp);
+		}
 	}
 
 	// Fetch from nodes
@@ -198,6 +200,10 @@ function tm_lists_get_items_by_id($list_id, $sort_method = "new_items_first", $l
 
 		// Then we select from tm_lists with ids from first query
 		// todo: optimise into single query
+		if (sizeof($ids) == 0) {
+			return array(); // no results
+		}
+
 		$query = "SELECT * FROM tm_lists WHERE id IN (" . implode(",", $ids) . ") ORDER BY FIELD(id, " . implode(",", $ids) . ")";
 		$results = db_query($query)->fetchAll();
 
@@ -355,7 +361,25 @@ function tm_lists_update_timestamp($item_id) {
 			WHERE id = :item_id";
 		db_query($query, 
 		array(':timestamp' => time(), 
-			  ':id' => $item_id));
+			  ':item_id' => $item_id));
+		return true;
+	} catch (Exception $e) {
+		return false;
+	}
+}
+
+/**
+ * Update list item notification timestamp
+ */
+function tm_lists_update_timestamp_notified($item_id) {
+
+	try {
+		$query = "UPDATE tm_lists SET 
+			timestamp_notified = :timestamp
+			WHERE id = :item_id";
+		db_query($query, 
+		array(':timestamp' => time(), 
+			  ':item_id' => $item_id));
 		return true;
 	} catch (Exception $e) {
 		return false;
@@ -397,6 +421,23 @@ function tm_lists_get_latest_timestamp($list_id) {
 	}
 
 	return null;
+}
+
+/**
+ * Get list items that have not been notified
+ */
+function tm_lists_get_list_unsent_notification_items($list_id) {
+
+	$query = "SELECT * FROM tm_lists WHERE list_id = :list_id AND timestamp_notified = 0";
+	$results = db_query($query, array(':list_id' => $list_id))->fetchAll();
+
+	// no items
+	if (sizeof($results) == 0) {
+		return array();
+	}
+
+	// return items
+	return $results;
 }
 
 /**

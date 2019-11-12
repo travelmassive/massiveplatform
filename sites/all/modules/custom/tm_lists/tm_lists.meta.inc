@@ -115,8 +115,18 @@ function tm_lists_add_list_meta_tags($node) {
   drupal_add_html_head($meta, 'og:updated_time');
 
   // og:description
-  $description = strip_tags($node->field_list_description[LANGUAGE_NONE][0]['value']);
+  $description = "";
+  if (isset($node->field_list_description[LANGUAGE_NONE][0]['value'])) {
+    $description = strip_tags(trim($node->field_list_description[LANGUAGE_NONE][0]['value']));
+  }
   
+  // use short description if available
+  if (isset($node->field_list_short_description[LANGUAGE_NONE][0]['value'])) {
+    if (trim($node->field_list_short_description[LANGUAGE_NONE][0]['value']) != "") {
+      $description = strip_tags(trim($node->field_list_short_description[LANGUAGE_NONE][0]['value']));
+    }
+  }
+
   // dynamic ## item count
   $list_count = tm_lists_get_num_items($node->nid, 1);
   $description = str_replace("##", $list_count, $description);

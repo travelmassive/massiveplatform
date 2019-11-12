@@ -211,6 +211,16 @@ function tm_lists_display_list($list_id) {
         	$who_viewed = str_replace("__NUM_VIEWERS__", $num_views, $who_viewed);
 		}
 		$moderator_menu = str_replace("__WHO_VIEWED__", $who_viewed, $moderator_menu);
+		
+		// send notifications
+		$send_notifications_menu = "";
+		$unsent_items = tm_lists_get_list_unsent_notification_items($list_id);
+		$unsent_notifications = sizeof($unsent_items);
+		if ($unsent_notifications > 0) {
+			$send_notifications_menu = "<li><a href='javascript:void();' onClick='tm_lists_send_unsent_notifications(" . $list_id . ", " . $unsent_notifications . ");'> Notifications (". $unsent_notifications . ")</a></li>";
+		}
+		
+		$moderator_menu = str_replace("__SEND_NOTIFICATIONS__", $send_notifications_menu, $moderator_menu);
 	}
 
 	// get list contributors
@@ -568,7 +578,7 @@ function tm_lists_display_list_ajax() {
 	if (!user_is_logged_in()) {
 		drupal_add_http_header('Cache-Control', 'public, max-age=300');
 	}
-	
+
 	// Step 1. Check input
 	if (!isset($_GET["list_id"])) {
 		return;

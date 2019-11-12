@@ -68,7 +68,7 @@ function tm_lists_field_default_field_instances() {
     'default_value' => NULL,
     'default_value_function' => '',
     'deleted' => 0,
-    'description' => 'Who can edit, and moderate this list.',
+    'description' => 'Who can edit, and moderate this list.<br>Will also receive notifications when a new item is added.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -721,7 +721,7 @@ example: /lists/1045/<b>featured-members</b>');
   t('When the list is in preview mode, notifications will be disabled.
 <br><br>');
   t('Who can add to the list');
-  t('Who can edit, and moderate this list.');
+  t('Who can edit, and moderate this list.<br>Will also receive notifications when a new item is added.');
   t('Who can remove from the list');
 
   return $field_instances;

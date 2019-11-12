@@ -26,11 +26,25 @@ function tm_notifications_lists_tm_notif_info() {
     )
   );
 
+   $notification['added_to_list_creator'] = array(
+    'title' => 'Notify when a profile is added to my list',
+    'description' => 'Notify when a profile is added to my list',
+    'use_cron' => FALSE,
+    'tokens' => array(
+      // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
+      'token_types' => array('user', 'current-user', 'node'),
+      // A boolean TRUE or FALSE whether to include 'global' context tokens like [current-user:*] or [site:*]. Defaults to TRUE.
+      'global_types' => FALSE,
+      // A boolean whether to include the 'Click this token to insert in into the the focused textfield' JavaScript functionality. Defaults to TRUE.
+      'click_insert' => TRUE
+    )
+  );
+
   return $notification;
 }
 
 /**
- * Notification method
+ * Notification method when item added to list
  */
 function tm_notifications_added_to_list($entity, $list) {
   
@@ -64,8 +78,7 @@ function tm_notifications_added_to_list($entity, $list) {
     if ($entity->type == 'organization') {
       $list_item_name_subject = strip_tags($entity->title);     
       $list_item_name_intro = $list_item_name_subject;
-   
-      foreach ($entity->field_owner['und'] as $owner) {
+      foreach ($entity->field_owner[LANGUAGE_NONE] as $owner) {
         $contact_users[] = user_load($owner['target_id']);
       }
     }
@@ -88,8 +101,8 @@ function tm_notifications_added_to_list($entity, $list) {
 
       // chapter leaders of event
       if (sizeof($entity->field_chapter) > 0) {
-        if (isset($entity->field_chapter['und'])) {
-          $chapter_id = $entity->field_chapter['und'][0]['target_id'];
+        if (isset($entity->field_chapter[LANGUAGE_NONE])) {
+          $chapter_id = $entity->field_chapter[LANGUAGE_NONE][0]['target_id'];
           $chapter = node_load($chapter_id);
           if (isset($chapter->field_chapter_leaders[LANGUAGE_NONE])) {
             foreach($chapter->field_chapter_leaders[LANGUAGE_NONE] as $leader) {
@@ -123,10 +136,83 @@ function tm_notifications_added_to_list($entity, $list) {
   // notify members
   foreach ($contact_users as $contact_user) {
 
-      $first_name = strip_tags($contact_user->field_user_first_name['und'][0]['value']);
-      $last_name = strip_tags($contact_user->field_user_last_name['und'][0]['value']);
+    $first_name = strip_tags($contact_user->field_user_first_name[LANGUAGE_NONE][0]['value']);
+    $last_name = strip_tags($contact_user->field_user_last_name[LANGUAGE_NONE][0]['value']);
 
-      tm_notifications_notify('added_to_list', $contact_user, array('user' => $contact_user, '__LIST_ITEM_NAME_SUBJECT__' => $list_item_name_subject, '__LIST_ITEM_NAME_INTRO__' => $list_item_name_intro, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__LIST_ID__' => $list->nid, '__LIST_TITLE__' => $list_title, '__MODERATOR_NAME__' => $static_add_member_moderator_first_name, '__HERO_HEADLINE__' => $hero_headline, '__ADD_LIST_MESSAGE__' => $add_list_message));
+    tm_notifications_notify('added_to_list', $contact_user, array('user' => $contact_user, '__LIST_ITEM_NAME_SUBJECT__' => $list_item_name_subject, '__LIST_ITEM_NAME_INTRO__' => $list_item_name_intro, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__LIST_ID__' => $list->nid, '__LIST_TITLE__' => $list_title, '__MODERATOR_NAME__' => $static_add_member_moderator_first_name, '__HERO_HEADLINE__' => $hero_headline, '__ADD_LIST_MESSAGE__' => $add_list_message));
+  }
+  
+}
+
+/**
+ * Notify list creators when item added to list
+ */
+function tm_notifications_added_to_list_notify_creators($entity, $list) {
+  
+  global $conf;
+  global $user;
+ 
+  // no headline
+  $hero_headline = "";
+
+  // list title
+  $list_title = tm_lists_get_display_list_title($list);
+
+ // set in tm_lists_moderation_add()
+  $static_add_member_moderator_first_name = &drupal_static("tm_add_to_list_moderator_first_name");
+  $static_add_member_moderator_last_name = &drupal_static("tm_add_to_list_moderator_last_name");
+
+  // item subject and intro
+  if (!isset($entity->nid)) {
+    $first_name = strip_tags($entity->field_user_first_name[LANGUAGE_NONE][0]['value']);
+    $last_name = strip_tags($entity->field_user_last_name[LANGUAGE_NONE][0]['value']);
+    $list_item_name_subject =  $first_name . " " . $last_name;
+    $list_item_name_intro =  $first_name . " " . $last_name;
+  }
+  if (isset($entity->nid)) {
+    $list_item_name_subject = strip_tags($entity->title);     
+    $list_item_name_intro = $list_item_name_subject;
+  }
+
+  // who to contact
+  $contact_users = array();
+
+  // add list creators
+  $list_creator_uids = array();
+  if (isset($list->field_list_creators[LANGUAGE_NONE])) {
+    $list_creators = $list->field_list_creators[LANGUAGE_NONE];
+    foreach ($list_creators as $list_creator) {
+      $list_creator_user = user_load($list_creator['target_id']);
+      if ($list_creator_user != null) {
+        $contact_users[] = $list_creator_user;
+        $list_creator_uids[] = $list_creator_user->uid;
+      }
     }
+  }
+
+  // add list owner
+  if (!in_array($list->uid, $list_creator_uids)) {
+     $list_owner = user_load($list->uid);
+     $contact_users[] = $list_owner;
+  }
+
+  // notify list creators
+  foreach ($contact_users as $contact_user) {
+
+    // don't notify yourself if you added the item
+    if ($contact_user->uid == $user->uid) {
+      continue;
+    }
+
+    // don't notify if you're added, or own the item that is added (you'll get a notification anyway)
+    if ($entity->uid == $user->uid) {
+        continue;
+    }
+
+    $first_name = strip_tags($contact_user->field_user_first_name[LANGUAGE_NONE][0]['value']);
+    $last_name = strip_tags($contact_user->field_user_last_name[LANGUAGE_NONE][0]['value']);
+
+    tm_notifications_notify('added_to_list_creator', $contact_user, array('user' => $contact_user, '__LIST_ITEM_NAME_SUBJECT__' => $list_item_name_subject, '__LIST_ITEM_NAME_INTRO__' => $list_item_name_intro, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__LIST_ID__' => $list->nid, '__LIST_TITLE__' => $list_title, '__MODERATOR_NAME__' => $static_add_member_moderator_first_name, '__HERO_HEADLINE__' => $hero_headline));
+  }
   
 }

@@ -32,7 +32,27 @@ __EMAIL_SIGNOFF__
 ',
     ),
   );
-  $export['tm_notifications__added_to_list'] = $strongarm;
+  $export['tm_notifications__added_to_list_creator'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'tm_notifications__added_to_list_creator';
+  $strongarm->value = array(
+    'user_label' => 'Notify when a profile is added to your list',
+    'default_state' => '1',
+    'change_allowed' => 0,
+    'email' => array(
+      'subject' => '__LIST_ITEM_NAME_SUBJECT__ was added to your list',
+      'message' => 'Hi __USER_FIRST_NAME__,
+<br>
+<br>__LIST_ITEM_NAME_INTRO__ was just added to <a href="__SERVER_HTTP__://__SERVER_NAME__/lists/__LIST_ID__">__LIST_TITLE__</a> by __MODERATOR_NAME__.
+<br>
+__EMAIL_SIGNOFF__
+',
+    ),
+  );
+  $export['tm_notifications__added_to_list_creator'] = $strongarm;
 
   return $export;
 }

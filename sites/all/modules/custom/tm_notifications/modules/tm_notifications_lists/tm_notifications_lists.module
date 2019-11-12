@@ -153,7 +153,7 @@ function tm_notifications_added_to_list_notify_creators($entity, $list) {
   global $user;
  
   // headline
-  $hero_text = "A new item was added.";
+  $hero_text = "Your list has a new addition.";
   $hero_headline = tm_notifications_render_hero_headline_html($hero_text);
 
   // list title

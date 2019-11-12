@@ -158,7 +158,7 @@ function tm_notifications_added_to_list_notify_creators($entity, $list) {
   // list title
   $list_title = tm_lists_get_display_list_title($list);
 
- // set in tm_lists_moderation_add()
+  // set in tm_lists_moderation_add()
   $static_add_member_moderator_first_name = &drupal_static("tm_add_to_list_moderator_first_name");
   $static_add_member_moderator_last_name = &drupal_static("tm_add_to_list_moderator_last_name");
 

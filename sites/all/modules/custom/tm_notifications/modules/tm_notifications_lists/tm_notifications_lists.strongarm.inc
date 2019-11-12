@@ -46,7 +46,7 @@ __EMAIL_SIGNOFF__
       'subject' => '__LIST_ITEM_NAME_SUBJECT__ was added to your list',
       'message' => 'Hi __USER_FIRST_NAME__,
 <br>
-<br>__LIST_ITEM_NAME_INTRO__ was added to <a href="__SERVER_HTTP__://__SERVER_NAME__/lists/__LIST_ID__">__LIST_TITLE__</a> by __MODERATOR_NAME__.
+<br>__LIST_ITEM_NAME_INTRO__ was just added to <a href="__SERVER_HTTP__://__SERVER_NAME__/lists/__LIST_ID__">__LIST_TITLE__</a> by __MODERATOR_NAME__.
 <br>
 <br>
 __EMAIL_SIGNOFF__

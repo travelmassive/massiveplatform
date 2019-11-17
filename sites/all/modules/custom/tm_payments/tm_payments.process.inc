@@ -235,14 +235,14 @@ function tm_payments_process_event_payment($event, $member) {
 
 		// message text
 		$message_text = "Thanks for your payment. You are now registered for this event.";
-		if (isset($conf["tm_payments_process_succesful_message_text"])) {
-			$message_text = $conf["tm_payments_process_succesful_message_text"];
+		if (isset($conf["tm_payments_process_successful_message_text"])) {
+			$message_text = $conf["tm_payments_process_successful_message_text"];
 		}
 
 		// message class
 		$message_class = "status";
-		if (isset($conf["tm_payments_process_succesful_message_class"])) {
-			$message_class = $conf["tm_payments_process_succesful_message_class"];
+		if (isset($conf["tm_payments_process_successful_message_class"])) {
+			$message_class = $conf["tm_payments_process_successful_message_class"];
 		}
 
 		drupal_set_message($message_text, $message_class);

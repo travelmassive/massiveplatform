@@ -762,8 +762,8 @@ $conf["tm_payments_reports_secret_token"] = "randomstring123"; // secret token t
 $conf["tm_payments_reports_help_message"] = "Here's your ticket sales for this event."; // message to show user
 $conf["tm_payments_event_partner_codes"] = array(); // custom partner codes for event tickets
 $conf["tm_payments_event_partner_codes"]["EXAMPLE"] = array("partner_code" => "Example", "display_amount" => 10, "partner_label" => "Partner Ticket", "partner_message" => "Partner discount applied");
-$conf["tm_payments_process_succesful_message_text"] = "Thanks for your payment. You are now registered for this event.";
-$conf["tm_payments_process_succesful_message_class"] = "status"; // class for the message (default 'status')
+$conf["tm_payments_process_successful_message_text"] = "Thanks for your payment. You are now registered for this event.";
+$conf["tm_payments_process_successful_message_class"] = "status"; // class for the message (default 'status')
 */
 
 /* SUBSCRIPTION PAYMENT SETTINGS */

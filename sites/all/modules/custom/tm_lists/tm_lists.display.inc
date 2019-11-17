@@ -449,7 +449,7 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 			// boost item
 			if ($sort_method == "sort_order") {
 				if (tm_lists_user_can_add_to_list($user, $list_id)) {
-					$item_menu .= "<li><a href='javascript:void(0);' onClick='tm_lists_position_item(\"" . $entity_type . "\", " . $item->entity_id . "," . $list_id . ", \"" . strip_tags(htmlentities($item_title, ENT_QUOTES)) . "\", " . $total_items . "," . $count . ");'>Change position</a></li>";
+					$item_menu .= "<li><a style='white-space: nowrap;' href='javascript:void(0);' onClick='tm_lists_position_item(\"" . $entity_type . "\", " . $item->entity_id . "," . $list_id . ", \"" . strip_tags(htmlentities($item_title, ENT_QUOTES)) . "\", " . $total_items . "," . $count . ");'>Change position</a></li>";
 				}
 			}
 

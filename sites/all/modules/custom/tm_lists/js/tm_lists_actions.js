@@ -1,18 +1,31 @@
 /* List action menu methods */
 (function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){
 
-  // boost list
-  tm_lists_boost_item = function(entity_type, entity_id, list_id, name) {
+  // position item in list
+  tm_lists_position_item = function(entity_type, entity_id, list_id, name, num_list_items, current_position) {
     
     name = decodeURIComponent(name);  
 
-    var message = "Move <b>" + name + "</b> to top of this list?";
+    var message = "Move <b>" + name + "</b> to position <select id='tm-lists-select-position'></select> of list?";
     $.prompt(message, { 
-      buttons: { "Move to top": true, "Cancel": false },
+      buttons: { "Update position": true, "Cancel": false },
       title: null,
+      loaded: function() {
+        var html = ''; // '<select id="tm-lists-select-position">';
+        for(i = 1; i <= num_list_items; i++) {
+          if (i == current_position) {
+            html += "<option value='"+i+"' selected disabled>"+i+"</option>";
+          } else {
+            html += "<option value='"+i+"'>"+i+"</option>";
+          }
+        }
+        //html += '</select>';
+        document.getElementById('tm-lists-select-position').innerHTML= html;
+      },
       submit: function(e,v,m,f){
         if (v == true) {
-          window.location = '/lists/boost/' + entity_type + '/' + entity_id + '/' + list_id;
+          var position = $('#tm-lists-select-position').find(":selected").val();
+          window.location = '/lists/position/' + entity_type + '/' + entity_id + '/' + list_id + '/' + position;
         }
       }
     });

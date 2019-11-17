@@ -48,8 +48,11 @@ function tm_users_approve($user) {
     // generate member html
     $member_widget = tm_notifications_render_member_html($user);
 
+    // subject line
+    $subject_line = "Your " . $conf["tm_site_name"] . " account has been approved";
+
     $approval_welcome_message = $conf["tm_notification_approval_welcome_message"];
-    tm_notifications_notify('user_approved', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__APPROVAL_INTRO_TEXT__' => $approval_text, '__REPLY_TO__' => $reply_to, '__APPROVAL_WELCOME_MESSAGE__' => $approval_welcome_message, '__HERO_HEADLINE__' => $hero_headline, "__MEMBER_WIDGET__" => $member_widget));
+    tm_notifications_notify('user_approved', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__APPROVAL_INTRO_TEXT__' => $approval_text, '__REPLY_TO__' => $reply_to, '__APPROVAL_WELCOME_MESSAGE__' => $approval_welcome_message, '__HERO_HEADLINE__' => $hero_headline, "__MEMBER_WIDGET__" => $member_widget, '__SUBJECT_LINE__' => $subject_line));
 
     // Remove any moderation flags the user has
 
@@ -348,5 +351,57 @@ function tm_users_approval_is_company_or_brand($user){
   drupal_goto(drupal_get_path_alias("user/$user->uid"));
 }
 
+/**
+ * Auto approve member
+ * Called from tm_users_user_insert()
+ */
+function tm_users_approval_on_signup($account) {
 
+  global $conf;
 
+  // check setting exists
+  if (!isset($conf["tm_users_approval_on_signup"])) {
+    return;
+  }
+
+  // check setting enabled
+  if ($conf["tm_users_approval_on_signup"] != true) {
+    return;
+  }
+  
+  // add approved role to account
+  $role_name = 'approved user'; // The name of the role to add.
+  $role = user_role_load_by_name($role_name);
+  user_multiple_role_edit(array($account->uid), 'add_role', $role->rid);
+
+  // flag member approved by admin
+  $approving_user = user_load(1);
+  flag('flag', 'approval_approved_by', $account->uid, $approving_user);
+
+  // hero headline
+  $headline_text = "Welcome.";
+  if (isset($conf["tm_users_approval_on_signup_headline"])) {
+    $headline_text = $conf["tm_users_approval_on_signup_headline"];
+  }
+  $hero_headline = tm_notifications_render_hero_headline_html($headline_text);
+  
+  // generate member html
+  $member_widget = tm_notifications_render_member_html($account);
+
+  // other variables
+  $profile_url = drupal_get_path_alias("user/" . $account->uid);
+  $profile_uid = $account->uid;
+  $approval_text = "";
+
+  // subject line
+  $subject_line = "Welcome to " . $conf["tm_site_name"];
+ if (isset($conf["tm_users_approval_on_signup_subject"])) {
+    $subject_line = $conf["tm_users_approval_on_signup_subject"];
+  }
+  
+  // send welcome message
+  $reply_to = null;
+  $approval_welcome_message = $conf["tm_notification_approval_welcome_message"];
+  tm_notifications_notify('user_approved', $account, array('approving-user' => $approving_user, 'user' => $account, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__APPROVAL_INTRO_TEXT__' => $approval_text, '__REPLY_TO__' => $reply_to, '__APPROVAL_WELCOME_MESSAGE__' => $approval_welcome_message, '__HERO_HEADLINE__' => $hero_headline, "__MEMBER_WIDGET__" => $member_widget, '__SUBJECT_LINE__' => $subject_line));
+
+}

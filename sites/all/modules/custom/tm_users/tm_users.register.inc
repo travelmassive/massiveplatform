@@ -160,14 +160,24 @@ function _tm_users_community_validation_callback($element, &$form_state, $form) 
 }
 
 /**
- * If user selected a home chapter on signup, then join it
- * See: https://github.com/travelmassive/massiveplatform/issues/75
- * todo: should check for a valid chapter id
- * Also add reason for joining to users fields
+ * Implement hook_user_insert()
  */
 function tm_users_user_insert(&$edit, $account, $category) {
 
-  // need user
+  // approve member on signup
+  tm_users_approval_on_signup($account);
+
+  // set home chapter
+  tm_users_set_chapter_on_insert($edit, $account, $category);
+}
+
+/**
+ * If user selected a home chapter on signup, then join it
+ * todo: should check for a valid chapter id
+ */
+function tm_users_set_chapter_on_insert(&$edit, $account, $category) {
+
+  // need chapter
   if (!isset($edit['chapter_list'])) {
     return;
   }

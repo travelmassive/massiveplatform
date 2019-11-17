@@ -530,9 +530,9 @@ function _tm_more_actions_process($field, $title = NULL) {
   _tm_more_actions_process_sharing_menu($field, $title, $links, $menu_item, $currentuser, $targetuser, $nid);
   _tm_more_actions_process_edit_menu($field, $title, $links, $menu_item, $currentuser, $targetuser, $nid);
   _tm_more_actions_process_user_menu($field, $title, $links, $menu_item, $currentuser, $targetuser, $nid);
+  _tm_more_actions_process_lists_menu($field, $title, $links, $menu_item, $currentuser, $targetuser, $nid);
   _tm_more_actions_process_event_menu($field, $title, $links, $menu_item, $currentuser, $targetuser, $nid);
   _tm_more_actions_process_chapter_menu($field, $title, $links, $menu_item, $currentuser, $targetuser, $nid);
-  _tm_more_actions_process_lists_menu($field, $title, $links, $menu_item, $currentuser, $targetuser, $nid);
   _tm_more_actions_process_organization_menu($field, $title, $links, $menu_item, $currentuser, $targetuser, $nid);
   _tm_more_actions_process_subscriptions_menu($field, $title, $links, $menu_item, $currentuser, $targetuser, $nid);
   _tm_more_actions_process_user_subscriptions_menu($field, $title, $links, $menu_item, $currentuser, $targetuser, $nid);

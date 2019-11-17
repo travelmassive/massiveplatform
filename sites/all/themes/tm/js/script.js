@@ -139,7 +139,7 @@
     $(this).click(function(event) {
 
       // don't ask if the user score is above the threshold
-      if (current_user_score > score_threshold) {
+      if (current_user_score >= score_threshold) {
         return;
       }
       

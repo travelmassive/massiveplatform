@@ -140,7 +140,7 @@ function tm_lists_moderation_add($entity_type, $entity_id, $list_id, $moderator,
 	}
 
 	// add to bottom of sort order
-	$sort_order = tm_lists_get_max_sort_order($list_id) + 1;
+	$sort_order = tm_lists_get_max_sort_order($list_id) + 10;
 
 	// add to list
 	$insert_id = tm_lists_add_to_list($moderator->uid, $entity_type_id, $entity_id, $list_id, $comment, $sort_order);

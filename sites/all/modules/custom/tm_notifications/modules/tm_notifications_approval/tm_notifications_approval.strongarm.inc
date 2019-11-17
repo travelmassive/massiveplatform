@@ -100,7 +100,7 @@ Here\'s some tips to get approved:
     'default_state' => '1',
     'change_allowed' => 0,
     'email' => array(
-      'subject' => 'Your __SITE_NAME__ account has been approved',
+      'subject' => '__SUBJECT_LINE__',
       'message' => 'Hi [user:field_user_first_name],
 <br>
 <br>__APPROVAL_INTRO_TEXT__

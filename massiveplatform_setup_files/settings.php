@@ -1168,6 +1168,6 @@ $conf["tm_newsfeed_updates_sound"] = "true";
 $conf["tm_newsfeed_updates_sound_file"] = "/sites/all/modules/custom/tm_newsfeed_updates/includes/sounds/info/1.mp3";
 
 /** APPROVAL REQUEST SETTINGS */
-$conf["tm_users_approval_minimum_score"] = 50; // minimum score for chapter leader to approve
-$conf["tm_users_request_approval_minimum_score"] = 50; // minimum score for guest to approve
+$conf["tm_users_approval_minimum_score"] = 50; // minimum score (0-100) for chapter leader to approve
+$conf["tm_users_request_approval_minimum_score"] = 50; // minimum score (0-100) for guest to approve
 

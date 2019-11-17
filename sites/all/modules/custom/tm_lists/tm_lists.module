@@ -90,9 +90,9 @@ function tm_lists_menu() {
 		'access arguments' => array('access content')
 	);
 
-	$items['lists/boost/%/%/%'] = array(
-		'page callback' => 'tm_lists_moderation_boost_callback',
-		'page arguments' => array(2, 3, 4),
+	$items['lists/position/%/%/%/%'] = array(
+		'page callback' => 'tm_lists_moderation_position_callback',
+		'page arguments' => array(2, 3, 4, 5),
 		'access arguments' => array('access content')
 	);
 

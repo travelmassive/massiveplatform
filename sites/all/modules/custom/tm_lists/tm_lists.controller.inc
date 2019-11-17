@@ -320,29 +320,86 @@ function tm_lists_update_sort_order($item_id, $sort_order) {
 }
 
 /**
- * Set item's sort order 1
- * Increment all other list item's sort order by 1
+ * Set an item in a list at a position
  */
-function tm_lists_boost_item_sort_order($list_id, $item_id) {
+function tm_lists_update_list_item_position($list_id, $item_id, $position) {
+
+	$item_at_position = tm_lists_get_list_item_by_position($list_id, $position);
+	if ($item_at_position == null) {
+		return false;
+	}
+
+	// if same position, no need to update sort order
+	if ($item_at_position->id == $item_id) {
+		return true;
+	}
+
+	// set sort order
+	$sort_order = $item_at_position->sort_order;
+	return tm_lists_update_item_sort_order($list_id, $item_id, $sort_order);
+}
+
+/**
+ * Get a list item by position, determined by sort_order
+ */
+function tm_lists_get_list_item_by_position($list_id, $position) {
+
+	// validate
+	$position = intval($position);
+	if ($position <= 0) {
+		$position = 1;
+	}
+
+	// sort by sort order
+	$query = "SELECT * FROM tm_lists WHERE list_id = :list_id AND is_published = 1 ORDER BY sort_order ASC, timestamp DESC LIMIT " .($position - 1) . ", 1";
+	$result = db_query($query, array(':list_id' => $list_id))->fetch();
+
+	// return item
+	return $result;
+
+}
+
+/**
+ * Set item's sort order
+ * Increment all other list item's sort order by 1 below
+ */
+function tm_lists_update_item_sort_order($list_id, $item_id, $sort_order) {
 
 	try {
 
-		// set item's sort order to 1
+		// Step 1. Get item's current sort order
+		$query = "SELECT sort_order FROM tm_lists WHERE list_id = :list_id AND id = :item_id LIMIT 1";
+		$result = db_query($query, array(':list_id' => $list_id, ':item_id' => $item_id))->fetch();
+		$current_sort_order = $result->sort_order;
+
+		// Step 2. Set item's sort order
 		$query = "UPDATE tm_lists SET 
-			sort_order = 1
+			sort_order = :sort_order
 			WHERE id = :item_id";
-		db_query($query, 
-		array(':item_id' => $item_id));
+		db_query($query, array(':item_id' => $item_id, ':sort_order' => $sort_order));
+	
+		// Step 3. Determine shift of sort order
+		$shift_sort_order = " + 1";
+		if ($current_sort_order < $sort_order) {
+			$shift_sort_order = " - 1";
+		}
 
-		// increment all other list items sort orders by 1
+		// Step 4. Shift sort order
 		$query = "UPDATE tm_lists SET 
-			sort_order = sort_order + 1
+			sort_order = sort_order " . $shift_sort_order . "
 			WHERE list_id = :list_id
-			AND id != :item_id";
-		db_query($query, 
-		array(':list_id' => $list_id,
-			':item_id' => $item_id));
+			AND id != :item_id 
+			AND sort_order = :sort_order";
+		db_query($query, array(':list_id' => $list_id,
+			':item_id' => $item_id, ":sort_order" => $sort_order));
 
+		//Step 5. Make sort_order of list sequentual
+		$query = "UPDATE tm_lists AS l
+		SET l.sort_order = (@cnt := @cnt + 10)
+		WHERE list_id = :list_id
+		ORDER BY l.sort_order ASC";
+		db_query("SET @cnt = 0");
+ 		db_query($query, array(':list_id' => $list_id));
 		return true;
 
 	} catch (Exception $e) {

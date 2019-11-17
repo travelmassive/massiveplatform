@@ -284,11 +284,13 @@ function tm_lists_display_list($list_id) {
 	$item_link_nofollow = $list->field_list_nofollow_links[LANGUAGE_NONE][0]['value'];
 	$hide_item_position = $list->field_list_hide_rankings[LANGUAGE_NONE][0]['value'];
 
+	// total items
+	$total_items = tm_lists_get_num_items($list_id);
+
 	// render list
-	$items_html = tm_lists_render_list_items_html($list_id, $items, $sort_method, 1, 1, $hide_item_position, $show_item_links, $item_link_nofollow);
+	$items_html = tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_method, 1, 1, $hide_item_position, $show_item_links, $item_link_nofollow);
 
 	// show pager if more items to display
-	$total_items = tm_lists_get_num_items($list_id);
 	if ($total_items > $per_page) {
 		$pager_template = file_get_contents(drupal_get_path('module', 'tm_lists') .'/templates/tm_list_view_pager.tpl.php');
 	}
@@ -319,7 +321,7 @@ function tm_lists_display_list($list_id) {
 }
 
 /* Render html results */
-function tm_lists_render_list_items_html($list_id, $items, $sort_method, $count, $page, $hide_item_position = false, $show_item_links = array("profile", "website"), $item_link_nofollow = true) {
+function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_method, $count, $page, $hide_item_position = false, $show_item_links = array("profile", "website"), $item_link_nofollow = true) {
 
 	global $conf;
 	global $user;
@@ -445,9 +447,9 @@ function tm_lists_render_list_items_html($list_id, $items, $sort_method, $count,
 			}
 
 			// boost item
-			if (($sort_method == "sort_order") and ($count != 1)) {
+			if ($sort_method == "sort_order") {
 				if (tm_lists_user_can_add_to_list($user, $list_id)) {
-					$item_menu .= "<li><a href='javascript:void(0);' onClick='tm_lists_boost_item(\"" . $entity_type . "\", " . $item->entity_id . "," . $list_id . ", \"" . strip_tags(htmlentities($item_title, ENT_QUOTES)) . "\");'>Move to top</a></li>";
+					$item_menu .= "<li><a href='javascript:void(0);' onClick='tm_lists_position_item(\"" . $entity_type . "\", " . $item->entity_id . "," . $list_id . ", \"" . strip_tags(htmlentities($item_title, ENT_QUOTES)) . "\", " . $total_items . "," . $count . ");'>Change position</a></li>";
 				}
 			}
 
@@ -623,13 +625,15 @@ function tm_lists_display_list_ajax() {
 	$item_link_nofollow = $list->field_list_nofollow_links[LANGUAGE_NONE][0]['value'];
 	$hide_item_position = $list->field_list_hide_rankings[LANGUAGE_NONE][0]['value'];
 
+	// total items
+	$total_items = tm_lists_get_num_items($list_id);
+
 	// Render results
-	$html = tm_lists_render_list_items_html($list_id, $items, $sort_method, $limit_from + 1, $page, $hide_item_position, $show_item_links, $item_link_nofollow);
+	$html = tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_method, $limit_from + 1, $page, $hide_item_position, $show_item_links, $item_link_nofollow);
 
 	// If end of list:
 	// Hide load more
 	// Show footer
-	$total_items = tm_lists_get_num_items($list_id);
 	if ((sizeof($items) < $per_page) or ($total_items <= ($per_page * $page))) {
 		$html .= "<script> document.getElementById('item-list-load-more').remove(); </script>";
 		$html .= $conf["tm_lists_footer_html"];

@@ -391,7 +391,7 @@ function tm_lists_moderation_edit_item_ajax($entity_type, $entity_id, $list_id) 
 /**
  * Boost list item
  */
-function tm_lists_moderation_boost_callback($entity_type, $entity_id, $list_id) {
+function tm_lists_moderation_position_callback($entity_type, $entity_id, $list_id, $position = 1) {
 
 	global $conf;
 	global $user;
@@ -431,14 +431,14 @@ function tm_lists_moderation_boost_callback($entity_type, $entity_id, $list_id) 
 		$entity_label = tm_users_get_full_name($entity_id);
 	}
 
-	// boost item
-	if (tm_lists_boost_item_sort_order($list_id, $list_item->id)) {
-		drupal_set_message(strip_tags($entity_label) . ' has been moved to the top of the list.');
+	// move to sort_order
+	if (tm_lists_update_list_item_position($list_id, $list_item->id, $position)) {
+		drupal_set_message(strip_tags($entity_label) . ' has been moved to position ' . $position . ' of the list.');
 		drupal_goto("/node/" . $list_item->list_id); // redirect to list 
 	}
 
 	// error boosting
-	drupal_set_message(t('Unable to boost list item.'), 'error');
+	drupal_set_message(t('Unable to update order of list item.'), 'error');
 	drupal_goto("/node/" . $list_id); // redirect to list 
 }
 

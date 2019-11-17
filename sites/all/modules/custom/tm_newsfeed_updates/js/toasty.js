@@ -459,7 +459,7 @@
             });
         audio.setAttribute('autoplay', 'autoplay');
         audio.innerHTML = '<source src="' + sound + '" type="audio/mpeg"/>' +
-                          '<embed hidden="true" autoplay="false" loop="false" src="' + sound + '" />';
+                          '<embed hidden="true" volume="0.5" autoplay="false" loop="false" src="' + sound + '" />';
         parentElement(container).appendChild(audio);
     };
 

@@ -33,7 +33,11 @@ function _tm_more_actions_process_user_menu($field, $title, &$links, &$menu_item
             // Note: users can request if score > 50
             // We allow approval if score >= 50 to give a bit of flexibility
             $user_score = tm_users_signup_score($targetuser->uid);
-            $score_threshold = 50; 
+
+            $score_threshold = 50; // default
+            if (isset($conf["tm_users_approval_minimum_score"])) {
+              $score_threshold = $conf["tm_users_approval_minimum_score"];
+            }
             
             if (($user_score >= $score_threshold) or (in_array("moderator", $user->roles) or user_access('administer'))) {
 

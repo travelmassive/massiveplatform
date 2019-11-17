@@ -132,7 +132,7 @@
   var current_user_uid = $('#current_user_uid').val();
   var confirm_title = "Oops, your profile is only " + current_user_score + "% complete.";
   var confirm_message = "To be a part of our community you need to complete your profile. It's easy and only takes a few minutes.";
-  var score_threshold = 50;
+  var score_threshold = Drupal.settings.user_approval_request_minimum_score; // ie: 50
   var profile_edit_url = "/user/" + current_user_uid + "/edit#user-profile-options";
 
   $(".approval-link").each(function() {

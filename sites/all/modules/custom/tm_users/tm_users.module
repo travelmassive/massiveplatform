@@ -29,11 +29,19 @@ include_once 'tm_users.duplicates.inc';
  */
 function tm_users_init() {
 
+  global $conf;
   global $user;
 
   // access uid in js with:
   // var id = Drupal.settings.currentUser;
   drupal_add_js(array('currentUser' => $user->uid), 'setting');
+
+  // set minimum request approval score
+  $approval_score = 50; // default
+  if (isset($conf["tm_users_request_approval_minimum_score"])) {
+    $approval_score = $conf["tm_users_request_approval_minimum_score"];
+  }
+  drupal_add_js(array('user_approval_request_minimum_score' => $approval_score), 'setting');
 
   // keep track of signed in users
   tm_users_track_signed_in();

@@ -113,6 +113,7 @@
 		  handler: function() {
 		  	tm_list_waypoint_count++;
 		    this.element.click();
+		    tm_list_waypoint.destroy();
 		  },
 		  offset: '100%'
 		})

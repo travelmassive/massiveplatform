@@ -322,6 +322,8 @@ ul.tm-list-item-actions-dropdown-menu {
     line-height: 20px;
     clear: both;
     display: inline-block;
+    text-align: left;
+    width: 140px;
 }
 
 .pageviews-wrapper svg, .pageviews-wrapper-page svg {
@@ -348,9 +350,4 @@ ul.tm-list-item-actions-dropdown-menu {
 .pageviews-wrapper-page svg {
     fill: #40454a;
     height: 18px;
-}
-
-/* Turn off pageviews icon for Safari due to placement issue */
-_::-webkit-full-page-media, _:future, :root .pageviews-wrapper svg {
-	display: none;
 }

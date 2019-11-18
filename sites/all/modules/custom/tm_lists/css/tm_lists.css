@@ -315,6 +315,7 @@ ul.tm-list-item-actions-dropdown-menu {
 .tm-list-pageviews {
 
 }
+
 .pageviews-wrapper {
     margin-left: 16px;
     height: 20px;
@@ -347,4 +348,9 @@ ul.tm-list-item-actions-dropdown-menu {
 .pageviews-wrapper-page svg {
     fill: #40454a;
     height: 18px;
+}
+
+/* Turn off pageviews icon for Safari due to placement issue */
+_::-webkit-full-page-media, _:future, :root .pageviews-wrapper svg {
+	display: none;
 }

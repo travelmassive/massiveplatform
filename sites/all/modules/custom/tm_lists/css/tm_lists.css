@@ -351,3 +351,9 @@ ul.tm-list-item-actions-dropdown-menu {
     fill: #40454a;
     height: 18px;
 }
+
+@media screen and (max-width: 800px) {
+	.pageviews-wrapper {
+		width: inherit;
+	}
+}

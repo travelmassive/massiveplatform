@@ -17,6 +17,9 @@
 		if (tm_lists_load_more_clicked) {
 			return;
 		}
+
+		// clicked
+		tm_lists_load_more_clicked = true;
 		
 		// Loading an extra page of listing result
 		$(".pager.pager-load-more").show();

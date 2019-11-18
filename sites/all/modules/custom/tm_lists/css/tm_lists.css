@@ -348,15 +348,3 @@ ul.tm-list-item-actions-dropdown-menu {
     fill: #40454a;
     height: 18px;
 }
-
-/* Moderation */
-
-#moderation_list_ids {
-	width: 100%;
-}
-
-#moderation_list_ids option {
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-

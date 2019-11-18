@@ -353,7 +353,11 @@ ul.tm-list-item-actions-dropdown-menu {
 }
 
 @media screen and (max-width: 800px) {
+	.tm-list-meta-data {
+		margin-left: -1rem;
+	}
 	.pageviews-wrapper {
-		width: inherit;
+		padding-left: 1rem;
+		width: 140px;
 	}
 }

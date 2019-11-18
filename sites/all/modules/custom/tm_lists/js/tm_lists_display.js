@@ -5,6 +5,11 @@
 	var tm_lists_page_number = 2; // start at page 2
 	var tm_lists_load_more_clicked = false;
 
+	// waypoints
+	var tm_list_waypoint_count = 1;
+	var tm_list_waypoint_max = 5;
+	var tm_list_waypoint;
+
 	// load results
 	loadMoreListItems = function() {
 
@@ -46,6 +51,7 @@
 				$(".list.placeholder").addClass("has-results");
 				$("#list-results-loading-more").hide();
 				$("#list-load-more").text("Show more");
+				tm_list_attach_waypoint();
 				applyDropdownsOnListMenus(tm_lists_page_number - 1);
 				
 			},
@@ -83,7 +89,40 @@
 		});
 	}
 
+	// attach waypoint to load more
+	tm_list_attach_waypoint = function() {
+
+		// check for load more
+		if (document.getElementById('list-load-more') == null) {
+			return;
+		}
+
+		// don't attach if reached limit
+		if (tm_list_waypoint_count >= tm_list_waypoint_max) {
+			return;
+		}
+
+		// remove any existing waypoints
+		if (tm_list_waypoint != null) {
+			tm_list_waypoint.destroy();
+		}
+
+		// add waypoint
+		tm_list_waypoint = new Waypoint({
+		  element: document.getElementById('list-load-more'),
+		  handler: function() {
+		  	tm_list_waypoint_count++;
+		    this.element.click();
+		  },
+		  offset: '100%'
+		})
+
+	}
+
 	// attach onclick
 	$("#list-load-more").on('click', loadMoreListItems);
+
+	// attach first waypoint
+	tm_list_attach_waypoint();
 
 });})(jQuery, Drupal, this, this.document);

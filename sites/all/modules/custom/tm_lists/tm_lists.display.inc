@@ -144,6 +144,9 @@ function tm_lists_display_list($list_id) {
 	drupal_add_js('var tm_global_list_id = ' . $list_id . '; var tm_global_list_sort_method = "' . $sort_method . '";', array('type' => 'inline', 'scope' => 'footer'));
 	drupal_add_js(drupal_get_path('module', 'tm_lists') . '/js/tm_lists_display.js');
 
+	// include waypoints js
+	drupal_add_js(drupal_get_path('module', 'tm_lists') . '/js/noframework.waypoints.min.js');
+
 	// include tm_lists_actions.js if user can perform actions
 	if ($user_can_perform_list_action) {
 		drupal_add_js(drupal_get_path('module', 'tm_lists') . '/js/tm_lists_actions.js');

@@ -327,7 +327,7 @@ function tm_lists_moderation_edit_form_ajax($entity_type, $entity_id, $list_id) 
 	}
 
 	// generate edit form
-	$edit_form = "<textarea id='edit_list_item_comment' onkeyup='countChar(this);' value='' placeholder='Add a short description to be displayed on the list...' rows='3' cols='50' placeholder=''>" . htmlentities($list_item->comment) . "</textarea><script>";
+	$edit_form = "<textarea id='edit_list_item_comment' onkeyup='countChar(this);' value='' placeholder='Add a short description to be displayed on the list...' rows='4' cols='50' placeholder=''>" . htmlentities($list_item->comment) . "</textarea><script>";
 
 	echo $edit_form;
 	return;

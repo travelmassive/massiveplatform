@@ -16,7 +16,7 @@
     name = decodeURIComponent(name);  
 
     var message = "Select list &mdash; <div id='moderation_list' style='display: inline-block'>Loading...</div>";
-    message = message + "<p>Description <textarea id='form_moderator_comment' onkeyup='countChar(this);' value='' placeholder='Add a short description to be displayed on the list...' rows='2' cols='50'></textarea><div style='margin-top: -16px; float: right;'><span id='charNum' style='font-size: 10pt; color: #888;'>250 chars</span></div></p>",
+    message = message + "<p>Description <textarea id='form_moderator_comment' onkeyup='countChar(this);' value='' placeholder='Add a short description to be displayed on the list...' rows='4' cols='50'></textarea><div style='margin-top: -16px; float: right;'><span id='charNum' style='font-size: 10pt; color: #888;'>250 chars</span></div></p>",
 
     $.prompt(message, { 
       buttons: { "Add to list": true, "Cancel": false },

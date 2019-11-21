@@ -155,6 +155,9 @@ function tm_lists_display_list_html_newsletter($list_id) {
 			$image_class = "avatar";
 			$image_uri = _tm_users_get_avatar_uri($entity);
 			$image_url = image_style_url("avatar", $image_uri);
+
+			// About me
+			$item_description = $entity->field_about_me[LANGUAGE_NONE][0]['value'];
 		}
 
 		// node fields
@@ -182,6 +185,8 @@ function tm_lists_display_list_html_newsletter($list_id) {
 				}
 				$image_url = _tm_events_get_default_image($img_url, $entity->nid);
 			}
+
+			$item_description = $entity->body[LANGUAGE_NONE][0]['value'];
 		}
 
 		// show ranking
@@ -189,8 +194,20 @@ function tm_lists_display_list_html_newsletter($list_id) {
 			$item_title = $count . ". " . $item_title;
 		}
 
+		// get comment
+		$comment = $item->comment;
+
+		// if comment is empty, use first sentence of entity description
+		if ($item->comment == "") {
+			$description_parts = explode(".", $item_description);
+			$comment = $description_parts[0];
+			if (sizeof($description_parts) > 1) {
+				$comment .= ".";
+			}
+		}
+
 		// comment
-		$item_comment = strip_tags($item->comment);
+		$item_comment = strip_tags($comment);
 		$item_comment = str_replace("##", $num_items, $item_comment); // replace ## with position
 		$item_comment = tm_base_linkify($item_comment, ["http", "https", "mail", "twitter"]);
 

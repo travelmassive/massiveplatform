@@ -596,7 +596,9 @@ function tm_events_node_presave($node) {
  * Set cookie for event nid on save
  */
 function tm_events_node_insert($node) {
-  user_cookie_save(array("last_edited_event" => $node->nid));
+  if ($node->type == "event") {
+    user_cookie_save(array("last_edited_event" => $node->nid));
+  }
 }
 
 /**

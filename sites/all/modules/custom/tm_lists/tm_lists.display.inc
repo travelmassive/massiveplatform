@@ -181,15 +181,17 @@ function tm_lists_display_list($list_id) {
 
 	// allow 3rd party pageviews
 	$pageviews = "";
-	if (isset($conf["tm_lists_pageviews_script"])) {
-		$pageviews_incr = 100000 + $list_id; // so we don't collide with wp post ids
-		$pageviews_script = $conf["tm_lists_pageviews_script"];
-		$pageviews_script = str_replace("__INCR__", $pageviews_incr , $pageviews_script);
-		drupal_add_js($pageviews_script, array('type' => 'inline', 'scope' => 'footer'));
-		$pageviews = $conf["tm_lists_pageviews_placeholder"];
-		$pageviews = str_replace("__INCR__", $pageviews_incr, $pageviews);
+	if (!$preview_mode) {
+		if (isset($conf["tm_lists_pageviews_script"])) {
+			$pageviews_incr = 100000 + $list_id; // so we don't collide with wp post ids
+			$pageviews_script = $conf["tm_lists_pageviews_script"];
+			$pageviews_script = str_replace("__INCR__", $pageviews_incr , $pageviews_script);
+			drupal_add_js($pageviews_script, array('type' => 'inline', 'scope' => 'footer'));
+			$pageviews = $conf["tm_lists_pageviews_placeholder"];
+			$pageviews = str_replace("__INCR__", $pageviews_incr, $pageviews);
+		}
 	}
-
+	
 	// load templates
 	$template = file_get_contents(drupal_get_path('module', 'tm_lists') .'/templates/tm_list_view.tpl.php');
 	$pager_template = "";

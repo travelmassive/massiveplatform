@@ -394,6 +394,10 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 			$last_name = strip_tags($entity->field_user_last_name[LANGUAGE_NONE][0]['value']);
 			$full_name = $first_name . " " . $last_name;
 			$item_title = $full_name;
+
+			// About me
+			$item_description = $entity->field_about_me[LANGUAGE_NONE][0]['value'];
+
 		}
 
 		// node fields
@@ -418,7 +422,9 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 				}
 				$image_url = _tm_events_get_default_image($img_url, $entity->nid);
 			}
+
 			$item_title = $entity->title;
+			$item_description = $entity->body[LANGUAGE_NONE][0]['value'];
 		}
 
 		// item position
@@ -490,8 +496,20 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 			$rel = "noopener";
 		}
 
+		// get comment
+		$comment = $item->comment;
+
+		// if comment is empty, use first sentence of entity description
+		if ($item->comment == "") {
+			$description_parts = explode(".", $item_description);
+			$comment = $description_parts[0];
+			if (sizeof($description_parts) > 1) {
+				$comment .= ".";
+			}
+		}
+
 		// format item comment
-		$comment = strip_tags($item->comment);
+		$comment = strip_tags($comment);
 		$comment = str_replace("##", $count, $comment); // replace ## with position
 		$comment = str_replace("\n", "</p>\n<p>", $comment);
 		$comment = "<p>" . $comment . "</p>";

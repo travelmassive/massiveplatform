@@ -13,6 +13,7 @@ dependencies[] = node
 dependencies[] = options
 dependencies[] = strongarm
 dependencies[] = text
+dependencies[] = tm_notifications_lists
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:2
 features[field_base][] = field_list_cover_image

@@ -11,3 +11,4 @@ dependencies[] = tm_notifications
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:2
 features[variable][] = tm_notifications__added_to_list
+features[variable][] = tm_notifications__added_to_list_creator

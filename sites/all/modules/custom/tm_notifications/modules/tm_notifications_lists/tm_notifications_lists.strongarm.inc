@@ -32,7 +32,7 @@ __EMAIL_SIGNOFF__
 ',
     ),
   );
-  $export['tm_notifications__added_to_list_creator'] = $strongarm;
+  $export['tm_notifications__added_to_list'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */

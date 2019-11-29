@@ -178,7 +178,11 @@ function tm_lists_moderation_add($entity_type, $entity_id, $list_id, $moderator,
 	}
 
 	// notify list creators
-	tm_notifications_added_to_list_notify_creators($entity, $item_list);
+	if (!$preview_mode) {
+		if (module_exists('tm_notifications_lists')) {
+			tm_notifications_added_to_list_notify_creators($entity, $item_list);
+		}
+	}
 
     // console return
     if ($is_console) { return true; }

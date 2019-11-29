@@ -498,6 +498,24 @@ function tm_lists_get_list_unsent_notification_items($list_id) {
 }
 
 /**
+ * Check if list is in preview mode
+ */
+function tm_lists_is_list_preview_mode($list_id) {
+
+  $query = "SELECT field_list_preview_mode_value FROM field_data_field_list_preview_mode WHERE entity_type = 'node' AND entity_id = :nid LIMIT 1";
+  $rows = db_query($query, array(':nid' => $list_id))->fetchAll();
+
+  // return result
+  foreach ($rows as $row) {
+    return ($row->field_list_preview_mode_value == 1);
+  }
+
+  // not preview mode
+  return false;
+}
+
+
+/**
  * Enumerate entity_type
  */
 function tm_lists_enumerate_entity_type($entity_type) {

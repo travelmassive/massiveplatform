@@ -315,12 +315,15 @@ ul.tm-list-item-actions-dropdown-menu {
 .tm-list-pageviews {
 
 }
+
 .pageviews-wrapper {
     margin-left: 16px;
     height: 20px;
     line-height: 20px;
     clear: both;
     display: inline-block;
+    text-align: left;
+    width: 140px;
 }
 
 .pageviews-wrapper svg, .pageviews-wrapper-page svg {
@@ -349,3 +352,12 @@ ul.tm-list-item-actions-dropdown-menu {
     height: 18px;
 }
 
+@media screen and (max-width: 800px) {
+	.tm-list-meta-data {
+		margin-left: -1rem;
+	}
+	.pageviews-wrapper {
+		padding-left: 1rem;
+		width: 140px;
+	}
+}

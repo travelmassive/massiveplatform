@@ -326,6 +326,9 @@ function _tm_date_get_date_format($user, $event) {
 function _tm_date_pretty_timezone_name($timezone) {
 
   $timezone_system_name = timezone_name_from_abbr($timezone); // ie: America/Los_Angeles
+  if ($timezone_system_name == "") {
+    $timezone_system_name = $timezone;
+  }
   $parts = explode("/", $timezone_system_name); // split
   $timezone_name = $parts[sizeof($parts) - 1]; // ie: Los_Angeles
   $timezone_name = str_replace("_", " ", $timezone_name); // ie: Los Angeles

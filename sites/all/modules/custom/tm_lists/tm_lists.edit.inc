@@ -38,14 +38,17 @@ function tm_lists_node_presave($node) {
   $list_slug = str_replace('!', "", $list_slug);
   $list_slug = str_replace('__LIST_COUNT__', '##', $list_slug);
 
-
   // replace space
   $list_slug = trim($list_slug);
   $list_slug = str_replace(" ", "-", $list_slug);
 
+  // remove --
+  $list_slug = str_replace("----", "-", $list_slug);
+  $list_slug = str_replace("---", "-", $list_slug);
+  $list_slug = str_replace("--", "-", $list_slug);
+
   // clean up
   $list_slug = strtolower($list_slug);
-  $list_slug = strip_tags($list_slug);
   $list_slug = strip_tags($list_slug);
 
   // save list-slug

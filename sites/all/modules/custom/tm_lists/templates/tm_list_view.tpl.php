@@ -19,4 +19,3 @@ __LIST_ITEMS__
 <div style="clear:both;">
 
 __LIST_PAGER__
-

@@ -59,10 +59,25 @@ function tm_lists_moderation_lists_ajax() {
 		$list_title = str_replace("##", $num_items, $item_list["title"]);
 		$list_label = strip_tags($list_title);
 
-		if (($moderation_mode == "add") and (tm_lists_item_exists($entity_type_id, $entity_id, $item_list["list_id"]))) { 
-			$html .= "<option value='" . $item_list["list_id"] . "' disabled>" . $list_label . " (listed)</option>\n";
+		// check preview mode
+		$label_extra = "";
+		$preview_mode = tm_lists_is_list_preview_mode($item_list["list_id"]);
+		if ($preview_mode) {
+			$label_extra = " (preview)";
+		}
+
+		// listed
+		$item_is_listed = false;
+		if (tm_lists_item_exists($entity_type_id, $entity_id, $item_list["list_id"])) {
+			$item_is_listed = true;
+			$label_extra = " (listed)";
+		}
+
+		if (($moderation_mode == "add") and ($item_is_listed)) { 
+			$label_extras[] = "listed";
+			$html .= "<option value='" . $item_list["list_id"] . "' disabled>" . $list_label . $label_extra . "</option>\n";
 		} else {
-			$html .= "<option value='" . $item_list["list_id"] . "'>" . $list_label . "</option>\n";
+			$html .= "<option value='" . $item_list["list_id"] . "'>" . $list_label . $label_extra . "</option>\n";
 		}
 	}
 
@@ -178,7 +193,11 @@ function tm_lists_moderation_add($entity_type, $entity_id, $list_id, $moderator,
 	}
 
 	// notify list creators
-	tm_notifications_added_to_list_notify_creators($entity, $item_list);
+	if (!$preview_mode) {
+		if (module_exists('tm_notifications_lists')) {
+			tm_notifications_added_to_list_notify_creators($entity, $item_list);
+		}
+	}
 
     // console return
     if ($is_console) { return true; }
@@ -327,7 +346,7 @@ function tm_lists_moderation_edit_form_ajax($entity_type, $entity_id, $list_id) 
 	}
 
 	// generate edit form
-	$edit_form = "<textarea id='edit_list_item_comment' onkeyup='countChar(this);' value='' placeholder='Add a short description to be displayed on the list...' rows='3' cols='50' placeholder=''>" . htmlentities($list_item->comment) . "</textarea><script>";
+	$edit_form = "<textarea id='edit_list_item_comment' onkeyup='countChar(this);' value='' placeholder='Add a short description to be displayed on the list...' rows='4' cols='50' placeholder=''>" . htmlentities($list_item->comment) . "</textarea><script>";
 
 	echo $edit_form;
 	return;

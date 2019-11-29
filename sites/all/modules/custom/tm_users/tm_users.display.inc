@@ -8,6 +8,7 @@
 function tm_users_user_view($account, $view_mode, $langcode) {
 
   global $conf;
+  global $user;
 
   // redirect from /user to full alias
   if (($view_mode == "full") and (request_path() == "user")) {
@@ -32,7 +33,6 @@ function tm_users_user_view($account, $view_mode, $langcode) {
   }
 
   // If viewing own account, set create member event message js
-  global $user;
   if (($view_mode == "full") && ($account->uid == $user->uid)) {
     // Set create member event message as js var
     // We use this in jq_create_member_event_message()
@@ -72,6 +72,11 @@ function tm_users_user_view($account, $view_mode, $langcode) {
           if ((!in_array('approved user', $user->roles)) and (!in_array('administrator', $user->roles))) {
             $private_profile = true;
           }
+        }
+
+        // allow non-approved member to view their own profile
+        if ($account->uid == $user->uid) {
+          $private_profile = false;
         }
 
         // if profile private, display message

@@ -144,6 +144,9 @@ function tm_lists_display_list($list_id) {
 	drupal_add_js('var tm_global_list_id = ' . $list_id . '; var tm_global_list_sort_method = "' . $sort_method . '";', array('type' => 'inline', 'scope' => 'footer'));
 	drupal_add_js(drupal_get_path('module', 'tm_lists') . '/js/tm_lists_display.js');
 
+	// include waypoints js
+	drupal_add_js(drupal_get_path('module', 'tm_lists') . '/js/noframework.waypoints.min.js');
+
 	// include tm_lists_actions.js if user can perform actions
 	if ($user_can_perform_list_action) {
 		drupal_add_js(drupal_get_path('module', 'tm_lists') . '/js/tm_lists_actions.js');
@@ -178,15 +181,17 @@ function tm_lists_display_list($list_id) {
 
 	// allow 3rd party pageviews
 	$pageviews = "";
-	if (isset($conf["tm_lists_pageviews_script"])) {
-		$pageviews_incr = 100000 + $list_id; // so we don't collide with wp post ids
-		$pageviews_script = $conf["tm_lists_pageviews_script"];
-		$pageviews_script = str_replace("__INCR__", $pageviews_incr , $pageviews_script);
-		drupal_add_js($pageviews_script, array('type' => 'inline', 'scope' => 'footer'));
-		$pageviews = $conf["tm_lists_pageviews_placeholder"];
-		$pageviews = str_replace("__INCR__", $pageviews_incr, $pageviews);
+	if (!$preview_mode) {
+		if (isset($conf["tm_lists_pageviews_script"])) {
+			$pageviews_incr = 100000 + $list_id; // so we don't collide with wp post ids
+			$pageviews_script = $conf["tm_lists_pageviews_script"];
+			$pageviews_script = str_replace("__INCR__", $pageviews_incr , $pageviews_script);
+			drupal_add_js($pageviews_script, array('type' => 'inline', 'scope' => 'footer'));
+			$pageviews = $conf["tm_lists_pageviews_placeholder"];
+			$pageviews = str_replace("__INCR__", $pageviews_incr, $pageviews);
+		}
 	}
-
+	
 	// load templates
 	$template = file_get_contents(drupal_get_path('module', 'tm_lists') .'/templates/tm_list_view.tpl.php');
 	$pager_template = "";
@@ -389,6 +394,12 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 			$last_name = strip_tags($entity->field_user_last_name[LANGUAGE_NONE][0]['value']);
 			$full_name = $first_name . " " . $last_name;
 			$item_title = $full_name;
+
+			// About me
+			if (isset($entity->field_about_me[LANGUAGE_NONE][0]['value'])) {
+				$item_description = $entity->field_about_me[LANGUAGE_NONE][0]['value'];
+			}
+
 		}
 
 		// node fields
@@ -413,7 +424,9 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 				}
 				$image_url = _tm_events_get_default_image($img_url, $entity->nid);
 			}
+
 			$item_title = $entity->title;
+			$item_description = $entity->body[LANGUAGE_NONE][0]['value'];
 		}
 
 		// item position
@@ -485,8 +498,20 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 			$rel = "noopener";
 		}
 
+		// get comment
+		$comment = $item->comment;
+
+		// if comment is empty, use first sentence of entity description
+		if ($item->comment == "") {
+			$description_parts = explode(".", $item_description);
+			$comment = $description_parts[0];
+			if (sizeof($description_parts) > 1) {
+				$comment .= ".";
+			}
+		}
+
 		// format item comment
-		$comment = strip_tags($item->comment);
+		$comment = strip_tags($comment);
 		$comment = str_replace("##", $count, $comment); // replace ## with position
 		$comment = str_replace("\n", "</p>\n<p>", $comment);
 		$comment = "<p>" . $comment . "</p>";

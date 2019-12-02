@@ -164,3 +164,12 @@ function tm_lists_node_view($node, $view_mode, $langcode) {
 	}
 }
 
+/**
+ * Implements hook_node_delete()
+ * Remove list items from tm_list when deleting node
+ */
+function tm_lists_node_delete($node) {
+  if ($node->type == 'list') {
+     tm_lists_remove_list_items($node->nid);
+  }
+}

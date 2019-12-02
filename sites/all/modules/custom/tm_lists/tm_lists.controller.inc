@@ -275,7 +275,7 @@ function tm_lists_remove_list_item($item_id) {
  */
 function tm_lists_remove_list_items($list_id) {
 
-	$item_id = intval($item_id);
+	$item_id = intval($list_id);
 	$query = "DELETE FROM tm_lists WHERE list_id = " . $list_id;
 	$results = db_query($query);
 	return 1; // todo: return status

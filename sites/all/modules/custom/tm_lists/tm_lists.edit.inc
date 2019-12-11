@@ -85,7 +85,7 @@ function tm_lists_form_alter(&$form, &$form_state, $form_id) {
   if (!$perm_is_moderator_or_admin) {
     $form['field_list_nofollow_links']['#disabled'] = true;
   }
- 
+  
   // Disable with js
   $js = "
 //  List Creators can always add to list
@@ -105,6 +105,13 @@ document.getElementById('edit-field-list-display-links-und-profile').disabled = 
 true;
 document.getElementById('edit-field-list-display-links-und-profile').checked = true;
 true;
+
+// Default reply-to
+document.getElementById('edit-field-list-reply-to-und-0-email').placeholder = '" . $conf["tm_announcement_reply_email"] . "';
+
+// List Item Description Character Limit
+document.getElementById('edit-field-list-item-description-char-und-0-value').placeholder = '250';
+
 ";
   drupal_add_js($js, array('type' => 'inline', 'scope' => 'footer'));
 

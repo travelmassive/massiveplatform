@@ -51,19 +51,20 @@
   }
 
   // confirm with user to moderate status
-  tm_lists_edit_form = function(entity_type, entity_id, list_id) {
+  tm_lists_edit_form = function(entity_type, entity_id, list_id, character_limit) {
     
+    var char_limit = character_limit;
     countChar = function(val) {
       var len = val.value.length;
-      if (len >= 250) {
-        val.value = val.value.substring(0, 250);
+      if (len >= char_limit) {
+        val.value = val.value.substring(0, char_limit);
       } else {
-        $('#charNum').text((250 - len) + " chars");
+        $('#charNum').text((char_limit - len) + " chars");
       }
     };
 
     var title = 'Edit description';
-    var message = '<div id="tm-list-item-edit-placeholder">Loading...</div><div style="width: 100%; text-align: right;"><span id="charNum" style="font-size: 10pt; color: #888;">250 chars</span></div>';
+    var message = '<div id="tm-list-item-edit-placeholder">Loading...</div><div style="width: 100%; text-align: right;"><span id="charNum" style="font-size: 10pt; color: #888;">' + char_limit + ' chars</span></div>';
 
     $.prompt(message, { buttons: { "Save changes": true, "Cancel": false },
       'title': title,

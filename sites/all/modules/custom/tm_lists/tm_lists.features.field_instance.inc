@@ -144,7 +144,7 @@ function tm_lists_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 14,
+      'weight' => 15,
     ),
   );
 
@@ -227,7 +227,7 @@ function tm_lists_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 12,
+      'weight' => 13,
     ),
   );
 
@@ -267,7 +267,54 @@ function tm_lists_field_default_field_instances() {
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 11,
+      'weight' => 12,
+    ),
+  );
+
+  // Exported field_instance: 'node-list-field_list_item_description_char'.
+  $field_instances['node-list-field_list_item_description_char'] = array(
+    'bundle' => 'list',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Adjust the character limit when editing a list item\'s description (default: 250).',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 0,
+          'thousand_separator' => '',
+        ),
+        'type' => 'number_integer',
+        'weight' => 18,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_list_item_description_char',
+    'label' => 'List Item Character Limit ',
+    'required' => 0,
+    'settings' => array(
+      'max' => 10000,
+      'min' => 250,
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 18,
     ),
   );
 
@@ -349,7 +396,7 @@ function tm_lists_field_default_field_instances() {
         'rows' => 3,
       ),
       'type' => 'text_textarea',
-      'weight' => 17,
+      'weight' => 19,
     ),
   );
 
@@ -393,7 +440,7 @@ function tm_lists_field_default_field_instances() {
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 13,
+      'weight' => 14,
     ),
   );
 
@@ -438,7 +485,47 @@ function tm_lists_field_default_field_instances() {
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 18,
+      'weight' => 20,
+    ),
+  );
+
+  // Exported field_instance: 'node-list-field_list_reply_to'.
+  $field_instances['node-list-field_list_reply_to'] = array(
+    'bundle' => 'list',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Any replies to this announcement will be sent here. Leave blank for default reply-to address.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'email',
+        'settings' => array(),
+        'type' => 'email_default',
+        'weight' => 17,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_list_reply_to',
+    'label' => 'Reply-to',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'email',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'email_textfield',
+      'weight' => 10,
     ),
   );
 
@@ -476,7 +563,7 @@ function tm_lists_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 15,
+      'weight' => 16,
     ),
   );
 
@@ -514,7 +601,7 @@ function tm_lists_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 16,
+      'weight' => 17,
     ),
   );
 
@@ -691,7 +778,7 @@ example: /lists/1045/<b>featured-members</b>',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 10,
+      'weight' => 11,
     ),
   );
 
@@ -699,6 +786,8 @@ example: /lists/1045/<b>featured-members</b>',
   // Included for use with string extractors like potx.
   t('A short description (less than 150 characters).<br>
 Will be used by Google and social media sharing.');
+  t('Adjust the character limit when editing a list item\'s description (default: 250).');
+  t('Any replies to this announcement will be sent here. Leave blank for default reply-to address.');
   t('Customize the URL of the list<br>
 example: /lists/1045/<b>featured-members</b>');
   t('Description');
@@ -710,11 +799,13 @@ example: /lists/1045/<b>featured-members</b>');
   t('Links are nofollow');
   t('List Cover Image');
   t('List Creators');
+  t('List Item Character Limit ');
   t('List URL');
   t('Moderator notes');
   t('Preview Mode');
   t('Provide a creative graphic for cover art (recommended image size: 1610 x 906)');
   t('Provide a creative graphic for social media promotion (recommended image size: 1200 x 630 pixels).');
+  t('Reply-to');
   t('Sharing description');
   t('Sharing image');
   t('Sort By');

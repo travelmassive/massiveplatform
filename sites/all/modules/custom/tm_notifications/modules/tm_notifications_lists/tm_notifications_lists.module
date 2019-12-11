@@ -133,13 +133,19 @@ function tm_notifications_added_to_list($entity, $list) {
     }
   }
 
+  // custom reply to
+  $reply_to = "";
+  if (isset($list->field_list_reply_to[LANGUAGE_NONE][0]['email'])) {
+    $reply_to = trim($list->field_list_reply_to[LANGUAGE_NONE][0]['email']);
+  }
+
   // notify members
   foreach ($contact_users as $contact_user) {
 
     $first_name = strip_tags($contact_user->field_user_first_name[LANGUAGE_NONE][0]['value']);
     $last_name = strip_tags($contact_user->field_user_last_name[LANGUAGE_NONE][0]['value']);
 
-    tm_notifications_notify('added_to_list', $contact_user, array('user' => $contact_user, '__LIST_ITEM_NAME_SUBJECT__' => $list_item_name_subject, '__LIST_ITEM_NAME_INTRO__' => $list_item_name_intro, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__LIST_ID__' => $list->nid, '__LIST_TITLE__' => $list_title, '__MODERATOR_NAME__' => $static_add_member_moderator_first_name, '__HERO_HEADLINE__' => $hero_headline, '__ADD_LIST_MESSAGE__' => $add_list_message));
+    tm_notifications_notify('added_to_list', $contact_user, array('user' => $contact_user, '__LIST_ITEM_NAME_SUBJECT__' => $list_item_name_subject, '__LIST_ITEM_NAME_INTRO__' => $list_item_name_intro, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__LIST_ID__' => $list->nid, '__LIST_TITLE__' => $list_title, '__MODERATOR_NAME__' => $static_add_member_moderator_first_name, '__HERO_HEADLINE__' => $hero_headline, '__ADD_LIST_MESSAGE__' => $add_list_message, '__REPLY_TO__' => $reply_to));
   }
   
 }

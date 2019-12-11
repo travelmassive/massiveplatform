@@ -242,15 +242,19 @@ function tm_notifications_mail($key, &$message, $params) {
 
   // set reply to from token
   if (isset ($params['tokens']['__REPLY_TO__'])) {
-    $message['headers']['Reply-To'] = $params['tokens']['__REPLY_TO__'];
+    if ($params['tokens']['__REPLY_TO__'] != "") {
+      $message['headers']['Reply-To'] = $params['tokens']['__REPLY_TO__'];
+    }
   }
-  
 
   // STEP 2. LOAD HTML TEMPLATE
   // Note: We use http://tedgoas.github.io/Cerberus/ hybrid template
-  $template_file = drupal_get_path('module', 'tm_notifications') . '/templates/tm_notifications-email_template.tpl.php';
+  $template_file_name = 'tm_notifications-email_template.tpl.php';
+  if (isset($conf["tm_email_custom_template"])) {
+    $template_file_name = $conf["tm_email_custom_template"];
+  }
+  $template_file = drupal_get_path('module', 'tm_notifications') . '/templates/' . $template_file_name;
   $template = file_get_contents($template_file);
- 
 
   // STEP 3. SET MAIL HTML HEADERS
   $module = 'tm_notifications';

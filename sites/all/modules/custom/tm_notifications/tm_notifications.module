@@ -242,9 +242,10 @@ function tm_notifications_mail($key, &$message, $params) {
 
   // set reply to from token
   if (isset ($params['tokens']['__REPLY_TO__'])) {
-    $message['headers']['Reply-To'] = $params['tokens']['__REPLY_TO__'];
+    if ($params['tokens']['__REPLY_TO__'] != "") {
+      $message['headers']['Reply-To'] = $params['tokens']['__REPLY_TO__'];
+    }
   }
-  
 
   // STEP 2. LOAD HTML TEMPLATE
   // Note: We use http://tedgoas.github.io/Cerberus/ hybrid template

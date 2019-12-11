@@ -204,7 +204,9 @@ function tm_lists_display_list($list_id) {
 
 	// if user can edit the list, add the moderator menu
 	$moderator_menu = "";
+	$user_can_edit_list = false;
 	if (tm_lists_user_can_edit_list($user, $list_id)) {
+		$user_can_edit_list = true;
 		$moderator_menu = file_get_contents(drupal_get_path('module', 'tm_lists') .'/templates/tm_list_view_menu.tpl.php');
 
 		// track views
@@ -276,9 +278,19 @@ function tm_lists_display_list($list_id) {
 	$template = str_replace("__LIST_CONTRIBUTORS__", $contributor_html, $template);
 	$template = str_replace("__LAST_UPDATED__", $last_updated, $template);
 
+	// total items
+	$total_items = tm_lists_get_num_items($list_id);
+
 	// get items from list
 	$per_page = $conf["tm_lists_per_page"];
 	$limit_to = $per_page;
+
+	// if preview mode and list editor, show all items
+	if ($preview_mode and $user_can_edit_list) {
+		$limit_to = $total_items;
+	}
+
+	// fetch items
 	$items = tm_lists_get_items_by_id($list_id, $sort_method, 0, $limit_to);
 
 	// get list options
@@ -289,11 +301,14 @@ function tm_lists_display_list($list_id) {
 	$item_link_nofollow = $list->field_list_nofollow_links[LANGUAGE_NONE][0]['value'];
 	$hide_item_position = $list->field_list_hide_rankings[LANGUAGE_NONE][0]['value'];
 
-	// total items
-	$total_items = tm_lists_get_num_items($list_id);
+	// description character limit
+	$character_limit = 250; // default
+	if (isset($list->field_list_item_description_char[LANGUAGE_NONE][0]['value'])) {
+		$character_limit = $list->field_list_item_description_char[LANGUAGE_NONE][0]['value'];
+	}
 
 	// render list
-	$items_html = tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_method, 1, 1, $hide_item_position, $show_item_links, $item_link_nofollow);
+	$items_html = tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_method, 1, 1, $hide_item_position, $show_item_links, $item_link_nofollow, $character_limit);
 
 	// show pager if more items to display
 	if ($total_items > $per_page) {
@@ -306,8 +321,13 @@ function tm_lists_display_list($list_id) {
 	}
 
 	// add footer if end of list
-	if ($total_items <= $per_page) {
+	if (($total_items <= $per_page) or ($preview_mode and $user_can_edit_list)) {
 		$items_html .= $conf["tm_lists_footer_html"];
+	}
+
+	// if preview mode and list editor, hide pager
+	if ($preview_mode and $user_can_edit_list) {
+		$pager_template = "";
 	}
 
 	$template = str_replace("__LIST_PAGER__", $pager_template, $template);
@@ -326,7 +346,7 @@ function tm_lists_display_list($list_id) {
 }
 
 /* Render html results */
-function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_method, $count, $page, $hide_item_position = false, $show_item_links = array("profile", "website"), $item_link_nofollow = true) {
+function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_method, $count, $page, $hide_item_position = false, $show_item_links = array("profile", "website"), $item_link_nofollow = true, $character_limit = 250) {
 
 	global $conf;
 	global $user;
@@ -476,7 +496,7 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 
 			// edit item
 			if ($show_edit_item) {
-				$item_menu .= "<li><a href='javascript:void(0);' onClick='tm_lists_edit_form(\"" . $entity_type . "\", " . $item->entity_id . "," . $list_id . ");'>Edit</a></li>";
+				$item_menu .= "<li><a href='javascript:void(0);' onClick='tm_lists_edit_form(\"" . $entity_type . "\", " . $item->entity_id . "," . $list_id . "," . $character_limit . ");'>Edit</a></li>";
 			}
 
 			// remove
@@ -653,8 +673,14 @@ function tm_lists_display_list_ajax() {
 	// total items
 	$total_items = tm_lists_get_num_items($list_id);
 
+	// description character limit
+	$character_limit = 250; // default
+	if (isset($list->field_list_item_description_char[LANGUAGE_NONE][0]['value'])) {
+		$character_limit = $list->field_list_item_description_char[LANGUAGE_NONE][0]['value'];
+	}
+	
 	// Render results
-	$html = tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_method, $limit_from + 1, $page, $hide_item_position, $show_item_links, $item_link_nofollow);
+	$html = tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_method, $limit_from + 1, $page, $hide_item_position, $show_item_links, $item_link_nofollow, $character_limit);
 
 	// If end of list:
 	// Hide load more

@@ -107,7 +107,7 @@ document.getElementById('edit-field-list-display-links-und-profile').checked = t
 true;
 
 // Default reply-to
-document.getElementById('edit-field-list-reply-to-und-0-email').placeholder = '" . $conf["tm_announcement_reply_email"] . "';
+document.getElementById('edit-field-list-reply-to-und-0-email').placeholder = '" . $conf["site_mail"] . "';
 
 // List Item Description Character Limit
 document.getElementById('edit-field-list-item-description-char-und-0-value').placeholder = '250';

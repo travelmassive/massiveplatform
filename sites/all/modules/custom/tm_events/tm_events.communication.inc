@@ -497,7 +497,7 @@ function tm_events_send_emails($recipients, $subject, $message, $event_image_src
   // ie: chapterid = 123,456,789 (multiple)
   if ($chapterids != "") {
     if (strpos($chapterids, ",") !== false) {
-      $chapterids = explode(",", $chapterids);
+      $chapterids = explode(", ", $chapterids);
     } else {
       $chapterids = array($chapterids);
     }

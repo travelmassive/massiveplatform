@@ -95,10 +95,6 @@ function tm_lists_display_list($list_id) {
 	global $conf;
 	global $user;
 
-	// cache for 5 minutes if logged out
-	if (!user_is_logged_in()) {
-		drupal_add_http_header('Cache-Control', 'public, max-age=300');
-	}
 	// add rss link
 	$rss_link = array(
 		'#tag' => 'link',
@@ -162,6 +158,11 @@ function tm_lists_display_list($list_id) {
 	$preview_mode = $list->field_list_preview_mode[LANGUAGE_NONE][0]['value'];
 	if ($preview_mode) {
 		drupal_set_message("This list is in Preview mode. Only people with the link can see this list.", "help-tip");
+	}
+
+	// cache for 5 minutes if logged out and not in preview mode
+	if (!user_is_logged_in() and !$preview_mode) {
+		drupal_add_http_header('Cache-Control', 'public, max-age=300');
 	}
 
 	// js settings

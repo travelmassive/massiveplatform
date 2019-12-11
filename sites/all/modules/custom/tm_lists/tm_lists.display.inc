@@ -417,6 +417,7 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 			$item_title = $full_name;
 
 			// About me
+			$item_description = "";
 			if (isset($entity->field_about_me[LANGUAGE_NONE][0]['value'])) {
 				$item_description = $entity->field_about_me[LANGUAGE_NONE][0]['value'];
 			}

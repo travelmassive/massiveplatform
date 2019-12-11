@@ -841,8 +841,12 @@ function tm_events_send_email($uid, $email, $subject, $message, $event_image_src
 
 
 	// STEP 1. LOAD HTML TEMPLATE
-	$template_file = drupal_get_path('module', 'tm_notifications') . '/templates/tm_notifications-email_template.tpl.php';
-	$template = file_get_contents($template_file);
+	$template_file_name = 'tm_notifications-email_template.tpl.php';
+  if (isset($conf["tm_email_custom_template"])) {
+    $template_file_name = $conf["tm_email_custom_template"];
+  }
+  $template_file = drupal_get_path('module', 'tm_notifications') . '/templates/' . $template_file_name;
+  $template = file_get_contents($template_file);
 
 
 	// STEP 2. SET MAIL HTML HEADERS

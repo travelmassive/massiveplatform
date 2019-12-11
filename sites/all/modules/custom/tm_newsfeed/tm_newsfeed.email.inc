@@ -20,7 +20,11 @@ function tm_newsfeed_notification_send_test_email($email, $subject, $body, $preh
 	$message = $body;
 
 	// STEP 1. LOAD HTML TEMPLATE
-	$template_file = drupal_get_path('module', 'tm_notifications') . '/templates/tm_notifications-email_template.tpl.php';
+	$template_file_name = 'tm_notifications-email_template.tpl.php';
+	if (isset($conf["tm_email_custom_template"])) {
+		$template_file_name = $conf["tm_email_custom_template"];
+	}
+	$template_file = drupal_get_path('module', 'tm_notifications') . '/templates/' . $template_file_name;
 	$template = file_get_contents($template_file);
 
 

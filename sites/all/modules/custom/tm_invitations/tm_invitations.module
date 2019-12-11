@@ -534,6 +534,8 @@ function tm_invitations_send_email_cron_run($item) {
 /* Email sending function */
 function tm_invitations_send_email($email, $inviter_name, $inviter_uid, $custom_message = "", $chapter_name = "", $server_name = "") {
 
+    global $conf;
+
     $module = 'tm_invitations';
     $key = 'key';
     $language = language_default();
@@ -561,7 +563,11 @@ function tm_invitations_send_email($email, $inviter_name, $inviter_uid, $custom_
     $message .= "<br>__EMAIL_SIGNOFF__";
 
     // STEP 1. LOAD HTML TEMPLATE
-    $template_file = drupal_get_path('module', 'tm_notifications') . '/templates/tm_notifications-email_template.tpl.php';
+    $template_file_name = 'tm_notifications-email_template.tpl.php';
+    if (isset($conf["tm_email_custom_template"])) {
+      $template_file_name = $conf["tm_email_custom_template"];
+    }
+    $template_file = drupal_get_path('module', 'tm_notifications') . '/templates/' . $template_file_name;
     $template = file_get_contents($template_file);
 
 
@@ -573,7 +579,6 @@ function tm_invitations_send_email($email, $inviter_name, $inviter_uid, $custom_
 
 
     // STEP 3. SET SUBJECT 
-    global $conf;
     if ($chapter_name != "") {
       $email_message['subject'] = "Your Invitation to __SITE_NAME__ " . $chapter_name;
     } else {

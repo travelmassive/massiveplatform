@@ -128,6 +128,7 @@ $conf['tm_site_name'] = "Massive"; // used by emails and in templates to refer t
 $conf['tm_email_server_http'] = "https"; // http or https depending on your setup. Will be used in email settings
 $conf['tm_email_server_url_domain'] = "example.massiveplatform.com"; // domain to use for links to site in emails
 $conf['tm_email_signoff'] = "Cheers,<br>- The Massive Team"; // default email sign off at bottom of emails
+// $conf['tm_email_custom_template'] = 'tm_notifications-email_template_custom.tpl.php'; // use a custom email template, in tm_notifications/templates/ folder
 $conf['tm_email_default_footer'] = "__UNSUBSCRIBE_LINK__<br>
 Example Company LLC. 123 Smith St, San Francisco CA 94111<br> Phone +1 555-123-456 &middot; community@massiveplatform.com"; // used by emails and in templates to refer to the site
 $conf['tm_announcement_copy_email'] = "community@massiveplatform.com"; // Send a copy of any announcement to this address

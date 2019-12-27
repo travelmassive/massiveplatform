@@ -18,7 +18,7 @@ class MetatagTagsTest extends MetatagTagsTestBase {
       'name' => 'Metatag tags: Basic',
       'description' => 'Test the basic meta tags.',
       'group' => 'Metatag',
-      'dependencies' => array('ctools', 'token'),
+      'dependencies' => array('ctools', 'devel', 'token'),
     );
   }
 
@@ -36,6 +36,7 @@ class MetatagTagsTest extends MetatagTagsTestBase {
     'geo.placename',
     'geo.position',
     'geo.region',
+    'google',
     'icbm',
     'image_src',
     'keywords',

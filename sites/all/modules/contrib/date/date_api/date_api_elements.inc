@@ -293,7 +293,7 @@ function date_text_element_value_callback($element, $input = FALSE, &$form_state
   // Normal input from submitting the form element. Check is_array() to skip
   // the string input values created by Views pagers. Those string values, if
   // present, should be interpreted as empty input.
-  if ($input != FALSE && is_array($input)) {
+  if ($input !== FALSE && is_array($input) && !is_null($input['date'])) {
     $return = $input;
     $date = date_text_input_date($element, $input);
   }

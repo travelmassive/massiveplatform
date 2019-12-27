@@ -292,8 +292,8 @@ function date_tools_wizard_build($form_values) {
   $instance = field_create_instance($instance);
   $view_name = 'calendar_node_' . $field_name;
 
-  field_info_cache_clear(TRUE);
-  field_cache_clear(TRUE);
+  field_info_cache_clear();
+  field_cache_clear();
 
   drupal_set_message(t('Your date field @name has been created.', array('@name' => $label)));
 

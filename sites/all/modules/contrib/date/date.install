@@ -228,12 +228,18 @@ function date_update_7005() {
  * Add date value indexes to existed field tables.
  */
 function date_update_7006() {
-  // Get all fields provided by Data module.
-  $fields = db_select('field_config', 'f')
+  // Get all fields provided by the Data module.
+  $query = db_select('field_config', 'f')
     ->fields('f', array('id', 'field_name', 'data'))
-    ->condition('f.type', array('datetime', 'date', 'datestamp'))
-    ->execute()
-    ->fetchAllAssoc('id');
+    ->condition('f.type', array('datetime', 'date', 'datestamp'));
+
+  // Special handling for the Encrypt module.
+  if (module_exists('field_encrypt')) {
+    $query->condition('f.data', '%' . db_like(' field_encrypt";a:1:{s:7:"encrypt";i:0 ') . '%', 'LIKE');
+  }
+
+  // Complete the query.
+  $fields = $query->execute()->fetchAllAssoc('id');
 
   foreach ($fields as $id => $info) {
     $field_info = field_info_field($info->field_name);

@@ -371,6 +371,16 @@ function date_repeat_field_widget_validate($element, &$form_state) {
     form_set_error($error_field_count, t("Missing value in 'Range of repeat'. (COUNT).", array(), array('context' => 'Date repeat')));
   }
 
+  $error_field_count = $error_field_base . '][rrule][weekly][INTERVAL';
+  if (isset($rrule_values['INTERVAL']) && isset($rrule_values['FREQ']) && !empty($item['rrule']) && $rrule_values['FREQ'] == 'WEEKLY' && $rrule_values['INTERVAL'] == '') {
+    form_set_error($error_field_count, t('Missing value in Repeats Every # of weeks. (INTERVAL).', array(), array('context' => 'Date repeat')));
+  }
+
+  $error_field_count = $error_field_base . '][rrule][daily][INTERVAL_child';
+  if (isset($rrule_values['INTERVAL']) && isset($rrule_values['FREQ']) && !empty($item['rrule']) && $rrule_values['FREQ'] == 'DAILY' && $rrule_values['INTERVAL'] == '') {
+    form_set_error($error_field_count, t('Missing value in Repeats Every # of days. (INTERVAL).', array(), array('context' => 'Date repeat')));
+  }
+
   if (form_get_errors()) {
     return;
   }

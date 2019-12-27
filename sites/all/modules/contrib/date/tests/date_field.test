@@ -154,8 +154,8 @@ abstract class DateFieldBasic extends DrupalWebTestCase {
     $field = field_create_field($field);
     $instance = field_create_instance($instance);
 
-    field_info_cache_clear(TRUE);
-    field_cache_clear(TRUE);
+    field_info_cache_clear();
+    field_cache_clear();
 
     // Look at how the field got configured.
     $this->drupalGet("admin/structure/types/manage/$bundle/fields/$field_name");
@@ -271,8 +271,8 @@ abstract class DateFieldBasic extends DrupalWebTestCase {
     $field = field_create_field($field);
     $instance = field_create_instance($instance);
 
-    field_info_cache_clear(TRUE);
-    field_cache_clear(TRUE);
+    field_info_cache_clear();
+    field_cache_clear();
 
     // Look at how the field got configured.
     $this->drupalGet("admin/structure/types/manage/$bundle/fields/$field_name");

@@ -29,4 +29,5 @@ function email_registration_requirements() {
  */
 function email_registration_uninstall() {
   variable_del('email_registration_login_with_username');
+  variable_del('email_registration_email_field');
 }

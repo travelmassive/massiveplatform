@@ -130,6 +130,7 @@ function email_registration_form_user_register_form_alter(&$form, &$form_state) 
   $form['account']['name']['#type'] = 'hidden';
   $form['account']['name']['#value'] = 'email_registration_' . user_password();
   $form['account']['mail']['#title'] = t('E-mail');
+  email_registration_email_field($form['account']['mail']);
 }
 
 /**
@@ -137,6 +138,7 @@ function email_registration_form_user_register_form_alter(&$form, &$form_state) 
  */
 function email_registration_form_user_pass_alter(&$form, &$form_state) {
   $form['name']['#title'] = t('E-mail');
+  email_registration_email_field($form['name']);
 }
 
 /**
@@ -151,6 +153,7 @@ function email_registration_form_user_login_alter(&$form, &$form_state) {
       : t('Enter your e-mail address.');
   $form['name']['#element_validate'][] = 'email_registration_user_login_validate';
   $form['pass']['#description'] = t('Enter the password that accompanies your e-mail.');
+  email_registration_email_field($form['name']);
 }
 
 /**
@@ -161,6 +164,7 @@ function email_registration_form_user_login_block_alter(&$form, &$form_state) {
     ? t('E-mail or username')
     : t('E-mail');
   $form['name']['#element_validate'][] = 'email_registration_user_login_validate';
+  email_registration_email_field($form['name']);
 }
 
 /**
@@ -172,7 +176,19 @@ function email_registration_form_user_admin_settings_alter(&$form, &$form_state)
     '#title' => t('Allow users login with e-mail or username.'),
     '#description' => t('Allow users to login with their username in addition to their e-mail.'),
     '#default_value' => variable_get('email_registration_login_with_username', TRUE),
-    );
+  );
+  $form['registration_cancellation']['email_registration_email_field'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Use HTML5 email field.'),
+    '#description' => t('Modify the user register, login and forgot password textfields to an HTML5 type="email" field.'),
+    '#default_value' => variable_get('email_registration_email_field', FALSE),
+    '#access' => module_exists('elements'),
+    '#states' => array(
+      'invisible' => array(
+        ':input[name="email_registration_login_with_username"]' => array('checked' => TRUE),
+      ),
+    ),
+  );
   $form['#submit'][] = 'email_registration_form_user_admin_settings_submit';
 }
 
@@ -183,8 +199,8 @@ function email_registration_form_user_admin_settings_alter(&$form, &$form_state)
  */
 function email_registration_form_user_admin_settings_submit($form, &$form_state) {
   variable_set('email_registration_login_with_username', $form_state['values']['email_registration_login_with_username']);
+  variable_set('email_registration_email_field', $form_state['values']['email_registration_email_field']);
 }
-
 
 /**
  * Form element validation handler for the user login form.
@@ -219,5 +235,15 @@ function email_registration_user_login_validate($form, &$form_state) {
     // We have to set this to NULL rather than FALSE, because
     // user_login_name_validate() uses isset() rather than empty().
     $form_state['values']['name'] = NULL;
+  }
+}
+
+/**
+ * Converts element to email type field if Elements module is enabled and if
+ * configured to do so.
+ */
+function email_registration_email_field(&$element) {
+  if (module_exists('elements') && variable_get('email_registration_email_field', FALSE)) {
+    $element['#type'] = 'emailfield';
   }
 }

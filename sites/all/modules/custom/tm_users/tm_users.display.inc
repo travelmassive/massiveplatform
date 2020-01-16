@@ -471,7 +471,7 @@ function _tm_users_get_avatar_uri($account) {
  * Link by title to any events this user had registered for or is organizer of
  * inserts this markup into the user menu tpl file
  */
-function tm_users_menu_events($uid, $include_chapter_events = false, $limit = 5){
+function tm_users_menu_events($uid, $include_chapter_events = false, $limit = 5, $is_moderator = false){
 
   global $conf;
 
@@ -525,5 +525,6 @@ function tm_users_menu_events($uid, $include_chapter_events = false, $limit = 5)
     <a href='/" . $event_menu_link . "'>
     <img style='width: 36px; display:block; float:left' class='tm_menu_event_image' src='" . image_style_url($style, $img_url) . "'><span class='tm_menu_event_link' style='width: 100%; display:block; padding-left: 44px;'>" . $event_menu_text . '</span></a></li>'; 
   }
+
   return $markup;
 }

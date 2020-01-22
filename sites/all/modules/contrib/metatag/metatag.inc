@@ -197,6 +197,11 @@ class DrupalDefaultMetaTag implements DrupalMetaTagInterface {
    *   The meta tag value after it has been tidied up.
    */
   public function tidyValue($value) {
+    // This shouldn't happen, but protect against tokens returning arrays.
+    if (!is_string($value)) {
+      return '';
+    }
+
     // Check for Media strings from the WYSIWYG submodule.
     if (module_exists('media_wysiwyg') && strpos($value, '[[{') !== FALSE) {
       // In https://www.drupal.org/node/2129273 media_wysiwyg_filter() was
@@ -212,6 +217,13 @@ class DrupalDefaultMetaTag implements DrupalMetaTagInterface {
 
     // Decode HTML entities.
     $value = decode_entities($value);
+
+    // First off, remove the <style> tag, because strip_tags() leaves the CSS
+    // inline.
+    $value = preg_replace('/<style\b[^>]*>(.*?)<\/style>/is', '', $value);
+
+    // Ditto for JavaScript.
+    $value = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $value);
 
     // Remove any HTML code that might have been included.
     $value = strip_tags($value);
@@ -483,9 +495,24 @@ class DrupalTextMetaTag extends DrupalDefaultMetaTag {
       'raw' => FALSE,
     );
 
+    // If the value wasn't set there's no point in proceeding.
+    if (!isset($this->data['value'])) {
+      return '';
+    }
+
     $value = $this->data['value'];
 
     if (empty($options['raw'])) {
+      // Make sure there is a node to work with.
+      if (isset($options['token data']['node'])) {
+        // Get language to use for selecting body field value.
+        $lang = field_language('node', $options['token data']['node'], 'body');
+        if (!empty($options['token data']['node']->body[$lang][0]['value'])) {
+          // Pre-tidy the node body for token_replace if it's not empty.
+          $options['token data']['node']->body[$lang][0]['value'] = $this->tidyValue($options['token data']['node']->body[$lang][0]['value']);
+        }
+      }
+
       // Give other modules the opportunity to use hook_metatag_pattern_alter()
       // to modify defined token patterns and values before replacement.
       drupal_alter('metatag_pattern', $value, $options['token data'], $this->info['name']);

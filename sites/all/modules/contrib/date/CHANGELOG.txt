@@ -1,3 +1,24 @@
+Date 7.x-2.11-beta3, 2019-09-22
+-------------------------------
+#1392472 by Taran2L, jvandooren, podarok, jeff h, FluxSauce, maen, solotandem,
+  nickonom, anrikun, JvE, steinmb, joelpittet: Undefined index: timezone in
+  date.field.inc.
+#3022378 by dev11235, DamienMcKenna, joelpittet: Date with empty "Repeats #
+  Weeks" and "Repeats Every # of Days" validation needed.
+#2769057 by id.medion, Chris Matthews, steinmb: Remove unused argument in the
+  function calls field_cache_clear() and field_info_cache_clear(),
+#3033104 by DamienMcKenna: Add a LICENSE.txt file.
+#3032391 by herved, steinmb, skylord, DanielVeza: Empty date fields are being
+  displayed.
+#3033022 by solotandem, steinmb: Correct reference to granularity setting.
+#2701545 by ron_s, Chris Charlton, Chris Matthews, adci_contributor,
+  DamienMcKenna: Add support for Date Popup Timepicker module.
+#3081547 by bhaskar-chakraborty, DamienMcKenna, vijaycs85: Update 7006 breaks
+  when using the field_encrypt module.
+#3032835 by solotandem, DamienMcKenna, steinmb, John_B: Validate input to date
+  filter handler.
+
+
 Date 7.x-2.11-beta2, 2018-10-26
 -------------------------------
 #3009740 by evgeny.chernyavskiy, DamienMcKenna, steinmb: PHP 7.3 compatibility,

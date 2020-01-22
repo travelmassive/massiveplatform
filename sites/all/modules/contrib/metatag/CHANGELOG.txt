@@ -1,3 +1,40 @@
+Metatag 7.x-1.26, 2019-12-20
+----------------------------
+#3011548 by jacob.embree, DamienMcKenna: Add configure link to
+  metatag_importer.info.
+#2966185 by DamienMcKenna, justindodge: Cache get without set causes super long
+  lock_waits with stampede protection.
+#3030181 by DamienMcKenna: Filter JavaScript, style content out of values.
+#3021167 by Stevel, DamienMcKenna: Make Devel a dependency for all tests.
+#3030239 by DamienMcKenna: Remove duplicate metatag_hreflang.test file.
+#3044943 by thejimbirch, mluzitano, DamienMcKenna: Fix LICENSE.txt.
+#3037897 by Ronino, DamienMcKenna: Allow raw meta tags to be modified prior to
+  creating the render array.
+#3037874 by Ronino: Build meta tags for Panels much later so they can be altered
+  after page data has been processed.
+#3018692 by thatguy, DamienMcKenna: Search API index multiple types.
+#3061475 by DamienMcKenna: Token to provide summary of text fields.
+#2994100 by DamienMcKenna: Add new meta tag: google.
+#3082120 by thejimbirch, cindytwilliams, DamienMcKenna: Add option name in
+  ROBOTS selector.
+#2831198 by FeyP, Xrobak, DamienMcKenna, Simon Georges: Translated views metatag
+  do not display.
+#2947473 by aether, rpayanm: Validate string in
+  DrupalDefaultMetaTag::tidyValue().
+#2982252 by DamienMcKenna, dev20.addweb, Mingsong: PHP Notice: Undefined index
+  value.
+#3047486 by DamienMcKenna: Recommend the Fast Token Browser module.
+#2977120 by DamienMcKenna: New meta tag: og:image:alt.
+#3027076 by DamienMcKenna: Add meta tag: Pocket site verification.
+#3096935 by DamienMcKenna, cindytwilliams, rubyji: Add new tag: Zoom domain
+  verification.
+#2994102 by DamienMcKenna, LaravZ: Removed extra xmlns definitions due to W3C
+  validation errors.
+#3063056 by tristangraves, DamienMcKenna: Metatag has media browser token in
+  meta description.
+#2957361 by DamienMcKenna: Add support for Pinterest meta namespace.
+
+
 Metatag 7.x-1.25, 2018-04-03
 ----------------------------
 #2958362 by DamienMcKenna, didierlebouc: Undefined index error in 7.x-1.24.

@@ -207,16 +207,16 @@ function metatag_metatag_info() {
     'weight' => ++$weight,
     'form' => array(
       '#options' => array(
-        'index' => t('Allow search engines to index this page (assumed).'),
-        'follow' => t('Allow search engines to follow links on this page (assumed).'),
-        'noindex' => t('Prevents search engines from indexing this page.'),
-        'nofollow' => t('Prevents search engines from following links on this page.'),
-        'noarchive' => t('Prevents cached copies of this page from appearing in search results.'),
-        'nosnippet' => t('Prevents descriptions from appearing in search results, and prevents page caching.'),
-        'noodp' => t('Blocks the <a href="!opendirectory">Open Directory Project</a> description from appearing in search results.', array('!opendirectory' => 'http://www.dmoz.org/')),
-        'noydir' => t('Prevents Yahoo! from listing this page in the <a href="@ydir">Yahoo! Directory</a>.', array('@ydir' => 'http://dir.yahoo.com/')),
-        'noimageindex' => t('Prevent search engines from indexing images on this page.'),
-        'notranslate' => t('Prevent search engines from offering to translate this page in search results.'),
+        'index' => t('index - Allow search engines to index this page (assumed).'),
+        'follow' => t('follow - Allow search engines to follow links on this page (assumed).'),
+        'noindex' => t('noindex - Prevents search engines from indexing this page.'),
+        'nofollow' => t('nofollow - Prevents search engines from following links on this page.'),
+        'noarchive' => t('noarchive - Prevents cached copies of this page from appearing in search results.'),
+        'nosnippet' => t('nosnippet - Prevents descriptions from appearing in search results, and prevents page caching.'),
+        'noodp' => t('noodp - Blocks the <a href="!opendirectory">Open Directory Project</a> description from appearing in search results.', array('!opendirectory' => 'http://www.dmoz.org/')),
+        'noydir' => t('noydir - Prevents Yahoo! from listing this page in the <a href="@ydir">Yahoo! Directory</a>.', array('@ydir' => 'http://dir.yahoo.com/')),
+        'noimageindex' => t('noimageindex - Prevent search engines from indexing images on this page.'),
+        'notranslate' => t('notranslate - Prevent search engines from offering to translate this page in search results.'),
       ),
     ),
   );
@@ -479,6 +479,14 @@ function metatag_metatag_info() {
     'devel_generate' => array(
       'type' => 'date',
     ),
+  );
+
+  $info['tags']['google'] = array(
+    'label' => t('Google'),
+    'description' => t("This meta tag communicates with Google. There are currently two directives supported: 'nositelinkssearchbox' to not to show the sitelinks search box, and 'notranslate' to ask Google not to offer a translation of the page. Both options may be added, just separate them with a comma. See <a href='@docs'>meta tags that Google understands</a> for further details.", array('@docs' => 'https://support.google.com/webmasters/answer/79812?hl=en')),
+    'class' => 'DrupalTextMetaTag',
+    'weight' => ++$weight,
+    'group' => 'advanced',
   );
 
   return $info;

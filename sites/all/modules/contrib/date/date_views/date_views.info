@@ -14,8 +14,11 @@ files[] = includes/date_views_filter_handler_simple.inc
 files[] = includes/date_views.views.inc
 files[] = includes/date_views_plugin_pager.inc
 
-; Information added by Drupal.org packaging script on 2019-01-22
-version = "7.x-2.11-beta2"
+; Test coverage.
+files[] = tests/date_views.filter.test
+
+; Information added by Drupal.org packaging script on 2019-09-23
+version = "7.x-2.11-beta3"
 core = "7.x"
 project = "date"
-datestamp = "1548172389"
+datestamp = "1569201788"

@@ -375,7 +375,15 @@ function date_popup_process_date_part(&$element) {
   }
   $date = '';
   if (!empty($element['#value']['date'])) {
+    // @todo If date does not meet the granularity or format condtions, then
+    // $date will have error condtions and '#default_value' below will have the
+    // global default date (most likely formatted string from 'now'). There
+    // will be an validation error message referring to the actual input date
+    // but the form element will display formatted 'now'.
     $date = new DateObject($element['#value']['date'], $element['#date_timezone'], date_popup_date_format($element));
+    if (!date_is_date($date)) {
+      $date = '';
+    }
   }
   $range = date_range_years($element['#date_year_range'], $date);
   $year_range = date_range_string($range);
@@ -407,6 +415,9 @@ function date_popup_process_date_part(&$element) {
 
   // Manually build this element and set the value - this will prevent
   // corrupting the parent value.
+  // Do NOT set '#input' => FALSE as this prevents the form API from recursing
+  // into this element (this was useful when the '#value' property was being
+  // overwritten by the '#default_value' property).
   $parents = array_merge($element['#parents'], array('date'));
   $sub_element = array(
     '#type' => 'textfield',
@@ -414,7 +425,6 @@ function date_popup_process_date_part(&$element) {
     '#title_display' => $element['#date_label_position'] == 'above' ? 'before' : 'invisible',
     '#default_value' => date_format_date($date, 'custom', date_popup_date_format($element)),
     '#id' => $id,
-    '#input' => FALSE,
     '#size' => !empty($element['#size']) ? $element['#size'] : 20,
     '#maxlength' => !empty($element['#maxlength']) ? $element['#maxlength'] : 30,
     '#attributes' => $element['#attributes'],
@@ -422,7 +432,7 @@ function date_popup_process_date_part(&$element) {
     '#name' => array_shift($parents) . '[' . implode('][', $parents) . ']',
     '#ajax' => !empty($element['#ajax']) ? $element['#ajax'] : FALSE,
   );
-  $sub_element['#value'] = $sub_element['#default_value'];
+  // Do NOT overwrite the actual input with the default value.
   // @todo Figure out exactly when this is needed, in many places it is not.
   $sub_element['#description'] = ' ' . t('E.g., @date', array(
       '@date' => date_format_date(
@@ -521,7 +531,7 @@ function date_popup_process_time_part(&$element) {
     '#ajax' => !empty($element['#ajax']) ? $element['#ajax'] : FALSE,
   );
 
-  $sub_element['#value'] = $sub_element['#default_value'];
+  // Do NOT overwrite the actual input with the default value.
 
   // @todo Figure out exactly when this is needed, in many places it is not.
   $example_date = date_now();
@@ -751,7 +761,7 @@ function date_popup_popup_to_format($format) {
  * input format into one that the given timepicker can support.
  *
  * @param string $timepicker
- *   The time entry plugin being used: either 'wvega' or 'default'.
+ *   The time entry plugin being used: 'wvega', 'timepicker' or 'default'.
  *
  * @return array
  *   A map of replacements.
@@ -761,6 +771,10 @@ function date_popup_timepicker_format_replacements($timepicker = 'default') {
     case 'wvega':
       // The wvega timepicker only supports uppercase AM/PM.
       return array('a' => 'A');
+
+    case 'timepicker':
+      // The jquery_ui timepicker supports all possible date formats.
+      return array();
 
     default:
       // The default timeEntry plugin requires leading zeros.

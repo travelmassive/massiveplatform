@@ -109,13 +109,7 @@ function date_field_formatter_view($entity_type, $entity, $field, $instance, $la
   //   If TRUE, tells the theme to show all the computed values
   //   of a repeating date. If not TRUE or not set, only the
   //   start date and the repeat rule will be displayed.
-  $element = array(
-    '#attached' => array(
-      'css' => array(
-      drupal_get_path('module', 'date_api') . '/date.css',
-      )
-    ),
-  );
+  $element = array();
   $settings = $display['settings'];
   $formatter = $display['type'];
   $variables = array(
@@ -218,6 +212,12 @@ function date_field_formatter_view($entity_type, $entity, $field, $instance, $la
         }
       }
   }
+
+  // Add the CSS stylesheet only if we have something to display.
+  if (!empty($element)) {
+    $element['#attached']['css'][] = drupal_get_path('module', 'date_api') . '/date.css';
+  }
+
   return $element;
 }
 
@@ -373,12 +373,13 @@ function date_field_validate($entity_type, $entity, $field, $instance, $langcode
     foreach ($items as $delta => $item) {
       if (is_array($item) && isset($item['value'])) {
         $process = date_process_values($field, $instance);
-        $date1 = new DateObject($item['value'], $item['timezone'], date_type_format($field['type']));
-        if (count($process) == 1 || (empty($item['value2']) && $item['value2'] !== 0)) {
+        $timezone = date_get_timezone($field['settings']['tz_handling'], isset($item['timezone']) ? $item['timezone'] : '');
+        $date1 = new DateObject($item['value'], $timezone, date_type_format($field['type']));
+        if (count($process) === 1 || (empty($item['value2']) && $item['value2'] !== 0)) {
           $date2 = clone $date1;
         }
         else {
-          $date2 = new DateObject($item['value2'], $item['timezone'], date_type_format($field['type']));
+          $date2 = new DateObject($item['value2'], $timezone, date_type_format($field['type']));
         }
         $valid1 = $date1->validGranularity($field['settings']['granularity'], $flexible);
         $valid2 = $date2->validGranularity($field['settings']['granularity'], $flexible);

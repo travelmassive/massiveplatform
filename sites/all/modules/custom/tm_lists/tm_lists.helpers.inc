@@ -21,25 +21,26 @@ function tm_lists_get_display_list_title($list) {
  */
 function tm_lists_get_display_list_description($list) {
 
+	global $conf;
+
 	$list_description = "";
 	if (isset($list->field_list_description[LANGUAGE_NONE][0]['value'])) {
 		$list_description = trim($list->field_list_description[LANGUAGE_NONE][0]['value']);
 	}
 
-	// format with paragraphs
-	$list_description = str_replace("\n", "</p>\n<p>", $list_description);
-	$list_description = "<p>" . $list_description . "</p>";
+	// get link target
+	$link_target = $conf["tm_lists_link_target"];
 
-	// replace ---- with hr
-	$list_description = preg_replace("/[-]{4,10}/", "<div class='tm_field_hr'></div>", $list_description); 
+	// allow markdown
+	$list_description = tm_base_parsedown($list_description, $link_target);
 
 	// linkify
-	$list_description = tm_base_linkify($list_description, ["http", "https", "mail", "twitter"], ["rel" => "nofollow noopener", "target" => "_blank"]); // add links
+	$list_description = tm_base_linkify($list_description, ["http", "https", "mail", "twitter"], ["rel" => "nofollow noopener", "target" => $link_target]); // add links
 
 	// add number of items
 	$num_items = tm_lists_get_num_items($list->nid, 1);
+	$list_description = str_replace("[##]", $num_items, $list_description); // in case you want to put ## at start of line
 	$list_description = str_replace("##", $num_items, $list_description);
-	
 	return $list_description;
 }
 

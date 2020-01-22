@@ -534,10 +534,10 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 
 		// format item comment
 		$comment = strip_tags($comment);
+		$comment = tm_base_parsedown($comment, $link_target); // allow markdown
+		$comment = tm_base_linkify($comment, ["http", "https", "mail", "twitter"], ["rel" => $rel, "target" => $link_target]); // linkify
+		$comment = str_replace("[##]", $count, $comment); // in case you want to put ## at start of line
 		$comment = str_replace("##", $count, $comment); // replace ## with position
-		$comment = str_replace("\n", "</p>\n<p>", $comment);
-		$comment = "<p>" . $comment . "</p>";
-		$comment = tm_base_linkify($comment, ["http", "https", "mail", "twitter"], ["rel" => $rel, "target" => $link_target]);
 
 		// profile url
 		$item_url = "/" . drupal_get_path_alias($entity_type . "/" . $item->entity_id);

@@ -1,0 +1,15 @@
+name = Metatag: Pinterest
+description = "Provides support for Pinterests's custom meta tags."
+package = SEO
+core = 7.x
+dependencies[] = metatag:metatag
+
+; Tests.
+files[] = tests/metatag_pinterest.test
+files[] = tests/metatag_pinterest.tags.test
+
+; Information added by Drupal.org packaging script on 2019-12-20
+version = "7.x-1.26"
+core = "7.x"
+project = "metatag"
+datestamp = "1576870397"

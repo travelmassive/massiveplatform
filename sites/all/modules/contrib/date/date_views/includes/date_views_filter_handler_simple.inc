@@ -406,10 +406,12 @@ class date_views_filter_handler_simple extends views_handler_filter_date {
 
     if (!empty($form_state['exposed'])) {
       // UI when the date selector is exposed.
+      $label = $this->options['expose']['label'];
       $default_date = $this->date_default_value($prefix);
       $id = 'edit-' . str_replace('_', '-', $this->field) . '-' . $prefix;
       $form[$prefix] = array(
         '#title' => check_plain($label),
+        '#title_display' => 'invisible',
         '#type' => $type,
         '#size' => 20,
         '#default_value' => !empty($this->value[$prefix]) ? $this->value[$prefix] : $default_date,
@@ -424,6 +426,11 @@ class date_views_filter_handler_simple extends views_handler_filter_date {
         $form[$prefix]['#pre_render'][] = 'ctools_dependent_pre_render';
         $form[$prefix]['#dependency'] = array($source => $operator_values);
       }
+
+      // Validate the input value; set form state input array.
+      $input = isset($form_state['input'][$identifier][$prefix]) ? $form_state['input'][$identifier][$prefix] : array();
+      $form_state['input'][$identifier][$prefix] = $this->input_validate($form[$prefix], $input);
+
       if (!isset($form_state['input'][$identifier][$prefix])) {
         // Handle bogus input from the query string to prevent fatal errors.
         if (isset($form_state['input'][$identifier]) && !is_array($form_state['input'][$identifier])) {
@@ -484,6 +491,57 @@ class date_views_filter_handler_simple extends views_handler_filter_date {
       }
     }
     return $form;
+  }
+
+  /**
+   * Returns form state input array appropriate to missing, valid, and invalid input.
+   */
+  function input_validate($element, $input) {
+    if (!$input) {
+      // No input value (e.g. initial form load), set value to NULL so Form API
+      // calls the element value_callback routine with FALSE to set the '#value'
+      // property from the '#default_value' property.
+      // See _form_builder_handle_input_element().
+      if ($element['#type'] != 'date_select') {
+        return array('date' => NULL);
+      }
+      $granularity = date_format_order($element['#date_format']);
+      if ($key = array_search('timezone', $granularity)) {
+        unset($granularity[$key]);
+      }
+      return array_fill_keys($granularity, NULL);
+    }
+
+    // Include element defaults to avoid notices in the xxx_input_date routines.
+    // Copied from form_builder() in form.inc.
+    if (isset($element['#type']) && empty($element['#defaults_loaded']) && ($info = element_info($element['#type']))) {
+      // Overlay $info onto $element, retaining preexisting keys in $element.
+      $element += $info;
+      $element['#defaults_loaded'] = TRUE;
+    }
+
+    $date = NULL;
+    $function = "{$element['#type']}_input_date";
+    if (($date = $function($element, $input)) && date_is_date($date)) {
+      // The input is valid including being in the expected format.
+      return $input;
+    }
+
+    if (is_object($date)) {
+      // Input may not meet the granularity and format but is recognizable.
+      return $input;
+    }
+
+    // Input is bogus, return empty array in granularity format.
+    if ($element['#type'] != 'date_select') {
+      return array('date' => '');
+    }
+
+    $granularity = date_format_order($element['#date_format']);
+    if ($key = array_search('timezone', $granularity)) {
+      unset($granularity[$key]);
+    }
+    return array_fill_keys($granularity, '');
   }
 
   /**

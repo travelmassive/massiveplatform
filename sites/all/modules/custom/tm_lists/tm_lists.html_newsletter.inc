@@ -66,11 +66,11 @@ function tm_lists_display_list_html_newsletter($list_id) {
 		$list_description = trim($list->field_list_description[LANGUAGE_NONE][0]['value']);
 	}
 	$num_items = tm_lists_get_num_items($list->nid, 1);
-	$list_description = str_replace("##", $num_items, $list_description);
 	$list_description = strip_tags($list_description);
-	$list_description = str_replace("\n", "</p>\n<p>", $list_description);
-	$list_description = "<p>" . $list_description . "</p>";
-	$list_description = tm_base_linkify($list_description, ["http", "https", "mail", "twitter"]);
+	$list_description = tm_base_parsedown($list_description); // allow markdown
+	$list_description = tm_base_linkify($list_description, ["http", "https", "mail", "twitter"]); // linkify
+	$list_description = str_replace("[##]", $num_items, $list_description); // in case you want to put ## at start of line
+	$list_description = str_replace("##", $num_items, $list_description); // replace ## with position
 	$list_description = $conf["tm_lists_newsletter_intro"] . $list_description;
 
 	// get items from list
@@ -208,8 +208,10 @@ function tm_lists_display_list_html_newsletter($list_id) {
 
 		// comment
 		$item_comment = strip_tags($comment);
+		$item_comment = tm_base_parsedown($item_comment); // allow markdown
+		$item_comment = tm_base_linkify($item_comment, ["http", "https", "mail", "twitter"]); // linkify
+		$item_comment = str_replace("[##]", $count, $item_comment); // in case you want to put ## at start of line
 		$item_comment = str_replace("##", $num_items, $item_comment); // replace ## with position
-		$item_comment = tm_base_linkify($item_comment, ["http", "https", "mail", "twitter"]);
 
 		// replace fields
 		$item_template = $newsletter_item_template;
@@ -281,9 +283,11 @@ function tm_lists_display_list_html_newsletter($list_id) {
 	// render
 	echo "<style>a { color: #1595e7; }</style>";
 	echo "<div id='header'><center>";
-	if (trim($list->field_list_moderator_notes[LANGUAGE_NONE][0]['value']) != "") {
-		$moderators_note = $list->field_list_moderator_notes[LANGUAGE_NONE][0]['value'];
-		echo "<br><span style='display: inline-block; color: #888; font-family: Arial; padding-bottom: 0.5rem; border-bottom: 1px solid #ddd;'><i>Moderator notes:</i> " . str_replace("\n", "<br>", $moderators_note) . "</span><br>";
+	if (isset($list->field_list_moderator_notes[LANGUAGE_NONE][0]['value'])) {
+		if (trim($list->field_list_moderator_notes[LANGUAGE_NONE][0]['value']) != "") {
+			$moderators_note = $list->field_list_moderator_notes[LANGUAGE_NONE][0]['value'];
+			echo "<br><span style='display: inline-block; color: #888; font-family: Arial; padding-bottom: 0.5rem; border-bottom: 1px solid #ddd;'><i>Moderator notes:</i> " . str_replace("\n", "<br>", $moderators_note) . "</span><br>";
+		}
 	}
 	echo "</center></div>";
 	echo $newsletter_template;

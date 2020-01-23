@@ -74,6 +74,10 @@ ul.tm-lists-index li {
 	font-size: 14pt;
 }
 
+.tm-list-description {
+	text-align: left;
+}
+
 .tm-list-meta-data {
 	margin-top: 2rem;
 	padding-top: 1rem;

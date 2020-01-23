@@ -39,8 +39,15 @@ function tm_lists_display_list_rss($list_id) {
 		$list_description = trim($list->field_list_description[LANGUAGE_NONE][0]['value']);
 	}
 	$num_items = tm_lists_get_num_items($list->nid, 1);
-	$list_description = str_replace("##", $num_items, $list_description);
 	$list_description = strip_tags($list_description);
+	
+	// apply markdown, and remove
+	$list_description = tm_base_parsedown($list_description, ""); // allow markdown
+	$list_description = strip_tags($list_description); // remove markdown
+
+	// apply counts
+	$list_description = str_replace("[##]", $num_items, $list_description);
+	$list_description = str_replace("##", $num_items, $list_description);
 
 	// get items from list
 	$items = tm_lists_get_items_by_id($list_id, $sort_method, 0, 100);
@@ -100,6 +107,13 @@ function tm_lists_display_list_rss($list_id) {
 
 		// comment
 		$comment = strip_tags($item->comment);
+
+		// apply markdown, and remove
+		$comment = tm_base_parsedown($comment, ""); // allow markdown
+		$comment = strip_tags($comment); // remove markdown
+
+		// apply position
+		$comment = str_replace("[##]", $num_items, $comment); // replace [##] with position
 		$comment = str_replace("##", $num_items, $comment); // replace ## with position
 
 		// create xml child

@@ -392,3 +392,7 @@ ul.tm-list-item-actions-dropdown-menu {
   border-top: 1px solid #eee;
 }
 
+.tm-list-intro hr {
+	width: 80%;
+	margin: auto;
+}

@@ -74,6 +74,10 @@ ul.tm-lists-index li {
 	font-size: 14pt;
 }
 
+.tm-list-description {
+	text-align: left;
+}
+
 .tm-list-meta-data {
 	margin-top: 2rem;
 	padding-top: 1rem;
@@ -160,7 +164,7 @@ img.tm-list-contributor-avatar {
 	padding: 1rem;
 	margin-left: 1rem;
 	margin-right: 2rem;
-	width: 40%;
+	width: 33%;
 	border-right: 1px solid #eee;
 }
 
@@ -360,4 +364,35 @@ ul.tm-list-item-actions-dropdown-menu {
 		padding-left: 1rem;
 		width: 140px;
 	}
+	.tm-list-view-item-position {
+		margin-top: 1.75rem;
+		padding-right: 0;
+	}
+}
+
+/* Markdown */
+
+.tm-list-view-item-comment h1, .tm-list-view-item-comment h2, .tm-list-view-item-comment h3, .tm-list-view-item-comment h3 {
+  margin-bottom: 0;
+}
+
+.tm-list-view-item-comment ul {
+  list-style-type: circle;
+  padding-left: 1em;
+}
+
+.tm-list-view-item-comment blockquote {
+  border-left: 8px solid #ddd;
+  padding-left: 8px;
+  margin-left: 0px;
+}
+
+.tm-list-intro hr, .tm-list-view-item-comment hr {
+  border: none;
+  border-top: 1px solid #eee;
+}
+
+.tm-list-intro hr {
+	width: 80%;
+	margin: auto;
 }

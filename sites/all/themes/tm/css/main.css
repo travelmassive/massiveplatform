@@ -2832,7 +2832,7 @@ tr.selected td {
 /* line 803, ../sass/components/_misc.scss */
 .progress .filled {
   background-color: #0072b9;
-  background-image: url('../images/progress.gif?1563867598');
+  background-image: url('../images/progress.gif?1578307708');
 }
 
 /* ==========================================================================
@@ -9355,6 +9355,30 @@ p.tm_footer_2018_slogan {
   color: #222;
   text-align: center;
   border: 1px solid #ffffff;
+}
+
+/* line 1182, ../sass/_single.scss */
+.detail-item blockquote {
+  margin-left: 0;
+  border-left: 4px solid #4382af;
+  padding-left: 0.5rem;
+  margin-top: 1rem;
+}
+
+/* line 1189, ../sass/_single.scss */
+.detail-item ul, .detail-item ol {
+  padding-left: 1rem;
+}
+
+/* line 1193, ../sass/_single.scss */
+.detail-item hr {
+  border: none;
+  border-top: 1px solid #e8eaeb;
+}
+
+/* line 1198, ../sass/_single.scss */
+.detail-item table, th, td {
+  border: 1px solid #e8eaeb;
 }
 
 /* line 2, ../sass/_login.scss */

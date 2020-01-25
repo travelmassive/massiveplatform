@@ -485,7 +485,8 @@ function tm_base_field_group_pre_render(&$element, $group, &$form) {
 function tm_base_ds_field_theme_functions_info() {
   return array(
     'theme_ds_field_dl' => t('TM Definition list item'),
-    'theme_ds_field_tm_default' => t('TM default field')
+    'theme_ds_field_tm_default' => t('TM default field'),
+    'theme_ds_field_tm_default_markdown' => t('TM default field (with Markdown)')
   );
 }
 
@@ -515,6 +516,57 @@ function theme_ds_field_tm_default($variables) {
     $rendered_item = drupal_render($item);
     $rendered_item = str_replace("\n", "<br>", $rendered_item); // add line breaks
     $rendered_item = preg_replace("/[-]{4,10}/", "<div class='tm_field_hr'></div>", $rendered_item); // replace ---- with hr
+    $output .= tm_base_linkify($rendered_item, ["http", "https", "mail", "twitter"], ["rel" => "nofollow noopener", "target" => "_blank"]); // add links
+  }
+  $output .= '</div>';
+
+  return $output;
+}
+
+/**
+ * Field theming function. Output the default TM field with markdown
+ */
+function theme_ds_field_tm_default_markdown($variables) {
+
+  global $conf;
+
+  // by default, don't parse markdown
+  $markdown_allowed = false;
+
+  // get field entity type and id
+  $entity_type = null;
+  $entity_id = null;
+
+  if (isset($variables['element']['#object']->uid)) {
+    $entity_id = $variables['element']['#object']->uid;
+    $entity_type = $variables['element']['#bundle'];
+  }
+
+  if (isset($variables['element']['#object']->nid)) {
+    $entity_id = $variables['element']['#object']->nid;
+    $entity_type = $variables['element']['#bundle'];
+  }
+
+  // check markdown allowed
+  $markdown_allowed = tm_base_check_markdown_permission($entity_type, $entity_id);
+
+  // render with default if markdown not allowed
+  if (!$markdown_allowed) {
+    return theme_ds_field_tm_default($variables);
+  }
+
+  // return markdown
+  $output = '';
+
+  $output .= '<div class="detail-item ' . $variables['field_name_css'] . '"><h2>' . $variables['label'] . '</h2>';
+  foreach ($variables['items'] as $delta => $item) {
+    $rendered_item = drupal_render($item); // will make any html tags entities
+    $rendered_item = str_replace("&gt;", ">", $rendered_item); // replace &gt; with > so we can do quotes
+    $rendered_item = str_replace("&quot;", "\"", $rendered_item); // replace &gt; with > so we can do quotes
+    $rendered_item = tm_base_parsedown($rendered_item, "", true); // markdown and don't escape html (it's escaped in drupal_render)
+    $rendered_item = str_replace("\n", "<br>", $rendered_item); // add line breaks
+    $rendered_item = str_replace("<br><", "<", $rendered_item); // remove <br> before open tag, ie: <br><p>, <br><h2>, etc.
+
     $output .= tm_base_linkify($rendered_item, ["http", "https", "mail", "twitter"], ["rel" => "nofollow noopener", "target" => "_blank"]); // add links
   }
   $output .= '</div>';
@@ -791,10 +843,11 @@ function tm_base_get_all_country_names() {
  * Uses Parsedown.php library
  * See: https://github.com/erusev/parsedown
  */
-function tm_base_parsedown($value, $link_target = "_blank") {
+function tm_base_parsedown($value, $link_target = "_blank", $allow_html = false) {
 
   $Parsedown = new Parsedown();
   $Parsedown->setSafeMode(true);
+  $Parsedown->setAllowRawHtmlInSafeMode($allow_html);
   if ($link_target != "") {
     $Parsedown->setLinkTarget($link_target);
   }
@@ -802,3 +855,50 @@ function tm_base_parsedown($value, $link_target = "_blank") {
 
 }
 
+/**
+ * Check if entity description can be rendered with markdown.
+ * 
+ * Configuration options:
+ * $conf["tm_markdown_allowed_users"] = array(1, 10452); // allowed users (use array(0) for all)
+ * $conf["tm_markdown_allowed_chapters"] = array(); // allowed chapter nids (use array(0) for all)
+ * $conf["tm_markdown_allowed_events"] = array(); // allowed events (use array(0) for all)
+ * $conf["tm_markdown_allowed_organizations"] = array(); // allowed companies (use array(0) for all)
+ */
+function tm_base_check_markdown_permission($entity_type, $entity_id) {
+
+  global $conf;
+
+  // config keys
+  $config_keys = array("user" => "tm_markdown_allowed_users", "chapter" => "tm_markdown_allowed_chapters", "event" => "tm_markdown_allowed_events", "organization" => "tm_markdown_allowed_organizations");
+
+  // check valid entity type
+  if (!isset($config_keys[$entity_type])) {
+    return false;
+  }
+
+  // get $conf[] key
+  $config_key = $config_keys[$entity_type];
+
+  // check config exists
+  if (!isset($conf[$config_key])) {
+    return false;
+  }
+
+  // no users, ie: array()
+  if (sizeof($conf[$config_key]) == 0) {
+    return false;
+  }
+
+  // all users or nodes, ie: array(0)
+  if (in_array(0, $conf[$config_key])) {
+    return true;
+  }
+
+  // check entity_id
+  if (in_array($entity_id, $conf[$config_key])) {
+    return true;
+  }
+
+  // no permission
+  return false;
+}

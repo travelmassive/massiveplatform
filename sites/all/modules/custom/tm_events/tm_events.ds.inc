@@ -18,8 +18,8 @@ function tm_events_ds_field_settings_info() {
   $ds_fieldsetting->bundle = 'event';
   $ds_fieldsetting->view_mode = 'full';
   $ds_fieldsetting->settings = array(
-    'ds_flag_event_waitlist' => array(
-      'weight' => '3',
+    'ds_flag_event_register' => array(
+      'weight' => '2',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -28,8 +28,8 @@ function tm_events_ds_field_settings_info() {
         ),
       ),
     ),
-    'ds_flag_event_register' => array(
-      'weight' => '2',
+    'ds_flag_event_waitlist' => array(
+      'weight' => '3',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
@@ -219,7 +219,7 @@ function tm_events_ds_field_settings_info() {
     'body' => array(
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_tm_default',
+          'func' => 'theme_ds_field_tm_default_markdown',
           'lb-col' => TRUE,
         ),
       ),
@@ -512,37 +512,37 @@ function tm_events_ds_layout_settings_info() {
       'first_column' => array(
         0 => 'tm_ds_event_price',
         4 => 'tm_ds_fulldate_event',
-        6 => 'tm_ds_event_location',
-        9 => 'tm_ds_event_message',
+        7 => 'tm_ds_event_location',
+        8 => 'tm_ds_event_message',
         13 => 'body',
         15 => 'tm_ds_event_refund_policy',
-        17 => 'group_details_wrapper',
+        18 => 'group_details_wrapper',
       ),
       'header_media' => array(
         1 => 'field_image',
       ),
       'header_body' => array(
-        2 => 'field_rsvp_link',
-        3 => 'tm_ds_date_avatar',
-        5 => 'ds_flag_event_register',
-        7 => 'title',
-        8 => 'tm_ds_event_seats_count',
-        10 => 'ds_flag_event_waitlist',
+        2 => 'tm_ds_date_avatar',
+        3 => 'field_rsvp_link',
+        5 => 'title',
+        6 => 'ds_flag_event_register',
+        9 => 'ds_flag_event_waitlist',
+        10 => 'tm_ds_event_seats_count',
         11 => 'group_action_menu_wrapper',
         12 => 'tm_ds_anon_flag_placeholder',
-        14 => 'tm_ds_communication_actions',
-        18 => 'tm_ds_more_actions',
+        16 => 'tm_ds_communication_actions',
+        17 => 'tm_ds_more_actions',
         27 => 'group_action_menu',
       ),
       'header_extra' => array(
-        16 => 'tm_ds_chapter_sticker',
+        14 => 'tm_ds_chapter_sticker',
       ),
       'second_column' => array(
         19 => 'group_sponsors',
         20 => 'group_featured_wrapper',
         21 => 'group_organizers_wrapper',
-        22 => 'field_event_sponsors',
-        23 => 'group_community_wrapper',
+        22 => 'group_community_wrapper',
+        23 => 'field_event_sponsors',
         24 => 'members_signed_up',
         25 => 'field_organizer',
         26 => 'field_event_featured_members',
@@ -551,28 +551,28 @@ function tm_events_ds_layout_settings_info() {
     'fields' => array(
       'tm_ds_event_price' => 'first_column',
       'field_image' => 'header_media',
-      'field_rsvp_link' => 'header_body',
       'tm_ds_date_avatar' => 'header_body',
+      'field_rsvp_link' => 'header_body',
       'tm_ds_fulldate_event' => 'first_column',
+      'title' => 'header_body',
       'ds_flag_event_register' => 'header_body',
       'tm_ds_event_location' => 'first_column',
-      'title' => 'header_body',
-      'tm_ds_event_seats_count' => 'header_body',
       'tm_ds_event_message' => 'first_column',
       'ds_flag_event_waitlist' => 'header_body',
+      'tm_ds_event_seats_count' => 'header_body',
       'group_action_menu_wrapper' => 'header_body',
       'tm_ds_anon_flag_placeholder' => 'header_body',
       'body' => 'first_column',
-      'tm_ds_communication_actions' => 'header_body',
-      'tm_ds_event_refund_policy' => 'first_column',
       'tm_ds_chapter_sticker' => 'header_extra',
-      'group_details_wrapper' => 'first_column',
+      'tm_ds_event_refund_policy' => 'first_column',
+      'tm_ds_communication_actions' => 'header_body',
       'tm_ds_more_actions' => 'header_body',
+      'group_details_wrapper' => 'first_column',
       'group_sponsors' => 'second_column',
       'group_featured_wrapper' => 'second_column',
       'group_organizers_wrapper' => 'second_column',
-      'field_event_sponsors' => 'second_column',
       'group_community_wrapper' => 'second_column',
+      'field_event_sponsors' => 'second_column',
       'members_signed_up' => 'second_column',
       'field_organizer' => 'second_column',
       'field_event_featured_members' => 'second_column',
@@ -591,6 +591,7 @@ function tm_events_ds_layout_settings_info() {
     'layout_attributes_merge' => 1,
     'layout_link_attribute' => '',
     'layout_link_custom' => '',
+    'layout_disable_css' => FALSE,
     'hide_page_title' => '1',
     'page_option_title' => '',
   );

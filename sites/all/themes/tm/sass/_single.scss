@@ -1179,4 +1179,22 @@ p.tm_footer_2018_slogan {
 .footer-hero-text a { color: #ffffff; }
 .footer-hero-info { position: absolute; width: 80px; font-family: Lato; font-size: 14px; top: 16px; right: 16px; background-color: #ffffff; border-radius: 8px; padding: 4px; color: #222; text-align: center; border: 1px solid #ffffff;}
 
+.detail-item blockquote {
+  margin-left: 0;
+  border-left: 4px solid #4382af; 
+  padding-left: 0.5rem; 
+  margin-top: 1rem;
+}
 
+.detail-item ul, .detail-item ol {
+  padding-left: 1rem;
+}
+
+.detail-item hr {
+  border: none;
+  border-top: 1px solid #e8eaeb;
+}
+
+.detail-item table, th, td {
+  border: 1px solid #e8eaeb;
+}

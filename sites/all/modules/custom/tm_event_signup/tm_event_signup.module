@@ -104,6 +104,9 @@ function _tm_event_seats_count($field, $title = NULL) {
         // event it set to waitlist all attendees
         return t('This is a waitlisted event');
       } else {
+        if ($waitlist_count == 0) {
+          return t('Be the first to register!');
+        }
         return t($waitlist_count . ' on the waitlist');
       }
     } else {

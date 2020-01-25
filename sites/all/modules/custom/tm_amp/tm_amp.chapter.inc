@@ -59,8 +59,22 @@ function tm_amp_render_chapter($node_id) {
 	// description
 	$description = "";
 	$description_linked = "";
-	if (isset($node->body[LANGUAGE_NONE][0]['value'])) {
-		$description = strip_tags($node->body[LANGUAGE_NONE][0]['value']);
+	if (isset($node->body[LANGUAGE_NONE][0]['safe_value'])) {
+
+		// get description, decode safe_value so we have line breaks, etc
+		$description = htmlspecialchars_decode($node->body[LANGUAGE_NONE][0]['safe_value']);
+
+		// if markdown is enabled, parse it
+		if (tm_base_check_markdown_permission("chapter", $node->nid)) {
+			$description = tm_base_parsedown($description, "", true);
+			$description = str_replace("<p>", "", $description);
+			$description = str_replace("</p>", "\n", $description); // replace </p> tags with \n
+		}
+
+		// remove tags and apply some formatting
+		$description = preg_replace("/<([^>]*(<|$))/", "&lt;$1", $description); // convert any open tags to htmlentities
+		$description = strip_tags($description); // strip tags
+		$description = preg_replace("/[\r\n]{3,}/", "\n", $description); // remove three or more consecutive line breaks
 		$description = str_replace("\n", "<br>", $description); // add line breaks
 		$description = preg_replace("/[-]{4,10}/", "", $description); // replace ----
 		$description_linked = tm_base_linkify($description, ["http", "https", "mail", "twitter"], ["rel" => "nofollow"]); // add links

@@ -86,10 +86,24 @@ function tm_amp_render_user($user_id) {
 	// about me
 	$about_me = "";
 	$about_me_linked = "";
-	if (isset($account->field_about_me[LANGUAGE_NONE][0]['value'])) {
-		$about_me = strip_tags($account->field_about_me[LANGUAGE_NONE][0]['value']);
+	if (isset($account->field_about_me[LANGUAGE_NONE][0]['safe_value'])) {
+
+		// get description, decode safe_value so we have line breaks, etc
+		$about_me = htmlspecialchars_decode($account->field_about_me[LANGUAGE_NONE][0]['safe_value']);
+
+		// if markdown is enabled, parse it
+		if (tm_base_check_markdown_permission("user", $account->uid)) {
+			$about_me = tm_base_parsedown($about_me, "", true);
+			$about_me = str_replace("<p>", "", $about_me);
+			$about_me = str_replace("</p>", "\n", $about_me); // replace </p> tags with \n
+		}
+
+		// remove tags and apply some formatting
+		$about_me = preg_replace("/<([^>]*(<|$))/", "&lt;$1", $about_me);  // convert any open tags to htmlentities
+		$about_me = strip_tags($about_me); // strip tags
+		$about_me = preg_replace("/[\r\n]{3,}/", "\n", $about_me); // remove three or more consecutive line breaks
 		$about_me = str_replace("\n", "<br>", $about_me); // add line breaks
-    	$about_me = preg_replace("/[-]{4,10}/", "", $about_me); // replace ----
+		$about_me = preg_replace("/[-]{4,10}/", "", $about_me); // replace ----
 		$about_me_linked = tm_base_linkify($about_me, ["http", "https", "mail", "twitter"], ["rel" => "nofollow"]); // add links
 	}
 	$html = str_replace("__PAGE_DESCRIPTION__", $about_me_linked, $html);

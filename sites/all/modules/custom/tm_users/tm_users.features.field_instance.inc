@@ -614,7 +614,9 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
       'search_result' => array(
         'label' => 'above',
         'module' => 'link',
-        'settings' => array(),
+        'settings' => array(
+          'custom_title' => '',
+        ),
         'type' => 'link_default',
         'weight' => 16,
       ),
@@ -756,7 +758,9 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
       'search_result' => array(
         'label' => 'above',
         'module' => 'link',
-        'settings' => array(),
+        'settings' => array(
+          'custom_title' => '',
+        ),
         'type' => 'link_default',
         'weight' => 17,
       ),
@@ -961,7 +965,9 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
       'search_result' => array(
         'label' => 'above',
         'module' => 'link',
-        'settings' => array(),
+        'settings' => array(
+          'custom_title' => '',
+        ),
         'type' => 'link_default',
         'weight' => 18,
       ),
@@ -1102,7 +1108,9 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
       'search_result' => array(
         'label' => 'above',
         'module' => 'link',
-        'settings' => array(),
+        'settings' => array(
+          'custom_title' => '',
+        ),
         'type' => 'link_default',
         'weight' => 19,
       ),

@@ -137,10 +137,20 @@ class Parsedown
         'steam:',
     );
 
+    // Massive platform
+
     protected $linkTarget = null;
     function setLinkTarget($linkTarget)
     {
         $this->linkTarget = $linkTarget;
+
+        return $this;
+    }
+
+    protected $allowRawHtmlInSafeMode = false;
+    function setAllowRawHtmlInSafeMode($allowRawHtmlInSafeMode)
+    {
+        $this->allowRawHtmlInSafeMode = $allowRawHtmlInSafeMode;
 
         return $this;
     }
@@ -1764,6 +1774,11 @@ class Parsedown
 
             $allowRawHtmlInSafeMode = isset($Element['allowRawHtmlInSafeMode']) && $Element['allowRawHtmlInSafeMode'];
             $permitRawHtml = !$this->safeMode || $allowRawHtmlInSafeMode;
+        }
+
+        // massive platform
+        if ($this->allowRawHtmlInSafeMode) {
+        	$permitRawHtml = true;
         }
 
         $hasContent = isset($text) || isset($Element['element']) || isset($Element['elements']);

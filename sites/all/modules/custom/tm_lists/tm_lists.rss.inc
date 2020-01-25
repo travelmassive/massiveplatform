@@ -41,7 +41,7 @@ function tm_lists_display_list_rss($list_id) {
 	$num_items = tm_lists_get_num_items($list->nid, 1);
 	$list_description = strip_tags($list_description);
 	
-	// apply markdown, and remove
+	// apply markdown, and remove tags
 	$list_description = tm_base_parsedown($list_description, ""); // allow markdown
 	$list_description = strip_tags($list_description); // remove markdown
 

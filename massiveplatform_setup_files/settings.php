@@ -1177,3 +1177,9 @@ $conf['tm_users_approval_on_signup_subject'] = "Welcome to our community"; // su
 $conf["tm_users_approval_minimum_score"] = 50; // minimum score (0-100) for chapter leader to approve
 $conf["tm_users_request_approval_minimum_score"] = 50; // minimum score (0-100) for guest to approve
 
+/** MARKDOWN **/
+/** Allow markdown on descriptions of these types **/
+$conf["tm_markdown_allowed_users"] = array(10452); // allowed users - use array(0) for all
+$conf["tm_markdown_allowed_chapters"] = array(); // allowed chapter nids - use array(0) for all
+$conf["tm_markdown_allowed_events"] = array(); // allowed events - use array(0) for all
+$conf["tm_markdown_allowed_organizations"] = array(); // allowed organizations - use array(0) for all

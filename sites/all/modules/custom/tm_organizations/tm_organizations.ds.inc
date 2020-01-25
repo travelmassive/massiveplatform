@@ -154,7 +154,7 @@ function tm_organizations_ds_field_settings_info() {
     'body' => array(
       'formatter_settings' => array(
         'ft' => array(
-          'func' => 'theme_ds_field_tm_default',
+          'func' => 'theme_ds_field_tm_default_markdown',
           'lb-col' => TRUE,
         ),
       ),

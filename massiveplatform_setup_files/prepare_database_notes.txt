@@ -1,6 +1,10 @@
 # IMPORTANT DEVELOPER NOTE: 
 
-If you are exporting updates to the tm_organization or tm_users module (ie: via drush fu), you must enable tm_subscriptions and tm_subscriptions_users first. You can then disable the modules again prior to creating a sample database.
+If you are exporting updates to the tm_organization or tm_users module (ie: via drush fu), you must enable tm_subscriptions and tm_subscriptions_users first. 
+
+If you are exporting updates to tm_events module (ie: via drush fu), you must enable tm_payments first. 
+
+You can then disable the modules again prior to creating a sample database.
 
 # Notes for preparing sample database
 

@@ -70,6 +70,7 @@ function tm_search_api_default_search_api_index() {
         "user:field_link_linkedin:url" : { "type" : "text" },
         "user:field_link_snapchat:url" : { "type" : "text" },
         "user:field_link_strava:url" : { "type" : "text" },
+        "user:field_link_tiktok:url" : { "type" : "text" },
         "user:field_link_twitter:url" : { "type" : "text" },
         "user:field_link_vimeo:url" : { "type" : "text" },
         "user:field_link_website:url" : { "type" : "text" },
@@ -677,6 +678,11 @@ function tm_search_api_default_search_api_server() {
             "boost" : "1.0"
           },
           "user:field_link_strava:url" : {
+            "table" : "search_api_db_tm_search_multi_index_text",
+            "type" : "text",
+            "boost" : "1.0"
+          },
+          "user:field_link_tiktok:url" : {
             "table" : "search_api_db_tm_search_multi_index_text",
             "type" : "text",
             "boost" : "1.0"

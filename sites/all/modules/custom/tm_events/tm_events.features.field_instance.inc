@@ -1237,7 +1237,7 @@ This will be added to the attendee count on the event page.',
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 47,
+      'weight' => 18,
     ),
   );
 
@@ -1542,6 +1542,129 @@ This will be added to the attendee count on the event page.',
       ),
       'type' => 'entityreference_autocomplete',
       'weight' => 6,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_sharing_image'.
+  $field_instances['node-event-field_event_sharing_image'] = array(
+    'bundle' => 'event',
+    'deleted' => 0,
+    'description' => 'Provide a creative graphic for social media sharing.<br><br>
+<strong>Tips</strong>
+<ul>
+<li>Recommended image size: 1200 x 630 pixels</li>
+<li>Images that consist of more than 20% text may experience reduced delivery when promoting on Facebook and other platforms.</li>
+<li>To preview your page — check <a target="_blank" href="https://developers.facebook.com/tools/debug/">Facebook Debugger</a> or <a target="_blank" href="https://cards-dev.twitter.com/validator">Twitter Cards Validator</a><br></li>
+<li>It may take up to 5 minutes for your changes to appear when previewing or sharing the page.</strong></li>
+</ul>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'image',
+        'settings' => array(
+          'image_link' => '',
+          'image_style' => '',
+        ),
+        'type' => 'image',
+        'weight' => 60,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_sharing_image',
+    'label' => 'Social media image',
+    'required' => 0,
+    'settings' => array(
+      'alt_field' => 0,
+      'default_image' => 0,
+      'file_directory' => 'images/events_social',
+      'file_extensions' => 'png gif jpg jpeg',
+      'max_filesize' => '8mb',
+      'max_resolution' => '',
+      'min_resolution' => '600x315',
+      'title_field' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'image',
+      'settings' => array(
+        'preview_image_style' => 'thumbnail',
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'image_image',
+      'weight' => 48,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_sharing_text'.
+  $field_instances['node-event-field_event_sharing_text'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'A short description for sharing on social media (124 - 150 characters).',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 61,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_sharing_text',
+    'label' => 'Social media description',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 2,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 49,
     ),
   );
 
@@ -2629,6 +2752,7 @@ This will be displayed to the member on the event page and included in the autom
   // Included for use with string extractors like potx.
   t('(Moderator) RSVP link text');
   t('<span id=\'tm-event-edit-company-description\'>The company hosting this event.</span>');
+  t('A short description for sharing on social media (124 - 150 characters).');
   t('Add a custom banner at the top of the event.<br>
 Provide HTML markup or a template alias.');
   t('Allow Chapter Leaders to send announcements');
@@ -2693,6 +2817,14 @@ This will be displayed to the member on the event page and included in the autom
   t('Payment commission (%)');
   t('Preview mode');
   t('Promote event to front page');
+  t('Provide a creative graphic for social media sharing.<br><br>
+<strong>Tips</strong>
+<ul>
+<li>Recommended image size: 1200 x 630 pixels</li>
+<li>Images that consist of more than 20% text may experience reduced delivery when promoting on Facebook and other platforms.</li>
+<li>To preview your page — check <a target="_blank" href="https://developers.facebook.com/tools/debug/">Facebook Debugger</a> or <a target="_blank" href="https://cards-dev.twitter.com/validator">Twitter Cards Validator</a><br></li>
+<li>It may take up to 5 minutes for your changes to appear when previewing or sharing the page.</strong></li>
+</ul>');
   t('Provide a link to the page with the RSVP (ie: http://www.eventbrite.com/e/your-event-url)');
   t('Provide the street address or physical location for this event.');
   t('Publish to Chapters');
@@ -2702,6 +2834,8 @@ This will be displayed to the member on the event page and included in the autom
   t('Send event notifications when attendees register or unregister for this event<br><br>
 ');
   t('Send payout to');
+  t('Social media description');
+  t('Social media image');
   t('Sponsors');
   t('The chapter hosting this event.<br>
 <strong>Publish to multiple chapters? See the <i>Event Chapters</i> section.</strong>');

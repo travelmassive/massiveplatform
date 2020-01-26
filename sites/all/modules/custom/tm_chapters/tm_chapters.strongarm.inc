@@ -78,10 +78,10 @@ function tm_chapters_strongarm() {
           'weight' => '13',
         ),
         'metatags' => array(
-          'weight' => '7',
+          'weight' => '8',
         ),
         'redirect' => array(
-          'weight' => '6',
+          'weight' => '7',
         ),
       ),
       'display' => array(),

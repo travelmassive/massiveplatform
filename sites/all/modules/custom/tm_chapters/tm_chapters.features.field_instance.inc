@@ -642,6 +642,129 @@ For JSONP append &callback=myfunction to the URL<br>',
     ),
   );
 
+  // Exported field_instance: 'node-chapter-field_chapter_sharing_image'.
+  $field_instances['node-chapter-field_chapter_sharing_image'] = array(
+    'bundle' => 'chapter',
+    'deleted' => 0,
+    'description' => 'Provide a creative graphic for social media sharing.<br><br>
+<strong>Tips</strong>
+<ul>
+<li>Recommended image size: 1200 x 630 pixels</li>
+<li>Images that consist of more than 20% text may experience reduced delivery when promoting on Facebook and other platforms.</li>
+<li>To preview your page — check <a target="_blank" href="https://developers.facebook.com/tools/debug/">Facebook Debugger</a> or <a target="_blank" href="https://cards-dev.twitter.com/validator">Twitter Cards Validator</a><br></li>
+<li>It may take up to 5 minutes for your changes to appear when previewing or sharing the page.</strong></li>
+</ul>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'image',
+        'settings' => array(
+          'image_link' => '',
+          'image_style' => '',
+        ),
+        'type' => 'image',
+        'weight' => 25,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_chapter_sharing_image',
+    'label' => 'Social media image',
+    'required' => 0,
+    'settings' => array(
+      'alt_field' => 0,
+      'default_image' => 0,
+      'file_directory' => 'images/chapters_social',
+      'file_extensions' => 'png gif jpg jpeg',
+      'max_filesize' => '8mb',
+      'max_resolution' => '',
+      'min_resolution' => '600x315',
+      'title_field' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'image',
+      'settings' => array(
+        'preview_image_style' => 'thumbnail',
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'image_image',
+      'weight' => 52,
+    ),
+  );
+
+  // Exported field_instance: 'node-chapter-field_chapter_sharing_text'.
+  $field_instances['node-chapter-field_chapter_sharing_text'] = array(
+    'bundle' => 'chapter',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'A short description for sharing on social media (124 - 150 characters).',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 24,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_chapter_sharing_text',
+    'label' => 'Social media description',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 2,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 54,
+    ),
+  );
+
   // Exported field_instance: 'node-chapter-field_chapter_shortcode'.
   $field_instances['node-chapter-field_chapter_shortcode'] = array(
     'bundle' => 'chapter',
@@ -1072,7 +1195,7 @@ For JSONP append &callback=myfunction to the URL<br>',
         'html5_geolocation' => 0,
       ),
       'type' => 'geofield_latlon',
-      'weight' => 3,
+      'weight' => 5,
     ),
   );
 
@@ -1526,6 +1649,7 @@ The message will be included in the notification email sent to the member when t
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('A short description for sharing on social media (124 - 150 characters).');
   t('API Public JSON');
   t('Add a welcome message to new members when they join your chapter.<br>
 The message will be included in the notification email sent to the member when they join.');
@@ -1559,6 +1683,14 @@ For JSONP append &callback=myfunction to the URL<br>');
   t('Please specify the country of the chapter.');
   t('Provide a banner image that is a good reflection of your chapter.
 <br>To support retina displays, upload your image sized to 1610x906');
+  t('Provide a creative graphic for social media sharing.<br><br>
+<strong>Tips</strong>
+<ul>
+<li>Recommended image size: 1200 x 630 pixels</li>
+<li>Images that consist of more than 20% text may experience reduced delivery when promoting on Facebook and other platforms.</li>
+<li>To preview your page — check <a target="_blank" href="https://developers.facebook.com/tools/debug/">Facebook Debugger</a> or <a target="_blank" href="https://cards-dev.twitter.com/validator">Twitter Cards Validator</a><br></li>
+<li>It may take up to 5 minutes for your changes to appear when previewing or sharing the page.</strong></li>
+</ul>');
   t('Reason for changing leadership');
   t('Recognize a company as a sponsor of your chapter.<br>
 <ul>
@@ -1568,6 +1700,8 @@ For JSONP append &callback=myfunction to the URL<br>');
 </ul>');
   t('Select a color that sets this city apart from the others. This color should have enough contrast with a white text layered on top.');
   t('Set whether Chaper Leaders can create paid events.');
+  t('Social media description');
+  t('Social media image');
   t('The location of the chapter, to display on the map. You can look up the latitude and longitude from Google.
 <br>Remember that West (W) and South (S) values are negative values. (example: Latitude 42.8806 S (South) is -42.8806)');
   t('This chapter is a group (ie: topic or theme based)');

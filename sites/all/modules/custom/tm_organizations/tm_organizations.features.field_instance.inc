@@ -609,7 +609,7 @@ Displays a short message to followers on your company page.<br><br>',
         'rows' => 4,
       ),
       'type' => 'text_textarea',
-      'weight' => 55,
+      'weight' => 56,
     ),
   );
 

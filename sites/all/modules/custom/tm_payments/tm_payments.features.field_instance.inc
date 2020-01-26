@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * tm_payments.features.field_instance.inc
@@ -264,6 +265,7 @@ This might help to improve card validation in certain regions.<br>',
         'label' => 'above',
         'module' => 'date',
         'settings' => array(
+          'custom_date_format' => '',
           'format_type' => 'long',
           'fromto' => 'both',
           'multiple_from' => '',
@@ -324,7 +326,7 @@ This might help to improve card validation in certain regions.<br>',
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 15,
+      'weight' => 16,
     ),
   );
 

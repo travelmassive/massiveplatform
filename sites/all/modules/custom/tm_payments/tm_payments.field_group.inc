@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * tm_payments.field_group.inc
@@ -23,8 +24,8 @@ function tm_payments_field_group_info() {
     'label' => 'Payments',
     'weight' => '57',
     'children' => array(
-      0 => 'field_company_payments_enabled',
-      1 => 'field_company_payment_commission',
+      0 => 'field_company_payment_commission',
+      1 => 'field_company_payments_enabled',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -51,7 +52,7 @@ function tm_payments_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Early Bird Pricing',
-    'weight' => '14',
+    'weight' => '15',
     'children' => array(
       0 => 'field_event_payment_early_amount',
       1 => 'field_event_payment_early_enable',
@@ -83,7 +84,7 @@ function tm_payments_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Sell Tickets',
-    'weight' => '13',
+    'weight' => '14',
     'children' => array(
       0 => 'field_event_payment_amount',
       1 => 'field_event_payment_currency',

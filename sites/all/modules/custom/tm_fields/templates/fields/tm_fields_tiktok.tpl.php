@@ -24,9 +24,9 @@ $found_match = false;
 // tiktok username
 if (!$found_match) {
 	if (($tiktok_url == "") and (strpos(strtolower($url), "http") === FALSE) and (strpos(strtolower($url), "www") === FALSE) and (strpos(strtolower($url), "%20") === FALSE) and (strtolower($url) != "na")) {
-		$display_url = trim($url);
-		// https://www.tiktok.com/@travelmassive
-		$tiktok_url = "https://www.tiktok.com/@" . trim($url);
+		$display_url = "tiktok.com/@" . trim($url);
+		// https://tiktok.com/@travelmassive
+		$tiktok_url = "https://tiktok.com/@" . trim($url);
 		$found_match = true;
 	}
 }

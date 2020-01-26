@@ -438,6 +438,9 @@ function tm_search_api_render_result_user($result, $results_user, $search_query,
 	if (sizeof($results_user->field_link_strava) > 0) {
 		$result_text .= " | Strava: " . $results_user->field_link_strava[LANGUAGE_NONE][0]['url'];
 	}
+	if (sizeof($results_user->field_link_tiktok) > 0) {
+		$result_text .= " | TikTok: " . $results_user->field_link_tiktok[LANGUAGE_NONE][0]['url'];
+	}
 
 	// user questions
 	if (sizeof($results_user->field_user_question_1) > 0) {

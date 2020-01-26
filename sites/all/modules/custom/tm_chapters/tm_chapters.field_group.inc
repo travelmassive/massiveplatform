@@ -85,7 +85,7 @@ function tm_chapters_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'API',
-    'weight' => '52',
+    'weight' => '10',
     'children' => array(
       0 => 'field_chapter_api_public_json',
     ),
@@ -144,7 +144,7 @@ function tm_chapters_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '4',
+    'weight' => '5',
     'children' => array(
       0 => 'field_geomaplocation',
     ),
@@ -172,7 +172,7 @@ function tm_chapters_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Payments',
-    'weight' => '8',
+    'weight' => '9',
     'children' => array(
       0 => 'field_chapter_payment_commission',
       1 => 'field_chapter_payments_enabled',
@@ -190,6 +190,36 @@ function tm_chapters_field_group_info() {
     ),
   );
   $field_groups['group_chapter_payments|node|chapter|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_chapter_social_sharing|node|chapter|form';
+  $field_group->group_name = 'group_chapter_social_sharing';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'chapter';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Social sharing',
+    'weight' => '4',
+    'children' => array(
+      0 => 'field_chapter_sharing_text',
+      1 => 'field_chapter_sharing_image',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'label' => 'Social sharing',
+      'instance_settings' => array(
+        'required_fields' => 1,
+        'id' => '',
+        'classes' => 'group-chapter-social-sharing field-group-fieldset',
+        'description' => '',
+      ),
+      'formatter' => 'open',
+    ),
+  );
+  $field_groups['group_chapter_social_sharing|node|chapter|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -256,7 +286,7 @@ function tm_chapters_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Community Management',
-    'weight' => '5',
+    'weight' => '6',
     'children' => array(
       0 => 'field_community_managers',
       1 => 'field_chapter_leaders_needed',
@@ -460,6 +490,7 @@ function tm_chapters_field_group_info() {
   t('Elsewhere');
   t('Location');
   t('Payments');
+  t('Social sharing');
   t('Summary');
 
   return $field_groups;

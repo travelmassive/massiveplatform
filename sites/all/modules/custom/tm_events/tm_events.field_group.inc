@@ -168,7 +168,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Payout',
-    'weight' => '16',
+    'weight' => '17',
     'children' => array(
       0 => 'field_event_payment_commission',
       1 => 'field_event_payment_payout_to',
@@ -222,6 +222,36 @@ function tm_events_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_event_social_sharing|node|event|form';
+  $field_group->group_name = 'group_event_social_sharing';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'event';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Social sharing',
+    'weight' => '12',
+    'children' => array(
+      0 => 'field_event_sharing_image',
+      1 => 'field_event_sharing_text',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'label' => 'Social sharing',
+      'instance_settings' => array(
+        'required_fields' => 1,
+        'id' => '',
+        'classes' => 'group-event-social-sharing field-group-fieldset',
+        'description' => '',
+      ),
+      'formatter' => 'open',
+    ),
+  );
+  $field_groups['group_event_social_sharing|node|event|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_events_wrapper|node|chapter|full';
   $field_group->group_name = 'group_events_wrapper';
   $field_group->entity_type = 'node';
@@ -253,7 +283,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Extra Stuff',
-    'weight' => '12',
+    'weight' => '13',
     'children' => array(
       0 => 'field_event_extra_guests',
       1 => 'field_event_total_attendance',
@@ -583,6 +613,7 @@ function tm_events_field_group_info() {
   t('Moderator Settings');
   t('Organizers');
   t('Payout');
+  t('Social sharing');
   t('Sponsors');
   t('Summary');
   t('Where');

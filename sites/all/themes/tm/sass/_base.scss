@@ -431,6 +431,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
   .youtube:before { @extend .icon-youtube; }
   .vimeo:before { @extend .icon-vimeo; }
   .snapchat:before { @extend .icon-snapchat; }
+  .tiktok:before { @extend .icon-tiktok; }
 
   @media #{$small-up} {
     @include grid-column(8);

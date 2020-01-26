@@ -554,8 +554,8 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 		$item_links_html = "<span class='tm-list-view-item-link view-profile'><a class='tm-list-item-link-profile' " . $link_target . " rel='" . $rel . "' href='" . $link_url . "'>" . $link_label . "</a></span>";
 
 		// show other links
-		// can be: 'website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat'
-		$link_labels = array('website' => "Website", 'twitter' => "Twitter", 'facebook' => "Facebook", 'linkedin' => "Linkedin", 'instagram' => "Instagram", 'youtube' => "YouTube", 'vimeo' => "Vimeo", 'snapchat' => "Snapchat");
+		// can be: 'website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat', 'tiktok'
+		$link_labels = array('website' => "Website", 'twitter' => "Twitter", 'facebook' => "Facebook", 'linkedin' => "Linkedin", 'instagram' => "Instagram", 'youtube' => "YouTube", 'vimeo' => "Vimeo", 'snapchat' => "Snapchat", 'tiktok' => "TikTok");
 
 		foreach ($links as $field => $link) {
 
@@ -767,6 +767,14 @@ function tm_lists_validate_link_url($url, $url_type) {
 	if ($url_type == "snapchat") {
 		if (((strpos($url, ".")) === FALSE) and ((strpos($url, "/") === FALSE))) {
 			$url = "https://www.snapchat.com/add/" . $url;
+		}
+	}	
+
+	// tiktok
+	if ($url_type == "tiktok") {
+		if (((strpos($url, ".")) === FALSE) and ((strpos($url, "/") === FALSE))) {
+			$url = str_replace("@", "", $url);
+			$url = "https://tiktok.com/@" . $url;
 		}
 	}	
 

@@ -810,6 +810,14 @@ function tm_fields_theme() {
       'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
       'template' => 'tm_fields_strava',
     ),
+    'tm_fields_tiktok' => array(
+      'variables' => array(
+        'title' => NULL,
+        'url' => NULL,
+      ),
+      'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
+      'template' => 'tm_fields_tiktok',
+    ),
   );
 }
 
@@ -875,7 +883,12 @@ function tm_fields_field_formatter_info() {
       'label' => t('TM Strava'), 
       'field types' => array('link_field'),
       'description' => t('Diplays a Strava URL from a user name'),
-    ), 
+    ),
+    'tm_fields_tiktok' => array(
+      'label' => t('TM TikTok'), 
+      'field types' => array('link_field'),
+      'description' => t('Diplays a TikTok URL from a user name'),
+    ),
   );
   return $info;
 }
@@ -1029,6 +1042,15 @@ function tm_fields_field_formatter_view($entity_type, $entity, $field, $instance
       foreach ($items as $delta => $item) {
         $element[$delta] = array(
           '#theme' => 'tm_fields_strava', 
+          '#title' => $item['title'], 
+          '#url' => _tm_fields_full_url($item, false), // remove ? arguments
+        );
+     }
+    break;
+    case 'tm_fields_tiktok':
+      foreach ($items as $delta => $item) {
+        $element[$delta] = array(
+          '#theme' => 'tm_fields_tiktok', 
           '#title' => $item['title'], 
           '#url' => _tm_fields_full_url($item, false), // remove ? arguments
         );

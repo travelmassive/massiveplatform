@@ -73,7 +73,7 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   }
 
   // Show additional link fields based on $conf['tm_users_link_fields']
-  $all_fields = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat', 'strava');
+  $all_fields = array('website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat', 'strava', 'tiktok');
   if (isset($conf["tm_users_link_fields"])) {
     $show_link_fields = $conf["tm_users_link_fields"];
     foreach ($all_fields as $field) {

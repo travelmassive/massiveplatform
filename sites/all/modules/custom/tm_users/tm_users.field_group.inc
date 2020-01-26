@@ -173,14 +173,15 @@ function tm_users_field_group_info() {
       9 => 'field_link_youtube',
       10 => 'field_link_strava',
       11 => 'field_user_testimonial',
-      12 => 'tm_ds_user_stats',
-      13 => 'tm_ds_user_featured',
-      14 => 'tm_ds_subscription_user_cta_ds',
-      15 => 'tm_ds_subscription_user_badge_ds',
-      16 => 'tm_ds_connection_actions',
-      17 => 'tm_ds_track_viewers',
-      18 => 'group_location_wrapper',
-      19 => 'group_user_qa_wrapper',
+      12 => 'field_link_tiktok',
+      13 => 'tm_ds_user_stats',
+      14 => 'tm_ds_user_featured',
+      15 => 'tm_ds_subscription_user_cta_ds',
+      16 => 'tm_ds_subscription_user_badge_ds',
+      17 => 'tm_ds_connection_actions',
+      18 => 'tm_ds_track_viewers',
+      19 => 'group_location_wrapper',
+      20 => 'group_user_qa_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -353,6 +354,7 @@ function tm_users_field_group_info() {
       6 => 'field_link_vimeo',
       7 => 'field_link_youtube',
       8 => 'field_link_strava',
+      9 => 'field_link_tiktok',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -471,7 +473,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '41',
+    'weight' => '42',
     'children' => array(
       0 => 'field_location_city',
     ),
@@ -534,8 +536,8 @@ function tm_users_field_group_info() {
       0 => 'field_facebook_signin_id',
       1 => 'field_user_subscription_date',
       2 => 'timezone',
-      3 => 'group_form_basic_settings',
-      4 => 'group_user_account_details',
+      3 => 'group_user_account_details',
+      4 => 'group_form_basic_settings',
     ),
     'format_type' => 'htab',
     'format_settings' => array(
@@ -564,8 +566,8 @@ function tm_users_field_group_info() {
     'label' => 'User edit',
     'weight' => '0',
     'children' => array(
-      0 => 'group_user_feedback',
-      1 => 'group_user_account',
+      0 => 'group_user_account',
+      1 => 'group_user_feedback',
       2 => 'group_user_notifications',
       3 => 'group_user_privacy',
       4 => 'group_user_profile',
@@ -711,7 +713,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'QA',
-    'weight' => '40',
+    'weight' => '41',
     'children' => array(
       0 => 'group_user_qa',
     ),

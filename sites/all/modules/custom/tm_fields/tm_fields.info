@@ -30,6 +30,7 @@ features[field_base][] = field_link_instagram
 features[field_base][] = field_link_linkedin
 features[field_base][] = field_link_snapchat
 features[field_base][] = field_link_strava
+features[field_base][] = field_link_tiktok
 features[field_base][] = field_link_twitter
 features[field_base][] = field_link_vimeo
 features[field_base][] = field_link_website

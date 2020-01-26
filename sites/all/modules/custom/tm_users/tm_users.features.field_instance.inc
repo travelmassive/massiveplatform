@@ -936,6 +936,71 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
     ),
   );
 
+  // Exported field_instance: 'user-user-field_link_tiktok'.
+  $field_instances['user-user-field_link_tiktok'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Your TikTok @username',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'tm_fields',
+        'settings' => array(),
+        'type' => 'tm_fields_tiktok',
+        'weight' => 39,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'user',
+    'field_name' => 'field_link_tiktok',
+    'label' => 'TikTok',
+    'required' => 0,
+    'settings' => array(
+      'absolute_url' => 0,
+      'attributes' => array(
+        'class' => '',
+        'configurable_class' => 0,
+        'configurable_title' => 0,
+        'rel' => 'nofollow',
+        'target' => '_blank',
+        'title' => '',
+      ),
+      'display' => array(
+        'url_cutoff' => 80,
+      ),
+      'enable_tokens' => 0,
+      'rel_remove' => 'default',
+      'title' => 'none',
+      'title_allowed_values' => '',
+      'title_label_use_field_label' => 0,
+      'title_maxlength' => 128,
+      'title_value' => '',
+      'url' => 0,
+      'user_register_form' => 0,
+      'validate_url' => 0,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'link',
+      'settings' => array(),
+      'type' => 'link_field',
+      'weight' => 59,
+    ),
+  );
+
   // Exported field_instance: 'user-user-field_link_twitter'.
   $field_instances['user-user-field_link_twitter'] = array(
     'bundle' => 'user',
@@ -2066,7 +2131,7 @@ Your testimonial will be displayed on your profile page.
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',
-        'weight' => 39,
+        'weight' => 40,
       ),
       'grid' => array(
         'label' => 'above',
@@ -2163,6 +2228,7 @@ Your testimonial will be displayed on your profile page.
 <br><strong>Providing information about your company?</strong> Please add a <a target=\'_blank\' class=\'cancel\' href="/companies">company page</a>.');
   t('The name of your business, company, or organization.
 <br>Once your account is approved you can add a <a target=\'_blank\' class=\'cancel\' href="/companies">company page</a>.');
+  t('TikTok');
   t('Turn off analytics');
   t('Twitter');
   t('Vimeo');
@@ -2170,6 +2236,7 @@ Your testimonial will be displayed on your profile page.
   t('Where you spend most of your time');
   t('YouTube');
   t('Your Snapchat username');
+  t('Your TikTok @username');
   t('Your profile page will only be available to approved members who are signed in.<br>
 It may take a few minutes for changes to take effect.<br>');
   t('examples: Founder, CEO, VP Marketing, Social Media Manager, Chief Explorer');

@@ -99,39 +99,6 @@ function tm_organizations_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
-  $field_group->identifier = 'group_company_account_details|node|organization|form';
-  $field_group->group_name = 'group_company_account_details';
-  $field_group->entity_type = 'node';
-  $field_group->bundle = 'organization';
-  $field_group->mode = 'form';
-  $field_group->parent_name = '';
-  $field_group->data = array(
-    'label' => 'Account Details',
-    'weight' => '2',
-    'children' => array(
-      0 => 'field_company_account_contact',
-      1 => 'field_company_account_email',
-      2 => 'field_company_account_phone',
-      3 => 'field_company_account_receipt',
-      4 => 'field_company_testimonial',
-    ),
-    'format_type' => 'fieldset',
-    'format_settings' => array(
-      'label' => 'Account Details',
-      'instance_settings' => array(
-        'required_fields' => 1,
-        'id' => '',
-        'classes' => 'group-company-account-details field-group-fieldset',
-        'description' => 'This information will be kept <i>private</i>.',
-      ),
-      'formatter' => 'open',
-    ),
-  );
-  $field_groups['group_company_account_details|node|organization|form'] = $field_group;
-
-  $field_group = new stdClass();
-  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
-  $field_group->api_version = 1;
   $field_group->identifier = 'group_company_moderator_settings|node|organization|form';
   $field_group->group_name = 'group_company_moderator_settings';
   $field_group->entity_type = 'node';
@@ -185,13 +152,14 @@ function tm_organizations_field_group_info() {
       7 => 'field_link_vimeo',
       8 => 'field_link_youtube',
       9 => 'field_company_testimonial',
-      10 => 'tm_ds_subscription_organization_cta_ds',
-      11 => 'tm_ds_subscription_organization_badge_ds',
-      12 => 'tm_ds_tm_sponsor',
-      13 => 'tm_ds_organization_follow_message',
-      14 => 'tm_ds_organization_stats',
-      15 => 'tm_ds_track_company_viewers',
-      16 => 'group_location_wrapper',
+      10 => 'field_link_tiktok',
+      11 => 'tm_ds_subscription_organization_cta_ds',
+      12 => 'tm_ds_subscription_organization_badge_ds',
+      13 => 'tm_ds_tm_sponsor',
+      14 => 'tm_ds_organization_follow_message',
+      15 => 'tm_ds_organization_stats',
+      16 => 'tm_ds_track_company_viewers',
+      17 => 'group_location_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -284,6 +252,7 @@ function tm_organizations_field_group_info() {
       6 => 'field_link_snapchat',
       7 => 'field_link_vimeo',
       8 => 'field_link_youtube',
+      9 => 'field_link_tiktok',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -309,7 +278,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '16',
+    'weight' => '17',
     'children' => array(
       0 => 'field_location_city',
       1 => 'field_country',
@@ -383,7 +352,6 @@ function tm_organizations_field_group_info() {
   // Translatables
   // Included for use with string extractors like potx.
   t('About');
-  t('Account Details');
   t('Action menu');
   t('Action menu wrapper');
   t('Elsewhere');

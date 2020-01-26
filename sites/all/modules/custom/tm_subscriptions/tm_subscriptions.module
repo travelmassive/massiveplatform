@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * @file
+ * Code for the tm_subscriptions feature.
+ */
+
+include_once 'tm_subscriptions.features.inc';
 /**
  * @file
  * Code for the TM Subscriptions feature.

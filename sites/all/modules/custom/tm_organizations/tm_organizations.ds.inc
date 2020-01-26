@@ -314,6 +314,14 @@ function tm_organizations_ds_field_settings_info() {
         ),
       ),
     ),
+    'field_link_tiktok' => array(
+      'formatter_settings' => array(
+        'ft' => array(
+          'func' => 'theme_ds_field_tm_default',
+          'lb-col' => TRUE,
+        ),
+      ),
+    ),
   );
   $export['node|organization|full'] = $ds_fieldsetting;
 
@@ -468,7 +476,7 @@ function tm_organizations_ds_layout_settings_info() {
     'regions' => array(
       'first_column' => array(
         0 => 'tm_ds_organization_follow_message',
-        4 => 'tm_ds_subscription_organization_badge_ds',
+        3 => 'tm_ds_subscription_organization_badge_ds',
         6 => 'tm_ds_subscription_organization_cta_ds',
         10 => 'body',
         12 => 'tm_ds_tm_sponsor',
@@ -484,18 +492,25 @@ function tm_organizations_ds_layout_settings_info() {
         26 => 'field_link_youtube',
         27 => 'field_link_vimeo',
         28 => 'field_link_snapchat',
-        30 => 'field_company_testimonial',
+        30 => 'field_link_tiktok',
         31 => 'field_location_city',
-        32 => 'field_country',
-        33 => 'event_list',
-        34 => 'group_location_wrapper',
+        32 => 'field_company_testimonial',
+        33 => 'field_country',
+        34 => 'event_list',
+        35 => 'group_location_wrapper',
       ),
       'header_media' => array(
         1 => 'field_image',
       ),
+      'second_column' => array(
+        2 => 'field_owner',
+        18 => 'members_following',
+        21 => 'group_managed_by_wrapper',
+        22 => 'group_community_wrapper',
+      ),
       'header_body' => array(
-        2 => 'ds_flag_follow_organizations',
-        3 => 'field_avatar',
+        4 => 'ds_flag_follow_organizations',
+        5 => 'field_avatar',
         7 => 'title',
         8 => 'tm_ds_anon_flag_placeholder',
         9 => 'tm_ds_more_actions',
@@ -503,20 +518,14 @@ function tm_organizations_ds_layout_settings_info() {
         13 => 'group_action_menu_wrapper',
         29 => 'group_action_menu',
       ),
-      'second_column' => array(
-        5 => 'field_owner',
-        18 => 'members_following',
-        21 => 'group_managed_by_wrapper',
-        22 => 'group_community_wrapper',
-      ),
     ),
     'fields' => array(
       'tm_ds_organization_follow_message' => 'first_column',
       'field_image' => 'header_media',
+      'field_owner' => 'second_column',
+      'tm_ds_subscription_organization_badge_ds' => 'first_column',
       'ds_flag_follow_organizations' => 'header_body',
       'field_avatar' => 'header_body',
-      'tm_ds_subscription_organization_badge_ds' => 'first_column',
-      'field_owner' => 'second_column',
       'tm_ds_subscription_organization_cta_ds' => 'first_column',
       'title' => 'header_body',
       'tm_ds_anon_flag_placeholder' => 'header_body',
@@ -541,8 +550,9 @@ function tm_organizations_ds_layout_settings_info() {
       'field_link_vimeo' => 'first_column',
       'field_link_snapchat' => 'first_column',
       'group_action_menu' => 'header_body',
-      'field_company_testimonial' => 'first_column',
+      'field_link_tiktok' => 'first_column',
       'field_location_city' => 'first_column',
+      'field_company_testimonial' => 'first_column',
       'field_country' => 'first_column',
       'event_list' => 'first_column',
       'group_location_wrapper' => 'first_column',

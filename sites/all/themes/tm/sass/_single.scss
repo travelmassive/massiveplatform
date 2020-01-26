@@ -980,6 +980,11 @@ a.tm_icon.snapchat:before {
     color: #fdff00;
 }
 
+a.tm_icon.tiktok:before {
+    font-family: 'tm-icons';
+    content: '\e670';
+}
+
 /* Footer 2018 */
 
 #footer { padding: 0; }

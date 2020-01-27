@@ -1200,6 +1200,10 @@ p.tm_footer_2018_slogan {
   border-top: 1px solid #e8eaeb;
 }
 
-.detail-item table, th, td {
-  border: 1px solid #e8eaeb;
+table.markdown-table th, table.markdown-table td {
+  border-bottom: 1px solid #e8eaeb;
+}
+
+table.markdown-table-striped tr:nth-child(even) {
+  background-color: #f2f2f2;
 }

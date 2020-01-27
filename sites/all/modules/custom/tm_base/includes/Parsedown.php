@@ -1033,6 +1033,7 @@ class Parsedown
             'element' => array(
                 'name' => 'table',
                 'elements' => array(),
+                'attributes' => array('class' => 'markdown-table markdown-table-striped')
             ),
         );
 

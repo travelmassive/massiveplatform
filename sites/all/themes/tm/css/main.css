@@ -9388,8 +9388,13 @@ p.tm_footer_2018_slogan {
 }
 
 /* line 1203, ../sass/_single.scss */
-.detail-item table, th, td {
-  border: 1px solid #e8eaeb;
+table.markdown-table th, table.markdown-table td {
+  border-bottom: 1px solid #e8eaeb;
+}
+
+/* line 1207, ../sass/_single.scss */
+table.markdown-table-striped tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
 
 /* line 2, ../sass/_login.scss */

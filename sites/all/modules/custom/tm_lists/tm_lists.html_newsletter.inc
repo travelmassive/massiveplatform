@@ -180,10 +180,11 @@ function tm_lists_display_list_html_newsletter($list_id) {
 			if ($entity->type == "event") {
 				$image_class = "cover";
 				$image_uri = $conf["tm_images_default_field_image"];
+				$image_uri = _tm_events_get_default_image($image_uri, $entity->nid);
 				if (isset($entity->field_image[LANGUAGE_NONE][0]['uri'])) {
 					$image_uri = $entity->field_image[LANGUAGE_NONE][0]['uri'];
 				}
-				$image_url = _tm_events_get_default_image($img_url, $entity->nid);
+				$image_url = image_style_url("banner", $image_uri);
 			}
 
 			$item_description = $entity->body[LANGUAGE_NONE][0]['value'];

@@ -252,6 +252,10 @@ function tm_lists_display_list($list_id) {
 		}
 		
 		$moderator_menu = str_replace("__SEND_NOTIFICATIONS__", $send_notifications_menu, $moderator_menu);
+
+		// clear cache
+		$send_notifications_menu = "<li><a href='javascript:void();' onClick='tm_lists_send_unsent_notifications(" . $list_id . ", " . $unsent_notifications . ");'> Notifications (". $unsent_notifications . ")</a></li>";
+
 	}
 
 	// get list contributors
@@ -566,10 +570,7 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 		if ($conf["tm_lists_oembed_enabled"]) {
 
 			$autoembed = new AutoEmbed();
-			if ($preview_mode and $user_can_perform_list_action) {
-				$autoembed->setUseCache(false); // don't use cache if in preview mode
-			}
-
+			$autoembed->setListId($list_id); // set list id for cache
 	        $comment = $autoembed->parse($comment);
 
 	        // protect autoembed tags from parsedown

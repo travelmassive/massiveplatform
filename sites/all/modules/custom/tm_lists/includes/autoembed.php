@@ -20,8 +20,9 @@
 class AutoEmbed 
 {
 	public $embedHeight	= 320;
-	public $embedWidth	= 453;
+	public $embedWidth	= 568; // 16:9
 	public $useCache = true;
+	public $listId = 0; // list id for caching
 	
     public $providers = array(
             '#http://(www\.)?youtube\.com/watch.*#i'				=> array( 'http://www.youtube.com/oembed', true ),
@@ -45,6 +46,8 @@ class AutoEmbed
             '#https?://www\.facebook\.com/video\.php.*#i'           => array( 'https://www.facebook.com/plugins/video/oembed.json/', true  ),
             '#https://(www.)tiktok.com/@.*/video/.*#'				=> array( 'https://www.tiktok.com/oembed', true),
             '#https?://open.spotify.com/(track|episode)/.*#'		=> array( 'https://embed.spotify.com/oembed?url=', true),
+            '#https://directory.libsyn.com/episode/index/show/.*/id/.*#'	=> array( 'https://oembed.libsyn.com/?item_id=', true),
+            '#https://html5-player.libsyn.com/embed/episode/id/.*#' => array( 'https://oembed.libsyn.com/?item_id=', true),
     );
     
     public function getEmbedHeight()
@@ -75,7 +78,18 @@ class AutoEmbed
     public function setUseCache( $useCache )
     {
     	$this->useCache = $useCache;
+    } 
+
+ 	public function getListId()
+    {
+    	return $this->listId;
     }    
+
+    public function setListId( $listId )
+    {
+    	$this->listId = $listId;
+    } 
+
 
     
     /**
@@ -142,6 +156,22 @@ class AutoEmbed
 
         if ( !$provider && $args['discover'] ) {
         	$provider = $this->discover( $url );
+        }
+
+        // libsyn
+		// ie: https://directory.libsyn.com/episode/index/show/countingcountries/id/12668033
+        if ((strpos($url, "directory.libsyn.com")) !== false) {
+        	$parts = explode("/", $url);
+        	$last = $parts[sizeof($parts) -1];
+        	$args['libsyn_item_id'] = $last;
+        }
+
+        // https://html5-player.libsyn.com/embed/episode/id/12764438/etc..
+		if ((strpos($url, "html5-player.libsyn.com")) !== false) {
+        	$parts = explode("/", $url);
+        	if (isset($parts[6])) {
+				$args['libsyn_item_id'] = $parts[6];
+        	}        	
         }
 
         if ( !$provider || false === $data = $this->fetch( $provider, $url, $args ) ) {
@@ -224,6 +254,11 @@ class AutoEmbed
 		$provider = $this->add_query_arg( 'maxwidth', (int) $args['width'], $provider );
 		$provider = $this->add_query_arg( 'maxheight', (int) $args['height'], $provider );
 		$provider = $this->add_query_arg( 'url', $url, $provider );
+		
+		// set ?item_id with libsyn
+		if (isset($args['libsyn_item_id'])) {
+			$provider = $this->add_query_arg( 'item_id', $args['libsyn_item_id'], $provider );
+		}
 
 		foreach( array( 'json', 'xml' ) AS $format ) {
 			$result = $this->_fetch_with_format( $provider, $format );
@@ -367,7 +402,7 @@ class AutoEmbed
     {
 
 		// check cache
-		$cache_key = "tm-lists-oembed-" . md5($url);
+		$cache_key = "tm-lists-oembed-" . $this->listId . "_" . md5($url);
 		$cache = cache_get($cache_key, 'cache');
 		if ($this->useCache) {
 			if (!empty($cache)) {

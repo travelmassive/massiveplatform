@@ -543,3 +543,25 @@ function tm_lists_moderation_send_unsent_notifications($list_id) {
 	drupal_set_message('Sent ' . $sent_notifications . ' notifications to item owners.');
 	drupal_goto("/lists/" . $list_id); // redirect to list 
 }
+
+/**
+ * Clear cache of oembed data for list
+ */
+function tm_lists_moderation_clear_oembed_cache($list_id) {
+
+	global $conf;
+	global $user;
+
+	// check permission
+	if (!tm_lists_user_can_add_to_list($user, $list_id)) {
+		drupal_set_message(t('You don\'t have permission to perform this action.'), 'error');
+		drupal_goto("/node/" . $list_id); // redirect to list 
+	}
+
+	// cache key is tm-lists-oembed-LISTID_MD5
+	cache_clear_all('tm-lists-oembed-' . $list_id . "_", 'cache', TRUE);
+
+	// cache reset
+	drupal_set_message('Cleared embedded URL cache (ie: YouTube, etc).');
+	drupal_goto("/lists/" . $list_id); // redirect to list 
+}

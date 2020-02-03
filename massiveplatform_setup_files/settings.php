@@ -1154,6 +1154,7 @@ $conf["tm_lists_newsletter_intro"] = 'Hey [%first_name|member%],<br>';
 $conf["tm_lists_newsletter_outro"] = 'Like this list? Explore <a href="">more lists</a>.';
 $conf["tm_lists_newsletter_facebook_icon_url"] = '';
 $conf["tm_lists_newsletter_twitter_icon_url"] = '';
+$conf["tm_lists_oembed_enabled"] = false; // embed youtube, vimeo, urls
 
 /** Newsletter Generation **/
 $conf["tm_users_download_csv_member_of_chapters"] = array("SYD"); // array of chapter shortcodes, will add to csv if user is a member of the chapter in new column

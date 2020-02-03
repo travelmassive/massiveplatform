@@ -2,6 +2,8 @@
 
 // tm_lists.display.inc
 
+include_once 'includes/autoembed.php';
+
 /* Lists index */
 
 function tm_lists_display_index() {
@@ -15,6 +17,7 @@ function tm_lists_display_index() {
 	}
 
 	$lists = tm_lists_get_lists();
+
 	// include css
 	drupal_add_css(drupal_get_path('module', 'tm_lists') . '/css/tm_lists.css');
 
@@ -136,12 +139,32 @@ function tm_lists_display_list($list_id) {
 		$user_can_perform_list_action = true;
 	}
 
+	// custom css
+	if (isset($list->field_list_custom_css[LANGUAGE_NONE][0]['value'])) {
+		$custom_css = trim($list->field_list_custom_css[LANGUAGE_NONE][0]['value']);
+		$custom_css = strip_tags($custom_css);
+		if ($custom_css != "") {
+			drupal_add_css($custom_css, array('type' => 'inline'));
+		}
+	}
+
 	// include list display js
 	drupal_add_js('var tm_global_list_id = ' . $list_id . '; var tm_global_list_sort_method = "' . $sort_method . '";', array('type' => 'inline', 'scope' => 'footer'));
 	drupal_add_js(drupal_get_path('module', 'tm_lists') . '/js/tm_lists_display.js');
 
 	// include waypoints js
 	drupal_add_js(drupal_get_path('module', 'tm_lists') . '/js/noframework.waypoints.min.js');
+
+	// include lazysizes and unload (plugin) js
+	if ($conf["tm_lists_oembed_enabled"]) {
+
+		drupal_add_js(drupal_get_path('module', 'tm_lists') . '/js/lazysizes.min.js');
+	
+		// include lazysizes config
+		// see https://github.com/aFarkas/lazysizes js-options
+		$lazysizes_js = "window.lazySizesConfig = window.lazySizesConfig || {}; lazySizesConfig.loadMode = 2;";
+		drupal_add_js($lazysizes_js, array('type' => 'inline', 'scope' => 'header'));
+	}
 
 	// include tm_lists_actions.js if user can perform actions
 	if ($user_can_perform_list_action) {
@@ -375,6 +398,9 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 		$order_flags['event_register'] = flag_get_flag('event_register');
 	}
 
+	// get status of preview
+	$preview_mode = tm_lists_is_list_preview_mode($list_id);
+
 	// load item template
 	$item_template = file_get_contents(drupal_get_path('module', 'tm_lists') .'/templates/tm_list_view_item.tpl.php');
 
@@ -535,8 +561,34 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 
 		// format item comment
 		$comment = strip_tags($comment);
-		$comment = tm_base_parsedown($comment, $link_target); // allow markdown
-		$comment = tm_base_linkify($comment, ["http", "https", "mail", "twitter"], ["rel" => $rel, "target" => $link_target]); // linkify
+
+		// autoembed youtube, vimeo, soundcloud
+		if ($conf["tm_lists_oembed_enabled"]) {
+
+			$autoembed = new AutoEmbed();
+			if ($preview_mode and $user_can_perform_list_action) {
+				$autoembed->setUseCache(false); // don't use cache if in preview mode
+			}
+
+	        $comment = $autoembed->parse($comment);
+
+	        // protect autoembed tags from parsedown
+	        $comment = str_replace("https://", "AUTOEMBED_HTTPS", $comment);
+	        $comment = str_replace("<iframe", "AUTOEMBED_OPENIFRAME", $comment);
+	        $comment = str_replace("</iframe>", "AUTOEMBED_CLOSEIFRAME", $comment);
+		}
+		
+        // parse markdown
+		$comment = tm_base_parsedown($comment, $link_target, true);
+
+		// protect autoembed tags from parsedown
+		if ($conf["tm_lists_oembed_enabled"]) {
+			$comment = str_replace("AUTOEMBED_HTTPS", "https://", $comment);
+			$comment = str_replace("AUTOEMBED_OPENIFRAME", "<iframe", $comment);
+	        $comment = str_replace("AUTOEMBED_CLOSEIFRAME", "</iframe>", $comment);
+	    }
+
+		//$comment = tm_base_linkify($comment, ["http", "https", "mail", "twitter"], ["rel" => $rel, "target" => $link_target]); // linkify
 		$comment = str_replace("[##]", $count, $comment); // in case you want to put ## at start of line
 		$comment = str_replace("##", $count, $comment); // replace ## with position
 

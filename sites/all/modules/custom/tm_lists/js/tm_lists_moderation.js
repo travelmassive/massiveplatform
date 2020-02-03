@@ -27,7 +27,7 @@
       },
       submit: function(e,v,m,f){
         if (v == true) {
-          window.location = '/lists/add/' + entity_type + '/' + entity_id + '/' + $("#moderation_list_ids option:selected").val() + '?comment=' + $("#form_moderator_comment").val();
+          window.location = '/lists/add/' + entity_type + '/' + entity_id + '/' + $("#moderation_list_ids option:selected").val() + '?comment=' + $("#form_moderator_comment").val().replace(/(?:\r\n|\r|\n)/g, '__NEWLINE__');;
         }
       }
     });

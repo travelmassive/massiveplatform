@@ -148,6 +148,47 @@ function tm_lists_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-list-field_list_custom_css'.
+  $field_instances['node-list-field_list_custom_css'] = array(
+    'bundle' => 'list',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Add custom CSS to the list.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 19,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_list_custom_css',
+    'label' => 'Custom CSS',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 19,
+    ),
+  );
+
   // Exported field_instance: 'node-list-field_list_description'.
   $field_instances['node-list-field_list_description'] = array(
     'bundle' => 'list',
@@ -182,7 +223,7 @@ function tm_lists_field_default_field_instances() {
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'rows' => 3,
+        'rows' => 8,
       ),
       'type' => 'text_textarea',
       'weight' => 5,
@@ -396,7 +437,7 @@ function tm_lists_field_default_field_instances() {
         'rows' => 3,
       ),
       'type' => 'text_textarea',
-      'weight' => 19,
+      'weight' => 20,
     ),
   );
 
@@ -485,7 +526,7 @@ function tm_lists_field_default_field_instances() {
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 20,
+      'weight' => 21,
     ),
   );
 
@@ -786,8 +827,10 @@ example: /lists/1045/<b>featured-members</b>',
   // Included for use with string extractors like potx.
   t('A short description (less than 150 characters).<br>
 Will be used by Google and social media sharing.');
+  t('Add custom CSS to the list.');
   t('Adjust the character limit when editing a list item\'s description (default: 250).');
   t('Any replies to this announcement will be sent here. Leave blank for default reply-to address.');
+  t('Custom CSS');
   t('Customize the URL of the list<br>
 example: /lists/1045/<b>featured-members</b>');
   t('Description');

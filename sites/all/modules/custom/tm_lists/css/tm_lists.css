@@ -396,3 +396,14 @@ ul.tm-list-item-actions-dropdown-menu {
 	width: 80%;
 	margin: auto;
 }
+
+/* OEmbed */
+
+.tm-list-view-item-comment iframe {
+	width: 100%;
+}
+
+.tm-list-intro iframe {
+	width: 100%;
+}
+

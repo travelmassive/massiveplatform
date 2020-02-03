@@ -99,6 +99,7 @@ function tm_lists_moderation_add_callback($entity_type, $entity_id, $list_id) {
 	$comment = null;
 	if (isset($_GET["comment"])) {
 		$comment = $_GET["comment"];
+		$comment = str_replace("__NEWLINE__", "\n", $comment); // replace new lines
 	}
 
 	tm_lists_moderation_add($entity_type, $entity_id, $list_id, $moderator, $comment);

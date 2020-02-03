@@ -44,7 +44,7 @@ class AutoEmbed
             '#https?://www\.facebook\.com/.*/videos/.*#i'           => array( 'https://www.facebook.com/plugins/video/oembed.json/', true  ),
             '#https?://www\.facebook\.com/video\.php.*#i'           => array( 'https://www.facebook.com/plugins/video/oembed.json/', true  ),
             '#https://(www.)tiktok.com/@.*/video/.*#'				=> array( 'https://www.tiktok.com/oembed', true),
-            '#https?://open.spotify.com/track/.*#'					=> array( 'https://embed.spotify.com/oembed?url=', true),
+            '#https?://open.spotify.com/(track|episode)/.*#'		=> array( 'https://embed.spotify.com/oembed?url=', true),
     );
     
     public function getEmbedHeight()

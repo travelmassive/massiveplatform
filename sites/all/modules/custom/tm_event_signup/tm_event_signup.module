@@ -162,6 +162,11 @@ function _tm_event_seats_count($field, $title = NULL) {
       $show_text .= '<br>' . $left . ' ' . $left_text;
     }
 
+    // a few people are going
+    if (($show_text == "1 person is going") or ($show_text == "2 people are going") or ($show_text == "3 people are going")) {
+      $show_text = "A few people are going";
+    }
+
     return t($show_text);
   }
   

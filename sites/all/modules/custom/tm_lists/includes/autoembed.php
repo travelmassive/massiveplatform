@@ -444,11 +444,6 @@ class AutoEmbed
 
         curl_close( $handle );
 
-        // Facebook response is json encoded
-        if (strpos($url, "facebook.com/plugins/post/oembed") !== false) {
-            //$response = json_decode($response);
-        }
-
 		// set cache
 		cache_set($cache_key, $response, 'cache', time() + (60 * 60 * 24)); // cache for 1 day
 

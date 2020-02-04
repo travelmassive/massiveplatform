@@ -446,7 +446,7 @@ class AutoEmbed
 
         // Facebook response is json encoded
         if (strpos($url, "facebook.com/plugins/post/oembed") !== false) {
-            $response = json_decode($response);
+            //$response = json_decode($response);
         }
 
 		// set cache

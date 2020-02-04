@@ -575,6 +575,7 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 
 	        // protect autoembed tags from parsedown
 	        $comment = str_replace("https://", "AUTOEMBED_HTTPS", $comment);
+	        $comment = str_replace("http://", "AUTOEMBED_HTTP", $comment);
 	        $comment = str_replace("<iframe", "AUTOEMBED_OPENIFRAME", $comment);
 	        $comment = str_replace("</iframe>", "AUTOEMBED_CLOSEIFRAME", $comment);
 		}
@@ -585,11 +586,12 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 		// protect autoembed tags from parsedown
 		if ($conf["tm_lists_oembed_enabled"]) {
 			$comment = str_replace("AUTOEMBED_HTTPS", "https://", $comment);
+			$comment = str_replace("AUTOEMBED_HTTP", "http://", $comment);
 			$comment = str_replace("AUTOEMBED_OPENIFRAME", "<iframe", $comment);
 	        $comment = str_replace("AUTOEMBED_CLOSEIFRAME", "</iframe>", $comment);
 	    }
 
-		//$comment = tm_base_linkify($comment, ["http", "https", "mail", "twitter"], ["rel" => $rel, "target" => $link_target]); // linkify
+		$comment = tm_base_linkify($comment, ["http", "https", "mail", "twitter"], ["rel" => $rel, "target" => $link_target]); // linkify
 		$comment = str_replace("[##]", $count, $comment); // in case you want to put ## at start of line
 		$comment = str_replace("##", $count, $comment); // replace ## with position
 

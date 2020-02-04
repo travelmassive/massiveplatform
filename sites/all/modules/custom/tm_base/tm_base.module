@@ -596,7 +596,9 @@ function tm_base_linkify($value, $protocols = array('http', 'mail'), array $attr
     // Link attributes
     $attr = '';
     foreach ($attributes as $key => $val) {
+      if ($val != "") {
         $attr .= ' ' . $key . '="' . htmlentities($val) . '"';
+      }
     }
     
     $links = array();

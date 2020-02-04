@@ -167,7 +167,6 @@ function tm_lists_node_view($node, $view_mode, $langcode) {
 		$account = user_load($user->uid);
 		if (tm_lists_user_can_add_to_lists($account)) {
 			drupal_add_js(drupal_get_path('module', 'tm_lists') . '/js/tm_lists_moderation.js');
-			drupal_add_js(drupal_get_path('module', 'tm_lists') . '/js/tm_lists_html.js');
 		}
 	}
 }

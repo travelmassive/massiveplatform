@@ -408,3 +408,21 @@ ul.tm-list-item-actions-dropdown-menu {
 	width: 80%;
 }
 
+.tiktok-embed iframe { 
+	width: inherit !important;
+	max-height: inherit !important;
+}
+
+blockquote.tiktok-embed {
+	border-left: none;
+	padding-left: none;
+}
+
+@media screen and (max-width: 500px) {
+	.tiktok-embed iframe { 
+		margin-left: -16px;
+		width: 320px !important;
+	}
+}
+
+

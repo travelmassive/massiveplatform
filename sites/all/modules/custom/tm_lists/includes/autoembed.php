@@ -369,6 +369,14 @@ class AutoEmbed
                     case 'video':
                     case 'rich':
                             if ( ! empty( $data->html ) && is_string( $data->html ) ) 
+
+                                // no lazyloading for Facebook, TikTok yet :(
+                                if ((strpos($url, 'facebook.com/') !== false) or
+                                   (strpos($url, 'tiktok.com/') !== false)) {
+                                    return $data->html;
+                                }
+                                
+                                // lazy loading for everything else
                             	return str_replace("src=", "class=\"lazyload\" data-src=", $data->html);
                             break;
 
@@ -407,11 +415,18 @@ class AutoEmbed
 		$cache = cache_get($cache_key, 'cache');
 		if ($this->useCache) {
 			if (!empty($cache)) {
-				return $cache->data;
+                return $cache->data;
 			}
 		}
 
+        // set browser
         $browser = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.16 (KHTML, like Gecko) \Chrome/24.0.1304.0 Safari/537.16';
+
+        // Facebook wants a different browser
+        if (strpos($url, "facebook.com/plugins") !== false) {
+            $browser = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36';
+        }
+
         $handle = curl_init();
 
         curl_setopt( $handle, CURLOPT_CONNECTTIMEOUT, 5 );
@@ -428,6 +443,11 @@ class AutoEmbed
         $response = curl_exec( $handle );
 
         curl_close( $handle );
+
+        // Facebook response is json encoded
+        if (strpos($url, "facebook.com/plugins/post/oembed") !== false) {
+            $response = json_decode($response);
+        }
 
 		// set cache
 		cache_set($cache_key, $response, 'cache', time() + (60 * 60 * 24)); // cache for 1 day

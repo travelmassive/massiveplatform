@@ -48,6 +48,7 @@ class AutoEmbed
             '#https?://open.spotify.com/(track|episode|show)/.*#'		=> array( 'https://embed.spotify.com/oembed?url=', true),
             '#https://directory.libsyn.com/episode/index/show/.*/id/.*#'	=> array( 'https://oembed.libsyn.com/?item_id=', true),
             '#https://html5-player.libsyn.com/embed/episode/id/.*#' => array( 'https://oembed.libsyn.com/?item_id=', true),
+            '#https?://(.*)\.podbean\.com/e/.*#i' => array( 'https://www.podbean.com/media/oembed?url=', true ),
     );
     
     public function getEmbedHeight()

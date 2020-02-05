@@ -51,7 +51,7 @@ function _tm_more_actions_process_lists_menu($field, $title, &$links, &$menu_ite
 
     // note: require moderator role to show link for chapter
     if (($field['entity']->type == "organization")
-      or (($field['entity']->type == "event"))
+      or ($field['entity']->type == "event")
       or (($field['entity']->type == "chapter") and (in_array("moderator", $user->roles)))) {
 
         // Check if user can add to list

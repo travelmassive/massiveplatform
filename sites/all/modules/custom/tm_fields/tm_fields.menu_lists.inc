@@ -49,9 +49,9 @@ function _tm_more_actions_process_lists_menu($field, $title, &$links, &$menu_ite
   // START add node to list
   if (isset($menu_item['page_arguments'][0]->nid)) {
 
-    // note: require moderator role to show link for event or chapter
+    // note: require moderator role to show link for chapter
     if (($field['entity']->type == "organization")
-      or (($field['entity']->type == "event") and (in_array("moderator", $user->roles)))
+      or (($field['entity']->type == "event"))
       or (($field['entity']->type == "chapter") and (in_array("moderator", $user->roles)))) {
 
         // Check if user can add to list

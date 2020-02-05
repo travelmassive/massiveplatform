@@ -1554,7 +1554,7 @@ This will be added to the attendee count on the event page.',
 <ul>
 <li>Recommended image size: 1200 x 630 pixels.</li>
 <li>Images that consist of more than 20% text may experience reduced delivery when paid promoting.</li>
-<li>To preview your page — check <a target="_blank" href="https://developers.facebook.com/tools/debug/">Facebook Debugger</a>, <a target="_blank" href="https://cards-dev.twitter.com/validator">Twitter Validator</a> or <a target="_blank" href="https://www.linkedin.com/post-inspector/">LinkedIn Inspector</a>.</li>
+<li>To preview your page — check <a target="_blank" href="https://developers.facebook.com/tools/debug/">Facebook Debugger</a> or <a target="_blank" href="https://www.linkedin.com/post-inspector/">LinkedIn Post Inspector</a>.</li>
 <li>It may take up to 5 minutes for your changes to appear when previewing or sharing the page.</strong></li>
 </ul>',
     'display' => array(
@@ -2822,7 +2822,7 @@ This will be displayed to the member on the event page and included in the autom
 <ul>
 <li>Recommended image size: 1200 x 630 pixels.</li>
 <li>Images that consist of more than 20% text may experience reduced delivery when paid promoting.</li>
-<li>To preview your page — check <a target="_blank" href="https://developers.facebook.com/tools/debug/">Facebook Debugger</a>, <a target="_blank" href="https://cards-dev.twitter.com/validator">Twitter Validator</a> or <a target="_blank" href="https://www.linkedin.com/post-inspector/">LinkedIn Inspector</a>.</li>
+<li>To preview your page — check <a target="_blank" href="https://developers.facebook.com/tools/debug/">Facebook Debugger</a> or <a target="_blank" href="https://www.linkedin.com/post-inspector/">LinkedIn Post Inspector</a>.</li>
 <li>It may take up to 5 minutes for your changes to appear when previewing or sharing the page.</strong></li>
 </ul>');
   t('Provide a link to the page with the RSVP (ie: http://www.eventbrite.com/e/your-event-url)');

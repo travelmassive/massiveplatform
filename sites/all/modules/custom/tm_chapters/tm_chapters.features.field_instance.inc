@@ -651,7 +651,7 @@ For JSONP append &callback=myfunction to the URL<br>',
 <ul>
 <li>Recommended image size: 1200 x 630 pixels.</li>
 <li>Images that consist of more than 20% text may experience reduced delivery when paid promoting.</li>
-<li>To preview your page — check <a target="_blank" href="https://developers.facebook.com/tools/debug/">Facebook Debugger</a>, <a target="_blank" href="https://cards-dev.twitter.com/validator">Twitter Validator</a> or <a target="_blank" href="https://www.linkedin.com/post-inspector/">LinkedIn Inspector</a>.</li>
+<li>To preview your page — check <a target="_blank" href="https://developers.facebook.com/tools/debug/">Facebook Debugger</a> or <a target="_blank" href="https://www.linkedin.com/post-inspector/">LinkedIn Post Inspector</a>.</li>
 <li>It may take up to 5 minutes for your changes to appear when previewing or sharing the page.</strong></li>
 </ul>',
     'display' => array(
@@ -1688,7 +1688,7 @@ For JSONP append &callback=myfunction to the URL<br>');
 <ul>
 <li>Recommended image size: 1200 x 630 pixels.</li>
 <li>Images that consist of more than 20% text may experience reduced delivery when paid promoting.</li>
-<li>To preview your page — check <a target="_blank" href="https://developers.facebook.com/tools/debug/">Facebook Debugger</a>, <a target="_blank" href="https://cards-dev.twitter.com/validator">Twitter Validator</a> or <a target="_blank" href="https://www.linkedin.com/post-inspector/">LinkedIn Inspector</a>.</li>
+<li>To preview your page — check <a target="_blank" href="https://developers.facebook.com/tools/debug/">Facebook Debugger</a> or <a target="_blank" href="https://www.linkedin.com/post-inspector/">LinkedIn Post Inspector</a>.</li>
 <li>It may take up to 5 minutes for your changes to appear when previewing or sharing the page.</strong></li>
 </ul>');
   t('Reason for changing leadership');

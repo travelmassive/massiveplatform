@@ -286,6 +286,19 @@ function _tm_base_frontpage() {
   global $conf;
   global $user;
 
+  // if user has deleted their account, set cookie so we can prevent page from being cached for other visitors
+  if (!user_is_logged_in()) {
+    $messages = drupal_get_messages('status', false);
+    if (isset($messages['status'])) {
+      foreach ($messages['status'] as $message) {
+        // set from user_cancel_password_confirm_submit()
+        if ($message == 'Your account has been canceled.') {
+          user_cookie_save(array('tm_canceled_account'=>1));
+        }
+      }
+    }
+  }
+
   // Remove the title.
   drupal_set_title('');
 
@@ -583,7 +596,9 @@ function tm_base_linkify($value, $protocols = array('http', 'mail'), array $attr
     // Link attributes
     $attr = '';
     foreach ($attributes as $key => $val) {
+      if ($val != "") {
         $attr .= ' ' . $key . '="' . htmlentities($val) . '"';
+      }
     }
     
     $links = array();

@@ -123,6 +123,13 @@ function tm_lists_menu() {
 		'access arguments' => array('access content'),
 	);
 
+	$items['lists/clear-cache/%'] = array(
+		'title' => 'Clear list cache',
+		'page callback' => 'tm_lists_moderation_clear_oembed_cache',
+		'page arguments' => array(2),
+		'access arguments' => array('access content'),
+	);
+
 	return $items;
 }
 

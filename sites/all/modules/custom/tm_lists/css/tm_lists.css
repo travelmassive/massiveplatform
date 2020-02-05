@@ -240,6 +240,8 @@ img.tm-list-contributor-avatar {
 		padding-top: 0;
 		width: 85%;
 		text-align: left;
+		padding: 0.25rem;
+		padding-right: 0.25rem;
 	}
 	.tm-list-view-item-links {
 		display: block;
@@ -396,3 +398,33 @@ ul.tm-list-item-actions-dropdown-menu {
 	width: 80%;
 	margin: auto;
 }
+
+/* OEmbed */
+
+.tm-list-view-item-comment iframe {
+	width: 100%;
+	max-height: 320px;
+}
+
+.tm-list-intro iframe {
+	width: 80%;
+}
+
+.tiktok-embed iframe { 
+	width: inherit !important;
+	max-height: inherit !important;
+}
+
+blockquote.tiktok-embed {
+	border-left: none;
+	padding-left: none;
+}
+
+@media screen and (max-width: 500px) {
+	.tiktok-embed iframe { 
+		margin-left: -16px;
+		width: 320px !important;
+	}
+}
+
+

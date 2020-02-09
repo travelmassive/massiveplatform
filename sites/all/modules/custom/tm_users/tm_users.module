@@ -718,15 +718,15 @@ function tm_users_google_tag_insert_alter(&$satisfied) {
     }
   }
 
-  // todo: acknowledge a no_analytics cookie for logged out users
-  if (!user_is_logged_in()) {
-    return;
-  }
-
   // static value set by tm_lists
   $tm_google_tag_disabled = &drupal_static("tm_google_tag_disabled");
   if ($tm_google_tag_disabled) {
      $satisfied = false;
+  }
+
+  // todo: acknowledge a no_analytics cookie for logged out users
+  if (!user_is_logged_in()) {
+    return;
   }
 
   $account = user_load($user->uid);

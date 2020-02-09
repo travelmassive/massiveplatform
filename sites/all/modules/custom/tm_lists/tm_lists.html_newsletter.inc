@@ -51,6 +51,12 @@ function tm_lists_display_list_html_newsletter($list_id) {
 		$show_items = 100;
 	}
 
+	// link items to list
+	$link_items_to_list = false;
+	if (isset($_GET["link_items_to_list"])) {
+		$link_items_to_list = true;
+	}
+
 	// load templates
 	$newsletter_template = file_get_contents(drupal_get_path('module', 'tm_lists') .'/templates/tm_list_html_newsletter.tpl.php');
 	$newsletter_image_template = file_get_contents(drupal_get_path('module', 'tm_lists') .'/templates/tm_list_html_newsletter_image.tpl.php');
@@ -229,7 +235,12 @@ function tm_lists_display_list_html_newsletter($list_id) {
 		$item_comment = str_replace("[##]", $count, $item_comment); // in case you want to put ## at start of line
 		$item_comment = str_replace("##", $num_items, $item_comment); // replace ## with position
 
-		// replace fields
+		// link items to list url
+		if ($link_items_to_list) {
+			$item_url = $list_url;
+		}
+
+ 		// replace fields
 		$item_template = $newsletter_item_template;
 		$item_template = str_replace("__ITEM_TITLE__", $item_title, $item_template);
 		$item_template = str_replace("__ITEM_URL__", $item_url, $item_template);
@@ -311,6 +322,7 @@ function tm_lists_display_list_html_newsletter($list_id) {
 	echo "<br><textarea onClick='this.select();' rows='2'>" . $newsletter_template . "</textarea>";
 	echo "</p>";
 	echo "<a style='font-family: Arial; font-size: 9pt; color: #888;' href='?hide_cover_image'>Hide Cover Image</a>";
+	echo " &middot; <a style='font-family: Arial; font-size: 9pt; color: #888;' href='?link_items_to_list'>Link Items to List</a>";
 	echo " &middot; <a style='font-family: Arial; font-size: 9pt; color: #888;' href='?items=10'>10 Items</a>";
 	echo " &middot; <a style='font-family: Arial; font-size: 9pt; color: #888;' href='?selected_items=1,2,5'>Items 1,2,5</a>";
 	echo " &middot; <a style='font-family: Arial; font-size: 9pt; color: #888;' href='#' onClick='document.getElementById(\"header\").style.display=\"none\"; document.getElementById(\"footer\").style.display=\"none\";'>Presentation Mode</a>";

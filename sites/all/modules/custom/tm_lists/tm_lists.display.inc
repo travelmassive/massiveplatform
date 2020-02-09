@@ -183,6 +183,13 @@ function tm_lists_display_list($list_id) {
 		drupal_set_message("This list is in Preview mode. Only people with the link can see this list.", "help-tip");
 	}
 
+	// disable analtyics if in preview mode, or user is list editor
+	if ($preview_mode or $user_can_perform_list_action) {
+		// disable analytics in tm_users_google_tag_insert_alter
+		$tm_google_tag_disabled = &drupal_static("tm_google_tag_disabled");
+		$tm_google_tag_disabled = false;
+	}
+
 	// cache for 5 minutes if logged out and not in preview mode
 	if (!user_is_logged_in() and !$preview_mode) {
 		drupal_add_http_header('Cache-Control', 'public, max-age=300');
@@ -607,12 +614,15 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 		// always show profile
 		$link_url = "/" . drupal_get_path_alias($entity_type . "/" . $item->entity_id);
 		$link_label = "View Profile";
-		if ($entity->type == "event") {
+		if (isset($entity->type)) {
+			if ($entity->type == "event") {
 			$link_label = "View Event";
+			}
+			if ($entity->type == "chapter") {
+				$link_label = "View Chapter";
+			}
 		}
-		if ($entity->type == "chapter") {
-			$link_label = "View Chapter";
-		}
+
 		$item_links_html = "<span class='tm-list-view-item-link view-profile'><a class='tm-list-item-link-profile' " . $link_target . " rel='" . $rel . "' href='" . $link_url . "'>" . $link_label . "</a></span>";
 
 		// show other links

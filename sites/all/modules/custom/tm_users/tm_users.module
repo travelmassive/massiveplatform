@@ -723,6 +723,12 @@ function tm_users_google_tag_insert_alter(&$satisfied) {
     return;
   }
 
+  // static value set by tm_lists
+  $tm_google_tag_disabled = &drupal_static("tm_google_tag_disabled");
+  if ($tm_google_tag_disabled) {
+     $satisfied = false;
+  }
+
   $account = user_load($user->uid);
 
   // if user has opted out of analytics, turn it off

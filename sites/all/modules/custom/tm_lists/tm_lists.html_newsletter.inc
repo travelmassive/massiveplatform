@@ -92,7 +92,7 @@ function tm_lists_display_list_html_newsletter($list_id) {
 	$display_items_array = array();
 	if (sizeof($display_items) > 0) {
 		foreach ($display_items as $display_item) {
-			$display_items_array[] = $items[$display_item];
+			$display_items_array[] = $items[$display_item-1];
 		}
 		$items = $display_items_array;
 	}

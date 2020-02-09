@@ -187,7 +187,7 @@ function tm_lists_display_list($list_id) {
 	if ($preview_mode or $user_can_perform_list_action) {
 		// disable analytics in tm_users_google_tag_insert_alter
 		$tm_google_tag_disabled = &drupal_static("tm_google_tag_disabled");
-		$tm_google_tag_disabled = false;
+		$tm_google_tag_disabled = true;
 	}
 
 	// cache for 5 minutes if logged out and not in preview mode

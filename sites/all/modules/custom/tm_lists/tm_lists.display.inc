@@ -183,6 +183,13 @@ function tm_lists_display_list($list_id) {
 		drupal_set_message("This list is in Preview mode. Only people with the link can see this list.", "help-tip");
 	}
 
+	// disable analtyics if in preview mode, or user is list editor
+	if ($preview_mode or $user_can_perform_list_action) {
+		// disable analytics in tm_users_google_tag_insert_alter
+		$tm_google_tag_disabled = &drupal_static("tm_google_tag_disabled");
+		$tm_google_tag_disabled = false;
+	}
+
 	// cache for 5 minutes if logged out and not in preview mode
 	if (!user_is_logged_in() and !$preview_mode) {
 		drupal_add_http_header('Cache-Control', 'public, max-age=300');

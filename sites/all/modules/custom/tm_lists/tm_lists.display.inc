@@ -607,12 +607,15 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 		// always show profile
 		$link_url = "/" . drupal_get_path_alias($entity_type . "/" . $item->entity_id);
 		$link_label = "View Profile";
-		if ($entity->type == "event") {
+		if (isset($entity->type)) {
+			if ($entity->type == "event") {
 			$link_label = "View Event";
+			}
+			if ($entity->type == "chapter") {
+				$link_label = "View Chapter";
+			}
 		}
-		if ($entity->type == "chapter") {
-			$link_label = "View Chapter";
-		}
+
 		$item_links_html = "<span class='tm-list-view-item-link view-profile'><a class='tm-list-item-link-profile' " . $link_target . " rel='" . $rel . "' href='" . $link_url . "'>" . $link_label . "</a></span>";
 
 		// show other links

@@ -496,6 +496,12 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 			$item_position = "<span class='tm-list-view-item-position'>" . $count . ".</span>";
 		}
 
+		// anchor tag
+		$item_anchor_tag = preg_replace('/[^a-zA-Z0-9]/', '', $item_title);
+		if ($item_anchor_tag == "") {
+			$item_anchor_tag = $item->entity_type . "-" . $item->entity_id; // fall back to node-123
+		}
+
 		// actions menu
 		$item_menu = "";
 		if ($user_can_perform_list_action) {
@@ -545,6 +551,9 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 
 				$item_menu .= "<li><a href='javascript:void(0);' onClick='tm_remove_item_from_list(\"" . $entity_type . "\", " . $item->entity_id . "," . $list_id . ", \"" . strip_tags(htmlentities($item_title, ENT_QUOTES)) . "\");'>Remove</a></li>";
 			}
+
+			// anchor tag
+			$item_menu .= "<li><a href='#" . $item_anchor_tag . "'>Link to item</a></li>";
 
 			$item_menu .= "</ul>";
 			$item_menu .= "</div>"; // more-actions
@@ -674,6 +683,7 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 		// replace fields
 		$item_html = $item_template;
 		$item_html = str_replace("__ITEM_POSITION__", $item_position, $item_html);
+		$item_html = str_replace("__ANCHOR_TAG__", $item_anchor_tag, $item_html);
 		$item_html = str_replace("__ITEM_IMAGE_CLASS__", $image_class, $item_html);
 		$item_html = str_replace("__ITEM_IMAGE_URL__", $image_url, $item_html);
 		$item_html = str_replace("__ITEM_TITLE__", $item_title, $item_html);

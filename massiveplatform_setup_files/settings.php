@@ -1177,6 +1177,7 @@ $conf['tm_users_approval_on_signup_headline'] = "Welcome."; // headline of welco
 $conf['tm_users_approval_on_signup_subject'] = "Welcome to our community"; // subject line automatically approved
 $conf["tm_users_approval_minimum_score"] = 50; // minimum score (0-100) for chapter leader to approve
 $conf["tm_users_request_approval_minimum_score"] = 50; // minimum score (0-100) for guest to approve
+$conf["tm_users_approval_verify_email"] = false; // if true, verify email on approval
 
 /** MARKDOWN **/
 /** Allow markdown on descriptions of these types **/

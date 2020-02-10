@@ -62,8 +62,9 @@ function tm_lists_display_index() {
 		if ($show_preview) {
 			$preview_mode = "<b>Preview mode</b> &nbsp;&nbsp;";
 		}
-		if ($list_item["updated"] != null) {
-			$difference = time() - $list_item["updated"];
+		$updated_timestamp = tm_lists_get_latest_timestamp($list_id);
+		if ($updated_timestamp != null) {
+			$difference = time() - $updated_timestamp; // $list_item["updated"];
 	        $update_time = format_interval($difference, 1);
 	        $update_time = str_replace("sec", "seconds", $update_time);
 	        $update_time = str_replace("min", "minutes", $update_time);

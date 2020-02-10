@@ -467,17 +467,29 @@ function tm_lists_get_list_contributors($list_id) {
  */
 function tm_lists_get_latest_timestamp($list_id) {
 
+	$timestamp = null;
 	$list_id = intval($list_id);
 
+	// get latest timestamp
 	$query = "SELECT timestamp FROM tm_lists WHERE list_id = " . $list_id . " ORDER BY timestamp desc LIMIT 1";
 	$results = db_query($query)->fetchAll();
-
-	// return timestamp
 	if (isset($results[0])) {
-		return $results[0]->timestamp;
+		$timestamp = $results[0]->timestamp;
 	}
 
-	return null;
+	// get latest changed
+	$query = "SELECT changed FROM node WHERE nid =" . $list_id;
+	$results = db_query($query)->fetchAll();
+	if (isset($results[0])) {
+		$changed = $results[0]->changed;
+	}
+
+	// get latest
+	if ($changed > $timestamp) {
+		$timestamp = $changed;
+	}
+
+	return $timestamp;
 }
 
 /**

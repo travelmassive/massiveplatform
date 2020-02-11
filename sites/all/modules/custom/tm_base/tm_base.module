@@ -899,11 +899,6 @@ function tm_base_check_markdown_permission($entity_type, $entity_id) {
     return false;
   }
 
-  // no users, ie: array()
-  if (sizeof($conf[$config_key]) == 0) {
-    return false;
-  }
-
   // all users or nodes, ie: array(0)
   if (in_array(0, $conf[$config_key])) {
     return true;
@@ -913,6 +908,25 @@ function tm_base_check_markdown_permission($entity_type, $entity_id) {
   if (in_array($entity_id, $conf[$config_key])) {
     return true;
   }
+
+  // check event chapter
+  if ($entity_type == "event") {
+    $event = node_load($entity_id);
+    if ($event != null) {
+      $chapter_id = _tm_event_get_chapter_id($event);
+      if ($chapter_id != null) {
+        if (in_array($chapter_id, $conf["tm_markdown_allowed_chapters_events"])) {
+          return true;
+        }
+      }      
+    }
+  }
+
+  // no users, ie: array()
+  if (sizeof($conf[$config_key]) == 0) {
+    return false;
+  }
+
 
   // no permission
   return false;

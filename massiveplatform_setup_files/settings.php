@@ -1185,3 +1185,5 @@ $conf["tm_markdown_allowed_users"] = array(10452); // allowed users - use array(
 $conf["tm_markdown_allowed_chapters"] = array(); // allowed chapter nids - use array(0) for all
 $conf["tm_markdown_allowed_events"] = array(); // allowed events - use array(0) for all
 $conf["tm_markdown_allowed_organizations"] = array(); // allowed organizations - use array(0) for all
+$conf["tm_markdown_allowed_chapters_events"] = array(); // list of chapters whose events can use markdown
+

@@ -261,6 +261,15 @@ function tm_lists_display_list($list_id) {
 		
 		$moderator_menu = str_replace("__SEND_NOTIFICATIONS__", $send_notifications_menu, $moderator_menu);
 
+		// show google analytics link
+		$google_analytics_report_menu = "";
+		if (in_array("access-google-analytics-report", $user->roles)) {
+			$list_path = tm_lists_get_list_url($list);
+			$google_analytics_report_link = tm_fields_google_analytics_report_link($list_path);
+			$google_analytics_report_menu = "<li><a target='_blank' href='" . $google_analytics_report_link . "'>View analytics</a></li>";
+		}
+		$moderator_menu = str_replace("__VIEW__ANALYTICS__", $google_analytics_report_menu, $moderator_menu);
+
 		// clear cache
 		$send_notifications_menu = "<li><a href='javascript:void();' onClick='tm_lists_send_unsent_notifications(" . $list_id . ", " . $unsent_notifications . ");'> Notifications (". $unsent_notifications . ")</a></li>";
 

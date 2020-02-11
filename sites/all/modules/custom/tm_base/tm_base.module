@@ -886,6 +886,11 @@ function tm_base_check_markdown_permission($entity_type, $entity_id) {
   // config keys
   $config_keys = array("user" => "tm_markdown_allowed_users", "chapter" => "tm_markdown_allowed_chapters", "event" => "tm_markdown_allowed_events", "organization" => "tm_markdown_allowed_organizations");
 
+  // check we have config
+  if (!isset($conf["tm_markdown_allowed_users"])) {
+    return false;
+  }
+
   // check valid entity type
   if (!isset($config_keys[$entity_type])) {
     return false;

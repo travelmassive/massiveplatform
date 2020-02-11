@@ -553,7 +553,9 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 			}
 
 			// anchor tag
-			$item_menu .= "<li><a href='#" . $item_anchor_tag . "'>Link to item</a></li>";
+			if ($count <= $conf["tm_lists_per_page"]) {
+				$item_menu .= "<li><a href='#" . $item_anchor_tag . "'>Link to item</a></li>";
+			}
 
 			$item_menu .= "</ul>";
 			$item_menu .= "</div>"; // more-actions

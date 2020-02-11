@@ -127,6 +127,10 @@ function tm_lists_add_list_meta_tags($node) {
     }
   }
 
+  // remove markdown
+  $description = tm_base_parsedown($description, null, true);
+  $description = strip_tags($description);
+
   // dynamic ## item count
   $list_count = tm_lists_get_num_items($node->nid, 1);
   $description = str_replace("##", $list_count, $description);

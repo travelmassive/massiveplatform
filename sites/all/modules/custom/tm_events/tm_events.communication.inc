@@ -1098,11 +1098,23 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
       $prefill .= '<p>' . $register_text . '<a href="' . $event_url . '">' . $event_url .'</a></p>';
   }
 
-  $prefill .= "<p>";
   if ($event->body != null) {
-    // add line breaks
-    $event_message = str_replace("\n", "<br>", $event->body[LANGUAGE_NONE][0]['value']); 
-    $prefill .=  $event_message . "<br>";
+
+    // get event message
+    $event_message = $event->body[LANGUAGE_NONE][0]['value'];
+
+    // add markdown support, or add line breaks
+    if (tm_base_check_markdown_permission("event", $event->nid)) {
+      $event_message = tm_base_parsedown($event_message, null, false);
+      $event_message = str_replace("\n", "", $event_message);
+    } else {
+      $prefill .= "<p>";
+      $event_message = str_replace("\n", "<br>", $event_message);
+      $event_message .= "<br>";
+    }
+
+    $prefill .= $event_message;
+    
   }
 
   // add contact link if html email

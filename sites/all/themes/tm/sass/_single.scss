@@ -1207,3 +1207,13 @@ table.markdown-table th, table.markdown-table td {
 table.markdown-table-striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
+
+.markdown-heading {
+    display: block !important;
+    position: relative !important;
+    height: auto !important;
+    width: auto !important;
+    overflow: visible !important;
+    margin-block-start: 1em !important;
+    margin-block-end: 1em !important;
+}

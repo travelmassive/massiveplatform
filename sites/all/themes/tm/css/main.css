@@ -9397,6 +9397,17 @@ table.markdown-table-striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
+/* line 1211, ../sass/_single.scss */
+.markdown-heading {
+  display: block !important;
+  position: relative !important;
+  height: auto !important;
+  width: auto !important;
+  overflow: visible !important;
+  margin-block-start: 1em !important;
+  margin-block-end: 1em !important;
+}
+
 /* line 2, ../sass/_login.scss */
 #account-menu-blk .menu-blk-title {
   text-transform: uppercase;

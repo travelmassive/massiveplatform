@@ -80,6 +80,7 @@ function tm_users_download_global_newsletter_generate($drush_progress = false) {
 
 	if ($module_exists_tm_subscriptions_user) {
 		$user_subscription_enable_flag = flag_get_flag('user_subscription_enable', NULL);
+		$user_subscription_enable_flag_id = $user_subscription_enable_flag->fid;
 	}
 
 	$organization_subscription_enable_flag_id = null;

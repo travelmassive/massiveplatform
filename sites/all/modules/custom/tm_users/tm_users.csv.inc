@@ -254,7 +254,7 @@ where n.value = 1 order by ud.uid asc";
 		// use flag lookup directly for performance
 		$user_subscription_type = "none";
 		if ($module_exists_tm_subscriptions_user) {
-			if (tm_flags_is_entity_flagged('user', $user_id, 'user_subscription_enable_flag', $user_subscription_enable_flag_id)) {
+			if (tm_flags_is_entity_flagged('user', $user_id, 'user_subscription_enable', $user_subscription_enable_flag_id)) {
 				$user_subscription_type = tm_subscriptions_user_get_type($user_id);
 			}
 			if ($user_subscription_type == "") {
@@ -269,7 +269,7 @@ where n.value = 1 order by ud.uid asc";
 			if (sizeof($organization_profile_nids) > 0) {
 
 				// check if first organization is subscribed
-				if (tm_flags_is_entity_flagged('node', $organization_profile_nids[0], 'organization_subscription_enable_flag', $organization_subscription_enable_flag_id)) {
+				if (tm_flags_is_entity_flagged('node', $organization_profile_nids[0], 'organization_subscription_enable', $organization_subscription_enable_flag_id)) {
 
 					// get subscription type
 					$company_subscription_type = tm_subscriptions_get_type($organization_profile_nids[0]);

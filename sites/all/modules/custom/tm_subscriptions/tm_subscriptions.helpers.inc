@@ -372,7 +372,7 @@ function tm_subscriptions_get_users_subscribed_companies($uid) {
 
 		// use direct flag lookup for performance
 		// if ($organization_subscription_enable->is_flagged($nid)) {
-		if (tm_flags_is_entity_flagged('node', $nid, 'organization_subscription_enable', $organization_subscription_enable->fid);
+		if (tm_flags_is_entity_flagged('node', $nid, 'organization_subscription_enable', $organization_subscription_enable->fid)) {
 			$subscribed_companies[] = $nid;
 		}
 	}

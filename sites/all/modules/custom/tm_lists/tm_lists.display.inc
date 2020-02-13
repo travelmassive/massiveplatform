@@ -62,8 +62,9 @@ function tm_lists_display_index() {
 		if ($show_preview) {
 			$preview_mode = "<b>Preview mode</b> &nbsp;&nbsp;";
 		}
-		if ($list_item["updated"] != null) {
-			$difference = time() - $list_item["updated"];
+		$updated_timestamp = tm_lists_get_latest_timestamp($list_id);
+		if ($updated_timestamp != null) {
+			$difference = time() - $updated_timestamp; // $list_item["updated"];
 	        $update_time = format_interval($difference, 1);
 	        $update_time = str_replace("sec", "seconds", $update_time);
 	        $update_time = str_replace("min", "minutes", $update_time);
@@ -259,6 +260,15 @@ function tm_lists_display_list($list_id) {
 		}
 		
 		$moderator_menu = str_replace("__SEND_NOTIFICATIONS__", $send_notifications_menu, $moderator_menu);
+
+		// show google analytics link
+		$google_analytics_report_menu = "";
+		if (in_array("access-google-analytics-report", $user->roles)) {
+			$list_path = tm_lists_get_list_url($list);
+			$google_analytics_report_link = tm_fields_google_analytics_report_link($list_path);
+			$google_analytics_report_menu = "<li><a target='_blank' href='" . $google_analytics_report_link . "'>View analytics</a></li>";
+		}
+		$moderator_menu = str_replace("__VIEW__ANALYTICS__", $google_analytics_report_menu, $moderator_menu);
 
 		// clear cache
 		$send_notifications_menu = "<li><a href='javascript:void();' onClick='tm_lists_send_unsent_notifications(" . $list_id . ", " . $unsent_notifications . ");'> Notifications (". $unsent_notifications . ")</a></li>";
@@ -495,6 +505,12 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 			$item_position = "<span class='tm-list-view-item-position'>" . $count . ".</span>";
 		}
 
+		// anchor tag
+		$item_anchor_tag = preg_replace('/[^a-zA-Z0-9]/', '', $item_title);
+		if ($item_anchor_tag == "") {
+			$item_anchor_tag = $item->entity_type . "-" . $item->entity_id; // fall back to node-123
+		}
+
 		// actions menu
 		$item_menu = "";
 		if ($user_can_perform_list_action) {
@@ -543,6 +559,11 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 			if (tm_lists_user_can_remove_from_list($user, $list_id)) {
 
 				$item_menu .= "<li><a href='javascript:void(0);' onClick='tm_remove_item_from_list(\"" . $entity_type . "\", " . $item->entity_id . "," . $list_id . ", \"" . strip_tags(htmlentities($item_title, ENT_QUOTES)) . "\");'>Remove</a></li>";
+			}
+
+			// anchor tag
+			if ($count <= $conf["tm_lists_per_page"]) {
+				$item_menu .= "<li><a href='#" . $item_anchor_tag . "'>Link to item</a></li>";
 			}
 
 			$item_menu .= "</ul>";
@@ -673,6 +694,7 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 		// replace fields
 		$item_html = $item_template;
 		$item_html = str_replace("__ITEM_POSITION__", $item_position, $item_html);
+		$item_html = str_replace("__ANCHOR_TAG__", $item_anchor_tag, $item_html);
 		$item_html = str_replace("__ITEM_IMAGE_CLASS__", $image_class, $item_html);
 		$item_html = str_replace("__ITEM_IMAGE_URL__", $image_url, $item_html);
 		$item_html = str_replace("__ITEM_TITLE__", $item_title, $item_html);

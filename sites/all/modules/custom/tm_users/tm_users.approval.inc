@@ -9,85 +9,91 @@ function tm_users_approve($user) {
 
   global $conf;
   $approving_user = $GLOBALS['user'];
-  $role_name = 'approved user'; // The name of the role to add.
 
-  if ($role = user_role_load_by_name($role_name)) {
-    user_multiple_role_edit(array($user->uid), 'add_role', $role->rid);
+  // apply approved role  
+  $approved_role = user_role_load_by_name("approved user");
+  user_multiple_role_edit(array($user->uid), 'add_role', $approved_role->rid);
 
-    // send notification message to user that they have been approved
-    // there doesn't seem to be a hook that can detect we are applying a new role, so do it here
-    $approving_user = user_uid_optional_load();
-    // set profile url (either friendly url or community url)
-    $profile_url = drupal_get_path_alias("user/" . $user->uid);
-    $profile_uid = $user->uid;
-
-    $approval_text = "Your account has been approved by " . $approving_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . ".";
-
-    $moderator_first_name = $approving_user->field_user_first_name['und'][0]['value'];
-
-    // get moderator message to send to member
-    // add line breaks
-    $moderator_message = trim($_GET["moderator_message"]);
-    $moderator_message_safe = "";
-    if ($moderator_message != "") {
-        $moderator_message_safe = "<br><br><strong>Message from " . $moderator_first_name . ":</strong> " . check_plain($moderator_message);
-        $moderator_message_safe = str_replace("__NL__", "<br>", $moderator_message_safe);
-        $approval_text .= $moderator_message_safe;
+  // verify email
+  if (isset($conf["tm_users_approval_verify_email"])) {
+    if ($conf["tm_users_approval_verify_email"]) {
+      $not_verified_role = user_role_load_by_name("non-validated");
+      user_multiple_role_edit(array($user->uid), 'remove_role', $not_verified_role->rid);
     }
-
-    // Set moderator's reply-to address if they have allowed in their notification settings
-    $reply_to = null;
-    $notif = new TMNotification("user_approval_allow_reply_to");
-    if ($notif->isEnabled($approving_user->uid)) {
-      $reply_to = $approving_user->mail;
-    }
-
-    // hero headline
-    $hero_headline = tm_notifications_render_hero_headline_html("Your account is approved.");
-
-    // generate member html
-    $member_widget = tm_notifications_render_member_html($user);
-
-    // subject line
-    $subject_line = "Your " . $conf["tm_site_name"] . " account has been approved";
-
-    $approval_welcome_message = $conf["tm_notification_approval_welcome_message"];
-    tm_notifications_notify('user_approved', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__APPROVAL_INTRO_TEXT__' => $approval_text, '__REPLY_TO__' => $reply_to, '__APPROVAL_WELCOME_MESSAGE__' => $approval_welcome_message, '__HERO_HEADLINE__' => $hero_headline, "__MEMBER_WIDGET__" => $member_widget, '__SUBJECT_LINE__' => $subject_line));
-
-    // Remove any moderation flags the user has
-
-    // Unflag approval_is_company_or_brand
-    $who_flagged = flag_get_entity_flags("user", $user->uid, "approval_is_company_or_brand");
-    foreach ($who_flagged as $flagger) {
-      $moderator = user_load($flagger->uid); 
-      flag('unflag', 'approval_is_company_or_brand', $user->uid, $moderator);
-    }
-
-    // Unflag approval_need_more_info
-    $who_flagged = flag_get_entity_flags("user", $user->uid, "approval_need_more_info");
-    foreach ($who_flagged as $flagger) {
-      $moderator = user_load($flagger->uid); 
-      flag('unflag', 'approval_need_more_info', $user->uid, $moderator);
-    }
-
-    // Unflag moderate_non_community_profile
-    $who_flagged = flag_get_entity_flags("user", $user->uid, "moderate_non_community_profile");
-    foreach ($who_flagged as $flagger) {
-      $moderator = user_load($flagger->uid); 
-      flag('unflag', 'moderate_non_community_profile', $user->uid, $moderator);
-    }
-
-    // Remove approval request flag
-    flag('unflag', 'approval_requested_by_user', $user->uid, $user);
-
-    // Remove all report flags
-    $report_flag = flag_get_flag('moderate_report_member', NULL);
-    flag_reset_flag($report_flag, $user->uid);
-
-    // Keep track of who approved with approval_approved_by flag
-    flag('flag', 'approval_approved_by', $user->uid, $approving_user);
-
   }
+  
+  // send notification message to user that they have been approved
+  // there doesn't seem to be a hook that can detect we are applying a new role, so do it here
+  $approving_user = user_uid_optional_load();
+  // set profile url (either friendly url or community url)
+  $profile_url = drupal_get_path_alias("user/" . $user->uid);
+  $profile_uid = $user->uid;
+
+  $approval_text = "Your account has been approved by " . $approving_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . ".";
+
+  $moderator_first_name = $approving_user->field_user_first_name['und'][0]['value'];
+
+  // get moderator message to send to member
+  // add line breaks
+  $moderator_message = trim($_GET["moderator_message"]);
+  $moderator_message_safe = "";
+  if ($moderator_message != "") {
+      $moderator_message_safe = "<br><br><strong>Message from " . $moderator_first_name . ":</strong> " . check_plain($moderator_message);
+      $moderator_message_safe = str_replace("__NL__", "<br>", $moderator_message_safe);
+      $approval_text .= $moderator_message_safe;
+  }
+
+  // Set moderator's reply-to address if they have allowed in their notification settings
+  $reply_to = null;
+  $notif = new TMNotification("user_approval_allow_reply_to");
+  if ($notif->isEnabled($approving_user->uid)) {
+    $reply_to = $approving_user->mail;
+  }
+
+  // hero headline
+  $hero_headline = tm_notifications_render_hero_headline_html("Your account is approved.");
+
+  // generate member html
+  $member_widget = tm_notifications_render_member_html($user);
+
+  // subject line
+  $subject_line = "Your " . $conf["tm_site_name"] . " account has been approved";
+
+  $approval_welcome_message = $conf["tm_notification_approval_welcome_message"];
+  tm_notifications_notify('user_approved', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__APPROVAL_INTRO_TEXT__' => $approval_text, '__REPLY_TO__' => $reply_to, '__APPROVAL_WELCOME_MESSAGE__' => $approval_welcome_message, '__HERO_HEADLINE__' => $hero_headline, "__MEMBER_WIDGET__" => $member_widget, '__SUBJECT_LINE__' => $subject_line));
+
+  // Remove any moderation flags the user has
+
+  // Unflag approval_is_company_or_brand
+  $who_flagged = flag_get_entity_flags("user", $user->uid, "approval_is_company_or_brand");
+  foreach ($who_flagged as $flagger) {
+    $moderator = user_load($flagger->uid); 
+    flag('unflag', 'approval_is_company_or_brand', $user->uid, $moderator);
+  }
+
+  // Unflag approval_need_more_info
+  $who_flagged = flag_get_entity_flags("user", $user->uid, "approval_need_more_info");
+  foreach ($who_flagged as $flagger) {
+    $moderator = user_load($flagger->uid); 
+    flag('unflag', 'approval_need_more_info', $user->uid, $moderator);
+  }
+
+  // Unflag moderate_non_community_profile
+  $who_flagged = flag_get_entity_flags("user", $user->uid, "moderate_non_community_profile");
+  foreach ($who_flagged as $flagger) {
+    $moderator = user_load($flagger->uid); 
+    flag('unflag', 'moderate_non_community_profile', $user->uid, $moderator);
+  }
+
+  // Remove approval request flag
+  flag('unflag', 'approval_requested_by_user', $user->uid, $user);
+
+  // Remove all report flags
+  $report_flag = flag_get_flag('moderate_report_member', NULL);
+  flag_reset_flag($report_flag, $user->uid);
+
+  // Keep track of who approved with approval_approved_by flag
+  flag('flag', 'approval_approved_by', $user->uid, $approving_user);
 
   // Give approver feedback and link to guest members pending
   // You have approved John Smith. There are 3 Guest Members pending approval in Sydney Travel Massive.

@@ -142,8 +142,11 @@ function tm_subscriptions_get_subscription_expires_text($organization) {
  */
 function tm_subscriptions_is_organization_subscription_enabled($nid) {
 
-	$organization_subscription_enable = flag_get_flag('organization_subscription_enable', NULL);
-	return ($organization_subscription_enable->is_flagged($nid));
+	// $organization_subscription_enable = flag_get_flag('organization_subscription_enable', NULL);
+	// return ($organization_subscription_enable->is_flagged($nid));
+
+	return tm_flags_is_entity_flagged('node', $nid, 'organization_subscription_enable');
+
 }
 
 /**
@@ -151,8 +154,10 @@ function tm_subscriptions_is_organization_subscription_enabled($nid) {
  */
 function tm_subscriptions_is_organization_subscription_paid($nid) {
 
-	$organization_subscription_paid = flag_get_flag('organization_subscription_paid', NULL);
-	return ($organization_subscription_paid->is_flagged($nid));
+	// $organization_subscription_paid = flag_get_flag('organization_subscription_paid', NULL);
+	//return ($organization_subscription_paid->is_flagged($nid));
+
+	return tm_flags_is_entity_flagged('node', $nid, 'organization_subscription_paid');
 }
 
 /**
@@ -366,7 +371,8 @@ function tm_subscriptions_get_users_subscribed_companies($uid) {
 	foreach ($nids as $nid) {
 
 		// use direct flag lookup for performance
-		if ($organization_subscription_enable->is_flagged($nid)) {
+		// if ($organization_subscription_enable->is_flagged($nid)) {
+		if (tm_flags_is_entity_flagged('node', $nid, 'organization_subscription_enable', $organization_subscription_enable->fid);
 			$subscribed_companies[] = $nid;
 		}
 	}

@@ -9,6 +9,7 @@ __SEND_NOTIFICATIONS__
 <li><a target='_blank' href='/lists/__LIST_ID__/html_newsletter'>HTML Newsletter</a></li>
 <li><a target='_blank' href='/lists/__LIST_ID__/rss'>RSS feed</a></li>
 <li><a href='/lists/clear-cache/__LIST_ID__'>Clear cache</a></li>
+__VIEW__ANALYTICS__
 <li><a href='/lists'>All lists</a></li>
 </ul>
 </div>

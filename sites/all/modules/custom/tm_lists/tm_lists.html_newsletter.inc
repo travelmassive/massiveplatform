@@ -45,9 +45,9 @@ function tm_lists_display_list_html_newsletter($list_id) {
 	}
 
 	// choose items ids
-	$selected_items = array();
-	if (isset($_GET["selected_items"])) {
-		$selected_items = explode(",", $_GET["selected_items"]);
+	$display_items = array();
+	if (isset($_GET["display_items"])) {
+		$display_items = explode(",", $_GET["display_items"]);
 		$show_items = 100;
 	}
 
@@ -89,12 +89,12 @@ function tm_lists_display_list_html_newsletter($list_id) {
 	$items = tm_lists_get_items_by_id($list_id, $sort_method, 0, $show_items);
 
 	// only show selected items
-	$selected_items_array = array();
-	if (sizeof($selected_items) > 0) {
-		foreach ($selected_items as $selected_item) {
-			$selected_items_array[] = $items[$selected_item];
+	$display_items_array = array();
+	if (sizeof($display_items) > 0) {
+		foreach ($display_items as $display_item) {
+			$display_items_array[] = $items[$display_item-1];
 		}
-		$items = $selected_items_array;
+		$items = $display_items_array;
 	}
 
 	// get list URL
@@ -324,7 +324,7 @@ function tm_lists_display_list_html_newsletter($list_id) {
 	echo "<a style='font-family: Arial; font-size: 9pt; color: #888;' href='?hide_cover_image'>Hide Cover Image</a>";
 	echo " &middot; <a style='font-family: Arial; font-size: 9pt; color: #888;' href='?link_items_to_list'>Link Items to List</a>";
 	echo " &middot; <a style='font-family: Arial; font-size: 9pt; color: #888;' href='?items=10'>10 Items</a>";
-	echo " &middot; <a style='font-family: Arial; font-size: 9pt; color: #888;' href='?selected_items=1,2,5'>Items 1,2,5</a>";
+	echo " &middot; <a style='font-family: Arial; font-size: 9pt; color: #888;' href='?display_items=1,2,5'>Items 1,2,5</a>";
 	echo " &middot; <a style='font-family: Arial; font-size: 9pt; color: #888;' href='#' onClick='document.getElementById(\"header\").style.display=\"none\"; document.getElementById(\"footer\").style.display=\"none\";'>Presentation Mode</a>";
 	echo "</center></div><br><br>";
 

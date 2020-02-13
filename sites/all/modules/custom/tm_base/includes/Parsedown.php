@@ -593,6 +593,7 @@ class Parsedown
         $Block = array(
             'element' => array(
                 'name' => 'h' . $level,
+                'attributes' => array('class' => 'markdown-heading'),
                 'handler' => array(
                     'function' => 'lineElements',
                     'argument' => $text,
@@ -854,7 +855,7 @@ class Parsedown
         if ($Line['indent'] < 4 and chop(chop($Line['text'], ' '), $Line['text'][0]) === '')
         {
             $Block['element']['name'] = $Line['text'][0] === '=' ? 'h1' : 'h2';
-
+            $Block['element']['attributes'] = array('class' => 'markdown-heading');
             return $Block;
         }
     }

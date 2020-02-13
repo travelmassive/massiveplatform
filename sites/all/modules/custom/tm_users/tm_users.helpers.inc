@@ -532,12 +532,13 @@ function tm_users_get_organization_profiles($uid, $join_flag_id = null) {
 
     // sort by flag id
     // use with tm_subscriptions
+    // profiles with subscriptions will be first
     $query = "SELECT fd.entity_id, f.fid FROM field_data_field_owner fd
     LEFT JOIN flagging f ON f.entity_id = fd.entity_id 
     AND ((f.fid = :fid) OR (f.fid IS NULL)) 
     WHERE fd.entity_type = 'node' AND fd.bundle = 'organization'
     AND fd.field_owner_target_id = :uid
-    ORDER by fd.entity_id ASC";
+    ORDER by fd.entity_id DESC";
     $rows = db_query($query, array(':fid' => $fid, ':uid' => $uid))->fetchAll();
 
   }

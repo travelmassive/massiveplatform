@@ -202,8 +202,10 @@ function tm_subscriptions_user_get_subscription_expires_text($account) {
  */
 function tm_subscriptions_is_user_subscription_enabled($uid) {
 
-	$user_subscription_enable = flag_get_flag('user_subscription_enable', NULL);
-	return ($user_subscription_enable->is_flagged($uid));
+	// $user_subscription_enable = flag_get_flag('user_subscription_enable', NULL);
+	// return ($user_subscription_enable->is_flagged($uid));
+
+	return tm_flags_is_entity_flagged('user', $uid, 'user_subscription_enable');
 }
 
 /**
@@ -211,8 +213,10 @@ function tm_subscriptions_is_user_subscription_enabled($uid) {
  */
 function tm_subscriptions_is_user_subscription_paid($uid) {
 
-	$user_subscription_paid = flag_get_flag('user_subscription_paid', NULL);
-	return ($user_subscription_paid->is_flagged($uid));
+	// $user_subscription_paid = flag_get_flag('user_subscription_paid', NULL);
+	// return ($user_subscription_paid->is_flagged($uid));
+
+	return tm_flags_is_entity_flagged('user', $uid, 'user_subscription_paid');
 }
 
 /**
@@ -561,3 +565,4 @@ function tm_subscriptions_user_get_country_code($account) {
 
 	return $country_code;
 }
+

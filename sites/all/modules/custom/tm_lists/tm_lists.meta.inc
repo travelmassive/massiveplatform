@@ -127,6 +127,10 @@ function tm_lists_add_list_meta_tags($node) {
     }
   }
 
+  // remove markdown
+  $description = tm_base_parsedown($description, null, true);
+  $description = strip_tags($description);
+
   // dynamic ## item count
   $list_count = tm_lists_get_num_items($node->nid, 1);
   $description = str_replace("##", $list_count, $description);
@@ -141,6 +145,7 @@ function tm_lists_add_list_meta_tags($node) {
   drupal_add_html_head($meta, 'og:description');
 
   // image
+  $image_url = null;
   if (isset($node->field_list_social_image[LANGUAGE_NONE][0]['uri'])) {
     $image_url = file_create_url($node->field_list_social_image[LANGUAGE_NONE][0]['uri']);
     $meta = array(
@@ -151,6 +156,60 @@ function tm_lists_add_list_meta_tags($node) {
       ),
     );
     drupal_add_html_head($meta, 'og:image');
+  }
+
+  // twitter:card
+  $meta = array(
+    '#tag' => 'meta', 
+    '#attributes' => array(
+    'property' => 'twitter:card', 
+    'content' => 'summary_large_image', // or summary, for smaller image
+    ),
+  );
+  drupal_add_html_head($meta, 'twitter:card');
+
+  // twitter:url
+  $url = tm_lists_get_list_url($node, true);
+  $meta = array(
+    '#tag' => 'meta', 
+    '#attributes' => array(
+    'property' => 'twitter:url', 
+    'content' => $url,
+    ),
+  );
+  drupal_add_html_head($meta, 'twitter:url');
+
+  // twitter:title
+  $title = trim(strip_tags($node->title));
+  $meta = array(
+    '#tag' => 'meta', 
+    '#attributes' => array(
+    'property' => 'twitter:title', 
+    'content' => $title,
+    ),
+  );
+  drupal_add_html_head($meta, 'twitter:title');
+
+  // twitter:description
+  $meta = array(
+    '#tag' => 'meta', 
+    '#attributes' => array(
+    'property' => 'twitter:description', 
+    'content' => $description,
+    ),
+  );
+  drupal_add_html_head($meta, 'twitter:description');
+
+  // twitter:image
+  if ($image_url != null) {
+    $meta = array(
+      '#tag' => 'meta', 
+      '#attributes' => array(
+      'property' => 'twitter:image', 
+      'content' => $image_url,
+      ),
+    );
+    drupal_add_html_head($meta, 'twitter:image');
   }
 
 }

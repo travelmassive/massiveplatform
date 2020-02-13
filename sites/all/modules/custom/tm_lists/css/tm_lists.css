@@ -197,6 +197,13 @@ img.tm-list-contributor-avatar {
 	margin-right: 1rem;
 }
 
+.tm-list-view-item-anchor {
+	display: block;
+	position: relative;
+	top: -56px;
+	visibility: hidden;
+}
+
 @media screen and (max-width: 800px) {
 	.tm-list-meta-data {
 		display: flex;

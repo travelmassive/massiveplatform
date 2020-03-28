@@ -406,6 +406,12 @@ ul.tm-list-item-actions-dropdown-menu {
 	margin: auto;
 }
 
+/* Featured */
+
+.tm_list_featured .jqiclose {
+	display: none;
+}
+
 /* OEmbed */
 
 .tm-list-view-item-comment iframe {

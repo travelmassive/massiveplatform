@@ -1,5 +1,5 @@
 <div class='tm-list-intro'>
-	<h1>__LIST_TITLE__</h1>
+	<h1 class='tm-list-intro-title'>__LIST_TITLE__</h1>
 	<div class='tm-list-description'>__LIST_DESCRIPTION__</div>
 	<div class='tm-list-meta-data'>
 		<span class='tm-list-pageviews'>__PAGEVIEWS__</span>

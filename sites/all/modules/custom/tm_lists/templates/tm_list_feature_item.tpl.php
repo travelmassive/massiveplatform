@@ -11,7 +11,6 @@ __LIST_ITEM__
 .tm_list_featured .jqi { 
 	width: 90% !important;
 	max-width: 1150px;
-	top: 250px !important;
 	margin-left: auto !important;
 	margin-right: auto !important;
 	left: 0 !important;
@@ -29,7 +28,7 @@ __LIST_ITEM__
 	background: none !important;
 }
 
-.tm_list_featured .jqiclose {
+.tm_list_featured .tm-list-item-actions-container {
 	display: none;
 }
 
@@ -41,16 +40,21 @@ __LIST_ITEM__
 	filter: blur(0px);
 }
 
-.tm_list_featured .tm-list-item-actions-container {
-	display: none;
-}
 
 </style>
 
 <script>
+// position below heading
+title_offset = jQuery('.tm-list-intro-title').offset().top;
+title_height = jQuery('.tm-list-intro-title').height();
+offset = (title_offset + title_height + 16);
+
+// set featured item position
+jQuery('.tm_list_featured .jqi').css({ top: offset + "px" });
+
 // scroll to top
 window.scroll({
-  top: 0, 
+  top: title_offset - 64, 
   left: 0, 
   behavior: 'smooth'
 });

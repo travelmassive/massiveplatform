@@ -9,6 +9,7 @@ __LIST_ITEM__
 /* Featured */
 
 .tm_list_featured .jqi { 
+	margin-top: 0px;
 	width: 90% !important;
 	max-width: 1150px;
 	margin-left: auto !important;

@@ -128,7 +128,7 @@
 
 		name = decodeURIComponent(name);  
 
-		var message = "<div id='feature_list_item'><img src='/sites/all/themes/tm/images/load-more-ajax-loader-2.gif'></div>";
+		var message = "<style>.tm_list_featured .jqi  { margin-top: 250px; }</style><div id='feature_list_item'><center><img style='padding-top: 8px;' src='/sites/all/themes/tm/images/load-more-ajax-loader-2.gif'></center></div>";
 
 		$.prompt(message, { 
 			classes: { box: 'tm_list_featured'}, 

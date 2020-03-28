@@ -133,7 +133,12 @@ function tm_lists_add_list_meta_tags($node) {
 
   // dynamic ## item count
   $list_count = tm_lists_get_num_items($node->nid, 1);
+  $description = str_replace("[##]", $list_count, $description);
   $description = str_replace("##", $list_count, $description);
+
+  // title
+  $title = trim(strip_tags($node->title));
+  $title = str_replace("##", $list_count, $title);
 
   $meta = array(
     '#tag' => 'meta', 
@@ -180,7 +185,6 @@ function tm_lists_add_list_meta_tags($node) {
   drupal_add_html_head($meta, 'twitter:url');
 
   // twitter:title
-  $title = trim(strip_tags($node->title));
   $meta = array(
     '#tag' => 'meta', 
     '#attributes' => array(

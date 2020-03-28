@@ -425,6 +425,10 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 	// load item template
 	$item_template = file_get_contents(drupal_get_path('module', 'tm_lists') .'/templates/tm_list_view_item.tpl.php');
 
+	// list url
+	$list_node = node_load($list_id);
+	$list_url = tm_lists_get_list_url($list_node);
+
 	// render list items
 	$items_html = "";
 	$entity_type = "node";
@@ -506,10 +510,8 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 		}
 
 		// anchor tag
-		$item_anchor_tag = preg_replace('/[^a-zA-Z0-9]/', '', $item_title);
-		if ($item_anchor_tag == "") {
-			$item_anchor_tag = $item->entity_type . "-" . $item->entity_id; // fall back to node-123
-		}
+		// $item_anchor_tag = preg_replace('/[^a-zA-Z0-9]/', '', $item_title);
+		$item_anchor_tag = "feature-" . $item->entity_type . $item->entity_id;
 
 		// actions menu
 		$item_menu = "";
@@ -561,10 +563,8 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 				$item_menu .= "<li><a href='javascript:void(0);' onClick='tm_remove_item_from_list(\"" . $entity_type . "\", " . $item->entity_id . "," . $list_id . ", \"" . strip_tags(htmlentities($item_title, ENT_QUOTES)) . "\");'>Remove</a></li>";
 			}
 
-			// anchor tag
-			if ($count <= $conf["tm_lists_per_page"]) {
-				$item_menu .= "<li><a href='#" . $item_anchor_tag . "'>Link to item</a></li>";
-			}
+			// item link
+			$item_menu .= "<li><a href='/" . $list_url . "/" . $item_anchor_tag . "'>Link to item</a></li>";
 
 			$item_menu .= "</ul>";
 			$item_menu .= "</div>"; // more-actions
@@ -944,4 +944,74 @@ function tm_lists_get_entity_score($entity_type, $entity, $flags) {
 
 	// return score
 	return $score;
+}
+
+/* Return html for a single list item */
+function tm_lists_display_list_item_ajax($list_id, $entity_type, $entity_id) {
+
+	// cache for 5 minutes if logged out
+	if (!user_is_logged_in()) {
+		drupal_add_http_header('Cache-Control', 'public, max-age=300');
+	}
+
+	// load list
+	$list = node_load($list_id);
+	if ($list == null) {
+		print "<script>jQuery.prompt.close();</script>";
+		drupal_exit();
+	}
+
+	// load template
+	$template = file_get_contents(drupal_get_path('module', 'tm_lists') .'/templates/tm_list_feature_item.tpl.php');
+
+	// get list options
+	$show_item_links = array();
+	foreach ($list->field_list_display_links[LANGUAGE_NONE] as $field) {
+		$show_item_links[] = $field['value'];
+	}
+	$sort_method = $list->field_list_sort_by[LANGUAGE_NONE][0]['value'];
+	$item_link_nofollow = $list->field_list_nofollow_links[LANGUAGE_NONE][0]['value'];
+	$hide_item_position = $list->field_list_hide_rankings[LANGUAGE_NONE][0]['value'];
+
+	$all_items = tm_lists_get_items_by_id($list_id, $sort_method, 0, 1000);
+	$items = array();
+	$count = 1;
+	foreach ($all_items as $item) {
+		if (($item->entity_id == $entity_id) and ($item->entity_type == $entity_type)) {
+			$items[] = $item;
+			break;
+		}
+		$count++;
+	}
+
+	// check we have an item
+	if (sizeof($items) == 0) {
+		print "<script>jQuery.prompt.close();</script>";
+		drupal_exit();
+	}
+
+	// description character limit
+	$character_limit = 250; // default
+	if (isset($list->field_list_item_description_char[LANGUAGE_NONE][0]['value'])) {
+		$character_limit = $list->field_list_item_description_char[LANGUAGE_NONE][0]['value'];
+	}
+	
+	// Render results
+	$item_html = tm_lists_render_list_items_html($list_id, $items, 1, $sort_method, $count, 0, $hide_item_position, $show_item_links, $item_link_nofollow, $character_limit);
+
+	// Insert into template
+	$html = str_replace("__LIST_ITEM__", $item_html, $template);
+
+	// Return html
+	echo $html;
+	drupal_exit();
+}
+
+/**
+ Featured item permalink redirect
+ ie: /lists/13741/test-list/feature-213737 
+ redirect to: /lists/13741/test-list#feature-213737
+*/
+function tm_lists_display_list_feature($list_id, $list_slug, $hash) {
+	drupal_goto("/lists/" . $list_id . "/" . $list_slug, array("fragment" => $hash));
 }

@@ -130,6 +130,20 @@ function tm_lists_menu() {
 		'access arguments' => array('access content'),
 	);
 
+	$items['lists/%/%/%'] = array(
+		'title' => 'View List',
+		'page callback' => 'tm_lists_display_list_feature',
+		'page arguments' => array(1, 2, 3),
+		'access arguments' => array('access content')
+	);
+	
+	$items['lists/ajax/item/%/%/%'] = array(
+		'title' => 'Fetch list item',
+		'page callback' => 'tm_lists_display_list_item_ajax',
+		'page arguments' => array(3,4,5),
+		'access arguments' => array('access content'),
+	);
+
 	return $items;
 }
 

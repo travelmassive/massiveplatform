@@ -694,7 +694,6 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 		// replace fields
 		$item_html = $item_template;
 		$item_html = str_replace("__ITEM_POSITION__", $item_position, $item_html);
-		$item_html = str_replace("__ANCHOR_TAG__", $item_anchor_tag, $item_html);
 		$item_html = str_replace("__ITEM_IMAGE_CLASS__", $image_class, $item_html);
 		$item_html = str_replace("__ITEM_IMAGE_URL__", $image_url, $item_html);
 		$item_html = str_replace("__ITEM_TITLE__", $item_title, $item_html);

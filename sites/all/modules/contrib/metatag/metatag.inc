@@ -503,13 +503,25 @@ class DrupalTextMetaTag extends DrupalDefaultMetaTag {
     $value = $this->data['value'];
 
     if (empty($options['raw'])) {
-      // Make sure there is a node to work with.
-      if (isset($options['token data']['node'])) {
-        // Get language to use for selecting body field value.
-        $lang = field_language('node', $options['token data']['node'], 'body');
-        if (!empty($options['token data']['node']->body[$lang][0]['value'])) {
-          // Pre-tidy the node body for token_replace if it's not empty.
-          $options['token data']['node']->body[$lang][0]['value'] = $this->tidyValue($options['token data']['node']->body[$lang][0]['value']);
+      // Keep a copy of the original body value from before the summary string
+      // is extracted, so that this doesn't break output from other modules.
+      $old_value = NULL;
+
+      // There can be problems extracting the [node:summary] token due to
+      // certain modules using custom placeholders, e.g. Media WYSIWYG. To avoid
+      // that problem, the string needs to be filtered using tidyValue() before
+      // the tokens are processed.
+      if (strpos($value, '[node:summary]') !== FALSE) {
+        // Make sure there is a node to work with.
+        if (isset($options['token data']['node'])) {
+          // Get language to use for selecting body field value.
+          $lang = field_language('node', $options['token data']['node'], 'body');
+          if (!empty($options['token data']['node']->body[$lang][0]['value'])) {
+            $old_value = $options['token data']['node']->body[$lang][0]['value'];
+
+            // Pre-tidy the node body for token_replace if it's not empty.
+            $options['token data']['node']->body[$lang][0]['value'] = $this->tidyValue($old_value);
+          }
         }
       }
 
@@ -517,6 +529,11 @@ class DrupalTextMetaTag extends DrupalDefaultMetaTag {
       // to modify defined token patterns and values before replacement.
       drupal_alter('metatag_pattern', $value, $options['token data'], $this->info['name']);
       $value = token_replace($value, $options['token data'], $options);
+
+      // Put back the original value, if one was retained earlier.
+      if (!is_null($old_value)) {
+        $options['token data']['node']->body[$lang][0]['value'] = $old_value;
+      }
     }
 
     // Special handling for language meta tags.

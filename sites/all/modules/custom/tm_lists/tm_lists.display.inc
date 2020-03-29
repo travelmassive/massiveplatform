@@ -572,6 +572,38 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 			$item_menu .= "</div>";
 		}
 
+		// everyone else who is logged in
+		if (!$user_can_perform_list_action and (user_is_logged_in())) {
+			
+			$item_menu = "<div class='tm-list-item-actions-container'>";
+			$item_menu .= "<ul><li class='tm-list-item-actions-dropdown' data-dropd-wrapper>";
+			$item_menu .= "<a class='tm-list-item-actions' href='javascript:void(0);' data-dropd-toggle=''></a>";
+
+			// more-actions
+			$item_menu .= "<div class='inner dropd dropd-s dropd-right' data-dropd='' style='top: 24px; min-width: 8rem;'>";
+
+			// dropd-menu
+			$item_menu .= "<ul class='tm-list-item-actions-dropdown-menu dropd-menu'>";
+			
+			// who added
+			$who_added = user_load($item->uid);
+			if ($who_added != null) {
+				$who_added_first_name = strip_tags($who_added->field_user_first_name[LANGUAGE_NONE][0]['value']);
+				$who_added_last_name = strip_tags($who_added->field_user_last_name[LANGUAGE_NONE][0]['value']);
+				$who_added_full_name = $who_added_first_name . " " . $who_added_last_name;
+				$who_added_url = drupal_get_path_alias("user/" . $item->uid);
+				$item_menu .= "<li style='white-space: nowrap;'><a href='/" . $who_added_url . "'>Added by " . $who_added_full_name . "</a></li>";
+			}
+
+			// item link
+			$item_menu .= "<li><a href='/" . $list_url . "/" . $item_anchor_tag . "'>Link to item</a></li>";
+
+			$item_menu .= "</ul>";
+			$item_menu .= "</div>"; // more-actions
+			$item_menu .= "</li></ul>"; // data-dropd-wrapper
+			$item_menu .= "</div>";
+		}
+
 		// link target and rel
 		$rel = "nofollow noopener"; // default
 		$link_target = $conf["tm_lists_link_target"];

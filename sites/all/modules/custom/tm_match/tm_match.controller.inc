@@ -8,7 +8,7 @@ function tm_match_suggest_uids($uid, $limit = 5) {
 	// You mission, if you choose to accept it.
 	// Find people to match with.
 
-	$query = "SELECT uid from users where uid > 0";
+	$query = "SELECT uid from users where uid > 0 ORDER BY RAND() LIMIT " . intval($limit);
 	$results = db_query($query)->fetchAll();
 
 	// check results

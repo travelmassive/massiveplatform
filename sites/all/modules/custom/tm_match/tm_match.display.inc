@@ -132,7 +132,7 @@ function tm_match_render_cards($uid, $num_cards = 10) {
 		$template_fields["__IMAGE_URL__"] = $image_url;
 		$template_fields["__NAME__"] = $full_name;
 		$template_fields["__TITLE__"] = $sub_title;
-		$template_fields["__CSS_COLOR__"] = $css_colors[sizeof($css_colors) % $count];
+		$template_fields["__CSS_COLOR__"] = $css_colors[$count % sizeof($css_colors)];
 
 		// render template
 		$html .= tm_match_render_card($template, $uid, $is_last_card, $template_fields);

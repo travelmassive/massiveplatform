@@ -10,9 +10,9 @@
 	height: 54rem;
 	margin-left: -15.3rem;
 	margin-top: -27rem;*/
-	background: #F6F6F5;
-	box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
-	border-radius: 8px;
+	/*background: #F6F6F5;*/
+	/*box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+	border-radius: 8px;*/
 }
 
 .tm_match__header {
@@ -24,7 +24,7 @@
 	overflow: hidden;
 	position: relative;
 	height: 48rem;
-	padding-top: 4.5rem;
+	padding-top: 2.5rem;
 	user-select: none;
 }
 
@@ -135,9 +135,12 @@
 }
 
 .tm_match__card__we {
+	height: 11.5rem;
 	text-align: center;
 	font-size: 2.2rem;
-	line-height: 11.5rem;
+	line-height: 3rem;
+	padding-top: 2rem;
+	overflow: hidden;
 }
 
 .tm_match__card__choice {

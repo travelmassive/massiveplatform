@@ -37,7 +37,7 @@
 			swipeCallback("right", tm_current_uid, card_uid);
 			$card.addClass("demo_disable_move");
 			confetti.start();
-			setTimeout(function() { confetti.stop() }, 5000);
+			setTimeout(function() { confetti.stop() }, 1000);
 
 		} else if (pullDeltaX <= -decisionVal) {
 			$card.addClass("to-left");

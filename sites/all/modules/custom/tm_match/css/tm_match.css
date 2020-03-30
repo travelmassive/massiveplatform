@@ -168,6 +168,7 @@
 .tm_match__card__btm {
 	height: 11.5rem;
 	background: #FFFFFF;
+	overflow: hidden;
 }
 
 .tm_match__card__we {
@@ -176,7 +177,6 @@
 	font-size: 2.2rem;
 	line-height: 3rem;
 	padding-top: 2rem;
-	overflow: hidden;
 }
 
 .tm_match__card__choice {

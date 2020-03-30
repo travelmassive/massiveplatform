@@ -170,16 +170,15 @@
 	background: #FFFFFF;
 	overflow: hidden;
 	text-align: center;
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
 }
 
 .tm_match__card__we {
-	height: 11.5rem;
 	text-align: center;
 	font-size: 2.2rem;
-	line-height: 3rem;
-	display: inline-block;
-  	vertical-align: middle;
-  	line-height: 2.5rem;
+  	line-height: 2.75rem;
 }
 
 .tm_match__card__choice {

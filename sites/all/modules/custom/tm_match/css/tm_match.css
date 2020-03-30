@@ -169,6 +169,7 @@
 	height: 11.5rem;
 	background: #FFFFFF;
 	overflow: hidden;
+	text-align: center;
 }
 
 .tm_match__card__we {
@@ -176,7 +177,9 @@
 	text-align: center;
 	font-size: 2.2rem;
 	line-height: 3rem;
-	padding-top: 2rem;
+	display: inline-block;
+  	vertical-align: middle;
+  	line-height: 2.5rem;
 }
 
 .tm_match__card__choice {

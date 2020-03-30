@@ -35,6 +35,13 @@
 	margin: 0 auto 5rem;
 }
 
+@media screen and (max-width: 600px) {
+
+	.tm_match__card-cont {
+		width: 100%;
+	}
+}
+
 .tm_match__card {
 	z-index: 2;
 	position: absolute;
@@ -161,6 +168,7 @@
 .tm_match__card__name {
 	text-align: center;
 	font-size: 2rem;
+	line-height: 2rem;
 	font-weight: bold;
 	color: #fff;
 }

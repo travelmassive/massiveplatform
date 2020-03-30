@@ -1,0 +1,45 @@
+<?php
+
+// tm_match.module
+include_once 'tm_match.display.inc';
+include_once 'tm_match.controller.inc';
+include_once 'tm_match.callbacks.inc';
+
+/**
+ * Implements hook_menu().
+ */
+function tm_match_menu() {
+
+	$items = array();
+
+	$items['match'] = array(
+		'title' => 'Match',
+		'page callback' => 'tm_match_display_index',
+		'access arguments' => array('access content')
+	);
+
+	$items['match/ajax/cards'] = array(
+		'title' => 'Match',
+		'page callback' => 'tm_match_fetch_cards_ajax',
+		'access arguments' => array('access content')
+	);
+
+	$items['match/callback/left/%/%'] = array(
+		'title' => 'Swipe Left',
+		'page callback' => 'tm_match_callback_swipe_left',
+		'page arguments' => array(3, 4),
+		'access arguments' => array('access content'),
+	);
+
+	$items['match/callback/right/%/%'] = array(
+		'title' => 'Swipe Right',
+		'page callback' => 'tm_match_callback_swipe_right',
+		'page arguments' => array(3, 4),
+		'access arguments' => array('access content')
+	);
+
+	return $items;
+}
+
+
+

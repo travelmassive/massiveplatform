@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function tm_match_schema() {
+  $schema = array();
+  $schema['tm_match'] = array(
+    'description' => 'Match Maker.',
+    'fields' => array(
+      'id' => array(
+        'description' => 'The unique ID.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'uid' => array(
+        'description' => 'The user ID who matched.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'left_uid' => array(
+        'description' => 'Swipe left.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'right_uid' => array(
+        'description' => 'Swipe right.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'timestamp' => array(
+        'description' => 'The Unix timestamp.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0, 
+      ),
+    ),
+    'primary key' => array('id'),     
+    'indexes' => array(
+      'uid' => array('uid'),
+      'uid_left_uid' => array('uid', 'left_uid'),
+      'uid_right_uid' => array('uid', 'left_uid'),
+      'uid_timestamp' => array('uid', 'timestamp'),  
+    ),  
+  );
+  return $schema;
+}
+

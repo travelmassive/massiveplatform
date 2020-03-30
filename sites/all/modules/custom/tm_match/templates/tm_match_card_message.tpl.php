@@ -3,7 +3,7 @@
 		<div class="tm_match__card__img"></div>
 		<p class="tm_match__card__name">__TITLE__</p>
 	</div>
-	<div class="tm_match__card__btm">
+	<div class="tm_match__card__btm message">
 		<p class="tm_match__card__we">__MESSAGE__</p>
 	</div>
 	<div class="tm_match__card__choice m--reject"></div>

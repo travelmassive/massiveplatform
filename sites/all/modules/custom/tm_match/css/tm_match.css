@@ -112,6 +112,42 @@
 	background: orange;
 }
 
+.tm_match__card__btm.purple {
+	border: 2px solid #7132B9;
+}
+
+.tm_match__card__btm.blue {
+	border: 2px solid #248CB6;
+}
+
+.tm_match__card__btm.indigo {
+	border: 2px solid #303F9F;
+}
+
+.tm_match__card__btm.cyan {
+	border: 2px solid #26C6DA;
+}
+
+.tm_match__card__btm.lime {
+	border: 2px solid #AFB42B;
+}
+
+.tm_match__card__btm.brown {
+	border: 2px solid #795548;
+}
+
+.tm_match__card__btm.pink {
+	border: 2px solid #ff567d;
+}
+
+.tm_match__card__btm.black {
+	border: 2px solid #222222;
+}
+
+.tm_match__card__btm.message {
+	border: 2px solid orange;
+}
+
 .tm_match__card__img {
 	overflow: hidden;
 	width: 10rem;

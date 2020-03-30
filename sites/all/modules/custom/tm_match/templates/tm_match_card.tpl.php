@@ -3,7 +3,7 @@
 		<div class="tm_match__card__img" style="background-image: url('__IMAGE_URL__');"></div>
 		<p class="tm_match__card__name">__NAME__</p>
 	</div>
-	<div class="tm_match__card__btm">
+	<div class="tm_match__card__btm _CSS_COLOR__">
 		<p class="tm_match__card__we">__TITLE__</p>
 	</div>
 	<div class="tm_match__card__choice m--reject"></div>

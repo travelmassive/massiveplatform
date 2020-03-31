@@ -4,8 +4,6 @@
 
 TODO LIST:
 
-- Filter if they swiped left on you
-- You've matched
 - Pro Member flag
 - View full profile link
 
@@ -41,6 +39,8 @@ Extas:
 
 DONE!
 
+- You've matched
+- Filter if they swiped left on you
 - Cool stats and message
 - Log in tm_match if you follow back
 - Metatag

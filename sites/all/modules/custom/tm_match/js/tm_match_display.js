@@ -151,7 +151,7 @@
 			success: function(response) {
 				tm_match_fetching_new_cards = false;
 				jQuery(".tm_match__card-cont").empty().append(response);
-				jQuery('.tm_match__card__btm').textfill();
+				jQuery('.tm_match__card__btm').textfill({maxFontPixels: 32});
 			},
 			error: function(xhr) {
 				// This is also reached when we cancel the xhr request
@@ -160,6 +160,6 @@
 	};
 
 	// text fill cards on initial load
-	jQuery('.tm_match__card__btm').textfill();
+	jQuery('.tm_match__card__btm').textfill({maxFontPixels: 32});
 
 });})(jQuery, Drupal, this, this.document);

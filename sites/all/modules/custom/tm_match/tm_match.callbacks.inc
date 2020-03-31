@@ -50,7 +50,7 @@ function tm_match_callback_swipe_right($uid, $right_uid) {
 	}
 
 	// dont match yourself
-	if ($uid == $left_uid) {
+	if ($uid == $right_uid) {
 		drupal_exit();
 	}
 

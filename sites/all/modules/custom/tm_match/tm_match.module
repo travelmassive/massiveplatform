@@ -11,6 +11,7 @@ TODO LIST:
 - Link to feedback
 - Check cache??
 - Log in tm_match if you follow back
+- Add message to notification so person can reply
 
 Bugs:
 
@@ -36,7 +37,7 @@ Suggestions algorithm:
 Extas:
 
 - Add calendar
-- Look into whereby.com
+- Look into whereby.com or bluejeans
 
 DONE!
 
@@ -45,6 +46,7 @@ DONE!
 - Demo for non-signed in, non-approved
 - Pass in UID
 - Debug mode
+
 
 
 */

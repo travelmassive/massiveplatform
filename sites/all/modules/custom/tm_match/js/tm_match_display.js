@@ -151,11 +151,15 @@
 			success: function(response) {
 				tm_match_fetching_new_cards = false;
 				jQuery(".tm_match__card-cont").empty().append(response);
+				jQuery('.tm_match__card__we').textfill();
 			},
 			error: function(xhr) {
 				// This is also reached when we cancel the xhr request
 			}
 		});
 	};
+
+	// text fill cards on initial load
+	jQuery('.tm_match__card__btm').textfill();
 
 });})(jQuery, Drupal, this, this.document);

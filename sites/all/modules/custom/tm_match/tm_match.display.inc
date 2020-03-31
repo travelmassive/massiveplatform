@@ -14,6 +14,7 @@ function tm_match_display_index() {
 
 	// include list display js
 	drupal_add_js(drupal_get_path('module', 'tm_match') . '/js/tm_match_display.js');
+	drupal_add_js(drupal_get_path('module', 'tm_match') . '/js/jquery.textfill.min.js');
 	drupal_add_js(drupal_get_path('module', 'tm_match') . '/js/confetti.min.js');
 
 	// load template
@@ -244,7 +245,7 @@ function tm_match_render_cards($uid, $num_cards = 10, $show_loading = true) {
 function tm_match_render_card($template, $uid, $first_name, $follows_you_back, $is_last_card, $template_fields) {
 
 	$html = str_replace("__UID__", $uid, $template);
-	$html = str_replace("__FIRST_NAME__", $first_name, $html);
+	$html = str_replace("__FIRST_NAME__", htmlentities($first_name), $html); // remove "
 
 	$is_last_card_text = "false";
 	if ($is_last_card) {

@@ -30,31 +30,3 @@
     <p><br><a href="javascript:continueMatching();">Continue matching</a></p>
   </div>
 </div>
-
-<style>
-  .tm_its_a_match_container {
-    display: none;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-    background-color: #ffffff;
-  }
-
-  .tm_its_a_match_content {
-    padding-top: 4rem;
-    text-align: center;
-  }
-
-  .tm_its_a_match_content h1 {
-    font-size: 38pt;
-  }
-
-  .tm_its_a_match_content p {
-    font-size: 16pt;
-  }
-
-</style>
-

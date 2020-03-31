@@ -4,7 +4,7 @@
 		<p class="tm_match__card__name">__NAME__</p>
 	</div>
 	<div class="tm_match__card__btm __CSS_COLOR__">
-		<p class="tm_match__card__we">__TITLE__</p>
+		<span class="tm_match__card__we">__TITLE__</span>
 	</div>
 	<div class="tm_match__card__choice m--reject"></div>
 	<div class="tm_match__card__choice m--like"></div>

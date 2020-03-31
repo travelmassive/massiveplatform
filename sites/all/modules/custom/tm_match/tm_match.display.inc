@@ -162,7 +162,16 @@ function tm_match_render_cards($uid, $num_cards = 10, $show_loading = true) {
 	if ($show_loading) {
 		$html = $template_loading;
 	}
-	$uids = tm_match_suggest_uids($uid, $num_cards);
+
+	// get suggested uids
+	if ($num_cards == 1) {
+		// if only one card, use featured ids
+		$featured_ids = $conf["tm_match_suggest_featured_uids"];
+		shuffle($featured_ids);
+		$uids = array_slice($featured_ids, 0, 1);
+	} else {
+		$uids = tm_match_suggest_uids($uid, $num_cards);
+	}
 
 	// no more
 	if (sizeof($uids) == 0) {

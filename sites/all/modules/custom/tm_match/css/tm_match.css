@@ -39,6 +39,7 @@
 
 	.tm_match__card-cont {
 		width: 100%;
+		touch-action: none;
 	}
 }
 

@@ -204,11 +204,11 @@
 	display: flex;
   	justify-content: center;
   	align-items: center;
-  	padding-left: 0.5rem;
-  	padding-right: 0.5rem;
 }
 
 .tm_match__card__we {
+	padding-left: 0.5rem;
+  	padding-right: 0.5rem;
 	text-align: center;
 	font-size: 2.2rem;
   	line-height: 2.5rem;

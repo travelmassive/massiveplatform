@@ -38,7 +38,7 @@ function tm_match_suggest_uids($uid, $limit = 10) {
 	$query = "SELECT uid FROM flagging WHERE fid = :fid AND entity_id = :entity_id ORDER BY RAND() LIMIT " . $limit;
 	$results = db_query($query, array(":fid" => $follow_members_flag->fid, ":entity_id" => $uid))->fetchAll();
 	foreach($results as $result) {
-		$follows_you_uids[] = $result->entity_id;
+		$follows_you_uids[] = $result->uid;
 	}
 
 	// 2. Members in your chapter

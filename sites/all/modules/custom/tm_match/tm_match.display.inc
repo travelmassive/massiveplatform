@@ -223,6 +223,21 @@ function tm_match_render_cards($uid, $num_cards = 10, $show_loading = true) {
 			$sub_title .= $location;
 		}
 
+		// if sub_title is empty, use first sentence of user description
+		if (trim($sub_title) == "") {
+			if (isset($account->field_about_me[LANGUAGE_NONE][0]['value'])) {
+				$item_description = $account->field_about_me[LANGUAGE_NONE][0]['value'];
+				$description_parts = explode(".", $item_description);
+				$sub_title = strip_tags($description_parts[0]);
+				if (sizeof($description_parts) > 1) {
+					$sub_title .= ".";
+				}
+			}
+		}
+
+		// format item comment
+		$comment = strip_tags($comment);
+
 		// template fields
 		$template_fields = array();
 		$template_fields["__IMAGE_URL__"] = $image_url;

@@ -19,7 +19,8 @@
 	function pullChange() {
 		
 		if (!animating) {
-			jQuery(".tm_match__card-cont").addClass("no-touch-action"); // disable scroll on mobile
+			jQuery(".tm_match__card-cont").addClass("no-touch-action"); // disable scroll
+			console.log("none");
 		}
 
 		animating = true;

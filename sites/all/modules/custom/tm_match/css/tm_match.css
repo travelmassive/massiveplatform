@@ -33,6 +33,7 @@
 	width: 24rem;
 	height: 32rem;
 	margin: 0 auto 5rem;
+	touch-action: auto;
 }
 
 .tm_match__card-cont.no-touch-action {

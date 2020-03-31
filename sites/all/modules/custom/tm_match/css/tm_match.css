@@ -204,6 +204,8 @@
 	display: flex;
   	justify-content: center;
   	align-items: center;
+  	padding-left: 0.5rem;
+  	padding-right: 0.5rem;
 }
 
 .tm_match__card__we {

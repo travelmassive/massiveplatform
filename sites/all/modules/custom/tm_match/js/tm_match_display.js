@@ -1,4 +1,4 @@
-//(function ($, Drupal, window, document, undefined) {
+(function ($, Drupal, window, document, undefined) {
 
 	jQuery(document).ready(function() {
 
@@ -158,6 +158,4 @@
 		});
 	};
 
-});
-
-//})(jQuery, Drupal, this, this.document);
+});})(jQuery, Drupal, this, this.document);

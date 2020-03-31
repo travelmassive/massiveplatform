@@ -13,9 +13,8 @@ function tm_match_display_index() {
 	drupal_add_css(drupal_get_path('module', 'tm_match') . '/css/tm_match.css');
 
 	// include list display js
-	//drupal_add_js(drupal_get_path('module', 'tm_match') . '/js/tm_match_display.js');
+	drupal_add_js(drupal_get_path('module', 'tm_match') . '/js/tm_match_display.js');
 	drupal_add_js(drupal_get_path('module', 'tm_match') . '/js/confetti.min.js');
-	$js_file = file_get_contents(drupal_get_path('module', 'tm_match') . '/js/tm_match_display.js');
 
 	// load template
 	$template = file_get_contents(drupal_get_path('module', 'tm_match') .'/templates/tm_match_index.tpl.php');
@@ -82,9 +81,6 @@ function tm_match_display_index() {
 	$html = str_replace("__MATCH_TIP__", "Swipe left or right ", $html);
 	$html = str_replace("__MATCH_FOOTER__", $footer, $html);
 	
-	// load more
-	$html .= "<script>\n" . $js_file . "\n" . "</script>";
-
 	// create form
 	$form['html'] = array(
 		'#type' => 'item',

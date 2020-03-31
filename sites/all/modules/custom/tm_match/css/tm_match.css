@@ -35,14 +35,11 @@
 	margin: 0 auto 5rem;
 }
 
-.no-touch-action {
-	touch-action: none;
-}
-
 @media screen and (max-width: 600px) {
 
 	.tm_match__card-cont {
 		width: 100%;
+		touch-action: none;
 	}
 }
 

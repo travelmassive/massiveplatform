@@ -56,9 +56,9 @@ function tm_match_suggest_uids($uid, $limit = 10) {
 	if (isset($account->field_user_country[LANGUAGE_NONE][0]['iso2'])) {
 		$country = $account->field_user_country[LANGUAGE_NONE][0]['iso2'];
 		$query = "SELECT entity_id FROM field_data_field_user_country WHERE field_user_country_iso2 = :iso2 ORDER BY RAND() LIMIT 10";
-		$results = db_query($query, array(":iso2" => $country->fid))->fetchAll();
+		$results = db_query($query, array(":iso2" => $country))->fetchAll();
 		foreach($results as $result) {
-			$suggested_uids = $result->entity_id;
+			$suggested_uids[] = $result->entity_id;
 		}
 	}
 
@@ -160,7 +160,7 @@ function tm_match_suggest_uids($uid, $limit = 10) {
 	$suggested_unique_uids = array_slice($suggested_unique_uids, 0, $pick_items);
 	
 	// Join the 10 followers, with 20 other randoms suggested
-	$suggested_all = array_merge($follows_you_uids, $suggested_unique_uids);
+	$suggested_all = array_unique(array_merge($follows_you_uids, $suggested_unique_uids));
 
 	// Check swipes
 	$swiped_already = tm_match_get_all_swipes($uid);
@@ -207,6 +207,11 @@ function tm_match_suggest_uids($uid, $limit = 10) {
 			}
 		}
 
+		// You don't already follow them
+		if (tm_match_user_is_following($uid, $check_user->uid, $follow_members_flag->fid)) {
+			continue;
+		}
+
 		// Add it
 		$suggested_filtered[] = $suggested_uid;
 	}
@@ -239,10 +244,14 @@ function tm_match_swipe_left($uid, $left_uid) {
 }
 
 // swipe right
-function tm_match_swipe_right($uid, $right_uid) {
+function tm_match_swipe_right($uid, $right_uid, $timestamp = null) {
 	
 	global $conf;
-	$timestamp = time();
+
+	// configure timestamp
+	if ($timestamp == null) {
+		$timestamp = time();
+	}	
 	
 	$fields = array(
 		'uid' => $uid,
@@ -293,7 +302,7 @@ function tm_match_check_rate_limit($uid) {
 // get all uids
 function tm_match_get_all_swipes($uid) {
 
-	$query = "SELECT DISTINCT IFNULL(left_uid, right_uid) as uid from tm_match WHERE uid = :uid";
+	$query = "SELECT DISTINCT IFNULL(left_uid, right_uid) AS uid FROM tm_match WHERE uid = :uid";
 
 	$results = db_query($query, array(":uid" => $uid))->fetchAll();
 
@@ -313,7 +322,7 @@ function tm_match_get_all_swipes($uid) {
 // check how many swipes
 function tm_match_count_all_swipes($uid, $timestamp = 0) {
 
-	$query = "SELECT COUNT(DISTINCT IFNULL(left_uid, right_uid)) as total_swipes from tm_match WHERE uid = :uid AND timestamp > :timestamp";
+	$query = "SELECT COUNT(DISTINCT IFNULL(left_uid, right_uid)) AS total_swipes FROM tm_match WHERE uid = :uid AND timestamp > :timestamp";
 
 	$result = db_query($query, array(":uid" => $uid, ":timestamp" => $timestamp))->fetch();
 
@@ -323,12 +332,11 @@ function tm_match_count_all_swipes($uid, $timestamp = 0) {
 
 	return $result->total_swipes;
 }
-
 
 // check how many swipes
 function tm_match_count_all_right_swipes($uid, $timestamp = 0) {
 
-	$query = "SELECT COUNT(DISTINCT right_uid) as total_swipes from tm_match WHERE uid = :uid AND timestamp > :timestamp";
+	$query = "SELECT COUNT(DISTINCT right_uid) AS total_swipes FROM tm_match WHERE uid = :uid AND timestamp > :timestamp";
 
 	$result = db_query($query, array(":uid" => $uid, ":timestamp" => $timestamp))->fetch();
 
@@ -338,3 +346,27 @@ function tm_match_count_all_right_swipes($uid, $timestamp = 0) {
 
 	return $result->total_swipes;
 }
+
+// check is someone has swiped right on another member
+function tm_match_user_has_swiped_right($uid, $right_uid) {
+
+	$query = "SELECT COUNT(DISTINCT right_uid) AS total_swipes FROM tm_match WHERE uid = :uid AND right_uid = :right_uid";
+	$result = db_query($query, array(":uid" => $uid, ":right_uid" => $right_uid))->fetch();
+	return $result->total_swipes;
+
+}
+
+// quick lookup if user is following another user
+function tm_match_user_is_following($uid_of_follower, $uid, $follow_members_flag_id = null) {
+
+	// fetch flag if not provided	
+	if ($follow_members_flag_id == null) {
+		$follow_members_flag_id = flag_get_flag('follow_members')->fid;
+	}
+
+	// check if card_uid is following uid
+	$query = "SELECT entity_id FROM flagging WHERE fid = :fid AND uid = :uid AND entity_id = :entity_id";
+	$results = db_query($query, array(":fid" => $follow_members_flag_id, ":uid" => $uid_of_follower, ":entity_id" => $uid))->fetchAll();
+	return (sizeof($results) > 0);
+}
+

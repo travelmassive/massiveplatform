@@ -286,3 +286,12 @@
 	background: #F6F6F5;
 }
 
+.tm_match_footer {
+	border-top: 1px solid #ddd;
+	padding-top: 1rem;
+	width: 80%;
+	margin: auto;
+	color: #888;
+	text-align: center;
+}
+

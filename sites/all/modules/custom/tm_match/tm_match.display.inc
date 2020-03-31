@@ -20,6 +20,11 @@ function tm_match_display_index() {
 	// load template
 	$template = file_get_contents(drupal_get_path('module', 'tm_match') .'/templates/tm_match_index.tpl.php');
 
+	// demo mode
+	if ($conf["tm_match_demo_mode"]) {
+		drupal_set_message("We're in demo mode — notifications won't be sent when you swipe.", 'help-tip');
+	}
+
 	// check rate limit
 	if (tm_match_check_rate_limit($user->uid)) {
 		$results_html = tm_match_render_cards($user->uid, $conf["tm_match_load_cards"]);	
@@ -65,14 +70,19 @@ function tm_match_display_index() {
 	}
 	$html = str_replace("__DEBUG_CSS__", $debug_css, $html);
 
+	// footer
+	$footer = $conf["tm_match_footer_message"];
+	$footer = str_replace("__NUM_MEMBERS__", tm_match_stats_total_users(), $footer);
+	$footer = str_replace("__NUM_SWIPES__",  tm_match_stats_total_swipes(), $footer);
+	$footer = str_replace("__NUM_MATCHES__", tm_match_stats_total_matches(), $footer);
+
 	// fields
 	$html = str_replace("__INTRO__", $conf["tm_match_index_intro"], $html);
 	$html = str_replace("__RESULTS__", $results_html, $html);
 	$html = str_replace("__MATCH_TIP__", "Swipe left or right ", $html);
-
+	$html = str_replace("__MATCH_FOOTER__", $footer, $html);
 	
 	// load more
-
 	$html .= "<script>\n" . $js_file . "\n" . "</script>";
 
 	// create form
@@ -159,11 +169,14 @@ function tm_match_render_cards($uid, $num_cards = 10, $show_loading = true) {
 		return tm_match_render_card_message($conf["tm_match_no_cards_title"], $conf["tm_match_no_cards_message"]);
 	}
 
+	// quick lookup, follow members flag id
+	$follow_members_flag_id = flag_get_flag('follow_members')->fid;
+
 	$count = 1;
-	foreach ($uids as $uid) {
+	foreach ($uids as $card_uid) {
 		
 		// load account
-		$account = user_load($uid);
+		$account = user_load($card_uid);
 		if ($account == null) {
 			continue;
 		}
@@ -211,8 +224,11 @@ function tm_match_render_cards($uid, $num_cards = 10, $show_loading = true) {
 		$template_fields["__TITLE__"] = $sub_title;
 		$template_fields["__CSS_COLOR__"] = $css_colors[$count % sizeof($css_colors)];
 
+		// follows you back
+		$follows_you_back = tm_match_user_is_following($card_uid, $uid, $follow_members_flag_id);
+
 		// render template
-		$html .= tm_match_render_card($template, $uid, $is_last_card, $template_fields);
+		$html .= tm_match_render_card($template, $card_uid, $first_name, $follows_you_back, $is_last_card, $template_fields);
 
 		$count++;
 	}
@@ -220,15 +236,20 @@ function tm_match_render_cards($uid, $num_cards = 10, $show_loading = true) {
 	return $html;
 }
 
-function tm_match_render_card($template, $uid, $is_last_card, $template_fields) {
+function tm_match_render_card($template, $uid, $first_name, $follows_you_back, $is_last_card, $template_fields) {
 
 	$html = str_replace("__UID__", $uid, $template);
+	$html = str_replace("__FIRST_NAME__", $first_name, $html);
 
 	$is_last_card_text = "false";
 	if ($is_last_card) {
 		$is_last_card_text = "true";
 	}
 
+	// follows you back
+	$html = str_replace("__FOLLOWS_YOU_BACK__", intval($follows_you_back), $html);
+
+	// is last card
 	$html = str_replace("__IS_LAST_CARD__", $is_last_card_text, $html);
 
 	// replace template field values

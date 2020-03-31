@@ -35,10 +35,17 @@
 		if (pullDeltaX >= decisionVal) {
 			$card.addClass("to-right");
 			var card_uid = $card.data("card-uid");
+			var card_first_name = $card.data("card-first-name");
 			swipeCallback("right", tm_match_current_uid, card_uid);
 			$card.addClass("tm_match_disable_move");
-			confetti.start();
-			setTimeout(function() { confetti.stop() }, 1000);
+			
+			var follows_you_back = $card.data("follows-you-back");
+			if (follows_you_back) {
+				itsAMatch(card_uid, card_first_name);
+			} else {
+				confetti.start();
+				setTimeout(function() { confetti.stop() }, 1000);
+			}
 
 		} else if (pullDeltaX <= -decisionVal) {
 			$card.addClass("to-left");
@@ -110,6 +117,20 @@
 				// This is also reached when we cancel the xhr request
 			}
 		});
+	}
+
+	// Its a match
+	function itsAMatch(card_uid, first_name) {
+		jQuery(".tm_its_a_match_first_name").text(first_name);
+		jQuery(".tm_its_a_match_url").attr("href", "/user/" + card_uid)
+		jQuery(".tm_its_a_match_container").show();
+		confetti.start();
+	}
+
+	// Continue matching
+	continueMatching = function() {
+		jQuery(".tm_its_a_match_container").fadeOut();
+		confetti.stop()
 	}
 
 	// Fetch new cards

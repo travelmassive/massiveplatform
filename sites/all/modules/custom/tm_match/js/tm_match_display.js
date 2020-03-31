@@ -19,8 +19,8 @@
 	function pullChange() {
 		
 		if (!animating) {
-			jQuery("body").css("touch-action", "none"); // disable scroll
-			console.log("none");
+			//jQuery("body").css("touch-action", "none"); // disable scroll
+			//console.log("none");
 		}
 
 		animating = true;
@@ -36,14 +36,14 @@
 
 	function release() {
 
-		jQuery("body").css("touch-action", ""); // enable scroll on mobile
+		//jQuery("body").css("touch-action", ""); // enable scroll on mobile
 
 		if (pullDeltaX >= decisionVal) {
 			$card.addClass("to-right");
 			console.log("to right");
 			var card_uid = $card.data("card-uid");
 			swipeCallback("right", tm_current_uid, card_uid);
-			$card.addClass("demo_disable_move");
+			$card.addClass("tm_match_disable_move");
 			confetti.start();
 			setTimeout(function() { confetti.stop() }, 1000);
 
@@ -52,7 +52,7 @@
 			console.log("to left");
 			var card_uid = $card.data("card-uid");
 			swipeCallback("left", tm_current_uid, card_uid);
-			$card.addClass("demo_disable_move");
+			$card.addClass("tm_match_disable_move");
 		}
 
 		if (Math.abs(pullDeltaX) >= decisionVal) {

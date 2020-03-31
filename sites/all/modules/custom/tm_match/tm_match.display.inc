@@ -235,9 +235,6 @@ function tm_match_render_cards($uid, $num_cards = 10, $show_loading = true) {
 			}
 		}
 
-		// format item comment
-		$comment = strip_tags($comment);
-
 		// template fields
 		$template_fields = array();
 		$template_fields["__IMAGE_URL__"] = $image_url;

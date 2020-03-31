@@ -212,6 +212,11 @@ function tm_match_suggest_uids($uid, $limit = 10) {
 			continue;
 		}
 
+		// They swiped left on you
+		if (tm_match_user_has_swiped_left($check_user->uid, $uid)) {
+			continue;
+		}
+
 		// Add it
 		$suggested_filtered[] = $suggested_uid;
 	}
@@ -344,6 +349,14 @@ function tm_match_count_all_right_swipes($uid, $timestamp = 0) {
 		return 0;
 	}
 
+	return $result->total_swipes;
+}
+
+// check is someone has swiped left on another member
+function tm_match_user_has_swiped_left($uid, $left_uid) {
+
+	$query = "SELECT COUNT(DISTINCT left_uid) AS total_swipes FROM tm_match WHERE uid = :uid AND left_uid = :left_uid";
+	$result = db_query($query, array(":uid" => $uid, ":left_uid" => $left_uid))->fetch();
 	return $result->total_swipes;
 }
 

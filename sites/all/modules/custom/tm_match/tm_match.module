@@ -4,6 +4,7 @@
 
 TODO LIST:
 
+- Filter if they swiped left on you
 - You've matched
 - Pro Member flag
 - View full profile link
@@ -13,9 +14,10 @@ Testing:
 - Check flag limits
 - Check matching algorithm
 
-Bugs:
+Bugs/fixes:
 
 - Mobile freeze
+- Scroll to 'its a match' on mobile
 
 Matching algorithm:
 

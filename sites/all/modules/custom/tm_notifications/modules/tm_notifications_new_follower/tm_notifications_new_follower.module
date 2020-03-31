@@ -161,6 +161,9 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
     $action_text = "followed you";
     if ($static_tm_match_swiped_right) {
       $action_text = "matched you";
+      if ($you_are_following_them) {
+         $action_text = "matched with you";
+      }
       $messaging_instructions .= $conf["tm_match_follower_notification_message"];
     }
 

@@ -270,7 +270,7 @@ function tm_match_swipe_right($uid, $right_uid, $timestamp = null) {
 	$static_tm_match_swiped_right = &drupal_static("tm_match_swiped_right");
 	$static_tm_match_swiped_right = true;
 
-	// Follow the mnember
+	// Follow the member
 	$account = user_load($uid);
 	$right_user = user_load($right_uid);
 	if (($account != null) and ($right_user != null)) {	

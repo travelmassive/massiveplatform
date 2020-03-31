@@ -27,6 +27,12 @@ function tm_flags_preprocess_flag(&$variables) {
     _tm_flags_organization_upvote($variables);
   }
 
+  // don't impose limits if swiping (swiping will impose limits)
+  $static_tm_match_swiped_right = &drupal_static("tm_match_swiped_right");
+  if ($static_tm_match_swiped_right) {
+    return;
+  }
+
   // check for follow and join limits
   return _tm_flags_flag_limits($variables);
 }
@@ -178,7 +184,7 @@ function _tm_flags_flag_limits(&$variables) {
   global $conf;
   global $user;
   $initialized = &drupal_static(__FUNCTION__, array());
- 
+
   // if user has been reported, limit flags
   if (tm_users_is_member_reported($user->uid)) {
     $tm_limit = true;

@@ -25,7 +25,13 @@
 	position: relative;
 	height: 48rem;
 	padding-top: 2.5rem;
+
 	user-select: none;
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* Internet Explorer */
+	-khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+	-webkit-user-select: none; /* Chrome, Safari, and Opera */
+	-webkit-touch-callout: none; /* Disable Android and iOS callouts*/
 }
 
 .tm_match__card-cont {
@@ -33,6 +39,13 @@
 	width: 24rem;
 	height: 32rem;
 	margin: 0 auto 5rem;
+
+	user-select: none;
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* Internet Explorer */
+	-khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+	-webkit-user-select: none; /* Chrome, Safari, and Opera */
+	-webkit-touch-callout: none; /* Disable Android and iOS callouts*/
 }
 
 @media screen and (max-width: 600px) {

@@ -17,6 +17,11 @@
 	var $card, $cardReject, $cardLike;
 
 	function pullChange() {
+		
+		if (!animating) {
+			jQuery(".tm_match__card-cont").addClass("no-touch-action"); // disable scroll on mobile
+		}
+
 		animating = true;
 		deg = pullDeltaX / 10;
 		$card.css("transform", "translateX("+ pullDeltaX +"px) rotate("+ deg +"deg)");
@@ -29,6 +34,8 @@
 	};
 
 	function release() {
+
+		jQuery(".tm_match__card-cont").removeClass("no-touch-action"); // enable scroll on mobile
 
 		if (pullDeltaX >= decisionVal) {
 			$card.addClass("to-right");

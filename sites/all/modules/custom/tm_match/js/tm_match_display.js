@@ -151,7 +151,7 @@
 			success: function(response) {
 				tm_match_fetching_new_cards = false;
 				jQuery(".tm_match__card-cont").empty().append(response);
-				jQuery('.tm_match__card__we').textfill();
+				jQuery('.tm_match__card__btm').textfill();
 			},
 			error: function(xhr) {
 				// This is also reached when we cancel the xhr request

@@ -22,7 +22,7 @@
  
 </div>
 
-<div class="tm_its_a_match_container">
+<div class="tm_its_a_match_container" style="display: none;">
   <div class="tm_its_a_match_content">
     <h1>It's a match! 🎉</h1>
     <p>Congratulations &mdash; you've matched with <span class="tm_its_a_match_first_name"></span>.</p>

@@ -19,7 +19,7 @@
 	function pullChange() {
 		
 		if (!animating) {
-			jQuery(".tm_match__card-cont").addClass("no-touch-action"); // disable scroll
+			jQuery("body").addClass("no-touch-action"); // disable scroll
 			console.log("none");
 		}
 
@@ -36,7 +36,7 @@
 
 	function release() {
 
-		jQuery(".tm_match__card-cont").removeClass("no-touch-action"); // enable scroll on mobile
+		jQuery("body").removeClass("no-touch-action"); // enable scroll on mobile
 
 		if (pullDeltaX >= decisionVal) {
 			$card.addClass("to-right");

@@ -154,8 +154,18 @@ function tm_notifications_new_follower_flag_flag($flag, $entity_id, $account, $f
     // generate member html
     $member_widget = tm_notifications_render_member_html($who_followed);
 
+    // if tm_match enabled
+    $static_tm_match_swiped_right = &drupal_static("tm_match_swiped_right");
+
+    // action text
+    $action_text = "followed you";
+    if ($static_tm_match_swiped_right) {
+      $action_text = "matched you";
+      $messaging_instructions .= $conf["tm_match_follower_notification_message"];
+    }
+
     // Notification options
-    $notification_options = array('user' => $followed_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__MESSAGING_INSTRUCTIONS__' => $messaging_instructions, '__FOLLOWER_MESSAGE__' => $follower_message, 'reply_to_member' => $reply_to_member, '__HERO_HEADLINE__' => $hero_headline, '__MEMBER_WIDGET__' => $member_widget);
+    $notification_options = array('user' => $followed_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__USER_FIRST_NAME__' => $first_name, '__USER_LAST_NAME__' => $last_name, '__MESSAGING_INSTRUCTIONS__' => $messaging_instructions, '__FOLLOWER_MESSAGE__' => $follower_message, '__ACTION__' => $action_text, 'reply_to_member' => $reply_to_member, '__HERO_HEADLINE__' => $hero_headline, '__MEMBER_WIDGET__' => $member_widget);
 
     // If reply_to is set
     if ($reply_to != "") {

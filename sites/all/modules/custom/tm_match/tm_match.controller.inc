@@ -55,6 +55,7 @@ function tm_match_swipe_left($uid, $left_uid) {
 // swipe right
 function tm_match_swipe_right($uid, $right_uid) {
 	
+	global $conf;
 	$timestamp = time();
 	
 	$fields = array(
@@ -64,7 +65,26 @@ function tm_match_swipe_right($uid, $right_uid) {
 	);
 
 	$result = drupal_write_record('tm_match', $fields);
+
+	// demo mode
+	if ($conf["tm_match_demo_mode"]) {
+		return $result;
+	}
+
+	// Set static variables for tm_notifications_new_follower():
+	$static_tm_match_swiped_right = &drupal_static("tm_match_swiped_right");
+	$static_tm_match_swiped_right = true;
+
+	// Follow the mnember
+	$account = user_load($uid);
+	$right_user = user_load($right_uid);
+	if (($account != null) and ($right_user != null)) {	
+		$flag = flag_get_flag('follow_members');
+		$flag->flag('flag', $right_user->uid, $account, TRUE);
+	}
+
 	return $result;
+	
 }
 
 // check limit

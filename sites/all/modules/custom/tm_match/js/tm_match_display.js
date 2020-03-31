@@ -5,7 +5,8 @@
 	// some globals to keep track of stuff
 	var tm_match_base_url = "/match";
 	var tm_match_fetching_new_cards = false;
-	var tm_current_uid = 10452; // Drupal.settings.tm_users.current_user_uid;
+	var tm_match_current_uid = jQuery("#match-user-uid").val(); // Drupal.settings.tm_users.current_user_uid;
+	var tm_match_load_more = jQuery("#match-load-more").val();
 
 	// cards
 	var animating = false;
@@ -33,18 +34,16 @@
 
 		if (pullDeltaX >= decisionVal) {
 			$card.addClass("to-right");
-			console.log("to right");
 			var card_uid = $card.data("card-uid");
-			swipeCallback("right", tm_current_uid, card_uid);
+			swipeCallback("right", tm_match_current_uid, card_uid);
 			$card.addClass("tm_match_disable_move");
 			confetti.start();
 			setTimeout(function() { confetti.stop() }, 1000);
 
 		} else if (pullDeltaX <= -decisionVal) {
 			$card.addClass("to-left");
-			console.log("to left");
 			var card_uid = $card.data("card-uid");
-			swipeCallback("left", tm_current_uid, card_uid);
+			swipeCallback("left", tm_match_current_uid, card_uid);
 			$card.addClass("tm_match_disable_move");
 		}
 
@@ -56,9 +55,7 @@
 				cardsCounter++;
 				var card_load_more = $card.data("card-load-more");
 				var is_last_card = $card.data("is-last-card");
-				console.log(is_last_card);
-				if (is_last_card == true) {
-					console.log("fetch new cards");
+				if ((is_last_card == true) && (tm_match_load_more == "1")) {
 					fetchNewCards();
 					//jQuery(".tm_match__card").removeClass("below");
 				}
@@ -108,7 +105,6 @@
 			url: tm_match_base_url + "/callback/" + left_or_right + "/" + uid + "/" + left_uid,
 			type: "GET",
 			success: function(response) {
-				console.log("logged " + left_or_right);
 			},
 			error: function(xhr) {
 				// This is also reached when we cancel the xhr request
@@ -118,8 +114,6 @@
 
 	// Fetch new cards
 	function fetchNewCards() {
-
-		console.log("ajax...");
 
 		// Check not already fetching
 		if (tm_match_fetching_new_cards) {

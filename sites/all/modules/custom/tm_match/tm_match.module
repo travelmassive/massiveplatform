@@ -1,5 +1,54 @@
 <?php
 
+/*
+
+TODO LIST:
+
+- You've matched
+- Pro Member flag
+- View full profile link
+- Cool stats
+- Link to feedback
+- Check cache??
+- Log in tm_match if you follow back
+
+Bugs:
+
+- Mobile freeze
+
+Suggestions algorithm:
+
+- Follows you
+- Members in your chapter
+- Members in your country
+- Members in your segment
+- Pro Members
+- Featured Members (via conf)
+- Chapter Leaders
+- I'm lucky members
+- Logged in in past 24 hours
+- Lots of followers
+- Filter out private, reported profiles
+- Don't show yourself
+- Not people you are already following
+
+
+Extas:
+
+- Add calendar
+- Look into whereby.com
+
+DONE!
+
+- Demo mode
+- Hook into notification
+- Demo for non-signed in, non-approved
+- Pass in UID
+- Debug mode
+
+
+*/
+
 // tm_match.module
 include_once 'tm_match.display.inc';
 include_once 'tm_match.controller.inc';

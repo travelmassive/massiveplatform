@@ -20,6 +20,15 @@
 	background: #002942;
 }
 
+.match-debug-container {
+	width: 500px;
+	margin: auto;
+	border: 1px solid #ddd;
+	border-radius: 1px;
+	padding: 2rem;
+	display: none;
+}
+
 .tm_match__content {
 	overflow: hidden;
 	position: relative;

@@ -16,6 +16,16 @@ function tm_match_callback_swipe_left($uid, $left_uid) {
 		drupal_exit();
 	}
 
+	// dont match yourself
+	if ($uid == $left_uid) {
+		drupal_exit();
+	}
+
+	// check approved
+	if (!in_array("approved user", $user->roles)) {
+		drupal_exit();
+	}
+
 	// check rate limit for left swipes
 	if (!tm_match_check_rate_limit($uid)) {
 		drupal_exit();
@@ -36,6 +46,16 @@ function tm_match_callback_swipe_right($uid, $right_uid) {
 	// check user id
 	global $user;
 	if ($uid != $user->uid) {
+		drupal_exit();
+	}
+
+	// dont match yourself
+	if ($uid == $left_uid) {
+		drupal_exit();
+	}
+
+	// check approved
+	if (!in_array("approved user", $user->roles)) {
 		drupal_exit();
 	}
 	

@@ -73,6 +73,7 @@
 	width: 100%;
 	height: 100%;
 	transform-origin: 50% 100%;
+	border-radius: 8px;
 }
 
 .tm_match__card.reset {
@@ -104,6 +105,8 @@
 .tm_match__card__top {
 	height: 20.5rem;
 	padding-top: 4rem;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
 }
 
 .tm_match__card__top.purple {
@@ -204,6 +207,8 @@
 	display: flex;
   	justify-content: center;
   	align-items: center;
+  	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
 }
 
 .tm_match__card__we {
@@ -221,6 +226,9 @@
 	width: 100%;
 	height: 100%;
 	opacity: 0;
+	border-radius: 8px;
+	border-radius: 8px;
+	box-shadow: 0 4px 16px 0 rgba(0,0,0,.15);
 }
 
 .tm_match__card__choice:before {
@@ -277,6 +285,10 @@
 	font-size: 2.2rem;
 }
 
+.tm_match__card.tm_match_loading_more {
+	box-shadow: 0 4px 16px 0 rgba(0,0,0,.15);
+}
+
 .tm_match_loading_more, .tm_match_disable_move {
 	pointer-events: none;
 }
@@ -313,7 +325,7 @@
 .tm_its_a_match_content {
 	padding-top: 4rem;
 	text-align: center;
-	}
+}
 
 .tm_its_a_match_content h1 {
 	font-size: 38pt;

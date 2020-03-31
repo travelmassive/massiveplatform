@@ -19,7 +19,7 @@
 	function pullChange() {
 		
 		if (!animating) {
-			jQuery("body").addClass("no-touch-action"); // disable scroll
+			jQuery("body").css("touch-action", "none"); // disable scroll
 			console.log("none");
 		}
 
@@ -36,7 +36,7 @@
 
 	function release() {
 
-		jQuery("body").removeClass("no-touch-action"); // enable scroll on mobile
+		jQuery("body").css("touch-action", ""); // enable scroll on mobile
 
 		if (pullDeltaX >= decisionVal) {
 			$card.addClass("to-right");

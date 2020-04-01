@@ -88,7 +88,7 @@
 		  pullDeltaX = 0;
 		  animating = false;
 		  if (!tm_match_fetching_new_cards) {
-		  	jQuery(".tm_match__card__more_link").show();
+		  	jQuery(".tm_match__card__more_link").fadeIn();
 		  }
 		}, 300);
 
@@ -188,7 +188,7 @@
 				tm_match_fetching_new_cards = false;
 				jQuery(".tm_match__card-cont").empty().append(response);
 				jQuery('.tm_match__card__btm').textfill({maxFontPixels: 32});
-				jQuery(".tm_match__card__more_link").show();
+				jQuery(".tm_match__card__more_link").fadeIn();
 			},
 			error: function(xhr) {
 				// This is also reached when we cancel the xhr request

@@ -22,6 +22,12 @@ function tm_match_display_index() {
 	// $js = file_get_contents(drupal_get_path('module', 'tm_match') .'/js/tm_match_display.js');
 	// $template .= "<script>\n" . $js . "</script>";
 
+	// hide tip js
+	$hide_tip_js = "\n<script>
+	jQuery(document).ready(function() {
+		document.getElementsByClassName('tm_match__tip')[0].style.visibility = 'hidden';
+	});</script>";
+
 	// clear help tip messages
 	drupal_get_messages("help-tip");
 
@@ -36,15 +42,18 @@ function tm_match_display_index() {
 	if ($conf["tm_match_offline"]) {
 		drupal_set_message("We're offline for a bit — come back later.", 'help-tip');
 		$results_html = tm_match_render_card_message($conf["tm_match_no_cards_title"], $conf["tm_match_no_cards_message"]);
+		$results_html .= $hide_tip_js;
 	} elseif (tm_match_check_rate_limit($user->uid)) {
-		$results_html = tm_match_render_cards($user->uid, $conf["tm_match_load_cards"]);	
+		$results_html = tm_match_render_cards($user->uid, $conf["tm_match_load_cards"]);
 	} else {
 		$results_html = tm_match_render_card_message($conf["tm_match_rate_limit_title"], $conf["tm_match_rate_limit_message"]);
+		$results_html .= $hide_tip_js;
 	}
 
 	// redirect if member is reported
 	if (tm_users_is_member_reported($user->uid)) {
 		$results_html = tm_match_render_card_message($conf["tm_match_no_cards_title"], $conf["tm_match_no_cards_message"]);
+		$results_html .= $hide_tip_js;
 	}
 
 	// not approved

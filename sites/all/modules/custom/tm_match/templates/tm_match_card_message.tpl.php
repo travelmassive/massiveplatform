@@ -10,9 +10,3 @@
 	<div class="tm_match__card__choice m--like"></div>
 	<div class="tm_match__card__drag"></div>-->
 </div>
-
-<script>
-	jQuery(document).ready(function() {
-		document.getElementsByClassName("tm_match__tip")[0].style.visibility = 'hidden';
-	});
-</script>

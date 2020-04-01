@@ -5,7 +5,7 @@
 <div class="match-debug-container" style="__DEBUG_CSS__">
 	<input type="text" id="match-user-uid" value="__UID__"/>
   <input type="text" id="match-load-more" value="__LOAD_MORE__"/>
-	<span class="match-debug-message">Debug message</span>
+	<input type="text" id="match-debug-message" value=""/>
 </div>
 
 <div class="tm_match_container">

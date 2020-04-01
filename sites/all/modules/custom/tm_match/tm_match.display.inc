@@ -13,12 +13,14 @@ function tm_match_display_index() {
 	drupal_add_css(drupal_get_path('module', 'tm_match') . '/css/tm_match.css');
 
 	// include list display js
-	drupal_add_js(drupal_get_path('module', 'tm_match') . '/js/tm_match_display.js');
+	//drupal_add_js(drupal_get_path('module', 'tm_match') . '/js/tm_match_display.js');
 	drupal_add_js(drupal_get_path('module', 'tm_match') . '/js/jquery.textfill.min.js');
 	drupal_add_js(drupal_get_path('module', 'tm_match') . '/js/confetti.min.js');
 
 	// load template
 	$template = file_get_contents(drupal_get_path('module', 'tm_match') .'/templates/tm_match_index.tpl.php');
+	$js = file_get_contents(drupal_get_path('module', 'tm_match') .'/js/tm_match_display.js');
+	$template .= "<script>\n" . $js . "</script>";
 
 	// demo mode
 	if ($conf["tm_match_demo_mode"]) {

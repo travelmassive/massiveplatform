@@ -7,6 +7,7 @@
 	var tm_match_fetching_new_cards = false;
 	var tm_match_current_uid = jQuery("#match-user-uid").val(); // Drupal.settings.tm_users.current_user_uid;
 	var tm_match_load_more = jQuery("#match-load-more").val();
+	var tm_its_a_match = true;
 
 	// cards
 	var animating = false;
@@ -48,7 +49,11 @@
 				itsAMatch(card_uid, card_first_name);
 			} else {
 				confetti.start();
-				setTimeout(function() { confetti.stop() }, 1000);
+				setTimeout(function() { 
+					if (!tm_its_a_match) { 
+						confetti.stop();
+					}
+				}, 1000);
 			}
 
 		} else if (pullDeltaX <= -decisionVal) {
@@ -138,6 +143,8 @@
 	// Its a match
 	function itsAMatch(card_uid, first_name) {
 		
+		tm_its_a_match = true;
+
 		// scroll to top
 		title_offset = jQuery('.tm_its_a_match_container').offset().top;
 		window.scroll({
@@ -157,8 +164,9 @@
 
 	// Continue matching
 	continueMatching = function() {
+		tm_its_a_match = false;
 		jQuery(".tm_its_a_match_container").fadeOut();
-		confetti.stop()
+		confetti.stop();
 	}
 
 	// Fetch new cards

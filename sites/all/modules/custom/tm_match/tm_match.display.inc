@@ -12,7 +12,6 @@ function tm_match_display_index() {
 	// include css
 	drupal_add_css(drupal_get_path('module', 'tm_match') . '/css/tm_match.css');
 
-	// include list display js
 	drupal_add_js(drupal_get_path('module', 'tm_match') . '/js/tm_match_display.js');
 	drupal_add_js(drupal_get_path('module', 'tm_match') . '/js/jquery.textfill.min.js');
 	drupal_add_js(drupal_get_path('module', 'tm_match') . '/js/confetti.min.js');

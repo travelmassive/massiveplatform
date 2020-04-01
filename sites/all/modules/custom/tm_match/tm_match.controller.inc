@@ -99,7 +99,9 @@ function tm_match_suggest_uids($uid, $limit = 10) {
 	if (sizeof($conf["tm_match_suggest_featured_uids"]) < $max_featured_uids) {
 		$max_featured_uids = sizeof($conf["tm_match_suggest_featured_uids"]);
 	}
-	$featured_member_uids = array_rand($conf["tm_match_suggest_featured_uids"], $max_featured_uids);
+	$featured_member_uids = $conf["tm_match_suggest_featured_uids"];
+	shuffle($featured_member_uids);
+	$featured_member_uids = array_slice($featured_member_uids, 0, $max_featured_uids);
 	foreach ($featured_member_uids as $suggested_uid) {
 		$suggested_uids[] = $suggested_uid;
 	}
@@ -186,7 +188,7 @@ function tm_match_suggest_uids($uid, $limit = 10) {
 
 		// Validate user
 		$check_user = user_load($suggested_uid);
-		if ($uid == null) {
+		if ($check_user == null) {
 			continue;
 		}
 

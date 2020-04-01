@@ -258,7 +258,7 @@ function tm_match_render_cards($uid, $num_cards = 10, $show_loading = true) {
 		$template_fields["__NAME__"] = $full_name;
 		$template_fields["__TITLE__"] = $sub_title;
 		$template_fields["__CSS_COLOR__"] = $css_colors[$count % sizeof($css_colors)];
-		$template_fields["__MORE_LINK__"] = "<a target='_blank' href='/user/" . $uid . "'>View profile</a>";
+		$template_fields["__MORE_LINK__"] = "<a target='_blank' href='/user/" . $card_uid . "'>View profile</a>";
 
 		// follows you back
 		$follows_you_back = tm_match_user_is_following($card_uid, $uid, $follow_members_flag_id);

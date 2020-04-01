@@ -1,4 +1,4 @@
-<div class="tm_match__card" data-swipe-enabled="0" data-card-uid="0" data-is-last-card="false">
+<div class="tm_match__card tm_match_message" data-swipe-enabled="0" data-card-uid="0" data-is-last-card="false">
 	<div class="tm_match__card__top message">
 		<div class="tm_match__card__img"></div>
 		<p class="tm_match__card__name">__TITLE__</p>

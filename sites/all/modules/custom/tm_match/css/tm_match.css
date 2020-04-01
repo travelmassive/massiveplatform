@@ -62,7 +62,15 @@
 
 	.tm_match__card-cont {
 		width: 100%;
+	}
+
+	.tm_match__card {
 		touch-action: none;
+	}
+
+	.tm_match__card.tm_match_loading_more,
+	.tm_match__card.tm_match_message {
+		touch-action: inherit;
 	}
 }
 

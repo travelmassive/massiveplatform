@@ -4,18 +4,13 @@
 
 TODO LIST:
 
-- Pro Member flag
-- View full profile link
-
 Testing:
 
-- Check flag limits
 - Check matching algorithm
 
 Bugs/fixes:
 
 - Mobile freeze
-- Scroll to 'its a match' on mobile
 
 Matching algorithm:
 
@@ -34,11 +29,16 @@ Matching algorithm:
 
 Extas:
 
+- Pro Member flag
 - Add calendar
 - Look into whereby.com or bluejeans
 
 DONE!
 
+- Scroll to 'its a match' on mobile
+- Testing: Check flag limits
+- View full profile link
+- Ofline mode
 - You've matched
 - Filter if they swiped left on you
 - Cool stats and message
@@ -49,7 +49,6 @@ DONE!
 - Demo for non-signed in, non-approved
 - Pass in UID
 - Debug mode
-
 
 
 */

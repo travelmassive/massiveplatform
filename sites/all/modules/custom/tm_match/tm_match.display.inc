@@ -25,13 +25,18 @@ function tm_match_display_index() {
 	// clear help tip messages
 	drupal_get_messages("help-tip");
 
+	$results_html = "";
+
 	// demo mode
 	if ($conf["tm_match_demo_mode"]) {
 		drupal_set_message("We're in demo mode — notifications won't be sent when you swipe.", 'help-tip');
 	}
 
-	// check rate limit
-	if (tm_match_check_rate_limit($user->uid)) {
+	// check disabled
+	if ($conf["tm_match_offline"]) {
+		drupal_set_message("We're offline for a bit — come back later.", 'help-tip');
+		$results_html = tm_match_render_card_message($conf["tm_match_no_cards_title"], $conf["tm_match_no_cards_message"]);
+	} elseif (tm_match_check_rate_limit($user->uid)) {
 		$results_html = tm_match_render_cards($user->uid, $conf["tm_match_load_cards"]);	
 	} else {
 		$results_html = tm_match_render_card_message($conf["tm_match_rate_limit_title"], $conf["tm_match_rate_limit_message"]);

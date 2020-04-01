@@ -27,12 +27,6 @@ function tm_flags_preprocess_flag(&$variables) {
     _tm_flags_organization_upvote($variables);
   }
 
-  // don't impose limits if swiping (swiping will impose limits)
-  $static_tm_match_swiped_right = &drupal_static("tm_match_swiped_right");
-  if ($static_tm_match_swiped_right) {
-    return;
-  }
-
   // check for follow and join limits
   return _tm_flags_flag_limits($variables);
 }

@@ -7,7 +7,7 @@
 	var tm_match_fetching_new_cards = false;
 	var tm_match_current_uid = jQuery("#match-user-uid").val(); // Drupal.settings.tm_users.current_user_uid;
 	var tm_match_load_more = jQuery("#match-load-more").val();
-	var tm_its_a_match = true;
+	var tm_its_a_match = false;
 
 	// cards
 	var animating = false;

@@ -144,16 +144,15 @@
 		tm_its_a_match = true;
 
 		// scroll to top
-		title_offset = jQuery('.tm_its_a_match_container').offset().top;
 		window.scroll({
-			top: title_offset - 220, 
+			top: 0, 
 			left: 0, 
 			behavior: 'auto'
 		});
 
 		// set fields
 		jQuery(".tm_its_a_match_first_name").text(first_name);
-		jQuery(".tm_its_a_match_url").attr("href", "/user/" + card_uid)
+		jQuery(".tm_its_a_match_url").attr("href", "/user/" + card_uid);
 		jQuery(".tm_its_a_match_container").show();
 
 		// celebrate

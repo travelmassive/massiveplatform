@@ -1,4 +1,4 @@
-//(function ($, Drupal, window, document, undefined) {
+(function ($, Drupal, window, document, undefined) {
 
 	jQuery(document).ready(function() {
 
@@ -35,7 +35,6 @@
 
 	function release() {
 
-		//decisionVal = pullDeltaX + 1;
 		jQuery("#match-debug-message").val(Math.abs(pullDeltaX) + " >= " + decisionVal);
 		if (pullDeltaX >= decisionVal) {
 			$card.addClass("to-right");
@@ -203,4 +202,4 @@
 	jQuery('.tm_match__card__btm').textfill({maxFontPixels: 32});
 
 });
-//})(jQuery, Drupal, this, this.document);
+})(jQuery, Drupal, this, this.document);

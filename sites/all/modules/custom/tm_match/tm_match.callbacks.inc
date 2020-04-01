@@ -16,6 +16,12 @@ function tm_match_callback_swipe_left($uid, $left_uid) {
 		drupal_exit();
 	}
 
+	// check offline
+	global $conf;
+	if ($conf["tm_match_offline"]) {
+		drupal_exit();
+	}
+
 	// dont match yourself
 	if ($uid == $left_uid) {
 		drupal_exit();
@@ -46,6 +52,12 @@ function tm_match_callback_swipe_right($uid, $right_uid) {
 	// check user id
 	global $user;
 	if ($uid != $user->uid) {
+		drupal_exit();
+	}
+
+	// check offline
+	global $conf;
+	if ($conf["tm_match_offline"]) {
 		drupal_exit();
 	}
 

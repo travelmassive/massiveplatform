@@ -35,13 +35,7 @@
 	position: relative;
 	height: 50rem;
 	padding-top: 2.5rem;
-
 	user-select: none;
-	-moz-user-select: none; /* Firefox */
-	-ms-user-select: none; /* Internet Explorer */
-	-khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
-	-webkit-user-select: none; /* Chrome, Safari, and Opera */
-	-webkit-touch-callout: none; /* Disable Android and iOS callouts*/
 }
 
 .tm_match__card-cont {
@@ -49,13 +43,7 @@
 	width: 24rem;
 	height: 32rem;
 	margin: 0 auto 5rem;
-
 	user-select: none;
-	-moz-user-select: none; /* Firefox */
-	-ms-user-select: none; /* Internet Explorer */
-	-khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
-	-webkit-user-select: none; /* Chrome, Safari, and Opera */
-	-webkit-touch-callout: none; /* Disable Android and iOS callouts*/
 }
 
 @media screen and (max-width: 600px) {
@@ -220,6 +208,10 @@
   	line-height: 2.5rem;
 }
 
+.tm_match__card__btm a {
+	text-decoration: underline !important; 
+}
+
 .tm_match__card__choice {
 	position: absolute;
 	left: 0;
@@ -286,12 +278,21 @@
 	font-size: 2.2rem;
 }
 
+.tm_match__card__more_link {
+	margin-top: 1rem;
+	text-align: center;
+}
+
+.tm_match__card__more_link a {
+	text-decoration: underline;
+}
+
 .tm_match__card.tm_match_loading_more {
 	box-shadow: 0 4px 16px 0 rgba(0,0,0,.15);
 }
 
 .tm_match_loading_more, .tm_match_disable_move {
-	pointer-events: none;
+	/*pointer-events: none;*/
 }
 
 .tm_match_card_message {
@@ -334,5 +335,9 @@
 
 .tm_its_a_match_content p {
 	font-size: 16pt;
+}
+
+.tm_its_a_match_first_name { 
+	
 }
 

@@ -1,4 +1,4 @@
-<div class="tm_match__card tm_match_loading_more" data-card-uid="0" data-is-last-card="false">
+<div class="tm_match__card tm_match_loading_more" data-swipe-enabled="0" data-card-uid="0" data-is-last-card="false">
 	<div class="tm_match__card__top indigo">
 		<div class="tm_match__card__img"></div>
 		<p class="tm_match__card__name">Loading...</p>

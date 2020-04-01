@@ -28,6 +28,8 @@
 		var likeOpacity = (opacity <= 0) ? 0 : opacity;
 		$cardReject.css("opacity", rejectOpacity);
 		$cardLike.css("opacity", likeOpacity);
+		jQuery(".tm_match__card__more_link").hide();
+
 	};
 
 	function release() {
@@ -80,15 +82,26 @@
 		  $card.attr("style", "").removeClass("reset").find(".tm_match__card__choice").attr("style", "");
 		  pullDeltaX = 0;
 		  animating = false;
+		  if (!tm_match_fetching_new_cards) {
+		  	jQuery(".tm_match__card__more_link").show();
+		  }
 		}, 300);
 
 	};
 
 	jQuery(document).on("mousedown touchstart", ".tm_match__card:not(.inactive)", function(e) {
 		
-		if (animating) return;
+		if (animating) {
+			return;
+		}
 
 		$card = jQuery(this);
+
+		// card must have swipe enabled
+		if (!$card.data("swipe-enabled")) {
+			return;
+		}
+
 		$cardReject = jQuery(".tm_match__card__choice.m--reject", $card);
 		$cardLike = jQuery(".tm_match__card__choice.m--like", $card);
 		var startX =  e.pageX || e.originalEvent.touches[0].pageX;
@@ -124,9 +137,21 @@
 
 	// Its a match
 	function itsAMatch(card_uid, first_name) {
+		
+		// scroll to top
+		title_offset = jQuery('.tm_its_a_match_container').offset().top;
+		window.scroll({
+			top: title_offset - 200, 
+			left: 0, 
+			behavior: 'auto'
+		});
+
+		// set fields
 		jQuery(".tm_its_a_match_first_name").text(first_name);
 		jQuery(".tm_its_a_match_url").attr("href", "/user/" + card_uid)
 		jQuery(".tm_its_a_match_container").show();
+
+		// celebrate
 		confetti.start();
 	}
 
@@ -155,6 +180,7 @@
 				tm_match_fetching_new_cards = false;
 				jQuery(".tm_match__card-cont").empty().append(response);
 				jQuery('.tm_match__card__btm').textfill({maxFontPixels: 32});
+				jQuery(".tm_match__card__more_link").show();
 			},
 			error: function(xhr) {
 				// This is also reached when we cancel the xhr request

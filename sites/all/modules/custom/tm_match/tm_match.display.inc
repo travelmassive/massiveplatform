@@ -42,10 +42,24 @@ function tm_match_display_index() {
 	// not approved
 	$is_approved = in_array("approved user", $user->roles);
 	if (user_is_logged_in() and !$is_approved) {
+
+		// generate approval link
+		$approval_link = "javascript:jq_request_approval(" . $user->uid . ");";
+		$who_flagged = flag_get_entity_flags("user", $user->uid, "approval_requested_by_user");
+		if (sizeof($who_flagged) > 0) {
+			$approval_link = "javascript:jq_approval_already_requested();";
+		}
+
+		// insert into help tip
 		$message = $conf["tm_match_approved_member_message"];
 		$message = str_replace("__UID__", $user->uid, $message);
+		$message = str_replace("__APPROVAL_LINK__", $approval_link, $message);
 		drupal_set_message($message, 'help-tip');
-		$results_html = tm_match_render_card_message($conf["tm_match_approved_member_card_title"], $conf["tm_match_approved_member_card_message"]);
+
+		// insert into card message
+		$approved_member_card_message = $conf["tm_match_approved_member_card_message"];
+		$approved_member_card_message = str_replace("__APPROVAL_LINK__", $approval_link, $approved_member_card_message);
+		$results_html = tm_match_render_card_message($conf["tm_match_approved_member_card_title"], $approved_member_card_message);
 		$results_html .= tm_match_render_cards($user->uid, 1, false);
 		$load_more = false;
 	}
@@ -63,7 +77,7 @@ function tm_match_display_index() {
 
 	// settings
 	$html = str_replace("__UID__", $user->uid, $html);		
-	$html = str_replace("__LOAD_MORE__", intval($load_more), $html);		
+	$html = str_replace("__LOAD_MORE__", intval($load_more), $html);
 
 	// debug
 	$debug_css = "display: none;";
@@ -139,6 +153,7 @@ function tm_match_render_card_message($title, $message) {
 	$template = file_get_contents(drupal_get_path('module', 'tm_match') .'/templates/tm_match_card_message.tpl.php');
 	$html = str_replace("__TITLE__", $title, $template);
 	$html = str_replace("__MESSAGE__", $message, $html);
+
 	return $html;
 }
 
@@ -243,6 +258,7 @@ function tm_match_render_cards($uid, $num_cards = 10, $show_loading = true) {
 		$template_fields["__NAME__"] = $full_name;
 		$template_fields["__TITLE__"] = $sub_title;
 		$template_fields["__CSS_COLOR__"] = $css_colors[$count % sizeof($css_colors)];
+		$template_fields["__MORE_LINK__"] = "<a target='_blank' href='/user/__UID__'>View profile</a>";
 
 		// follows you back
 		$follows_you_back = tm_match_user_is_following($card_uid, $uid, $follow_members_flag_id);

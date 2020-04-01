@@ -209,7 +209,7 @@
 }
 
 .tm_match__card__btm a {
-	text-decoration: underline !important; 
+	text-decoration: underline; 
 }
 
 .tm_match__card__choice {
@@ -281,6 +281,7 @@
 .tm_match__card__more_link {
 	margin-top: 1rem;
 	text-align: center;
+	background-color: #ffffff;
 }
 
 .tm_match__card__more_link a {

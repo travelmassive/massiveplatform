@@ -50,9 +50,7 @@
 			} else {
 				confetti.start();
 				setTimeout(function() { 
-					if (!tm_its_a_match) { 
-						confetti.stop();
-					}
+					confetti.stop();
 				}, 1000);
 			}
 
@@ -77,7 +75,6 @@
 					fetchNewCards();
 					//jQuery(".tm_match__card").removeClass("below");
 				}
-				jQuery("#match-debug-message").val("timeout");
 			}, 300);
 		}
 
@@ -90,7 +87,7 @@
 		  pullDeltaX = 0;
 		  animating = false;
 		  if (!tm_match_fetching_new_cards) {
-		  	jQuery(".tm_match__card__more_link").fadeIn();
+		  	jQuery(".tm_match__card__more_link").delay(2000).fadeIn();
 		  }
 		}, 300);
 

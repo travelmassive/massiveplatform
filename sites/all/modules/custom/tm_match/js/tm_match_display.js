@@ -36,9 +36,11 @@
 	function release() {
 
 		jQuery("#match-debug-message").val(Math.abs(pullDeltaX) + " >= " + decisionVal);
+		
+		var card_uid = $card.data("card-uid");
+
 		if (pullDeltaX >= decisionVal) {
 			$card.addClass("to-right");
-			var card_uid = $card.data("card-uid");
 			var card_first_name = $card.data("card-first-name");
 			swipeCallback("right", tm_match_current_uid, card_uid);
 			$card.addClass("tm_match_disable_move");

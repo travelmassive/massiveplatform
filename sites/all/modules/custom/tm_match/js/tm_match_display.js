@@ -141,7 +141,7 @@
 		// scroll to top
 		title_offset = jQuery('.tm_its_a_match_container').offset().top;
 		window.scroll({
-			top: title_offset - 200, 
+			top: title_offset - 220, 
 			left: 0, 
 			behavior: 'auto'
 		});

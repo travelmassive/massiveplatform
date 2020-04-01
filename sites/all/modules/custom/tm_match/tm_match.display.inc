@@ -22,6 +22,9 @@ function tm_match_display_index() {
 	$js = file_get_contents(drupal_get_path('module', 'tm_match') .'/js/tm_match_display.js');
 	$template .= "<script>\n" . $js . "</script>";
 
+	// clear help tip messages
+	drupal_get_messages("help-tip");
+
 	// demo mode
 	if ($conf["tm_match_demo_mode"]) {
 		drupal_set_message("We're in demo mode — notifications won't be sent when you swipe.", 'help-tip');

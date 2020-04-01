@@ -4,10 +4,6 @@
 
 TODO LIST:
 
-Testing:
-
-- Check matching algorithm
-
 Bugs/fixes:
 
 - Mobile freeze
@@ -35,6 +31,7 @@ Extas:
 
 DONE!
 
+- Check matching algorithm
 - Scroll to 'its a match' on mobile
 - Testing: Check flag limits
 - View full profile link

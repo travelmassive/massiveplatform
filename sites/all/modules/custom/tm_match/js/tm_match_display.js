@@ -177,6 +177,10 @@
 			return;
 		}
 
+		// Reset its a match
+		tm_its_a_match = false;
+		confetti.stop();
+
 		// Fetching
 		tm_match_fetching_new_cards = true;
 		

@@ -58,13 +58,15 @@
 
 		} else if (pullDeltaX <= -decisionVal) {
 			$card.addClass("to-left");
-			var card_uid = $card.data("card-uid");
 			swipeCallback("left", tm_match_current_uid, card_uid);
 			$card.addClass("tm_match_disable_move");
 		}
 
 		if (Math.abs(pullDeltaX) >= decisionVal) {
 			$card.addClass("inactive");
+
+			// remove more link
+			$card.children(".tm_match__card__more_link").remove();
 
 			setTimeout(function() {
 				$card.addClass("below").removeClass("inactive to-left to-right");

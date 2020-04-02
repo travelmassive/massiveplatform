@@ -115,6 +115,7 @@ $conf['tm_wordpress_feedme_frontpage_id'] = "1831";
 $conf['tm_following_ratio_limit'] = '100'; // difference between following/followers (for approved members)
 $conf['tm_following_ratio_limit_unapproved'] = '20'; // set to zero to disallow unapproved members from following and show a feature message
 $conf['tm_following_ratio_limit_daily'] = '0.5'; // number of followers added to limit each day since approval
+$conf['tm_following_ratio_exclude_uids'] = array(); // array of uids who don't have a follow limit
 $conf['tm_chapter_join_limit'] = '16'; // "join" limit for the non chapter leaders
 $conf['tm_add_company_limit'] = '8'; // maximum number of companies a user can add (no limit for chapter leaders, moderators)
 $conf['tm_unapproved_follow_member'] = false; // allow unapproved members to follow other members

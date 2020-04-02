@@ -4,8 +4,10 @@
 
 TODO LIST:
 
+- Fill suggestions with right swipes
+- Show matches
 - Hide cards before showing?
-- What happens if you are on a bunch of cards and get rate limited while they are open?
+- Return if rate limited after swiping, loadnewcards
 - Disable rate limit when following back from profile if someone matched you
 
 Bugs/fixes:

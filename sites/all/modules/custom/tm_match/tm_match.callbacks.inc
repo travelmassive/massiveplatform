@@ -70,6 +70,11 @@ function tm_match_callback_swipe_right($uid, $right_uid) {
 	if (!in_array("approved user", $user->roles)) {
 		drupal_exit();
 	}
+
+	// check rate limit for right swipes
+	if (!tm_match_check_rate_limit($uid)) {
+		drupal_exit();
+	}
 	
 	tm_match_swipe_right($uid, $right_uid);
 

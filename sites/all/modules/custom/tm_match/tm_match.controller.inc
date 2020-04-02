@@ -290,13 +290,21 @@ function tm_match_swipe_right($uid, $right_uid, $timestamp = null) {
 }
 
 // check limit
-// based on left swipes
+// based on right swipes
 function tm_match_check_rate_limit($uid) {
 
 	global $conf;
 
-	$max_left_swipes = $conf["tm_match_swipe_limit_right"];
-	$total_left_swipes = tm_match_count_all_right_swipes($uid, $conf["tm_match_swipe_limit_period"]);
+	// check right swipes
+	$max_right_swipes = $conf["tm_match_swipe_limit_right"];
+	$total_right_swipes = tm_match_count_all_right_swipes($uid, $conf["tm_match_swipe_limit_period"]);
+	if ($total_right_swipes > $max_right_swipes) {
+		return false;
+	}
+
+	// check total swipes (20x right swipes)
+	$max_left_swipes = $max_right_swipes * 20;
+	$total_left_swipes = tm_match_count_all_left_swipes($uid, $conf["tm_match_swipe_limit_period"]);
 
 	if ($total_left_swipes > $max_left_swipes) {
 		return false;
@@ -326,8 +334,8 @@ function tm_match_get_all_swipes($uid) {
 	return $uids;
 }
 
-// check how many swipes
-function tm_match_count_all_swipes($uid, $seconds_ago = 0) {
+// check how many total swipes
+function tm_match_count_total_swipes($uid, $seconds_ago = 0) {
 
 	$query = "SELECT COUNT(DISTINCT IFNULL(left_uid, right_uid)) AS total_swipes FROM tm_match WHERE uid = :uid AND timestamp > UNIX_TIMESTAMP(DATE_SUB(NOW(),INTERVAL :seconds_ago SECOND))";
 
@@ -340,10 +348,24 @@ function tm_match_count_all_swipes($uid, $seconds_ago = 0) {
 	return $result->total_swipes;
 }
 
-// check how many swipes
-function tm_match_count_all_right_swipes($uid, $seconds_ago = 0) {
+// check how many left swipes
+function tm_match_count_all_left_swipes($uid, $seconds_ago = 0) {
+	return tm_match_count_all_swipes($uid, "left", $seconds_ago);
+}
 
-	$query = "SELECT COUNT(DISTINCT right_uid) AS total_swipes FROM tm_match WHERE uid = :uid AND timestamp > UNIX_TIMESTAMP(DATE_SUB(NOW(),INTERVAL :seconds_ago SECOND))";
+// check how many right swipes
+function tm_match_count_all_right_swipes($uid, $seconds_ago = 0) {
+	return tm_match_count_all_swipes($uid, "right", $seconds_ago);
+}
+
+// check how many left swipes
+function tm_match_count_all_swipes($uid, $left_or_right, $seconds_ago = 0) {
+
+	// validate
+	if (($left_or_right != "left") and ($left_or_right != "right")) {
+		$left_or_right = "right";
+	}
+	$query = "SELECT COUNT(DISTINCT " . $left_or_right . "_uid) AS total_swipes FROM tm_match WHERE uid = :uid AND timestamp > UNIX_TIMESTAMP(DATE_SUB(NOW(),INTERVAL :seconds_ago SECOND))";
 
 	$result = db_query($query, array(":uid" => $uid, ":seconds_ago" => $seconds_ago))->fetch();
 

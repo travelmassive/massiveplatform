@@ -4,6 +4,9 @@
 
 TODO LIST:
 
+- What happens if you are on a bunch of cards and get rate limited while they are open?
+- Disable rate limit when following back from profile if someone matched you
+
 Bugs/fixes:
 
 - Mobile freeze

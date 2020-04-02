@@ -223,6 +223,11 @@ function _tm_fulldate_event($field, $title = NULL) {
   $first_date = true;
   foreach ($event_timezones as $timezone => $timezone_name) {
 
+    // replace UTC with GMT
+    if ($timezone_name == "UTC") {
+      $timezone_name = "GMT";
+    }
+
     // Set timezone of event date
     $display_dt_timezone = new DateTimeZone($timezone);
     $event_date->setTimeZone($display_dt_timezone);

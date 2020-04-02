@@ -1187,3 +1187,29 @@ $conf["tm_markdown_allowed_events"] = array(); // allowed events - use array(0) 
 $conf["tm_markdown_allowed_organizations"] = array(); // allowed organizations - use array(0) for all
 $conf["tm_markdown_allowed_chapters_events"] = array(); // list of chapters whose events can use markdown
 
+/** MATCH **/
+$conf["tm_match_demo_mode"] = true; // whether to follow, or not
+$conf["tm_match_offline"] = false; // allow to take offline
+$conf["tm_match_load_cards"] = 10; // number of new cards to fetch 
+$conf["tm_match_swipe_limit_left"] = 100; // maximum number of left swipes in period
+$conf["tm_match_swipe_limit_right"] = 10; // maximum number of right swipes in period
+$conf["tm_match_swipe_limit_period"] = 86400; // period to check for swipes
+$conf["tm_match_index_intro"] = "<center><h1>Make new friends.</h1></center>";
+$conf["tm_match_loading_messages"] = array("🌎 🌏 🌍", "🤖 🍻", "🚀 ⭐️ 🪐"); 
+$conf["tm_match_rate_limit_title"] = "That's it for today.";
+$conf["tm_match_rate_limit_message"] = "Come back tomorrow.";
+$conf["tm_match_no_cards_title"] = "Gone fishing... 🎣";
+$conf["tm_match_no_cards_message"] = "Come back in a bit.";
+$conf["tm_match_suggest_featured_uids"] = array(); // list of users to feature
+$conf["tm_match_approved_member_message"] = "You need to be an <a class='approval-link' href='__APPROVAL_LINK__'>Approved Member</a> to use Massive Match.";
+$conf["tm_match_approved_member_card_title"] = "Request Approval 👋";
+$conf["tm_match_approved_member_card_message"] = "Your account needs to be <a class='approval-link' href='__APPROVAL_LINK__'>verified</a> to match with other members.";
+$conf["tm_match_sign_in_message"] = "Please log in to your account to use Massive Match.";
+$conf["tm_match_sign_in_card_title"] = "Log in, or sign up";
+$conf["tm_match_sign_in_card_message"] = "You need to <a href='/user/login?destination=/match'>log in</a> to match with other members.";
+$conf["tm_match_follower_notification_message"] = "<p>Visit <a href='__SERVER_HTTP__://__SERVER_NAME__/match'>match</a> to connect with other members.</p>";
+$conf["tm_match_og_title"] = "Massive Match"; // og:title
+$conf["tm_match_og_image"] = ""; // og:image
+$conf["tm_match_og_description"] = "Make friends with other members"; //og:description
+$conf["tm_match_footer_message"] = "__NUM_MEMBERS__ members have swiped __NUM_SWIPES__ times and created __NUM_MATCHES__ new matches.";
+

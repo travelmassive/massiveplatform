@@ -332,6 +332,12 @@
 	text-align: center;
 }
 
+@media screen and (max-width: 600px) {
+	.tm_match_footer {
+		width: 100%;
+	}
+}
+
 /* It's a match */
 
 .tm_its_a_match_container {

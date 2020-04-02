@@ -303,7 +303,7 @@ function tm_match_check_rate_limit($uid) {
 	}
 
 	// check left swipes
-	$max_right_swipes = $conf["tm_match_swipe_limit_left"];
+	$max_left_swipes = $conf["tm_match_swipe_limit_left"];
 	$total_left_swipes = tm_match_count_all_left_swipes($uid, $conf["tm_match_swipe_limit_period"]);
 
 	if ($total_left_swipes > $max_left_swipes) {

@@ -30,12 +30,11 @@ function tm_flags_preprocess_flag(&$variables) {
   // if tm_match enabled
   // if someone has swiped right on you, always allow follow
   if ($flag->name == "follow_members") {
-      if (module_exists("tm_match")) {
-        $entity_id = $variables['entity_id'];
-        $uid = $variables['user']->uid;
-        if (tm_match_user_has_swiped_right($entity_id, $uid)) {
-          return;
-        }
+    if (module_exists("tm_match")) {
+      $entity_id = $variables['entity_id'];
+      $uid = $variables['user']->uid;
+      if (tm_match_user_has_swiped_right($entity_id, $uid)) {
+        return;
       }
     }
   }

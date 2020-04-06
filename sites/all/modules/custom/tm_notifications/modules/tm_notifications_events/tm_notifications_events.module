@@ -369,7 +369,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
 
     // Adjust text for paid ticket
     $member_register_subject = "You are now registered for";
-    $member_register_intro = "You are now signed up to attend";
+    $member_register_intro = "You are now signed up to attend:";
 
     // If registered by chapter leader or moderator
     if ($static_register_member_moderator_first_name != null) {
@@ -381,7 +381,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
     if ($paid_for_event && $event_pricing != null) {
 
       $member_register_subject = "Your ticket to";
-      $member_register_intro = "You have purchased a ticket to the event";
+      $member_register_intro = "You have purchased a ticket to the event:";
 
       // create payment note
       $member_register_payment_note = "<br><div style='background-color: #eee; border-radius: 4px; padding: 4px;'>";

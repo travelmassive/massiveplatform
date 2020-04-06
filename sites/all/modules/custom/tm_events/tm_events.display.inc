@@ -538,11 +538,11 @@ function tm_events_render_timezones($user, $event) {
     }
     // same day, start and end time
     elseif ($event_date != $event_date2) {
-      $event_html .= " &mdash; " . $event_date->format('l, F j, Y') . "</b> &mdash; " . $event_date->format($time_format) . ' to ' . $event_date2->format($time_format) . "<br>";      
+      $event_html .= " &mdash; </b>" . $event_date->format('l, F j, Y') . " &mdash; " . $event_date->format($time_format) . ' to ' . $event_date2->format($time_format) . "<br>";      
     }
     // only start time
     else {
-      $event_html .= " &mdash; " . $event_date->format('l, F j, Y') . "</b> &mdash; " . $event_date->format($time_format) . "<br>";
+      $event_html .= " &mdash; </b>" . $event_date->format('l, F j, Y') . " &mdash; " . $event_date->format($time_format) . "<br>";
     }
   }
 

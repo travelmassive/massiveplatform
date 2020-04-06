@@ -344,7 +344,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
   // if online event, show all timezones
   if (isset($event->field_event_is_online[LANGUAGE_NONE][0]['value'])) { 
     if ($event->field_event_is_online[LANGUAGE_NONE][0]['value'] == true) {
-      $event_time = "This event is online in the following timezones:<br>";
+      $event_time = "<br>🌍 Online in the following timezones:<br>";
       $event_time .= tm_events_render_timezones($account, $event);
     }
   }

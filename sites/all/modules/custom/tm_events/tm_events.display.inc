@@ -528,21 +528,28 @@ function tm_events_render_timezones($user, $event) {
 
     $multi_day = ($event_date->format('l, F j, Y') != $event_date2->format('l, F j, Y'));
 
+    // next year
+    $date_format = 'l, F j'; // include year
+    $event_date_year = $event_date2->format('Y');
+    if ($event_date_year != date("Y")) {
+      $date_format = 'l, F j, Y'; // next year
+    }
+
     // multi day
     if ($multi_day) {
       $event_html .= "</b>\n<br>Start: ";
-      $event_html .= $event_date->format('l, F j, Y') . ' ' . $event_date->format($time_format) . "";
+      $event_html .= $event_date->format($date_format) . ' ' . $event_date->format($time_format) . "";
       $event_html .= "<br>End: ";
-      $event_html .= $event_date2->format('l, F j, Y') . ' ' . $event_date2->format($time_format) . "";
+      $event_html .= $event_date2->format($date_format) . ' ' . $event_date2->format($time_format) . "";
       $event_html .= "<br>";
     }
     // same day, start and end time
     elseif ($event_date != $event_date2) {
-      $event_html .= " &mdash; </b>" . $event_date->format('l, F j, Y') . " &mdash; " . $event_date->format($time_format) . ' to ' . $event_date2->format($time_format) . "<br>";      
+      $event_html .= " &mdash; </b>" . $event_date->format($date_format) . " &mdash; " . $event_date->format($time_format) . ' to ' . $event_date2->format($time_format) . "<br>";      
     }
     // only start time
     else {
-      $event_html .= " &mdash; </b>" . $event_date->format('l, F j, Y') . " &mdash; " . $event_date->format($time_format) . "<br>";
+      $event_html .= " &mdash; </b>" . $event_date->format($date_format) . " &mdash; " . $event_date->format($time_format) . "<br>";
     }
   }
 

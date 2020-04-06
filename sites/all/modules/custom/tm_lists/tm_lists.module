@@ -78,7 +78,7 @@ function tm_lists_menu() {
 		'access arguments' => array('access content')
 	);
 
-	$items['lists/moderation-list-ajax/%'] = array(
+	$items['lists/moderation-list-ajax/%/%/%'] = array(
 		'page callback' => 'tm_lists_moderation_lists_ajax',
 		'page arguments' => array(2),
 		'access arguments' => array('access content')

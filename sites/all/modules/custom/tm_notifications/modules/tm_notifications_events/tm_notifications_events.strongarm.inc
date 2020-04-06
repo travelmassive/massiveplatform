@@ -118,8 +118,7 @@ __MODERATOR_MESSAGE__
 Here\'s the event details to keep handy &mdash;
 <br>
 <br><strong>[node:title]</strong>
-<br>Date: __EVENT_DATE__
-<br>Start: __EVENT_TIME__
+<br>__EVENT_TIME__
 <br>Venue: [node:field_event_venue_name]
 <br>Location: [node:field_location]
 <br><a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_CALENDAR_LINK__">Add to calendar</a>

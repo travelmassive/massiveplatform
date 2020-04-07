@@ -106,7 +106,7 @@ function tm_lists_has_user_added_to_list($user_id, $list_id) {
 	$result = db_query($query)->fetch();
 
 	// return if user has added to list
-	return ($result->total >= 1);
+	return ($result->has_added >= 1);
 
 }
 

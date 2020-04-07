@@ -103,13 +103,11 @@ function tm_lists_has_user_added_to_list($user_id, $list_id) {
 	$list_id = intval($list_id);
 
 	$query = "SELECT COUNT(*) AS has_added FROM tm_lists WHERE uid = " . $user_id . " AND list_id = " . $list_id;
-	$results = db_query($query)->fetchAll();
-	if (sizeof($results) > 0) {
-		return true;
-	}
+	$result = db_query($query)->fetch();
 
-	// not an author
-	return false;
+	// return if user has added to list
+	return ($result->total >= 1);
+
 }
 
 /**

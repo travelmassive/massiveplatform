@@ -121,7 +121,7 @@ function tm_notifications_added_to_list($entity, $list) {
   // add a custom message to the notification
   $add_list_message = "";
   if (isset($conf["tm_lists_notification_message"])) {
-    $add_list_message = "<br><br>" . $conf["tm_lists_notification_message"];
+    $add_list_message = "<br><br>" . str_replace("\n", "<br>", $conf["tm_lists_notification_message"]) . "<br>";
   }
 
   // custom add message
@@ -129,7 +129,7 @@ function tm_notifications_added_to_list($entity, $list) {
     $list_message = $list->field_list_message_added[LANGUAGE_NONE][0]['value'];
     $list_message = trim($list_message);
     if ($list_message != "") {
-      $add_list_message = "<br><br>" . $list_message;
+      $add_list_message = "<br><br>" . str_replace("\n", "<br>", $list_message) . "<br>";
     }
   }
 

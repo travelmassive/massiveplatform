@@ -27,6 +27,30 @@ function tm_flags_preprocess_flag(&$variables) {
     _tm_flags_organization_upvote($variables);
   }
 
+  // don't apply follow limits to certain members
+  // $conf["tm_following_ratio_exclude_uids"];
+  if ($flag->name == "follow_members") {
+    global $conf;
+    if (isset($conf['tm_following_ratio_exclude_uids'])) {
+      $uid = $variables['user']->uid;
+      if (in_array($uid, $conf['tm_following_ratio_exclude_uids'])) {
+        return;
+      }
+    }
+  }
+
+  // if tm_match enabled
+  // if someone has swiped right on you, always allow follow
+  if ($flag->name == "follow_members") {
+    if (module_exists("tm_match")) {
+      $entity_id = $variables['entity_id'];
+      $uid = $variables['user']->uid;
+      if (tm_match_user_has_swiped_right($entity_id, $uid)) {
+        return;
+      }
+    }
+  }
+
   // check for follow and join limits
   return _tm_flags_flag_limits($variables);
 }
@@ -178,7 +202,7 @@ function _tm_flags_flag_limits(&$variables) {
   global $conf;
   global $user;
   $initialized = &drupal_static(__FUNCTION__, array());
- 
+
   // if user has been reported, limit flags
   if (tm_users_is_member_reported($user->uid)) {
     $tm_limit = true;

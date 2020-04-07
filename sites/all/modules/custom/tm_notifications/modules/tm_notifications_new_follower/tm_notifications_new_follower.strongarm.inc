@@ -19,10 +19,10 @@ function tm_notifications_new_follower_strongarm() {
     'default_state' => '1',
     'change_allowed' => 1,
     'email' => array(
-      'subject' => '__USER_FIRST_NAME__ __USER_LAST_NAME__ just followed you on __SITE_NAME__',
+      'subject' => '__USER_FIRST_NAME__ __USER_LAST_NAME__ just __ACTION__ on __SITE_NAME__',
       'message' => 'Hi [user:field_user_first_name],
 <br>
-<br>__USER_FIRST_NAME__ __USER_LAST_NAME__ just followed you on __SITE_NAME__.
+<br>__USER_FIRST_NAME__ __USER_LAST_NAME__ just __ACTION__ on __SITE_NAME__.
 __MEMBER_WIDGET__
 __FOLLOWER_MESSAGE__
 __MESSAGING_INSTRUCTIONS__

@@ -338,7 +338,16 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
 
   $event_date_time = strtotime( $event->field_event_date['und'][0]['value']);
   $nice_date = date('l j F', $event_date_time );
-  $event_time = date('g:ia', $event_date_time );
+  $event_start = date('g:ia', $event_date_time );
+  $event_time = "<br>Date: " . $nice_date . "\n<br>Start: " . $event_start;
+
+  // if online event, show all timezones
+  if (isset($event->field_event_is_online[LANGUAGE_NONE][0]['value'])) { 
+    if ($event->field_event_is_online[LANGUAGE_NONE][0]['value'] == true) {
+      $event_time = "<br>";
+      $event_time .= tm_events_render_timezones($account, $event);
+    }
+  }
 
   // events_register_flag
   $map_link_url = "";
@@ -360,7 +369,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
 
     // Adjust text for paid ticket
     $member_register_subject = "You are now registered for";
-    $member_register_intro = "You are now signed up to attend";
+    $member_register_intro = "You are now signed up to attend:";
 
     // If registered by chapter leader or moderator
     if ($static_register_member_moderator_first_name != null) {
@@ -372,7 +381,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
     if ($paid_for_event && $event_pricing != null) {
 
       $member_register_subject = "Your ticket to";
-      $member_register_intro = "You have purchased a ticket to the event";
+      $member_register_intro = "You have purchased a ticket to the event:";
 
       // create payment note
       $member_register_payment_note = "<br><div style='background-color: #eee; border-radius: 4px; padding: 4px;'>";

@@ -223,6 +223,11 @@ function _tm_fulldate_event($field, $title = NULL) {
   $first_date = true;
   foreach ($event_timezones as $timezone => $timezone_name) {
 
+    // replace UTC with GMT
+    if ($timezone_name == "UTC") {
+      $timezone_name = "GMT";
+    }
+
     // Set timezone of event date
     $display_dt_timezone = new DateTimeZone($timezone);
     $event_date->setTimeZone($display_dt_timezone);
@@ -237,14 +242,14 @@ function _tm_fulldate_event($field, $title = NULL) {
 
     // Show timezone name if more than one timezone
     if (sizeof($event_timezones) > 1) {
-      $event_html .= $timezone_name . " - ";
+      $event_html .= $timezone_name . " &mdash; ";
     }
 
     $multi_day = ($event_date->format('l, F j, Y') != $event_date2->format('l, F j, Y'));
 
     // multi day
     if ($multi_day) {
-      $event_html .= '<span style="font-weight: normal; width: 2.2rem; display: inline-block;">Start</span>';
+      $event_html .= '<br><span style="font-weight: normal; width: 2.2rem; display: inline-block;">Start</span>';
       $event_html .= $event_date->format('l, F j, Y') . ' <span style="font-weight: normal;">' . $event_date->format($time_format) . "</span>";
       $event_html .= '<br><span style="font-weight: normal; width: 2.2rem; display: inline-block;">End</span>';
       $event_html .= $event_date2->format('l, F j, Y') . ' <span style="font-weight: normal;">' . $event_date2->format($time_format) . "</span>";
@@ -462,4 +467,92 @@ function tm_events_get_custom_banner($node) {
   }
 
   return trim($custom_banner);
+}
+
+/**
+ * Helper method to show timezones for events
+ */
+function tm_events_render_timezones($user, $event) {
+
+  global $conf;
+
+  // Make sure we have an event date
+  if (!isset($event->field_event_date[LANGUAGE_NONE][0]['value'])) {
+    return;
+  }
+
+  // Step 1. Set time format
+  $time_format = _tm_date_get_date_format($user, $event);
+
+  // Step 2. Create event date using event's timezone
+  $event_timezone = _tm_get_event_timezone($event);
+  $dt_timezone = new DateTimeZone($event_timezone);
+  $event_date = new DateTime($event->field_event_date[LANGUAGE_NONE][0]['value'], $dt_timezone);
+  $event_date2 = new DateTime($event->field_event_date[LANGUAGE_NONE][0]['value2'], $dt_timezone);
+
+  // Step 3. Set up event timezone array
+  $timezone_name = _tm_date_pretty_timezone_name($event_timezone);
+  $event_timezones = array($event_timezone => $timezone_name);
+
+  // Step 4. Include user's timezone
+  if (isset($user->timezone)) {
+    $timezone_name = _tm_date_pretty_timezone_name($user->timezone);
+    $event_timezones[$user->timezone] = $timezone_name;
+  }
+
+  // Include tm_event_online_timezones
+  foreach ($conf["tm_event_online_timezones"] as $timezone => $timezone_name) {
+    $event_timezones[$timezone] = $timezone_name;
+  }
+
+  // Only show unique timezones  
+  $event_timezones = array_unique($event_timezones, SORT_REGULAR);
+
+  // Step 5. Create list
+  $event_html = "";
+  $first_date = true;
+  foreach ($event_timezones as $timezone => $timezone_name) {
+
+    // replace UTC with GMT
+    if ($timezone_name == "UTC") {
+      $timezone_name = "GMT";
+    }
+    
+    // Set timezone of event date
+    $display_dt_timezone = new DateTimeZone($timezone);
+    $event_date->setTimeZone($display_dt_timezone);
+    $event_date2->setTimeZone($display_dt_timezone);
+
+    // Show timezone name
+    $event_html .= "<b>" . $timezone_name;
+
+    $multi_day = ($event_date->format('l, F j, Y') != $event_date2->format('l, F j, Y'));
+
+    // next year
+    $date_format = 'l, F j'; // include year
+    $event_date_year = $event_date2->format('Y');
+    if ($event_date_year != date("Y")) {
+      $date_format = 'l, F j, Y'; // next year
+    }
+
+    // multi day
+    if ($multi_day) {
+      $event_html .= "</b>\n<br>Start: ";
+      $event_html .= $event_date->format($date_format) . ' ' . $event_date->format($time_format) . "";
+      $event_html .= "<br>End: ";
+      $event_html .= $event_date2->format($date_format) . ' ' . $event_date2->format($time_format) . "";
+      $event_html .= "<br>";
+    }
+    // same day, start and end time
+    elseif ($event_date != $event_date2) {
+      $event_html .= " &mdash; </b>" . $event_date->format($date_format) . " &mdash; " . $event_date->format($time_format) . ' to ' . $event_date2->format($time_format) . "<br>";      
+    }
+    // only start time
+    else {
+      $event_html .= " &mdash; </b>" . $event_date->format($date_format) . " &mdash; " . $event_date->format($time_format) . "<br>";
+    }
+  }
+
+  return $event_html;
+
 }

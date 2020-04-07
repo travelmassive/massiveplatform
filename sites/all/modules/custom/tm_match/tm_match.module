@@ -1,0 +1,147 @@
+<?php
+
+/*
+
+TODO LIST:
+
+- You've made a connection
+- Fill suggestions with right swipes
+- Show matches
+- Hide cards before showing?
+- Return if rate limited after swiping, loadnewcards
+
+Bugs/fixes:
+
+- Mobile freeze
+
+Matching algorithm:
+
+1. Follows you (approx 1/3 of your suggestions)
+2. Members in your chapter
+3. Members in your country
+4. Members in your location
+5. Members in your industry segment
+6. Pro Members
+7. Featured Members
+8. Chapter Leaders
+9. I'm lucky members (random members)
+10. Logged in in past 24 hours
+11. Lots of followers
+12. Has been featured in a list
+
+Extas:
+
+- Pro Member flag
+- Add calendar
+- Look into whereby.com or bluejeans
+
+DONE!
+
+- Disable rate limit when following back from profile if someone matched you
+- Check matching algorithm
+- Scroll to 'its a match' on mobile
+- Testing: Check flag limits
+- View full profile link
+- Ofline mode
+- You've matched
+- Filter if they swiped left on you
+- Cool stats and message
+- Log in tm_match if you follow back
+- Metatag
+- Demo mode
+- Hook into notification
+- Demo for non-signed in, non-approved
+- Pass in UID
+- Debug mode
+
+
+*/
+
+// tm_match.module
+include_once 'tm_match.display.inc';
+include_once 'tm_match.controller.inc';
+include_once 'tm_match.callbacks.inc';
+include_once 'tm_match.meta.inc';
+include_once 'tm_match.stats.inc';
+
+/**
+ * Implements hook_menu().
+ */
+function tm_match_menu() {
+
+	$items = array();
+
+	$items['match'] = array(
+		'title' => 'Match',
+		'page callback' => 'tm_match_display_index',
+		'access arguments' => array('access content')
+	);
+
+	$items['match/ajax/cards'] = array(
+		'title' => 'Match',
+		'page callback' => 'tm_match_fetch_cards_ajax',
+		'access arguments' => array('access content')
+	);
+
+	$items['match/callback/left/%/%'] = array(
+		'title' => 'Swipe Left',
+		'page callback' => 'tm_match_callback_swipe_left',
+		'page arguments' => array(3, 4),
+		'access arguments' => array('access content'),
+	);
+
+	$items['match/callback/right/%/%'] = array(
+		'title' => 'Swipe Right',
+		'page callback' => 'tm_match_callback_swipe_right',
+		'page arguments' => array(3, 4),
+		'access arguments' => array('access content')
+	);
+
+	return $items;
+}
+
+
+/**
+ * Implement hook_flag_flag()
+ * Add a swipe_right in tm_match if:
+ * 1. You swipe right on someone who already follows you
+ * 2. You followed someone from their profile who had swiped right on you
+ */
+function tm_match_flag_flag($flag, $entity_id, $account, $flagging) {
+  
+	global $conf;
+
+	// set up variables
+	$who_followed_uid = $account->uid;
+	$who_is_followed_uid = $entity_id;
+
+	// Following a member
+	if ($flag->name == 'follow_members' && $flag->entity_type == 'user') {
+		
+		// Has flag been initiatied by a swipe
+		$static_tm_match_swiped_right = &drupal_static("tm_match_swiped_right");
+		
+		// 1. You swipe right on someone who already follows you
+		// Add a swipe_right from them to you, with timestamp 0
+		if ($static_tm_match_swiped_right) {
+			if (!tm_match_user_has_swiped_right($who_is_followed_uid, $who_followed_uid)) {
+				if (tm_match_user_is_following($who_is_followed_uid, $who_followed_uid)) {
+					tm_match_swipe_right($who_is_followed_uid, $who_followed_uid, 1);
+				}
+			}
+		}
+
+		// 2. You followed someone from their profile who had swiped right on you
+		if (!$static_tm_match_swiped_right) {
+			if (tm_match_user_has_swiped_right($who_is_followed_uid, $who_followed_uid)) {
+				tm_match_swipe_right($who_followed_uid, $who_is_followed_uid);
+			}
+		}
+	}
+
+}
+
+
+
+
+

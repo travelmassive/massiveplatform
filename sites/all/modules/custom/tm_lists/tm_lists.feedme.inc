@@ -60,7 +60,7 @@ function tm_lists_feedme_display() {
 	}
 
 	// render related lists
-	$html = tm_lists_feedme_render($list_id_arr, "Lists", "/lists", "All lists", $show_contributor_uid);
+	$html = tm_lists_feedme_render($list_id_arr, "Lists", "/lists", "All lists", $entity_type, $entity_id, $show_contributor_uid);
 	echo $html;
 	drupal_exit();
 }
@@ -68,7 +68,7 @@ function tm_lists_feedme_display() {
 /**
  * Render list of related lists
  */
-function tm_lists_feedme_render($list_ids, $title, $more_link, $more_text, $show_contributor_uid = 0) {
+function tm_lists_feedme_render($list_ids, $title, $more_link, $more_text, $entity_type, $entity_id, $show_contributor_uid = 0) {
 
 	global $user;
 	global $conf;
@@ -101,8 +101,10 @@ function tm_lists_feedme_render($list_ids, $title, $more_link, $more_text, $show
 		}
 
 		// get list title and url
+		// link to featured item
+		// ie: /lists/123/list-name#feature-125355
 		$list_title = tm_lists_get_display_list_title($list);
-		$list_url = "/lists/" . $list_id;
+		$list_url = "/lists/" . $list_id . "#feature-" . tm_lists_enumerate_entity_type($entity_type) . $entity_id;
 
 		// list image
 		// try cover first, then sharing image

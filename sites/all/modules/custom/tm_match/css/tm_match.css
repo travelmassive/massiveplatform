@@ -2,6 +2,14 @@
 	display: none;
 }
 
+.match-index-intro h1 {
+	margin-bottom: 0.25rem;
+}
+
+.match-index-intro p { 
+	margin: 0;
+}
+
 .tm_match_container {
 	/*position: absolute;
 	left: 50%;

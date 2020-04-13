@@ -109,8 +109,16 @@ function tm_match_display_index() {
 	$footer = str_replace("__NUM_SWIPES__",  tm_match_stats_total_swipes(), $footer);
 	$footer = str_replace("__NUM_MATCHES__", tm_match_stats_total_matches(), $footer);
 
+	// your match stats
+	$your_match_stats = "";
+	$mutual_connections = tm_match_get_count_user_connections($user->uid);
+	if ($mutual_connections > 0) {
+		$your_match_stats = $conf["tm_match_connections_view_message"];;
+	}
+
 	// fields
 	$html = str_replace("__INTRO__", $conf["tm_match_index_intro"], $html);
+	$html = str_replace("__YOUR_MATCH_STATS__", $your_match_stats, $html);
 	$html = str_replace("__RESULTS__", $results_html, $html);
 	$html = str_replace("__MATCH_TIP__", "Swipe left or right ", $html);
 	$html = str_replace("__MATCH_FOOTER__", $footer, $html);

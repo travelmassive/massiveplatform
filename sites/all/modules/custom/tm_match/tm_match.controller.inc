@@ -407,3 +407,57 @@ function tm_match_user_is_following($uid_of_follower, $uid, $follow_members_flag
 	return (sizeof($results) > 0);
 }
 
+// get mutual connections
+function tm_match_get_user_connections($uid, $limit_from = 0, $limit_results = 100, $follow_members_flag_id = null) {
+
+	// fetch flag if not provided	
+	if ($follow_members_flag_id == null) {
+		$follow_members_flag_id = flag_get_flag('follow_members')->fid;
+	}
+
+	// mutual connections, sort by most recent flag
+	$query = "SELECT followed.uid AS uid, GREATEST(follows.timestamp,followed.timestamp) AS ts FROM 
+	(SELECT * FROM flagging WHERE uid = :uid AND fid = :fid ORDER BY timestamp ASC) AS follows
+	INNER JOIN flagging AS followed
+	ON followed.entity_id = follows.uid AND followed.uid = follows.entity_id
+	WHERE followed.fid = :fid
+	ORDER by ts DESC 
+	LIMIT " . intval($limit_from) . "," . intval($limit_results);
+	$results = db_query($query, array(":uid" => $uid, ":fid" => $follow_members_flag_id))->fetchAll();
+
+	// no results
+	if ($results == null) {
+		return array();
+	}
+
+	// turn into array
+	$uids = array();
+	foreach($results as $result) {
+		$uids[] = $result->uid;
+	}
+	
+	return $uids;
+
+}
+
+// get mutual connections
+function tm_match_get_count_user_connections($uid, $follow_members_flag_id = null) {
+
+	// fetch flag if not provided	
+	if ($follow_members_flag_id == null) {
+		$follow_members_flag_id = flag_get_flag('follow_members')->fid;
+	}
+
+	// count mutual connections
+	$query = "SELECT COUNT(followed.uid) AS total FROM 
+	(SELECT * FROM flagging WHERE uid = :uid AND fid = :fid ORDER BY timestamp ASC) AS follows
+	INNER JOIN flagging AS followed
+	ON followed.entity_id = follows.uid AND followed.uid = follows.entity_id
+	WHERE followed.fid = :fid";
+	$result = db_query($query, array(":uid" => $uid, ":fid" => $follow_members_flag_id))->fetch();
+
+	// return total
+	return $result->total;
+
+}
+

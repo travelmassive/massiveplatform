@@ -151,8 +151,12 @@ function tm_match_render_connections($uids) {
 			$home_chapter_color = $home_chapter->field_chapter_color[LANGUAGE_NONE][0]['rgb'];
 		}
 
+		// user url
+		$user_url = "/" . drupal_get_path_alias("user/" . $account->uid);
+
 		$user_template = $template;
 		$user_template = str_replace("__UID__", $account->uid, $user_template);
+		$user_template = str_replace("__USER_URL__", $user_url, $user_template);
 		$user_template = str_replace("__FULL_NAME__", $full_name, $user_template);
 		$user_template = str_replace("__JOB_ROLE__", $job_role, $user_template);
 		$user_template = str_replace("__ORGANIZATION_NAME__", $organization_name, $user_template);

@@ -57,7 +57,7 @@ function tm_match_connections_index() {
 
 	// pager
 	$pager_template = "";
-	if (sizeof($connections) > $connections_per_page) {
+	if (sizeof($connections) >= $connections_per_page) {
 		$pager_template = file_get_contents(drupal_get_path('module', 'tm_match') .'/templates/tm_match_connections_pager.tpl.php');
 	}
 

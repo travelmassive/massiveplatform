@@ -1195,7 +1195,7 @@ $conf["tm_match_load_cards"] = 10; // number of new cards to fetch
 $conf["tm_match_swipe_limit_left"] = 100; // maximum number of left swipes in period
 $conf["tm_match_swipe_limit_right"] = 10; // maximum number of right swipes in period
 $conf["tm_match_swipe_limit_period"] = 86400; // period to check for swipes
-$conf["tm_match_index_intro"] = "<center><h1>Make new friends.</h1></center>";
+$conf["tm_match_index_intro"] = "<center><h1>Make new friends.</h1>__YOUR_MATCH_STATS__</center>";
 $conf["tm_match_loading_messages"] = array("🌎 🌏 🌍", "🤖 🍻", "🚀 ⭐️ 🪐"); 
 $conf["tm_match_rate_limit_title"] = "That's it for today.";
 $conf["tm_match_rate_limit_message"] = "Come back tomorrow.";
@@ -1214,5 +1214,5 @@ $conf["tm_match_og_image"] = ""; // og:image
 $conf["tm_match_og_description"] = "Make friends with other members"; //og:description
 $conf["tm_match_footer_message"] = "__NUM_MEMBERS__ members have swiped __NUM_SWIPES__ times and created __NUM_MATCHES__ new matches.";
 $conf["tm_match_connections_intro"] = "<center><h1>Your Matches.</h1><p style='margin-top: 0px;'>You <a href='/match'>connected</a> with __NUM_CONNECTIONS__.</p><br></center>";
-$conf["tm_connections_view_message"] = "👋 View <a href='/match/connections'>your matches</a>";
+$conf["tm_match_connections_view_message"] = "👋 View <a href='/match/connections'>your matches</a>";
 $conf["tm_match_connections_per_page"] = 12;

@@ -10,6 +10,10 @@
 	margin: 0;
 }
 
+.connections-index-intro p {
+	margin-top: 0;
+}
+
 .tm_match_container {
 	/*position: absolute;
 	left: 50%;
@@ -376,3 +380,19 @@
 	
 }
 
+.follows-back-0 .tm_match__card_follow_back {
+	display: none;
+}
+
+.follows-back-1 .tm_match__card_follow_back {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin-right: 8px;
+	margin-top: 8px;
+	border-radius: 50%;
+	width: 8px;
+	height: 8px;
+	background-color: #fff;
+	opacity: 0.2;
+}

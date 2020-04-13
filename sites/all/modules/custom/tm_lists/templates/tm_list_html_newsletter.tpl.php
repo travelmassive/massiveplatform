@@ -213,7 +213,7 @@
                                             </tbody>
                                             <tbody>
                                               <tr>
-                                                <td class="pc-fb-font" style="padding: 10px 20px 0; line-height: 28px; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 300; letter-spacing: -0.2px; color: #4a4a4a;" valign="top"><a style="text-decoration: none; color: #4a4a4a;" href="__LIST_URL__">__LIST_DESCRIPTION__</a></td>
+                                                <td class="pc-fb-font" style="padding: 10px 20px 0; line-height: 28px; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 300; letter-spacing: -0.2px; color: #4a4a4a;" valign="top">__LIST_DESCRIPTION__</td>
                                               </tr>
                                             </tbody>
                                           </table>

@@ -63,6 +63,7 @@ include_once 'tm_match.controller.inc';
 include_once 'tm_match.callbacks.inc';
 include_once 'tm_match.meta.inc';
 include_once 'tm_match.stats.inc';
+include_once 'tm_match.connections.inc';
 
 /**
  * Implements hook_menu().
@@ -97,9 +98,20 @@ function tm_match_menu() {
 		'access arguments' => array('access content')
 	);
 
+	$items['match/connections'] = array(
+		'title' => 'Your Matches',
+		'page callback' => 'tm_match_connections_index',
+		'access arguments' => array('access content')
+	);
+
+	$items['match/ajax/connections'] = array(
+		'title' => 'Your Connections',
+		'page callback' => 'tm_match_fetch_connections_ajax',
+		'access arguments' => array('access content')
+	);
+
 	return $items;
 }
-
 
 /**
  * Implement hook_flag_flag()
@@ -140,8 +152,3 @@ function tm_match_flag_flag($flag, $entity_id, $account, $flagging) {
 	}
 
 }
-
-
-
-
-

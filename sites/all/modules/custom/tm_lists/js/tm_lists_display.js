@@ -7,7 +7,7 @@
 
 	// waypoints
 	var tm_list_waypoint_count = 1;
-	var tm_list_waypoint_max = 5;
+	var tm_list_waypoint_max = 10;
 	var tm_list_waypoint;
 
 	// load results

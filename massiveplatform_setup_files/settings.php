@@ -1213,4 +1213,6 @@ $conf["tm_match_og_title"] = "Massive Match"; // og:title
 $conf["tm_match_og_image"] = ""; // og:image
 $conf["tm_match_og_description"] = "Make friends with other members"; //og:description
 $conf["tm_match_footer_message"] = "__NUM_MEMBERS__ members have swiped __NUM_SWIPES__ times and created __NUM_MATCHES__ new matches.";
-
+$conf["tm_match_connections_intro"] = "<center><h1>Your Matches.</h1><p style='margin-top: 0px;'>You <a href='/match'>connected</a> with __NUM_CONNECTIONS__.</p><br></center>";
+$conf["tm_connections_view_message"] = "👋 View <a href='/match/connections'>your matches</a>";
+$conf["tm_match_connections_per_page"] = 12;

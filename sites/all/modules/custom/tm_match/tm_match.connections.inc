@@ -205,7 +205,7 @@ function tm_match_fetch_connections_ajax() {
 	}
 
 	$limit_from = ($page - 1) * $connections_per_page;
-	$connections = tm_match_get_user_connections($user_id, $page, $connections_per_page);
+	$connections = tm_match_get_user_connections($user_id, $limit_from, $connections_per_page);
 	$results_html = tm_match_render_connections($connections);
 
 	// Return html

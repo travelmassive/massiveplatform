@@ -10,6 +10,10 @@
 	margin: 0;
 }
 
+.connections-index-intro h1 {
+	margin-bottom: 0.25rem;
+}
+
 .connections-index-intro p {
 	margin-top: 0;
 }
@@ -391,8 +395,8 @@
 	margin-right: 8px;
 	margin-top: 8px;
 	border-radius: 50%;
-	width: 8px;
-	height: 8px;
+	width: 6px;
+	height: 6px;
 	background-color: #fff;
-	opacity: 0.2;
+	opacity: 0.1;
 }

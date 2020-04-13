@@ -6,7 +6,6 @@ TODO LIST:
 
 - You've made a connection
 - Fill suggestions with right swipes
-- Show matches
 - Hide cards before showing?
 - Return if rate limited after swiping, loadnewcards
 
@@ -37,6 +36,7 @@ Extas:
 
 DONE!
 
+- Show matches
 - Disable rate limit when following back from profile if someone matched you
 - Check matching algorithm
 - Scroll to 'its a match' on mobile

@@ -200,8 +200,8 @@ function tm_match_fetch_connections_ajax() {
 	if (isset($_GET["page"])) {
 		$page = intval($_GET["page"]);
 	}
-	if ($page > 0) {
-		$page = 0;
+	if ($page < 1) {
+		$page = 1;
 	}
 
 	$limit_from = ($page - 1) * $connections_per_page;

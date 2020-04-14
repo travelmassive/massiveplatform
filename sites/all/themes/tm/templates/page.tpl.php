@@ -6,8 +6,18 @@
  * Complete documentation for this file is available online.
  * @see https://drupal.org/node/1728148
  */
+?>
 
- global $conf;
+<?php
+
+  global $conf;
+
+  // Configure navbar to position in the header
+  $tm_branding_navbar_top = false;
+  if (isset($conf["tm_branding_navbar_top"])) {
+    $tm_branding_navbar_top = $conf["tm_branding_navbar_top"];
+  }
+
 ?>
 
 <div id="page">
@@ -23,7 +33,17 @@
       <nav id="prime-nav" role="navigation">
         <h1><?= t('Primary navigation'); ?></h1>
 
-        <div class='topnav-search-container' <?php if ((arg(0) == "search") or (arg(0) == "insights")) { echo "style='display: none;'"; } ?>>
+        <?php if ($tm_branding_navbar_top) { ?>
+        <div class="top-navbar top-navbar-header">
+          <div class="row">
+            <section>
+              <?php echo tm_branding_get_element("navbar_html"); ?>
+            </section>
+          </div>
+        </div>
+        <?php } ?>
+
+        <div class='topnav-search-container <?php if ($tm_branding_navbar_top) { ?>top-navbar-header<?php } ?>' <?php if ((arg(0) == "search") or (arg(0) == "insights")) { echo "style='display: none;'"; } ?>>
           <div class='topnav-search-inner'>
             <i class='topnav-search-icon'></i>
             <form method="GET" action="/search"><input type='text' id='topnav-search-textfield' name='query' placeholder='<?php print $conf['tm_search_api_placeholder_text'];?>' value='' size='40' maxlength='255' class='form-text' autocomplete='off'></form>
@@ -52,6 +72,7 @@
 
   <div class="top-navbar-divider"></div>
 
+  <?php if (!$tm_branding_navbar_top) { ?>
   <div class="top-navbar">
     <div class="row">
       <section>
@@ -59,6 +80,7 @@
       </section>
     </div>
   </div>
+  <?php } ?>
 
   <?php
 

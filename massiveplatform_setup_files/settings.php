@@ -517,24 +517,18 @@ $conf['tm_branding_email_footer_html'] = ''; // insert text into email notificat
 
 // site navigation links (navbar)
 $conf["tm_branding_navbar_html"] = '
-<span class="topnav-links-lhs">
+<span class="topnav-links-center">
 <a href="/chapters">Chapters</a> 
-<a style="margin-left: 0.5rem;" href="/events">Events</a> 
-<a style="margin-left: 0.5rem;" href="/community">People</a> 
-<a style="margin-left: 0.5rem;" href="/companies">Companies</a>
-</span>
-<span class="topnav-links-rhs">
-<a href="#">Shop</a> 
-<a style="margin-left: 0.5rem;" href="#">Forum</a>
-<div class="topnav-dropdown">
-  <a style="margin-left: 0.5rem;" class="topnav-dropdown-link" href="javascript:void(0);">More <span class="topnav-dropdown-arrow topnav-dropdown-arrow-down"></span></a>
-    <div class="topnav-dropdown-content">
-      <a href="/blog/">Blog</a>
-      <a href="/blog/about-us">About us</a>
-    </div>
-</div>
+<a style="margin-left: 0.75rem;" href="/events">Events</a> 
+<a style="margin-left: 0.75rem;" href="/community">People</a> 
+<a style="margin-left: 0.75rem;" href="/companies">Companies</a>
+<a style="margin-left: 0.75rem;" href="/blog">Blog</a>
+<a style="margin-left: 0.75rem;" href="javascript:void(0);" id="topnav-search-button"></a>
 </span>
 ';
+
+// put the navbar in the top header 
+$conf["tm_branding_navbar_top"] = true;
 
 // contextual links for site navbar
 $conf["tm_branding_navbar_html_show_subscription_cta"] = "<a style='margin-left: 0.25rem;' href='/blog/pro-membership/'><span style='font-size: smaller; background-color: #fff; color: #037cb7; border-radius: 2px; padding: 2px; padding-left: 4px; padding-right: 4px;'>Pro Membership</a></a>";

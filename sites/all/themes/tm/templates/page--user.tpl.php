@@ -37,6 +37,12 @@
     include './'. path_to_theme() .'/templates/page--lists-feedme.tpl.php';
   }
 
+  // Configure navbar to position in the header
+  $tm_branding_navbar_top = false;
+  if (isset($conf["tm_branding_navbar_top"])) {
+    $tm_branding_navbar_top = $conf["tm_branding_navbar_top"];
+  }
+
 ?>
 
 <?php
@@ -66,7 +72,17 @@ if (sizeof($request_uri_parts) == 3) {
       <nav id="prime-nav" role="navigation">
         <h1><?= t('Primary navigation'); ?></h1>
 
-         <div class='topnav-search-container'>
+        <?php if ($tm_branding_navbar_top) { ?>
+        <div class="top-navbar top-navbar-header">
+          <div class="row">
+            <section>
+              <?php echo tm_branding_get_element("navbar_html"); ?>
+            </section>
+          </div>
+        </div>
+        <?php } ?>
+
+         <div class='topnav-search-container <?php if ($tm_branding_navbar_top) { ?>top-navbar-header<?php } ?>'>
           <div class='topnav-search-inner'>
             <i class='topnav-search-icon'></i>
             <form method="GET" action="/search"><input type='text' id='topnav-search-textfield' name='query' placeholder='<?php print $conf['tm_search_api_placeholder_text'];?>' value='' size='40' maxlength='255' class='form-text' autocomplete='off'></form>
@@ -95,6 +111,7 @@ if (sizeof($request_uri_parts) == 3) {
 
   <div class="top-navbar-divider"></div>
 
+  <?php if (!$tm_branding_navbar_top) { ?>
   <div class="top-navbar">
     <div class="row">
       <section>
@@ -102,6 +119,7 @@ if (sizeof($request_uri_parts) == 3) {
       </section>
     </div>
   </div>
+  <?php } ?>
 
   <?php
 

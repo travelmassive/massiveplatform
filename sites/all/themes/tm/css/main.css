@@ -4026,7 +4026,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
     margin-left: 0.5rem;
   }
 }
-@media only screen and (min-width: 34.063rem) {
+@media only screen and (min-width: 65.063rem) {
   /* line 280, ../sass/_base.scss */
   #prime-nav .browse-wrapper .toggle:before {
     display: none;
@@ -4911,37 +4911,43 @@ img.tm-status-update-preview-image {
   /* line 921, ../sass/_base.scss */
   .topnav-search-container {
     display: block;
-    margin-left: -50px;
-    width: 200px;
+    margin-left: -60px;
+    width: 220px;
+  }
+}
+@media only screen and (max-width: 650px) {
+  /* line 921, ../sass/_base.scss */
+  .topnav-search-container {
+    display: none;
   }
 }
 @media only screen and (min-width: 65.063rem) {
   /* line 921, ../sass/_base.scss */
   .topnav-search-container {
     display: block;
-    margin-left: 240px;
+    margin-left: 250px;
   }
 }
 
-/* line 940, ../sass/_base.scss */
+/* line 944, ../sass/_base.scss */
 .topnav-search-inner {
   width: 196px;
 }
 @media only screen and (min-width: 65.063rem) {
-  /* line 940, ../sass/_base.scss */
+  /* line 944, ../sass/_base.scss */
   .topnav-search-inner {
     width: 296px;
   }
 }
 
-/* line 947, ../sass/_base.scss */
+/* line 951, ../sass/_base.scss */
 #topnav-search-textfield {
   background-color: #efefef;
   margin: 0 auto;
   padding-left: 32px;
 }
 
-/* line 953, ../sass/_base.scss */
+/* line 957, ../sass/_base.scss */
 .topnav-search-icon {
   position: absolute;
   padding: 4px 8px;
@@ -4950,7 +4956,7 @@ img.tm-status-update-preview-image {
   height: 0px;
 }
 
-/* line 960, ../sass/_base.scss */
+/* line 964, ../sass/_base.scss */
 .topnav-search-icon:before {
   content: "\e610";
   font-family: 'tm-icons';
@@ -4964,57 +4970,57 @@ img.tm-status-update-preview-image {
   font-size: 12pt;
 }
 
-/* line 973, ../sass/_base.scss */
+/* line 977, ../sass/_base.scss */
 .top-navbar {
   background-color: #037cb7;
   color: #fff;
   padding: 0.5rem;
   display: none;
 }
-@media only screen and (min-width: 34.063rem) {
-  /* line 973, ../sass/_base.scss */
+@media only screen and (min-width: 65.063rem) {
+  /* line 977, ../sass/_base.scss */
   .top-navbar {
     display: block;
   }
 }
 
-/* line 983, ../sass/_base.scss */
+/* line 987, ../sass/_base.scss */
 .top-navbar a {
   color: #fff;
 }
 
-/* line 987, ../sass/_base.scss */
+/* line 991, ../sass/_base.scss */
 .topnav-links-lhs {
   display: inline-block;
   float: left;
 }
 @media only screen and (min-width: 69.063rem) {
-  /* line 987, ../sass/_base.scss */
+  /* line 991, ../sass/_base.scss */
   .topnav-links-lhs {
     padding-left: 1rem;
   }
 }
 
-/* line 995, ../sass/_base.scss */
+/* line 999, ../sass/_base.scss */
 .topnav-links-rhs {
   float: right;
   display: none;
   padding-right: 1.0rem;
 }
 @media only screen and (min-width: 65.063rem) {
-  /* line 995, ../sass/_base.scss */
+  /* line 999, ../sass/_base.scss */
   .topnav-links-rhs {
     display: inline-block;
   }
 }
 
-@media only screen and (min-width: 34.063rem) {
-  /* line 1004, ../sass/_base.scss */
+@media only screen and (min-width: 65.063rem) {
+  /* line 1008, ../sass/_base.scss */
   #topnav-links-dropdown {
     display: none;
   }
 }
-/* line 1008, ../sass/_base.scss */
+/* line 1012, ../sass/_base.scss */
 #topnav-links-dropdown .more {
   display: block;
   position: relative;
@@ -5025,7 +5031,7 @@ img.tm-status-update-preview-image {
   text-transform: uppercase;
   font-size: 0.85rem;
 }
-/* line 1018, ../sass/_base.scss */
+/* line 1022, ../sass/_base.scss */
 #topnav-links-dropdown .more:before, #topnav-links-dropdown .more:after {
   position: absolute;
   top: 50%;
@@ -5035,16 +5041,16 @@ img.tm-status-update-preview-image {
   content: '';
   background: #e8eaeb;
 }
-/* line 1027, ../sass/_base.scss */
+/* line 1031, ../sass/_base.scss */
 #topnav-links-dropdown .more:before {
   left: 0;
 }
-/* line 1030, ../sass/_base.scss */
+/* line 1034, ../sass/_base.scss */
 #topnav-links-dropdown .more:after {
   right: 0;
 }
 
-/* line 1036, ../sass/_base.scss */
+/* line 1040, ../sass/_base.scss */
 .topnav-links-search:before {
   content: "\e610";
   font-family: 'tm-icons';
@@ -5059,7 +5065,7 @@ img.tm-status-update-preview-image {
 }
 
 /* Navbar dropdown */
-/* line 1051, ../sass/_base.scss */
+/* line 1055, ../sass/_base.scss */
 .topnav-dropdown-content {
   display: none;
   position: absolute;
@@ -5071,7 +5077,7 @@ img.tm-status-update-preview-image {
   border: 1px solid #ddd;
 }
 
-/* line 1062, ../sass/_base.scss */
+/* line 1066, ../sass/_base.scss */
 .topnav-dropdown-content a {
   color: black;
   padding: 12px 16px;
@@ -5079,24 +5085,24 @@ img.tm-status-update-preview-image {
   display: block;
 }
 
-/* line 1069, ../sass/_base.scss */
+/* line 1073, ../sass/_base.scss */
 .topnav-dropdown {
   display: inline-block;
   padding-bottom: 2px;
   margin-bottom: -2px;
 }
 
-/* line 1075, ../sass/_base.scss */
+/* line 1079, ../sass/_base.scss */
 .topnav-dropdown-content a {
   color: #037cb7;
 }
 
-/* line 1079, ../sass/_base.scss */
+/* line 1083, ../sass/_base.scss */
 .topnav-dropdown:hover .topnav-dropdown-content {
   display: block;
 }
 
-/* line 1083, ../sass/_base.scss */
+/* line 1087, ../sass/_base.scss */
 .topnav-dropdown-arrow {
   border: solid rgba(255, 255, 255, 0.75);
   border-width: 0 3px 3px 0;
@@ -5106,73 +5112,117 @@ img.tm-status-update-preview-image {
   margin-left: 4px;
 }
 
-/* line 1092, ../sass/_base.scss */
+/* line 1096, ../sass/_base.scss */
 .topnav-dropdown-arrow-down {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
 }
 
-/* line 1097, ../sass/_base.scss */
+/* line 1101, ../sass/_base.scss */
 .tm_nps_review_link {
   text-decoration: underline !important;
 }
 
-/* line 1098, ../sass/_base.scss */
+/* line 1102, ../sass/_base.scss */
 .tm_nps label {
   margin-top: 0;
 }
 
-/* line 1099, ../sass/_base.scss */
+/* line 1103, ../sass/_base.scss */
 .tm_nps_container {
   border-radius: 4px !important;
   background-color: #037cb7;
   color: #fff;
 }
 
-/* line 1100, ../sass/_base.scss */
+/* line 1104, ../sass/_base.scss */
 .tm_nps_container label {
   color: #fff;
 }
 
-/* line 1101, ../sass/_base.scss */
+/* line 1105, ../sass/_base.scss */
 .page-feedback #page-title {
   display: none;
 }
 
-/* line 1102, ../sass/_base.scss */
+/* line 1106, ../sass/_base.scss */
 .form-item-field-user-testimonial-und-0-value label {
   font-size: 1rem;
 }
 
 @media only screen and (min-width: 65.063rem) {
-  /* line 1104, ../sass/_base.scss */
+  /* line 1108, ../sass/_base.scss */
   .views-table .views-field-title {
     min-width: 8rem;
     padding-left: 1rem;
   }
 
-  /* line 1105, ../sass/_base.scss */
+  /* line 1109, ../sass/_base.scss */
   .views-table .views-field-score {
     padding-left: 1rem;
   }
 
-  /* line 1106, ../sass/_base.scss */
+  /* line 1110, ../sass/_base.scss */
   .views-table .views-field-comment {
     padding-left: 1rem;
     padding-right: 1rem;
   }
 
-  /* line 1107, ../sass/_base.scss */
+  /* line 1111, ../sass/_base.scss */
   .views-table .views-field-realname {
     min-width: 12rem;
     max-width: 12rem;
   }
 
-  /* line 1108, ../sass/_base.scss */
+  /* line 1112, ../sass/_base.scss */
   .views-table .views-field-created {
     min-width: 10rem;
   }
 }
+/* Top Navbar in Header */
+/* Set $conf["tm_branding_navbar_top"] = true; */
+@media only screen and (max-width: 65rem) {
+  /* line 1119, ../sass/_base.scss */
+  .top-navbar.top-navbar-header {
+    display: none !important;
+  }
+}
+/* line 1124, ../sass/_base.scss */
+.topnav-search-container.top-navbar-header {
+  display: none;
+}
+
+/* line 1128, ../sass/_base.scss */
+.top-navbar.top-navbar-header {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  width: 80%;
+  background-color: inherit;
+  text-align: center;
+}
+
+/* line 1137, ../sass/_base.scss */
+.top-navbar.top-navbar-header a {
+  color: #213040;
+  font-size: 12.5pt;
+  font-weight: 800;
+  overflow: hidden;
+}
+
+/* line 1144, ../sass/_base.scss */
+#topnav-search-button {
+  display: inline-block;
+  width: 1.5rem;
+  margin-bottom: -8px;
+}
+
+/* line 1150, ../sass/_base.scss */
+#topnav-search-button:before {
+  font-family: 'tm-icons';
+  content: "\e610";
+}
+
 /* line 3, ../sass/_buttons.scss */
 button:hover, button:focus {
   outline: none;

@@ -1,11 +1,11 @@
 --- sites/all/modules/contrib/search_api_solr/includes/service.inc.orig	2020-04-14 15:07:14.655784447 +0000
-+++ sites/all/modules/contrib/search_api_solr/includes/service.inc	2020-04-14 15:09:40.051693722 +0000
++++ sites/all/modules/contrib/search_api_solr/includes/service.inc	2020-04-14 15:16:10.593969459 +0000
 @@ -1897,7 +1897,8 @@
          $value = format_date($value, 'custom', self::SOLR_DATE_FORMAT, 'UTC');
          break;
        case 'text':
 -        return '(' . call_user_func(array($this->getConnectionClass(), 'escape'), $value) . ')';
-+	return call_user_func(array($this->,getConnectionClass() 'phrase'), $value); // massiveplatform
++	return call_user_func(array($this->getConnectionClass(), 'phrase'), $value); // massiveplatform
 +        // return '(' . call_user_func(array($this->getConnectionClass(), 'escape'), $value) . ')';
      }
      return call_user_func(array($this->getConnectionClass(), 'phrase'), $value);

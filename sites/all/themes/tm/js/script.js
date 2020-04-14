@@ -957,4 +957,23 @@
 });})(jQuery, Drupal, this, this.document);
 
 
+// Toggle search box when navbar is in header
+(function ($, Drupal, window, document, undefined) {jQuery(document).ready(function(){
+  
+  // Hide top navbar and show search
+  $("#topnav-search-button").click(function() {
+    $('.top-navbar').hide();
+    $('.topnav-search-container').show();
+    $('#topnav-search-textfield').focus();
+  });
+
+  // Hide search and show top navbar
+  $(".top-navbar-header #topnav-search-textfield").blur(function() {
+    $(".topnav-search-container").hide();
+    $(".top-navbar").show();
+  });
+
+});})(jQuery, Drupal, this, this.document);
+
+
 

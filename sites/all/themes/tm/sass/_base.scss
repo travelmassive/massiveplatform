@@ -275,7 +275,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
       margin-left: 0.5rem;
     }
   }
-  @media #{$small-up} {
+  @media #{$medium-up} {
     .browse-wrapper {
       .toggle:before {
         display: none;
@@ -927,13 +927,17 @@ img.tm-status-update-preview-image {
 
   @media #{$small-up} {
     display: block;
-    margin-left: -50px;
-    width: 200px;
+    margin-left: -60px;
+    width: 220px;
+  }
+
+  @media only screen and (max-width: 650px) {
+    display: none;
   }
 
   @media #{$medium-up} {
     display: block;
-    margin-left: 240px;
+    margin-left: 250px;
   }
 }
 
@@ -975,7 +979,7 @@ img.tm-status-update-preview-image {
   color: #fff;
   padding: 0.5rem;
   display: none;
-  @media #{$small-up} {
+  @media #{$medium-up} {
     display: block;
   }
 }
@@ -1002,7 +1006,7 @@ img.tm-status-update-preview-image {
 }
 
 #topnav-links-dropdown {
-  @media #{$small-up} {
+  @media #{$medium-up} {
     display: none;
   }
   .more {
@@ -1108,3 +1112,42 @@ img.tm-status-update-preview-image {
   .views-table .views-field-created { min-width: 10rem; }
 }
 
+/* Top Navbar in Header */
+/* Set $conf["tm_branding_navbar_top"] = true; */
+@media only screen and (max-width: 65rem) {
+
+  .top-navbar.top-navbar-header {
+    display: none !important;
+  }
+}
+
+.topnav-search-container.top-navbar-header {
+  display: none;
+}
+
+.top-navbar.top-navbar-header {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  width: 80%;
+  background-color: inherit;
+  text-align: center;
+}
+
+.top-navbar.top-navbar-header a {
+  color: $primary-color;
+  font-size: 12.5pt;
+  font-weight: 800;
+  overflow: hidden;
+} 
+
+#topnav-search-button {
+  display: inline-block;
+  width: 1.5rem;
+  margin-bottom: -8px;
+}
+
+#topnav-search-button:before {
+  font-family: 'tm-icons';
+  content: "\e610";
+}

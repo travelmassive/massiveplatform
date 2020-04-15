@@ -136,6 +136,20 @@ function tm_subscriptions_user_cta_banner_node($user_id, $node_id) {
 		}
 	}
 
+	// show on event page if member is in the event
+	if ($node->type == "event") {
+		$account = user_load($user_id);
+		if ($account != null) {
+			if (isset($node->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
+				$chapter_id = $node->field_chapter[LANGUAGE_NONE][0]['target_id'];
+				$chapters = tm_users_get_chapters($account);
+				if (in_array($chapter_id, $chapters)) {
+					return tm_subscriptions_user_cta_banner($user_id, $node);
+				}
+			}
+		}
+	}
+
 }
 
 /**

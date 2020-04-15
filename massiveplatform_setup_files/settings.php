@@ -927,14 +927,14 @@ $conf["tm_subscriptions_user"]["US"]["support_url"] = "http://example.massivepla
 $conf["tm_subscriptions_user"]["US"]["html"] = "<center><h2>Support Your Community.</h2>
 <p style='font-size: larger;'>Join __NUM_SUBSCRIBED_MEMBERS__ other members with a Pro Membership. <a class='show-subscriptions-payment' target='_blank' href='http://example.massiveplatform.com/blog/pro-membership/'>View Benefits</a></p>
 <div id='tm-subscriptions-payment' style='display: __PAYMENT_DISPLAY__;'>
-<button class='payment-button bttn bttn-secondary bttn-m'>Purchase Membership</button> <br>
+<button class='payment-button-member bttn bttn-secondary bttn-m'>Purchase Membership</button> <br>
 <span style='color: #888; font-size: 10pt; line-height: 2rem;'>__PRICING_LABEL__</span>
 </div>
 </center>
 <span style='float: right;'><a class='hide-cta-banner-user' style='color: #888;' href='#'>No, thanks</a></span>";
 $conf["tm_subscriptions_user"]["US"]["html_renew"] = "<center><h2>Your subscription expires in __SUBSCRIPTION_EXPIRES_TEXT__.</h2>
 <p style='font-size: larger;'>Join __NUM_SUBSCRIBED_MEMBERS__ other members with a Pro Membership. <a target='_blank' href='http://example.massiveplatform.com/blog/pro-membership/'>View Benefits</a></p>
-<button class='payment-button bttn bttn-secondary bttn-m'>Renew Subscription</button> <br>
+<button class='payment-button-member bttn bttn-secondary bttn-m'>Renew Subscription</button> <br>
 <span style='color: #888; font-size: 10pt; line-height: 2rem;'>__PRICING_LABEL__</span></center>
 <span style='float: right;'><a class='hide-cta-banner' style='color: #888;' href='#'>No, thanks</a></span>";
 $conf["tm_subscriptions_user"]["US"]["email_replyto"] = "support@massiveplatform.com"; // where should reply to emails go

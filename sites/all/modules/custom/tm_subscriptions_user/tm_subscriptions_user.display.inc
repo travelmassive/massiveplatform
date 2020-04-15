@@ -436,9 +436,9 @@ jQuery(document).ready(function($) {
 		locale: 'auto',	
 		token: function(token) {
 
-			$('.payment-button').addClass('disabled');
+			$('.payment-button-member').addClass('disabled');
 
-			$('.payment-button').append('<form id="process-stripe-payment"></form>');
+			$('.payment-button-member').append('<form id="process-stripe-payment"></form>');
 			$('#process-stripe-payment').attr("action","/payment/subscription-user/{$entity_id}/{$user_id}?partner={$partner_code}");
 			$('#process-stripe-payment').attr("method","post");
 			$('#process-stripe-payment').append('<input type="hidden" name="stripe_token" id="stripe_token" value="">');
@@ -454,7 +454,7 @@ jQuery(document).ready(function($) {
 		}
 	});
 
-	$('.payment-button').on('click', function(e) {
+	$('.payment-button-member').on('click', function(e) {
 		// Open Checkout with further options
 		handler.open({
 			name: '{$tm_subscriptions_handler_name}',

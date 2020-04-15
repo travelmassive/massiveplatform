@@ -282,7 +282,7 @@ function tm_subscriptions_user_get_partner_code() {
 		$tm_force_show_cta = true;
 
 		// hide for subsequent page loads
-		setcookie("tm_subscriptions_hide_cta_a", 0, strtotime('+30 days'), "/", "." . $conf["tm_email_server_url_domain"]);
+		setcookie("tm_subscriptions_hide_user_cta", 0, strtotime('+30 days'), "/", "." . $conf["tm_email_server_url_domain"]);
 
 	} elseif (isset($_COOKIE['Drupal_visitor_subscription_partner'])) {
 		// check cookie

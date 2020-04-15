@@ -190,8 +190,8 @@ function tm_subscriptions_user_cta_banner($user_id, $display_chapter = null) {
 
 	// get cookie
 	$wrapper_style = "";
-	if ((!$tm_force_show_cta) and (isset($_COOKIE["tm_subscriptions_hide_cta"]))) {
-		if ($_COOKIE["tm_subscriptions_hide_cta"] == 1) {
+	if ((!$tm_force_show_cta) and (isset($_COOKIE["tm_subscriptions_hide_cta_a"]))) {
+		if ($_COOKIE["tm_subscriptions_hide_cta_a"] == 1) {
 			$wrapper_style = "display: none";
 		}
 	}
@@ -475,14 +475,14 @@ jQuery(document).ready(function($) {
 	// Hide the CTA banner
 	$('.hide-cta-banner-user').on('click', function(e) {
 		$("#tm-subscriptions-cta-banner").hide();
-		var cookie = ['tm_subscriptions_hide_cta=1; domain=.', window.location.host.toString(), '; path=/;'].join('');
+		var cookie = ['tm_subscriptions_hide_cta_a=1; domain=.', window.location.host.toString(), '; path=/;'].join('');
 		document.cookie = cookie;
 	});
 
 	// Show the CTA banner
     $('.show-cta-banner-user').on('click', function(e) {
 		$("#tm-subscriptions-cta-banner").show();
-		var cookie = ['tm_subscriptions_hide_cta=0; domain=.', window.location.host.toString(), '; path=/;'].join('');
+		var cookie = ['tm_subscriptions_hide_cta_a=0; domain=.', window.location.host.toString(), '; path=/;'].join('');
 		document.cookie = cookie;
 	});
 

@@ -23,13 +23,16 @@ function tm_lists_render_footer($num_items = 5, $use_cache = true) {
 	// load template
 	$template = file_get_contents(drupal_get_path('module', 'tm_lists') .'/templates/tm_lists_footer.tpl.php');
 
+	// title
+	$template = str_replace("__FOOTER_TITLE__", $conf["tm_lists_footer_title"], $template);
+
 	// generate lists
-	$count = 0;
+	$count = 1;
 	$list_html = "<ul class='tm-lists-footer'>";
 	foreach ($lists as $list_item) {
 
 		// limit number of items
-		if ($count >= $num_items) { 
+		if ($count > $num_items) { 
 			continue;
 		}
 

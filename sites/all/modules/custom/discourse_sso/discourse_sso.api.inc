@@ -58,10 +58,15 @@ function discourse_sso_api($params, $url) {
 	$payload = base64_encode(http_build_query($params));
 	$signed = hash_hmac('sha256', $payload, $sso_secret);
 
+	// set api key and username in header
+	// see: https://docs.discourse.org/
+	// see: https://meta.discourse.org/t/discourse-api-documentation/22706
+	$http_headers = array('Api-Key: ' . $conf["tm_discourse_sso_api_key"], 'Api-Username: ' . $conf["tm_discourse_sso_api_username"]);
+
 	// url-ify the data for the POST
 	$fields_string = http_build_query([
-				'api_key' => $conf["tm_discourse_sso_api_key"],
-				'api_username' => $conf["tm_discourse_sso_api_username"],
+				// 'api_key' => $conf["tm_discourse_sso_api_key"], // moved to http headers
+				// 'api_username' => $conf["tm_discourse_sso_api_username"], // moved to http headers
 	            'sso' => $payload,
 	            'sig' => $signed,
 	        ], '', '&', PHP_QUERY_RFC3986);
@@ -78,6 +83,7 @@ function discourse_sso_api($params, $url) {
 	}
 
 	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $http_headers);
 	curl_setopt($ch, CURLOPT_POST, count($params));
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

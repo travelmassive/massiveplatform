@@ -1150,6 +1150,7 @@ $conf["tm_lists_newsletter_outro"] = 'Like this list? Explore <a href="">more li
 $conf["tm_lists_newsletter_facebook_icon_url"] = '';
 $conf["tm_lists_newsletter_twitter_icon_url"] = '';
 $conf["tm_lists_oembed_enabled"] = false; // embed youtube, vimeo, urls
+$conf["tm_lists_footer_num_items"] = 3; // how many items to show in __LISTS_FOOTER_HTML__ branding element
 
 /** Newsletter Generation **/
 $conf["tm_users_download_csv_member_of_chapters"] = array("SYD"); // array of chapter shortcodes, will add to csv if user is a member of the chapter in new column

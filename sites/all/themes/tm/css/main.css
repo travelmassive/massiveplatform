@@ -5227,9 +5227,10 @@ img.tm-status-update-preview-image {
 .lists-footer-container {
   text-align: left;
   width: 100%;
+  color: #213040;
 }
 
-/* line 1160, ../sass/_base.scss */
+/* line 1161, ../sass/_base.scss */
 .lists-footer-container ul {
   list-style-type: none;
   margin-left: 0;
@@ -5238,25 +5239,24 @@ img.tm-status-update-preview-image {
   padding-left: 0.5rem;
 }
 
-/* line 1168, ../sass/_base.scss */
+/* line 1169, ../sass/_base.scss */
 .tm-lists-footer-label {
   color: #213040;
 }
 
-/* line 1172, ../sass/_base.scss */
+/* line 1173, ../sass/_base.scss */
 a.tm-lists-footer-label-link {
   color: #213040;
 }
 
-/* line 1176, ../sass/_base.scss */
+/* line 1177, ../sass/_base.scss */
 a.tm-lists-footer-label-link:hover {
   text-decoration: underline;
 }
 
-/* line 1180, ../sass/_base.scss */
+/* line 1181, ../sass/_base.scss */
 .tm-lists-footer-details {
-  margin-left: 1rem;
-  color: #213040;
+  margin-left: 0.75rem;
 }
 
 /* line 3, ../sass/_buttons.scss */

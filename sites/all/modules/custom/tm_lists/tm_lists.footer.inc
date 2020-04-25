@@ -23,7 +23,7 @@ function tm_lists_render_footer($num_items = 5, $use_cache = true) {
 	// load template
 	$template = file_get_contents(drupal_get_path('module', 'tm_lists') .'/templates/tm_lists_footer.tpl.php');
 
-	// title
+	// footer title
 	$template = str_replace("__FOOTER_TITLE__", $conf["tm_lists_footer_title"], $template);
 
 	// generate lists
@@ -54,8 +54,11 @@ function tm_lists_render_footer($num_items = 5, $use_cache = true) {
 		// get list title
 		$list_title = tm_lists_get_display_list_title($list);
 
+		// get list url
+		$list_url = tm_lists_get_list_url($list);
+
 		// render list
-		$list_html .= "<li><span class='tm-lists-footer-label'><a class='tm-lists-footer-label-link' href='/lists/" . $list_id . "/'>" . $list_title . "</a>";
+		$list_html .= "<li><span class='tm-lists-footer-label'><a class='tm-lists-footer-label-link' href='" . $list_url . "'>" . $list_title . "</a>";
 		
 		// update time
 		$updated_time = "";

@@ -1154,7 +1154,8 @@ img.tm-status-update-preview-image {
 /* Lists Footer */
 .lists-footer-container {
   text-align: left;
-  width: 100%
+  width: 100%;
+  color: $primary-color;
 }
 
 .lists-footer-container ul {
@@ -1178,6 +1179,5 @@ a.tm-lists-footer-label-link:hover {
 }
 
 .tm-lists-footer-details {
-  margin-left: 1rem;
-  color: $primary-color;
+  margin-left: 0.75rem;
 }

@@ -1150,7 +1150,7 @@ $conf["tm_lists_newsletter_outro"] = 'Like this list? Explore <a href="">more li
 $conf["tm_lists_newsletter_facebook_icon_url"] = '';
 $conf["tm_lists_newsletter_twitter_icon_url"] = '';
 $conf["tm_lists_oembed_enabled"] = false; // embed youtube, vimeo, urls
-$conf["tm_lists_footer_title"] = "Recent Lists";
+$conf["tm_lists_footer_title"] = "Recent Lists"; // title in footer
 $conf["tm_lists_footer_num_items"] = 3; // how many items to show in __LISTS_FOOTER_HTML__ branding element
 
 /** Newsletter Generation **/

@@ -655,7 +655,7 @@ function _tm_more_actions_process_moderator_menu($field, $title, &$links, &$menu
 
       // get report path
       if ($menu_item['path'] == 'user/%') {
-        $report_path = drupal_get_path_alias("user/" . $field['entity']->uid);
+        $report_path = "user/" . $field['entity']->uid; // For GA PII we now use /user/123
       } else {
         $report_path = drupal_get_path_alias("node/" . $field['entity']->nid);
       }      

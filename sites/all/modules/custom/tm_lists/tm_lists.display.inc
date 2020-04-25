@@ -53,8 +53,11 @@ function tm_lists_display_index() {
 		// get list title
 		$list_title = tm_lists_get_display_list_title($list);
 
+		// get list url
+		$list_url = tm_lists_get_list_url($list);
+
 		// render list
-		$list_html .= "<a href='/lists/" . $list_id . "/'><li><span class='tm-lists-label'>" . $list_title;
+		$list_html .= "<a href='" . $list_url . "'><li><span class='tm-lists-label'>" . $list_title;
 		
 
 		$updated_time = "";

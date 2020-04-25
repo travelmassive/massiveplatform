@@ -29,7 +29,7 @@ function tm_lists_render_footer($num_items = 5, $use_cache = true) {
 	foreach ($lists as $list_item) {
 
 		// limit number of items
-		if ($count > $num_items) { 
+		if ($count >= $num_items) { 
 			continue;
 		}
 

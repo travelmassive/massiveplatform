@@ -1150,3 +1150,33 @@ img.tm-status-update-preview-image {
   font-family: 'tm-icons';
   content: "\e610";
 }
+
+/* Lists Footer */
+.lists-footer-container {
+  text-align: left;
+  width: 100%
+}
+
+.lists-footer-container ul {
+  list-style-type: none;
+  margin-left: 0;
+  margin-top: 0;
+  text-align: left;
+}
+
+.tm-lists-footer-label {
+  color: $primary-color;
+}
+
+a.tm-lists-footer-label-link {
+  color: $primary-color;
+}
+
+a.tm-lists-footer-label-link:hover {
+  text-decoration: underline;
+}
+
+.tm-lists-footer-details {
+  margin-left: 1rem;
+  color: $primary-color;
+}

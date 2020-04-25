@@ -11,7 +11,7 @@ function tm_lists_render_footer($num_items = 5, $use_cache = true) {
 	 if ($use_cache) {
 		$cache = cache_get('tm-lists-footer', 'cache');
 		if (!empty($cache)) {
-			return $cache;
+			return $cache->data;
 		}
 	}
 
@@ -51,7 +51,7 @@ function tm_lists_render_footer($num_items = 5, $use_cache = true) {
 		$list_title = tm_lists_get_display_list_title($list);
 
 		// render list
-		$list_html .= "<a href='/lists/" . $list_id . "/'><li><span class='tm-lists-label'>" . $list_title;
+		$list_html .= "<li><span class='tm-lists-footer-label'><a class='tm-lists-footer-label-link' href='/lists/" . $list_id . "/'>" . $list_title . "</a>";
 		
 		// update time
 		$updated_time = "";
@@ -64,7 +64,7 @@ function tm_lists_render_footer($num_items = 5, $use_cache = true) {
 	        $updated_time = "Updated " . $update_time . " ago";
 		}
 		
-		$list_html .= "</span><span class='tm-lists-details'>" . $updated_time . "</span></li></a>";
+		$list_html .= "</span><span class='tm-lists-footer-details'>" . $updated_time . "</span></li>";
 	}
 
 	$list_html .= "</ul>";

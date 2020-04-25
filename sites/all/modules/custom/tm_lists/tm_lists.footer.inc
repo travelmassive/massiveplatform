@@ -17,11 +17,6 @@ function tm_lists_render_footer($num_items = 5, $use_cache = true) {
 
 	$lists = tm_lists_get_lists();
 
-	// limit number of items
-	if (sizeof($lists) > $num_items) {
-		$lists = array_slice($lists, 0, $num_items);
-	}
-
 	// include css
 	drupal_add_css(drupal_get_path('module', 'tm_lists') . '/css/tm_lists.css');
 
@@ -29,8 +24,14 @@ function tm_lists_render_footer($num_items = 5, $use_cache = true) {
 	$template = file_get_contents(drupal_get_path('module', 'tm_lists') .'/templates/tm_lists_footer.tpl.php');
 
 	// generate lists
+	$count = 0;
 	$list_html = "<ul class='tm-lists-footer'>";
 	foreach ($lists as $list_item) {
+
+		// limit number of items
+		if ($count > $num_items) { 
+			continue;
+		}
 
 		// list id
 		$list_id = $list_item["list_id"];
@@ -65,6 +66,8 @@ function tm_lists_render_footer($num_items = 5, $use_cache = true) {
 		}
 		
 		$list_html .= "</span><span class='tm-lists-footer-details'>" . $updated_time . "</span></li>";
+
+		$count++;
 	}
 
 	$list_html .= "</ul>";

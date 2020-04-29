@@ -2905,7 +2905,7 @@ Icons
 .form-download.follow:before,
 .form-submit.follow:before, .icon-refresh, .icon-phone, .icon-pencil, .bttn.edit:before, .bttn-group a.edit:before, .page-views .tabs-primary a.edit:before, .page-search .tabs-primary a.edit:before, .pager li a.edit:before, .pager .edit.pager-current:before, .views-exposed-form .edit.form-type-select:before, .edit.facebook-login:before, .edit.twitter-login:before,
 .form-download.edit:before,
-.form-submit.edit:before, .image-edit-button:before, .icon-my-location, .icon-mobile, .icon-menu, #prime-nav .browse-wrapper .toggle:before, .icon-map, .icon-map-marker, .tm-status-update-location:before, #tm-status-update-location-field:before, .contained-block .detail-item.field-location:before, .contained-block .detail-item.location:before, .icon-list, .icon-linkedin, #foot-nav .linkedin:before, .contained-block .detail-item.field-link-linkedin:before, .icon-image, .icon-home, .icon-history, .icon-grid, .icon-google-plus, .icon-globe, .contained-block .detail-item.field-link-website:before, .icon-github, .icon-flickr, .icon-feed, .icon-facebook, #foot-nav .facebook:before, .contained-block .detail-item.field-link-facebook:before, .facebook-login:before, .icon-expand, .icon-email, .icon-download, .form-download:before, .icon-disc-cancel, .icon-description, .contained-block .detail-item.field-about-me:before, .contained-block .detail-item.about-me:before, .contained-block .detail-item.body:before, .icon-cog, .icon-clock, .contained-block .detail-item.field-date-event:before, .icon-circle-warning, .messages.warning:before, .warning.messages--status:before, .warning.messages--warning:before, .warning.messages--error:before, .icon-circle-success, .icon-circle-question, .contained-block .detail-item.tm-ds-event-refund-policy:before, .icon-circle-play, .tm-frontpage-video-play:before, .icon-circle-info, .messages.help-tip:before, .help-tip.messages--status:before, .help-tip.messages--warning:before, .help-tip.messages--error:before, .contained-block .detail-item.tm-ds-event-message:before, .icon-circle-error, .messages.error:before, .error.messages--status:before, .error.messages--warning:before, .error.messages--error:before, .icon-cancel, .icon-arr-up, .icon-arr-tail-up, .icon-arr-tail-right, .icon-arr-tail-left, .icon-arr-tail-down, .icon-arr-right, .icon-arr-right-last, .icon-arr-left, .icon-arr-left-first, .icon-arr-down, .icon-add, .icon-connection, .contained-block .detail-item.tm-ds-connection-actions:before, .contained-block .detail-item.tm-ds-organization-follow-message:before, .icon-youtube, #foot-nav .youtube:before, .contained-block .detail-item.field-link-youtube:before, .icon-vimeo, #foot-nav .vimeo:before, .contained-block .detail-item.field-link-vimeo:before, .icon-snapchat, #foot-nav .snapchat:before, .contained-block .detail-item.field-link-snapchat:before, .social .icon-snapchat, .social #foot-nav .snapchat:before, #foot-nav .social .snapchat:before, .social .contained-block .detail-item.field-link-snapchat:before, .contained-block .social .detail-item.field-link-snapchat:before, .icon-strava, .contained-block .detail-item.field-link-strava:before, .icon-2016-tick, .icon-2016-flame, .icon-2016-credit-card, .icon-2016-lightening, .icon-2016-play, .icon-2016-heart-outline, .contained-block .detail-item.field-user-testimonial:before, .contained-block .detail-item.field-company-testimonial:before, .icon-2016-globe, #prime-nav .newsfeed-wrapper .toggle:before, .icon-2016-megaphone, .icon-2016-bell, .icon-2016-comment-bubble, .icon-2016-up-arrow, .icon-2016-down-arrow, .icon-2016-plane, .icon-2016-eye, .tm-status-update-views:before, .contained-block .detail-item.tm-ds-track-viewers:before, .contained-block .detail-item.tm-ds-track-company-viewers:before, .icon-2016-flames, .tm-status-update-popular:before, .icon-2016-tag, .tm-status-update-promoted:before, .icon-2016-qr-code, .icon-2016-flag, .icon-2016-chart, .contained-block .detail-item.tm-ds-chapter-stats:before, .icon-2016-heart, .icon-2016-star, .icon-2016-star-outline, .icon-2016-dots, .tm-status-update-actions:before, .bttn.settings:before, .bttn-group a.settings:before, .page-views .tabs-primary a.settings:before, .page-search .tabs-primary a.settings:before, .pager li a.settings:before, .pager .settings.pager-current:before, .views-exposed-form .settings.form-type-select:before, .settings.facebook-login:before, .settings.twitter-login:before,
+.form-submit.edit:before, .image-edit-button:before, .icon-my-location, .icon-mobile, .icon-menu, #prime-nav .browse-wrapper .toggle:before, .icon-map, .icon-map-marker, .tm-status-update-location:before, #tm-status-update-location-field:before, .contained-block .detail-item.field-location:before, .contained-block .detail-item.location:before, .icon-list, .icon-linkedin, #foot-nav .linkedin:before, .contained-block .detail-item.field-link-linkedin:before, .icon-image, .icon-home, .icon-history, .icon-grid, .icon-google-plus, .icon-globe, .contained-block .detail-item.field-link-website:before, .icon-github, .icon-flickr, .icon-feed, .icon-facebook, #foot-nav .facebook:before, .contained-block .detail-item.field-link-facebook:before, .facebook-login:before, .icon-expand, .icon-email, .icon-download, .form-download:before, .icon-disc-cancel, .icon-description, .contained-block .detail-item.field-about-me:before, .contained-block .detail-item.about-me:before, .contained-block .detail-item.body:before, .icon-cog, .icon-clock, .messages.countdown-timer:before, .countdown-timer.messages--status:before, .countdown-timer.messages--warning:before, .countdown-timer.messages--error:before, .contained-block .detail-item.field-date-event:before, .icon-circle-warning, .messages.warning:before, .warning.messages--status:before, .warning.messages--warning:before, .warning.messages--error:before, .icon-circle-success, .icon-circle-question, .contained-block .detail-item.tm-ds-event-refund-policy:before, .icon-circle-play, .tm-frontpage-video-play:before, .icon-circle-info, .messages.help-tip:before, .help-tip.messages--status:before, .help-tip.messages--warning:before, .help-tip.messages--error:before, .contained-block .detail-item.tm-ds-event-message:before, .icon-circle-error, .messages.error:before, .error.messages--status:before, .error.messages--warning:before, .error.messages--error:before, .icon-cancel, .icon-arr-up, .icon-arr-tail-up, .icon-arr-tail-right, .icon-arr-tail-left, .icon-arr-tail-down, .icon-arr-right, .icon-arr-right-last, .icon-arr-left, .icon-arr-left-first, .icon-arr-down, .icon-add, .icon-connection, .contained-block .detail-item.tm-ds-connection-actions:before, .contained-block .detail-item.tm-ds-organization-follow-message:before, .icon-youtube, #foot-nav .youtube:before, .contained-block .detail-item.field-link-youtube:before, .icon-vimeo, #foot-nav .vimeo:before, .contained-block .detail-item.field-link-vimeo:before, .icon-snapchat, #foot-nav .snapchat:before, .contained-block .detail-item.field-link-snapchat:before, .social .icon-snapchat, .social #foot-nav .snapchat:before, #foot-nav .social .snapchat:before, .social .contained-block .detail-item.field-link-snapchat:before, .contained-block .social .detail-item.field-link-snapchat:before, .icon-strava, .contained-block .detail-item.field-link-strava:before, .icon-2016-tick, .icon-2016-flame, .icon-2016-credit-card, .icon-2016-lightening, .icon-2016-play, .icon-2016-heart-outline, .contained-block .detail-item.field-user-testimonial:before, .contained-block .detail-item.field-company-testimonial:before, .icon-2016-globe, #prime-nav .newsfeed-wrapper .toggle:before, .icon-2016-megaphone, .icon-2016-bell, .icon-2016-comment-bubble, .icon-2016-up-arrow, .icon-2016-down-arrow, .icon-2016-plane, .icon-2016-eye, .tm-status-update-views:before, .contained-block .detail-item.tm-ds-track-viewers:before, .contained-block .detail-item.tm-ds-track-company-viewers:before, .icon-2016-flames, .tm-status-update-popular:before, .icon-2016-tag, .tm-status-update-promoted:before, .icon-2016-qr-code, .icon-2016-flag, .icon-2016-chart, .contained-block .detail-item.tm-ds-chapter-stats:before, .icon-2016-heart, .icon-2016-star, .icon-2016-star-outline, .icon-2016-dots, .tm-status-update-actions:before, .bttn.settings:before, .bttn-group a.settings:before, .page-views .tabs-primary a.settings:before, .page-search .tabs-primary a.settings:before, .pager li a.settings:before, .pager .settings.pager-current:before, .views-exposed-form .settings.form-type-select:before, .settings.facebook-login:before, .settings.twitter-login:before,
 .form-download.settings:before,
 .form-submit.settings:before, .icon-2017-subscriber, .organization-sticker-icon:before, .contained-block .detail-item.tm-ds-subscription-organization-badge-ds:before, .contained-block .detail-item.tm-ds-subscription-user-badge-ds:before, .text_subscriber:before, .tm-user-menu-subscription-badge:before, .icon-2017-subscribe-cta, .contained-block .detail-item.tm-ds-subscription-organization-cta-ds:before, .contained-block .detail-item.tm-ds-subscription-user-cta-ds:before, .icon-tiktok, #foot-nav .tiktok:before, .contained-block .detail-item.field-link-tiktok:before, [class^="icon-"], [class*=" icon-"] {
   font-family: 'tm-icons';
@@ -3232,7 +3232,7 @@ Icons
 }
 
 /* line 279, ../sass/_type.scss */
-.icon-clock, .contained-block .detail-item.field-date-event:before {
+.icon-clock, .messages.countdown-timer:before, .countdown-timer.messages--status:before, .countdown-timer.messages--warning:before, .countdown-timer.messages--error:before, .contained-block .detail-item.field-date-event:before {
   content: "\e637";
 }
 
@@ -5220,17 +5220,19 @@ img.tm-status-update-preview-image {
 #topnav-search-button:before {
   font-family: 'tm-icons';
   content: "\e610";
+  position: relative;
+  top: 2px;
 }
 
 /* Lists Footer */
-/* line 1155, ../sass/_base.scss */
+/* line 1157, ../sass/_base.scss */
 .lists-footer-container {
   text-align: left;
   width: 100%;
   color: #213040;
 }
 
-/* line 1161, ../sass/_base.scss */
+/* line 1163, ../sass/_base.scss */
 .lists-footer-container ul {
   list-style-type: none;
   margin-left: 0;
@@ -5239,22 +5241,22 @@ img.tm-status-update-preview-image {
   padding-left: 0.5rem;
 }
 
-/* line 1169, ../sass/_base.scss */
+/* line 1171, ../sass/_base.scss */
 .tm-lists-footer-label {
   color: #213040;
 }
 
-/* line 1173, ../sass/_base.scss */
+/* line 1175, ../sass/_base.scss */
 a.tm-lists-footer-label-link {
   color: #213040;
 }
 
-/* line 1177, ../sass/_base.scss */
+/* line 1179, ../sass/_base.scss */
 a.tm-lists-footer-label-link:hover {
   text-decoration: underline;
 }
 
-/* line 1181, ../sass/_base.scss */
+/* line 1183, ../sass/_base.scss */
 .tm-lists-footer-details {
   margin-left: 0.75rem;
 }
@@ -6471,7 +6473,7 @@ select:disabled {
 }
 
 /* line 461, ../sass/_forms.scss */
-.messages, .messages--status, .messages--warning, .messages--error, .messages--status, .messages--warning, .messages--error, .messages--help-tip {
+.messages, .messages--status, .messages--warning, .messages--error, .messages--status, .messages--warning, .messages--error, .messages--help-tip, .messages--countdown-timer {
   position: relative;
   border-radius: 0.25rem;
   border: none;
@@ -6485,7 +6487,7 @@ select:disabled {
   clear: both;
 }
 /* line 473, ../sass/_forms.scss */
-.messages:before, .messages--status:before, .messages--warning:before, .messages--error:before, .messages--status:before, .messages--warning:before, .messages--error:before, .messages--help-tip:before {
+.messages:before, .messages--status:before, .messages--warning:before, .messages--error:before, .messages--status:before, .messages--warning:before, .messages--error:before, .messages--help-tip:before, .messages--countdown-timer:before {
   font-size: 1rem;
   position: absolute;
   top: 1rem;
@@ -6497,12 +6499,12 @@ select:disabled {
   text-align: center;
 }
 /* line 484, ../sass/_forms.scss */
-.messages a, .messages--status a, .messages--warning a, .messages--error a, .messages a:visited, .messages--status a:visited, .messages--warning a:visited, .messages--error a:visited, .messages a:hover, .messages--status a:hover, .messages--warning a:hover, .messages--error a:hover, .messages--status a, .messages--status a:visited, .messages--status a:hover, .messages--warning a, .messages--warning a:visited, .messages--warning a:hover, .messages--error a, .messages--error a:visited, .messages--error a:hover, .messages--help-tip a, .messages--help-tip a:visited, .messages--help-tip a:hover {
+.messages a, .messages--status a, .messages--warning a, .messages--error a, .messages a:visited, .messages--status a:visited, .messages--warning a:visited, .messages--error a:visited, .messages a:hover, .messages--status a:hover, .messages--warning a:hover, .messages--error a:hover, .messages--status a, .messages--status a:visited, .messages--status a:hover, .messages--warning a, .messages--warning a:visited, .messages--warning a:hover, .messages--error a, .messages--error a:visited, .messages--error a:hover, .messages--help-tip a, .messages--help-tip a:visited, .messages--help-tip a:hover, .messages--countdown-timer a, .messages--countdown-timer a:visited, .messages--countdown-timer a:hover {
   color: #FFF;
   text-decoration: underline;
 }
 /* line 488, ../sass/_forms.scss */
-.messages .messages__list, .messages--status .messages__list, .messages--warning .messages__list, .messages--error .messages__list, .messages--status .messages__list, .messages--warning .messages__list, .messages--error .messages__list, .messages--help-tip .messages__list {
+.messages .messages__list, .messages--status .messages__list, .messages--warning .messages__list, .messages--error .messages__list, .messages--status .messages__list, .messages--warning .messages__list, .messages--error .messages__list, .messages--help-tip .messages__list, .messages--countdown-timer .messages__list {
   margin: 0 0 0 1rem;
   padding: 0;
 }
@@ -6528,7 +6530,13 @@ select:disabled {
   color: #FFF;
 }
 
-/* line 521, ../sass/_forms.scss */
+/* line 515, ../sass/_forms.scss */
+.messages.countdown-timer, .countdown-timer.messages--status, .countdown-timer.messages--warning, .countdown-timer.messages--error {
+  background: #FF5944;
+  color: #FFF;
+}
+
+/* line 527, ../sass/_forms.scss */
 .sp-replacer,
 .sp-replacer:hover,
 .sp-replacer.sp-active,
@@ -6539,33 +6547,33 @@ select:disabled {
   border-radius: 0.25rem;
 }
 
-/* line 526, ../sass/_forms.scss */
+/* line 532, ../sass/_forms.scss */
 #edit-revalidate {
   margin-bottom: 48px;
 }
 
-/* line 533, ../sass/_forms.scss */
+/* line 539, ../sass/_forms.scss */
 #edit-userlist {
   border-top: 1px solid #e8e8e8;
   width: 80%;
 }
-/* line 536, ../sass/_forms.scss */
+/* line 542, ../sass/_forms.scss */
 #edit-userlist .form-item {
   padding: 5px;
   border: 1px solid #e8e8e8;
   border-top: none;
 }
-/* line 540, ../sass/_forms.scss */
+/* line 546, ../sass/_forms.scss */
 #edit-userlist .form-item .tmeventuser {
   width: 50%;
   display: inline-block;
 }
-/* line 544, ../sass/_forms.scss */
+/* line 550, ../sass/_forms.scss */
 #edit-userlist .form-item .tmeventstatus {
   white-space: nowrap;
   width: 50%;
 }
-/* line 548, ../sass/_forms.scss */
+/* line 554, ../sass/_forms.scss */
 #edit-userlist .form-item .tmeventstime {
   display: inline-block;
   min-width: 3.5rem;
@@ -6573,120 +6581,120 @@ select:disabled {
   font-size: smaller;
   color: #888;
 }
-/* line 555, ../sass/_forms.scss */
+/* line 561, ../sass/_forms.scss */
 #edit-userlist .form-item .tmeventslink {
   font-size: smaller;
   float: right;
   margin-top: 2px;
 }
-/* line 560, ../sass/_forms.scss */
+/* line 566, ../sass/_forms.scss */
 #edit-userlist .form-item .tmeventtaxonomy {
   display: none;
 }
 
 @media only screen and (min-width: 65.063rem) {
-  /* line 568, ../sass/_forms.scss */
+  /* line 574, ../sass/_forms.scss */
   #edit-userlist .tmeventtaxonomy {
     display: inline !important;
   }
 }
 /* Signup page */
-/* line 575, ../sass/_forms.scss */
+/* line 581, ../sass/_forms.scss */
 .signup_notice {
   background-color: #D2D5D8;
 }
 
-/* line 579, ../sass/_forms.scss */
+/* line 585, ../sass/_forms.scss */
 .form-item-is-company {
   margin-top: -24px;
   padding-bottom: 16px;
 }
 
-/* line 584, ../sass/_forms.scss */
+/* line 590, ../sass/_forms.scss */
 .form-item-chapter-list {
   padding-bottom: 16px;
 }
 
 /* Company page */
-/* line 589, ../sass/_forms.scss */
+/* line 595, ../sass/_forms.scss */
 .page_notice {
   background-color: #fff;
   color: #4d5966;
   padding-left: 16px;
 }
 
-/* line 595, ../sass/_forms.scss */
+/* line 601, ../sass/_forms.scss */
 .page_notice a {
   color: #213040;
 }
 
-/* line 599, ../sass/_forms.scss */
+/* line 605, ../sass/_forms.scss */
 .page_notice a:hover {
   color: #213040;
 }
 
-/* line 603, ../sass/_forms.scss */
+/* line 609, ../sass/_forms.scss */
 .page_notice a:visited {
   color: #213040;
 }
 
-/* line 607, ../sass/_forms.scss */
+/* line 613, ../sass/_forms.scss */
 .view-content tbody {
   font-size: 0.85rem;
 }
 
-/* line 611, ../sass/_forms.scss */
+/* line 617, ../sass/_forms.scss */
 .view-content td {
   padding-left: 1rem;
 }
 
-/* line 615, ../sass/_forms.scss */
+/* line 621, ../sass/_forms.scss */
 #user-cancel-confirm-form #edit-cancel {
   padding-left: 16px;
 }
 
-/* line 619, ../sass/_forms.scss */
+/* line 625, ../sass/_forms.scss */
 .cancel_account_link {
   float: right;
   padding-bottom: 0.5rem;
   font-size: 10pt;
 }
 
-/* line 625, ../sass/_forms.scss */
+/* line 631, ../sass/_forms.scss */
 a.cancel_account_link {
   margin-top: -0.5rem;
   color: #888;
 }
 
-/* line 630, ../sass/_forms.scss */
+/* line 636, ../sass/_forms.scss */
 .field-name-field-user-disable-public-index {
   margin-left: 2rem;
   margin-bottom: 2rem;
   margin-right: 1rem;
 }
 
-/* line 636, ../sass/_forms.scss */
+/* line 642, ../sass/_forms.scss */
 .field-name-field-user-has-private-profile {
   margin-left: 2rem;
   margin-bottom: 2rem;
   margin-right: 1rem;
 }
 
-/* line 642, ../sass/_forms.scss */
+/* line 648, ../sass/_forms.scss */
 .field-name-field-user-disable-chat {
   margin-left: 2rem;
   margin-bottom: 2rem;
   margin-right: 1rem;
 }
 
-/* line 648, ../sass/_forms.scss */
+/* line 654, ../sass/_forms.scss */
 .field-name-field-user-disable-analytics {
   margin-left: 2rem;
   margin-bottom: 2rem;
   margin-right: 1rem;
 }
 
-/* line 654, ../sass/_forms.scss */
+/* line 660, ../sass/_forms.scss */
 td.views-field-access {
   white-space: nowrap;
 }

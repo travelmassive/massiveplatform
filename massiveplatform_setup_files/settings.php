@@ -198,7 +198,7 @@ $conf["tm_event_approved_members_description"] = "Check this box if you want to 
 $conf["tm_event_post_reminder_message"] = "Share what happened with the community &mdash; <a target='_blank' href=''>post event photos</a> on the Forum, or <a target='_blank' href=''>submit a blog article</a>."; // message displayed to chapter leaders after event
 $conf["tm_event_custom_banner_templates"] = array(); // custom event banner template alias
 $conf["tm_event_custom_banner_templates"]["example"] = "<h1>Call this template with __EXAMPLE__</h1>"; 
-
+$conf["tm_event_check_updates_seconds"] = 30; // how often to check for event page updates in seconds
 
 /** SIGNUP PAGE SETTINGS **/
 /** Provides a list of validated options on the signup page to indicate how the user connects with the community **/
@@ -1212,3 +1212,10 @@ $conf["tm_match_footer_message"] = "__NUM_MEMBERS__ members have swiped __NUM_SW
 $conf["tm_match_connections_intro"] = "<center><h1>Your Matches.</h1><p style='margin-top: 0px;'>You <a href='/match'>connected</a> with __NUM_CONNECTIONS__.</p><br></center>";
 $conf["tm_match_connections_view_message"] = "👋 View <a href='/match/connections'>your matches</a>";
 $conf["tm_match_connections_per_page"] = 12;
+
+/** EVENT CHATBOX **/
+$conf["tm_chatbox_enabled"] = false; // enable or disable event chatbox (requires a chatbro account)
+$conf["tm_chatbox_site_domain"] = "example.massiveplatform.com";
+$conf["tm_chatbox_id"] = "chatbox_id";
+$conf["tm_chatbox_secret_key"] = "secret_key";
+$conf["tm_chatbox_name_color"] = "#4a4a4a";

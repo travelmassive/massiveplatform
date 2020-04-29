@@ -423,6 +423,62 @@ function tm_events_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-event-field_event_chatbox_enabled'.
+  $field_instances['node-event-field_event_chatbox_enabled'] = array(
+    'bundle' => 'event',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Enable an online chat box for attendee discussion.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 63,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 45,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_chatbox_enabled',
+    'label' => 'Display live chat',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 5,
+    ),
+  );
+
   // Exported field_instance: 'node-event-field_event_company'.
   $field_instances['node-event-field_event_company'] = array(
     'bundle' => 'event',
@@ -1294,6 +1350,60 @@ This will be added to the attendee count on the event page.',
       ),
       'type' => 'options_onoff',
       'weight' => 9,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_livestream_video_url'.
+  $field_instances['node-event-field_event_livestream_video_url'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Embed your YouTube live stream on the event page.
+<br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 62,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 42,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_livestream_video_url',
+    'label' => 'YouTube live stream URL',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 6,
     ),
   );
 
@@ -2773,6 +2883,10 @@ Provide HTML markup or a template alias.');
   t('Custom Banner');
   t('Description');
   t('Display event on the front page (for non-chapter events).');
+  t('Display live chat');
+  t('Embed your YouTube live stream on the event page.
+<br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM');
+  t('Enable an online chat box for attendee discussion.');
   t('Event Chapter');
   t('Event Company');
   t('Event Timezone');
@@ -2851,6 +2965,7 @@ This will be displayed to the member on the event page and included in the autom
   t('Who is organizing this event? Organizers will be notified of all event registrations.
 <br>If set to none, then all organizers will be notified of any registrations and waitlists.');
   t('Who will we send the event payout to?');
+  t('YouTube live stream URL');
 
   return $field_instances;
 }

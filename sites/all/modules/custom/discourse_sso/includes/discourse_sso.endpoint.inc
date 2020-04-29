@@ -240,8 +240,8 @@ function discourse_sso_get_optional_user_params($user) {
   $user_wrapper = entity_metadata_wrapper('user', user_load($user->uid));
 
   // Massive Platform name
-  $acccount = user_load($user->uid);
-  $user_params['name'] = $acccount->field_user_first_name[LANGUAGE_NONE][0]['value'] . " " . $acccount->field_user_last_name[LANGUAGE_NONE][0]['value'];
+  $account = user_load($user->uid);
+  $user_params['name'] = $account->field_user_first_name[LANGUAGE_NONE][0]['value'] . " " . $account->field_user_last_name[LANGUAGE_NONE][0]['value'];
 
   return $user_params;
 }

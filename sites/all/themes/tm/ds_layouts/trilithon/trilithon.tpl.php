@@ -48,6 +48,10 @@
       </<?php print $header_extra_wrapper; ?>>
     </header>
 
+    <<?php print $below_header_wrapper; ?> class="below-header <?php print $below_header_classes; ?>">
+      <?php print $below_header; ?>
+    </<?php print $below_header_wrapper; ?>>
+
     <<?php print $first_column_wrapper; ?> class="column first<?php print $first_column_classes; ?>">
       <?php print $first_column; ?>
     </<?php print $first_column_wrapper; ?>>

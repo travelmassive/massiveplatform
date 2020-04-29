@@ -18,6 +18,10 @@ function tm_events_token_info() {
     'name' => t('TM Event date (dd)'),
     'description' => t('Returns the event date day)'),
   );
+  $info['tokens']['node']['tm-event-live-url'] = array(
+    'name' => t('TM Event live url (/live8790'),
+    'description' => t('Returns cache-busting live string)'),
+  );
   return $info;
 }
 
@@ -51,6 +55,13 @@ function tm_events_tokens($type, $tokens, array $data = array(), array $options 
           $event_date = new DateTime($event->field_event_date['und'][0]['value'], new DateTimeZone($event_timezone));
           $replacements[$original] = $event_date->format("d");
           break;
+
+        // add a cache-busting /live-1234 URL if event is live
+        // uses event changed timestamp
+        case 'tm-event-live-url':
+          if (tm_event_livestream_check_display($event)) {
+            $replacements[$original] = "/live-" . ($event->changed % 10000);
+          }
 
       } // end switch
     } // end foreach

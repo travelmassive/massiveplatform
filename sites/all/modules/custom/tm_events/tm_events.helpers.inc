@@ -442,6 +442,17 @@ function tm_events_user_is_waitlisted($event_id, $uid) {
 }
 
 /**
+ * Fast lookup if member is registered for event
+ */
+function tm_events_user_is_registered($event_id, $uid) {
+
+  $register_flag_id = flag_get_flag('event_register')->fid;
+  $query = "SELECT uid FROM flagging WHERE entity_id = :event_id AND fid = :fid AND uid = :uid";
+  $row = db_query($query, array(':event_id' => $event_id, ':fid' => $register_flag_id, ':uid' => $uid, ))->fetch();
+  return ($row != null);
+}
+
+/**
  * Fast lookup of future events member has registered for or is organizer of
  */
 function tm_events_get_users_future_events($uid, $include_chapter_events = false) {
@@ -661,3 +672,43 @@ function tm_events_get_future_events_for_chapters($chapter_ids = null, $include_
   // return results
   return $event_ids;
 }
+
+/**
+ * Check if event is past event
+ */
+function tm_events_is_past_event($event, $grace_minutes = 0) {
+  
+  // time since start and end of event
+  $event_date = field_get_items('node',$event,'field_event_date');
+  $current_date = new DateTime('now', new DateTimeZone('UTC'));
+  $event_timezone = _tm_get_event_timezone($event);
+  $event_datetime_start = new DateTime($event_date[0]['value'], new DateTimeZone($event_timezone));
+  $event_datetime_end = new DateTime($event_date[0]['value2'], new DateTimeZone($event_timezone));
+  $seconds_since_event_start = $current_date->format('U') - $event_datetime_start->format('U');
+  $seconds_since_event_end = $current_date->format('U') - $event_datetime_end->format('U');
+
+  // is past event
+  $is_past_event = ($seconds_since_event_end - ($grace_minutes * 60) > 0);
+
+  return $is_past_event;
+
+}
+
+/**
+ * Get seconds until start of event
+ */
+function tm_events_seconds_until_event_starts($event) {
+  
+  // time since start and end of event
+  $event_date = field_get_items('node',$event,'field_event_date');
+  $current_date = new DateTime('now', new DateTimeZone('UTC'));
+  $event_timezone = _tm_get_event_timezone($event);
+  $event_datetime_start = new DateTime($event_date[0]['value'], new DateTimeZone($event_timezone));
+  $event_datetime_end = new DateTime($event_date[0]['value2'], new DateTimeZone($event_timezone));
+  $seconds_since_event_start = $current_date->format('U') - $event_datetime_start->format('U');
+  $seconds_since_event_end = $current_date->format('U') - $event_datetime_end->format('U');
+
+  return $seconds_since_event_start * -1;
+
+}
+

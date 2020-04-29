@@ -1193,8 +1193,8 @@ This will be added to the attendee count on the event page.',
       ),
     ),
     'deleted' => 0,
-    'description' => 'Members can join online (ie: Twitter chat, video stream)
-<br><br>',
+    'description' => 'Members can participate online (ie: webinar, live stream, Twitter chat)
+<br>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -2919,8 +2919,8 @@ This will be displayed to the member on the event page and included in the autom
   t('Leave blank to use the chapter\'s timezone (or UTC if no chapter for event)');
   t('Location');
   t('Map link');
-  t('Members can join online (ie: Twitter chat, video stream)
-<br><br>');
+  t('Members can participate online (ie: webinar, live stream, Twitter chat)
+<br>');
   t('Message When Registered');
   t('Message When Waitlisted');
   t('Non-registered Guests');

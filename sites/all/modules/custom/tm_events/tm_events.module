@@ -20,6 +20,8 @@ include_once 'tm_events.flags.inc';
 include_once 'tm_events.ical.inc';
 include_once 'tm_events.moderation.inc';
 include_once 'tm_events.grants.inc';
+include_once 'tm_events.chatbox.inc';
+include_once 'tm_events.livestream.inc';
 
 /*
 * Implements hook_menu()
@@ -100,6 +102,20 @@ function tm_events_menu() {
     'access arguments' => array('approve users'),
     'type' => MENU_CALLBACK,
   );
+  $items['events/last-changed/%'] = array(
+    'title' => t('Check when last changed'),
+    'page callback' => 'tm_events_check_last_changed',
+    'page arguments' => array(2),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+  $items['events/moderation-chatbox/%'] = array(
+    'title' => t('Live Chat Moderation'),
+    'page callback' => 'tm_event_chatbox_moderator_page',
+    'page arguments' => array(2),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
   return $items;
 }
 
@@ -146,6 +162,20 @@ function tm_events_ds_fields_info($entity_type) {
     'field_type' => DS_FIELD_TYPE_FUNCTION,
     'ui_limit' => array('event|full',),
     'function' => '_tm_event_location'
+  );
+
+  $fields['tm_ds_event_chatbox'] = array(
+    'title' => t('Event chatbox'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('event|full',),
+    'function' => '_tm_event_chatbox'
+  );
+
+  $fields['tm_ds_event_livestream'] = array(
+    'title' => t('Event live stream'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('event|full',),
+    'function' => '_tm_event_livestream'
   );
 
   return array($entity_type => $fields);
@@ -331,6 +361,7 @@ function tm_events_preprocess_field(&$variables) {
 function tm_events_node_view($node, $view_mode, $langcode) {
 
   global $user;
+  global $conf;
 
   // Check event
   if ($node->type != 'event') {
@@ -372,5 +403,113 @@ function tm_events_node_view($node, $view_mode, $langcode) {
       }
     }
 
+    // check for updates and reload page if updated
+    if (isset($conf["tm_event_check_updates_seconds"])) {
+      $check_updates_timeout = $conf["tm_event_check_updates_seconds"] * 1000;
+      drupal_add_js(array('tm_events' => array('tm_event_changed_nid' => $node->nid)), array('type' => 'setting'));
+      drupal_add_js(array('tm_events' => array('tm_event_changed_timestamp' => $node->changed)), array('type' => 'setting'));
+      drupal_add_js(array('tm_events' => array('tm_event_changed_refresh' => $check_updates_timeout)), array('type' => 'setting'));
+      drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_check_updates.js');
+    }
+
+    // include chatbox css and js
+    if (tm_event_chatbox_check_display($user, $node)) {
+      $account = user_load($user->uid);
+      $widget_js = tm_event_chatbox_widget_js($account, $node);
+      drupal_add_js($widget_js, array('type' => 'inline', 'scope' => 'footer'));
+    }
+
+    // add css if chatbox enabled
+    if (isset($node->field_event_chatbox_enabled[LANGUAGE_NONE][0]['value'])) {
+      if ($node->field_event_chatbox_enabled[LANGUAGE_NONE][0]['value'] == 1) {
+        drupal_add_css(drupal_get_path('module', 'tm_events') . '/css/tm_events_chatbox.css');
+      }
+    }
+
+    // show live stream
+    $is_displaying_live_stream = false;
+    if (tm_event_livestream_check_display($node)) {
+
+      $is_displaying_live_stream = true;
+
+      // hide header
+      drupal_add_css(".trilithon-header.contained { display: none; }", "inline");
+
+      // add fitvids to scale video
+      drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_fitvids.js');
+
+      // show moderator tools
+      if (tm_events_check_permission_edit_event($user, $node)) {
+
+        $livestream_url = tm_event_get_livestream_url($node);
+        $livestream_video_id = tm_event_get_youtube_video_id($livestream_url);
+        $livestream_external_url = "https://www.youtube.com/watch?v=" . $livestream_video_id;
+
+        $message = "Live stream is now displayed. ";
+        $message .= "Moderater tools &mdash; ";
+        $message .= "<a target='_blank' href='" . $livestream_external_url . "'>View on YouTube</a> &middot; ";
+        $message .= "<a target='_blank' href='/events/moderation-chatbox/" . $node->nid . "'>Chat moderation</a> &middot; ";
+        $message .= "<a target='_blank' href='/events/send-announcement/" . $node->nid . "'>Send announcement</a> &middot; ";
+        $message .= "<a href='/node/" . $node->nid . "/edit'>Event settings</a>";
+
+        drupal_set_message($message, "help-tip");
+      }
+    }
+
+    // warn event editor if live stream url if invalid
+    if (user_is_logged_in()) {
+      if (!tm_events_is_past_event($node) and (tm_event_get_livestream_url($node) != "")) {
+        if (tm_events_check_permission_edit_event($user, $node)) {
+          $livestream_url = tm_event_get_livestream_url($node);
+          $youtube_video_id = tm_event_get_youtube_video_id($livestream_url);
+          if ($youtube_video_id == "") {
+            drupal_set_message("The live stream URL <i>" . $livestream_url . "</i> is not a valid YouTube link.", "warning");
+          }
+        }
+      }
+    }
+
+    // show countdown timer for online events until live stream
+    if ((!$is_displaying_live_stream) and (!tm_events_is_past_event($node))) {
+      if (isset($node->field_event_is_online[LANGUAGE_NONE][0]['value'])) {
+        if ($node->field_event_is_online[LANGUAGE_NONE][0]['value'] == true) {
+          $seconds_until_start = tm_events_seconds_until_event_starts($node);
+          drupal_add_js(array('tm_events' => array('tm_event_seconds_until_start' => $seconds_until_start)), array('type' => 'setting'));
+          drupal_set_message("Going LIVE <span id='tm_events_countdown_text'></span>", "countdown-timer");
+          drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_countdown_timer.js');
+        }
+      }
+    }
+
   }
+}
+
+/**
+ * Return timestamp when event changed
+ */
+function tm_events_check_last_changed($nid) {
+
+  // get path alias
+  $event_url = "/" . drupal_get_path_alias("node/" . $nid);
+
+  // fast lookup changed
+  $query = "SELECT changed FROM node WHERE nid = :nid";
+  $result = db_query($query, array(':nid' => $nid))->fetch();
+  $changed = array("timestamp" => 0, "url" => $event_url);
+  if ($result != null) {
+     $changed = array("timestamp" => $result->changed, "url" => $event_url);
+  }
+
+  // check if we are embedding in a jsonp callback
+  if (isset($_GET["callback"])) {
+    // jsonp callback
+    // ie: mycallback({json_data});
+    drupal_add_http_header('Content-Type', 'application/javascript');
+    print($_GET["callback"] . "(" . json_encode($changed) . ");");
+  } else {
+    // standard json
+    // ie: {json_data}
+    print(json_encode($changed));
+  }
+  drupal_exit();
 }

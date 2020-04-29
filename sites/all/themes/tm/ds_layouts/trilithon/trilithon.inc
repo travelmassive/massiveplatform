@@ -12,6 +12,7 @@ function ds_trilithon() {
       'header_media' => t('Header media'),
       'header_body' => t('Header body'),
       'header_extra' => t('Header extra'),
+      'below_header' => t('Below header'),
       'first_column' => t('First column'),
       'second_column' => t('Second column'),
     ),

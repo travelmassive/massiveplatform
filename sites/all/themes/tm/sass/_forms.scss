@@ -458,7 +458,7 @@ select {
 
 // Messages
 
-.messages, .messages--status, .messages--warning, .messages--error, .messages--help-tip {
+.messages, .messages--status, .messages--warning, .messages--error, .messages--help-tip, .messages--countdown-timer {
   position: relative;
   border-radius: $global-radius;
   border: none;
@@ -510,6 +510,12 @@ select {
   background: #FF5944;
   color: #FFF;
   &:before { @extend .icon-circle-info; }
+}
+
+.messages.countdown-timer {
+  background: #FF5944;
+  color: #FFF;
+  &:before { @extend .icon-clock; }
 }
 
 // Color picker

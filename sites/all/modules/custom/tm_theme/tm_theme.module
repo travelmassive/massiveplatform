@@ -549,6 +549,12 @@ function tm_theme_add_cover_video_js($account, $node) {
       if (isset($node->field_event_cover_video[LANGUAGE_NONE][0]['value'])) {
         $cover_video_value = $node->field_event_cover_video[LANGUAGE_NONE][0]['value'];
       }
+
+      // if showing live stream video, turn off cover video
+      if (tm_event_livestream_check_display($node)) {
+        $cover_video_value = null;
+      }
+
     }
   }
   

@@ -1149,6 +1149,8 @@ img.tm-status-update-preview-image {
 #topnav-search-button:before {
   font-family: 'tm-icons';
   content: "\e610";
+  position: relative;
+  top: 2px;
 }
 
 /* Lists Footer */

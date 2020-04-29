@@ -347,6 +347,7 @@ function _tm_date_pretty_timezone_name($timezone) {
 function tm_events_show_announcement_tip($event) {
 
   global $conf;
+  global $user;
 
   // don't show if in preview mode
   if (isset($event->field_event_is_preview_mode[LANGUAGE_NONE][0]['value'])) {
@@ -362,6 +363,11 @@ function tm_events_show_announcement_tip($event) {
         return;
       }
     }
+  }
+
+  // don't show if if live stream enabled
+  if (tm_event_livestream_check_display($event)) {
+    return;
   }
 
   // get last sent announcement

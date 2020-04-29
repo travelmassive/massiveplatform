@@ -1,0 +1,62 @@
+/* Styling for chatbox */
+
+#event_chatbox_container {
+     margin-left: 16px;
+     margin-right: 16px;
+     margin-top: 16px;
+     margin-bottom: 32px;
+     background-color: #fff;
+     border-radius: 4px;
+     box-shadow:rgba(33, 48, 64, 0.1) 0px 2px 0px 0px; 0 0.125rem 0 0 rgba(33,48,64,0.1);
+}
+
+.chatbro_chat_name { 
+  display: none !important;
+}
+
+.chatbox_title { 
+  padding-top: 16px;
+  margin-left: 32px;
+  padding-right: 32px;
+}
+
+#event_chatbox_container h1 { 
+  font-size: 16px; margin-bottom: 0 !important;
+}
+
+.chatbro_out_of_chat_top {
+  display: none;
+}
+
+.chatbro_header_table {
+  background-color: #ffffff !important;
+  height: 48px !important;
+}
+
+.chatbro_participant_wrapper_max {
+  color: #4a4a4a !important;
+  margin-top: -48px;
+  margin-right: 16px !important;
+}
+
+.chatbro_header {
+  height: 24px;
+  z-index: 4 !important;
+}
+
+.event_chatbox_message {
+	margin-left: 32px;
+	margin-top: 16px;
+	padding-bottom: 16px;
+	font-size: 16px;
+}
+
+@media only screen and (max-width: 600px) { 
+  .chatbox_title {
+    margin-left: 16px;
+    padding-top: 8px;
+  }
+  .event_chatbox_message {
+  	margin-left: 16px;
+  }
+}

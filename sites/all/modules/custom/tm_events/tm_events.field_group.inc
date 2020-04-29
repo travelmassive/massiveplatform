@@ -252,6 +252,36 @@ function tm_events_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_events_online_settings|node|event|form';
+  $field_group->group_name = 'group_events_online_settings';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'event';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Online Events',
+    'weight' => '2',
+    'children' => array(
+      0 => 'field_event_is_online',
+      1 => 'field_event_livestream_video_url',
+      2 => 'field_event_chatbox_enabled',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'formatter' => 'collapsible',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-events-online-settings field-group-fieldset',
+        'required_fields' => 1,
+        'id' => '',
+      ),
+    ),
+  );
+  $field_groups['group_events_online_settings|node|event|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_events_wrapper|node|chapter|full';
   $field_group->group_name = 'group_events_wrapper';
   $field_group->entity_type = 'node';
@@ -611,6 +641,7 @@ function tm_events_field_group_info() {
   t('Featured members');
   t('Location');
   t('Moderator Settings');
+  t('Online Events');
   t('Organizers');
   t('Payout');
   t('Social sharing');

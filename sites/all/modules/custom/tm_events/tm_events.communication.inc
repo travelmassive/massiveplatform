@@ -994,9 +994,12 @@ function tm_events_send_emails_ajax() {
   // load event
   $event = node_load($eventid);
 
+  // default event button text
+  $default_event_button_text = _tm_events_get_default_event_button_label($eventid);
+
   // Replace [EVENT_BUTTON] token
   if (trim($button_label) == "") {
-    $button_label = "Register Now";
+    $button_label = $default_event_button_text;
   }
   $event_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('node/' . $event->nid);
   $button_html = tm_notifications_render_button_html($button_label, $event_url);

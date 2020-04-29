@@ -20,6 +20,7 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
 
   // Add javascript to form
   drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_edit_event.js');
+  drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_sync_end_date.js');
 
   // Hide "show row weights"
   drupal_add_css(".tabledrag-toggle-weight { display: none; }", "inline");
@@ -324,7 +325,7 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
 
     $form['field_event_custom_banner']['#weight'] = 8;
 
-    drupal_add_js('jQuery(document).ready(function () { jQuery("#tm-event-edit-company-description").html("The company listing this event.<br><b>Listing a sponsor? See the <i>Event Sponsors</i> section."); });', 'inline');
+    drupal_add_js('jQuery(document).ready(function () { jQuery("#tm-event-edit-company-description").html("The company listing this event.<br><b>Listing a sponsor? See the <i>Event Sponsors</i> section."); });', array('type' => 'inline', 'scope' => 'footer'));
 
   }
 
@@ -469,6 +470,15 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
   //////////
   if ($is_new_event) {
     drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_add_event.js');
+  }
+
+  // STEP 11. HIDE CHATBOX IF NOT ENABLED
+  if (isset($conf["tm_chatbox_enabled"])) {
+    if (!$conf["tm_chatbox_enabled"]) {
+      unset($form['field_event_chatbox_enabled']);
+    }
+  } else {
+    unset($form['field_event_chatbox_enabled']);
   }
 
   // Hide discuss category id (deprecated)

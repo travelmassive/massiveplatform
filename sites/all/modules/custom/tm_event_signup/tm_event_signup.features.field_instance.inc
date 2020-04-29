@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * tm_event_signup.features.field_instance.inc
@@ -37,7 +38,7 @@ function tm_event_signup_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 36,
+        'weight' => 67,
       ),
       'grid' => array(
         'label' => 'above',
@@ -99,7 +100,7 @@ function tm_event_signup_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 32,
+        'weight' => 66,
       ),
       'grid' => array(
         'label' => 'above',

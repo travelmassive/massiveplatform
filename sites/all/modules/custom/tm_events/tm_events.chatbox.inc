@@ -98,8 +98,14 @@ function _tm_event_chatbox($field, $title = NULL) {
     $message = "<div class='event_chatbox_message'>" . $message . "</div>" . "\n" . $message_js;
   }
 
+  // live chat title
+  $live_chat_title = "LIVE CHAT";
+  if (tm_event_livestream_check_display($node)) {
+    $live_chat_title .= " &mdash; " . strip_tags($event_title); // show event title when live streaming
+  }
+
   // Show the chatbox
-  return "<div id='event_chatbox_container' style=''><div class='chatbox_title'><h1 class='prime-title'>LIVE CHAT &mdash; " . strip_tags($event_title) . "</h1></div><div id='chatbro' style='height: 300px;'></div>" . $message . "</div>";
+  return "<div id='event_chatbox_container' style=''><div class='chatbox_title'><h1 class='prime-title'>" . $live_chat_title . "</h1></div><div id='chatbro' style='height: 300px;'></div>" . $message . "</div>";
 
 }
 
@@ -135,8 +141,14 @@ function tm_event_chatbox_moderator_page($nid) {
   // event title
   $event_title = $node->title;
 
+   // live chat title
+  $live_chat_title = "LIVE CHAT";
+  if (tm_event_livestream_check_display($node)) {
+    $live_chat_title .= " &mdash; " . strip_tags($event_title); // show event title when live streaming
+  }
+
   // Show the chatbox
-  return "<div id='event_chatbox_container'><div class='chatbox_title'><h1 class='prime-title'>LIVE CHAT &mdash; " . strip_tags($event_title) . "</h1></div><div id='chatbro' style='height: 600px;'></div></div>";
+  return "<div id='event_chatbox_container'><div class='chatbox_title'><h1 class='prime-title'>" . $live_chat_title . "</h1></div><div id='chatbro' style='height: 600px;'></div></div>";
 }
 
 

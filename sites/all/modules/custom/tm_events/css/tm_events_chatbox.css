@@ -44,6 +44,10 @@
   z-index: 4 !important;
 }
 
+.chatbro_system_messages_block {
+  z-index: 4 !important;
+}
+
 .event_chatbox_message {
 	margin-left: 32px;
 	margin-top: 16px;

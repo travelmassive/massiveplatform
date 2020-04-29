@@ -268,13 +268,14 @@ function tm_events_field_group_info() {
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
-      'formatter' => 'collapsible',
+      'label' => 'Online Events',
       'instance_settings' => array(
-        'description' => '',
-        'classes' => 'group-events-online-settings field-group-fieldset',
-        'required_fields' => 1,
+        'required_fields' => 0,
         'id' => '',
+        'classes' => 'group-events-online-settings field-group-fieldset',
+        'description' => '',
       ),
+      'formatter' => 'open',
     ),
   );
   $field_groups['group_events_online_settings|node|event|form'] = $field_group;

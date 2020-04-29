@@ -165,11 +165,14 @@ function tm_event_chatbox_check_display($account, $node) {
     return false;
   }
 
-  // check if enabled
-  if (isset($node->field_event_chatbox_enabled[LANGUAGE_NONE][0]['value'])) {
-    if (!$node->field_event_chatbox_enabled[LANGUAGE_NONE][0]['value'] == 1) {
-      return false;
-    }
+  // check setting
+  if (!isset($node->field_event_chatbox_enabled[LANGUAGE_NONE][0]['value'])) {
+    return false;
+  }
+
+  // check if not enabled
+  if (!$node->field_event_chatbox_enabled[LANGUAGE_NONE][0]['value'] == 1) {
+    return false;
   }
 
   // member is reported
@@ -244,8 +247,6 @@ function tm_event_chatbox_widget_js($account, $node) {
   if (tm_events_is_past_event($node, 60) and (!$user_is_event_moderator)) {
     $allow_send_message = "false";
   }
-
-  // if ($conf["tm_chatbox_allow_non_registered_users"]) {
 
   // calculate signature
   // see: http://sso.chatbro.com/

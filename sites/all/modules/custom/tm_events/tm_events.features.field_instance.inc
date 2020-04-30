@@ -1894,7 +1894,8 @@ This will be added to the attendee count on the event page.',
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Leave blank to use the chapter\'s timezone (or UTC if no chapter for event)',
+    'description' => 'Leave blank to use the chapter\'s timezone (or UTC if no chapter for event)
+<br><br>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -2916,7 +2917,8 @@ This will be displayed to the member on the event page and included in the autom
 ');
   t('Increase your event\'s exposure with a cover video. 
 <br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM');
-  t('Leave blank to use the chapter\'s timezone (or UTC if no chapter for event)');
+  t('Leave blank to use the chapter\'s timezone (or UTC if no chapter for event)
+<br><br>');
   t('Location');
   t('Map link');
   t('Members can participate online (ie: webinar, live stream, Twitter chat)

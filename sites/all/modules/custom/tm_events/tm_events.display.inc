@@ -223,9 +223,9 @@ function _tm_fulldate_event($field, $title = NULL) {
   $first_date = true;
   foreach ($event_timezones as $timezone => $timezone_name) {
 
-    // replace UTC with GMT
+    // Don't display UTC/GMT as it confuses people
     if ($timezone_name == "UTC") {
-      $timezone_name = "GMT";
+      continue;
     }
 
     // Set timezone of event date
@@ -519,9 +519,9 @@ function tm_events_render_timezones($user, $event) {
   $first_date = true;
   foreach ($event_timezones as $timezone => $timezone_name) {
 
-    // replace UTC with GMT
+    // Don't display UTC/GMT as it confuses people
     if ($timezone_name == "UTC") {
-      $timezone_name = "GMT";
+      continue;
     }
     
     // Set timezone of event date

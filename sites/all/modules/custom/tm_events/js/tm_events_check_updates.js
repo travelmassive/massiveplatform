@@ -32,8 +32,9 @@
 			}
 
 			// fetch last changed time of event
+			// add timestamp so we don't get cached
 			jQuery.ajax({
-				url: "/events/last-changed/" + tm_event_changed_nid,
+				url: "/events/last-changed/" + tm_event_changed_nid + "?t=" + Date.now(),
 				type: "GET",
 				success: function(data) {
 					if ((typeof data.timestamp !== 'undefined') && (typeof data.url !== 'undefined')) {

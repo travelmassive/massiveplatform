@@ -4570,7 +4570,7 @@ a.disabled:hover, a.disabled:focus, .bttn.disabled:hover, .bttn-group a.disabled
 
 /* line 672, ../sass/_base.scss */
 .date.date-alternative {
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 /* Payment reports */

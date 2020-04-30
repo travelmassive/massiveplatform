@@ -476,7 +476,7 @@ function tm_events_node_view($node, $view_mode, $langcode) {
           $seconds_until_start = tm_events_seconds_until_event_starts($node);
           drupal_add_js(array('tm_events' => array('tm_event_seconds_until_start' => $seconds_until_start)), array('type' => 'setting'));
           drupal_get_messages("countdown-timer");
-          drupal_set_message("Going LIVE <span id='tm_events_countdown_text'></span>", "countdown-timer");
+          drupal_set_message("<!--googleoff: index-->Going LIVE <span id='tm_events_countdown_text'></span><!--googleon: index-->", "countdown-timer");
           drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_countdown_timer.js');
         }
       }

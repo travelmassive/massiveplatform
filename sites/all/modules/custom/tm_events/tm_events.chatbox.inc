@@ -235,7 +235,7 @@ function tm_event_chatbox_widget_js($account, $node) {
   $user_is_event_moderator = false;
   if (tm_events_check_permission_edit_event($account, $node)) {
     $user_is_event_moderator = true;
-    $permissions = array("ban", "delete");
+    $permissions = array("delete", "ban");
   }
 
   // user must be registered for event to chat

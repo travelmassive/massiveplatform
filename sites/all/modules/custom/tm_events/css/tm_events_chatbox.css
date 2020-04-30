@@ -55,7 +55,7 @@
 	font-size: 16px;
 }
 
-@media only screen and (max-width: 600px) { 
+@media only screen and (max-width: 1105px) { 
   .chatbox_title {
     margin-left: 16px;
     padding-top: 8px;

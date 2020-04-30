@@ -36,7 +36,7 @@
 				url: "/events/last-changed/" + tm_event_changed_nid,
 				type: "GET",
 				success: function(data) {
-					if ((typeof data.timestamp !== 'undefined') &&  (typeof data.url !== 'undefined')) {
+					if ((typeof data.timestamp !== 'undefined') && (typeof data.url !== 'undefined')) {
 						if (data.timestamp > tm_event_changed_timestamp) {
 							window.location = data.url; // .reload(true); 
 						} else {

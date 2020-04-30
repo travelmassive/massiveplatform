@@ -143,7 +143,7 @@ function tm_event_chatbox_moderator_page($nid) {
 
    // live chat title
   $live_chat_title = "LIVE CHAT";
-  $live_chat_title .= " &mdash; " . strip_tags($event_title); // show event title when live streaming
+  $live_chat_title .= " &mdash; <a href='/node/" . $node->nid . "'>" . strip_tags($event_title) . "</a>"; // show event title when live streaming
 
   // Show the chatbox
   return "<div id='event_chatbox_container'><div class='chatbox_title'><h1 class='prime-title'>" . $live_chat_title . "</h1></div><div id='chatbro' style='height: 600px;'></div></div>";
@@ -286,7 +286,6 @@ signature: '" . $signature . "'
 
 /* Render a sign in message for logged out users */
 function tm_events_chatbox_sign_in_message($node) {
-
 
   $event_title = $node->title;
 

@@ -126,8 +126,18 @@ function tm_event_chatbox_moderator_page($nid) {
     drupal_access_denied();
   }
 
-  // Must be editor of event
-  if (!tm_events_check_permission_edit_event($user, $node)) {
+  // Check if is featured member
+  $is_featured_member = false;
+  if (isset($node->field_event_featured_members[LANGUAGE_NONE])) {
+    foreach ($node->field_event_featured_members[LANGUAGE_NONE] as $field_featured_member) {  
+      if ($field_featured_member["target_id"] == $user->uid) {
+        $is_featured_member = true;
+      }
+    }
+  }
+
+  // Must be featured member, or editor of event
+  if (!($is_featured_member or tm_events_check_permission_edit_event($user, $node))) {
     drupal_access_denied();
   }
 

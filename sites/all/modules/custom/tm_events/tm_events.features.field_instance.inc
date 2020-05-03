@@ -1180,7 +1180,7 @@ This will be added to the attendee count on the event page.',
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 10,
+      'weight' => 11,
     ),
   );
 
@@ -1349,7 +1349,62 @@ This will be added to the attendee count on the event page.',
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 9,
+      'weight' => 10,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_livestream_mode'.
+  $field_instances['node-event-field_event_livestream_mode'] = array(
+    'bundle' => 'event',
+    'default_value' => array(
+      0 => array(
+        'value' => 'public',
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Choose who can see your live stream.<br>
+Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 64,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_livestream_mode',
+    'label' => 'Who can watch the live stream?',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 7,
     ),
   );
 
@@ -1942,7 +1997,7 @@ This will be added to the attendee count on the event page.',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 3,
+      'weight' => 4,
     ),
   );
 
@@ -2880,6 +2935,8 @@ Provide HTML markup or a template alias.');
   t('Check this box if you want to restrict registration and waitlist to members who are approved. Non-approved members won\'t be able to sign up.');
   t('Check this option if you want to restrict displaying the event location to registered attendees only.');
   t('Check this to indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)');
+  t('Choose who can see your live stream.<br>
+Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.');
   t('Cover Video');
   t('Custom Banner');
   t('Description');
@@ -2964,6 +3021,7 @@ This will be displayed to the member on the event page and included in the autom
 <br>To support retina displays, upload your image sized to 1610x906');
   t('Venue name');
   t('When');
+  t('Who can watch the live stream?');
   t('Who is organizing this event? Organizers will be notified of all event registrations.
 <br>If set to none, then all organizers will be notified of any registrations and waitlists.');
   t('Who will we send the event payout to?');

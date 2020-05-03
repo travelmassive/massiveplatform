@@ -366,7 +366,7 @@ function tm_events_show_announcement_tip($event) {
   }
 
   // don't show if if live stream enabled
-  if (tm_event_livestream_check_display($event)) {
+  if (tm_event_livestream_check_display($user, $event)) {
     return;
   }
 

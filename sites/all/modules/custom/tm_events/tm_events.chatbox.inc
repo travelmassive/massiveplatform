@@ -100,7 +100,7 @@ function _tm_event_chatbox($field, $title = NULL) {
 
   // live chat title
   $live_chat_title = "LIVE CHAT";
-  if (tm_event_livestream_check_display($node)) {
+  if (tm_event_livestream_check_display($user, $node)) {
     $live_chat_title .= " &mdash; " . strip_tags($event_title); // show event title when live streaming
   }
 
@@ -200,6 +200,29 @@ function tm_event_chatbox_check_display($account, $node) {
     return false;
   }
 
+  // is featured member
+  $is_featured_member = false;
+  if (isset($node->field_event_featured_members[LANGUAGE_NONE])) {
+    foreach ($node->field_event_featured_members[LANGUAGE_NONE] as $field_featured_member) {  
+      if ($field_featured_member["target_id"] == $account->uid) {
+        return true;
+      }
+    }
+  }
+
+  // member can edit event
+  if (tm_events_check_permission_edit_event($account, $node)) {
+    return true;
+  }
+
+  // if live stream mode 'attendees' and not registered
+  $livestream_mode = tm_event_livestream_get_mode($node);
+  if ($livestream_mode == "attendees") {
+    if (!tm_events_user_is_registered($node->nid, $account->uid)) {
+      return false;
+    }
+  }
+
   return true;
 
 }
@@ -297,11 +320,12 @@ signature: '" . $signature . "'
 /* Render a sign in message for logged out users */
 function tm_events_chatbox_sign_in_message($node) {
 
+  global $user;
   $event_title = $node->title;
 
   // live chat title
   $live_chat_title = "LIVE CHAT";
-  if (tm_event_livestream_check_display($node)) {
+  if (tm_event_livestream_check_display($user, $node)) {
     $live_chat_title .= " &mdash; " . strip_tags($event_title); // show event title when live streaming
   }
 

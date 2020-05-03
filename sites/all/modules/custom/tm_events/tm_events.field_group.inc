@@ -260,11 +260,12 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Online Events',
-    'weight' => '2',
+    'weight' => '1',
     'children' => array(
       0 => 'field_event_is_online',
       1 => 'field_event_livestream_video_url',
       2 => 'field_event_chatbox_enabled',
+      3 => 'field_event_livestream_mode',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -401,7 +402,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'About',
-    'weight' => '1',
+    'weight' => '2',
     'children' => array(
       0 => 'field_external_rsvp',
       1 => 'field_signup_limit',
@@ -440,7 +441,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Where',
-    'weight' => '2',
+    'weight' => '3',
     'children' => array(
       0 => 'field_event_venue_name',
       1 => 'field_location',

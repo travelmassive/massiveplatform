@@ -551,7 +551,7 @@ function tm_theme_add_cover_video_js($account, $node) {
       }
 
       // if showing live stream video, turn off cover video
-      if (tm_event_livestream_check_display($node)) {
+      if (tm_event_livestream_check_display($account, $node)) {
         $cover_video_value = null;
       }
 

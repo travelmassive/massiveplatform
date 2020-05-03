@@ -5266,6 +5266,25 @@ a.tm-lists-footer-label-link:hover {
   margin-left: 0.75rem;
 }
 
+/* line 1190, ../sass/_base.scss */
+.tm-online-events-edit-form-message {
+  background-color: #1ABC9C;
+  color: #fff;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 13.6px;
+  line-height: 20px;
+  margin-top: 16px !important;
+}
+
+/* line 1201, ../sass/_base.scss */
+.tm-online-events-edit-form-message a {
+  color: #fff;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 /* line 3, ../sass/_buttons.scss */
 button:hover, button:focus {
   outline: none;

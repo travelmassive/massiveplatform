@@ -158,6 +158,7 @@ function tm_event_chatbox_moderator_page($nid) {
 
    // live chat title
   $live_chat_title = "LIVE CHAT";
+  $event_title = "LIVE - Bangkok - Manila - Kuala Lumpur Covid Panel";
   $live_chat_title .= " &mdash; <a href='/node/" . $node->nid . "'>" . strip_tags($event_title) . "</a>"; // show event title when live streaming
 
   // generate html
@@ -171,7 +172,7 @@ function tm_event_chatbox_moderator_page($nid) {
         <link rel="shortcut icon" href="/sites/default/files/site_branding/favicon/default_favicon.ico" type="image/x-icon" />
         <style>html { height: 100%; margin: 0; padding: 0; } 
           body { height: 95%; margin: 0; padding: 2.75rem; }
-          #chatbro { margin-top: 2rem; border: 1px solid #ddd; box-shadow: 0 4px 16px 0 rgba(0,0,0,.15); }
+          #chatbro { margin-top: 2rem; margin-bottom: 2.5rem; border: 1px solid #ddd; box-shadow: 0 4px 16px 0 rgba(0,0,0,.15); }
           .prime-title { font-family: sans-serif; } .prime-title a { color: #488bf8; }
           @media only screen and (max-width: 600px) { 
             body { padding: 1rem; }

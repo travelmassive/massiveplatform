@@ -472,13 +472,21 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
     drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_add_event.js');
   }
 
-  // STEP 11. HIDE CHATBOX IF NOT ENABLED
+  // STEP 11. ONLINE EVENT SETTINGS
   if (isset($conf["tm_chatbox_enabled"])) {
     if (!$conf["tm_chatbox_enabled"]) {
       unset($form['field_event_chatbox_enabled']);
     }
   } else {
     unset($form['field_event_chatbox_enabled']);
+  }
+  // must select a livestream mode
+  unset($form['field_event_livestream_mode'][LANGUAGE_NONE]['#options']["_none"]);
+  
+  // STEP 12. SHOW ONLINE EVENT HELP
+  if (isset($conf["tm_event_online_event_tips"])) {
+    $online_events_help_text = "<div class='tm-online-events-edit-form-message' style='border: 5px solid red; font-size: 13.6px !important; line-height: 20px !important; margin-top: 16px !important;'>" . $conf["tm_event_online_event_tips"] . "</div>";
+    $form['#fieldgroups']['group_events_online_settings']->format_settings['instance_settings']['description'] = $online_events_help_text;
   }
 
   // Hide discuss category id (deprecated)

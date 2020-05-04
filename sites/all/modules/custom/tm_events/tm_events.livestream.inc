@@ -9,7 +9,7 @@ function _tm_event_livestream($field, $title = NULL) {
 
   // Check if we display chatbox
   $node = $field['entity'];
-  if (!tm_event_livestream_check_display($node)) {
+  if (!tm_event_livestream_check_display($user, $node)) {
     return;
   }
 
@@ -30,7 +30,7 @@ function _tm_event_livestream($field, $title = NULL) {
 }
 
 /* Check if we display the live stream */
-function tm_event_livestream_check_display($node) {
+function tm_event_livestream_check_display($account, $node, $check_mode = true) {
 
   global $conf;
 
@@ -39,9 +39,45 @@ function tm_event_livestream_check_display($node) {
     return false;
   }
 
-  // check if past event within last 1 hour
-  if (tm_events_is_past_event($node, 60)) {
-    return false;
+  // Bypass mode check for event editors and featured members
+  if ($account != null) { 
+
+    // Check if is featured member
+    $is_featured_member = false;
+    if (isset($node->field_event_featured_members[LANGUAGE_NONE])) {
+      foreach ($node->field_event_featured_members[LANGUAGE_NONE] as $field_featured_member) {  
+        if ($field_featured_member["target_id"] == $account->uid) {
+          $is_featured_member = true;
+        }
+      }
+    }
+
+    // If is featured member, or can edit event
+    if ($is_featured_member or tm_events_check_permission_edit_event($account, $node)) {
+      $check_mode = false;
+    }
+  }
+
+  // check live stream mode:
+  // public - Everyone (default)
+  // members - Only signed-in members
+  // attendees - Only registered attendees
+  $livestream_mode = tm_event_livestream_get_mode($node);
+
+  // need to be signed in
+  if ($check_mode and (($livestream_mode == "members") or ($livestream_mode == "attendees"))) {
+
+    // must be signed in
+    if (!user_is_logged_in()) {
+      return false;
+    }
+
+    // for attendees, must be registered
+    if ($livestream_mode == "attendees") {
+      if (!tm_events_user_is_registered($node->nid, $account->uid)) {
+        return false;
+      }
+    }
   }
 
   // check if livestream url provided
@@ -58,6 +94,50 @@ function tm_event_livestream_check_display($node) {
 
   // can view
   return true;
+
+}
+
+/* Display a message, if required, to the user about viewing the live stream */
+function tm_event_livestream_show_display_message($account, $node) {
+
+  $message = "";
+
+  // check if livestream url provided
+  if (tm_event_get_livestream_url($node) == "") {
+    return;
+  }
+
+  // check live stream mode:
+  // public - Everyone (default)
+  // members - Only signed-in members
+  // attendees - Only registered attendees
+  $livestream_mode = tm_event_livestream_get_mode($node);
+
+  // only members can watch
+  if ($livestream_mode == "members") {
+    // need to sign in
+    if (!user_is_logged_in()) {
+        $message = "<a href='/user/login?destination=/node/" . $node->nid . "'>Sign in</a> to watch the live stream.";
+    }
+  }
+
+  // only attendees can watch
+  if ($livestream_mode == "attendees") {
+    if (!tm_events_is_past_event($node)) {
+      // need to sign in
+      if (!user_is_logged_in()) {
+        $message = "<a href='/user/login?destination=/node/" . $node->nid . "'>Sign in</a> and register to watch the live stream.";
+      } else if (!tm_events_user_is_registered($node->nid, $account->uid)) {
+        // need to register
+        $message = "Register for this event to watch the live stream.";
+      }
+    }
+  }
+
+  // no message
+  if ($message != "") {
+    drupal_set_message($message, "help-tip");
+  }
 
 }
 
@@ -113,4 +193,27 @@ function tm_event_render_livestream_embed($youtube_video_id) {
 
   return $embed_html;
 
+}
+
+/* Get live stream mode of event */
+function tm_event_livestream_get_mode($node) {
+
+  $livestream_mode = "public"; // default
+
+  if (isset($node->field_event_livestream_mode[LANGUAGE_NONE][0]['value'])) {
+    $livestream_mode = $node->field_event_livestream_mode[LANGUAGE_NONE][0]['value'];
+  }
+
+  return $livestream_mode;
+}
+
+/* Get live stream mode label of event */
+function tm_event_livestream_get_mode_label($node) {
+
+  $livestream_mode = tm_event_livestream_get_mode($node);
+
+  if ($livestream_mode == "public") { return "everyone viewing this page"; }
+  if ($livestream_mode == "members") { return "signed-in members"; }
+  if ($livestream_mode == "attendees") { return "registered attendees"; }
+  return "";
 }

@@ -429,7 +429,7 @@ function tm_events_node_view($node, $view_mode, $langcode) {
 
     // show live stream
     $is_displaying_live_stream = false;
-    if (tm_event_livestream_check_display($node)) {
+    if (tm_event_livestream_check_display($user, $node)) {
 
       $is_displaying_live_stream = true;
 
@@ -446,7 +446,9 @@ function tm_events_node_view($node, $view_mode, $langcode) {
         $livestream_video_id = tm_event_get_youtube_video_id($livestream_url);
         $livestream_external_url = "https://www.youtube.com/watch?v=" . $livestream_video_id;
 
-        $message = "Live stream is now displayed. ";
+        // livestream mode
+        $livestream_mode_label = tm_event_livestream_get_mode_label($node);
+        $message = "Live stream is now displayed to <b>" . $livestream_mode_label . "</b>. ";
         $message .= "Moderater tools &mdash; ";
         $message .= "<a target='_blank' href='" . $livestream_external_url . "'>View on YouTube</a> &middot; ";
         $message .= "<a target='_blank' href='/events/moderation-chatbox/" . $node->nid . "'>Chat moderation</a> &middot; ";
@@ -455,6 +457,10 @@ function tm_events_node_view($node, $view_mode, $langcode) {
 
         drupal_set_message($message, "help-tip");
       }
+    } else {
+      // show reason why live stream not displaying, if required
+      // ie: you need to log in to view the live stream
+      tm_event_livestream_show_display_message($user, $node);
     }
 
     // warn event editor if live stream url if invalid

@@ -199,6 +199,7 @@ $conf["tm_event_post_reminder_message"] = "Share what happened with the communit
 $conf["tm_event_custom_banner_templates"] = array(); // custom event banner template alias
 $conf["tm_event_custom_banner_templates"]["example"] = "<h1>Call this template with __EXAMPLE__</h1>"; 
 $conf["tm_event_check_updates_seconds"] = 30; // how often to check for event page updates in seconds
+$conf["tm_event_online_event_tips"] = "Live stream your event, from your YouTube channel."; // tips for online event settings
 
 /** SIGNUP PAGE SETTINGS **/
 /** Provides a list of validated options on the signup page to indicate how the user connects with the community **/

@@ -59,7 +59,7 @@ function tm_events_tokens($type, $tokens, array $data = array(), array $options 
         // add a cache-busting /live-1234 URL if event is live
         // uses event changed timestamp
         case 'tm-event-live-url':
-          if (tm_event_livestream_check_display($event)) {
+          if (tm_event_livestream_check_display(null, $event, false)) {
             $replacements[$original] = "/live-" . ($event->changed % 10000);
           }
 

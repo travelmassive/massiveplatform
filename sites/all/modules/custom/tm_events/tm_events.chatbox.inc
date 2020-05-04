@@ -175,7 +175,7 @@ function tm_event_chatbox_moderator_page($nid) {
           #chatbro { margin-top: 2rem; margin-bottom: 2.5rem; border: 1px solid #ddd; box-shadow: 0 4px 16px 0 rgba(0,0,0,.15); }
           .prime-title { font-family: sans-serif; } .prime-title a { color: #488bf8; }
           @media only screen and (max-width: 600px) { 
-            body { padding: 1rem; }
+            body { padding: 1rem; padding-bottom: 128px; }
           }
         </style>
     </head>

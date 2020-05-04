@@ -448,7 +448,11 @@ function tm_events_node_view($node, $view_mode, $langcode) {
 
         // livestream mode
         $livestream_mode_label = tm_event_livestream_get_mode_label($node);
-        $message = "Live stream is now displayed to <b>" . $livestream_mode_label . "</b>. ";
+        $label = "Live stream";
+        if (tm_events_is_past_event($node)) {
+          $label = "Event replay";
+        }
+        $message = $label . " is now displayed to <b>" . $livestream_mode_label . "</b>. ";
         $message .= "Moderater tools &mdash; ";
         $message .= "<a target='_blank' href='" . $livestream_external_url . "'>View on YouTube</a> &middot; ";
         $message .= "<a target='_blank' href='/events/moderation-chatbox/" . $node->nid . "'>Chat moderation</a> &middot; ";

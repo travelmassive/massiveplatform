@@ -113,11 +113,16 @@ function tm_event_livestream_show_display_message($account, $node) {
   // attendees - Only registered attendees
   $livestream_mode = tm_event_livestream_get_mode($node);
 
+  $label = "live stream";
+  if (tm_events_is_past_event($node)) {
+    $label = "replay";
+  }
+
   // only members can watch
   if ($livestream_mode == "members") {
     // need to sign in
     if (!user_is_logged_in()) {
-        $message = "<a href='/user/login?destination=/node/" . $node->nid . "'>Sign in</a> to watch the live stream.";
+        $message = "<a href='/user/login?destination=/node/" . $node->nid . "'>Sign in</a> to watch the " . $label . ".";
     }
   }
 
@@ -126,10 +131,10 @@ function tm_event_livestream_show_display_message($account, $node) {
     if (!tm_events_is_past_event($node)) {
       // need to sign in
       if (!user_is_logged_in()) {
-        $message = "<a href='/user/login?destination=/node/" . $node->nid . "'>Sign in</a> and register to watch the live stream.";
+        $message = "<a href='/user/login?destination=/node/" . $node->nid . "'>Sign in</a> and register to watch the " . $label . ".";
       } else if (!tm_events_user_is_registered($node->nid, $account->uid)) {
         // need to register
-        $message = "Register for this event to watch the live stream.";
+        $message = "Register for this event to watch the " . $label . ".";
       }
     }
   }

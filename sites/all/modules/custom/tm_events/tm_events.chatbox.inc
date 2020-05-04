@@ -165,8 +165,18 @@ function tm_event_chatbox_moderator_page($nid) {
 <html>
     <head>
         <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
         <title>' . $live_chat_title . '</title>
-        <style>html { height: 100%; margin: 0; padding: 0; } body { height: 95%; margin: 0; padding: 2.5rem; } #chatbro { margin-top: 2rem; border: 1px solid #ddd; box-shadow: 0 4px 16px 0 rgba(0,0,0,.15); } .prime-title { font-family: sans-serif; } .prime-title a { color: #488bf8; } </style>
+        <link rel="shortcut icon" href="/sites/default/files/site_branding/favicon/default_favicon.ico" type="image/x-icon" />
+        <style>html { height: 100%; margin: 0; padding: 0; } 
+          body { height: 95%; margin: 0; padding: 2.75rem; }
+          #chatbro { margin-top: 2rem; border: 1px solid #ddd; box-shadow: 0 4px 16px 0 rgba(0,0,0,.15); }
+          .prime-title { font-family: sans-serif; } .prime-title a { color: #488bf8; }
+          @media only screen and (max-width: 600px) { 
+            body { padding: 1rem; }
+          }
+        </style>
     </head>
     <body>
     <script>
@@ -176,7 +186,7 @@ function tm_event_chatbox_moderator_page($nid) {
         <div class="chatbox_title">
           <h1 class="prime-title">' . $live_chat_title . '</h1>
         </div>
-        <div id="chatbro" style="height: 75%;"></div>
+        <div id="chatbro" style="height: 80%;"></div>
       </div>
     </body>
 </html>';

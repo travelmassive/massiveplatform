@@ -158,7 +158,6 @@ function tm_event_chatbox_moderator_page($nid) {
 
    // live chat title
   $live_chat_title = "LIVE CHAT";
-  $event_title = "LIVE - Bangkok - Manila - Kuala Lumpur Covid Panel";
   $live_chat_title .= " &mdash; <a href='/node/" . $node->nid . "'>" . strip_tags($event_title) . "</a>"; // show event title when live streaming
 
   // generate html

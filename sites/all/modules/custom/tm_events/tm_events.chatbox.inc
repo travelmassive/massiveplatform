@@ -117,13 +117,15 @@ function tm_event_chatbox_moderator_page($nid) {
 
   // Logged in
   if (!user_is_logged_in()) {
-    drupal_access_denied();
+    drupal_set_message("You need to <a href='/user/login?destination=/node/" . $nid . "'>sign in</a> to view this page.", "help-tip");
+    return "";
   }
 
   // Check valid node
   $node = node_load($nid);
   if ($node == null) {
-    drupal_access_denied();
+    drupal_set_message("Invalid event id", "help-tip");
+    return "";
   }
 
   // Check if is featured member
@@ -138,15 +140,18 @@ function tm_event_chatbox_moderator_page($nid) {
 
   // Must be featured member, or editor of event
   if (!($is_featured_member or tm_events_check_permission_edit_event($user, $node))) {
-    drupal_access_denied();
+    drupal_set_message("Only event organizers can view this page.", "help-tip");
+    return "";
   }
 
   // include chatbox js
   $account = user_load($user->uid);
   $widget_js = tm_event_chatbox_widget_js($account, $node);
-  drupal_add_js($widget_js, array('type' => 'inline', 'scope' => 'footer'));
-  drupal_add_css(drupal_get_path('module', 'tm_events') . '/css/tm_events_chatbox.css');
-  drupal_add_css("#page-title { display: none; } ", 'inline');
+
+  // if we were showing in page
+  //drupal_add_js($widget_js, array('type' => 'inline', 'scope' => 'footer'));
+  //drupal_add_css(drupal_get_path('module', 'tm_events') . '/css/tm_events_chatbox.css');
+  //drupal_add_css("#page-title { display: none; } ", 'inline');
 
   // event title
   $event_title = $node->title;
@@ -155,8 +160,39 @@ function tm_event_chatbox_moderator_page($nid) {
   $live_chat_title = "LIVE CHAT";
   $live_chat_title .= " &mdash; <a href='/node/" . $node->nid . "'>" . strip_tags($event_title) . "</a>"; // show event title when live streaming
 
-  // Show the chatbox
-  return "<div id='event_chatbox_container'><div class='chatbox_title'><h1 class='prime-title'>" . $live_chat_title . "</h1></div><div id='chatbro' style='height: 600px;'></div></div>";
+  // generate html
+  $chatbox_html = '<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+        <title>' . $live_chat_title . '</title>
+        <style>html { height: 100%; margin: 0; padding: 0; } 
+          body { height: 95%; margin: 0; padding: 2.75rem; }
+          #chatbro { margin-top: 2rem; margin-bottom: 2.5rem; border: 1px solid #ddd; box-shadow: 0 4px 16px 0 rgba(0,0,0,.15); }
+          .prime-title { font-family: sans-serif; } .prime-title a { color: #488bf8; }
+          @media only screen and (max-width: 600px) { 
+            body { padding: 1rem; padding-bottom: 128px; }
+          }
+        </style>
+    </head>
+    <body>
+    <script>
+' . $widget_js . '
+    </script>
+      <div id="event_chatbox_container" style="height: 100%;">
+        <div class="chatbox_title">
+          <h1 class="prime-title">' . $live_chat_title . '</h1>
+        </div>
+        <div id="chatbro" style="height: 80%;"></div>
+      </div>
+    </body>
+</html>';
+
+  // output html
+  print $chatbox_html;
+  drupal_exit();
 }
 
 

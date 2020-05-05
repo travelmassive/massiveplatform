@@ -18,20 +18,20 @@
 
 		// calculate difference since countdown started
 		var delta = Date.now() - tm_event_countdown_started;
-		var seconds = Math.floor(((tm_event_countdown_seconds*1000) - delta) / 1000);
+		var seconds_to_go = Math.floor(((tm_event_countdown_seconds*1000) - delta) / 1000);
 
-		var days        = Math.floor(seconds/24/60/60);
-		var hoursLeft   = Math.floor((seconds) - (days*86400));
+		var days        = Math.floor(seconds_to_go/24/60/60);
+		var hoursLeft   = Math.floor((seconds_to_go) - (days*86400));
 		var hours       = Math.floor(hoursLeft/3600);
 		var minutesLeft = Math.floor((hoursLeft) - (hours*3600));
 		var minutes     = Math.floor(minutesLeft/60);
-		var seconds = seconds % 60;
+		var seconds = seconds_to_go % 60;
 
 		// don't render if seconds are same as last time
-		if (seconds == previous_seconds) {
+		if (seconds_to_go == previous_seconds) {
 			return;
 		}
-		previous_seconds = seconds;
+		previous_seconds = seconds_to_go;
 
 		function tm_event_timer_pad(n) {
 			return (n < 10 ? "0" + n : n);
@@ -60,14 +60,14 @@
 			countdown_text = tm_event_countdown_plural(seconds, "second", "");
 		}
 
-		if (seconds > 0) {
+		if (seconds_to_go > 0) {
 			document.getElementById('tm_events_countdown_text').innerHTML = "in " + countdown_text + ".";
 		}
-		if (seconds < 0) {
+		if (seconds_to_go < 0) {
 			document.getElementById('tm_events_countdown_text').innerHTML = "now...";
 			clearInterval(tm_event_countdown_timer_interval); // stop interval
 		}
-		if (seconds == 0) {
+		if (seconds_to_go == 0) {
 			clearInterval(tm_event_countdown_timer_interval);
 			document.getElementById('tm_events_countdown_text').innerHTML = "now...";
 			clearInterval(tm_event_countdown_timer_interval); // stop interval

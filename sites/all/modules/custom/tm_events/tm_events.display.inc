@@ -224,7 +224,7 @@ function _tm_fulldate_event($field, $title = NULL) {
   foreach ($event_timezones as $timezone => $timezone_name) {
 
     // Don't display UTC/GMT as it confuses people
-    if ($timezone_name == "UTC") {
+    if (($timezone_name == "UTC") and (sizeof($event_timezones) > 1)) {
       continue;
     }
 
@@ -520,7 +520,7 @@ function tm_events_render_timezones($user, $event) {
   foreach ($event_timezones as $timezone => $timezone_name) {
 
     // Don't display UTC/GMT as it confuses people
-    if ($timezone_name == "UTC") {
+    if (($timezone_name == "UTC") and (sizeof($event_timezones) > 1)) {
       continue;
     }
     

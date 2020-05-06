@@ -443,6 +443,10 @@ blockquote.tiktok-embed {
 		margin-left: -16px;
 		width: 320px !important;
 	}
+	.tm-list-view-item-comment iframe.instagram-media {
+		margin-left: -16px !important;
+		width: 320px !important;
+	}
 }
 
 

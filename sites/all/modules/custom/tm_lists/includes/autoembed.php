@@ -33,7 +33,7 @@ class AutoEmbed
             '#https://youtu\.be/.*#i'								=> array( 'http://www.youtube.com/oembed?scheme=https', true ),
             '#https?://(.+\.)?vimeo\.com/.*#i'						=> array( 'http://vimeo.com/api/oembed.{format}', true ),
             '#https?://(www\.)?soundcloud\.com/.*#i'				=> array( 'http://soundcloud.com/oembed', true ),
-            '#https?://(www\.)?instagr(\.am|am\.com)/p/.*#i'        => array( 'http://api.instagram.com/oembed?url=', true ),
+            '#https?://(www\.)?instagr(\.am|am\.com)/p/.*#i'        => array( 'http://api.instagram.com/oembed?hidecaption=true&url=', true ),
             '#https?://www\.facebook\.com/.*/posts/.*#i'            => array( 'https://www.facebook.com/plugins/post/oembed.json/', true  ),
             '#https?://www\.facebook\.com/.*/activity/.*#i'         => array( 'https://www.facebook.com/plugins/post/oembed.json/', true  ),
             '#https?://www\.facebook\.com/.*/photos/.*#i'           => array( 'https://www.facebook.com/plugins/post/oembed.json/', true  ),
@@ -370,10 +370,17 @@ class AutoEmbed
                     case 'rich':
                             if ( ! empty( $data->html ) && is_string( $data->html ) ) 
 
-                                // no lazyloading for Facebook, TikTok yet :(
+                                // no lazyloading for Facebook, TikTok
                                 if ((strpos($url, 'facebook.com/') !== false) or
                                    (strpos($url, 'tiktok.com/') !== false)) {
                                     return $data->html;
+                                }
+
+                                // don't lazyload instagram
+                                // run instagram embed js
+                                // https://developers.facebook.com/docs/instagram/embedding/
+                                if (strpos($url, 'instagram.com/') !== false) {
+                                    return $data->html . "<script>if (typeof(instgrm) !== 'undefined') { instgrm.Embeds.process(); }</script>";
                                 }
                                 
                                 // lazy loading for everything else

@@ -58,7 +58,7 @@ function tm_lists_render_footer($num_items = 5, $use_cache = true) {
 		$list_url = tm_lists_get_list_url($list);
 
 		// render list
-		$list_html .= "<li><span class='tm-lists-footer-label'><a class='tm-lists-footer-label-link' href='" . $list_url . "'>" . $list_title . "</a>";
+		$list_html .= "<li><span class='tm-lists-footer-label'><a class='tm-lists-footer-label-link' href='/" . $list_url . "'>" . $list_title . "</a>";
 		
 		// update time
 		$updated_time = "";

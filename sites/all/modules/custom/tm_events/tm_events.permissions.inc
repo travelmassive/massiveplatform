@@ -571,7 +571,7 @@ function tm_events_check_geoblock_signup($check_user, $event) {
       }
 
       // user matches geoip
-      if ($users_country == $geoip_country) {
+      if ($geoip_country == $country_code) {
         return true;
       }
       

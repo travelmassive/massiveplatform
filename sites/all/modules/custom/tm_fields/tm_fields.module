@@ -818,6 +818,14 @@ function tm_fields_theme() {
       'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
       'template' => 'tm_fields_tiktok',
     ),
+    'tm_fields_instant_messaging' => array(
+      'variables' => array(
+        'title' => NULL,
+        'url' => NULL,
+      ),
+      'path' => drupal_get_path('module','tm_fields') . '/templates/fields',
+      'template' => 'tm_fields_instant_messaging',
+    ),
   );
 }
 

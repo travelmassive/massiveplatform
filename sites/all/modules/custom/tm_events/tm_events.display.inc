@@ -82,7 +82,7 @@ function _tm_event_location($field, $title = NULL) {
 
   global $user;
 
-  // check if user is flagged
+  // check node is event
   $node = $field['entity'];
   if ($node->type != "event") {
     return;
@@ -144,7 +144,7 @@ function _tm_event_location($field, $title = NULL) {
   $html .= '<div class="detail-venue-name">' . t($event_venue_name) . '</div>';
   $html .= '<div class="detail-venue-address">' . str_replace("\n", "<br>", t($event_location)) . '</div>';
   if ($event_map_link) {
-    $html .= '<div class="detail-venue-link"><a href="' . t($event_map_link) . '" rel="nofollow" target="_blank">View map</a></div>';
+    $html .= '<div class="detail-venue-link"><a href="' . t($event_map_link) . '" rel="nofollow noopener" target="_blank">View map</a></div>';
   }
 
   return $html;

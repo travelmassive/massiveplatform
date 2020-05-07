@@ -59,7 +59,7 @@
 $flag_event = node_load($event_id);
 $geoblock_signups = $flag_event->field_event_geoblock_signups[LANGUAGE_NONE][0]['value'];
 $geoblocked_message = "This event is for <b>local chapter members</b>.";
-if ($geoblock_signups = "same_country_as_event") {
+if ($geoblock_signups == "same_country_as_event") {
   $event_country_name = tm_events_get_event_country_name($flag_event);
   $geoblocked_message = "This event is for members in <b>" . $event_country_name . "</b>.";
   if ($event_country_name == "United States") {

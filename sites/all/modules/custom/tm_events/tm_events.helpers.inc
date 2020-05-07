@@ -712,3 +712,25 @@ function tm_events_seconds_until_event_starts($event) {
 
 }
 
+/**
+ * Get country name of an event
+ */
+function tm_events_get_event_country_name($event) {
+
+  $event_chapter_country = "";
+  
+  if (isset($event->field_chapter[LANGUAGE_NONE][0])) {
+    $event_chapter_nid = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
+    $event_chapter = node_load($event_chapter_nid);
+    if ($event_chapter != null) {
+      if (isset($event_chapter->field_country[LANGUAGE_NONE][0]['iso2'])) {
+        $country_code = $event_chapter->field_country[LANGUAGE_NONE][0]['iso2'];
+        $country_names = tm_base_get_all_country_names();
+        $event_chapter_country = $country_names[$country_code];
+      }
+    }
+  }
+
+  return $event_chapter_country;
+}
+

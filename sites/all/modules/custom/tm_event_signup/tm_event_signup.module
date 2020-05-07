@@ -251,6 +251,7 @@ function tm_event_signup_preprocess_flag(&$variables) {
   $status = $variables['status'];
   $event_id = $variables['entity_id'];
   $flagged_entity = node_load($event_id);
+  $variables['event_id'] = $event_id;
 
   // Get flag for event
   // Either: show_closed, show_external_rsvp, show_register, show_waitlist, or show_not_approved
@@ -300,6 +301,11 @@ function _tm_event_display_flag($nid) {
     throw new Exception("Invalid event node. Nid: " . $nid);
   }
   
+  // Check if the event has already happened
+  if (_tm_event_is_past($event)) {
+    return 'show_closed';
+  }
+
   // Check if is external RSVP.
   // Is external event
   $display_external = (isset($event->field_external_rsvp[LANGUAGE_NONE][0]['value']) && $event->field_external_rsvp[LANGUAGE_NONE][0]['value'] !== '0');
@@ -313,10 +319,11 @@ function _tm_event_display_flag($nid) {
   if ($approved_members_only and !$approved_member) {
     return 'show_not_approved';
   }
-  
-  // Check if the event has already happened
-  if (_tm_event_is_past($event)) {
-    return 'show_closed';
+
+  // Check event geoblock settings 
+  $check_user = user_load($user->uid);
+  if (!tm_events_check_geoblock_signup($check_user, $event)) {
+    return 'show_geoblocked';
   }
 
   // Check signup limit.

@@ -826,7 +826,7 @@ This will be added to the attendee count on the event page.',
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 32,
+      'weight' => 51,
     ),
   );
 
@@ -1057,6 +1057,60 @@ This will be added to the attendee count on the event page.',
       ),
       'type' => 'entityreference_autocomplete',
       'weight' => 34,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_geoblock_signups'.
+  $field_instances['node-event-field_event_geoblock_signups'] = array(
+    'bundle' => 'event',
+    'default_value' => array(
+      0 => array(
+        'value' => 'all_members',
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'You can restrict registrations to members in your chapter, or country.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 65,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_geoblock_signups',
+    'label' => 'Who can register for your event?',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 8,
     ),
   );
 
@@ -2062,7 +2116,7 @@ Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.',
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 34,
+      'weight' => 52,
     ),
   );
 
@@ -2712,7 +2766,7 @@ This will be displayed to the member on the event page and included in the autom
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 18,
+      'weight' => 17,
     ),
   );
 
@@ -2910,7 +2964,7 @@ This will be displayed to the member on the event page and included in the autom
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 19,
+      'weight' => 18,
     ),
   );
 
@@ -3021,10 +3075,12 @@ This will be displayed to the member on the event page and included in the autom
 <br>To support retina displays, upload your image sized to 1610x906');
   t('Venue name');
   t('When');
+  t('Who can register for your event?');
   t('Who can watch the live stream?');
   t('Who is organizing this event? Organizers will be notified of all event registrations.
 <br>If set to none, then all organizers will be notified of any registrations and waitlists.');
   t('Who will we send the event payout to?');
+  t('You can restrict registrations to members in your chapter, or country.');
   t('YouTube live stream URL');
 
   return $field_instances;

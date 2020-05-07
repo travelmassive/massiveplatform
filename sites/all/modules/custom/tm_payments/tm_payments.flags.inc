@@ -136,17 +136,24 @@ function _tm_payments_preprocess_flag_register_flag(&$variables) {
 		return;
 	}
 
-	// STEP 3. GET PRICING
+	// load user
 	$member = user_load($uid);
 	$user_id = $member->uid;
 
+	// STEP 3. CHECK GEOBLOCK
+	if (!tm_events_check_geoblock_signup($member, $event)) {
+		$variables['link_text'] = 'Buy Ticket';
+		return;
+	}
+
+	// STEP 4. GET PRICING
 	$pricing = _tm_payments_get_registration_price($event);
 	if ($pricing == null) {
 		// problem calculating pricing
 		return;
 	}
 
-	// STEP 3. CREATE STRIPE JS
+	// STEP 5. CREATE STRIPE JS
 	$stripe_currency = $pricing["stripe_currency"];	
 	$stripe_amount = $pricing["stripe_amount"];
 	$user_email = $member->mail;

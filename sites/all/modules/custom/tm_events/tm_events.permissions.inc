@@ -494,3 +494,127 @@ function tm_events_check_permission_announce_event($check_user, $event) {
   // no permission
   return false;
 }
+
+/**
+ * Check geoblock
+ */
+function tm_events_check_geoblock_signup($check_user, $event) {
+
+  // check for setting
+  if (!isset($event->field_event_geoblock_signups[LANGUAGE_NONE][0]['value'])) {
+    return true;
+  }
+
+  // get value
+  $geoblock_signups = $event->field_event_geoblock_signups[LANGUAGE_NONE][0]['value'];
+
+  // all_members
+  if ($geoblock_signups == "all_members") {
+    return true;
+  }
+
+  // Setting 1: same_country_as_event
+  // Member is in same country as the event
+  // Check account setting, or geoip
+  if ($geoblock_signups == "same_country_as_event") {
+
+    // get user's country
+    $users_country = null;
+    if (isset($check_user->field_user_country[LANGUAGE_NONE][0]['iso2'])) {
+      $users_country = $check_user->field_user_country[LANGUAGE_NONE][0]['iso2'];
+    }
+
+    // get event country
+    // country code
+    $country_code = null;
+    if (isset($event->field_chapter[LANGUAGE_NONE][0])) {
+      $event_chapter_nid = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
+      $event_chapter = node_load($event_chapter_nid);
+      if ($event_chapter != null) {
+        
+        // country code
+        if (isset($event_chapter->field_country[LANGUAGE_NONE][0]['iso2'])) {
+          $country_code = $event_chapter->field_country[LANGUAGE_NONE][0]['iso2'];
+        }
+      }
+    }
+
+    // in same country
+    if ($users_country == $country_code) {
+      return true;
+    }
+
+    // check geoip
+    if (module_exists("tm_geoip")) {
+
+      $match_ip = tm_geoip_get_real_visitor_ip();
+
+      // if no ip, lookup from user's last ip
+      if ($match_ip == null) {
+        if ($check_user->uid > 0) {
+          $match_ip = tm_geoip_get_users_last_ip($check_user->uid);
+        }
+      }
+
+      // if no ip, dont match
+      if ($match_ip == null) {
+        return false;
+      }
+
+      // lookup geoip info
+      $geoip_info = tm_geoip_lookup($match_ip);
+
+      // get geoip info
+      $geoip_country = null;
+      if (isset($geoip_info['country']['iso_code'])) {
+        $geoip_country = $geoip_info['country']['iso_code'];
+      }
+
+      // user matches geoip
+      if ($users_country == $geoip_country) {
+        return true;
+      }
+      
+    }
+
+    // not in same country
+    return false;
+  }
+
+  // Setting 2: same_chapter_as_event
+  // Member is in the same chapter as event
+  // Will also check published chapters
+  if ($geoblock_signups == "same_chapter_as_event") {
+
+    // get users chapters
+    $users_chapters = tm_users_get_chapters($check_user);
+
+    // member is in a chapter of event
+    $event_chapter = null;
+    if (isset($event->field_chapter[LANGUAGE_NONE][0])) {
+      $event_chapter_nid = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
+      foreach ($users_chapters as $user_chapter_nid) {
+        if ($user_chapter_nid == $event_chapter_nid) {
+          return true;
+        }
+      }
+    }
+
+    // member in a chapter that event is published to
+    $event_chapters = tm_events_get_published_chapters($event);
+    foreach ($users_chapters as $user_chapter_nid) {
+      foreach ($event_chapters as $event_chapter_nid) {
+        if ($user_chapter_nid == $event_chapter_nid) {
+          return true;
+        }
+      }
+    }
+
+    // member not in a chapter of event
+    return false;
+  }
+
+  // ignore other settings
+  return true;
+
+}

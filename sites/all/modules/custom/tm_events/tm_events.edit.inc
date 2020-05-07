@@ -482,12 +482,38 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
   }
   // must select a livestream mode
   unset($form['field_event_livestream_mode'][LANGUAGE_NONE]['#options']["_none"]);
-  
-  // STEP 12. SHOW ONLINE EVENT HELP
+
+  // show online event help
   if (isset($conf["tm_event_online_event_tips"])) {
     $online_events_help_text = "<div class='tm-online-events-edit-form-message' style='border: 5px solid red; font-size: 13.6px !important; line-height: 20px !important; margin-top: 16px !important;'>" . $conf["tm_event_online_event_tips"] . "</div>";
     $form['#fieldgroups']['group_events_online_settings']->format_settings['instance_settings']['description'] = $online_events_help_text;
   }
+
+  // STEP 12. GEOBLOCK SETTINGS
+  // must select a geoblock mode
+  // event chapter
+  $event_chapter = null;
+  if (isset($event->field_chapter[LANGUAGE_NONE][0])) {
+    $event_chapter_nid = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
+    $event_chapter = node_load($event_chapter_nid);
+  }
+  $event_chapter_country = tm_events_get_event_country_name($event);
+
+  // published chapters
+  $published_chapters_text = "";
+  if (sizeof(tm_events_get_published_chapters($event)) > 0) {
+     $published_chapters_text = " and published chapters";
+  }
+
+  $geoblock_options = array();
+  $geoblock_options["all_members"] = "All members (default)";
+  if ($event_chapter != null) {
+    $geoblock_options["same_chapter_as_event"] = "Only members in " . $event_chapter->title . $published_chapters_text;
+  }
+  if ($event_chapter_country != "") {
+    $geoblock_options["same_country_as_event"] = "Only members in " . $event_chapter_country;
+  }
+  $form['field_event_geoblock_signups'][LANGUAGE_NONE]['#options'] = $geoblock_options;
 
   // Hide discuss category id (deprecated)
   unset($form['field_event_discuss_category_id']);

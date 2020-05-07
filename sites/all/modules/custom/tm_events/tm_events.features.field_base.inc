@@ -329,6 +329,32 @@ function tm_events_field_default_field_bases() {
     'type' => 'entityreference',
   );
 
+  // Exported field_base: 'field_event_geoblock_signups'.
+  $field_bases['field_event_geoblock_signups'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_event_geoblock_signups',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'all_members' => 'All members (default)',
+        'same_country_as_event' => 'Only members in your country',
+        'same_chapter_as_event' => 'Only members of your chapter',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
   // Exported field_base: 'field_event_hide_location'.
   $field_bases['field_event_hide_location'] = array(
     'active' => 1,

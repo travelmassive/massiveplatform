@@ -53,6 +53,21 @@
   <span class="follow bttn bttn-secondary bttn-m disabled" rel="nofollow">Past Event </span>
 </li>
 
+<?php elseif (isset($event_flag) && $event_flag == "show_geoblocked") : ?>
+
+<?php 
+$flag_event = node_load($event_id);
+$geoblock_signups = $flag_event->field_event_geoblock_signups[LANGUAGE_NONE][0]['value'];
+$geoblocked_message = "This event is for <b>local chapter members</b>.";
+if ($geoblock_signups = "same_country_as_event") {
+  $event_country_name = tm_events_get_event_country_name($flag_event);
+  $geoblocked_message = "This event is for members in <b>" . $event_country_name . "</b>.";
+}
+?>
+<li class="<?php print $flag_wrapper_classes; ?>">
+  <span onClick="jq_alert('You can\'t register for this event', ' <?php print($geoblocked_message);?><br>If you need assistance, please <a href=\'/events/message/<?php print($event_id);?>\'>contact the organizers</a>.');" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></span>
+</li>
+
 <?php elseif (isset($event_flag) && $event_flag == "show_not_approved") : ?>
 
 <li class="<?php print $flag_wrapper_classes; ?>">

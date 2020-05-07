@@ -266,6 +266,7 @@ function tm_events_field_group_info() {
       1 => 'field_event_livestream_video_url',
       2 => 'field_event_chatbox_enabled',
       3 => 'field_event_livestream_mode',
+      4 => 'field_event_geoblock_signups',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

@@ -62,6 +62,9 @@ $geoblocked_message = "This event is for <b>local chapter members</b>.";
 if ($geoblock_signups = "same_country_as_event") {
   $event_country_name = tm_events_get_event_country_name($flag_event);
   $geoblocked_message = "This event is for members in <b>" . $event_country_name . "</b>.";
+  if ($event_country_name == "United States") {
+     $geoblocked_message = "This event is for members in the <b>United States</b>.";
+  }
 }
 ?>
 <li class="<?php print $flag_wrapper_classes; ?>">

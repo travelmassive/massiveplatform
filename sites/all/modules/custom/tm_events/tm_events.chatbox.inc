@@ -168,7 +168,7 @@ function tm_event_chatbox_moderator_page($nid) {
         <meta name="robots" content="noindex">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-        <title>' . $live_chat_title . '</title>
+        <title>LIVE CHAT MODERATION - ' . strip_tags($event_title) . '</title>
         <style>html { height: 100%; margin: 0; padding: 0; } 
           body { height: 95%; margin: 0; padding: 2.75rem; }
           #chatbro { margin-top: 2rem; margin-bottom: 2.5rem; border: 1px solid #ddd; box-shadow: 0 4px 16px 0 rgba(0,0,0,.15); }

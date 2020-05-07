@@ -152,6 +152,9 @@
     &.field-company-testimonial:before { @extend .icon-2016-heart-outline; font-size: 16pt;}
     &.field-link-instant-messaging:before { @extend .icon-2016-comment-bubble; font-size: 16pt;}
 
+    &.field-link-instant-messaging .label-above { display: none; }
+    
+    &.field-link-instant-messaging,
     &.field-link-facebook,
     &.field-link-linkedin,
     &.field-link-twitter,

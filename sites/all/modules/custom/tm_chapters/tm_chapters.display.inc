@@ -26,6 +26,14 @@ function tm_chapters_ds_fields_info($entity_type) {
     'function' => '_tm_ds_chapter_stats'
   );
 
+  // instant messaging
+  $fields['tm_ds_chapter_instant_messaging'] = array(
+    'title' => t('Instant Messaging Link'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('chapter|full',),
+    'function' => '_tm_chapter_instant_messaging'
+  );
+
   return array($entity_type => $fields);
 }
 
@@ -263,3 +271,40 @@ function _tm_ds_chapter_stats($field, $title = NULL) {
 
   return $html;
 }
+
+/* Display Suite - Render event location */
+/* If field_event_hide_location is set, only show location to registered attendees */
+function _tm_chapter_instant_messaging($field, $title = NULL) {
+
+  global $user;
+
+  // check node is a chapter
+  $node = $field['entity'];
+  if ($node->type != "chapter") {
+    return;
+  }
+
+  // check user can view the instant messaging field
+  if (!tm_chapters_user_can_view_instant_messaging($user, $node)) {
+    return;
+  }
+
+  // get instant messenger link
+  $invite_url = trim($node->field_link_instant_messaging[LANGUAGE_NONE][0]['url']);
+
+  // render
+  $prefix = "";
+  $label = $invite_url;
+  if (stripos($invite_url, "whatsapp.com") !== false) {
+    $prefix = "Join our ";
+    $label = "WhatsApp Chat";
+  }
+  if (stripos($invite_url, "t.me") !== false) {
+    $prefix = "Join our ";
+    $label = "Telegram Group";
+  }
+  $html = $prefix . "<a target='_blank' rel='nofollow noopener' href='" . strip_tags($invite_url) . "'>" . $label . "</a>";
+
+  return $html;
+}
+

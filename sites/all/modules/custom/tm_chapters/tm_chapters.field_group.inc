@@ -346,6 +346,7 @@ function tm_chapters_field_group_info() {
       3 => 'field_link_twitter',
       4 => 'field_link_website',
       5 => 'tm_ds_chapter_stats',
+      6 => 'tm_ds_chapter_instant_messaging',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -410,6 +411,7 @@ function tm_chapters_field_group_info() {
       1 => 'field_link_linkedin',
       2 => 'field_link_twitter',
       3 => 'field_link_website',
+      4 => 'field_link_instant_messaging',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

@@ -235,3 +235,45 @@ function tm_chapters_get_all_chapters() {
 
   return $chapter_nids;
 }
+
+/**
+ * Helper method to determine if we show the instant messaging field
+ */
+function tm_chapters_user_can_view_instant_messaging($account, $chapter) {
+
+  // check is logged in
+  if ($account->uid == 0) {
+    return false;
+  }
+
+  // check if user approved
+  if (!in_array('approved user', $account->roles)) {
+    return false;
+  }
+  
+  // check user is not reported
+  if (tm_users_is_member_reported($account->uid)) {
+    return false;
+  }
+
+  // check if user is member of chapter
+  $users_chapters = tm_users_get_chapters($account);
+  foreach ($users_chapters as $chapter_nid) {
+    if ($chapter_nid == $chapter->nid) {
+      return true;
+    }
+  }
+
+  // check if community manager
+  if (tm_users_is_community_manager($account->uid, $chapter->nid)) {
+    return true;
+  }
+
+  // user is moderator
+  if (!in_array('moderator', $account->roles)) {
+    return true;
+  }
+
+  // not in chapter
+  return false;
+}

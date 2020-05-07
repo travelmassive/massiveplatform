@@ -103,7 +103,7 @@ For JSONP append &callback=myfunction to the URL<br>',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 23,
       ),
       'grid' => array(
         'label' => 'above',
@@ -155,7 +155,7 @@ For JSONP append &callback=myfunction to the URL<br>',
         'label' => 'inline',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 30,
+        'weight' => 37,
       ),
       'grid' => array(
         'label' => 'above',
@@ -212,7 +212,7 @@ For JSONP append &callback=myfunction to the URL<br>',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 21,
+        'weight' => 28,
       ),
       'grid' => array(
         'label' => 'above',
@@ -269,7 +269,7 @@ For JSONP append &callback=myfunction to the URL<br>',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 22,
+        'weight' => 29,
       ),
       'grid' => array(
         'label' => 'above',
@@ -441,7 +441,7 @@ For JSONP append &callback=myfunction to the URL<br>',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 20,
+        'weight' => 27,
       ),
       'grid' => array(
         'label' => 'above',
@@ -493,7 +493,7 @@ For JSONP append &callback=myfunction to the URL<br>',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 19,
+        'weight' => 26,
       ),
       'grid' => array(
         'label' => 'above',
@@ -552,7 +552,7 @@ For JSONP append &callback=myfunction to the URL<br>',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 23,
+        'weight' => 30,
       ),
       'grid' => array(
         'label' => 'above',
@@ -610,7 +610,7 @@ For JSONP append &callback=myfunction to the URL<br>',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 29,
+        'weight' => 36,
       ),
       'grid' => array(
         'label' => 'above',
@@ -669,7 +669,7 @@ For JSONP append &callback=myfunction to the URL<br>',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 10,
       ),
       'grid' => array(
         'label' => 'above',
@@ -730,7 +730,7 @@ For JSONP append &callback=myfunction to the URL<br>',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 11,
       ),
       'grid' => array(
         'label' => 'above',
@@ -782,7 +782,7 @@ For JSONP append &callback=myfunction to the URL<br>',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 31,
+        'weight' => 38,
       ),
       'grid' => array(
         'label' => 'above',
@@ -945,7 +945,7 @@ For JSONP append &callback=myfunction to the URL<br>',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 25,
+        'weight' => 32,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1005,7 +1005,7 @@ For JSONP append &callback=myfunction to the URL<br>',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 28,
+        'weight' => 35,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1103,7 +1103,7 @@ For JSONP append &callback=myfunction to the URL<br>',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 24,
+        'weight' => 31,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1159,7 +1159,7 @@ For JSONP append &callback=myfunction to the URL<br>',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 27,
+        'weight' => 34,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1302,7 +1302,7 @@ The message will be included in the notification email sent to the member when t
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 26,
+        'weight' => 33,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1416,6 +1416,81 @@ The message will be included in the notification email sent to the member when t
       'settings' => array(),
       'type' => 'link_field',
       'weight' => 42,
+    ),
+  );
+
+  // Exported field_instance: 'node-chapter-field_link_instant_messaging'.
+  $field_instances['node-chapter-field_link_instant_messaging'] = array(
+    'bundle' => 'chapter',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Invitation link to an Instant Messenger Group (WhatsApp, Telegram, etc).<br>
+For privacy, the link is only displayed to <i>approved</i> chapter members.<br>
+',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'link',
+        'settings' => array(
+          'custom_title' => '',
+        ),
+        'type' => 'link_default',
+        'weight' => 26,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 39,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_link_instant_messaging',
+    'label' => 'Instant Messaging',
+    'required' => 0,
+    'settings' => array(
+      'absolute_url' => 1,
+      'attributes' => array(
+        'class' => '',
+        'configurable_class' => 0,
+        'configurable_title' => 0,
+        'rel' => 'nofollow',
+        'target' => '_blank',
+        'title' => 'Instant Messenger',
+      ),
+      'display' => array(
+        'url_cutoff' => 44,
+      ),
+      'enable_tokens' => 0,
+      'rel_remove' => 'default',
+      'title' => 'none',
+      'title_allowed_values' => '',
+      'title_label_use_field_label' => 0,
+      'title_maxlength' => 128,
+      'title_value' => '',
+      'url' => 0,
+      'user_register_form' => FALSE,
+      'validate_url' => 0,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'link',
+      'settings' => array(),
+      'type' => 'link_field',
+      'weight' => 43,
     ),
   );
 
@@ -1674,6 +1749,10 @@ The message will be included in the notification email sent to the member when t
   t('Image');
   t('Increase your exposure with a cover video. 
 <br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM');
+  t('Instant Messaging');
+  t('Invitation link to an Instant Messenger Group (WhatsApp, Telegram, etc).<br>
+For privacy, the link is only displayed to <i>approved</i> chapter members.<br>
+');
   t('JSON payload for returning information to external public pages and apps.<br>
 Can be referenced via /api/public/chapter_json?shortcode=SYD (cached for 60 seconds)<br>
 For JSONP append &callback=myfunction to the URL<br>');

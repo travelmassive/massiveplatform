@@ -498,6 +498,9 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
     $event_chapter = node_load($event_chapter_nid);
   }
   $event_chapter_country = tm_events_get_event_country_name($event);
+  if ($event_chapter_country == "United States") {
+    $event_chapter_country = "the United States";
+  }
 
   // published chapters
   $published_chapters_text = "";

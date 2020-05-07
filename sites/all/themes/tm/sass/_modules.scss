@@ -150,6 +150,7 @@
     &.tm-ds-track-company-viewers:before { @extend .icon-2016-eye; }
     &.field-user-testimonial:before { @extend .icon-2016-heart-outline; font-size: 16pt;}
     &.field-company-testimonial:before { @extend .icon-2016-heart-outline; font-size: 16pt;}
+    &.field-link-instant-messaging:before { @extend .icon-2016-comment-bubble; font-size: 16pt;}
 
     &.field-link-facebook,
     &.field-link-linkedin,

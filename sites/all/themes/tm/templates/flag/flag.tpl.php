@@ -65,7 +65,7 @@ if ($geoblock_signups = "same_country_as_event") {
 }
 ?>
 <li class="<?php print $flag_wrapper_classes; ?>">
-  <span onClick="jq_alert('You can\'t register for this event', ' <?php print($geoblocked_message);?><br>If you need assistance, please <a href=\'/events/message/<?php print($event_id);?>\'>contact the organizers</a>.');" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></span>
+  <span onClick="jq_alert('Sorry, you cannot register for this event', ' <?php print($geoblocked_message);?><br>If you need assistance, please <a href=\'/events/message/<?php print($event_id);?>\'>contact the organizers</a>.');" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></span>
 </li>
 
 <?php elseif (isset($event_flag) && $event_flag == "show_not_approved") : ?>

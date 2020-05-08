@@ -511,7 +511,7 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
   $geoblock_options = array();
   $geoblock_options["all_members"] = "All members (default)";
   if ($event_chapter != null) {
-    $geoblock_options["same_chapter_as_event"] = "Only members of " . tm_chapters_formal_name($event_chapter->title) . $published_chapters_text;
+    $geoblock_options["same_chapter_as_event"] = "Only members of " . tm_chapters_formal_name($event_chapter) . $published_chapters_text;
   }
   if ($event_chapter_country != "") {
     $geoblock_options["same_country_as_event"] = "Only members in " . $event_chapter_country;

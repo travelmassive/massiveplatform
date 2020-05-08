@@ -270,7 +270,7 @@ function tm_chapters_user_can_view_instant_messaging($account, $chapter) {
   }
 
   // user is moderator
-  if (!in_array('moderator', $account->roles)) {
+  if (in_array('moderator', $account->roles)) {
     return true;
   }
 

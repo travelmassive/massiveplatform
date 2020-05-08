@@ -292,6 +292,15 @@ function _tm_chapter_instant_messaging($field, $title = NULL) {
   // get instant messenger link
   $invite_url = trim($node->field_link_instant_messaging[LANGUAGE_NONE][0]['url']);
 
+  // must start with http:// or https://
+  if (!(stripos($invite_url, "https://") === 0) and !(stripos($invite_url, "https://") === 0)) {
+    return;
+  }
+
+  // tidy up
+  $invite_url = str_ireplace("https://", "https://", $invite_url);
+  $invite_url = str_ireplace("http://", "http://", $invite_url);
+
   // render
   $prefix = "";
   $label = $invite_url;

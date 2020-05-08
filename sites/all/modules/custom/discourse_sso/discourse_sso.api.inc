@@ -108,7 +108,12 @@ function discourse_sso_api_get($params, $url) {
 	global $conf;
 
 	// url-ify the data for the POST
-	$query_string = '?api_key=' . $conf["tm_discourse_sso_api_key"] . '&' . 'api_username=' . $conf["tm_discourse_sso_api_username"];
+	$query_string = ""; // '?api_key=' . $conf["tm_discourse_sso_api_key"] . '&' . 'api_username=' . $conf["tm_discourse_sso_api_username"];
+
+	// set api key and username in header
+	// see: https://docs.discourse.org/
+	// see: https://meta.discourse.org/t/discourse-api-documentation/22706
+	$http_headers = array('Api-Key: ' . $conf["tm_discourse_sso_api_key"], 'Api-Username: ' . $conf["tm_discourse_sso_api_username"]);
 
 	// open connection
 	$ch = curl_init();
@@ -122,6 +127,7 @@ function discourse_sso_api_get($params, $url) {
 	}
 
 	curl_setopt($ch, CURLOPT_URL, $url . $query_string);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $http_headers);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_VERBOSE, false);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $CURLOPT_SSL_VERIFYHOST);

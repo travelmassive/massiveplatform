@@ -432,4 +432,40 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
   }
   // END register member to event
 
+  // START show calendar link
+  if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
+    $node = menu_get_object();
+    if ($node->type == 'event') {
+      
+      $show_menu_item = false;
+
+      // check permission
+      if (tm_events_check_permission_edit_event($user, $field['entity'])) {
+
+        // check if chat enabled
+        if (isset($node->field_event_chatbox_enabled[LANGUAGE_NONE][0]['value'])) {
+          if ($node->field_event_chatbox_enabled[LANGUAGE_NONE][0]['value'] == 1) {
+            $show_menu_item = true;
+          }
+        }
+
+      }
+
+      if ($show_menu_item) {
+
+        $calendar_link = '/events/moderation-chatbox/' . $nid;
+        $links['event'][] = array(
+          'wrapper_class' => array('event_moderation_chatbox'),
+          'content' => l(t('Chat moderation'), $calendar_link, array(
+            'attributes' => array(
+              'title' => t('Chat moderation'),
+              'target' => '_blank',
+            )
+          ))
+        );
+      }
+    }
+  }
+  
+
 }

@@ -73,18 +73,20 @@
 			countdown_text = tm_event_countdown_plural(seconds, "second", "");
 		}
 
+		// hide the timer after 1 hour of going live
+		// (for signed out visitors looking at a cache)
+		if (seconds_to_go < -3600) {
+			jQuery(".messages--countdown-timer.messages.countdown-timer").hide();
+		}
+
+		// display the countdown timer
 		if (seconds_to_go > 0) {
 			document.getElementById('tm_events_countdown_text').innerHTML = "in " + countdown_text + ".";
-		}
-		if (seconds_to_go < 0) {
+		} else {
 			document.getElementById('tm_events_countdown_text').innerHTML = "now...";
 			clearInterval(tm_event_countdown_timer_interval); // stop interval
 		}
-		if (seconds_to_go == 0) {
-			clearInterval(tm_event_countdown_timer_interval);
-			document.getElementById('tm_events_countdown_text').innerHTML = "now...";
-			clearInterval(tm_event_countdown_timer_interval); // stop interval
-		}
+	
 	}
 
 	// fetch the countdown time, and then start the timer

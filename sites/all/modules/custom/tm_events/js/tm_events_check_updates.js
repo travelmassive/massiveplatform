@@ -68,7 +68,7 @@
 				},
 				dataType: "json",
 				timeout: 5000
-			})
+			});
 		}, tm_event_changed_refresh);
 	};
 

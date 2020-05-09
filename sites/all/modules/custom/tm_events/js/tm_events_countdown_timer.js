@@ -8,6 +8,19 @@
 	var tm_event_countdown_seconds = tm_event_countdown_to_start;
 	var tm_event_countdown_started = null;
 	var previous_seconds = tm_event_countdown_seconds;
+	var tm_event_countdown_timer_interval = null;
+
+	// check if user is logged in
+	var tm_event_countdown_user_is_logged_in = false;
+	if (typeof Drupal.settings.tm_events.tm_event_changed_user_is_logged_in !== 'undefined') {
+		tm_event_countdown_user_is_logged_in = Drupal.settings.tm_events.tm_event_changed_user_is_logged_in;
+	}
+
+	// event nid
+	var tm_event_countdown_nid = 0;
+	if (typeof Drupal.settings.tm_events.tm_event_changed_nid !== 'undefined') {
+		tm_event_countdown_nid = Drupal.settings.tm_events.tm_event_changed_nid;
+	}
 
 	// render a countdown timer into #tm_events_countdown_text 
 	function tm_event_countdown_render() {
@@ -74,8 +87,49 @@
 		}
 	}
 
-	// start countdown timer and renderer
-	var tm_event_countdown_started = Date.now();
-	var tm_event_countdown_timer_interval = setInterval(function(){ tm_event_countdown_render(); }, 1000);
+	// fetch the countdown time, and then start the timer
+	function tm_event_countdown_callback() {
+
+		// check we have nid
+		if (tm_event_countdown_nid == 0) {
+			return;
+		}
+
+		// fetch last changed time of event
+		// add timestamp so we don't get cached
+		jQuery.ajax({
+			url: "/events/seconds-to-event-callback/" + tm_event_countdown_nid + "?t=" + Date.now(),
+			type: "GET",
+			success: function(data) {
+
+				if (typeof data.seconds !== 'undefined') {
+
+					// set seconds
+					tm_event_countdown_seconds = data.seconds;
+					
+					// start countdown timer and renderer
+					tm_event_countdown_started = Date.now();
+					tm_event_countdown_timer_interval = setInterval(function(){ tm_event_countdown_render(); }, 1000);
+
+				}
+			},
+			dataType: "json",
+			timeout: 5000
+		});	
+	}
+
+	// if the member is logged in, we can rely on embedded timer var
+	// if the visitor is logged out, we fetch the seconds from a callback to prevent stale cache
+	if (tm_event_countdown_user_is_logged_in) {
+
+		// start countdown timer and renderer
+		tm_event_countdown_started = Date.now();
+		tm_event_countdown_timer_interval = setInterval(function(){ tm_event_countdown_render(); }, 1000);
+
+	} else {
+
+		// fetch the countdown time, and then start the timer
+		tm_event_countdown_callback();
+	}
 
 });})(jQuery, Drupal, this, this.document);

@@ -104,7 +104,14 @@ function tm_events_menu() {
   );
   $items['events/last-changed/%'] = array(
     'title' => t('Check when last changed'),
-    'page callback' => 'tm_events_check_last_changed',
+    'page callback' => 'tm_events_check_last_changed_ajax',
+    'page arguments' => array(2),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+  $items['events/seconds-to-event-callback/%'] = array(
+    'title' => t('Get seconds to event'),
+    'page callback' => 'tm_events_seconds_until_event_starts_ajax',
     'page arguments' => array(2),
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
@@ -404,12 +411,12 @@ function tm_events_node_view($node, $view_mode, $langcode) {
     }
 
     // check for updates and reload page if updated
+    drupal_add_js(array('tm_events' => array('tm_event_changed_nid' => $node->nid)), array('type' => 'setting'));
+    drupal_add_js(array('tm_events' => array('tm_event_changed_user_is_logged_in' => user_is_logged_in())), array('type' => 'setting'));
     if (isset($conf["tm_event_check_updates_seconds"])) {
       $check_updates_timeout = $conf["tm_event_check_updates_seconds"] * 1000;
-      drupal_add_js(array('tm_events' => array('tm_event_changed_nid' => $node->nid)), array('type' => 'setting'));
       drupal_add_js(array('tm_events' => array('tm_event_changed_timestamp' => $node->changed)), array('type' => 'setting'));
       drupal_add_js(array('tm_events' => array('tm_event_changed_refresh' => $check_updates_timeout)), array('type' => 'setting'));
-      drupal_add_js(array('tm_events' => array('tm_event_changed_user_is_logged_in' => user_is_logged_in())), array('type' => 'setting'));
       drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_check_updates.js');
     }
 
@@ -499,7 +506,7 @@ function tm_events_node_view($node, $view_mode, $langcode) {
 /**
  * Return timestamp when event changed
  */
-function tm_events_check_last_changed($nid) {
+function tm_events_check_last_changed_ajax($nid) {
 
   // get path alias
   $event_url = "/" . drupal_get_path_alias("node/" . $nid);
@@ -522,6 +529,35 @@ function tm_events_check_last_changed($nid) {
     // standard json
     // ie: {json_data}
     print(json_encode($changed));
+  }
+  drupal_exit();
+}
+
+/**
+ * Return seconds until event starts
+ */
+function tm_events_seconds_until_event_starts_ajax($nid) {
+
+  // get seconds until start of event
+  $event = node_load(intval($nid));
+
+  if ($event == null) {
+     $result = array("seconds" => 0);
+  } else {
+    $seconds_until_start = tm_events_seconds_until_event_starts($event);
+    $result = array("seconds" => $seconds_until_start);
+  }
+
+  // check if we are embedding in a jsonp callback
+  if (isset($_GET["callback"])) {
+    // jsonp callback
+    // ie: mycallback({json_data});
+    drupal_add_http_header('Content-Type', 'application/javascript');
+    print($_GET["callback"] . "(" . json_encode($result) . ");");
+  } else {
+    // standard json
+    // ie: {json_data}
+    print(json_encode($result));
   }
   drupal_exit();
 }

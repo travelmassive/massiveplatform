@@ -24,8 +24,11 @@ function _tm_event_livestream($field, $title = NULL) {
     return "";
   }
 
+  // start time
+  $start_time = tm_event_get_youtube_video_start_time($livestream_url);
+
   // render live stream
-  $html = tm_event_render_livestream_embed($youtube_video_id);
+  $html = tm_event_render_livestream_embed($youtube_video_id, $start_time);
   return $html;
 }
 
@@ -187,14 +190,43 @@ function tm_event_get_youtube_video_id($livestream_url) {
 
 }
 
+/* Get youtube ?t= from live stream URL */
+function tm_event_get_youtube_video_start_time($livestream_url) {
+
+  // ?t=15
+  // https://www.youtube.com/watch?v=rbtv2zxhufM&t=15
+  $parts = explode("t=", $livestream_url);
+  if (sizeof($parts) > 1) {
+    $more_parts = explode("&", $parts[1]);
+    return intval($more_parts[0]);
+  }
+
+  // ?time_continue=15
+  // https://www.youtube.com/watch?v=rbtv2zxhufM&time_continue=15
+  $parts = explode("time_continue=", $livestream_url);
+  if (sizeof($parts) > 1) {
+    $more_parts = explode("&", $parts[1]);
+    return intval($more_parts[0]);
+  }
+
+  // not found
+  return 0;
+}
+
 /* Render youtube live stream embed */
-function tm_event_render_livestream_embed($youtube_video_id) {
+function tm_event_render_livestream_embed($youtube_video_id, $start_time = 0) {
   
   // testing
   // $youtube_video_id = "jhFDyDgMVUI"; // "rbtv2zxhufM"
 
+  // optional start time
+  $start_time_arg = "";
+  if ($start_time > 0) {
+    $start_time_arg = "&start=" . $start_time;
+  }
+
   // embed template
-  $embed_html = '<div id="livestream_video_container" style="width: 100%; margin-left: 16px; margin-right: 16px; padding-right: 32px; margin-bottom: 32px;"><iframe id="livestream_video" width="560" height="315" src="https://www.youtube.com/embed/' . $youtube_video_id . '?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>';
+  $embed_html = '<div id="livestream_video_container" style="width: 100%; margin-left: 16px; margin-right: 16px; padding-right: 32px; margin-bottom: 32px;"><iframe id="livestream_video" width="560" height="315" src="https://www.youtube.com/embed/' . $youtube_video_id . '?autoplay=1' . $start_time_arg . '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>';
 
   return $embed_html;
 

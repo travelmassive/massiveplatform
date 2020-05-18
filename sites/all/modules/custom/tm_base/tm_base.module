@@ -936,3 +936,30 @@ function tm_base_check_markdown_permission($entity_type, $entity_id) {
   // no permission
   return false;
 }
+
+/**
+ * Implement hook_pathauto_alias_alter()
+ * Replace strings when creating URL aliases
+ */
+function tm_base_pathauto_alias_alter(&$alias, array $context) {
+
+  global $conf;
+
+  // require $conf["tm_base_pathauto_filters"]
+  if (!isset($conf["tm_base_pathauto_filters"])) {
+    return;
+  }
+
+  // replace filtered items
+  $filtered_alias = $alias;
+  $filters = $conf["tm_base_pathauto_filters"];
+  foreach ($filters as $filter => $replace) {
+    $filtered_alias = str_replace($filter, $replace, $filtered_alias);
+  }
+
+  // check we still have a string
+  if (trim($filtered_alias) != "") {
+    $alias = $filtered_alias;
+  }
+
+}

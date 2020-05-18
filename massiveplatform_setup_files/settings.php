@@ -49,6 +49,7 @@ $conf['install_profile'] = 'tm';
 $conf['image_suppress_itok_output'] = TRUE; // supress ?itok so email images can be loaded by gmail
 $conf['image_allow_insecure_derivatives'] = TRUE;
 $conf['tm_image_module_derivatives_patch'] = TRUE; // apply image derivates patch 
+$conf['tm_base_pathauto_filters'] = array("❤️" => "heart", "—" => "-"); // replace strings when creating url aliases
 
 
 /** ADMIN PAGES **/

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * tm_flags.strongarm.inc
@@ -30,6 +31,13 @@ function tm_flags_strongarm() {
   $strongarm->name = 'field_bundle_settings_flagging__download_member_csv';
   $strongarm->value = array();
   $export['field_bundle_settings_flagging__download_member_csv'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'field_bundle_settings_flagging__reminder_last_sent';
+  $strongarm->value = array();
+  $export['field_bundle_settings_flagging__reminder_last_sent'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */

@@ -14,6 +14,16 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
   
   $base = $base_root . request_uri();
 
+  // quick lookup tm_events_check_permission_edit_event()
+  $check_permission_edit_event = false;
+  if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
+    $node = menu_get_object();
+    if ($node->type == 'event') {
+      $check_permission_edit_event = tm_events_check_permission_edit_event($user, $field['entity']);
+    }
+  }
+
+
   // START Add chapter event Link
   if (isset($field['entity']->type) && $field['entity']->type == 'chapter') {
     if (_tm_events_check_create_chapter_event($user, $field['entity']->nid)) {
@@ -120,7 +130,7 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
       $show_menu_item = false;
 
       // check permission
-      $show_menu_item = tm_events_check_permission_edit_event($user, $field['entity']);
+      $show_menu_item = $check_permission_edit_event;
     
       // if event is external rsvp, don't show
       if ($node->field_external_rsvp['und'][0]['value']) {
@@ -147,7 +157,7 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
     if ($node->type == 'event') {
       
       // check permission
-      $show_menu_item = tm_events_check_permission_edit_event($user, $field['entity']);
+      $show_menu_item = $check_permission_edit_event;
     
       // also see if user is featured and has access to download csv
       if (!$show_menu_item) {
@@ -238,6 +248,54 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
           );
         }
 
+        // Event is online
+        $is_online_event = false;
+        if (isset($node->field_event_is_online[LANGUAGE_NONE][0]['value'])) {
+          $is_online_event = $node->field_event_is_online[LANGUAGE_NONE][0]['value'];
+        }
+
+        // Event has reminders
+        $event_send_reminders = false;
+        if (isset($node->field_event_send_reminders[LANGUAGE_NONE][0]['value'])) {
+          $event_send_reminders = $node->field_event_send_reminders[LANGUAGE_NONE][0]['value'];
+        }
+
+        // Event reminders turned off
+        if ($is_online_event and !$event_send_reminders and !tm_events_is_past_event($node, 60)) {
+          $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Event reminders are " . l("disabled", "/node/" . $nid . "/edit", array('attributes' => array('class' => array('report-flagged-link')))) . "</span><br>";
+          $links['event'][] = array(
+            'wrapper_class' => array('event_last_sent'),
+            'content' => t($last_sent_text),
+          );
+        }
+
+        // Preview test emails
+        // Don't show for past events
+        if ($is_online_event and $event_send_reminders and !tm_events_is_past_event($node, 60)) {
+          
+          // Preview 1hr30min reminder
+          $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Preview " . l("1 day", "/events/send-test-reminder/" . $nid . "/24hr", array('attributes' => array('class' => array('report-flagged-link')))) . " reminder</span><br>";
+          $links['event'][] = array(
+            'wrapper_class' => array('event_last_sent'),
+            'content' => t($last_sent_text),
+          );
+
+          // Preview 1hr30min reminder
+          $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Preview " . l("1 hour 30 min", "/events/send-test-reminder/" . $nid . "/1hr30min", array('attributes' => array('class' => array('report-flagged-link')))) . " reminder</span><br>";
+          $links['event'][] = array(
+            'wrapper_class' => array('event_last_sent'),
+            'content' => t($last_sent_text),
+          );
+
+          // Preview 10min reminder
+          $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Preview " . l("10 minute", "/" . "events/send-test-reminder/" . $nid . "/10min", array('attributes' => array('class' => array('report-flagged-link')))) . " reminder</span><br>";
+          $links['event'][] = array(
+            'wrapper_class' => array('event_last_sent'),
+            'content' => t($last_sent_text),
+          );
+
+        }
+
       }
     }
   }
@@ -286,7 +344,7 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
     if (isset($field['entity']->type) && $field['entity']->type == 'event') {
 
       // Check if is moderator or administrator
-      if (tm_events_check_permission_edit_event($user, $field['entity'])) {
+      if ($check_permission_edit_event) {
 
         // get number of viewers
         $max_view_days = $conf["tm_track_views_store_days"];
@@ -320,7 +378,7 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
 
         // check permission
         $show_menu_item = false;
-        $allowed_manage_event = tm_events_check_permission_edit_event($user, $field['entity']);
+        $allowed_manage_event = $check_permission_edit_event;
         if ($allowed_manage_event) {
 
           // check payments are enabled
@@ -357,7 +415,7 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
       $show_menu_item = false;
 
       // check permission
-      $show_menu_item = tm_events_check_permission_edit_event($user, $field['entity']);
+      $show_menu_item = $check_permission_edit_event;
     
       if ($show_menu_item) {
 
@@ -432,7 +490,7 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
   }
   // END register member to event
 
-  // START show calendar link
+  // START show chatbox moderation link
   if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
     $node = menu_get_object();
     if ($node->type == 'event') {
@@ -440,7 +498,7 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
       $show_menu_item = false;
 
       // check permission
-      if (tm_events_check_permission_edit_event($user, $field['entity'])) {
+      if ($check_permission_edit_event) {
 
         // check if chat enabled
         if (isset($node->field_event_chatbox_enabled[LANGUAGE_NONE][0]['value'])) {
@@ -466,6 +524,77 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
       }
     }
   }
-  
+  // END show chatbox moderation link
+
+  // START show go live link
+  if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
+    $node = menu_get_object();
+    if ($node->type == 'event') {
+      
+      $show_menu_item = false;
+
+      // check permission
+      if ($check_permission_edit_event) {
+
+         // Get live stream URL
+        $livestream_url = tm_event_get_livestream_url($node);
+
+        // Get youtube video id
+        $youtube_video_id = tm_event_get_youtube_video_id($livestream_url);
+
+        // Show live stream button
+        if ((!tm_event_livestream_is_on($node)) and ($youtube_video_id != null)) {
+
+           $links['event'][] = array(
+            'wrapper_class' => array('event_moderation_go_live'),
+            'content' => l(t('Go live'), "/events/display-live-stream-callback/" . $node->nid . "/on", array(
+              'attributes' => array(
+                'title' => t('Go live'),
+                'class' => 'tm-go-live-button',
+              )
+            ))
+          );
+
+          // Scheduled
+          // How long until scheduled to go live
+          $scheduled_text = "";
+          $event_date = field_get_items('node',$node,'field_event_date');
+          $current_date = new DateTime('now', new DateTimeZone('UTC'));
+          $event_timezone = _tm_get_event_timezone($node);
+          $event_datetime = new DateTime($event_date[0]['value'], new DateTimeZone($event_timezone));
+          if (($event_datetime->format('U') - $current_date->format('U')) > 0) {
+            $scheduled_text = "Scheduled in " . _tm_event_time_elapsed($event_datetime->format('U') - $current_date->format('U'));
+          }
+          if (tm_events_is_past_event($node, 60)) {
+            $scheduled_text = "Past event";
+          }
+
+          $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>" . $scheduled_text . "</span><br>";
+          $links['event'][] = array(
+            'wrapper_class' => array('event_moderation_go_live'),
+            'content' => t($last_sent_text),
+          );
+
+        }
+
+        // End live stream button
+        if (tm_event_livestream_is_on($node)) {
+
+           $links['event'][] = array(
+            'wrapper_class' => array('event_moderation_chatbox'),
+            'content' => l(t('End live stream'), "/events/display-live-stream-callback/" . $node->nid . "/off", array(
+              'attributes' => array(
+                'title' => t('End live stream'),
+                'class' => 'tm-go-live-button',
+              )
+            ))
+          );
+        }
+
+      }
+    }
+  }
+
+
 
 }

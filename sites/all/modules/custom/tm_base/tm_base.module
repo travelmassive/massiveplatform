@@ -920,6 +920,15 @@ function tm_base_check_markdown_permission($entity_type, $entity_id) {
     if ($event != null) {
       $chapter_id = _tm_event_get_chapter_id($event);
       if ($chapter_id != null) {
+
+        // if any chapter
+        if (isset($conf["tm_markdown_allowed_chapters_events"][0])) {
+          if ($conf["tm_markdown_allowed_chapters_events"][0] == 0) {
+            return true;
+          }
+        }
+
+        // if chapter in allowed list
         if (in_array($chapter_id, $conf["tm_markdown_allowed_chapters_events"])) {
           return true;
         }

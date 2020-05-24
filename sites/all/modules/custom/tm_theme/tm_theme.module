@@ -546,9 +546,19 @@ function tm_theme_add_cover_video_js($account, $node) {
     }
 
     if ($node->type == "event") {
+
       if (isset($node->field_event_cover_video[LANGUAGE_NONE][0]['value'])) {
         $cover_video_value = $node->field_event_cover_video[LANGUAGE_NONE][0]['value'];
+      } else {
+        // use live stream url if available
+        $livestream_url = tm_event_get_livestream_url($node);
+        if (trim($livestream_url) != "") {
+          $cover_video_value = $livestream_url;
+        }
       }
+
+      // hide the chapter sticker so it doesn't obscure the video
+      drupal_add_css(".chapter-sticker.chapter-sticker-icon { display: none !important; }", "inline");
 
       // if showing live stream video, turn off cover video
       global $user;

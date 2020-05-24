@@ -42,6 +42,11 @@ function tm_event_livestream_check_display($account, $node, $check_mode = true) 
     return false;
   }
 
+   // check livestream on
+  if (!tm_event_livestream_is_on($node)) {
+    return;
+  }
+
   // Bypass mode check for event editors and featured members
   if ($account != null) { 
 
@@ -166,6 +171,42 @@ function tm_event_get_livestream_url($node) {
   return null;
 }
 
+/**
+ * Callback to toggle livestream
+ */
+function tm_events_livestream_toggle_callback($event_id, $state) {
+
+  global $user;
+
+  // user is logged in
+  if (!user_is_logged_in()) {
+    drupal_access_denied();
+  }
+
+  // valid event
+  $event = node_load($event_id);
+  if ($event == null) {
+    drupal_access_denied();
+  }
+
+  // user can edit event
+  if (!tm_events_check_permission_edit_event($user, $event)) {
+    drupal_access_denied();
+  }
+  
+  // set livestream on or off
+  $event->field_event_livestream_on[LANGUAGE_NONE][0]['value'] = 0;
+  if ($state == "on") {
+     $event->field_event_livestream_on[LANGUAGE_NONE][0]['value'] = 1;
+  }
+
+  // save 
+  node_save($event);
+ 
+  // redirect
+  drupal_goto("node/". $event_id);
+}
+
 /* Get youtube id from live stream URL */
 function tm_event_get_youtube_video_id($livestream_url) {
 
@@ -180,7 +221,7 @@ function tm_event_get_youtube_video_id($livestream_url) {
     $youtube_video_id = $matches[1];
   } else {
     // check if its just id
-    if ((strlen($livestream_url < 20) && (strpos($livestream_url, ".") === false))) {
+    if ((strlen($livestream_url < 20) && (strpos($livestream_url, ".") === false) && (stripos($livestream_url, "http") === false))) {
       $youtube_video_id = $livestream_url;
     }
   }
@@ -253,4 +294,14 @@ function tm_event_livestream_get_mode_label($node) {
   if ($livestream_mode == "members") { return "signed-in members"; }
   if ($livestream_mode == "attendees") { return "registered attendees"; }
   return "";
+}
+
+/* Get live stream enabled */
+function tm_event_livestream_is_on($node) {
+
+  if (isset($node->field_event_livestream_on[LANGUAGE_NONE][0]['value'])) {
+    return $node->field_event_livestream_on[LANGUAGE_NONE][0]['value'];
+  }
+
+  return false;
 }

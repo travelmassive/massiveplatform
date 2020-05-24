@@ -150,6 +150,75 @@ function _tm_event_location($field, $title = NULL) {
   return $html;
 }
 
+/* Display Suite - Render online event instructions */
+function _tm_event_online_instructions($field, $title = NULL) {
+
+  global $user;
+
+  // check node is event
+  $node = $field['entity'];
+  if ($node->type != "event") {
+    return;
+  }
+
+  // If logged in, check if registered or waitlisted
+  $registered_flag = false; // default if not logged in
+  $waitlist_for_event = false; // default if not logged in
+  if (user_is_logged_in()) {
+    $registered_flag = flag_get_flag('event_register');
+    $registered_for_event = ($registered_flag && $registered_flag->is_flagged($node->nid, $user->uid));
+    $waitlist_flag = flag_get_flag('event_waitlist');
+    $waitlist_for_event = ($waitlist_flag && $waitlist_flag->is_flagged($node->nid, $user->uid));
+  }
+
+  // Hide if not logged in or not registered
+  $show_instructions = false;
+  if ($registered_for_event) {
+    $show_instructions = true;
+  }
+
+  // Don't show if external rsvp set
+  if ($node->field_external_rsvp[LANGUAGE_NONE][0]['value']) {
+    return "";
+  }
+
+  // Get instructions
+  $online_instructions = "";
+  if (isset($node->field_event_online_instructions[LANGUAGE_NONE][0]['value'])) {
+     $online_instructions = trim(strip_tags($node->field_event_online_instructions[LANGUAGE_NONE][0]['value']));
+  }
+
+  // If no instructions, hide
+  if ($online_instructions == "") {
+    return "";
+  }
+
+  // If not showing the event instructions
+  if (!$show_instructions && !$waitlist_for_event) {
+    $html = 'Instructions will be sent when you register';
+    return $html;
+  } else if (!$show_instructions && $waitlist_for_event) {
+    $html = 'Instructions will be sent when you are confirmed to attend';
+    return $html;
+  }
+
+  // add markdown support, or add line breaks
+  if (tm_base_check_markdown_permission("event", $node->nid)) {
+    $online_instructions = tm_base_parsedown($online_instructions, null, false);
+    $online_instructions = str_replace("\n", "", $online_instructions);
+  } else {
+    $online_instructions = str_replace("\n", "<br>", $online_instructions); // add line breaks
+    $online_instructions = preg_replace("/[-]{4,10}/", "<div class='tm_field_hr'></div>", $online_instructions); // replace ---- with hr
+    $online_instructions = tm_base_linkify($online_instructions, ["http", "https", "mail", "twitter"], ["rel" => "nofollow noopener", "target" => "_blank"]); // add links
+  }
+    
+  // Render the event instructions
+  $html = '<h2><span>How to join the event</span></h2>';
+  $html .= '<div class="detail-venue-address">' . $online_instructions . '</div>';
+
+  return $html;
+}
+
 /**
  * Custom function to prepare date for a date badge.
  */
@@ -309,15 +378,17 @@ function _tm_date_get_date_format($user, $event) {
   }
   
   // If user has county set, override timezone format based on their country
-  $account = user_load($user->uid);
-  if (sizeof($account->field_user_country) > 0) {
-    // get user's country code if it's set
-    if (isset($account->field_user_country[LANGUAGE_NONE][0]['iso2'])) {
-      $field_user_country = $account->field_user_country[LANGUAGE_NONE][0]['iso2']; // ie: AU, US
-      if (in_array($field_user_country, $country_codes_with_12_hours)) {
-        $time_format = "g:i a"; // ie: 2:00 pm
-      } else {
-        $time_format = "G:i"; // ie: 14:00
+  if ($user != null) {
+    $account = user_load($user->uid);
+    if (sizeof($account->field_user_country) > 0) {
+      // get user's country code if it's set
+      if (isset($account->field_user_country[LANGUAGE_NONE][0]['iso2'])) {
+        $field_user_country = $account->field_user_country[LANGUAGE_NONE][0]['iso2']; // ie: AU, US
+        if (in_array($field_user_country, $country_codes_with_12_hours)) {
+          $time_format = "g:i a"; // ie: 2:00 pm
+        } else {
+          $time_format = "G:i"; // ie: 14:00
+        }
       }
     }
   }
@@ -561,4 +632,107 @@ function tm_events_render_timezones($user, $event) {
 
   return $event_html;
 
+}
+
+/**
+ * Helper method to show short timezones for events
+ * ie: 10am NYC / 3pm London / 9pm Bangkok
+ */
+function tm_events_render_short_timezones($event) {
+
+  global $conf;
+
+  // Make sure we have an event date
+  if (!isset($event->field_event_date[LANGUAGE_NONE][0]['value'])) {
+    return;
+  }
+
+  // Step 1. Set time format
+  $time_format = _tm_date_get_date_format(null, $event);
+
+  // Step 2. Create event date using event's timezone
+  $event_timezone = _tm_get_event_timezone($event);
+  $dt_timezone = new DateTimeZone($event_timezone);
+  $event_date = new DateTime($event->field_event_date[LANGUAGE_NONE][0]['value'], $dt_timezone);
+  $event_date2 = new DateTime($event->field_event_date[LANGUAGE_NONE][0]['value2'], $dt_timezone);
+
+  // Step 3. Set up event timezone array
+  $timezone_name = _tm_date_pretty_timezone_name($event_timezone);
+  $event_timezones = array($event_timezone => $timezone_name);
+
+  // Step 4. Include tm_event_online_timezones
+  foreach ($conf["tm_event_online_timezones"] as $timezone => $timezone_name) {
+    $event_timezones[$timezone] = $timezone_name;
+  }
+
+  // Only show unique timezones  
+  $event_timezones = array_unique($event_timezones, SORT_REGULAR);
+
+  // Step 5. Create list
+  $html_parts = array();
+  $first_date = true;
+  $count = 1;
+  $max_timezones = 3;
+  foreach ($event_timezones as $timezone => $timezone_name) {
+
+    // limit timezones
+    if ($count > $max_timezones) {
+      continue;
+    }
+
+    // Don't display UTC/GMT as it confuses people
+    if (($timezone_name == "UTC") and (sizeof($event_timezones) > 1)) {
+      continue;
+    }
+    
+    // Set timezone of event date
+    $display_dt_timezone = new DateTimeZone($timezone);
+    $event_date->setTimeZone($display_dt_timezone);
+    $event_date2->setTimeZone($display_dt_timezone);
+
+    // Get timezone offset from event time
+    $timezone_offset = tm_events_get_timezone_offset($event_timezone, $timezone) / 3600;
+
+    // Don't show timezones > 6 hours
+    if (abs($timezone_offset) > 6) { 
+      continue;
+    }
+
+    // Short timezone name
+    if ($timezone_name == "New York") {
+      $timezone_name = "NYC";
+    }
+    if ($timezone_name == "Los Angeles") {
+      $timezone_name = "LA";
+    }
+
+    // time and city
+    $html_parts[] = $event_date->format($time_format) . " " . $timezone_name;
+
+    $count++;
+
+  }
+
+  $event_html = implode(" / ", $html_parts);
+  return $event_html;
+
+}
+
+
+/**
+ * Helper method get the timezone offset between two timezones
+ */
+function tm_events_get_timezone_offset($remote_tz, $origin_tz = null) {
+    if($origin_tz === null) 
+    {
+        if(!is_string($origin_tz = date_default_timezone_get())) {
+            return false;
+        }
+    }
+    $origin_dtz = new DateTimeZone($origin_tz);
+    $remote_dtz = new DateTimeZone($remote_tz);
+    $origin_dt  = new DateTime("now", $origin_dtz);
+    $remote_dt  = new DateTime("now", $remote_dtz);
+    $offset     = $origin_dtz->getOffset($origin_dt) - $remote_dtz->getOffset($remote_dt);
+    return $offset;
 }

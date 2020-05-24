@@ -201,6 +201,47 @@ $conf["tm_event_custom_banner_templates"] = array(); // custom event banner temp
 $conf["tm_event_custom_banner_templates"]["example"] = "<h1>Call this template with __EXAMPLE__</h1>"; 
 $conf["tm_event_check_updates_seconds"] = 30; // how often to check for event page updates in seconds
 $conf["tm_event_online_event_tips"] = "Live stream your event, from your YouTube channel."; // tips for online event settings
+$conf["tm_event_online_reminder_24hr_subject"] = "Join us tomorrow... __EVENT_TITLE__";
+$conf["tm_event_online_reminder_24hr_headline"] = "We can't wait to see you.";
+$conf["tm_event_online_reminder_24hr_intro"] =  "Join us tomorrow – __START_TIMEZONES__";
+$conf["tm_event_online_reminder_24hr_image"] = true;
+$conf["tm_event_online_reminder_1hr30min_subject"] = "We'll start shortly... __EVENT_TITLE__";
+$conf["tm_event_online_reminder_1hr30min_headline"] = "See you online.";
+$conf["tm_event_online_reminder_1hr30min_intro"] =  "We'll start in 1 hour and 30 minutes – __START_TIMEZONES__";
+$conf["tm_event_online_reminder_1hr30min_image"] = true;
+$conf["tm_event_online_reminder_10min_subject"] = "We'll start in 10 minutes... __EVENT_TITLE__";
+$conf["tm_event_online_reminder_10min_headline"] = "";
+$conf["tm_event_online_reminder_10min_intro"] =  "We are going LIVE in 10 minutes.";
+$conf["tm_event_online_reminder_10min_image"] = false;
+$conf["tm_event_online_reminder_instructions_heading"] = "How to join us LIVE";
+$conf["tm_event_online_reminder_featured_emoji"] = ""; // put emoji before "Featured Members"
+$conf["tm_event_online_reminder_button_label_attendee"] = "View event";
+$conf["tm_event_online_reminder_button_label_register"] = "Register now";
+
+// reminder message for non-attendees
+// don't include the event instructions
+$conf["tm_event_online_reminder_message_register"] = "<p>Hi [first_name],</p>
+<p>We're getting ready for tomorrow's online event:</p>
+<p><b><a href='__EVENT_URL__'>__EVENT_TITLE__</a></b></p>
+<p><b>__INTRO_TEXT__</b></p>
+<p>Instructions will be sent when you register.</p>
+<p>[EVENT_BUTTON]</p>
+__FEATURED_MEMBERS__
+__CONTACT_LINK__
+__SIGNOFF_MESSAGE__
+";
+
+// reminder message for attendees
+$conf["tm_event_online_reminder_message_attendee"] = "<p>Hi [first_name],</p>
+<p>Thank you for signing up for today's event:</p>
+<p><b><a href='__EVENT_URL__'>__EVENT_TITLE__</a></b></p>
+<p><b>__INTRO_TEXT__</b></p>
+__EVENT_INSTRUCTIONS__
+<p>[EVENT_BUTTON]</p>
+__FEATURED_MEMBERS__
+__CONTACT_LINK__
+__SIGNOFF_MESSAGE__
+";
 
 /** SIGNUP PAGE SETTINGS **/
 /** Provides a list of validated options on the signup page to indicate how the user connects with the community **/
@@ -1184,7 +1225,7 @@ $conf["tm_markdown_allowed_users"] = array(10452); // allowed users - use array(
 $conf["tm_markdown_allowed_chapters"] = array(); // allowed chapter nids - use array(0) for all
 $conf["tm_markdown_allowed_events"] = array(); // allowed events - use array(0) for all
 $conf["tm_markdown_allowed_organizations"] = array(); // allowed organizations - use array(0) for all
-$conf["tm_markdown_allowed_chapters_events"] = array(); // list of chapters whose events can use markdown
+$conf["tm_markdown_allowed_chapters_events"] = array(); // list of chapters whose events can use markdown - use array(0) for all
 
 /** MATCH **/
 $conf["tm_match_demo_mode"] = true; // whether to follow, or not

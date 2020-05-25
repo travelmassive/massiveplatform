@@ -3,8 +3,8 @@
 // tm_events.drush.inc - drush commands
 
 // instructions:
-// run hourly on 14,29,44,59 minutes: drush tm-events-livestream-tasks
-// run hourly on 5,10,15,20,25,30,35,40,45,50,55 minutes: tm-events-reminder-tasks
+// run hourly on 14,29,44,59 minutes: drush tm-events-livestream-tasks --uri=https://example.massiveplatform.com --confirm=true
+// run hourly on 5,10,15,20,25,30,35,40,45,50,55 minutes: tm-events-reminder-tasks --uri=https://example.massiveplatform.com --confirm=true
 
 /**
  * Implements hook_drush_command().
@@ -16,7 +16,7 @@ function tm_events_drush_command() {
 		'callback' => 'tm_events_livestream_tasks_drush',
 		'options' => array(
 			'confirm' => 'Confirm that you want to proceed',
-			'target_event' => 'id of single event to process',
+			'target-event' => 'id of single event to process',
 			'seconds' => 'Set the seconds timers (developer)',
 		),
 	);
@@ -26,7 +26,7 @@ function tm_events_drush_command() {
 		'callback' => 'tm_events_reminder_tasks_drush',
 		'options' => array(
 			'confirm' => 'Confirm that you want to proceed',
-			'target_event' => 'id of single event to process',
+			'target-event' => 'id of single event to process',
 			'seconds' => 'Set the seconds timers (developer)',
 		),
 	);
@@ -61,7 +61,7 @@ function tm_events_livestream_tasks_drush() {
 		$confirm = ($confirm_opt == "true");
 	}
 	if ($confirm_opt == null) {
-		drush_print("Usage: drush tm-events-livestream-tasks --uri=HOSTNAME --confirm=true\nOptional: --target_event=123 --seconds=600");
+		drush_print("Usage: drush tm-events-livestream-tasks --uri=HOSTNAME --confirm=true\nOptional: --target-event=123 --seconds=600");
 		return;
 	}
 	if (!$confirm) {
@@ -74,7 +74,7 @@ function tm_events_livestream_tasks_drush() {
 	}
 
 	// target event
-	$target_event = drush_get_option('target_event');
+	$target_event = drush_get_option('target-event');
 	if ($target_event != null) {
 		drush_print("Target event id: " . $target_event);
 	}
@@ -206,7 +206,7 @@ function tm_events_reminder_tasks_drush() {
 		$confirm = ($confirm_opt == "true");
 	}
 	if ($confirm_opt == null) {
-		drush_print("Usage: drush tm-events-reminder-tasks --uri=HOSTNAME --confirm=true\nOptional: --target_event=123 --seconds=600 (600 = 10min, 5400 = 1hr30min, 86400 = 24hr");
+		drush_print("Usage: drush tm-events-reminder-tasks --uri=HOSTNAME --confirm=true\nOptional: --target-event=123 --seconds=600 (600 = 10min, 5400 = 1hr30min, 86400 = 24hr");
 		return;
 	}
 	if (!$confirm) {
@@ -219,7 +219,7 @@ function tm_events_reminder_tasks_drush() {
 	}
 
 	// target event
-	$target_event = drush_get_option('target_event');
+	$target_event = drush_get_option('target-event');
 	if ($target_event != null) {
 		drush_print("Target event id: " . $target_event);
 	}
@@ -233,7 +233,7 @@ function tm_events_reminder_tasks_drush() {
 	}
 
 	// get upcoming events in next 24 hours (we don't know timezone yet)
-	$query = "SELECT entity_id FROM field_data_field_event_date WHERE entity_type = 'node' and bundle = 'event' and field_event_date_value > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY field_event_date_value ASC";
+	$query = "SELECT entity_id FROM field_data_field_event_date WHERE entity_type = 'node' AND bundle = 'event' AND field_event_date_value > DATE_SUB(NOW(), INTERVAL 1 DAY) AND field_event_date_value < DATE_ADD(NOW(), INTERVAL 2 DAY) ORDER BY field_event_date_value ASC";
 	$event_ids = db_query($query)->fetchAll();
 	$event_data = array();
 
@@ -790,7 +790,6 @@ function tm_events_reminder_send_drush($event, $recipients, $subject, $headline_
 	}
 	$chapter_nids = array_unique($chapter_nids);
 	$chapterids = implode(",", $chapter_nids);
-
 
 	// flag announcement last sent
   	flag('unflag', 'announcement_last_sent', $eventid, $drush_user);

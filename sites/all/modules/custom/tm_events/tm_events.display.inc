@@ -704,7 +704,7 @@ function tm_events_render_short_timezones($event) {
 
     // Don't show timezone if its too early or too late
     $start_hour = intval($event_date->format("G"));
-    if (($start_hour < 6) or ($start_hour > 22)) {
+    if (($start_hour < 8) or ($start_hour > 22)) {
       continue;
     }
 

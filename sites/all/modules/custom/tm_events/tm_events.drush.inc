@@ -267,10 +267,7 @@ function tm_events_reminder_tasks_drush() {
 	    }
 
 	    // only process online event
-        $is_online_event = false;
-        if (isset($event->field_event_is_online[LANGUAGE_NONE][0]['value'])) {
-          $is_online_event = $event->field_event_is_online[LANGUAGE_NONE][0]['value'];
-        }
+        $is_online_event = tm_events_is_online_event($event);
 		if (!$is_online_event) {
 			drush_print("- Event is not online event, skipping...");
 			continue;

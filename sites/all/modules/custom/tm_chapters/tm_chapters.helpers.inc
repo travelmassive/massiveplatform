@@ -277,3 +277,32 @@ function tm_chapters_user_can_view_instant_messaging($account, $chapter) {
   // not in chapter
   return false;
 }
+
+/**
+ * Helper method check if member is in a chapter
+ */
+function tm_chapters_is_member_of_chapter($account, $chapter) {
+
+  // check if user is member of chapter
+  $users_chapters = tm_users_get_chapters($account);
+  foreach ($users_chapters as $chapter_nid) {
+    if ($chapter_nid == $chapter->nid) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Helper method if chapter is a group
+ */
+function tm_chapters_chapter_is_group($chapter) {
+
+  // check setting
+  if (isset($chapter->field_chapter_is_group[LANGUAGE_NONE][0]['value'])) {
+    return ($chapter->field_chapter_is_group[LANGUAGE_NONE][0]['value'] == 1);
+  }
+
+  return false;
+}

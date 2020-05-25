@@ -255,10 +255,7 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
         }
 
         // Event is online
-        $is_online_event = false;
-        if (isset($node->field_event_is_online[LANGUAGE_NONE][0]['value'])) {
-          $is_online_event = $node->field_event_is_online[LANGUAGE_NONE][0]['value'];
-        }
+        $is_online_event = tm_events_is_online_event($node);
 
         // Event has reminders
         $event_send_reminders = false;

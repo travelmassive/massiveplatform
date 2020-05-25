@@ -650,10 +650,13 @@ function tm_events_generate_reminder_message($event, $message_template, $headlin
 				// url
 				$featured_member_url = $conf["tm_email_server_http"] . "://" . $conf["tm_email_server_url_domain"] . "/user/"  . $account->uid;
 
+				// name
+				$first_and_last_name = trim(strip_tags($account->field_user_first_name[LANGUAGE_NONE][0]['value'])) . " " . trim(strip_tags($account->field_user_last_name[LANGUAGE_NONE][0]['value']));
+
 				// create link
 				$featured_member_html = "<li>";
 				$featured_member_html .= "<a href='" . $featured_member_url . "'>";
-				$featured_member_html .= trim(strip_tags($account->field_user_first_name[LANGUAGE_NONE][0]['value'])) . " " . trim(strip_tags($account->field_user_last_name[LANGUAGE_NONE][0]['value']));
+				$featured_member_html .= $first_and_last_name;
 				$featured_member_html .= "</a>";
 
 				// job role, and name
@@ -677,17 +680,16 @@ function tm_events_generate_reminder_message($event, $message_template, $headlin
 				// 1. job_role at organisation_name
 				// 2. organization_name
 				// 3. job_role
-				/*if ((strlen($sub_title) < 55) and (strlen($sub_title) > 3)) {
+				$max_length = 55;
+				if (isset($conf["tm_event_online_reminders_max_featured_member_text"])) {
+					$max_length = $conf["tm_event_online_reminders_max_featured_member_text"];
+				}
+				if ((strlen($first_and_last_name . ", " . $sub_title) < $max_length) and (strlen($sub_title) > 3)) {
 					$featured_member_html .= ", " . $sub_title;
-				} elseif ((strlen($organization_name) < 55) and (strlen($organization_name) > 3)) {
+				} elseif ((strlen($first_and_last_name . ", " . $organization_name) < $max_length) and (strlen($organization_name) > 3)) {
 					$featured_member_html .= ", " . $organization_name;
-				} elseif ((strlen($job_role) < 55) and (strlen($job_role) > 3)) {
+				} elseif ((strlen($first_and_last_name . ", " . $job_role) < $max_length) and (strlen($job_role) > 3)) {
 					$featured_member_html .= ", " . $job_role;
-				}*/
-
-				// Only show organisation name (neater)
-				if ((strlen($organization_name) < 55) and (strlen($organization_name) > 3)) {
-					$featured_member_html .= ", " . $organization_name;
 				}
 
 				$featured_member_html .= "</li>";

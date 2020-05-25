@@ -326,6 +326,12 @@ function tm_events_reminder_tasks_drush() {
 			$reminder_type = "24hr";
 			drush_print("- Reminder type: " . $reminder_type);
 
+			// Don't send 24hr reminder (to all members) if in preview mode
+			if (tm_events_is_preview_mode($event->nid)) {
+				drush_print("- Event is in preview mode, not sending reminder.");
+				continue;
+			}
+
 			// generate message
 			$event_title = trim(strip_tags($event->title));
 			$subject = $conf["tm_event_online_reminder_" . $reminder_type . "_subject"];

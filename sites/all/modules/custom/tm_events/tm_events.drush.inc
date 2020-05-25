@@ -548,10 +548,12 @@ function tm_events_send_test_reminder($event, $reminder_type = "1hr30min", $send
 	$subject = str_replace("__EVENT_TITLE__", $event_title, $subject);
 	$headline_text = $conf["tm_event_online_reminder_" . $reminder_type . "_headline"];
 	$intro_text = $conf["tm_event_online_reminder_" . $reminder_type . "_intro"];
+	$button_label = $conf["tm_event_online_reminder_button_label_attendee"];
 	$message_template = $conf["tm_event_online_reminder_message_attendee"];
 
 	if ($reminder_type == "24hr") {
 		$message_template = $conf["tm_event_online_reminder_message_register"];
+		$button_label = $conf["tm_event_online_reminder_button_label_register"];
 	}
 
 	// display cover image
@@ -567,7 +569,7 @@ function tm_events_send_test_reminder($event, $reminder_type = "1hr30min", $send
 	}
 
 	// generate message
-	$message = tm_events_generate_reminder_message($event, $message_template, $headline_text, $intro_text);
+	$message = tm_events_generate_reminder_message($event, $message_template, $headline_text, $intro_text, $button_label);
 
 	// send test email
 	return tm_events_send_email(null, $send_to_email, "[Preview] " . $subject, $message, $event_image_src, $event_image_link, $event->nid, "", $headline_text);
@@ -655,20 +657,32 @@ function tm_events_generate_reminder_message($event, $message_template, $headlin
 				$featured_member_html .= "</a>";
 
 				// job role, and name
+				$job_role = "";
+				$organization_name = "";
 				$sub_title = "";
 				if (isset($account->field_job_role[LANGUAGE_NONE][0]['value'])) {
-					$sub_title = strip_tags($account->field_job_role[LANGUAGE_NONE][0]['value']);
+					$job_role = strip_tags(trim($account->field_job_role[LANGUAGE_NONE][0]['value']));
+					$sub_title = $job_role;
 				}
 				if (isset($account->field_job_organization[LANGUAGE_NONE][0]['value'])) {
 					if ($sub_title != "") {
 						$sub_title .= " at ";
 					}
-					$sub_title .= strip_tags($account->field_job_organization[LANGUAGE_NONE][0]['value']);
+					$organization_name = strip_tags(trim($account->field_job_organization[LANGUAGE_NONE][0]['value']));
+					$sub_title .= $organization_name;
 				}
 
 				// only display if short enough
+				// Try in this order
+				// 1. job_role at organisation_name
+				// 2. organization_name
+				// 3. job_role
 				if ((strlen($sub_title) < 55) and (strlen($sub_title) > 3)) {
 					$featured_member_html .= ", " . $sub_title;
+				} elseif ((strlen($organization_name) < 55) and (strlen($organization_name) > 3)) {
+					$featured_member_html .= ", " . $organization_name;
+				} elseif ((strlen($job_role) < 55) and (strlen($job_role) > 3)) {
+					$featured_member_html .= ", " . $job_role;
 				}
 
 				$featured_member_html .= "</li>";

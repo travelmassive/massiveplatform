@@ -289,6 +289,11 @@ function _tm_chapter_instant_messaging($field, $title = NULL) {
     return;
   }
 
+  // check field exists
+  if (!isset($node->field_link_instant_messaging[LANGUAGE_NONE][0]['url'])) {
+    return;
+  }
+
   // get instant messenger link
   $invite_url = trim($node->field_link_instant_messaging[LANGUAGE_NONE][0]['url']);
 

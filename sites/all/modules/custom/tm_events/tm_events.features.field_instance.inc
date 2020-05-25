@@ -1884,7 +1884,7 @@ This will only be displayed to registered attendees.',
       ),
     ),
     'deleted' => 0,
-    'description' => 'Chapter members are reminded <b>24 hours</b> before the event starts to register.<br>
+    'description' => 'Chapter members are invited <b>24 hours</b> before the event starts to register.<br>
 Registered attendees are reminded <b>1.5 hours</b> and <b>10 minutes</b> before you go live.<br>',
     'display' => array(
       'default' => array(
@@ -3153,7 +3153,7 @@ Provide HTML markup or a template alias.');
   t('Change Owner');
   t('Change the owner of the event.');
   t('Change the text of the RSVP button (default: RSVP)');
-  t('Chapter members are reminded <b>24 hours</b> before the event starts to register.<br>
+  t('Chapter members are invited <b>24 hours</b> before the event starts to register.<br>
 Registered attendees are reminded <b>1.5 hours</b> and <b>10 minutes</b> before you go live.<br>');
   t('Chapters that you publish this event to will be able to announce the event.');
   t('Check this box if you want to restrict registration and waitlist to members who are approved. Non-approved members won\'t be able to sign up.');

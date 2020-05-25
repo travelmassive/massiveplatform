@@ -200,6 +200,11 @@ $conf["tm_event_post_reminder_message"] = "Share what happened with the communit
 $conf["tm_event_custom_banner_templates"] = array(); // custom event banner template alias
 $conf["tm_event_custom_banner_templates"]["example"] = "<h1>Call this template with __EXAMPLE__</h1>"; 
 $conf["tm_event_check_updates_seconds"] = 30; // how often to check for event page updates in seconds
+
+/** ONLINE EVENT OPTIONS **/
+$conf["tm_event_online_event_tips"] = "Live stream your event, from your YouTube channel.<br> We recommend <a target='_blank' href='https://streamyard.com'>StreamYard</a> to broadcast your event."; // tips for online event settings
+$conf["tm_event_online_livestream_schedule_enabled"] = false; // check tm_events.drush.inc for installation instructions
+$conf["tm_event_online_reminders_enabled"] = false; // check tm_events.drush.inc for installation instructions
 $conf["tm_event_online_event_tips"] = "Live stream your event, from your YouTube channel."; // tips for online event settings
 $conf["tm_event_online_reminder_24hr_subject"] = "Join us tomorrow... __EVENT_TITLE__";
 $conf["tm_event_online_reminder_24hr_headline"] = "We can't wait to see you.";

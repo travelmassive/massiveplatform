@@ -33,7 +33,7 @@ function _tm_event_livestream($field, $title = NULL) {
 }
 
 /* Check if we display the live stream */
-function tm_event_livestream_check_display($account, $node, $check_mode = true) {
+function tm_event_livestream_check_display($account, $node, $check_mode = true, $check_livestream_on = true) {
 
   global $conf;
 
@@ -43,8 +43,10 @@ function tm_event_livestream_check_display($account, $node, $check_mode = true) 
   }
 
    // check livestream on
-  if (!tm_event_livestream_is_on($node)) {
-    return;
+  if ($check_livestream_on) {
+    if (!tm_event_livestream_is_on($node)) {
+      return;
+    }
   }
 
   // Bypass mode check for event editors and featured members

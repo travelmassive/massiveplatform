@@ -1204,3 +1204,26 @@ a.tm-lists-footer-label-link:hover {
   text-decoration: underline;
 }
 
+.tm-go-live-button {
+  display: inline-block !important;
+  background-color: #4f9bd6 !important;
+  color: #fff !important;
+  margin-left: 16px !important;
+  border-radius: 2px !important;
+}
+
+.tm-go-live-button:hover {
+  background-color: #4584ba !important;
+}
+
+.tm-end-live-button {
+  display: inline-block !important;
+  background-color: #dd624d !important;
+  color: #fff !important;
+  margin-left: 16px !important;
+  border-radius: 2px !important;
+}
+
+.tm-end-live-button:hover {
+  background-color: #d94830 !important;
+}

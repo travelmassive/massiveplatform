@@ -2,6 +2,10 @@
 
 // tm_events.drush.inc - drush commands
 
+// instructions:
+// run hourly on 14,29,44,59 minutes: drush tm-events-livestream-tasks
+// run hourly on 5,10,15,20,25,30,35,40,45,50,55 minutes: tm-events-reminder-tasks
+
 /**
  * Implements hook_drush_command().
  */
@@ -36,6 +40,16 @@ function tm_events_drush_command() {
 function tm_events_livestream_tasks_drush() {
 
 	global $conf;
+
+	// check config
+	$livestream_schedule_enabled = false;
+	if (isset($conf["tm_event_online_livestream_schedule_enabled"])) {
+		$livestream_schedule_enabled = $conf["tm_event_online_livestream_schedule_enabled"];
+	}
+	if (!$livestream_schedule_enabled) {
+		drush_print('Please enable reminders in $conf["tm_event_online_livestream_schedule_enabled"] to run this task.');
+		return;
+	}
 
 	// check confirm
 	$confirm = false;
@@ -107,13 +121,13 @@ function tm_events_livestream_tasks_drush() {
 	    // event started already
 	    // give one minute grace for cron
 		if ($seconds_until_event_starts <= -60) {
-			drush_print("Event already started (" . $seconds_until_event_starts . " seconds), skipping...");
+			drush_print("- Event already started (" . $seconds_until_event_starts . " seconds), skipping...");
 			continue;
 		}
 
 	    // already live
 	    if (tm_event_livestream_is_on($event)) {
-	    	drush_print("Event live stream already on, skipping...");
+	    	drush_print("- Event live stream already on, skipping...");
 	    	continue;
 	    }
 
@@ -124,12 +138,12 @@ function tm_events_livestream_tasks_drush() {
         $youtube_video_id = tm_event_get_youtube_video_id($livestream_url);
 
         if ($youtube_video_id == null) {
-        	drush_print("Event does not have a live stream URL, skipping...");
+        	drush_print("- Event does not have a live stream URL, skipping...");
 	    	continue;
         }
 
 		// display seconds until start
-		drush_print("Seconds until event: " . $seconds_until_event_starts);
+		drush_print("- Seconds until event: " . $seconds_until_event_starts);
 
 		// 1 minute to live
 		// Turn live stream on
@@ -137,7 +151,7 @@ function tm_events_livestream_tasks_drush() {
 		// process 1 minute earlier for cron
 		if ($seconds_until_event_starts <= 60) {
 			
-			drush_print("Going LIVE...");
+			drush_print("- Going LIVE...");
 
 			// send message
 			if ($confirm) {
@@ -145,8 +159,10 @@ function tm_events_livestream_tasks_drush() {
 				// set livestream on
 				$event->field_event_livestream_on[LANGUAGE_NONE][0]['value'] = 1;
 				node_save($event);
-				drush_print("Node saved...");
+				drush_print("- Node saved");
 
+			} else {
+				drush_print("- (Simulation) Node saved");
 			}
 
 		}
@@ -164,6 +180,16 @@ function tm_events_reminder_tasks_drush() {
 
 	global $conf;
 
+	// check config
+	$reminders_enabled = false;
+	if (isset($conf["tm_event_online_reminders_enabled"])) {
+		$reminders_enabled = $conf["tm_event_online_reminders_enabled"];
+	}
+	if (!$reminders_enabled) {
+		drush_print('Please enable reminders in $conf["tm_event_online_reminders_enabled"] to run this task.');
+		return;
+	}
+
 	// check confirm
 	$confirm = false;
 	$confirm_opt = drush_get_option('confirm');
@@ -171,7 +197,7 @@ function tm_events_reminder_tasks_drush() {
 		$confirm = ($confirm_opt == "true");
 	}
 	if ($confirm_opt == null) {
-		drush_print("Usage: drush tm-events-reminder-tasks --uri=HOSTNAME --confirm=true\nOptional: --target_event=123 --seconds=600");
+		drush_print("Usage: drush tm-events-reminder-tasks --uri=HOSTNAME --confirm=true\nOptional: --target_event=123 --seconds=600 (600 = 10min, 5400 = 1hr30min, 86400 = 24hr");
 		return;
 	}
 	if (!$confirm) {
@@ -192,7 +218,7 @@ function tm_events_reminder_tasks_drush() {
 	// set_seconds
 	$set_seconds = drush_get_option('seconds');
 	if ($set_seconds != null) {
-		drush_print("Set seconds: " . $set_seconds);
+		drush_print("Set seconds: " . $set_seconds . " (600 = 10min, 5400 = 1hr30min, 86400 = 24hr");
 	}
 
 	// get upcoming events in next 24 hours (we don't know timezone yet)
@@ -225,7 +251,7 @@ function tm_events_reminder_tasks_drush() {
 
 	    // don't process external rsvp
 	    if ($event->field_external_rsvp[LANGUAGE_NONE][0]['value']) {
-			drush_print("Event is external RSVP, skipping...");
+			drush_print("- Event is external RSVP, skipping...");
 			continue;
 	    }
 
@@ -235,7 +261,7 @@ function tm_events_reminder_tasks_drush() {
           $is_online_event = $event->field_event_is_online[LANGUAGE_NONE][0]['value'];
         }
 		if (!$is_online_event) {
-			drush_print("Event is not online event, skipping...");
+			drush_print("- Event is not online event, skipping...");
 			continue;
 		}
 
@@ -245,17 +271,18 @@ function tm_events_reminder_tasks_drush() {
 			$send_reminders = $event->field_event_send_reminders[LANGUAGE_NONE][0]['value'];
 		}
 		if (!$send_reminders) {
-			drush_print("Event reminders not turned on, skipping...");
+			drush_print("- Event reminders not turned on, skipping...");
 			continue;
 		}
 
-		// check if sent reminder in the past 10 minutes
+		// check if sent reminder recently
+		$min_minutes = 15; // 15 minutes
 		$announcement_last_sent_flagged = flag_get_entity_flags("node", $event->nid, "reminder_last_sent");
 		if (sizeof($announcement_last_sent_flagged) > 0) {
 			$flagged_last = array_shift($announcement_last_sent_flagged);
 			$difference = time() - $flagged_last->timestamp;
-			if ($difference < 600) { 
-				drush_print("Reminder has been sent in past 10 minutes, skipping...");
+			if ($difference < (60 * $min_minutes)) { 
+				drush_print("- Reminder has been sent in past " . $min_minutes . " minutes, skipping...");
 				continue;
 			}
 		}
@@ -270,12 +297,12 @@ function tm_events_reminder_tasks_drush() {
 
 		// event started already
 		if ($seconds_until_event_starts <= 0) {
-			drush_print("Event already started (" . $seconds_until_event_starts . " seconds), skipping...");
+			drush_print("- Event already started (" . $seconds_until_event_starts . " seconds), skipping...");
 			continue;
 		}
 
 		// display seconds until start
-		drush_print("Seconds until event: " . $seconds_until_event_starts);
+		drush_print("- Seconds until event: " . $seconds_until_event_starts);
 
 		// Get chapter associated with event if there is one
 		$chapter = null;
@@ -297,7 +324,7 @@ function tm_events_reminder_tasks_drush() {
 		if (($seconds_until_event_starts > (60 * 1438)  and ($seconds_until_event_starts <= (60 * 1441)))) {
 			
 			$reminder_type = "24hr";
-			drush_print("Reminder type: " . $reminder_type);
+			drush_print("- Reminder type: " . $reminder_type);
 
 			// generate message
 			$event_title = trim(strip_tags($event->title));
@@ -334,7 +361,7 @@ function tm_events_reminder_tasks_drush() {
 				$send_to = 'member_followers';
 			}
 
-			drush_print("Recipients: " . $send_to);
+			drush_print("- Recipients: " . $send_to);
 
 			// send message
 			if ($confirm) {
@@ -351,7 +378,7 @@ function tm_events_reminder_tasks_drush() {
 		if (($seconds_until_event_starts > (60 * 88) and ($seconds_until_event_starts <= (60 * 91)))) {
 			
 			$reminder_type = "1hr30min";
-			drush_print("Reminder type: " . $reminder_type);
+			drush_print("- Reminder type: " . $reminder_type);
 
 			// generate message
 			$event_title = trim(strip_tags($event->title));
@@ -393,7 +420,7 @@ function tm_events_reminder_tasks_drush() {
 		if (($seconds_until_event_starts > (60 * 8)) and ($seconds_until_event_starts <= (60 * 11))) {
 			
 			$reminder_type = "10min";
-			drush_print("Reminder type: " . $reminder_type);
+			drush_print("- Reminder type: " . $reminder_type);
 
 			// generate message
 			$event_title = trim(strip_tags($event->title));
@@ -418,7 +445,7 @@ function tm_events_reminder_tasks_drush() {
 			}
 
 			// generate message
-			$message = tm_events_generate_reminder_message($event, "", $headline_text, $intro_text, $button_label);
+			$message = tm_events_generate_reminder_message($event, $message_template, $headline_text, $intro_text, $button_label);
 
 			// send message
 			if ($confirm) {

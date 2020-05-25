@@ -164,6 +164,7 @@ function _tm_event_online_instructions($field, $title = NULL) {
   // If logged in, check if registered or waitlisted
   $registered_flag = false; // default if not logged in
   $waitlist_for_event = false; // default if not logged in
+  $registered_for_event = false;
   if (user_is_logged_in()) {
     $registered_flag = flag_get_flag('event_register');
     $registered_for_event = ($registered_flag && $registered_flag->is_flagged($node->nid, $user->uid));

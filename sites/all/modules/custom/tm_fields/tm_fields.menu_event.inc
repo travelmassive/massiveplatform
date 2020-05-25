@@ -248,6 +248,12 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
           );
         }
 
+        // Check if reminders are enabled
+        $reminders_enabled = false;
+        if (isset($conf["tm_event_online_reminders_enabled"])) {
+          $reminders_enabled = $conf["tm_event_online_reminders_enabled"];
+        }
+
         // Event is online
         $is_online_event = false;
         if (isset($node->field_event_is_online[LANGUAGE_NONE][0]['value'])) {
@@ -261,7 +267,7 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
         }
 
         // Event reminders turned off
-        if ($is_online_event and !$event_send_reminders and !tm_events_is_past_event($node, 60)) {
+        if ($reminders_enabled and $is_online_event and !$event_send_reminders and !tm_events_is_past_event($node, 60)) {
           $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Event reminders are " . l("disabled", "/node/" . $nid . "/edit", array('attributes' => array('class' => array('report-flagged-link')))) . "</span><br>";
           $links['event'][] = array(
             'wrapper_class' => array('event_last_sent'),
@@ -271,7 +277,7 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
 
         // Preview test emails
         // Don't show for past events
-        if ($is_online_event and $event_send_reminders and !tm_events_is_past_event($node, 60)) {
+        if ($reminders_enabled and $is_online_event and $event_send_reminders and !tm_events_is_past_event($node, 60)) {
           
           // Preview 1hr30min reminder
           $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Preview " . l("1 day", "/events/send-test-reminder/" . $nid . "/24hr", array('attributes' => array('class' => array('report-flagged-link')))) . " reminder</span><br>";
@@ -536,7 +542,7 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
       // check permission
       if ($check_permission_edit_event) {
 
-         // Get live stream URL
+        // Get live stream URL
         $livestream_url = tm_event_get_livestream_url($node);
 
         // Get youtube video id
@@ -547,34 +553,39 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
 
            $links['event'][] = array(
             'wrapper_class' => array('event_moderation_go_live'),
-            'content' => l(t('Go live'), "/events/display-live-stream-callback/" . $node->nid . "/on", array(
+            'content' => l(t('Go Live'), "/events/display-live-stream-callback/" . $node->nid . "/on", array(
               'attributes' => array(
-                'title' => t('Go live'),
+                'title' => t('Go Live'),
                 'class' => 'tm-go-live-button',
               )
             ))
           );
 
-          // Scheduled
-          // How long until scheduled to go live
-          $scheduled_text = "";
-          $event_date = field_get_items('node',$node,'field_event_date');
-          $current_date = new DateTime('now', new DateTimeZone('UTC'));
-          $event_timezone = _tm_get_event_timezone($node);
-          $event_datetime = new DateTime($event_date[0]['value'], new DateTimeZone($event_timezone));
-          if (($event_datetime->format('U') - $current_date->format('U')) > 0) {
-            $scheduled_text = "Scheduled in " . _tm_event_time_elapsed($event_datetime->format('U') - $current_date->format('U'));
-          }
-          if (tm_events_is_past_event($node, 60)) {
-            $scheduled_text = "Past event";
-          }
+          // Show scheduled time if automated schedule enabled
+          if (isset($conf["tm_event_online_livestream_schedule_enabled"])) {
+            if ($conf["tm_event_online_livestream_schedule_enabled"]) {
 
-          $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>" . $scheduled_text . "</span><br>";
-          $links['event'][] = array(
-            'wrapper_class' => array('event_moderation_go_live'),
-            'content' => t($last_sent_text),
-          );
+              // Scheduled
+              // How long until scheduled to go live
+              $scheduled_text = "";
+              $event_date = field_get_items('node',$node,'field_event_date');
+              $current_date = new DateTime('now', new DateTimeZone('UTC'));
+              $event_timezone = _tm_get_event_timezone($node);
+              $event_datetime = new DateTime($event_date[0]['value'], new DateTimeZone($event_timezone));
+              if (($event_datetime->format('U') - $current_date->format('U')) > 0) {
+                $scheduled_text = "Scheduled in " . _tm_event_time_elapsed($event_datetime->format('U') - $current_date->format('U'));
+              }
 
+              if ($scheduled_text != "") {
+                $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 1.5em;'>" . $scheduled_text . "</span><br>";
+                $links['event'][] = array(
+                  'wrapper_class' => array('event_moderation_go_live'),
+                  'content' => t($last_sent_text),
+                );
+              }
+             
+            }
+          }
         }
 
         // End live stream button
@@ -582,10 +593,10 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
 
            $links['event'][] = array(
             'wrapper_class' => array('event_moderation_chatbox'),
-            'content' => l(t('End live stream'), "/events/display-live-stream-callback/" . $node->nid . "/off", array(
+            'content' => l(t('End Live Stream'), "/events/display-live-stream-callback/" . $node->nid . "/off", array(
               'attributes' => array(
-                'title' => t('End live stream'),
-                'class' => 'tm-go-live-button',
+                'title' => t('End Live Stream'),
+                'class' => 'tm-end-live-button',
               )
             ))
           );

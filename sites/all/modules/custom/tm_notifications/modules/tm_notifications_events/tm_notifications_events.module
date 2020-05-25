@@ -383,14 +383,14 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
 
     // register event message
     $message = "";
-    if ($online_instructions == "") {
-       $message = "<br>";
-    }
     if (isset($event->field_register_event_message['und'][0]['value'])) {
       $message = trim(strip_tags(check_plain($event->field_register_event_message['und'][0]['value'])));
       $message = str_replace("\n", "<br>", $message); // add line breaks
       if ($message != "") {
         $message = "<br><strong>Additional Information</strong>:<p>" . $message . "</p>";
+        if ($online_instructions == "") {
+          $message = "<br>" . $message;
+        }
       }
     }
 

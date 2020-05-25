@@ -68,7 +68,11 @@
 	$("#edit-field-event-livestream-video-url-und-0-value").change(function() {
 		if ($("#edit-field-event-livestream-video-url-und-0-value").val().includes("youtu")) {
 			if ($("#edit-field-event-online-instructions-und-0-value").val() == "") {
-				$("#edit-field-event-online-instructions-und-0-value").val("Watch the live stream on the event page");
+				if ($("#edit-field-event-chatbox-enabled-und").prop("checked") == true) {
+					$("#edit-field-event-online-instructions-und-0-value").val("Watch the live stream on the event page and join the live chat.");
+				} else {
+					$("#edit-field-event-online-instructions-und-0-value").val("Watch the live stream on the event page.");
+				}
 			}
 		}
 	});

@@ -674,6 +674,7 @@ function tm_events_render_short_timezones($event) {
   $first_date = true;
   $count = 1;
   $max_timezones = 3;
+  $last_offset = null;
   foreach ($event_timezones as $timezone => $timezone_name) {
 
     // limit timezones
@@ -694,8 +695,16 @@ function tm_events_render_short_timezones($event) {
     // Get timezone offset from event time
     $timezone_offset = tm_events_get_timezone_offset($event_timezone, $timezone) / 3600;
 
-    // Don't show timezones > 6 hours
-    if (abs($timezone_offset) > 6) { 
+    // If next offset is 2 or less hours difference, don't show it
+    if ($last_offset != null) {
+      if (abs($last_offset - $timezone_offset) < 3) {
+        continue;
+      }
+    }
+
+    // Don't show timezone if its too early or too late
+    $start_hour = intval($event_date->format("G"));
+    if (($start_hour < 8) or ($start_hour > 22)) {
       continue;
     }
 
@@ -708,8 +717,15 @@ function tm_events_render_short_timezones($event) {
     }
 
     // time and city
-    $html_parts[] = $event_date->format($time_format) . " " . $timezone_name;
+    $timezone_label = $event_date->format($time_format) . " " . $timezone_name;
 
+    // Shorten 8:00 am to 8am, 10:00 pm to 10pm, etc
+    $timezone_label = str_replace(":00 am", "am", $timezone_label);
+    $timezone_label = str_replace(":00 pm", "pm", $timezone_label);
+
+    $html_parts[] = $timezone_label;
+
+    $last_offset = $timezone_offset;
     $count++;
 
   }

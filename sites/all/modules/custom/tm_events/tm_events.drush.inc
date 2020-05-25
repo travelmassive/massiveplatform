@@ -677,12 +677,17 @@ function tm_events_generate_reminder_message($event, $message_template, $headlin
 				// 1. job_role at organisation_name
 				// 2. organization_name
 				// 3. job_role
-				if ((strlen($sub_title) < 55) and (strlen($sub_title) > 3)) {
+				/*if ((strlen($sub_title) < 55) and (strlen($sub_title) > 3)) {
 					$featured_member_html .= ", " . $sub_title;
 				} elseif ((strlen($organization_name) < 55) and (strlen($organization_name) > 3)) {
 					$featured_member_html .= ", " . $organization_name;
 				} elseif ((strlen($job_role) < 55) and (strlen($job_role) > 3)) {
 					$featured_member_html .= ", " . $job_role;
+				}*/
+
+				// Only show organisation name (neater)
+				if ((strlen($organization_name) < 55) and (strlen($organization_name) > 3)) {
+					$featured_member_html .= ", " . $organization_name;
 				}
 
 				$featured_member_html .= "</li>";

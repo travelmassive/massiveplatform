@@ -33,14 +33,62 @@ function tm_events_flag_flag($flag, $entity_id, $account, $flagging) {
   // Option 1. Chapter event
   if ($typeof_event == "chapter_event") {
 
-    // (Note: automatically join chapter)
+    // Automatically join chapter if any of the following:
+    // Case 1. Event is not online event (ie: in person)
+    // Case 2. Event chapter is a group (ie: online group)
+    // Case 3. Member country is same as event country (more relevant)
+    // Note: New users will still join the event chapter (via chapter_referral_id)
 
-    // join chapter
+    $join_chapter = false;
     $chapter_id = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
-    $signup_flag = flag_get_flag('signup');
-    if (!$signup_flag->is_flagged($chapter_id, $account->uid)) {
-      flag('flag', 'signup', $chapter_id, $user);
-    } 
+    $event_chapter = node_load($chapter_id);
+
+    // Case 1. Not online event
+    if (!tm_events_is_online_event($event)) {
+       $join_chapter = true;
+    }
+
+    // Case 2. Event chapter is a group
+    if (tm_chapters_chapter_is_group($event_chapter)) {
+      $join_chapter = true;
+    }
+
+    // Case 3. Member country is same as event country
+
+    // Get user's country
+    $users_country = null;
+    if (isset($user->field_user_country[LANGUAGE_NONE][0]['iso2'])) {
+      $users_country = $user->field_user_country[LANGUAGE_NONE][0]['iso2'];
+    }
+
+    // Get event country
+    $country_code = null;
+    if (isset($event_chapter->field_country[LANGUAGE_NONE][0]['iso2'])) {
+      $country_code = $event_chapter->field_country[LANGUAGE_NONE][0]['iso2'];
+    }
+
+    // In same country
+    if ($users_country == $country_code) {
+      $join_chapter = true;
+    }
+
+    // Show help tip to view chapter if not automatically joining
+    if (!$join_chapter) {
+      if (!tm_chapters_is_member_of_chapter($user, $event_chapter)) {
+        $chapter_name = tm_chapters_formal_name($event_chapter);
+        $chapter_url = drupal_get_path_alias("node/" . $chapter_id);
+        drupal_set_message("Learn more about the <a href='/" . $chapter_url . "'>" . $chapter_name . "</a> community and how to get involved", "help-tip");
+      }
+    }
+
+    // Join chapter
+    if ($join_chapter) {
+      $signup_flag = flag_get_flag('signup');
+      if (!$signup_flag->is_flagged($chapter_id, $account->uid)) {
+        flag('flag', 'signup', $chapter_id, $user);
+      } 
+    }
+
   }
 
   // Option 2. Company event

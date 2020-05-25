@@ -734,3 +734,16 @@ function tm_events_get_event_country_name($event) {
   return $event_chapter_country;
 }
 
+/**
+ * Helper method if event is online
+ */
+function tm_events_is_online_event($event) {
+
+  // if online event is set
+  if (isset($event->field_event_is_online[LANGUAGE_NONE][0]['value'])) {
+    return ($event->field_event_is_online[LANGUAGE_NONE][0]['value'] == 1);
+  }
+
+  // not online event
+  return false;
+}

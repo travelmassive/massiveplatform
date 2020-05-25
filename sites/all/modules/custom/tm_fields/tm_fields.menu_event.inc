@@ -590,9 +590,9 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
 
            $links['event'][] = array(
             'wrapper_class' => array('event_moderation_chatbox'),
-            'content' => l(t('End Live Stream'), "/events/display-live-stream-callback/" . $node->nid . "/off", array(
+            'content' => l(t('End Live View'), "/events/display-live-stream-callback/" . $node->nid . "/off", array(
               'attributes' => array(
-                'title' => t('End Live Stream'),
+                'title' => t('End Live View'),
                 'class' => 'tm-end-live-button',
               )
             ))

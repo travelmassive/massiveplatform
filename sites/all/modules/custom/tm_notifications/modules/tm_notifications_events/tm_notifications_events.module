@@ -349,30 +349,6 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
     }
   }
 
-  // Get instructions
-  $online_instructions = "";
-  if (isset($event->field_event_online_instructions[LANGUAGE_NONE][0]['value'])) {
-     $online_instructions = trim(strip_tags($event->field_event_online_instructions[LANGUAGE_NONE][0]['value']));
-  }
-
-  if ($online_instructions != "") {
-     // add markdown support, or add line breaks
-    if (tm_base_check_markdown_permission("event", $event->nid)) {
-      $online_instructions = $online_instructions;
-      $online_instructions = tm_base_parsedown($online_instructions, null, false);
-      $online_instructions = str_replace("\n", "", $online_instructions);
-    } else {
-      $online_instructions = str_replace("\n", "<br>", $online_instructions); // add line breaks
-      $online_instructions = preg_replace("/[-]{4,10}/", "<hr>", $online_instructions); // replace ---- with hr
-      $online_instructions = tm_base_linkify($online_instructions, ["http", "https", "mail", "twitter"]); // add links
-    }
-    $online_instructions_heading = "👉 How to join us LIVE";
-    if (isset($conf["tm_event_online_reminder_instructions_heading"])) {
-      $online_instructions_heading = $conf["tm_event_online_reminder_instructions_heading"];
-    }
-    $online_instructions = "<br>" . $online_instructions_heading . "<p>" . $online_instructions . "</p>";
-  }
- 
   // events_register_flag
   $map_link_url = "";
   if ($event->field_map_link != null) {
@@ -380,6 +356,30 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
   }
 
   if (($flag_or_unflag == "flag") && ($flag->name == 'event_register')) {
+
+    // Get instructions
+    $online_instructions = "";
+    if (isset($event->field_event_online_instructions[LANGUAGE_NONE][0]['value'])) {
+       $online_instructions = trim(strip_tags($event->field_event_online_instructions[LANGUAGE_NONE][0]['value']));
+    }
+
+    if ($online_instructions != "") {
+       // add markdown support, or add line breaks
+      if (tm_base_check_markdown_permission("event", $event->nid)) {
+        $online_instructions = $online_instructions;
+        $online_instructions = tm_base_parsedown($online_instructions, null, false);
+        $online_instructions = str_replace("\n", "", $online_instructions);
+      } else {
+        $online_instructions = str_replace("\n", "<br>", $online_instructions); // add line breaks
+        $online_instructions = preg_replace("/[-]{4,10}/", "<hr>", $online_instructions); // replace ---- with hr
+        $online_instructions = tm_base_linkify($online_instructions, ["http", "https", "mail", "twitter"]); // add links
+      }
+      $online_instructions_heading = "👉 How to join us LIVE";
+      if (isset($conf["tm_event_online_reminder_instructions_heading"])) {
+        $online_instructions_heading = $conf["tm_event_online_reminder_instructions_heading"];
+      }
+      $online_instructions = "<br>" . $online_instructions_heading . "<p>" . $online_instructions . "</p>";
+    }
 
     // register event message
     $message = "";
@@ -389,6 +389,11 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
       if ($message != "") {
         $message = "<br><strong>Additional Information</strong>:<p>" . $message . "</p>";
       }
+    }
+
+    // add additional line break if no message and online instructions
+    if (($message == "") and ($online_instructions == "")) {
+      $message = "<br>";
     }
 
     // Adjust text for paid ticket

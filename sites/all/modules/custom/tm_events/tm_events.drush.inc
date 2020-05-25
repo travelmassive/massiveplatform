@@ -88,7 +88,7 @@ function tm_events_livestream_tasks_drush() {
 	}
 
 	// get upcoming events in next 24 hours (we don't know timezone yet)
-	$query = "SELECT entity_id FROM field_data_field_event_date WHERE entity_type = 'node' and bundle = 'event' and field_event_date_value > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY field_event_date_value ASC";
+	$query = "SELECT entity_id FROM field_data_field_event_date WHERE entity_type = 'node' AND bundle = 'event' AND field_event_date_value > DATE_SUB(NOW(), INTERVAL 1 DAY) AND field_event_date_value < DATE_ADD(NOW(), INTERVAL 2 DAY) ORDER BY field_event_date_value ASC";
 	$event_ids = db_query($query)->fetchAll();
 	$event_data = array();
 

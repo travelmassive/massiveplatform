@@ -77,7 +77,7 @@ function tm_events_flag_flag($flag, $entity_id, $account, $flagging) {
       if (!tm_chapters_is_member_of_chapter($user, $event_chapter)) {
         $chapter_name = tm_chapters_formal_name($event_chapter);
         $chapter_url = drupal_get_path_alias("node/" . $chapter_id);
-        drupal_set_message("Learn more about the <a href='/" . $chapter_url . "'>" . $chapter_name . "</a> community and how to get involved", "help-tip");
+        drupal_set_message("Learn more about the <a href='/" . $chapter_url . "'>" . $chapter_name . "</a> community and how to get involved.", "help-tip");
       }
     }
 

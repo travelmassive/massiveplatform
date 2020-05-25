@@ -29,4 +29,48 @@
 		}
 	});
 
+	// Online event settings
+	$("#edit-field-event-is-online-und").change(function() {
+
+		// If online event checked
+		if ($("#edit-field-event-is-online-und").prop("checked") == true) {
+
+			// Turn on reminders
+			$("#edit-field-event-send-reminders-und").prop("checked", true);
+
+			// Default value for venue name
+			if ($("#edit-field-event-venue-name-und-0-value").val() == "") {
+				$("#edit-field-event-venue-name-und-0-value").val("This is an online event");
+			}
+
+			// Default value for location
+			if ($("#edit-field-location-und-0-value").val() == "") {
+				$("#edit-field-location-und-0-value").val("Join us online");
+			}
+		}
+
+		// If not online event, turn off reminders
+		if ($("#edit-field-event-is-online-und").prop("checked") == false) {
+			$("#edit-field-event-send-reminders-und").prop("checked", false);
+		}
+
+	});
+
+	// Event reminder settings
+	$("#edit-field-event-send-reminders-und").change(function() {
+		if ($("#edit-field-event-is-online-und").prop("checked") == false) {
+			jq_alert(null, "Reminders are only available for <i>Online Events</i>.");
+			$("#edit-field-event-send-reminders-und").prop("checked", false);
+		}
+	});
+
+	// Default value for event instructions if YouTube url entered
+	$("#edit-field-event-livestream-video-url-und-0-value").change(function() {
+		if ($("#edit-field-event-livestream-video-url-und-0-value").val().includes("youtu")) {
+			if ($("#edit-field-event-online-instructions-und-0-value").val() == "") {
+				$("#edit-field-event-online-instructions-und-0-value").val("Watch the live stream on the event page");
+			}
+		}
+	});
+
 });})(jQuery, Drupal, this, this.document);

@@ -43,11 +43,9 @@ function tm_events_communication_form($event) {
 
   // Get company associated with event if there is one
   $company = null;
-  if (isset($event->field_event_company[LANGUAGE_NONE])) {
-    if (sizeof($event->field_event_company[LANGUAGE_NONE][0] > 0)) {
-      $company_id = $event->field_event_company[LANGUAGE_NONE][0]['target_id'];
-      $company = node_load($company_id);
-    }
+  if (isset($event->field_event_company[LANGUAGE_NONE][0]['target_id'])) {
+    $company_id = $event->field_event_company[LANGUAGE_NONE][0]['target_id'];
+    $company = node_load($company_id);
   }
 
   // Set event id in form
@@ -471,19 +469,24 @@ function tm_events_test_email_ajax(){
 /**
  * Submit function of communication ajax request
  */
-function tm_events_send_emails($recipients, $subject, $message, $event_image_src, $event_image_link, $eventid, $chapterids, $replyto = "", $approved_members = true, $headline_text = ""){
-
-  global $user;
+function tm_events_send_emails($recipients, $subject, $message, $event_image_src, $event_image_link, $eventid, $chapterids, $replyto = "", $approved_members = true, $headline_text = "", $account, $drush_command = false) {
 
   // permission check
   $event = node_load($eventid);
-  if (!tm_events_check_permission_announce_event($user, $event)) {
-    print(json_encode(array("sent" => 0)));
-    return;
+  if (!$drush_command) { 
+    if (!tm_events_check_permission_announce_event($account, $event)) {
+      print(json_encode(array("sent" => 0)));
+      return;
+    }
   }
 
   // moderator permission
-  $perm_is_moderator_or_admin = ((in_array("moderator", $user->roles)) || (in_array("administrator", $user->roles)));
+  $perm_is_moderator_or_admin = ((in_array("moderator", $account->roles)) || (in_array("administrator", $account->roles)));
+  
+  // drush command is moderator
+  if ($drush_command) {
+    $perm_is_moderator_or_admin = true;
+  }
 
   // all these user lists are just flags to event or chapter
   $rsvpflag = flag_get_flag('event_register', NULL);
@@ -497,7 +500,7 @@ function tm_events_send_emails($recipients, $subject, $message, $event_image_src
   // ie: chapterid = 123,456,789 (multiple)
   if ($chapterids != "") {
     if (strpos($chapterids, ",") !== false) {
-      $chapterids = explode(", ", $chapterids);
+      $chapterids = explode(",", $chapterids);
     } else {
       $chapterids = array($chapterids);
     }
@@ -508,7 +511,7 @@ function tm_events_send_emails($recipients, $subject, $message, $event_image_src
   // Check that user has permission to announce to chapter
   $combined_chapter_nids = array();
   foreach ($chapterids as $chapterid) {
-    if (!(tm_users_is_chapter_leader($user->uid, $chapterid) or ($perm_is_moderator_or_admin))) {
+    if (!(tm_users_is_chapter_leader($account->uid, $chapterid) or ($perm_is_moderator_or_admin))) {
       print(json_encode(array("sent" => 0)));
       return;
     }
@@ -627,7 +630,7 @@ function tm_events_send_emails($recipients, $subject, $message, $event_image_src
     $results = db_select('flagging', 'f')
       ->fields('f')
       ->condition('fid', $follow_members->fid ,'=')
-      ->condition('entity_id', $user->uid ,'=')
+      ->condition('entity_id', $account->uid ,'=')
       ->execute();
 
     // create user_ids list from results
@@ -641,21 +644,18 @@ function tm_events_send_emails($recipients, $subject, $message, $event_image_src
    
     $load_event = node_load($eventid);
     $company_id = null;
-    if (isset($load_event->field_event_company[LANGUAGE_NONE])) {
-      if (sizeof($load_event->field_event_company[LANGUAGE_NONE][0] > 0)) {
-        $company_id = $load_event->field_event_company[LANGUAGE_NONE][0]['target_id'];
+    if (isset($load_event->field_event_company[LANGUAGE_NONE][0]['target_id'])) {
+      $company_id = $load_event->field_event_company[LANGUAGE_NONE][0]['target_id'];
 
-        $results = db_select('flagging', 'f')
-          ->fields('f')
-          ->condition('fid', $follow_organizations->fid ,'=')
-          ->condition('entity_id', $company_id ,'=')
-          ->execute();
+      $results = db_select('flagging', 'f')
+        ->fields('f')
+        ->condition('fid', $follow_organizations->fid ,'=')
+        ->condition('entity_id', $company_id ,'=')
+        ->execute();
 
-        // create user_ids list from results
-        while ($result = $results->fetchAssoc()){
-          $user_ids[] = $result['uid'];
-        }
-
+      // create user_ids list from results
+      while ($result = $results->fetchAssoc()){
+        $user_ids[] = $result['uid'];
       }
     }
   }
@@ -884,9 +884,10 @@ function tm_events_send_email($uid, $email, $subject, $message, $event_image_src
   $template = str_replace("__UNSUBSCRIBE_LINK__", $unsubscribe_link, $template);
 
 
-  $secret_hash = tm_notifications_generate_secret_hash($account->uid, $notification_name); 
-  $tokens["UNSUBSCRIBE_NOTIFICATION_LINK"] = "user/" . $account->uid . "/unsubscribe/" . $notification_name . "/" . $secret_hash;
- 
+  // $secret_hash = tm_notifications_generate_secret_hash($account->uid, $notification_name); 
+  // $tokens["UNSUBSCRIBE_NOTIFICATION_LINK"] = "user/" . $account->uid . "/unsubscribe/" . $notification_name . "/" . $secret_hash;
+  $tokens["UNSUBSCRIBE_NOTIFICATION_LINK"] = "";
+
   /*$unsubscribe_link = "<a href='__SERVER_HTTP__://__SERVER_NAME__/" . $params['tokens']['UNSUBSCRIBE_NOTIFICATION_LINK'] . "'>Unsubscribe from this notification</a>";
   $template = str_replace("__UNSUBSCRIBE_LINK__", $unsubscribe_link, $template);*/
 
@@ -1026,7 +1027,7 @@ function tm_events_send_emails_ajax() {
     }
   }
 
-  $sendcount = tm_events_send_emails($recipients, $subject, $message, $event_image_src, $event_image_link, $eventid, $chapterid, $replyto, $approved_members, $headline_text);
+  $sendcount = tm_events_send_emails($recipients, $subject, $message, $event_image_src, $event_image_link, $eventid, $chapterid, $replyto, $approved_members, $headline_text, $user);
 
   // flag announcement last sent
   flag('unflag', 'announcement_last_sent', $eventid, $user);

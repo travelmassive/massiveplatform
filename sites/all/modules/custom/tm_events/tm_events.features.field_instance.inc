@@ -30,7 +30,7 @@ function tm_events_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',
-        'weight' => 4,
+        'weight' => 5,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -105,7 +105,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 31,
+        'weight' => 56,
       ),
       'grid' => array(
         'label' => 'above',
@@ -168,7 +168,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 35,
+        'weight' => 59,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -287,7 +287,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 17,
       ),
       'grid' => array(
         'label' => 'above',
@@ -344,7 +344,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 13,
+        'weight' => 48,
       ),
       'grid' => array(
         'label' => 'above',
@@ -445,7 +445,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 45,
+        'weight' => 62,
       ),
       'grid' => array(
         'label' => 'above',
@@ -501,7 +501,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 44,
       ),
       'grid' => array(
         'label' => 'above',
@@ -588,7 +588,8 @@ function tm_events_field_default_field_instances() {
     'default_value' => NULL,
     'deleted' => 0,
     'description' => 'Increase your event\'s exposure with a cover video. 
-<br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM',
+<br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM<br>
+<b>Live Streaming?</b> See the <i>Online Events</i> section below.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -601,7 +602,7 @@ function tm_events_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 42,
       ),
       'grid' => array(
         'label' => 'above',
@@ -655,7 +656,7 @@ Provide HTML markup or a template alias.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 19,
       ),
       'grid' => array(
         'label' => 'above',
@@ -715,7 +716,7 @@ Provide HTML markup or a template alias.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 34,
+        'weight' => 58,
       ),
       'grid' => array(
         'label' => 'above',
@@ -788,7 +789,7 @@ This will be added to the attendee count on the event page.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 24,
+        'weight' => 49,
       ),
       'grid' => array(
         'label' => 'above',
@@ -852,7 +853,7 @@ This will be added to the attendee count on the event page.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 46,
       ),
       'grid' => array(
         'label' => 'above',
@@ -912,7 +913,7 @@ This will be added to the attendee count on the event page.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 47,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1082,7 +1083,7 @@ This will be added to the attendee count on the event page.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 24,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1110,7 +1111,7 @@ This will be added to the attendee count on the event page.',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 8,
+      'weight' => 11,
     ),
   );
 
@@ -1136,7 +1137,7 @@ This will be added to the attendee count on the event page.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 26,
+        'weight' => 51,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1198,7 +1199,7 @@ This will be added to the attendee count on the event page.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 43,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1261,7 +1262,7 @@ This will be added to the attendee count on the event page.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 41,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1317,7 +1318,7 @@ This will be added to the attendee count on the event page.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 16,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1373,7 +1374,7 @@ This will be added to the attendee count on the event page.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 20,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1430,7 +1431,7 @@ Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 23,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1458,7 +1459,63 @@ Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 7,
+      'weight' => 10,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_livestream_on'.
+  $field_instances['node-event-field_event_livestream_on'] = array(
+    'bundle' => 'event',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Display the live stream on the event page.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 66,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 25,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_livestream_on',
+    'label' => 'Live stream on event page',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 6,
     ),
   );
 
@@ -1481,7 +1538,7 @@ Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 42,
+        'weight' => 60,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1512,7 +1569,61 @@ Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.',
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 8,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_online_instructions'.
+  $field_instances['node-event-field_event_online_instructions'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Instructions to join the online event.<br>
+This will only be displayed to registered attendees.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 71,
+      ),
+      'full' => array(
+        'label' => 'hidden',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 74,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_online_instructions',
+    'label' => 'How to join the event',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 3,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 9,
     ),
   );
 
@@ -1540,7 +1651,7 @@ Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 27,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1598,7 +1709,7 @@ Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 39,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1690,7 +1801,7 @@ Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 40,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1764,6 +1875,63 @@ Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.',
     ),
   );
 
+  // Exported field_instance: 'node-event-field_event_send_reminders'.
+  $field_instances['node-event-field_event_send_reminders'] = array(
+    'bundle' => 'event',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Chapter members are reminded <b>24 hours</b> before the event starts to register.<br>
+Registered attendees are reminded <b>1.5 hours</b> and <b>10 minutes</b> before you go live.<br>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 70,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 14,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_send_reminders',
+    'label' => 'Send reminders',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 7,
+    ),
+  );
+
   // Exported field_instance: 'node-event-field_event_sharing_image'.
   $field_instances['node-event-field_event_sharing_image'] = array(
     'bundle' => 'event',
@@ -1791,7 +1959,7 @@ Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 21,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1852,7 +2020,7 @@ Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 22,
       ),
       'grid' => array(
         'label' => 'above',
@@ -2017,7 +2185,7 @@ Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 13,
       ),
       'grid' => array(
         'label' => 'above',
@@ -2078,7 +2246,7 @@ Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 25,
+        'weight' => 50,
       ),
       'grid' => array(
         'label' => 'above',
@@ -2138,7 +2306,7 @@ Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 27,
+        'weight' => 52,
       ),
       'grid' => array(
         'label' => 'above',
@@ -2346,7 +2514,7 @@ Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 33,
+        'weight' => 57,
       ),
       'grid' => array(
         'label' => 'above',
@@ -2561,7 +2729,7 @@ Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 15,
       ),
       'grid' => array(
         'label' => 'above',
@@ -2729,7 +2897,7 @@ This will be displayed to the member on the event page and included in the autom
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 30,
+        'weight' => 55,
       ),
       'grid' => array(
         'label' => 'above',
@@ -2872,7 +3040,7 @@ This will be displayed to the member on the event page and included in the autom
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 18,
       ),
       'grid' => array(
         'label' => 'above',
@@ -2927,7 +3095,7 @@ This will be displayed to the member on the event page and included in the autom
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 29,
+        'weight' => 54,
       ),
       'grid' => array(
         'label' => 'above',
@@ -2985,6 +3153,8 @@ Provide HTML markup or a template alias.');
   t('Change Owner');
   t('Change the owner of the event.');
   t('Change the text of the RSVP button (default: RSVP)');
+  t('Chapter members are reminded <b>24 hours</b> before the event starts to register.<br>
+Registered attendees are reminded <b>1.5 hours</b> and <b>10 minutes</b> before you go live.<br>');
   t('Chapters that you publish this event to will be able to announce the event.');
   t('Check this box if you want to restrict registration and waitlist to members who are approved. Non-approved members won\'t be able to sign up.');
   t('Check this option if you want to restrict displaying the event location to registered attendees only.');
@@ -2996,6 +3166,7 @@ Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.');
   t('Description');
   t('Display event on the front page (for non-chapter events).');
   t('Display live chat');
+  t('Display the live stream on the event page.');
   t('Embed your YouTube live stream on the event page.
 <br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM');
   t('Enable an online chat box for attendee discussion.');
@@ -3019,6 +3190,7 @@ Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.');
   t('How many non-registered guests are coming?<br>
 This will be added to the attendee count on the event page.');
   t('How many people attended?');
+  t('How to join the event');
   t('Image');
   t('Include any additional information you want to provide to members only when they are waitlisted.<br>
 This will be displayed to the member on the event page and included in the automatic waitlist notification email.
@@ -3027,9 +3199,13 @@ This will be displayed to the member on the event page and included in the autom
 This will be displayed to the member on the event page and included in the automatic registration notification email.
 ');
   t('Increase your event\'s exposure with a cover video. 
-<br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM');
+<br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM<br>
+<b>Live Streaming?</b> See the <i>Online Events</i> section below.');
+  t('Instructions to join the online event.<br>
+This will only be displayed to registered attendees.');
   t('Leave blank to use the chapter\'s timezone (or UTC if no chapter for event)
 <br><br>');
+  t('Live stream on event page');
   t('Location');
   t('Map link');
   t('Members can participate online (ie: webinar, live stream, Twitter chat)
@@ -3061,6 +3237,7 @@ This will be displayed to the member on the event page and included in the autom
   t('Send event notifications when attendees register or unregister for this event<br><br>
 ');
   t('Send payout to');
+  t('Send reminders');
   t('Social media description');
   t('Social media image');
   t('Sponsors');

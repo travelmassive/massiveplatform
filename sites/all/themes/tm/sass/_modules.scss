@@ -151,6 +151,7 @@
     &.field-user-testimonial:before { @extend .icon-2016-heart-outline; font-size: 16pt;}
     &.field-company-testimonial:before { @extend .icon-2016-heart-outline; font-size: 16pt;}
     &.field-link-instant-messaging:before { @extend .icon-2016-comment-bubble; font-size: 16pt;}
+    &.detail-item.online-instructions:before { @extend .icon-mobile;}
 
     &.field-link-instant-messaging .label-above { display: none; }
     

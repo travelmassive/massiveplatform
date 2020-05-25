@@ -518,6 +518,18 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
   }
   $form['field_event_geoblock_signups'][LANGUAGE_NONE]['#options'] = $geoblock_options;
 
+  // STEP 13. Hide livestream on checkbox (we put a button in the options dropdown)
+  unset($form['field_event_livestream_on']);
+
+  // STEP 14. Hide reminders if they aren't enabled in $conf["tm_event_online_reminders_enabled"]
+  $reminders_enabled = false;
+  if (isset($conf["tm_event_online_reminders_enabled"])) {
+    $reminders_enabled = $conf["tm_event_online_reminders_enabled"];
+  }
+  if (!$reminders_enabled) {
+     unset($form['field_event_send_reminders']);
+  }
+
   // Hide discuss category id (deprecated)
   unset($form['field_event_discuss_category_id']);
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * tm_flags.features.user_permission.inc
@@ -176,6 +177,16 @@ function tm_flags_user_default_permissions() {
       'approved user' => 'approved user',
       'chapter leader' => 'chapter leader',
       'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'flag reminder_last_sent'.
+  $permissions['flag reminder_last_sent'] = array(
+    'name' => 'flag reminder_last_sent',
+    'roles' => array(
+      'approved user' => 'approved user',
+      'authenticated user' => 'authenticated user',
     ),
     'module' => 'flag',
   );
@@ -367,6 +378,16 @@ function tm_flags_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'moderator' => 'moderator',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag reminder_last_sent'.
+  $permissions['unflag reminder_last_sent'] = array(
+    'name' => 'unflag reminder_last_sent',
+    'roles' => array(
+      'approved user' => 'approved user',
+      'authenticated user' => 'authenticated user',
     ),
     'module' => 'flag',
   );

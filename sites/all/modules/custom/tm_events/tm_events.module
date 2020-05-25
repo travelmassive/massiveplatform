@@ -22,6 +22,7 @@ include_once 'tm_events.moderation.inc';
 include_once 'tm_events.grants.inc';
 include_once 'tm_events.chatbox.inc';
 include_once 'tm_events.livestream.inc';
+include_once 'tm_events.drush.inc';
 
 /*
 * Implements hook_menu()
@@ -123,6 +124,20 @@ function tm_events_menu() {
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
+  $items['events/send-test-reminder/%/%'] = array(
+    'title' => t('Send test reminder email'),
+    'page callback' => 'tm_events_send_test_reminder_callback',
+    'page arguments' => array(2, 3),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+  $items['events/display-live-stream-callback/%/%'] = array(
+    'title' => t('Display live stream callback'),
+    'page callback' => 'tm_events_livestream_toggle_callback',
+    'page arguments' => array(2, 3),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
   return $items;
 }
 
@@ -183,6 +198,13 @@ function tm_events_ds_fields_info($entity_type) {
     'field_type' => DS_FIELD_TYPE_FUNCTION,
     'ui_limit' => array('event|full',),
     'function' => '_tm_event_livestream'
+  );
+
+  $fields['tm_ds_event_online_instructions'] = array(
+    'title' => t('Online instructions'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('event|full',),
+    'function' => '_tm_event_online_instructions'
   );
 
   return array($entity_type => $fields);
@@ -460,12 +482,9 @@ function tm_events_node_view($node, $view_mode, $langcode) {
           $label = "Event replay";
         }
         $message = $label . " is now displayed to <b>" . $livestream_mode_label . "</b>. ";
-        $message .= "Moderater tools &mdash; ";
-        $message .= "<a target='_blank' href='" . $livestream_external_url . "'>View on YouTube</a> &middot; ";
-        $message .= "<a target='_blank' href='/events/moderation-chatbox/" . $node->nid . "'>Chat moderation</a> &middot; ";
-        $message .= "<a target='_blank' href='/events/send-announcement/" . $node->nid . "'>Send announcement</a> &middot; ";
-        $message .= "<a href='/node/" . $node->nid . "/edit'>Event settings</a>";
 
+        drupal_add_css(".tm-more-actions { position: absolute; top: 26px; right: 26px; list-style: none;", "inline");
+        drupal_add_js("jQuery(document).ready(function () { jQuery('.tm-more-actions').appendTo('.header-wrapper'); });", "inline");
         drupal_set_message($message, "help-tip");
       }
     } else {

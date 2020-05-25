@@ -349,6 +349,30 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
     }
   }
 
+  // Get instructions
+  $online_instructions = "";
+  if (isset($event->field_event_online_instructions[LANGUAGE_NONE][0]['value'])) {
+     $online_instructions = trim(strip_tags($event->field_event_online_instructions[LANGUAGE_NONE][0]['value']));
+  }
+
+  if ($online_instructions != "") {
+     // add markdown support, or add line breaks
+    if (tm_base_check_markdown_permission("event", $event->nid)) {
+      $online_instructions = $online_instructions;
+      $online_instructions = tm_base_parsedown($online_instructions, null, false);
+      $online_instructions = str_replace("\n", "", $online_instructions);
+    } else {
+      $online_instructions = str_replace("\n", "<br>", $online_instructions); // add line breaks
+      $online_instructions = preg_replace("/[-]{4,10}/", "<hr>", $online_instructions); // replace ---- with hr
+      $online_instructions = tm_base_linkify($online_instructions, ["http", "https", "mail", "twitter"]); // add links
+    }
+    $online_instructions_heading = "👉 How to join us LIVE";
+    if (isset($conf["tm_event_online_reminder_instructions_heading"])) {
+      $online_instructions_heading = $conf["tm_event_online_reminder_instructions_heading"];
+    }
+    $online_instructions = "<br>" . $online_instructions_heading . "<p>" . $online_instructions . "</p>";
+  }
+ 
   // events_register_flag
   $map_link_url = "";
   if ($event->field_map_link != null) {
@@ -418,7 +442,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
       $hero_headline = tm_notifications_render_hero_headline_html($headline);
     }
 
-    tm_notifications_notify('events_register_flag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url, '__MAP_LINK__' => $map_link_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time, '__REGISTER_EVENT_MESSAGE__' => $message, '__REGISTER_SUBJECT__' => $member_register_subject, '__REGISTER_INTRO__' => $member_register_intro, '__REGISTER_PAYMENT_NOTE__' => $member_register_payment_note, '__EVENT_CALENDAR_LINK__' => $event_calendar_link, '__MODERATOR_MESSAGE__' => $moderator_message, '__HERO_HEADLINE__' => $hero_headline));
+    tm_notifications_notify('events_register_flag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url, '__MAP_LINK__' => $map_link_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time, '__ONLINE_INSTRUCTIONS__' => $online_instructions, '__REGISTER_EVENT_MESSAGE__' => $message, '__REGISTER_SUBJECT__' => $member_register_subject, '__REGISTER_INTRO__' => $member_register_intro, '__REGISTER_PAYMENT_NOTE__' => $member_register_payment_note, '__EVENT_CALENDAR_LINK__' => $event_calendar_link, '__MODERATOR_MESSAGE__' => $moderator_message, '__HERO_HEADLINE__' => $hero_headline));
   }
 
   // events_register_unflag

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * tm_flags.features.inc
@@ -278,11 +279,11 @@ function tm_flags_flag_default_flags() {
     'access_author' => '',
     'show_contextual_link' => 0,
     'i18n' => 0,
-    'api_version' => 3,
     'module' => 'tm_flags',
     'locked' => array(
       0 => 'name',
     ),
+    'api_version' => 3,
   );
   // Exported flag: "Event Register".
   $flags['event_register'] = array(
@@ -653,6 +654,44 @@ function tm_flags_flag_default_flags() {
       0 => 'name',
     ),
     'api_version' => 3,
+  );
+  // Exported flag: "Reminder Last Sent".
+  $flags['reminder_last_sent'] = array(
+    'entity_type' => 'node',
+    'title' => 'Reminder Last Sent',
+    'global' => 1,
+    'types' => array(
+      0 => 'event',
+    ),
+    'flag_short' => 'Flag this item',
+    'flag_long' => '',
+    'flag_message' => '',
+    'unflag_short' => 'Unflag this item',
+    'unflag_long' => '',
+    'unflag_message' => '',
+    'unflag_denied_text' => '',
+    'link_type' => 'normal',
+    'weight' => 0,
+    'show_in_links' => array(
+      'full' => 0,
+      'teaser' => 0,
+      'rss' => 0,
+      'diff_standard' => 0,
+      'token' => 0,
+      'grid' => 0,
+      'list' => 0,
+      'revision' => 0,
+    ),
+    'show_as_field' => 0,
+    'show_on_form' => 0,
+    'access_author' => '',
+    'show_contextual_link' => 0,
+    'i18n' => 0,
+    'api_version' => 3,
+    'module' => 'tm_flags',
+    'locked' => array(
+      0 => 'name',
+    ),
   );
   // Exported flag: "Remove member from chapter".
   $flags['remove_member_from_chapter'] = array(

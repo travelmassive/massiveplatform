@@ -87,7 +87,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Who\'s Going?',
-    'weight' => '10',
+    'weight' => '12',
     'children' => array(
       0 => 'members_signed_up',
     ),
@@ -110,7 +110,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'About',
-    'weight' => '6',
+    'weight' => '8',
     'children' => array(
       0 => 'body',
       1 => 'tm_ds_event_price',
@@ -118,6 +118,7 @@ function tm_events_field_group_info() {
       3 => 'tm_ds_fulldate_event',
       4 => 'tm_ds_event_message',
       5 => 'tm_ds_event_location',
+      6 => 'tm_ds_event_online_instructions',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -260,13 +261,16 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Online Events',
-    'weight' => '1',
+    'weight' => '2',
     'children' => array(
       0 => 'field_event_is_online',
       1 => 'field_event_livestream_video_url',
       2 => 'field_event_chatbox_enabled',
       3 => 'field_event_livestream_mode',
       4 => 'field_event_geoblock_signups',
+      5 => 'field_event_livestream_on',
+      6 => 'field_event_send_reminders',
+      7 => 'field_event_online_instructions',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -378,7 +382,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Featured Members',
-    'weight' => '8',
+    'weight' => '10',
     'children' => array(
       0 => 'field_event_featured_members',
     ),
@@ -403,7 +407,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'About',
-    'weight' => '2',
+    'weight' => '1',
     'children' => array(
       0 => 'field_external_rsvp',
       1 => 'field_signup_limit',
@@ -472,7 +476,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '28',
+    'weight' => '53',
     'children' => array(
       0 => 'field_event_venue_name',
       1 => 'field_location',
@@ -537,7 +541,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Organizers',
-    'weight' => '9',
+    'weight' => '11',
     'children' => array(
       0 => 'field_organizer',
     ),
@@ -589,7 +593,7 @@ function tm_events_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Sponsors',
-    'weight' => '7',
+    'weight' => '9',
     'children' => array(
       0 => 'field_event_sponsors',
     ),

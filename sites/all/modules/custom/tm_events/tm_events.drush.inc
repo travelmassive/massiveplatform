@@ -642,7 +642,7 @@ function tm_events_generate_reminder_message($event, $message_template, $headlin
 				// create link
 				$featured_member_html = "<li>";
 				$featured_member_html .= "<a href='" . $featured_member_url . "'>";
-				$featured_member_html .= trim(strip_tags($account->field_user_first_name[LANGUAGE_NONE][0]['value'])) . " " . trim(strip_tags($account->field_user_first_name[LANGUAGE_NONE][0]['value']));
+				$featured_member_html .= trim(strip_tags($account->field_user_first_name[LANGUAGE_NONE][0]['value'])) . " " . trim(strip_tags($account->field_user_last_name[LANGUAGE_NONE][0]['value']));
 				$featured_member_html .= "</a>";
 
 				// job role, and name

@@ -507,7 +507,7 @@ function tm_events_send_emails($recipients, $subject, $message, $event_image_src
   } else {
     $chapterids = array();
   }
- 
+
   // Check that user has permission to announce to chapter
   $combined_chapter_nids = array();
   foreach ($chapterids as $chapterid) {
@@ -618,10 +618,14 @@ function tm_events_send_emails($recipients, $subject, $message, $event_image_src
       while ($result = $results->fetchAssoc()){
         $members_who_have_waitlist[] = $result['uid'];
       }
-    }
 
-    // we only want people who are in the chapter who have not registered or waitlist
-    $user_ids = array_diff($members_in_chapter, $members_who_have_rsvp, $members_who_have_waitlist);
+      // we only want people who are in the chapter who have not registered or waitlist
+      $chapter_user_ids = array_diff($members_in_chapter, $members_who_have_rsvp, $members_who_have_waitlist);
+
+      // merge with user ids
+      $user_ids = array_merge($user_ids, $chapter_user_ids);
+
+    }
   }
 
   // Member Followers

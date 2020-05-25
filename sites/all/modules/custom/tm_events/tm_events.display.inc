@@ -142,7 +142,9 @@ function _tm_event_location($field, $title = NULL) {
   // Render the location html
   $html = '<h2><span>Location</span></h2>';
   $html .= '<div class="detail-venue-name">' . t($event_venue_name) . '</div>';
-  $html .= '<div class="detail-venue-address">' . str_replace("\n", "<br>", t($event_location)) . '</div>';
+  if ($event_location != "Join us online") {
+    $html .= '<div class="detail-venue-address">' . str_replace("\n", "<br>", t($event_location)) . '</div>';
+  }
   if ($event_map_link) {
     $html .= '<div class="detail-venue-link"><a href="' . t($event_map_link) . '" rel="nofollow noopener" target="_blank">View map</a></div>';
   }

@@ -708,7 +708,13 @@ function tm_events_render_short_timezones($event) {
     }
 
     // time and city
-    $html_parts[] = $event_date->format($time_format) . " " . $timezone_name;
+    $timezone_label = $event_date->format($time_format) . " " . $timezone_name;
+
+    // Shorten 8:00 am to 8am, 10:00 pm to 10pm, etc
+    $timezone_label = str_replace(":00 am", "am", $timezone_label);
+    $timezone_label = str_replace(":00 pm", "pm", $timezone_label);
+
+    $html_parts[] = $timezone_label;
 
     $count++;
 

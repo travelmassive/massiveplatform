@@ -1620,7 +1620,7 @@ This will only be displayed to registered attendees.',
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'rows' => 3,
+        'rows' => 5,
       ),
       'type' => 'text_textarea',
       'weight' => 9,

@@ -41,6 +41,9 @@ function tm_events_livestream_tasks_drush() {
 
 	global $conf;
 
+	// timestamp
+	drush_print("\nStart: " . date("Y-m-d H:i:s T O"));
+
 	// check config
 	$livestream_schedule_enabled = false;
 	if (isset($conf["tm_event_online_livestream_schedule_enabled"])) {
@@ -79,7 +82,9 @@ function tm_events_livestream_tasks_drush() {
 	// set_seconds
 	$set_seconds = drush_get_option('seconds');
 	if ($set_seconds != null) {
+		$confirm = false;
 		drush_print("Set seconds: " . $set_seconds);
+		drush_print("Running simulation only. Unset --seconds to enable --confirm=true.");
 	}
 
 	// get upcoming events in next 24 hours (we don't know timezone yet)
@@ -169,8 +174,9 @@ function tm_events_livestream_tasks_drush() {
 	
 	}
 
+	// timestamp
 	drush_print("----");
-	drush_print("Done.");
+	drush_print("End: " . date("Y-m-d H:i:s T O"));
 }
 
 /**
@@ -179,6 +185,9 @@ function tm_events_livestream_tasks_drush() {
 function tm_events_reminder_tasks_drush() {
 
 	global $conf;
+
+	// timestamp
+	drush_print("\nStart: " . date("Y-m-d H:i:s T O"));
 
 	// check config
 	$reminders_enabled = false;
@@ -218,7 +227,9 @@ function tm_events_reminder_tasks_drush() {
 	// set_seconds
 	$set_seconds = drush_get_option('seconds');
 	if ($set_seconds != null) {
+		$confirm = false;
 		drush_print("Set seconds: " . $set_seconds . " (600 = 10min, 5400 = 1hr30min, 86400 = 24hr");
+		drush_print("Running simulation only. Unset --seconds to enable --confirm=true.");
 	}
 
 	// get upcoming events in next 24 hours (we don't know timezone yet)
@@ -464,8 +475,9 @@ function tm_events_reminder_tasks_drush() {
 		}
 	}
 
+	// timestamp
 	drush_print("----");
-	drush_print("Done.");
+	drush_print("End: " . date("Y-m-d H:i:s T O"));
 }
 
 /**

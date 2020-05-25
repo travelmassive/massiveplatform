@@ -5292,23 +5292,25 @@ a.tm-lists-footer-label-link:hover {
   color: #fff !important;
   margin-left: 16px !important;
   border-radius: 2px !important;
+  margin-top: 4px !important;
 }
 
-/* line 1215, ../sass/_base.scss */
+/* line 1216, ../sass/_base.scss */
 .tm-go-live-button:hover {
   background-color: #4584ba !important;
 }
 
-/* line 1219, ../sass/_base.scss */
+/* line 1220, ../sass/_base.scss */
 .tm-end-live-button {
   display: inline-block !important;
   background-color: #dd624d !important;
   color: #fff !important;
   margin-left: 16px !important;
   border-radius: 2px !important;
+  margin-top: 4px !important;
 }
 
-/* line 1227, ../sass/_base.scss */
+/* line 1229, ../sass/_base.scss */
 .tm-end-live-button:hover {
   background-color: #d94830 !important;
 }

@@ -492,12 +492,20 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
   // STEP 12. GEOBLOCK SETTINGS
   // must select a geoblock mode
   // event chapter
+
+  // get event chapter country
   $event_chapter = null;
-  if (isset($event->field_chapter[LANGUAGE_NONE][0])) {
-    $event_chapter_nid = $event->field_chapter[LANGUAGE_NONE][0]['target_id'];
-    $event_chapter = node_load($event_chapter_nid);
+  $event_chapter_country = "";
+  if (isset($chapter_id)) {
+    $event_chapter = node_load($chapter_id);
+    if (isset($event_chapter->field_country[LANGUAGE_NONE][0]['iso2'])) {
+      $country_code = $event_chapter->field_country[LANGUAGE_NONE][0]['iso2'];
+      $country_names = tm_base_get_all_country_names();
+      $event_chapter_country = $country_names[$country_code];
+    }
   }
-  $event_chapter_country = tm_events_get_event_country_name($event);
+  
+  // grammar for USA
   if ($event_chapter_country == "United States") {
     $event_chapter_country = "the United States";
   }
@@ -510,6 +518,7 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
 
   $geoblock_options = array();
   $geoblock_options["all_members"] = "All members (default)";
+
   if ($event_chapter != null) {
     $geoblock_options["same_chapter_as_event"] = "Only members of " . tm_chapters_formal_name($event_chapter) . $published_chapters_text;
   }
@@ -521,7 +530,29 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
   // STEP 13. Hide livestream on checkbox (we put a button in the options dropdown)
   unset($form['field_event_livestream_on']);
 
-  // STEP 14. Hide reminders if they aren't enabled in $conf["tm_event_online_reminders_enabled"]
+  // STEP 14. Reminders
+
+  // Update description if sending to followers
+  // Members: your followers
+  // Companies: your followers, or your upvoters
+  if ($typeof_event != "chapter_event") {
+    $followers_label = "followers";
+    if ($typeof_event == "company_event") {
+      $followers_label = "company followers";
+      if (isset($conf["tm_organizations_upvote"])) {
+        if ($conf["tm_organizations_upvote"]) {
+          $followers_label = "upvoters";
+        }
+      }
+    }
+
+    // set description
+    $send_reminders_description_followers = "Your " . $followers_label . " are invited <b>24 hours</b> before the event starts to register.<br>
+Registered attendees are reminded <b>1.5 hours</b> and <b>10 minutes</b> before you go live.";
+    $form['field_event_send_reminders'][LANGUAGE_NONE]['#description'] = $send_reminders_description_followers;
+  }
+
+  // Hide reminders if they aren't enabled in $conf["tm_event_online_reminders_enabled"]
   $reminders_enabled = false;
   if (isset($conf["tm_event_online_reminders_enabled"])) {
     $reminders_enabled = $conf["tm_event_online_reminders_enabled"];

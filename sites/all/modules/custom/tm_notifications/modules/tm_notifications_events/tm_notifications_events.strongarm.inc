@@ -123,7 +123,6 @@ Here\'s the event details to keep handy &mdash;
 <br>📍 [node:field_location]
 <br>🗓 <a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_CALENDAR_LINK__">Add to calendar</a>
 __ONLINE_INSTRUCTIONS__
-<br>
 __REGISTER_EVENT_MESSAGE__
 <br>See who else is attending, or message the event organizers by visiting the <a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">event page</a>.
 <br>

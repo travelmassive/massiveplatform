@@ -173,6 +173,7 @@ function tm_event_chatbox_moderator_page($nid) {
           body { height: 95%; margin: 0; padding: 2.75rem; }
           #chatbro { margin-top: 2rem; margin-bottom: 2.5rem; border: 1px solid #ddd; box-shadow: 0 4px 16px 0 rgba(0,0,0,.15); }
           .prime-title { font-family: sans-serif; } .prime-title a { color: #488bf8; }
+          .chatbro_message_name a { color: #4a4a4a !important; }
           @media only screen and (max-width: 600px) { 
             body { padding: 1rem; padding-bottom: 128px; }
           }
@@ -283,7 +284,6 @@ function tm_event_chatbox_widget_js($account, $node) {
   $site_domain = $conf["tm_chatbox_site_domain"];
   $chat_title = "Event ID: " . $node->nid;
   $external_id = $account->uid;
-  $name_color = $conf["tm_chatbox_name_color"];
 
   // name
   $full_name = strip_tags($account->field_user_first_name[LANGUAGE_NONE][0]['value']) . " " . strip_tags($account->field_user_last_name[LANGUAGE_NONE][0]['value']);
@@ -330,7 +330,7 @@ function tm_event_chatbox_widget_js($account, $node) {
 
   // calculate signature
   // see: http://sso.chatbro.com/
-  $signature = md5($site_domain . $external_id . $full_name . $avatar_url . $profile_url . $name_color . implode("", $permissions) . $secret_key);
+  $signature = md5($site_domain . $external_id . $full_name . $avatar_url . $profile_url . implode("", $permissions) . $secret_key);
 
   // configure widget
   $widget_js .= "
@@ -346,7 +346,6 @@ showChatMenu: false,
 allowUploadFile: false,
 avatarBorderRadius: '16px',
 allowSendMessages: " . $allow_send_message . ",
-siteUserFullNameColor: '" . $name_color . "',
 permissions: " . json_encode($permissions) . ",
 signature: '" . $signature . "'
 });";

@@ -55,6 +55,10 @@
 	font-size: 16px;
 }
 
+.chatbro_message_name a { 
+  color: #4a4a4a !important;
+}
+
 @media only screen and (max-width: 1105px) { 
   .chatbox_title {
     margin-left: 16px;

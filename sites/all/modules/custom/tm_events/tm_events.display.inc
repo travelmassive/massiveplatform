@@ -138,6 +138,11 @@ function _tm_event_location($field, $title = NULL) {
   if (isset($node->field_map_link[LANGUAGE_NONE][0]['url'])) {
     $event_map_link = $node->field_map_link[LANGUAGE_NONE][0]['url'];
   }
+
+  // Tidy up any 'online' references to say 'This is an online event'
+  if ((strtolower($event_venue_name) == "online") or (strtolower($event_venue_name) == "online event")) {
+    $event_venue_name = "This is an online event";
+  }
   
   // Render the location html
   $html = '<h2><span>Location</span></h2>';

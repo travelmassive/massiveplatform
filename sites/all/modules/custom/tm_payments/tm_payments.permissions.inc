@@ -19,7 +19,9 @@ function _tm_payments_check_enable_payments($event_id = null, $chapter_id = null
 
   	// Check if moderator or administrator
 	if ((in_array("moderator", $user->roles)) || (in_array("administrator", $user->roles))) {
-		return true;
+		if (!(isset($_GET["hide_moderator_options"]))) {
+			return true;
+		}
 	}
 
 	// Check if field_event_payment_enabled enabled

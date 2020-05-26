@@ -18,6 +18,12 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
   $perm_is_moderator_or_admin = ((in_array("moderator", $user->roles)) || (in_array("administrator", $user->roles)));
   $perm_is_chapter_leader = (in_array("chapter leader", $user->roles));
 
+  // Allow to hide moderator options
+  // ie: providing a demo
+  if (isset($_GET["hide_moderator_options"])) {
+    $perm_is_moderator_or_admin = false;
+  }
+
   // Add javascript to form
   drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_edit_event.js');
   drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_sync_end_date.js');

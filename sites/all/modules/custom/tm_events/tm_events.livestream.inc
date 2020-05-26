@@ -269,7 +269,7 @@ function tm_event_render_livestream_embed($youtube_video_id, $start_time = 0) {
   }
 
   // embed template
-  $embed_html = '<div id="livestream_video_container" style="width: 100%; position: relative; left: 16px; margin: 0 auto; margin-bottom: 32px; padding-right: 32px;"><iframe id="livestream_video" width="560" height="315" src="https://www.youtube.com/embed/' . $youtube_video_id . '?autoplay=1' . $start_time_arg . '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe><div id="livestream_video_container_buttons"><a href="javascript:tm_livestream_smaller_video();" title="Decrease video size"><span class="toggle bttn bttn-tertiary bttn-m" style="width: 38px;">—</span></a><br><a href="javascript:tm_livestream_larger_video();" title="Increase video size"><span class="bttn bttn-tertiary bttn-m" style="width: 38px; margin-top: 8px;">+</span></a></div></div>';
+  $embed_html = '<div id="livestream_video_container" style="width: 100%; position: relative; left: 16px; margin: 0 auto; margin-bottom: 32px; padding-right: 32px;"><iframe id="livestream_video" width="560" height="315" src="https://www.youtube.com/embed/' . $youtube_video_id . '?autoplay=1' . $start_time_arg . '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe><div id="livestream_video_container_buttons"><a href="javascript:tm_livestream_larger_video();" title="Increase video size"><span class="toggle bttn bttn-tertiary bttn-m" style="width: 38px;">+</span></a><br><a href="javascript:tm_livestream_smaller_video();" title="Decrease video size"><span class="bttn bttn-tertiary bttn-m" style="width: 38px; margin-top: 4px;">—</span></a></div></div>';
 
   return $embed_html;
 

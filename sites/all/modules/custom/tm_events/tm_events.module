@@ -468,6 +468,10 @@ function tm_events_node_view($node, $view_mode, $langcode) {
       // add fitvids to scale video
       drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_fitvids.js');
 
+      // add video size controls
+      drupal_add_js(drupal_get_path('module', 'tm_events') . '/js/tm_events_livestream_controls.js');
+      drupal_add_css(drupal_get_path('module', 'tm_events') . '/css/tm_events_livestream.css');
+
       // show moderator tools
       if (tm_events_check_permission_edit_event($user, $node)) {
 

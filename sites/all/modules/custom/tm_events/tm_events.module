@@ -483,7 +483,7 @@ function tm_events_node_view($node, $view_mode, $langcode) {
         }
         $message = $label . " is now displayed to <b>" . $livestream_mode_label . "</b>. ";
 
-        drupal_add_css(".tm-more-actions { position: absolute; top: 26px; right: 26px; list-style: none;", "inline");
+        drupal_add_css(".tm-more-actions { position: absolute; top: 26px; right: 26px; list-style: none; } .messages.help-tip { padding-right: 64px; } ", "inline");
         drupal_add_js("jQuery(document).ready(function () { jQuery('.tm-more-actions').appendTo('.header-wrapper'); });", "inline");
         drupal_set_message($message, "help-tip");
       }

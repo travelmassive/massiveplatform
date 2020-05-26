@@ -20,7 +20,7 @@
 		var new_width = Math.round(original_width * video_container_sizes[video_container_index]);
 		jQuery("#livestream_video_container").width(new_width);
 
-	}
+	};
 
 	// Increase video size
 	tm_livestream_larger_video = function() {
@@ -35,6 +35,6 @@
 
 		var new_width = Math.round(original_width * video_container_sizes[video_container_index]);
 		jQuery("#livestream_video_container").width(new_width);
-	}
+	};
 
 });})(jQuery, Drupal, this, this.document);

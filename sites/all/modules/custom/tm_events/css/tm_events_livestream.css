@@ -6,7 +6,7 @@
 	float: right;
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1298px) {
 	#livestream_video_container_buttons { 
 	  display: none;
 	}

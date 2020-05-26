@@ -330,7 +330,7 @@ function tm_event_chatbox_widget_js($account, $node) {
 
   // calculate signature
   // see: http://sso.chatbro.com/
-  $signature = md5($site_domain . $external_id . $full_name . $avatar_url . $profile_url . $name_color . implode("", $permissions) . $secret_key);
+  $signature = md5($site_domain . $external_id . $full_name . $avatar_url . $profile_url . implode("", $permissions) . $secret_key);
 
   // configure widget
   $widget_js .= "

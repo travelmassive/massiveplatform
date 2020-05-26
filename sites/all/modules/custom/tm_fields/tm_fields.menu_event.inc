@@ -277,11 +277,13 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
         if ($reminders_enabled and $is_online_event and $event_send_reminders and !tm_events_is_past_event($node, 60)) {
           
           // Preview 1hr30min reminder
-          $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Preview " . l("1 day", "/events/send-test-reminder/" . $nid . "/24hr", array('attributes' => array('class' => array('report-flagged-link')))) . " reminder</span><br>";
-          $links['event'][] = array(
-            'wrapper_class' => array('event_last_sent'),
-            'content' => t($last_sent_text),
-          );
+          if (!tm_events_is_preview_mode($node->nid)) {
+            $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Preview " . l("1 day", "/events/send-test-reminder/" . $nid . "/24hr", array('attributes' => array('class' => array('report-flagged-link')))) . " reminder</span><br>";
+            $links['event'][] = array(
+              'wrapper_class' => array('event_last_sent'),
+              'content' => t($last_sent_text),
+            );
+          }
 
           // Preview 1hr30min reminder
           $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Preview " . l("1 hour 30 min", "/events/send-test-reminder/" . $nid . "/1hr30min", array('attributes' => array('class' => array('report-flagged-link')))) . " reminder</span><br>";

@@ -138,6 +138,12 @@ function tm_subscriptions_user_cta_banner_node($user_id, $node_id) {
 
 	// show on event page if member is in the event
 	if ($node->type == "event") {
+
+		// don't display if livestream is on
+		if (tm_event_livestream_is_on($node)) {
+			return;
+		}
+
 		$account = user_load($user_id);
 		if ($account != null) {
 			if (isset($node->field_chapter[LANGUAGE_NONE][0]['target_id'])) {

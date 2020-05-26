@@ -104,6 +104,11 @@ function _tm_payments_form_alter_event_form(&$form, &$form_state, $form_id) {
 	// Permission variables
 	$perm_is_moderator_or_admin = ((in_array("moderator", $user->roles)) || (in_array("administrator", $user->roles)));
 
+	// Allow to hide moderator options
+	if (isset($_GET["hide_moderator_options"])) {
+		$perm_is_moderator_or_admin = false;
+	}
+
 	// STEP 1. Determine if event is new or editing existing
 	//////////
 	$event = $form_state['node'];

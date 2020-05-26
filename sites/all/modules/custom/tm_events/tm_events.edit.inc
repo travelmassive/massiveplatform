@@ -19,7 +19,6 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
   $perm_is_chapter_leader = (in_array("chapter leader", $user->roles));
 
   // Allow to hide moderator options
-  // ie: providing a demo
   if (isset($_GET["hide_moderator_options"])) {
     $perm_is_moderator_or_admin = false;
   }

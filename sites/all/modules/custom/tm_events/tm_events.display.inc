@@ -142,7 +142,7 @@ function _tm_event_location($field, $title = NULL) {
   // Render the location html
   $html = '<h2><span>Location</span></h2>';
   $html .= '<div class="detail-venue-name">' . t($event_venue_name) . '</div>';
-  if ((stripos($event_venue_name, "online") !== false) and (strlen($event_location) < 16)) {
+  if ((stripos($event_venue_name, "online") !== false) and (strlen($event_location) <= 24)) {
     // hide event location if venue name contains online, and event location is short string
   } else {
     $html .= '<div class="detail-venue-address">' . str_replace("\n", "<br>", t($event_location)) . '</div>';

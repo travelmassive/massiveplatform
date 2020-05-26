@@ -260,7 +260,7 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
 		if (($is_new_event) && ($user->timezone != null)) {
 			$form['field_event_timezone'][LANGUAGE_NONE]['#default_value'] = $user->timezone;
 		}
-		$form['field_event_timezone'][LANGUAGE_NONE]['#description'] = 'Set the timezone where your event is happening.';
+		$form['field_event_timezone'][LANGUAGE_NONE]['#description'] = 'Set the timezone where your event is happening.<br><br>';
 
 		// Disable fields
   	$form['field_chapter']['#disabled'] = true;

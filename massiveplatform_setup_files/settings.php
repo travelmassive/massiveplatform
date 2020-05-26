@@ -1267,4 +1267,3 @@ $conf["tm_chatbox_enabled"] = false; // enable or disable event chatbox (require
 $conf["tm_chatbox_site_domain"] = "example.massiveplatform.com";
 $conf["tm_chatbox_id"] = "chatbox_id";
 $conf["tm_chatbox_secret_key"] = "secret_key";
-$conf["tm_chatbox_name_color"] = "#4a4a4a";

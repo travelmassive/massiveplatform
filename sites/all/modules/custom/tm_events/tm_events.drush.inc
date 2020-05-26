@@ -379,7 +379,7 @@ function tm_events_reminder_tasks_drush() {
 
 			// send message
 			if ($confirm) {
-				tm_events_reminder_send_drush($event, $send_to, $subject, $headline_text, $message, $event_image_src, $event_image_url);
+				tm_events_reminder_send_drush($event, $send_to, $subject, $headline_text, $message, $event_image_src, $event_image_link);
 			} else {
 				drush_print("Subject: " . $subject);
 				drush_print($message);
@@ -421,7 +421,7 @@ function tm_events_reminder_tasks_drush() {
 
 			// send message
 			if ($confirm) {
-				tm_events_reminder_send_drush($event, $recipients, $subject, $headline_text, $message, $event_image_src, $event_image_url);
+				tm_events_reminder_send_drush($event, $recipients, $subject, $headline_text, $message, $event_image_src, $event_image_link);
 			} else {
 				drush_print("Subject: " . $subject);
 				drush_print($message);
@@ -463,7 +463,7 @@ function tm_events_reminder_tasks_drush() {
 
 			// send message
 			if ($confirm) {
-				tm_events_reminder_send_drush($event, $recipients, $subject, $headline_text, $message, $event_image_src, $event_image_url);
+				tm_events_reminder_send_drush($event, $recipients, $subject, $headline_text, $message, $event_image_src, $event_image_link);
 			} else {
 				drush_print("Subject: " . $subject);
 				drush_print($message);

@@ -83,6 +83,9 @@ function tm_events_communication_form($event) {
 
   // Headline text
   $example_headlines = array("We can't wait to see you.", "Looking forward to seeing you.", "Secure your spot.", "Meet up with us.", "Join our next event.", "We'd love to see you.");
+  if (tm_events_is_past_event($event, 60)) {
+    $example_headlines = array("Thanks for attending.", "Thanks for joining us.");
+  }
   $form['headline_text'] = array(
     '#title' => t('Headline'),
     '#type' =>'textfield',

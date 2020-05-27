@@ -1054,6 +1054,66 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
   // event url
   $event_url = $conf["tm_email_server_http"] . "://" . $_SERVER["SERVER_NAME"] . "/" . drupal_get_path_alias('node/' . $event->nid);
 
+  // event date
+  $view = field_view_field('node',$event,'field_event_date',
+    array('label'=>'hidden',));
+  $date = render($view);
+  $event_date_label = strip_tags($date);
+
+  // event date and time
+  $event_timezone = _tm_get_event_timezone($event);
+  $dt_timezone = new DateTimeZone($event_timezone);
+  $event_date = new DateTime($event->field_event_date[LANGUAGE_NONE][0]['value'], $dt_timezone);  
+  $event_time_label = null;
+  if (tm_events_is_online_event($event)) {
+    $event_date_label = $event_date->format("l, M d, Y");
+    $event_time_label = tm_events_render_short_timezones($event);
+  }
+
+  // Intro
+  // Join our upcoming event
+  // Join our upcoming event on Thursday
+  // Our event will get started shortly
+  // Here's the details of our past event
+
+  $action = "Join";
+  $intro_text = "Join our upcoming event:";
+  $seconds_until_event = tm_events_seconds_until_event_starts($event);
+  $seconds_in_a_week = 7 * 24 * 60 * 60;
+  $seconds_in_a_day = 24 * 60 * 60;
+  $day_of_event = $event_date->format("l");
+
+  if ($seconds_until_event > $seconds_in_a_week) {
+    $intro_text =  $action . " our upcoming event:";
+  }
+  if ($seconds_until_event <= ($seconds_in_a_day * 6)) {
+    $intro_text = $action . " our upcoming event on " . $day_of_event . ":";
+  }
+  if ($seconds_until_event < $seconds_in_a_day) {
+    $intro_text =  "Our event will get started shortly:";
+  }
+  if ($seconds_until_event < 0) {
+    $intro_text = "Here's the details of our past event:";
+  }
+
+  // venue name
+  $event_venue_name = null;
+  if (isset($event->field_event_venue_name[LANGUAGE_NONE][0]['value'])) {
+    $event_venue_name = "Venue: " . strip_tags(trim($event->field_event_venue_name[LANGUAGE_NONE][0]['value']));
+  }
+  if ((strtolower($event_venue_name) == "venue: online") or (strtolower($event_venue_name) == "venue: online event")) {
+    $event_venue_name = "This is an online event";
+  }
+
+  // venue location
+  $event_location  = null;
+  if (isset($event->field_location[LANGUAGE_NONE][0]['value'])) {
+    $event_location = strip_tags(trim($event->field_location[LANGUAGE_NONE][0]['value']));
+  }
+  if ((stripos($event_venue_name, "online") !== false) and (strlen($event_location) <= 24)) {
+    $event_location = null;
+  }
+
   // registration text
   $register_text = "Register now:";
   if (module_exists("tm_payments")) {
@@ -1062,26 +1122,27 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
     }
   }
 
-  // event date
-  $view = field_view_field('node',$event,'field_event_date',
-    array('label'=>'hidden',));
-  $date = render($view);
 
-  $intro_text = "We're pleased to announce a new event, here's the details:";
-  if (($chapter == null) && ($company == null) && (tm_events_check_published_chapter_leader($event, $user->uid) == null)) {
-    $intro_text = "I'd like to invite you to my upcoming event:";
-  }
+  // Generate template
 
   $prefill = "<p>Hi [first_name],</p>";
   $prefill .= "<p>" . $intro_text . "</p>";
+  $prefill .= "<p><b><a href='" . $event_url . "'>" .$event->title . "<a/></b></p>";
+
+  $prefill .= "<p>Here's the event details:</b>";
   $prefill .= "<ul>";
-  $prefill .= "<li><strong><a href='" . $event_url . "'>" .$event->title . "<a/></strong></li>";
-  $prefill .= "<li>".strip_tags($date) . "</li>";
-  if ($event->field_event_venue_name != null) {
-    $prefill .= "<li>" . t('Venue').': '.$event->field_event_venue_name[LANGUAGE_NONE][0]['value'];
+  $prefill .= "<li>". $event_date_label . "</li>";
+   
+  if ($event_time_label != null) {
+    $prefill .= "<li>". $event_time_label . "</li>";
   }
-  if ($event->field_location != null) {
-    $location_text = $event->field_location[LANGUAGE_NONE][0]['value'];
+ 
+  if ($event_venue_name != null) {
+    $prefill .= "<li>" . $event_venue_name . "</li>";
+  }
+
+  if ($event_location != null) {
+    $location_text = $event_location;
     $location_text = str_replace("\r", ", ", $location_text);
     $prefill .= "<li>" . t('Location').': '. $location_text . "</li>";
   }

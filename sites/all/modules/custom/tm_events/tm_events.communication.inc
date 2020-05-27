@@ -1093,7 +1093,7 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
     $intro_text =  "Our event will get started shortly:";
   }
   if ($seconds_until_event < 0) {
-    $intro_text = "Here's the details of our past event:";
+    $intro_text = "Thanks to everyone who attended our past event:";
   }
 
   // venue name

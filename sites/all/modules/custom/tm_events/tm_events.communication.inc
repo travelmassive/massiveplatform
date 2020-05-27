@@ -1101,7 +1101,7 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
   if (isset($event->field_event_venue_name[LANGUAGE_NONE][0]['value'])) {
     $event_venue_name = "Venue: " . strip_tags(trim($event->field_event_venue_name[LANGUAGE_NONE][0]['value']));
   }
-  if ((strtolower($event_venue_name) == "venue: online") or (strtolower($event_venue_name) == "venue: online event")) {
+  if ((strtolower($event_venue_name) == "venue: online") or (strtolower($event_venue_name) == "venue: online event") or (strtolower($event_venue_name) == "venue: this is an online event")) {
     $event_venue_name = "This is an online event";
   }
 

@@ -263,9 +263,25 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
           $event_send_reminders = $node->field_event_send_reminders[LANGUAGE_NONE][0]['value'];
         }
 
+        // Event has external rsvp
+        $has_external_rsvp = false;
+        if (isset($node->field_external_rsvp[LANGUAGE_NONE][0]['value'])) {
+           $has_external_rsvp = $node->field_external_rsvp[LANGUAGE_NONE][0]['value'];
+        }
+
         // Event reminders turned off
-        if ($reminders_enabled and $is_online_event and !$event_send_reminders and !tm_events_is_past_event($node, 60)) {
+        if ($reminders_enabled and $is_online_event and !$event_send_reminders and !$has_external_rsvp and !tm_events_is_past_event($node, 60)) {
           $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Event reminders are " . l("disabled", "/node/" . $nid . "/edit", array('attributes' => array('class' => array('report-flagged-link')))) . "</span><br>";
+          $links['event'][] = array(
+            'wrapper_class' => array('event_last_sent'),
+            'content' => t($last_sent_text),
+          );
+        }
+
+        // External rsvp
+        if ($reminders_enabled and $is_online_event and $event_send_reminders and $has_external_rsvp and !tm_events_is_past_event($node, 60)) {
+          $has_external_rsvp_link = l(t('disabled'), "javascript:jq_alert('Send automated reminders', 'Send automated reminders by enabling <i>Allow members to RSVP instantly</i> in your event settings.')", array('fragment' => '','external'=>true, 'attributes' => array('class' => array('report-flagged-link'))));
+          $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Event reminders are " . $has_external_rsvp_link . "</span><br>";
           $links['event'][] = array(
             'wrapper_class' => array('event_last_sent'),
             'content' => t($last_sent_text),
@@ -274,7 +290,7 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
 
         // Preview test emails
         // Don't show for past events
-        if ($reminders_enabled and $is_online_event and $event_send_reminders and !tm_events_is_past_event($node, 60)) {
+        if ($reminders_enabled and $is_online_event and $event_send_reminders and !$has_external_rsvp and !tm_events_is_past_event($node, 60)) {
           
           // Preview 1hr30min reminder
           if (!tm_events_is_preview_mode($node->nid)) {

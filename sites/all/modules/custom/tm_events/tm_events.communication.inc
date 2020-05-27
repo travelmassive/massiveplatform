@@ -1066,7 +1066,7 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
   $event_date = new DateTime($event->field_event_date[LANGUAGE_NONE][0]['value'], $dt_timezone);  
   $event_time_label = null;
   if (tm_events_is_online_event($event)) {
-    $event_date_label = $event_date->format("l, M d, Y");
+    $event_date_label = $event_date->format("l, F j, Y");
     $event_time_label = tm_events_render_short_timezones($event);
   }
 

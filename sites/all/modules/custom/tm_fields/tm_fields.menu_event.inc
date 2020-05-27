@@ -291,20 +291,24 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
             );
           }
         
-          // Preview 1hr30min reminder
-          $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Preview " . l("1 hour 30 min", "/events/send-test-reminder/" . $nid . "/1hr30min", array('attributes' => array('class' => array('report-flagged-link')))) . " reminder</span><br>";
-          $links['event'][] = array(
-            'wrapper_class' => array('event_last_sent'),
-            'content' => t($last_sent_text),
-          );
+          // Check not external rsvp
+          if (!$has_external_rsvp) {
 
-          // Preview 10min reminder
-          $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Preview " . l("10 minute", "/" . "events/send-test-reminder/" . $nid . "/10min", array('attributes' => array('class' => array('report-flagged-link')))) . " reminder</span><br>";
-          $links['event'][] = array(
-            'wrapper_class' => array('event_last_sent'),
-            'content' => t($last_sent_text),
-          );
+            // Preview 1hr30min reminder
+            $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Preview " . l("1 hour 30 min", "/events/send-test-reminder/" . $nid . "/1hr30min", array('attributes' => array('class' => array('report-flagged-link')))) . " reminder</span><br>";
+            $links['event'][] = array(
+              'wrapper_class' => array('event_last_sent'),
+              'content' => t($last_sent_text),
+            );
 
+            // Preview 10min reminder
+            $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Preview " . l("10 minute", "/" . "events/send-test-reminder/" . $nid . "/10min", array('attributes' => array('class' => array('report-flagged-link')))) . " reminder</span><br>";
+            $links['event'][] = array(
+              'wrapper_class' => array('event_last_sent'),
+              'content' => t($last_sent_text),
+            );
+
+          }          
         }
 
       }

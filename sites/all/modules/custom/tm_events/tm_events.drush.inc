@@ -396,6 +396,12 @@ function tm_events_reminder_tasks_drush() {
 			$reminder_type = "1hr30min";
 			drush_print("- Reminder type: " . $reminder_type);
 
+			// Check external rsvp
+			if ($event->field_external_rsvp[LANGUAGE_NONE][0]['value']) {
+				drush_print("- Event is external RSVP, skipping...");
+				continue;
+			}
+
 			// generate message
 			$event_title = trim(strip_tags($event->title));
 			$subject = $conf["tm_event_online_reminder_" . $reminder_type . "_subject"];
@@ -437,6 +443,12 @@ function tm_events_reminder_tasks_drush() {
 			
 			$reminder_type = "10min";
 			drush_print("- Reminder type: " . $reminder_type);
+
+			// Check external rsvp
+			if ($event->field_external_rsvp[LANGUAGE_NONE][0]['value']) {
+				drush_print("- Event is external RSVP, skipping...");
+				continue;
+			}
 
 			// generate message
 			$event_title = trim(strip_tags($event->title));

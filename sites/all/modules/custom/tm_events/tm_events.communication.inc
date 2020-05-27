@@ -97,8 +97,6 @@ function tm_events_communication_form($event) {
     $example_headlines = array("Thanks for attending.", "Thanks for joining us.");
   }
  
-  $day_of_event = $event_date->format("l");
-
   $form['headline_text'] = array(
     '#title' => t('Headline'),
     '#type' =>'textfield',

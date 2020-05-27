@@ -261,10 +261,12 @@ function tm_events_reminder_tasks_drush() {
 	    drush_print("Event: (nid " . $result->entity_id . ") " . $event->title);
 
 	    // don't process external rsvp
-	    if ($event->field_external_rsvp[LANGUAGE_NONE][0]['value']) {
-			drush_print("- Event is external RSVP, skipping...");
-			continue;
-	    }
+		if (!$conf['tm_event_restrict_announcement_rsvp']) {
+			if ($event->field_external_rsvp[LANGUAGE_NONE][0]['value']) {
+				drush_print("- Event is external RSVP, skipping...");
+				continue;
+			}
+		}
 
 	    // only process online event
         $is_online_event = tm_events_is_online_event($event);

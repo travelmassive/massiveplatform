@@ -270,7 +270,7 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
         }
 
         // Event reminders turned off
-        if ($reminders_enabled and $is_online_event and !$event_send_reminders and !tm_events_is_past_event($node, 60)) {
+        if ($reminders_enabled and $is_online_event and !$event_send_reminders and !$has_external_rsvp and !tm_events_is_past_event($node, 60)) {
           $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Event reminders are " . l("disabled", "/node/" . $nid . "/edit", array('attributes' => array('class' => array('report-flagged-link')))) . "</span><br>";
           $links['event'][] = array(
             'wrapper_class' => array('event_last_sent'),

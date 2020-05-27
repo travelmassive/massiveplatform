@@ -82,10 +82,23 @@ function tm_events_communication_form($event) {
     );
 
   // Headline text
+  $seconds_until_event = tm_events_seconds_until_event_starts($event);
+  $seconds_in_a_day = 24 * 60 * 60;
+
   $example_headlines = array("We can't wait to see you.", "Looking forward to seeing you.", "Secure your spot.", "Meet up with us.", "Join our next event.", "We'd love to see you.");
-  if (tm_events_is_past_event($event, 60)) {
+
+  // within a day
+  if ($seconds_until_event < $seconds_in_a_day) {
+    $example_headlines = array("See you soon.", "See you shortly.");
+  }
+
+  // past event
+  if ($seconds_until_event < -3600) {
     $example_headlines = array("Thanks for attending.", "Thanks for joining us.");
   }
+ 
+  $day_of_event = $event_date->format("l");
+
   $form['headline_text'] = array(
     '#title' => t('Headline'),
     '#type' =>'textfield',

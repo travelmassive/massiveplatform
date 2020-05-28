@@ -104,8 +104,6 @@ function tm_events_livestream_tasks_drush() {
 			}
 		}
 
-		drush_print("----");
-
 		// get information about event
 		$event = node_load($result->entity_id);
 		if ($event == null) {
@@ -248,8 +246,6 @@ function tm_events_reminder_tasks_drush() {
 				continue;
 			}
 		}
-
-		drush_print("----");
 
 		// get information about event
 		$event = node_load($result->entity_id);

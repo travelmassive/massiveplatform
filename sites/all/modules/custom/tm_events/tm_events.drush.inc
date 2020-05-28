@@ -5,6 +5,7 @@
 // instructions:
 // run hourly on 14,29,44,59 minutes: drush tm-events-livestream-tasks --uri=https://example.massiveplatform.com --confirm=true
 // run hourly on 4,9,14,19,24,29,34,39,44,49,54 minutes: tm-events-reminder-tasks --uri=https://example.massiveplatform.com --confirm=true
+// set up a crontab entry and a script to run and log these commands
 
 /**
  * Implements hook_drush_command().
@@ -773,6 +774,13 @@ function tm_events_generate_reminder_message($event, $message_template, $headlin
 	
 	$signoff_html .= "</p>";
 	$message = str_replace("__SIGNOFF_MESSAGE__", $signoff_html, $message);
+
+	// add chapter and event ids
+	if ($chapter != null) {
+		$message .= "<p><small>(Event ID: " . $event->nid . ":" . $chapter->nid . ")</small></p>";
+	} else {
+		$message .= "<p><small>(Event ID: " . $event->nid . ")</small></p>";
+	}
 
 	return($message);
 }

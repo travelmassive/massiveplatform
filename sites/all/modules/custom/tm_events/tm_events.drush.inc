@@ -173,8 +173,8 @@ function tm_events_livestream_tasks_drush() {
 	}
 
 	// timestamp
-	drush_print("----");
 	drush_print("End: " . date("Y-m-d H:i:s T O"));
+	drush_print("----");
 }
 
 /**
@@ -483,8 +483,8 @@ function tm_events_reminder_tasks_drush() {
 	}
 
 	// timestamp
-	drush_print("----");
 	drush_print("End: " . date("Y-m-d H:i:s T O"));
+	drush_print("----");
 }
 
 /**

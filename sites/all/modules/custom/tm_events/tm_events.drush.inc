@@ -4,7 +4,8 @@
 
 // instructions:
 // run hourly on 14,29,44,59 minutes: drush tm-events-livestream-tasks --uri=https://example.massiveplatform.com --confirm=true
-// run hourly on 5,10,15,20,25,30,35,40,45,50,55 minutes: tm-events-reminder-tasks --uri=https://example.massiveplatform.com --confirm=true
+// run hourly on 4,9,14,19,24,29,34,39,44,49,54 minutes: tm-events-reminder-tasks --uri=https://example.massiveplatform.com --confirm=true
+// set up a crontab entry and a script to run and log these commands
 
 /**
  * Implements hook_drush_command().
@@ -42,7 +43,7 @@ function tm_events_livestream_tasks_drush() {
 	global $conf;
 
 	// timestamp
-	drush_print("\nStart: " . date("Y-m-d H:i:s T O"));
+	drush_print("\nStart: " . gmdate("Y-m-d H:i:s T O"));
 
 	// check config
 	$livestream_schedule_enabled = false;
@@ -173,8 +174,8 @@ function tm_events_livestream_tasks_drush() {
 	}
 
 	// timestamp
+	drush_print("End: " . gmdate("Y-m-d H:i:s T O"));
 	drush_print("----");
-	drush_print("End: " . date("Y-m-d H:i:s T O"));
 }
 
 /**
@@ -185,7 +186,7 @@ function tm_events_reminder_tasks_drush() {
 	global $conf;
 
 	// timestamp
-	drush_print("\nStart: " . date("Y-m-d H:i:s T O"));
+	drush_print("\nStart: " . gmdate("Y-m-d H:i:s T O"));
 
 	// check config
 	$reminders_enabled = false;
@@ -257,7 +258,7 @@ function tm_events_reminder_tasks_drush() {
 	    drush_print("Event: (nid " . $result->entity_id . ") " . $event->title);
 
 	    // don't process external rsvp
-		if (!$conf['tm_event_restrict_announcement_rsvp']) {
+		if ($conf['tm_event_restrict_announcement_rsvp']) {
 			if ($event->field_external_rsvp[LANGUAGE_NONE][0]['value']) {
 				drush_print("- Event is external RSVP, skipping...");
 				continue;
@@ -483,8 +484,8 @@ function tm_events_reminder_tasks_drush() {
 	}
 
 	// timestamp
+	drush_print("End: " . gmdate("Y-m-d H:i:s T O"));
 	drush_print("----");
-	drush_print("End: " . date("Y-m-d H:i:s T O"));
 }
 
 /**
@@ -773,6 +774,13 @@ function tm_events_generate_reminder_message($event, $message_template, $headlin
 	
 	$signoff_html .= "</p>";
 	$message = str_replace("__SIGNOFF_MESSAGE__", $signoff_html, $message);
+
+	// add chapter and event ids
+	if ($chapter != null) {
+		$message .= "<p><small>(Event ID: " . $event->nid . ":" . $chapter->nid . ")</small></p>";
+	} else {
+		$message .= "<p><small>(Event ID: " . $event->nid . ")</small></p>";
+	}
 
 	return($message);
 }

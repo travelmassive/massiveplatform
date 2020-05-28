@@ -42,7 +42,7 @@ function tm_events_livestream_tasks_drush() {
 	global $conf;
 
 	// timestamp
-	drush_print("\nStart: " . date("Y-m-d H:i:s T O"));
+	drush_print("\nStart: " . gmdate("Y-m-d H:i:s T O"));
 
 	// check config
 	$livestream_schedule_enabled = false;
@@ -173,7 +173,7 @@ function tm_events_livestream_tasks_drush() {
 	}
 
 	// timestamp
-	drush_print("End: " . date("Y-m-d H:i:s T O"));
+	drush_print("End: " . gmdate("Y-m-d H:i:s T O"));
 	drush_print("----");
 }
 
@@ -185,7 +185,7 @@ function tm_events_reminder_tasks_drush() {
 	global $conf;
 
 	// timestamp
-	drush_print("\nStart: " . date("Y-m-d H:i:s T O"));
+	drush_print("\nStart: " . gmdate("Y-m-d H:i:s T O"));
 
 	// check config
 	$reminders_enabled = false;
@@ -483,7 +483,7 @@ function tm_events_reminder_tasks_drush() {
 	}
 
 	// timestamp
-	drush_print("End: " . date("Y-m-d H:i:s T O"));
+	drush_print("End: " . gmdate("Y-m-d H:i:s T O"));
 	drush_print("----");
 }
 

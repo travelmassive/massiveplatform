@@ -4,7 +4,7 @@
 
 // instructions:
 // run hourly on 14,29,44,59 minutes: drush tm-events-livestream-tasks --uri=https://example.massiveplatform.com --confirm=true
-// run hourly on 5,10,15,20,25,30,35,40,45,50,55 minutes: tm-events-reminder-tasks --uri=https://example.massiveplatform.com --confirm=true
+// run hourly on 4,9,14,19,24,29,34,39,44,49,54 minutes: tm-events-reminder-tasks --uri=https://example.massiveplatform.com --confirm=true
 
 /**
  * Implements hook_drush_command().
@@ -257,7 +257,7 @@ function tm_events_reminder_tasks_drush() {
 	    drush_print("Event: (nid " . $result->entity_id . ") " . $event->title);
 
 	    // don't process external rsvp
-		if (!$conf['tm_event_restrict_announcement_rsvp']) {
+		if ($conf['tm_event_restrict_announcement_rsvp']) {
 			if ($event->field_external_rsvp[LANGUAGE_NONE][0]['value']) {
 				drush_print("- Event is external RSVP, skipping...");
 				continue;

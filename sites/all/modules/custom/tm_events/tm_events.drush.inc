@@ -4,7 +4,7 @@
 
 // instructions:
 // run hourly on 14,29,44,59 minutes: drush tm-events-livestream-tasks --uri=https://example.massiveplatform.com --confirm=true
-// run hourly on 4,9,14,19,24,29,34,39,44,49,54 minutes: tm-events-reminder-tasks --uri=https://example.massiveplatform.com --confirm=true
+// run hourly on 4,9,14,19,24,29,34,39,44,49,54,59 minutes: tm-events-reminder-tasks --uri=https://example.massiveplatform.com --confirm=true
 // set up a crontab entry and a script to run and log these commands
 
 /**

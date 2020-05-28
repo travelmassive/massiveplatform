@@ -775,9 +775,14 @@ function tm_events_generate_reminder_message($event, $message_template, $headlin
 	$signoff_html .= "</p>";
 	$message = str_replace("__SIGNOFF_MESSAGE__", $signoff_html, $message);
 
-	// add chapter and event ids
+  	// display event id, and optional chapter nids
+  	$chapter_nids = tm_events_get_published_chapters($event);
 	if ($chapter != null) {
-		$message .= "<p><small>(Event ID: " . $event->nid . ":" . $chapter->nid . ")</small></p>";
+		array_unshift($chapter_nids, $chapter->nid);
+	}
+  	$chapter_nids = array_unique($chapter_nids);
+	if ($chapter != null) {
+		$message .= "<p><small>(Event ID: " . $event->nid . ":" . implode(",", $chapter_nids) . ")</small></p>";
 	} else {
 		$message .= "<p><small>(Event ID: " . $event->nid . ")</small></p>";
 	}

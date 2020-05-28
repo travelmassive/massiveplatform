@@ -117,7 +117,7 @@ __EMAIL_SIGNOFF__
 <br>
 __MODERATOR_MESSAGE__
 <br>
-Here\'s the event details to keep handy &mdash;
+Here are the event details to keep handy &mdash;
 <br>__EVENT_TIME__
 <br>🌍 [node:field_event_venue_name]
 <br>📍 [node:field_location]

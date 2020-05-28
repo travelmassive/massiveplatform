@@ -1143,7 +1143,7 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
   $prefill .= "<p>" . $intro_text . "</p>";
   $prefill .= "<p><b><a href='" . $event_url . "'>" .$event->title . "<a/></b></p>";
 
-  $prefill .= "<p>Here's the event details —</b>";
+  $prefill .= "<p>Here are the event details —</b>";
   $prefill .= "<ul>";
   $prefill .= "<li>". $event_date_label . "</li>";
    

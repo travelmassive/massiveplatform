@@ -263,8 +263,14 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
           $event_send_reminders = $node->field_event_send_reminders[LANGUAGE_NONE][0]['value'];
         }
 
+        // Event has external rsvp
+        $has_external_rsvp = false;
+        if (isset($node->field_external_rsvp[LANGUAGE_NONE][0]['value'])) {
+           $has_external_rsvp = $node->field_external_rsvp[LANGUAGE_NONE][0]['value'];
+        }
+
         // Event reminders turned off
-        if ($reminders_enabled and $is_online_event and !$event_send_reminders and !tm_events_is_past_event($node, 60)) {
+        if ($reminders_enabled and $is_online_event and !$event_send_reminders and !$has_external_rsvp and !tm_events_is_past_event($node, 60)) {
           $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Event reminders are " . l("disabled", "/node/" . $nid . "/edit", array('attributes' => array('class' => array('report-flagged-link')))) . "</span><br>";
           $links['event'][] = array(
             'wrapper_class' => array('event_last_sent'),
@@ -284,21 +290,25 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
               'content' => t($last_sent_text),
             );
           }
+        
+          // Check not external rsvp
+          if (!$has_external_rsvp) {
 
-          // Preview 1hr30min reminder
-          $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Preview " . l("1 hour 30 min", "/events/send-test-reminder/" . $nid . "/1hr30min", array('attributes' => array('class' => array('report-flagged-link')))) . " reminder</span><br>";
-          $links['event'][] = array(
-            'wrapper_class' => array('event_last_sent'),
-            'content' => t($last_sent_text),
-          );
+            // Preview 1hr30min reminder
+            $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Preview " . l("1 hour 30 min", "/events/send-test-reminder/" . $nid . "/1hr30min", array('attributes' => array('class' => array('report-flagged-link')))) . " reminder</span><br>";
+            $links['event'][] = array(
+              'wrapper_class' => array('event_last_sent'),
+              'content' => t($last_sent_text),
+            );
 
-          // Preview 10min reminder
-          $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Preview " . l("10 minute", "/" . "events/send-test-reminder/" . $nid . "/10min", array('attributes' => array('class' => array('report-flagged-link')))) . " reminder</span><br>";
-          $links['event'][] = array(
-            'wrapper_class' => array('event_last_sent'),
-            'content' => t($last_sent_text),
-          );
+            // Preview 10min reminder
+            $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Preview " . l("10 minute", "/" . "events/send-test-reminder/" . $nid . "/10min", array('attributes' => array('class' => array('report-flagged-link')))) . " reminder</span><br>";
+            $links['event'][] = array(
+              'wrapper_class' => array('event_last_sent'),
+              'content' => t($last_sent_text),
+            );
 
+          }          
         }
 
       }

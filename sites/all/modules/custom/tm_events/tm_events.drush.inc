@@ -4,7 +4,7 @@
 
 // instructions:
 // run hourly on 14,29,44,59 minutes: drush tm-events-livestream-tasks --uri=https://example.massiveplatform.com --confirm=true
-// run hourly on 4,9,14,19,24,29,34,39,44,49,54,59 minutes: tm-events-reminder-tasks --uri=https://example.massiveplatform.com --confirm=true
+// run hourly on 0,5,10,15,20,25,30,35,40,45,50,55 minutes: tm-events-reminder-tasks --uri=https://example.massiveplatform.com --confirm=true
 // set up a crontab entry and a script to run and log these commands
 
 /**
@@ -123,7 +123,6 @@ function tm_events_livestream_tasks_drush() {
 		}
 
 	    // event started already
-	    // give one minute grace for cron
 		if ($seconds_until_event_starts <= -60) {
 			drush_print("- Event already started (" . $seconds_until_event_starts . " seconds), skipping...");
 			continue;
@@ -327,7 +326,6 @@ function tm_events_reminder_tasks_drush() {
 
 		// 24 hour reminder
 		// Send to non registered members
-		// process 1 minute earlier for cron
 		if (($seconds_until_event_starts > (60 * 1438)  and ($seconds_until_event_starts <= (60 * 1441)))) {
 			
 			$reminder_type = "24hr";
@@ -387,7 +385,6 @@ function tm_events_reminder_tasks_drush() {
 
 		// 1.5 hour reminder
 		// Send to attendees
-		// process 1 minute earlier for cron
 		if (($seconds_until_event_starts > (60 * 88) and ($seconds_until_event_starts <= (60 * 91)))) {
 			
 			$reminder_type = "1hr30min";
@@ -435,7 +432,6 @@ function tm_events_reminder_tasks_drush() {
 
 		// 10 minute reminder
 		// Send to only attendees
-		// process 1 minute earlier for cron
 		if (($seconds_until_event_starts > (60 * 8)) and ($seconds_until_event_starts <= (60 * 11))) {
 			
 			$reminder_type = "10min";

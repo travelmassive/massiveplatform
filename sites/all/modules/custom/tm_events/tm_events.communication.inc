@@ -339,7 +339,7 @@ function tm_events_communication_form($event) {
   // Approved members
   $form['approved_members'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Send to ' . tm_users_get_approved_member_label("plural") . ' only'),
+    '#title' => t('Send to <i>Verified</i> members only'),
     '#default_value' => true,
   );
 
@@ -1143,7 +1143,7 @@ function tm_events_create_prefill_text($event, $chapter, $company, $use_html = t
   $prefill .= "<p>" . $intro_text . "</p>";
   $prefill .= "<p><b><a href='" . $event_url . "'>" .$event->title . "<a/></b></p>";
 
-  $prefill .= "<p>Here's the event details —</b>";
+  $prefill .= "<p>Here are the event details —</b>";
   $prefill .= "<ul>";
   $prefill .= "<li>". $event_date_label . "</li>";
    

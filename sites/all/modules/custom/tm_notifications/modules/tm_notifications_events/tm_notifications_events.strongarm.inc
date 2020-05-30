@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * tm_notifications_events.strongarm.inc
@@ -18,7 +19,9 @@ function tm_notifications_events_strongarm() {
     'user_label' => '[Chapter Leaders] Notify when someone registers for my event',
     'default_state' => '1',
     'change_allowed' => 1,
-    'change_allowed_roles' => array("chapter leader"),
+    'change_allowed_roles' => array(
+      0 => 'chapter leader',
+    ),
     'email' => array(
       'subject' => '__PROFILE_FULL_NAME__ __REGISTER_ACTION_SUBJECT__ [node:title]',
       'message' => 'Hi [user:field_user_first_name],
@@ -32,72 +35,6 @@ __EMAIL_SIGNOFF__
     ),
   );
   $export['tm_notifications__events_register_flag'] = $strongarm;
-
-
-    $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'tm_notifications__events_register_unflag';
-  $strongarm->value = array(
-    'user_label' => '[Chapter Leaders] Notify when someone unregisters for my event',
-    'default_state' => '1',
-    'change_allowed' => 1,
-    'change_allowed_roles' => array("chapter leader"),
-    'email' => array(
-      'subject' => '__PROFILE_FULL_NAME__ just un-registered for [node:title]',
-      'message' => 'Hi [user:field_user_first_name],
-<br>
-<br>__PROFILE_FULL_NAME__ just un-registered from <a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">[node:title]</a>.
-__MEMBER_WIDGET__
-__EMAIL_SIGNOFF__
-',
-    ),
-  );
-  $export['tm_notifications__events_register_unflag'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'tm_notifications__events_waitlist_flag';
-  $strongarm->value = array(
-    'user_label' => '[Chapter Leaders] Notify when someone registers for waitlist to my event',
-    'default_state' => '1',
-    'change_allowed' => 1,
-    'change_allowed_roles' => array("chapter leader"),
-    'email' => array(
-      'subject' => '__PROFILE_FULL_NAME__ just joined the waitlist for [node:title]',
-      'message' => 'Hi [user:field_user_first_name],
-<br>
-<br>__PROFILE_FULL_NAME__ just joined the waiting list for <a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">[node:title]</a>.
-__MEMBER_WIDGET__
-__EMAIL_SIGNOFF__
-',
-    ),
-  );
-  $export['tm_notifications__events_waitlist_flag'] = $strongarm;
-
-
-    $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'tm_notifications__events_waitlist_unflag';
-  $strongarm->value = array(
-    'user_label' => '[Chapter Leaders] Notify when someone unregisters from the waitlist to my event',
-    'default_state' => '1',
-    'change_allowed' => 1,
-    'change_allowed_roles' => array("chapter leader"),
-    'email' => array(
-      'subject' => '__PROFILE_FULL_NAME__ just un-registered from the waitlist for [node:title]',
-      'message' => 'Hi [user:field_user_first_name],
-<br>
-<br>__PROFILE_FULL_NAME__ just left the waiting list for <a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">[node:title]</a>.
-__MEMBER_WIDGET__
-__EMAIL_SIGNOFF__
-',
-    ),
-  );
-  $export['tm_notifications__events_waitlist_unflag'] = $strongarm;
-
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
@@ -123,6 +60,7 @@ Here\'s the event details to keep handy &mdash;
 <br>📍 [node:field_location]
 <br>🗓 <a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_CALENDAR_LINK__">Add to calendar</a>
 __ONLINE_INSTRUCTIONS__
+<br>
 __REGISTER_EVENT_MESSAGE__
 <br>See who else is attending, or message the event organizers by visiting the <a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">event page</a>.
 <br>
@@ -133,6 +71,28 @@ __REGISTER_EVENT_MESSAGE__
   );
   $export['tm_notifications__events_register_flag_user'] = $strongarm;
 
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'tm_notifications__events_register_unflag';
+  $strongarm->value = array(
+    'user_label' => '[Chapter Leaders] Notify when someone unregisters for my event',
+    'default_state' => '1',
+    'change_allowed' => 1,
+    'change_allowed_roles' => array(
+      0 => 'chapter leader',
+    ),
+    'email' => array(
+      'subject' => '__PROFILE_FULL_NAME__ just un-registered for [node:title]',
+      'message' => 'Hi [user:field_user_first_name],
+<br>
+<br>__PROFILE_FULL_NAME__ just un-registered from <a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">[node:title]</a>.
+__MEMBER_WIDGET__
+__EMAIL_SIGNOFF__
+',
+    ),
+  );
+  $export['tm_notifications__events_register_unflag'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
@@ -156,6 +116,28 @@ __REGISTER_EVENT_MESSAGE__
   );
   $export['tm_notifications__events_register_unflag_user'] = $strongarm;
 
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'tm_notifications__events_waitlist_flag';
+  $strongarm->value = array(
+    'user_label' => '[Chapter Leaders] Notify when someone registers for waitlist to my event',
+    'default_state' => '1',
+    'change_allowed' => 1,
+    'change_allowed_roles' => array(
+      0 => 'chapter leader',
+    ),
+    'email' => array(
+      'subject' => '__PROFILE_FULL_NAME__ just joined the waitlist for [node:title]',
+      'message' => 'Hi [user:field_user_first_name],
+<br>
+<br>__PROFILE_FULL_NAME__ just joined the waiting list for <a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">[node:title]</a>.
+__MEMBER_WIDGET__
+__EMAIL_SIGNOFF__
+',
+    ),
+  );
+  $export['tm_notifications__events_waitlist_flag'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
@@ -181,6 +163,28 @@ __WAITLIST_EVENT_MESSAGE__
   );
   $export['tm_notifications__events_waitlist_flag_user'] = $strongarm;
 
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'tm_notifications__events_waitlist_unflag';
+  $strongarm->value = array(
+    'user_label' => '[Chapter Leaders] Notify when someone unregisters from the waitlist to my event',
+    'default_state' => '1',
+    'change_allowed' => 1,
+    'change_allowed_roles' => array(
+      0 => 'chapter leader',
+    ),
+    'email' => array(
+      'subject' => '__PROFILE_FULL_NAME__ just un-registered from the waitlist for [node:title]',
+      'message' => 'Hi [user:field_user_first_name],
+<br>
+<br>__PROFILE_FULL_NAME__ just left the waiting list for <a href="__SERVER_HTTP__://__SERVER_NAME__/__EVENT_URL__">[node:title]</a>.
+__MEMBER_WIDGET__
+__EMAIL_SIGNOFF__
+',
+    ),
+  );
+  $export['tm_notifications__events_waitlist_unflag'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */

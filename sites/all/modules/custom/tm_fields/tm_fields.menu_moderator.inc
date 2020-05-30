@@ -14,7 +14,7 @@ function _tm_more_actions_process_moderator_menu($field, $title, &$links, &$menu
   
   $base = $base_root . request_uri();
 
-  // START unapprove link
+  // START un-verify link
   if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
     if (isset($menu_item['page_arguments'][0]->uid)){
       if (in_array("approved user", $targetuser->roles)){
@@ -26,7 +26,7 @@ function _tm_more_actions_process_moderator_menu($field, $title, &$links, &$menu
 
             $links['user'][] = array(
               'wrapper_class' => array('moderator_unapprove'),
-              'content' => l(t('Un-Approve'), 'javascript:jq_confirm_unapprove_user(' . $targetuser->uid . ')', array(
+              'content' => l(t('Un-Verify'), 'javascript:jq_confirm_unapprove_user(' . $targetuser->uid . ')', array(
                 'fragment' => '',
                 'external'=>true,
                 'attributes' => array(
@@ -40,7 +40,7 @@ function _tm_more_actions_process_moderator_menu($field, $title, &$links, &$menu
       }
     }
   }
-  // END unapprove link
+  // END un-verify link
 
 
   // START moderator info
@@ -85,16 +85,16 @@ function _tm_more_actions_process_moderator_menu($field, $title, &$links, &$menu
         $flagged_time = format_interval($approved_difference, 1) . " ago";
         $flagged_user = user_load($flagger->uid);
         if ($flagged_user->uid > 0) {
-          $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Approved by " . l($flagged_user->field_user_first_name[LANGUAGE_NONE][0]['value'], "/" . drupal_get_path_alias("user/" . $flagged_user->uid), array('attributes' => array('target' => '_blank', 'class' => array('report-flagged-link')))) . " " . $flagged_time . "</span><br>";
+          $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Verified by " . l($flagged_user->field_user_first_name[LANGUAGE_NONE][0]['value'], "/" . drupal_get_path_alias("user/" . $flagged_user->uid), array('attributes' => array('target' => '_blank', 'class' => array('report-flagged-link')))) . " " . $flagged_time . "</span><br>";
         } else {
           // Approved by a user who has removed their account
-          $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Approved " . $flagged_time . "</span><br>";
+          $menu_text .= "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Verified " . $flagged_time . "</span><br>";
         }
       }
 
       // if empty menu text, then user was approved before we started flagging
       if (($menu_text == "") and (in_array("approved user", $targetuser->roles))) {
-        $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Approved by administrator</span>";
+        $menu_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Verified by administrator</span>";
       }
 
       $links['user_info'][] = array(
@@ -234,7 +234,7 @@ function _tm_more_actions_process_moderator_menu($field, $title, &$links, &$menu
         }
       }
       
-      // 8. Show email address to chapter leader if unapproved
+      // 8. Show email address to chapter leader if un-verified
       // Always show to moderators
       if ((!in_array("approved user", $targetuser->roles) and (tm_users_member_in_users_chapter($targetuser->uid, $user->uid, true))) or (in_array("moderator", $user->roles))) {
 

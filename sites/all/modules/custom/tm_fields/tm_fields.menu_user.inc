@@ -14,7 +14,7 @@ function _tm_more_actions_process_user_menu($field, $title, &$links, &$menu_item
   
   $base = $base_root . request_uri();
 
-  // START approve link
+  // START verify link
   if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
     if (isset($menu_item['page_arguments'][0]->uid)){
       if (!in_array("approved user", $targetuser->roles)){
@@ -41,15 +41,22 @@ function _tm_more_actions_process_user_menu($field, $title, &$links, &$menu_item
             
             if (($user_score >= $score_threshold) or (in_array("moderator", $user->roles) or user_access('administer'))) {
 
-              // Show approve user link
-              $community_values_url = $conf["tm_community_values_url"];
+              // verification guidelines
+              $verify_guidelines = "Please follow these guidelines for verification::<ul class='tm-checklist'><li>Profile is a real person</li><li>At least one link to verify personal account</li><li>Profile meets our <a target='_blank' href='" . $conf["tm_community_values_url"] . "'>community values</a></li></ul>";
+              if (isset($conf["tm_users_approval_verify_guidelines"])) {
+                $verify_guidelines = $conf["tm_users_approval_verify_guidelines"];
+              }
+              $verify_guidelines = str_replace("'", "\\'", $verify_guidelines); // js
+
+              // Show verify member link
               $links['user'][] = array(
                 'moderator' => array('moderator_approve'),
-                'content' => l(t('Approve member'), "javascript:jq_confirm_approve_member(" . $targetuser->uid . ", '" . $community_values_url . "')", array(
+                'content' => l(t('Verify member'), "javascript:jq_confirm_approve_member(" . $targetuser->uid . ", '" . $verify_guidelines . "')", array(
                   'fragment' => '',
                   'external'=>true,
                   'attributes' => array(
-                    'title' => t('Approve member')
+                    'title' => t('Verify member'),
+                    'class' => 'tm-moderator-menu-verification'
                   )
                 ))
               );
@@ -59,11 +66,11 @@ function _tm_more_actions_process_user_menu($field, $title, &$links, &$menu_item
               // Incomplete profile
               $links['user'][] = array(
                 'wrapper_class' => array('moderator_approve_message'),
-                'content' => l(t('Approve member'), "javascript:jq_alert('Incomplete Profile', 'Sorry, you can\'t approve this member as their profile is only " . $user_score . "% complete.')", array(
+                'content' => l(t('Verify member'), "javascript:jq_alert('Incomplete Profile', 'Sorry, you can\'t verify this member as their profile is only " . $user_score . "% complete.')", array(
                   'fragment' => '',
                   'external'=>true,
                   'attributes' => array(
-                    'title' => t('Approve member')
+                    'title' => t('Verify member')
                   )
                 ))
               );
@@ -75,7 +82,7 @@ function _tm_more_actions_process_user_menu($field, $title, &$links, &$menu_item
       }
     }
   }
-  // END approve link
+  // END verify link
   
   // START requested approval note
   if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {

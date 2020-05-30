@@ -12,8 +12,8 @@ include_once 'tm_notifications_approval.features.inc';
 function tm_notifications_approval_tm_notif_info() {
   $notification = array();
   $notification['user_approved'] = array(
-    'title' => 'Member has been approved',
-    'description' => 'Send the member a notification that they have been approved.',
+    'title' => 'Member has been verified',
+    'description' => 'Send the member a notification that they have been verified.',
     'use_cron' => FALSE,
     'tokens' => array(
       // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'
@@ -54,8 +54,8 @@ function tm_notifications_approval_tm_notif_info() {
   );
 
   $notification['user_requested_approval'] = array(
-    'title' => 'User requested account approval',
-    'description' => '[Chapter Leaders] Notify when new member requests approval',
+    'title' => 'Member requested account verification',
+    'description' => '[Chapter Leaders] Notify when new member requests verification',
     'use_cron' => FALSE,
     'tokens' => array(
       // The token types that have specific context. Can be multiple token types like 'term' and/or 'user'

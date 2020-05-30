@@ -839,7 +839,7 @@
 .tm_preview_notification .jqi { width: auto;}
 
 /* Unapproved label */
-.text_approved:before { @extend .icon-tick; margin-right: 0.2rem;}
+.text_approved:before { @extend .icon-verified; color: #3e9fef; margin-right: 0.2rem; font-size: 12pt; vertical-align: bottom; }
 
 /* Subscriber label */
 .text_subscriber:before { @extend .icon-2017-subscriber; font-size: 1.2rem; margin-bottom: -0.5rem; margin-right: 0.2rem; vertical-align: bottom;}

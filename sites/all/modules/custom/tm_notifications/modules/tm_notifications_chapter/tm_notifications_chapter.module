@@ -140,7 +140,7 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
   // unapproved message
   $unapproved_message = "";
   if (!in_array("approved user", $who_joined->roles)) {
-    $unapproved_message = '<br>PS: Please ensure that you\'ve completed <a href="__SERVER_HTTP__://__SERVER_NAME__/user/' . $who_joined->uid . '">your profile</a> so we can approve your account.';
+    $unapproved_message = '<br>PS: Please ensure that you\'ve completed <a href="__SERVER_HTTP__://__SERVER_NAME__/user/' . $who_joined->uid . '">your profile</a> so we can verify your account.';
   }
 
   // Fetch the current date  and make sure it's UTC and user-defined timezone.
@@ -211,12 +211,12 @@ function tm_notifications_chapter_flag_flag($flag, $entity_id, $account, $flaggi
     });
 
     // show who approved
-    $approved_by_message = "This member is already approved.";
+    $approved_by_message = "This member is already verified.";
     if (sizeof($who_flagged) > 0) {
       $flagger = $who_flagged[0];
       $flagged_user = user_load($flagger->uid);
       if ($flagged_user->uid > 0) {
-        $approved_by_message = "This member was approved by " . $flagged_user->field_user_first_name[LANGUAGE_NONE][0]['safe_value'] . " " . $flagged_user->field_user_last_name[LANGUAGE_NONE][0]['safe_value'] . ".";
+        $approved_by_message = "This member was verified by " . $flagged_user->field_user_first_name[LANGUAGE_NONE][0]['safe_value'] . " " . $flagged_user->field_user_last_name[LANGUAGE_NONE][0]['safe_value'] . ".";
       }
     }
 

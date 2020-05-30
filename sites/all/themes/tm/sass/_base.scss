@@ -244,6 +244,14 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
       &:before {
         @extend .icon-user;
       }
+      &.account-style-1:before {
+      @extend .icon-member-style-1;
+      font-size: 21pt;
+      }
+      &.account-style-2:before {
+        @extend .icon-member-style-2;
+        font-size: 21pt;
+      }
     }
     .inner {
       right: -0.5rem;
@@ -1226,6 +1234,48 @@ a.tm-lists-footer-label-link:hover {
   margin-top: 4px !important;
 }
 
+.tm-go-live-button:before, .tm-end-live-button:before {
+  font-family: 'tm-icons';
+  content: "\e676";
+  color: #ffffff !important;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin-right: 8px;
+}
+
 .tm-end-live-button:hover {
   background-color: #d94830 !important;
+}
+
+ul.tm-checklist {
+  list-style: none;
+  padding-left: 16px;
+}
+
+ul.tm-checklist li:before {
+  font-family: 'tm-icons';
+  content: "\e609";
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin-right: 8px;
+}
+
+.tm-account-menu-verification:before {
+  font-family: 'tm-icons';
+  content: "\e673";
+  margin-right: 4px !important;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.tm-moderator-menu-verification:before {
+  font-family: 'tm-icons';
+  content: "\e673";
+  margin-right: 4px !important;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

@@ -1126,7 +1126,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['fields']['flagged_2']['not'] = 0;
   $handler->display->display_options['path'] = 'admin/unapproved-members';
   $handler->display->display_options['menu']['type'] = 'normal';
-  $handler->display->display_options['menu']['title'] = 'Unapproved members';
+  $handler->display->display_options['menu']['title'] = 'All members';
   $handler->display->display_options['menu']['weight'] = '0';
   $handler->display->display_options['menu']['name'] = 'management';
   $handler->display->display_options['menu']['context'] = 0;

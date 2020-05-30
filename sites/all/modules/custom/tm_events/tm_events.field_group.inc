@@ -198,17 +198,15 @@ function tm_events_field_group_info() {
   $field_group->mode = 'form';
   $field_group->parent_name = '';
   $field_group->data = array(
-    'label' => 'Event Settings',
+    'label' => 'Event Messages',
     'weight' => '7',
     'children' => array(
-      0 => 'field_approved_members_only',
-      1 => 'field_register_event_message',
-      2 => 'field_waitlist_event_message',
-      3 => 'field_event_hide_location',
+      0 => 'field_register_event_message',
+      1 => 'field_waitlist_event_message',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
-      'label' => 'Event Settings',
+      'label' => 'Event Messages',
       'instance_settings' => array(
         'required_fields' => 1,
         'id' => '',
@@ -415,12 +413,13 @@ function tm_events_field_group_info() {
       3 => 'field_image',
       4 => 'field_organizer',
       5 => 'field_rsvp_link',
-      6 => 'field_chapter',
-      7 => 'field_event_company',
-      8 => 'field_event_cover_video',
-      9 => 'field_rsvp_link_title',
-      10 => 'title',
-      11 => 'path',
+      6 => 'field_approved_members_only',
+      7 => 'field_chapter',
+      8 => 'field_event_company',
+      9 => 'field_event_cover_video',
+      10 => 'field_rsvp_link_title',
+      11 => 'title',
+      12 => 'path',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -451,6 +450,7 @@ function tm_events_field_group_info() {
       0 => 'field_event_venue_name',
       1 => 'field_location',
       2 => 'field_map_link',
+      3 => 'field_event_hide_location',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -640,7 +640,7 @@ function tm_events_field_group_info() {
   t('Action menu');
   t('Action menu wrapper');
   t('Event Chapters');
-  t('Event Settings');
+  t('Event Messages');
   t('Event Sponsors');
   t('Events');
   t('Extra Stuff');

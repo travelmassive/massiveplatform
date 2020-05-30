@@ -403,14 +403,6 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
       $form['field_approved_members_only'][LANGUAGE_NONE]['#default_value'] = $conf['tm_event_approved_members_default'];
     }
   }
-  if (isset($conf['tm_event_approved_members_title'])) {
-    $form['field_approved_members_only'][LANGUAGE_NONE]['#title'] = $conf['tm_event_approved_members_title'];
-
-  }
-  if (isset($conf['tm_event_approved_members_description'])) {
-    $form['field_approved_members_only'][LANGUAGE_NONE]['#description'] = $conf['tm_event_approved_members_description'];
-  }
-
 
   // STEP 6. Modify payment fields if tm_payments enabled
   //////////

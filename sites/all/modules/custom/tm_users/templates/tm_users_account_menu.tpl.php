@@ -51,7 +51,14 @@ $image = theme('image_style', array(
 ?>
 
 <h2>
-  <a class="toggle" href="#account-menu-blk" data-dropd-toggle>
+  <?php
+    // allow customization of account icon
+    $account_css_class = "";
+    if (isset($conf["tm_users_custom_account_css_class"])) {
+      $account_css_class = " " . $conf["tm_users_custom_account_css_class"];
+    }
+  ?>
+  <a class="toggle<?php echo $account_css_class; ?>" href="#account-menu-blk" data-dropd-toggle>
     <span class="hide"><?= t('Account'); ?></span>
     <?php if ($user->uid) : ?>
     <span class="avatar"><?php print $image; ?></span>
@@ -180,10 +187,10 @@ $image = theme('image_style', array(
         }
         $flagged_time = format_interval($difference, 1) . " ago";
       ?>
-      <li><?php print l(t($conf['tm_requested_approval_text'] . ' (' . $flagged_time . ')'), 'javascript:jq_approval_already_requested();', array('fragment' => '','external'=>true)); ?></li>
+      <li><?php print l(t('Request verification (' . $flagged_time . ')'), 'javascript:jq_approval_already_requested();', array('fragment' => '','external'=>true, 'attributes' => array('class' => 'tm-account-menu-verification'))); ?></li>
       <?php } else { ?>
       <li><?php
-        print l(t($conf['tm_request_approval_text']), 'javascript:jq_request_approval(' . $loaded->uid . ')', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('approval-link')))); ?></li>
+        print l('Request verification', 'javascript:jq_request_approval(' . $loaded->uid . ')', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('approval-link', 'tm-account-menu-verification')))); ?></li>
       <?php
       } // end if flagged
       } // end if not approved
@@ -217,9 +224,9 @@ $image = theme('image_style', array(
       <?php endif; ?>
   <?php endif; ?>
 
-  <?php if (!in_array("approved user", $loaded->roles)) : ?>
+ <?php if (!in_array("approved user", $loaded->roles)) : ?>
     <ul class="dropd-menu">
-      <li><?php print l(t('Add company page'), 'javascript:jq_alert("How can list my company page?", "To create a company page that can be discovered on our <a href=\"/companies\">company listings</a>, your account needs to be approved first.<br><br><strong>What should I do next?</strong><br>Please complete your personal profile and request approval of your account. Once your account is approved this feature will be enabled.");', array('fragment' => '','external'=>true)); ?></li>
+    <li><?php print l(t('Add company page'), 'javascript:jq_alert("How can list my company page?", "To create a <a href=\"/companies\">company page</a> you need a <i>verified</i> account.<br><br><strong>What should I do next?</strong><br>Complete your personal profile and request verification. When you are verified this feature will be enabled.");', array('fragment' => '','external'=>true)); ?></li>
     </ul>
   <?php endif; ?>
 
@@ -340,19 +347,21 @@ if ((!in_array("approved user", $loaded->roles))
   and ($user_score > 50) 
   and ($tm_account_changed)
   and (!$user_requested_approval)) {
-    
-      // add cookie library  
-      drupal_add_library('system', 'jquery.cookie');
 
-      // Load the prompt
-      drupal_add_js("jQuery(document).ready(function($) {
-          setTimeout(function(){
-            if (typeof jq_prompt_request_approval == 'function') { 
-              jq_prompt_request_approval(" . $loaded->uid . ");
-            }
-          }, 500);
-          });
-        ", "inline");
+    $message = "Do you want to unlock more features for your account?";
+
+    // add cookie library  
+    drupal_add_library('system', 'jquery.cookie');
+
+    // Load the prompt
+    drupal_add_js("jQuery(document).ready(function($) {
+        setTimeout(function(){
+          if (typeof jq_prompt_request_approval == 'function') { 
+            jq_prompt_request_approval(" . $loaded->uid . ", '" . $message . "');
+          }
+        }, 500);
+        });
+      ", "inline");
 } 
 
 //  unset account changed session

@@ -1125,7 +1125,7 @@ This will be added to the attendee count on the event page.',
       ),
     ),
     'deleted' => 0,
-    'description' => 'Check this option if you want to restrict displaying the event location to registered attendees only.',
+    'description' => 'Restrict displaying the event location to registered attendees only.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -2502,7 +2502,7 @@ Registered attendees are reminded <b>1.5 hours</b> and <b>10 minutes</b> before 
       ),
     ),
     'deleted' => 0,
-    'description' => 'Check this to indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)',
+    'description' => 'Indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -3156,8 +3156,6 @@ Provide HTML markup or a template alias.');
   t('Chapter members are invited <b>24 hours</b> before the event starts to register.<br>
 Registered attendees are reminded <b>1.5 hours</b> and <b>10 minutes</b> before you go live.<br>');
   t('Chapters that you publish this event to will be able to announce the event.');
-  t('Check this option if you want to restrict displaying the event location to registered attendees only.');
-  t('Check this to indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)');
   t('Choose who can see your live stream.<br>
 Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.');
   t('Cover Video');
@@ -3200,6 +3198,7 @@ This will be displayed to the member on the event page and included in the autom
   t('Increase your event\'s exposure with a cover video. 
 <br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM<br>
 <b>Live Streaming?</b> See the <i>Online Events</i> section below.');
+  t('Indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)');
   t('Instructions to join the online event.<br>
 This will only be displayed to registered attendees.');
   t('Leave blank to use the chapter\'s timezone (or UTC if no chapter for event)
@@ -3231,6 +3230,7 @@ This will only be displayed to registered attendees.');
   t('Provide the street address or physical location for this event.');
   t('Publish to Chapters');
   t('RSVP link');
+  t('Restrict displaying the event location to registered attendees only.');
   t('Restrict registration and waitlist to members who are verified.<br>
 Non-verified members won\'t be able to sign up.');
   t('Select additional chapters associated with the event.

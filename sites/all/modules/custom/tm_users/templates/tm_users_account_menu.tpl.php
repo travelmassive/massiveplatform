@@ -55,10 +55,10 @@ $image = theme('image_style', array(
     // allow customization of account icon
     $account_css_class = "";
     if (isset($conf["tm_users_custom_account_css_class"])) {
-      $account_css_class = $conf["tm_users_custom_account_css_class"];
+      $account_css_class = " " . $conf["tm_users_custom_account_css_class"];
     }
   ?>
-  <a class="toggle <?php echo $account_css_class; ?>" href="#account-menu-blk" data-dropd-toggle>
+  <a class="toggle<?php echo $account_css_class; ?>" href="#account-menu-blk" data-dropd-toggle>
     <span class="hide"><?= t('Account'); ?></span>
     <?php if ($user->uid) : ?>
     <span class="avatar"><?php print $image; ?></span>

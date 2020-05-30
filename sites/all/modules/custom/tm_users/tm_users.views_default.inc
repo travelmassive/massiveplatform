@@ -1090,7 +1090,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['fields']['timestamp']['table'] = 'flagging';
   $handler->display->display_options['fields']['timestamp']['field'] = 'timestamp';
   $handler->display->display_options['fields']['timestamp']['relationship'] = 'flag_content_rel_2';
-  $handler->display->display_options['fields']['timestamp']['label'] = 'When Requested Approval';
+  $handler->display->display_options['fields']['timestamp']['label'] = 'When Requested Verification';
   $handler->display->display_options['fields']['timestamp']['date_format'] = 'time ago';
   $handler->display->display_options['fields']['timestamp']['second_date_format'] = 'long';
   /* Field: Flags: Flagged */
@@ -1121,7 +1121,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['fields']['flagged_2']['table'] = 'flagging';
   $handler->display->display_options['fields']['flagged_2']['field'] = 'flagged';
   $handler->display->display_options['fields']['flagged_2']['relationship'] = 'flag_content_rel_2';
-  $handler->display->display_options['fields']['flagged_2']['label'] = 'User requested approval?';
+  $handler->display->display_options['fields']['flagged_2']['label'] = 'User requested verification?';
   $handler->display->display_options['fields']['flagged_2']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['flagged_2']['not'] = 0;
   $handler->display->display_options['path'] = 'admin/unapproved-members';
@@ -1313,7 +1313,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['fields']['timestamp']['table'] = 'flagging';
   $handler->display->display_options['fields']['timestamp']['field'] = 'timestamp';
   $handler->display->display_options['fields']['timestamp']['relationship'] = 'flag_content_rel_2';
-  $handler->display->display_options['fields']['timestamp']['label'] = 'When Requested Approval';
+  $handler->display->display_options['fields']['timestamp']['label'] = 'When Requested Verification';
   $handler->display->display_options['fields']['timestamp']['date_format'] = 'time ago';
   $handler->display->display_options['fields']['timestamp']['second_date_format'] = 'long';
   /* Field: Flags: Flagged */
@@ -1344,7 +1344,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['fields']['flagged_2']['table'] = 'flagging';
   $handler->display->display_options['fields']['flagged_2']['field'] = 'flagged';
   $handler->display->display_options['fields']['flagged_2']['relationship'] = 'flag_content_rel_2';
-  $handler->display->display_options['fields']['flagged_2']['label'] = 'User requested approval?';
+  $handler->display->display_options['fields']['flagged_2']['label'] = 'User requested verification?';
   $handler->display->display_options['fields']['flagged_2']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['flagged_2']['not'] = 0;
   $handler->display->display_options['defaults']['arguments'] = FALSE;

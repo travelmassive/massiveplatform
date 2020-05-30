@@ -92,7 +92,8 @@ function tm_events_field_default_field_instances() {
       ),
     ),
     'deleted' => 0,
-    'description' => 'Check this box if you want to restrict registration and waitlist to members who are verified. Non-verified members won\'t be able to sign up.',
+    'description' => 'Restrict registration and waitlist to members who are verified.<br>
+Non-verified members won\'t be able to sign up.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -3155,7 +3156,6 @@ Provide HTML markup or a template alias.');
   t('Chapter members are invited <b>24 hours</b> before the event starts to register.<br>
 Registered attendees are reminded <b>1.5 hours</b> and <b>10 minutes</b> before you go live.<br>');
   t('Chapters that you publish this event to will be able to announce the event.');
-  t('Check this box if you want to restrict registration and waitlist to members who are verified. Non-verified members won\'t be able to sign up.');
   t('Check this option if you want to restrict displaying the event location to registered attendees only.');
   t('Check this to indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)');
   t('Choose who can see your live stream.<br>
@@ -3231,6 +3231,8 @@ This will only be displayed to registered attendees.');
   t('Provide the street address or physical location for this event.');
   t('Publish to Chapters');
   t('RSVP link');
+  t('Restrict registration and waitlist to members who are verified.<br>
+Non-verified members won\'t be able to sign up.');
   t('Select additional chapters associated with the event.
 <br>The event will be published in these chapters also.');
   t('Send event notifications when attendees register or unregister for this event<br><br>

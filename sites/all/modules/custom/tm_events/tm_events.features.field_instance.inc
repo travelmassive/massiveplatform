@@ -142,7 +142,7 @@ Non-verified members won\'t be able to sign up.',
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 16,
+      'weight' => 18,
     ),
   );
 
@@ -634,7 +634,7 @@ Non-verified members won\'t be able to sign up.',
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 14,
+      'weight' => 16,
     ),
   );
 
@@ -2489,7 +2489,7 @@ Registered attendees are reminded <b>1.5 hours</b> and <b>10 minutes</b> before 
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 13,
+      'weight' => 15,
     ),
   );
 
@@ -3019,7 +3019,7 @@ This will be displayed to the member on the event page and included in the autom
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 17,
+      'weight' => 13,
     ),
   );
 
@@ -3072,7 +3072,7 @@ This will be displayed to the member on the event page and included in the autom
         'size' => 15,
       ),
       'type' => 'text_textfield',
-      'weight' => 18,
+      'weight' => 14,
     ),
   );
 

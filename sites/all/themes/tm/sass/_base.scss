@@ -244,6 +244,14 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
       &:before {
         @extend .icon-user;
       }
+      &.account-style-1:before {
+      @extend .icon-member-style-1;
+      font-size: 21pt;
+      }
+      &.account-style-2:before {
+        @extend .icon-member-style-2;
+        font-size: 21pt;
+      }
     }
     .inner {
       right: -0.5rem;

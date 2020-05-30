@@ -372,7 +372,7 @@
       },
       state1: {
         title: 'Add a welcome message?',
-        html: "You can send a short message to the member (optional) <textarea id='form_moderator_message' value='' placeholder='Thanks for joining...' rows='3' cols='50'></textarea>",
+        html: "You can send a short message to the member <textarea id='form_moderator_message' value='' placeholder='Thanks for joining...' rows='3' cols='50'></textarea>",
         buttons: { Back: -1, OK: true },
         focus: 1,
         submit:function(e,v,m,f){

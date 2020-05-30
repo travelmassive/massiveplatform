@@ -5364,28 +5364,17 @@ a.tm-lists-footer-label-link:hover {
 }
 
 /* line 1237, ../sass/_base.scss */
-.tm-go-live-button:before, .tm-end-live-button:before {
-  font-family: 'tm-icons';
-  content: "\e676";
-  color: #ffffff !important;
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin-right: 8px;
-}
-
-/* line 1247, ../sass/_base.scss */
 .tm-end-live-button:hover {
   background-color: #d94830 !important;
 }
 
-/* line 1251, ../sass/_base.scss */
+/* line 1241, ../sass/_base.scss */
 ul.tm-checklist {
   list-style: none;
   padding-left: 16px;
 }
 
-/* line 1256, ../sass/_base.scss */
+/* line 1246, ../sass/_base.scss */
 ul.tm-checklist li:before {
   font-family: 'tm-icons';
   content: "\e609";
@@ -5395,7 +5384,7 @@ ul.tm-checklist li:before {
   margin-right: 8px;
 }
 
-/* line 1265, ../sass/_base.scss */
+/* line 1255, ../sass/_base.scss */
 .tm-account-menu-verification:before {
   font-family: 'tm-icons';
   content: "\e673";
@@ -5405,7 +5394,7 @@ ul.tm-checklist li:before {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* line 1274, ../sass/_base.scss */
+/* line 1264, ../sass/_base.scss */
 .tm-moderator-menu-verification:before {
   font-family: 'tm-icons';
   content: "\e673";

@@ -269,7 +269,7 @@ function tm_users_in_chapter_tips() {
   if ($in_chapter) {
     if (!in_array("approved user", $user->roles)) {
         $your_account_url = drupal_get_path_alias('user/' . $user->uid);
-        $user_tip = "Your membership will be displayed in the " . $chapter_name . " community when <a href='/" . $your_account_url . "'>your account</a> has been approved.";
+        $user_tip = "Your membership will be displayed in the " . $chapter_name . " community when <a href='/" . $your_account_url . "'>your account</a> has been verified.";
     }
   }
 

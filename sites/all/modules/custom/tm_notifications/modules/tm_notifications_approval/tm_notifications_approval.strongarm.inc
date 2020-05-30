@@ -151,7 +151,7 @@ __MEMBER_WIDGET__
   $strongarm->api_version = 1;
   $strongarm->name = 'tm_notifications__user_approved';
   $strongarm->value = array(
-    'user_label' => 'Notification that user has been approved',
+    'user_label' => 'Notification that user has been verified',
     'default_state' => '1',
     'change_allowed' => 0,
     'email' => array(

@@ -29,7 +29,7 @@ function tm_users_approve($user) {
   $profile_url = drupal_get_path_alias("user/" . $user->uid);
   $profile_uid = $user->uid;
 
-  $approval_text = "Your account has been approved by " . $approving_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . ".";
+  $approval_text = "Your account has been verified by " . $approving_user->field_user_first_name[LANGUAGE_NONE][0]['value'] . ".";
 
   $moderator_first_name = $approving_user->field_user_first_name['und'][0]['value'];
 
@@ -51,13 +51,13 @@ function tm_users_approve($user) {
   }
 
   // hero headline
-  $hero_headline = tm_notifications_render_hero_headline_html("Your account is approved.");
+  $hero_headline = tm_notifications_render_hero_headline_html("Your account is verified 🎉");
 
   // generate member html
   $member_widget = tm_notifications_render_member_html($user);
 
   // subject line
-  $subject_line = "Your " . $conf["tm_site_name"] . " account has been approved";
+  $subject_line = "Your " . $conf["tm_site_name"] . " account has been verified";
 
   $approval_welcome_message = $conf["tm_notification_approval_welcome_message"];
   tm_notifications_notify('user_approved', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__APPROVAL_INTRO_TEXT__' => $approval_text, '__REPLY_TO__' => $reply_to, '__APPROVAL_WELCOME_MESSAGE__' => $approval_welcome_message, '__HERO_HEADLINE__' => $hero_headline, "__MEMBER_WIDGET__" => $member_widget, '__SUBJECT_LINE__' => $subject_line));

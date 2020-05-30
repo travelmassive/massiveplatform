@@ -1234,16 +1234,6 @@ a.tm-lists-footer-label-link:hover {
   margin-top: 4px !important;
 }
 
-.tm-go-live-button:before, .tm-end-live-button:before {
-  font-family: 'tm-icons';
-  content: "\e676";
-  color: #ffffff !important;
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin-right: 8px;
-}
-
 .tm-end-live-button:hover {
   background-color: #d94830 !important;
 }

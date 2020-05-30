@@ -438,7 +438,7 @@ function tm_invitations_user_insert(&$edit, $account, $category) {
           }
 
           // Send approval email
-          $approval_text = "Your account has been approved by " . $inviter->field_user_first_name[LANGUAGE_NONE][0]['value'] . ".";
+          $approval_text = "Your account has been verified by " . $inviter->field_user_first_name[LANGUAGE_NONE][0]['value'] . ".";
 
           tm_notifications_notify('user_approved', $account, array('approving-user' => $inviter, 'user' => $account, '__PROFILE_URL__' => $profile_url, '__APPROVAL_INTRO_TEXT__' => $approval_text));
 

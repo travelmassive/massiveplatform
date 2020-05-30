@@ -157,12 +157,6 @@ $conf['tm_user_remove_own_account_notify'] = 'community@massiveplatform.com'; //
 /** MEMBER LABELS **/
 $conf["tm_member_label"] = "massive member"; // singular
 $conf["tm_members_label"] = "massive members"; // plural
-$conf["tm_approved_label"] = "Approved Member"; // title for approved member
-$conf["tm_unapproved_label"] = "Guest Member"; // title for unapproved member
-$conf["tm_approved_label_plural"] = "Approved Members"; // title for approved member
-$conf["tm_unapproved_label_plural"] = "Guest Members"; // title for unapproved member
-$conf["tm_request_approval_text"] = "Request approval"; // label for request approval link
-$conf["tm_requested_approval_text"] = "Requested approval"; // label for requested approval link
 
 /** OTHER LABELS **/
 // $conf["tm_segment_label"] = "Industry Segment"; // optional - change the "industry" label 
@@ -195,8 +189,6 @@ $conf['tm_event_follow_company'] = true; // follow company when joining company 
 $conf['tm_event_follow_member'] = true; // follow member when joining member event
 $conf['tm_event_restrict_announcement_rsvp'] = true; // if true, don't allow members to send announcement from external rsvp events
 $conf["tm_event_approved_members_default"] = 1; // (default = 1) set default of approved members checkbox
-$conf["tm_event_approved_members_title"] = "Approved Members Only"; // optional - set the title for approved members checkbox
-$conf["tm_event_approved_members_description"] = "Check this box if you want to restrict registration and waitlist to members who are approved. Guest members won't be able to register."; // optional - set the description for the approved members description
 $conf["tm_event_post_reminder_message"] = "Share what happened with the community &mdash; <a target='_blank' href=''>post event photos</a> on the Forum, or <a target='_blank' href=''>submit a blog article</a>."; // message displayed to chapter leaders after event
 $conf["tm_event_custom_banner_templates"] = array(); // custom event banner template alias
 $conf["tm_event_custom_banner_templates"]["example"] = "<h1>Call this template with __EXAMPLE__</h1>"; 
@@ -1225,6 +1217,8 @@ $conf['tm_users_approval_on_signup_subject'] = "Welcome to our community"; // su
 $conf["tm_users_approval_minimum_score"] = 50; // minimum score (0-100) for chapter leader to approve
 $conf["tm_users_request_approval_minimum_score"] = 50; // minimum score (0-100) for guest to approve
 $conf["tm_users_approval_verify_email"] = false; // if true, verify email on approval
+// $conf["tm_users_approval_verifying_message"] = "Our community team will get back to you shortly."; // Custom message when already requested
+// $conf["tm_users_approval_verify_guidelines"] = "Please follow these guidelines for verification:<ul class='tm-checklist'><li>Profile is a real person</li><li>At least one link to verify personal account</li><li>Profile meets our <a target='_blank' href='" . $conf["tm_community_values_url"] . "'>community values</a></li></ul>"; // Guidelines for chapter leaders to approve account
 
 /** MARKDOWN **/
 /** Allow markdown on descriptions of these types **/

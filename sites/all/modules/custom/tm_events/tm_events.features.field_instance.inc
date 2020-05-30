@@ -92,7 +92,7 @@ function tm_events_field_default_field_instances() {
       ),
     ),
     'deleted' => 0,
-    'description' => 'Check this box if you want to restrict registration and waitlist to members who are approved. Non-approved members won\'t be able to sign up.',
+    'description' => 'Check this box if you want to restrict registration and waitlist to members who are verified. Non-verified members won\'t be able to sign up.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -129,7 +129,7 @@ function tm_events_field_default_field_instances() {
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_approved_members_only',
-    'label' => 'Approved Members Only',
+    'label' => 'Verified Members Only',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -141,7 +141,7 @@ function tm_events_field_default_field_instances() {
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 14,
+      'weight' => 16,
     ),
   );
 
@@ -1173,7 +1173,7 @@ This will be added to the attendee count on the event page.',
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 15,
+      'weight' => 23,
     ),
   );
 
@@ -3018,7 +3018,7 @@ This will be displayed to the member on the event page and included in the autom
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 16,
+      'weight' => 17,
     ),
   );
 
@@ -3071,7 +3071,7 @@ This will be displayed to the member on the event page and included in the autom
         'size' => 15,
       ),
       'type' => 'text_textfield',
-      'weight' => 17,
+      'weight' => 18,
     ),
   );
 
@@ -3146,7 +3146,6 @@ Provide HTML markup or a template alias.');
   t('Allow Chapter Leaders to send announcements');
   t('Allow featured members to download the attendee list');
   t('Allow featured members to receive event notifications');
-  t('Approved Members Only');
   t('Assign a label for featured members on the event listing. Leave blank for default.
 <br>example: Keynote Speakers
 <br><br>');
@@ -3156,7 +3155,7 @@ Provide HTML markup or a template alias.');
   t('Chapter members are invited <b>24 hours</b> before the event starts to register.<br>
 Registered attendees are reminded <b>1.5 hours</b> and <b>10 minutes</b> before you go live.<br>');
   t('Chapters that you publish this event to will be able to announce the event.');
-  t('Check this box if you want to restrict registration and waitlist to members who are approved. Non-approved members won\'t be able to sign up.');
+  t('Check this box if you want to restrict registration and waitlist to members who are verified. Non-verified members won\'t be able to sign up.');
   t('Check this option if you want to restrict displaying the event location to registered attendees only.');
   t('Check this to indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)');
   t('Choose who can see your live stream.<br>
@@ -3251,6 +3250,7 @@ This will only be displayed to registered attendees.');
   t('This will be used as the main image for the event.
 <br>To support retina displays, upload your image sized to 1610x906');
   t('Venue name');
+  t('Verified Members Only');
   t('When');
   t('Who can register for your event?');
   t('Who can watch the live stream?');

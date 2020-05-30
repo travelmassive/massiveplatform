@@ -284,18 +284,16 @@
   }
 
   jq_request_approval = function(uid) {
-    confirm_title = "Approve my account";
-    message = ""; //We\'re a growing community, and we need your help to ensure everyone fits in. ";
-    message = message + "<p style='margin-top: 0px;'>In a few words, please tell us why you would like to join the community.</p>";
-    if (reason_for_joining != "") {
-
-    }
+    
+    confirm_title = "Verify my account";
+    message = "<p style='margin-top: 0px;'>In a few words, please tell us why you would like to join the community.</p>";
+   
     // get reason for joining from hidden form field
     // we don't want to move this around in the js call as it\'s visible
     //reason_for_joining = $("#reason_for_joining").val();
     message = message + "<input type='text' id='form_reason_for_approval' value='' maxlength='150' placeholder='I want to join because...' size='100'>";
 
-    $.prompt(message, { buttons: { "Request Approval": true, "Cancel": false },
+    $.prompt(message, { buttons: { "Request Verification": true, "Cancel": false },
       title: confirm_title,
       loaded: function() {
         // copy in reason for approval from hidden field
@@ -312,11 +310,11 @@
 
   // prompt if user can request approval
   // allow a 30 minute wait time if user opts for "not yet"
-  jq_prompt_request_approval = function(uid) {
+  jq_prompt_request_approval = function(uid, message) {
 
     var current_user_score = $('#current_user_score').val();
 
-    // if user has previouslly chosen "No, not yet" then don't show
+    // if user has previously chosen "No, not yet" then don't show
     if ($.cookie("Drupal.visitor.dont_request_approval")) {
       return;
     }
@@ -324,8 +322,8 @@
     $.prompt({
       state0: {
         title: 'Bravo! Your profile is ' + current_user_score + '% complete.',
-        html: 'Do you want to unlock more features for your account?',
-        buttons: { "Yes, request approval": true, "No, not yet": false },
+        html: message,
+        buttons: { "Yes, request verification": true, "No, not yet": false },
         //focus: 1,
         submit:function(e,v,m,f){
           if(v){
@@ -347,15 +345,20 @@
   }
 
   jq_approval_already_requested = function() {
-    jq_alert("We're verifying your account", "Our community team will get back to you shortly.<br><br><strong>Here's a few tips to fast track your approval</strong> - accounts that are completely filled in get approved much faster. Make sure you write about yourself, not your business. Explain why you want to be a part of our community 😊<br><br>If you need to be approved sooner, please <a href='/contact'>contact us</a>.");
+    // default message
+    var approval_verifying_message = "Our community team will get back to you shortly.";
+    if (typeof Drupal.settings.tm_users.approval_verifying_message !== 'undefined') {
+      approval_verifying_message = Drupal.settings.tm_users.approval_verifying_message;
+    }
+    jq_alert("We're reviewing your profile", approval_verifying_message);
   }
 
-  jq_confirm_approve_member = function(uid, community_values_url) {
+  jq_confirm_approve_member = function(uid, verify_guidelines) {
       
     $.prompt({
       state0: {
-        title: 'Do you want to approve this account?',
-        html: 'Guidelines for approval:<li>Account is a real person</li><li>Profile is not a company or logo</li><li>At least one link to verify personal account</li><li>Profile meets our <a target="_blank" href="' + community_values_url + '">community values</a></li>',
+        title: 'Do you want to verify this account?',
+        html: verify_guidelines,
         buttons: { Cancel: false, Next: true },
         focus: 1,
         submit:function(e,v,m,f){
@@ -369,7 +372,7 @@
       },
       state1: {
         title: 'Add a welcome message?',
-        html: "You can send a short message to the member. <textarea id='form_moderator_message' value='' placeholder='Thanks for joining...' rows='3' cols='50'></textarea>",
+        html: "You can send a short message to the member (optional) <textarea id='form_moderator_message' value='' placeholder='Thanks for joining...' rows='3' cols='50'></textarea>",
         buttons: { Back: -1, OK: true },
         focus: 1,
         submit:function(e,v,m,f){
@@ -387,7 +390,7 @@
   }
 
   jq_confirm_unapprove_user = function(uid) {
-    jq_confirm_url('Do you want to un-approve this account?', 'The user will not be notified automatically. Please contact the user to address the issue.', '/user/' + uid + '/unapprove');
+    jq_confirm_url('Do you want to un-verify this account?', 'The member will not be notified automatically. Please contact the member to address the issue.', '/user/' + uid + '/unapprove');
   }
 
   jq_confirm_incomplete_profile = function(uid) {
@@ -395,7 +398,7 @@
     $.prompt({
       state0: {
         title: 'Flag this account as incomplete?',
-        html: 'This action will:<li>Notify the member to update their profile</li><li>Notify you when the member requests approval</li>',
+        html: 'This action will:<ul class="tm-checklist"><li>Notify the member to update their profile</li><li>Notify you when the member requests verification</li></ul>',
         buttons: { Cancel: false, Next: true },
         focus: 1,
         submit:function(e,v,m,f){
@@ -431,7 +434,7 @@
     $.prompt({
       state0: {
         title: 'Flag this account as a company or brand?',
-        html: 'This action will:<li>Notify the member to personalize their profile</li><li>Inform member on how to list their company</li><li>Notify you when the member requests approval</li>',
+        html: 'This action will:<ul class="tm-checklist"><li>Notify the member to personalize their profile</li><li>Inform the member how to list their company</li><li>Notify you when the member requests verification</li></ul>',
         buttons: { Cancel: false, Next: true },
         focus: 1,
         submit:function(e,v,m,f){
@@ -467,7 +470,7 @@
     $.prompt({
       state0: {
         title: 'Flag this account as non-community profile?',
-        html: 'This action will:<li>Set this account to <i>un-approved</i></li><li>Inform account owner of <a target="_blank" href="' + community_values_url + '">membership guidelines</a></li><li>Notify you if the account owner requests approval</li>',
+        html: 'This action will:<ul class="tm-checklist"><li>Set this account to <i>Guest</i> status</li><li>Inform account owner of <a target="_blank" href="' + community_values_url + '">membership guidelines</a></li><li>Notify you if the owner requests verification</li></ul>',
         buttons: { Cancel: false, Next: true },
         focus: 1,
         submit:function(e,v,m,f){
@@ -779,13 +782,13 @@
   jq_unapproved_member_event_register = function(approved_member_label_single, approved_member_label_plural) {
 
     var current_user_uid = $('#current_user_uid').val();
-    var confirm_message = "Please complete your profile and request approval of your account. It's easy and only takes a few minutes.";
+    var confirm_message = "Please complete your profile and request verification of your account. It's easy and only takes a few minutes.";
     var profile_edit_url = "/user/" + current_user_uid + "/edit#user-profile-options";
 
     // prompt to complete profile
     // event.preventDefault();
     $.prompt(confirm_message, {
-        title: 'Only ' + approved_member_label_plural + ' can register',
+        title: 'Only Verified Members can register',
         buttons: { "OK": false, "Edit Profile": true },
         submit: function(e,v,m,f){
           if (v==true) {

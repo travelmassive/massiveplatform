@@ -308,17 +308,13 @@ function _tm_approved_process($field, $title = NULL) {
       $flagged_time = format_interval($difference, 1) . " ago";
 
       // 1. Show approval requested link
-      $approval_link = l(t($conf['tm_requested_approval_text'] . ' (' . $flagged_time . ')'), 'javascript:jq_approval_already_requested();', array('fragment' => '','external'=>true));
+      $approval_link = l('Requested verification (' . $flagged_time . ')', 'javascript:jq_approval_already_requested();', array('fragment' => '','external'=>true));
       $html .= '<span class="approval_pending" style="font-size: 10pt;">' . $approval_link . '</span>';
 
     } else {
 
-      // 2. Show "Approve my account" link
-      $tm_request_approval_text = 'Request approval';
-      if (isset($conf["tm_request_approval_text"])) {
-        $tm_request_approval_text = $conf["tm_request_approval_text"];
-      }
-      $approval_link = l(t($tm_request_approval_text), 'javascript:jq_request_approval(' . $loaded->uid . ')', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('approval-link'))));
+      // 2. Show "Verify my account" link
+      $approval_link = l('Request verification', 'javascript:jq_request_approval(' . $loaded->uid . ')', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('approval-link'))));
 
       $html .= '<span class="approval" style="font-size: 10pt;">' . $approval_link . '</span>';
     }

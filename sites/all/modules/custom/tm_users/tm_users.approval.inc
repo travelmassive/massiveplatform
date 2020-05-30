@@ -108,15 +108,15 @@ function tm_users_approve($user) {
       if ($membership_counts["members_unapproved_total"] > 0) {
 
         if ($membership_counts["members_unapproved_total"] == 1) {
-          $unapproved_members_html = "Please review <a href='" . $unapproved_members_url . "'>1 " . $conf["tm_unapproved_label"] . "</a> in " . tm_chapters_formal_name($chapter) . ".";
+          $unapproved_members_html = "Please review <a href='" . $unapproved_members_url . "'>1 Guest Member</a> in " . tm_chapters_formal_name($chapter) . ".";
         } else {
-          $unapproved_members_html = "Please review <a href='" . $unapproved_members_url . "'>" . $members_unapproved_total . " " . $conf["tm_unapproved_label_plural"] . "</a> in " . tm_chapters_formal_name($chapter) . ".";
+          $unapproved_members_html = "Please review <a href='" . $unapproved_members_url . "'>" . $members_unapproved_total . " Guest Members</a> in " . tm_chapters_formal_name($chapter) . ".";
         }
        
       }
   }
   $approved_name = $user->field_user_first_name[LANGUAGE_NONE][0]['safe_value'] . " " . $user->field_user_last_name[LANGUAGE_NONE][0]['safe_value'];
-  $message = "You have approved " . $approved_name . ". " . $unapproved_members_html;
+  $message = "You have verified " . $approved_name . ". " . $unapproved_members_html;
   drupal_set_message($message);
 
   drupal_goto(drupal_get_path_alias("user/$user->uid"));
@@ -244,7 +244,7 @@ function tm_users_request_approval($user) {
   $flag->flag("flag", $user->uid);
 
   // Notify user
-  drupal_set_message("Thanks for submitting your profile for approval. We'll take a look and notify you shortly.");
+  drupal_set_message("Thanks for submitting your profile for verification. We'll take a look and notify you soon.");
 
   drupal_goto(drupal_get_path_alias("user/$user->uid"));
 

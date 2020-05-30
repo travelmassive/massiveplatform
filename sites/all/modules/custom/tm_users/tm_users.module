@@ -49,6 +49,16 @@ function tm_users_init() {
   // set application cookies
   tm_users_set_application_cookies();
 
+  // verification message
+  if (!in_array("approved user", $user->roles)) {
+
+    $approval_verifying_message = "Here are some tips to get verified sooner: <br><ul class='tm-checklist'><li>Use your <b>real name</b></li><li>Upload a <b>picture of yourself</b></li><li>Fill out the <b>about me</b> section</li></ul>Our community team will review your profile. To check your verification status, please <a href='/contact'>contact us</a>.";
+    if (isset($conf["tm_users_approval_verifying_message"])) {
+      $approval_verifying_message = $conf["tm_users_approval_verifying_message"];
+    }
+    drupal_add_js(array('tm_users' => array('approval_verifying_message' => $approval_verifying_message)), array('type' => 'setting'));
+  }
+
 }
 
 /*
@@ -496,9 +506,9 @@ function tm_users_views_post_execute(&$view) {
         if ((in_array('administrator', $user->roles)) or in_array('chapter leader', $user->roles) or in_array('moderator', $user->roles)) {
 
           if (isset($_GET["show_all_members"])) {
-            $toggle_all_members_link = "<div><a style='margin-left: 0.5rem;' class='bttn bttn-tertiary bttn-m' href='/community'>Hide " . $conf["tm_unapproved_label_plural"] . "</a></div>";
+            $toggle_all_members_link = "<div><a style='margin-left: 0.5rem;' class='bttn bttn-tertiary bttn-m' href='/community'>Hide Guest Members</a></div>";
           } else {
-            $toggle_all_members_link = "<div><a class='bttn bttn-tertiary bttn-m' href='/community?show_all_members'>Show " . $conf["tm_unapproved_label_plural"] . "</a></div>";
+            $toggle_all_members_link = "<div><a class='bttn bttn-tertiary bttn-m' href='/community?show_all_members'>Show Guest Members</a></div>";
           }
         }
       }

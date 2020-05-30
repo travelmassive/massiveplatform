@@ -103,9 +103,9 @@ function _tm_more_actions_process_chapter_menu($field, $title, &$links, &$menu_i
         $members_unapproved_total = $membership_counts["members_unapproved_total"];
         if ($membership_counts["members_unapproved_total"] > 0) {
 
-          $unapproved_members_html = "1 " . $conf["tm_unapproved_label"];
+          $unapproved_members_html = "1 Guest Member";
           if ($membership_counts["members_unapproved_total"] > 1) {
-            $unapproved_members_html = $members_unapproved_total . " " . $conf["tm_unapproved_label_plural"];
+            $unapproved_members_html = $members_unapproved_total . " Guest Members";
           }
 
           $links['chapter'][] = array(

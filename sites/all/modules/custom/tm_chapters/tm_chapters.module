@@ -336,12 +336,12 @@ function tm_chapters_views_post_execute(&$view) {
         if ((in_array('administrator', $user->roles)) or in_array('chapter leader', $user->roles) or in_array('moderator', $user->roles)) {
 
           if (isset($_GET["show_all_members"])) {
-            $page_title = $conf["tm_unapproved_label_plural"];
-            $toggle_all_members_link = "<div><a style='margin-left: 0.5rem;' class='bttn bttn-tertiary bttn-m' href='/node/" . $nid . "/members'>Hide " . $conf["tm_unapproved_label_plural"] . "</a></div>";
+            $page_title = "Guest Members";
+            $toggle_all_members_link = "<div><a style='margin-left: 0.5rem;' class='bttn bttn-tertiary bttn-m' href='/node/" . $nid . "/members'>Hide Guest Members</a></div>";
 
           } else {
-            $page_title = $conf["tm_approved_label_plural"];
-            $toggle_all_members_link = "<div><a class='bttn bttn-tertiary bttn-m' href='/node/" . $nid . "/members?show_all_members'>Show " . $conf["tm_unapproved_label_plural"] . "</a></div>";
+            $page_title = "Verified Members";
+            $toggle_all_members_link = "<div><a class='bttn bttn-tertiary bttn-m' href='/node/" . $nid . "/members?show_all_members'>Show Guest Members</a></div>";
           }
         }
       }

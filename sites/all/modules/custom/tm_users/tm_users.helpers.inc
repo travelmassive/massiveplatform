@@ -476,18 +476,12 @@ function tm_users_get_approved_member_label($type = "singular") {
 
    // plural
    if ($type == "plural") {
-     $unapproved_label = "Approved Members";
-     if (isset($conf["tm_approved_labels"])) {
-       $unapproved_label = $conf["tm_approved_labels"];
-     }
+     $unapproved_label = "Verified Members";
      return $unapproved_label;
    }
 
    // singular
-   $unapproved_label = "Approved Member";
-   if (isset($conf["tm_approved_label"])) {
-     $unapproved_label = $conf["tm_approved_label"];
-   }
+   $unapproved_label = "Verified Member";
    return $unapproved_label;
 }
 
@@ -500,19 +494,11 @@ function tm_users_get_unapproved_member_label($type = "singular") {
 
   // plural
   if ($type == "plural") {
-    $unapproved_label = "Guest Members";
-    if (isset($conf["tm_unapproved_labels"])) {
-      $unapproved_label = $conf["tm_unapproved_labels"];
-    }
-    return $unapproved_label;
+    return "Guest Members";
   }
 
   // singular
-  $unapproved_label = "Guest Member";
-  if (isset($conf["tm_unapproved_label"])) {
-    $unapproved_label = $conf["tm_unapproved_label"];
-  }
-  return $unapproved_label;
+  return "Guest Member";
   
 }
 

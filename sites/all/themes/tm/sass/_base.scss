@@ -1165,6 +1165,7 @@ img.tm-status-update-preview-image {
 }
 
 /* Lists Footer */
+
 .lists-footer-container {
   text-align: left;
   width: 100%;
@@ -1177,6 +1178,11 @@ img.tm-status-update-preview-image {
   margin-top: 0;
   text-align: left;
   padding-left: 0.5rem;
+}
+
+.tm-lists-footer {
+  padding-top: 2rem;
+  text-align: center;
 }
 
 .tm-lists-footer-label {

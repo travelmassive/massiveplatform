@@ -1127,6 +1127,25 @@ function tm_users_views_default_views() {
   $handler->display->display_options['fields']['flagged_2']['label'] = 'User requested verification?';
   $handler->display->display_options['fields']['flagged_2']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['flagged_2']['not'] = 0;
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: User: Active status */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'users';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = '1';
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: User: Roles */
+  $handler->display->display_options['filters']['rid']['id'] = 'rid';
+  $handler->display->display_options['filters']['rid']['table'] = 'users_roles';
+  $handler->display->display_options['filters']['rid']['field'] = 'rid';
+  $handler->display->display_options['filters']['rid']['operator'] = 'not';
+  $handler->display->display_options['filters']['rid']['value'] = array(
+    6 => '6',
+  );
+  $handler->display->display_options['filters']['rid']['group'] = 1;
+  $handler->display->display_options['filters']['rid']['reduce_duplicates'] = TRUE;
   $handler->display->display_options['path'] = 'admin/unapproved-members';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'All members';
@@ -1361,6 +1380,25 @@ function tm_users_views_default_views() {
   $handler->display->display_options['arguments']['entity_id']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['entity_id']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['entity_id']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: User: Active status */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'users';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = '1';
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: User: Roles */
+  $handler->display->display_options['filters']['rid']['id'] = 'rid';
+  $handler->display->display_options['filters']['rid']['table'] = 'users_roles';
+  $handler->display->display_options['filters']['rid']['field'] = 'rid';
+  $handler->display->display_options['filters']['rid']['operator'] = 'not';
+  $handler->display->display_options['filters']['rid']['value'] = array(
+    6 => '6',
+  );
+  $handler->display->display_options['filters']['rid']['group'] = 1;
+  $handler->display->display_options['filters']['rid']['reduce_duplicates'] = TRUE;
   $handler->display->display_options['path'] = 'chapters/%/unapproved-members';
   $handler->display->display_options['menu']['title'] = 'Unapproved users';
   $handler->display->display_options['menu']['weight'] = '0';
@@ -1760,12 +1798,14 @@ function tm_users_views_default_views() {
   $handler->display->display_options['filters']['rid']['value'] = array(
     6 => '6',
   );
+  $handler->display->display_options['filters']['rid']['group'] = 1;
   $handler->display->display_options['filters']['rid']['reduce_duplicates'] = TRUE;
-  /* Filter criterion: User: Share a Testimonial (field_user_testimonial) */
-  $handler->display->display_options['filters']['field_user_testimonial_value']['id'] = 'field_user_testimonial_value';
-  $handler->display->display_options['filters']['field_user_testimonial_value']['table'] = 'field_data_field_user_testimonial';
-  $handler->display->display_options['filters']['field_user_testimonial_value']['field'] = 'field_user_testimonial_value';
-  $handler->display->display_options['filters']['field_user_testimonial_value']['operator'] = 'not empty';
+  /* Filter criterion: User: Share your response to COVID-19 (field_user_covid19_message) */
+  $handler->display->display_options['filters']['field_user_covid19_message_value']['id'] = 'field_user_covid19_message_value';
+  $handler->display->display_options['filters']['field_user_covid19_message_value']['table'] = 'field_data_field_user_covid19_message';
+  $handler->display->display_options['filters']['field_user_covid19_message_value']['field'] = 'field_user_covid19_message_value';
+  $handler->display->display_options['filters']['field_user_covid19_message_value']['operator'] = 'not empty';
+  $handler->display->display_options['filters']['field_user_covid19_message_value']['group'] = 1;
   $handler->display->display_options['path'] = 'admin/member-covid19-messages';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'All members';

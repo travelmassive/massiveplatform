@@ -351,6 +351,13 @@ function tm_events_views_post_execute(&$view) {
       // Step 2. Show Event Tip
       if (isset($conf['tm_event_types_tips'][$url_event_type])) {
         $tip = $conf['tm_event_types_tips'][$url_event_type];
+        
+        // lookup and replace stats from api data
+        if (module_exists("tm_api")) {
+          $api_data = tm_api_stats_get_data();
+          $tip = tm_api_replace_text_fields($api_data, $tip);
+        }
+
         drupal_set_message($tip, 'page_notice');
       }
     }

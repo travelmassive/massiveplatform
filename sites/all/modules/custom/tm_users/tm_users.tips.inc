@@ -424,16 +424,30 @@ function tm_users_event_tips() {
   global $user;
   $user_tip = "";
 
-  $chapters_nids = array();
-  if (user_is_logged_in()) {
-    if (isset($account->field_home_chapter['und'][0]['target_id'])) {
-      $account = user_load($user->uid);
-      $chapter = node_load();
-      $chapter_url = url('node/' . $chapter->nid, array("absolute" => true));
-      $user_tip = "Visit your home chapter " . l(t( $conf["tm_site_name"] . " " . $chapter->title), $chapter_url) . " for events near you.";
+  // allow custom tips
+  if (isset($conf['tm_event_types_tips']["all"])) {
+    $user_tip = $conf['tm_event_types_tips']["all"];
+    // lookup and replace stats from api data
+    if (module_exists("tm_api")) {
+      $api_data = tm_api_stats_get_data();
+      $user_tip = tm_api_replace_text_fields($api_data, $user_tip);
     }
-  } 
+  }
+
+  // show home chapter
+  if ($user_tip == "") {
+    $chapters_nids = array();
+    if (user_is_logged_in()) {
+      if (isset($account->field_home_chapter['und'][0]['target_id'])) {
+        $account = user_load($user->uid);
+        $chapter = node_load();
+        $chapter_url = url('node/' . $chapter->nid, array("absolute" => true));
+        $user_tip = "Visit your home chapter " . l(t( $conf["tm_site_name"] . " " . $chapter->title), $chapter_url) . " for events near you.";
+      }
+    }
+  }
   
+  // default
   if ($user_tip == "") {
     $user_tip = "Find and register for upcoming events in the " . $conf["tm_site_name"] . " community around the world to learn, share and connect with other members.";
   }

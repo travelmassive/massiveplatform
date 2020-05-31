@@ -152,6 +152,9 @@
     &.field-company-testimonial:before { @extend .icon-2016-heart-outline; font-size: 16pt;}
     &.field-link-instant-messaging:before { @extend .icon-2016-comment-bubble; font-size: 16pt;}
     &.detail-item.online-instructions:before { @extend .icon-mobile;}
+    &.detail-item.field-user-covid19-message:before { @extend .icon-virus;}
+    &.detail-item.field-company-covid19-message:before { @extend .icon-virus;}
+    &.detail-item.field-event-covid19-message:before { @extend .icon-virus-shield;}
 
     &.field-link-instant-messaging .label-above { display: none; }
     

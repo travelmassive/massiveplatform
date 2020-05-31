@@ -153,13 +153,14 @@ function tm_organizations_field_group_info() {
       8 => 'field_link_youtube',
       9 => 'field_company_testimonial',
       10 => 'field_link_tiktok',
-      11 => 'tm_ds_subscription_organization_cta_ds',
-      12 => 'tm_ds_subscription_organization_badge_ds',
-      13 => 'tm_ds_tm_sponsor',
-      14 => 'tm_ds_organization_follow_message',
-      15 => 'tm_ds_organization_stats',
-      16 => 'tm_ds_track_company_viewers',
-      17 => 'group_location_wrapper',
+      11 => 'field_company_covid19_message',
+      12 => 'tm_ds_subscription_organization_cta_ds',
+      13 => 'tm_ds_subscription_organization_badge_ds',
+      14 => 'tm_ds_tm_sponsor',
+      15 => 'tm_ds_organization_follow_message',
+      16 => 'tm_ds_organization_stats',
+      17 => 'tm_ds_track_company_viewers',
+      18 => 'group_location_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -214,8 +215,9 @@ function tm_organizations_field_group_info() {
       6 => 'field_segment',
       7 => 'field_country',
       8 => 'field_company_cover_video',
-      9 => 'title',
-      10 => 'path',
+      9 => 'field_company_covid19_message',
+      10 => 'title',
+      11 => 'path',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -278,7 +280,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '17',
+    'weight' => '18',
     'children' => array(
       0 => 'field_location_city',
       1 => 'field_country',

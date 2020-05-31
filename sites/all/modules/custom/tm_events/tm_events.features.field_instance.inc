@@ -638,6 +638,61 @@ Non-verified members won\'t be able to sign up.',
     ),
   );
 
+  // Exported field_instance: 'node-event-field_event_covid19_message'.
+  $field_instances['node-event-field_event_covid19_message'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Share any COVID-19 or health and safety guidelines for this event.<br>
+This will be displayed on the event page for all members.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 72,
+      ),
+      'full' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_plain',
+        'weight' => 6,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_covid19_message',
+    'label' => 'Health and Safety Guidelines',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 3,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 19,
+    ),
+  );
+
   // Exported field_instance: 'node-event-field_event_custom_banner'.
   $field_instances['node-event-field_event_custom_banner'] = array(
     'bundle' => 'event',
@@ -1999,7 +2054,7 @@ Registered attendees are reminded <b>1.5 hours</b> and <b>10 minutes</b> before 
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 48,
+      'weight' => 54,
     ),
   );
 
@@ -2052,7 +2107,7 @@ Registered attendees are reminded <b>1.5 hours</b> and <b>10 minutes</b> before 
         'rows' => 2,
       ),
       'type' => 'text_textarea',
-      'weight' => 49,
+      'weight' => 55,
     ),
   );
 
@@ -2932,7 +2987,7 @@ This will be displayed to the member on the event page and included in the autom
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'rows' => 5,
+        'rows' => 3,
       ),
       'type' => 'text_textarea',
       'weight' => 17,
@@ -3130,7 +3185,7 @@ This will be displayed to the member on the event page and included in the autom
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'rows' => 5,
+        'rows' => 3,
       ),
       'type' => 'text_textarea',
       'weight' => 18,
@@ -3180,6 +3235,7 @@ Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.');
 <li>A sponsor must have a company page in order to be listed as a sponsor.</li>
 <li>Sponsors will also be added to our world-wide <a target="_blank" href="/sponsors">sponsors page</a>.</li>
 </ul>');
+  t('Health and Safety Guidelines');
   t('Help the attendees find the right location by providing a link to a map, for example <a href="http://maps.google.com/">Google Maps</a>.');
   t('Hide Organizers');
   t('Hide the list of organizers on the event page.');
@@ -3239,6 +3295,8 @@ Non-verified members won\'t be able to sign up.');
 ');
   t('Send payout to');
   t('Send reminders');
+  t('Share any COVID-19 or health and safety guidelines for this event.<br>
+This will be displayed on the event page for all members.');
   t('Social media description');
   t('Social media image');
   t('Sponsors');

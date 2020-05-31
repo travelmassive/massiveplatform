@@ -777,12 +777,11 @@ function tm_users_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'Unapproved members';
+  $handler->display->display_options['title'] = 'Moderate members';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'role';
   $handler->display->display_options['access']['role'] = array(
     4 => '4',
-    7 => '7',
     5 => '5',
   );
   $handler->display->display_options['cache']['type'] = 'none';
@@ -916,6 +915,10 @@ function tm_users_views_default_views() {
     6 => '6',
   );
   $handler->display->display_options['filters']['rid']['reduce_duplicates'] = TRUE;
+  /* Filter criterion: User: Share a Testimonial (field_user_testimonial) */
+  $handler->display->display_options['filters']['field_user_testimonial_value']['id'] = 'field_user_testimonial_value';
+  $handler->display->display_options['filters']['field_user_testimonial_value']['table'] = 'field_data_field_user_testimonial';
+  $handler->display->display_options['filters']['field_user_testimonial_value']['field'] = 'field_user_testimonial_value';
 
   /* Display: All unapproved members */
   $handler = $view->new_display('page', 'All unapproved members', 'all_unapproved_members');
@@ -1360,6 +1363,412 @@ function tm_users_views_default_views() {
   $handler->display->display_options['arguments']['entity_id']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['path'] = 'chapters/%/unapproved-members';
   $handler->display->display_options['menu']['title'] = 'Unapproved users';
+  $handler->display->display_options['menu']['weight'] = '0';
+  $handler->display->display_options['menu']['name'] = 'management';
+  $handler->display->display_options['menu']['context'] = 0;
+  $handler->display->display_options['menu']['context_only_inline'] = 0;
+
+  /* Display: Members with testimonials */
+  $handler = $view->new_display('page', 'Members with testimonials', 'members_with_testimonials');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Member testimonials';
+  $handler->display->display_options['defaults']['group_by'] = FALSE;
+  $handler->display->display_options['group_by'] = TRUE;
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'field_user_first_name' => 'field_user_first_name',
+    'field_user_last_name' => 'field_user_last_name',
+    'mail' => 'mail',
+    'name_1' => 'name_1',
+    'field_home_chapter' => 'field_home_chapter',
+    'created' => 'created',
+    'timestamp' => 'timestamp',
+    'flagged' => 'flagged',
+    'flagged_1' => 'flagged_1',
+    'flagged_3' => 'flagged_3',
+    'flagged_2' => 'flagged_2',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'field_user_first_name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_last_name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'mail' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'name_1' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_home_chapter' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'created' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'timestamp' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'flagged' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'flagged_1' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'flagged_3' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'flagged_2' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['header'] = FALSE;
+  /* Header: Global: Text area */
+  $handler->display->display_options['header']['area']['id'] = 'area';
+  $handler->display->display_options['header']['area']['table'] = 'views';
+  $handler->display->display_options['header']['area']['field'] = 'area';
+  $handler->display->display_options['header']['area']['format'] = 'filtered_html';
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Flags: approval_need_more_info */
+  $handler->display->display_options['relationships']['flag_content_rel']['id'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_content_rel']['field'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel']['label'] = 'flag_approval_need_more_info';
+  $handler->display->display_options['relationships']['flag_content_rel']['required'] = 0;
+  $handler->display->display_options['relationships']['flag_content_rel']['flag'] = 'approval_need_more_info';
+  $handler->display->display_options['relationships']['flag_content_rel']['user_scope'] = 'any';
+  /* Relationship: Flags: approval_is_company_or_brand */
+  $handler->display->display_options['relationships']['flag_content_rel_1']['id'] = 'flag_content_rel_1';
+  $handler->display->display_options['relationships']['flag_content_rel_1']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_content_rel_1']['field'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel_1']['label'] = 'flag_approval_is_company_or_brand';
+  $handler->display->display_options['relationships']['flag_content_rel_1']['required'] = 0;
+  $handler->display->display_options['relationships']['flag_content_rel_1']['flag'] = 'approval_is_company_or_brand';
+  $handler->display->display_options['relationships']['flag_content_rel_1']['user_scope'] = 'any';
+  /* Relationship: Flags: approval_requested_by_user */
+  $handler->display->display_options['relationships']['flag_content_rel_2']['id'] = 'flag_content_rel_2';
+  $handler->display->display_options['relationships']['flag_content_rel_2']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_content_rel_2']['field'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel_2']['label'] = 'flag_user_requested_approval';
+  $handler->display->display_options['relationships']['flag_content_rel_2']['required'] = 0;
+  $handler->display->display_options['relationships']['flag_content_rel_2']['flag'] = 'approval_requested_by_user';
+  $handler->display->display_options['relationships']['flag_content_rel_2']['user_scope'] = 'any';
+  /* Relationship: Flags: moderate_non_community_profile */
+  $handler->display->display_options['relationships']['flag_content_rel_3']['id'] = 'flag_content_rel_3';
+  $handler->display->display_options['relationships']['flag_content_rel_3']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_content_rel_3']['field'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel_3']['label'] = 'flag_moderate_non_community';
+  $handler->display->display_options['relationships']['flag_content_rel_3']['required'] = 0;
+  $handler->display->display_options['relationships']['flag_content_rel_3']['flag'] = 'moderate_non_community_profile';
+  $handler->display->display_options['relationships']['flag_content_rel_3']['user_scope'] = 'any';
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: User: First name */
+  $handler->display->display_options['fields']['field_user_first_name']['id'] = 'field_user_first_name';
+  $handler->display->display_options['fields']['field_user_first_name']['table'] = 'field_data_field_user_first_name';
+  $handler->display->display_options['fields']['field_user_first_name']['field'] = 'field_user_first_name';
+  /* Field: User: Last name */
+  $handler->display->display_options['fields']['field_user_last_name']['id'] = 'field_user_last_name';
+  $handler->display->display_options['fields']['field_user_last_name']['table'] = 'field_data_field_user_last_name';
+  $handler->display->display_options['fields']['field_user_last_name']['field'] = 'field_user_last_name';
+  /* Field: User: E-mail */
+  $handler->display->display_options['fields']['mail']['id'] = 'mail';
+  $handler->display->display_options['fields']['mail']['table'] = 'users';
+  $handler->display->display_options['fields']['mail']['field'] = 'mail';
+  /* Field: User: Home Chapter */
+  $handler->display->display_options['fields']['field_home_chapter']['id'] = 'field_home_chapter';
+  $handler->display->display_options['fields']['field_home_chapter']['table'] = 'field_data_field_home_chapter';
+  $handler->display->display_options['fields']['field_home_chapter']['field'] = 'field_home_chapter';
+  $handler->display->display_options['fields']['field_home_chapter']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_home_chapter']['settings'] = array(
+    'link' => 0,
+  );
+  /* Field: User: Created date */
+  $handler->display->display_options['fields']['created']['id'] = 'created';
+  $handler->display->display_options['fields']['created']['table'] = 'users';
+  $handler->display->display_options['fields']['created']['field'] = 'created';
+  $handler->display->display_options['fields']['created']['label'] = 'Joined';
+  $handler->display->display_options['fields']['created']['date_format'] = 'time ago';
+  $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
+  /* Field: User: Share a Testimonial */
+  $handler->display->display_options['fields']['field_user_testimonial']['id'] = 'field_user_testimonial';
+  $handler->display->display_options['fields']['field_user_testimonial']['table'] = 'field_data_field_user_testimonial';
+  $handler->display->display_options['fields']['field_user_testimonial']['field'] = 'field_user_testimonial';
+  $handler->display->display_options['fields']['field_user_testimonial']['label'] = 'Testimonial';
+  $handler->display->display_options['fields']['field_user_testimonial']['type'] = 'text_trimmed';
+  $handler->display->display_options['fields']['field_user_testimonial']['settings'] = array(
+    'trim_length' => '600',
+  );
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: User: Active status */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'users';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = '1';
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: User: Roles */
+  $handler->display->display_options['filters']['rid']['id'] = 'rid';
+  $handler->display->display_options['filters']['rid']['table'] = 'users_roles';
+  $handler->display->display_options['filters']['rid']['field'] = 'rid';
+  $handler->display->display_options['filters']['rid']['operator'] = 'not';
+  $handler->display->display_options['filters']['rid']['value'] = array(
+    6 => '6',
+  );
+  $handler->display->display_options['filters']['rid']['reduce_duplicates'] = TRUE;
+  /* Filter criterion: User: Share a Testimonial (field_user_testimonial) */
+  $handler->display->display_options['filters']['field_user_testimonial_value']['id'] = 'field_user_testimonial_value';
+  $handler->display->display_options['filters']['field_user_testimonial_value']['table'] = 'field_data_field_user_testimonial';
+  $handler->display->display_options['filters']['field_user_testimonial_value']['field'] = 'field_user_testimonial_value';
+  $handler->display->display_options['filters']['field_user_testimonial_value']['operator'] = 'not empty';
+  $handler->display->display_options['path'] = 'admin/member-testimonials';
+  $handler->display->display_options['menu']['type'] = 'normal';
+  $handler->display->display_options['menu']['title'] = 'All members';
+  $handler->display->display_options['menu']['weight'] = '0';
+  $handler->display->display_options['menu']['name'] = 'management';
+  $handler->display->display_options['menu']['context'] = 0;
+  $handler->display->display_options['menu']['context_only_inline'] = 0;
+
+  /* Display: Members with COVID-19 Message */
+  $handler = $view->new_display('page', 'Members with COVID-19 Message', 'members_with_covid19_message');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Member COVID-19 messages';
+  $handler->display->display_options['defaults']['group_by'] = FALSE;
+  $handler->display->display_options['group_by'] = TRUE;
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'field_user_first_name' => 'field_user_first_name',
+    'field_user_last_name' => 'field_user_last_name',
+    'mail' => 'mail',
+    'name_1' => 'name_1',
+    'field_home_chapter' => 'field_home_chapter',
+    'created' => 'created',
+    'timestamp' => 'timestamp',
+    'flagged' => 'flagged',
+    'flagged_1' => 'flagged_1',
+    'flagged_3' => 'flagged_3',
+    'flagged_2' => 'flagged_2',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'field_user_first_name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_last_name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'mail' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'name_1' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_home_chapter' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'created' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'timestamp' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'flagged' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'flagged_1' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'flagged_3' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'flagged_2' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['header'] = FALSE;
+  /* Header: Global: Text area */
+  $handler->display->display_options['header']['area']['id'] = 'area';
+  $handler->display->display_options['header']['area']['table'] = 'views';
+  $handler->display->display_options['header']['area']['field'] = 'area';
+  $handler->display->display_options['header']['area']['format'] = 'filtered_html';
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Flags: approval_need_more_info */
+  $handler->display->display_options['relationships']['flag_content_rel']['id'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_content_rel']['field'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel']['label'] = 'flag_approval_need_more_info';
+  $handler->display->display_options['relationships']['flag_content_rel']['required'] = 0;
+  $handler->display->display_options['relationships']['flag_content_rel']['flag'] = 'approval_need_more_info';
+  $handler->display->display_options['relationships']['flag_content_rel']['user_scope'] = 'any';
+  /* Relationship: Flags: approval_is_company_or_brand */
+  $handler->display->display_options['relationships']['flag_content_rel_1']['id'] = 'flag_content_rel_1';
+  $handler->display->display_options['relationships']['flag_content_rel_1']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_content_rel_1']['field'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel_1']['label'] = 'flag_approval_is_company_or_brand';
+  $handler->display->display_options['relationships']['flag_content_rel_1']['required'] = 0;
+  $handler->display->display_options['relationships']['flag_content_rel_1']['flag'] = 'approval_is_company_or_brand';
+  $handler->display->display_options['relationships']['flag_content_rel_1']['user_scope'] = 'any';
+  /* Relationship: Flags: approval_requested_by_user */
+  $handler->display->display_options['relationships']['flag_content_rel_2']['id'] = 'flag_content_rel_2';
+  $handler->display->display_options['relationships']['flag_content_rel_2']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_content_rel_2']['field'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel_2']['label'] = 'flag_user_requested_approval';
+  $handler->display->display_options['relationships']['flag_content_rel_2']['required'] = 0;
+  $handler->display->display_options['relationships']['flag_content_rel_2']['flag'] = 'approval_requested_by_user';
+  $handler->display->display_options['relationships']['flag_content_rel_2']['user_scope'] = 'any';
+  /* Relationship: Flags: moderate_non_community_profile */
+  $handler->display->display_options['relationships']['flag_content_rel_3']['id'] = 'flag_content_rel_3';
+  $handler->display->display_options['relationships']['flag_content_rel_3']['table'] = 'users';
+  $handler->display->display_options['relationships']['flag_content_rel_3']['field'] = 'flag_content_rel';
+  $handler->display->display_options['relationships']['flag_content_rel_3']['label'] = 'flag_moderate_non_community';
+  $handler->display->display_options['relationships']['flag_content_rel_3']['required'] = 0;
+  $handler->display->display_options['relationships']['flag_content_rel_3']['flag'] = 'moderate_non_community_profile';
+  $handler->display->display_options['relationships']['flag_content_rel_3']['user_scope'] = 'any';
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: User: First name */
+  $handler->display->display_options['fields']['field_user_first_name']['id'] = 'field_user_first_name';
+  $handler->display->display_options['fields']['field_user_first_name']['table'] = 'field_data_field_user_first_name';
+  $handler->display->display_options['fields']['field_user_first_name']['field'] = 'field_user_first_name';
+  /* Field: User: Last name */
+  $handler->display->display_options['fields']['field_user_last_name']['id'] = 'field_user_last_name';
+  $handler->display->display_options['fields']['field_user_last_name']['table'] = 'field_data_field_user_last_name';
+  $handler->display->display_options['fields']['field_user_last_name']['field'] = 'field_user_last_name';
+  /* Field: User: E-mail */
+  $handler->display->display_options['fields']['mail']['id'] = 'mail';
+  $handler->display->display_options['fields']['mail']['table'] = 'users';
+  $handler->display->display_options['fields']['mail']['field'] = 'mail';
+  /* Field: User: Home Chapter */
+  $handler->display->display_options['fields']['field_home_chapter']['id'] = 'field_home_chapter';
+  $handler->display->display_options['fields']['field_home_chapter']['table'] = 'field_data_field_home_chapter';
+  $handler->display->display_options['fields']['field_home_chapter']['field'] = 'field_home_chapter';
+  $handler->display->display_options['fields']['field_home_chapter']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_home_chapter']['settings'] = array(
+    'link' => 0,
+  );
+  /* Field: User: Created date */
+  $handler->display->display_options['fields']['created']['id'] = 'created';
+  $handler->display->display_options['fields']['created']['table'] = 'users';
+  $handler->display->display_options['fields']['created']['field'] = 'created';
+  $handler->display->display_options['fields']['created']['label'] = 'Joined';
+  $handler->display->display_options['fields']['created']['date_format'] = 'time ago';
+  $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
+  /* Field: User: Share your response to COVID-19 */
+  $handler->display->display_options['fields']['field_user_covid19_message']['id'] = 'field_user_covid19_message';
+  $handler->display->display_options['fields']['field_user_covid19_message']['table'] = 'field_data_field_user_covid19_message';
+  $handler->display->display_options['fields']['field_user_covid19_message']['field'] = 'field_user_covid19_message';
+  $handler->display->display_options['fields']['field_user_covid19_message']['label'] = 'Response to COVID-19';
+  $handler->display->display_options['fields']['field_user_covid19_message']['type'] = 'text_trimmed';
+  $handler->display->display_options['fields']['field_user_covid19_message']['settings'] = array(
+    'trim_length' => '600',
+  );
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: User: Active status */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'users';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = '1';
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: User: Roles */
+  $handler->display->display_options['filters']['rid']['id'] = 'rid';
+  $handler->display->display_options['filters']['rid']['table'] = 'users_roles';
+  $handler->display->display_options['filters']['rid']['field'] = 'rid';
+  $handler->display->display_options['filters']['rid']['operator'] = 'not';
+  $handler->display->display_options['filters']['rid']['value'] = array(
+    6 => '6',
+  );
+  $handler->display->display_options['filters']['rid']['reduce_duplicates'] = TRUE;
+  /* Filter criterion: User: Share a Testimonial (field_user_testimonial) */
+  $handler->display->display_options['filters']['field_user_testimonial_value']['id'] = 'field_user_testimonial_value';
+  $handler->display->display_options['filters']['field_user_testimonial_value']['table'] = 'field_data_field_user_testimonial';
+  $handler->display->display_options['filters']['field_user_testimonial_value']['field'] = 'field_user_testimonial_value';
+  $handler->display->display_options['filters']['field_user_testimonial_value']['operator'] = 'not empty';
+  $handler->display->display_options['path'] = 'admin/member-covid19-messages';
+  $handler->display->display_options['menu']['type'] = 'normal';
+  $handler->display->display_options['menu']['title'] = 'All members';
   $handler->display->display_options['menu']['weight'] = '0';
   $handler->display->display_options['menu']['name'] = 'management';
   $handler->display->display_options['menu']['context'] = 0;

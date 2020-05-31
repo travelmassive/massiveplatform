@@ -174,14 +174,15 @@ function tm_users_field_group_info() {
       10 => 'field_link_strava',
       11 => 'field_user_testimonial',
       12 => 'field_link_tiktok',
-      13 => 'tm_ds_user_stats',
-      14 => 'tm_ds_user_featured',
-      15 => 'tm_ds_subscription_user_cta_ds',
-      16 => 'tm_ds_subscription_user_badge_ds',
-      17 => 'tm_ds_connection_actions',
-      18 => 'tm_ds_track_viewers',
-      19 => 'group_location_wrapper',
-      20 => 'group_user_qa_wrapper',
+      13 => 'field_user_covid19_message',
+      14 => 'tm_ds_user_stats',
+      15 => 'tm_ds_user_featured',
+      16 => 'tm_ds_subscription_user_cta_ds',
+      17 => 'tm_ds_subscription_user_badge_ds',
+      18 => 'tm_ds_connection_actions',
+      19 => 'tm_ds_track_viewers',
+      20 => 'group_location_wrapper',
+      21 => 'group_user_qa_wrapper',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -388,6 +389,7 @@ function tm_users_field_group_info() {
       3 => 'field_user_question_4',
       4 => 'field_user_question_5',
       5 => 'field_reason_for_joining',
+      6 => 'field_user_covid19_message',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -473,7 +475,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'Location',
-    'weight' => '42',
+    'weight' => '43',
     'children' => array(
       0 => 'field_location_city',
     ),
@@ -713,7 +715,7 @@ function tm_users_field_group_info() {
   $field_group->parent_name = 'group_details_wrapper';
   $field_group->data = array(
     'label' => 'QA',
-    'weight' => '41',
+    'weight' => '42',
     'children' => array(
       0 => 'group_user_qa',
     ),

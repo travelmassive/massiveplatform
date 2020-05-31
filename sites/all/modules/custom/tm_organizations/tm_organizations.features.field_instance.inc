@@ -221,6 +221,61 @@ function tm_organizations_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-organization-field_company_covid19_message'.
+  $field_instances['node-organization-field_company_covid19_message'] = array(
+    'bundle' => 'organization',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Share how your organization is working with employees, customers, partners, or the community during this time.<br>
+This message will be displayed on your company page.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 36,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_plain',
+        'weight' => 5,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_company_covid19_message',
+    'label' => 'Share your organization\'s response to COVID-19',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 3,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 12,
+    ),
+  );
+
   // Exported field_instance: 'node-organization-field_company_enable_events'.
   $field_instances['node-organization-field_company_enable_events'] = array(
     'bundle' => 'organization',
@@ -461,7 +516,7 @@ Your testimonial will be displayed on your company page.',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',
-        'weight' => 15,
+        'weight' => 17,
       ),
       'grid' => array(
         'label' => 'above',
@@ -792,7 +847,7 @@ Displays a short message to followers on your company page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_facebook',
-        'weight' => 9,
+        'weight' => 10,
       ),
       'grid' => array(
         'label' => 'above',
@@ -874,7 +929,7 @@ Displays a short message to followers on your company page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_instagram',
-        'weight' => 11,
+        'weight' => 12,
       ),
       'grid' => array(
         'label' => 'above',
@@ -951,7 +1006,7 @@ Displays a short message to followers on your company page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_linkedin',
-        'weight' => 10,
+        'weight' => 11,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1033,7 +1088,7 @@ Displays a short message to followers on your company page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_snapchat',
-        'weight' => 14,
+        'weight' => 15,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1112,7 +1167,7 @@ Displays a short message to followers on your company page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_tiktok',
-        'weight' => 15,
+        'weight' => 16,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1184,7 +1239,7 @@ Displays a short message to followers on your company page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_twitter',
-        'weight' => 7,
+        'weight' => 8,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1266,7 +1321,7 @@ Displays a short message to followers on your company page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_vimeo',
-        'weight' => 13,
+        'weight' => 14,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1343,7 +1398,7 @@ Displays a short message to followers on your company page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_link',
-        'weight' => 5,
+        'weight' => 6,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1425,7 +1480,7 @@ Displays a short message to followers on your company page.<br><br>',
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_youtube',
-        'weight' => 12,
+        'weight' => 13,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1774,6 +1829,9 @@ example: http://exampleblog.com/feed/');
 <br>To support retina displays, upload your image sized to 1610x906');
   t('Select up to five members who can manage this listing.');
   t('Share a Testimonial');
+  t('Share how your organization is working with employees, customers, partners, or the community during this time.<br>
+This message will be displayed on your company page.');
+  t('Share your organization\'s response to COVID-19');
   t('Snapchat');
   t('Tell us about your organization or company. Describe your business and the service or product that you provide.');
   t('TikTok');

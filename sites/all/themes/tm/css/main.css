@@ -5283,14 +5283,14 @@ img.tm-status-update-preview-image {
 }
 
 /* Lists Footer */
-/* line 1168, ../sass/_base.scss */
+/* line 1169, ../sass/_base.scss */
 .lists-footer-container {
   text-align: left;
   width: 100%;
   color: #213040;
 }
 
-/* line 1174, ../sass/_base.scss */
+/* line 1175, ../sass/_base.scss */
 .lists-footer-container ul {
   list-style-type: none;
   margin-left: 0;
@@ -5299,27 +5299,33 @@ img.tm-status-update-preview-image {
   padding-left: 0.5rem;
 }
 
-/* line 1182, ../sass/_base.scss */
+/* line 1183, ../sass/_base.scss */
+.tm-lists-footer {
+  padding-top: 2rem;
+  text-align: center;
+}
+
+/* line 1188, ../sass/_base.scss */
 .tm-lists-footer-label {
   color: #213040;
 }
 
-/* line 1186, ../sass/_base.scss */
+/* line 1192, ../sass/_base.scss */
 a.tm-lists-footer-label-link {
   color: #213040;
 }
 
-/* line 1190, ../sass/_base.scss */
+/* line 1196, ../sass/_base.scss */
 a.tm-lists-footer-label-link:hover {
   text-decoration: underline;
 }
 
-/* line 1194, ../sass/_base.scss */
+/* line 1200, ../sass/_base.scss */
 .tm-lists-footer-details {
   margin-left: 0.75rem;
 }
 
-/* line 1198, ../sass/_base.scss */
+/* line 1204, ../sass/_base.scss */
 .tm-online-events-edit-form-message {
   background-color: #1ABC9C;
   color: #fff;
@@ -5331,14 +5337,14 @@ a.tm-lists-footer-label-link:hover {
   margin-top: 16px;
 }
 
-/* line 1209, ../sass/_base.scss */
+/* line 1215, ../sass/_base.scss */
 .tm-online-events-edit-form-message a {
   color: #fff;
   font-weight: bold;
   text-decoration: underline;
 }
 
-/* line 1215, ../sass/_base.scss */
+/* line 1221, ../sass/_base.scss */
 .tm-go-live-button {
   display: inline-block !important;
   background-color: #4f9bd6 !important;
@@ -5348,12 +5354,12 @@ a.tm-lists-footer-label-link:hover {
   margin-top: 4px !important;
 }
 
-/* line 1224, ../sass/_base.scss */
+/* line 1230, ../sass/_base.scss */
 .tm-go-live-button:hover {
   background-color: #4584ba !important;
 }
 
-/* line 1228, ../sass/_base.scss */
+/* line 1234, ../sass/_base.scss */
 .tm-end-live-button {
   display: inline-block !important;
   background-color: #dd624d !important;
@@ -5363,18 +5369,18 @@ a.tm-lists-footer-label-link:hover {
   margin-top: 4px !important;
 }
 
-/* line 1237, ../sass/_base.scss */
+/* line 1243, ../sass/_base.scss */
 .tm-end-live-button:hover {
   background-color: #d94830 !important;
 }
 
-/* line 1241, ../sass/_base.scss */
+/* line 1247, ../sass/_base.scss */
 ul.tm-checklist {
   list-style: none;
   padding-left: 16px;
 }
 
-/* line 1246, ../sass/_base.scss */
+/* line 1252, ../sass/_base.scss */
 ul.tm-checklist li:before {
   font-family: 'tm-icons';
   content: "\e609";
@@ -5384,7 +5390,7 @@ ul.tm-checklist li:before {
   margin-right: 8px;
 }
 
-/* line 1255, ../sass/_base.scss */
+/* line 1261, ../sass/_base.scss */
 .tm-account-menu-verification:before {
   font-family: 'tm-icons';
   content: "\e673";
@@ -5394,7 +5400,7 @@ ul.tm-checklist li:before {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* line 1264, ../sass/_base.scss */
+/* line 1270, ../sass/_base.scss */
 .tm-moderator-menu-verification:before {
   font-family: 'tm-icons';
   content: "\e673";

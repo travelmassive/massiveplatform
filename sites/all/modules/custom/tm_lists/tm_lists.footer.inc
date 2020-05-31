@@ -17,9 +17,6 @@ function tm_lists_render_footer($num_items = 5, $use_cache = true) {
 
 	$lists = tm_lists_get_lists();
 
-	// include css
-	drupal_add_css(drupal_get_path('module', 'tm_lists') . '/css/tm_lists.css');
-
 	// load template
 	$template = file_get_contents(drupal_get_path('module', 'tm_lists') .'/templates/tm_lists_footer.tpl.php');
 

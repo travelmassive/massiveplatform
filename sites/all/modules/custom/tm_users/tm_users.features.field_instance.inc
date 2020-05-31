@@ -597,7 +597,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_facebook',
-        'weight' => 32,
+        'weight' => 33,
       ),
       'grid' => array(
         'label' => 'above',
@@ -670,7 +670,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_instagram',
-        'weight' => 34,
+        'weight' => 35,
       ),
       'grid' => array(
         'label' => 'above',
@@ -741,7 +741,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_linkedin',
-        'weight' => 33,
+        'weight' => 34,
       ),
       'grid' => array(
         'label' => 'above',
@@ -814,7 +814,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_snapchat',
-        'weight' => 37,
+        'weight' => 38,
       ),
       'grid' => array(
         'label' => 'above',
@@ -884,7 +884,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_strava',
-        'weight' => 38,
+        'weight' => 39,
       ),
       'grid' => array(
         'label' => 'above',
@@ -948,7 +948,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_tiktok',
-        'weight' => 39,
+        'weight' => 40,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1013,7 +1013,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_twitter',
-        'weight' => 31,
+        'weight' => 32,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1086,7 +1086,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_vimeo',
-        'weight' => 36,
+        'weight' => 37,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1156,7 +1156,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_link',
-        'weight' => 30,
+        'weight' => 31,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1229,7 +1229,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'tm_fields',
         'settings' => array(),
         'type' => 'tm_fields_youtube',
-        'weight' => 35,
+        'weight' => 36,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1406,7 +1406,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'module' => 'hs_taxonomy',
         'settings' => array(),
         'type' => 'hs_taxonomy_term_reference_hierarchical_text',
-        'weight' => 29,
+        'weight' => 30,
       ),
       'grid' => array(
         'label' => 'above',
@@ -1561,7 +1561,7 @@ This message will be displayed on your profile page.',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',
-        'weight' => 40,
+        'weight' => 29,
       ),
       'grid' => array(
         'label' => 'above',

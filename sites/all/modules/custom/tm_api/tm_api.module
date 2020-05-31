@@ -110,6 +110,12 @@ function tm_api_stats_get_data($use_cache = true) {
   // initialize api data
   $api_data = array("message" => null, "error" => null, "success" => true);
 
+  // flags
+  $register_flag = flag_get_flag('event_register', NULL);
+  $waitlist_flag = flag_get_flag('event_waitlist', NULL);
+  $follow_flag = flag_get_flag('follow_members', NULL);
+  $follow_organizations_flag = flag_get_flag('follow_organizations', NULL);
+
   // number of chapters
   $query = "SELECT COUNT(*) amount FROM {node} n ".
               "WHERE n.type = :type";
@@ -125,7 +131,7 @@ function tm_api_stats_get_data($use_cache = true) {
   // number of events in past
   // don't include partner events
   $query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 
-  LEFT JOIN field_revision_field_is_partner_event p on e.entity_id = p.entity_id
+  LEFT JOIN field_data_field_is_partner_event p on e.entity_id = p.entity_id
   WHERE p.entity_type = 'node' AND field_is_partner_event_value = 0
   AND e.entity_type = 'node' AND field_event_date_value <= NOW();";
   $num_events = db_query($query_sql)->fetch();
@@ -134,9 +140,9 @@ function tm_api_stats_get_data($use_cache = true) {
   // number of events (past year)
   // don't include partner events
   $query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 
-  LEFT JOIN field_revision_field_is_partner_event p on e.entity_id = p.entity_id
+  LEFT JOIN field_data_field_is_partner_event p on e.entity_id = p.entity_id
   WHERE p.entity_type = 'node' AND field_is_partner_event_value = 0
-  AND e.entity_type = 'node' AND field_event_date_value >= (NOW() - INTERVAL 1 YEAR) AND field_event_date_value <= NOW();";
+  AND e.entity_type = 'node' AND field_event_date_value >= (NOW() - INTERVAL 1 YEAR) AND field_event_date_value <= NOW()";
   $num_events_past_year = db_query($query_sql)->fetch();
   $api_data["num_events_past_year"] = $num_events_past_year->total;
 
@@ -158,48 +164,46 @@ function tm_api_stats_get_data($use_cache = true) {
   $api_data["num_member_countries"] = $num_member_countries;
 
   // number of follows
-  $flag = flag_get_flag('follow_members', NULL);
   $query = "SELECT COUNT(*) amount FROM {flagging} f WHERE f.fid = :fid";
-  $num_member_followers = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $num_member_followers = db_query($query, array(':fid' => $follow_flag->fid))->fetch();
   $api_data["num_member_followers"] = $num_member_followers->amount;
 
   // number of company follows
-  $flag = flag_get_flag('follow_organizations', NULL);
   $query = "SELECT COUNT(*) amount FROM {flagging} f WHERE f.fid = :fid";
-  $num_organization_followers = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $num_organization_followers = db_query($query, array(':fid' => $follow_organizations_flag->fid))->fetch();
   $api_data["num_organization_followers"] = $num_organization_followers->amount;
 
   // number of connections (member + organization follows)
   $api_data["num_connections"] = $api_data["num_member_followers"] + $api_data["num_organization_followers"];
 
   // num of mutual follows
-  $flag = flag_get_flag('follow_members', NULL);
   $query = "select count(distinct flagging.uid, f2.uid) as amount from flagging inner join flagging as f2 on flagging.uid = f2.entity_id where flagging.fid = :fid and f2.fid = :fid order by flagging.uid";
-  $num_mutual_followers = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $num_mutual_followers = db_query($query, array(':fid' => $follow_flag->fid))->fetch();
   $api_data["num_mutual_follows"] = $num_mutual_followers->amount;
 
   // number of registrations
-  $flag = flag_get_flag('event_register', NULL);
   $query = "SELECT COUNT(*) amount FROM {flagging} f WHERE f.fid = :fid";
-  $num_registrations = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $num_registrations = db_query($query, array(':fid' => $register_flag->fid))->fetch();
   $api_data["num_event_registrations"] = $num_registrations->amount;
 
+  // number of unique registrations
+  $query = "SELECT COUNT(DISTINCT(f.uid)) amount FROM {flagging} f WHERE f.fid = :fid";
+  $num_registrations = db_query($query, array(':fid' => $register_flag->fid))->fetch();
+  $api_data["num_event_unique_registrations"] = $num_registrations->amount;
+
   // number of registrations (past year)
-  $flag = flag_get_flag('event_register', NULL);
   $query = "SELECT COUNT(*) amount FROM {flagging} f WHERE f.fid = :fid AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 1 YEAR)";
-  $num_registrations_past_year = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $num_registrations_past_year = db_query($query, array(':fid' => $register_flag->fid))->fetch();
   $api_data["num_event_registrations_past_year"] = $num_registrations_past_year->amount;
 
   // number of waitlists
-  $flag = flag_get_flag('event_waitlist', NULL);
   $query = "SELECT COUNT(*) amount FROM {flagging} f WHERE f.fid = :fid";
-  $num_waitlists = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $num_waitlists = db_query($query, array(':fid' => $waitlist_flag->fid))->fetch();
   $api_data["num_event_waitlists"] = $num_waitlists->amount;
 
   // number of waitlists (past year)
-  $flag = flag_get_flag('event_waitlist', NULL);
   $query = "SELECT COUNT(*) amount FROM {flagging} f WHERE f.fid = :fid AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL 1 YEAR)";
-  $num_waitlists_past_year = db_query($query, array(':fid' => $flag->fid))->fetch();
+  $num_waitlists_past_year = db_query($query, array(':fid' => $waitlist_flag->fid))->fetch();
   $api_data["num_waitlists_past_year"] = $num_waitlists_past_year->amount;
 
   // number of chapter leaders
@@ -246,6 +250,43 @@ function tm_api_stats_get_data($use_cache = true) {
     $num_subscribed_members_amount = flag_get_flag_counts("user_subscription_enable");
     $api_data["num_subscribers"] = $num_subscribed_members_amount;
   }
+
+  // number of past livestream events
+  $query_sql = "SELECT COUNT(*) AS total FROM {field_data_field_event_date} e 
+  LEFT JOIN field_data_field_event_livestream_video_url p on e.entity_id = p.entity_id
+  WHERE p.entity_type = 'node' AND field_event_livestream_video_url_value IS NOT NULL 
+  AND e.entity_type = 'node' AND field_event_date_value <= NOW()";
+  $num_livestream_events = db_query($query_sql)->fetch();
+  $api_data["num_livestream_events"] = $num_livestream_events->total;
+
+  // number of livestream registrations
+  $query_sql = "SELECT COUNT(*) AS total FROM {flagging} f
+  LEFT JOIN field_data_field_event_livestream_video_url p ON f.entity_id = p.entity_id
+  WHERE f.fid = :fid AND p.entity_type = 'node' AND field_event_livestream_video_url_value IS NOT NULL";
+  $num_livestream_event_registrations = db_query($query_sql, array(':fid' => $register_flag->fid))->fetch();
+  $api_data["num_livestream_event_registrations"] = $num_livestream_event_registrations->total;
+
+  // number of past online events
+  $query_sql = "SELECT COUNT(*) AS total FROM {field_data_field_event_date} e 
+  LEFT JOIN field_data_field_event_is_online p ON e.entity_id = p.entity_id
+  WHERE p.entity_type = 'node' AND field_event_is_online_value = 1
+  AND e.entity_type = 'node' AND field_event_date_value <= NOW()";
+  $num_online_events = db_query($query_sql)->fetch();
+  $api_data["num_online_events"] = $num_online_events->total;
+
+  // number of online event registrations
+  $query_sql = "SELECT COUNT(*) AS total FROM {flagging} f
+  LEFT JOIN field_data_field_event_is_online p ON f.entity_id = p.entity_id
+  WHERE f.fid = :fid AND p.entity_type = 'node' AND field_event_is_online_value = 1";
+  $num_online_event_registrations = db_query($query_sql, array(':fid' => $register_flag->fid))->fetch();
+  $api_data["num_online_event_registrations"] = $num_online_event_registrations->total;
+
+  // number of unique online event registrations
+  $query_sql = "SELECT COUNT(DISTINCT(f.uid)) as total FROM {flagging} f
+  LEFT JOIN field_data_field_event_is_online p ON f.entity_id = p.entity_id
+  WHERE f.fid = :fid AND p.entity_type = 'node' AND field_event_is_online_value = 1";
+  $num_online_event_unique_registrations = db_query($query_sql, array(':fid' => $register_flag->fid))->fetch();
+  $api_data["num_online_event_unique_registrations"] = $num_online_event_unique_registrations->total;
 
   // return api data in json format
   cache_set('tm-api-stats', $api_data, 'cache', time() + 1800); // 30 mins
@@ -633,6 +674,37 @@ function tm_api_return_json($api_data) {
     print(json_encode($api_data));
   }
   drupal_exit();
+}
+
+// Replace api data in text fields
+// ie: "There are over __STATS_NUM_MEMBERS__ members"
+function tm_api_replace_text_fields($api_data, $element) {
+
+  // parse text
+  $element = str_replace("__STATS_NUM_MEMBERS__", number_format($api_data["num_members"]), $element);
+  $element = str_replace("__STATS_NUM_MEMBERS_ROUNDED__", number_format(floor(round($api_data["num_members"]/1000,4))*1000), $element);
+  $element = str_replace("__STATS_NUM_COUNTRIES__", $api_data["num_member_countries"], $element);
+  $element = str_replace("__STATS_NUM_CHAPTER_COUNTRIES__", $api_data["num_chapter_countries"], $element);
+  $element = str_replace("__STATS_NUM_CHAPTERS__", number_format($api_data["num_chapters"]), $element);
+  $element = str_replace("__STATS_NUM_ORGANIZATIONS__", number_format($api_data["num_organizations"]), $element);
+  $element = str_replace("__STATS_NUM_ORGANIZATIONS_ROUNDED__", number_format(floor(round($api_data["num_organizations"]/1000,4))*1000), $element);
+  $element = str_replace("__STATS_NUM_EVENTS__", number_format($api_data["num_events"]), $element);
+  $element = str_replace("__STATS_NUM_CONNECTIONS__", number_format($api_data["num_connections"]), $element);
+  $element = str_replace("__STATS_NUM_CONNECTIONS_ROUNDED__", number_format(floor(round($api_data["num_connections"]/1000,4))*1000), $element);
+  $element = str_replace("__STATS_NUM_CHAPTER_LEADERS__", number_format($api_data["num_chapter_leaders"]), $element);
+  $element = str_replace("__STATS_NUM_EVENTS_PAST_YEAR__", number_format($api_data["num_events_past_year"]), $element);
+  $element = str_replace("__STATS_NUM_EVENT_REGISTRATIONS__", number_format($api_data["num_event_registrations"]), $element);
+  $element = str_replace("__STATS_NUM_EVENT_UNIQUE_REGISTRATIONS__", number_format($api_data["num_event_unique_registrations"]), $element);
+  $element = str_replace("__STATS_NUM_EVENT_REGISTRATIONS_PAST_YEAR__", number_format($api_data["num_event_registrations_past_year"]), $element);
+  $element = str_replace("__STATS_NUM_EVENTS_TOTAL__", number_format($api_data["num_events"]), $element);
+  $element = str_replace("__STATS_NUM_LIVESTREAM_EVENTS_TOTAL__", number_format($api_data["num_livestream_events"]), $element);
+  $element = str_replace("__STATS_NUM_LIVESTREAM_EVENT_REGISTRATIONS__", number_format($api_data["num_livestream_event_registrations"]), $element);
+  $element = str_replace("__STATS_NUM_ONLINE_EVENTS_TOTAL__", number_format($api_data["num_online_events"]), $element);
+  $element = str_replace("__STATS_NUM_ONLINE_EVENT_REGISTRATIONS__", number_format($api_data["num_online_event_registrations"]), $element);
+  $element = str_replace("__STATS_NUM_ONLINE_EVENT_UNIQUE_REGISTRATIONS__", number_format($api_data["num_online_event_unique_registrations"]), $element);
+
+  return $element;
+
 }
 
 

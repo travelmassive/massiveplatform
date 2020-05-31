@@ -422,7 +422,7 @@ function tm_events_views_default_views() {
   $handler->display->display_options['filters']['field_event_is_preview_mode_value']['value'] = array(
     1 => '1',
   );
-  $handler->display->display_options['path'] = 'events/preview';
+  $handler->display->display_options['path'] = 'events/list/preview';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Events';
   $handler->display->display_options['menu']['weight'] = '2';
@@ -504,7 +504,7 @@ function tm_events_views_default_views() {
     1 => '1',
   );
   $handler->display->display_options['filters']['field_event_is_preview_mode_value']['group'] = 1;
-  $handler->display->display_options['path'] = 'events/past';
+  $handler->display->display_options['path'] = 'events/list/past';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Events';
   $handler->display->display_options['menu']['weight'] = '2';
@@ -591,7 +591,7 @@ function tm_events_views_default_views() {
   $handler->display->display_options['filters']['field_event_livestream_video_url_value']['table'] = 'field_data_field_event_livestream_video_url';
   $handler->display->display_options['filters']['field_event_livestream_video_url_value']['field'] = 'field_event_livestream_video_url_value';
   $handler->display->display_options['filters']['field_event_livestream_video_url_value']['operator'] = 'not empty';
-  $handler->display->display_options['path'] = 'events/replay';
+  $handler->display->display_options['path'] = 'events/list/replays';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Events';
   $handler->display->display_options['menu']['weight'] = '2';

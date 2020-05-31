@@ -247,6 +247,8 @@ $image = theme('image_style', array(
         <li><?php print l(t('Chapter leaders'), 'admin/tm_reports'); ?></li>
         <li><?php print l(t('Global insights'), 'admin/global_insights'); ?></li>
         <li><?php print l(t('Member feedback'), 'feedback/results/all'); ?></li>
+        <li><?php print l(t('Member testimonials'), 'admin/member-testimonials'); ?></li>
+        <li><?php print l(t('COVID-19 messages'), 'admin/member-covid19-messages'); ?></li>
         <?php if (module_exists("tm_commissions")): ?>
         <li><?php print l(t('Chapter commissions'), '/chapters/all-chapters/commissions'); ?></li>
         <?php endif; ?>

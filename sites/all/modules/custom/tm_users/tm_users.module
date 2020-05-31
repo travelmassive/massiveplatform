@@ -480,6 +480,18 @@ function tm_users_user_presave(&$edit, $account, $category) {
     }
   }
 
+  // Trim COVID-19 Response
+  if (isset($edit['field_user_covid19_message'][LANGUAGE_NONE][0]['value'])) {
+    $trimmed = trim($edit['field_user_covid19_message'][LANGUAGE_NONE][0]['value']);
+    if ($trimmed != "") {
+      // save trimmed value
+      $edit['field_user_covid19_message'][LANGUAGE_NONE][0]['value'] = $trimmed;
+    } else {
+      // remove empty value
+      $edit['field_user_covid19_message'] = null;
+    }
+  }
+
   // Set last modified timestamp of user
   $datetime_now = new DateTime(null, new DateTimeZone('UTC'));
   $edit['field_last_modified_timestamp'][LANGUAGE_NONE][0]['value'] = $datetime_now->getTimestamp();

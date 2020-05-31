@@ -676,6 +676,18 @@ function tm_events_node_presave($node) {
     }
   }
 
+  // Trim COVID-19 Message
+  if (isset($node->field_event_covid19_message[LANGUAGE_NONE][0]['value'])) {
+    $trimmed = trim($node->field_event_covid19_message[LANGUAGE_NONE][0]['value']);
+    if ($trimmed != "") {
+      // save trimmed value
+      $node->field_event_covid19_message[LANGUAGE_NONE][0]['value'] = $trimmed;
+    } else {
+      // remove empty value
+      $node->field_event_covid19_message[LANGUAGE_NONE][0]['value'] = null;
+    }
+  }
+
 }
 
 /**

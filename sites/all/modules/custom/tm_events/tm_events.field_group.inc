@@ -113,12 +113,13 @@ function tm_events_field_group_info() {
     'weight' => '8',
     'children' => array(
       0 => 'body',
-      1 => 'tm_ds_event_price',
-      2 => 'tm_ds_event_refund_policy',
-      3 => 'tm_ds_fulldate_event',
-      4 => 'tm_ds_event_message',
-      5 => 'tm_ds_event_location',
-      6 => 'tm_ds_event_online_instructions',
+      1 => 'field_event_covid19_message',
+      2 => 'tm_ds_event_price',
+      3 => 'tm_ds_event_refund_policy',
+      4 => 'tm_ds_fulldate_event',
+      5 => 'tm_ds_event_message',
+      6 => 'tm_ds_event_location',
+      7 => 'tm_ds_event_online_instructions',
     ),
     'format_type' => 'contained_block',
     'format_settings' => array(
@@ -203,6 +204,7 @@ function tm_events_field_group_info() {
     'children' => array(
       0 => 'field_register_event_message',
       1 => 'field_waitlist_event_message',
+      2 => 'field_event_covid19_message',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

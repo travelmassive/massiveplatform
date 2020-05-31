@@ -1390,7 +1390,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 7,
+      'weight' => 86,
     ),
   );
 
@@ -1545,6 +1545,54 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
       ),
       'type' => 'text_textfield',
       'weight' => 39,
+    ),
+  );
+
+  // Exported field_instance: 'user-user-field_user_covid19_message'.
+  $field_instances['user-user-field_user_covid19_message'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Share with the community how you have been affected or responded during this time.<br>
+This message will be displayed on your profile page.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_plain',
+        'weight' => 40,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'user',
+    'field_name' => 'field_user_covid19_message',
+    'label' => 'Share your response to COVID-19',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 3,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 85,
     ),
   );
 
@@ -1897,7 +1945,7 @@ It may take a few minutes for changes to take effect.<br>',
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 8,
+      'weight' => 87,
     ),
   );
 
@@ -1951,7 +1999,7 @@ It may take a few minutes for changes to take effect.<br>',
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 9,
+      'weight' => 88,
     ),
   );
 
@@ -2005,7 +2053,7 @@ It may take a few minutes for changes to take effect.<br>',
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 10,
+      'weight' => 89,
     ),
   );
 
@@ -2059,7 +2107,7 @@ It may take a few minutes for changes to take effect.<br>',
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 11,
+      'weight' => 90,
     ),
   );
 
@@ -2113,7 +2161,7 @@ It may take a few minutes for changes to take effect.<br>',
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 12,
+      'weight' => 91,
     ),
   );
 
@@ -2131,7 +2179,7 @@ Your testimonial will be displayed on your profile page.
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',
-        'weight' => 40,
+        'weight' => 41,
       ),
       'grid' => array(
         'label' => 'above',
@@ -2221,6 +2269,9 @@ Your testimonial will be displayed on your profile page.
   t('Question 5');
   t('Reason for joining');
   t('Share a Testimonial');
+  t('Share with the community how you have been affected or responded during this time.<br>
+This message will be displayed on your profile page.');
+  t('Share your response to COVID-19');
   t('Site chat allows you to chat to other members in your chapter who are online.');
   t('Snapchat');
   t('Strava');

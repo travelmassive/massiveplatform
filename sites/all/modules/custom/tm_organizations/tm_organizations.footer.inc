@@ -28,7 +28,7 @@ function tm_organizations_render_footer($num_items = 5, $use_cache = true) {
 </div>';
 
 	// footer title
-	$template = str_replace("__FOOTER_TITLE__", $conf["tm_subscriptions_user_subscribers_footer_title"], $template);
+	$template = str_replace("__FOOTER_TITLE__", $conf["tm_organizations_footer_title"], $template);
 
 	// generate lists
 	$list_html = "<ul class='tm-lists-footer organizations'>";

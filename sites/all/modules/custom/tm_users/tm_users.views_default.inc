@@ -917,10 +917,10 @@ function tm_users_views_default_views() {
   $handler->display->display_options['filters']['rid']['group'] = 1;
   $handler->display->display_options['filters']['rid']['reduce_duplicates'] = TRUE;
 
-  /* Display: All unapproved members */
-  $handler = $view->new_display('page', 'All unapproved members', 'all_unapproved_members');
+  /* Display: All guest members */
+  $handler = $view->new_display('page', 'All guest members', 'all_unapproved_members');
   $handler->display->display_options['defaults']['title'] = FALSE;
-  $handler->display->display_options['title'] = 'All unapproved users';
+  $handler->display->display_options['title'] = 'All guest members';
   $handler->display->display_options['defaults']['group_by'] = FALSE;
   $handler->display->display_options['group_by'] = TRUE;
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
@@ -1151,10 +1151,10 @@ function tm_users_views_default_views() {
   $handler->display->display_options['menu']['context'] = 0;
   $handler->display->display_options['menu']['context_only_inline'] = 0;
 
-  /* Display: Unapproved Chapter members */
-  $handler = $view->new_display('page', 'Unapproved Chapter members', 'unapproved_members_in_chapter');
+  /* Display: Guest Chapter members */
+  $handler = $view->new_display('page', 'Guest Chapter members', 'unapproved_members_in_chapter');
   $handler->display->display_options['defaults']['title'] = FALSE;
-  $handler->display->display_options['title'] = 'Unapproved Chapter Members';
+  $handler->display->display_options['title'] = 'Guest Chapter Members';
   $handler->display->display_options['defaults']['group_by'] = FALSE;
   $handler->display->display_options['group_by'] = TRUE;
   $handler->display->display_options['defaults']['access'] = FALSE;

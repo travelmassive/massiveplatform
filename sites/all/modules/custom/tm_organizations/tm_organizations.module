@@ -10,7 +10,7 @@ include_once 'tm_organizations.follow.inc';
 include_once 'tm_organizations.helpers.inc';
 include_once 'tm_organizations.moderate.inc';
 include_once 'tm_organizations.grants.inc';
-
+include_once 'tm_organizations.footer.inc';
 
 /*
 * Implements hook_menu()

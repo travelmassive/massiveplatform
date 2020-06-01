@@ -103,7 +103,7 @@ function tm_api_stats_get_data($use_cache = true) {
     // check cache
     $cache = cache_get('tm-api-stats', 'cache');
     if (!empty($cache)) {
-      //return $cache->data;
+      return $cache->data;
     }
   }
 

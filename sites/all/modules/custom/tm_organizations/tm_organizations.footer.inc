@@ -19,7 +19,7 @@ function tm_organizations_render_footer($num_items = 5, $use_cache = true) {
 	$exclude_items = $conf["tm_organizations_footer_exclude"];
 
 	// get organizatins with recent follows, sorted by follower count
-	$recent_follows = tm_organizations_get_followed_organizations($num_items, $num_days, $exlude_items);
+	$recent_follows = tm_organizations_get_followed_organizations($num_items, $num_days, $exclude_items);
 
 	// load template
 	$template = '<div class="lists-footer-container organizations">

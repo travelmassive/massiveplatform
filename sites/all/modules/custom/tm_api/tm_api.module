@@ -103,7 +103,7 @@ function tm_api_stats_get_data($use_cache = true) {
     // check cache
     $cache = cache_get('tm-api-stats', 'cache');
     if (!empty($cache)) {
-      return $cache->data;
+      //return $cache->data;
     }
   }
 
@@ -129,19 +129,19 @@ function tm_api_stats_get_data($use_cache = true) {
   $api_data["num_organizations"] = $num_organizations->amount;
 
   // number of events in past
-  // don't include partner events
+  // chapter events
   $query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 
-  LEFT JOIN field_data_field_is_partner_event p on e.entity_id = p.entity_id
-  WHERE p.entity_type = 'node' AND field_is_partner_event_value = 0
-  AND e.entity_type = 'node' AND field_event_date_value <= NOW();";
+  LEFT JOIN field_data_field_chapter p on e.entity_id = p.entity_id
+  WHERE p.bundle = 'event'
+  AND e.entity_type = 'node' AND field_event_date_value <= NOW()";
   $num_events = db_query($query_sql)->fetch();
   $api_data["num_events"] = $num_events->total;
 
   // number of events (past year)
-  // don't include partner events
+  // chapter events
   $query_sql = "SELECT COUNT(*) total FROM {field_data_field_event_date} e 
-  LEFT JOIN field_data_field_is_partner_event p on e.entity_id = p.entity_id
-  WHERE p.entity_type = 'node' AND field_is_partner_event_value = 0
+  LEFT JOIN field_data_field_chapter p on e.entity_id = p.entity_id
+  WHERE p.bundle = 'event'
   AND e.entity_type = 'node' AND field_event_date_value >= (NOW() - INTERVAL 1 YEAR) AND field_event_date_value <= NOW()";
   $num_events_past_year = db_query($query_sql)->fetch();
   $api_data["num_events_past_year"] = $num_events_past_year->total;

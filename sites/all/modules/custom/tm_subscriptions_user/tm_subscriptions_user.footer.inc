@@ -28,7 +28,7 @@ function tm_subscriptions_user_render_footer($num_items = 5, $use_cache = true) 
 
 	// generate lists
 	$count = 1;
-	$list_html = "<ul class='tm-lists-user-footer subscriptions'>";
+	$list_html = "<ul class='tm-lists-footer subscriptions'>";
 	foreach ($subscriber_uids as $uid) {
 
 		// load account

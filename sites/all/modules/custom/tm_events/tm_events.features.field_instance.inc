@@ -654,7 +654,7 @@ This will be displayed on the event page for all members.',
         'weight' => 72,
       ),
       'full' => array(
-        'label' => 'hidden',
+        'label' => 'inline',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',

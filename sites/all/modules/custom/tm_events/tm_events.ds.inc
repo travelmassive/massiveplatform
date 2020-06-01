@@ -347,6 +347,7 @@ function tm_events_ds_field_settings_info() {
       'formatter_settings' => array(
         'ft' => array(
           'func' => 'theme_ds_field_tm_default',
+          'lb' => 'Health and Safety',
           'lb-col' => TRUE,
         ),
       ),

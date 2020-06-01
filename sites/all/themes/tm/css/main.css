@@ -5451,6 +5451,20 @@ ul.tm-checklist li:before {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Health and Safety */
+/* line 1288, ../sass/_base.scss */
+.detail-item.field-event-covid19-message h2 {
+  margin-bottom: 8px;
+  border: 0 none;
+  clip: unset;
+  height: auto;
+  overflow: hidden;
+  padding: initial;
+  position: relative;
+  width: inherit;
+  font-size: 11pt;
+}
+
 /* line 3, ../sass/_buttons.scss */
 button:hover, button:focus {
   outline: none;

@@ -70,3 +70,28 @@ function tm_organizations_get_taxonomy_tid($nid) {
   return null;
 }
 
+/**
+ * Helper method to get list of recently followed organizations ordered by follow count
+ */
+function tm_organizations_get_followed_organizations($limit = 5, $days = 7, $exclude_nids = null) {
+
+  $follow_organizations_flag = flag_get_flag('follow_organizations', NULL);
+  $organization_nids = array();
+
+  // exclude nids
+  if ($exclude_nids == null) {
+    $exclude_nids = array();
+  }
+  if (sizeof($exclude_nids) == 0) {
+     $exclude_nids = array(0);
+  }
+
+  $query = "SELECT entity_id, COUNT(*) as group_count FROM flagging WHERE entity_type = 'node' AND fid = :fid AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL " . intval($days) . " DAY) AND entity_id NOT IN (" . implode(",", $exclude_nids) . ") GROUP BY entity_id ORDER BY group_count DESC LIMIT " . intval($limit);
+  $rows = db_query($query, array(':fid' => $follow_organizations_flag->fid))->fetchAll();
+  foreach ($rows as $row) {
+    $organization_nids[] = array("entity_id" => $row->entity_id, "follower_count" => $row->group_count);
+  }
+
+  return $organization_nids;
+}
+

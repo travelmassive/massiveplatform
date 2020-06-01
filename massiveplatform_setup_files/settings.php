@@ -637,6 +637,16 @@ $conf["tm_branding_include_css"] = "";
 // include custom js for branding ( do not include <script> tag)
 $conf["tm_branding_include_js"] = "";
 
+/** SITE BRANDING FOOTER LISTS **/
+// $conf["tm_lists_footer_title"] = "Recent Lists"; // title in footer
+// $conf["tm_lists_footer_num_items"] = 3; // how many items to show in __LISTS_FOOTER_HTML__ branding element
+// $conf["tm_subscriptions_user_subscribers_footer_title"] = "New Subscribers"; // title of footer links
+// $conf["tm_subscriptions_user_subscribers_footer_num_items"] = 3; // how many items to show in __SUBSCRIPTIONS_FOOTER_HTML__ branding element
+// $conf["tm_organizations_footer_title"] = "Trending"; // title in footer
+// $conf["tm_organizations_footer_num_items"] = 3; // how many items to show in __ORGANIZATIONS_FOOTER_HTML__ branding element
+// $conf["tm_organizations_footer_num_days"] = 7; // how many days of follows to count
+// $conf["tm_organizations_footer_exclude"] = array(); // exclude any organizations from displaying
+
 /** STATUS UPDATES **/
 $conf["tm_status_updates_enabled"] = true; // enable status updates
 $conf['tm_status_updates_frontpage_feed'] = true; // display status updates and flags on front page
@@ -934,8 +944,6 @@ $conf["tm_subscriptions_user_subscribers_page_title"] = "Pro Members"; // title 
 $conf["tm_subscriptions_user_subscribers_page_message"] = "Learn more about Pro Membership."; // message to show non-subscribed members on the subscribers page
 $conf["tm_subscriptions_user_subscribers_page_message_subscribed"] = "Connect with fellow Pro Members in the community."; // message to show subscribed members on the subscribers page
 $conf["tm_subscriptions_user_chapter_leader_message"] = "<br>See your <a href='__COMMISSIONS_REPORT_URL__'>chapter commissions</a>, or learn more about <a href=''>Memberships</a>.<br>";
-$conf["tm_subscriptions_user_subscribers_footer_title"] = "Welcome Pro Members"; // title in footer
-$conf["tm_subscriptions_user_subscribers_footer_num_items"] = 3; // how many items to show in __SUBSCRIPTIONS_FOOTER_HTML__ branding element
 $conf["tm_subscriptions_user_cta_approved_account"] = true; // only allow approved accounts to upgrade
 $conf["tm_subscriptions_user_cta_min_events"] = 1; // minimum number of events attended
 $conf["tm_subscriptions_user_cta_min_account_age"] = 7; // minimum account age
@@ -1194,8 +1202,6 @@ $conf["tm_lists_newsletter_outro"] = 'Like this list? Explore <a href="">more li
 $conf["tm_lists_newsletter_facebook_icon_url"] = '';
 $conf["tm_lists_newsletter_twitter_icon_url"] = '';
 $conf["tm_lists_oembed_enabled"] = false; // embed youtube, vimeo, urls
-$conf["tm_lists_footer_title"] = "Recent Lists"; // title in footer
-$conf["tm_lists_footer_num_items"] = 3; // how many items to show in __LISTS_FOOTER_HTML__ branding element
 
 /** Newsletter Generation **/
 $conf["tm_users_download_csv_member_of_chapters"] = array("SYD"); // array of chapter shortcodes, will add to csv if user is a member of the chapter in new column

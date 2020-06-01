@@ -934,6 +934,8 @@ $conf["tm_subscriptions_user_subscribers_page_title"] = "Pro Members"; // title 
 $conf["tm_subscriptions_user_subscribers_page_message"] = "Learn more about Pro Membership."; // message to show non-subscribed members on the subscribers page
 $conf["tm_subscriptions_user_subscribers_page_message_subscribed"] = "Connect with fellow Pro Members in the community."; // message to show subscribed members on the subscribers page
 $conf["tm_subscriptions_user_chapter_leader_message"] = "<br>See your <a href='__COMMISSIONS_REPORT_URL__'>chapter commissions</a>, or learn more about <a href=''>Memberships</a>.<br>";
+$conf["tm_subscriptions_user_subscribers_footer_title"] = "Welcome Pro Members"; // title in footer
+$conf["tm_subscriptions_user_subscribers_footer_num_items"] = 3; // how many items to show in __SUBSCRIPTIONS_FOOTER_HTML__ branding element
 $conf["tm_subscriptions_user_cta_approved_account"] = true; // only allow approved accounts to upgrade
 $conf["tm_subscriptions_user_cta_min_events"] = 1; // minimum number of events attended
 $conf["tm_subscriptions_user_cta_min_account_age"] = 7; // minimum account age

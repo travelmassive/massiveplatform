@@ -17,7 +17,7 @@ include_once 'tm_subscriptions_user.helpers.inc';
 include_once 'tm_subscriptions_user.pricing.inc';
 include_once 'tm_subscriptions_user.notifications.inc';
 include_once 'tm_subscriptions_user.reports.inc';
-
+include_once 'tm_subscriptions_user.footer.inc';
 
 /* 
 Stripe Payments Module

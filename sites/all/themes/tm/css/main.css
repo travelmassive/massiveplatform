@@ -5362,7 +5362,8 @@ a.tm-lists-footer-label-link:hover {
   margin-left: 0.75rem;
 }
 
-/* line 1204, ../sass/_base.scss */
+/* Online Events */
+/* line 1206, ../sass/_base.scss */
 .tm-online-events-edit-form-message {
   background-color: #1ABC9C;
   color: #fff;
@@ -5374,14 +5375,14 @@ a.tm-lists-footer-label-link:hover {
   margin-top: 16px;
 }
 
-/* line 1215, ../sass/_base.scss */
+/* line 1217, ../sass/_base.scss */
 .tm-online-events-edit-form-message a {
   color: #fff;
   font-weight: bold;
   text-decoration: underline;
 }
 
-/* line 1221, ../sass/_base.scss */
+/* line 1223, ../sass/_base.scss */
 .tm-go-live-button {
   display: inline-block !important;
   background-color: #4f9bd6 !important;
@@ -5391,12 +5392,12 @@ a.tm-lists-footer-label-link:hover {
   margin-top: 4px !important;
 }
 
-/* line 1230, ../sass/_base.scss */
+/* line 1232, ../sass/_base.scss */
 .tm-go-live-button:hover {
   background-color: #4584ba !important;
 }
 
-/* line 1234, ../sass/_base.scss */
+/* line 1236, ../sass/_base.scss */
 .tm-end-live-button {
   display: inline-block !important;
   background-color: #dd624d !important;
@@ -5406,18 +5407,19 @@ a.tm-lists-footer-label-link:hover {
   margin-top: 4px !important;
 }
 
-/* line 1243, ../sass/_base.scss */
+/* line 1245, ../sass/_base.scss */
 .tm-end-live-button:hover {
   background-color: #d94830 !important;
 }
 
-/* line 1247, ../sass/_base.scss */
+/* Forms */
+/* line 1251, ../sass/_base.scss */
 ul.tm-checklist {
   list-style: none;
   padding-left: 16px;
 }
 
-/* line 1252, ../sass/_base.scss */
+/* line 1256, ../sass/_base.scss */
 ul.tm-checklist li:before {
   font-family: 'tm-icons';
   content: "\e609";
@@ -5427,7 +5429,8 @@ ul.tm-checklist li:before {
   margin-right: 8px;
 }
 
-/* line 1261, ../sass/_base.scss */
+/* Verification */
+/* line 1267, ../sass/_base.scss */
 .tm-account-menu-verification:before {
   font-family: 'tm-icons';
   content: "\e673";
@@ -5437,7 +5440,7 @@ ul.tm-checklist li:before {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* line 1270, ../sass/_base.scss */
+/* line 1276, ../sass/_base.scss */
 .tm-moderator-menu-verification:before {
   font-family: 'tm-icons';
   content: "\e673";

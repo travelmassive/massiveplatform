@@ -1201,6 +1201,8 @@ a.tm-lists-footer-label-link:hover {
   margin-left: 0.75rem;
 }
 
+/* Online Events */
+
 .tm-online-events-edit-form-message {
   background-color: #1ABC9C;
   color: #fff;
@@ -1244,6 +1246,8 @@ a.tm-lists-footer-label-link:hover {
   background-color: #d94830 !important;
 }
 
+/* Forms */
+
 ul.tm-checklist {
   list-style: none;
   padding-left: 16px;
@@ -1257,6 +1261,8 @@ ul.tm-checklist li:before {
   -moz-osx-font-smoothing: grayscale;
   margin-right: 8px;
 }
+
+/* Verification */
 
 .tm-account-menu-verification:before {
   font-family: 'tm-icons';
@@ -1276,3 +1282,4 @@ ul.tm-checklist li:before {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+

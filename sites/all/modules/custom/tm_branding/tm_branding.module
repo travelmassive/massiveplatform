@@ -857,13 +857,17 @@ function tm_branding_get_base_element($element_name, $extra = null) {
 
 	// render footer for lists
 	if (module_exists("tm_lists")) {
-		if (strpos(current_path(), "lists") === false) {
- 			if (($element_name == "footer_html") or ($element_name == "footer_level1_html") or ($element_name == "footer_level2_html")) {
-				$lists_html = tm_lists_render_footer($conf["tm_lists_footer_num_items"]);
-				$element = str_replace("__LISTS_FOOTER_HTML__", $lists_html, $element);
-			}
-		} else {
-			$element = str_replace("__LISTS_FOOTER_HTML__", "", $element);
+		if (($element_name == "footer_html") or ($element_name == "footer_level1_html") or ($element_name == "footer_level2_html")) {
+			$lists_html = tm_lists_render_footer($conf["tm_lists_footer_num_items"]);
+			$element = str_replace("__LISTS_FOOTER_HTML__", $lists_html, $element);
+		}
+	}
+
+	// render footer for user subscriptions
+	if (module_exists("tm_subscriptions_user")) {
+		if (($element_name == "footer_html") or ($element_name == "footer_level1_html") or ($element_name == "footer_level2_html")) {
+			$lists_html = tm_subscriptions_user_render_footer($conf["tm_subscriptions_user_subscribers_footer_num_items"]);
+			$element = str_replace("__SUBSCRIPTIONS_FOOTER_HTML__", $lists_html, $element);
 		}
 	}
 

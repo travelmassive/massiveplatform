@@ -565,3 +565,19 @@ function tm_subscriptions_user_get_country_code($account) {
 	return $country_code;
 }
 
+/**
+ * Helper method to get list of new subscribers 
+ */
+function tm_subscriptions_user_get_new_subscribers($limit = 5) {
+
+	$user_subscription_enable = flag_get_flag('user_subscription_enable', NULL);
+	$subscriber_uids = array();
+
+	$query = "SELECT entity_id FROM flagging WHERE entity_type = 'user' AND fid = :fid ORDER BY timestamp DESC LIMIT " . intval($limit);
+	$rows = db_query($query, array(':fid' => $user_subscription_enable->fid))->fetchAll();
+	foreach ($rows as $row) {
+		$subscriber_uids[] = $row->entity_id;
+	}
+
+	return $subscriber_uids;
+}

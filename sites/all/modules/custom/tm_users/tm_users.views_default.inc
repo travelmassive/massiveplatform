@@ -1551,6 +1551,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['fields']['mail']['id'] = 'mail';
   $handler->display->display_options['fields']['mail']['table'] = 'users';
   $handler->display->display_options['fields']['mail']['field'] = 'mail';
+  $handler->display->display_options['fields']['mail']['link_to_user'] = 'user';
   /* Field: User: Home Chapter */
   $handler->display->display_options['fields']['field_home_chapter']['id'] = 'field_home_chapter';
   $handler->display->display_options['fields']['field_home_chapter']['table'] = 'field_data_field_home_chapter';
@@ -1746,6 +1747,7 @@ function tm_users_views_default_views() {
   $handler->display->display_options['fields']['mail']['id'] = 'mail';
   $handler->display->display_options['fields']['mail']['table'] = 'users';
   $handler->display->display_options['fields']['mail']['field'] = 'mail';
+  $handler->display->display_options['fields']['mail']['link_to_user'] = 'user';
   /* Field: User: Home Chapter */
   $handler->display->display_options['fields']['field_home_chapter']['id'] = 'field_home_chapter';
   $handler->display->display_options['fields']['field_home_chapter']['table'] = 'field_data_field_home_chapter';

@@ -89,7 +89,7 @@ function tm_events_add_page() {
 	}
 
 	// create tip
-	$tip = "";
+	$tip = "Add an event for our community.";
 	if (isset($conf["tm_event_add_event_help_tip"])) {
 		$tip = $conf["tm_event_add_event_help_tip"];
 		// lookup and replace stats from api data

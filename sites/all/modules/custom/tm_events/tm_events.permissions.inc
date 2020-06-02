@@ -152,6 +152,11 @@ function tm_events_check_permission_edit_event($check_user, $event) {
     }
   }
 
+  // member is reported
+  if (tm_users_is_member_reported($check_user->uid)) {
+    return false;
+  }
+
   // if managing company page 
   if ($conf["tm_event_company_events_enabled"] == true) {
     if (isset($event->field_event_company[LANGUAGE_NONE][0])) {
@@ -269,6 +274,11 @@ function _tm_events_check_create_company_event($check_user, $company_id) {
     return false;
   }
 
+  // member is reported
+  if (tm_users_is_member_reported($check_user->uid)) {
+    return false;
+  }
+
   // if field_company_enable_events enabled, allow company event
   $company = node_load($company_id);
   if (isset($company->field_company_enable_events[LANGUAGE_NONE][0]['value'])) {
@@ -331,6 +341,11 @@ function _tm_events_check_create_member_event($check_user) {
     return true;
   }
 
+  // member is reported
+  if (tm_users_is_member_reported($check_user->uid)) {
+    return false;
+  }
+
   // allow approved members with minimum number of followers to create an event
   $min_followers = $conf["tm_event_member_event_min_followers"];
   $num_followers = tm_users_get_num_followers($check_user->uid);
@@ -363,9 +378,19 @@ function _tm_events_check_create_member_event_message($check_user) {
     return "";
   }
 
+  // member is reported
+  if (tm_users_is_member_reported($check_user->uid)) {
+    return "Sorry, you can't add an event at this time.";
+  }
+
   // not approved member
   if (!in_array("approved user", $check_user->roles)) {
-    return "";
+    $message = "<b>To add an event, you need:</b> <ul class=\"tm-checklist\"><li>A <a href=\"/user/" . $check_user->uid . "\">verified</a> account</li>";
+    if ($conf["tm_event_member_event_min_followers"] > 0) {
+      $message .= "<li>At least " . $conf["tm_event_member_event_min_followers"] . " followers</li>";
+    }
+    $message .= "</ul>Complete these steps then you can add your event.";
+    return $message;
   }
 
   // must have validated email
@@ -378,7 +403,7 @@ function _tm_events_check_create_member_event_message($check_user) {
   $num_followers = tm_users_get_num_followers($check_user->uid);
   if ($num_followers < $min_followers) {
     $message = "<b>You need " . ($min_followers - $num_followers) . " more members to vouch for you.</b>";
-    $message .= "<br><br>To add a member event in our community you need at least " . $conf["tm_event_member_event_min_followers"] . " followers.";
+    $message .= "<br><br>To add a member event you need at least " . $conf["tm_event_member_event_min_followers"] . " followers.";
     return $message;
   }
 
@@ -416,12 +441,23 @@ function _tm_events_check_create_company_event_message($check_user, $company_id)
     return "Please verify your email address.";
   }
 
+  // member is reported
+  if (tm_users_is_member_reported($check_user->uid)) {
+    return "Sorry, you can't add an event at this time.";
+  }
+
   // need minimum number of company followers to vouch for you
   $min_followers = $conf["tm_event_company_event_min_followers"];
   $num_followers = tm_organizations_get_num_followers($company_id);
+  $followers_label = "followers";
+  if (isset($conf["tm_organizations_upvote"])) {
+    if ($conf["tm_organizations_upvote"]) {
+      $follower_label = "upvotes";
+    }
+  }
   if ($num_followers < $min_followers) {
     $message = "<b>You need " . ($min_followers - $num_followers) . " more members to vouch for you.</b>";
-    $message .= "<br><br>To add an event in our community your company needs at least " . $conf["tm_event_company_event_min_followers"] . " followers.";
+    $message .= "<br><br>To add an event <a href=\"/node/" . $company_id . "\">your company</a> needs at least " . $conf["tm_event_company_event_min_followers"] . " " . $follower_label . ".";
     return $message;
   }
 

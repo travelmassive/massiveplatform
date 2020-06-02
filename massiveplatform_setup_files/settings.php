@@ -193,6 +193,7 @@ $conf["tm_event_post_reminder_message"] = "Share what happened with the communit
 $conf["tm_event_custom_banner_templates"] = array(); // custom event banner template alias
 $conf["tm_event_custom_banner_templates"]["example"] = "<h1>Call this template with __EXAMPLE__</h1>"; 
 $conf["tm_event_check_updates_seconds"] = 30; // how often to check for event page updates in seconds
+$conf["tm_event_add_event_help_tip"] = "Add an event for our community and reach __STATS_NUM_MEMBERS__ members. All events listed are subject to our <a target='_blank' href='" . $conf['tm_community_values_url'] . "'>community guidelines</a>."; // help tip to show on /events/add
 
 /** ONLINE EVENT OPTIONS **/
 $conf["tm_event_online_event_tips"] = "Live stream your event, from your YouTube channel.<br> We recommend <a target='_blank' href='https://streamyard.com'>StreamYard</a> to broadcast your event."; // tips for online event settings

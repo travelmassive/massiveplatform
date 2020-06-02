@@ -239,7 +239,8 @@ function tm_users_preprocess_page(&$variables) {
   }
 
   // Split url parts
-  $url_parts = explode("/", request_path());
+  $request_path = request_path();
+  $url_parts = explode("/", $request_path);
 
   // Show chapter page tips
   if (($url_parts[0] == "chapters") and (sizeof($url_parts) == 1)) {
@@ -288,6 +289,11 @@ function tm_users_preprocess_page(&$variables) {
   if (($url_parts[0] == "search") and (sizeof($url_parts) == 1)) {  
     // show signup tips if less than < 70% complete
     //tm_users_signup_tips(false, null, 70);
+    return;
+  }
+
+  // Add event
+  if ($request_path == "events/add") {  
     return;
   }
 

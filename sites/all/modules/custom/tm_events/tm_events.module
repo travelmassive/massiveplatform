@@ -140,7 +140,7 @@ function tm_events_menu() {
     'type' => MENU_CALLBACK,
   );
   $items['events/add'] = array(
-    'title' => 'Add an event',
+    'title' => 'Add event',
     'page callback' => 'tm_events_add_page',
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,

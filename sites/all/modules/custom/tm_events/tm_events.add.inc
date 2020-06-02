@@ -40,7 +40,7 @@ function tm_events_add_page() {
 		if (_tm_events_check_create_chapter_event($user, $nid)) {
 			$chapter = node_load($nid);
 			$chapter_title = tm_chapters_formal_name($chapter);
-			$html .= "<li><a href='/node/add/event?field_chapter=" . $nid . "'>Add an event in " . $chapter_title . "</a></li>";
+			$html .= "<li><a href='/node/add/event?field_chapter=" . $nid . "'>Add event in " . $chapter_title . "</a></li>";
 			$add_chapter_event = true;
 		}
 	}
@@ -51,13 +51,13 @@ function tm_events_add_page() {
 		$company = node_load($nid);
 		$company_title = strip_tags(trim($company->title));
 		if (_tm_events_check_create_company_event($user, $nid)) {	
-			$html .= "<li><a href='/node/add/event?field_event_company=" . $nid . "'>Add an event for " . $company_title . "</a></li>";
+			$html .= "<li><a href='/node/add/event?field_event_company=" . $nid . "'>Add event for " . $company_title . "</a></li>";
 		}
 		else {
 			$company_event_message = _tm_events_check_create_company_event_message($user, $nid);
 			drupal_add_js(array('tm_events' => array('create_company_event_message' => $company_event_message)), array('type' => 'setting'));
 			if ($company_event_message != "") {
-				$html .= "<li><a href='javascript:jq_create_company_event_message();'>Add an event for " . $company_title . "</a></li>";
+				$html .= "<li><a href='javascript:jq_create_company_event_message();'>Add event for " . $company_title . "</a></li>";
 			}
 		}
 	}
@@ -68,12 +68,12 @@ function tm_events_add_page() {
 	if ((!$add_chapter_event) or (in_array('moderator', array_values($user->roles)))) {
 		$can_create_member_event = _tm_events_check_create_member_event($user);
 		if ($can_create_member_event) {
-			$html .= "<li><a href='/node/add/event'>Add a new member event</a></li>";
+			$html .= "<li><a href='/node/add/event'>Add member event</a></li>";
 		} else {
 			$member_event_message = _tm_events_check_create_member_event_message($user);
 			drupal_add_js(array('tm_events' => array('create_member_event_message' => $member_event_message)), array('type' => 'setting'));
 			if ($member_event_message != "") {
-				$html .= "<li><a href='javascript:jq_create_member_event_message();'>Add a new member event</a></li>";
+				$html .= "<li><a href='javascript:jq_create_member_event_message();'>Add member event</a></li>";
 			}
 		}
 	}

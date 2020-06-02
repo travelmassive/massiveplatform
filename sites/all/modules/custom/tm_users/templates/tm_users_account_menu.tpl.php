@@ -241,7 +241,7 @@ $image = theme('image_style', array(
       <ul class="dropd-menu dropdown-moderator-tools" id="account_menu_moderator_actions_items" style="display: none;">
         <li><?php print l(t('Add event'), 'node/add/event'); ?></li>
         <li><?php print l(t('Add chapter'), 'node/add/chapter'); ?></li>
-        <li><?php print l(t('New events'), 'events/list/new'); ?></li>
+        <li><?php print l(t('Past events'), 'events/list/past'); ?></li>
         <li><?php print l(t('Preview events'), 'events/list/preview'); ?></li>
         <li><?php print l(t('All ' . strtolower(tm_users_get_unapproved_member_label("plural"))), 'admin/unapproved-members'); ?></li>
         <li><?php print l(t('Chapter leaders'), 'admin/tm_reports'); ?></li>

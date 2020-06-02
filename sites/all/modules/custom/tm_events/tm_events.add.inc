@@ -78,6 +78,11 @@ function tm_events_add_page() {
 		}
 	}
 
+	// If user can only create chapter event, go directly to event page
+	if ((!$can_create_member_event) and (sizeof($company_nids) == 0) and (sizeof($chapter_nids) == 1)) {
+		drupal_goto("/node/add/event", array("query" => array("field_chapter" => $chapter_nids[0])));
+	}
+
 	// If user can only create member event, go directly to event page
 	if (($can_create_member_event) and (sizeof($company_nids) == 0) and (sizeof($chapter_nids) == 0)) {
 		drupal_goto("/node/add/event");

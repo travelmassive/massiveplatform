@@ -1425,7 +1425,7 @@ The message will be included in the notification email sent to the member when t
     'default_value' => NULL,
     'deleted' => 0,
     'description' => 'Invitation link to an Instant Messenger Group (Telegram, WhatsApp, etc).<br>
-For privacy, the link is only displayed to <i>approved</i> chapter members.<br>
+For privacy, the link is only displayed to <i>verified</i> chapter members.<br>
 Example: https://t.me/your_telegram_group_link
 ',
     'display' => array(
@@ -1752,7 +1752,7 @@ The message will be included in the notification email sent to the member when t
 <br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM');
   t('Instant Messaging');
   t('Invitation link to an Instant Messenger Group (Telegram, WhatsApp, etc).<br>
-For privacy, the link is only displayed to <i>approved</i> chapter members.<br>
+For privacy, the link is only displayed to <i>verified</i> chapter members.<br>
 Example: https://t.me/your_telegram_group_link
 ');
   t('JSON payload for returning information to external public pages and apps.<br>

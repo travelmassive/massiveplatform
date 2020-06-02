@@ -23,6 +23,7 @@ include_once 'tm_events.grants.inc';
 include_once 'tm_events.chatbox.inc';
 include_once 'tm_events.livestream.inc';
 include_once 'tm_events.drush.inc';
+include_once 'tm_events.add.inc';
 
 /*
 * Implements hook_menu()
@@ -135,6 +136,12 @@ function tm_events_menu() {
     'title' => t('Display live stream callback'),
     'page callback' => 'tm_events_livestream_toggle_callback',
     'page arguments' => array(2, 3),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+  $items['events/add'] = array(
+    'title' => 'Add an event',
+    'page callback' => 'tm_events_add_page',
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
@@ -269,8 +276,9 @@ function tm_events_page_alter(&$page) {
 
       $css_classes = "";
       if ($url_event_type == $event_type) { 
-        $css_classes = "is-active active";
+        $css_classes = "is-active active ";
       }
+      $css_classes .= "event-type-" . $event_type;
 
       $url_arg = "";
       if ($event_type != $default_event_type) {

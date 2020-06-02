@@ -1,0 +1,112 @@
+<?php 
+
+// tm_events.add.inc
+
+/**
+ * Render html for add event
+ */
+function tm_events_add_page() {
+
+	global $user;
+	global $conf;
+
+	// user logged in
+	if (!user_is_logged_in()) {
+		drupal_set_message("Please <a href='/user/login?destination=/events/add'>log in</a> to your account to add an event.");
+		// create form
+		$form['html'] = array(
+			'#type' => 'item',
+			'#markup' => "",
+			);
+		return $form;
+	}
+
+	// get messages
+	drupal_get_messages();
+
+	//drupal_get_messages("help-tip");
+
+	$company_message = "";
+	$member_message = "";
+
+	$html = "<style>.column { padding: 0; }</style>";
+	$html .= "<div class='contained contained-block'>";
+	$html .= "<ul>";
+
+	// Check if can create chapter event
+	$chapter_nids = tm_users_get_chapters_leading($user, true);
+	$add_chapter_event = false;
+	foreach ($chapter_nids as $nid) {
+		if (_tm_events_check_create_chapter_event($user, $nid)) {
+			$chapter = node_load($nid);
+			$chapter_title = tm_chapters_formal_name($chapter);
+			$html .= "<li><a href='/node/add/event?field_chapter=" . $nid . "'>Add an event in " . $chapter_title . "</a></li>";
+			$add_chapter_event = true;
+		}
+	}
+
+	// Check if can create company event
+	$company_nids = tm_organizations_get_users_companies($user->uid);
+	foreach ($company_nids as $nid) {
+		$company = node_load($nid);
+		$company_title = strip_tags(trim($company->title));
+		if (_tm_events_check_create_company_event($user, $nid)) {	
+			$html .= "<li><a href='/node/add/event?field_event_company=" . $nid . "'>Add an event for " . $company_title . "</a></li>";
+		}
+		else {
+			$company_event_message = _tm_events_check_create_company_event_message($user, $nid);
+			drupal_add_js(array('tm_events' => array('create_company_event_message' => $company_event_message)), array('type' => 'setting'));
+			if ($company_event_message != "") {
+				$html .= "<li><a href='javascript:jq_create_company_event_message();'>Add an event for " . $company_title . "</a></li>";
+			}
+		}
+	}
+
+	// Check if can create member event
+	// Hide for chapter leaders
+	$can_create_member_event = false;
+	if ((!$add_chapter_event) or (in_array('moderator', array_values($user->roles)))) {
+		$can_create_member_event = _tm_events_check_create_member_event($user);
+		if ($can_create_member_event) {
+			$html .= "<li><a href='/node/add/event'>Add a new member event</a></li>";
+		} else {
+			$member_event_message = _tm_events_check_create_member_event_message($user);
+			drupal_add_js(array('tm_events' => array('create_member_event_message' => $member_event_message)), array('type' => 'setting'));
+			if ($member_event_message != "") {
+				$html .= "<li><a href='javascript:jq_create_member_event_message();'>Add a new member event</a></li>";
+			}
+		}
+	}
+
+	// If user can only create member event, go directly to event page
+	if (($can_create_member_event) and (sizeof($company_nids) == 0) and (sizeof($chapter_nids) == 0)) {
+		drupal_goto("/node/add/event");
+	}
+
+	// create tip
+	$tip = "";
+	if (isset($conf["tm_event_add_event_help_tip"])) {
+		$tip = $conf["tm_event_add_event_help_tip"];
+		// lookup and replace stats from api data
+        if (module_exists("tm_api")) {
+          $api_data = tm_api_stats_get_data();
+          $tip = tm_api_replace_text_fields($api_data, $tip);
+        }
+	}
+
+	// show message, or tip
+	if ($tip != "") {
+		drupal_set_message($tip, "help-tip");
+	}
+	
+	$html .= "</ul>";
+	$html .= "</div>";
+
+	// create form
+	$form['html'] = array(
+		'#type' => 'item',
+		'#markup' => $html,
+	);
+  	return $form;
+
+}

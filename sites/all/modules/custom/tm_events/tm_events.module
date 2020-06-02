@@ -269,9 +269,9 @@ function tm_events_page_alter(&$page) {
 
       $css_classes = "";
       if ($url_event_type == $event_type) { 
-        $css_classes = "is-active active";
+        $css_classes = "is-active active ";
       }
-      $css_classes .= " event-type-" . $event_type;
+      $css_classes .= "event-type-" . $event_type;
 
       $url_arg = "";
       if ($event_type != $default_event_type) {

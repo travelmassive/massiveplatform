@@ -1598,7 +1598,6 @@ function tm_users_views_default_views() {
   $handler->display->display_options['filters']['field_user_testimonial_value']['operator'] = 'not empty';
   $handler->display->display_options['filters']['field_user_testimonial_value']['group'] = 1;
   $handler->display->display_options['path'] = 'admin/member-testimonials';
-  $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'All members';
   $handler->display->display_options['menu']['weight'] = '0';
   $handler->display->display_options['menu']['name'] = 'management';
@@ -1800,7 +1799,6 @@ function tm_users_views_default_views() {
   $handler->display->display_options['filters']['field_user_covid19_message_value']['operator'] = 'not empty';
   $handler->display->display_options['filters']['field_user_covid19_message_value']['group'] = 1;
   $handler->display->display_options['path'] = 'admin/member-covid19-messages';
-  $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'All members';
   $handler->display->display_options['menu']['weight'] = '0';
   $handler->display->display_options['menu']['name'] = 'management';

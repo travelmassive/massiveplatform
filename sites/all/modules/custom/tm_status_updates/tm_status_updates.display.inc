@@ -504,10 +504,10 @@ function tm_status_updates_unapproved_member_message() {
 	    		$difference = time() - $flagger->timestamp;
 	  		}
 	  		$flagged_time = format_interval($difference, 1) . " ago";
-			$approval_link = l(t('Approval requested (' . $flagged_time . ')'), 'javascript:jq_approval_already_requested();', array('fragment' => '','external'=>true));
+			$approval_link = l(t('Verification requested (' . $flagged_time . ')'), 'javascript:jq_approval_already_requested();', array('fragment' => '','external'=>true));
 		} 
 		else {
-			$approval_link = l(t('Approve my account'), 'javascript:jq_request_approval(' . $user->uid . ')', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('approval-link'))));
+			$approval_link = l(t('Verify my account'), 'javascript:jq_request_approval(' . $user->uid . ')', array('fragment' => '','external'=>true, 'attributes' => array('class' => array('approval-link'))));
 		}
 
 		// tell user they need to be approved

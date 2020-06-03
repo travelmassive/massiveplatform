@@ -228,7 +228,7 @@ function tm_users_request_approval($user) {
   }
 
   // hero headline
-  $hero_headline = tm_notifications_render_hero_headline_html("Approval request");
+  $hero_headline = tm_notifications_render_hero_headline_html("Verification request");
 
   // generate member html
   $member_widget = tm_notifications_render_member_html($user);

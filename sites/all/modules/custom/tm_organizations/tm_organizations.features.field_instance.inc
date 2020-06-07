@@ -237,7 +237,7 @@ This message will be displayed on your company page.',
         'weight' => 36,
       ),
       'full' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',

@@ -1557,7 +1557,7 @@ If you are assigning a Facebook ID to another account, you should remove the Fac
 This message will be displayed on your profile page.',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',

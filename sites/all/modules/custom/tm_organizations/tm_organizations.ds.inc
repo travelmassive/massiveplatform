@@ -326,7 +326,7 @@ function tm_organizations_ds_field_settings_info() {
       'formatter_settings' => array(
         'ft' => array(
           'func' => 'theme_ds_field_tm_default',
-          'lb' => 'Response to COVID-19',
+          'lb' => 'How have you responded to COVID-19?',
           'lb-col' => TRUE,
         ),
       ),

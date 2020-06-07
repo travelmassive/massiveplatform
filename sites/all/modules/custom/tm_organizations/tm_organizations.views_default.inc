@@ -299,7 +299,7 @@ function tm_organizations_views_default_views() {
   );
 
   /* Display: Company COVID-19 messages */
-  $handler = $view->new_display('page', 'Company COVID-19 messages', 'page');
+  $handler = $view->new_display('page', 'Company COVID-19 messages', 'page_company_covid19_message');
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';

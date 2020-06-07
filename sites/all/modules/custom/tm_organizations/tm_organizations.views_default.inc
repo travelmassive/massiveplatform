@@ -348,7 +348,7 @@ function tm_organizations_views_default_views() {
   $handler->display->display_options['filters']['field_company_covid19_message_value']['table'] = 'field_data_field_company_covid19_message';
   $handler->display->display_options['filters']['field_company_covid19_message_value']['field'] = 'field_company_covid19_message_value';
   $handler->display->display_options['filters']['field_company_covid19_message_value']['operator'] = 'not empty';
-  $handler->display->display_options['path'] = 'admin/companies-covid19-message';
+  $handler->display->display_options['path'] = 'admin/company-covid19-messages';
   $export['company_moderation_list'] = $view;
 
   $view = new view();

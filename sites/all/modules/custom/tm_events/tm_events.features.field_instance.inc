@@ -1634,8 +1634,8 @@ Is your live stream private? Set your YouTube Visibility to \'Unlisted\'.',
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Instructions to join the online event.<br>
-This will only be displayed to registered attendees.',
+    'description' => '<b>⬆ This will only be displayed to registered attendees.</b>
+',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -3195,6 +3195,8 @@ This will be displayed to the member on the event page and included in the autom
   // Translatables
   // Included for use with string extractors like potx.
   t('(Moderator) RSVP link text');
+  t('<b>⬆ This will only be displayed to registered attendees.</b>
+');
   t('<span id=\'tm-event-edit-company-description\'>The company hosting this event.</span>');
   t('A short description for sharing on social media (124 - 150 characters).');
   t('Add a custom banner at the top of the event.<br>
@@ -3255,8 +3257,6 @@ This will be displayed to the member on the event page and included in the autom
 <br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM<br>
 <b>Live Streaming?</b> See the <i>Online Events</i> section below.');
   t('Indicate this event is a partner event not associated with a chapter (ie: a conference, exhibition)');
-  t('Instructions to join the online event.<br>
-This will only be displayed to registered attendees.');
   t('Leave blank to use the chapter\'s timezone (or UTC if no chapter for event)
 <br><br>');
   t('Live stream on event page');

@@ -703,6 +703,7 @@ function tm_base_init() {
     "/admin/unapproved-members",
     "/admin/member-testimonials",
     "/admin/member-covid19-messages",
+    "/admin/company-covid19-messages",
     "/admin/tm_reports",
     "/admin/tm_reports/chapters_report",
     "/admin/tm_reports/industry_report",

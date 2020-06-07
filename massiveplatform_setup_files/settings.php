@@ -677,6 +677,7 @@ $conf["tm_status_updates_meta_og_title"] = "Massive News Feed";
 //$conf['tm_status_updates_meta_og_image"] = "";
 $conf["tm_status_updates_meta_description"] = "Share the latest news with our community on your news feed.";
 $conf["tm_status_updates_unapproved_message"] = "Your updates won't be published until your account is approved."; // display banner to unapproved members
+$conf["tm_status_updates_drush_exlude_urls"] = array(); // urls to exclude in drush status-updates-post-organization-updates
 
 /** NEWSFEED EMAIL NOTIFICATIONS **/
 /** You will need to run a cron task to schedule newsfeed items **/

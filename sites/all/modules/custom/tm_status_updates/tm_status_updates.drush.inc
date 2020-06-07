@@ -273,6 +273,14 @@ function tm_status_updates_post_organization_update_helper($nid, $newsfeed_url =
 		return false;
 	}
 
+	// check for excluded links
+	if (isset($conf["tm_status_updates_drush_exlude_urls"])) {
+ 		if (in_array($feed_item["link"], $conf["tm_status_updates_drush_exlude_urls"])) {
+ 			drush_print("Item contains excluded url: " . $feed_item["link"]);
+			return false;
+ 		}
+ 	}
+
 	// get data from parsed feed
 	$status_update = $feed_item["title"];
 	$preview_url = $feed_item["link"];
@@ -396,7 +404,7 @@ function tm_status_updates_post_update_fetch_wordpress($feed_url) {
  		foreach ($item->category as $category) {
  			$feed_item["categories"][] = $category . "";
  		}
- 	}		
+ 	}
 
  	return $feed_item;
 	

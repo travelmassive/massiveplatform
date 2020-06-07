@@ -489,6 +489,9 @@ function tm_users_user_presave(&$edit, $account, $category) {
   // Trim COVID-19 Response
   if (isset($edit['field_user_covid19_message'][LANGUAGE_NONE][0]['value'])) {
     $trimmed = trim($edit['field_user_covid19_message'][LANGUAGE_NONE][0]['value']);
+    if (in_array($trimmed, array("n/a", "N/A", "-", "--"))) {
+      $trimmed = "";
+    }
     if ($trimmed != "") {
       // save trimmed value
       $edit['field_user_covid19_message'][LANGUAGE_NONE][0]['value'] = $trimmed;

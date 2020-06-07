@@ -456,6 +456,8 @@ function tm_users_ds_field_settings_info() {
       'formatter_settings' => array(
         'ft' => array(
           'func' => 'theme_ds_field_tm_default',
+          'lb' => 'How has COVID-19 impacted you?',
+          'lb-col' => TRUE,
         ),
       ),
     ),

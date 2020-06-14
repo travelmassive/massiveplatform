@@ -149,7 +149,7 @@ function tm_events_generate_ical($event, $single_event = true) {
 	$uniqueid = "event-" . $event->nid . "@" . $conf["tm_email_server_url_domain"];
 
 	// date and timezone
-	$event_timezone = "America/Los_Angeles"; // _tm_get_event_timezone($event);
+	$event_timezone = _tm_get_event_timezone($event);
 	$dt_timezone = new DateTimeZone($event_timezone);
 	$datestart = new DateTime($event->field_event_date[LANGUAGE_NONE][0]['value'], $dt_timezone);
 	$dateend = new DateTime($event->field_event_date[LANGUAGE_NONE][0]['value2'], $dt_timezone);

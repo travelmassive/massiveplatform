@@ -55,91 +55,68 @@ function tm_events_generate_ical_filename($event) {
 }
 
 /**
- * Generate iCal header
- */
-function tm_events_generate_ical_header($prodid, $timezone) {
-	$ical = "BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:__PRODID__
-CALSCALE:GREGORIAN
-X-WR-TIMEZONE:__VTIMEZONE__";
-
-	$ical = str_replace("__PRODID__", tm_events_ical_escape_string($prodid), $ical);
-	$ical = str_replace("__VTIMEZONE__", $timezone, $ical);
-
-	return $ical;
-}
-
-/**
- * Generate iCal footer
- */
-function tm_events_generate_ical_footer() {
-	$ical = "END:VCALENDAR";
-	return $ical;
-}
-
-/**
  * Generate iCal 
  */
 function tm_events_generate_ical($event, $single_event = true) {
 
+	// import icalendar library
+	define('_ZAPCAL',1);
+	define('_ZAPCAL_MAXYEAR', 2036);
+	define('_ZAPCAL_MAXREVENTS', 5000);
+	require_once('includes/icalendar/date.php');
+	require_once('includes/icalendar/recurringdate.php');
+	require_once('includes/icalendar/ical.php');
+	require_once('includes/icalendar/timezone.php');
+
 	global $conf;
 
-	// ical fields
-	$prodid = "-//" . tm_events_ical_escape_string($conf["tm_site_name"]) . "//NONSGML v1.0//EN";
-	$uniqueid = "event-" . $event->nid . "@" . $conf["tm_email_server_url_domain"];
+	// event title
+	$title = $event->title;
 
 	// date and timezone
 	$event_timezone = _tm_get_event_timezone($event);
 	$dt_timezone = new DateTimeZone($event_timezone);
 	$datestart = new DateTime($event->field_event_date[LANGUAGE_NONE][0]['value'], $dt_timezone);
 	$dateend = new DateTime($event->field_event_date[LANGUAGE_NONE][0]['value2'], $dt_timezone);
+	$event_start = date_format($datestart, 'Ymd\THis'); // ie: "2020-01-01 12:00:00";
+	$event_end = date_format($dateend, 'Ymd\THis'); // ie: "2020-01-01 13:00:00";
 
+	// create the ical object
+	$icalobj = new ZCiCal();
+
+	// Add timezone data
+	ZCTimeZoneHelper::getTZNode(substr($event_start,0,4),substr($event_end,0,4),$event_timezone, $icalobj->curnode);
+
+	// create the event within the ical object
+	$eventobj = new ZCiCalNode("VEVENT", $icalobj->curnode);
+	$eventobj->addNode(new ZCiCalDataNode("SUMMARY:" . tm_events_ical_escape_string($title)));
+	$eventobj->addNode(new ZCiCalDataNode("DTSTART:" . ZCiCal::fromSqlDateTime($event_start)));
+	$eventobj->addNode(new ZCiCalDataNode("DTEND:" . ZCiCal::fromSqlDateTime($event_end)));
+	$uid = $uniqueid = "event-" . $event->nid . "@" . $conf["tm_email_server_url_domain"];
+	$eventobj->addNode(new ZCiCalDataNode("UID:" . $uid));
+	$eventobj->addNode(new ZCiCalDataNode("DTSTAMP:" . ZCiCal::fromSqlDateTime()));
+
+	// Add description
+	$description = "";
+	if (isset($event->body[LANGUAGE_NONE][0]['value'])) {
+		$description = $event->body[LANGUAGE_NONE][0]['value'];
+	}
+	$eventobj->addNode(new ZCiCalDataNode("DESCRIPTION:" . tm_events_ical_escape_string($description)));
+
+	// Location
 	// The location is made available here to logged out users to improve useability
 	// The link is delivered via email and may be accessed by an unauthenticated browser
 	$venue_name = $event->field_event_venue_name[LANGUAGE_NONE][0]['value'];
 	$location = $venue_name . "\n" . $event->field_location[LANGUAGE_NONE][0]['value'];
 	$location = str_replace("\n", ", ", $location);
-	$description = "";
-	if (isset($event->body[LANGUAGE_NONE][0]['value'])) {
-		$description = $event->body[LANGUAGE_NONE][0]['value'];
-	}
-	
+	$eventobj->addNode(new ZCiCalDataNode("LOCATION:" . tm_events_ical_escape_string($location)));
+
+	// URL
 	$uri = $conf["tm_email_server_http"] . "://" . $conf["tm_email_server_url_domain"] . "/" . drupal_get_path_alias('node/' . $event->nid);
+	$eventobj->addNode(new ZCiCalDataNode("URL:" . tm_events_ical_escape_string($uri)));
 
-	$summary = $event->title;
-
-	// ical template
-	$ical = "";
-	if ($single_event) {
-		$ical .= tm_events_generate_ical_header($prodid, $event_timezone) . "\n";
-	}
-
-	$ical .= "BEGIN:VEVENT
-UID:__UID__
-DTSTART;TZID=__VTIMEZONE__:__DTSTART__
-DTEND;TZID=__VTIMEZONE__:__DTEND__
-DTSTAMP:__DTSTAMP__
-DESCRIPTION:__DESCRIPTION__
-LOCATION:__LOCATION__
-URL:__URL__
-SUMMARY:__SUMMARY__
-END:VEVENT";
-
-if ($single_event) {
-	$ical .= "\n" . tm_events_generate_ical_footer();
-}
-	// format template
-	$ical = str_replace("__DTEND__", date_format($dateend, 'Ymd\THis'), $ical);
-	$ical = str_replace("__UID__", $uniqueid, $ical);
-	$ical = str_replace("__DTSTAMP__", date('Ymd\THis\Z', time()), $ical);
-	$ical = str_replace("__LOCATION__", tm_events_ical_escape_string($location), $ical);
-	$ical = str_replace("__DESCRIPTION__", tm_events_ical_escape_string($description), $ical);
-	$ical = str_replace("__URL__", tm_events_ical_escape_string($uri), $ical);
-	$ical = str_replace("__SUMMARY__", tm_events_ical_escape_string($summary), $ical);
-	$ical = str_replace("__DTSTART__", date_format($datestart, 'Ymd\THis'), $ical);
-	$ical = str_replace("__VTIMEZONE__", $event_timezone, $ical);
-
+	//render ical
+	$ical = $icalobj->export();
 	return $ical;
 }
 

@@ -179,10 +179,19 @@ function tm_newsfeed_updates_poll_notifications() {
       }
   }
 
+  // turn off sound on event pages
+  $tm_newsfeed_updates_sound = $conf["tm_newsfeed_updates_sound"];
+  if (isset($_SERVER['HTTP_REFERER'])) {
+    $referer = $_SERVER['HTTP_REFERER'];
+    if (strpos($referer, "events/") !== false) {
+      $tm_newsfeed_updates_sound = "false";
+    }
+  }
+
   // show update
   if ($html != "") {  
     $html = str_replace("\n", "", $html);
-    $js .= "var toasty_html = '" . $html . "'; var toast = new Toasty({autoClose: true, progressBar: " . $conf["tm_newsfeed_updates_progress_bar"] . ", transition: 'slideLeftFade', sounds: { info: '" . $conf["tm_newsfeed_updates_sound_file"] . "' }, enableSounds: " . $conf["tm_newsfeed_updates_sound"] . ", duration: " . $display_duration . "}); if (toasty_html != tm_newsfeed_updates_html) { toast.info(toasty_html); tm_newsfeed_updates_html = toasty_html; }; ";
+    $js .= "var toasty_html = '" . $html . "'; var toast = new Toasty({autoClose: true, progressBar: " . $conf["tm_newsfeed_updates_progress_bar"] . ", transition: 'slideLeftFade', sounds: { info: '" . $conf["tm_newsfeed_updates_sound_file"] . "' }, enableSounds: " . $tm_newsfeed_updates_sound . ", duration: " . $display_duration . "}); if (toasty_html != tm_newsfeed_updates_html) { toast.info(toasty_html); tm_newsfeed_updates_html = toasty_html; }; ";
   }
 
   // set refresh interval

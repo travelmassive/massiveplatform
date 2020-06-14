@@ -78,8 +78,8 @@ function tm_events_generate_ical($event, $single_event = true) {
 	$dt_timezone = new DateTimeZone($event_timezone);
 	$datestart = new DateTime($event->field_event_date[LANGUAGE_NONE][0]['value'], $dt_timezone);
 	$dateend = new DateTime($event->field_event_date[LANGUAGE_NONE][0]['value2'], $dt_timezone);
-	$event_start = date_format($datestart, 'Ymd\THis'); // ie: "2020-01-01 12:00:00";
-	$event_end = date_format($dateend, 'Ymd\THis'); // ie: "2020-01-01 13:00:00";
+	$event_start = date_format($datestart, 'Y-m-d H:i:s'); // ie: "2020-01-01 12:00:00";
+	$event_end = date_format($dateend, 'Y-m-d H:i:s'); // ie: "2020-01-01 13:00:00";
 
 	// create the ical object
 	$icalobj = new ZCiCal();

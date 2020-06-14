@@ -127,8 +127,16 @@ END:VTIMEZONE\n";
 
 	// TZOFFSETFROM:
 	// TZOFFSETTO:
-	$offset = sprintf("%+d",$transitions[0]["offset"]);
-	$ical = str_replace("__OFFSET__", $offset, $ical);
+	$offset_seconds = $transitions[0]["offset"];
+	$offset_hours = abs(floor($offset_seconds / 3600));
+	$offset_minutes = abs(floor(($offset_seconds / 60) % 60));
+	$offset_format = sprintf("%02d",$offset_hours) . sprintf("%02d",$offset_minutes); // ie: +1030 (plus 10 hours, 30 minutes)
+	if ($offset_seconds >= 0) {
+		$offset_format = "+" . $offset_format;
+	} else {
+		$offset_format = "-" . $offset_format;
+	}
+	$ical = str_replace("__OFFSET__", $offset_format, $ical);
 
 	// TZNAME:
 	$tzname = $transitions[0]["abbr"];

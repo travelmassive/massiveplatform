@@ -166,7 +166,17 @@ function tm_events_generate_ical($event, $single_event = true) {
 	// The link is delivered via email and may be accessed by an unauthenticated browser
 	$venue_name = $event->field_event_venue_name[LANGUAGE_NONE][0]['value'];
 	$location = $venue_name . "\n" . $event->field_location[LANGUAGE_NONE][0]['value'];
+
+	// Make on one line
 	$location = str_replace("\n", ", ", $location);
+	$location = str_replace("\r", ", ", $location);
+
+	// Tidy up
+	$location = str_replace("., ", ". ", $location);
+	$location = str_replace(". ,", ".", $location);
+	$location = str_replace(", ,", ",", $location);
+	$location = str_replace(", ,", ",", $location);
+
 	$description = "";
 	if (isset($event->body[LANGUAGE_NONE][0]['value'])) {
 		$description = $event->body[LANGUAGE_NONE][0]['value'];

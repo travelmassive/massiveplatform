@@ -33,6 +33,7 @@ function tm_flags_preprocess_flag(&$variables) {
   if (($flag->name == "follow_members") or ($flag->name == "follow_organizations") or ($flag->name == "join")) {
     global $conf;
     if (isset($conf['tm_following_ratio_exclude_uids'])) {
+      $uid = $variables['user']->uid;
       if (in_array($uid, $conf['tm_following_ratio_exclude_uids'])) {
         $exclude_user = true;
       }

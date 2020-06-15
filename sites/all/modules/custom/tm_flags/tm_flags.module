@@ -431,7 +431,7 @@ function _tm_flags_flag_limits(&$variables) {
       jQuery(document).ready(function($) {
         $( ".flag-limit" ).unbind().click(function() {
           var message = $( ".flag-limit span.flag-action" ).text();
-          jq_alert(message + " limit reached", "Sorry, you can\'t perform this action.");
+          jq_alert("Limit reached", "Sorry, you can\'t perform this action.");
         }); 
       });
       ', 'inline');

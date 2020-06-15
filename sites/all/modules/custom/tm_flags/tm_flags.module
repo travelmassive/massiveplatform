@@ -428,7 +428,7 @@ function _tm_flags_flag_limits(&$variables, $exclude_user = false) {
       $variables['link_href'] = '';
       $display_upvotes = $conf["tm_organizations_upvote"];
       $variables['flag_button_class'] = 'flag-limit follow bttn bttn-secondary bttn-m';
-      if ($display_upvotes) {
+      if (($display_upvotes) and ($flag_name == "follow_organizations")) {
         $variables['flag_button_class'] = 'flag-limit follow bttn bttn-secondary bttn-m upvote';
       }
       drupal_add_js('

@@ -844,7 +844,7 @@ function tm_events_reminder_send_drush($event, $recipients, $subject, $headline_
 
 	// send copy
 	if (isset($conf["tm_announcement_copy_email"])) {
-		tm_events_send_email(null, $conf["tm_announcement_copy_email"], "[Copy] " . $subject . " (" . $sendcount . " sent)", $message, $event_image_src, $event_image_link, $eventid, $replyto, $headline_text);
+		tm_events_send_email(null, $conf["tm_announcement_copy_email"], "[Cron] " . $subject . " (" . $sendcount . " sent)", $message, $event_image_src, $event_image_link, $eventid, $replyto, $headline_text);
  	}
 
  	drush_print("Sent reminder email to " . $sendcount . " recipients");

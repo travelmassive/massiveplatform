@@ -425,8 +425,8 @@ function tm_chapters_send_emails($recipients, $subject, $message, $chapter_image
   $queue->createItem(["user_ids" => $user_ids,
                     "subject" => $subject,
                     "message" => $message,
-                    "event_image_src" => $event_image_src,
-                    "event_image_link" => $event_image_link,
+                    "chapter_image_src" => $chapter_image_src,
+                    "chapter_image_link" => $chapter_image_link,
                     "replyto" => $replyto,
                     "chapterid" => $chapterid]);
 
@@ -465,7 +465,7 @@ function tm_chapters_process_emails_cron($item) {
   catch (Exception $e) {
     // If the process fails, log and the queue handler will remove the item.
     try {
-      watchdog_exception("tm_events", $e, "tm_chapters_process_emails_cron_run(): Queue item @item_id failed with message @message", array(
+      watchdog_exception("tm_chapters", $e, "tm_chapters_process_emails_cron_run(): Queue item @item_id failed with message @message", array(
           '@item_id' => $item->item_id,
           '@message' => (string) $e,
         ), WATCHDOG_ERROR);
@@ -487,8 +487,8 @@ function tm_chapters_process_emails_cron_run($item) {
   $user_ids = $item["user_ids"];
   $subject = $item["subject"];
   $message = $item["message"];
-  $event_image_src = $item["event_image_src"];
-  $event_image_link = $item["event_image_link"];
+  $chapter_image_src = $item["chapter_image_src"];
+  $chapter_image_link = $item["chapter_image_link"];
   $replyto = $item["replyto"];
   $chapterid = $item["chapterid"];
 
@@ -558,7 +558,7 @@ function tm_chapters_send_email_cron($item) {
   catch (Exception $e) {
     // If the process fails, log and the queue handler will remove the item.
     try {
-      watchdog_exception("tm_events", $e, "tm_chapters_send_email_cron_run(): Queue item @item_id failed with message @message", array(
+      watchdog_exception("tm_chapters", $e, "tm_chapters_send_email_cron_run(): Queue item @item_id failed with message @message", array(
           '@item_id' => $item->item_id,
           '@message' => (string) $e,
         ), WATCHDOG_ERROR);
@@ -737,7 +737,7 @@ function tm_chapters_send_emails_ajax() {
       if (isset($chapter->field_image[LANGUAGE_NONE][0]['uri'])) {
         $chapter_image_src = image_style_url("banner", $chapter->field_image[LANGUAGE_NONE][0]['uri']);
       } else {
-        $default_image_uri = _tm_events_get_default_image($conf["tm_images_default_field_image"], $chapter->nid);
+        $default_image_uri = _tm_chapters_get_default_image($conf["tm_images_default_field_image"], $chapter->nid);
         $chapter_image_src = image_style_url("banner", $default_image_uri);
       }
 

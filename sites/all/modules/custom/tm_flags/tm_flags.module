@@ -30,7 +30,7 @@ function tm_flags_preprocess_flag(&$variables) {
   // don't apply follow limits to certain members
   // $conf["tm_following_ratio_exclude_uids"];
   $exclude_user = false;
-  if (($flag->name == "follow_members") or ($flag->name == "follow_organizations") or ($flag->name == "join")) {
+  if (($flag->name == "follow_members") or ($flag->name == "follow_organizations") or ($flag->name == "signup")) {
     global $conf;
     if (isset($conf['tm_following_ratio_exclude_uids'])) {
       $uid = $variables['user']->uid;
@@ -408,9 +408,9 @@ function _tm_flags_flag_limits(&$variables, $exclude_user = false) {
           if (tm_follow_restricted_prompt) { return; }
           tm_follow_restricted_prompt = true;
 
-          var message = "<strong>How can I follow other members?</strong><br>Unlock this feature by completing your profile and <a href=\"javascript:jq_request_approval(' . $user->uid . ')\" class=\"approval-link\">requesting approval</a> of your account.";
+          var message = "<strong>How can I follow other members?</strong><br>Unlock this feature by completing your profile and <a href=\"javascript:jq_request_approval(' . $user->uid . ')\" class=\"approval-link\">requesting verification</a> of your account.";
           $.prompt(message, {
-            title: "This feature is for ' . str_replace("'", "", tm_users_get_approved_member_label("plural")) . '",
+            title: "This feature is for Verified Members",
             buttons: {"OK": false}, 
             loaded: function() { 
               $("#main").addClass("tm-blur-filter");

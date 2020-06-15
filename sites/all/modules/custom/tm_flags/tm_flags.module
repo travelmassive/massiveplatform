@@ -29,7 +29,7 @@ function tm_flags_preprocess_flag(&$variables) {
 
   // don't apply follow limits to certain members
   // $conf["tm_following_ratio_exclude_uids"];
-  if ($flag->name == "follow_members") {
+  if (($flag->name == "follow_members") or ($flag->name == "follow_organizations")) {
     global $conf;
     if (isset($conf['tm_following_ratio_exclude_uids'])) {
       $uid = $variables['user']->uid;

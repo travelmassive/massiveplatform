@@ -677,7 +677,7 @@ function tm_notifications_render_hero_image_html($hero_image_src, $hero_image_li
 
   // Render hero image
   $hero_image_html = str_replace("__A_TAG_OPEN__", $a_tag_open, $hero_image_template);
-  $hero_image_html = str_replace("__A_TAG_CLOSE__", $a_tag_open, $hero_image_html);
+  $hero_image_html = str_replace("__A_TAG_CLOSE__", $a_tag_close, $hero_image_html);
   $hero_image_html = str_replace("__HERO_IMAGE_SRC__", $hero_image_src, $hero_image_html);
   $hero_image_html = str_replace("__HERO_IMAGE_ALT__", $hero_image_alt_text, $hero_image_html);
 

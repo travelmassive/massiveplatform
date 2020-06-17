@@ -596,8 +596,20 @@ function tm_events_send_emails($recipients, $subject, $message, $event_image_src
     
   }
 
+  // Send to published chapters
+  // If sent via tm_events_reminder_send_drush()to member_followers, or company_followers we include published chapters
+  $published_chapters = false;
+  if ($drush_command) {
+    if (($recipients == 'member_followers') and (sizeof($chapterids) > 0)) {
+      $published_chapters = true;
+    }
+    if (($recipients == 'company_followers') and (sizeof($chapterids) > 0)) {
+      $published_chapters = true;
+    }
+  }
+
   // All chapter members who are not registered or on waitlist
-  if ($recipients == 'chapter_and_not_rsvp_or_waitlist') {
+  if (($recipients == 'chapter_and_not_rsvp_or_waitlist') or $published_chapters) {
 
     foreach($chapterids as $chapterid) {
 

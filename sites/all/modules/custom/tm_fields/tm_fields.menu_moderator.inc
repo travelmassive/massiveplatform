@@ -690,7 +690,7 @@ function _tm_more_actions_process_moderator_menu($field, $title, &$links, &$menu
 
           $links['user'][] = array(
             'wrapper_class' => array('moderator_avatar_shortcode'),
-             'content' => l(t('WordPress shortcode'), "javascript:jq_alert('WordPress Shortcode for Profile Image', '<pre style=\'font-size: 12px\'>" . $avatar_shortcode . "</pre>')", array(
+             'content' => l(t('WordPress shortcode'), "javascript:jq_alert('WordPress Shortcode for Profile Image', '<input onClick=\'this.select();\' style=\'font-size: 13px; width: 100%; padding: 6px;\' value=\'" . $avatar_shortcode . "\'/>')", array(
               'fragment' => '',
               'external'=>true,
               'attributes' => array(

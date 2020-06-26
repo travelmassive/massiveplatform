@@ -679,4 +679,30 @@ function _tm_more_actions_process_moderator_menu($field, $title, &$links, &$menu
   }
   // END google analytics report link
 
+  // START avatar shortcode link
+  if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
+    if (isset($menu_item['page_arguments'][0]->uid)){
+      
+      if ((in_array("moderator", $user->roles)) or (in_array("access-avatar_url", $user->roles))) {
+
+        $encrypted_uid = tm_users_encrypt_uid('encrypt', $targetuser->uid);
+        $avatar_shortcode = "[avatar id=\"" . $encrypted_uid . "\"]";
+
+        $links['user'][] = array(
+          'wrapper_class' => array('moderator_avatar_shortcode'),
+           'content' => l(t('WordPress shortcode'), "javascript:jq_alert('WordPress Shortcode for Profile Image', '<pre style=\'font-size: 12px\'>" . $avatar_shortcode . "</pre>')", array(
+            'fragment' => '',
+            'external'=>true,
+            'attributes' => array(
+              'title' => t('Avatar shortcode')
+            )
+          ))
+        );
+
+      }
+    }
+  }
+  // END avatar shortcode link
+
+
 }

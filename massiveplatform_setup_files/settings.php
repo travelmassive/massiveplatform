@@ -1272,3 +1272,9 @@ $conf["tm_chatbox_enabled"] = false; // enable or disable event chatbox (require
 $conf["tm_chatbox_site_domain"] = "example.massiveplatform.com";
 $conf["tm_chatbox_id"] = "chatbox_id";
 $conf["tm_chatbox_secret_key"] = "secret_key";
+
+/** WORDPRESS SHORTCODE **/
+/** ie: user/redirect_avatar_url/encrypted_uid */
+$conf['tm_users_avatar_secret_key'] = 'randomstringabc';
+$conf['tm_users_avatar_secret_iv'] = 'randomstring123';
+

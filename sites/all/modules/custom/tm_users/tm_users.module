@@ -180,6 +180,13 @@ function tm_users_menu() {
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
+  $items['user/redirect_avatar_url'] = array(
+    'title' => 'User avatar',
+    'page callback' => 'tm_users_redirect_avatar_url',
+    'page arguments' => array(2),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
   
   return $items;
 }
@@ -822,4 +829,30 @@ function tm_users_redirect_to_random_user($count_redirects = 0) {
 
   drupal_set_message("Sorry, you don't get lucky today.", "help-tip");
   drupal_goto("/");
+}
+
+/**
+ * Get avatar url
+ */
+function tm_users_redirect_avatar_url($encrypted_uid) {
+
+  global $conf;
+
+  // decrypt uid
+  $uid = tm_users_encrypt_uid('decrypt', $encrypted_uid);
+  
+  // load user
+  if ($uid != null) {
+    $account = user_load($uid);
+  }
+
+  // get image url
+  if (($account == null) or ($uid == null)) {
+    $image_url = image_style_url("avatar", $conf["tm_images_default_field_avatar"]); ;
+  } else {
+    $image_url = image_style_url("avatar", _tm_users_get_avatar_uri($account));
+  }
+
+  // redirect to url
+  drupal_goto($image_url, array('external' => TRUE));  
 }

@@ -187,6 +187,13 @@ function tm_users_menu() {
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
+  $items['user/redirect_profile_url'] = array(
+    'title' => 'User profile',
+    'page callback' => 'tm_users_redirect_profile_url',
+    'page arguments' => array(2),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
   
   return $items;
 }
@@ -832,7 +839,7 @@ function tm_users_redirect_to_random_user($count_redirects = 0) {
 }
 
 /**
- * Get avatar url
+ * Redirect to avatar url
  */
 function tm_users_redirect_avatar_url($encrypted_uid) {
 
@@ -855,4 +862,24 @@ function tm_users_redirect_avatar_url($encrypted_uid) {
 
   // redirect to url
   drupal_goto($image_url, array('external' => TRUE));  
+}
+
+/**
+ * Redirect to profile URL
+ */
+function tm_users_redirect_profile_url($encrypted_uid) {
+
+  // decrypt uid
+  $uid = tm_users_encrypt_uid('decrypt', $encrypted_uid);
+  
+  // load user
+  if ($uid == null) {
+    $profile_url = "/";
+  } else {
+    $profile_url = drupal_get_path_alias("user/" . $uid);
+  }
+  
+  // redirect to profile
+  drupal_goto($profile_url);
+  
 }

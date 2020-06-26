@@ -683,7 +683,7 @@ function _tm_more_actions_process_moderator_menu($field, $title, &$links, &$menu
   if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
     if (isset($menu_item['page_arguments'][0]->uid)){
       if (isset($conf['tm_users_avatar_secret_key'])) {
-        if ((in_array("moderator", $user->roles)) or (in_array("access-avatar_url", $user->roles))) {
+        if ((in_array("moderator", $user->roles)) or (in_array("access-avatar-url", $user->roles))) {
 
           $encrypted_uid = tm_users_encrypt_uid('encrypt', $targetuser->uid);
           $avatar_shortcode = "[avatar id=\"" . $encrypted_uid . "\"]";

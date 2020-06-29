@@ -104,7 +104,7 @@ function _tm_event_chatbox($field, $title = NULL) {
     $live_chat_title .= " &mdash; " . strip_tags($event_title); // show event title when live streaming
   }
 
-  // show minimized chat box unless user had opened it, or within 12 hours of event
+  // show minimized chat box unless user had opened it, or within 2 hours of event
   $minimized_chatbox = true;
   $minimized_html = "";
   $chatbox_container_style = "";
@@ -121,7 +121,7 @@ function _tm_event_chatbox($field, $title = NULL) {
 
   // show if event within 12 hours
   $seconds_until_event_starts = tm_events_seconds_until_event_starts($node);
-  if ($seconds_until_event_starts < (12 * 60 * 60)) {
+  if ($seconds_until_event_starts < (2 * 60 * 60)) {
      $minimized_chatbox = false;
   }
 

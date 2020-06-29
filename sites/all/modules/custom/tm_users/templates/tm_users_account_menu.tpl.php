@@ -127,7 +127,7 @@ $image = theme('image_style', array(
       // user links
       if (isset($conf["tm_users_account_menu_links"])) {
         foreach($conf["tm_users_account_menu_links"] as $account_menu_title => $account_menu_link) {
-          print "<li>" . l(t($account_menu_title), $account_menu_link, array('fragment' => '', 'external' =>true)) . "</li>";
+          print "<li>" . l(t($account_menu_title), $account_menu_link, array('fragment' => '', 'external' =>true, 'html' => true)) . "</li>";
         }
       }
       ?>
@@ -162,7 +162,7 @@ $image = theme('image_style', array(
 
       // print links
       foreach($subscriber_links as $account_menu_title => $account_menu_link) {
-        print "<li>" . l(t($account_menu_title), $account_menu_link, array('fragment' => '', 'external' =>true)) . "</li>";
+        print "<li>" . l(t($account_menu_title), $account_menu_link, array('fragment' => '', 'external' =>true, 'html' => true)) . "</li>";
       }
 
       ?>
@@ -172,7 +172,7 @@ $image = theme('image_style', array(
           <?php
             // chapter leader links
             foreach($conf["tm_users_chapter_leader_menu_links"] as $account_menu_title => $account_menu_link) {
-              print "<li>" . l(t($account_menu_title), $account_menu_link, array('fragment' => '', 'external' =>true)) . "</li>";
+              print "<li>" . l(t($account_menu_title), $account_menu_link, array('fragment' => '', 'external' =>true, 'html' => true)) . "</li>";
             }
           ?>
       <?php endif; ?>

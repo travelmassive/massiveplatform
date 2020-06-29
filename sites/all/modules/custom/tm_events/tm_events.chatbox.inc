@@ -133,7 +133,7 @@ function _tm_event_chatbox($field, $title = NULL) {
 
   // set cookie
   var d = new Date;
-  d.setTime(d.getTime() + 7*24*60*60*1000); // 7 days
+  d.setTime(d.getTime() + 24*60*60*1000); // 1 day
   var cookie = ['" . $cookie_key . "=1; domain=.', window.location.host.toString(), '; path=/;expires=' + d.toGMTString()].join('');
   document.cookie = cookie;
 

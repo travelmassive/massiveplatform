@@ -58,7 +58,7 @@ function _tm_event_seats_count($field, $title = NULL) {
     // Extra stuff. Show total attendance
     if (isset($event->field_event_total_attendance[LANGUAGE_NONE][0]['value'])) {
       $total_attendance = $event->field_event_total_attendance[LANGUAGE_NONE][0]['value'];
-      return t($total_attendance . " members went");
+      return t($total_attendance . " people went");
     }
 
     // RSVP event without total attenance
@@ -77,7 +77,7 @@ function _tm_event_seats_count($field, $title = NULL) {
     }
 
     // No total attendance specified
-    return t($count . " members went");
+    return t($count . " people went");
   }
   
   // Future event...
@@ -115,9 +115,9 @@ function _tm_event_seats_count($field, $title = NULL) {
   }
   
   // Show how many peoplare going
-  $count_text = "members are going";
+  $count_text = "people are going";
   if ($count == 1) {
-    $count_text = "member is going";
+    $count_text = "person is going";
   }
 
   // If signup limit, show seats left
@@ -138,10 +138,10 @@ function _tm_event_seats_count($field, $title = NULL) {
       $waitlist_count = $waitlist_flag->get_count($event->nid);
       if ($waitlist_count > 0) {
         if ($count == 0) {
-          // ie: 5 members on the waitlist
+          // ie: 5 people on the waitlist
           return t($waitlist_count . ' on the waitlist.<br>');
         } else {
-          // ie: 5 members are going, 3 on waitlist
+          // ie: 5 people are going, 3 on waitlist
           return t($count . ' ' . $count_text . '<br>' . $waitlist_count . ' on the waitlist<br>');
         }
       } else {
@@ -149,7 +149,7 @@ function _tm_event_seats_count($field, $title = NULL) {
       }
     }
     
-    // show x members going
+    // show x people going
     $show_text = $count . ' ' . $count_text;
 
     // show spots
@@ -165,12 +165,12 @@ function _tm_event_seats_count($field, $title = NULL) {
     return t($show_text);
   }
 
-  // No signup limit, must say how many members are going
+  // No signup limit, must say how many people are going
   $show_text = $count . ' ' . $count_text;
 
-  // A few members are going
-  if (($show_text == "1 member is going") or ($show_text == "2 members are going") or ($show_text == "3 members are going")) {
-    $show_text = "A few members are going";
+  // A few people are going
+  if (($show_text == "1 person is going") or ($show_text == "2 people are going") or ($show_text == "3 people are going")) {
+    $show_text = "A few people are going";
   }
   
   return t($show_text);

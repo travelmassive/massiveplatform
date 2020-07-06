@@ -437,7 +437,7 @@ $conf["tm_theme_meta_color"] = "#007DB7"; // Set the theme color for mobile Andr
 $conf["tm_theme_js_footer_scripts"] = array("sites/all/modules/contrib/ckeditor/includes/ckeditor.utils.js", "//cdn.ckeditor.com/4.4.3/full-all/ckeditor.js"); // Array of scripts that will be forced to bottom of footer (after Drupal.settings) 
 // $conf["tm_theme_google_fonts_url"] = ""; // ie: https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap)
 // $conf["tm_theme_preload_cover_images"] = true; // Preload cover images with fast placeholder
-
+// $conf['tm_theme_custom_header_template'] = false; // if set, use themes/tm/templates/custom-header.tpl.php
 
 /** SEARCH SETTINGS **/
 $conf["tm_search_api_placeholder_text"] = "Enter a name, city, event or company ..."; // placeholder text for search box in site header
@@ -1272,3 +1272,9 @@ $conf["tm_chatbox_enabled"] = false; // enable or disable event chatbox (require
 $conf["tm_chatbox_site_domain"] = "example.massiveplatform.com";
 $conf["tm_chatbox_id"] = "chatbox_id";
 $conf["tm_chatbox_secret_key"] = "secret_key";
+
+/** WORDPRESS SHORTCODE **/
+/** ie: user/redirect_avatar_url/encrypted_uid */
+// $conf['tm_users_avatar_secret_key'] = 'randomstringabc';
+// $conf['tm_users_avatar_secret_iv'] = 'randomstring123';
+

@@ -18,10 +18,24 @@
     $tm_branding_navbar_top = $conf["tm_branding_navbar_top"];
   }
 
+  // Custom header template
+  $custom_header_template = false;
+  if (isset($conf["tm_theme_custom_header_template"])) {
+    if ($conf["tm_theme_custom_header_template"]) {
+      $custom_header_template = true;
+    }
+  }
+
 ?>
 
 <div id="page">
 
+  <?php
+  if ($custom_header_template) { 
+    // load custom header
+    include './'. path_to_theme() .'/templates/custom-header.tpl.php';
+  } else { 
+  ?>
   <header class="header" id="header" role="banner" <?php if ($is_front) {?>style="opacity: 0.9;"<?php } ?>>
     <div class="row">
       <h1 id="site-title">
@@ -69,6 +83,7 @@
       </nav>
     </div>
   </header>
+  <?php } // end if custom template ?>
 
   <div class="top-navbar-divider"></div>
 

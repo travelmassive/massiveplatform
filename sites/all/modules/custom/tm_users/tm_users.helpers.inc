@@ -614,3 +614,38 @@ function tm_users_is_member_reported($uid) {
   return (sizeof($moderate_report_member_flagged) > 0);
 }
 
+/*
+ * Encrypt and decrypt uid
+ * see: https://naveensnayak.wordpress.com/2013/03/12/simple-php-encrypt-and-decrypt/
+ */
+function tm_users_encrypt_uid($action, $uid, $secret_key="", $secret_iv="") {
+
+  global $conf;
+  $output = false;
+
+  $encrypt_method = "AES-256-CBC";
+
+  if ($secret_key == "") {
+    $secret_key = $conf["tm_users_avatar_secret_key"]; // 'This is my secret key';
+  }
+  if ($secret_iv == "") {
+    $secret_iv = $conf["tm_users_avatar_secret_iv"]; // 'This is my secret iv';
+  }
+
+  // hash
+  $key = hash('sha256', $secret_key);
+  
+  // iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
+  $iv = substr(hash('sha256', $secret_iv), 0, 16);
+
+  if( $action == 'encrypt' ) {
+      $output = openssl_encrypt($uid, $encrypt_method, $key, 0, $iv);
+      $output = base64_encode($output);
+  }
+  else if( $action == 'decrypt' ){
+      $output = openssl_decrypt(base64_decode($uid), $encrypt_method, $key, 0, $iv);
+  }
+
+  return $output;
+}
+

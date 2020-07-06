@@ -1,6 +1,6 @@
 /* Styling for chatbox */
 
-#event_chatbox_container {
+#event_chatbox_container, #event_chatbox_container_small {
      margin-left: 16px;
      margin-right: 16px;
      margin-top: 16px;
@@ -20,7 +20,7 @@
   padding-right: 32px;
 }
 
-#event_chatbox_container h1 { 
+#event_chatbox_container h1, #event_chatbox_container_small h1 { 
   font-size: 16px; margin-bottom: 0 !important;
 }
 
@@ -57,6 +57,18 @@
 
 .chatbro_message_name a { 
   color: #4a4a4a !important;
+}
+
+.event_chatbox_container_small_icon { 
+  vertical-align: middle;
+}
+.event_chatbox_container_small_icon:before { 
+  font-family: 'tm-icons';
+  content: "\e65b";
+  font-size: 16pt;
+  color: #a6acb2;
+  padding-right: 0.25rem;
+  display: inline-block;
 }
 
 @media only screen and (max-width: 1105px) { 

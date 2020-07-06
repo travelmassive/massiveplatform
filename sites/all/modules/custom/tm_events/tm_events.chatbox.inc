@@ -47,7 +47,7 @@ function _tm_event_chatbox($field, $title = NULL) {
     if ($node->field_external_rsvp[LANGUAGE_NONE][0]['value'] != 0) {
       $external_rsvp = true;
     }
-  }
+  } 
 
   // if user is not registered
   $message = "";
@@ -104,8 +104,57 @@ function _tm_event_chatbox($field, $title = NULL) {
     $live_chat_title .= " &mdash; " . strip_tags($event_title); // show event title when live streaming
   }
 
+  // show minimized chat box unless user had opened it, or within 2 hours of event
+  $minimized_chatbox = true;
+  $minimized_html = "";
+  $chatbox_container_style = "";
+
+  // cookie key
+  $cookie_key = "tm_events_chatbox_show_" . $node->nid;
+
+  // show if user has unminimized chat
+  if (isset($_COOKIE[$cookie_key])) {
+    if ($_COOKIE[$cookie_key] == 1) {
+      $minimized_chatbox = false;
+    }
+  }
+
+  // show if event within 12 hours
+  $seconds_until_event_starts = tm_events_seconds_until_event_starts($node);
+  if ($seconds_until_event_starts < (2 * 60 * 60)) {
+     $minimized_chatbox = false;
+  }
+
+  // if minimized
+  if ($minimized_chatbox) {
+    
+    // js to show full chat box and set cookie
+    $js = "function tm_show_chat_box() {
+
+  // set cookie
+  var d = new Date;
+  d.setTime(d.getTime() + 24*60*60*1000); // 1 day
+  var cookie = ['" . $cookie_key . "=1; domain=.', window.location.host.toString(), '; path=/;expires=' + d.toGMTString()].join('');
+  document.cookie = cookie;
+
+  // hide and show
+  jQuery('#event_chatbox_container_small').hide();
+  jQuery('#event_chatbox_container').show();
+}";
+    drupal_add_js($js, array('type' => 'inline', 'scope' => 'footer'));
+
+    // minimized html
+    $minimized_html = "<div id='event_chatbox_container_small'><div class='chatbox_title'><h1 class='prime-title'>LIVE CHAT</h1></div><div class='event_chatbox_message'><span class='event_chatbox_container_small_icon'></span> Join the <a href='javascript:tm_show_chat_box();'>live discussion</a></div></div>";
+
+    // hide the full chatbox
+    $chatbox_container_style = "display: none";
+  }
+
+  // chatbox html
+  $chatbox_html = "<div id='event_chatbox_container' style='" . $chatbox_container_style . "'><div class='chatbox_title'><h1 class='prime-title'>" . $live_chat_title . "</h1></div><div id='chatbro' style='height: 300px;'></div>" . $message . "</div>";
+
   // Show the chatbox
-  return "<div id='event_chatbox_container' style=''><div class='chatbox_title'><h1 class='prime-title'>" . $live_chat_title . "</h1></div><div id='chatbro' style='height: 300px;'></div>" . $message . "</div>";
+  return $minimized_html . $chatbox_html;  
 
 }
 

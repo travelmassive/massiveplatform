@@ -53,6 +53,14 @@
     $tm_branding_navbar_top = $conf["tm_branding_navbar_top"];
   }
 
+  // Custom header template
+  $custom_header_template = false;
+  if (isset($conf["tm_theme_custom_header_template"])) {
+    if ($conf["tm_theme_custom_header_template"]) {
+      $custom_header_template = true;
+    }
+  }
+
 ?>
 
 <?php
@@ -71,6 +79,12 @@ if (sizeof($request_uri_parts) == 3) {
 
 <div id="page">
 
+  <?php
+  if ($custom_header_template) { 
+    // load custom header
+    include './'. path_to_theme() .'/templates/custom-header.tpl.php';
+  } else { 
+  ?>
   <header class="header" id="header" role="banner">
     <div class="row">
       <h1 id="site-title">
@@ -118,6 +132,7 @@ if (sizeof($request_uri_parts) == 3) {
       </nav>
     </div>
   </header>
+  <?php } // end if custom template ?>
 
   <div class="top-navbar-divider"></div>
 

@@ -90,123 +90,40 @@
   }
   </style>
 
-  <?php
-  // background video
-  if ($is_front) { 
-  ?>
-
-  <style>
-  .fullscreen-bg {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      overflow: hidden;
-      z-index: -100;
-      opacity: <?php print (round(tm_branding_get_element("frontpage_opacity"), 2)); ?> !important;
-  }
-
-  .fullscreen-bg__video {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: auto;
-      height: auto;
-      min-width: 100%;
-      min-height: 100%;
-      -webkit-transform: translate(-50%, -50%);
-         -moz-transform: translate(-50%, -50%);
-          -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-  }
-
-  video::-webkit-media-controls {
-      display:none !important;
-  }
-
-  video::-webkit-media-controls-start-playback-button {
-    display: none !important;
-  }
-
-  </style>
-  <?php
-
-      $frontpage_image = tm_branding_get_element("frontpage_image");
-      $frontpage_video_url = tm_branding_get_element("frontpage_video_url");
-
-      // create <video> tag if image or video url provided
-      $bg_video_body_html = "";
-      if (($frontpage_image != "") or ($frontpage_video_url != "")) {
-
-        // div wrapper
-        $bg_video_body_html = '<div class="fullscreen-bg">';
-
-        // video cover
-        if ($frontpage_image != '') {
-          $bg_video_body_html .= '<video loop autoplay muted poster="' . $frontpage_image . '" class="fullscreen-bg__video" id="fullscreen-bg-video">';
-        } else {
-          $bg_video_body_html .= '<video loop autoplay muted class="fullscreen-bg__video">';
-        }
-
-        // background video and background image
-        if ($frontpage_video_url != "") {
-          $bg_video_body_html .= '<source src="' . $frontpage_video_url . '" type="video/mp4">';
-        }
-
-        $bg_video_body_html .= '</video>';
-        $bg_video_body_html .= '</div>';
-
-        // detect hls url
-        $is_hls_url = 0;
-        if (strpos($frontpage_video_url, "m3u8") !== false) {
-          $is_hls_url = 1;
-        }
-      }
-    } // end if front page
-  ?>
-
   <body class="<?php print $classes; ?>" <?php print $attributes;?>>
     
-  <?php 
-    if ($is_front and ($frontpage_image != "")) {
-      print($bg_video_body_html); // <video> embed
-      if ($frontpage_video_url != "") { // show video controls
-  ?>
-    <div id="tm-frontpage-video-controls" style="display:none;">
-      <div id="tm-frontpage-video-buttons"><span class="tm-frontpage-video-pause"></span><span class="tm-frontpage-video-play"></span></div>
-      <div id="tm-frontpage-video-info">Now playing: <a href="<?php echo tm_branding_get_element("frontpage_video_link"); ?>"><?php echo tm_branding_get_element("frontpage_video_text");?></a></div>
-    </div>
-
-<script>
-  // Add HTTP Live Streaming support for Chrome and Firefox
-  // https://github.com/dailymotion/hls.js
-  // note: safari already supports hls
-  jQuery(document).ready(function() {
-    var is_chrome = navigator.userAgent.indexOf('Chrome') > -1;
-    var is_explorer = navigator.userAgent.indexOf('MSIE') > -1;
-    var is_firefox = navigator.userAgent.indexOf('Firefox') > -1;
-    var is_safari = navigator.userAgent.indexOf("Safari") > -1;
-    var is_hls_url = <?php print($is_hls_url); ?>;
-    if (is_hls_url && (is_chrome || is_firefox)) {
-      if(Hls.isSupported()) {
-        var video = document.getElementById('fullscreen-bg-video');
-        var hls = new Hls();
-        hls.loadSource('<?php print($frontpage_video_url);?>');
-        hls.attachMedia(video);
-        hls.on(Hls.Events.MANIFEST_PARSED,function() {
-          video.play();
-        });
-      }
-    }
-  });
-</script>
-
-  <?php 
-      } // end show video controls
-    } // end if front page video
-  ?>
-
+    <?php 
+      $frontpage_image = tm_branding_get_element("frontpage_image");
+      $frontpage_opacity = tm_branding_get_element("frontpage_opacity");
+      if ($is_front and ($frontpage_image != "")) {
+    ?>
+        <style>
+        #bg {
+          position: fixed; 
+          top: -50%; 
+          left: -50%; 
+          width: 200%; 
+          height: 200%;
+        }
+        #bg img {
+          position: absolute; 
+          top: 0; 
+          left: 0; 
+          right: 0; 
+          bottom: 0; 
+          margin: auto; 
+          min-width: 50%;
+          min-height: 50%;
+          opacity: <?php print $frontpage_opacity; ?>;
+        }
+        </style>
+        <div id="bg">
+          <img src="<?php print ($frontpage_image);?>" alt="background image">
+        </div>
+    <?php
+      } // end if front page with image
+    ?>
+  
     <!--[if lt IE 9]>
       <div id="nocando">
         <h1>Your browser is not supported.</h1>

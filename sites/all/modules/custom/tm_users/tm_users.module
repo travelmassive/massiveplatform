@@ -194,6 +194,13 @@ function tm_users_menu() {
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
+  $items['user/redirect_to_settings'] = array(
+    'title' => 'User profile',
+    'page callback' => 'tm_users_redirect_edit_settings',
+    'page arguments' => array(2),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
   
   return $items;
 }
@@ -883,3 +890,19 @@ function tm_users_redirect_profile_url($encrypted_uid) {
   drupal_goto($profile_url);
   
 }
+
+/**
+ * Redirect to profile edit URL
+ */
+function tm_users_redirect_edit_settings() {
+
+  if (user_is_logged_in()) {
+    global $user;
+    drupal_goto("user/" . $user->uid . "/edit");
+  } else {
+    drupal_set_message("You must be signed in to edit your profile.");
+    drupal_goto("/");
+  }
+  
+}
+

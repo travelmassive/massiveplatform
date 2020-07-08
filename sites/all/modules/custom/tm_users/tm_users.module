@@ -197,7 +197,6 @@ function tm_users_menu() {
   $items['user/redirect_to_settings'] = array(
     'title' => 'User profile',
     'page callback' => 'tm_users_redirect_edit_settings',
-    'page arguments' => array(2),
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );

@@ -687,6 +687,7 @@ function _tm_more_actions_process_moderator_menu($field, $title, &$links, &$menu
 
           $encrypted_uid = tm_users_encrypt_uid('encrypt', $targetuser->uid);
           $avatar_shortcode = "[tm_avatar id=" . $encrypted_uid . "]";
+          $avatar_shortcode .= " " . htmlentities(strip_tags($targetuser->field_user_first_name[LANGUAGE_NONE][0]['value'] . " " . $targetuser->field_user_last_name[LANGUAGE_NONE][0]['value']), ENT_QUOTES);
 
           $links['user'][] = array(
             'wrapper_class' => array('moderator_avatar_shortcode'),

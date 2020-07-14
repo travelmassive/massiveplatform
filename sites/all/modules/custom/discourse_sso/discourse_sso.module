@@ -85,6 +85,12 @@ function discourse_sso_menu() {
     'file' => 'discourse_sso.admin.inc',
     'file path' => drupal_get_path('module', 'discourse_sso') . '/includes',
   );
+  $items['discourse/redirect_to_forum'] = array(
+    'title' => 'User profile',
+    'page callback' => 'discourse_sso_login_and_redirect',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
   return $items;
 }
 
@@ -358,5 +364,25 @@ function discourse_sso_user_update(&$edit, $account, $category) {
 
 }
 
+/**
+ * Helper method to login and redirect vis SSO
+ * See: https://meta.discourse.org/t/create-an-sso-login-link/109290
+ */
+function discourse_sso_login_and_redirect() {
 
+  global $conf;
+
+  $discourse_url = $conf["tm_discourse_sso_sync_url"];
+
+  if (user_is_logged_in()) {
+    // Login and redirect to forum
+    // ie: https://forum.example.com/session/sso?return_path=https://forum.example.com/your-discourse-endpoint
+    $url = $discourse_url . "/session/sso?return_path=" . $discourse_url;
+    drupal_goto($url, array('external' => TRUE));
+  } else {
+    // Just go to forum
+    drupal_goto($discourse_url, array('external' => TRUE));
+  }
+
+}
 

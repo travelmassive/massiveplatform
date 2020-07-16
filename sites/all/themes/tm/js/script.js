@@ -679,8 +679,8 @@
           classes: { box: 'tm_zoom_picture'}, 
           buttons: {}, 
           overlayspeed: 'fast',
-          loaded: function() { $("#page").addClass("tm-blur-filter"); },
-          close: function() { $("#page").removeClass("tm-blur-filter"); }
+          loaded: function() { $("#main").addClass("tm-blur-filter"); },
+          close: function() { $("#main").removeClass("tm-blur-filter"); }
         });
       }
     } else {

@@ -24,7 +24,8 @@ function tm_events_add_page() {
 	// get messages
 	drupal_get_messages();
 
-	//drupal_get_messages("help-tip");
+	// remove last_edited_event cookie
+	user_cookie_delete("last_edited_event");
 
 	$company_message = "";
 	$member_message = "";

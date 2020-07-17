@@ -378,7 +378,7 @@ function discourse_sso_login_and_redirect() {
   if (user_is_logged_in() and (in_array("approved user", $user->roles))) {
     // Login and redirect to forum
     // ie: https://forum.example.com/session/sso?return_path=https://forum.example.com/your-discourse-endpoint
-    $url = $discourse_url . "/session/sso?return_path=" . $discourse_url;
+    $url = $discourse_url . "session/sso?return_path=" . $discourse_url;
     drupal_goto($url, array('external' => TRUE));
   } else {
     // Just go to forum

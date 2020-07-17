@@ -104,26 +104,24 @@ function tm_events_add_page() {
 			// can edit an upcoming event
 			$can_edit_upcoming_events = true;
 
-			// get preview mode
-			$preview_mode_text = "";
-			if (tm_events_is_preview_mode($nid)) {
-				$preview_mode_text = " (Preview mode)";
-			}
-
 			// how long until event
-			$time_until_text = "";
+			$event_extra_text = "";
 			$event_date = field_get_items('node',$event,'field_event_date');
 			$current_date = new DateTime('now', new DateTimeZone('UTC'));
 			$event_timezone = _tm_get_event_timezone($event);
 			$event_datetime = new DateTime($event_date[0]['value'], new DateTimeZone($event_timezone));
 			if (($event_datetime->format('U') - $current_date->format('U')) > 0) {
-				$time_until_text =  "<br>in " . _tm_event_time_elapsed($event_datetime->format('U') - $current_date->format('U'));
+				$event_extra_text =  "in " . _tm_event_time_elapsed($event_datetime->format('U') - $current_date->format('U'));
 			}
 
-			$event_menu_text = t($event->title) . "<span style='font-style: italic; font-size: smaller;'>" . $time_until_text . $preview_mode_text . "</span>";
-			$event_menu_link = drupal_get_path_alias("node/" . $event->nid);
+			// get preview mode
+			if (!tm_events_is_preview_mode($nid)) {
+				$event_extra_text .=" (Preview mode)";
+			}
 
-			$html .= "<li><a href='/" . $event_menu_link . "'>" . $event_menu_text . '</span></a></li>'; 
+			// display menu item
+			$event_menu_link = drupal_get_path_alias("node/" . $event->nid);
+			$html .= "<li><a href='/" . $event_menu_link . "'>" . t($event->title) . "</a> <span style='color: #808080;'>" . $event_extra_text . "</span></li>"; 
 		}
 	}
 

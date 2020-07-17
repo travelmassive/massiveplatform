@@ -115,7 +115,7 @@ function tm_events_add_page() {
 			}
 
 			// get preview mode
-			if (!tm_events_is_preview_mode($nid)) {
+			if (tm_events_is_preview_mode($nid)) {
 				$event_extra_text .=" (Preview mode)";
 			}
 

@@ -371,10 +371,11 @@ function discourse_sso_user_update(&$edit, $account, $category) {
 function discourse_sso_login_and_redirect() {
 
   global $conf;
+  global $user;
 
   $discourse_url = $conf["tm_discourse_sso_sync_url"];
 
-  if (user_is_logged_in()) {
+  if (user_is_logged_in() and (in_array("approved user", $user->roles))) {
     // Login and redirect to forum
     // ie: https://forum.example.com/session/sso?return_path=https://forum.example.com/your-discourse-endpoint
     $url = $discourse_url . "/session/sso?return_path=" . $discourse_url;

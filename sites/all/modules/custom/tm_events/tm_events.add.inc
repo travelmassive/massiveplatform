@@ -79,14 +79,66 @@ function tm_events_add_page() {
 		}
 	}
 
-	// If user can only create chapter event, go directly to event page
-	if ((!$can_create_member_event) and (sizeof($company_nids) == 0) and (sizeof($chapter_nids) == 1)) {
-		drupal_goto("/node/add/event", array("query" => array("field_chapter" => $chapter_nids[0])));
+	// List any upcoming events that the member can edit (including preview mode)
+	$upcoming_events = tm_events_get_users_future_events($user->uid, $add_chapter_event);
+	$can_edit_upcoming_events = false;
+	if (sizeof($upcoming_events) > 0) {
+		
+		$html .= "<hr style='border: none; border-bottom: 1px solid #ddd; width: 95%'>";
+
+		$account = user_load($user->uid);
+		foreach ($upcoming_events as $nid) {
+
+			$event = node_load($nid);
+
+			// check valid event
+			if ($event == null) {
+				continue;
+			}
+
+			// check can edit event
+			if (!tm_events_check_permission_edit_event($account, $event)) {
+				continue;
+			}
+
+			// can edit an upcoming event
+			$can_edit_upcoming_events = true;
+
+			// get preview mode
+			$preview_mode_text = "";
+			if (tm_events_is_preview_mode($nid)) {
+				$preview_mode_text = " (Preview mode)";
+			}
+
+			// how long until event
+			$time_until_text = "";
+			$event_date = field_get_items('node',$event,'field_event_date');
+			$current_date = new DateTime('now', new DateTimeZone('UTC'));
+			$event_timezone = _tm_get_event_timezone($event);
+			$event_datetime = new DateTime($event_date[0]['value'], new DateTimeZone($event_timezone));
+			if (($event_datetime->format('U') - $current_date->format('U')) > 0) {
+				$time_until_text =  "<br>in " . _tm_event_time_elapsed($event_datetime->format('U') - $current_date->format('U'));
+			}
+
+			$event_menu_text = t($event->title) . "<span style='font-style: italic; font-size: smaller;'>" . $time_until_text . $preview_mode_text . "</span>";
+			$event_menu_link = drupal_get_path_alias("node/" . $event->nid);
+
+			$html .= "<li><a href='/" . $event_menu_link . "'>" . $event_menu_text . '</span></a></li>'; 
+		}
 	}
 
-	// If user can only create member event, go directly to event page
-	if (($can_create_member_event) and (sizeof($company_nids) == 0) and (sizeof($chapter_nids) == 0)) {
-		drupal_goto("/node/add/event");
+	// Redirect if no editable events
+	if (!$can_edit_upcoming_events) {
+
+		// If user can only create chapter event, go directly to event page
+		if ((!$can_create_member_event) and (sizeof($company_nids) == 0) and (sizeof($chapter_nids) == 1)) {
+			drupal_goto("/node/add/event", array("query" => array("field_chapter" => $chapter_nids[0])));
+		}
+
+		// If user can only create member event, go directly to event page
+		if (($can_create_member_event) and (sizeof($company_nids) == 0) and (sizeof($chapter_nids) == 0)) {
+			drupal_goto("/node/add/event");
+		}
 	}
 
 	// create tip

@@ -452,8 +452,6 @@ function tm_users_event_tips() {
     $user_tip = "Find and register for upcoming events in the " . $conf["tm_site_name"] . " community around the world to learn, share and connect with other members.";
   }
 
-  //$user_tip = "Edit your event...";
-
   // Shower user tip
   if ($user_tip != "") {
     drupal_get_messages('page_notice');

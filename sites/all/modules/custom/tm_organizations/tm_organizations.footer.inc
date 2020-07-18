@@ -21,6 +21,31 @@ function tm_organizations_render_footer($num_items = 5, $use_cache = true) {
 	// get organizatins with recent follows, sorted by follower count
 	$recent_follows = tm_organizations_get_followed_organizations($num_items, $num_days, $exclude_items);
 
+	// order list by title length
+	if (isset($conf["tm_organizations_footer_order_length"])) {
+		if ($conf["tm_organizations_footer_order_length"]) {
+
+			// get node title lengths
+			$sorted = array();
+			foreach ($recent_follows as $item) {
+
+				$node = node_load($item["entity_id"]);
+				if ($node == null) {
+					continue;
+				}
+
+				// add title to associative array
+				$sorted[] = array("title" => $node->title, "entity_id" => $item["entity_id"], "follower_count" => $item["follower_count"]);
+			}
+
+			// sort by name length
+			usort($sorted, function ($item1, $item2) {
+				return (strlen($item1['title']) < strlen($item2['title']));
+			});
+			$recent_follows = $sorted;
+		}
+	}
+
 	// load template
 	$template = '<div class="tm-footer-lists-container organizations">
 	<h2>__FOOTER_TITLE__</h2>
@@ -88,3 +113,4 @@ function tm_organizations_render_footer($num_items = 5, $use_cache = true) {
 	return $html;
 
 }
+

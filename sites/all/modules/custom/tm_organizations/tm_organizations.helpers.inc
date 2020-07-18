@@ -96,7 +96,7 @@ function tm_organizations_get_followed_organizations($limit = 5, $days = 7, $exc
 
   // exclude previous period
   if ($exclude_previous_period) {
-    $query = "SELECT entity_id, COUNT(*) as group_count FROM flagging WHERE entity_type = 'node' AND fid = :fid AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL " . intval($days * 2) . " DAY) AND timestamp <= UNIX_TIMESTAMP(NOW() - INTERVAL " . intval($days) . " DAY) AND entity_id NOT IN (" . implode(",", $exclude_nids) . ") GROUP BY entity_id ORDER BY group_count DESC LIMIT " . intval($limit);
+    $query = "SELECT entity_id, COUNT(*) as group_count, MAX(timestamp) as max_timestamp FROM flagging WHERE entity_type = 'node' AND fid = :fid AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL " . intval($days * 2) . " DAY) AND timestamp <= UNIX_TIMESTAMP(NOW() - INTERVAL " . intval($days) . " DAY) AND entity_id NOT IN (" . implode(",", $exclude_nids) . ") GROUP BY entity_id ORDER BY group_count DESC, max_timestamp DESC LIMIT " . intval($limit);
     $rows = db_query($query, array(':fid' => $follow_organizations_flag->fid))->fetchAll();
     foreach ($rows as $row) {
       $exclude_nids[] = $row->entity_id;
@@ -104,7 +104,7 @@ function tm_organizations_get_followed_organizations($limit = 5, $days = 7, $exc
   }
 
   // get current period
-  $query = "SELECT entity_id, COUNT(*) as group_count FROM flagging WHERE entity_type = 'node' AND fid = :fid AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL " . intval($days) . " DAY) AND entity_id NOT IN (" . implode(",", $exclude_nids) . ") GROUP BY entity_id ORDER BY group_count DESC LIMIT " . intval($limit);
+  $query = "SELECT entity_id, COUNT(*) as group_count, MAX(timestamp) as max_timestamp  FROM flagging WHERE entity_type = 'node' AND fid = :fid AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL " . intval($days) . " DAY) AND entity_id NOT IN (" . implode(",", $exclude_nids) . ") GROUP BY entity_id ORDER BY group_count DESC, max_timestamp DESC LIMIT " . intval($limit);
   $rows = db_query($query, array(':fid' => $follow_organizations_flag->fid))->fetchAll();
   foreach ($rows as $row) {
     $organization_nids[] = array("entity_id" => $row->entity_id, "follower_count" => $row->group_count);

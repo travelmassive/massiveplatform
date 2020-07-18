@@ -75,6 +75,8 @@ function tm_organizations_get_taxonomy_tid($nid) {
  */
 function tm_organizations_get_followed_organizations($limit = 5, $days = 7, $exclude_nids = null) {
 
+  global $conf;
+
   $follow_organizations_flag = flag_get_flag('follow_organizations', NULL);
   $organization_nids = array();
 
@@ -86,11 +88,19 @@ function tm_organizations_get_followed_organizations($limit = 5, $days = 7, $exc
      $exclude_nids = array(0);
   }
 
+  // check if exclude previous period
+  $exclude_previous_period = false;
+  if (isset($conf["tm_organizations_footer_exclude_previous"])) {
+    $exclude_previous_period = $conf["tm_organizations_footer_exclude_previous"];
+  }
+
   // exclude previous period
-  $query = "SELECT entity_id, COUNT(*) as group_count FROM flagging WHERE entity_type = 'node' AND fid = :fid AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL " . intval($days * 2) . " DAY) AND timestamp <= UNIX_TIMESTAMP(NOW() - INTERVAL " . intval($days) . " DAY) AND entity_id NOT IN (" . implode(",", $exclude_nids) . ") GROUP BY entity_id ORDER BY group_count DESC LIMIT " . intval($limit);
-  $rows = db_query($query, array(':fid' => $follow_organizations_flag->fid))->fetchAll();
-  foreach ($rows as $row) {
-    $exclude_nids[] = $row->entity_id;
+  if ($exclude_previous_period) {
+    $query = "SELECT entity_id, COUNT(*) as group_count FROM flagging WHERE entity_type = 'node' AND fid = :fid AND timestamp > UNIX_TIMESTAMP(NOW() - INTERVAL " . intval($days * 2) . " DAY) AND timestamp <= UNIX_TIMESTAMP(NOW() - INTERVAL " . intval($days) . " DAY) AND entity_id NOT IN (" . implode(",", $exclude_nids) . ") GROUP BY entity_id ORDER BY group_count DESC LIMIT " . intval($limit);
+    $rows = db_query($query, array(':fid' => $follow_organizations_flag->fid))->fetchAll();
+    foreach ($rows as $row) {
+      $exclude_nids[] = $row->entity_id;
+    }
   }
 
   // get current period

@@ -649,6 +649,7 @@ $conf["tm_branding_include_js"] = "";
 // $conf["tm_organizations_footer_num_days"] = 7; // how many days of follows to count
 // $conf["tm_organizations_footer_exclude"] = array(); // exclude any organizations from displaying
 // $conf["tm_organizations_footer_max_length"] = 32; // maximum length of title
+// $conf["tm_organizations_footer_exclude_previous"] = false; // exclude previous period when calculating upvotes
 
 /** STATUS UPDATES **/
 $conf["tm_status_updates_enabled"] = true; // enable status updates

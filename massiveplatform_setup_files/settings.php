@@ -643,10 +643,12 @@ $conf["tm_branding_include_js"] = "";
 // $conf["tm_lists_footer_num_items"] = 3; // how many items to show in __LISTS_FOOTER_HTML__ branding element
 // $conf["tm_subscriptions_user_subscribers_footer_title"] = "New Subscribers"; // title of footer links
 // $conf["tm_subscriptions_user_subscribers_footer_num_items"] = 3; // how many items to show in __SUBSCRIPTIONS_FOOTER_HTML__ branding element
+// $conf["tm_subscriptions_user_subscribers_footer_max_length"] = 32; // maximum length of members' name
 // $conf["tm_organizations_footer_title"] = "Trending"; // title in footer
 // $conf["tm_organizations_footer_num_items"] = 3; // how many items to show in __ORGANIZATIONS_FOOTER_HTML__ branding element
 // $conf["tm_organizations_footer_num_days"] = 7; // how many days of follows to count
 // $conf["tm_organizations_footer_exclude"] = array(); // exclude any organizations from displaying
+// $conf["tm_organizations_footer_max_length"] = 32; // maximum length of title
 
 /** STATUS UPDATES **/
 $conf["tm_status_updates_enabled"] = true; // enable status updates

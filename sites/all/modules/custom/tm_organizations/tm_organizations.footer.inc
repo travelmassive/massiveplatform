@@ -22,7 +22,7 @@ function tm_organizations_render_footer($num_items = 5, $use_cache = true) {
 	$recent_follows = tm_organizations_get_followed_organizations($num_items, $num_days, $exclude_items);
 
 	// load template
-	$template = '<div class="lists-footer-container organizations">
+	$template = '<div class="tm-footer-lists-container organizations">
 	<h2>__FOOTER_TITLE__</h2>
     __LIST_ITEMS__
 </div>';
@@ -31,7 +31,7 @@ function tm_organizations_render_footer($num_items = 5, $use_cache = true) {
 	$template = str_replace("__FOOTER_TITLE__", $conf["tm_organizations_footer_title"], $template);
 
 	// generate lists
-	$list_html = "<ul class='tm-lists-footer organizations'>";
+	$list_html = "<ul class='tm-footer-lists organizations'>";
 	foreach ($recent_follows as $item) {
 
 		// get details
@@ -47,6 +47,14 @@ function tm_organizations_render_footer($num_items = 5, $use_cache = true) {
 		// get title
 		$title = strip_tags(trim($node->title));
 
+		// trim title
+		if (isset($conf["tm_organizations_footer_max_length"])) {
+			$max_length = $conf["tm_organizations_footer_max_length"];
+			if (strlen($title) > $max_length) {
+				$title = substr($title, 0, $max_length) . "...";
+			}
+		}
+		
 		// get company page url
 		$profile_url = drupal_get_path_alias("node/" . $node->nid);
 
@@ -64,11 +72,10 @@ function tm_organizations_render_footer($num_items = 5, $use_cache = true) {
 			}
 		}
 
-
 		// render list
-		$list_html .= "<li><span class='tm-lists-footer-label organizations'><a class='tm-lists-footer-label-link organizations' href='/" . $profile_url . "'>" . $title . "</a>";
+		$list_html .= "<li><span class='tm-footer-lists-label organizations'><a class='tm-footer-lists-label-link organizations' href='/" . $profile_url . "'>" . $title . "</a>";
 				
-		$list_html .= "</span><span class='tm-lists-footer-details organizations'>" . $follower_count . " " . $followers_label . "</span></li>";
+		$list_html .= "</span><span class='tm-footer-lists-details organizations'>" . $follower_count . " " . $followers_label . "</span></li>";
 	}
 
 	$list_html .= "</ul>";

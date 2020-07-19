@@ -639,13 +639,6 @@ function tm_search_api_render_result_organization($result, $organization, $searc
 
 	$result_info = tm_search_api_result_highlight($result_text, $search_query);
 
-	// subscription
-	if (module_exists("tm_subscriptions")) {
-		if (tm_subscriptions_is_organization_subscription_enabled($organization->nid)) {
-			$result_title .= " <span style='font-weight: normal;' class='tm-user-menu-subscription-badge'>" . strtoupper($conf["tm_subscriptions_organization_label_short"]) . "</span>";
-		}
-	}
-
 	// render item
     $html = tm_search_api_render_search_result($result_url, $result_image_url, $result_title, $result_info, $result_item_count);
 

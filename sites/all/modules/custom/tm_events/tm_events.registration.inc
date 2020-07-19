@@ -60,7 +60,6 @@ function tm_events_manage_registrations_form($event){
 
     // outside of loop for better performance
     $module_exists_tm_subscriptions_user = module_exists("tm_subscriptions_user");
-    $module_exists_tm_subscriptions = module_exists("tm_subscriptions");
 
     while ($attendee_user = $users->fetchAssoc()) {
 
@@ -80,14 +79,6 @@ function tm_events_manage_registrations_form($event){
       if ($module_exists_tm_subscriptions_user) {
         if (tm_subscriptions_is_user_subscription_enabled($account->uid)) {
           $subscriber_text = "<span style='font-weight: normal;' class='tm-user-menu-subscription-badge'> " . strtoupper($conf["tm_subscriptions_user_label_short"]) . "</span>";
-        }
-      }
-
-      // company subscription
-      if ($module_exists_tm_subscriptions) {
-        $company_nids = tm_subscriptions_get_users_subscribed_companies($account->uid);
-        if (sizeof($company_nids) > 0) {
-          $subscriber_text = "<span style='font-weight: normal;' class='tm-user-menu-subscription-badge'> " . strtoupper($conf["tm_subscriptions_organization_label_short"]) . "</span>";
         }
       }
 

@@ -345,7 +345,7 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 	$flag = $flag_types[$result->fid];
 
 	// make sure we want to display this flag
-	$show_flags = array("approval_approved_by", "event_register", "event_waitlist", "signup", "follow_members", "follow_organizations", "tm_sponsor", "organization_subscription_enable", "user_subscription_enable");
+	$show_flags = array("approval_approved_by", "event_register", "event_waitlist", "signup", "follow_members", "follow_organizations", "tm_sponsor", "user_subscription_enable");
 	if (!in_array($flag->name, $show_flags)) {
 		return "";
 	}
@@ -548,20 +548,6 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 			$image_url = image_style_url("avatar", $image_uri);
 
 			$feed_title = l($organization->title, $flagged_node_url) . " just became a sponsor, thanks!";
-			
-			$html = tm_status_updates_render_flag_feed($flagged_node_url, $image_url, $feed_title, "", $details, "status-updates-image-avatar");
-			break;
-
-	   	// ORGANIZATION HAS SUBSCRIPTION
-	   	case "organization_subscription_enable":
-
-			$organization = $flagged_node;
-
-			// get image url
-			$image_uri = _tm_organizations_get_avatar_uri($organization);
-			$image_url = image_style_url("avatar", $image_uri);
-
-			$feed_title = l($organization->title, $flagged_node_url) . " upgraded to a " . $conf["tm_subscriptions_organization_label"];
 			
 			$html = tm_status_updates_render_flag_feed($flagged_node_url, $image_url, $feed_title, "", $details, "status-updates-image-avatar");
 			break;

@@ -294,13 +294,6 @@ function _tm_events_check_create_company_event($check_user, $company_id) {
     return true;
   }
 
-  // check for subscription account (ie: premium member)
-  if (module_exists("tm_subscriptions")) {
-    if (tm_subscriptions_is_organization_subscription_enabled($company_id)) {
-      return true;
-    }
-  }
-
 	return false;
 }
 

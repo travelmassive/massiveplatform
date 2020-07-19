@@ -14,7 +14,6 @@ include_once 'tm_fields.menu_organization.inc';
 include_once 'tm_fields.menu_event.inc';
 include_once 'tm_fields.menu_chapter.inc';
 include_once 'tm_fields.menu_moderator.inc';
-include_once 'tm_fields.menu_subscriptions.inc';
 include_once 'tm_fields.menu_user_subscriptions.inc';
 include_once 'tm_fields.menu_lists.inc';
 
@@ -36,13 +35,6 @@ function tm_fields_ds_fields_info($entity_type) {
     'field_type' => DS_FIELD_TYPE_FUNCTION,
     'ui_limit' => array('event|*', 'user|*'),
     'function' => '_tm_chapter_sticker_process'
-  );
-
-  $fields['tm_ds_organization_sticker'] = array(
-    'title' => t('Organization sticker'),
-    'field_type' => DS_FIELD_TYPE_FUNCTION,
-    'ui_limit' => array('organization|*'),
-    'function' => '_tm_organization_sticker_process'
   );
 
   $fields['tm_ds_approved'] = array(
@@ -232,40 +224,6 @@ function _tm_chapter_sticker_process($field, $title = NULL) {
     }
 
   }
-}
-
-/**
- * Custom function to build the organization sticker
- */
-function _tm_organization_sticker_process($field, $title = NULL) {
-
-  if (!module_exists("tm_subscriptions")) {
-    return;
-  }
-  
-  global $conf;
-  global $user;
-
-  $node_id = $field['entity']->nid;
-  $organization = $field['entity'];
-
-  // show all other users the learn_more_url
-  // show customers the support url
-  if (tm_organizations_is_company_profile_manager($user->uid, $node_id)) {
-    $custom_url = tm_subscriptions_get_organization_subscription_field($organization, "support_url");
-  } else {
-    $custom_url = tm_subscriptions_get_organization_subscription_field($organization, "learn_more_url");
-  }
-
-
-  $is_subscriber = tm_subscriptions_is_organization_subscription_enabled($node_id);
-  return theme('tm_organization_sticker', array(
-    'is_subscriber' => $is_subscriber,
-    'label' => $conf["tm_subscriptions_organization_label_short"],
-    'custom_url' => $custom_url
-    )
-  );
-
 }
 
 /**
@@ -530,7 +488,6 @@ function _tm_more_actions_process($field, $title = NULL) {
   _tm_more_actions_process_event_menu($field, $title, $links, $menu_item, $currentuser, $targetuser, $nid);
   _tm_more_actions_process_chapter_menu($field, $title, $links, $menu_item, $currentuser, $targetuser, $nid);
   _tm_more_actions_process_organization_menu($field, $title, $links, $menu_item, $currentuser, $targetuser, $nid);
-  _tm_more_actions_process_subscriptions_menu($field, $title, $links, $menu_item, $currentuser, $targetuser, $nid);
   _tm_more_actions_process_user_subscriptions_menu($field, $title, $links, $menu_item, $currentuser, $targetuser, $nid);
   _tm_more_actions_process_moderator_menu($field, $title, $links, $menu_item, $currentuser, $targetuser, $nid);
   

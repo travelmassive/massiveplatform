@@ -77,26 +77,6 @@ function tm_intercom_page_alter(&$page) {
 			}
 		}
 
-		// company subscription
-		// use flag lookup directly for performance
-		if (module_exists('tm_subscriptions')) {
-
-			// get list of subscribed companies
-			$subscribed_companies = array();
-			foreach ($organization_profile_nids as $nid) {
-
-				// use direct flag lookup for performance
-				$organization_subscription_enable_flag = flag_get_flag('organization_subscription_enable', NULL);
-				if ($organization_subscription_enable_flag->is_flagged($nid)) {
-					$subscribed_companies[] = $nid;
-				}
-			}
-
-			if (sizeof($subscribed_companies) > 0) {
-				$member_type = $conf["tm_subscriptions_organization_label_noun"];
-			}
-		}
-
 		$settings['tm_member_type'] = $member_type;
 
 		// HMAC using SHA-256

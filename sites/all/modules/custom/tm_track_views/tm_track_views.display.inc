@@ -186,11 +186,6 @@ function tm_track_views_views_pre_execute(&$view) {
 	// only allow subscribed members to see who has viewed profile
 	if ($conf["tm_track_views_display_mode"] == "subscribed") {
 		$message = $conf["tm_track_views_subscription_message"];
-		if (module_exists("tm_subscriptions")) {
-			if (tm_subscriptions_is_organization_subscription_enabled($entity_id)) {
-				return;
-			}
-		}
 		if (module_exists("tm_subscriptions_user")) {
 			if (tm_subscriptions_is_user_subscription_enabled($user->uid)) {
 				return;

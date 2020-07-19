@@ -60,11 +60,6 @@ function tm_theme_html_head_alter(&$head_elements) {
         $now = new DateTime(null, new DateTimeZone('UTC'));
         user_cookie_save(array('site_branding_partner_timestamp'=>$now->getTimestamp()));
 
-        // set partner code for subscriptions (organizations)
-        if (module_exists("tm_subscriptions")) {
-          tm_subscriptions_set_partner_cookie();
-        }
-
         // set partner code for subscriptions (user)
         if (module_exists("tm_subscriptions_user")) {
           tm_subscriptions_user_set_partner_cookie();

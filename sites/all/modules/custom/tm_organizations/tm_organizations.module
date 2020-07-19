@@ -405,12 +405,10 @@ function tm_organizations_form_alter(&$form, $form_state, $form_id) {
       $form['field_segment'][LANGUAGE_NONE][0]['tid']['#description'] = $conf['tm_segment_organization_description'];
     }
 
-    // if tm_subscriptions not enabled, hide all subscription fields
-    if (!module_exists("tm_subscriptions")) {
-      field_group_hide_field_groups($form, array('group_company_account_details'));
-      unset($form['field_company_subscription_type']);
-      unset($form['field_company_subscription_date']);
-    }
+    // tm_subscriptions (organizations) deprecated
+    field_group_hide_field_groups($form, array('group_company_account_details'));
+    unset($form['field_company_subscription_type']);
+    unset($form['field_company_subscription_date']);
 
     // upvote
     $display_upvotes = $conf["tm_organizations_upvote"];

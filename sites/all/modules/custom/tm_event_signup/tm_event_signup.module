@@ -255,26 +255,55 @@ function tm_event_signup_preprocess_flag(&$variables) {
 
   // Get flag for event
   // Either: show_closed, show_external_rsvp, show_register, show_waitlist, or show_not_approved
-  if (isset($flagged_entity->type)) {
-    if ($status == 'unflagged' && $flagged_entity->type == 'event') {
-      $event_flag = _tm_event_display_flag($event_id);
+  if (!isset($flagged_entity->type)) {
+    return;
+  }
 
-      // flag is event_register
-      if ($flag->name == "event_register") { //} && $status == 'unflagged') {
-          $variables['hide_flag'] = ($event_flag != "show_register");
+  // Not not flagged
+  if ($status == 'unflagged' && $flagged_entity->type == 'event') {
+    $event_flag = _tm_event_display_flag($event_id);
 
-          // the register flag may be hidden but also send through variables to flag.tpl.php to
-          // indicate whether to show closed event, external_rsvp, etc.
-          $variables['event_flag'] = $event_flag;
-      }
+    // flag is event_register
+    if ($flag->name == "event_register") { //} && $status == 'unflagged') {
+        $variables['hide_flag'] = ($event_flag != "show_register");
 
-      // flag is event_waitlist
-      if ($flag->name == "event_waitlist") {
-         $variables['hide_flag'] = ($event_flag != "show_waitlist");
+        // the register flag may be hidden but also send through variables to flag.tpl.php to
+        // indicate whether to show closed event, external_rsvp, etc.
+        $variables['event_flag'] = $event_flag;
+    }
+
+    // flag is event_waitlist
+    if ($flag->name == "event_waitlist") {
+       $variables['hide_flag'] = ($event_flag != "show_waitlist");
+    }
+  }
+
+  // Has been flagged
+  if ($status == 'flagged' && $flagged_entity->type == 'event') {
+
+    // Check if the event has already happened
+    
+    $event = node_load($event_id);
+    if (_tm_event_is_past($event)) {
+
+      // show closed
+      $variables['event_flag'] = 'show_closed';
+
+      // show feedback for recent chapter events user has registered for
+      if (module_exists("tm_nps")) {
+        global $user;
+        if (tm_events_user_is_registered($event->nid, $user->uid)) {
+          if (isset($event->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
+            $seconds_since_event = 7 * 24 * 60 * 60;
+            if (tm_events_seconds_until_event_starts($event) > (-$seconds_since_event)) {
+              $variables['event_flag'] = 'show_feedback';
+            }
+          }
+        }
       }
     }
   }
-  
+
 }
 
 
@@ -301,16 +330,16 @@ function _tm_event_display_flag($nid) {
     throw new Exception("Invalid event node. Nid: " . $nid);
   }
   
-  // Check if the event has already happened
-  if (_tm_event_is_past($event)) {
-    return 'show_closed';
-  }
-
   // Check if is external RSVP.
   // Is external event
   $display_external = (isset($event->field_external_rsvp[LANGUAGE_NONE][0]['value']) && $event->field_external_rsvp[LANGUAGE_NONE][0]['value'] !== '0');
   if ($display_external) {
     return 'show_external_rsvp';
+  }
+
+  // Check if the event has already happened
+  if (_tm_event_is_past($event)) {
+    return 'show_closed';
   }
 
   // Check if we are approved

@@ -31,7 +31,7 @@
 
     name = decodeURIComponent(name);  
 
-    var message = "How likely are you to recommend " + site_name + " to a friend or colleague?";
+    var message = "How likely are you to recommend " + site_name + "?"; // to a friend or colleague
 
     message = message + "<div class='tm_nps_container'><table style='width: 100%; margin-top: 0.75rem;'><tbody style='border-top: none;'><tr>";
     message = message + "<td style='width: 9%' align='center'><span class='tm_nps'><input onChange='updateFeedbackLabel()' type='radio' name='tm_nps' id='tm_nps_0' value='0'><br><label for='tm_nps_0'>0</label></span></td>";

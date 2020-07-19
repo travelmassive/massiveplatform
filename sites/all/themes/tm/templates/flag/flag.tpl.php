@@ -46,11 +46,25 @@
   $flag_upvote_class = "";
  }
 ?>
-
-<?php if (isset($event_flag) && $event_flag == "show_closed") : ?>
+<?php if (isset($event_flag) && $event_flag == "show_external_rsvp") : ?>
 
 <li class="<?php print $flag_wrapper_classes; ?>">
-  <span class="follow bttn bttn-secondary bttn-m disabled" rel="nofollow">Past Event </span>
+  <span class="follow bttn bttn-secondary bttn-m disabled" rel="nofollow">Past Event</span>
+  <style>
+    .actions-menu .external { display: none; }
+  </style>
+</li>
+
+<?php elseif (isset($event_flag) && $event_flag == "show_closed") : ?>
+
+<li class="<?php print $flag_wrapper_classes; ?>">
+  <span class="follow bttn bttn-secondary bttn-m disabled" rel="nofollow">Past Event</span>
+</li>
+
+<?php elseif (isset($event_flag) && $event_flag == "show_feedback") : ?>
+
+<li class="<?php print $flag_wrapper_classes; ?>">
+  <a href="javascript:jq_net_promoter_score('this event');"><span class="follow bttn bttn-secondary bttn-m" rel="nofollow">Feedback</span></a>
 </li>
 
 <?php elseif (isset($event_flag) && $event_flag == "show_geoblocked") : ?>
@@ -67,6 +81,7 @@ if ($geoblock_signups == "same_country_as_event") {
   }
 }
 ?>
+
 <li class="<?php print $flag_wrapper_classes; ?>">
   <span onClick="jq_alert('Sorry, you cannot register for this event', ' <?php print($geoblocked_message);?><br>If you need assistance, please <a href=\'/events/message/<?php print($event_id);?>\'>contact the organizers</a>.');" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></span>
 </li>

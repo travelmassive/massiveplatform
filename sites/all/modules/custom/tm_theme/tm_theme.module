@@ -179,7 +179,11 @@ function tm_theme_preprocess_html(&$variables, $hook) {
       drupal_set_message($conf["tm_users_feedback_cta"] . "<a href='/user/login?destination=" . drupal_get_path_alias() . "%3Ffeedback'>Please log in to share feedback</a>.");
       drupal_goto(drupal_get_path_alias());
     } else {
-      drupal_add_js('jQuery(document).ready(function () { setTimeout(function() { jq_net_promoter_score("' . $conf["tm_site_name"] . '","' . drupal_get_path_alias() . '" );}, 500); });', 'inline');
+      $site_name = $conf["tm_site_name"];
+      if (strpos(drupal_get_path_alias(), "events/") === 0) {
+        $site_name = "this event";
+      }
+      drupal_add_js('jQuery(document).ready(function () { setTimeout(function() { jq_net_promoter_score("' . $site_name . '","' . drupal_get_path_alias() . '" );}, 500); });', 'inline');
     }
   }
 

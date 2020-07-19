@@ -398,9 +398,6 @@ function tm_status_updates_get_combined_feed_global($start_date = null, $end_dat
 	$display_flags[] = flag_get_flag('follow_organizations')->fid;
 	$display_flags[] = flag_get_flag('signup')->fid;
 	$display_flags[] = flag_get_flag('event_register')->fid;
-	if (module_exists("tm_subscriptions")) {
-		$display_flags[] = flag_get_flag('organization_subscription_enable')->fid;
-	}
 	if (module_exists("tm_subscriptions_user")) {
 		$display_flags[] = flag_get_flag('user_subscription_enable')->fid;
 	}

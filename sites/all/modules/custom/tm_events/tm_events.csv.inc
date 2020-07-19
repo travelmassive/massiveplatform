@@ -114,15 +114,10 @@ function tm_events_download_csv_confirm($nid){
 
   // outside of loop for better performance
   $module_exists_tm_subscriptions_user = module_exists("tm_subscriptions_user");
-  $module_exists_tm_subscriptions = module_exists("tm_subscriptions");
 
   // preload flags
   if ($module_exists_tm_subscriptions_user) {
     $user_subscription_enable_flag = flag_get_flag('user_subscription_enable', NULL);
-  }
-
-  if ($module_exists_tm_subscriptions) {
-    $organization_subscription_enable_flag = flag_get_flag('organization_subscription_enable', NULL);
   }
   
   // list of users
@@ -208,26 +203,7 @@ function tm_events_download_csv_confirm($nid){
         $member_type = $conf["tm_subscriptions_user_label_noun"];
       }
     }
-
-    // company subscription
-    // use flag lookup directly for performance
-    if ($module_exists_tm_subscriptions) {
-
-      // get list of subscribed companies
-      $subscribed_companies = array();
-      $nids = tm_organizations_get_users_companies($account->uid);
-      foreach ($nids as $nid) {
-
-        // use direct flag lookup for performance
-        if ($organization_subscription_enable_flag->is_flagged($nid)) {
-          $subscribed_companies[] = $nid;
-        }
-      }
-
-      if (sizeof($subscribed_companies) > 0) {
-        $member_type = $conf["tm_subscriptions_organization_label_noun"];
-      }
-    }
+    
     $item[] = $member_type;
 
     // remove commas from any input data

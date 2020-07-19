@@ -167,18 +167,7 @@ function discourse_sso_get_user_params($user, $nonce = "") {
   } else {
     $remove_groups[] = 'subscribers';
   }
-
-  // company subscriber role
-  if (module_exists("tm_subscriptions")) {
-    // is user is associated with a company that has a subscription
-    $subscribed_companies = tm_subscriptions_get_users_subscribed_companies($user->uid);
-    if (sizeof($subscribed_companies) > 0) {
-      $add_groups[] = 'company-subscribers';
-    } else {
-      $remove_groups[] = 'company-subscribers';
-    }
-  }
-
+  
   // custom groups
   // ie: 
   // $conf["tm_discourse_sso_custom_groups"] = array("vips" => array(123));

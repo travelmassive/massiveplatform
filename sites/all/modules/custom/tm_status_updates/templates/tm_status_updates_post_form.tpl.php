@@ -1,11 +1,14 @@
 <style>
+#tm-newsfeed-heading h2 { font-size: 44px; }
+#tm-newsfeed-container { position: relative; }
+#tm-newsfeed-container hr { border: none; border-bottom: 1px solid #ddd; }
 .tm-status-update-form-container { padding-top: 12px; }
 .tm-status-update-image-container { left: 8px; top: 0px; width: 100px; }
 .tm-status-update-image { width: 48px; border-radius: 50%; }
-.tm-status-update-text-container { position: absolute; left: 72px; right: 16px; top: 12px; }
-.tm-status-update-post-actions { text-align: right; margin-top: 6px; }
+.tm-status-update-text-container { position: absolute; left: 62px; right: 0px; top: 12px; }
+.tm-status-update-post-actions { text-align: right; margin-top: 6px;}
 #tm-status-update-post-button { margin-left: 8px; }
-#charNum { font-size: 14px; color: #888; margin-right: 8px; position: absolute; top: -16px; right: 8px; }
+#charNum { font-size: 14px; color: #888; margin-right: 8px; position: absolute; top: -12px; right: 0px; }
 #tm-status-update-feedback-container { font-size: 14px; margin-bottom: -12px; min-height: 28px; }
 #tm-status-update-location-text { font-size: 14px; color: #213040; text-decoration: underline; }
 #tm-status-update-feedback-loading-image { margin-top: 6px; padding-right: 8px; }
@@ -14,6 +17,11 @@
 @media only screen and (max-width: 650px) {
 	#tm-status-update-location-container { float: right; min-width: 300px; text-align: right; margin-left: 0px; }
 }
+.messages--status { margin-bottom: 0px; }
+.newsfeed-close-container { float: right; margin-right:4px; margin-top: 4px; }
+.newsfeed-close-container:before { font-family: 'tm-icons'; content: "\e617"; color: #888; }
+.newsfeed-close-container:hover:before { color: #FC389A; }
+#newsfeed-results .newsfeed-close-container { display: none; }
 </style>
 
 <script>

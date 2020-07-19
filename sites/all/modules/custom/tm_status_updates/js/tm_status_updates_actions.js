@@ -260,11 +260,11 @@
 
         // if reloading empty feed
         if (reload) {
-          $(".status-update-list:first").html("");
+          $("#newsfeed-results .status-update-list").html("");
         }
         
         // add data
-        $(".status-update-list:first").append(data);
+        $("#newsfeed-results .status-update-list").append(data);
 
         // add dropdown handlers
         tm_status_update_init_dropdown_handlers();

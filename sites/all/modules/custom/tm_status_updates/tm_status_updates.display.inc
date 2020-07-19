@@ -134,13 +134,8 @@ function tm_status_updates_display_feed($feed_type) {
 
 	// custom message
 	$message_html = "";
-	if (($help_message == "") and (isset($conf["tm_status_updates_custom_message"][$feed_type]))) {
-		$message_html = tm_status_update_render_custom_message($conf["tm_status_updates_custom_message"][$feed_type]);
-		if ($promoted_html == "") {
-			// if no promoted updates, push the help text up to be even with left hand side
-			$message_html = "<div style='margin-top: -14px;'>" . $message_html . "</div>";
-		}
-
+	if (($help_message != "") and (isset($conf["tm_status_updates_custom_message"][$feed_type]))) {
+		$message_html = "<div class='messages--status messages status'>" . $conf["tm_status_updates_custom_message"][$feed_type] . "</div>";
 	}
 	
 	// if not approved show a message

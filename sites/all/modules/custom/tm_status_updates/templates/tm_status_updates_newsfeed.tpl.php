@@ -1,17 +1,19 @@
+__CUSTOM_MESSAGE__
+<div id="tm-newsfeed-heading">
+	<h2>Share your news</h2>
+</div>
+<div id="tm-newsfeed-container">
 __STATUS_UPDATE_FORM__
-
+<hr>
 <div class="trilithon" id="newsfeed" style="margin-top: 32px;">
+	
+	<div class="row" id="newsfeed-top">
+		__PROMOTED_UPDATES__
+	</div>
 
-	<div class="column first" id="newsfeed-results">
+	<div class="row" id="newsfeed-results">
 	__NEWSFEED_RESULTS__
 	</div>
 
-	<div class="column second" id="newsfeed-sidebar">
-
-		__PROMOTED_UPDATES__
-		__CUSTOM_MESSAGE__
-		__RECOMMENDED_MEMBERS__
-
-	</div>
 
 </div>

@@ -1,6 +1,4 @@
-<div id="tm-newsfeed-heading">
-	<h2>__NEWSFEED_HEADING__</h2>
-</div>
+__NEWSFEED_HEADING__
 <div id="tm-newsfeed-container">
 __STATUS_UPDATE_FORM__
 <div class="trilithon" id="newsfeed" style="margin-top: 32px;">

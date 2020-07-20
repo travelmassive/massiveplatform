@@ -141,9 +141,13 @@ function tm_status_updates_display_feed($feed_type) {
 	tm_status_updates_unapproved_member_message();
 	
 	// newsfeed heading
-	$newsfeed_heading = "Share your news";
-	if (isset($conf["tm_status_updates_heading"])) {
-		$newsfeed_heading = $conf["tm_status_updates_heading"];
+	$newsfeed_heading = "";
+	if (($feed_type == "newsfeed") or ($feed_type == "global")) {
+		$heading = "Share your news";
+		if (isset($conf["tm_status_updates_heading"])) {
+			$heading = $conf["tm_status_updates_heading"];
+		}
+		$newsfeed_heading = '<div id="tm-newsfeed-heading"><h2>' . $heading . '</h2></div>';
 	}
 
 	// construct page from rendered items

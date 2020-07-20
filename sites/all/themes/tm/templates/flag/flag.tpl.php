@@ -46,7 +46,7 @@
   $flag_upvote_class = "";
  }
 ?>
-<?php if (isset($event_flag) && $event_flag == "show_external_rsvp") : ?>
+<?php if (isset($event_flag) && $event_flag == "show_external_rsvp_closed") : ?>
 
 <li class="<?php print $flag_wrapper_classes; ?>">
   <span class="follow bttn bttn-secondary bttn-m disabled" rel="nofollow">Past Event</span>

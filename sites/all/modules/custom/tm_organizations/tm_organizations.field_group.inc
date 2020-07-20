@@ -107,7 +107,7 @@ function tm_organizations_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Moderator Settings',
-    'weight' => '4',
+    'weight' => '2',
     'children' => array(
       0 => 'field_company_enable_events',
       1 => 'field_company_newsfeed_location',

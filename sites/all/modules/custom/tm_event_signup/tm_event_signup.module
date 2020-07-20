@@ -261,6 +261,7 @@ function tm_event_signup_preprocess_flag(&$variables) {
 
   // Not not flagged
   if ($status == 'unflagged' && $flagged_entity->type == 'event') {
+
     $event_flag = _tm_event_display_flag($event_id);
 
     // flag is event_register
@@ -333,6 +334,13 @@ function _tm_event_display_flag($nid) {
   // Check if is external RSVP.
   // Is external event
   $display_external = (isset($event->field_external_rsvp[LANGUAGE_NONE][0]['value']) && $event->field_external_rsvp[LANGUAGE_NONE][0]['value'] !== '0');
+
+  // External rsvp and past event
+  if (_tm_event_is_past($event) and $display_external) {
+    return 'show_external_rsvp_closed';
+  }
+
+  // External rsvp
   if ($display_external) {
     return 'show_external_rsvp';
   }

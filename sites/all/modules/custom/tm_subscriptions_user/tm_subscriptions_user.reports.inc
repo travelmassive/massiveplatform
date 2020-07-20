@@ -84,7 +84,7 @@ function tm_subscriptions_reports_user_payments($account) {
     $html .= "<p class='tm-subscriptions-report-add'><a href='/user/" . $account->uid . "/edit#user-account-details'>Add your company details to this receipt</a></p>";
   }
 
-  // field_company_account_contact
+  // field_user_account_contact
   if (isset($account->field_user_account_contact[LANGUAGE_NONE][0]['safe_value'])) {
     $html .= "Contact: " . strip_tags($account->field_user_account_contact[LANGUAGE_NONE][0]['safe_value']);
   }

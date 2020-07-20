@@ -496,61 +496,6 @@ example: http://exampleblog.com/feed/',
     ),
   );
 
-  // Exported field_instance: 'node-organization-field_company_testimonial'.
-  $field_instances['node-organization-field_company_testimonial'] = array(
-    'bundle' => 'organization',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'If you\'ve enjoyed working with us, please share a short testimonial.<br>
-Your testimonial will be displayed on your company page.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 34,
-      ),
-      'full' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_plain',
-        'weight' => 17,
-      ),
-      'grid' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-      'list' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'ds_extras_field_template' => '',
-    'entity_type' => 'node',
-    'field_name' => 'field_company_testimonial',
-    'label' => 'Share a Testimonial',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 2,
-      ),
-      'type' => 'text_textarea',
-      'weight' => 70,
-    ),
-  );
-
   // Exported field_instance: 'node-organization-field_country'.
   $field_instances['node-organization-field_country'] = array(
     'bundle' => 'organization',
@@ -664,7 +609,7 @@ Displays a short message to followers on your company page.<br><br>',
         'rows' => 4,
       ),
       'type' => 'text_textarea',
-      'weight' => 56,
+      'weight' => 80,
     ),
   );
 
@@ -904,7 +849,7 @@ Displays a short message to followers on your company page.<br><br>',
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 49,
+      'weight' => 73,
     ),
   );
 
@@ -983,7 +928,7 @@ Displays a short message to followers on your company page.<br><br>',
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 51,
+      'weight' => 75,
     ),
   );
 
@@ -1063,7 +1008,7 @@ Displays a short message to followers on your company page.<br><br>',
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 50,
+      'weight' => 74,
     ),
   );
 
@@ -1142,7 +1087,7 @@ Displays a short message to followers on your company page.<br><br>',
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 54,
+      'weight' => 78,
     ),
   );
 
@@ -1216,7 +1161,7 @@ Displays a short message to followers on your company page.<br><br>',
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 55,
+      'weight' => 79,
     ),
   );
 
@@ -1296,7 +1241,7 @@ Displays a short message to followers on your company page.<br><br>',
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 48,
+      'weight' => 72,
     ),
   );
 
@@ -1375,7 +1320,7 @@ Displays a short message to followers on your company page.<br><br>',
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 53,
+      'weight' => 77,
     ),
   );
 
@@ -1455,7 +1400,7 @@ Displays a short message to followers on your company page.<br><br>',
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 47,
+      'weight' => 71,
     ),
   );
 
@@ -1534,7 +1479,7 @@ Displays a short message to followers on your company page.<br><br>',
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 52,
+      'weight' => 76,
     ),
   );
 
@@ -1808,8 +1753,6 @@ Example: #news #tech');
   t('Friendly URL');
   t('Give something back to members who follow your company.<br>
 Displays a short message to followers on your company page.<br><br>');
-  t('If you\'ve enjoyed working with us, please share a short testimonial.<br>
-Your testimonial will be displayed on your company page.');
   t('Increase your exposure with a cover video. 
 <br>Example: https://www.youtube.com/watch?v=rbtv2zxhufM');
   t('Industry Segment');
@@ -1828,7 +1771,6 @@ example: http://exampleblog.com/feed/');
   t('Provide a cover image to be displayed behind your company logo.
 <br>To support retina displays, upload your image sized to 1610x906');
   t('Select up to five members who can manage this listing.');
-  t('Share a Testimonial');
   t('Share how your organization is working with employees, customers, partners, or the community during this time.<br>
 This message will be displayed on your company page.');
   t('Share your organization\'s response to COVID-19');

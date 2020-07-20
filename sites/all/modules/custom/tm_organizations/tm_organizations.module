@@ -108,18 +108,6 @@ function tm_organizations_node_presave($node) {
 
   }
 
-  // Trim testimonial
-  if (isset($node->field_company_testimonial[LANGUAGE_NONE][0]['value'])) {
-    $trimmed = trim($node->field_company_testimonial[LANGUAGE_NONE][0]['value']);
-    if ($trimmed != "") {
-      // save trimmed value
-      $node->field_company_testimonial[LANGUAGE_NONE][0]['value'] = $trimmed;
-    } else {
-      // remove empty value
-      $node->field_company_testimonial = null;
-    }
-  }
-
   // Trim COVID-19 Message
   if (isset($node->field_company_covid19_message[LANGUAGE_NONE][0]['value'])) {
     $trimmed = trim($node->field_company_covid19_message[LANGUAGE_NONE][0]['value']);
@@ -186,10 +174,10 @@ function tm_organizations_preprocess_page(&$variables, $hook) {
   global $user;
   global $conf;
 
-  $default_message = "Discover and connect with other companies in the " . $conf["tm_site_name"] . " network.";
+  $default_message = "Discover and connect with other companies in the " . $conf["tm_site_name"] . " network. Add a <a href='/node/add/organization'>company page</a>.";
 
   if (module_exists("tm_search_api")) {
-    $default_message = "Find and discover companies in our network with <a href='/search'>" . $conf["tm_site_name"] . " Search</a>.";
+    $default_message = "Search for companies on <a href='/search'>" . $conf["tm_site_name"] . " Search</a>, or add a new <a href='/node/add/organization'>company page</a> for your business or startup.";
   }
 
   // Don't allow user to exceed limit of adding companies
@@ -250,7 +238,7 @@ function tm_organizations_preprocess_page(&$variables, $hook) {
 
     // Option 1. Create a message if user already has a company
     if ($user_has_companies) {
-      $message = "Discover and connect with other companies in the " . $conf["tm_site_name"] . " network. View " . l(t('your company pages'), 'user/' . $loaded->uid . "/companies") . "";
+      $message = "Discover and connect with other companies in the " . $conf["tm_site_name"] . " network. View " . l(t('your company pages'), 'user/' . $loaded->uid . "/companies");
       drupal_set_message($message, 'page_notice');
       return;
     }
@@ -271,7 +259,7 @@ function tm_organizations_preprocess_page(&$variables, $hook) {
     }
 
     // Display message
-    $message .= "<div id='pending_approval' style='display: none;'>Your account is currently pending approval by our team. Once we've approved your account, you will be able to add your company page.</div>";
+    $message .= "<div id='pending_approval' style='display: none;'>Your account is currently pending verification. Once we've verified your account, you will be able to add your company page.</div>";
     drupal_set_message($message, 'page_notice');
 
   }

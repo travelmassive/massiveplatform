@@ -397,6 +397,11 @@ function tm_organizations_form_alter(&$form, $form_state, $form_id) {
     field_group_hide_field_groups($form, array('group_company_account_details'));
     unset($form['field_company_subscription_type']);
     unset($form['field_company_subscription_date']);
+    unset($form['field_company_account_contact']);
+    unset($form['field_company_account_email']);
+    unset($form['field_company_account_phone']);
+    unset($form['field_company_account_receipt']);
+    unset($form['field_company_testimonial']);
 
     // upvote
     $display_upvotes = $conf["tm_organizations_upvote"];

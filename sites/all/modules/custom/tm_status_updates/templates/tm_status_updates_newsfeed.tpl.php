@@ -1,6 +1,5 @@
-__CUSTOM_MESSAGE__
 <div id="tm-newsfeed-heading">
-	<h2>Share your news</h2>
+	<h2>__NEWSFEED_HEADING__</h2>
 </div>
 <div id="tm-newsfeed-container">
 __STATUS_UPDATE_FORM__

@@ -491,7 +491,7 @@ function tm_status_updates_unapproved_member_message() {
 
 	// don't show if user has't yet validated address
 	if (in_array('non-validated', $account->roles)) {
-		return false;
+		 return;
 	}
 
 	// check if user has been approved yet

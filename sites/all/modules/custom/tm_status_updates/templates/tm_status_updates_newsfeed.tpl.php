@@ -3,14 +3,13 @@
 </div>
 <div id="tm-newsfeed-container">
 __STATUS_UPDATE_FORM__
-<hr>
 <div class="trilithon" id="newsfeed" style="margin-top: 32px;">
 	
-	<div class="row" id="newsfeed-top">
+	<div class="below-header" id="newsfeed-top">
 		__PROMOTED_UPDATES__
 	</div>
 
-	<div class="row" id="newsfeed-results">
+	<div class="below-header" id="newsfeed-results">
 	__NEWSFEED_RESULTS__
 	</div>
 

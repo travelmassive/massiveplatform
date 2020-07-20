@@ -1,5 +1,5 @@
 <style>
-#tm-newsfeed-heading h2 { font-size: 44px; }
+#tm-newsfeed-heading h2 { font-size: 45px; }
 #tm-newsfeed-container { position: relative; }
 #tm-newsfeed-container hr { border: none; border-bottom: 1px solid #ddd; }
 .tm-status-update-form-container { padding-top: 12px; }

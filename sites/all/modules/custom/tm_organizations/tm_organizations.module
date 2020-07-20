@@ -176,10 +176,6 @@ function tm_organizations_preprocess_page(&$variables, $hook) {
 
   $default_message = "Discover and connect with other companies in the " . $conf["tm_site_name"] . " network. Add a <a href='/node/add/organization'>company page</a>.";
 
-  if (module_exists("tm_search_api")) {
-    $default_message = "Search for companies on <a href='/search'>" . $conf["tm_site_name"] . " Search</a>, or add a new <a href='/node/add/organization'>company page</a> for your business or startup.";
-  }
-
   // Don't allow user to exceed limit of adding companies
   if (current_path() == "node/add/organization") {
     if (!tm_organizations_check_user_can_create_company($user->uid)) {
@@ -238,7 +234,7 @@ function tm_organizations_preprocess_page(&$variables, $hook) {
 
     // Option 1. Create a message if user already has a company
     if ($user_has_companies) {
-      $message = "Discover and connect with other companies in the " . $conf["tm_site_name"] . " network. View " . l(t('your company pages'), 'user/' . $loaded->uid . "/companies");
+      $message = "Discover and connect with other companies in the " . $conf["tm_site_name"] . " network. View " . l(t('your company pages'), 'user/' . $loaded->uid . "/companies") . ".";
       drupal_set_message($message, 'page_notice');
       return;
     }

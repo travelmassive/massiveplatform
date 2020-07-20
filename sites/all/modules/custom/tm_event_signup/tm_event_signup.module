@@ -245,7 +245,7 @@ function tm_event_signup_flag_javascript_info_alter(&$info, $flag) {
  * Preprocess the register and waitlist flags to display or hide them
  */
 function tm_event_signup_preprocess_flag(&$variables) {
-
+  
   // Shortcuts.
   $flag = $variables['flag'];
   $status = $variables['status'];
@@ -256,6 +256,11 @@ function tm_event_signup_preprocess_flag(&$variables) {
   // Get flag for event
   // Either: show_closed, show_external_rsvp, show_register, show_waitlist, or show_not_approved
   if (!isset($flagged_entity->type)) {
+    return;
+  }
+
+  // Must be event
+  if ($flagged_entity->type != 'event') {
     return;
   }
 
@@ -284,7 +289,6 @@ function tm_event_signup_preprocess_flag(&$variables) {
 
     // Check if the event has already happened
     
-    $event = node_load($event_id);
     if (_tm_event_is_past($event)) {
 
       // show closed
@@ -293,6 +297,7 @@ function tm_event_signup_preprocess_flag(&$variables) {
       // show feedback for recent chapter events user has registered for
       if (module_exists("tm_nps")) {
         global $user;
+        $event = $flagged_entity;
         if (tm_events_user_is_registered($event->nid, $user->uid)) {
           if (isset($event->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
             $seconds_since_event = 7 * 24 * 60 * 60;

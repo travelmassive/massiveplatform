@@ -177,7 +177,7 @@ function tm_organizations_preprocess_page(&$variables, $hook) {
   $default_message = "Discover and connect with other companies in the " . $conf["tm_site_name"] . " network. Add a <a href='/node/add/organization'>company page</a>.";
 
   if (module_exists("tm_search_api")) {
-    $default_message = "Discover and connect with other companies in the " . $conf["tm_site_name"] . " network, or use our <a href='/search'>advanced search</a>. Add a <a href='/node/add/organization'>company page</a>.";
+    $default_message = "Discover and connect with other companies in the " . $conf["tm_site_name"] . " network, or try our <a href='/search'>advanced search</a>. Add a <a href='/node/add/organization'>company page</a>.";
   }
 
   // Don't allow user to exceed limit of adding companies

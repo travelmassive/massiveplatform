@@ -248,7 +248,7 @@ function tm_event_signup_preprocess_flag(&$variables) {
   
   // Shortcuts.
   $flag = $variables['flag'];
-  $status = $variables['status'];
+  $status = $variables['status']; // set in _tm_flags_flag_limits()
   $event_id = $variables['entity_id'];
   $flagged_entity = node_load($event_id);
   $variables['event_id'] = $event_id;
@@ -264,8 +264,12 @@ function tm_event_signup_preprocess_flag(&$variables) {
     return;
   }
 
-  // Not not flagged
-  if ($status == 'unflagged' && $flagged_entity->type == 'event') {
+  // Flag status
+  $is_registered = tm_flags_is_entity_flagged("node", $event_id, "event_register", $flag->fid);
+  $is_waitlist = tm_flags_is_entity_flagged("node", $event_id, "event_waitlist", $flag->fid);
+
+  // Case 1. Not registered or on waitlist
+  if (!$is_registered and !$is_waitlist) {
 
     $event_flag = _tm_event_display_flag($event_id);
 
@@ -284,11 +288,12 @@ function tm_event_signup_preprocess_flag(&$variables) {
     }
   }
 
-  // Has been flagged
-  if ($status == 'flagged' && $flagged_entity->type == 'event') {
+  // Case 2. Registered
+  if ($is_registered) {
 
     // Check if the event has already happened
-    
+    $event = $flagged_entity;
+
     if (_tm_event_is_past($event)) {
 
       // show closed
@@ -297,7 +302,7 @@ function tm_event_signup_preprocess_flag(&$variables) {
       // show feedback for recent chapter events user has registered for
       if (module_exists("tm_nps")) {
         global $user;
-        $event = $flagged_entity;
+        
         if (tm_events_user_is_registered($event->nid, $user->uid)) {
           if (isset($event->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
             $seconds_since_event = 7 * 24 * 60 * 60;

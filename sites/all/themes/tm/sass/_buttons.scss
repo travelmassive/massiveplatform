@@ -61,6 +61,7 @@ button {
   }
   &.follow,
   &.external,
+  &.past-event,
   &.edit {
     width: 9rem;
     &:before {

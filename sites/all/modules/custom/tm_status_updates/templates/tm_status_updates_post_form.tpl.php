@@ -4,7 +4,7 @@
 #tm-newsfeed-container hr { border: none; border-bottom: 1px solid #ddd; }
 .tm-status-update-form-container { padding-top: 12px; }
 .tm-status-update-image-container { left: 8px; top: 0px; width: 100px; }
-.tm-status-update-image { width: 48px; border-radius: 50%; }
+.tm-status-update-image { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
 .tm-status-update-text-container { position: absolute; left: 62px; right: 0px; top: 12px; }
 .tm-status-update-post-actions { text-align: right; margin-top: 6px;}
 #tm-status-update-post-button { margin-left: 8px; }

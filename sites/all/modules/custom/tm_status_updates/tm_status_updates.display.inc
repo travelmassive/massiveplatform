@@ -133,8 +133,10 @@ function tm_status_updates_display_feed($feed_type) {
 	}
 
 	// custom message
-	if (isset($conf["tm_status_updates_custom_message"][$feed_type])) {
-		drupal_set_message($conf["tm_status_updates_custom_message"][$feed_type], "help-tip");
+	if (user_is_logged_in()) {
+		if (isset($conf["tm_status_updates_custom_message"][$feed_type])) {
+			drupal_set_message($conf["tm_status_updates_custom_message"][$feed_type], "help-tip");
+		}
 	}
 
 	// if not approved show a message

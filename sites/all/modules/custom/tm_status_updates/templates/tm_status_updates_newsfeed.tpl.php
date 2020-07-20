@@ -11,5 +11,4 @@ __STATUS_UPDATE_FORM__
 	__NEWSFEED_RESULTS__
 	</div>
 
-
 </div>

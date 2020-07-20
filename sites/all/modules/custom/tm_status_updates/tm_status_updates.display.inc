@@ -133,18 +133,18 @@ function tm_status_updates_display_feed($feed_type) {
 	}
 
 	// custom message
-	$message_html = "";
-	if (($help_message == "") and (isset($conf["tm_status_updates_custom_message"][$feed_type]))) {
-		$message_html = tm_status_update_render_custom_message($conf["tm_status_updates_custom_message"][$feed_type]);
-		if ($promoted_html == "") {
-			// if no promoted updates, push the help text up to be even with left hand side
-			$message_html = "<div style='margin-top: -14px;'>" . $message_html . "</div>";
-		}
-
+	if (isset($conf["tm_status_updates_custom_message"][$feed_type])) {
+		drupal_set_message($conf["tm_status_updates_custom_message"][$feed_type], "help-tip");
 	}
-	
+
 	// if not approved show a message
 	tm_status_updates_unapproved_member_message();
+	
+	// newsfeed heading
+	$newsfeed_heading = "Share your news";
+	if (isset($conf["tm_status_updates_heading"])) {
+		$newsfeed_heading = $conf["tm_status_updates_heading"];
+	}
 
 	// construct page from rendered items
 	$html = file_get_contents(drupal_get_path('module', 'tm_status_updates') .'/templates/tm_status_updates_newsfeed.tpl.php');
@@ -152,7 +152,7 @@ function tm_status_updates_display_feed($feed_type) {
 	$html = str_replace("__NEWSFEED_RESULTS__", $newsfeed_html, $html);
 	$html = str_replace("__PROMOTED_UPDATES__", $promoted_html, $html);
 	$html = str_replace("__RECOMMENDED_MEMBERS__", $recommended_html, $html);
-	$html = str_replace("__CUSTOM_MESSAGE__", $message_html, $html);
+	$html = str_replace("__NEWSFEED_HEADING__", $newsfeed_heading, $html);
 
 	// include performance timing
 	$performance_time = round((microtime(true) - $timer_start), 3);
@@ -491,7 +491,7 @@ function tm_status_updates_unapproved_member_message() {
 
 	// don't show if user has't yet validated address
 	if (in_array('non-validated', $account->roles)) {
-		return;
+		 return;
 	}
 
 	// check if user has been approved yet
@@ -512,8 +512,10 @@ function tm_status_updates_unapproved_member_message() {
 
 		// tell user they need to be approved
 		$message = $conf["tm_status_updates_unapproved_message"];
+		drupal_get_messages("help-tip");
 		drupal_set_message($message . " " . $approval_link, "help-tip");
 	}
+
 }
 
 /**

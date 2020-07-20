@@ -875,16 +875,16 @@ function tm_status_updates_render_link_preview($preview_data) {
 	$image_file = $preview_data["image_file"];
 	$image_url = file_create_url($image_file);
 
+	// add protocol to url if not already
+	if ((stripos($url, "http://") !== 0) and ((stripos($url, "https://") !== 0))) {
+		$url = "http://" . $url;
+	}
+
 	// display url
 	$display_url = $url;
 	$url_parts = explode("/", $url);
 	if (isset($url_parts[2])) {
 		$display_url = str_replace("www.", "", $url_parts[2]);
-	}
-
-	// add protocol to url if not already
-	if ((stripos($url, "http://") !== 0) and ((stripos($url, "https://") !== 0))) {
-		$url = "http://" . $url;
 	}
 
 	// case of no title
@@ -994,6 +994,7 @@ function tm_status_updates_render_max_length($text, $max_length) {
 global $tm_status_updates_feeds_template;
 $tm_status_updates_feeds_template = <<<EOT
 <section class="contained contained-block status-updates __CSS_CLASS__">
+	<div class='newsfeed-close-container' onClick="javascript:this.parentNode.style.display='none';"></div>
 	<header class="contained-head">
 		<h1 class="prime-title status-updates top">__FEED_TITLE__</h1>
 	</header>
@@ -1096,8 +1097,8 @@ $tm_status_updates_feed_template_css = <<<EOT
 .card.status-updates:hover { background-color: #e7f2f7; }
 img.status-updates-image { max-height: 64px; max-width: 64px; border-radius: 4px; }
 img.status-updates-image-avatar { max-height: 64px; max-width: 64px; border-radius: 50%; }
-.status-updates.newsfeed { border-left: 8px solid #2b75b4; }
-.status-updates.promoted { border-left: 8px solid #ffA700; }
+.status-updates.newsfeed { border-left: 8px solid #488bf8; }
+.status-updates.promoted { border-left: 8px solid #FC389A; }
 </style>
 EOT;
 

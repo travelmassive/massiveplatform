@@ -655,6 +655,7 @@ $conf["tm_branding_include_js"] = "";
 /** STATUS UPDATES **/
 $conf["tm_status_updates_enabled"] = true; // enable status updates
 $conf['tm_status_updates_frontpage_feed'] = true; // display status updates and flags on front page
+$conf["tm_status_updates_heading"] = "Share your news"; // heading on newsfeed front page
 $conf["tm_status_updates_placeholders"] = array("Post a news update...", "What are you working on?", "Share an achievement with the community...");
 $conf["tm_status_updates_silence_uids"] = array(); // silence any spamming members from newsfeeds
 $conf["tm_status_updates_hide_recommended_uids"] = array(1, 10452); // hide members from recommended members lists

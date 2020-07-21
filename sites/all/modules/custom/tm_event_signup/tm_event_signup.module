@@ -264,54 +264,25 @@ function tm_event_signup_preprocess_flag(&$variables) {
     return;
   }
 
-  // Flag status
-  $is_registered = tm_flags_is_entity_flagged("node", $event_id, "event_register", $flag->fid);
-  $is_waitlist = tm_flags_is_entity_flagged("node", $event_id, "event_waitlist", $flag->fid);
+  // The register flag may be hidden but also send through variables to flag.tpl.php to
+  // indicate whether to show closed event, external_rsvp, etc.
+  $event_flag = _tm_event_display_flag($event_id);
+  $variables['event_flag'] = $event_flag;
 
-  // Case 1. Not registered or on waitlist
-  if (!$is_registered and !$is_waitlist) {
+  // User flags
+  $is_waitlisted = $flag->is_flagged($event_id);
 
-    $event_flag = _tm_event_display_flag($event_id);
-
-    // flag is event_register
-    if ($flag->name == "event_register") { //} && $status == 'unflagged') {
-        $variables['hide_flag'] = ($event_flag != "show_register");
-
-        // the register flag may be hidden but also send through variables to flag.tpl.php to
-        // indicate whether to show closed event, external_rsvp, etc.
-        $variables['event_flag'] = $event_flag;
-    }
-
-    // flag is event_waitlist
-    if ($flag->name == "event_waitlist") {
-       $variables['hide_flag'] = ($event_flag != "show_waitlist");
+  // Handle flag event_register
+  if ($flag->name == "event_register") {
+     if ($event_flag == "show_waitlist") {
+      $variables['do_not_display_flag'] = true;
     }
   }
 
-  // Case 2. Registered
-  if ($is_registered) {
-
-    // Check if the event has already happened
-    $event = $flagged_entity;
-
-    if (_tm_event_is_past($event)) {
-
-      // show closed
-      $variables['event_flag'] = 'show_closed';
-
-      // show feedback for recent chapter events user has registered for
-      if (module_exists("tm_nps")) {
-        global $user;
-        
-        if (tm_events_user_is_registered($event->nid, $user->uid)) {
-          if (isset($event->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
-            $seconds_since_event = 7 * 24 * 60 * 60;
-            if (tm_events_seconds_until_event_starts($event) > (-$seconds_since_event)) {
-              $variables['event_flag'] = 'show_feedback';
-            }
-          }
-        }
-      }
+  // Handle flag event_waitlist
+  if ($flag->name == "event_waitlist") {
+    if ($event_flag != "show_waitlist") {
+      $variables['do_not_display_flag'] = true;
     }
   }
 
@@ -332,7 +303,9 @@ function _tm_event_display_flag($nid) {
 
   global $user;
 
-  $flag = flag_get_flag('event_register');
+  // Flags
+  $flag_register = flag_get_flag('event_register');
+  $flag_waitlist = flag_get_flag('event_waitlist');
 
   $limit = 0;
   $event = node_load($nid);
@@ -355,9 +328,29 @@ function _tm_event_display_flag($nid) {
     return 'show_external_rsvp';
   }
 
+  // Show feedback for recent chapter events user has registered for
+  if (_tm_event_is_past($event)) {
+    if (module_exists("tm_nps")) {
+      if (tm_events_user_is_registered($event->nid, $user->uid)) {
+        if (isset($event->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
+          $seconds_since_event = 7 * 24 * 60 * 60;
+          if (tm_events_seconds_until_event_starts($event) > (-$seconds_since_event)) {
+            return 'show_feedback';
+          }
+        }
+      }
+    }
+  }
+
   // Check if the event has already happened
   if (_tm_event_is_past($event)) {
     return 'show_closed';
+  }
+
+  // Is waitlisted
+  $is_waitlisted = $flag_waitlist->is_flagged($nid);
+  if ($is_waitlisted) {
+    return 'show_waitlist';
   }
 
   // Check if we are approved
@@ -384,9 +377,9 @@ function _tm_event_display_flag($nid) {
   }
   
   // Signup limit
-  if ($flag->get_count($nid) >= $limit) {
+  if ($flag_register->get_count($nid) >= $limit) {
     // Show waitlist, event booked out
-    if ($flag->is_flagged($nid, $user->uid)) {
+    if ($flag_register->is_flagged($nid, $user->uid)) {
       return 'show_register';
     } else {
       // not registered, show waitlist

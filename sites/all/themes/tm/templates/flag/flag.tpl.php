@@ -39,7 +39,12 @@
  * advanced theming you may have to remove all the whitespace.
  */
 ?>
-
+<?php
+// set in tm_event_signup_preprocess_flag
+if (isset($do_not_display_flag)) {
+  return;
+}
+?>
 <?php
  // allow $flag_upvote_class
  if (!isset($flag_upvote_class)) {

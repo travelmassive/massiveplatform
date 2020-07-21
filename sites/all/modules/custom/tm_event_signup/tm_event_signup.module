@@ -274,7 +274,7 @@ function tm_event_signup_preprocess_flag(&$variables) {
 
   // Handle flag event_register
   if ($flag->name == "event_register") {
-     if ($event_flag == "show_waitlist") {
+     if (($event_flag == "show_waitlist") or ($event_flag == "show_external_rsvp")) {
       $variables['do_not_display_flag'] = true;
     }
   }

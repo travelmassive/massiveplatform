@@ -274,14 +274,14 @@ function tm_event_signup_preprocess_flag(&$variables) {
   $event_flag = _tm_event_display_flag($event_id);
   $variables['event_flag'] = $event_flag;
 
-  // Handle flag event_register
+  // Hide register flag if on waitlist, or external rsvp
   if ($flag->name == "event_register") {
      if (($event_flag == "show_waitlist") or ($event_flag == "show_external_rsvp")) {
       $variables['do_not_display_flag'] = true;
     }
   }
 
-  // Handle flag event_waitlist
+  // Hide waitlist flag if not showing waitlist
   if ($flag->name == "event_waitlist") {
     if ($event_flag != "show_waitlist") {
       $variables['do_not_display_flag'] = true;

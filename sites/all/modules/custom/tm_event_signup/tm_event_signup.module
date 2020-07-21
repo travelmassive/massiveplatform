@@ -250,11 +250,15 @@ function tm_event_signup_preprocess_flag(&$variables) {
   $flag = $variables['flag'];
   $status = $variables['status']; // set in _tm_flags_flag_limits()
   $event_id = $variables['entity_id'];
-  $flagged_entity = node_load($event_id);
   $variables['event_id'] = $event_id;
 
-  // Get flag for event
-  // Either: show_closed, show_external_rsvp, show_register, show_waitlist, or show_not_approved
+  // Check flag
+  if (($flag->name != "event_register") and ($flag->name != "event_waitlist")) {
+    return;
+  }
+
+  // Check flagged entity
+  $flagged_entity = node_load($event_id);
   if (!isset($flagged_entity->type)) {
     return;
   }
@@ -266,6 +270,7 @@ function tm_event_signup_preprocess_flag(&$variables) {
 
   // The register flag may be hidden but also send through variables to flag.tpl.php to
   // indicate whether to show closed event, external_rsvp, etc.
+  // ie: show_closed, show_external_rsvp, show_register, show_waitlist, or show_not_approved
   $event_flag = _tm_event_display_flag($event_id);
   $variables['event_flag'] = $event_flag;
 

@@ -139,30 +139,28 @@ function _tm_event_chatbox($field, $title = NULL) {
 
     // js to display and minimize chat box and set cookie
     $js = "
-  function tm_show_chat_box() {
-    // set cookie
-    var d = new Date;
-    d.setTime(d.getTime() + 24*60*60*1000); // 1 day
-    var cookie = '" . $cookie_key . "=1; domain=.' + window.location.host.toString() + '; path=/;expires=' + d.toGMTString();
-    document.cookie = cookie;
+function tm_show_chat_box() {
+  // set cookie
+  var d = new Date;
+  d.setTime(d.getTime() + 24*60*60*1000); // 1 day
+  var cookie = '" . $cookie_key . "=1; domain=.' + window.location.host.toString() + '; path=/;expires=' + d.toGMTString();
+  document.cookie = cookie;
 
-    // hide and show
-    jQuery('#event_chatbox_container_small').hide();
-    jQuery('#event_chatbox_container').show();
-  }
+  // hide and show
+  jQuery('#event_chatbox_container_small').hide();
+  jQuery('#event_chatbox_container').show();
+}
 
-  function tm_hide_chat_box() {
+function tm_hide_chat_box() {
+  // delete cookie
+  var cookie = '" . $cookie_key . "= ; domain=.' + window.location.host.toString() + '; path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT';
+  document.cookie = cookie;
 
-    // delete cookie
-    var cookie = '" . $cookie_key . "= ; domain=.' + window.location.host.toString() + '; path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT';
-    document.cookie = cookie;
+  // hide and show
+  jQuery('#event_chatbox_container_small').show();
+  jQuery('#event_chatbox_container').hide();
+}";
 
-    // hide and show
-    jQuery('#event_chatbox_container_small').show();
-    jQuery('#event_chatbox_container').hide();
-  }
-
-  ";
     drupal_add_js($js, array('type' => 'inline', 'scope' => 'footer'));
 
     // hide the full chatbox

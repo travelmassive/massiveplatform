@@ -362,6 +362,11 @@ function _tm_event_display_flag($nid) {
     return 'show_not_approved';
   }
 
+  // If already registered
+  if ($flag_register->is_flagged($nid, $user->uid)) {
+      return 'show_register';
+  }
+
   // Check event geoblock settings 
   $check_user = user_load($user->uid);
   if (!tm_events_check_geoblock_signup($check_user, $event)) {

@@ -99,75 +99,83 @@ function _tm_event_chatbox($field, $title = NULL) {
   }
 
   // live chat title
+  $can_minimize_chatbox = true;
   $live_chat_title = "LIVE CHAT <a href='javascript:tm_hide_chat_box();'><span id='event_chatbox_minimize_icon'></span></a>";
   if (tm_event_livestream_check_display($user, $node)) {
+    $can_minimize_chatbox = false; // always show full chatbox when livestreaming
     $live_chat_title .= " &mdash; " . strip_tags($event_title); // show event title when live streaming
   }
 
-  // show minimized chat box unless user had opened it, or within 2 hours of event
-  $minimized_chatbox = true;
+  // defaults
   $minimized_html = "";
   $chatbox_container_style = "";
-  $chatbox_small_container_style = "";
+  
+  // keep chatbox open when livestream
+  if ($can_minimize_chatbox) {
 
-  // cookie key
-  $cookie_key = "tm_events_chatbox_show_" . $node->nid;
+     // show minimized chat box unless user had opened it, or within 2 hours of event
+    $minimized_chatbox = true;
+    $chatbox_small_container_style = "";
 
-  // show if user has unminimized chat
-  if (isset($_COOKIE[$cookie_key])) {
-    if ($_COOKIE[$cookie_key] == 1) {
-      $minimized_chatbox = false;
+    // cookie key
+    $cookie_key = "tm_events_chatbox_show_" . $node->nid;
+
+    // show if user has unminimized chat
+    if (isset($_COOKIE[$cookie_key])) {
+      if ($_COOKIE[$cookie_key] == 1) {
+        $minimized_chatbox = false;
+      }
     }
+
+    // show if event within 12 hours
+    $seconds_until_event_starts = tm_events_seconds_until_event_starts($node);
+    if ($seconds_until_event_starts < (2 * 60 * 60)) {
+       $minimized_chatbox = false;
+    }
+
+    // embed css and js, as we're signed in
+    $css = "#event_chatbox_minimize_icon:before { line-height: 1; font-family: 'tm-icons'; content: \"\\e65c\"; margin-left: 4px; }";
+    drupal_add_css($css, array('type' => 'inline'));
+
+    // js to display and minimize chat box and set cookie
+    $js = "
+  function tm_show_chat_box() {
+    // set cookie
+    var d = new Date;
+    d.setTime(d.getTime() + 24*60*60*1000); // 1 day
+    var cookie = '" . $cookie_key . "=1; domain=.' + window.location.host.toString() + '; path=/;expires=' + d.toGMTString();
+    document.cookie = cookie;
+
+    // hide and show
+    jQuery('#event_chatbox_container_small').hide();
+    jQuery('#event_chatbox_container').show();
   }
 
-  // show if event within 12 hours
-  $seconds_until_event_starts = tm_events_seconds_until_event_starts($node);
-  if ($seconds_until_event_starts < (2 * 60 * 60)) {
-     $minimized_chatbox = false;
+  function tm_hide_chat_box() {
+
+    // delete cookie
+    var cookie = '" . $cookie_key . "= ; domain=.' + window.location.host.toString() + '; path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    document.cookie = cookie;
+
+    // hide and show
+    jQuery('#event_chatbox_container_small').show();
+    jQuery('#event_chatbox_container').hide();
   }
 
-  // embed css and js, as we're signed in
-  $css = "#event_chatbox_minimize_icon:before { line-height: 1; font-family: 'tm-icons'; content: \"\\e65c\"; margin-left: 4px; }";
-  drupal_add_css($css, array('type' => 'inline'));
+  ";
+    drupal_add_js($js, array('type' => 'inline', 'scope' => 'footer'));
 
-  // js to display and minimize chat box and set cookie
-  $js = "
-function tm_show_chat_box() {
-  // set cookie
-  var d = new Date;
-  d.setTime(d.getTime() + 24*60*60*1000); // 1 day
-  var cookie = '" . $cookie_key . "=1; domain=.' + window.location.host.toString() + '; path=/;expires=' + d.toGMTString();
-  document.cookie = cookie;
+    // hide the full chatbox
+    if ($minimized_chatbox) {
+      $chatbox_container_style = "display: none";
+    } else {
+       $chatbox_small_container_style = "display: none";
+    }
 
-  // hide and show
-  jQuery('#event_chatbox_container_small').hide();
-  jQuery('#event_chatbox_container').show();
-}
-
-function tm_hide_chat_box() {
-
-  // delete cookie
-  var cookie = '" . $cookie_key . "= ; domain=.' + window.location.host.toString() + '; path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT';
-  document.cookie = cookie;
-
-  // hide and show
-  jQuery('#event_chatbox_container_small').show();
-  jQuery('#event_chatbox_container').hide();
-}
-
-";
-  drupal_add_js($js, array('type' => 'inline', 'scope' => 'footer'));
-
-  // hide the full chatbox
-  if ($minimized_chatbox) {
-    $chatbox_container_style = "display: none";
-  } else {
-     $chatbox_small_container_style = "display: none";
+    // minimized html
+    $minimized_html = "<div id='event_chatbox_container_small' style='" . $chatbox_small_container_style . "'><div class='chatbox_title'><h1 class='prime-title'>LIVE CHAT</h1></div><div class='event_chatbox_message'><span class='event_chatbox_container_small_icon'></span> Join the <a href='javascript:tm_show_chat_box();'>live discussion</a></div></div>";
   }
-
-  // minimized html
-  $minimized_html = "<div id='event_chatbox_container_small' style='" . $chatbox_small_container_style . "'><div class='chatbox_title'><h1 class='prime-title'>LIVE CHAT</h1></div><div class='event_chatbox_message'><span class='event_chatbox_container_small_icon'></span> Join the <a href='javascript:tm_show_chat_box();'>live discussion</a></div></div>";
-
+  
   // chatbox html
   $chatbox_html = "<style></style><div id='event_chatbox_container' style='" . $chatbox_container_style . "'><div class='chatbox_title'><h1 class='prime-title'>" . $live_chat_title . "</h1></div><div id='chatbro' style='height: 300px;'></div>" . $message . "</div>";
 

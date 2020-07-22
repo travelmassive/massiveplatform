@@ -355,16 +355,16 @@ function _tm_event_display_flag($nid) {
     return 'show_waitlist';
   }
 
+  // If already registered
+  if ($flag_register->is_flagged($nid, $user->uid)) {
+      return 'show_register';
+  }
+
   // Check if we are approved
   $approved_members_only = $event->field_approved_members_only[LANGUAGE_NONE][0]['value'];
   $approved_member = in_array("approved user", $user->roles);
   if ($approved_members_only and !$approved_member) {
     return 'show_not_approved';
-  }
-
-  // If already registered
-  if ($flag_register->is_flagged($nid, $user->uid)) {
-      return 'show_register';
   }
 
   // Check event geoblock settings 

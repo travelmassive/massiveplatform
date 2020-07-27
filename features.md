@@ -47,7 +47,6 @@ Heres's a list of features that have been developed for Massive Platform.
 - Partner Event Flag
 - Customize Event URLs
 - List All Upcoming Events
-- Event Reminders
 - Export Attendee Data (CSV)
 - Online events for webinars
 - Preview events mode

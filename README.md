@@ -64,6 +64,6 @@ A big thanks to everyone who has contributed their feedback, ideas, and testing!
 
 - If you are planning to use our platform in the travel industry, please contact Travel Massive.
 - Drupal is released under the <a href="https://www.drupal.org/licensing/faq">Drupal License</a> (GPL).
-- The Travel Massive name and logo is trademarked and can not be used used.
+- The Travel Massive name and logo is trademarked and can not be used.
 - Sample data such as profile images may also be subject to copyright by their owners.
 

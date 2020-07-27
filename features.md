@@ -30,6 +30,7 @@ Heres's a list of features that have been developed for Massive Platform.
 - See who viewed your profile
 - Global community insights page
 - Member can leave display a testimonial
+- Membership matching (swipe left, right)
 - COVID-19 update field
 - Paid subscription support (Stripe checkout)
 

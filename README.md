@@ -12,7 +12,7 @@ permalink: /
 Massive Platform is a kick-ass, continually developed community platform to build and grow event-driven, chapter-based communities.
 {: .fs-6 .fw-300 }
 
-[Learn more](#faq){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [View it on GitHub](https://github.com/travelmassive/massiveplatform){: .btn .fs-5 .mb-4 .mb-md-0 }
+[Learn more](#frequently-asked-questions){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [View it on GitHub](https://github.com/travelmassive/massiveplatform){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 

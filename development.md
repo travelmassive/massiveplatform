@@ -39,7 +39,56 @@ Next, view the features list. This will show you if there are any database chang
 drush fd
 ```
 
-Let's say a new field has been added to tm_events. You can bring the module up to date by running the following command:
+The output will look like this:
+
+```console
+user@ubuntu:/var/www/massiveplatform# drush fd
+ Date Migration Example               date_migrate_example                 Disabled  7.x-2.11-beta3               
+ Features Tests                       features_test                        Disabled  7.x-2.11                     
+ Imagecache_actions Test Suite        imagecache_testsuite                 Disabled  7.x-1.12                     
+ TM Base                              tm_base                              Enabled   7.x-1.0-dev                  
+ TM Branding                          tm_branding                          Enabled   7.x-1.0-dev                  
+ TM Chapters                          tm_chapters                          Enabled   7.x-1.0-dev                  
+ TM Chapters Map                      tm_chapters_leaflet_map              Enabled   7.x-1.0                      
+ TM Commissions                       tm_commissions                       Disabled  7.x-1.0                      
+ TM Event signup                      tm_event_signup                      Enabled   7.x-1.0-dev                  
+ TM Events                            tm_events                            Enabled   7.x-1.0-dev     Needs Review             
+ TM Fields                            tm_fields                            Enabled   7.x-1.0-dev                  
+ TM Flags                             tm_flags                             Enabled   7.x-1.0-dev                  
+ TM Invitations                       tm_invitations                       Enabled   7.x-1.0-dev                  
+ TM Lists                             tm_lists                             Disabled  7.x-1.0-dev                  
+ TM Marketplace                       tm_marketplace                       Disabled  7.x-1.0-dev                  
+ TM Messaging                         tm_messaging                         Enabled   7.x-1.0-dev                  
+ TM Meta                              tm_meta                              Enabled   7.x-1.0-dev                  
+ TM Newsfeed                          tm_newsfeed                          Enabled   7.x-1.0-dev                  
+ TM Notifications                     tm_notifications                     Enabled   7.x-1.0-dev                  
+ TM Notifications Approval            tm_notifications_approval            Enabled   7.x-1.0-dev                  
+ TM Notifications Chapter             tm_notifications_chapter             Enabled   7.x-1.0-dev                  
+ TM Notifications Events              tm_notifications_events              Enabled   7.x-1.0-dev                  
+ TM Notifications Lists               tm_notifications_lists               Disabled  7.x-1.0-dev                  
+ TM Notifications Messaging           tm_notifications_messaging           Enabled   7.x-1.0-dev                  
+ TM Notifications Moderation          tm_notifications_moderation          Enabled   7.x-1.0-dev                  
+ TM Notifications Following           tm_notifications_new_follower        Enabled   7.x-1.0-dev        
+ TM Notifications Newsfeed            tm_notifications_newsfeed            Enabled   7.x-1.0-dev                  
+ TM Notifications Newsletters         tm_notifications_newsletters         Enabled   7.x-1.0-dev                  
+ TM Notifications User Subscriptions  tm_notifications_subscriptions_user  Disabled  7.x-1.0-dev                  
+ TM Notifications Upcoming Event      tm_notifications_upcoming_event      Disabled  7.x-1.0-dev                  
+ TM Net Promoter Score                tm_nps                               Enabled   7.x-1.0-dev                  
+ TM Organizations                     tm_organizations                     Enabled   7.x-1.0-dev      
+ TM Payments                          tm_payments                          Disabled  7.x-1.0-dev                  
+ TM Reports                           tm_reports                           Enabled   7.x-1.0-beta1                
+ TM Search                            tm_search                            Disabled  7.x-1.0-dev                  
+ TM Search API                        tm_search_api                        Enabled   7.x-1.0-dev                  
+ TM Status Updates                    tm_status_updates                    Enabled   7.x-1.0-dev                  
+ TM User Subscriptions                tm_subscriptions_user                Disabled  7.x-1.0-dev                  
+ TM Theme                             tm_theme                             Enabled   7.x-1.0-dev                  
+ TM Track Views                       tm_track_views                       Disabled  7.x-1.0-dev                  
+ TM Users                             tm_users                             Enabled   7.x-1.0-dev                  
+ TM External signin                   tm_users_external_signin             Enabled   7.x-1.0-dev
+user@ubuntu:/var/www/massiveplatform#
+```
+
+In the example above, tm_events has been updated ('Needs Review'). You can bring the module up to date by running the following command:
 
 ```console
 drush fr tm_events
@@ -137,6 +186,16 @@ drush status-updates-post-organization-updates --uri=https://yoursite.com --root
 ```
 
 ## Development
+
+### Customizing the sidebar
+
+If you want to customize your sidebar, make a copy of 'example-sidebar.tpl.php' and update $conf['tm_theme_custom_sidebar_template'].
+
+You can enable the traditional navbar by commenting out the following line in settings.php:
+
+```console
+// $conf['tm_theme_custom_sidebar_template'] = 'example-sidebar.tpl.php';
+```
 
 ### How to edit SASS stylesheets with Compass
 

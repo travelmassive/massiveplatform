@@ -1,5 +1,5 @@
 Welcome to Massive Platform - Travel Massive's Community Platform.
 
-This site is powered by Drupal. Read more over at www.massiveplatform.com
+Massive Platform is a continually developed community platform to build and grow event-driven, chapter-based communities.
 
-- The Travel Massive Team
+Read more over at www.massiveplatform.com

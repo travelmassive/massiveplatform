@@ -54,11 +54,9 @@
   }
 
   // Custom header template
-  $custom_header_template = false;
-  if (isset($conf["tm_theme_custom_header_template"])) {
-    if ($conf["tm_theme_custom_header_template"]) {
-      $custom_header_template = true;
-    }
+  $custom_sidebar_template = "";
+  if (isset($conf["tm_theme_custom_sidebar_template"])) {
+    $custom_sidebar_template = $conf["tm_theme_custom_sidebar_template"];
   }
 
 ?>
@@ -80,9 +78,9 @@ if (sizeof($request_uri_parts) == 3) {
 <div id="page">
 
   <?php
-  if ($custom_header_template) { 
+  if ($custom_sidebar_template != "") { 
     // load custom header
-    include './'. path_to_theme() .'/templates/custom-header.tpl.php';
+    include './'. path_to_theme() . '/templates/' . $conf["tm_theme_custom_sidebar_template"];
   } else { 
   ?>
   <header class="header" id="header" role="banner">

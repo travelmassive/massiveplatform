@@ -49,21 +49,7 @@ __MODERATOR_MESSAGE__
 <br>
 <br>Please personalize <a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">your profile</a></strong> &mdash; <i>it only takes a few minutes.</i>
 __MEMBER_WIDGET__
-<strong>Once you\'ve personalized your account, we\'ll be able to verify you and you can add a <a href="__SERVER_HTTP__://__SERVER_NAME__/companies">company page</a>.</strong>
-<br>
-<br>Here\'s some tips to get verified:
-<ul>
-<li>Provide your real First and Last name if you haven\'t already</li>
-<li>Tell us about yourself in the "About me" section</li>
-<li>Upload a photo of yourself so members can recognize you</li>
-<li>Tell us what city you are based in</li>
-<li>Fill out your profile questions</li>
-<li>Provide links to your personal LinkedIn or social media accounts</li>
-</ul>
-<br><strong>I\'ve updated my account, what next?</strong>
-<br>Tap "Request verification" from your account menu. Our team will review your profile and you\'ll be notified when you are verified.
-<br>
-<br>If you need any assistance please reply to this email.
+__MODERATION_TIPS__
 <br>
 <br>__EMAIL_SIGNOFF__
 <p><small>(Moderator: __MODERATOR_FIRST_NAME__)</small></p>
@@ -89,20 +75,7 @@ __MEMBER_WIDGET__
 __MODERATOR_MESSAGE__
 <br>Please complete <a href="__SERVER_HTTP__://__SERVER_NAME__/user/__PROFILE_UID__">your profile</a></strong> &mdash; <i>it only takes a few minutes.</i>
 __MEMBER_WIDGET__
-Here\'s some tips to get verified:
-<ul>
-<li>Tell us about yourself in the "About me" section</li>
-<li>Upload a profile picture so members can recognize you</li>
-<li>Tell us what city you are based in</li>
-<li>Fill out your Job Role and Organization Name</li>
-<li>Update your Industry Segment</li>
-<li>Fill out your profile questions</li>
-<li>Provide links to your website, or social media accounts</li>
-</ul>
-<br><strong>I\'ve updated my account, what next?</strong>
-<br>Tap "Request verification" from your account menu. Our team will review your profile and you\'ll be notified when you are verified.
-<br>
-<br>If you need any assistance please reply to this email.
+__MODERATION_TIPS__
 <br>
 <br>__EMAIL_SIGNOFF__
 <p><small>(Moderator: __MODERATOR_FIRST_NAME__)</small></p>

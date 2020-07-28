@@ -302,7 +302,7 @@ $conf["tm_notification_moderation_non_community_message"] = 'To be a member of t
 <br>Our community provides professional networking and development for members of the COMMUNITY_INDUSTRY industry.';
 
 /** MODERATION TIPS WHEN FLAGGED AS INCOMPLETE **/
-$conf["tm_notification_moderation_more_info_tips"] = 'AAAHere\'s some tips to get verified:
+$conf["tm_notification_moderation_more_info_tips"] = 'Here\'s some tips to get verified:
 <ul>
 <li>Tell us about yourself in the "About me" section</li>
 <li>Upload a profile picture so members can recognize you</li>
@@ -318,7 +318,7 @@ $conf["tm_notification_moderation_more_info_tips"] = 'AAAHere\'s some tips to ge
 <br>If you need any assistance please reply to this email.';
 
 /** MODERATION TIPS WHEN FLAGGED AS COMPANY OR BRAND **/
-$conf["tm_notification_moderation_is_company_tips"] = 'AAA<strong>Once you\'ve personalized your account, we\'ll be able to verify you and you can add a <a href="__SERVER_HTTP__://__SERVER_NAME__/companies">company page</a>.</strong>
+$conf["tm_notification_moderation_is_company_tips"] = '<strong>Once you\'ve personalized your account, we\'ll be able to verify you and you can add a <a href="__SERVER_HTTP__://__SERVER_NAME__/companies">company page</a>.</strong>
 <br><br>Here\'s some tips to get verified:
 <ul>
 <li>Provide your real First and Last name if you haven\'t already</li>

@@ -2832,7 +2832,7 @@ tr.selected td {
 /* line 803, ../sass/components/_misc.scss */
 .progress .filled {
   background-color: #0072b9;
-  background-image: url('../images/progress.gif?1595906153');
+  background-image: url('../images/progress.gif?1595923910');
 }
 
 /* ==========================================================================
@@ -9927,7 +9927,7 @@ table.markdown-table-striped tr:nth-child(even) {
 /* Style for TM sidebar */
 /* line 3, ../sass/_tm_sidebar.scss */
 body.tm_sidebar {
-  margin-left: 256px !important;
+  margin-left: 256px;
   background-color: #f3f4f5;
 }
 

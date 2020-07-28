@@ -62,6 +62,13 @@ You must run the Drupal cron regularly to support tasks such as search indexing 
 drush run-cron --uri=https://yoursite.com --root=/path/to/massiveplatform
 ```
 
+You can run the cron every minute by adding an entry to your /etc/crontab:
+
+```console
+# Run drupal ultimate cron every minute
+* * * * * root /usr/bin/drush cron-run --uri=https://yoursite.com --root=/path/to/massiveplatform 2>&1 > /dev/null
+```
+
 ## Automated tasks
 
 The following is a list of drush commands you can run. 

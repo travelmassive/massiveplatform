@@ -88,7 +88,7 @@ user@ubuntu:/var/www/massiveplatform# drush fd
 user@ubuntu:/var/www/massiveplatform#
 ```
 
-In the example above, tm_events has been updated ('Needs Review'). You can bring the module up to date by running the following command:
+In the example above, *scroll the output to the right*, and you will notice that tm_events has been updated ('Needs Review'). You can bring the module up to date by running the following command:
 
 ```console
 drush fr tm_events

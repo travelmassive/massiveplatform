@@ -14,7 +14,7 @@ Here's the general tasks you'll run to update your codebase, in the following or
 2. Add any new settings.php variables *(git log -p massiveplatform_setup_files/settings.php)*
 3. Update any code features *(drush fd; drush fr tm_changed_module)*
 4. Apply any database updates *(drush updb)*
-5. Clear cache *(drush css all)*
+5. Clear cache *(drush cc all)*
 
 New versions of Drupal core and modules are maintained and included, you don't need to update modules seperately.
 
@@ -27,13 +27,13 @@ git log -p massiveplatform_setup_files/settings.php
 
 ### Example of updating code features
 
-Clear the cache
+First, we clear the cache
 
 ```console
 drush cc all
 ```
 
-View features list. This will show you if there are any database changes (ie: a new field) to platform modules.
+Next, view the features list. This will show you if there are any database changes (ie: a new field) to platform modules.
 
 ```console
 drush fd
@@ -143,21 +143,6 @@ sudo gem install compass -v 0.12.6
 See: [https://www.drupal.org/node/2353067#comment-9535245](https://www.drupal.org/node/2353067#comment-9535245)
 
 Run "compass watch sites/all/themes/tm" to update css files
-
-### How to manually flag someone to attend an event:
-
-Change the userid and event id accordingly.
-
-**Example for regular event**
-
-```console
-drush php-eval '$account = user_load(34757); $content_id = 16555; $event_register = flag_get_flag("event_register"); $event_register->flag('flag', $content_id, $account, null);'
-```
-
-**Example for paid event**
-```console
-drush php-eval '$account = user_load(34757); $content_id = 16555; $event_paid = flag_get_flag("event_paid"); $event_paid->flag('flag', $content_id, $account, null); $event_register = flag_get_flag("event_register"); $event_register->flag('flag', $content_id, $account, null);'
-```
 
 ### How to export member questions to csv:
 

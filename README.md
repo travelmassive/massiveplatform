@@ -20,7 +20,7 @@ Massive Platform is a kick-ass, continually developed community platform to buil
 
 ## Frequently Asked Questions
 
-### Where communities use Massive Platform?
+### What communities use Massive Platform?
 
 Massive Platform powers [Travel Massive](https://travelmassive.com), [Mappy Hour](https://mappyhour.org), and [The Nomadic Network](https://thenomadicnetwork.com/) — connecting more than 100,000 members both online and offline in places across the world.
 

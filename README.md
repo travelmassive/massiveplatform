@@ -59,6 +59,7 @@ A big thanks to everyone who has contributed their feedback, ideas, and testing!
 - Flipside - initial project design, HTML theme and prototype created in Lisbon.
 - [Robyn Stanley](https://github.com/rumpledelf) and [Ryan Cross](https://github.com/rcross) for pre-release support.
 - [Dean Rollins](https://github.com/drollins) for newsfeed emails and search sort
+- [OrionVM](https://orionvm.com) for their fast, scalable cloud hosting
 
 ### Licensing
 

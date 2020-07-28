@@ -19,7 +19,8 @@ function tm_organizations_render_footer($num_items = 5, $use_cache = true) {
 	$exclude_items = $conf["tm_organizations_footer_exclude"];
 
 	// get organizatins with recent follows, sorted by follower count
-	$recent_follows = tm_organizations_get_followed_organizations($num_items, $num_days, $exclude_items);
+	$fetch_items = $num_items * 2;
+	$recent_follows = tm_organizations_get_followed_organizations($fetch_items, $num_days, $exclude_items);
 
 	// order list by title length
 	if (isset($conf["tm_organizations_footer_order_length"])) {
@@ -56,8 +57,13 @@ function tm_organizations_render_footer($num_items = 5, $use_cache = true) {
 	$template = str_replace("__FOOTER_TITLE__", $conf["tm_organizations_footer_title"], $template);
 
 	// generate lists
+	$count = 1;
 	$list_html = "<ul class='tm-footer-lists organizations'>";
 	foreach ($recent_follows as $item) {
+
+		if ($count > $num_items) {
+			continue;
+		}
 
 		// get details
 		$nid = $item["entity_id"];
@@ -101,6 +107,8 @@ function tm_organizations_render_footer($num_items = 5, $use_cache = true) {
 		$list_html .= "<li><span class='tm-footer-lists-label organizations'><a class='tm-footer-lists-label-link organizations' href='/" . $profile_url . "'>" . $title . "</a>";
 				
 		$list_html .= "</span><span class='tm-footer-lists-details organizations'>" . $follower_count . " " . $followers_label . "</span></li>";
+
+		$count++;
 	}
 
 	$list_html .= "</ul>";

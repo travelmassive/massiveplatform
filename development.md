@@ -147,7 +147,7 @@ sudo gem install sass -v 3.2.19
 sudo gem install compass -v 0.12.6
 ```
 
-See: [https://www.drupal.org/node/2353067#comment-9535245](https://www.drupal.org/node/2353067#comment-9535245)
+See [this comment regarding compass version](https://www.drupal.org/node/2353067#comment-9535245)
 
 Run "compass watch sites/all/themes/tm" to update css files
 

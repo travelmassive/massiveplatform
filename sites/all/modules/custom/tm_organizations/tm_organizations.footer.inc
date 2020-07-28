@@ -69,7 +69,15 @@ function tm_organizations_render_footer($num_items = 5, $use_cache = true) {
 		// get details
 		$nid = $item["entity_id"];
 		$follower_count = $item["follower_count"];
-		$title = $item["title"];
+
+		// load account
+		$node = node_load($nid);
+		if ($node == null) {
+			continue;
+		}
+
+		// get title
+		$title = strip_tags(trim($node->title));
 
 		// skip all caps
 		if ((strlen($title) > 5) and ctype_upper($title)) {

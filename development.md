@@ -52,7 +52,7 @@ user@ubuntu:/var/www/massiveplatform# drush fd
  TM Chapters Map                      tm_chapters_leaflet_map              Enabled   7.x-1.0                      
  TM Commissions                       tm_commissions                       Disabled  7.x-1.0                      
  TM Event signup                      tm_event_signup                      Enabled   7.x-1.0-dev                  
- TM Events                            tm_events                            Enabled   7.x-1.0-dev     Needs Review             
+ TM Events                            tm_events                            Enabled   7.x-1.0-dev     Overridden             
  TM Fields                            tm_fields                            Enabled   7.x-1.0-dev                  
  TM Flags                             tm_flags                             Enabled   7.x-1.0-dev                  
  TM Invitations                       tm_invitations                       Enabled   7.x-1.0-dev                  
@@ -88,7 +88,7 @@ user@ubuntu:/var/www/massiveplatform# drush fd
 user@ubuntu:/var/www/massiveplatform#
 ```
 
-In the example above, *scroll the output to the right*, and you will notice that tm_events has been updated ('Needs Review'). You can bring the module up to date by running the following command:
+In the example above, *scroll the output to the right*, and you will notice that tm_events has been updated ('Overridden'). You can bring the module up to date by running the following command:
 
 ```console
 drush fr tm_events

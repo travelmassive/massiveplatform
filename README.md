@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Home
+title: Massive Platform
 nav_order: 1
-description: "All about Massive Platform."
+description: "A continually developed platform to build and grow communities."
 permalink: /
 ---
 

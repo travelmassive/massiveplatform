@@ -36,7 +36,8 @@ function tm_organizations_render_footer($num_items = 5, $use_cache = true) {
 				}
 
 				// add title to associative array
-				$sorted[] = array("title" => $node->title, "entity_id" => $item["entity_id"], "follower_count" => $item["follower_count"]);
+				$title = strip_tags(trim($node->title));
+				$sorted[] = array("title" => $title, "entity_id" => $item["entity_id"], "follower_count" => $item["follower_count"]);
 			}
 
 			// sort by name length
@@ -68,15 +69,12 @@ function tm_organizations_render_footer($num_items = 5, $use_cache = true) {
 		// get details
 		$nid = $item["entity_id"];
 		$follower_count = $item["follower_count"];
+		$title = $item["title"];
 
-		// load account
-		$node = node_load($nid);
-		if ($node == null) {
+		// skip all caps
+		if ((strlen($title) > 5) and ctype_upper($title)) {
 			continue;
 		}
-
-		// get title
-		$title = strip_tags(trim($node->title));
 
 		// trim title
 		if (isset($conf["tm_organizations_footer_max_length"])) {

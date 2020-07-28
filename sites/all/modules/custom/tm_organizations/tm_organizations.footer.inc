@@ -80,7 +80,7 @@ function tm_organizations_render_footer($num_items = 5, $use_cache = true) {
 		$title = strip_tags(trim($node->title));
 
 		// skip all caps
-		if ((strlen($title) > 5) and ctype_upper($title)) {
+		if ((strlen($title) > 5) and (strtoupper($title) == $title)) {
 			continue;
 		}
 

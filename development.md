@@ -197,6 +197,10 @@ You can enable the traditional navbar by commenting out the following line in se
 // $conf['tm_theme_custom_sidebar_template'] = 'example-sidebar.tpl.php';
 ```
 
+### Moving images to S3 / Cloudfront
+
+See the file 's3fs_install_notes.txt' in massiveplatform_setup_files.
+
 ### How to edit SASS stylesheets with Compass
 
 To edit SASS stylesheets you'll need compass installed:

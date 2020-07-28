@@ -54,7 +54,7 @@ A big thanks to everyone who has contributed their feedback, ideas, and testing!
 
 - [Travel Massive Chapter Leaders](https://travelmassive.com/leaders) - feedback and testing with Travel Massive
 - [Sarah Knapp](https://mappyhour.org/sarah) - feedback and testing with Mappy Hour 
-- [Erica Virvo](https://thenomadicnetwork.com/erica-virvo) - feedback and testing with Nomadic Network
+- [Erica Virvo](https://thenomadicnetwork.com/erica-virvo) - feedback and testing with The Nomadic Network
 - Berkeley Sourcing Group - feedback and testing with Hardware Massive
 - Flipside - initial project design, HTML theme and prototype created in Lisbon.
 - [Robyn Stanley](https://github.com/rumpledelf) and [Ryan Cross](https://github.com/rcross) for pre-release support.

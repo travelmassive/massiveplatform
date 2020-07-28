@@ -34,7 +34,7 @@
 
 <div id="tm_sidenav">
 
-	<a id="tm_sidenav_logo_link" href="/"><img id="tm_sidenav_logo" src="/sites/default/files/site_branding/header_logo/default_header_logo.svg"></a>   
+	<a id="tm_sidenav_logo_link" href="/"><img id="tm_sidenav_logo" src="<?php echo tm_branding_get_element("header_logo");?>" alt="Logo"></a>   
 
 	<div id='tm-user-hidden-fields' style='display: none;'>
 		<input style='display: none;' id='reason_for_joining' value='<?php print urlencode($reason_for_joining);?>'>

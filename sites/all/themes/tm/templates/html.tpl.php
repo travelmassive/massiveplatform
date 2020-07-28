@@ -89,8 +89,15 @@
     content: ', ';
   }
   </style>
-
-  <body class="<?php print $classes; ?>" <?php print $attributes;?>>
+  <?php
+  $sidebar_class = "";
+  if (isset($conf["tm_theme_custom_sidebar_template"])) {
+    if ($conf["tm_theme_custom_sidebar_template"] != "") {
+      $sidebar_class = "tm_sidebar";
+    }
+  }
+  ?>
+  <body class="<?php print $classes; ?> <?php print $sidebar_class; ?>" <?php print $attributes;?>>
     
     <?php 
       $frontpage_image = tm_branding_get_element("frontpage_image");

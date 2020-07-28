@@ -2832,7 +2832,7 @@ tr.selected td {
 /* line 803, ../sass/components/_misc.scss */
 .progress .filled {
   background-color: #0072b9;
-  background-image: url('../images/progress.gif?1578307708');
+  background-image: url('../images/progress.gif?1595906153');
 }
 
 /* ==========================================================================
@@ -9922,5 +9922,558 @@ table.markdown-table-striped tr:nth-child(even) {
   .feed-icons {
     visibility: hidden;
     display: none;
+  }
+}
+/* Style for TM sidebar */
+/* line 3, ../sass/_tm_sidebar.scss */
+body.tm_sidebar {
+  margin-left: 256px !important;
+  background-color: #f3f4f5;
+}
+
+/* line 8, ../sass/_tm_sidebar.scss */
+#tm_sidenav {
+  width: 245px;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-right: 1px solid #ddd;
+  z-index: 1000;
+  padding-top: 0px;
+  transition: all 0.1s ease-in-out;
+  box-shadow: none;
+  overflow-y: hidden;
+}
+
+/* line 23, ../sass/_tm_sidebar.scss */
+#tm_sidenav.min {
+  position: absolute;
+  padding-top: 45px;
+  opacity: 1;
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* line 30, ../sass/_tm_sidebar.scss */
+#tm_sidenav_toggle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 48px;
+  width: 48px;
+  background-color: #fff;
+  border-radius: 24px;
+  padding: 8px;
+  padding-top: 12px;
+  text-align: center;
+  vertical-align: center;
+  z-index: 1001;
+}
+
+/* line 45, ../sass/_tm_sidebar.scss */
+#tm_sidenav_toggle.tm_sidenav_toggle_fixed {
+  position: absolute;
+}
+
+/* line 49, ../sass/_tm_sidebar.scss */
+#tm_sidenav_logo {
+  width: 172px;
+  margin-left: 30px;
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+
+/* line 56, ../sass/_tm_sidebar.scss */
+#tm_sidenav_logo_link:hover {
+  opacity: 1 !important;
+}
+
+/* line 60, ../sass/_tm_sidebar.scss */
+#tm_sidenav ul {
+  list-style-type: none;
+  margin-top: 19px;
+  padding-left: 20px;
+  line-height: 1.5;
+  padding-left: 20px;
+  margin-left: 5px;
+}
+
+/* line 69, ../sass/_tm_sidebar.scss */
+#tm_sidenav li {
+  font-size: 17pt;
+  font-weight: 600;
+}
+
+/* line 74, ../sass/_tm_sidebar.scss */
+#tm_sidenav li a {
+  color: #808080;
+  padding-left: 10px;
+  padding-right: 10px;
+  opacity: 1;
+}
+
+/* line 81, ../sass/_tm_sidebar.scss */
+#tm_sidenav li a:hover {
+  color: #007eb5;
+  text-decoration: none;
+  background-color: #eee;
+  border-radius: 16px;
+}
+
+/* line 88, ../sass/_tm_sidebar.scss */
+#tm_sidenav li a:active {
+  text-decoration: none;
+}
+
+/* line 92, ../sass/_tm_sidebar.scss */
+.tm_sidenav_login {
+  color: #808080;
+}
+
+/* line 95, ../sass/_tm_sidebar.scss */
+.tm_sidenav_login a {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
+/* line 100, ../sass/_tm_sidebar.scss */
+#tm_sidenav_search {
+  font-family: 'Lato', sans-serif;
+  width: 196px;
+  border-radius: 16px;
+  border: 2px solid #ddd;
+  padding-left: 10px;
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 300;
+  box-shadow: none;
+  line-height: 26px;
+  height: 45px;
+}
+
+/* line 114, ../sass/_tm_sidebar.scss */
+#tm_sidenav_search:focus {
+  outline: none;
+}
+
+/* line 118, ../sass/_tm_sidebar.scss */
+#tm_sidenav_search:hover {
+  border: 2px solid #007eb5;
+}
+
+/* line 122, ../sass/_tm_sidebar.scss */
+.tm_sidenav_home_icon:before {
+  font-family: 'tm-icons';
+  content: "\e65c";
+  margin-right: 5px;
+}
+
+/* line 128, ../sass/_tm_sidebar.scss */
+.tm_sidenav_profile_icon:before {
+  font-family: 'tm-icons';
+  content: "\e678";
+  margin-right: 5px;
+  font-weight: 200;
+}
+
+/* line 135, ../sass/_tm_sidebar.scss */
+.tm_sidenav_settings_icon:before {
+  font-family: 'tm-icons';
+  content: "\e636";
+  font-size: 20px;
+  margin-right: 5px;
+  font-weight: 200;
+}
+
+/* line 143, ../sass/_tm_sidebar.scss */
+.tm_sidenav_profile_icon:before {
+  font-family: 'tm-icons';
+  content: "\e678";
+  margin-right: 5px;
+  font-weight: 200;
+}
+
+/* line 150, ../sass/_tm_sidebar.scss */
+.tm_sidenav_sign_in_icon:before {
+  font-family: 'tm-icons';
+  content: "\e678";
+  margin-right: 0px;
+  margin-left: 10px;
+  font-weight: 200;
+}
+
+/* line 158, ../sass/_tm_sidebar.scss */
+.tm_sidenav_marketplace_icon:before {
+  font-family: 'tm-icons';
+  content: "\e658";
+  margin-right: 5px;
+  font-weight: 200;
+}
+
+/* line 165, ../sass/_tm_sidebar.scss */
+.tm_sidenav_replays_icon:before {
+  font-family: 'tm-icons';
+  content: "\e680";
+  margin-right: 5px;
+  font-size: 20px;
+}
+
+/* line 172, ../sass/_tm_sidebar.scss */
+.tm_sidenav_lists_icon:before {
+  font-family: 'tm-icons';
+  content: "\e635";
+  margin-right: 5px;
+  font-weight: 200;
+  font-size: 18px;
+  display: inline-block;
+}
+
+/* line 181, ../sass/_tm_sidebar.scss */
+.tm_sidenav_more_icon:before {
+  font-family: 'tm-icons';
+  content: "\e62e";
+  margin-right: 5px;
+  font-size: 20px;
+}
+
+/* line 188, ../sass/_tm_sidebar.scss */
+.tm_sidenav_events_icon:before {
+  font-family: 'tm-icons';
+  content: "\e62a";
+  margin-right: 5px;
+  font-size: 20px;
+}
+
+/* line 195, ../sass/_tm_sidebar.scss */
+.tm_sidenav_add_event_icon:before {
+  font-family: 'tm-icons';
+  content: "\e625";
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+/* line 202, ../sass/_tm_sidebar.scss */
+.tm_sidenav_toggle_icon:before {
+  font-family: 'tm-icons';
+  content: "\e622";
+  font-size: 26px;
+  color: #007eb5;
+}
+
+/* line 209, ../sass/_tm_sidebar.scss */
+.tm_sidenav_toggle_icon:before {
+  font-family: 'tm-icons';
+  content: "\e622";
+  font-size: 26px;
+  color: #007eb5;
+}
+
+/* line 216, ../sass/_tm_sidebar.scss */
+#account-menu-blk {
+  font-size: 24px;
+  line-height: 1.5;
+  color: #4a4a4a;
+}
+
+/* line 222, ../sass/_tm_sidebar.scss */
+.tm-sidebar-login a {
+  color: #176CF6;
+  text-decoration: underline !important;
+}
+
+/* line 227, ../sass/_tm_sidebar.scss */
+#tm_sidenav .tm-account-menu-verification:before {
+  font-size: 20px !important;
+}
+
+/* line 231, ../sass/_tm_sidebar.scss */
+#tm_sidenav_moderator_options {
+  width: 196px;
+  font-size: 24px;
+  margin-top: 8px;
+  border-radius: 8px;
+  border: 1px solid #808080;
+}
+
+@media screen and (max-width: 1024px) {
+  /* line 240, ../sass/_tm_sidebar.scss */
+  body {
+    margin-left: inherit !important;
+  }
+
+  /* line 243, ../sass/_tm_sidebar.scss */
+  #container-theme {
+    margin-top: 20px;
+  }
+
+  /* line 246, ../sass/_tm_sidebar.scss */
+  #tm_sidenav {
+    opacity: 0;
+    display: none;
+  }
+
+  /* line 250, ../sass/_tm_sidebar.scss */
+  #tm_sidenav_toggle {
+    display: block;
+  }
+}
+@media screen and (min-width: 1025px) {
+  /* line 256, ../sass/_tm_sidebar.scss */
+  #tm_sidenav {
+    opacity: 1 !important;
+  }
+
+  /* line 259, ../sass/_tm_sidebar.scss */
+  #tm_sidenav_toggle {
+    display: none !important;
+  }
+
+  /* line 262, ../sass/_tm_sidebar.scss */
+  #tm_sidenav_toggle.min {
+    padding-top: 0rem !important;
+    box-shadow: none !important;
+  }
+}
+/* Social Icons */
+/* line 270, ../sass/_tm_sidebar.scss */
+#tm_sidenav_icons {
+  position: absolute;
+  bottom: 0;
+  width: 235px;
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 8px;
+  background-color: #fff;
+}
+
+/* line 280, ../sass/_tm_sidebar.scss */
+#tm_sidenav_icons li {
+  display: inline-block;
+  margin: 0 !important;
+}
+
+/* line 285, ../sass/_tm_sidebar.scss */
+#tm_sidenav_icons li a {
+  padding: 2px !important;
+  font-size: 28px;
+  font-weight: 200 !important;
+}
+
+/* line 291, ../sass/_tm_sidebar.scss */
+#tm_sidenav_icons li a:hover {
+  background-color: #fff;
+  border-radius: 0;
+  opacity: 0.7;
+}
+
+@media screen and (min-width: 1025px) and (max-height: 1000px) {
+  /* line 298, ../sass/_tm_sidebar.scss */
+  #tm_sidenav_icons.signed_in {
+    display: none;
+  }
+
+  /* line 299, ../sass/_tm_sidebar.scss */
+  #tm_sidenav li {
+    font-size: 16pt;
+  }
+
+  /* line 300, ../sass/_tm_sidebar.scss */
+  .tm_sidenav_icon:before {
+    font-size: 16pt;
+  }
+}
+@media screen and (min-width: 1025px) and (max-height: 800px) {
+  /* line 304, ../sass/_tm_sidebar.scss */
+  #tm_sidenav li {
+    font-size: 13pt;
+  }
+
+  /* line 305, ../sass/_tm_sidebar.scss */
+  .tm_sidenav_icon:before {
+    font-size: 13pt;
+  }
+
+  /* line 306, ../sass/_tm_sidebar.scss */
+  #tm_sidenav_moderator_options {
+    font-size: 13pt;
+  }
+}
+@media screen and (min-width: 1025px) and (max-height: 700px) {
+  /* line 310, ../sass/_tm_sidebar.scss */
+  #tm_sidenav li {
+    font-size: 17pt;
+  }
+
+  /* line 311, ../sass/_tm_sidebar.scss */
+  .tm_sidenav_icon:before {
+    font-size: 17pt;
+  }
+
+  /* line 312, ../sass/_tm_sidebar.scss */
+  body {
+    margin-left: inherit !important;
+  }
+
+  /* line 313, ../sass/_tm_sidebar.scss */
+  #container-theme {
+    margin-top: 20px;
+  }
+
+  /* line 314, ../sass/_tm_sidebar.scss */
+  #tm_sidenav {
+    opacity: 0;
+    display: none;
+  }
+
+  /* line 315, ../sass/_tm_sidebar.scss */
+  #tm_sidenav_toggle {
+    display: block !important;
+  }
+
+  /* line 316, ../sass/_tm_sidebar.scss */
+  #tm_sidenav_icons {
+    display: block !important;
+  }
+
+  /* line 317, ../sass/_tm_sidebar.scss */
+  #tm_sidenav_icons.signed_in {
+    display: block !important;
+  }
+
+  /* line 318, ../sass/_tm_sidebar.scss */
+  #tm_sidenav_moderator_options {
+    font-size: 24px;
+  }
+}
+/* Style for TM footer */
+/* line 3, ../sass/_tm_footer.scss */
+#footer, .front #footer {
+  background: none;
+}
+
+/* line 7, ../sass/_tm_footer.scss */
+#tm_footer_2020_container {
+  width: 100%;
+  color: #808080;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: 16px;
+  font-size: 16px;
+}
+
+/* line 16, ../sass/_tm_footer.scss */
+#tm_footer_2020_container a {
+  border: none;
+}
+
+/* line 20, ../sass/_tm_footer.scss */
+#tm_footer_2020_wrapper {
+  padding-top: 32px;
+  width: 100%;
+  max-width: 1190px;
+  margin: auto;
+}
+
+/* line 27, ../sass/_tm_footer.scss */
+#tm_footer_2020_inner {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  border-radius: 16px;
+  padding-left: 20px;
+  background-color: #ffffff;
+}
+
+/* line 36, ../sass/_tm_footer.scss */
+.tm_footer_2020_col {
+  flex: 1;
+}
+
+/* line 40, ../sass/_tm_footer.scss */
+.tm_footer_2020_col li a {
+  font-weight: 700;
+  color: #4a4a4a !important;
+}
+
+/* line 45, ../sass/_tm_footer.scss */
+.tm_footer_2020_col li a:hover {
+  color: #007eb5 !important;
+  text-decoration: underline !important;
+}
+
+/* line 50, ../sass/_tm_footer.scss */
+#tm_footer_2020_inner h2 {
+  font-size: 24px;
+  color: #007eb5;
+  font-weight: 800;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+/* line 58, ../sass/_tm_footer.scss */
+#tm_footer_2020_inner h2 a {
+  color: #007eb5 !important;
+}
+
+/* line 62, ../sass/_tm_footer.scss */
+#tm_footer_2020_inner ul {
+  margin-top: 0;
+  padding-left: 0;
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+}
+
+/* line 69, ../sass/_tm_footer.scss */
+#tm_footer_2020_inner li {
+  list-style-type: none;
+  margin-bottom: 0.2rem;
+  line-height: 22px;
+}
+
+/* line 75, ../sass/_tm_footer.scss */
+.tm_footer_2020_col {
+  display: inline-block;
+  vertical-align: top;
+  float: left;
+  min-width: 290px;
+  padding-left: 5px;
+}
+
+/* line 83, ../sass/_tm_footer.scss */
+#tm_footer_2020_bottom {
+  padding-top: 16px;
+  height: 60px;
+  vertical-align: top;
+  font-size: 10pt;
+  font-weight: 300;
+}
+
+/* line 91, ../sass/_tm_footer.scss */
+#tm_footer_2020_bottom a {
+  color: #808080 !important;
+  text-decoration: none;
+}
+
+/* line 96, ../sass/_tm_footer.scss */
+#tm_footer_2020_bottom a:hover {
+  text-decoration: underline;
+}
+
+/* line 100, ../sass/_tm_footer.scss */
+#tm_footer_2020_bottom_lhs {
+  float: left;
+  line-height: 24px;
+}
+
+/* line 105, ../sass/_tm_footer.scss */
+#tm_footer_2020_bottom_rhs {
+  float: right;
+}
+
+@media print {
+  /* line 112, ../sass/_tm_footer.scss */
+  #tm_footer_2020_container {
+    display: none !important;
   }
 }

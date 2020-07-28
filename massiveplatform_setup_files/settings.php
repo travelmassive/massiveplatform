@@ -8,9 +8,8 @@
 // To create mysql database run these commands:
 // create database massiveplatform;
 // grant all on massiveplatform.* to massiveplatform@localhost identified by 'YOUR_DB_PASS';
-//
-// Uncomment the configuration below for quick start
-/*$databases = array (
+
+$databases = array (
   'default' =>
   array (
     'default' =>
@@ -22,20 +21,18 @@
       'port' => '',
       'driver' => 'mysql',
       'prefix' => '',
-      // uncomment two lines below if you are using utf8mb4
-      //'charset' => 'utf8mb4',
-      //'collation' => 'utf8mb4_general_ci',
+      'charset' => 'utf8mb4',
+      'collation' => 'utf8mb4_general_ci',
     ),
   ),
 );
 
 $update_free_access = FALSE;
-$drupal_hash_salt = 'RANDOM_STRING_HERE'; // generate a random string and insert here
+$drupal_hash_salt = 'RANDOM_STRING_HERE'; // <--- generate a random string and insert here
 ini_set('session.gc_probability', 1);
 ini_set('session.gc_divisor', 100);
 ini_set('session.gc_maxlifetime', (60 * 60 * 24 * 90)); // 90 days
 ini_set('session.cookie_lifetime', (60 * 60 * 24 * 90)); // 90 days
-*/
 
 /** PERFORMANCE SETTINGS **/
 $conf['cache'] = 1;                      // Page cache (disable if using geoip branding)
@@ -304,6 +301,38 @@ $conf["tm_notification_moderation_non_community_message"] = 'To be a member of t
 <br><strong>But I love COMMUNITY_INDUSTRY, can I join still?</strong>
 <br>Our community provides professional networking and development for members of the COMMUNITY_INDUSTRY industry.';
 
+/** MODERATION TIPS WHEN FLAGGED AS INCOMPLETE **/
+$conf["tm_notification_moderation_more_info_tips"] = 'Here\'s some tips to get verified:
+<ul>
+<li>Tell us about yourself in the "About me" section</li>
+<li>Upload a profile picture so members can recognize you</li>
+<li>Tell us what city you are based in</li>
+<li>Fill out your Job Role and Organization Name</li>
+<li>Update your Industry Segment</li>
+<li>Fill out your profile questions</li>
+<li>Provide links to your website, or social media accounts</li>
+</ul>
+<br><strong>I\'ve updated my account, what next?</strong>
+<br>Tap "Request verification" from your account menu. Our team will review your profile and you\'ll be notified when you are verified.
+<br>
+<br>If you need any assistance please reply to this email.';
+
+/** MODERATION TIPS WHEN FLAGGED AS COMPANY OR BRAND **/
+$conf["tm_notification_moderation_is_company_tips"] = '<strong>Once you\'ve personalized your account, we\'ll be able to verify you and you can add a <a href="__SERVER_HTTP__://__SERVER_NAME__/companies">company page</a>.</strong>
+<br><br>Here\'s some tips to get verified:
+<ul>
+<li>Provide your real First and Last name if you haven\'t already</li>
+<li>Tell us about yourself in the "About me" section</li>
+<li>Upload a photo of yourself so members can recognize you</li>
+<li>Tell us what city you are based in</li>
+<li>Fill out your profile questions</li>
+<li>Provide links to your personal LinkedIn or social media accounts</li>
+</ul>
+<br><strong>I\'ve updated my account, what next?</strong>
+<br>Tap "Request verification" from your account menu. Our team will review your profile and you\'ll be notified when you are verified.
+<br>
+<br>If you need any assistance please reply to this email.';
+
 /** FRONTPAGE CONFIGURATION VARIABLES **/
 //$conf['tm_frontpage_launch_message'] = "We've just launched our new community platform. Read our <a style='color: #fff; text-decoration: underline;' href='/blog/'>announcement</a>."; // launch message (comment out to disable)
 $conf['tm_frontpage_show_anon_stats'] = array('members', 'chapters', 'connections'); // Options: members, chapters, organizations, connections, mutual_follows
@@ -437,7 +466,7 @@ $conf["tm_theme_meta_color"] = "#007DB7"; // Set the theme color for mobile Andr
 $conf["tm_theme_js_footer_scripts"] = array("sites/all/modules/contrib/ckeditor/includes/ckeditor.utils.js", "//cdn.ckeditor.com/4.4.3/full-all/ckeditor.js"); // Array of scripts that will be forced to bottom of footer (after Drupal.settings) 
 // $conf["tm_theme_google_fonts_url"] = ""; // ie: https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap)
 // $conf["tm_theme_preload_cover_images"] = true; // Preload cover images with fast placeholder
-// $conf['tm_theme_custom_header_template'] = false; // if set, use themes/tm/templates/custom-header.tpl.php
+$conf['tm_theme_custom_sidebar_template'] = 'example-sidebar.tpl.php'; // if set, use themes/tm/templates/custom-header.tpl.php
 
 /** SEARCH SETTINGS **/
 $conf["tm_search_api_placeholder_text"] = "Enter a name, city, event or company ..."; // placeholder text for search box in site header
@@ -595,36 +624,55 @@ $conf['tm_branding_menu_html'] = "
 
 // footer html 
 $conf['tm_branding_footer_html'] = "
-<div id='tm_footer_2018_container'>
-  <div id='tm_footer_2018_inner'>
-  <div id='tm_footer_2018_lhs'></div>
-  <div id='tm_footer_2018_rhs'></div>
-  <a title='Home' rel='home' href='__FRONTPAGE_URL__'><img id='tm_footer_2018_logo' src='__FOOTER_LOGO_URL__' alt='Home' width='140' height='64'></a>
-  <p class='tm_footer_2018_slogan'>A Community Platform.</p>
-  <p class='tm_footer_2018_stats'><a href='/community'>__STATS_NUM_MEMBERS__ members</a> / <a href='/chapters'>__STATS_NUM_CHAPTERS__ chapters</a> / <a href='/companies'><span class='stats_num_connections'>__STATS_NUM_ORGANIZATIONS__</span> companies</a></p>
-  <p class='tm_footer_2018_main_links'><a href='/blog/about-us/'>About</a> / <a href='/blog/membership/'>Membership</a> / <a href='/sponsors'>Sponsors</a></p>
-  <ul class='tm_footer_2018_links'>
-    <li class='tm_menu first'><a href='http://twitter.com/' title='Massive on Twitter' class='twitter tm_icon' target='_blank'></a></li>
-    <li class='tm_menu'><a href='https://www.facebook.com/' title='Massive on Facebook' class='facebook tm_icon' target='_blank'></a></li>
-    <li class='tm_menu'><a href='http://instagram.com/' title='Massive on Instagram' class='instagram tm_icon' target='_blank'></a></li>
-    <li class='tm_menu'><a href='http://www.linkedin.com/' title='Massive on Linkedin' class='linkedin tm_icon' target='_blank'></a></li>
-    <li class='tm_menu'><a href='https://www.youtube.com/' title='Massive on YouTube' class='youtube tm_icon' target='_blank'></a></li>
-    <li class='tm_menu'><a href='https://vimeo.com/' title='Massive on Vimeo' class='vimeo tm_icon' target='_blank'></a></li>
-    <li class='tm_menu last'><a href='https://www.snapchat.com/' title='Massive on Snapchat' class='snapchat tm_icon' target='_blank'></a></li>
-  </ul>
+<div id='tm_footer_2020_container'>
+  <a name='footer-more'></a>
+  <div id='tm_footer_2020_wrapper'>
+    <div id='tm_footer_2020_inner'>
+      <div class='tm_footer_2020_col'>
+        <h2>Learn more</h2>
+        <ul>
+          <li><a href='/blog/about-us'>About Us</a></li>
+          <li><a href='/feedback'>Share feedback</a></li>
+          <li><a href='/contact'>Contact Us</a></li>
+        </ul> 
+      </div>
+      <div class='tm_footer_2020_col'>
+        <h2>Community</h2>
+        <ul>
+          <li><a href='/blog/community-values/'>Community Values</a></li>
+          <li><a href='/community'>__STATS_NUM_MEMBERS__ Members</a></li>
+          <li><a href='/chapters'>__STATS_NUM_CHAPTERS__ Chapters</a></li>
+        </ul> 
+      </div>
+      <div class='tm_footer_2020_col'>
+        <h2>Explore</h2>
+        <ul>
+          <li><a href='/events'>Upcoming Events</a></li>
+          <li><a href='/events/list/past'>Past Events</a></li>
+          <li><a href='/leaders'>Chapter Leaders</a></li>
+        </ul> 
+      </div>
+      <div class='tm_footer_2020_col'>
+        <h2>More Links</h2>
+        <ul>
+          <li><a href='/blog/'>Blog</a></li>
+        </ul> 
+      </div>
+    </div> 
 
-  <p class='tm_footer_2018_made_with'>Made with <span style='color: red;'>♥</span> around the world.</p>
-  <p class='tm_footer_2018_minor_links'><a href='/blog/community-values/'>Community Values</a>
-  <br><a href='/contact'>Contact</a><p>
-</div>
+    <div style='clear: both;'></div>
 
-<div id='tm_footer_2018_base'>
-  <span class='tm_footer_2018_copyright'><time datetime='2011/__CURRENT_YEAR__'>© 2011-__CURRENT_YEAR__ All Rights Reserved</time> Example Company LLC</span>
-  <br>
-  <span id='tm_footer_2018_powered_by'><a href='http://massiveplatform.com'><span style='color: #75b5b1;'>☁️</span> Powered by Massive Platform</a></span>
-  <span class='tm_footer_2018_terms'> | <a href='/content/terms-use'>Terms</a> · <a href='/content/privacy-policy'>Privacy</a></span>
+    <div id='tm_footer_2020_bottom'>
+      <div id='tm_footer_2020_bottom_lhs'>
+        <span class='tm_footer_2020_copyright'><time datetime='2011/__CURRENT_YEAR__'>© 2011-__CURRENT_YEAR__</time> Example Company LLC</span> <span class='tm_footer_2020_terms'> | <a href='/content/terms-use'>Terms</a> | <a href='/content/privacy-policy'>Privacy</a></span><br>
+    <span id='tm_footer_2020_powered_by'><span style='color: #75b5b1;'>☁️</span> Powered by <a target='_blank' rel='noopener nofollow' href='https://massiveplatform.com'>Massive Platform</a></span>
+      </div>
+      <div id='tm_footer_2020_bottom_rhs'>
+        <span style='margin-right: 8px;'>Made with ❤️ around the world.</span><br>
+      </div>
+  </div>
 </div>
-</div>";
+<div style='clear: both;'></div>";
 
 // front page sub-footer html
 $conf["tm_branding_footer_level1_html"] = "";

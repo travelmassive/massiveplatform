@@ -255,6 +255,7 @@ function tm_users_request_approval($user) {
  */
 function tm_users_approval_need_more_info($user){
 
+  global $conf;
   $approving_user = $GLOBALS['user'];
 
   // send notification message to user that they need to provide more information
@@ -288,7 +289,30 @@ function tm_users_approval_need_more_info($user){
   // generate member html
   $member_widget = tm_notifications_render_member_html($user);
 
-  tm_notifications_notify('user_approval_need_more_info', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe, '__REPLY_TO__' => $reply_to, '__HERO_HEADLINE__' => $hero_headline, '__MEMBER_WIDGET__' => $member_widget));
+  // default moderation tips
+  $moderation_tips = 'Here\'s some tips to get verified:
+<ul>
+<li>Tell us about yourself in the "About me" section</li>
+<li>Upload a profile picture so members can recognize you</li>
+<li>Tell us what city you are based in</li>
+<li>Fill out your Job Role and Organization Name</li>
+<li>Update your Industry Segment</li>
+<li>Fill out your profile questions</li>
+<li>Provide links to your website, or social media accounts</li>
+</ul>
+<br><strong>I\'ve updated my account, what next?</strong>
+<br>Tap "Request verification" from your account menu. Our team will review your profile and you\'ll be notified when you are verified.
+<br>
+<br>If you need any assistance please reply to this email.';
+
+  // custom moderation tips
+  if (isset($conf["tm_notification_moderation_more_info_tips"])) {
+    $moderation_tips = $conf["tm_notification_moderation_more_info_tips"];
+  }
+  $moderation_tips = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $moderation_tips);
+  $moderation_tips = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $moderation_tips);  
+
+  tm_notifications_notify('user_approval_need_more_info', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe, '__REPLY_TO__' => $reply_to, '__HERO_HEADLINE__' => $hero_headline, '__MEMBER_WIDGET__' => $member_widget, '__MODERATION_TIPS__' => $moderation_tips));
 
   // unflag then flag again
   flag('unflag', 'approval_need_more_info', $user->uid, $approving_user);
@@ -308,6 +332,7 @@ function tm_users_approval_need_more_info($user){
  */
 function tm_users_approval_is_company_or_brand($user){
 
+  global $conf;
   $approving_user = $GLOBALS['user'];
   $role_name = 'approved user'; // The name of the role to add.
 
@@ -342,7 +367,30 @@ function tm_users_approval_is_company_or_brand($user){
   // generate member html
   $member_widget = tm_notifications_render_member_html($user);
 
-  tm_notifications_notify('user_approval_is_company_or_brand', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe, '__REPLY_TO__' => $reply_to, '__HERO_HEADLINE__' => $hero_headline, '__MEMBER_WIDGET__' => $member_widget));
+  // default moderation tips
+  $moderation_tips = '<strong>Once you\'ve personalized your account, we\'ll be able to verify you and you can add a <a href="__SERVER_HTTP__://__SERVER_NAME__/companies">company page</a>.</strong>
+<br><br>Here\'s some tips to get verified:
+<ul>
+<li>Provide your real First and Last name if you haven\'t already</li>
+<li>Tell us about yourself in the "About me" section</li>
+<li>Upload a photo of yourself so members can recognize you</li>
+<li>Tell us what city you are based in</li>
+<li>Fill out your profile questions</li>
+<li>Provide links to your personal LinkedIn or social media accounts</li>
+</ul>
+<br><strong>I\'ve updated my account, what next?</strong>
+<br>Tap "Request verification" from your account menu. Our team will review your profile and you\'ll be notified when you are verified.
+<br>
+<br>If you need any assistance please reply to this email.';
+
+  // custom moderation tips
+  if (isset($conf["tm_notification_moderation_is_company_tips"])) {
+    $moderation_tips = $conf["tm_notification_moderation_is_company_tips"];
+  }
+  $moderation_tips = str_replace("__SERVER_NAME__", $_SERVER["SERVER_NAME"], $moderation_tips);
+  $moderation_tips = str_replace("__SERVER_HTTP__", $conf["tm_email_server_http"], $moderation_tips);  
+
+  tm_notifications_notify('user_approval_is_company_or_brand', $user, array('approving-user' => $approving_user, 'user' => $user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__MODERATOR_FIRST_NAME__' => $moderator_first_name, '__MODERATOR_MESSAGE__' => $moderator_message_safe, '__REPLY_TO__' => $reply_to, '__HERO_HEADLINE__' => $hero_headline, '__MEMBER_WIDGET__' => $member_widget, '__MODERATION_TIPS__' => $moderation_tips));
 
   // flag the user that its a company or brand
   flag('unflag', 'approval_is_company_or_brand', $user->uid, $approving_user);

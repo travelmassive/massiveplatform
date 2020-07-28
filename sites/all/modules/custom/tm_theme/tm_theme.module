@@ -106,6 +106,15 @@ function tm_theme_preprocess_html(&$variables, $hook) {
     tm_theme_add_meta_tags_front_page();
   }
 
+  // add sidebar
+  $custom_sidebar_template = "";
+  if (isset($conf["tm_theme_custom_sidebar_template"])) {
+    $custom_sidebar_template = $conf["tm_theme_custom_sidebar_template"];
+    if ($custom_sidebar_template != "") {
+      drupal_add_js(drupal_get_path('theme', 'tm') . '/js/sidebar.js', array('group' => JS_THEME));
+    }
+  }
+
   // add impromptu js for better alert box handling
   // see: http://trentrichardson.com/Impromptu/
   // https://github.com/trentrichardson/jQuery-Impromptu
@@ -121,7 +130,7 @@ function tm_theme_preprocess_html(&$variables, $hook) {
 
   // if not front page add sticky header
   // also ignore node or user edit pages as account menu is obscured when using sticky header
-  if (!drupal_is_front_page()) {
+  if ((!drupal_is_front_page()) and ($custom_sidebar_template == "")) {
     drupal_add_js(drupal_get_path('theme', 'tm') . '/js/jquery.sticky.js', array('group' => JS_THEME));
   }
 
@@ -157,12 +166,6 @@ function tm_theme_preprocess_html(&$variables, $hook) {
       }
      
     }
-  }
-
-  // Add support for HTTP Live Streaming
-  // hls.js
-  if (drupal_is_front_page()) {
-    drupal_add_js(drupal_get_path('theme', 'tm') . '/js/hls.min.js');
   }
 
   // Call helper method to protect pii data from being sent to GA

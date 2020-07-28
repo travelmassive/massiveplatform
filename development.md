@@ -65,7 +65,7 @@ drush run-cron --uri=https://yoursite.com --root=/path/to/massiveplatform
 You can run the cron every minute by adding an entry to your /etc/crontab:
 
 ```console
-# Run drupal ultimate cron every minute
+# Run Drupal ultimate cron every minute
 * * * * * root /usr/bin/drush cron-run --uri=https://yoursite.com --root=/path/to/massiveplatform 2>&1 > /dev/null
 ```
 

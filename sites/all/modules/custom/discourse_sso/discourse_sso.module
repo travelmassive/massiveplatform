@@ -377,17 +377,15 @@ function discourse_sso_login_and_redirect() {
 
   // set destination
   // only redirect to discourse url
+  $return_path = $discourse_url;
   if (isset($_GET["destination"])) {
-    $destination = urldecode($_GET["destination"]);
-    if (strpos($destination, $discourse_url) === 0) {
-      $discourse_url = $destination;
-    }
+    $return_path .= ltrim($_GET["destination"], '/');
   }
 
   if (user_is_logged_in() and (in_array("approved user", $user->roles))) {
     // Login and redirect to forum
     // ie: https://forum.example.com/session/sso?return_path=https://forum.example.com/your-discourse-endpoint
-    $url = $discourse_url . "session/sso?return_path=" . $discourse_url;
+    $url = $discourse_url . "session/sso?return_path=" . $return_path;
     drupal_goto($url, array('external' => TRUE));
   } else {
     // Just go to forum

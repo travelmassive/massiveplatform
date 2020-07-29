@@ -375,6 +375,15 @@ function discourse_sso_login_and_redirect() {
 
   $discourse_url = $conf["tm_discourse_sso_sync_url"];
 
+  // set destination
+  // only redirect to discourse url
+  if (isset($_GET["destination"])) {
+    $destination = urldecode($_GET["destination"]);
+    if (strpos($destination, $discourse_url) === 0) {
+      $discourse_url = $destination;
+    }
+  }
+
   if (user_is_logged_in() and (in_array("approved user", $user->roles))) {
     // Login and redirect to forum
     // ie: https://forum.example.com/session/sso?return_path=https://forum.example.com/your-discourse-endpoint

@@ -5473,6 +5473,30 @@ ul.tm-checklist li:before {
   margin-left: 8px;
 }
 
+/* Preload background shimmer  */
+@keyframes tm-placeholder-shimmer {
+  /* line 1311, ../sass/_base.scss */
+  0% {
+    background-position: 0px 0;
+  }
+
+  /* line 1314, ../sass/_base.scss */
+  100% {
+    background-position: 100em 0;
+  }
+}
+
+/* line 1319, ../sass/_base.scss */
+.tm-preloading-background {
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: tm-placeholder-shimmer;
+  animation-timing-function: linear;
+  background: #ffffff;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+}
+
 /* line 3, ../sass/_buttons.scss */
 button:hover, button:focus {
   outline: none;

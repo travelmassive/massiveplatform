@@ -1304,3 +1304,24 @@ ul.tm-checklist li:before {
 .bttn.bttn-tertiary.bttn-m.cancel { 
   margin-left: 8px;
 }
+
+/* Preload background shimmer  */
+
+@keyframes tm-placeholder-shimmer {
+  0% {
+    background-position: 0px 0;
+  }
+  100% {
+    background-position: 100em 0;
+  }
+}
+
+.tm-preloading-background {
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: tm-placeholder-shimmer;
+  animation-timing-function: linear;
+  background: #ffffff;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%); 
+}

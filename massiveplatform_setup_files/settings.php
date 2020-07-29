@@ -655,6 +655,7 @@ $conf['tm_branding_footer_html'] = "
       <div class='tm_footer_2020_col'>
         <h2>More Links</h2>
         <ul>
+          <li><a href='/newsfeed'>Newsfeed</a></li>
           <li><a href='/blog/'>Blog</a></li>
         </ul> 
       </div>

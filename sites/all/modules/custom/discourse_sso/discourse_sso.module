@@ -389,7 +389,7 @@ function discourse_sso_login_and_redirect() {
     drupal_goto($url, array('external' => TRUE));
   } else {
     // Just go to forum
-    drupal_goto($discourse_url, array('external' => TRUE));
+    drupal_goto($return_path, array('external' => TRUE));
   }
 
 }

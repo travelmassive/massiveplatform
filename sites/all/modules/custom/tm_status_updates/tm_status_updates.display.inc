@@ -29,8 +29,8 @@ function tm_status_updates_display_feed($feed_type) {
 
 	// js init loader
 	$loader_js = "jQuery(document).ready(function() { 
-		jQuery('#tm-status-updates-promoted-init').load('/newsfeed/load/promoted?feed_type=" . $feed_type . "');
-		jQuery('#tm-status-updates-newsfeed-init').load('/newsfeed/load/feed?feed_type=" . $feed_type . "');
+		jQuery('#tm-status-updates-promoted-init').load('/newsfeed/load/promoted?feed_type=" . $feed_type . "&url=" . urlencode(current_path()) . "', function() { tm_status_update_init_dropdown_handlers();});
+		jQuery('#tm-status-updates-newsfeed-init').load('/newsfeed/load/feed?feed_type=" . $feed_type . "&url=" . urlencode(current_path()) . "', function() { tm_status_update_init_dropdown_handlers();});
 });";
 	drupal_add_js($loader_js, "inline");
 
@@ -61,7 +61,7 @@ function tm_status_updates_display_feed($feed_type) {
 	if ($feed_type == "tags") {
 		$promoted_html = ""; // dont show promoted on tags
 		$tags = tm_status_updates_get_search_tags();
-		$tm_status_update_form = "<h2 style='margin-bottom: 8px;'>Updates recently tagged " . implode(" and ", $tags) . "</h2><a href='/newsfeed'>&larr; Return to news feed</a>";
+		$tm_status_update_form = "<h2 style='margin-bottom: 8px;'>Updates recently tagged " . implode(" and ", $tags) . "</h2><a href='/newsfeed/global'>&larr; Return to news feed</a>";
 		drupal_add_js("var tm_update_status_loader_meta = ". json_encode(array("tags" => $tags)) . ";", "inline");
 	}
 
@@ -70,7 +70,7 @@ function tm_status_updates_display_feed($feed_type) {
 		$promoted_html = ""; // dont show promoted on search
 		$search_terms = tm_status_updates_get_search_terms();
 		$all_results = tm_status_updates_poll_results("search", array("search_terms" => $search_terms), null, $fetch_next);
-		$tm_status_update_form = "<h2 style='margin-bottom: 8px;'>Updates matching '" . implode(" and ", $search_terms) . "'</h2><a href='/newsfeed'>&larr; Return to news feed</a>";
+		$tm_status_update_form = "<h2 style='margin-bottom: 8px;'>Updates matching '" . implode(" and ", $search_terms) . "'</h2><a href='/newsfeed/global'>&larr; Return to news feed</a>";
 		drupal_add_js("var tm_update_status_loader_meta = ". json_encode(array("search_terms" => $search_terms)) . ";", "inline");
 	}
 
@@ -78,7 +78,7 @@ function tm_status_updates_display_feed($feed_type) {
 	if ($feed_type == "near") {
 		$promoted_html = ""; // dont show promoted on nearby
 		$location = tm_status_updates_get_location();
-		$tm_status_update_form = "<h2 style='margin-bottom: 8px;'>Nearby updates</h2><span style='background-color: #fff; font-size: 14px; border-radius: 4px; padding: 4px;'> latitude:" . $location["latitude"] . ", longitude:" . $location["longitude"] . ", range: " . $location["range"] . "km</span><br><a href='/newsfeed'>&larr; Return to news feed</a>";
+		$tm_status_update_form = "<h2 style='margin-bottom: 8px;'>Nearby updates</h2><span style='background-color: #fff; font-size: 14px; border-radius: 4px; padding: 4px;'> latitude:" . $location["latitude"] . ", longitude:" . $location["longitude"] . ", range: " . $location["range"] . "km</span><br><a href='/newsfeed/global'>&larr; Return to news feed</a>";
 		drupal_add_js("var tm_update_status_loader_meta = ". json_encode(array("location" => $location)) . ";", "inline");
 	}
 
@@ -427,8 +427,15 @@ function tm_status_updates_display_ajax() {
  */
 function tm_status_updates_get_search_terms() {
 
+	$current_path = current_path();
+
+	// support ajax requests
+	if (isset($_GET["url"])) {
+		$current_path = urldecode($_GET["url"]);
+	}
+
 	// ie: newsfeed/tags/TAG1/TAG2/etc
-	$parts = explode("/", current_path());
+	$parts = explode("/", $current_path);
 	$queries = array_slice($parts, 2);
 
 	// create query_term array
@@ -475,8 +482,15 @@ function tm_status_updates_get_location() {
 	$longitude = null;
 	$range = 200; // 200km
 
+	$current_path = current_path();
+
+	// support ajax requests
+	if (isset($_GET["url"])) {
+		$current_path = urldecode($_GET["url"]);
+	}
+
 	// ie: newsfeed/tags/TAG1/TAG2/etc
-	$parts = explode("/", current_path());
+	$parts = explode("/", $current_path);
 	
 	// ?range=
 	if (isset($_GET["range"])) {

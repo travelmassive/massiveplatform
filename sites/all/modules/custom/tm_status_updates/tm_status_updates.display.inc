@@ -159,7 +159,6 @@ function tm_status_updates_display_feed_ajax() {
 
 	// newsfeed
 	if ($feed_type == "newsfeed") {
-
 		$feed_title = "Your feed &middot; <a style='font-size: smaller; text-decoration: none;color: #007DB7;' href='/newsfeed/global'>All members</a>";
 		$all_results = tm_status_updates_poll_results("newsfeed", array("account" => $account), null, $fetch_next);
 
@@ -196,8 +195,14 @@ function tm_status_updates_display_feed_ajax() {
 	// preload users before rending to improve performance
 	tm_status_updates_preload_entities($all_results["results"]);
 
+	// hide repeat posts
+	$hide_repeat_posters = true;
+	if (($feed_type == "tags") or ($feed_type == "search")) {
+		$hide_repeat_posters = false;
+	}
+
 	// render item html from results
-	$results_html = tm_status_updates_render_results_items($all_results["results"], $viewer_ip);
+	$results_html = tm_status_updates_render_results_items($all_results["results"], $viewer_ip, $hide_repeat_posters);
 
 	// render newsfeed section
 	$newsfeed_html = tm_status_updates_render_results_feed($results_html, $feed_title, "newsfeed");
@@ -385,8 +390,14 @@ function tm_status_updates_display_ajax() {
 	// preload users before rending to improve performance
 	tm_status_updates_preload_entities($all_results["results"]);
 
+	// hide repeat posts
+	$hide_repeat_posters = true;
+	if (($feed_type == "tags") or ($feed_type == "search")) {
+		$hide_repeat_posters = false;
+	}
+
 	// render item html from results
-	$results_html = tm_status_updates_render_results_items($all_results["results"], $viewer_ip);
+	$results_html = tm_status_updates_render_results_items($all_results["results"], $viewer_ip, $hide_repeat_posters);
 
 	// include performance timing
 	$performance_time = round((microtime(true) - $timer_start), 3);

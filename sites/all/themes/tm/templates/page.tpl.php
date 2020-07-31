@@ -157,7 +157,18 @@
             // FRONT PAGE ITEMS
             if (drupal_is_front_page()) {
             ?>
+
             <div class="trilithon" id="frontpage_feed" style="margin-top: 64px;">
+
+              <?php 
+              // MARKETPLACE FEED
+              if (@isset($conf["tm_marketplace_frontpage_url"])) { ?>
+              <div class="trilithon-header contained">
+                <div class="below-header">
+                  <div id="frontpage_marketplace_feed"><section id="feedme-placeholder" class="contained contained-block feedme-marketplace tm-preloading-background"></section><?php include './'. path_to_theme() .'/templates/page--marketplace-frontpage.tpl.php';?></div>
+                </div>
+              </div>
+              <?php } // end if ?>
 
               <?php
               // WORDPRESS FEED
@@ -186,23 +197,12 @@
                   } // end if
                 } // end if
               ?>
-              </div> <!-- close trilithon -->
-            
-              <?php 
-              // MARKETPLACE FEED
-              if (@isset($conf["tm_marketplace_frontpage_url"])) { ?>
-              <div class="class="trilithon-header contained">
-                <div class="below-header">
-                  <div id="frontpage_marketplace_feed"><section id="feedme-placeholder" class="contained contained-block feedme-marketplace tm-preloading-background"></section><?php include './'. path_to_theme() .'/templates/page--marketplace-frontpage.tpl.php';?></div>
-                </div>
-              </div>
-              <?php } // end if ?>
+              
+            </div> <!-- close trilithon -->
 
             <?php } // end if front page ?>
 
-            </div>
-
-          </div>
+          </div> <!-- close column -->
 
         </section>
       </div>

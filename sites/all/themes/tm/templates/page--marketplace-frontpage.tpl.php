@@ -3,7 +3,9 @@ jQuery(document).ready(function(){
 
 	function load_marketplace_feedme() {
 
-			feedme_url = "<?php global $conf; print($conf["tm_marketplace_frontpage_url"]);?>";
+			feedme_base_url = "<?php global $conf; print($conf["tm_marketplace_frontpage_url"]);?>";
+			feedme_limit = <?php print($conf["tm_marketplace_frontpage_limit"]);?>;
+			feedme_url = feedme_base_url + "?limit=" + feedme_limit;
 			
 			jQuery.get(feedme_url, function(data) {
 

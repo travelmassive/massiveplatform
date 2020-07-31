@@ -1007,6 +1007,7 @@ $conf['tm_marketplace_cookie_secret_iv'] = 'randomstring123'; // must match jobs
 $conf['tm_marketplace_enable_feedme'] = true; // embed marketplace jobs into chapter and company pages
 $conf['tm_marketplace_feedme_url'] = '/marketplace/api/feedme/'; // url for feedme
 $conf['tm_marketplace_frontpage_url'] = '/marketplace/api/feedme/frontpage'; // url for frontpage feed
+$conf['tm_marketplace_frontpage_limit'] = 5; // how many items to show on frontpage feed
 */
 
 /** DISCOURSE SETTINGS **/

@@ -46,7 +46,20 @@
 		<li><form method="GET" action="/search"><input id="tm_sidenav_search" name="query" type="text" placeholder="Search" style="" autocomplete="off"></input></form></li>
 		<li><a href="/"><span class="tm_sidenav_home_icon tm_sidenav_icon"></span>Home</a></li>
 		<li><a href="/events"><span class="tm_sidenav_events_icon tm_sidenav_icon"></span>Events</a></li>
-        <li><a href="/chapters">Chapters</a></li>
+        <li><a href="/chapters">Chapters</a>
+        <?php 
+		// add link to home chapter
+		if (user_is_logged_in()) { 
+			if (isset($account->field_home_chapter[LANGUAGE_NONE][0]['target_id'])) {
+				$home_chapter = node_load($account->field_home_chapter[LANGUAGE_NONE][0]['target_id']);
+				$home_chapter_url = drupal_get_path_alias('node/' . $home_chapter->nid);
+				$home_chapter_code = $home_chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['value'];
+				$home_chapter_color = $home_chapter->field_chapter_color[LANGUAGE_NONE][0]['rgb'];
+				echo "<a style='font-size: smaller; color: #fff; background-color: " . $home_chapter_color . "; border-radius: 4px;' href='/" . $home_chapter_url . "'>" . $home_chapter_code . "</a>";
+			} // end if set home chapter
+		} // end if logged in
+		?>
+		</li>
 		<li><a href="/companies">Companies</a></li>
 		<li><a href="/blog/">Blog</a></li>
 		<li><span style="margin-left: 10px; font-weight: 200; color: #808080;">—</span></li>

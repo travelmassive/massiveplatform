@@ -148,47 +148,61 @@
               <ul class="action-links"><?php print render($action_links); ?></ul>
             <?php endif; ?>
           </header>
+
           <div class="column">
 
             <?php print render($page['content']); ?>
 
+            <?php 
+            // FRONT PAGE ITEMS
+            if (drupal_is_front_page()) {
+            ?>
             <div class="trilithon" id="frontpage_feed" style="margin-top: 64px;">
 
-            <?php
-            // Enable wordpress feedme plugin
-            // Show recent blog posts and more
-            $tm_enable_wordpress_feedme = false;
-            if (@isset($conf["tm_enable_wordpress_feedme"])) {
-              if ($conf["tm_enable_wordpress_feedme"]) {
-                $tm_enable_wordpress_feedme = true;
-            ?>
-              <div class="column first" id="frontpage_wordpress_feed" style="float: left;"></div>
-            <?php
-                include './'. path_to_theme() .'/templates/page--wordpress-feedme.tpl.php';
+              <?php
+              // WORDPRESS FEED
+              $tm_enable_wordpress_feedme = false;
+              if (@isset($conf["tm_enable_wordpress_feedme"])) {
+                if ($conf["tm_enable_wordpress_feedme"]) {
+                  $tm_enable_wordpress_feedme = true;
+              ?>
+                <div class="column first" id="frontpage_wordpress_feed" style="float: left;"><section id="feedme-placeholder" class="contained contained-block feedme tm-preloading-background"></section></div>
+              <?php
+                  include './'. path_to_theme() .'/templates/page--wordpress-feedme.tpl.php';
+                } // end if
               } // end if
-            } // end if
-            ?>
+              ?>
 
-            <?php
-            // only show flag feeds if enabled and on front page
-            $show_flag_feeds = false;
-            if (@isset($conf["tm_status_updates_frontpage_feed"])) {
-              if ($conf["tm_status_updates_frontpage_feed"] and drupal_is_front_page()) {
-                $show_flag_feeds = true;
-              }
-            }
+              <?php
+              // STATUS UPDATES FEED
+              if (@isset($conf["tm_status_updates_frontpage_feed"])) {
+                if ($conf["tm_status_updates_frontpage_feed"]) {
+                  $show_flag_feeds = true;
+                ?>
+                <div class="<?php if($tm_enable_wordpress_feedme) { print("column second"); }?>" id="frontpage_flag_feed" style="float: right;">
+                <?php print(tm_status_updates_show_frontpage_updates()); ?>
+                </div> <!-- close second column -->
+              <?php 
+                  } // end if
+                } // end if
+              ?>
+              </div> <!-- close trilithon -->
             
-            if ($show_flag_feeds) {
-            ?>
-              <div class="<?php if($tm_enable_wordpress_feedme) { print("column second"); }?>" id="frontpage_flag_feed" style="float: right;">
-                
-            <?php print(tm_status_updates_show_frontpage_updates()); ?>
-              </div> <!-- close second column -->
-            <?php
-              } // end if show flag feeds
-            ?>
+              <?php 
+              // MARKETPLACE FEED
+              if (@isset($conf["tm_marketplace_frontpage_url"])) { ?>
+              <div class="class="trilithon-header contained">
+                <div class="below-header">
+                  <div id="frontpage_marketplace_feed"><section id="feedme-placeholder" class="contained contained-block feedme-marketplace tm-preloading-background"></section><?php include './'. path_to_theme() .'/templates/page--marketplace-frontpage.tpl.php';?></div>
+                </div>
+              </div>
+              <?php } // end if ?>
 
-            </div> <!-- close triliton -->
+            <?php } // end if front page ?>
+
+            </div>
+
+          </div>
 
         </section>
       </div>

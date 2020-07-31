@@ -1323,5 +1323,17 @@ ul.tm-checklist li:before {
   animation-name: tm-placeholder-shimmer;
   animation-timing-function: linear;
   background: #ffffff;
-  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%); 
+  background: linear-gradient(to right, #ffffff 8%, #eeeeee 18%, #ffffff 33%); 
 }
+
+/* Feedme */
+
+.contained.contained-block.feedme { border-left: 8px solid #488bf8; }
+.contained.contained-block.feedme-marketplace { border-left: 8px solid #FC389A; }
+
+img.feedme-image { max-height: 64px;}
+img.feedme-image-marketplace { max-height: 64px; vertical-align: middle;}
+
+#frontpage_wordpress_feed #feedme-placeholder { height: 600px; }
+#frontpage_marketplace_feed #feedme-placeholder { height: 400px; }
+

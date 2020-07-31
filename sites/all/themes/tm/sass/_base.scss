@@ -1332,7 +1332,7 @@ ul.tm-checklist li:before {
 .contained.contained-block.feedme-marketplace { border-left: 8px solid #FC389A; }
 
 img.feedme-image { max-height: 64px;}
-img.feedme-image-marketplace { max-height: 64px; vertical-align: middle;}
+img.feedme-image-marketplace { height: 64px; object-fit: contain; }
 
 #frontpage_feed .feedme-marketplace .media  { width : 72px; height: 72px; }
 

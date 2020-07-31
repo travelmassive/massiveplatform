@@ -5519,8 +5519,8 @@ img.feedme-image {
 
 /* line 1335, ../sass/_base.scss */
 img.feedme-image-marketplace {
-  max-height: 64px;
-  vertical-align: middle;
+  height: 64px;
+  object-fit: contain;
 }
 
 /* line 1337, ../sass/_base.scss */

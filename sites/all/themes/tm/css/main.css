@@ -5524,11 +5524,17 @@ img.feedme-image-marketplace {
 }
 
 /* line 1337, ../sass/_base.scss */
+#frontpage_feed .feedme-marketplace .media {
+  width: 72px;
+  height: 72px;
+}
+
+/* line 1339, ../sass/_base.scss */
 #frontpage_wordpress_feed #feedme-placeholder {
   height: 600px;
 }
 
-/* line 1338, ../sass/_base.scss */
+/* line 1340, ../sass/_base.scss */
 #frontpage_marketplace_feed #feedme-placeholder {
   height: 400px;
 }

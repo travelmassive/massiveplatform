@@ -41,13 +41,15 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   // http://drupal.stackexchange.com/questions/64171/redirect-user-to-their-profile-page-after-savin
   $form['#submit'][] = 'tm_users_user_profile_form_submit';
 
-  
   // Add JS
   $js_array = array(); 
 
   // Add javascript protection to prompt to save profile if its edited
   // Use case is that many users don't click the save button on their profile
   $js_array[] = drupal_get_path('module', 'tm_users') . '/js/user-edit-protection.js';
+
+  // Add field add links ("+ Add link") 
+  $js_array[] = drupal_get_path('module', 'tm_users') . '/js/user-edit-field-add-links.js';
 
   if (!(in_array("administrator", $user->roles))) {
     // Add javascript to hide email and password fields to improve useability
@@ -115,6 +117,8 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
         unset($form['field_facebook_signin_id']);
       }
     }
+    // disable autocomplete
+    $form['field_facebook_signin_id']['#attributes']['autocomplete'] = 'off';
   } else {
     unset($form['field_facebook_signin_id']);
   }
@@ -193,6 +197,19 @@ function tm_users_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
     }
 
   }
+
+  // Once verified, member can't change their name without support
+  if (in_array("approved user", $user->roles)) {
+    if ((!in_array("chapter leader", $user->roles)) && (!in_array("moderator", $user->roles)) && (!in_array("administrator", $user->roles))) {
+      $form["field_user_first_name"][LANGUAGE_NONE]['#disabled'] = true;
+      $form["field_user_first_name"][LANGUAGE_NONE][0]['value']['#description'] = "As your profile is <strong>verified</strong>, please <a href='/contact'>contact support</a> if you wish to change your name.";
+      $form["field_user_last_name"][LANGUAGE_NONE]['#disabled'] = true;
+      $form["field_user_last_name"][LANGUAGE_NONE][0]['value']['#description'] = "&nbsp;";
+    }
+  }
+
+  // Default for add country
+  $form['field_user_country'][LANGUAGE_NONE]['#options']['_none'] = " - Select your country -";
 
 }
 

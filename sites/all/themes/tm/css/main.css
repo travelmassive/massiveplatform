@@ -5539,6 +5539,55 @@ img.feedme-image-marketplace {
   height: 400px;
 }
 
+/* Profile add field */
+/* line 1344, ../sass/_base.scss */
+.tm-add-field-label {
+  position: relative;
+  border-radius: 12px;
+  background: #efefef;
+  display: inline-block;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: #007eb5;
+  text-transform: uppercase;
+  font-size: 10pt;
+  font-weight: 600;
+}
+
+/* line 1357, ../sass/_base.scss */
+.tm-hide-field-label {
+  color: #007eb5;
+  line-height: 1;
+}
+
+/* line 1362, ../sass/_base.scss */
+.tm-add-field-label:hover, .tm-hide-field-label:hover {
+  cursor: pointer;
+}
+
+/* line 1366, ../sass/_base.scss */
+.tm-add-field-add-sign {
+  margin-right: 4px;
+}
+
+/* line 1370, ../sass/_base.scss */
+.tm-add-field-add-sign:before {
+  content: "+";
+  font-weight: bold;
+}
+
+/* line 1375, ../sass/_base.scss */
+.tm-add-field-close-sign {
+  margin-right: 4px;
+}
+
+/* line 1379, ../sass/_base.scss */
+.tm-add-field-close-sign:before {
+  font-family: 'tm-icons';
+  content: "\e61b";
+  color: #007eb5;
+}
+
 /* line 3, ../sass/_buttons.scss */
 button:hover, button:focus {
   outline: none;

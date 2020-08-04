@@ -1339,3 +1339,45 @@ img.feedme-image-marketplace { height: 64px; object-fit: contain; }
 #frontpage_wordpress_feed #feedme-placeholder { height: 600px; }
 #frontpage_marketplace_feed #feedme-placeholder { height: 400px; }
 
+/* Profile add field */
+
+.tm-add-field-label {
+  position: relative;
+  border-radius: 12px;
+  background: #efefef;
+  display: inline-block;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: #007eb5;
+  text-transform: uppercase;
+  font-size: 10pt;
+  font-weight: 600;
+}
+
+.tm-hide-field-label {
+  color: #007eb5;
+  line-height: 1;
+}
+
+.tm-add-field-label:hover, .tm-hide-field-label:hover{
+  cursor: pointer;  
+}
+
+.tm-add-field-add-sign {
+  margin-right: 4px;
+}
+
+.tm-add-field-add-sign:before {
+  content: "+";
+  font-weight: bold;
+}
+
+.tm-add-field-close-sign {
+  margin-right: 4px;
+}
+
+.tm-add-field-close-sign:before {
+  font-family: 'tm-icons';
+  content: "\e61b";
+  color: #007eb5;
+}

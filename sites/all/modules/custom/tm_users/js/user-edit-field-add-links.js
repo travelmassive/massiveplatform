@@ -6,6 +6,11 @@
 			
 			try {
 
+				// check item exists
+				if (jQuery(item).length == 0) {
+					return;
+				}
+
 				// set description
 				if (description != "") {
 					jQuery(item + " .description").html(description);
@@ -94,6 +99,9 @@
 				return;
 			}
 		}
+
+		// Account fields
+		tm_add_field_link(".form-item-field-friendly-url-und-0-value", "Claim Your URL", "example: your-name", "Create a custom URL that will let people quickly visit your profile and connect with you.");
 
 		// About me fields
 		tm_add_field_link(".form-item-field-user-cover-video-und-0-value", "Add YouTube video", "", "");

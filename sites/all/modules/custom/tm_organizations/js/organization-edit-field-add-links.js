@@ -6,6 +6,11 @@
 			
 			try {
 
+				// check item exists
+				if (jQuery(item).length == 0) {
+					return;
+				}
+				
 				// set description
 				if (description != "") {
 					jQuery(item + " .description").html(description);
@@ -97,7 +102,7 @@
 
 		// About me fields
 		tm_add_field_link(".form-item-field-company-cover-video-und-0-value", "Add YouTube video", "", "");
-		tm_add_field_link(".form-item-field-friendly-url-und-0-value", "Claim Profile URL", "", "");
+		tm_add_field_link(".form-item-field-friendly-url-und-0-value", "Claim Your URL", "example: your-company", "Create a custom URL that will let people quickly visit your page and connect with you.");
 
 		// COVID-19 response
 		tm_add_field_link(".form-item-field-company-covid19-message-und-0-value", "Add response", "", "");

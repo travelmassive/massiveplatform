@@ -52,7 +52,7 @@ if (!$feedme_off) {
 ?>
 
 <script>
-$(document).ready(function(){
+jQuery(document).ready(function(){
 
 feedme_append = "<?php print($feedme_append);?>";
 jQuery(feedme_append).append( "<div id='marketplace_feedme' style='<?php print($feedme_style);?>'></div>" );

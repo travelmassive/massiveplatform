@@ -508,11 +508,13 @@ function _tm_edit_own_profile_process($field, $title = NULL) {
     
     if ($user->uid == $uid) {
       $classes = $field['formatter_settings']['Extra classes'];
-      return l(t('Edit'), 'user/' . $uid . '/edit', array(
+      return l(t('Edit'), '/user/' . $uid . '/edit', array(
         'attributes' => array(
           'class' => $classes,
           'title' => t('Edit your profile')
-        )
+        ),
+        'fragment' => 'user-profile-options',
+        'external' => TRUE
       ));
     }
   }

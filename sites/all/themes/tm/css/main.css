@@ -5473,6 +5473,121 @@ ul.tm-checklist li:before {
   margin-left: 8px;
 }
 
+/* Preload background shimmer  */
+@keyframes tm-placeholder-shimmer {
+  /* line 1311, ../sass/_base.scss */
+  0% {
+    background-position: 0px 0;
+  }
+
+  /* line 1314, ../sass/_base.scss */
+  100% {
+    background-position: 100em 0;
+  }
+}
+
+/* line 1319, ../sass/_base.scss */
+.tm-preloading-background {
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: tm-placeholder-shimmer;
+  animation-timing-function: linear;
+  background: #ffffff;
+  background: linear-gradient(to right, #ffffff 8%, #eeeeee 18%, #ffffff 33%);
+}
+
+/* Feedme */
+/* line 1331, ../sass/_base.scss */
+.contained.contained-block.feedme, .node-form > div.contained-block.feedme,
+#user-profile-form > div.contained-block.feedme,
+#user-register-form > div.contained-block.feedme, #content .contained-block.feedme.search-form {
+  border-left: 8px solid #488bf8;
+}
+
+/* line 1332, ../sass/_base.scss */
+.contained.contained-block.feedme-marketplace, .node-form > div.contained-block.feedme-marketplace,
+#user-profile-form > div.contained-block.feedme-marketplace,
+#user-register-form > div.contained-block.feedme-marketplace, #content .contained-block.feedme-marketplace.search-form {
+  border-left: 8px solid #FC389A;
+}
+
+/* line 1334, ../sass/_base.scss */
+img.feedme-image {
+  max-height: 64px;
+}
+
+/* line 1335, ../sass/_base.scss */
+img.feedme-image-marketplace {
+  height: 64px;
+  object-fit: contain;
+}
+
+/* line 1337, ../sass/_base.scss */
+#frontpage_feed .feedme-marketplace .media {
+  width: 72px;
+  height: 72px;
+}
+
+/* line 1339, ../sass/_base.scss */
+#frontpage_wordpress_feed #feedme-placeholder {
+  height: 600px;
+}
+
+/* line 1340, ../sass/_base.scss */
+#frontpage_marketplace_feed #feedme-placeholder {
+  height: 400px;
+}
+
+/* Profile add field */
+/* line 1344, ../sass/_base.scss */
+.tm-add-field-label {
+  position: relative;
+  border-radius: 12px;
+  background: #efefef;
+  display: inline-block;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: #007eb5;
+  text-transform: uppercase;
+  font-size: 10pt;
+  font-weight: 600;
+}
+
+/* line 1357, ../sass/_base.scss */
+.tm-hide-field-label {
+  color: #007eb5;
+  line-height: 1;
+}
+
+/* line 1362, ../sass/_base.scss */
+.tm-add-field-label:hover, .tm-hide-field-label:hover {
+  cursor: pointer;
+}
+
+/* line 1366, ../sass/_base.scss */
+.tm-add-field-add-sign {
+  margin-right: 4px;
+}
+
+/* line 1370, ../sass/_base.scss */
+.tm-add-field-add-sign:before {
+  content: "+";
+  font-weight: bold;
+}
+
+/* line 1375, ../sass/_base.scss */
+.tm-add-field-close-sign {
+  margin-right: 4px;
+}
+
+/* line 1379, ../sass/_base.scss */
+.tm-add-field-close-sign:before {
+  font-family: 'tm-icons';
+  content: "\e61b";
+  color: #007eb5;
+}
+
 /* line 3, ../sass/_buttons.scss */
 button:hover, button:focus {
   outline: none;

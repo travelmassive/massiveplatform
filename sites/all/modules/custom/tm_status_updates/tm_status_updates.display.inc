@@ -21,115 +21,65 @@ function tm_status_updates_display_feed($feed_type) {
 	// hide title
 	drupal_add_css('#page-title { display: none; }', 'inline');
 
+	$promoted_html = "<div id='tm-status-updates-promoted-init'><section class='contained contained-block status-updates newsfeed tm-preloading-background' style='height: 170px; border-left: 8px solid #FC389A;'>
+</section></div>";
+	$newsfeed_html = "<div id='tm-status-updates-newsfeed-init'><section class='contained contained-block status-updates newsfeed tm-preloading-background' style='height: 170px; border-left: 8px solid #488bf8;'>
+</section></div>";
+	$recommended_html = ""; // deprecated tm_status_updated_render_recommended_members($user);
+
+	// js init loader
+	$loader_js = "jQuery(document).ready(function() { 
+		jQuery('#tm-status-updates-promoted-init').load('/newsfeed/load/promoted?feed_type=" . $feed_type . "&url=" . urlencode(current_path()) . "', function() { tm_status_update_init_dropdown_handlers();});
+		jQuery('#tm-status-updates-newsfeed-init').load('/newsfeed/load/feed?feed_type=" . $feed_type . "&url=" . urlencode(current_path()) . "', function() { tm_status_update_init_dropdown_handlers();});
+});";
+	drupal_add_js($loader_js, "inline");
+
+
 	// global feed
 	if ($feed_type == "global") {
-		$feed_title = "All members";
-
-		if ($user->uid > 0) {
-			$feed_title .= " &middot; <a style='font-size: smaller; text-decoration: none;color: #007DB7;' href='/newsfeed'>Your feed</a>";
-		}
-
 		if ($user->uid == 0) {
-
-			// show login form
 			$tm_status_update_form = "";
 			$signup_message = tm_status_updates_render_login_message();
 			drupal_set_message($signup_message . "<a href='/user/register'>Sign up now</a> or <a href='javascript:jq_login_signup_box();'>Log In</a>.", "help-tip");
-
 		} else {
-
 			// clear any previous sign in messages
 			drupal_get_messages("help-tip");
-
 			// show status update form
 			$tm_status_update_form = tm_status_updates_render_update_form($account);
 		}
-
-		$all_results = tm_status_updates_poll_results("global", array(), null, $fetch_next);
 	}
 
 	// newsfeed
 	if ($feed_type == "newsfeed") {
-
-		$feed_title = "Your feed &middot; <a style='font-size: smaller; text-decoration: none;color: #007DB7;' href='/newsfeed/global'>All members</a>";
-		$all_results = tm_status_updates_poll_results("newsfeed", array("account" => $account), null, $fetch_next);
 		$tm_status_update_form = tm_status_updates_render_update_form($account);
-
-		// If no results for your feed, switch to global feed
-		if (sizeof($all_results) == 0) {
-			return tm_status_updates_display_feed("global");
-		}
-
+		$promoted_html = ""; // dont show promoted on own newsfeed
 		// clear any previous sign in messages
 		drupal_get_messages("help-tip");
 	}
 
 	// tags
 	if ($feed_type == "tags") {
-		$feed_title = "Tagged updates";
+		$promoted_html = ""; // dont show promoted on tags
 		$tags = tm_status_updates_get_search_tags();
-		$all_results = tm_status_updates_poll_results("tags", array("tags" => $tags), null, $fetch_next);
-		$tm_status_update_form = "<h2 style='margin-bottom: 8px;'>Updates recently tagged " . implode(" and ", $tags) . "</h2><a href='/newsfeed'>&larr; Return to news feed</a>";
+		$tm_status_update_form = "<h2 style='margin-bottom: 8px;'>Updates recently tagged " . implode(" and ", $tags) . "</h2><a href='/newsfeed/global'>&larr; Return to news feed</a>";
 		drupal_add_js("var tm_update_status_loader_meta = ". json_encode(array("tags" => $tags)) . ";", "inline");
 	}
 
 	// search
 	if ($feed_type == "search") {
-		$feed_title = "Search updates";
+		$promoted_html = ""; // dont show promoted on search
 		$search_terms = tm_status_updates_get_search_terms();
 		$all_results = tm_status_updates_poll_results("search", array("search_terms" => $search_terms), null, $fetch_next);
-		$tm_status_update_form = "<h2 style='margin-bottom: 8px;'>Updates matching '" . implode(" and ", $search_terms) . "'</h2><a href='/newsfeed'>&larr; Return to news feed</a>";
+		$tm_status_update_form = "<h2 style='margin-bottom: 8px;'>Updates matching '" . implode(" and ", $search_terms) . "'</h2><a href='/newsfeed/global'>&larr; Return to news feed</a>";
 		drupal_add_js("var tm_update_status_loader_meta = ". json_encode(array("search_terms" => $search_terms)) . ";", "inline");
 	}
 
 	// near
 	if ($feed_type == "near") {
-		$feed_title = "Nearby updates";
+		$promoted_html = ""; // dont show promoted on nearby
 		$location = tm_status_updates_get_location();
-		$all_results = tm_status_updates_poll_results("near", array("latitude" => $location["latitude"], "longitude" => $location["longitude"], "range" => $location["range"]), null, $fetch_next);
-		$tm_status_update_form = "<h2 style='margin-bottom: 8px;'>Nearby updates</h2><span style='background-color: #fff; font-size: 14px; border-radius: 4px; padding: 4px;'> latitude:" . $location["latitude"] . ", longitude:" . $location["longitude"] . ", range: " . $location["range"] . "km</span><br><a href='/newsfeed'>&larr; Return to news feed</a>";
+		$tm_status_update_form = "<h2 style='margin-bottom: 8px;'>Nearby updates</h2><span style='background-color: #fff; font-size: 14px; border-radius: 4px; padding: 4px;'> latitude:" . $location["latitude"] . ", longitude:" . $location["longitude"] . ", range: " . $location["range"] . "km</span><br><a href='/newsfeed/global'>&larr; Return to news feed</a>";
 		drupal_add_js("var tm_update_status_loader_meta = ". json_encode(array("location" => $location)) . ";", "inline");
-	}
-
-	// // load js libraries
-	if ($user->uid == 0) {
-		tm_status_updates_display_include_js(true, $feed_type, false, false);
-	} else {
-		tm_status_updates_display_include_js(true, $feed_type, true, true);
-	}
-
-	// get viewer ip
-	$viewer_ip = tm_geoip_get_real_visitor_ip();
-
-	// preload users before rending to improve performance
-	tm_status_updates_preload_entities($all_results["results"]);
-
-	// render item html from results
-	$results_html = tm_status_updates_render_results_items($all_results["results"], $viewer_ip);
-
-	// render newsfeed section
-	$newsfeed_html = tm_status_updates_render_results_feed($results_html, $feed_title, "newsfeed");
-
-	// show loader
-	if (sizeof($all_results["results"]) >= $fetch_next) {
-		$loader_html = tm_status_updates_render_loader($all_results["last_timestamp"]);
-		$newsfeed_html .= $loader_html;
-	}
- 
-	// promoted updates
-	$promoted_html = tm_status_updates_render_promoted(7, $conf["tm_status_updates_show_featured"]);
-
-	// recommended members
-	$recommended_html = tm_status_updated_render_recommended_members($user);
-
-	// show help text if now enough results
-	$help_message = "";
-	if (sizeof($all_results["results"]) < $fetch_next) {
-		$loader_html = "";
-		$help_message = "Build your personal news feed by following members and companies you're interested in. Or find out what's happening on the <a href='/newsfeed/global'>global news feed</a>.";
-		//drupal_set_message($help_message, "help-tip");
-		$help_html = tm_status_update_render_custom_message($help_message);
-		$newsfeed_html .= $help_html;
 	}
 
 	// custom message
@@ -137,6 +87,13 @@ function tm_status_updates_display_feed($feed_type) {
 		if (isset($conf["tm_status_updates_custom_message"][$feed_type])) {
 			drupal_set_message($conf["tm_status_updates_custom_message"][$feed_type], "help-tip");
 		}
+	}
+
+	// // load js libraries
+	if ($user->uid == 0) {
+		tm_status_updates_display_include_js(true, $feed_type, false, false);
+	} else {
+		tm_status_updates_display_include_js(true, $feed_type, true, true);
 	}
 
 	// if not approved show a message
@@ -165,6 +122,126 @@ function tm_status_updates_display_feed($feed_type) {
 	$html .= "\n<div class='tm-status-updates-timer' style='display: none;'>" . $performance_time . "</div>";
 	return $html;
 }
+
+/**
+ * Callback to display initial newsfeed results
+ * ie: /newsfeed/load/feed?feed_type=global
+ */
+function tm_status_updates_display_feed_ajax() {
+
+	global $user;
+	global $conf;
+
+	// feed type
+	$feed_type = "global";
+	if (isset($_GET["feed_type"])) {
+		$feed_type = $_GET["feed_type"];
+	}
+
+	$fetch_next = $conf["tm_status_updates_items_per_load"];
+
+	// start performance timer
+	$timer_start = microtime(true); 
+
+	// load user
+	$account = user_load($user->uid);
+
+	// global feed
+	if ($feed_type == "global") {
+
+		$feed_title = "All members";
+		if ($user->uid > 0) {
+			$feed_title .= " &middot; <a style='font-size: smaller; text-decoration: none;color: #007DB7;' href='/newsfeed'>Your feed</a>";
+		}
+
+		$all_results = tm_status_updates_poll_results("global", array(), null, $fetch_next);
+	}
+
+	// newsfeed
+	if ($feed_type == "newsfeed") {
+		$feed_title = "Your feed &middot; <a style='font-size: smaller; text-decoration: none;color: #007DB7;' href='/newsfeed/global'>All members</a>";
+		$all_results = tm_status_updates_poll_results("newsfeed", array("account" => $account), null, $fetch_next);
+
+		// If no results for your feed, switch to global feed
+		if (sizeof($all_results) == 0) {
+			return tm_status_updates_display_feed("global");
+		}
+	}
+
+	// tags
+	if ($feed_type == "tags") {
+		$feed_title = "Tagged updates";
+		$tags = tm_status_updates_get_search_tags();
+		$all_results = tm_status_updates_poll_results("tags", array("tags" => $tags), null, $fetch_next);
+	}
+
+	// search
+	if ($feed_type == "search") {
+		$feed_title = "Search updates";
+		$search_terms = tm_status_updates_get_search_terms();
+		$all_results = tm_status_updates_poll_results("search", array("search_terms" => $search_terms), null, $fetch_next);
+	}
+
+	// near
+	if ($feed_type == "near") {
+		$feed_title = "Nearby updates";
+		$location = tm_status_updates_get_location();
+		$all_results = tm_status_updates_poll_results("near", array("latitude" => $location["latitude"], "longitude" => $location["longitude"], "range" => $location["range"]), null, $fetch_next);
+	}
+
+	// get viewer ip
+	$viewer_ip = tm_geoip_get_real_visitor_ip();
+
+	// preload users before rending to improve performance
+	tm_status_updates_preload_entities($all_results["results"]);
+
+	// hide repeat posts
+	$hide_repeat_posters = true;
+	if (($feed_type == "tags") or ($feed_type == "search")) {
+		$hide_repeat_posters = false;
+	}
+
+	// render item html from results
+	$results_html = tm_status_updates_render_results_items($all_results["results"], $viewer_ip, $hide_repeat_posters);
+
+	// render newsfeed section
+	$newsfeed_html = tm_status_updates_render_results_feed($results_html, $feed_title, "newsfeed");
+
+	// show loader
+	if (sizeof($all_results["results"]) >= $fetch_next) {
+		$loader_html = tm_status_updates_render_loader($all_results["last_timestamp"]);
+		$newsfeed_html .= $loader_html;
+	}
+	
+	// show help text if now enough results
+	$help_message = "";
+	if (sizeof($all_results["results"]) < $fetch_next) {
+		$loader_html = "";
+		$help_message = "Build your personal news feed by following members and companies you're interested in. Or find out what's happening on the <a href='/newsfeed/global'>global news feed</a>.";
+		//drupal_set_message($help_message, "help-tip");
+		$help_html = tm_status_update_render_custom_message($help_message);
+		$newsfeed_html .= $help_html;
+	}
+
+	echo $newsfeed_html;
+	return;
+}
+
+/**
+ * Callback to display initial newsfeed results
+ * ie: /newsfeed/load/promoted?feed_type=global
+ */
+function tm_status_updates_display_promoted_ajax() {
+
+	global $conf;
+
+	// promoted updates
+	$promoted_html = tm_status_updates_render_promoted(7, $conf["tm_status_updates_show_featured"]);
+
+	echo $promoted_html;
+	return;
+}
+
 
 /**
  * Global feed render
@@ -313,8 +390,14 @@ function tm_status_updates_display_ajax() {
 	// preload users before rending to improve performance
 	tm_status_updates_preload_entities($all_results["results"]);
 
+	// hide repeat posts
+	$hide_repeat_posters = true;
+	if (($feed_type == "tags") or ($feed_type == "search")) {
+		$hide_repeat_posters = false;
+	}
+
 	// render item html from results
-	$results_html = tm_status_updates_render_results_items($all_results["results"], $viewer_ip);
+	$results_html = tm_status_updates_render_results_items($all_results["results"], $viewer_ip, $hide_repeat_posters);
 
 	// include performance timing
 	$performance_time = round((microtime(true) - $timer_start), 3);
@@ -355,8 +438,15 @@ function tm_status_updates_display_ajax() {
  */
 function tm_status_updates_get_search_terms() {
 
+	$current_path = current_path();
+
+	// support ajax requests
+	if (isset($_GET["url"])) {
+		$current_path = urldecode($_GET["url"]);
+	}
+
 	// ie: newsfeed/tags/TAG1/TAG2/etc
-	$parts = explode("/", current_path());
+	$parts = explode("/", $current_path);
 	$queries = array_slice($parts, 2);
 
 	// create query_term array
@@ -403,8 +493,15 @@ function tm_status_updates_get_location() {
 	$longitude = null;
 	$range = 200; // 200km
 
+	$current_path = current_path();
+
+	// support ajax requests
+	if (isset($_GET["url"])) {
+		$current_path = urldecode($_GET["url"]);
+	}
+
 	// ie: newsfeed/tags/TAG1/TAG2/etc
-	$parts = explode("/", current_path());
+	$parts = explode("/", $current_path);
 	
 	// ?range=
 	if (isset($_GET["range"])) {

@@ -86,6 +86,22 @@ function tm_status_updates_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  $items['newsfeed/load/feed'] = array(
+    'title' => 'Init news feed',
+    'page callback' => 'tm_status_updates_display_feed_ajax',
+    'page arguments' => array(1),
+    'access callback' => 'tm_status_updates_display_callback',
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['newsfeed/load/promoted'] = array(
+    'title' => 'Init promoted feed',
+    'page callback' => 'tm_status_updates_display_promoted_ajax',
+    'page arguments' => array(1),
+    'access callback' => 'tm_status_updates_display_callback',
+    'type' => MENU_CALLBACK,
+  );
+
   $items['user/%user/status/update'] = array(
     'title' => 'Update status',
     'page callback' => 'tm_status_updates_update_status_ajax',

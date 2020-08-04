@@ -655,6 +655,7 @@ $conf['tm_branding_footer_html'] = "
       <div class='tm_footer_2020_col'>
         <h2>More Links</h2>
         <ul>
+          <li><a href='/newsfeed'>Newsfeed</a></li>
           <li><a href='/blog/'>Blog</a></li>
         </ul> 
       </div>
@@ -1004,7 +1005,9 @@ $conf['tm_marketplace_cookie_enable'] = true; // for marketplace subscription em
 $conf['tm_marketplace_cookie_secret_key'] = 'randomstringabc'; // must match jobskee config
 $conf['tm_marketplace_cookie_secret_iv'] = 'randomstring123'; // must match jobskee config
 $conf['tm_marketplace_enable_feedme'] = true; // embed marketplace jobs into chapter and company pages
-$conf['tm_marketplace_feedme_url'] = '/jobs/api/search/'; // url for search
+$conf['tm_marketplace_feedme_url'] = '/marketplace/api/feedme/'; // url for feedme
+$conf['tm_marketplace_frontpage_url'] = '/marketplace/api/feedme/frontpage'; // url for frontpage feed
+$conf['tm_marketplace_frontpage_limit'] = 5; // how many items to show on frontpage feed
 */
 
 /** DISCOURSE SETTINGS **/

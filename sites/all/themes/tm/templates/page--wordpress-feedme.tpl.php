@@ -57,7 +57,7 @@ if (!$feedme_off) {
 ?>
 
 <script>
-$(document).ready(function(){
+jQuery(document).ready(function(){
 
 feedme_append = "<?php print($feedme_append);?>";
 jQuery(feedme_append).append( "<div id='feedme' style='<?php print($feedme_style);?>'></div>" );
@@ -77,6 +77,7 @@ function load_feedme() {
     //console.log(feedme_url);
     jQuery.get(feedme_url, function(data) {
         jQuery("#feedme").replaceWith(data);
+        jQuery("#frontpage_wordpress_feed #feedme-placeholder").remove();
         // if feedme_loaded() function defined, call it
         // this can be used to display a div when the feed loads
         if (typeof(feedme_loaded) == "function") {

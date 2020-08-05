@@ -25,11 +25,12 @@ function tm_theme_html_head_alter(&$head_elements) {
     }
   }
 
-  // add noindex to /node or /user URLS
-  // all URLs we want indexed should be clean URLS
+  // add noindex to /node or /user URLs
+  // all URLs we want indexed should be clean URLs
+  // note: unlikely to hit this as we redirect all these
   $url_parts = explode('/', request_uri());
   if (($url_parts[1] == 'node') or ($url_parts[1] == 'user')) {
-  	$head_elements['MYMODULE_meta_robots'] = array(
+  	$head_elements['tm_theme_meta_robots'] = array(
   		'#tag' => 'meta',
   		'#type' => 'html_tag',
   		'#attributes' => array(
@@ -37,6 +38,32 @@ function tm_theme_html_head_alter(&$head_elements) {
   		'content' => 'noindex'
   		)
   	);
+  }
+
+  // remove any metatags that are overridden in $conf['tm_theme_custom_meta_tags'] 
+  $request_path = strtolower(request_path());
+  if (isset($conf['tm_theme_custom_meta_tags'][$request_path])) {
+    $custom_meta_tags = $conf['tm_theme_custom_meta_tags'][$request_path];
+
+    // duplicate og:title into dcterms.title
+    if (isset($custom_meta_tags['og:title'])) {
+      $custom_meta_tags['dcterms.title'] = $custom_meta_tags['og:title'];
+    }
+
+    // duplicate og:description into description
+    if (isset($custom_meta_tags['og:description'])) {
+      $custom_meta_tags['description'] = $custom_meta_tags['og:description'];
+    }
+
+    foreach ($head_elements as $key => $element) {
+      if (strpos($key, "metatag_") === 0) {
+        $key_without_metatag = str_replace("metatag_", "", $key);
+        $key_without_metatag = str_replace("_0", "", $key_without_metatag);
+        if (array_key_exists($key_without_metatag, $custom_meta_tags)) {
+          unset($head_elements[$key]);
+        }
+      }
+    }  
   }
 
   // fix css for administrator on edit page
@@ -238,6 +265,19 @@ function tm_theme_preprocess_html(&$variables, $hook) {
         }
 
       }
+    }
+  }
+
+  // Add custom meta tags
+  tm_theme_add_meta_tags_request_path();
+
+  // Add custom page title
+  // refer to $conf['tm_theme_custom_meta_tags']
+  $request_path = strtolower(request_path());
+  if (isset($conf['tm_theme_custom_meta_tags'][$request_path])) {
+    $meta_tags = $conf['tm_theme_custom_meta_tags'][$request_path];
+    if (isset($meta_tags['og:title'])) {
+      $variables['head_title'] = $meta_tags['og:title'] . ' | ' . variable_get('site_name');
     }
   }
 
@@ -456,6 +496,71 @@ function tm_theme_add_meta_tags_node($nid) {
     ),
   );
   drupal_add_html_head($meta, 'og:updated_time');
+
+}
+
+/**
+ * Add meta tags for custom path
+ */
+function tm_theme_add_meta_tags_request_path() {
+
+  global $conf;
+
+  // refer to $conf['tm_theme_custom_meta_tags']
+  // example for /community path
+  // $conf['tm_theme_custom_meta_tags']['community'] = array(
+  //  'og:title' => 'Community Page',
+  //  'og:description' => 'Explore our community',
+  //  'og:image' => '');
+  //
+  $request_path = strtolower(request_path());
+  if (!isset($conf['tm_theme_custom_meta_tags'][$request_path])) {
+    return;
+  }
+
+  // get meta tags
+  $meta_tags = $conf['tm_theme_custom_meta_tags'][$request_path];
+
+  // duplicate og:title into dcterms.title
+  if (isset($meta_tags['og:title'])) {
+    $meta_tags['dcterms.title'] = $meta_tags['og:title'];
+  }
+
+  // duplicate og:description into description
+  if (isset($meta_tags['og:description'])) {
+    $meta_tags['description'] = $meta_tags['og:description'];
+  }
+
+  // add tags
+  foreach ($meta_tags as $tag => $value) {
+    $meta = array(
+      '#tag' => 'meta', 
+      '#attributes' => array(
+        'property' => $tag, 
+        'content' => $value,
+      ),
+    );
+
+    // description tag has name attribute
+    if ($tag == 'description') {
+      unset($meta['#attributes']);
+      $meta['#attributes'] = array();
+      $meta['#attributes']['name'] = 'description';
+      $meta['#attributes']['content'] = $value;
+    }
+
+    // dcterms. has name attribute
+    if (strpos($tag, "dcterms.") === 0) {
+      unset($meta['#attributes']);
+      $meta['#attributes'] = array();
+      $meta['#attributes']['name'] = $tag;
+      $meta['#attributes']['content'] = $value;
+    }
+
+    // add custom metatag
+    drupal_add_html_head($meta, $tag);
+
+  }
 
 }
 

@@ -468,7 +468,7 @@ $conf["tm_theme_js_footer_scripts"] = array("sites/all/modules/contrib/ckeditor/
 // $conf["tm_theme_preload_cover_images"] = true; // Preload cover images with fast placeholder
 $conf['tm_theme_custom_sidebar_template'] = 'example-sidebar.tpl.php'; // if set, use themes/tm/templates/custom-header.tpl.php
 $conf['tm_theme_custom_meta_tags'] = array(); // Add meta tags to custom paths. og:title, og:description will also override title, description.
-$conf['tm_theme_custom_meta_tags']['community/demo'] = array('og:title' => 'Community Page', 'og:description' => 'Explore our community', 'og:image' => '');
+$conf['tm_theme_custom_meta_tags']['community'] = array('og:title' => 'Community Page', 'og:description' => 'Explore our community', 'og:image' => '');
 $conf['tm_theme_custom_meta_tags']['events/list/replays'] = array('og:title' => 'Event Replays', 'og:description' => 'Watch on-demand videos', 'og:image' => '');
 
 /** SEARCH SETTINGS **/

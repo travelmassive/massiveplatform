@@ -45,14 +45,21 @@ function tm_theme_html_head_alter(&$head_elements) {
   if (isset($conf['tm_theme_custom_meta_tags'][$request_path])) {
     $custom_meta_tags = $conf['tm_theme_custom_meta_tags'][$request_path];
 
-    // duplicate og:title into dcterms.title
+    // duplicate og:title into dcterms.title and twitter:title
     if (isset($custom_meta_tags['og:title'])) {
       $custom_meta_tags['dcterms.title'] = $custom_meta_tags['og:title'];
+      $custom_meta_tags['twitter:title'] = $custom_meta_tags['og:title'];
     }
 
-    // duplicate og:description into description
+    // duplicate og:description into description and twitter:description
     if (isset($custom_meta_tags['og:description'])) {
       $custom_meta_tags['description'] = $custom_meta_tags['og:description'];
+      $custom_meta_tags['twitter:description'] = $custom_meta_tags['og:description'];
+    }
+
+    // duplicate og:image into twitter:image unless already set
+    if (isset($custom_meta_tags['og:image']) and !isset($custom_meta_tags['twitter:image'])) {
+      $custom_meta_tags['twitter:image'] = $custom_meta_tags['og:image'];
     }
 
     foreach ($head_elements as $key => $element) {
@@ -521,14 +528,21 @@ function tm_theme_add_meta_tags_request_path() {
   // get meta tags
   $meta_tags = $conf['tm_theme_custom_meta_tags'][$request_path];
 
-  // duplicate og:title into dcterms.title
+  // duplicate og:title into dcterms.title and twitter:title
   if (isset($meta_tags['og:title'])) {
     $meta_tags['dcterms.title'] = $meta_tags['og:title'];
+    $meta_tags['twitter:title'] = $meta_tags['og:title'];
   }
 
-  // duplicate og:description into description
+  // duplicate og:description into description and twitter:description
   if (isset($meta_tags['og:description'])) {
     $meta_tags['description'] = $meta_tags['og:description'];
+    $meta_tags['twitter:description'] = $meta_tags['og:description'];
+  }
+
+  // duplicate og:image into twitter:image unless already set
+  if (isset($meta_tags['og:image']) and !isset($meta_tags['twitter:image'])) {
+    $meta_tags['twitter:image'] = $meta_tags['og:image'];
   }
 
   // add tags
@@ -549,8 +563,8 @@ function tm_theme_add_meta_tags_request_path() {
       $meta['#attributes']['content'] = $value;
     }
 
-    // dcterms. has name attribute
-    if (strpos($tag, "dcterms.") === 0) {
+    // dcterms. , twitter: has name attribute
+    if ((strpos($tag, "dcterms.") === 0) or (strpos($tag, "twitter:") === 0)) {
       unset($meta['#attributes']);
       $meta['#attributes'] = array();
       $meta['#attributes']['name'] = $tag;

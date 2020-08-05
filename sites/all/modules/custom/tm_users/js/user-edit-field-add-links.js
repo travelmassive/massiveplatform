@@ -104,11 +104,11 @@
 		tm_add_field_link(".form-item-field-friendly-url-und-0-value", "Claim Your URL", "example: your-name", "Create a custom URL that will let people quickly visit your profile and connect with you.");
 
 		// About me fields
-		tm_add_field_link(".form-item-field-user-cover-video-und-0-value", "Add YouTube video", "", "");
+		tm_add_field_link(".form-item-field-user-cover-video-und-0-value", "Add YouTube video", "YouTube Video URL", "");
 		tm_add_field_link(".form-item-field-home-chapter-und", "Add home chapter", "", "");
 		tm_add_field_link(".form-item-field-location-city-und-0-value", "Add city", "", "");
 		tm_add_field_link(".form-item-field-job-role-und-0-value", "Add job role", "", "examples: Founder, CEO, VP Marketing, Social Media Manager");
-		tm_add_field_link(".form-item-field-job-organization-und-0-value", "Add organization", "", "");
+		tm_add_field_link(".form-item-field-job-organization-und-0-value", "Add organization", "", "The name of your business, company, or organization.<br>Once your account is verified you can add a <a target='_blank' href='/companies'>company page</a>.");
 		tm_add_field_link(".form-item-field-user-country-und", "Add country", "", "");
 		tm_add_field_link(".form-item-field-segment-und-0-tid", "Add industry segment", "", "");
 

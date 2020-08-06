@@ -188,7 +188,7 @@ function tm_organizations_preprocess_page(&$variables, $hook) {
       }
       $message = "Sorry, you've reached the limit of the number of company pages you can create.";
       drupal_set_message($message, 'page_notice');
-      drupal_goto("user/" . $user->uid . "/companies");
+      //drupal_goto("user/" . $user->uid);
     }
   }
 

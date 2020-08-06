@@ -121,4 +121,36 @@ function _tm_more_actions_process_user_menu($field, $title, &$links, &$menu_item
   }
   // END requested approval note
 
+  // START Add company page
+  if (($menu_item['path'] == 'user/%') or ($menu_item['path'] == 'user/%/view')) {
+
+    // Only show when looking at your own profile
+    if ($currentuser == $targetuser) {
+
+      // Check that user has permission to create company page
+      if (tm_organizations_check_user_can_create_company($currentuser->uid)) {
+        $links['user'][] = array(
+          'wrapper_class' => array('add_organization'),
+          'content' => l(t('Add company'), 'node/add/organization', array(
+            'attributes' => array(
+              'title' => t('Add company')
+            )
+          ))
+        );
+      } else if (!in_array("approved user", $currentuser->roles)){
+        $links['user'][] = array(
+        'wrapper_class' => array('add_organization'),
+        'content' => l(t('Add company'), 'javascript:jq_alert("", "To add a <a href=\'/companies\'>company page</a>, you need a verified account.");',
+          array(
+            'fragment' => '',
+            'external' => true,
+            'attributes' => array('title' => t('Add company'))
+          )
+        )
+      );
+      }
+    }
+  }
+  // End Add company page
+
 }

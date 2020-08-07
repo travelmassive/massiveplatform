@@ -24,6 +24,8 @@ Massive Platform is a kick-ass, continually developed community platform to buil
 
 Massive Platform powers [Travel Massive](https://travelmassive.com), [Mappy Hour](https://mappyhour.org), and [The Nomadic Network](https://thenomadicnetwork.com/) — connecting more than 100,000 members both online and offline in places across the world.
 
+Massive Platform has powered more than 2,500 events in 80 countries.
+
 ### Who created Massive Platform?
 
 Massive Platform was created by Travel Massive's founder [Ian C](https://travelmassive.com/ian) ([@travelvc](https://twitter.com/travelvc)). Massive Platform is developed with the mindset that communities should be **free** and **open**.

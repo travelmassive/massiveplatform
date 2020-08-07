@@ -6,6 +6,8 @@ nav_order: 2
 
 # Getting started
 
+![chapters example](/assets/images/massive_platform_chapters_screenshot.jpg "Example Screenshot")
+
 ## How To Install Massive Platform
 
 Installing the platform is reasonably straight forward if you you've got some Drupal experience.

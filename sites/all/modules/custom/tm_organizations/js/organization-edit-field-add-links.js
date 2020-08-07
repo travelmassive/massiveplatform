@@ -6,6 +6,11 @@
 			
 			try {
 
+				// check item exists
+				if (jQuery(item).length == 0) {
+					return;
+				}
+
 				// set description
 				if (description != "") {
 					jQuery(item + " .description").html(description);
@@ -96,8 +101,8 @@
 		}
 
 		// About me fields
-		tm_add_field_link(".form-item-field-company-cover-video-und-0-value", "Add YouTube video", "", "");
-		tm_add_field_link(".form-item-field-friendly-url-und-0-value", "Claim Profile URL", "", "");
+		tm_add_field_link(".form-item-field-company-cover-video-und-0-value", "Add YouTube video", "YouTube Video URL", "");
+		tm_add_field_link(".form-item-field-friendly-url-und-0-value", "Claim Your URL", "example: your-company", "Create a custom URL that will let people quickly visit your page and connect with you.");
 
 		// COVID-19 response
 		tm_add_field_link(".form-item-field-company-covid19-message-und-0-value", "Add response", "", "");
@@ -105,8 +110,8 @@
 		// Website links
 		tm_add_field_link("#edit-field-link-website", "Add link", "https://www.mywebsite.com", "A link to your website");
 		tm_add_field_link("#edit-field-link-twitter", "Add link", "@yourtwitter", "Your Twitter handle, or a link to your Twitter profile");
-		tm_add_field_link("#edit-field-link-linkedin", "Add link", "https://linkedin.com/company/your-company-name", "A link to your LinkedIn page.<p><strong>How to find your LinkedIn URL</strong><br>1. Go to <a style='text-decoration: underline;' target='_blank' href='https://www.linkedin.com'>linkedin.com</a> and log in to your LinkedIn account.<br> 2. Go to your organization's page <br>3. Click \"View as member\" at the top right of your page.<br>4. Once your page loads, look at your browser's URL bar. The URL there is your LinkedIn URL.</p>");
-		tm_add_field_link("#edit-field-link-facebook", "Add link", "https://facebook.com/your-company-name", "A link to your Facebook page.<p><strong>How to find your Facebook page</strong><br>1. Go to <a style='text-decoration: underline;' target='_blank' href='https://www.facebook.com'>facebook.com</a> and log in to your Facebook account.<br> 2. Go to your Facebook page.<br>3. Once your page loads, look at your browser's URL bar. The URL there is your Facebook URL.</p>");
+		tm_add_field_link("#edit-field-link-linkedin", "Add link", "https://www.linkedin.com/company/your-company-name", "A link to your LinkedIn page.<p><strong>How to find your LinkedIn URL</strong><br>1. Go to <a style='text-decoration: underline;' target='_blank' href='https://www.linkedin.com'>linkedin.com</a> and log in to your LinkedIn account.<br> 2. Go to your organization's page <br>3. Click \"View as member\" at the top right of your page.<br>4. Once your page loads, look at your browser's URL bar. The URL there is your LinkedIn URL.</p>");
+		tm_add_field_link("#edit-field-link-facebook", "Add link", "https://www.facebook.com/your-company-name", "A link to your Facebook page.<p><strong>How to find your Facebook page</strong><br>1. Go to <a style='text-decoration: underline;' target='_blank' href='https://www.facebook.com'>facebook.com</a> and log in to your Facebook account.<br> 2. Go to your Facebook page.<br>3. Once your page loads, look at your browser's URL bar. The URL there is your Facebook URL.</p>");
 		tm_add_field_link("#edit-field-link-instagram", "Add link", "@yourinstagram", "Your Instagram handle, or a link to your Instagram page");
 		tm_add_field_link("#edit-field-link-youtube", "Add link", "https://youtube.com/user/yourname", "A link to your YouTube channel");
 		tm_add_field_link("#edit-field-link-vimeo", "Add link", "https://vimeo.com/yourname", "A link to your Vimeo page");

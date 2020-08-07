@@ -19,7 +19,7 @@ function tm_organizations_render_footer($num_items = 5, $use_cache = true) {
 	$exclude_items = $conf["tm_organizations_footer_exclude"];
 
 	// get organizatins with recent follows, sorted by follower count
-	$fetch_items = $num_items * 2;
+	$fetch_items = $num_items + 5; // get additional items in case we omit some
 	$recent_follows = tm_organizations_get_followed_organizations($fetch_items, $num_days, $exclude_items);
 
 	// order list by title length
@@ -27,8 +27,13 @@ function tm_organizations_render_footer($num_items = 5, $use_cache = true) {
 		if ($conf["tm_organizations_footer_order_length"]) {
 
 			// get node title lengths
+			$count = 1;
 			$sorted = array();
 			foreach ($recent_follows as $item) {
+
+				if ($count > $num_items) {
+					continue;
+				}
 
 				$node = node_load($item["entity_id"]);
 				if ($node == null) {
@@ -37,7 +42,15 @@ function tm_organizations_render_footer($num_items = 5, $use_cache = true) {
 
 				// add title to associative array
 				$title = strip_tags(trim($node->title));
+
+				// skip all caps
+				if ((strlen($title) > 5) and (strtoupper($title) == $title)) {
+					continue;
+				}
+
 				$sorted[] = array("title" => $title, "entity_id" => $item["entity_id"], "follower_count" => $item["follower_count"]);
+
+				$count++;
 			}
 
 			// sort by name length
@@ -78,11 +91,6 @@ function tm_organizations_render_footer($num_items = 5, $use_cache = true) {
 
 		// get title
 		$title = strip_tags(trim($node->title));
-
-		// skip all caps
-		if ((strlen($title) > 5) and (strtoupper($title) == $title)) {
-			continue;
-		}
 
 		// trim title
 		if (isset($conf["tm_organizations_footer_max_length"])) {

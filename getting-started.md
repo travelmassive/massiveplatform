@@ -97,7 +97,7 @@ upload_max_filesize = 16M
 Restart php7.2-fpm service after modifying php.ini
 
 ```console
-sudo service php5-fpm restart
+sudo service php7.2-fpm restart
 ```
 
 ### 5. Import Sample MySQL database

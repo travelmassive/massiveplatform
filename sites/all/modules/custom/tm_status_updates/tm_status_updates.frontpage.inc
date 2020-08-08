@@ -36,7 +36,7 @@ function tm_status_updates_show_frontpage_updates($display_num_items = 5, $displ
 	// render newsfeed section
 	global $tm_status_updates_feed_template_frontpage_css;
 	if ($conf["tm_status_updates_enabled"]) {
-		$newsfeed_html = tm_status_updates_render_results_feed($results_html, "Latest Updates", "frontpage", "/newsfeed", "View more", $tm_status_updates_feed_template_frontpage_css);
+		$newsfeed_html = tm_status_updates_render_results_feed($results_html, "Latest Updates", "frontpage", "/newsfeed/global", "View more", $tm_status_updates_feed_template_frontpage_css);
 	} else {
 		$newsfeed_html = tm_status_updates_render_results_feed($results_html, "Latest Updates", "", "", "", $tm_status_updates_feed_template_frontpage_css);
 	}

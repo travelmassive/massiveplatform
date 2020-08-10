@@ -72,7 +72,7 @@ function tm_checkout_reports_user_payments($account = null) {
   }
 
   // Help message
-  $help_message = $conf["tm_subscriptions_reports_help_message"];
+  $help_message = $conf["tm_checkout_reports_help_message"];
   drupal_get_messages('help-tip');
   drupal_set_message($help_message, 'help-tip');
 
@@ -143,7 +143,7 @@ function tm_checkout_reports_user_payments($account = null) {
     }
 
     // Our header
-    $html .= "<hr>" . $conf["tm_subscriptions_receipt_details"];
+    $html .= "<hr>" . $conf["tm_checkout_receipt_details"];
 	  
 	}
 

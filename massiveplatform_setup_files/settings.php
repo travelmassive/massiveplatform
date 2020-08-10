@@ -873,29 +873,9 @@ $conf["tm_payments_process_successful_message_text"] = "Thanks for your payment.
 $conf["tm_payments_process_successful_message_class"] = "status"; // class for the message (default 'status')
 */
 
-/* SUBSCRIPTION PAYMENT SETTINGS */
-/* Enable tm_subscriptions */
-/** Note: this requires a stripe payments endpoint which is not provided in this distribution **/
-/** If you would like to process event payments, please get in contact with the author. **/
-/*
-$conf["tm_subscriptions_stripe_publishable_key"] = "publishable"; // stripe publishable key
-$conf["tm_subscriptions_stripe_image_url"] = '/sites/all/themes/tm/images/stripe_payment_icon.png'; // stripe image url
-$conf["tm_subscriptions_process_url"] = ""; // external payment processor
-$conf["tm_subscriptions_process_check_certificate"] = false; // turn on for production 
-$conf["tm_subscriptions_process_timeout"] = 10; // seconds to wait for process url before timeout 
-$conf["tm_subscriptions_process_error_email"] = "support@massiveplatform.com"; // if payment process fails, who to email
-$conf["tm_subscriptions_error_message"] = "A problem occured processing your payment, please contact support@massiveplatform.com";
-$conf["tm_subscriptions_receipt_details"] = "<strong>TAX RECEIPT</strong><br>Your company name<br>Your company address<br>Email: your@receiptemail";
-$conf["tm_subscriptions_stripe_logo"] = "<a target='_blank' href='https://stripe.com/gallery'><img style='width: 119px; height: 26px;' width='119' height='26' src='/sites/all/themes/tm/images/stripe_logo_solid@2x.png'></a><br>Secure payment gateway trusted by <a target='_blank' href='https://stripe.com/gallery'>global brands</a>"; // displayed when payment is enabled
-$conf["tm_subscriptions_handler_name"] = "Massive"; // merchant name to display on payment screen
-$conf["tm_subscriptions_enable_billing_address"] = false; // enable billing address
-$conf["tm_subscriptions_stripe_email_field_enabled"] = true; // allow user to enter email address
-$conf["tm_subscriptions_payments_reports_url"] = ""; // subscription payment reports
-$conf["tm_subscriptions_payments_reports_secret_token"] = "randomstring123"; // secret token to verify payment report 
-$conf["tm_subscriptions_reports_help_message"] = "Here's a receipt of your payments."; // message to show user
-
 /* USER SUBSCRIPTION PAYMENT SETTINGS */
 /* Enable tm_subscriptions_user */
+/* Require tm_checkout */
 /*
 // User subscriptions 
 $conf["tm_subscriptions_user_enabled"] = true; // enable subscription payments
@@ -1280,3 +1260,5 @@ $conf["tm_checkout_stripe_payment_email"] = "support@massiveplatform.com"; // em
 $conf["tm_checkout_subscription_public_page"] = "membership"; // path for the public subscription landing page
 $conf["tm_checkout_subscription_confirm_page"] = "membership/landing"; // path for the public subscription landing page
 $conf["tm_checkout_subscription_leader_message"] = "Share the <a href='/membership'>Membership Page</a> link with your chapter to help support us.";
+$conf["tm_checkout_reports_help_message"] = "Here's a receipt of your payments."; // message to show user
+$conf["tm_checkout_receipt_details"] = "<strong>TAX RECEIPT</strong><br>Your company name<br>Your company address<br>Email: your@receiptemail";

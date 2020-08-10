@@ -64,7 +64,29 @@
 		<li><a href="/blog/">Blog</a></li>
 		<li><span style="margin-left: 10px; font-weight: 200; color: #808080;">—</span></li>
 		<?php if (user_is_logged_in()) { ?>
-		<li><a href="/user"><span class="tm_sidenav_profile_icon tm_sidenav_icon"></span>Profile</a></li>
+		<li><a href="/user"><span class="tm_sidenav_profile_icon tm_sidenav_icon"></span>Profile</a>
+		<?php
+		if (user_is_logged_in()) { 
+
+			// show badge for chapter leader
+			if (in_array("chapter leader", $account->roles)) {
+					echo "<a class='tm-sidebar-leader-badge' href='/leaders'>LEADER</a>";
+			} 
+
+			// show badge for subscriptions
+			else if (module_exists("tm_subscriptions_user")) {
+				if ($conf["tm_subscriptions_user_enabled"]) {
+					if (tm_subscriptions_is_user_subscription_enabled($account->uid)) {
+						echo "<a class='tm-sidebar-pro-member-badge' href='/" . $conf['tm_checkout_subscription_confirm_page'] . "'>Pro</a>";
+					} 
+					else {
+						echo "<a class='tm-sidebar-pro-member-upgrade' href='/checkout/upgrade'>Get Pro</a>";
+					}
+				}
+			}
+		}	
+		?>
+		</li>
 		<li><a href="/user/<?php print($account->uid);?>/edit"><span class="tm_sidenav_settings_icon tm_sidenav_icon"></span>Settings</a></li>
 
 		<?php if (!in_array("approved user", $account->roles)) { 

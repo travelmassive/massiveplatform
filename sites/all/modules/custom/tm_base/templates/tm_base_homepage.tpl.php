@@ -13,9 +13,8 @@ global $user;
     if (module_exists("tm_subscriptions_user")) {
       $subscription_cta = tm_subscriptions_user_cta_banner($user->uid);
       if ($subscription_cta != "") {
-        // print CTA and JS
+        // print CTA
         print $subscription_cta;
-        tm_subscriptions_user_cta_js($user->uid);
       }
       
     }

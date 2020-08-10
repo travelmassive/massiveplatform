@@ -1,0 +1,195 @@
+<?php
+
+/*
+mysql> describe tm_checkout_payments;
++--------------------------+---------------------+------+-----+---------+----------------+
+| Field                    | Type                | Null | Key | Default | Extra          |
++--------------------------+---------------------+------+-----+---------+----------------+
+| id                       | int(10) unsigned    | NO   | PRI | NULL    | auto_increment |
+| timestamp                | int(11)             | NO   | MUL | 0       |                |
+| payment_id               | varchar(255)        | YES  | MUL |         |                |
+| checkout_action          | varchar(255)        | NO   |     |         |                |
+| stripe_email             | varchar(255)        | NO   |     |         |                |
+| stripe_currency          | varchar(255)        | NO   |     |         |                |
+| stripe_amount            | decimal(10,2)       | NO   |     | 0.00    |                |
+| display_amount           | decimal(10,2)       | NO   |     | 0.00    |                |
+| entity_id                | int(10) unsigned    | YES  |     | NULL    |                |
+| entity_type              | varchar(255)        | YES  |     |         |                |
+| entity_title             | varchar(255)        | YES  |     |         |                |
+| user_id                  | int(10) unsigned    | YES  | MUL | NULL    |                |
+| user_email               | varchar(255)        | YES  |     |         |                |
+| user_first_name          | varchar(255)        | YES  |     |         |                |
+| user_last_name           | varchar(255)        | YES  |     |         |                |
+| log_user_ip              | varchar(255)        | YES  |     |         |                |
+| log_user_http_user_agent | varchar(255)        | YES  |     |         |                |
+| refunded                 | tinyint(3) unsigned | YES  |     | 0       |                |
+| paid_out                 | tinyint(3) unsigned | YES  |     | 0       |                |
+| referer_code             | varchar(255)        | YES  |     | NULL    |                |
+| partner_code             | varchar(255)        | YES  |     | NULL    |                |
++--------------------------+---------------------+------+-----+---------+----------------+
+21 rows in set (0.00 sec)
+*/
+
+/**
+ * Implements hook_schema().
+ */
+function tm_checkout_schema() {
+  $schema = array();
+  $schema['tm_checkout_payments'] = array(
+    'description' => 'Stripe checkout payments',
+    'fields' => array(
+      'id' => array(
+        'description' => 'The unique ID.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'timestamp' => array(
+        'description' => 'The Unix timestamp when the checkout was created.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0, 
+      ),
+      'payment_id' => array(
+        'description' => 'Identifier for the payment',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'checkout_action' => array(
+        'description' => 'Checkout action',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'payment_email' => array(
+       'description' => 'Payment email',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'stripe_currency' => array(
+        'description' => 'Checkout currency',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'stripe_amount' => array(
+        'description' => 'Checkout amount',
+        'type' => 'numeric',
+        'precision' => 10,
+        'scale' => 2,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'display_amount' => array(
+        'description' => 'Display amount',
+        'type' => 'numeric',
+        'precision' => 10,
+        'scale' => 2,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'entity_id' => array(
+        'description' => 'Entity id',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'entity_type' => array(
+        'description' => 'Entity type',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'entity_title' => array(
+       'description' => 'Entity title',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'user_id' => array(
+        'description' => 'User ID',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'user_email' => array(
+        'description' => 'Stripe use email',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'user_first_name' => array(
+        'description' => 'Stripe last name',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'user_last_name' => array(
+        'description' => 'Stripe last name',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'log_user_ip' => array(
+        'description' => 'Checkout ip',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'log_user_http_user_agent' => array(
+        'description' => 'Checkout user agent',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'refunded' => array(
+        'description' => 'Refunded flag',
+        'type' => 'int',
+        'size' => 'tiny',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'default' => 0,
+      ),
+      'paid_out' => array(
+        'description' => 'Paid out flag',
+        'type' => 'int',
+        'size' => 'tiny',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'default' => 0,
+      ),
+      'referer_code' => array(
+        'description' => 'Referer code',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ),
+      'partner_code' => array(
+       'description' => 'Partner code',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ),
+    ),
+    'primary key' => array('id'),     
+    'indexes' => array(
+      'user_id' => array('user_id'),
+      'payment_id' => array('payment_id'),
+      'timestamp' => array('timestamp'),  
+    ),  
+  );
+  return $schema;
+}

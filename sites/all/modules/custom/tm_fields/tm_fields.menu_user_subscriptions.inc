@@ -15,12 +15,21 @@ function _tm_more_actions_process_user_subscriptions_menu($field, $title, &$link
   $base = $base_root . request_uri();
 
   // START View user subscription details
-  if (module_exists("tm_subscriptions_user") && (!isset($field['entity']->nid) && $flag_link = flag_create_link('user_subscription_enable', $field['entity']->uid))) {
+  if (module_exists("tm_subscriptions_user") && (!isset($field['entity']->nid))) {
 
     // 1. Show Flag / Unflag link
     // only show for admin and moderator
     // chapter leaders flag sponsors via the event page but not directly
     if ((in_array('administrator', array_values($user->roles))) or (in_array('moderator', array_values($user->roles)))) {
+
+      // Flag link
+      $flag_link = flag_create_link('user_subscription_enable', $field['entity']->uid);
+
+      // Check if flagged or not
+      if (tm_flags_is_entity_flagged('user', $field['entity']->uid, 'user_subscription_enable')) {
+       $flag_link = str_replace("/flag/flag/", "/flag/unflag/", $flag_link);
+       $flag_link = str_replace("Enable Subscription", "Disable Subscription", $flag_link);
+      }
 
       $links['subscription_user'][] = array(
         'wrapper_class' => array('subscription_user_set_subscription'),
@@ -131,32 +140,5 @@ function _tm_more_actions_process_user_subscriptions_menu($field, $title, &$link
     }
   }
   // END View user subscription details
-
-  // START View user subscription payments
-  if (module_exists("tm_subscriptions_user")) {
-    if (isset($field['entity']->uid) and (!isset($field['entity']->nid))) {
-
-      // Check if is moderator or administrator
-      $is_moderator_or_administrator = (in_array("administrator", $user->roles) or in_array("moderator", $user->roles));
-
-      // Check if user has made payment
-      if (tm_subscriptions_is_user_subscription_paid($field['entity']->uid)) {
-
-        // If moderator or you are looking at your own profile
-        if ($is_moderator_or_administrator or ($targetuser->uid == $user->uid)) {
-
-          $links['subscription_user'][] = array(
-          'wrapper_class' => array('subscription_user_view_payments'),
-          'content' => l(t('View payments'), '/payment/reports/subscription-payments-member/' . $field['entity']->uid, array(
-            'attributes' => array(
-              'title' => t('View payments for @account', array('@account' => $field['entity']->name))
-            )
-          )));
-
-        }
-      }
-    }
-  }
-  // END View user subscription payments
-
+  
 }

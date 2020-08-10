@@ -5,6 +5,7 @@
  */
 
 include_once 'tm_subscriptions_user.features.inc';
+
 /**
  * @file
  * Code for the TM Subscriptions feature.
@@ -12,16 +13,13 @@ include_once 'tm_subscriptions_user.features.inc';
 
 include_once 'tm_subscriptions_user.permissions.inc';
 include_once 'tm_subscriptions_user.display.inc';
-include_once 'tm_subscriptions_user.process.inc';
 include_once 'tm_subscriptions_user.helpers.inc';
 include_once 'tm_subscriptions_user.pricing.inc';
 include_once 'tm_subscriptions_user.notifications.inc';
-include_once 'tm_subscriptions_user.reports.inc';
 include_once 'tm_subscriptions_user.footer.inc';
 
-/* 
-Stripe Payments Module
-You will also need stripe-payments repository installed into /payments and hosted on another server.
+/*  
+This module now relies on tm_checkout module which provides Stripe checkout and a payments table
 */
 
 function tm_subscriptions_user_menu() {
@@ -29,20 +27,6 @@ function tm_subscriptions_user_menu() {
 	global $conf;
 
 	$items = array();
-	$items['payment/subscription-user/%user/%user'] = array(
-    'title' => 'Entity payment',
-    'page callback' => 'tm_subscriptions_process_user_payment',
-    'page arguments' => array(2,3),
-    'access arguments' => array('access content'),
-    'type' => MENU_CALLBACK,
-  );
-  $items['payment/reports/subscription-payments-member/%user'] = array(
-    'title' => 'Subscription payments',
-    'page callback' => 'tm_subscriptions_reports_user_payments',
-    'page arguments' => array(3),
-    'access arguments' => array('access content'),
-    'type' => MENU_CALLBACK,
-  );
   $items['membership/invite'] = array(
     'title' => 'Membership invitation',
     'page callback' => 'tm_subscriptions_user_invite_link',
@@ -110,10 +94,7 @@ function tm_subscriptions_user_user_view_alter(&$build) {
   $account = $build['#account'];
 
   if (tm_subscriptions_check_show_user_cta($account->uid, $user->uid)) {
-
-    // Add Stripe js and pricing
-    // (CTA html is rendered from themes/tm/trilithon/trilithon.tpl.php)
-    tm_subscriptions_user_cta_js($account->uid);
+    drupal_add_js(drupal_get_path('module', 'tm_subscriptions_user') . '/js/tm_subscriptions_user_cta.js');
   }
 
 }
@@ -151,10 +132,7 @@ function tm_subscriptions_user_node_view_alter(&$build) {
   if (($node->type == "chapter") or ($node->type == "event")) {
    
     if (tm_subscriptions_check_show_user_cta($user->uid, $user->uid)) {
-
-      // Add Stripe js and pricing
-      // (CTA html is rendered from themes/tm/trilithon/trilithon.tpl.php)
-      tm_subscriptions_user_cta_js($user->uid);
+      drupal_add_js(drupal_get_path('module', 'tm_subscriptions_user') . '/js/tm_subscriptions_user_cta.js');
     }
   }
 

@@ -1,0 +1,103 @@
+<?php
+
+// tm_checkout.module
+
+include_once 'tm_checkout.helpers.inc';
+include_once 'tm_checkout.controller.inc';
+include_once 'tm_checkout.webhook.inc';
+include_once 'tm_checkout.reports.inc';
+include_once 'tm_checkout.subscription.inc';
+
+/**
+ * Implement hook_menu()
+ */
+function tm_checkout_menu() {
+
+	global $conf;
+
+	// allow a clean url for the public subscription path
+	$tm_checkout_subscription_public_page = "membership";
+	if (isset($conf["tm_checkout_subscription_public_page"])) {
+		$tm_checkout_subscription_public_page = $conf["tm_checkout_subscription_public_page"];
+	}
+
+	// allow a clean url for the public subscription path
+	$tm_checkout_subscription_confirm_page = "membership/confirmation";
+	if (isset($conf["tm_checkout_subscription_confirm_page"])) {
+		$tm_checkout_subscription_confirm_page = $conf["tm_checkout_subscription_confirm_page"];
+	}
+
+	$items = array();
+	$items[$tm_checkout_subscription_public_page] = array(
+		'title' => 'Upgrade membership',
+		'page callback' => 'tm_checkout_public_subscription_page',
+		'access arguments' => array('access content'),
+		'type' => MENU_CALLBACK,
+	);
+	$items['checkout/upgrade'] = array(
+		'title' => 'Upgrade membership',
+		'page callback' => 'tm_checkout_upgrade_subscription_page',
+		'access arguments' => array('access content'),
+		'type' => MENU_CALLBACK,
+	);
+	$items['checkout/upgrade/%'] = array(
+		'title' => 'Upgrade membership',
+		'page callback' => 'tm_checkout_upgrade_subscription_page',
+		'access arguments' => array('access content'),
+		'page arguments' => array(1),
+		'type' => MENU_CALLBACK,
+	);
+	$items['checkout/renew'] = array(
+		'title' => 'Renew membership',
+		'page callback' => 'tm_checkout_renew_subscription_page',
+		'access arguments' => array('access content'),
+		'type' => MENU_CALLBACK,
+	);
+	$items['checkout/renew/%'] = array(
+		'title' => 'Renew membership',
+		'page callback' => 'tm_checkout_renew_subscription_page',
+		'access arguments' => array('access content'),
+		'page arguments' => array(1),
+		'type' => MENU_CALLBACK,
+	);
+	$items[$tm_checkout_subscription_confirm_page] = array(
+		'title' => 'Payment successful',
+		'page callback' => 'tm_checkout_landing_subscription_page',
+		'access arguments' => array('access content'),
+		'type' => MENU_CALLBACK,
+	);
+	$items[$tm_checkout_subscription_confirm_page . '/%'] = array(
+		'title' => 'Payment successful',
+		'page callback' => 'tm_checkout_landing_subscription_page',
+		'access arguments' => array('access content'),
+		'page arguments' => array(1),
+		'type' => MENU_CALLBACK,
+	);
+	$items['checkout/ajax/checkout-button/%'] = array(
+		'title' => 'Checkout button',
+		'page callback' => 'tm_checkout_subscription_button_ajax',
+		'access arguments' => array('access content'),
+		'type' => MENU_CALLBACK,
+	);
+	$items['checkout/webhook'] = array(
+		'title' => 'Stripe webhook',
+		'page callback' => 'tm_checkout_stripe_webhook',
+		'access arguments' => array('access content'),
+		'type' => MENU_CALLBACK,
+	);
+	$items['checkout/my-payments/%user'] = array(
+		'title' => 'Member payments',
+		'page callback' => 'tm_checkout_reports_user_payments',
+		'page arguments' => array(2),
+		'access callback' => 'tm_checkout_access_payment_report_check',
+		'type' => MENU_CALLBACK,
+	);
+	$items['checkout/my-payments'] = array(
+		'title' => 'Member payments',
+		'page callback' => 'tm_checkout_reports_user_payments',
+		'access arguments' => array('access content'),
+		'type' => MENU_CALLBACK,
+	);
+
+	return $items;
+}

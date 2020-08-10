@@ -10,6 +10,7 @@ dependencies[] = field_group
 dependencies[] = flag
 dependencies[] = strongarm
 dependencies[] = tm_users
+dependencies[] = tm_checkout
 dependencies[] = views
 dependencies[] = views_load_more
 features[context][] = subscribers_page

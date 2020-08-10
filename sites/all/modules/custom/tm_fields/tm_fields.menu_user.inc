@@ -153,4 +153,37 @@ function _tm_more_actions_process_user_menu($field, $title, &$links, &$menu_item
   }
   // End Add company page
 
+  // START View user subscription payments
+  if (module_exists("tm_checkout")) {
+    if (isset($field['entity']->uid) and (!isset($field['entity']->nid))) {
+
+      // Check if is moderator or administrator
+      $is_moderator_or_administrator = (in_array("administrator", $user->roles) or in_array("moderator", $user->roles));
+
+      // Check if user has made payment
+      if (tm_checkout_user_has_made_payment($targetuser->uid)) {
+
+        // If moderator or you are looking at your own profile
+        if ($is_moderator_or_administrator or ($targetuser->uid == $user->uid)) {
+
+          // report url
+          $report_url = '/checkout/my-payments';
+          if ($is_moderator_or_administrator) {
+            $report_url .= '/' . $field['entity']->uid;
+          }
+
+          $links['subscription_user'][] = array(
+          'wrapper_class' => array('subscription_user_view_payments'),
+          'content' => l(t('View payments'), $report_url, array(
+            'attributes' => array(
+              'title' => t('View payments for @account', array('@account' => $field['entity']->name))
+            )
+          )));
+
+        }
+      }
+    }
+  }
+  // END View user subscription payments
+
 }

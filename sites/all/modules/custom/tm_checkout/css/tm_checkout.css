@@ -1,0 +1,43 @@
+h1.page__title {
+	display: none;
+}
+
+h1.tm-checkout {
+	text-align: center;
+}
+
+p.tm-checkout-error-message {
+	text-align: center;
+}
+
+.tm-checkout-container {
+	text-align: left;
+	margin: auto;
+	max-width: 800px !important;
+}
+
+#tm-checkout-button-container {
+	text-align: center;
+	height: 76px;
+}
+
+#checkout-button {
+	background-color: #3838FC;
+	font-size: 18pt;
+	color: #fff;
+	border-radius: 4px;
+	border: none;
+	padding: 8px 16px;
+}
+
+.tm-checkout-button-pricing-label {
+	color: #888;
+	font-size: 11pt;
+	line-height: 2rem;
+}
+
+.tm-checkout-error-message {
+	color: #888;
+	font-size: 11pt;
+	line-height: 1.75rem;
+}

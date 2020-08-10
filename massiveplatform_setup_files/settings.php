@@ -998,6 +998,39 @@ To renew your subscription, simply sign in to your account and view your profile
 
 __EMAIL_SIGNOFF__
 ";
+$conf["tm_subscriptions_user"]["US"]["checkout_upgrade_title"] = "Upgrade to Pro Membership";
+$conf["tm_subscriptions_user"]["US"]["checkout_upgrade_message"] = "<p>
+Hey __FIRST_NAME__,
+<br>
+<br>Upgrade to Pro Membership!
+</p>
+<div id='tm-checkout-button-container'></div>
+";
+$conf["tm_subscriptions_user"]["US"]["checkout_renew_title"] = "Renew your Pro Memership";
+$conf["tm_subscriptions_user"]["US"]["checkout_renew_message"] = "<p>
+Hey __FIRST_NAME__,
+<br>
+<br>Your subscription expires in __SUBSCRIPTION_EXPIRES_TEXT__.
+<br>Renew your membership!
+</p>
+<div id='tm-checkout-button-container'></div>
+";
+$conf["tm_subscriptions_user"]["US"]["checkout_landing_title"] = "Thanks for supporting us.";
+$conf["tm_subscriptions_user"]["US"]["checkout_landing_message"] = "<p>
+Hey __FIRST_NAME__,
+<br>
+<br>Thanks for upgraded to Pro Membership!
+<br>
+<br>Your subscription expires in __SUBSCRIPTION_EXPIRES_TEXT__.
+<a href='/checkout/my-payments/__USER_ID__'>View payment receipt</a>
+</p>
+";
+$conf["tm_subscriptions_user"]["US"]["checkout_public_title"] = "Upgrade to Pro Membership";
+$conf["tm_subscriptions_user"]["US"]["checkout_public_message"] = "<p>
+Pro Membership has a lot offer.
+<br>Please sign in to upgrade.
+</p>
+";
 */
 
 /** MARKETPLACE/JOBS SETTINGS **/
@@ -1237,3 +1270,13 @@ $conf["tm_chatbox_secret_key"] = "secret_key";
 // $conf['tm_users_avatar_secret_key'] = 'randomstringabc';
 // $conf['tm_users_avatar_secret_iv'] = 'randomstring123';
 
+/** STRIPE CHECKOUT */
+$conf["tm_checkout_stripe_library_path"] = "stripe-php-7.46.1"; // stripe  library path inside tm_checkout/includes/
+$conf["tm_checkout_stripe_api_version"] = "2020-03-02"; // stripe api version
+$conf["tm_checkout_stripe_publishable_key"] = "your_stripe_publishable_ley"; // your stripe publishable key
+$conf["tm_checkout_stripe_secret_key"] = "your_stripe_secret_key"; // your stripe secret key
+$conf["tm_checkout_stripe_endpoint_secret"] = "your_stripe_endpoint_secret"; // create an webhook for checkout.session.completed
+$conf["tm_checkout_stripe_payment_email"] = "support@massiveplatform.com"; // email when payment is logged
+$conf["tm_checkout_subscription_public_page"] = "membership"; // path for the public subscription landing page
+$conf["tm_checkout_subscription_confirm_page"] = "membership/landing"; // path for the public subscription landing page
+$conf["tm_checkout_subscription_leader_message"] = "Share the <a href='/membership'>Membership Page</a> link with your chapter to help support us.";

@@ -581,3 +581,81 @@ function tm_subscriptions_user_get_new_subscribers($limit = 5) {
 
 	return $subscriber_uids;
 }
+
+/**
+ * Helper method to replace template fields
+ */
+function tm_subscriptions_user_replace_template_fields($account, $template, $display_chapter = null) {
+
+	$inner_html = $template;
+
+	// include template fields
+	$subscription_date = tm_subscriptions_user_get_subscription_date($account);
+	$subscription_date_text = date('Y-m-d', strtotime($subscription_date));
+	$expires_text = tm_subscriptions_user_get_subscription_expires_text($account);
+	if ((strpos($expires_text, "mins")) or (strpos($expires_text, "hours"))) {
+		$expires_text = "Today";
+	}
+	$inner_html = str_replace("__SUBSCRIPTION_EXPIRES_DATE__", $subscription_date_text, $inner_html); // subscription expiry date
+	$inner_html = str_replace("__SUBSCRIPTION_EXPIRES_TEXT__", $expires_text, $inner_html); // days until subscription expiry
+	
+	// add number of members to text
+	$query = "SELECT COUNT(*) amount FROM {users} u";
+	$num_members = db_query($query)->fetch();
+	$num_members_amount = $num_members->amount;
+	if ($num_members_amount > 1000) {
+		$num_members_amount = number_format(round(floor($num_members_amount / 1000)) * 1000);
+	}
+	$inner_html = str_replace("__NUM_MEMBERS_ROUNDED__", $num_members_amount, $inner_html);
+
+	// add number of subscribed members to text
+	$num_subscribed_members_amount = flag_get_flag_counts("user_subscription_enable");
+	$inner_html = str_replace("__NUM_SUBSCRIBED_MEMBERS__", $num_subscribed_members_amount, $inner_html);
+
+	// get pricing label
+	$pricing_label = tm_subscriptions_get_user_pricing_label($account);
+	$inner_html = str_replace("__PRICING_LABEL__", $pricing_label, $inner_html);
+
+	// get pricing amount
+	$pricing_amount = tm_subscriptions_get_user_pricing_amount($account);
+	$inner_html = str_replace("__PRICING_AMOUNT__", $pricing_amount, $inner_html);
+
+	// get chapter shortcode and set ?ref=
+	// ie ?ref=TOR
+	$shortcode = null;
+	if ($display_chapter == null) {
+		$shortcode = tm_subscriptions_user_get_chapter_code($account);
+	} elseif (isset($display_chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['value'])) {
+		$shortcode = $display_chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['value'];
+	}
+
+	$inner_html = str_replace("__CHAPTER_SHORTCODE__", $shortcode, $inner_html);
+	if ($shortcode != "") {
+		$inner_html = str_replace("__CHAPTER_SHORTCODE_REF__", "?ref=" . $shortcode, $inner_html);
+	} else {
+		$inner_html = str_replace("__CHAPTER_SHORTCODE_REF__", "", $inner_html);
+	}
+
+	// members first name
+	$first_name = $account->field_user_first_name[LANGUAGE_NONE][0]['value'];
+	$inner_html = str_replace("__FIRST_NAME__", $first_name, $inner_html);
+
+	// chapter title
+	if ($display_chapter == null) {
+		$display_chapter = tm_subscriptions_user_get_chapter($account);
+	}
+	$chapter_title = "community";
+	$chapter_label = "community";
+	if ($display_chapter != null) {
+		$chapter_title = strip_tags($display_chapter->title);
+		$chapter_label = $chapter_title . " chapter";
+	}
+	$inner_html = str_replace("__CHAPTER_LABEL__", $chapter_label, $inner_html);
+	$inner_html = str_replace("__CHAPTER_TITLE__", $chapter_title, $inner_html);
+
+	// user id
+	$inner_html = str_replace("__USER_ID__", $account->uid, $inner_html);
+
+	return $inner_html;
+
+}

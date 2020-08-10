@@ -27,6 +27,7 @@ function tm_subscriptions_get_user_subscription_price($account) {
 	$currency_prefix = $subscription["currency_symbol"];
 	$subscription_label = $subscription["subscription_label"];
 	$subscription_type = $subscription["subscription_type"];
+	$stripe_description = $subscription["stripe_description"];
 
 	// STEP 2. GET DISCOUNT PRICING
 	$partner_enabled = false;
@@ -60,7 +61,7 @@ function tm_subscriptions_get_user_subscription_price($account) {
 	$stripe_amount = _tm_subscriptions_user_get_api_amount($display_amount, $currency);
 	
 	// return pricing array
-	return array("display_amount" => $display_amount, "stripe_currency" => $currency, "stripe_amount" => $stripe_amount, "currency_symbol" => $currency_symbol, "currency_prefix" => $currency_prefix, "regular_amount" => $regular_amount, "partner_enabled" => $partner_enabled, "partner_message" => $partner_message,  "partner_label" => $partner_label, "saving_message" => $saving_message, "subscription_label" => $subscription_label, "partner_code" => $partner_code, "subscription_type" => $subscription_type);
+	return array("display_amount" => $display_amount, "stripe_currency" => $currency, "stripe_amount" => $stripe_amount, "currency_symbol" => $currency_symbol, "currency_prefix" => $currency_prefix, "regular_amount" => $regular_amount, "partner_enabled" => $partner_enabled, "partner_message" => $partner_message,  "partner_label" => $partner_label, "saving_message" => $saving_message, "subscription_label" => $subscription_label, "partner_code" => $partner_code, "subscription_type" => $subscription_type, "stripe_description" => $stripe_description);
 }
 
 /**
@@ -109,4 +110,3 @@ function tm_subscriptions_get_user_pricing_amount($account) {
 	$pricing_amount = $country_pricing["currency_prefix"] . $country_pricing["display_amount"];
 	return $pricing_amount;
 }
-

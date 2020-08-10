@@ -317,3 +317,75 @@ body.tm_sidebar {
     #tm_sidenav_icons.signed_in { display: block !important; }
     #tm_sidenav_moderator_options { font-size: 24px; }
 }
+
+@media print {
+    body { margin-left: inherit !important; }
+    #tm_sidenav {
+        display: none;
+    }
+    #tm_sidenav_toggle {
+        display: none;
+    }
+}
+
+/* Profile badges */
+
+.tm-sidebar-pro-member-badge {
+    font-size: 12.5pt;
+    color: #ffffff !important;
+    background-color: #ffb800;
+    border-radius: 4px;
+    display: inline-block;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -6px;
+}
+
+.tm-sidebar-pro-member-badge:hover {
+    background-color: #ffb800 !important;
+    border-radius: 4px !important;
+}
+
+.tm-sidebar-pro-member-badge:before {
+    font-family: 'tm-icons';
+    content: "\e655";
+    color: #ffffff;
+    margin-right: 2px;
+}
+
+.tm-sidebar-leader-badge {
+    font-size: 10pt;
+    color: #ffffff !important;
+    background-color: #ffb800;
+    border-radius: 4px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -4px;
+}
+
+.tm-sidebar-leader-badge:hover {
+    background-color: #ffb800 !important;
+    border-radius: 4px !important;
+}
+
+.tm-sidebar-leader-badge:before {
+    font-family: 'tm-icons';
+    content: "\e666";
+    color: #ffffff;
+    margin-right: 4px;
+    font-size: 10pt;
+}
+
+.tm-sidebar-pro-member-upgrade {
+    font-size: 12.5pt;
+    color: #fff !important;
+    background-color: #3838FC;
+    border-radius: 4px;
+    padding: 2px 4px;
+    font-weight: 400;
+}
+
+.tm-sidebar-pro-member-upgrade:hover {
+    background-color: #3838FC !important;
+    border-radius: 4px !important;
+}

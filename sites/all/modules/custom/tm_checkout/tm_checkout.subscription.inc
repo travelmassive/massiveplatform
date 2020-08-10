@@ -298,6 +298,23 @@ function tm_checkout_subscription_page($checkout_action = "upgrade_subscription"
 	// include css
 	drupal_add_css(drupal_get_path('module', 'tm_checkout') . '/css/tm_checkout.css');
 
+	// check that we have subscription data
+	$subscription = tm_subscriptions_get_user_subscription($account); // subscription data
+	if ($subscription == null) {
+
+		// prepare message
+		$template = file_get_contents(drupal_get_path('module', 'tm_checkout') . '/templates/tm_checkout_subscription.tpl.php');
+		$html = str_replace("__TITLE__", "We're working on it.", $template);
+		$html = str_replace("__MESSAGE__", "<p class='tm-checkout-error-message'>Membership pricing is not yet available for your country.<br>Please <a href='/contact'>contact our team</a> for assistance.</p>", $html);
+		
+		// render form
+		$form['html'] = array(
+		'#type' => 'item',
+		'#markup' => $html,
+		);
+		return $form;
+	}
+
 	// include stripe js
 	drupal_add_js('https://js.stripe.com/v3/', 'external');
 

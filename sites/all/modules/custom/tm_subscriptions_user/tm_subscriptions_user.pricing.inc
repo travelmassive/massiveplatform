@@ -93,6 +93,7 @@ function tm_subscriptions_get_user_pricing_label($account) {
 	}
 	
 	$country_pricing = tm_subscriptions_get_user_subscription_price($account);
+	
 	if ($country_pricing["saving_message"] != "") {
 		$pricing_label = $country_pricing["subscription_label"] . " — " . $country_pricing["saving_message"]; // use saving message if partner code applied
 	}

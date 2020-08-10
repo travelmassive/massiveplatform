@@ -428,7 +428,12 @@ function tm_checkout_subscription_button_ajax() {
 	$error_message = "";
 
 	// init Stripe
-	require_once(drupal_get_path('module', 'tm_checkout') . "/includes/" . $conf["tm_checkout_stripe_library_path"] . '/init.php');
+	$stripe_init_file = drupal_get_path('module', 'tm_checkout') . "/includes/" . $conf["tm_checkout_stripe_library_path"] . '/init.php';
+	if (!file_exists($stripe_init_file)) {
+		print("<p class='tm-checkout-error-message'>Looks like we're unable to accept payments right now.<br>Please <a href='/contact'>contact our team</a> for assistance.<br><i>(Stripe library not installed)</i></p>");
+		return;
+	}
+	require_once($stripe_init_file);
 
 	try {
 

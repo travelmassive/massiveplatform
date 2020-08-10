@@ -697,6 +697,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
 .tm-payments-report-table th, .tm-subscriptions-report-table th { 
   border-bottom: 1px solid #888;
   background-color: #fff;
+  text-align: left;
 }
 
 .tm-payments-report-table tr, .tm-subscriptions-report-table tr  { 
@@ -705,7 +706,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
 }
 
 .tm-payments-report-table td, .tm-subscriptions-report-table td  { 
-  padding-left: 0.5rem;
+  padding-left: 0;
   padding-right: 0.5rem;
   font-size: smaller;
 }

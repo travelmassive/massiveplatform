@@ -419,6 +419,7 @@ function tm_checkout_subscription_button_ajax() {
 	$metadata["referer_code"] = tm_subscriptions_user_get_chapter_code($account);
 	$metadata["partner_code"] = $pricing["partner_code"];
 	$metadata["user_subscription_type"] = $pricing["subscription_type"];
+	$metadata['user_subscription_label'] = $pricing["subscription_label"];
 
 	// site url
 	$site_url = $conf['tm_email_server_http'] . "://" . $conf['tm_email_server_url_domain'];
@@ -546,6 +547,7 @@ function tm_checkout_subscription_process($stripe_session) {
 	$referer_code = $metadata['referer_code'];
 	$partner_code = $metadata['partner_code'];
 	$subscription_type = $metadata['user_subscription_type'];
+	$subscription_label = $metadata['user_subscription_label'];
 
 	// Check if is renewed
 	$is_renewed = tm_subscriptions_check_user_renewal_period($account);
@@ -595,7 +597,7 @@ function tm_checkout_subscription_process($stripe_session) {
 	// $tm_subscriptions_user_flag = true;
 	user_save($account);
 
-	// Step 5. Send notifications
+	// STEP 5. Send notifications
 	if ($is_renewed) {
 		$success_message = $conf["tm_subscriptions_user_renewed_success_message"];
 		tm_subscriptions_user_send_notification($account, "renewed", $user_first_name);

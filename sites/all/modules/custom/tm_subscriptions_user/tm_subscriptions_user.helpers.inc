@@ -276,6 +276,11 @@ function tm_subscriptions_user_get_partner_code() {
 	if (isset($_GET["partner"])) {
 		$partner_code = $_GET["partner"];
 
+		// ignore sample code 'PARTNERCODE'
+		if (strtoupper(trim($partner_code)) == "PARTNERCODE") {
+			return "";
+		}
+
 		// If arriving at a ?partner= link then we show the CTA
 		// set static variable
 		$tm_force_show_cta = &drupal_static("tm_force_show_cta");

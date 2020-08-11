@@ -22,8 +22,11 @@ function tm_subscriptions_user_send_notification($account, $notification_type, $
 	// get account url
 	$account_url = $conf["tm_email_server_http"] . "://" . $conf["tm_email_server_url_domain"] . "/" . drupal_get_path_alias('user/' . $account->uid);
 
+	// get account uid url
+	$account_uid_url = $conf["tm_email_server_http"] . "://" . $conf["tm_email_server_url_domain"] . '/user/' . $account->uid;
+
 	// payment receipt url
-	$view_payments_url = $conf["tm_email_server_http"] . "://" . $conf["tm_email_server_url_domain"] . "/payment/reports/subscription-payments-member/" . $account->uid;
+	$view_payments_url = $conf["tm_email_server_http"] . "://" . $conf["tm_email_server_url_domain"] . "/checkout/my-payments/" . $account->uid;
 
 	// first name of owner of account
 	if ($first_name == "") {
@@ -62,6 +65,7 @@ function tm_subscriptions_user_send_notification($account, $notification_type, $
 	$message = str_replace("__FIRST_NAME__", strip_tags($first_name), $message); // first name
 	$message = str_replace("__EMAIL_SIGNOFF__", $conf["tm_email_signoff"], $message); // email sign off
 	$message = str_replace("__USER_PROFILE_URL__", $account_url, $message); // account url
+	$message = str_replace("__USER_UID_URL__", $account_uid_url, $message); // account uid url
 	$message = str_replace("__USER_ID__", $account->uid, $message); // account uid
 	$message = str_replace("__VIEW_PAYMENTS_URL__", $view_payments_url, $message); // payments url
 	$message = str_replace("\n", "<br>", $message); // line breaks

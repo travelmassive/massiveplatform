@@ -604,9 +604,9 @@ function tm_subscriptions_user_replace_template_fields($account, $template, $dis
 	// ie:
 	// expires in 9 days
 	// is enabled
-	$expires_full_text = "expires in" . $expires_text;
-	if ($expires_full_text == "expires in") {
-		$expires_full_text = " is enabled";
+	$expires_full_text = "expires in " . $expires_text;
+	if ($expires_full_text == "expires in ") {
+		$expires_full_text = "is enabled";
 	}
 	$inner_html = str_replace("__SUBSCRIPTION_EXPIRES_FULL_TEXT__", $expires_full_text, $inner_html);
 	

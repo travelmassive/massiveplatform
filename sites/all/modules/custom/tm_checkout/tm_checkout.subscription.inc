@@ -648,10 +648,8 @@ function tm_checkout_subscription_process($stripe_session) {
 
 	// STEP 5. Send notifications
 	if ($is_renewed) {
-		$success_message = $conf["tm_subscriptions_user_renewed_success_message"];
 		tm_subscriptions_user_send_notification($account, "renewed", $user_first_name);
 	} else {
-		$success_message = $conf["tm_subscriptions_user_payment_success_message"];
 		tm_subscriptions_user_send_notification($account, "purchase", $user_first_name);
 	}
 

@@ -536,9 +536,21 @@ function tm_checkout_subscription_button_ajax() {
 	// load template
 	$template = file_get_contents(drupal_get_path('module', 'tm_checkout') . '/templates/tm_checkout_subscription_button.tpl.php');
 
+	// check and display partner code
+	$partner_code_label = "";
+	$partner_code = strtoupper($pricing["partner_code"]);
+	if ($partner_code != "") {
+		if (isset($subscription["partner_codes"][$partner_code])) {
+			$partner_code_label = "Partner code " . $partner_code . " applied 🎉";
+		} else {
+			$partner_code_label = "Partner code " . $partner_code . " is invalid or expired.";
+		}
+	}
+
 	// generate html
 	$html = str_replace("__CHECKOUT_BUTTON__", $checkout_button, $template);
 	$html = str_replace("__PRICING_LABEL__", $pricing_label, $html);
+	$html = str_replace("__PARTNER_CODE_LABEL__", $partner_code_label, $html);
 	$html = str_replace("__ERROR_MESSAGE__", $error_message, $html);
 
 	// output

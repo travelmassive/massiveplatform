@@ -1,3 +1,4 @@
+__ERROR_MESSAGE__
 __CHECKOUT_BUTTON__
 <br><span class='tm-checkout-button-pricing-label'>__PRICING_LABEL__</span>
-__ERROR_MESSAGE__
+<br><span class='tm-checkout-button-pricing-partner-code'>__PARTNER_CODE_LABEL__</span>

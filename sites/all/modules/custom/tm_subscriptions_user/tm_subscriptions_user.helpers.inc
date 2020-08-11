@@ -290,18 +290,12 @@ function tm_subscriptions_user_get_partner_code() {
 		$partner_code = $_COOKIE['Drupal_visitor_subscription_partner'];
 	}
 
-	return trim($partner_code);
+	return trim(strip_tags($partner_code));
 }
 
 /**
  * Set partner code and company url cookie
  * Drupal.visitor.subscription_partner
- * Drupal.visitor.subscription_account_url
- * Drupal.visitor.subscription_account_first_name
- * Drupal.visitor.subscription_account_segment_l1
- * Drupal.visitor.subscription_account_segment_l2
- * Drupal.visitor.subscription_account_home_chapter
- * Drupal.visitor.subscription_account_home_chapter_shortcode
  */
 function tm_subscriptions_user_set_partner_cookie($uid = null) {
 
@@ -314,63 +308,6 @@ function tm_subscriptions_user_set_partner_cookie($uid = null) {
 	// check ?partner=
 	if ($partner_code != "") {
 		setcookie("Drupal.visitor.subscription_partner", $partner_code, strtotime($cookie_time), "/");
-	}
-
-	// set subscription_account_url if uid set
-	if ($uid != null) {
-
-		// load user
-		$account = user_load($uid);
-
-		// account uri
-		$uri = $conf["tm_email_server_http"] . "://" . $conf["tm_email_server_url_domain"] . "/" . drupal_get_path_alias('user/' . $uid);
-		setcookie("Drupal.visitor.subscription_account_url", $uri, strtotime($cookie_time), "/");
-
-		// first name
-		$first_name = $account->field_user_first_name[LANGUAGE_NONE][0]['value'];
-		setcookie("Drupal.visitor.subscription_first_name", $first_name, strtotime($cookie_time), "/");
-
-		// home chapter name
-		$home_chapter_name = "";
-		$home_chapter_shortcode = "";
-		if (sizeof($account->field_home_chapter) > 0) {
-			$chapter_id = $account->field_home_chapter[LANGUAGE_NONE][0]['target_id'];
-			$home_chapter = node_load($chapter_id);
-			if ($home_chapter != null) {
-				$home_chapter_name = $home_chapter->title;
-				$home_chapter_shortcode = $home_chapter->field_chapter_shortcode[LANGUAGE_NONE][0]['value'];
-			}
-		}
-		setcookie("Drupal.visitor.subscription_account_home_chapter", $home_chapter_name, strtotime($cookie_time), "/");
-		setcookie("Drupal.visitor.subscription_account_home_chapter_shortcode", $home_chapter_shortcode, strtotime($cookie_time), "/");
-
-		// user segment
-		$user_segment_l1 = "";
-		$user_segment_l2 = "";
-		$field_segment_tid = tm_users_get_taxonomy_tid($uid);
-		if ($field_segment_tid != null){
-			$term = taxonomy_term_load($field_segment_tid);
-			// load parent term
-			$parent_terms = taxonomy_get_parents($term->tid);
-			if (sizeof($parent_terms) > 0) {
-				$parent_term = current($parent_terms);
-				$user_segment_l1 = $parent_term->name;
-				$user_segment_l2 = $term->name;
-			} else {
-				$user_segment_l1 = $term->name;
-				$user_segment_l2 = "";
-			}
-		}
-
-		setcookie("Drupal.visitor.subscription_account_segment_l1", $user_segment_l1, strtotime($cookie_time), "/");
-		setcookie("Drupal.visitor.subscription_account_segment_l2", $user_segment_l2, strtotime($cookie_time), "/");
-
-		// set price_label from subscription
-		// ie: Upgrade to Pro Membership for $99.
-		$pricing_label = tm_subscriptions_get_user_pricing_label($account);
-		if ($pricing_label != "") {
-			setcookie("Drupal.visitor.subscription_account_price_label", $pricing_label, strtotime($cookie_time), "/");
-		}
 	}
 }
 

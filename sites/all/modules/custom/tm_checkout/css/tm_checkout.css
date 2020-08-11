@@ -41,3 +41,12 @@ p.tm-checkout-error-message {
 	font-size: 11pt;
 	line-height: 1.75rem;
 }
+
+.tm-checkout-button-pricing-partner-code {
+	margin-top: 4px;
+	display: inline-block;
+	color: #888;
+	font-size: 11pt;
+	border-top: 1px solid #ddd;
+	padding: 2px 8px;
+}

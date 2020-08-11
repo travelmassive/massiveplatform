@@ -4,7 +4,7 @@
 
 /** 
  * Public landing page for upgrade subscription
- * /checkout/membership
+ * /membership
  */
 function tm_checkout_public_subscription_page() {
 
@@ -68,21 +68,23 @@ function tm_checkout_public_subscription_page() {
 	$title = $conf["tm_subscriptions_user"][$default_country]["checkout_public_title"];
 	$message = $conf["tm_subscriptions_user"][$default_country]["checkout_public_message"];
 
-	// add number of members to text
-	$query = "SELECT COUNT(*) amount FROM {users} u";
-	$num_members = db_query($query)->fetch();
-	$num_members_amount = $num_members->amount;
-	if ($num_members_amount > 1000) {
-		$num_members_amount = number_format(round(floor($num_members_amount / 1000)) * 1000);
-	}
-	$message = str_replace("__NUM_MEMBERS_ROUNDED__", $num_members_amount, $message);
-
-	// add number of subscribed members to text
-	$num_subscribed_members_amount = flag_get_flag_counts("user_subscription_enable");
-	$message = str_replace("__NUM_SUBSCRIBED_MEMBERS__", $num_subscribed_members_amount, $message);
-
 	// load template
 	$template = file_get_contents(drupal_get_path('module', 'tm_checkout') . '/templates/tm_checkout_subscription.tpl.php');
+
+	// lookup and replace stats
+	if (module_exists("tm_api")) {
+
+		// fetch api data
+		$api_data = tm_api_stats_get_data();
+
+		// replace fields
+		$title = tm_api_replace_text_fields($api_data, $title);
+		$message = tm_api_replace_text_fields($api_data, $message);
+	}
+
+	// render list of subscribers
+	$new_subscribers_html = tm_subscriptions_user_render_subscribers(16);
+	$message = str_replace("__NEW_SUBSCRIBERS_LIST__", $new_subscribers_html, $message);
 
 	// create html
 	$html = str_replace("__TITLE__", $title, $template);
@@ -247,6 +249,21 @@ function tm_checkout_landing_subscription_page() {
 	// load template
 	$template = file_get_contents(drupal_get_path('module', 'tm_checkout') . '/templates/tm_checkout_subscription.tpl.php');
 
+	// lookup and replace stats
+	if (module_exists("tm_api")) {
+
+		// fetch api data
+		$api_data = tm_api_stats_get_data();
+
+		// replace fields
+		$title = tm_api_replace_text_fields($api_data, $title);
+		$message = tm_api_replace_text_fields($api_data, $message);
+	}
+
+	// view payments url
+	$view_payments_url = "/checkout/my-payments/" . $account->uid;
+	$message = str_replace("__VIEW_PAYMENTS_URL__", $view_payments_url, $message);
+
 	// create html
 	$html = str_replace("__TITLE__", $title, $template);
 	$html = str_replace("__MESSAGE__", $message, $html);
@@ -298,6 +315,23 @@ function tm_checkout_subscription_page($checkout_action = "upgrade_subscription"
 	// include css
 	drupal_add_css(drupal_get_path('module', 'tm_checkout') . '/css/tm_checkout.css');
 
+	// check that we have subscription data
+	$subscription = tm_subscriptions_get_user_subscription($account); // subscription data
+	if ($subscription == null) {
+
+		// prepare message
+		$template = file_get_contents(drupal_get_path('module', 'tm_checkout') . '/templates/tm_checkout_subscription.tpl.php');
+		$html = str_replace("__TITLE__", "Please contact us.", $template);
+		$html = str_replace("__MESSAGE__", "<p class='tm-checkout-error-message'>Membership pricing is not yet available for your country.<br>Please <a href='/contact'>contact our team</a> for assistance.</p>", $html);
+		
+		// render form
+		$form['html'] = array(
+		'#type' => 'item',
+		'#markup' => $html,
+		);
+		return $form;
+	}
+
 	// include stripe js
 	drupal_add_js('https://js.stripe.com/v3/', 'external');
 
@@ -326,6 +360,21 @@ function tm_checkout_subscription_page($checkout_action = "upgrade_subscription"
 		$title = tm_subscriptions_get_user_subscription_field($account, "checkout_renew_title");
 		$message =tm_subscriptions_get_user_subscription_field($account, "checkout_renew_message");
 	}
+
+	// lookup and replace stats
+	if (module_exists("tm_api")) {
+
+		// fetch api data
+		$api_data = tm_api_stats_get_data();
+
+		// replace fields
+		$title = tm_api_replace_text_fields($api_data, $title);
+		$message = tm_api_replace_text_fields($api_data, $message);
+	}
+
+	// render list of subscribers
+	$new_subscribers_html = tm_subscriptions_user_render_subscribers(16);
+	$message = str_replace("__NEW_SUBSCRIBERS_LIST__", $new_subscribers_html, $message);
 
 	// create html
 	$html = str_replace("__TITLE__", $title, $template);
@@ -615,4 +664,3 @@ function tm_checkout_subscription_process($stripe_session) {
 	echo "{'success': true, 'message': 'Payment processed'}";
 
 }
-

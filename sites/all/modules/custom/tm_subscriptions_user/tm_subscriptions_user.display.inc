@@ -196,8 +196,9 @@ function tm_subscriptions_user_cta_banner($user_id, $display_chapter = null) {
 
 	// get cookie
 	$wrapper_style = "";
-	if ((!$tm_force_show_cta) and (isset($_COOKIE["tm_subscriptions_hide_user_cta"]))) {
-		if ($_COOKIE["tm_subscriptions_hide_user_cta"] == 1) {
+	$hide_cta_cookie_name = $conf["tm_subscriptions_user_hide_cta_cookie"];
+	if ((!$tm_force_show_cta) and (isset($_COOKIE[$hide_cta_cookie_name]))) {
+		if ($_COOKIE[$hide_cta_cookie_name] == 1) {
 			$wrapper_style = "display: none";
 		}
 	}
@@ -326,3 +327,33 @@ function _tm_subscriptions_user_badge_ds($field, $title = NULL) {
 	return $html;
 }
 
+/**
+ * Render new subscribers
+ */
+function tm_subscriptions_user_render_subscribers($limit = 5) {
+
+	global $conf;
+
+	$html = "";
+	$new_subscriber_uids = tm_subscriptions_user_get_new_subscribers($limit);
+
+	foreach ($new_subscriber_uids as $new_subscriber_uid) {
+
+		// load account
+		$account = user_load($new_subscriber_uid);
+		if ($account == null) {
+			continue;
+		}
+
+		// Set avatar
+		$avatar_url = image_style_url("avatar_grid", _tm_users_get_avatar_uri($account));
+		$img_url = str_replace("'", "%27", file_create_url($avatar_url)); // to fix
+		$user_url = drupal_get_path_alias("user/" . $account->uid);
+		$user_full_name = strip_tags($account->field_user_first_name[LANGUAGE_NONE][0]['value']) . " " . strip_tags($account->field_user_last_name[LANGUAGE_NONE][0]['value']);
+		$user_full_name = str_replace("''", "", $user_full_name);
+
+		$html .= "<a target='_blank' title='" . $user_full_name . "' href='" . $user_url . "'><img class='tm-subscribers-user-avatar' src='" . $img_url . "'></a> ";
+	}
+
+	return $html;
+}

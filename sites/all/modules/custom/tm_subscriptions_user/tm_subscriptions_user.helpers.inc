@@ -282,7 +282,8 @@ function tm_subscriptions_user_get_partner_code() {
 		$tm_force_show_cta = true;
 
 		// hide for subsequent page loads
-		setcookie("tm_subscriptions_hide_user_cta", 0, strtotime('+30 days'), "/", "." . $conf["tm_email_server_url_domain"]);
+		$hide_cta_cookie_name = $conf["tm_subscriptions_user_hide_cta_cookie"];
+		setcookie($hide_cta_cookie_name, 0, strtotime('+30 days'), "/", "." . $conf["tm_email_server_url_domain"]);
 
 	} elseif (isset($_COOKIE['Drupal_visitor_subscription_partner'])) {
 		// check cookie
@@ -598,6 +599,16 @@ function tm_subscriptions_user_replace_template_fields($account, $template, $dis
 	}
 	$inner_html = str_replace("__SUBSCRIPTION_EXPIRES_DATE__", $subscription_date_text, $inner_html); // subscription expiry date
 	$inner_html = str_replace("__SUBSCRIPTION_EXPIRES_TEXT__", $expires_text, $inner_html); // days until subscription expiry
+
+	// full text in case no expiry date
+	// ie:
+	// expires in 9 days
+	// is enabled
+	$expires_full_text = "expires in" . $expires_text;
+	if ($expires_full_text == "expires in") {
+		$expires_full_text = " is enabled";
+	}
+	$inner_html = str_replace("__SUBSCRIPTION_EXPIRES_FULL_TEXT__", $expires_full_text, $inner_html);
 	
 	// add number of members to text
 	$query = "SELECT COUNT(*) amount FROM {users} u";

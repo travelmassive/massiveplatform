@@ -897,6 +897,7 @@ $conf["tm_subscriptions_user_payment_success_message"] = "Thanks for your paymen
 $conf["tm_subscriptions_user_renewed_success_message"] = "Thanks for your payment. Your pro subscription has been renewed."; // message to display after renewing subscription 
 $conf["tm_subscriptions_user_cta_text"] = "Upgrade to Pro Membership";
 $conf["tm_subscriptions_user_expired_message"] = "Your Pro Membership has expired.";
+$conf["tm_subscriptions_user_hide_cta_cookie"] = "tm_subscriptions_user_hide_cta"; // name of cookie to hide cta
 $conf["tm_subscriptions_user_default"] = "US"; // optional - use this country as default price
 $conf["tm_subscriptions_user"] = array();
 $conf["tm_subscriptions_user"]["US"] = array();

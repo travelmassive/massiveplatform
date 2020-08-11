@@ -8,6 +8,10 @@ h1.tm-checkout {
 
 p.tm-cta-intro, .tm-cta-intro li {
   font-size: 14pt;
+  line-height: 1.5rem;
+}
+
+.tm-cta-intro li {
   line-height: 1.75rem;
 }
 

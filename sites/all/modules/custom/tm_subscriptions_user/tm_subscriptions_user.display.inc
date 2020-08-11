@@ -352,7 +352,7 @@ function tm_subscriptions_user_render_subscribers($limit = 5) {
 		$user_full_name = strip_tags($account->field_user_first_name[LANGUAGE_NONE][0]['value']) . " " . strip_tags($account->field_user_last_name[LANGUAGE_NONE][0]['value']);
 		$user_full_name = str_replace("''", "", $user_full_name);
 
-		$html .= "<a target='_blank' title='" . $user_full_name . "' href='" . $user_url . "'><img class='tm-subscribers-user-avatar' src='" . $img_url . "'></a> ";
+		$html .= "<a target='_blank' title='" . $user_full_name . "' href='/" . $user_url . "'><img class='tm-subscribers-user-avatar' src='" . $img_url . "'></a> ";
 	}
 
 	return $html;

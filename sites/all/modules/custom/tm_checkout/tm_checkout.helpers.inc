@@ -5,7 +5,7 @@
 /**
  * Notify of payment
  */
-function tm_checkout_notify_payment($timestamp, $payment_id, $checkout_action, $payment_email, $stripe_currency,$stripe_amount, $display_amount, $entity_id, $entity_type, $entity_title, $user_id, $user_email, $user_first_name, $user_last_name, $log_user_ip, $log_user_http_user_agent, $refunded, $paid_out, $referer_code, $partner_code) {
+function tm_checkout_notify_payment($timestamp, $payment_id, $checkout_action, $checkout_item, $payment_email, $stripe_currency,$stripe_amount, $display_amount, $entity_id, $entity_type, $entity_title, $user_id, $user_email, $user_first_name, $user_last_name, $log_user_ip, $log_user_http_user_agent, $refunded, $paid_out, $referer_code, $partner_code) {
 
 	global $conf;
 
@@ -17,7 +17,8 @@ function tm_checkout_notify_payment($timestamp, $payment_id, $checkout_action, $
 	$message = 'A Stripe payment was processed:<br>';
 	$message .= '<br>timestamp: ' . date(DATE_RFC2822, $timestamp);
 	$message .= '<br>payment_id: ' . trim($payment_id);
-	$message .= '<br>checkout_action: ' . $checkout_action; 
+	$message .= '<br>checkout_action: ' . trim($checkout_action);
+	$message .= '<br>checkout_item: ' . trim($checkout_item); 
 	$message .= '<br>payment_email: ' . trim($payment_email); 
 	$message .= '<br>stripe_currency: ' . $stripe_currency;
 	$message .= '<br>stripe_amount: ' . $stripe_amount; 
@@ -48,4 +49,3 @@ function tm_checkout_notify_payment($timestamp, $payment_id, $checkout_action, $
 	return $result;
 
 }
-

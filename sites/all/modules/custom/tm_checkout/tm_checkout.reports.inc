@@ -65,12 +65,6 @@ function tm_checkout_reports_user_payments($account = null) {
   // get event sales from payment processor callback
   $results = tm_checkout_get_user_payments($account->uid);
 
-  // check we got a result
-  if ($results == null) {
-    drupal_set_message("Oops, an error occured fetching your payment history.<br>Please try again later.", 'error');
-    return "";
-  }
-
   // Help message
   $help_message = $conf["tm_checkout_reports_help_message"];
   drupal_get_messages('help-tip');

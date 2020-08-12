@@ -7,5 +7,4 @@ project = tm_checkout
 dependencies[] = tm_base
 features[ctools][] = views:views_default:3.0
 features[features_api][] = api:2
-features[views_view][] = reports
 features_exclude[dependencies][ctools] = ctools

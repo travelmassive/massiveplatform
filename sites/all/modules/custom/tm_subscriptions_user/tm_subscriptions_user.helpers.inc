@@ -550,6 +550,9 @@ function tm_subscriptions_user_replace_template_fields($account, $template, $dis
 	if ($expires_full_text == "expires in ") {
 		$expires_full_text = "is enabled";
 	}
+	if ($expires_full_text == "expires in Expired") {
+		$expires_full_text = "has expired";
+	}
 	$inner_html = str_replace("__SUBSCRIPTION_EXPIRES_FULL_TEXT__", $expires_full_text, $inner_html);
 	
 	// add number of members to text

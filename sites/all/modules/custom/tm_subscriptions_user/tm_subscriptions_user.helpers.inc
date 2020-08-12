@@ -276,6 +276,11 @@ function tm_subscriptions_user_get_partner_code() {
 	if (isset($_GET["partner"])) {
 		$partner_code = $_GET["partner"];
 
+		// ignore sample code 'PARTNERCODE'
+		if (strtoupper(trim($partner_code)) == "PARTNERCODE") {
+			return "";
+		}
+
 		// If arriving at a ?partner= link then we show the CTA
 		// set static variable
 		$tm_force_show_cta = &drupal_static("tm_force_show_cta");
@@ -544,6 +549,9 @@ function tm_subscriptions_user_replace_template_fields($account, $template, $dis
 	$expires_full_text = "expires in " . $expires_text;
 	if ($expires_full_text == "expires in ") {
 		$expires_full_text = "is enabled";
+	}
+	if ($expires_full_text == "expires in Expired") {
+		$expires_full_text = "has expired";
 	}
 	$inner_html = str_replace("__SUBSCRIPTION_EXPIRES_FULL_TEXT__", $expires_full_text, $inner_html);
 	

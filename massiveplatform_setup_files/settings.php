@@ -1251,7 +1251,7 @@ $conf["tm_chatbox_secret_key"] = "secret_key";
 /** STRIPE CHECKOUT */
 $conf["tm_checkout_stripe_library_path"] = "stripe-php-7.46.1"; // stripe  library path inside tm_checkout/includes/
 $conf["tm_checkout_stripe_api_version"] = "2020-03-02"; // stripe api version
-$conf["tm_checkout_stripe_publishable_key"] = "your_stripe_publishable_ley"; // your stripe publishable key
+$conf["tm_checkout_stripe_publishable_key"] = "your_stripe_publishable_key"; // your stripe publishable key
 $conf["tm_checkout_stripe_secret_key"] = "your_stripe_secret_key"; // your stripe secret key
 $conf["tm_checkout_stripe_endpoint_secret"] = "your_stripe_endpoint_secret"; // create an webhook for checkout.session.completed
 $conf["tm_checkout_stripe_payment_email"] = "support@massiveplatform.com"; // email when payment is logged

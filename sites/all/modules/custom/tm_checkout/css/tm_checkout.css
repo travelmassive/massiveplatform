@@ -6,6 +6,34 @@ h1.tm-checkout {
 	text-align: center;
 }
 
+p.tm-cta-intro, .tm-cta-intro li {
+  font-size: 14pt;
+  line-height: 1.5rem;
+}
+
+.tm-cta-intro li {
+  line-height: 1.75rem;
+}
+
+p.tm-cta-intro a, .tm-cta-intro li a {
+  text-decoration: underline;
+}
+
+.tm-subscribers-user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.tm-cta-details {
+  color: #888;
+  font-size: 11pt;
+}
+
+.tm-cta-details a {
+  text-decoration: underline;
+}
+
 p.tm-checkout-error-message {
 	text-align: center;
 }
@@ -17,6 +45,8 @@ p.tm-checkout-error-message {
 }
 
 #tm-checkout-button-container {
+	margin-top: 48px;
+	margin-bottom: 48px;
 	text-align: center;
 	height: 76px;
 }
@@ -48,5 +78,10 @@ p.tm-checkout-error-message {
 	color: #888;
 	font-size: 11pt;
 	border-top: 1px solid #ddd;
-	padding: 2px 8px;
+	padding-top: 2px;
+}
+
+.tm-cta-intro-footer {
+  font-size: 12pt;
+  color: #888;
 }

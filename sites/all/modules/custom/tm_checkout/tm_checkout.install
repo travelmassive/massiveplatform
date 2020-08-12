@@ -9,6 +9,7 @@ mysql> describe tm_checkout_payments;
 | timestamp                | int(11)             | NO   | MUL | 0       |                |
 | payment_id               | varchar(255)        | YES  | MUL |         |                |
 | checkout_action          | varchar(255)        | NO   |     |         |                |
+| checkout_item            | varchar(255)        | NO   |     |         |                |
 | stripe_email             | varchar(255)        | NO   |     |         |                |
 | stripe_currency          | varchar(255)        | NO   |     |         |                |
 | stripe_amount            | decimal(10,2)       | NO   |     | 0.00    |                |
@@ -59,6 +60,13 @@ function tm_checkout_schema() {
       ),
       'checkout_action' => array(
         'description' => 'Checkout action',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'checkout_item' => array(
+        'description' => 'Checkout item',
         'type' => 'varchar',
         'length' => 255,
         'not null' => TRUE,

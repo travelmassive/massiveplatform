@@ -608,6 +608,7 @@ function tm_checkout_subscription_process($stripe_session) {
 	$referer_code = $metadata['referer_code'];
 	$partner_code = $metadata['partner_code'];
 	$subscription_type = $metadata['user_subscription_type'];
+	$checkout_item = $subscription_type;
 	$subscription_label = $metadata['user_subscription_label'];
 
 	// Check if is renewed
@@ -617,7 +618,7 @@ function tm_checkout_subscription_process($stripe_session) {
   	}
 
   	// STEP 3. Log payment
-	tm_checkout_log_payment(null, $payment_id, $checkout_action, $payment_email, $stripe_currency, $stripe_amount, $display_amount, $entity_id, $entity_type, $entity_title, $user_id, $user_email, $user_first_name, $user_last_name, $log_user_ip, $log_user_http_user_agent, $refunded, $paid_out, $referer_code, $partner_code);
+	tm_checkout_log_payment(null, $payment_id, $checkout_action, $checkout_item, $payment_email, $stripe_currency, $stripe_amount, $display_amount, $entity_id, $entity_type, $entity_title, $user_id, $user_email, $user_first_name, $user_last_name, $log_user_ip, $log_user_http_user_agent, $refunded, $paid_out, $referer_code, $partner_code);
 
 	// STEP 4. Upgrade account
 	$subscription = tm_subscriptions_get_user_subscription($account); // subscription data

@@ -456,7 +456,7 @@ function tm_checkout_subscription_button_ajax() {
 	$metadata['entity_id'] = $account->uid;
 	$metadata['entity_type'] = "user";
 	$metadata['entity_title'] = strip_tags($account->field_user_first_name[LANGUAGE_NONE][0]['value']) . " " . strip_tags($account->field_user_last_name[LANGUAGE_NONE][0]['value']);
-	$metadata['user_id'] = $account->uid;
+	$metadata['user_id'] = $user_processing->uid;
 	$metadata['user_email'] = strip_tags($user_processing->mail);
 	$metadata['user_first_name'] = strip_tags($user_processing->field_user_first_name[LANGUAGE_NONE][0]['value']);
 	$metadata['user_last_name'] = strip_tags($user_processing->field_user_last_name[LANGUAGE_NONE][0]['value']);

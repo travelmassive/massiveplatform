@@ -67,7 +67,7 @@ function tm_checkout_get_payment($payment_id) {
  */
 function tm_checkout_get_user_payments($uid) {
 
-	$query = "SELECT * FROM tm_checkout_payments WHERE entity_id = :uid AND entity_type = 'user'";
+	$query = "SELECT * FROM tm_checkout_payments WHERE user_id = :uid";
 
 	// fetch result
 	$results = db_query($query, array(':uid' => $uid))->fetchAll();
@@ -86,7 +86,7 @@ function tm_checkout_get_user_payments($uid) {
  */
 function tm_checkout_user_has_made_payment($uid) {
 
-	$query = "SELECT COUNT(*) AS total FROM tm_checkout_payments WHERE entity_id = :uid AND entity_type = 'user'";
+	$query = "SELECT COUNT(*) AS total FROM tm_checkout_payments WHERE user_id = :uid";
 
 	// fetch result
 	$result = db_query($query, array(':uid' => $uid))->fetch();

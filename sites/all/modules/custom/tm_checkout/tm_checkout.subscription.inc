@@ -456,10 +456,10 @@ function tm_checkout_subscription_button_ajax() {
 	$metadata['entity_id'] = $account->uid;
 	$metadata['entity_type'] = "user";
 	$metadata['entity_title'] = strip_tags($account->field_user_first_name[LANGUAGE_NONE][0]['value']) . " " . strip_tags($account->field_user_last_name[LANGUAGE_NONE][0]['value']);
-	$metadata['user_id'] = $user_processing->uid;
-	$metadata['user_email'] = strip_tags($user_processing->mail);
-	$metadata['user_first_name'] = strip_tags($user_processing->field_user_first_name[LANGUAGE_NONE][0]['value']);
-	$metadata['user_last_name'] = strip_tags($user_processing->field_user_last_name[LANGUAGE_NONE][0]['value']);
+	$metadata['user_id'] = $account->uid;
+	$metadata['user_email'] = strip_tags($account->mail);
+	$metadata['user_first_name'] = strip_tags($account->field_user_first_name[LANGUAGE_NONE][0]['value']);
+	$metadata['user_last_name'] = strip_tags($account->field_user_last_name[LANGUAGE_NONE][0]['value']);
 	$metadata['log_user_ip'] = tm_geoip_get_real_visitor_ip();
 	$metadata['log_user_http_user_agent'] = "none";
 	if (isset($_SERVER['HTTP_USER_AGENT'])) {

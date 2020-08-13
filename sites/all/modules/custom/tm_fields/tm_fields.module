@@ -204,8 +204,8 @@ function _tm_chapter_sticker_process($field, $title = NULL) {
         $company = node_load($company_id);
         if ($company != null) {
           $event_type_name = strip_tags(trim($company->title));
-            if (strlen($event_type_name) > 25) {
-            $event_type_name = substr($event_type_name, 0, 25) . "...";
+            if (strlen($event_type_name) > 35) {
+            $event_type_name = substr($event_type_name, 0, 35) . "...";
           }
         }
       }

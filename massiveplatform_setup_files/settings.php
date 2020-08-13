@@ -1260,3 +1260,4 @@ $conf["tm_checkout_subscription_confirm_page"] = "membership/landing"; // path f
 $conf["tm_checkout_subscription_leader_message"] = "Share the <a href='/membership'>Membership Page</a> link with your chapter to help support us.";
 $conf["tm_checkout_reports_help_message"] = "Here's a receipt of your payments."; // message to show user
 $conf["tm_checkout_receipt_details"] = "<strong>TAX RECEIPT</strong><br>Your company name<br>Your company address<br>Email: your@receiptemail";
+$conf["tm_checkout_partner_commission_default"] = "10"; // default commission for partner code

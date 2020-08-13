@@ -111,3 +111,4 @@ function tm_subscriptions_get_user_pricing_amount($account) {
 	$pricing_amount = $country_pricing["currency_prefix"] . $country_pricing["display_amount"];
 	return $pricing_amount;
 }
+

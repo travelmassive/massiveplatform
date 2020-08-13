@@ -467,6 +467,7 @@ function tm_checkout_subscription_button_ajax() {
 	}
 	$metadata["referer_code"] = tm_subscriptions_user_get_chapter_code($account);
 	$metadata["partner_code"] = $pricing["partner_code"];
+	$metadata["partner_commission"] = tm_checkout_get_partner_commission($pricing["partner_code"]);
 	$metadata["user_subscription_type"] = $pricing["subscription_type"];
 	$metadata['user_subscription_label'] = $pricing["subscription_label"];
 
@@ -607,6 +608,7 @@ function tm_checkout_subscription_process($stripe_session) {
 	$paid_out = 0;
 	$referer_code = $metadata['referer_code'];
 	$partner_code = $metadata['partner_code'];
+	$partner_commission = $metadata['partner_commission'];
 	$subscription_type = $metadata['user_subscription_type'];
 	$checkout_item = $subscription_type;
 	$subscription_label = $metadata['user_subscription_label'];
@@ -618,7 +620,7 @@ function tm_checkout_subscription_process($stripe_session) {
   	}
 
   	// STEP 3. Log payment
-	tm_checkout_log_payment(null, $payment_id, $checkout_action, $checkout_item, $payment_email, $stripe_currency, $stripe_amount, $display_amount, $entity_id, $entity_type, $entity_title, $user_id, $user_email, $user_first_name, $user_last_name, $log_user_ip, $log_user_http_user_agent, $refunded, $paid_out, $referer_code, $partner_code);
+	tm_checkout_log_payment(null, $payment_id, $checkout_action, $checkout_item, $payment_email, $stripe_currency, $stripe_amount, $display_amount, $entity_id, $entity_type, $entity_title, $user_id, $user_email, $user_first_name, $user_last_name, $log_user_ip, $log_user_http_user_agent, $refunded, $paid_out, $referer_code, $partner_code, $partner_commission);
 
 	// STEP 4. Upgrade account
 	$subscription = tm_subscriptions_get_user_subscription($account); // subscription data

@@ -201,6 +201,10 @@ function _tm_chapter_sticker_process($field, $title = NULL) {
       if (isset($field['entity']->field_event_company['und'][0]['target_id'])) {
         $company_id = $field['entity']->field_event_company['und'][0]['target_id'];
         $url = url("node/" . $company_id);
+        $event_type_name = strip_tags(trim($field['entity']->title));
+        if (strlen($event_type_name) > 25) {
+          $event_type_name = substr($event_type_name, 0, 25) . "...";
+        }
       }
     }
 

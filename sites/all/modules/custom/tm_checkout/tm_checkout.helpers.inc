@@ -5,7 +5,7 @@
 /**
  * Notify of payment
  */
-function tm_checkout_notify_payment($timestamp, $payment_id, $checkout_action, $checkout_item, $payment_email, $stripe_currency,$stripe_amount, $display_amount, $entity_id, $entity_type, $entity_title, $user_id, $user_email, $user_first_name, $user_last_name, $log_user_ip, $log_user_http_user_agent, $refunded, $paid_out, $referer_code, $partner_code) {
+function tm_checkout_notify_payment($timestamp, $payment_id, $checkout_action, $checkout_item, $payment_email, $stripe_currency,$stripe_amount, $display_amount, $entity_id, $entity_type, $entity_title, $user_id, $user_email, $user_first_name, $user_last_name, $log_user_ip, $log_user_http_user_agent, $refunded, $paid_out, $referer_code, $partner_code, $partner_commission) {
 
 	global $conf;
 
@@ -36,6 +36,7 @@ function tm_checkout_notify_payment($timestamp, $payment_id, $checkout_action, $
 	$message .= '<br>paid_out: ' . $paid_out; 
 	$message .= '<br>referer_code: ' . trim($referer_code);
 	$message .= '<br>partner_code: ' . trim($partner_code);
+	$message .= '<br>partner_commission' . $partner_commission;
 
 	$subject = "Payment processed";
 	$recipient = $conf["tm_checkout_stripe_payment_email"];
@@ -48,4 +49,28 @@ function tm_checkout_notify_payment($timestamp, $payment_id, $checkout_action, $
 	$result = mail($recipient, $subject, $message, $headers);
 	return $result;
 
+}
+
+/**
+ * Helper method to get partner commission
+ * ie: return 10 for 10%
+ */
+function tm_checkout_get_partner_commission($partner_code) {
+
+	global $conf;
+
+	// if no partner code, no commission
+	if ($partner_code == null) {
+		return 0;
+	}
+
+	// if no partner code, no commission
+	if (trim($partner_code) == "") {
+		return 0;
+	}
+
+	// return default commission
+	// todo: look this up dynamically
+	$partner_commission = $conf["tm_checkout_partner_commission_default"]; 
+	return $partner_commission;
 }

@@ -35,7 +35,7 @@ function tm_payments_reports_event_sales($event) {
 
   // No payments
   if (sizeof($payments) == 0) {
-  	$html .= "<tr><td colspan='6'>You haven't sold any tickets yet. Go hustle and sell some tickets! :)</td></tr>";
+  	$html .= "<tr><td colspan='6'><p>You haven't sold any tickets yet.</p></td></tr>";
   }
 
   // Payment Details

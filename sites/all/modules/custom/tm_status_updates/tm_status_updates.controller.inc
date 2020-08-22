@@ -401,6 +401,9 @@ function tm_status_updates_get_combined_feed_global($start_date = null, $end_dat
 	if (module_exists("tm_subscriptions_user")) {
 		$display_flags[] = flag_get_flag('user_subscription_enable')->fid;
 	}
+	if (module_exists("tm_payments")) {
+		$display_flags[] = flag_get_flag('event_paid')->fid;
+	}
 
 	$query2 = "SELECT timestamp,
 			'flagged_item' as result_type,

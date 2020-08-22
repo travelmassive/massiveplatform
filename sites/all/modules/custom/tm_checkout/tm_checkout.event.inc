@@ -622,6 +622,12 @@ function tm_checkout_event_button_ajax() {
 		}
 	}
 
+	// set partner code
+	$partner_code = $pricing["partner_code"];
+	if ($parter_code == "PREVIEW") {
+		$partner_code = "";
+	}
+
 	// create meta data
 	$metadata = array();
 	$metadata['tm_processor'] = "tm_checkout";
@@ -643,7 +649,7 @@ function tm_checkout_event_button_ajax() {
 		$metadata['log_user_http_user_agent'] = $_SERVER['HTTP_USER_AGENT'];
 	}
 	$metadata["referer_code"] = $chapter_code;
-	$metadata["partner_code"] = $pricing["partner_code"];
+	$metadata["partner_code"] = $partner_code;
 	$metadata["partner_commission"] = tm_checkout_get_partner_commission($pricing["partner_code"], "event_payment");
 
 	// site url

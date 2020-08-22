@@ -139,8 +139,8 @@ function _tm_payments_price($field, $title = NULL) {
 		// past event with no post payments
 		if (_tm_event_is_past($node)) {
 			$payment_post_event = false;
-			if (isset($event->field_event_payment_post_event[LANGUAGE_NONE][0]['value'])) {
-				$payment_post_event = $event->field_event_payment_post_event[LANGUAGE_NONE][0]['value'];
+			if (isset($node->field_event_payment_post_event[LANGUAGE_NONE][0]['value'])) {
+				$payment_post_event = $node->field_event_payment_post_event[LANGUAGE_NONE][0]['value'];
 			}
 			if (!$payment_post_event) {
 				return "";

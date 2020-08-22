@@ -345,7 +345,7 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 	$flag = $flag_types[$result->fid];
 
 	// make sure we want to display this flag
-	$show_flags = array("approval_approved_by", "event_register", "event_waitlist", "signup", "follow_members", "follow_organizations", "tm_sponsor", "user_subscription_enable");
+	$show_flags = array("approval_approved_by", "event_register", "event_waitlist", "signup", "follow_members", "follow_organizations", "tm_sponsor", "user_subscription_enable", "event_paid");
 	if (!in_array($flag->name, $show_flags)) {
 		return "";
 	}
@@ -466,6 +466,26 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 			}
 
 			$feed_title = l($flagging_user_name, $flagging_user_url) . " registered for " . l($event->title, $flagged_node_url);
+			$html = tm_status_updates_render_flag_feed($flagging_user_url, $image_url, $feed_title, "", $details, "status-updates-image-avatar");
+			break;
+
+		// MEMBER PURCHASED A TICKET TO EVENT
+	    case "event_paid":
+
+			$event = $flagged_node;
+
+			// get image url
+			$image_uri = _tm_users_get_avatar_uri($flagging_user);
+			$image_url = image_style_url("avatar", $image_uri);
+
+			// if event has chapter
+			if (isset($event->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
+				$event_chapter = node_load($event->field_chapter[LANGUAGE_NONE][0]['target_id']);
+				$details["location_text"] = $event_chapter->title;
+				$details["location_url"] = "/" . drupal_get_path_alias("node/" . $event_chapter->nid);
+			}
+
+			$feed_title = l($flagging_user_name, $flagging_user_url) . " purchased a ticket to " . l($event->title, $flagged_node_url);
 			$html = tm_status_updates_render_flag_feed($flagging_user_url, $image_url, $feed_title, "", $details, "status-updates-image-avatar");
 			break;
 

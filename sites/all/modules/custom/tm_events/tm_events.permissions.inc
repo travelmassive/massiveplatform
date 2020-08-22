@@ -526,6 +526,8 @@ function tm_events_check_permission_announce_event($check_user, $event) {
 
 /**
  * Check geoblock
+ * Return true if user passes geoblock
+ * Return false if user should be geoblocked
  */
 function tm_events_check_geoblock_signup($check_user, $event) {
 

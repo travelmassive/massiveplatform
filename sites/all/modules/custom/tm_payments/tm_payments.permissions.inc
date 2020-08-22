@@ -5,7 +5,7 @@
 /* Helper method to determine whether an event can have payments enabled 
  * Checks the following: 
  * - Moderator or administrator user
- * - If field_event_payment_enabled is set to true
+ * - If field_event_payment_type is not empty and not set to 'no_payments'
  * - If event has a chapter and chapter has reached threshold of members
  * - If enable_payments option is set for event chapter (todo)
  */
@@ -24,11 +24,11 @@ function _tm_payments_check_enable_payments($event_id = null, $chapter_id = null
 		}
 	}
 
-	// Check if field_event_payment_enabled enabled
+	// Check if field_event_payment_type is not empty and not set to 'no_payments'
 	if ($event_id != null) {
 		$event = node_load($event_id);
-		if (isset($event->field_event_payment_enabled[LANGUAGE_NONE][0]['value'])) {
-			if ($event->field_event_payment_enabled[LANGUAGE_NONE][0]['value'] == 1) {
+		if (isset($event->field_event_payment_type[LANGUAGE_NONE][0]['value'])) {
+			if ($event->field_event_payment_type[LANGUAGE_NONE][0]['value'] != "no_payments") {
 				return true;
 			}
 		}

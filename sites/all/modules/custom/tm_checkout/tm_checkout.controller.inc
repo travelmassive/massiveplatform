@@ -5,7 +5,7 @@
 /**
  * Log a payment in tm_checkout_payments
  */
-function tm_checkout_log_payment($timestamp, $payment_id, $checkout_action, $checkout_item, $payment_email, $stripe_currency, $stripe_amount, $display_amount, $entity_id, $entity_type, $entity_title, $user_id, $user_email, $user_first_name, $user_last_name, $log_user_ip, $log_user_http_user_agent, $refunded, $paid_out, $referer_code, $partner_code) {
+function tm_checkout_log_payment($timestamp, $payment_id, $checkout_action, $checkout_item, $payment_email, $stripe_currency, $stripe_amount, $display_amount, $entity_id, $entity_type, $entity_title, $user_id, $user_email, $user_first_name, $user_last_name, $log_user_ip, $log_user_http_user_agent, $refunded, $paid_out, $referer_code, $partner_code, $partner_commission) {
 
 	if ($timestamp == null) {
 		$timestamp = time();
@@ -32,14 +32,15 @@ function tm_checkout_log_payment($timestamp, $payment_id, $checkout_action, $che
 		'refunded' => $refunded, 
 		'paid_out' => $paid_out, 
 		'referer_code' => trim($referer_code), 
-		'partner_code' => trim($partner_code)
+		'partner_code' => trim($partner_code),
+		'partner_commission' => $partner_commission
 	);
 
 	// write payment
 	$result = drupal_write_record('tm_checkout_payments', $fields);
 
 	// notify account that we got a payment, woohoo!
-	tm_checkout_notify_payment($timestamp, $payment_id, $checkout_action, $checkout_item, $payment_email, $stripe_currency,$stripe_amount, $display_amount, $entity_id, $entity_type, $entity_title, $user_id, $user_email, $user_first_name, $user_last_name, $log_user_ip, $log_user_http_user_agent, $refunded, $paid_out, $referer_code, $partner_code);
+	tm_checkout_notify_payment($timestamp, $payment_id, $checkout_action, $checkout_item, $payment_email, $stripe_currency,$stripe_amount, $display_amount, $entity_id, $entity_type, $entity_title, $user_id, $user_email, $user_first_name, $user_last_name, $log_user_ip, $log_user_http_user_agent, $refunded, $paid_out, $referer_code, $partner_code, $partner_commission);
 
 	return $result;
 
@@ -67,7 +68,7 @@ function tm_checkout_get_payment($payment_id) {
  */
 function tm_checkout_get_user_payments($uid) {
 
-	$query = "SELECT * FROM tm_checkout_payments WHERE user_id = :uid";
+	$query = "SELECT * FROM tm_checkout_payments WHERE user_id = :uid ORDER BY timestamp DESC";
 
 	// fetch result
 	$results = db_query($query, array(':uid' => $uid))->fetchAll();
@@ -91,5 +92,24 @@ function tm_checkout_user_has_made_payment($uid) {
 	// fetch result
 	$result = db_query($query, array(':uid' => $uid))->fetch();
 	return ($result->total > 0);
+
+}
+
+/**
+ * Get event payments
+ */
+function tm_checkout_get_event_payments($event_id) {
+
+	$query = "SELECT * FROM tm_checkout_payments WHERE entity_type = 'event' AND entity_id = :event_id ORDER BY timestamp DESC";
+
+	// fetch result
+	$results = db_query($query, array(':event_id' => $event_id))->fetchAll();
+
+	$results_array = array();
+	foreach ($results as $result) {
+		$results_array[] = $result;
+	}
+
+	return $results_array;
 
 }

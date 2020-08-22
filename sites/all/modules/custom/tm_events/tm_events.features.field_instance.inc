@@ -30,7 +30,7 @@ function tm_events_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',
-        'weight' => 5,
+        'weight' => 6,
       ),
       'grid' => array(
         'label' => 'hidden',
@@ -658,7 +658,7 @@ This will be displayed on the event page for all members.',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_plain',
-        'weight' => 6,
+        'weight' => 7,
       ),
       'grid' => array(
         'label' => 'above',

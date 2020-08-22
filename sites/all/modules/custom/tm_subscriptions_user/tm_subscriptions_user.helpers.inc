@@ -274,6 +274,7 @@ function tm_subscriptions_user_get_partner_code() {
 
 	// check ?partner=
 	if (isset($_GET["partner"])) {
+
 		$partner_code = $_GET["partner"];
 
 		// ignore sample code 'PARTNERCODE'
@@ -295,25 +296,46 @@ function tm_subscriptions_user_get_partner_code() {
 		$partner_code = $_COOKIE['Drupal_visitor_subscription_partner'];
 	}
 
-	return trim(strip_tags($partner_code));
+	// clean up
+	$partner_code = strip_tags(strtoupper(trim($partner_code)));
+
+	return $partner_code;
 }
 
 /**
  * Set partner code and company url cookie
  * Drupal.visitor.subscription_partner
  */
-function tm_subscriptions_user_set_partner_cookie($uid = null) {
+function tm_subscriptions_user_set_partner_cookie($account = null) {
 
 	global $conf;
+	global $user;
+
 	$cookie_time = '+30 days';
 
 	// get partner code
 	$partner_code = tm_subscriptions_user_get_partner_code();
 
+	// unset partner code
+	setcookie("Drupal.visitor.subscription_partner", $partner_code, time() - 3600, "/", "." . $conf["tm_email_server_url_domain"]);
+	
 	// check ?partner=
 	if ($partner_code != "") {
-		setcookie("Drupal.visitor.subscription_partner", $partner_code, strtotime($cookie_time), "/");
+
+		// get account
+		if ($account == null) {
+			$account = user_load($user->uid);
+		}
+	
+		// get subscription
+		$subscription = tm_subscriptions_get_user_subscription($account);
+
+		// validate partner code
+		if (isset($subscription["partner_codes"][$partner_code])) {
+			setcookie("Drupal.visitor.subscription_partner", $partner_code, strtotime($cookie_time), "/", "." . $conf["tm_email_server_url_domain"]);
+		}
 	}
+
 }
 
 /**

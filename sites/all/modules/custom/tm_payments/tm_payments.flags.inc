@@ -10,11 +10,6 @@ function tm_payments_preprocess_flag(&$variables) {
 	$flag = &$variables['flag'];
 	$action = $variables['action'];
 
-	// Register flag
-	if (($flag->name == "event_register") && ($action == "flag")) {
-		return _tm_payments_preprocess_flag_register_flag($variables);
-	}
-
 	// Register unflag
 	if (($flag->name == "event_register") && ($action == "unflag")) {
 		return _tm_payments_preprocess_flag_register_unflag($variables);
@@ -85,160 +80,6 @@ function _tm_payments_preprocess_flag_waitlist_flag(&$variables) {
     return true;
 }
 
-/**
- * Modify event register flag
- */
-function _tm_payments_preprocess_flag_register_flag(&$variables) {
-
-	global $conf;
-
-	// Some typing shotcuts:
-	$flag = &$variables['flag'];
-	$action = $variables['action'];
-	$entity_id = $variables['entity_id'];
-	$flag_css_name = str_replace('_', '-', $flag->name);
-	$uid = $variables['user']->uid;
-
-	// Check if event is valid
-  	$event = node_load($entity_id);
-  	if ($event->type != "event") {
-    	return;
-  	}
-
-	// STEP 1. CHECK IF PAYMENT IS ENABLED
-	if (!_tm_payments_is_payment_enabled($event)) {
-		return;
-	}
-
-	// STEP 2. CHECK IF APPROVED MEMBERS ONLY
-	if ($event->field_approved_members_only[LANGUAGE_NONE][0]['value'] == 1) {
-		$check_member = user_load($uid);
-		if (!in_array('approved user', $check_member->roles)) {
-			$variables['link_text'] = 'Buy Ticket';
-			return;
-		}
-    }
-
-    // check if member is removed the chapter
-    $remove_member_from_chapter_flag = flag_get_flag('remove_member_from_chapter');
-	$check_entity = node_load($entity_id);
-	$check_chapter_id = _tm_event_get_chapter_id($check_entity);
-	if ($check_chapter_id != null) {
-		if ($remove_member_from_chapter_flag->is_flagged($check_chapter_id, $uid)) {
-			$variables['link_text'] = 'Buy Ticket';
-			return;
-		}
-	}
-
-	// check if member is reported
-	if (tm_users_is_member_reported($uid)) {
-		$variables['link_text'] = 'Buy Ticket';
-		return;
-	}
-
-	// load user
-	$member = user_load($uid);
-	$user_id = $member->uid;
-
-	// STEP 3. CHECK GEOBLOCK
-	if (!tm_events_check_geoblock_signup($member, $event)) {
-		$variables['link_text'] = 'Buy Ticket';
-		return;
-	}
-
-	// STEP 4. GET PRICING
-	$pricing = _tm_payments_get_registration_price($event);
-	if ($pricing == null) {
-		// problem calculating pricing
-		return;
-	}
-
-	// STEP 5. CREATE STRIPE JS
-	$stripe_currency = $pricing["stripe_currency"];	
-	$stripe_amount = $pricing["stripe_amount"];
-	$user_email = $member->mail;
-	$stripe_pub_key = $conf["tm_payments_stripe_publishable_key"];
-	$stripe_bg_image = $conf["tm_payments_stripe_image_url"];
-
-	$tm_payments_stripe_logo = $conf["tm_payments_stripe_logo"];
-
-	$tm_payments_handler_name = $conf["tm_payments_handler_name"]; // ie: "Travel Massive";
-	$tm_payments_handler_description = $conf["tm_payments_handler_description"]; // ie: "Event Registration";
-
-	// Enable billing address
-	$enable_billing_address = "false";
-	if (isset($event->field_event_payment_ask_address[LANGUAGE_NONE][0]['value'])) {
-		if ($event->field_event_payment_ask_address[LANGUAGE_NONE][0]['value'] == 1) {
-			$enable_billing_address = "true";
-		}
-	}
-
-	  $stripe_js = <<<EOT
-
-jQuery(document).ready(function($) {
-	
-	$('.payment-button').unbind('click');
-
-	var handler = StripeCheckout.configure({
-		key: '{$stripe_pub_key}',
-		image: '{$stripe_bg_image}',
-		locale: 'auto',	
-		token: function(token) {
-
-			$('.payment-button').addClass('disabled');
-
-			$('.payment-button').append('<form id="process-stripe-payment"></form>');
-			$('#process-stripe-payment').attr("action","/payment/event/{$entity_id}/{$user_id}");
-			$('#process-stripe-payment').attr("method","post");
-			$('#process-stripe-payment').append('<input type="hidden" name="stripe_token" id="stripe_token" value="">');
-			$('#process-stripe-payment').append('<input type="hidden" name="stripe_email" id="stripe_email" value="">');
-			$('#process-stripe-payment').append('<input type="hidden" name="stripe_amount" id="stripe_amount" value="{$stripe_amount}">');
-			$('#process-stripe-payment').append('<input type="hidden" name="stripe_currency" id="stripe_currency" value="{$stripe_currency}">');
-
-
-			$('#stripe_token').val(token.id);
-			$('#stripe_email').val(token.email);
-
-			$('#process-stripe-payment').submit();
-		}
-	});
-
-	$('.payment-button').on('click', function(e) {
-		// Open Checkout with further options
-		handler.open({
-			name: '{$tm_payments_handler_name}',
-			description: '{$tm_payments_handler_description}',
-			amount: $stripe_amount,
-			currency: '{$stripe_currency}',
-			billingAddress: {$enable_billing_address},
-			email: '{$user_email}'
-		});
-		e.preventDefault();
-	});
-
-	// Close Checkout on page navigation
-	$(window).on('popstate', function() {
-		handler.close();
-	});
-
-	// Add stripe logo to information panel
-	$('.detail-item.price').after("<div class='detail-item tm-payment-gateway-logo'>{$tm_payments_stripe_logo}</div>");
-	
-
-});
-
-EOT;
-
-	// STEP 4. MODIFY BUTTON AND INCLUDE STRIPE JS
-	$variables['flag_classes_array'][] = 'payment-button';
-	$variables['link_href'] = '#';
-	$variables['link_text'] = 'Buy Ticket';
-	drupal_add_js('https://checkout.stripe.com/checkout.js', 'external'); // add stripe library
-	drupal_add_js($stripe_js, 'inline'); // add inline js
-	return true;
-
-}
-
 
 /**
  * Modify event register unflag
@@ -268,7 +109,7 @@ function _tm_payments_preprocess_flag_register_unflag(&$variables) {
 	$paid_for_event = ($paid_flag && $paid_flag->is_flagged($entity_id, $uid));
 
 	if ($paid_for_event) {
-		$variables['link_text'] = 'Purchased';
+		$variables['link_text'] = 'Registered';
 	}
 
 	// show warning when unregistering

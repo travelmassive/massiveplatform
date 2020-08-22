@@ -23,7 +23,6 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
     }
   }
 
-
   // START Add chapter event Link
   if (isset($field['entity']->type) && $field['entity']->type == 'chapter') {
     if (_tm_events_check_create_chapter_event($user, $field['entity']->nid)) {
@@ -121,6 +120,36 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
     }
   }
   // END Add member event link
+
+  // START cancel ticket
+  if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
+    $node = menu_get_object();
+    if ($node->type == 'event') {
+
+      // if donation button showing, show unregister link
+      $event_display_flag = _tm_event_display_flag($node->nid, $user);
+      if (($event_display_flag == "show_donate") and (!_tm_event_is_past($node))) {
+
+        // generate un-register link
+        $rsvpflag = flag_get_flag('event_register');
+        $link_type = $rsvpflag->get_link_type();
+        $flag_link = module_invoke($link_type['module'], 'flag_link', $rsvpflag, "unflag", $node->nid);
+        $unregister_link = "/" . $flag_link['href'] . "?destination=node/" . $node->nid . "&token=" . $flag_link['query']['token'];
+
+        $links['event'][] = array(
+          'wrapper_class' => array('event_manage_registrations'),
+          'content' => l(t('Cancel my ticket'), $unregister_link, array(
+            'external' => true,
+            'attributes' => array( 
+            'title' => t('Cancel ticket')
+            )
+          ))
+        );
+
+      }
+    }
+  }
+  // END cancel ticket
 
   // START manage RSVPs
   if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
@@ -385,7 +414,7 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
   }
   // END View event viewers
 
-  // START ticket sales
+  // START ticket sales and checkout lnk
   if (module_exists("tm_payments")) {
     if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {
       $node = menu_get_object();
@@ -408,6 +437,18 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
         }
 
         if ($show_menu_item) {
+
+          // checkout page
+          $links['event'][] = array(
+            'wrapper_class' => array('event_ticket_sales'),
+            'content' => l(t('Checkout page'), 'checkout/event/' . $nid, array(
+              'attributes' => array( 
+              'title' => t('Checkout page')
+              )
+            ))
+          );
+
+          // ticket sales
           $links['event'][] = array(
             'wrapper_class' => array('event_ticket_sales'),
             'content' => l(t('Ticket sales'), 'payment/reports/event-sales/' . $nid, array(
@@ -420,7 +461,7 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
       }
     }
   }
-  // END ticket sales
+  // END ticket sales and checkout link
 
   // START show calendar link
   if (isset($menu_item['page_arguments'][0]->nid) && $user->uid > 0) {

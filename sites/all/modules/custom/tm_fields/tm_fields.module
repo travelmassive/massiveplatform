@@ -201,6 +201,13 @@ function _tm_chapter_sticker_process($field, $title = NULL) {
       if (isset($field['entity']->field_event_company['und'][0]['target_id'])) {
         $company_id = $field['entity']->field_event_company['und'][0]['target_id'];
         $url = url("node/" . $company_id);
+        $company = node_load($company_id);
+        if ($company != null) {
+          $event_type_name = strip_tags(trim($company->title));
+            if (strlen($event_type_name) > 35) {
+            $event_type_name = substr($event_type_name, 0, 35) . "...";
+          }
+        }
       }
     }
 
@@ -585,7 +592,7 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
         break;
       case 'event':
         $result = _tm_event_display_flag($entity->nid);
-        
+         
         // Only show the button for managed events.
         // The other events will have an external RSVP link.
         if ($result == 'show_external_rsvp') {
@@ -600,21 +607,6 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
             if (_tm_payments_is_payment_enabled($entity)) {
               $button_text = "Buy Ticket";
             }
-
-            global $conf;
-            $tm_payments_stripe_logo = $conf["tm_payments_stripe_logo"];
-            $stripe_js = <<<EOT
-
-            jQuery(document).ready(function($) {
-
-              // Add stripe logo to information panel
-              $('.detail-item.price').after("<div class='detail-item tm-payment-gateway-logo'>{$tm_payments_stripe_logo}</div>");
-
-            });
-EOT;
-
-            drupal_add_js($stripe_js, 'inline'); // add inline js
-
           }
           $css_classes .= ' disabled';
           return l(t($button_text), 'javascript:jq_login_signup_box();', array(
@@ -627,7 +619,7 @@ EOT;
         }
 
         // Show closed
-        if (($result == 'show_closed')) {
+        if (($result == 'show_closed') or ($result == 'show_feedback')) {
           $css_classes .= ' disabled';
           return l(t('Past Event'), 'javascript:jq_login_signup_box();', array(
           'external' => true,
@@ -645,6 +637,18 @@ EOT;
             'external' => true,
             'attributes' => array(
             'title' => t('Join waitlist for :event', array(':event' => $entity->title)),
+            'class' => array($css_classes)
+          )
+          ));
+        }
+
+        // Checkout ticket
+        if ($result == 'show_checkout') {
+          $css_classes .= ' disabled';
+          return l(t('Get Ticket'), 'javascript:jq_login_signup_box();', array(
+            'external' => true,
+            'attributes' => array(
+            'title' => t('Get Ticket for :event', array(':event' => $entity->title)),
             'class' => array($css_classes)
           )
           ));

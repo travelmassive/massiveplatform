@@ -747,3 +747,33 @@ function tm_events_is_online_event($event) {
   // not online event
   return false;
 }
+
+/**
+ * Helper method to get all registered attendees for an event
+ */
+function tm_events_get_registered_attendees($event_id, $limit = 100000) {
+
+  // get list of account
+  $rsvpflag = flag_get_flag('event_register', NULL);
+ 
+  // Generate uid list
+  $user_ids = array();
+
+  // Get registered attendees
+  $results = db_select('flagging', 'f')
+    ->fields('f')
+    ->condition('fid', $rsvpflag->fid ,'=')
+    ->condition('entity_id', $event_id ,'=')
+    ->orderBy('timestamp', 'DESC')
+    ->range(0,$limit)
+    ->execute();
+
+  // create user_ids list from results
+  while ($result = $results->fetchAssoc()){
+    $user_ids[] = $result['uid'];
+  }
+  
+  return $user_ids;
+
+}
+

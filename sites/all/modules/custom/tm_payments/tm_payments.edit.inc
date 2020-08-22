@@ -170,32 +170,59 @@ function _tm_payments_form_alter_event_form(&$form, &$form_state, $form_id) {
 
 	// Step 4. Set help and placeholder text
 	//////////
-  
+
+	// remove empty payment type option
+	unset($form['field_event_payment_type'][LANGUAGE_NONE]['#options']['_none']);
+
 	// help text
-	$field_description = $form['field_event_payment_enabled'][LANGUAGE_NONE]['#description'];
-	$payments_help_text = "<div class='tm-payments-edit-form-message'>" . $conf["tm_payments_enable_help_text"] . "</div>" . $field_description;
-	$form['field_event_payment_enabled'][LANGUAGE_NONE]['#description'] = $payments_help_text;
+	$field_title = $form['field_event_payment_type'][LANGUAGE_NONE]['#title'];
+	$payments_help_text = $field_title . "<div class='tm-payments-edit-form-message'>" . $conf["tm_payments_enable_help_text"] . "</div>";
+	$form['field_event_payment_type'][LANGUAGE_NONE]['#title'] = $payments_help_text;
 
 	// refund policy placeholder
 	$refund_policy = $conf["tm_payments_refund_policy"];
 	$form['field_event_payment_refund_text'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = $refund_policy;
 
+	// pricing tiers
+	$field_event_payment_tiers_description = "Pricing tiers, separated by commas &mdash; example: FREE,5,10,CHOOSE
+<br>To highlight a popular option &mdash; <strong>5*</strong> will display <strong>$5 (Popular)</strong>
+<br>To add a label &mdash; <strong>5|Coffee</strong> will display <strong>$5 &mdash; Coffee</strong>";
+
+	$form['field_event_payment_tiers'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = "0,5,10,CHOOSE";
+	$form['field_event_payment_tiers'][LANGUAGE_NONE][0]['value']['#description'] = $field_event_payment_tiers_description;
+
+	// subscriber discount
+	if (module_exists("tm_subscriptions_user")) {
+		$form['field_event_payment_sub_discount'][LANGUAGE_NONE][0]['value']['#title'] = $conf["tm_subscriptions_user_label_noun"] . " Discount";
+		$form['field_event_payment_sub_discount'][LANGUAGE_NONE][0]['value']['#description'] = "Reward <a target='_blank' href='/" . $conf["tm_checkout_subscription_public_page"] . "'>" . $conf["tm_subscriptions_user_label_noun"] . "</a> subscribers who support the community.<br>Example: 50%";
+	}
+
+	// filter % from subscriber discount
+	$form['field_event_payment_sub_discount'][LANGUAGE_NONE][0]['value']['#element_validate'] = array('tm_payments_sub_discount_validate');
+
+	// partner codes
+	$field_event_payment_partner_codes_description = "Include any partner discount codes, separated by commas. 
+<br>Example: VIP=50%,FRIENDS=10%";
+	$form['field_event_payment_partner_code'][LANGUAGE_NONE][0]['value']['#description'] = $field_event_payment_partner_codes_description;
+	$form['field_event_payment_partner_code'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = "FRIENDS=10%";
+	$form['field_event_payment_partner_code'][LANGUAGE_NONE][0]['#validated'] = true;
 
 	// Step 5. Set available currencies
 	//////////
 	$currencies = array();
 	$default_currency = "";
 	if (isset($conf["tm_payments_currencies"])) {
-	foreach ($conf["tm_payments_currencies"] as $key => $val) {
-	  $currencies[$key] = $conf["tm_payments_currency_symbols"][$key] . " " . strtoupper($key);
-	}
+		foreach ($conf["tm_payments_currencies"] as $key => $val) {
+			$currencies[$key] = $conf["tm_payments_currency_symbols"][$key] . " " . strtoupper($key);
+		}
 	}
 	if (isset($conf["tm_payments_currencies_default"])) {
-	$default_currency = $conf["tm_payments_currencies_default"];
+		$default_currency = $conf["tm_payments_currencies_default"];
 	}
 
 	// set options
 	$form['field_event_payment_currency'][LANGUAGE_NONE]['#options'] = $currencies;
+	$form['field_event_payment_currency'][LANGUAGE_NONE]['#title'] = "Pricing Currency";
 
 	// if currency type saved, select it in the dropdown
 	$event = $form['#entity'];
@@ -291,6 +318,10 @@ function _tm_payments_form_alter_event_form(&$form, &$form_state, $form_id) {
 		$form['field_event_payment_commission']['#disabled'] = true;
 	}
 
+	// Hide deprecated fields
+	unset($form['field_event_payment_enabled']);
+	unset($form['field_event_payment_ask_address']);
+
 }
 
 /**
@@ -298,7 +329,7 @@ function _tm_payments_form_alter_event_form(&$form, &$form_state, $form_id) {
  */
 function tm_payments_node_presave($node) {
 
-	global $user;
+global $user;
 
   // make sure we are working on an event node
   if ($node->type != "event") { return; }
@@ -312,5 +343,33 @@ function tm_payments_node_presave($node) {
   	$node->field_event_payment_commission[LANGUAGE_NONE][0]['value'] = $default_commission;
   }
 
+}
+
+/**
+ * Validate subscriber discount field
+ */
+function tm_payments_sub_discount_validate($element, &$form_state, $form) {
+
+	// get value
+	$submitted_value = trim($form_state['values']['field_event_payment_sub_discount'][LANGUAGE_NONE][0]['value']);
+
+	// check empty
+	if ($submitted_value == "") {
+    	return;
+    }
+
+    // remove %
+    $filtered = abs(intval(preg_replace("/[^0-9.]/", "", $submitted_value)));
+
+    // check range
+    if ($filtered < 0) {
+    	$filtered = 0;
+    }
+    if ($filtered > 100) {
+    	$filtered = 100;
+    }
+
+    // set value
+  	$form_state['values']['field_event_payment_sub_discount'][LANGUAGE_NONE][0]['value'] = $filtered;
 }
 

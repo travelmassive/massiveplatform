@@ -762,3 +762,36 @@ function tm_events_get_timezone_offset($remote_tz, $origin_tz = null) {
     $offset     = $origin_dtz->getOffset($origin_dt) - $remote_dtz->getOffset($remote_dt);
     return $offset;
 }
+
+/**
+ * Render attendees
+ */
+function tm_events_render_attendees($event_id, $limit = 5) {
+
+  global $conf;
+
+  $html = "";
+
+  // get attendees
+  $attendee_uids = tm_events_get_registered_attendees($event_id, $limit);
+
+  foreach ($attendee_uids as $attendee_uid) {
+
+    // load account
+    $account = user_load($attendee_uid);
+    if ($account == null) {
+      continue;
+    }
+
+    // Set avatar
+    $avatar_url = image_style_url("avatar_grid", _tm_users_get_avatar_uri($account));
+    $img_url = str_replace("'", "%27", file_create_url($avatar_url)); // to fix
+    $user_url = drupal_get_path_alias("user/" . $account->uid);
+    $user_full_name = strip_tags($account->field_user_first_name[LANGUAGE_NONE][0]['value']) . " " . strip_tags($account->field_user_last_name[LANGUAGE_NONE][0]['value']);
+    $user_full_name = str_replace("''", "", $user_full_name);
+
+    $html .= "<a target='_blank' title='" . $user_full_name . "' href='/" . $user_url . "'><img class='tm-registrations-user-avatar' src='" . $img_url . "'></a> ";
+  }
+
+  return $html;
+}

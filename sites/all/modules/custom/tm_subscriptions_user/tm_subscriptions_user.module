@@ -107,6 +107,7 @@ function tm_subscriptions_user_user_view_alter(&$build) {
  */
 function tm_subscriptions_user_node_view_alter(&$build) {
 
+  global $conf;
   global $user;
 
   // check user logged in

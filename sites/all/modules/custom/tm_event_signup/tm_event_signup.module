@@ -290,7 +290,6 @@ function tm_event_signup_preprocess_flag(&$variables) {
 
 }
 
-
 /**
  * Checks if the current user can join the event with the given nid.
  * In order to signup, the signup limit can't be reached and the event
@@ -301,9 +300,14 @@ function tm_event_signup_preprocess_flag(&$variables) {
  * @param $nid
  *   The event id
  */
-function _tm_event_display_flag($nid) {
+function _tm_event_display_flag($nid, $account = null) {
 
   global $user;
+
+  // check for a different account
+  if ($account == null) {
+    $account = $user;
+  }
 
   // Flags
   $flag_register = flag_get_flag('event_register');
@@ -314,14 +318,20 @@ function _tm_event_display_flag($nid) {
 
   if (!$event || $event->type != 'event') {
     throw new Exception("Invalid event node. Nid: " . $nid);
-  }
+  } 
+
+  // Is past event
+  $is_past_event = _tm_event_is_past($event);
+
+  // Payment type
+  $payment_type = _tm_payments_get_payment_type($event);
   
   // Check if is external RSVP.
   // Is external event
   $display_external = (isset($event->field_external_rsvp[LANGUAGE_NONE][0]['value']) && $event->field_external_rsvp[LANGUAGE_NONE][0]['value'] !== '0');
 
   // External rsvp and past event
-  if (_tm_event_is_past($event) and $display_external) {
+  if ($is_past_event and $display_external) {
     return 'show_external_rsvp_closed';
   }
 
@@ -330,10 +340,28 @@ function _tm_event_display_flag($nid) {
     return 'show_external_rsvp';
   }
 
+  // Show donation if user is registered for event, but has not paid
+  if (module_exists("tm_payments")) {
+    if (_tm_payments_is_payment_enabled($event)) {
+      if (tm_events_user_is_registered($event->nid, $account->uid)) { 
+        if ((!_tm_payments_user_has_paid($event->nid, $account->uid)) and ($payment_type != "fixed_price")) {
+          if ($is_past_event) {
+            $payment_post_event = $event->field_event_payment_post_event[LANGUAGE_NONE][0]['value'];
+            if ($payment_post_event) {
+              return 'show_donate';
+            }
+          } else {
+            return 'show_donate';
+          }
+        }      
+      }
+    }
+  }
+
   // Show feedback for recent chapter events user has registered for
-  if (_tm_event_is_past($event)) {
+  if ($is_past_event) {
     if (module_exists("tm_nps")) {
-      if (tm_events_user_is_registered($event->nid, $user->uid)) {
+      if (tm_events_user_is_registered($event->nid, $account->uid)) {
         if (isset($event->field_chapter[LANGUAGE_NONE][0]['target_id'])) {
           $seconds_since_event = 7 * 24 * 60 * 60;
           if (tm_events_seconds_until_event_starts($event) > (-$seconds_since_event)) {
@@ -344,60 +372,95 @@ function _tm_event_display_flag($nid) {
     }
   }
 
-  // Check if the event has already happened
-  if (_tm_event_is_past($event)) {
-    return 'show_closed';
-  }
-
   // Is waitlisted
-  $is_waitlisted = $flag_waitlist->is_flagged($nid);
+  $is_waitlisted = $flag_waitlist->is_flagged($nid, $account->uid);
   if ($is_waitlisted) {
+    if ($is_past_event) {
+      return 'show_closed';
+    }
     return 'show_waitlist';
   }
 
   // If already registered
-  if ($flag_register->is_flagged($nid, $user->uid)) {
+  if ($flag_register->is_flagged($nid, $account->uid)) {
       return 'show_register';
   }
 
   // Check if we are approved
   $approved_members_only = $event->field_approved_members_only[LANGUAGE_NONE][0]['value'];
-  $approved_member = in_array("approved user", $user->roles);
+  $approved_member = in_array("approved user", $account->roles);
   if ($approved_members_only and !$approved_member) {
+    if ($is_past_event) {
+      return 'show_closed';
+    }
     return 'show_not_approved';
   }
 
   // Check event geoblock settings 
-  $check_user = user_load($user->uid);
+  $check_user = user_load($account->uid);
   if (!tm_events_check_geoblock_signup($check_user, $event)) {
+    if ($is_past_event) {
+      return 'show_closed';
+    }
     return 'show_geoblocked';
   }
 
-  // Check signup limit.
+  // Check signup limit
   if (isset($event->field_signup_limit[LANGUAGE_NONE][0]['value'])) {
-    $limit = $event->field_signup_limit[LANGUAGE_NONE][0]['value'];
-  }
-  
-  // No signup limit, show register
-  if ($limit === 0) {
-    return 'show_register';
-  }
-  
-  // Signup limit
-  if ($flag_register->get_count($nid) >= $limit) {
-    // Show waitlist, event booked out
-    if ($flag_register->is_flagged($nid, $user->uid)) {
-      return 'show_register';
-    } else {
-      // not registered, show waitlist
-      return 'show_waitlist';
+
+    // Get signup limit
+    $limit = trim($event->field_signup_limit[LANGUAGE_NONE][0]['value']);
+
+    // If there is a limit
+    if (($limit != "") and (intval($limit) >= 0)) {
+
+      // Check registered more than limit
+      if ($flag_register->get_count($nid) >= $limit) {
+
+        // If not registered, show waitlist
+        if (!$flag_register->is_flagged($nid, $account->uid)) {
+          if ($is_past_event) {
+            return 'show_closed';
+          }
+          return 'show_waitlist';
+        }
+
+      }
     }
-    
   }
-  else {
-    // Spare seats, show register
-    return 'show_register';
+
+  // Check payments
+  if (module_exists("tm_payments")) {
+    if (_tm_payments_is_payment_enabled($event)) {
+
+      // check not already registered
+      if (!tm_events_user_is_registered($event->nid, $account->uid)) {
+
+        // if past event, check if field_event_payment_post_event enabled
+        if (_tm_event_is_past($event)) {
+          if (isset($event->field_event_payment_post_event[LANGUAGE_NONE][0]['value'])) {
+            $payment_post_event = $event->field_event_payment_post_event[LANGUAGE_NONE][0]['value'];
+          
+            if ($payment_post_event) {
+              return 'show_checkout';
+            }
+          }
+        } else {
+          // not a past event, show checkout
+          return 'show_checkout';
+        }
+      }
+    }
   }
+
+  // Check if the event has already happened
+  if ($is_past_event) {
+    return 'show_closed';
+  }
+
+  // Can register
+  return "show_register";
+
 }
 
 /** 
@@ -421,7 +484,3 @@ function _tm_event_is_past($event) {
 
   return false;
 }
-
-
-
-

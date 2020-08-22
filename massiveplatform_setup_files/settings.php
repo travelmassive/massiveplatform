@@ -842,35 +842,29 @@ $conf["tm_newsfeed_headline_text_daily"] = array("Your daily briefing.");
 /** Note: this requires a stripe payments endpoint which is not provided in this distribution **/
 /** If you would like to process event payments, please get in contact with the author. **/
 /*
-$conf["tm_payments_stripe_publishable_key"] = "publishable"; // stripe publishable key
-$conf["tm_payments_stripe_image_url"] = '/sites/all/themes/tm/images/stripe_payment_icon.png'; // stripe image url
-$conf["tm_payments_process_url"] = "https://example.massiveplatform.com/payments/process.php"; // external payment processor
 $conf["tm_payments_process_check_certificate"] = false; // turn on for production 
 $conf["tm_payments_process_timeout"] = 10; // seconds to wait for process url before timeout 
 $conf["tm_payments_process_error_email"] = "support@massiveplatform.com"; // if payment process fails, who to email
-$conf["tm_payments_error_message"] = "A problem occured processing your payment, please contact support@massiveplatform.com";
 $conf["tm_payments_currencies"] = array("usd" => "\$", "aud" => "AUD \$", "cad" => "CAD \$", "eur" => "€", "gbp" => "GBP £"); // available currencies (must be supported by stripe)
+$conf["tm_payments_currencies_fx"] = array("usd" => 1, "aud" => 1.4, "cad" => 1.3, "eur" => 0.85, "gbp" => 0.75); // fx conversions from usd
 $conf["tm_payments_currencies_default"] = "usd"; // default currency
 $conf["tm_payments_currency_symbols"] = array("usd" => "$", "aud" => "$", "cad" => "$", "eur" => "€", "gbp" => "£");
 $conf["tm_payments_refund_policy"] = "You can get a refund until 7 days before the event";
 $conf["tm_payments_refund_url"] = "https://example.massiveplatform.com/blog/event-refund/";
 $conf["tm_payments_receipt_details"] = "<strong>TAX RECEIPT</strong><br>Your company name<br>Your company address<br>Email: your@receiptemail";
 $conf["tm_payments_early_bird_label"] = "Early Bird Ticket"; // default label for early bird ticket
-$conf["tm_payments_stripe_logo"] = "<a target='_blank' href='https://stripe.com/gallery'><img style='width: 119px; height: 26px;' width='119' height='26' src='/sites/all/themes/tm/images/stripe_logo_solid@2x.png'></a><br>Secure payment gateway trusted by <a target='_blank' href='https://stripe.com/gallery'>global brands</a>"; // displayed when payment is enabled
-$conf["tm_payments_handler_name"] = "Massive"; // merchant name to display on payment screen
-$conf["tm_payments_handler_description"] = "Event Registration"; // default description to display on payment screen
 $conf["tm_payments_enable_chapter_min_members"] = 100; // enable payments if event chapter has minimum member count (set to 0 to disable)
 $conf["tm_payments_enable_help_text"] = "Congratulations, you can accept payments for events.<br>By accepting payments you agree to our event <a target='_blank' href='#'>terms and conditions</a>.";
 $conf["tm_payments_commission_default_chapter"] = "80"; // default commission % for chapter event 
 $conf["tm_payments_commission_default_company"] = "75"; // default commission % for company event
 $conf["tm_payments_commission_default_member"] = "70"; // default commission % for member event
-$conf["tm_payments_reports_url"] = ""; // external payment reports
-$conf["tm_payments_reports_secret_token"] = "randomstring123"; // secret token to verify payment report 
 $conf["tm_payments_reports_help_message"] = "Here's your ticket sales for this event."; // message to show user
-$conf["tm_payments_event_partner_codes"] = array(); // custom partner codes for event tickets
-$conf["tm_payments_event_partner_codes"]["EXAMPLE"] = array("partner_code" => "Example", "display_amount" => 10, "partner_label" => "Partner Ticket", "partner_message" => "Partner discount applied");
 $conf["tm_payments_process_successful_message_text"] = "Thanks for your payment. You are now registered for this event.";
 $conf["tm_payments_process_successful_message_class"] = "status"; // class for the message (default 'status')
+$conf["tm_payments_process_donation_message_text"] = "Thanks for your donation &mdash; a receipt has been sent to your email.";
+$conf["tm_payments_free_ticket_label"] = "Free ticket"; // label underneath register button when user chooses free option
+$conf["tm_payments_max_price_usd"] = 1000; // maximum price to accept payments, in usd
+$conf["tm_payments_show_payments_message"] = "We've raised __TOTAL_AMOUNT__ from __TOTAL_PAYMENTS__ members"; // message when showing total payments
 */
 
 /* USER SUBSCRIPTION PAYMENT SETTINGS */
@@ -1260,3 +1254,4 @@ $conf["tm_checkout_subscription_confirm_page"] = "membership/landing"; // path f
 $conf["tm_checkout_subscription_leader_message"] = "Share the <a href='/membership'>Membership Page</a> link with your chapter to help support us.";
 $conf["tm_checkout_reports_help_message"] = "Here's a receipt of your payments."; // message to show user
 $conf["tm_checkout_receipt_details"] = "<strong>TAX RECEIPT</strong><br>Your company name<br>Your company address<br>Email: your@receiptemail";
+$conf["tm_checkout_partner_commission_default"] = "10"; // default commission for partner code

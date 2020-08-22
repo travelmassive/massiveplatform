@@ -1,6 +1,6 @@
 <?php
 
-// tm_checkout.upgrade.inc
+// tm_checkout.subscription.inc
 
 /** 
  * Public landing page for upgrade subscription
@@ -10,6 +10,12 @@ function tm_checkout_public_subscription_page() {
 
 	global $conf;
 	global $user;
+
+	// check tm_subscriptions_user module
+	if (!module_exists("tm_subscriptions_user")) {
+		echo "Sorry, payments are not currently available. <a href='/'>Go home</a>";
+		drupal_exit();
+	}
 
 	// process partner cookie
 	tm_subscriptions_user_set_partner_cookie();
@@ -235,6 +241,7 @@ function tm_checkout_landing_subscription_page() {
 	if (!tm_subscriptions_is_user_subscription_enabled($account->uid)) {
 		if (isset($_GET["session_id"])) {
 			drupal_set_message(" It looks like you made a payment, but we need to manually confirm it. Please <a href='/contact'>contact our team</a> so we can assist you.");
+			tm_checkout_notify_payment_error("Check Stripe webhook log. Subscription not enabled after checkout. user_id: " . $account->uid);
 		}
 		drupal_goto("checkout/upgrade/" . $account->uid);
 	}
@@ -307,7 +314,7 @@ function tm_checkout_subscription_page($checkout_action = "upgrade_subscription"
 				drupal_goto("/checkout/upgrade");
 			}
 			if ($checkout_action == "renew_subscription") {
-				//drupal_goto("/checkout/renew");
+				drupal_goto("/checkout/renew");
 			}
 		}
 	}
@@ -330,6 +337,29 @@ function tm_checkout_subscription_page($checkout_action = "upgrade_subscription"
 		'#markup' => $html,
 		);
 		return $form;
+	}
+
+	// check for ?partner code
+	if (isset($_GET["partner"])) {
+
+		// set partner cookie
+		tm_subscriptions_user_set_partner_cookie($account);
+
+		// get messages
+		drupal_get_messages();
+		
+		// check if valid
+		$partner_code_provided = strip_tags(strtoupper(trim($_GET["partner"])));
+		if ($partner_code_provided != "") {
+			if (isset($subscription["partner_codes"][$partner_code_provided])) {
+				drupal_set_message("Your partner code " . htmlentities($partner_code_provided) . " has been applied.");
+			} else {
+				drupal_set_message("The partner code " . htmlentities($partner_code_provided) . " is invalid or expired.", "help-tip");
+			}
+		}
+
+		// reload page
+		drupal_goto(current_path());
 	}
 
 	// include stripe js
@@ -405,6 +435,7 @@ function tm_checkout_subscription_button_ajax() {
 		return;
 
 	}
+	
 	// need user id
 	if (arg(3) == "") {
 		return;
@@ -467,6 +498,7 @@ function tm_checkout_subscription_button_ajax() {
 	}
 	$metadata["referer_code"] = tm_subscriptions_user_get_chapter_code($account);
 	$metadata["partner_code"] = $pricing["partner_code"];
+	$metadata["partner_commission"] = tm_checkout_get_partner_commission($pricing["partner_code"], "upgrade_subscription");
 	$metadata["user_subscription_type"] = $pricing["subscription_type"];
 	$metadata['user_subscription_label'] = $pricing["subscription_label"];
 
@@ -540,15 +572,25 @@ function tm_checkout_subscription_button_ajax() {
 	$partner_code_label = "";
 	$partner_code = strtoupper($pricing["partner_code"]);
 	if ($partner_code != "") {
-		if (isset($subscription["partner_codes"][$partner_code])) {
-			$partner_code_label = "Partner code " . $partner_code . " applied 🎉";
-		} else {
-			$partner_code_label = "Partner code " . $partner_code . " is invalid or expired.";
-		}
+		$partner_code_label = "🎉 Partner code " . $partner_code . " applied &mdash; <a class='tm-checkout-subscription-partner-code-link' href='?partner='>remove</a>";
+	} else {
+
+		// apply partner code js
+		$apply_partner_code_js = "javascript:tm_checkout_subscription_apply_partner_code();";
+
+		$partner_code_label = "Apply a <a class='tm-checkout-subscription-partner-code-link' href='" . $apply_partner_code_js . "'>partner code</a>";
 	}
 
+	// pricing option
+	$pricing_options = "Join for " . $pricing["currency_symbol"] . $pricing["display_amount"] . " &mdash; fast and secure.";
+	if ($checkout_action == "renew_subscription") {
+		$pricing_options = "Renew for " . $pricing["currency_symbol"] . $pricing["display_amount"] . " &mdash; fast and secure.";
+	}
+	$pricing_options = "<div style='margin-bottom: 32px;'>" . $pricing_options . "</div>";
+
 	// generate html
-	$html = str_replace("__CHECKOUT_BUTTON__", $checkout_button, $template);
+	$html = str_replace("__PRICING_OPTIONS__", $pricing_options, $template);
+	$html = str_replace("__CHECKOUT_BUTTON__", $checkout_button, $html);
 	$html = str_replace("__PRICING_LABEL__", $pricing_label, $html);
 	$html = str_replace("__PARTNER_CODE_LABEL__", $partner_code_label, $html);
 	$html = str_replace("__ERROR_MESSAGE__", $error_message, $html);
@@ -569,7 +611,7 @@ function tm_checkout_subscription_process($stripe_session) {
 	// STEP 1. Fetch Stripe metadata
 	$metadata = $stripe_session->metadata;
 
-	// STEP 2. FETCH ACCOUNT
+	// STEP 2. Getch account
 	$entity_id = $metadata['entity_id'];
 	$entity_type = $metadata['entity_type'];
 	if ($entity_type != "user") {
@@ -587,7 +629,7 @@ function tm_checkout_subscription_process($stripe_session) {
 		return;
 	}
 	
-	// STEP 2. Set payment vars
+	// STEP 3. Set payment vars
 	$payment_id = $stripe_session->payment_intent;
 	$checkout_action = $metadata['checkout_action']; // upgrade_membership
 	$payment_email = $metadata['payment_email'];
@@ -607,6 +649,7 @@ function tm_checkout_subscription_process($stripe_session) {
 	$paid_out = 0;
 	$referer_code = $metadata['referer_code'];
 	$partner_code = $metadata['partner_code'];
+	$partner_commission = $metadata['partner_commission'];
 	$subscription_type = $metadata['user_subscription_type'];
 	$checkout_item = $subscription_type;
 	$subscription_label = $metadata['user_subscription_label'];
@@ -617,10 +660,10 @@ function tm_checkout_subscription_process($stripe_session) {
   		$checkout_action = "renew_membership";
   	}
 
-  	// STEP 3. Log payment
-	tm_checkout_log_payment(null, $payment_id, $checkout_action, $checkout_item, $payment_email, $stripe_currency, $stripe_amount, $display_amount, $entity_id, $entity_type, $entity_title, $user_id, $user_email, $user_first_name, $user_last_name, $log_user_ip, $log_user_http_user_agent, $refunded, $paid_out, $referer_code, $partner_code);
+  	// STEP 4. Log payment
+	tm_checkout_log_payment(null, $payment_id, $checkout_action, $checkout_item, $payment_email, $stripe_currency, $stripe_amount, $display_amount, $entity_id, $entity_type, $entity_title, $user_id, $user_email, $user_first_name, $user_last_name, $log_user_ip, $log_user_http_user_agent, $refunded, $paid_out, $referer_code, $partner_code, $partner_commission);
 
-	// STEP 4. Upgrade account
+	// STEP 5. Upgrade account
 	$subscription = tm_subscriptions_get_user_subscription($account); // subscription data
 
 	// Get subscription flags
@@ -659,7 +702,7 @@ function tm_checkout_subscription_process($stripe_session) {
 	// $tm_subscriptions_user_flag = true;
 	user_save($account);
 
-	// STEP 5. Send notifications
+	// STEP 6. Send notifications
 	if ($is_renewed) {
 		tm_subscriptions_user_send_notification($account, "renewed", $user_first_name);
 	} else {
@@ -673,5 +716,5 @@ function tm_checkout_subscription_process($stripe_session) {
 	}
 
 	echo "{'success': true, 'message': 'Payment processed'}";
-
+	return;
 }

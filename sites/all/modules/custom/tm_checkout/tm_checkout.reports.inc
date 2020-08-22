@@ -93,8 +93,12 @@ function tm_checkout_reports_user_payments($account = null) {
   $payments = $results;
 
   // Render payments table
+  $paid_by_th = "";
+  if ($account->uid != $user->uid) {
+    $paid_by_th = "<th>Paid By</th>";
+  }
   $html .= "<p><table class='tm-subscriptions-report-table'>";
-  $html .= "<tr><th>Payment</th><th>Item</th><th>Paid By</th><th class='tm-payments-report-extra'>Payment Date</th><th class='tm-payments-report-extra'>Payment ID</th></tr>";
+  $html .= "<tr><th>Payment</th><th>Item</th>" . $paid_by_th . "<th class='tm-payments-report-extra'>Payment Date</th><th class='tm-payments-report-extra'>Payment ID</th></tr>";
 
   // No payments
   if (sizeof($payments) == 0) {
@@ -104,17 +108,28 @@ function tm_checkout_reports_user_payments($account = null) {
   // Payment Details
   foreach($payments as $payment) {
 
-    // look up subsription label
-    // if can't be found, fall back to subscription type
-    $subscription_label = tm_subscriptions_get_user_subscription_field($account, "subscription_label");
-    if ($subscription_label == "") {
-      $subscription_label = $payment->subscription_type;
+    $checkout_action = $payment->checkout_action;
+
+    // item labels
+    $item_label = "Payment";
+    if ($checkout_action == "event_payment") {
+      $item_label = "<a href='/" . drupal_get_path_alias("node/" . $payment->entity_id) . "'>Event Ticket: " . strip_tags($payment->entity_title) . "</a>";
+    }
+
+    if ($checkout_action == "upgrade_subscription") {
+      $item_label = tm_subscriptions_get_user_subscription_field($account, "subscription_label");
+    }
+
+    if ($checkout_action == "renew_subscription") {
+      $item_label = "Renew " . tm_subscriptions_get_user_subscription_field($account, "subscription_label");
     }
 
     $html .=  "<tr>";
     $html .=  "<td>" . ($payment->display_amount + 0) . " " . strtoupper($payment->stripe_currency) . "</td>";
-    $html .=  "<td>" . $subscription_label . "</td>";
-    $html .=  "<td><a target='_blank' href='/user/" . $payment->user_id . "'>" . $payment->user_first_name . " " . $payment->user_last_name . "</a></td>";    
+    $html .=  "<td>" . $item_label . "</td>";
+    if ($account->uid != $user->uid) { 
+      $html .=  "<td><a target='_blank' href='/user/" . $payment->user_id . "'>" . $payment->user_first_name . " " . $payment->user_last_name . "</a></td>";
+    }
     $html .=  "<td class='tm-payments-report-extra'>" . date("Y-m-d", $payment->timestamp) . "</td>";
     $html .=  "<td class='tm-payments-report-extra'>" . $payment->payment_id . "</a></td>";
     $html .=  "</tr>";

@@ -72,7 +72,7 @@ function tm_payments_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 24,
+      'weight' => 26,
     ),
   );
 
@@ -117,7 +117,7 @@ This might help to improve card validation in certain regions.<br>',
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_event_payment_ask_address',
-    'label' => 'Enable billing address',
+    'label' => 'Enable billing address (Deprecated)',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -129,7 +129,7 @@ This might help to improve card validation in certain regions.<br>',
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 26,
+      'weight' => 35,
     ),
   );
 
@@ -138,7 +138,7 @@ This might help to improve card validation in certain regions.<br>',
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Price will be displayed and members will be charged in the selected currency',
+    'description' => 'Default currency for prices. Members will be able to select their currency.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -185,7 +185,7 @@ This might help to improve card validation in certain regions.<br>',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 23,
+      'weight' => 25,
     ),
   );
 
@@ -565,7 +565,7 @@ This might help to improve card validation in certain regions.<br>',
     'ds_extras_field_template' => '',
     'entity_type' => 'node',
     'field_name' => 'field_event_payment_enabled',
-    'label' => 'Enable Registration Payment',
+    'label' => 'Enable Registration Payment (Deprecated)',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -577,7 +577,171 @@ This might help to improve card validation in certain regions.<br>',
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 22,
+      'weight' => 34,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_payment_message_text'.
+  $field_instances['node-event-field_event_payment_message_text'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Add a message to the checkout page for your event.
+<br>For example, provide a call to action to financially support your event.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 75,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_payment_message_text',
+    'label' => 'Checkout Message',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 3,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 28,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_payment_partner_code'.
+  $field_instances['node-event-field_event_payment_partner_code'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Include any partner discount codes, separated by commas.
+<br>Example: <i>VIP=50%,SAVE10=10%</i>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 78,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_payment_partner_code',
+    'label' => 'Partner Codes',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 30,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_payment_post_event'.
+  $field_instances['node-event-field_event_payment_post_event'] = array(
+    'bundle' => 'event',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Take donations from attendees, or charge to watch your online replay.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 76,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_payment_post_event',
+    'label' => 'Accept payments after the event',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 33,
     ),
   );
 
@@ -634,10 +798,230 @@ This might help to improve card validation in certain regions.<br>',
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'rows' => 5,
+        'rows' => 3,
       ),
       'type' => 'text_textarea',
-      'weight' => 25,
+      'weight' => 29,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_payment_sub_discount'.
+  $field_instances['node-event-field_event_payment_sub_discount'] = array(
+    'bundle' => 'event',
+    'default_value' => array(
+      0 => array(
+        'value' => 50,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Discount to provide to subscribed members.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 2,
+          'thousand_separator' => '',
+        ),
+        'type' => 'number_decimal',
+        'weight' => 77,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_payment_sub_discount',
+    'label' => 'Subscriber Discount',
+    'required' => 0,
+    'settings' => array(
+      'max' => 100,
+      'min' => 0,
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 31,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_payment_tiers'.
+  $field_instances['node-event-field_event_payment_tiers'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Pricing tiers, separated by commas.
+<br>Example: <i>0,5,10,CHOOSE</i> will display the options Free, $5, $10 and a "Choose your own amount" field.
+<br>Add a label to your options: <i>5|Coffee</i> will display $5 &mdash; Coffee',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 73,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_payment_tiers',
+    'label' => 'Pricing Options',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 27,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_payment_type'.
+  $field_instances['node-event-field_event_payment_type'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Choose how you will price tickets to your event.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 74,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_payment_type',
+    'label' => 'Event Payments',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 24,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_payments_show_total'.
+  $field_instances['node-event-field_event_payments_show_total'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Display total payments on the event page, to the public.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 80,
+      ),
+      'full' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'grid' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'ds_extras_field_template' => '',
+    'entity_type' => 'node',
+    'field_name' => 'field_event_payments_show_total',
+    'label' => 'Show Payments',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 32,
     ),
   );
 
@@ -759,28 +1143,46 @@ This might help to improve card validation in certain regions.<br>',
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Accept payments after the event');
+  t('Add a message to the checkout page for your event.
+<br>For example, provide a call to action to financially support your event.');
+  t('Checkout Message');
+  t('Choose how you will price tickets to your event.');
   t('Company payment commission (%)');
   t('Customize the label for the Early Bird ticket. ie: "Rush Tickets"
 <br>Leave blank to use default');
+  t('Default currency for prices. Members will be able to select their currency.');
+  t('Discount to provide to subscribed members.');
+  t('Display total payments on the event page, to the public.');
   t('Early Bird End Date');
   t('Early Bird Label');
   t('Early Bird Registration Price');
   t('Early Bird Seats');
   t('Enable Early Bird Price');
   t('Enable Event Payments');
-  t('Enable Registration Payment');
-  t('Enable billing address');
+  t('Enable Registration Payment (Deprecated)');
+  t('Enable billing address (Deprecated)');
+  t('Event Payments');
   t('Explain the refund policy for this event. It will be shown on the event page.
 <br>If you leave this blank, the default refund policy will be displayed.');
   t('Fix the default commission percentage for events created by this company.
 <br>Note: Does not include bank fees, forex or other charges.');
+  t('Include any partner discount codes, separated by commas.
+<br>Example: <i>VIP=50%,SAVE10=10%</i>');
+  t('Partner Codes');
   t('Payment Currency');
-  t('Price will be displayed and members will be charged in the selected currency');
+  t('Pricing Options');
+  t('Pricing tiers, separated by commas.
+<br>Example: <i>0,5,10,CHOOSE</i> will display the options Free, $5, $10 and a "Choose your own amount" field.
+<br>Add a label to your options: <i>5|Coffee</i> will display $5 &mdash; Coffee');
   t('Refund Policy');
   t('Registration Price');
   t('Require the customer to enter their billing address when making a payment.<br>
 This might help to improve card validation in certain regions.<br>');
   t('Set whether company can create paid events.');
+  t('Show Payments');
+  t('Subscriber Discount');
+  t('Take donations from attendees, or charge to watch your online replay.');
   t('The number of seats available for early bird pricing
 <br>Leave blank for no limit');
   t('The price of early bird ticket (ie: for $15 enter 15.00)');

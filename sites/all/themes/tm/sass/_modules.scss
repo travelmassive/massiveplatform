@@ -117,7 +117,7 @@
       }
       &:before { @extend .icon-clock; }
     }
-    &.price:before { @extend .icon-s-arr-right; }
+    &.price:before { @extend .icon-2016-credit-card; font-size: 14pt; }
     &.tm-ds-event-refund-policy:before { @extend .icon-circle-question; }
     &.tm-ds-tm-sponsor:before { @extend .icon-medal; }
     &.tm-ds-user-featured:before { @extend .icon-star; }
@@ -155,6 +155,7 @@
     &.detail-item.field-user-covid19-message:before { @extend .icon-virus;}
     &.detail-item.field-company-covid19-message:before { @extend .icon-virus;}
     &.detail-item.field-event-covid19-message:before { @extend .icon-virus-shield;}
+    &.detail-item.payments:before { @extend .icon-2016-heart; font-size: 15pt; color: #ed654e; }
 
     &.field-link-instant-messaging .label-above { display: none; }
     

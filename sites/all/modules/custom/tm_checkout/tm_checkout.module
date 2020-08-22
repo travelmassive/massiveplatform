@@ -7,6 +7,7 @@ include_once 'tm_checkout.controller.inc';
 include_once 'tm_checkout.webhook.inc';
 include_once 'tm_checkout.reports.inc';
 include_once 'tm_checkout.subscription.inc';
+include_once 'tm_checkout.event.inc';
 
 /**
  * Implement hook_menu()
@@ -28,72 +29,100 @@ function tm_checkout_menu() {
 	}
 
 	$items = array();
+
+	// Membership
 	$items[$tm_checkout_subscription_public_page] = array(
-		'title' => 'Upgrade membership',
+		'title' => 'Upgrade Membership',
 		'page callback' => 'tm_checkout_public_subscription_page',
 		'access arguments' => array('access content'),
 		'type' => MENU_CALLBACK,
 	);
 	$items['checkout/upgrade'] = array(
-		'title' => 'Upgrade membership',
+		'title' => 'Upgrade Membership',
 		'page callback' => 'tm_checkout_upgrade_subscription_page',
 		'access arguments' => array('access content'),
 		'type' => MENU_CALLBACK,
 	);
 	$items['checkout/upgrade/%'] = array(
-		'title' => 'Upgrade membership',
+		'title' => 'Upgrade Membership',
 		'page callback' => 'tm_checkout_upgrade_subscription_page',
 		'access arguments' => array('access content'),
 		'page arguments' => array(1),
 		'type' => MENU_CALLBACK,
 	);
 	$items['checkout/renew'] = array(
-		'title' => 'Renew membership',
+		'title' => 'Renew Membership',
 		'page callback' => 'tm_checkout_renew_subscription_page',
 		'access arguments' => array('access content'),
 		'type' => MENU_CALLBACK,
 	);
 	$items['checkout/renew/%'] = array(
-		'title' => 'Renew membership',
+		'title' => 'Renew Membership',
 		'page callback' => 'tm_checkout_renew_subscription_page',
 		'access arguments' => array('access content'),
 		'page arguments' => array(1),
 		'type' => MENU_CALLBACK,
 	);
 	$items[$tm_checkout_subscription_confirm_page] = array(
-		'title' => 'Payment successful',
+		'title' => 'Payment Successful',
 		'page callback' => 'tm_checkout_landing_subscription_page',
 		'access arguments' => array('access content'),
 		'type' => MENU_CALLBACK,
 	);
 	$items[$tm_checkout_subscription_confirm_page . '/%'] = array(
-		'title' => 'Payment successful',
+		'title' => 'Payment Successful',
 		'page callback' => 'tm_checkout_landing_subscription_page',
 		'access arguments' => array('access content'),
 		'page arguments' => array(1),
 		'type' => MENU_CALLBACK,
 	);
 	$items['checkout/ajax/checkout-button/%'] = array(
-		'title' => 'Checkout button',
+		'title' => 'Checkout Button',
 		'page callback' => 'tm_checkout_subscription_button_ajax',
 		'access arguments' => array('access content'),
 		'type' => MENU_CALLBACK,
 	);
+
+	// Events
+	$items['checkout/event/%'] = array(
+		'title' => 'Get a ticket',
+		'page callback' => 'tm_checkout_event_payment_page',
+		'access arguments' => array('access content'),
+		'page arguments' => array(1),
+		'type' => MENU_CALLBACK,
+	);
+	$items['checkout/event-landing/%'] = array(
+		'title' => 'Payment Successful',
+		'page callback' => 'tm_checkout_event_landing_page',
+		'access arguments' => array('access content'),
+		'page arguments' => array(1),
+		'type' => MENU_CALLBACK,
+	);
+	$items['checkout/ajax/checkout-event-button/%'] = array(
+		'title' => 'Checkout event button',
+		'page callback' => 'tm_checkout_event_button_ajax',
+		'access arguments' => array('access content'),
+		'type' => MENU_CALLBACK,
+	);
+
+	// Stripe Webhook
 	$items['checkout/webhook'] = array(
 		'title' => 'Stripe webhook',
 		'page callback' => 'tm_checkout_stripe_webhook',
 		'access arguments' => array('access content'),
 		'type' => MENU_CALLBACK,
 	);
+
+	// User payments report
 	$items['checkout/my-payments/%user'] = array(
-		'title' => 'Member payments',
+		'title' => 'Your payments',
 		'page callback' => 'tm_checkout_reports_user_payments',
 		'page arguments' => array(2),
 		'access callback' => 'tm_checkout_access_payment_report_check',
 		'type' => MENU_CALLBACK,
 	);
 	$items['checkout/my-payments'] = array(
-		'title' => 'Member payments',
+		'title' => 'Your payments',
 		'page callback' => 'tm_checkout_reports_user_payments',
 		'access arguments' => array('access content'),
 		'type' => MENU_CALLBACK,

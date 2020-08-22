@@ -33,4 +33,22 @@
 		});
 	}
 
+	// apply a partner code
+	tm_checkout_subscription_apply_partner_code = function() {
+		jQuery.prompt({
+			state0: {
+				title: 'Got a partner code?',
+				html: "<input type='text' id='tm-checkout-apply-partner-code' placeholder='Enter your partner or discount code' autocomplete='off'>",
+				buttons: { Cancel: -1, Apply: true },
+				focus: 1,
+				submit:function(e,v,m,f){
+					if (v == true) {
+						window.location = '?partner=' + document.getElementById('tm-checkout-apply-partner-code').value; 
+					} 
+					$.prompt.close();
+				}
+			}
+		});
+	}
+
 });})(jQuery, Drupal, this, this.document);

@@ -702,11 +702,12 @@ function tm_api_replace_text_fields($api_data, $element) {
   $element = str_replace("__STATS_NUM_ONLINE_EVENTS_TOTAL__", number_format($api_data["num_online_events"]), $element);
   $element = str_replace("__STATS_NUM_ONLINE_EVENT_REGISTRATIONS__", number_format($api_data["num_online_event_registrations"]), $element);
   $element = str_replace("__STATS_NUM_ONLINE_EVENT_UNIQUE_REGISTRATIONS__", number_format($api_data["num_online_event_unique_registrations"]), $element);
-  $element = str_replace("__STATS_NUM_SUBSCRIBERS__", number_format($api_data["num_subscribers"]), $element);
+
+  // subscribers
+  if (isset($api_data["num_subscribers"])) {
+      $element = str_replace("__STATS_NUM_SUBSCRIBERS__", number_format($api_data["num_subscribers"]), $element);
+  }
 
   return $element;
 
 }
-
-
-?>

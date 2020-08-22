@@ -48,7 +48,14 @@ p.tm-checkout-error-message {
 	margin-top: 48px;
 	margin-bottom: 48px;
 	text-align: center;
-	height: 76px;
+	height: 163px;
+}
+
+#tm-checkout-event-button-container {
+	margin-top: 48px;
+	margin-bottom: 48px;
+	text-align: center;
+	height: 100px;
 }
 
 #checkout-button {
@@ -82,6 +89,132 @@ p.tm-checkout-error-message {
 }
 
 .tm-cta-intro-footer {
-  font-size: 12pt;
-  color: #888;
+	font-size: 12pt;
+	color: #888;
 }
+
+.tm-checkout-pricing-options {
+	clear: all;
+	font-size: 16pt;
+ 	margin-bottom: 32px;
+}
+
+a.tm-checkout-subscription-partner-code-link {
+	color: #888 !important;
+	text-decoration: underline !important;
+}
+
+/* Event Checkout */
+
+.tm-checkout-event-intro {
+	font-size: 14pt;
+  	line-height: 1.5rem;
+  	text-align: left;
+  	padding-bottom: 24px;
+  	margin-bottom: 24px;
+  	border-bottom: 1px solid #ddd;
+}
+
+.tm-checkout-currency-container {
+	float: right;
+	background-color: #fff;
+	padding: 4px 8px;
+	border-radius: 16px;
+}
+
+.tm-checkout-currency-container select {
+	border: none;
+}
+
+.tm-checkout-pricing-options {
+	clear: all;
+	font-size: 16pt;
+	margin-bottom: 16px;
+	text-align: center;
+	margin-top: 16px;
+}
+
+.tm-checkout-pricing-options-container {
+	text-align: left;
+	font-size: 16pt;
+}
+
+.tm-checkout-pricing-options ul li {
+	list-style-type: none;
+}
+
+.tm-checkout-pricing-options label { 
+	cursor: pointer;
+}
+
+.tm-checkout-label-extra {
+	margin-left: 0px;
+	padding: 4px 8px;
+}
+
+.tm-checkout-label-extra:before {
+	content: "— ";
+}
+
+.tm-checkout-label-popular {
+	margin-left: 8px;
+	vertical-align: top;
+	background-color: #efefef;
+	padding: 4px 8px;
+	border-radius: 16px;
+	font-size: 10pt;
+}
+
+.tm-checkout-label-popular:before {
+	content: "Popular!";
+}
+
+.tm-checkout-pricing-options label {
+	display: inline-block;
+	font-size: 16pt;
+	margin-left: 4px;
+}
+
+.tm-registrations-attending {
+	font-size: 14pt;
+	line-height: 1.5;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.tm-registrations-user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-bottom: 8px;
+}
+
+a.tm-registrations-attending-more {
+	color: #4a4a4a !important;
+	text-decoration: underline !important;
+}
+
+.tm-checkout-pricing-message {
+	display: inline-block;
+	float: left;
+	margin-bottom: 1rem;
+	padding: 4px 16px;
+	background-color: #dedede;
+	border-radius: 16px;
+}
+
+.tm-checkout-pricing-message a:hover {
+	text-decoration: underline;
+}
+
+a.tm-checkout-apply-partner-code-link {
+	text-decoration: none;
+}
+
+a.tm-checkout-remove-partner-code-link {
+	color: #4a4a4a;
+}
+
+
+

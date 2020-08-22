@@ -13,7 +13,7 @@
 // https://dev.maxmind.com/geoip/geoip2/geolite2/
 // (Please refer to license for use)
 
-// For production environments, install the php5 extension for faster lookups
+// For production environments, install the php extension for faster lookups
 // Instructions for ubuntu:
 // https://tuxinthefastlane.wordpress.com/2015/04/24/getting-maxminds-geoip2-to-work-with-nginx-and-php-on-ubuntu/
 

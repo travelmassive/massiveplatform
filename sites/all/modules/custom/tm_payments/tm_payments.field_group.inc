@@ -91,6 +91,13 @@ function tm_payments_field_group_info() {
       2 => 'field_event_payment_enabled',
       3 => 'field_event_payment_refund_text',
       4 => 'field_event_payment_ask_address',
+      5 => 'field_event_payment_tiers',
+      6 => 'field_event_payment_type',
+      7 => 'field_event_payment_message_text',
+      8 => 'field_event_payment_post_event',
+      9 => 'field_event_payment_sub_discount',
+      10 => 'field_event_payment_partner_code',
+      11 => 'field_event_payments_show_total',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

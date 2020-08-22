@@ -77,4 +77,67 @@
 		}
 	});
 
+	// Handle event payment change
+	function tm_event_payment_type_change() {
+
+		var tm_event_payment_type = $("#edit-field-event-payment-type-und").val();
+
+		// no_payments
+		if ((tm_event_payment_type == null) || (tm_event_payment_type == "no_payments")) {
+			console.log("no payments");
+
+			// hide all fields
+			$(".group-event-payment .form-wrapper").hide();
+			$(".group-event-early-bird").hide();
+			$(".form-field-name-field-event-payment-early-date").hide();
+			$(".group-event-payout").hide();
+
+			// show payment option field
+			$(".form-field-name-field-event-payment-type").show();
+		}
+
+		// fixed_price
+		if (tm_event_payment_type == "fixed_price") {
+
+			// show all fields
+			$(".group-event-payment .form-wrapper").show();
+			$(".group-event-payout").show();
+
+			// hide tiers, show fixed pricing
+			$("#field-event-payment-tiers-add-more-wrapper").hide();
+			$("#field-event-payment-amount-add-more-wrapper").show();
+
+			// show early bird
+			$(".group-event-early-bird").show();
+			$(".form-field-name-field-event-payment-early-date").show();
+			
+		}
+
+		// pay_what_you_wish
+		if (tm_event_payment_type == "pay_what_you_wish") {
+			
+			// show all fields
+			$(".group-event-payment .form-wrapper").show();
+			$(".group-event-payout").show();
+
+			// show tiers, hide fixed pricing
+			$("#field-event-payment-tiers-add-more-wrapper").show();
+			$("#field-event-payment-amount-add-more-wrapper").hide();
+
+			// hide early bird
+			$(".group-event-early-bird").hide();
+			$(".form-field-name-field-event-payment-early-date").hide();
+		}
+
+	}
+
+	// Event payments
+	$("#edit-field-event-payment-type-und").change(function() {
+		tm_event_payment_type_change();
+	});
+
+	// Set up event payments on load
+	tm_event_payment_type_change();
+
+
 });})(jQuery, Drupal, this, this.document);

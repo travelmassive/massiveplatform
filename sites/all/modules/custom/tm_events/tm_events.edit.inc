@@ -416,7 +416,6 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
       'field_event_payment_enabled',
       'field_event_payment_early_date',
       'field_event_payment_early_label',
-      'field_event_payment_enabled',
       'field_event_payment_currency',
       'field_event_payment_amount',
       'field_event_payment_refund_text',
@@ -426,7 +425,15 @@ function tm_events_form_event_node_form_alter(&$form, &$form_state, $form_id) {
       'field_event_payment_early_seats',
       'field_event_is_preview_mode',
       'field_event_payment_payout_to',
-      'field_event_payment_commission');
+      'field_event_payment_commission',
+      'field_event_payment_type',
+      'field_event_payment_tiers',
+      'field_event_payment_partner_code',
+      'field_event_payment_sub_discount',
+      'field_event_payments_show_total',
+      'field_event_payment_post_event',
+      'field_event_payment_message_text'
+    );
 
     foreach ($disable_payment_fields as $payment_field_name) {
       if (isset($form[$payment_field_name])) {

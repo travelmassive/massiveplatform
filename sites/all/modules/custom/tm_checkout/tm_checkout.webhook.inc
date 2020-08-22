@@ -89,7 +89,7 @@ function tm_checkout_stripe_webhook() {
 
 			// event payment
 			if (($checkout_action) == "event_payment") {
-				// todo
+				tm_checkout_event_process($session);
 			}
 
 		} else {

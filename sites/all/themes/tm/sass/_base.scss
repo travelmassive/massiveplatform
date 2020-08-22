@@ -613,13 +613,20 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
   color: #fff;
   border-radius: 4px;
   padding: 1rem;
-  margin-bottom: 0.5rem;
+  margin-top: 16px;
+  margin-bottom: 1rem;
 }
 
 .tm-payments-edit-form-message a {
   color: #fff;
   font-weight: bold;
   text-decoration: underline;
+}
+
+.form-field-name-field-event-payment-early-date .fieldset-description {
+  font-size: 0.85rem;
+  color: #79828c;
+  margin-top: 16px;
 }
 
 /* Event registration and chapter announcement tips */
@@ -698,6 +705,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
   border-bottom: 1px solid #888;
   background-color: #fff;
   text-align: left;
+  padding-left: 0.5rem;
 }
 
 .tm-payments-report-table tr, .tm-subscriptions-report-table tr  { 
@@ -706,7 +714,7 @@ a.disabled, .bttn.disabled, .form-submit.disabled, .form-download.disabled {
 }
 
 .tm-payments-report-table td, .tm-subscriptions-report-table td  { 
-  padding-left: 0;
+  padding-left: 0.5rem;
   padding-right: 0.5rem;
   font-size: smaller;
 }
@@ -1381,4 +1389,9 @@ img.feedme-image-marketplace { height: 64px; object-fit: contain; }
   font-family: 'tm-icons';
   content: "\e61b";
   color: #007eb5;
+}
+
+/* Ticket price field */
+.detail-price a { 
+  text-decoration: underline;
 }

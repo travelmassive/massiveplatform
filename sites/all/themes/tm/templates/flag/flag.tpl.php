@@ -51,7 +51,19 @@ if (isset($do_not_display_flag)) {
   $flag_upvote_class = "";
  }
 ?>
-<?php if (isset($event_flag) && $event_flag == "show_external_rsvp_closed") : ?>
+<?php if (isset($event_flag) && $event_flag == "show_checkout") : ?>
+  
+<li class="<?php print $flag_wrapper_classes; ?>">
+  <a href='/checkout/event/<?php print($event_id);?>'><span class="follow checkout-event bttn bttn-secondary bttn-m" rel="nofollow">Tickets</span></a>
+</li>
+
+<?php elseif (isset($event_flag) && $event_flag == "show_donate") : ?>
+  
+<li class="<?php print $flag_wrapper_classes; ?>">
+  <a href='/checkout/event/<?php print($event_id);?>'><span class="follow donate-event bttn bttn-secondary bttn-m" rel="nofollow">Donate</span></a>
+</li>
+
+<?php elseif (isset($event_flag) && $event_flag == "show_external_rsvp_closed") : ?>
 
 <li class="<?php print $flag_wrapper_classes; ?>">
   <span class="past-event bttn bttn-secondary bttn-m disabled" rel="nofollow">Past Event</span>
@@ -98,9 +110,9 @@ if ($geoblock_signups == "same_country_as_event") {
 <?php
   $who_flagged = flag_get_entity_flags("user", $user->uid, "approval_requested_by_user");
   if (sizeof($who_flagged) > 0): ?>
-  <span onClick="jq_alert('This event is for <?php print(tm_users_get_approved_member_label("plural"));?>', ' Please wait for your account to be reviewed.<br>If you need assistance please <a href=\'/contact\'>contact us</a>.');" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></span>
+  <span onClick="jQuery('.flag').unbind('click'); jq_alert('This event is for <?php print(tm_users_get_approved_member_label("plural"));?>', ' Please wait for your account to be reviewed.<br>If you need assistance please <a href=\'/contact\'>contact us</a>.');" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></span>
 <?php else: ?>
-  <span onClick="jq_unapproved_member_event_register('<?php print(tm_users_get_approved_member_label("single"));?>', '<?php print(tm_users_get_approved_member_label("plural"));?>');" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></span>
+  <span onClick="jQuery('.flag').unbind('click'); jq_unapproved_member_event_register('<?php print(tm_users_get_approved_member_label("single"));?>', '<?php print(tm_users_get_approved_member_label("plural"));?>');" class="follow bttn bttn-secondary bttn-m <?php if ($status == 'flagged'): ?>on<?php endif; ?> <?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></span>
 <?php endif; ?>    
 </li>
 

@@ -32,7 +32,7 @@
     <a style="text-decoration: none;" href="#top" onClick="javascript:toggleSideBar();"><span class="tm_sidenav_toggle_icon"></span></a>
 </div>
 
-<div id="tm_sidenav">
+<div id="tm_sidenav" <?php if (user_is_logged_in()) { if (in_array("administrator", $account->roles)) { print("style='top: 64px;'"); } } ?>>
 
 	<a id="tm_sidenav_logo_link" href="/"><img id="tm_sidenav_logo" src="<?php echo tm_branding_get_element("header_logo");?>" alt="Logo"></a>   
 

@@ -484,3 +484,8 @@ button {
 .btn_upvote_count { 
   color: #add8e6;
 }
+
+/* Donate */
+/* Upvote */
+.bttn.follow.donate-event:before { @extend .icon-arr-tail-right; }
+.follow.on.donate-event.flag-processed:before { @extend .icon-arr-tail-right; }

@@ -17,20 +17,8 @@ function tm_payments_reports_event_sales($event) {
 
   $form = array();
 
-  // get event sales from payment processor callback
-  $results = tm_payments_get_event_sales($event->nid);
-
-  // check we got a result
-  if ($results == null) {
-    drupal_set_message("Oops, an error occured fetching event sales.<br>Please try again later.", 'error');
-    return "";
-  }
-
-  // check valid result
-  if ($results->success == false) {
-    drupal_set_message("Oops, an error occured processing event sales (" . t($results->error) . ").<br>Please try again later.", 'error');
-    return "";
-  }
+  // get event sales from tm_checkout
+  $results = tm_checkout_get_event_payments($event->nid);
 
   // Help message
   $help_message = $conf["tm_payments_reports_help_message"];
@@ -38,9 +26,7 @@ function tm_payments_reports_event_sales($event) {
   drupal_set_message($help_message, 'help-tip');
 
   // Get payments
-  $payments = $results->data->payments;
-  $payment_totals = $results->data->payment_totals;
-  $refund_totals = $results->data->refund_totals;
+  $payments = $results;
 
   // Render payments table
   $html = "<div id='tm-payments-report'>";
@@ -53,11 +39,14 @@ function tm_payments_reports_event_sales($event) {
   }
 
   // Payment Details
+  $payment_totals = array();
+  $refund_totals = array();
+
   foreach($payments as $payment) {
 
     $html .=  "<tr>";
     $html .=  "<td>" . ($payment->display_amount + 0) . " " . strtoupper($payment->stripe_currency) . "</td>";
-    $html .=  "<td><i>" . _tm_event_time_elapsed($payment->seconds_ago) . "</i></td>";
+    $html .=  "<td><i>" . _tm_event_time_elapsed(time() - $payment->timestamp) . " ago</i></td>";
     $html .=  "<td><a target='_blank' href='/user/" . $payment->user_id . "'>" . $payment->user_first_name . " " . $payment->user_last_name . "</a></td>";
     $payment_status = "Received";
     $payment_status_class = "paid";
@@ -70,9 +59,18 @@ function tm_payments_reports_event_sales($event) {
       $payment_status_class = "refunded";
     }
     $html .=  "<td><span class='tm-payments-report-status " . $payment_status_class . "'>" . $payment_status . "</span></td>";
-    $html .=  "<td class='tm-payments-report-extra'>" . $payment->created_at . "</td>";
-    $html .=  "<td class='tm-payments-report-extra'>" . $payment->charge_id . "</a></td>";
+    $html .=  "<td class='tm-payments-report-extra'>" . date("Y-m-d j:i", $payment->timestamp)  . "</td>";
+    $html .=  "<td class='tm-payments-report-extra'>" . $payment->payment_id . "</a></td>";
     $html .=  "</tr>";
+
+    // calculate payment and refund
+    if (!$payment->refunded) {
+      if (!isset($payment_totals[$payment->stripe_currency])) {
+        $payment_totals[$payment->stripe_currency] = 0;
+      }
+      $payment_totals[$payment->stripe_currency] += $payment->display_amount;
+    }
+
   }
 
   $html .=  "</table></p>";
@@ -96,7 +94,6 @@ function tm_payments_reports_event_sales($event) {
     $html .= "<strong>Estimated earnings: " . round($total * ($event_commission/100)) . " " . strtoupper($currency) . "</strong><br>";
   }
   $html .= "</p>";
-
 
   // Who to payout to
   $payout_uid = $event->uid; // default event owner
@@ -122,49 +119,5 @@ function tm_payments_reports_event_sales($event) {
 
   return $form;
 
-}
-
-/**
- * Fetch event sales from payment processor callback
- */
-function tm_payments_get_event_sales($event_id) {
-
-  global $conf;
-
-  // construct url
-  $token = $conf["tm_payments_reports_secret_token"];
-  $url = $conf["tm_payments_reports_url"] . "?token=" . $token . "&event_id=" . $event_id;
-
-  //open connection
-  $ch = curl_init();
-
-  //set the url, number of POST vars, POST data
-  $CURLOPT_SSL_VERIFYHOST = 2;
-  $CURLOPT_SSL_VERIFYPEER = true;
-  if ($conf["tm_payments_process_check_certificate"] == false) {
-    $CURLOPT_SSL_VERIFYHOST = 0;
-    $CURLOPT_SSL_VERIFYPEER = false;
-  }
-  curl_setopt($ch, CURLOPT_URL, $url);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($ch, CURLOPT_VERBOSE, false);
-  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $CURLOPT_SSL_VERIFYHOST);
-  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $CURLOPT_SSL_VERIFYPEER);
-  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0); 
-  curl_setopt($ch, CURLOPT_TIMEOUT, $conf["tm_payments_process_timeout"]); // timeout in seconds
-
-  //execute post
-  $result = curl_exec($ch);
-
-  if ($result === false) {
-    return null;
-  }
-
-  //close connection
-  curl_close($ch);
-
-  // return results
-  $res = json_decode($result);
-  return $res;
 }
 

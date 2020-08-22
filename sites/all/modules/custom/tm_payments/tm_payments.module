@@ -8,13 +8,11 @@ include_once 'tm_payments.features.inc';
 include_once 'tm_payments.edit.inc';
 include_once 'tm_payments.permissions.inc';
 include_once 'tm_payments.display.inc';
-include_once 'tm_payments.process.inc';
 include_once 'tm_payments.helpers.inc';
 include_once 'tm_payments.pricing.inc';
 include_once 'tm_payments.flags.inc';
 include_once 'tm_payments.commission.inc';
 include_once 'tm_payments.reports.inc';
-
 
 /* 
 Stripe Payments Module
@@ -91,6 +89,13 @@ function tm_payments_ds_fields_info($entity_type) {
     'function' => '_tm_payments_refund_policy'
   );
 
+   $fields['tm_ds_event_payments_show_total'] = array(
+    'title' => t('Event payments'),
+    'field_type' => DS_FIELD_TYPE_FUNCTION,
+    'ui_limit' => array('event|full',),
+    'function' => '_tm_payments_show_total'
+  );
+
   return array($entity_type => $fields);
 }
 
@@ -98,14 +103,7 @@ function tm_payments_ds_fields_info($entity_type) {
  * Implement hook_node_view
  */
 function tm_payments_node_view($node, $view_mode, $langcode) {
-  // display partner code applied message
-  if ($node->type == 'event' && $view_mode == 'full') {
-    $partner_code = _tm_payments_get_partner_code($node->nid, true);
-    // redirect to clean URL if partner code is provided
-    if (isset($_GET["partner"])) {
-      drupal_goto("node/" . $node->nid);
-    }
-  }
+  // deprecated
 }
 
 

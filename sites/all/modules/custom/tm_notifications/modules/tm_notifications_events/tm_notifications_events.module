@@ -159,16 +159,14 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
   $event_url = drupal_get_path_alias('node/' . $event->nid);
 
   // get user and profile url of who flagged the event
-  $who_flagged = user_load($GLOBALS['user']->uid);
   $profile_url = drupal_get_path_alias("user/" . $account->uid);
-  $profile_uid = $who_flagged->uid;
 
   // TM_PAYMENTS
   // Check if member also paid for event via tm_payments
   // NOTE: This method relies on static pricing.
   // If we move to dynamic pricing (ie: early-bird, allotments) this will need to be revised.
   $paid_for_event = false;
-  $event_pricing = null;
+  $event_payment_text = null;
   if (module_exists("tm_payments")) {
 
     // Check pricing is enabled
@@ -176,15 +174,14 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
 
       // Check if we paid
       $paid_flag = flag_get_flag('event_paid');
-      $paid_for_event = ($paid_flag && $paid_flag->is_flagged($event->nid, $who_flagged->uid));
+      $paid_for_event = ($paid_flag && $paid_flag->is_flagged($event->nid, $account->uid));
 
       // Get pricing
       if ($paid_for_event) {
         try {
           // fetch pricing from static variable set in tm_payments_process_event_payment
-          $event_pricing = drupal_static("tm_payments_pricing");
-          drupal_static_reset("tm_payments_pricing");
-          // $event_pricing = _tm_payments_get_registration_price($event); // old way
+          $event_payment_text = drupal_static("tm_payments_payment_text");
+          drupal_static_reset("tm_payments_payment_text");
         } catch (Exception $e) {
           // do nothing, we don't want to stop other actions in the middle of payment
         }
@@ -201,7 +198,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
 
   // User Registered for Event
   // Or user was added by a moderator
-  if (($GLOBALS['user']->uid == $flagging->uid) or ($static_register_member_moderator_first_name != null)) {
+  if (($GLOBALS['user']->uid == $flagging->uid) or ($static_register_member_moderator_first_name != null) or ($event_payment_text != null)) {
 
     // get profile full name
     $profile_full_name = tm_users_get_full_name($account->uid);
@@ -278,10 +275,10 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
     $register_payment_note = "";
 
     // Adjust text for paid ticket
-    if ($paid_for_event && $event_pricing != null) {
+    if ($paid_for_event && $event_payment_text != null) {
       $register_action_subject = "purchased a ticket to";
       $register_action_body = "just purchased a ticket to your event";
-      $register_payment_note = "<strong>Payment received:</strong> " . $event_pricing["currency_symbol"] . $event_pricing["display_amount"] . " (excludes processing fees)<br><br>";
+      $register_payment_note = "<strong>Payment received:</strong> " . $event_payment_text . " (excludes processing fees)<br><br>";
     }
 
      // let other organizers know who registered this member
@@ -410,7 +407,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
     }
 
     $member_register_payment_note = "";
-    if ($paid_for_event && $event_pricing != null) {
+    if ($paid_for_event && $event_payment_text != null) {
 
       $member_register_subject = "Your ticket to";
       $member_register_intro = "You have purchased a ticket to the event:";
@@ -418,8 +415,9 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
       // create payment note
       $member_register_payment_note = "<br><div style='background-color: #eee; border-radius: 4px; padding: 4px;'>";
       $member_register_payment_note .= $conf["tm_payments_receipt_details"];
-      $member_register_payment_note .= "<br><strong>Payment received:</strong> " . $event_pricing["currency_symbol"] . $event_pricing["display_amount"];
+      $member_register_payment_note .= "<br><strong>Payment received:</strong> " . $event_payment_text;
       $member_register_payment_note .= "<br><strong>Payment date:</strong> " . date('d F Y') . "<br>";
+      $member_register_payment_note .= "<br><strong><a href='__SERVER_HTTP__://__SERVER_NAME__/checkout/my-payments'>View receipt details</a></strong><br>";
       $member_register_payment_note .= "</div>";
     }
 
@@ -450,12 +448,12 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
       $hero_headline = tm_notifications_render_hero_headline_html($headline);
     }
 
-    tm_notifications_notify('events_register_flag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url, '__MAP_LINK__' => $map_link_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time, '__ONLINE_INSTRUCTIONS__' => $online_instructions, '__REGISTER_EVENT_MESSAGE__' => $message, '__REGISTER_SUBJECT__' => $member_register_subject, '__REGISTER_INTRO__' => $member_register_intro, '__REGISTER_PAYMENT_NOTE__' => $member_register_payment_note, '__EVENT_CALENDAR_LINK__' => $event_calendar_link, '__MODERATOR_MESSAGE__' => $moderator_message, '__HERO_HEADLINE__' => $hero_headline));
+    tm_notifications_notify('events_register_flag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $account->uid, '__EVENT_URL__' => $event_url, '__MAP_LINK__' => $map_link_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time, '__ONLINE_INSTRUCTIONS__' => $online_instructions, '__REGISTER_EVENT_MESSAGE__' => $message, '__REGISTER_SUBJECT__' => $member_register_subject, '__REGISTER_INTRO__' => $member_register_intro, '__REGISTER_PAYMENT_NOTE__' => $member_register_payment_note, '__EVENT_CALENDAR_LINK__' => $event_calendar_link, '__MODERATOR_MESSAGE__' => $moderator_message, '__HERO_HEADLINE__' => $hero_headline));
   }
 
   // events_register_unflag
   if (($flag_or_unflag == "unflag") && ($flag->name == 'event_register')) {
-    tm_notifications_notify('events_register_unflag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time));
+    tm_notifications_notify('events_register_unflag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $account->uid, '__EVENT_URL__' => $event_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time));
   }
 
   // waitlist_register_flag
@@ -472,7 +470,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
     }
 
     $hero_headline = tm_notifications_render_hero_headline_html("You're on the waitlist.");
-    tm_notifications_notify('events_waitlist_flag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time, '__WAITLIST_EVENT_MESSAGE__' => $message, '__HERO_HEADLINE__' => $hero_headline));
+    tm_notifications_notify('events_waitlist_flag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $account->uid, '__EVENT_URL__' => $event_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time, '__WAITLIST_EVENT_MESSAGE__' => $message, '__HERO_HEADLINE__' => $hero_headline));
   }
 
   // waitlist_register_unflag
@@ -485,7 +483,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
     $registered_for_event = ($registered_flag && $registered_flag->is_flagged($event->nid, $account->uid));
 
     if (!$registered_for_event) {
-      tm_notifications_notify('events_waitlist_unflag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $profile_uid, '__EVENT_URL__' => $event_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time));
+      tm_notifications_notify('events_waitlist_unflag_user', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $account->uid, '__EVENT_URL__' => $event_url, '__EVENT_DATE__' => $nice_date, '__EVENT_TIME__' => $event_time));
     }
   }
 

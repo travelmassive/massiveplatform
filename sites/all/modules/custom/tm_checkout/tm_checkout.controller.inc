@@ -68,7 +68,7 @@ function tm_checkout_get_payment($payment_id) {
  */
 function tm_checkout_get_user_payments($uid) {
 
-	$query = "SELECT * FROM tm_checkout_payments WHERE user_id = :uid";
+	$query = "SELECT * FROM tm_checkout_payments WHERE user_id = :uid ORDER BY timestamp DESC";
 
 	// fetch result
 	$results = db_query($query, array(':uid' => $uid))->fetchAll();
@@ -92,5 +92,24 @@ function tm_checkout_user_has_made_payment($uid) {
 	// fetch result
 	$result = db_query($query, array(':uid' => $uid))->fetch();
 	return ($result->total > 0);
+
+}
+
+/**
+ * Get event payments
+ */
+function tm_checkout_get_event_payments($event_id) {
+
+	$query = "SELECT * FROM tm_checkout_payments WHERE entity_type = 'event' AND entity_id = :event_id ORDER BY timestamp DESC";
+
+	// fetch result
+	$results = db_query($query, array(':event_id' => $event_id))->fetchAll();
+
+	$results_array = array();
+	foreach ($results as $result) {
+		$results_array[] = $result;
+	}
+
+	return $results_array;
 
 }

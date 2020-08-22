@@ -411,7 +411,7 @@ function tm_checkout_event_page($event_id, $user_id) {
 	}
 
 	// render list of attendees
-	$num_attendees_to_display = 32;
+	$num_attendees_to_display = 41;
 	if ($number_of_attendees_flagged > 5) {
 		$attendees_html = "<div class='tm-registrations-attending'>";
 		$attendees_html .= "<span style='display: block; margin-bottom: 16px;'>Join <strong>" . $number_of_attendees . " members</strong> supporting this event</span>" . tm_events_render_attendees($event->nid, $num_attendees_to_display);

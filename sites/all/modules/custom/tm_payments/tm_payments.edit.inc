@@ -184,11 +184,14 @@ function _tm_payments_form_alter_event_form(&$form, &$form_state, $form_id) {
 	$form['field_event_payment_refund_text'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = $refund_policy;
 
 	// pricing tiers
-	$field_event_payment_tiers_description = "Pricing tiers, separated by commas &mdash; example: FREE,5,10,CHOOSE
-<br>To highlight a popular option &mdash; <strong>5*</strong> will display <strong>$5 (Popular)</strong>
-<br>To add a label &mdash; <strong>5|Coffee</strong> will display <strong>$5 &mdash; Coffee</strong>";
+	$field_event_payment_tiers_description = "Pricing options, separated by commas.
+<br><strong>0</strong> will display a <strong>Free</strong> option.
+<br><strong>5*</strong> will autoselect and display <strong>$5 (Popular)</strong>
+<br><strong>5|Coffee</strong> will display <strong>$5 &mdash; Coffee</strong>
+<br><strong>CHOOSE</strong> will display a <strong>Choose your own price</strong> option.";
 
-	$form['field_event_payment_tiers'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = "0,5,10,CHOOSE";
+	$form['field_event_payment_tiers'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = "Example: 0,5,10,CHOOSE";
+	$form['field_event_payment_tiers'][LANGUAGE_NONE][0]['value']['#attributes']['autocomplete'] = "off";
 	$form['field_event_payment_tiers'][LANGUAGE_NONE][0]['value']['#description'] = $field_event_payment_tiers_description;
 
 	// subscriber discount

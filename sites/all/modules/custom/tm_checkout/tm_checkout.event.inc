@@ -254,15 +254,37 @@ function tm_checkout_event_page($event_id, $user_id) {
 	// include css
 	drupal_add_css(drupal_get_path('module', 'tm_checkout') . '/css/tm_checkout.css');
 
+	// get payment type
+	$payment_type = _tm_payments_get_payment_type($event);
+
 	// check that we have pricing data
+	$no_pricing_options = false;
 	$pricing = _tm_payments_get_registration_price($event, $account, $currency, $partner_code);
 
-	if ($pricing == null) {
+	// check fixed price
+	if ($payment_type == "fixed_price") {
+		if ($pricing == null) {
+			$no_pricing_options = true;
+		}
+	}
+
+	// check pay what you wish
+	if ($payment_type == "pay_what_you_wish") {
+		if (!isset($event->field_event_payment_tiers[LANGUAGE_NONE][0]['value'])) {
+			$no_pricing_options = true;
+		} else if (trim($event->field_event_payment_tiers[LANGUAGE_NONE][0]['value']) == "") {
+			$no_pricing_options = true;
+		}
+	}
+
+	// if no pricing options for fixed_payment, show message
+	if ($no_pricing_options and (($payment_type == "fixed_price"))) {
 
 		// prepare message
 		$template = file_get_contents(drupal_get_path('module', 'tm_checkout') . '/templates/tm_checkout_event.tpl.php');
 		$html = str_replace("__TITLE__", "Please contact us.", $template);
 		$html = str_replace("__MESSAGE__", "<style>.tm-cta-intro-footer, .tm-checkout-pricing-options, .tm-checkout-currency-container, hr { display: none; }</style><p class='tm-checkout-error-message'>Ticket pricing is not available for this event.<br>Please <a href='/contact'>contact our team</a> for assistance.</p>", $html);
+		$html = str_replace("__EVENT_URL__", "/contact", $html);
 		$html = str_replace("__BUTTON__", "", $html);
 		$html = str_replace("__PARTNER_MESSAGE__", "", $html);
 		$html = str_replace("__CURRENCY__", "", $html);
@@ -327,9 +349,8 @@ function tm_checkout_event_page($event_id, $user_id) {
 
 	$button = "<div id='tm-checkout-event-button-container'></div>";
 
-	// get payment type
+	// pricing options
 	$pricing_options = "";
-	$payment_type = _tm_payments_get_payment_type($event);
 
 	// partner message
 	$partner_message = "";

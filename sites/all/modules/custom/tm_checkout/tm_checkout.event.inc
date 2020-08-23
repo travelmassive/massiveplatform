@@ -1117,6 +1117,11 @@ function tm_checkout_event_process($stripe_session) {
 	$partner_commission = $metadata['partner_commission'];
 	$subscription_type = $metadata['user_subscription_type'];
 
+	// remove PREVIEW
+	if ($partner_code == "PREVIEW") {
+		$partner_code = "";
+	}
+
   	// STEP 4. Log payment
 	tm_checkout_log_payment(null, $payment_id, $checkout_action, $checkout_item, $payment_email, $stripe_currency, $stripe_amount, $display_amount, $entity_id, $entity_type, $entity_title, $user_id, $user_email, $user_first_name, $user_last_name, $log_user_ip, $log_user_http_user_agent, $refunded, $paid_out, $referer_code, $partner_code, $partner_commission);
 
@@ -1129,6 +1134,9 @@ function tm_checkout_event_process($stripe_session) {
 		$currency_symbol = $conf["tm_payments_currency_symbols"][$stripe_currency];
 	}
 	$hook_static_var_payment_text = $currency_symbol . $display_amount;
+
+	// check if user already registered
+	$already_registered = tm_events_user_is_registered($event->nid, $account->uid);
 
 	// Get event flags
 	$rsvpflag = flag_get_flag('event_register', NULL);
@@ -1144,9 +1152,55 @@ function tm_checkout_event_process($stripe_session) {
 	$rsvpflag->flag('flag', $event->nid, $account, TRUE);
 	$waitflag->flag('unflag', $event->nid, $account, TRUE);
 
+	// If already registered, send a payment notification to event organizers
+	// This is because the event_register notification was already sent when the user registered
+	if ($already_registered) {
+		tm_checkout_event_notify_organizers_of_payment($account, $event, $hook_static_var_payment_text);
+	}
+	
 	// Clear payments total cache for _tm_payments_show_total()
 	cache_clear_all('tm-payments-show-total-' . $event->nid . '-', 'cache', TRUE);
 
 	echo "{'success': true, 'message': 'Payment processed'}";
 	return;
+}
+
+/*
+ * Send a payment notification to event organizers
+ */
+function tm_checkout_event_notify_organizers_of_payment($account, $event, $payment_text) {
+
+	// get event url
+	$event_url = drupal_get_path_alias('node/' . $event->nid);
+
+	// get user and profile url of who flagged the event
+	$profile_url = drupal_get_path_alias("user/" . $account->uid);
+
+	// get profile full name
+	$profile_full_name = tm_users_get_full_name($account->uid);
+
+	// Default text
+	$register_action_headline = "A member purchased a ticket.";
+	$register_action_subject = "purchased a ticket to";
+	$register_action_body = "just purchased a ticket to your event";
+	$register_payment_note = "<strong>Payment received:</strong> " . $event_payment_text . " (excludes processing fees)<br><br>";
+	$registered_by_message = "";
+
+	// generate member html
+	$member_widget = tm_notifications_render_member_html($account);
+
+	// get list of uids to notify
+	$notify_ids = tm_notifications_events_get_organizer_notify_ids($event);
+
+	// send notifications to event organizers
+    foreach ($notify_ids as $notify_id) {
+
+		// load the user to notify
+		$notify_user = user_load($notify_id);
+
+		// events_register_flag
+		$hero_headline = tm_notifications_render_hero_headline_html($register_action_headline);
+		tm_notifications_notify('events_register_flag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $account->uid, '__EVENT_URL__' => $event_url, '__REGISTER_ACTION_SUBJECT__' => $register_action_subject, '__REGISTER_ACTION_BODY__' => $register_action_body, '__REGISTER_PAYMENT_NOTE__' => $register_payment_note, '__PROFILE_FULL_NAME__' => $profile_full_name, '__REGISTERED_BY_MESSAGE__' => $registered_by_message, '__HERO_HEADLINE__' => $hero_headline, '__MEMBER_WIDGET__' => $member_widget));
+	}
+
 }

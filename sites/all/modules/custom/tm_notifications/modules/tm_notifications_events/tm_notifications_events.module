@@ -203,79 +203,19 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
     // get profile full name
     $profile_full_name = tm_users_get_full_name($account->uid);
 
-    // work out who to notify
-    // either: 
-    // case 1: event with organizers -> organizers
-    // case 2: event with no organizers and a chapter -> chapter leaders
-    // case 3: event with no organizers and no chapter -> event creator
-
-    $notify_ids = array();
-
-    // case 1: event with organizers -> organizers
-    if (sizeof($event->field_organizer) > 0) {
-      foreach ($event->field_organizer['und'] as $organizer) {
-        $notify_ids[] = $organizer['target_id'];
-      }
-    }
-
-    // case 2: event with no organizers and a chapter -> chapter leaders
-    if ((sizeof($event->field_organizer) == 0) and (sizeof($event->field_chapter) > 0)) {
-
-      if (isset($event->field_chapter['und'])) {
-        $chapter_id = $event->field_chapter['und'][0]['target_id'];
-        $chapter = node_load($chapter_id);
-      
-        if (isset($chapter->field_chapter_leaders[LANGUAGE_NONE])) {
-          foreach($chapter->field_chapter_leaders[LANGUAGE_NONE] as $chapter_leader) {
-            $notify_ids[] = $chapter_leader['target_id'];
-          }
-        }
-      }
-    }
-
-    // case 3: event with no organizers and no chapter -> event creator
-    if ((sizeof($event->field_organizer) == 0) and (sizeof($event->field_chapter) == 0)) {
-        $notify_ids[] = $event->uid;
-    }
-
-    // case 4: featured members and field_notify_featured_members is checked
-    if (isset($event->field_notify_featured_members[LANGUAGE_NONE][0]['value'])) {
-      if ($event->field_notify_featured_members[LANGUAGE_NONE][0]['value'] == true) {
-        if (sizeof($event->field_event_featured_members) > 0) {
-          foreach ($event->field_event_featured_members['und'] as $featured_member) {
-            $notify_ids[] = $featured_member['target_id'];
-          }
-        }
-      }
-    }
-
-    // case 5: event with no organizers and a company -> company managers
-    if ((sizeof($event->field_organizer) == 0) and (sizeof($event->field_event_company) > 0)) {
-
-      if (isset($event->field_event_company['und'])) {
-        $company_id = $event->field_event_company['und'][0]['target_id'];
-        $company = node_load($company_id);
-      
-        foreach ($company->field_owner[LANGUAGE_NONE] as $profile_owner) {
-          $notify_ids[] = $profile_owner['target_id'];
-        }
-      }
-    }
-
-    // in case duplicate organiser are set - remove duplicate notify_ids
-    $notify_ids = array_unique($notify_ids);
-
     // STEP 1
     // Notify the event organisers
     // Ok, now notify everyone we need to
 
     // Default text
+    $register_action_headline = "A member just registered.";
     $register_action_subject = "just registered for";
     $register_action_body = "just signed up for your event";
     $register_payment_note = "";
 
     // Adjust text for paid ticket
     if ($paid_for_event && $event_payment_text != null) {
+      $register_action_headline = "A member purchased a ticket.";
       $register_action_subject = "purchased a ticket to";
       $register_action_body = "just purchased a ticket to your event";
       $register_payment_note = "<strong>Payment received:</strong> " . $event_payment_text . " (excludes processing fees)<br><br>";
@@ -287,16 +227,14 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
       $registered_by_message = "This member was registered to the event by " . $static_register_member_moderator_first_name . " " . $static_register_member_moderator_last_name . ".<br><br>";
     }
 
-     // hero headline
-    $hero_headline = tm_notifications_render_hero_headline_html("One more person is attending.");
-    $hero_headline_unregister_event = tm_notifications_render_hero_headline_html("An attendee un-registered.");
-    $hero_headline_join_waitlist = tm_notifications_render_hero_headline_html("A member joined the waitlist.");
-    $hero_headline_leave_waitlist = tm_notifications_render_hero_headline_html("A member left the waitlist.");
-
     // generate member html
     $account_loaded = user_load($account->uid);
     $member_widget = tm_notifications_render_member_html($account_loaded);
 
+    // get list of uids to notify
+    $notify_ids = tm_notifications_events_get_organizer_notify_ids($event);
+
+    // notify organizers
     foreach ($notify_ids as $notify_id) {
 
       // load the user to notify
@@ -304,7 +242,7 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
 
       // events_register_flag
       if (($flag_or_unflag == "flag") && ($flag->name == 'event_register')) {
-        $hero_headline = tm_notifications_render_hero_headline_html("A member just registered.");
+        $hero_headline = tm_notifications_render_hero_headline_html($register_action_headline);
         tm_notifications_notify('events_register_flag', $notify_user, array('node' => $event, 'user' => $notify_user, '__PROFILE_URL__' => $profile_url, '__PROFILE_UID__' => $account->uid, '__EVENT_URL__' => $event_url, '__REGISTER_ACTION_SUBJECT__' => $register_action_subject, '__REGISTER_ACTION_BODY__' => $register_action_body, '__REGISTER_PAYMENT_NOTE__' => $register_payment_note, '__PROFILE_FULL_NAME__' => $profile_full_name, '__REGISTERED_BY_MESSAGE__' => $registered_by_message, '__HERO_HEADLINE__' => $hero_headline, '__MEMBER_WIDGET__' => $member_widget));
       }
 
@@ -488,4 +426,73 @@ function tm_notifications_events_handle_flagging($flag_or_unflag, $flag, $entity
   }
 
 
+}
+
+/*
+ * Helper method to get list of uids to notify about an event
+ * either: 
+ * case 1: event with organizers -> organizers
+ * case 2: event with no organizers and a chapter -> chapter leaders
+ * case 3: event with no organizers and no chapter -> event creator
+ */
+function tm_notifications_events_get_organizer_notify_ids($event) {
+
+  $notify_ids = array();
+
+  // case 1: event with organizers -> organizers
+  if (sizeof($event->field_organizer) > 0) {
+    foreach ($event->field_organizer['und'] as $organizer) {
+      $notify_ids[] = $organizer['target_id'];
+    }
+  }
+
+  // case 2: event with no organizers and a chapter -> chapter leaders
+  if ((sizeof($event->field_organizer) == 0) and (sizeof($event->field_chapter) > 0)) {
+
+    if (isset($event->field_chapter['und'])) {
+      $chapter_id = $event->field_chapter['und'][0]['target_id'];
+      $chapter = node_load($chapter_id);
+    
+      if (isset($chapter->field_chapter_leaders[LANGUAGE_NONE])) {
+        foreach($chapter->field_chapter_leaders[LANGUAGE_NONE] as $chapter_leader) {
+          $notify_ids[] = $chapter_leader['target_id'];
+        }
+      }
+    }
+  }
+
+  // case 3: event with no organizers and no chapter -> event creator
+  if ((sizeof($event->field_organizer) == 0) and (sizeof($event->field_chapter) == 0)) {
+      $notify_ids[] = $event->uid;
+  }
+
+  // case 4: featured members and field_notify_featured_members is checked
+  if (isset($event->field_notify_featured_members[LANGUAGE_NONE][0]['value'])) {
+    if ($event->field_notify_featured_members[LANGUAGE_NONE][0]['value'] == true) {
+      if (sizeof($event->field_event_featured_members) > 0) {
+        foreach ($event->field_event_featured_members['und'] as $featured_member) {
+          $notify_ids[] = $featured_member['target_id'];
+        }
+      }
+    }
+  }
+
+  // case 5: event with no organizers and a company -> company managers
+  if ((sizeof($event->field_organizer) == 0) and (sizeof($event->field_event_company) > 0)) {
+
+    if (isset($event->field_event_company['und'])) {
+      $company_id = $event->field_event_company['und'][0]['target_id'];
+      $company = node_load($company_id);
+    
+      foreach ($company->field_owner[LANGUAGE_NONE] as $profile_owner) {
+        $notify_ids[] = $profile_owner['target_id'];
+      }
+    }
+  }
+
+  // in case duplicate organiser are set - remove duplicate notify_ids
+  $notify_ids = array_unique($notify_ids);
+
+  // return user ids to notify
+  return $notify_ids;
 }

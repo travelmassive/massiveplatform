@@ -108,8 +108,19 @@ function _tm_payments_price($field, $title = NULL) {
 		// pay what you wish
 		if ($payment_type == "pay_what_you_wish") {
 
+			// get event currency
+			$currency = $node->field_event_payment_currency[LANGUAGE_NONE][0]['value'];
+
+			// see if we can match user's local currency
+			if (user_is_logged_in()) {
+				$currency = tm_checkout_get_user_currency($currency);
+			}
+
+			// currency prefix
+			$currency_prefix = $conf["tm_payments_currencies"][$currency];
+
 			// get lowest price
-			$lowest_price = _tm_payments_get_lowest_price($node, $user, $pricing["stripe_currency"]);
+			$lowest_price = _tm_payments_get_lowest_price($node, $user, $currency);
 			
 			// label
 			$attend_this_label = "Support this event with a ";
@@ -119,7 +130,7 @@ function _tm_payments_price($field, $title = NULL) {
 				} else {
 					$attend_this_label .= "ticket for ";
 				}
-				$attend_this_label .= $pricing["currency_prefix"] . str_replace(".00", "", $lowest_price);
+				$attend_this_label .= $currency_prefix . str_replace(".00", "", $lowest_price);
 			} else {
 				$attend_this_label .= "donation"; 
 			}
@@ -279,12 +290,7 @@ function _tm_payments_show_total($field, $title = NULL) {
 	}
 
 	// render message
-	$display_total_amount = $conf["tm_payments_currency_symbols"][$display_currency] . ($total_amount + 0);
-
-	// differentiate $ currencies ie: AUD $
-	if (($display_currency == "aud") or ($display_currency == "cad") or ($display_currency == "sgd") or ($display_currency == "nzd")) {
-		$display_total_amount = $conf["tm_payments_currencies"][$display_currency] . ($total_amount + 0);
-	}
+	$display_total_amount = $conf["tm_payments_currencies"][$display_currency] . ($total_amount + 0);
 
 	$message_template = $conf["tm_payments_show_payments_message"];
 	if ($total_payments == 1) {

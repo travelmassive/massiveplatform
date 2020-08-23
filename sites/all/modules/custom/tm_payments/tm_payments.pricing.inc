@@ -433,6 +433,11 @@ function _tm_payments_get_event_subscriber_discount($event, $account) {
 		return 0;
 	}
 
+	// check logged in
+	if ($account->uid == 0) {
+		return 0;
+	}
+
 	// check if user is subscriber or chapter leader
 	if (!(tm_subscriptions_is_user_subscription_enabled($account->uid)) and (!in_array("chapter leader", $account->roles))) {
 		return 0;

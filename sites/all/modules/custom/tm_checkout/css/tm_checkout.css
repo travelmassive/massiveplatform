@@ -154,6 +154,14 @@ a.tm-checkout-subscription-partner-code-link {
 
 .tm-checkout-pricing-options label { 
 	cursor: pointer;
+	line-height: 1.1;
+	max-width: 90%;
+}
+
+@media only screen and (max-width: 640px) {
+	.tm-checkout-pricing-options label { 
+		line-height: 1.5;
+	}
 }
 
 .tm-checkout-label-extra {

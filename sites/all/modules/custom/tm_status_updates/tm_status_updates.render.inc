@@ -638,10 +638,18 @@ function tm_status_updates_render_results_items($results, $count_viewer_ip, $hid
 	$event_waitlist_flag = flag_get_flag('event_waitlist');
 	$event_waitlist_flag_id = $event_waitlist_flag->fid;
 
+	// preload event_paid flag id
+	$event_paid_flag = null;
+	if (module_exists("tm_payments")) {
+		$event_paid_flag = flag_get_flag('event_paid');
+		$event_paid_flag_id = $event_paid_flag->fid;	
+	}
+
 	// render results
 	$html_items = array();
 	$count_items = 0;
 	$last_user_uid = null;
+	$last_post_was_event_register = false;
 	foreach($results as $result) {
 
 		$html = "";
@@ -662,10 +670,24 @@ function tm_status_updates_render_results_items($results, $count_viewer_ip, $hid
 			}
 		}
 
-		// hide repeating posts
-		// (exception: event registration)
+		// determine if we are repeating post
 		$own_post = ($user->uid == $result->owner_uid);
 		$repeating_post = ($result->owner_uid == $last_user_uid);
+
+		// if repeating post, and last was event register, and this is event payment
+		// hide the previous post (register) so the ticket payment is displayed
+		// this is because when purchasing a ticket, the flag order is event_register then event_paid
+ 		if ($repeating_post and $last_post_was_event_register) {
+			if ($event_paid_flag != null) {
+				if ($flagged_item->fid == $event_paid_flag->fid) {
+					array_pop($html_items);
+					$repeating_post = false;
+				}	
+			}
+		}
+
+		// hide repeating posts
+		// (exception: event registration)
 		if ($repeating_post and !$is_event_item) {
 			if ($own_post and $hide_own_repeats) {
 				continue;
@@ -690,6 +712,11 @@ function tm_status_updates_render_results_items($results, $count_viewer_ip, $hid
 		// render flagged item
 		if ($result->result_type == "flagged_item") {
 			$html = tm_status_updates_render_flagged_item($flagged_item, $show_you);
+		}
+
+		// keep track of event register
+		if ($result->result_type == "flagged_item") {
+			$last_post_was_event_register = ($flagged_item->fid == $event_register_flag->fid);
 		}
 
 		// track last id

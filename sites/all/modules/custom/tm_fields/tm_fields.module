@@ -598,6 +598,18 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
         if ($result == 'show_external_rsvp') {
           return;
         }
+
+        // Checkout ticket
+        if ($result == 'show_checkout') {
+          $css_classes .= ' disabled';
+          return l(t('Tickets'), 'javascript:jq_login_signup_box();', array(
+            'external' => true,
+            'attributes' => array(
+            'title' => t('Get Ticket for :event', array(':event' => $entity->title)),
+            'class' => array($css_classes)
+          )
+          ));
+        }
         
         // Show register
         if (($result == 'show_register') or ($result == 'show_not_approved')) {
@@ -641,19 +653,6 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
           )
           ));
         }
-
-        // Checkout ticket
-        if ($result == 'show_checkout') {
-          $css_classes .= ' disabled';
-          return l(t('Get Ticket'), 'javascript:jq_login_signup_box();', array(
-            'external' => true,
-            'attributes' => array(
-            'title' => t('Get Ticket for :event', array(':event' => $entity->title)),
-            'class' => array($css_classes)
-          )
-          ));
-        }
-        
         
         break;
     }

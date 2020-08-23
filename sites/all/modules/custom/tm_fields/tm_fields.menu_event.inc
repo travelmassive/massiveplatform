@@ -429,6 +429,11 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
           if (_tm_payments_is_payment_enabled($field['entity'])) {
              $show_menu_item = true;
           }
+
+          // check if any payments have been made
+          if (tm_checkout_event_has_payments($node->nid)) {
+            $show_menu_item = true;
+          }
         }
 
         // if event is external rsvp, don't show

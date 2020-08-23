@@ -340,6 +340,27 @@ function _tm_event_display_flag($nid, $account = null) {
     return 'show_external_rsvp';
   }
 
+  // If logged out, and payments enabled, show ticket
+  if ($account->uid == 0) {
+    if (module_exists("tm_payments")) {
+      if (_tm_payments_is_payment_enabled($event)) {
+        // if past event, check if field_event_payment_post_event enabled
+        if (_tm_event_is_past($event)) {
+          if (isset($event->field_event_payment_post_event[LANGUAGE_NONE][0]['value'])) {
+            $payment_post_event = $event->field_event_payment_post_event[LANGUAGE_NONE][0]['value'];
+            if ($payment_post_event) {
+              return 'show_checkout';
+            }
+          }
+          return 'show_closed';
+        }
+
+        // future event
+        return 'show_checkout';
+      }
+    }
+  }
+
   // Show donation if user is registered for event, but has not paid
   if (module_exists("tm_payments")) {
     if (_tm_payments_is_payment_enabled($event)) {

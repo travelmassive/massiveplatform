@@ -99,7 +99,6 @@ function tm_checkout_user_has_made_payment($uid) {
  * Check if event has made a payment
  */
 function tm_checkout_event_has_payments($event_id) {
-	return true;
 
 	$query = "SELECT COUNT(*) AS total FROM tm_checkout_payments WHERE entity_type = 'event' AND entity_id = :event_id";
 

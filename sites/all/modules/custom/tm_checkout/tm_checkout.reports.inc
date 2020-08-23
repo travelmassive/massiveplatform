@@ -108,7 +108,11 @@ function tm_checkout_reports_user_payments($account = null) {
   // Payment Details
   foreach($payments as $payment) {
 
+    // checkout action
     $checkout_action = $payment->checkout_action;
+
+    // is refunded
+    $is_refunded = ($payment->refunded == 1);
 
     // item labels
     $item_label = "Payment";
@@ -125,10 +129,16 @@ function tm_checkout_reports_user_payments($account = null) {
     }
 
     $html .=  "<tr>";
-    $html .=  "<td>" . ($payment->display_amount + 0) . " " . strtoupper($payment->stripe_currency) . "</td>";
+    $html .=  "<td>";
+    if ($is_refunded) {
+      $html .= "<span class='tm-payments-report-status refunded' style='margin-right: 8px;'>Refunded</span>";
+    }
+    $html .= ($payment->display_amount + 0) . " " . strtoupper($payment->stripe_currency);
+    $html .= "</td>";
     $html .=  "<td>" . $item_label . "</td>";
     if ($account->uid != $user->uid) { 
-      $html .=  "<td><a target='_blank' href='/user/" . $payment->user_id . "'>" . $payment->user_first_name . " " . $payment->user_last_name . "</a></td>";
+      $user_profile_url = drupal_get_path_alias("user/" . $payment->user_id);
+      $html .=  "<td><a target='_blank' href='/" . $user_profile_url . "'>" . $payment->user_first_name . " " . $payment->user_last_name . "</a></td>";
     }
     $html .=  "<td class='tm-payments-report-extra'>" . date("Y-m-d", $payment->timestamp) . "</td>";
     $html .=  "<td class='tm-payments-report-extra'>" . $payment->payment_id . "</a></td>";
@@ -152,7 +162,7 @@ function tm_checkout_reports_user_payments($account = null) {
     }
 
     // Our header
-    $html .= "<hr>" . $conf["tm_checkout_receipt_details"];
+    $html .= "<hr style='border: none; border-top: 1px solid #ddd;'>" . $conf["tm_checkout_receipt_details"];
 	  
 	}
 

@@ -2,6 +2,9 @@
 
 // tm_checkout.event.inc
 
+// todo
+// show tickets to signed out, if enabled
+
 /** 
  * Event payment
  * /checkout/event/123
@@ -775,7 +778,7 @@ function tm_checkout_event_render_pricing_options($event, $account, $currency, $
 	}
 
 	// free
-	if ($partner_discount == 0) {
+	if (($partner_discount == 0) or ($subscriber_discount_pct == 100)) {
 		return "<br>Hey there, rock star! 🎸";
 	}
 
@@ -933,12 +936,26 @@ function tm_checkout_event_render_partner_message($event, $account, $currency, $
 	// get payment type
 	$payment_type = _tm_payments_get_payment_type($event);
 
+	// subscriber discount
+	$subscriber_discount = 0;
+	if (module_exists("tm_subscriptions_user")) {
+
+		if (isset($event->field_event_payment_sub_discount[LANGUAGE_NONE][0]['value'])) {
+			$subscriber_discount = abs(intval($event->field_event_payment_sub_discount[LANGUAGE_NONE][0]['value']));
+			if ($subscriber_discount > 100) {
+				$subscriber_discount = 0;
+			}	
+		}
+	}
+
 	// if lowest value is zero, and you can choose your own price, don't show message
 	$lowest_price = _tm_payments_get_lowest_price($event, $account, $currency);
 	if (($lowest_price == 0) and ($payment_type == "pay_what_you_wish")) {
 		if (isset($event->field_event_payment_tiers[LANGUAGE_NONE][0]['value'])) {
 			if (strpos($event->field_event_payment_tiers[LANGUAGE_NONE][0]['value'], "CHOOSE") !== false) {
-				return "";
+				if ($subscriber_discount != 100) {
+					return "";
+				}
 			}
 		}
 	}
@@ -953,15 +970,7 @@ function tm_checkout_event_render_partner_message($event, $account, $currency, $
 	$apply_partner_code_js = "javascript:tm_checkout_apply_partner_code(" . $event->nid . ",\"" . $currency  . "\");";
 
 	// check for user subscriber discount
-	$subscriber_discount = 0;
 	if (module_exists("tm_subscriptions_user")) {
-
-		if (isset($event->field_event_payment_sub_discount[LANGUAGE_NONE][0]['value'])) {
-			$subscriber_discount = abs(intval($event->field_event_payment_sub_discount[LANGUAGE_NONE][0]['value']));
-			if ($subscriber_discount > 100) {
-				$subscriber_discount = 0;
-			}	
-		}
 
 		// If subscriber discount
 		if ($subscriber_discount > 0) {

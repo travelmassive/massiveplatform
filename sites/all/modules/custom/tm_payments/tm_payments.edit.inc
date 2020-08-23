@@ -210,6 +210,10 @@ function _tm_payments_form_alter_event_form(&$form, &$form_state, $form_id) {
 	$form['field_event_payment_partner_code'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = "example: FRIENDS=10%";
 	$form['field_event_payment_partner_code'][LANGUAGE_NONE][0]['#validated'] = true;
 
+	// show total payments
+	$field_event_payments_show_total_description = "Display the total funds raised, on the event page.";
+	$form['field_event_payments_show_total'][LANGUAGE_NONE]['#description'] = $field_event_payments_show_total_description;
+
 	// Step 5. Set available currencies
 	//////////
 	$currencies = array();

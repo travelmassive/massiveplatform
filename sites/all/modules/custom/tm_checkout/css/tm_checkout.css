@@ -117,13 +117,14 @@ a.tm-checkout-subscription-partner-code-link {
 
 .tm-checkout-currency-container {
 	float: right;
-	background-color: #fff;
-	padding: 4px 8px;
+	background-color: #efefef;
+	padding: 4px 8px 4px 16px;
 	border-radius: 16px;
 }
 
 .tm-checkout-currency-container select {
 	border: none;
+	background-color: #efefef;
 }
 
 .tm-checkout-pricing-options {
@@ -200,7 +201,7 @@ a.tm-registrations-attending-more {
 	float: left;
 	margin-bottom: 1rem;
 	padding: 4px 16px;
-	background-color: #dedede;
+	background-color: #efefef;
 	border-radius: 16px;
 }
 

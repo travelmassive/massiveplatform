@@ -10173,13 +10173,13 @@ body.tm_sidebar {
   color: #808080;
 }
 
-/* line 95, ../sass/_tm_sidebar.scss */
+/* line 96, ../sass/_tm_sidebar.scss */
 .tm_sidenav_login a {
   padding-left: 5px !important;
   padding-right: 5px !important;
 }
 
-/* line 100, ../sass/_tm_sidebar.scss */
+/* line 101, ../sass/_tm_sidebar.scss */
 #tm_sidenav_search {
   font-family: 'Lato', sans-serif;
   width: 196px;
@@ -10194,24 +10194,24 @@ body.tm_sidebar {
   height: 45px;
 }
 
-/* line 114, ../sass/_tm_sidebar.scss */
+/* line 115, ../sass/_tm_sidebar.scss */
 #tm_sidenav_search:focus {
   outline: none;
 }
 
-/* line 118, ../sass/_tm_sidebar.scss */
+/* line 119, ../sass/_tm_sidebar.scss */
 #tm_sidenav_search:hover {
   border: 2px solid #007eb5;
 }
 
-/* line 122, ../sass/_tm_sidebar.scss */
+/* line 123, ../sass/_tm_sidebar.scss */
 .tm_sidenav_home_icon:before {
   font-family: 'tm-icons';
   content: "\e65c";
   margin-right: 5px;
 }
 
-/* line 128, ../sass/_tm_sidebar.scss */
+/* line 129, ../sass/_tm_sidebar.scss */
 .tm_sidenav_profile_icon:before {
   font-family: 'tm-icons';
   content: "\e678";
@@ -10219,7 +10219,7 @@ body.tm_sidebar {
   font-weight: 200;
 }
 
-/* line 135, ../sass/_tm_sidebar.scss */
+/* line 136, ../sass/_tm_sidebar.scss */
 .tm_sidenav_settings_icon:before {
   font-family: 'tm-icons';
   content: "\e636";
@@ -10228,7 +10228,7 @@ body.tm_sidebar {
   font-weight: 200;
 }
 
-/* line 143, ../sass/_tm_sidebar.scss */
+/* line 144, ../sass/_tm_sidebar.scss */
 .tm_sidenav_profile_icon:before {
   font-family: 'tm-icons';
   content: "\e678";
@@ -10236,7 +10236,7 @@ body.tm_sidebar {
   font-weight: 200;
 }
 
-/* line 150, ../sass/_tm_sidebar.scss */
+/* line 151, ../sass/_tm_sidebar.scss */
 .tm_sidenav_sign_in_icon:before {
   font-family: 'tm-icons';
   content: "\e678";
@@ -10245,7 +10245,7 @@ body.tm_sidebar {
   font-weight: 200;
 }
 
-/* line 158, ../sass/_tm_sidebar.scss */
+/* line 159, ../sass/_tm_sidebar.scss */
 .tm_sidenav_marketplace_icon:before {
   font-family: 'tm-icons';
   content: "\e658";
@@ -10253,7 +10253,7 @@ body.tm_sidebar {
   font-weight: 200;
 }
 
-/* line 165, ../sass/_tm_sidebar.scss */
+/* line 166, ../sass/_tm_sidebar.scss */
 .tm_sidenav_replays_icon:before {
   font-family: 'tm-icons';
   content: "\e680";
@@ -10261,7 +10261,7 @@ body.tm_sidebar {
   font-size: 20px;
 }
 
-/* line 172, ../sass/_tm_sidebar.scss */
+/* line 173, ../sass/_tm_sidebar.scss */
 .tm_sidenav_lists_icon:before {
   font-family: 'tm-icons';
   content: "\e635";
@@ -10271,7 +10271,7 @@ body.tm_sidebar {
   display: inline-block;
 }
 
-/* line 181, ../sass/_tm_sidebar.scss */
+/* line 182, ../sass/_tm_sidebar.scss */
 .tm_sidenav_more_icon:before {
   font-family: 'tm-icons';
   content: "\e62e";
@@ -10279,7 +10279,7 @@ body.tm_sidebar {
   font-size: 20px;
 }
 
-/* line 188, ../sass/_tm_sidebar.scss */
+/* line 189, ../sass/_tm_sidebar.scss */
 .tm_sidenav_events_icon:before {
   font-family: 'tm-icons';
   content: "\e62a";
@@ -10287,7 +10287,7 @@ body.tm_sidebar {
   font-size: 20px;
 }
 
-/* line 195, ../sass/_tm_sidebar.scss */
+/* line 196, ../sass/_tm_sidebar.scss */
 .tm_sidenav_add_event_icon:before {
   font-family: 'tm-icons';
   content: "\e625";
@@ -10295,7 +10295,7 @@ body.tm_sidebar {
   margin-right: 5px;
 }
 
-/* line 202, ../sass/_tm_sidebar.scss */
+/* line 203, ../sass/_tm_sidebar.scss */
 .tm_sidenav_toggle_icon:before {
   font-family: 'tm-icons';
   content: "\e622";
@@ -10303,7 +10303,7 @@ body.tm_sidebar {
   color: #007eb5;
 }
 
-/* line 209, ../sass/_tm_sidebar.scss */
+/* line 210, ../sass/_tm_sidebar.scss */
 .tm_sidenav_toggle_icon:before {
   font-family: 'tm-icons';
   content: "\e622";
@@ -10311,25 +10311,25 @@ body.tm_sidebar {
   color: #007eb5;
 }
 
-/* line 216, ../sass/_tm_sidebar.scss */
+/* line 217, ../sass/_tm_sidebar.scss */
 #account-menu-blk {
   font-size: 24px;
   line-height: 1.5;
   color: #4a4a4a;
 }
 
-/* line 222, ../sass/_tm_sidebar.scss */
+/* line 223, ../sass/_tm_sidebar.scss */
 .tm-sidebar-login a {
   color: #176CF6;
   text-decoration: underline !important;
 }
 
-/* line 227, ../sass/_tm_sidebar.scss */
+/* line 228, ../sass/_tm_sidebar.scss */
 #tm_sidenav .tm-account-menu-verification:before {
   font-size: 20px !important;
 }
 
-/* line 231, ../sass/_tm_sidebar.scss */
+/* line 232, ../sass/_tm_sidebar.scss */
 #tm_sidenav_moderator_options {
   width: 196px;
   font-size: 24px;
@@ -10339,46 +10339,46 @@ body.tm_sidebar {
 }
 
 @media screen and (max-width: 1024px) {
-  /* line 240, ../sass/_tm_sidebar.scss */
+  /* line 241, ../sass/_tm_sidebar.scss */
   body {
     margin-left: inherit !important;
   }
 
-  /* line 243, ../sass/_tm_sidebar.scss */
+  /* line 244, ../sass/_tm_sidebar.scss */
   #container-theme {
     margin-top: 20px;
   }
 
-  /* line 246, ../sass/_tm_sidebar.scss */
+  /* line 247, ../sass/_tm_sidebar.scss */
   #tm_sidenav {
     opacity: 0;
     display: none;
   }
 
-  /* line 250, ../sass/_tm_sidebar.scss */
+  /* line 251, ../sass/_tm_sidebar.scss */
   #tm_sidenav_toggle {
     display: block;
   }
 }
 @media screen and (min-width: 1025px) {
-  /* line 256, ../sass/_tm_sidebar.scss */
+  /* line 257, ../sass/_tm_sidebar.scss */
   #tm_sidenav {
     opacity: 1 !important;
   }
 
-  /* line 259, ../sass/_tm_sidebar.scss */
+  /* line 260, ../sass/_tm_sidebar.scss */
   #tm_sidenav_toggle {
     display: none !important;
   }
 
-  /* line 262, ../sass/_tm_sidebar.scss */
+  /* line 263, ../sass/_tm_sidebar.scss */
   #tm_sidenav_toggle.min {
     padding-top: 0rem !important;
     box-shadow: none !important;
   }
 }
 /* Social Icons */
-/* line 270, ../sass/_tm_sidebar.scss */
+/* line 271, ../sass/_tm_sidebar.scss */
 #tm_sidenav_icons {
   position: absolute;
   bottom: 0;
@@ -10389,20 +10389,20 @@ body.tm_sidebar {
   background-color: #fff;
 }
 
-/* line 280, ../sass/_tm_sidebar.scss */
+/* line 281, ../sass/_tm_sidebar.scss */
 #tm_sidenav_icons li {
   display: inline-block;
   margin: 0 !important;
 }
 
-/* line 285, ../sass/_tm_sidebar.scss */
+/* line 286, ../sass/_tm_sidebar.scss */
 #tm_sidenav_icons li a {
   padding: 2px !important;
   font-size: 28px;
   font-weight: 200 !important;
 }
 
-/* line 291, ../sass/_tm_sidebar.scss */
+/* line 292, ../sass/_tm_sidebar.scss */
 #tm_sidenav_icons li a:hover {
   background-color: #fff;
   border-radius: 0;
@@ -10410,102 +10410,102 @@ body.tm_sidebar {
 }
 
 @media screen and (min-width: 1025px) and (max-height: 1000px) {
-  /* line 298, ../sass/_tm_sidebar.scss */
+  /* line 299, ../sass/_tm_sidebar.scss */
   #tm_sidenav_icons.signed_in {
     display: none;
   }
 
-  /* line 299, ../sass/_tm_sidebar.scss */
+  /* line 300, ../sass/_tm_sidebar.scss */
   #tm_sidenav li {
     font-size: 16pt;
   }
 
-  /* line 300, ../sass/_tm_sidebar.scss */
+  /* line 301, ../sass/_tm_sidebar.scss */
   .tm_sidenav_icon:before {
     font-size: 16pt;
   }
 }
 @media screen and (min-width: 1025px) and (max-height: 800px) {
-  /* line 304, ../sass/_tm_sidebar.scss */
+  /* line 305, ../sass/_tm_sidebar.scss */
   #tm_sidenav li {
     font-size: 13pt;
   }
 
-  /* line 305, ../sass/_tm_sidebar.scss */
+  /* line 306, ../sass/_tm_sidebar.scss */
   .tm_sidenav_icon:before {
     font-size: 13pt;
   }
 
-  /* line 306, ../sass/_tm_sidebar.scss */
+  /* line 307, ../sass/_tm_sidebar.scss */
   #tm_sidenav_moderator_options {
     font-size: 13pt;
   }
 }
 @media screen and (min-width: 1025px) and (max-height: 700px) {
-  /* line 310, ../sass/_tm_sidebar.scss */
+  /* line 311, ../sass/_tm_sidebar.scss */
   #tm_sidenav li {
     font-size: 17pt;
   }
 
-  /* line 311, ../sass/_tm_sidebar.scss */
+  /* line 312, ../sass/_tm_sidebar.scss */
   .tm_sidenav_icon:before {
     font-size: 17pt;
   }
 
-  /* line 312, ../sass/_tm_sidebar.scss */
+  /* line 313, ../sass/_tm_sidebar.scss */
   body {
     margin-left: inherit !important;
   }
 
-  /* line 313, ../sass/_tm_sidebar.scss */
+  /* line 314, ../sass/_tm_sidebar.scss */
   #container-theme {
     margin-top: 20px;
   }
 
-  /* line 314, ../sass/_tm_sidebar.scss */
+  /* line 315, ../sass/_tm_sidebar.scss */
   #tm_sidenav {
     opacity: 0;
     display: none;
   }
 
-  /* line 315, ../sass/_tm_sidebar.scss */
+  /* line 316, ../sass/_tm_sidebar.scss */
   #tm_sidenav_toggle {
     display: block !important;
   }
 
-  /* line 316, ../sass/_tm_sidebar.scss */
+  /* line 317, ../sass/_tm_sidebar.scss */
   #tm_sidenav_icons {
     display: block !important;
   }
 
-  /* line 317, ../sass/_tm_sidebar.scss */
+  /* line 318, ../sass/_tm_sidebar.scss */
   #tm_sidenav_icons.signed_in {
     display: block !important;
   }
 
-  /* line 318, ../sass/_tm_sidebar.scss */
+  /* line 319, ../sass/_tm_sidebar.scss */
   #tm_sidenav_moderator_options {
     font-size: 24px;
   }
 }
 @media print {
-  /* line 322, ../sass/_tm_sidebar.scss */
+  /* line 323, ../sass/_tm_sidebar.scss */
   body {
     margin-left: inherit !important;
   }
 
-  /* line 323, ../sass/_tm_sidebar.scss */
+  /* line 324, ../sass/_tm_sidebar.scss */
   #tm_sidenav {
     display: none;
   }
 
-  /* line 326, ../sass/_tm_sidebar.scss */
+  /* line 327, ../sass/_tm_sidebar.scss */
   #tm_sidenav_toggle {
     display: none;
   }
 }
 /* Profile badges */
-/* line 333, ../sass/_tm_sidebar.scss */
+/* line 334, ../sass/_tm_sidebar.scss */
 .tm-sidebar-pro-member-badge {
   font-size: 12.5pt;
   color: #ffffff !important;
@@ -10517,13 +10517,13 @@ body.tm_sidebar {
   margin-top: -6px;
 }
 
-/* line 344, ../sass/_tm_sidebar.scss */
+/* line 345, ../sass/_tm_sidebar.scss */
 .tm-sidebar-pro-member-badge:hover {
   background-color: #ffb800 !important;
   border-radius: 4px !important;
 }
 
-/* line 349, ../sass/_tm_sidebar.scss */
+/* line 350, ../sass/_tm_sidebar.scss */
 .tm-sidebar-pro-member-badge:before {
   font-family: 'tm-icons';
   content: "\e655";
@@ -10531,7 +10531,7 @@ body.tm_sidebar {
   margin-right: 2px;
 }
 
-/* line 356, ../sass/_tm_sidebar.scss */
+/* line 357, ../sass/_tm_sidebar.scss */
 .tm-sidebar-leader-badge {
   font-size: 10pt;
   color: #ffffff !important;
@@ -10542,13 +10542,13 @@ body.tm_sidebar {
   margin-top: -4px;
 }
 
-/* line 366, ../sass/_tm_sidebar.scss */
+/* line 367, ../sass/_tm_sidebar.scss */
 .tm-sidebar-leader-badge:hover {
   background-color: #3838FC !important;
   border-radius: 4px !important;
 }
 
-/* line 371, ../sass/_tm_sidebar.scss */
+/* line 372, ../sass/_tm_sidebar.scss */
 .tm-sidebar-leader-badge:before {
   font-family: 'tm-icons';
   content: "\e666";
@@ -10557,7 +10557,7 @@ body.tm_sidebar {
   font-size: 10pt;
 }
 
-/* line 379, ../sass/_tm_sidebar.scss */
+/* line 380, ../sass/_tm_sidebar.scss */
 .tm-sidebar-pro-member-upgrade {
   font-size: 12.5pt;
   color: #fff !important;
@@ -10567,7 +10567,7 @@ body.tm_sidebar {
   font-weight: 400;
 }
 
-/* line 388, ../sass/_tm_sidebar.scss */
+/* line 389, ../sass/_tm_sidebar.scss */
 .tm-sidebar-pro-member-upgrade:hover {
   background-color: #3838FC !important;
   border-radius: 4px !important;

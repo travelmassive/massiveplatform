@@ -1171,7 +1171,7 @@ function tm_checkout_event_process($stripe_session) {
 /*
  * Send a payment notification to event organizers
  */
-function tm_checkout_event_notify_organizers_of_payment($account, $event, $payment_text) {
+function tm_checkout_event_notify_organizers_of_payment($account, $event, $event_payment_text) {
 
 	// get event url
 	$event_url = drupal_get_path_alias('node/' . $event->nid);
@@ -1196,7 +1196,7 @@ function tm_checkout_event_notify_organizers_of_payment($account, $event, $payme
 	$notify_ids = tm_notifications_events_get_organizer_notify_ids($event);
 
 	// send notifications to event organizers
-    foreach ($notify_ids as $notify_id) {
+	foreach ($notify_ids as $notify_id) {
 
 		// load the user to notify
 		$notify_user = user_load($notify_id);

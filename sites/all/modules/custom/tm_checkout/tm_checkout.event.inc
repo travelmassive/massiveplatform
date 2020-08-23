@@ -951,6 +951,11 @@ function tm_checkout_event_render_partner_message($event, $account, $currency, $
 		}
 	}
 
+	// already registered, showing donation
+	if (tm_events_user_is_registered($event->nid, $account->uid)) {
+		return "<div class='tm-checkout-pricing-message'>👏 Make a donation to this event</div>";
+	}
+	
 	// if lowest value is zero, and you can choose your own price, don't show message
 	$lowest_price = _tm_payments_get_lowest_price($event, $account, $currency);
 	if (($lowest_price == 0) and ($payment_type == "pay_what_you_wish")) {
@@ -961,11 +966,6 @@ function tm_checkout_event_render_partner_message($event, $account, $currency, $
 				}
 			}
 		}
-	}
-
-	// already registered, showing donation
-	if (tm_events_user_is_registered($event->nid, $account->uid)) {
-		return "<div class='tm-checkout-pricing-message'>👏 Make a donation to this event</div>";
 	}
 
 	// default no message

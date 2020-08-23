@@ -2,9 +2,6 @@
 
 // tm_checkout.event.inc
 
-// todo
-// show tickets to signed out, if enabled
-
 /** 
  * Event payment
  * /checkout/event/123

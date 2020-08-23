@@ -411,7 +411,7 @@ function tm_checkout_event_page($event_id, $user_id) {
 	}
 
 	// render list of attendees
-	$num_attendees_to_display = 41; // default
+	$num_attendees_to_display = 32; // default
 	if (isset($conf["tm_payments_max_display_profiles"])) {
 		$num_attendees_to_display = $conf["tm_payments_max_display_profiles"];
 	}

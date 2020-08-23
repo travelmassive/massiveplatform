@@ -775,8 +775,15 @@ function tm_checkout_event_render_pricing_options($event, $account, $currency, $
 	}
 
 	// free
-	if (($partner_discount == 0) or ($subscriber_discount_pct == 100)) {
+	if ($partner_discount == 0) {
 		return "<br>Hey there, rock star! 🎸";
+	}
+
+	// free for subscriber and not already registered
+	if ($subscriber_discount_pct == 100) {
+		if (!tm_events_user_is_registered($event->nid, $account->uid)) {
+			return "<br>Hey there, rock star! 🎸";
+		}
 	}
 
 	// default is pay
@@ -957,6 +964,11 @@ function tm_checkout_event_render_partner_message($event, $account, $currency, $
 		}
 	}
 
+	// already registered, showing donation
+	if (tm_events_user_is_registered($event->nid, $account->uid)) {
+		return "<div class='tm-checkout-pricing-message'>👏 Make a donation to this event</div>";
+	}
+
 	// default no message
 	$message = "";
 
@@ -969,7 +981,7 @@ function tm_checkout_event_render_partner_message($event, $account, $currency, $
 	// check for user subscriber discount
 	if (module_exists("tm_subscriptions_user")) {
 
-		// If subscriber discount
+		// If subscriber discount not already registered for event
 		if ($subscriber_discount > 0) {
 			$check_chapter_leader = in_array("chapter leader", $account->roles);
 			if ((tm_subscriptions_is_user_subscription_enabled($account->uid)) or $check_chapter_leader) {

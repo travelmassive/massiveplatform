@@ -943,7 +943,6 @@ function tm_checkout_event_render_partner_message($event, $account, $currency, $
 	// subscriber discount
 	$subscriber_discount = 0;
 	if (module_exists("tm_subscriptions_user")) {
-
 		if (isset($event->field_event_payment_sub_discount[LANGUAGE_NONE][0]['value'])) {
 			$subscriber_discount = abs(intval($event->field_event_payment_sub_discount[LANGUAGE_NONE][0]['value']));
 			if ($subscriber_discount > 100) {

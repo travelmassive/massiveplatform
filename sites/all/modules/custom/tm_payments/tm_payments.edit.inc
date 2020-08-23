@@ -207,7 +207,7 @@ function _tm_payments_form_alter_event_form(&$form, &$form_state, $form_id) {
 	$field_event_payment_partner_codes_description = "Include any partner discount codes, separated by commas. 
 <br>Example: VIP=50%,FRIENDS=10%";
 	$form['field_event_payment_partner_code'][LANGUAGE_NONE][0]['value']['#description'] = $field_event_payment_partner_codes_description;
-	$form['field_event_payment_partner_code'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = "FRIENDS=10%";
+	$form['field_event_payment_partner_code'][LANGUAGE_NONE][0]['value']['#attributes']['placeholder'] = "example: FRIENDS=10%";
 	$form['field_event_payment_partner_code'][LANGUAGE_NONE][0]['#validated'] = true;
 
 	// Step 5. Set available currencies

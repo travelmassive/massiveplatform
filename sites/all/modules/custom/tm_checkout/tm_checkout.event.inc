@@ -1133,8 +1133,8 @@ function tm_checkout_event_process($stripe_session) {
 	// Set pricing into static variable so we can pick it up in the notifications hook
 	$hook_static_var_payment_text = &drupal_static("tm_payments_payment_text");
 	$currency_symbol = "";
-	if (isset($conf["tm_payments_currency_symbols"][$stripe_currency])) {
-		$currency_symbol = $conf["tm_payments_currency_symbols"][$stripe_currency];
+	if (isset($conf["tm_payments_currencies"][$stripe_currency])) {
+		$currency_symbol = $conf["tm_payments_currencies"][$stripe_currency];
 	}
 	$hook_static_var_payment_text = $currency_symbol . $display_amount;
 

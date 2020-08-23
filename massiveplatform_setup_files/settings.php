@@ -865,6 +865,7 @@ $conf["tm_payments_process_donation_message_text"] = "Thanks for your donation &
 $conf["tm_payments_free_ticket_label"] = "Free ticket"; // label underneath register button when user chooses free option
 $conf["tm_payments_max_price_usd"] = 1000; // maximum price to accept payments, in usd
 $conf["tm_payments_show_payments_message"] = "We've raised __TOTAL_AMOUNT__ from __TOTAL_PAYMENTS__ members"; // message when showing total payments
+$conf["tm_payments_max_display_profiles"] = 32; // how many member profiles to show on event checkout page
 */
 
 /* USER SUBSCRIPTION PAYMENT SETTINGS */

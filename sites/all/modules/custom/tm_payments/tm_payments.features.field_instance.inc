@@ -810,7 +810,7 @@ This might help to improve card validation in certain regions.<br>',
     'bundle' => 'event',
     'default_value' => array(
       0 => array(
-        'value' => 50,
+        'value' => 25,
       ),
     ),
     'deleted' => 0,

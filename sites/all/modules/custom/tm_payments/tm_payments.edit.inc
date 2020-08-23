@@ -197,7 +197,7 @@ function _tm_payments_form_alter_event_form(&$form, &$form_state, $form_id) {
 	// subscriber discount
 	if (module_exists("tm_subscriptions_user")) {
 		$form['field_event_payment_sub_discount'][LANGUAGE_NONE][0]['value']['#title'] = $conf["tm_subscriptions_user_label_noun"] . " Discount";
-		$form['field_event_payment_sub_discount'][LANGUAGE_NONE][0]['value']['#description'] = "Reward <a target='_blank' href='/" . $conf["tm_checkout_subscription_public_page"] . "'>" . $conf["tm_subscriptions_user_label_noun"] . "</a> subscribers who support the community.<br>Example: 50%";
+		$form['field_event_payment_sub_discount'][LANGUAGE_NONE][0]['value']['#description'] = "Reward <a target='_blank' href='/" . $conf["tm_checkout_subscription_public_page"] . "'>" . $conf["tm_subscriptions_user_label_noun"] . "</a> subscribers who support the community.<br>Example: 25%";
 	}
 
 	// filter % from subscriber discount

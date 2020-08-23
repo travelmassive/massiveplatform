@@ -819,7 +819,7 @@ function tm_checkout_event_render_pricing_options($event, $account, $currency, $
 		}
 
 		// check numeric
-		if ((!is_numeric($part) and (strtoupper($part) != "FREE") and (strtoupper($part) != "CHOOSE"))) {
+		if ((!is_numeric(str_replace("*", "", $part)) and (strtoupper($part) != "FREE") and (strtoupper($part) != "CHOOSE"))) {
 			continue;
 		}
 

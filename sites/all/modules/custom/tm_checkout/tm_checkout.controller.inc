@@ -96,6 +96,20 @@ function tm_checkout_user_has_made_payment($uid) {
 }
 
 /**
+ * Check if event has made a payment
+ */
+function tm_checkout_event_has_payments($event_id) {
+	return true;
+
+	$query = "SELECT COUNT(*) AS total FROM tm_checkout_payments WHERE entity_type = 'event' AND entity_id = :event_id";
+
+	// fetch result
+	$result = db_query($query, array(':event_id' => $event_id))->fetch();
+	return ($result->total > 0);
+
+}
+
+/**
  * Get event payments
  */
 function tm_checkout_get_event_payments($event_id) {

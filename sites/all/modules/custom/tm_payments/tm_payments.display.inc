@@ -21,6 +21,14 @@ function _tm_payments_price($field, $title = NULL) {
 		return;
 	}
 
+	// if user is signed in, check they can make a payment 
+	if (user_is_logged_in()) {
+		$event_display_flag = _tm_event_display_flag($node->nid, $user);
+		if ($event_display_flag == "show_closed") {
+			return;
+		}
+	}
+
 	// If logged in, check if registered or waitlisted
 	$registered_for_event = false; // default if not logged in
 	$waitlist_for_event = false; // default if not logged in

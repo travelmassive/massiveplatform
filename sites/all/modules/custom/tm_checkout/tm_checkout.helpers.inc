@@ -135,21 +135,20 @@ function tm_checkout_get_user_currency($currency) {
 	// visitor and geoip
 	$visitor_ip = tm_geoip_get_real_visitor_ip();
 	$geoip_info = tm_geoip_lookup($visitor_ip);
-
-	// special case for GBP
-	if (isset($geoip_info["country"]["iso_code"])) {
-		if ($geoip_info["country"]["iso_code"] == "GB") {
-			if (isset($conf["tm_payments_currencies"]["gbp"])) {
-				return "gbp";
-			}
-		}
-	}
-
-	// special case for CAD
-	if (isset($geoip_info["country"]["iso_code"])) {
-		if ($geoip_info["country"]["iso_code"] == "CA") {
-			if (isset($conf["tm_payments_currencies"]["cad"])) {
-				return "cad";
+	
+	// special case for iso code
+	$iso_codes = array();
+	$iso_codes["GB"] = "gbp";
+	$iso_codes["CA"] = "cad";
+	$iso_codes["TH"] = "thb";
+	$iso_codes["JP"] = "jpy";
+	$iso_codes["SG"] = "sgd";
+	foreach ($iso_codes as $iso_code => $iso_currency) {
+		if (isset($geoip_info["country"]["iso_code"])) {
+			if ($geoip_info["country"]["iso_code"] == $iso_code) {
+				if (isset($conf["tm_payments_currencies"][$iso_currency])) {
+					return $iso_currency;
+				}
 			}
 		}
 	}

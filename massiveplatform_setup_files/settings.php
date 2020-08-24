@@ -847,8 +847,8 @@ $conf["tm_payments_process_timeout"] = 10; // seconds to wait for process url be
 $conf["tm_payments_process_error_email"] = "support@massiveplatform.com"; // if payment process fails, who to email
 $conf["tm_payments_currencies"] = array("usd" => "\$", "aud" => "AUD \$", "cad" => "CAD \$", "eur" => "€", "gbp" => "GBP £"); // available currencies (must be supported by stripe)
 $conf["tm_payments_currencies_fx"] = array("usd" => 1, "aud" => 1.4, "cad" => 1.3, "eur" => 0.85, "gbp" => 0.75); // fx conversions from usd
-$conf["tm_payments_currencies_default"] = "usd"; // default currency
 $conf["tm_payments_currency_symbols"] = array("usd" => "$", "aud" => "$", "cad" => "$", "eur" => "€", "gbp" => "£");
+$conf["tm_payments_currencies_default"] = "usd"; // default currency
 $conf["tm_payments_refund_policy"] = "You can get a refund until 7 days before the event";
 $conf["tm_payments_refund_url"] = "https://example.massiveplatform.com/blog/event-refund/";
 $conf["tm_payments_receipt_details"] = "<strong>TAX RECEIPT</strong><br>Your company name<br>Your company address<br>Email: your@receiptemail";

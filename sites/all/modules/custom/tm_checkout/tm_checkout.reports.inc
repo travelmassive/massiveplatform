@@ -75,13 +75,16 @@ function tm_checkout_reports_user_payments($account = null) {
 
   // Render account details
   // field_user_account_receipt
-  if (isset($account->field_user_account_receipt[LANGUAGE_NONE][0]['safe_value'])) {
-    $html .= "<p style='font-weight: bold;'>";
-    $html .= str_replace("\n", "<br>", strip_tags($account->field_user_account_receipt[LANGUAGE_NONE][0]['safe_value']));
-    $html .= "<span class='tm-subscriptions-report-edit'><br><a href='/user/" . $account->uid . "/edit#receipt-details'>Edit</a></span>";
-    $html .= "</p>";
-  } else {
-    $html .= "<p class='tm-subscriptions-report-add'><a href='/user/" . $account->uid . "/edit#receipt-details'>Add your company details to this receipt</a></p>";
+  // Needs tm_subscription_user enabled
+  if (module_exists("tm_subscriptions_user")) {
+      if (isset($account->field_user_account_receipt[LANGUAGE_NONE][0]['safe_value'])) {
+      $html .= "<p style='font-weight: bold;'>";
+      $html .= str_replace("\n", "<br>", strip_tags($account->field_user_account_receipt[LANGUAGE_NONE][0]['safe_value']));
+      $html .= "<span class='tm-subscriptions-report-edit'><br><a href='/user/" . $account->uid . "/edit#receipt-details'>Edit</a></span>";
+      $html .= "</p>";
+    } else {
+      $html .= "<p class='tm-subscriptions-report-add'><a href='/user/" . $account->uid . "/edit#receipt-details'>Add your company details to this receipt</a></p>";
+    }
   }
 
   // field_user_account_contact

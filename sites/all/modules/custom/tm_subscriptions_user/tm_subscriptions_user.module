@@ -162,6 +162,21 @@ function tm_subscriptions_user_form_user_profile_form_alter(&$form, &$form_state
     $ajax_request = true;
   }
 
+  // Show Account Details for subscribers
+  $account = $form['#user'];
+
+  // Show the receipt field if payment has been made and user does not have a subscription
+  if (module_exists("tm_payments")) {
+    if ((tm_checkout_user_has_made_payment($account->uid))) {
+      if (($conf["tm_subscriptions_user_enabled"] == false) or (!tm_subscriptions_is_user_subscription_enabled($account->uid))) {
+        unset($form['field_user_account_phone']); // hide phone
+        unset($form['field_user_subscription_type']); // hide subscription type
+        unset($form['field_user_subscription_date']); // hide subscription end date
+        return;
+      }
+    }
+  }
+
   // if tm_subscriptions_user not enabled, hide subscription fields
   if ($conf["tm_subscriptions_user_enabled"] == false) {
     field_group_hide_field_groups($form, array('group_user_account_details'));
@@ -170,8 +185,7 @@ function tm_subscriptions_user_form_user_profile_form_alter(&$form, &$form_state
     return;
   }
 
-  // Show Account Details for subscribers
-  $account = $form['#user'];
+  // Check moderator or admin
   $perm_is_moderator_or_admin = ((in_array("moderator", $user->roles)) || (in_array("administrator", $user->roles)));
 
   // Hide account details and subscription date if not a moderator or admin or not subscribed

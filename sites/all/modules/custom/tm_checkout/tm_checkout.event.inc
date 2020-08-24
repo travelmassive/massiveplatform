@@ -151,8 +151,8 @@ function tm_checkout_event_landing_page() {
 		drupal_goto("/");
 	}
 	
-	// check user is registered for event
-	if (!tm_events_user_is_registered($event_id, $account->uid)) {
+	// check user is paid for event
+	if (!_tm_payments_user_has_paid($event_id, $account->uid)) {
 		if (isset($_GET["session_id"])) {
 			drupal_set_message("It looks like you made a payment, but we need to manually confirm it. Please <a href='/contact'>contact our team</a> so we can assist you.");
 			tm_checkout_notify_payment_error("Check Stripe webhook log. User not registered for event after checkout. event_id: " . $event_id . ", user_id: " . $account->uid);

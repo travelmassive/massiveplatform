@@ -177,11 +177,12 @@ a.tm-checkout-subscription-partner-code-link {
 
 .tm-checkout-label-popular {
 	margin-left: 8px;
-	vertical-align: top;
+	vertical-align: middle;
 	background-color: #efefef;
 	padding: 4px 8px;
 	border-radius: 16px;
 	font-size: 10pt;
+	line-height: 1;
 }
 
 .tm-checkout-label-popular:before {

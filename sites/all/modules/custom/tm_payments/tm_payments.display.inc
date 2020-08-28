@@ -221,7 +221,7 @@ function _tm_payments_show_total($field, $title = NULL) {
 	}
 
 	// must have field_event_payments_show_total
-	if (!isset($event->field_event_payments_show_total)) {
+	if (!isset($event->field_event_payments_show_total[LANGUAGE_NONE][0]['value'])) {
 		return;
 	}
 

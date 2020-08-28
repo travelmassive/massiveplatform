@@ -220,6 +220,19 @@ function tm_checkout_event_page($event_id, $user_id) {
 	// load event
 	$event = node_load($event_id);
 
+	// get partner code
+	$partner_code = tm_checkout_event_get_partner_code($event);
+	if ($partner_code != "PREVIEW") {
+		if (isset($_GET["partner"])) {
+			$partner_code_provided = htmlentities(strip_tags(strtoupper($_GET["partner"])));
+			if ($partner_code != "") {
+				drupal_set_message("Your partner code " . $partner_code_provided . " has been applied.");
+			} elseif ($partner_code_provided != "") {
+				drupal_set_message("The partner code " . $partner_code_provided . " is invalid or expired.", "help-tip");
+			}
+		}
+	}
+
 	// get event currency
 	$currency = $event->field_event_payment_currency[LANGUAGE_NONE][0]['value'];
 
@@ -233,22 +246,14 @@ function tm_checkout_event_page($event_id, $user_id) {
 		}
 	}
 
+	// if preview mode, use default event currency
+	if ($partner_code == "PREVIEW") {
+		$currency = $event->field_event_payment_currency[LANGUAGE_NONE][0]['value'];
+	}
+
 	// check we have a valid currency
 	if (!isset($conf["tm_payments_currencies"]["usd"])) {
 		$currency = $conf["tm_payments_currencies_default"];
-	}
-
-	// get partner code
-	$partner_code = tm_checkout_event_get_partner_code($event);
-	if ($partner_code != "PREVIEW") {
-		if (isset($_GET["partner"])) {
-			$partner_code_provided = htmlentities(strip_tags(strtoupper($_GET["partner"])));
-			if ($partner_code != "") {
-				drupal_set_message("Your partner code " . $partner_code_provided . " has been applied.");
-			} elseif ($partner_code_provided != "") {
-				drupal_set_message("The partner code " . $partner_code_provided . " is invalid or expired.", "help-tip");
-			}
-		}
 	}
 	
 	// include css

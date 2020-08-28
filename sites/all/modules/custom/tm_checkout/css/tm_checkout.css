@@ -137,6 +137,12 @@ a.tm-checkout-subscription-partner-code-link {
 	min-width: 64px;
 }
 
+@media only screen and (max-width: 640px) {
+	.tm-checkout-currency-container select {
+		min-width: 68px;
+	}
+}
+
 .tm-checkout-pricing-options {
 	clear: all;
 	font-size: 16pt;

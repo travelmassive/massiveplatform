@@ -113,7 +113,7 @@
 	tm_checkout_pay_what_you_wish_message = function() {
 		var alert_title = Drupal.settings.tm_checkout_event.pay_what_you_wish_title;
 		var message = Drupal.settings.tm_checkout_event.pay_what_you_wish_message;
-		jQuery.prompt(message, {title: alert_title, buttons: { "OK": true}});
+		jQuery.prompt(message, {title: alert_title, buttons: { "Got it, thanks.": true}});
 	}
 
 	// listen to radio button change

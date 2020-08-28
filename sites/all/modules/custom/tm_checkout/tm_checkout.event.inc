@@ -964,7 +964,7 @@ function tm_checkout_event_render_partner_message($event, $account, $currency, $
 
 	// already registered, showing donation
 	if (tm_events_user_is_registered($event->nid, $account->uid)) {
-		return "<div class='tm-checkout-pricing-message'>👏 Make a donation to this event</div>";
+		return "<div class='tm-checkout-pricing-message'>👏 Make a donation to this event &mdash; <a style='text-decoration: underline;' href='javascript:tm_checkout_pay_what_you_wish_message();'>learn more</a></div>";
 	}
 	
 	// if lowest value is zero, and you can choose your own price, show donation
@@ -973,7 +973,7 @@ function tm_checkout_event_render_partner_message($event, $account, $currency, $
 		if (isset($event->field_event_payment_tiers[LANGUAGE_NONE][0]['value'])) {
 			if (strpos($event->field_event_payment_tiers[LANGUAGE_NONE][0]['value'], "CHOOSE") !== false) {
 				if ($subscriber_discount != 100) {
-					return "<div class='tm-checkout-pricing-message'>✌️ Tickets are on a <a style='text-decoration: underline;' href='javascript:tm_checkout_pay_what_you_wish_message();'>pay what you can</a> basis</div>";
+					return "<div class='tm-checkout-pricing-message'>✌️ Tickets are on a pay what you can basis &mdash; <a style='text-decoration: underline;' href='javascript:tm_checkout_pay_what_you_wish_message();'>learn more</a></div>";
 				}
 			}
 		}

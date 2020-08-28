@@ -109,6 +109,13 @@
 		});
 	}
 
+	// pay what you wish message
+	tm_checkout_pay_what_you_wish_message = function() {
+		var alert_title = Drupal.settings.tm_checkout_event.pay_what_you_wish_title;
+		var message = Drupal.settings.tm_checkout_event.pay_what_you_wish_message;
+		jQuery.prompt(message, {title: alert_title, buttons: { "OK": true}});
+	}
+
 	// listen to radio button change
 	jQuery('input[type=radio][name=checkout_payment_option]').on('change', function() {
 		tm_checkout_option_selected();

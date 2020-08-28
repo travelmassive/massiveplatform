@@ -322,6 +322,12 @@ function tm_checkout_event_page($event_id, $user_id) {
 	}
 	drupal_add_js(array('tm_checkout_event' => array('checkout_button_ajax_url' => $checkout_button_ajax_url)), array('type' => 'setting'));
 
+	// set pay what you can message for js tm_checkout_pay_what_you_wish_message()
+	$pay_what_you_wish_title = $conf["tm_checkout_event_pay_what_you_wish_title"];
+	$pay_what_you_wish_message = $conf["tm_checkout_event_pay_what_you_wish_message"];
+	drupal_add_js(array('tm_checkout_event' => array('pay_what_you_wish_title' => $pay_what_you_wish_title)), array('type' => 'setting'));
+	drupal_add_js(array('tm_checkout_event' => array('pay_what_you_wish_message' => $pay_what_you_wish_message)), array('type' => 'setting'));
+
 	// load template
 	$template = file_get_contents(drupal_get_path('module', 'tm_checkout') . '/templates/tm_checkout_event.tpl.php');
 
@@ -961,13 +967,13 @@ function tm_checkout_event_render_partner_message($event, $account, $currency, $
 		return "<div class='tm-checkout-pricing-message'>👏 Make a donation to this event</div>";
 	}
 	
-	// if lowest value is zero, and you can choose your own price, don't show message
+	// if lowest value is zero, and you can choose your own price, show donation
 	$lowest_price = _tm_payments_get_lowest_price($event, $account, $currency);
 	if (($lowest_price == 0) and ($payment_type == "pay_what_you_wish")) {
 		if (isset($event->field_event_payment_tiers[LANGUAGE_NONE][0]['value'])) {
 			if (strpos($event->field_event_payment_tiers[LANGUAGE_NONE][0]['value'], "CHOOSE") !== false) {
 				if ($subscriber_discount != 100) {
-					return "";
+					return "<div class='tm-checkout-pricing-message'>✌️ Tickets are on a <a style='text-decoration: underline;' href='javascript:tm_checkout_pay_what_you_wish_message();'>pay what you can</a> basis</div>";
 				}
 			}
 		}

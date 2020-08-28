@@ -234,15 +234,6 @@ a.tm-registrations-attending-more {
 	text-decoration: underline;
 }
 
-@media only screen and (max-width: 640px) {
-	.tm-checkout-short-message { 
-		display: inline-block !important;
-	}
-	.tm-checkout-long-message { 
-		display: none;
-	}
-}
-
 a.tm-checkout-apply-partner-code-link {
 	text-decoration: none;
 }

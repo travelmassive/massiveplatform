@@ -964,7 +964,7 @@ function tm_checkout_event_render_partner_message($event, $account, $currency, $
 
 	// already registered, showing donation
 	if (tm_events_user_is_registered($event->nid, $account->uid)) {
-		return "<div class='tm-checkout-pricing-message'>👏 <span class='tm-checkout-long-message'>Make a donation</span><span class='tm-checkout-short-message' style='display: none;'>Donate</span> to this event &mdash; <a style='text-decoration: underline; white-space: nowrap;' href='javascript:tm_checkout_pay_what_you_wish_message();'>learn more</a></div>";
+		return "<div class='tm-checkout-pricing-message'>👏 Donate to this event &mdash; <a style='text-decoration: underline; white-space: nowrap;' href='javascript:tm_checkout_pay_what_you_wish_message();'>learn more</a></div>";
 	}
 	
 	// if lowest value is zero, and you can choose your own price, show donation

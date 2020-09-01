@@ -3,7 +3,52 @@ h1.page__title {
 }
 
 h1.tm-checkout {
-	text-align: center;
+	margin-bottom: 0.75rem;
+}
+
+.tm-checkout-title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tm-checkout-title-container-image {
+	width: 192px;
+	text-align: right;
+	padding-right: 32px;
+}
+.tm-checkout-title-container-title {
+	width: auto;
+	text-align: left;
+	margin-left: 16px;
+}
+
+img.tm-checkout-image {
+	min-width: 172px;
+	border-radius: 4px;
+	vertical-align: middle;
+	box-shadow:rgba(33, 48, 64, 0.1) 0px 2px 0px 0px;
+}
+
+@media only screen and (max-width: 640px) {
+	.tm-checkout-title-container {
+		flex-direction: column;
+		margin-left: 0;
+	}
+	.tm-checkout-title-container-image {
+		width: 100%;
+		text-align: center;
+		padding-right: 0;
+	}
+	.tm-checkout-title-container-title {
+		width: 100%;
+		text-align: center;
+		margin-left: 0;
+	}
+	img.tm-checkout-image {
+		min-width: 100%;
+		margin-top: 32px;
+	}
 }
 
 p.tm-cta-intro, .tm-cta-intro li {

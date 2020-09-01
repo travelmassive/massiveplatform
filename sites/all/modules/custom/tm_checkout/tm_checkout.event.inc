@@ -285,10 +285,19 @@ function tm_checkout_event_page($event_id, $user_id) {
 	// if no pricing options for fixed_payment, show message
 	if ($no_pricing_options and (($payment_type == "fixed_price"))) {
 
+		// event image url
+		$event_image_url = "";
+		if (isset($event->field_image[LANGUAGE_NONE][0]['uri'])) {
+			$event_image_url = image_style_url("banner_grid", $event->field_image[LANGUAGE_NONE][0]['uri']);
+		} else {
+			$default_image_uri = _tm_events_get_default_image($conf["tm_images_default_field_image"], $event->nid);
+			$event_image_url = image_style_url("banner_grid", $default_image_uri);
+		}
+
 		// prepare message
 		$template = file_get_contents(drupal_get_path('module', 'tm_checkout') . '/templates/tm_checkout_event.tpl.php');
 		$html = str_replace("__TITLE__", "Please contact us.", $template);
-		$html = str_replace("__EVENT_IMAGE_URL__", "", $html);
+		$html = str_replace("__EVENT_IMAGE_URL__", $event_image_url, $html);
 		$html = str_replace("__MESSAGE__", "<style>.tm-cta-intro-footer, .tm-checkout-pricing-options, .tm-checkout-currency-container, hr { display: none; }</style><p class='tm-checkout-error-message'>Ticket pricing is not available for this event.<br>Please <a href='/contact'>contact our team</a> for assistance.</p>", $html);
 		$html = str_replace("__EVENT_URL__", "/contact", $html);
 		$html = str_replace("__BUTTON__", "", $html);

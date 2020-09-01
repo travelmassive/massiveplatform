@@ -1,6 +1,6 @@
 <div class='tm-checkout-title-container'>
 	<div class='tm-checkout-title-container-image'><a href='__EVENT_URL__'><img class='tm-checkout-image' style='width: 172px;' src='__EVENT_IMAGE_URL__'></a></div>
-	<div class='tm-checkout-title-container-text'><h1 class='tm-checkout'><a href='__EVENT_URL__'>__TITLE__</a></h1></div>
+	<div class='tm-checkout-title-container-text'><a href='__EVENT_URL__'><h1 class='tm-checkout'>__TITLE__</h1></a></div>
 </div>
 <div class='tm-checkout-container'>
 <div class='tm-checkout-event-intro'>__MESSAGE__</div>

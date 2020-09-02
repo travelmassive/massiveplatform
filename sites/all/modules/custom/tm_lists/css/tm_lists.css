@@ -459,6 +459,10 @@ ul.tm-list-item-actions-dropdown-menu {
 	margin: auto;
 }
 
+.tm-list-view-item-comment h2.markdown-heading {
+	margin-block-start: 0em !important;
+}
+
 /* Featured */
 
 .tm_list_featured .jqiclose {

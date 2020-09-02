@@ -464,6 +464,11 @@ ul.tm-list-item-actions-dropdown-menu {
 	max-height: 320px;
 }
 
+.tm-list-view-item-comment iframe.instagram-media {
+	width: 100%;
+	max-height: inherit;
+}
+
 .tm-list-intro iframe {
 	width: 80%;
 }
@@ -491,8 +496,7 @@ blockquote.tiktok-embed {
 		width: 320px !important;
 	}
 	.tm-list-view-item-comment iframe.instagram-media {
-		width: 100%;
-		max-height: inherit;
+		margin: auto;
 	}
 }
 

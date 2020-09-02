@@ -3,9 +3,13 @@ h1.page__title {
 }
 
 h1.tm-checkout {
-	font-size: 38px !important;
+	font-size: 44px;
 	margin-bottom: 0.75rem;
 	text-align: center;
+}
+
+.page-checkout-event h1.tm-checkout {
+	font-size: 38px !important;
 }
 
 .tm-checkout-title-container {

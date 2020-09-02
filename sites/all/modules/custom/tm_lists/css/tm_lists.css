@@ -441,6 +441,7 @@ ul.tm-list-item-actions-dropdown-menu {
 .tm-list-view-item-comment ul {
   list-style-type: circle;
   padding-left: 1em;
+  padding-bottom: 1rem;
 }
 
 .tm-list-view-item-comment blockquote {

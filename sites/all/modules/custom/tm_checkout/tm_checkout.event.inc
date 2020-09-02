@@ -247,7 +247,7 @@ function tm_checkout_event_page($event_id, $user_id) {
 	}
 
 	// if preview mode, use default event currency
-	if ($partner_code == "PREVIEW") {
+	if (($partner_code == "PREVIEW") and (!isset($_GET["currency"]))) {
 		$currency = $event->field_event_payment_currency[LANGUAGE_NONE][0]['value'];
 	}
 

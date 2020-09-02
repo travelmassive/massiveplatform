@@ -135,14 +135,14 @@ img.tm-list-contributor-avatar {
 	margin: auto;
 }
 
-.featured .tm-list-view-item-container {
-	padding-right: 2.5rem;
-}
-
 .tm-list-view-item-lhs {
 	width: 200px;
 	text-align: right;
 	padding-top: 1.5rem;
+}
+
+.featured .tm-list-view-item-lhs {
+	width: 170px;
 }
 
 .tm-list-view-item-rhs {

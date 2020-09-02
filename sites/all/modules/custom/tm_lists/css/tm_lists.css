@@ -77,6 +77,7 @@ ul.tm-lists-index li {
 }
 
 .tm-list-description {
+	margin-top: 2.5rem;
 	text-align: left;
 }
 
@@ -162,6 +163,12 @@ img.tm-list-contributor-avatar {
 	border-radius: 16px;
 	margin-top: 1.95rem;
 	margin-bottom: -1.95rem;
+}
+
+@media screen and (min-width: 1200px) {
+	.tm-list-view-item-position {
+		margin-right: -3.25rem;
+	}
 }
 
 .tm-list-view-item-position:before {
@@ -457,11 +464,6 @@ ul.tm-list-item-actions-dropdown-menu {
 	max-height: 320px;
 }
 
-.tm-list-view-item-comment iframe.instagram-media {
-	width: 100%;
-	max-height: inherit;
-}
-
 .tm-list-intro iframe {
 	width: 80%;
 }
@@ -469,6 +471,13 @@ ul.tm-list-item-actions-dropdown-menu {
 .tiktok-embed iframe { 
 	width: inherit !important;
 	max-height: inherit !important;
+}
+
+@media screen and (max-width: 600px) {
+	.iframe.instagram-media {
+		width: 100% !important;
+		margin: auto !important;
+	}
 }
 
 blockquote.tiktok-embed {
@@ -482,8 +491,8 @@ blockquote.tiktok-embed {
 		width: 320px !important;
 	}
 	.tm-list-view-item-comment iframe.instagram-media {
-		margin-left: -29px !important;
-		width: 320px !important;
+		width: 100%;
+		max-height: inherit;
 	}
 }
 

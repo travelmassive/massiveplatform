@@ -177,6 +177,9 @@ img.tm-list-contributor-avatar {
 	.tm-list-view-item-position {
 		margin-right: -3.25rem;
 	}
+	.tm-list-view-item-score {
+		margin-right: -0.75rem !important;
+	}
 }
 
 .tm-list-view-item-position:before {
@@ -230,7 +233,7 @@ img.tm-list-contributor-avatar {
 
 .tm-list-view-item-score {
 	float: right !important;
-	margin-right: 1rem;
+	margin-right: 0.5rem;
 	margin-top: 1.85rem;
 	margin-bottom: -1.85rem;
 }
@@ -270,9 +273,12 @@ img.tm-list-contributor-avatar {
 		flex-direction: column;
 	}
 	.tm-list-view-item-score { 
+		margin-top: -5rem;
+		margin-right: 0;
 	}
 	.tm-list-view-item-position {
-
+		margin-top: -7rem;
+		margin-bottom: 0;
 	}
 	.tm-list-view-item-title {
 		flex-direction: column;

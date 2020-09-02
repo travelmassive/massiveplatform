@@ -220,6 +220,19 @@ function tm_checkout_event_page($event_id, $user_id) {
 	// load event
 	$event = node_load($event_id);
 
+	// get partner code
+	$partner_code = tm_checkout_event_get_partner_code($event);
+	if ($partner_code != "PREVIEW") {
+		if (isset($_GET["partner"])) {
+			$partner_code_provided = htmlentities(strip_tags(strtoupper($_GET["partner"])));
+			if ($partner_code != "") {
+				drupal_set_message("Your partner code " . $partner_code_provided . " has been applied.");
+			} elseif ($partner_code_provided != "") {
+				drupal_set_message("The partner code " . $partner_code_provided . " is invalid or expired.", "help-tip");
+			}
+		}
+	}
+
 	// get event currency
 	$currency = $event->field_event_payment_currency[LANGUAGE_NONE][0]['value'];
 
@@ -233,22 +246,14 @@ function tm_checkout_event_page($event_id, $user_id) {
 		}
 	}
 
+	// if preview mode, use default event currency
+	if ($partner_code == "PREVIEW") {
+		$currency = $event->field_event_payment_currency[LANGUAGE_NONE][0]['value'];
+	}
+
 	// check we have a valid currency
 	if (!isset($conf["tm_payments_currencies"]["usd"])) {
 		$currency = $conf["tm_payments_currencies_default"];
-	}
-
-	// get partner code
-	$partner_code = tm_checkout_event_get_partner_code($event);
-	if ($partner_code != "PREVIEW") {
-		if (isset($_GET["partner"])) {
-			$partner_code_provided = htmlentities(strip_tags(strtoupper($_GET["partner"])));
-			if ($partner_code != "") {
-				drupal_set_message("Your partner code " . $partner_code_provided . " has been applied.");
-			} elseif ($partner_code_provided != "") {
-				drupal_set_message("The partner code " . $partner_code_provided . " is invalid or expired.", "help-tip");
-			}
-		}
 	}
 	
 	// include css
@@ -280,9 +285,19 @@ function tm_checkout_event_page($event_id, $user_id) {
 	// if no pricing options for fixed_payment, show message
 	if ($no_pricing_options and (($payment_type == "fixed_price"))) {
 
+		// event image url
+		$event_image_url = "";
+		if (isset($event->field_image[LANGUAGE_NONE][0]['uri'])) {
+			$event_image_url = image_style_url("banner_grid", $event->field_image[LANGUAGE_NONE][0]['uri']);
+		} else {
+			$default_image_uri = _tm_events_get_default_image($conf["tm_images_default_field_image"], $event->nid);
+			$event_image_url = image_style_url("banner_grid", $default_image_uri);
+		}
+
 		// prepare message
 		$template = file_get_contents(drupal_get_path('module', 'tm_checkout') . '/templates/tm_checkout_event.tpl.php');
 		$html = str_replace("__TITLE__", "Please contact us.", $template);
+		$html = str_replace("__EVENT_IMAGE_URL__", $event_image_url, $html);
 		$html = str_replace("__MESSAGE__", "<style>.tm-cta-intro-footer, .tm-checkout-pricing-options, .tm-checkout-currency-container, hr { display: none; }</style><p class='tm-checkout-error-message'>Ticket pricing is not available for this event.<br>Please <a href='/contact'>contact our team</a> for assistance.</p>", $html);
 		$html = str_replace("__EVENT_URL__", "/contact", $html);
 		$html = str_replace("__BUTTON__", "", $html);
@@ -316,6 +331,12 @@ function tm_checkout_event_page($event_id, $user_id) {
 		$checkout_button_ajax_url .= "&preview";
 	}
 	drupal_add_js(array('tm_checkout_event' => array('checkout_button_ajax_url' => $checkout_button_ajax_url)), array('type' => 'setting'));
+
+	// set pay what you can message for js tm_checkout_pay_what_you_wish_message()
+	$pay_what_you_wish_title = $conf["tm_checkout_event_pay_what_you_wish_title"];
+	$pay_what_you_wish_message = $conf["tm_checkout_event_pay_what_you_wish_message"];
+	drupal_add_js(array('tm_checkout_event' => array('pay_what_you_wish_title' => $pay_what_you_wish_title)), array('type' => 'setting'));
+	drupal_add_js(array('tm_checkout_event' => array('pay_what_you_wish_message' => $pay_what_you_wish_message)), array('type' => 'setting'));
 
 	// load template
 	$template = file_get_contents(drupal_get_path('module', 'tm_checkout') . '/templates/tm_checkout_event.tpl.php');
@@ -397,6 +418,15 @@ function tm_checkout_event_page($event_id, $user_id) {
 	// event url
 	$event_url = "/" . drupal_get_path_alias("node/" . $event->nid);
 
+	// event image url
+	$event_image_url = "";
+	if (isset($event->field_image[LANGUAGE_NONE][0]['uri'])) {
+		$event_image_url = image_style_url("banner_grid", $event->field_image[LANGUAGE_NONE][0]['uri']);
+	} else {
+		$default_image_uri = _tm_events_get_default_image($conf["tm_images_default_field_image"], $event->nid);
+		$event_image_url = image_style_url("banner_grid", $default_image_uri);
+	}
+
 	// render list of attendees
 	$attendees_html = "";
 
@@ -426,6 +456,7 @@ function tm_checkout_event_page($event_id, $user_id) {
 
 	// create html
 	$html = str_replace("__EVENT_URL__", $event_url, $template);
+	$html = str_replace("__EVENT_IMAGE_URL__", $event_image_url, $html);
 	$html = str_replace("__TITLE__", $title, $html);
 	$html = str_replace("__PARTNER_MESSAGE__", $partner_message, $html);
 	$html = str_replace("__MESSAGE__", $message, $html);
@@ -953,16 +984,16 @@ function tm_checkout_event_render_partner_message($event, $account, $currency, $
 
 	// already registered, showing donation
 	if (tm_events_user_is_registered($event->nid, $account->uid)) {
-		return "<div class='tm-checkout-pricing-message'>👏 Make a donation to this event</div>";
+		return "<div class='tm-checkout-pricing-message'>👏 Donate to this event &mdash; <a style='text-decoration: underline; white-space: nowrap;' href='javascript:tm_checkout_pay_what_you_wish_message();'>learn more</a></div>";
 	}
 	
-	// if lowest value is zero, and you can choose your own price, don't show message
+	// if lowest value is zero, and you can choose your own price, show donation
 	$lowest_price = _tm_payments_get_lowest_price($event, $account, $currency);
 	if (($lowest_price == 0) and ($payment_type == "pay_what_you_wish")) {
 		if (isset($event->field_event_payment_tiers[LANGUAGE_NONE][0]['value'])) {
 			if (strpos($event->field_event_payment_tiers[LANGUAGE_NONE][0]['value'], "CHOOSE") !== false) {
 				if ($subscriber_discount != 100) {
-					return "";
+					return "<div class='tm-checkout-pricing-message'>✌️ Tickets are on a pay what you can basis &mdash; <a style='text-decoration: underline; white-space: nowrap;' href='javascript:tm_checkout_pay_what_you_wish_message();'>learn more</a></div>";
 				}
 			}
 		}

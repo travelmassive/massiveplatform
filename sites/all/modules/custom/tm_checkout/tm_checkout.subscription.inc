@@ -89,7 +89,7 @@ function tm_checkout_public_subscription_page() {
 	}
 
 	// render list of subscribers
-	$new_subscribers_html = tm_subscriptions_user_render_subscribers(16);
+	$new_subscribers_html = tm_subscriptions_user_render_subscribers(40);
 	$message = str_replace("__NEW_SUBSCRIBERS_LIST__", $new_subscribers_html, $message);
 
 	// create html
@@ -403,7 +403,7 @@ function tm_checkout_subscription_page($checkout_action = "upgrade_subscription"
 	}
 
 	// render list of subscribers
-	$new_subscribers_html = tm_subscriptions_user_render_subscribers(16);
+	$new_subscribers_html = tm_subscriptions_user_render_subscribers(40);
 	$message = str_replace("__NEW_SUBSCRIBERS_LIST__", $new_subscribers_html, $message);
 
 	// create html

@@ -50,7 +50,7 @@ ul.tm-lists-index li {
 .tm-list-items ul {
     list-style-type: none;
     margin: auto;
-    max-width: 100%;
+    max-width: 850px;
     padding: 0;
 }
 
@@ -58,13 +58,15 @@ ul.tm-lists-index li {
 	padding: 0;
 	background-color: #ffffff;
 	font-size: 14pt;
-	border: 1px solid #eee;
+	border-bottom: 1px solid #eee;
 	width: 100%;
+	margin: auto;
 	display: inline-block;
 	clear:both;
 	margin-top: 8px;
-	box-shadow: 0 0.125rem 0 0 rgba(33, 48, 64, 0.1);
-	border-radius: 0.25rem;
+	/*box-shadow: 0 0.125rem 0 0 rgba(33, 48, 64, 0.1);*/
+	/*border-radius: 0.25rem;*/
+	padding-bottom: 16px;
 	color: #213040;
 }
 
@@ -127,6 +129,20 @@ img.tm-list-contributor-avatar {
 	display: flex;
 	align-items: center;
 	border-top: 1px #eee;
+	align-items: flex-start;
+	max-width: 850px;
+	margin: auto;
+}
+
+.tm-list-view-item-lhs {
+	width: 200px;
+	text-align: right;
+	padding-top: 1.5rem;
+}
+
+.tm-list-view-item-rhs {
+	width: 70%;
+	padding-left: 2rem;
 }
 
 .tm-list-view-item-image {
@@ -136,50 +152,59 @@ img.tm-list-contributor-avatar {
 }
 
 .tm-list-view-item-position {
-	font-size: 22pt;
+	float: right;
+	font-size: 10pt;
+	background-color: #222;
+	color: #fff;
 	font-weight: bold;
-	padding-right: 1.25rem;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	border-radius: 16px;
+	margin-top: 1.95rem;
+	margin-bottom: -1.95rem;
+}
+
+.tm-list-view-item-position:before {
+	content: '#';
 }
 
 .tm-list-view-item-image img.tm-list-item-avatar {
-	width: 72px;
-	height: 72px;
+	width: 96px;
+	height: 96px;
 	object-fit: contain;
 	border-radius: 50%;
 }
 
 .tm-list-view-item-image img.tm-list-item-cover {
-	max-width: 96px;
+	max-height: 96px;
 	border-radius: 8px;
 }
 
 .tm-list-view-item-title {
 	display: flex;
 	align-items: center;
-	padding: 1rem;
-	margin-left: 1rem;
 	margin-right: 2rem;
-	width: 33%;
-	border-right: 1px solid #eee;
 }
 
 .tm-list-view-item-comment {
-	padding: 1rem;
-	padding-right: 1.75rem;
-	width: 60%;
-	vertical-align: middle;
+	padding: 0rem;
+	vertical-align: top;
+}
+
+.tm-list-view-item-comment p {
+	margin-top: 0;
 }
 
 .tm-list-view-item-links {
 	padding-top: 1rem;
 	margin-left: auto;
+	font-size: 11.5pt;
 }
 
 .tm-list-view-item-link {
+	overflow: hidden;
 	padding-left: 0.25rem;
 	margin-left: 0.25rem;
-
-	border-left: 1px solid #ddd;
 }
 
 .tm-list-view-item-link.view-profile {
@@ -189,7 +214,10 @@ img.tm-list-contributor-avatar {
 }
 
 .tm-list-view-item-score {
+	float: right !important;
 	margin-right: 1rem;
+	margin-top: 1.85rem;
+	margin-bottom: -1.85rem;
 }
 
 .tm-list-view-item-anchor {
@@ -200,6 +228,16 @@ img.tm-list-contributor-avatar {
 }
 
 @media screen and (max-width: 800px) {
+	.tm-list-view-item-lhs {
+		width: 100%;
+		padding: 0;
+		padding-top: 1rem;
+		text-align: center;
+	}
+	.tm-list-view-item-rhs {
+		width: 100%;
+		padding: 0;
+	}
 	.tm-list-meta-data {
 		display: flex;
 		flex-direction: column;
@@ -217,16 +255,15 @@ img.tm-list-contributor-avatar {
 		flex-direction: column;
 	}
 	.tm-list-view-item-score { 
-		margin: 0;
 	}
 	.tm-list-view-item-position {
-		width: 100%;
+
 	}
 	.tm-list-view-item-title {
 		flex-direction: column;
 		width: 100%;
 		text-align: center;
-		margin: 0;
+		margin: 0.5rem;
 	}
 	.tm-list-view-item-title h2 {
 		width: 100%;
@@ -240,8 +277,8 @@ img.tm-list-contributor-avatar {
 	.tm-list-view-item-comment {
 		margin: 0;
 		padding-top: 0;
-		width: 85%;
-		text-align: left;
+		width: 100%;
+		text-align: center;
 		padding: 0.25rem;
 		padding-right: 0.25rem;
 	}
@@ -255,8 +292,10 @@ img.tm-list-contributor-avatar {
 /* Options Menu */
 
 .tm-list-item-actions-container {
-	position: absolute;
-	right: 24px;
+	position: relative;
+	width: 100px;
+	float: right;
+	text-align: right;
 	margin-top: -24px;
 }
 
@@ -305,18 +344,23 @@ li.tm-list-item-actions-dropdown {
 }
 
 ul.tm-list-item-actions-dropdown-menu {
+	text-align: left;
 	margin: 0 !important;
 }
 
 /* Moderator menu */
 .tm-list-moderate-menu {
-	float: right;
+	width: 100%;
+	margin: auto;
 	display: inline;
 	margin-top: -42px;
+	text-align: center;
 }
 
 .tm-list-moderate-menu .tm-list-item-actions-dropdown {
-	position: relative;
+	position: absolute;
+	right: 50%;
+	text-align: left;
 }
 
 /* Pageviews */
@@ -369,8 +413,7 @@ ul.tm-list-item-actions-dropdown-menu {
 		width: 140px;
 	}
 	.tm-list-view-item-position {
-		margin-top: 1.75rem;
-		padding-right: 0;
+		
 	}
 }
 

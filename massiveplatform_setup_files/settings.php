@@ -1256,3 +1256,5 @@ $conf["tm_checkout_subscription_leader_message"] = "Share the <a href='/membersh
 $conf["tm_checkout_reports_help_message"] = "Here's a receipt of your payments."; // message to show user
 $conf["tm_checkout_receipt_details"] = "<strong>TAX RECEIPT</strong><br>Your company name<br>Your company address<br>Email: your@receiptemail";
 $conf["tm_checkout_partner_commission_default"] = "10"; // default commission for partner code
+$conf["tm_checkout_event_pay_what_you_wish_title"] = "Why we're asking for donationss"; // pay what you wish title
+$conf["tm_checkout_event_pay_what_you_wish_message"] = "While this event is free, a lot of work goes into making these happen. So we're asking for donations, which helps us create more events and keep this community running."; // pay what you wish message

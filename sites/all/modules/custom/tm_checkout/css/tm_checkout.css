@@ -5,6 +5,7 @@ h1.page__title {
 h1.tm-checkout {
 	font-size: 38px !important;
 	margin-bottom: 0.75rem;
+	text-align: center;
 }
 
 .tm-checkout-title-container {
@@ -32,6 +33,9 @@ img.tm-checkout-image {
 }
 
 @media only screen and (max-width: 640px) {
+	h1.tm-checkout {
+		text-align: left;
+	}
 	.tm-checkout-title-container {
 		flex-direction: column;
 		margin-left: 0;

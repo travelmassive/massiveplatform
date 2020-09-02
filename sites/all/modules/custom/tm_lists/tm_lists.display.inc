@@ -299,7 +299,7 @@ function tm_lists_display_list($list_id) {
 	// contributor html
 	$contributor_html = "";
 	if (sizeof($contributor_links) > 0) {
-		$contributor_html = "Created by ";
+		$contributor_html = "Created by &nbsp;";
 		$contributor_html .= implode(" ", $contributor_links);
 	}
 	if (sizeof($contributor_links) < sizeof($contributor_uids)) {

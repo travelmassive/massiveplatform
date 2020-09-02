@@ -509,7 +509,7 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 		// item position
 		$item_position = "";
 		if (!$hide_item_position) {
-			$item_position = "<span class='tm-list-view-item-position'>" . $count . ".</span>";
+			$item_position = "<span class='tm-list-view-item-position'>" . $count . "</span>";
 		}
 
 		// anchor tag

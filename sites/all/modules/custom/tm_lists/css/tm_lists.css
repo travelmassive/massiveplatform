@@ -308,6 +308,13 @@ img.tm-list-contributor-avatar {
 		text-align: center;
 		width: 100%;
 	}
+	.featured .tm-list-view-item-rhs .tm-list-view-item-comment {
+		padding-left: 1rem;
+		padding-right: 0.5rem;
+	}
+	.featured .tm-list-view-item-rhs .tm-list-view-item-position {
+		margin-right: 0.75rem;
+	}
 }
 
 /* Options Menu */

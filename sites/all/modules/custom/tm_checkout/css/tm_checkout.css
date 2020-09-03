@@ -16,6 +16,8 @@ h1.tm-checkout {
   display: flex;
   align-items: center;
   justify-content: center;
+  max-width: 800px;
+  margin: auto;
 }
 
 .tm-checkout-title-container-image {

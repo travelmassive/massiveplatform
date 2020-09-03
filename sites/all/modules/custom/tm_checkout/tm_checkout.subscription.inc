@@ -271,6 +271,10 @@ function tm_checkout_landing_subscription_page() {
 	$view_payments_url = "/checkout/my-payments/" . $account->uid;
 	$message = str_replace("__VIEW_PAYMENTS_URL__", $view_payments_url, $message);
 
+	// render list of subscribers
+	$new_subscribers_html = tm_subscriptions_user_render_subscribers(40, $account->uid);
+	$message = str_replace("__NEW_SUBSCRIBERS_LIST__", $new_subscribers_html, $message);
+
 	// create html
 	$html = str_replace("__TITLE__", $title, $template);
 	$html = str_replace("__MESSAGE__", $message, $html);

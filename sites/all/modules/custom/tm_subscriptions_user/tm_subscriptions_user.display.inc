@@ -330,12 +330,12 @@ function _tm_subscriptions_user_badge_ds($field, $title = NULL) {
 /**
  * Render new subscribers
  */
-function tm_subscriptions_user_render_subscribers($limit = 5) {
+function tm_subscriptions_user_render_subscribers($limit = 5, $exclude_uid = null) {
 
 	global $conf;
 
 	$html = "";
-	$new_subscriber_uids = tm_subscriptions_user_get_new_subscribers($limit);
+	$new_subscriber_uids = tm_subscriptions_user_get_new_subscribers($limit, $exclude_uid);
 
 	foreach ($new_subscriber_uids as $new_subscriber_uid) {
 

@@ -10,21 +10,7 @@
   <meta name="x-apple-disable-message-reformatting">
   <title></title>
   <style type="text/css">
-    @media screen {
-      @font-face {
-        font-family: 'Lato';
-        font-style: normal;
-        font-weight: 400;
-        src: local('Lato Regular'), local('Lato-Regular'), url('https://fonts.gstatic.com/s/lato/v15/S6uyw4BMUTPHjx4wWA.woff') format('woff'), url('https://fonts.gstatic.com/s/lato/v15/S6uyw4BMUTPHjx4wXg.woff2') format('woff2');
-      }
-      @font-face {
-        font-family: 'Lato';
-        font-style: normal;
-        font-weight: 700;
-        src: local('Lato Bold'), local('Lato-Bold'), url('https://fonts.gstatic.com/s/lato/v15/S6u9w4BMUTPHh6UVSwiPHw.woff') format('woff'), url('https://fonts.gstatic.com/s/lato/v15/S6u9w4BMUTPHh6UVSwiPGQ.woff2') format('woff2');
-      }
-    }
-
+    
     #outlook a {
       padding: 0;
     }
@@ -198,7 +184,7 @@
                                     __HERO_IMAGE__
                                     <tbody>
                                       <tr>
-                                        <td class="pc-fb-font" style="padding: 0 5px; font-family: 'Lato', Helvetica, Arial, sans-serif; font-weight: 500; font-size: 14px; color: #40BE65; text-align: center;" valign="top"></td>
+                                        <td class="pc-fb-font" style="padding: 0 5px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 500; font-size: 14px; color: #40BE65; text-align: center;" valign="top"></td>
                                       </tr>
                                       <tr>
                                         <td height="12" style="font-size: 1px; line-height: 1px;">&nbsp;</td>
@@ -207,7 +193,7 @@
                                     __HERO_HEADLINE__
                                     <tbody>
                                       <tr>
-                                        <td class="pc-fb-font" valign="top" style="padding: 0 5px; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 300; line-height: 28px; letter-spacing: -0.2px; color: #4c4c4c; text-align: left">
+                                        <td class="pc-fb-font" valign="top" style="padding: 0 5px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 17px; font-weight: normal; line-height: 28px; letter-spacing: -0.2px; color: #4c4c4c; text-align: left">
                                             __EMAIL_BODY__
                                         </td>
                                       </tr>

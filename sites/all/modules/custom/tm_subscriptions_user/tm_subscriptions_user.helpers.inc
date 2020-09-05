@@ -533,13 +533,17 @@ function tm_subscriptions_user_get_country_code($account) {
 /**
  * Helper method to get list of new subscribers 
  */
-function tm_subscriptions_user_get_new_subscribers($limit = 5) {
+function tm_subscriptions_user_get_new_subscribers($limit = 5, $exclude_uid = null) {
 
 	$user_subscription_enable = flag_get_flag('user_subscription_enable', NULL);
 	$subscriber_uids = array();
 
-	$query = "SELECT entity_id FROM flagging WHERE entity_type = 'user' AND fid = :fid ORDER BY timestamp DESC LIMIT " . intval($limit);
-	$rows = db_query($query, array(':fid' => $user_subscription_enable->fid))->fetchAll();
+	if ($exclude_uid == null) {
+		$exclude_uid = -1;
+	}
+
+	$query = "SELECT entity_id FROM flagging WHERE entity_type = 'user' AND entity_id != :exclude_uid AND fid = :fid ORDER BY timestamp DESC LIMIT " . intval($limit);
+	$rows = db_query($query, array(':exclude_uid' => $exclude_uid, ':fid' => $user_subscription_enable->fid))->fetchAll();
 	foreach ($rows as $row) {
 		$subscriber_uids[] = $row->entity_id;
 	}

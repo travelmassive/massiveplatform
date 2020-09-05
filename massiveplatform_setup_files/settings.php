@@ -839,8 +839,7 @@ $conf["tm_newsfeed_headline_text_daily"] = array("Your daily briefing.");
 
 /* EVENT PAYMENT SETTINGS */
 /** Optional event payments settings **/
-/** Note: this requires a stripe payments endpoint which is not provided in this distribution **/
-/** If you would like to process event payments, please get in contact with the author. **/
+/** Requires tm_checkout configured as well **/
 /*
 $conf["tm_payments_process_check_certificate"] = false; // turn on for production 
 $conf["tm_payments_process_timeout"] = 10; // seconds to wait for process url before timeout 
@@ -1244,7 +1243,8 @@ $conf["tm_chatbox_secret_key"] = "secret_key";
 // $conf['tm_users_avatar_secret_iv'] = 'randomstring123';
 
 /** STRIPE CHECKOUT */
-$conf["tm_checkout_stripe_library_path"] = "stripe-php-7.46.1"; // stripe  library path inside tm_checkout/includes/
+/*
+$conf["tm_checkout_stripe_library_path"] = "stripe-php-7.51.0"; // stripe  library path inside tm_checkout/includes/
 $conf["tm_checkout_stripe_api_version"] = "2020-03-02"; // stripe api version
 $conf["tm_checkout_stripe_publishable_key"] = "your_stripe_publishable_key"; // your stripe publishable key
 $conf["tm_checkout_stripe_secret_key"] = "your_stripe_secret_key"; // your stripe secret key
@@ -1258,3 +1258,4 @@ $conf["tm_checkout_receipt_details"] = "<strong>TAX RECEIPT</strong><br>Your com
 $conf["tm_checkout_partner_commission_default"] = "10"; // default commission for partner code
 $conf["tm_checkout_event_pay_what_you_wish_title"] = "Why we're asking for donationss"; // pay what you wish title
 $conf["tm_checkout_event_pay_what_you_wish_message"] = "While this event is free, a lot of work goes into making these happen. So we're asking for donations, which helps us create more events and keep this community running."; // pay what you wish message
+*/

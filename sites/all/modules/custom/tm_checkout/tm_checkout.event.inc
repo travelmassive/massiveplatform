@@ -247,7 +247,7 @@ function tm_checkout_event_page($event_id, $user_id) {
 	}
 
 	// if preview mode, use default event currency
-	if ($partner_code == "PREVIEW") {
+	if (($partner_code == "PREVIEW") and (!isset($_GET["currency"]))) {
 		$currency = $event->field_event_payment_currency[LANGUAGE_NONE][0]['value'];
 	}
 
@@ -358,13 +358,19 @@ function tm_checkout_event_page($event_id, $user_id) {
 	if ($user_processing->uid != $account->uid) {
 		$currency_uid = "&uid=" . $account->uid;
 	}
+	// pass ?partner= so event organizer can edit currency in live mode
+	$partner_opt = "";
+	if (isset($_GET["partner"])) {
+		if ($_GET["partner"] == "") {
+			$partner_opt = "&partner=";
+		}
+	}
 	foreach($conf["tm_payments_currencies"] as $choose_currency => $currency_symbol) {
 		$selected = "";
 		if ($choose_currency == $currency) {
 			$selected = "selected='selected'";
 		}
-
-		$currency_html .= '<option value="/checkout/event/' . $event->nid . '?currency=' . $choose_currency . $currency_uid . '" ' . $selected . '>' . $conf["tm_payments_currency_symbols"][$choose_currency] . " " . strtoupper($choose_currency) . '</option>';
+		$currency_html .= '<option value="/checkout/event/' . $event->nid . '?currency=' . $choose_currency . $currency_uid . $partner_opt . '" ' . $selected . '>' . $conf["tm_payments_currency_symbols"][$choose_currency] . " " . strtoupper($choose_currency) . '</option>';
 	}
 	$currency_html .= '</select>';
 

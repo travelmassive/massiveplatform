@@ -64,13 +64,13 @@ function tm_checkout_menu() {
 		'type' => MENU_CALLBACK,
 	);
 	$items[$tm_checkout_subscription_confirm_page] = array(
-		'title' => 'Payment Successful',
+		'title' => 'Your Membership',
 		'page callback' => 'tm_checkout_landing_subscription_page',
 		'access arguments' => array('access content'),
 		'type' => MENU_CALLBACK,
 	);
 	$items[$tm_checkout_subscription_confirm_page . '/%'] = array(
-		'title' => 'Payment Successful',
+		'title' => 'Your Membership',
 		'page callback' => 'tm_checkout_landing_subscription_page',
 		'access arguments' => array('access content'),
 		'page arguments' => array(1),

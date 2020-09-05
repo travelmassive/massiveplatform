@@ -3,14 +3,21 @@ h1.page__title {
 }
 
 h1.tm-checkout {
-	font-size: 38px !important;
+	font-size: 44px;
 	margin-bottom: 0.75rem;
+	text-align: center;
+}
+
+.page-checkout-event h1.tm-checkout {
+	font-size: 38px !important;
 }
 
 .tm-checkout-title-container {
   display: flex;
   align-items: center;
   justify-content: center;
+  max-width: 800px;
+  margin: auto;
 }
 
 .tm-checkout-title-container-image {
@@ -32,6 +39,9 @@ img.tm-checkout-image {
 }
 
 @media only screen and (max-width: 640px) {
+	h1.tm-checkout {
+		text-align: left;
+	}
 	.tm-checkout-title-container {
 		flex-direction: column;
 		margin-left: 0;

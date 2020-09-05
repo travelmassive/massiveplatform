@@ -692,7 +692,7 @@ function tm_notifications_render_hero_headline_html($hero_text) {
   // Hero headline
   $hero_headline_template = '<tbody>
   <tr>
-    <td class="pc-xs-fs-30 pc-xs-lh-42 pc-fb-font" style="padding: 0 5px 25px 5px; font-family: \'Lato\', Helvetica, Arial, sans-serif; font-size: 36px; font-weight: 800; line-height: 46px; letter-spacing: -0.6px; color: #1B1B1B; text-align: center;" valign="top">
+    <td class="pc-xs-fs-30 pc-xs-lh-42 pc-fb-font" style="padding: 0 5px 25px 5px; font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; font-size: 36px; font-weight: 800; line-height: 46px; letter-spacing: -0.6px; color: #1B1B1B; text-align: center;" valign="top">
       <div style="text-align: left;">__HERO_HEADLINE_TEXT__</div>
     </td>
   </tr>
@@ -718,7 +718,7 @@ function tm_notifications_render_button_html($button_label, $button_url) {
   <tbody>
     <tr>
       <td style="padding: 13px 17px; border-radius: 8px; background-color: #1595E7;" bgcolor="#1595E7" valign="top" align="center">
-        <a href="__BUTTON_URL__" style="line-height: 24px; text-decoration: none; word-break: break-word; font-weight: 600; display: block; font-family: \'Lato\', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff;">__BUTTON_TEXT__</a>
+        <a href="__BUTTON_URL__" style="line-height: 24px; text-decoration: none; word-break: break-word; font-weight: 600; display: block; font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff;">__BUTTON_TEXT__</a>
       </td>
     </tr>
   </tbody>
@@ -757,7 +757,7 @@ function tm_notifications_render_member_html($account) {
           </tbody>
           <tbody>
             <tr>
-              <td class="pc-fb-font" valign="top" style="text-align: center; font-family: \'Lato\', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 500; line-height: 21px; letter-spacing: -0.1px; color: #1B1B1B;"><a href="__MEMBER_URL__">__MEMBER_NAME__</a></td>
+              <td class="pc-fb-font" valign="top" style="text-align: center; font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 500; line-height: 21px; letter-spacing: -0.1px; color: #1B1B1B;"><a href="__MEMBER_URL__">__MEMBER_NAME__</a></td>
             </tr>
             <tr>
               <td height="2" style="font-size: 1px; line-height: 1px;">&nbsp;</td>
@@ -773,7 +773,7 @@ function tm_notifications_render_member_html($account) {
   // Member title
   $member_title_template = '<tbody>
   <tr>
-    <td class="pc-fb-font" valign="top" style="text-align: center; font-family: \'Lato\', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 300; line-height: 20px; letter-spacing: -0.2px; color: #9B9B9B;">__MEMBER_TITLE__</td>
+    <td class="pc-fb-font" valign="top" style="text-align: center; font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 20px; letter-spacing: -0.2px; color: #9B9B9B;">__MEMBER_TITLE__</td>
   </tr>
 </tbody>';
 

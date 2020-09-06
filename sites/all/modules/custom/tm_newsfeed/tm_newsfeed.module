@@ -35,12 +35,5 @@ function tm_newsfeed_menu() {
     'type' => MENU_CALLBACK,
   );
 
-  $items['api/newsfeed/discussions'] = array(
-    'title' => 'Discourse Newsfeed',
-    'page callback' => 'tm_newsfeed_discourse_render_frontpage_feed',
-    'access arguments' => array('access content'),
-    'type' => MENU_CALLBACK,
-  );
-
   return $items;
 }

@@ -905,13 +905,6 @@
   transition: all .5s;
 }
 
-.avatar:hover .feedme-image-discussions,
-.avatar:focus .feedme-image-discussions {
-  transform: scale(1.15);
-  opacity: 0.85;
-  transition: all .5s;
-}
-
 .avatar:hover .feedme-image,
 .avatar:focus .feedme-image {
   transform: scale(1.15);

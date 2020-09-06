@@ -127,11 +127,11 @@ function tm_newsfeed_discourse_render_frontpage_feed($max_topics = 5, $use_cache
 			if (($topic->posts_count > 1) or ($topic->like_count > 0)) {
 
 				if ($topic->posts_count == 2) {
-					$replies_label = " (1 reply)";
+					$replies_label = "1 reply";
 				} elseif ($topic->posts_count > 2) {
-					$replies_label = " (" . ($topic->posts_count - 1) . " replies)";
+					$replies_label = "" . ($topic->posts_count - 1) . " replies";
 				} else {
-					$replies_label = " (Be the first to reply)";
+					$replies_label = "Be the first to reply";
 				}
 				$href = '/discourse/redirect_to_forum?forum_destination=/t/' . $topic->slug . "/" . $topic->id;
 				$title = strip_tags($topic->title);

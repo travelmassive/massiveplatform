@@ -552,6 +552,16 @@
       border-radius: $global-radius;
     }
   }
+  .badge-discussions-feedme {
+    width: 4rem;
+    height: 4rem;
+    display: block;
+    img {
+      display: block;
+      max-width: 100%;
+      border-radius: $global-radius;
+    }
+  }
   .badge-search-result {
     width: 4rem;
     height: 4rem;
@@ -890,6 +900,13 @@
 
 .avatar:hover .feedme-image-marketplace,
 .avatar:focus .feedme-image-marketplace {
+  transform: scale(1.15);
+  opacity: 0.85;
+  transition: all .5s;
+}
+
+.avatar:hover .feedme-image-discussions,
+.avatar:focus .feedme-image-discussions {
   transform: scale(1.15);
   opacity: 0.85;
   transition: all .5s;

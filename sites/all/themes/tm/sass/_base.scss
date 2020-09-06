@@ -1341,6 +1341,7 @@ ul.tm-checklist li:before {
 .contained.contained-block.feedme { border-left: 8px solid #488bf8; }
 .contained.contained-block.feedme-marketplace { border-left: 8px solid #FC389A; }
 .contained.contained-block.feedme-discussions { border-left: 8px solid #488bf8; }
+.feedme-discussions-category:after { content: none !important; }
 
 img.feedme-image { max-height: 64px;}
 img.feedme-image-marketplace { height: 64px; object-fit: contain; }

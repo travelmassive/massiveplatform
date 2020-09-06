@@ -5557,35 +5557,40 @@ img.feedme-image-discussions {
   object-fit: contain;
 }
 
-/* line 1350, ../sass/_base.scss */
+/* line 1349, ../sass/_base.scss */
+img.feedme-image-discussions.feedme-image-avatar {
+  border-radius: 50% !important;
+}
+
+/* line 1351, ../sass/_base.scss */
 #frontpage_feed .feedme-marketplace .media {
   width: 72px;
   height: 72px;
 }
 
-/* line 1351, ../sass/_base.scss */
+/* line 1352, ../sass/_base.scss */
 #frontpage_feed .feedme-discussions .media {
   width: 72px;
   height: 72px;
 }
 
-/* line 1353, ../sass/_base.scss */
+/* line 1354, ../sass/_base.scss */
 #frontpage_wordpress_feed #feedme-placeholder {
   height: 600px;
 }
 
-/* line 1354, ../sass/_base.scss */
+/* line 1355, ../sass/_base.scss */
 #frontpage_marketplace_feed #feedme-placeholder {
   height: 648px;
 }
 
-/* line 1355, ../sass/_base.scss */
+/* line 1356, ../sass/_base.scss */
 #frontpage_discussions_feed #feedme-placeholder {
   height: 400px;
 }
 
 /* Profile add field */
-/* line 1359, ../sass/_base.scss */
+/* line 1360, ../sass/_base.scss */
 .tm-add-field-label {
   position: relative;
   border-radius: 12px;
@@ -5599,34 +5604,34 @@ img.feedme-image-discussions {
   font-weight: 600;
 }
 
-/* line 1372, ../sass/_base.scss */
+/* line 1373, ../sass/_base.scss */
 .tm-hide-field-label {
   color: #007eb5;
   line-height: 1;
 }
 
-/* line 1377, ../sass/_base.scss */
+/* line 1378, ../sass/_base.scss */
 .tm-add-field-label:hover, .tm-hide-field-label:hover {
   cursor: pointer;
 }
 
-/* line 1381, ../sass/_base.scss */
+/* line 1382, ../sass/_base.scss */
 .tm-add-field-add-sign {
   margin-right: 4px;
 }
 
-/* line 1385, ../sass/_base.scss */
+/* line 1386, ../sass/_base.scss */
 .tm-add-field-add-sign:before {
   content: "+";
   font-weight: bold;
 }
 
-/* line 1390, ../sass/_base.scss */
+/* line 1391, ../sass/_base.scss */
 .tm-add-field-close-sign {
   margin-right: 4px;
 }
 
-/* line 1394, ../sass/_base.scss */
+/* line 1395, ../sass/_base.scss */
 .tm-add-field-close-sign:before {
   font-family: 'tm-icons';
   content: "\e61b";
@@ -5634,7 +5639,7 @@ img.feedme-image-discussions {
 }
 
 /* Ticket price field */
-/* line 1401, ../sass/_base.scss */
+/* line 1402, ../sass/_base.scss */
 .detail-price a {
   text-decoration: underline;
 }
@@ -9508,14 +9513,6 @@ td.views-field-access {
 }
 
 /* line 909, ../sass/_single.scss */
-.avatar:hover .feedme-image-discussions,
-.avatar:focus .feedme-image-discussions {
-  transform: scale(1.15);
-  opacity: 0.85;
-  transition: all .5s;
-}
-
-/* line 916, ../sass/_single.scss */
 .avatar:hover .feedme-image,
 .avatar:focus .feedme-image {
   transform: scale(1.15);
@@ -9523,31 +9520,31 @@ td.views-field-access {
   transition: all .5s;
 }
 
-/* line 922, ../sass/_single.scss */
+/* line 915, ../sass/_single.scss */
 .node-organization .avatar {
   border-radius: 50%;
 }
 
-/* line 923, ../sass/_single.scss */
+/* line 916, ../sass/_single.scss */
 .user-profile .avatar {
   border-radius: 50%;
 }
 
-/* line 924, ../sass/_single.scss */
+/* line 917, ../sass/_single.scss */
 .contained.node-organization .media .avatar, .node-form > div.node-organization .media .avatar,
 #user-profile-form > div.node-organization .media .avatar,
 #user-register-form > div.node-organization .media .avatar, #content .node-organization.search-form .media .avatar {
   border-radius: 50%;
 }
 
-/* line 925, ../sass/_single.scss */
+/* line 918, ../sass/_single.scss */
 .contained.user-profile .media .avatar, .node-form > div.user-profile .media .avatar,
 #user-profile-form > div.user-profile .media .avatar,
 #user-register-form > div.user-profile .media .avatar, #content .user-profile.search-form .media .avatar {
   border-radius: 50%;
 }
 
-/* line 927, ../sass/_single.scss */
+/* line 920, ../sass/_single.scss */
 .tm-user-menu-subscription-badge {
   padding-left: 0.2em;
   font-size: smaller;
@@ -9560,91 +9557,91 @@ td.views-field-access {
 }
 
 /* 2018 Footer Icons */
-/* line 944, ../sass/_single.scss */
+/* line 937, ../sass/_single.scss */
 .tm_icon:before {
   color: #7a828b;
   margin-right: 6px;
 }
 
-/* line 949, ../sass/_single.scss */
+/* line 942, ../sass/_single.scss */
 ul.tm_links .li:before {
   font-family: 'tm-icons';
   content: '\e630';
 }
 
-/* line 954, ../sass/_single.scss */
+/* line 947, ../sass/_single.scss */
 a.tm_icon.facebook:before {
   font-family: 'tm-icons';
   content: '\e630';
 }
 
-/* line 959, ../sass/_single.scss */
+/* line 952, ../sass/_single.scss */
 a.tm_icon.twitter:before {
   font-family: 'tm-icons';
   content: '\e603';
 }
 
-/* line 964, ../sass/_single.scss */
+/* line 957, ../sass/_single.scss */
 a.tm_icon.instagram:before {
   font-family: 'tm-icons';
   content: '\e649';
 }
 
-/* line 969, ../sass/_single.scss */
+/* line 962, ../sass/_single.scss */
 a.tm_icon.linkedin:before {
   font-family: 'tm-icons';
   content: '\e626';
 }
 
-/* line 974, ../sass/_single.scss */
+/* line 967, ../sass/_single.scss */
 a.tm_icon.tm_more_massive:before {
   font-family: 'tm-icons';
   content: '\e619';
 }
 
-/* line 979, ../sass/_single.scss */
+/* line 972, ../sass/_single.scss */
 a.tm_icon.youtube:before {
   font-family: 'tm-icons';
   content: '\e64f';
 }
 
-/* line 984, ../sass/_single.scss */
+/* line 977, ../sass/_single.scss */
 a.tm_icon.vimeo:before {
   font-family: 'tm-icons';
   content: '\e650';
 }
 
-/* line 989, ../sass/_single.scss */
+/* line 982, ../sass/_single.scss */
 a.tm_icon.snapchat:before {
   font-family: 'tm-icons';
   content: '\e651';
 }
 
-/* line 994, ../sass/_single.scss */
+/* line 987, ../sass/_single.scss */
 a.tm_icon.snapchat:before {
   font-family: 'tm-icons';
   content: '\e651';
   color: #fdff00;
 }
 
-/* line 1000, ../sass/_single.scss */
+/* line 993, ../sass/_single.scss */
 a.tm_icon.tiktok:before {
   font-family: 'tm-icons';
   content: '\e670';
 }
 
 /* Footer 2018 */
-/* line 1007, ../sass/_single.scss */
+/* line 1000, ../sass/_single.scss */
 #footer {
   padding: 0;
 }
 
-/* line 1009, ../sass/_single.scss */
+/* line 1002, ../sass/_single.scss */
 #tm_footer_2018_container {
   background-color: #ffffff;
 }
 
-/* line 1013, ../sass/_single.scss */
+/* line 1006, ../sass/_single.scss */
 #tm_footer_2018 {
   height: 512px;
   background-color: #ffffff;
@@ -9652,12 +9649,12 @@ a.tm_icon.tiktok:before {
   font-size: 13px;
 }
 
-/* line 1020, ../sass/_single.scss */
+/* line 1013, ../sass/_single.scss */
 #tm_footer_2018_inner p {
   line-height: 1.25rem;
 }
 
-/* line 1024, ../sass/_single.scss */
+/* line 1017, ../sass/_single.scss */
 #tm_footer_2018_inner {
   height: 100%;
   padding-top: 128px;
@@ -9665,13 +9662,13 @@ a.tm_icon.tiktok:before {
   background-color: #fff;
 }
 
-/* line 1031, ../sass/_single.scss */
+/* line 1024, ../sass/_single.scss */
 #tm_footer_2018_logo {
   width: 140px;
   height: 64px;
 }
 
-/* line 1036, ../sass/_single.scss */
+/* line 1029, ../sass/_single.scss */
 #tm_footer_2018_lhs {
   position: relative;
   height: 3px;
@@ -9681,7 +9678,7 @@ a.tm_icon.tiktok:before {
   background-color: #e6e6e6;
 }
 
-/* line 1045, ../sass/_single.scss */
+/* line 1038, ../sass/_single.scss */
 #tm_footer_2018_rhs {
   position: relative;
   height: 3px;
@@ -9691,7 +9688,7 @@ a.tm_icon.tiktok:before {
   background-color: #e6e6e6;
 }
 
-/* line 1054, ../sass/_single.scss */
+/* line 1047, ../sass/_single.scss */
 p.tm_footer_2018_slogan {
   padding-top: 0.75rem;
   line-height: 2rem;
@@ -9700,7 +9697,7 @@ p.tm_footer_2018_slogan {
   font-size: 13px;
 }
 
-/* line 1062, ../sass/_single.scss */
+/* line 1055, ../sass/_single.scss */
 #tm_footer_2018_inner p {
   margin-top: 0px;
   margin-bottom: 0px;
@@ -9710,38 +9707,38 @@ p.tm_footer_2018_slogan {
   line-height: 1.2rem;
 }
 
-/* line 1071, ../sass/_single.scss */
+/* line 1064, ../sass/_single.scss */
 #tm_footer_2018_inner p a:hover {
   text-decoration: underline;
 }
 
-/* line 1075, ../sass/_single.scss */
+/* line 1068, ../sass/_single.scss */
 #tm_footer_2018_inner a {
   border-bottom: none;
   color: #40454a !important;
 }
 
-/* line 1080, ../sass/_single.scss */
+/* line 1073, ../sass/_single.scss */
 .tm_footer_2018_stats {
   margin-top: 32px !important;
 }
 
-/* line 1084, ../sass/_single.scss */
+/* line 1077, ../sass/_single.scss */
 .tm_footer_2018_main_links {
   margin-bottom: 32px !important;
 }
 
-/* line 1088, ../sass/_single.scss */
+/* line 1081, ../sass/_single.scss */
 .tm_footer_2018_made_with {
   margin-top: 16px !important;
 }
 
-/* line 1092, ../sass/_single.scss */
+/* line 1085, ../sass/_single.scss */
 .tm_footer_2018_minor_links {
   margin-bottom: 32px !important;
 }
 
-/* line 1096, ../sass/_single.scss */
+/* line 1089, ../sass/_single.scss */
 #tm_footer_2018_base {
   background-color: #f3f4f4;
   text-align: center;
@@ -9752,29 +9749,29 @@ p.tm_footer_2018_slogan {
   line-height: 1.25rem;
 }
 
-/* line 1106, ../sass/_single.scss */
+/* line 1099, ../sass/_single.scss */
 .tm_footer_2018_copyright {
   color: #777;
 }
 
-/* line 1110, ../sass/_single.scss */
+/* line 1103, ../sass/_single.scss */
 .tm_footer_2018_terms {
   color: #777;
 }
 
-/* line 1114, ../sass/_single.scss */
+/* line 1107, ../sass/_single.scss */
 .tm_footer_2018_terms a {
   border-bottom: none;
   text-decoration: none;
   color: #777 !important;
 }
 
-/* line 1120, ../sass/_single.scss */
+/* line 1113, ../sass/_single.scss */
 .tm_footer_2018_terms a:hover {
   text-decoration: underline;
 }
 
-/* line 1124, ../sass/_single.scss */
+/* line 1117, ../sass/_single.scss */
 .tm_footer_2018_links {
   background-color: #222;
   border-radius: 22px;
@@ -9786,7 +9783,7 @@ p.tm_footer_2018_slogan {
   padding-right: 2px;
 }
 
-/* line 1135, ../sass/_single.scss */
+/* line 1128, ../sass/_single.scss */
 .tm_footer_2018_links li {
   list-style-type: none;
   display: inline;
@@ -9794,38 +9791,38 @@ p.tm_footer_2018_slogan {
   color: #fff;
 }
 
-/* line 1142, ../sass/_single.scss */
+/* line 1135, ../sass/_single.scss */
 .tm_footer_2018_links li a {
   border-bottom: none;
   text-decoration: none;
 }
 
-/* line 1147, ../sass/_single.scss */
+/* line 1140, ../sass/_single.scss */
 #tm_footer_2018_powered_by {
   text-align: center;
   font-family: Lato;
 }
 
-/* line 1152, ../sass/_single.scss */
+/* line 1145, ../sass/_single.scss */
 #tm_footer_2018_powered_by a {
   text-decoration: none;
   border-bottom: none;
   color: #75b5b1 !important;
 }
 
-/* line 1158, ../sass/_single.scss */
+/* line 1151, ../sass/_single.scss */
 #tm_footer_2018_powered_by a:hover {
   text-decoration: underline;
   color: #75b5b1 !important;
 }
 
 /* Footer Hero */
-/* line 1164, ../sass/_single.scss */
+/* line 1157, ../sass/_single.scss */
 #footer-hero-container {
   height: 512px;
 }
 
-/* line 1168, ../sass/_single.scss */
+/* line 1161, ../sass/_single.scss */
 .footer-hero-image {
   background-color: #222;
   height: 100%;
@@ -9835,14 +9832,14 @@ p.tm_footer_2018_slogan {
   position: relative;
 }
 
-/* line 1177, ../sass/_single.scss */
+/* line 1170, ../sass/_single.scss */
 .footer-hero-grayscale {
   -webkit-filter: grayscale(100%);
   /* Safari 6.0 - 9.0 */
   filter: grayscale(100%);
 }
 
-/* line 1182, ../sass/_single.scss */
+/* line 1175, ../sass/_single.scss */
 .footer-hero-grayscale:hover {
   -webkit-filter: grayscale(0%);
   /* Safari 6.0 - 9.0 */
@@ -9850,7 +9847,7 @@ p.tm_footer_2018_slogan {
   transition: all 0.25s ease-out;
 }
 
-/* line 1188, ../sass/_single.scss */
+/* line 1181, ../sass/_single.scss */
 .footer-hero-text {
   text-align: center;
   position: absolute;
@@ -9860,33 +9857,33 @@ p.tm_footer_2018_slogan {
   color: #ffffff;
 }
 
-/* line 1197, ../sass/_single.scss */
+/* line 1190, ../sass/_single.scss */
 .footer-hero-text h1 {
   color: #ffffff;
 }
 
-/* line 1198, ../sass/_single.scss */
+/* line 1191, ../sass/_single.scss */
 .footer-hero-text h1 a {
   color: #ffffff;
   text-decoration: underline;
 }
 
-/* line 1199, ../sass/_single.scss */
+/* line 1192, ../sass/_single.scss */
 .footer-hero-text h1 a:hover {
   text-decoration: underline;
 }
 
-/* line 1200, ../sass/_single.scss */
+/* line 1193, ../sass/_single.scss */
 .footer-hero-text p {
   font-size: larger;
 }
 
-/* line 1201, ../sass/_single.scss */
+/* line 1194, ../sass/_single.scss */
 .footer-hero-text a {
   color: #ffffff;
 }
 
-/* line 1202, ../sass/_single.scss */
+/* line 1195, ../sass/_single.scss */
 .footer-hero-info {
   position: absolute;
   width: 80px;
@@ -9902,7 +9899,7 @@ p.tm_footer_2018_slogan {
   border: 1px solid #ffffff;
 }
 
-/* line 1204, ../sass/_single.scss */
+/* line 1197, ../sass/_single.scss */
 .detail-item blockquote {
   margin-left: 0;
   border-left: 4px solid #4382af;
@@ -9910,28 +9907,28 @@ p.tm_footer_2018_slogan {
   margin-top: 1rem;
 }
 
-/* line 1211, ../sass/_single.scss */
+/* line 1204, ../sass/_single.scss */
 .detail-item ul, .detail-item ol {
   padding-left: 1rem;
 }
 
-/* line 1215, ../sass/_single.scss */
+/* line 1208, ../sass/_single.scss */
 .detail-item hr {
   border: none;
   border-top: 1px solid #e8eaeb;
 }
 
-/* line 1220, ../sass/_single.scss */
+/* line 1213, ../sass/_single.scss */
 table.markdown-table th, table.markdown-table td {
   border-bottom: 1px solid #e8eaeb;
 }
 
-/* line 1224, ../sass/_single.scss */
+/* line 1217, ../sass/_single.scss */
 table.markdown-table-striped tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-/* line 1228, ../sass/_single.scss */
+/* line 1221, ../sass/_single.scss */
 .markdown-heading {
   display: block !important;
   position: relative !important;

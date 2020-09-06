@@ -161,11 +161,13 @@ function tm_newsfeed_discourse_render_frontpage_feed($max_topics = 5, $use_cache
 
 				$post_image_url = $topic->image_url;
 				$post_image_alt = "Topic thumbnail";
+				$image_class = '';
 				if ($post_image_url == null) {
 					$post_image_url = $base_url . $user_avatars[$topic->posters[0]->user_id];
 					$post_image_url = str_replace("{size}", 135, $post_image_url);
 					$post_image_alt = strip_tags($user_names[$topic->posters[0]->user_id]);
 					$post_image_alt = str_replace("\"", "", $post_image_alt);
+					$image_class = 'feedme-image-avatar';
 				}
 
 				$item_html .= '<li class="feedme">
@@ -174,7 +176,7 @@ function tm_newsfeed_discourse_render_frontpage_feed($max_topics = 5, $use_cache
                         <div class="media">
                             <div class="avatar">
                                 <span class="badge-discussions-feedme">
-                                    <img class="feedme-image-discussions" typeof="foaf:Image" alt="' . $post_image_alt . '" src="'. $post_image_url .'">
+                                    <img class="feedme-image-discussions ' . $image_class . '" typeof="foaf:Image" alt="' . $post_image_alt . '" src="'. $post_image_url .'">
                                 </span>
                             </div>
                         </div>

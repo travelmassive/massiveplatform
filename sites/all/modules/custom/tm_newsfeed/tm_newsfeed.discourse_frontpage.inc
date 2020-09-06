@@ -200,7 +200,7 @@ function tm_newsfeed_discourse_render_frontpage_feed($max_topics = 5, $use_cache
 
 <section class="contained contained-block feedme-discussions">
     <header class="contained-head">
-        <h1 class="prime-title feedme top">Trending Discussions</h1>
+        <h1 class="prime-title feedme top">Community Discussions</h1>
     </header>
     <div class="contained-body">
         <ul class="discussions-feedme-list related-list">

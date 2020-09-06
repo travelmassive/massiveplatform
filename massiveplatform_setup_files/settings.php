@@ -1032,6 +1032,8 @@ $conf["tm_discourse_sso_unaproved_message"] = "You need to be an approved member
 $conf["tm_discourse_sso_anonymous_message"] = "Please <a href='/user/login'>log in</a> to your account to join our discussions.";
 $conf["tm_discourse_sso_custom_groups"] = array("vips" => array(123));
 $conf["tm_discourse_sso_ignore_users"] = array();
+$conf['tm_discourse_frontpage_feed'] = true; // enable front page feed
+$conf['tm_discourse_frontpage_limit'] = 5; // how many items to show on frontpage feed
 */
 
 /** RECPATCHA SETTINGS **/

@@ -20,6 +20,7 @@ include "tm_newsfeed.builder.inc";
 include "tm_newsfeed.marketplace.inc";
 include "tm_newsfeed.blog.inc";
 include "tm_newsfeed.discourse.inc";
+include "tm_newsfeed.discourse_frontpage.inc";
 include "tm_newsfeed.preview.inc";
 
 /*

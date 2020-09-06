@@ -396,6 +396,16 @@
       border-radius: $global-radius;
     }
   }
+  .badge-discussions-feedme {
+    width: 4rem;
+    height: 4rem;
+    display: block;
+    img {
+      display: block;
+      max-width: 100%;
+      border-radius: $global-radius;
+    }
+  }
   .badge-search-result {
     width: 4rem;
     height: 4rem;

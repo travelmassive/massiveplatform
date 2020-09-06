@@ -5532,7 +5532,7 @@ ul.tm-checklist li:before {
 .contained.contained-block.feedme-discussions, .node-form > div.contained-block.feedme-discussions,
 #user-profile-form > div.contained-block.feedme-discussions,
 #user-register-form > div.contained-block.feedme-discussions, #content .contained-block.feedme-discussions.search-form {
-  border-left: 8px solid #3838FC;
+  border-left: 8px solid #488bf8;
 }
 
 /* line 1345, ../sass/_base.scss */

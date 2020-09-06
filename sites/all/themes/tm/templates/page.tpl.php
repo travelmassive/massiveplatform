@@ -160,43 +160,83 @@
 
             <div class="trilithon" id="frontpage_feed" style="margin-top: 64px;">
 
-              <?php 
-              // MARKETPLACE FEED
-              if (@isset($conf["tm_marketplace_frontpage_url"])) { ?>
-              <div class="trilithon-header contained">
-                <div class="below-header">
-                  <div id="frontpage_marketplace_feed"><section id="feedme-placeholder" class="contained contained-block feedme-marketplace tm-preloading-background"></section><?php include './'. path_to_theme() .'/templates/page--marketplace-frontpage.tpl.php';?></div>
+<?php
+
+// Render front page feeds
+
+// Check discussions feed enabled
+$tm_frontpage_discussions_enabled = false;
+if (@isset($conf["tm_discourse_frontpage_feed"])) {
+  $tm_frontpage_discussions_enabled = $conf["tm_discourse_frontpage_feed"];
+}
+
+// Check marketplace feed enabled
+$tm_frontpage_marketplace_enabled = false;
+if (@isset($conf["tm_marketplace_frontpage_url"])) {
+  $tm_frontpage_marketplace_enabled = true;
+}
+
+// Check wordpress feed enabled
+$tm_frontpage_wordpress_enabled = false;
+if (@isset($conf["tm_enable_wordpress_feedme"])) {
+  $tm_frontpage_wordpress_enabled = $conf["tm_enable_wordpress_feedme"];
+}
+
+// Check status updates enabled
+$tm_frontpage_status_updates_enabled = false;
+if (@isset($conf["tm_status_updates_frontpage_feed"])) {
+  $tm_frontpage_status_updates_enabled = $conf["tm_status_updates_frontpage_feed"];
+}
+
+// wordpress and status updates
+$tm_frontpage_discussions_classes = "trilithon-header contained";
+$tm_frontpage_marketplace_classes = "trilithon-header contained";
+if ($tm_frontpage_discussions_enabled and $tm_frontpage_marketplace_enabled) {
+  $tm_frontpage_discussions_classes = "column first";
+  $tm_frontpage_marketplace_classes = "column second";
+}
+
+// wordpress and status updates
+$tm_frontpage_wordpress_classes = "trilithon-header contained";
+$tm_frontpage_status_updates_classes = "tm-frontpage-feed-fullwidth contained";
+if ($tm_frontpage_wordpress_enabled and $tm_frontpage_status_updates_enabled) {
+  $tm_frontpage_wordpress_classes = "column third";
+  $tm_frontpage_status_updates_classes = "column second";
+}
+
+?>
+
+            <?php if ($tm_frontpage_discussions_enabled) { ?>
+              <div class="<?php echo($tm_frontpage_discussions_classes);?>">
+                <div id="frontpage_discussions_feed">
+                  <?php print(tm_newsfeed_discourse_render_frontpage_feed($conf["tm_discourse_frontpage_limit"]));?>
                 </div>
               </div>
-              <?php } // end if ?>
+            <?php } // end if ?>
 
-              <?php
-              // WORDPRESS FEED
-              $tm_enable_wordpress_feedme = false;
-              if (@isset($conf["tm_enable_wordpress_feedme"])) {
-                if ($conf["tm_enable_wordpress_feedme"]) {
-                  $tm_enable_wordpress_feedme = true;
-              ?>
-                <div class="column first" id="frontpage_wordpress_feed" style="float: left;"><section id="feedme-placeholder" class="contained contained-block feedme tm-preloading-background"></section></div>
-              <?php
-                  include './'. path_to_theme() .'/templates/page--wordpress-feedme.tpl.php';
-                } // end if
-              } // end if
-              ?>
+            <?php if ($tm_frontpage_marketplace_enabled) { ?>
+              <div class="<?php echo($tm_frontpage_marketplace_classes);?>">
+                <div id="frontpage_marketplace_feed">
+                  <section id="feedme-placeholder" class="contained contained-block feedme-marketplace tm-preloading-background"></section>
+                </div>
+              </div>
+              <?php include './'. path_to_theme() .'/templates/page--marketplace-frontpage.tpl.php';?></div>
+            <?php } // end if ?>
 
-              <?php
-              // STATUS UPDATES FEED
-              if (@isset($conf["tm_status_updates_frontpage_feed"])) {
-                if ($conf["tm_status_updates_frontpage_feed"]) {
-                  $show_flag_feeds = true;
-                ?>
-                <div class="<?php if($tm_enable_wordpress_feedme) { print("column second"); }?>" id="frontpage_flag_feed" style="float: right;">
+            </div><div class="trilithon" id="frontpage_feed_row_2">
+            
+            <?php if ($tm_frontpage_wordpress_enabled) { ?>
+              <div class="<?php echo($tm_frontpage_wordpress_classes);?>" id="frontpage_wordpress_feed">
+                <section id="feedme-placeholder" class="contained contained-block feedme tm-preloading-background"></section>
+              </div>
+            <?php include './'. path_to_theme() .'/templates/page--wordpress-feedme.tpl.php'; ?>
+            <?php } // end if ?>
+
+            <?php if ($tm_frontpage_status_updates_enabled) { ?>
+              <div class="<?php echo($tm_frontpage_status_updates_classes);?>" id="frontpage_flag_feed">
                 <?php print(tm_status_updates_show_frontpage_updates()); ?>
-                </div> <!-- close second column -->
-              <?php 
-                  } // end if
-                } // end if
-              ?>
+              </div> <!-- close second column -->
+            <?php } // end if ?>
               
             </div> <!-- close trilithon -->
 

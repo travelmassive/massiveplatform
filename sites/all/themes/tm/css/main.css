@@ -5509,13 +5509,19 @@ ul.tm-checklist li:before {
 
 /* Feedme */
 /* line 1340, ../sass/_base.scss */
+.tm-frontpage-feed-fullwidth {
+  margin-left: 16px !important;
+  margin-right: 16px !important;
+}
+
+/* line 1341, ../sass/_base.scss */
 .contained.contained-block.feedme, .node-form > div.contained-block.feedme,
 #user-profile-form > div.contained-block.feedme,
 #user-register-form > div.contained-block.feedme, #content .contained-block.feedme.search-form {
   border-left: 8px solid #488bf8;
 }
 
-/* line 1341, ../sass/_base.scss */
+/* line 1342, ../sass/_base.scss */
 .contained.contained-block.feedme-marketplace, .node-form > div.contained-block.feedme-marketplace,
 #user-profile-form > div.contained-block.feedme-marketplace,
 #user-register-form > div.contained-block.feedme-marketplace, #content .contained-block.feedme-marketplace.search-form {
@@ -5523,34 +5529,58 @@ ul.tm-checklist li:before {
 }
 
 /* line 1343, ../sass/_base.scss */
+.contained.contained-block.feedme-discussions, .node-form > div.contained-block.feedme-discussions,
+#user-profile-form > div.contained-block.feedme-discussions,
+#user-register-form > div.contained-block.feedme-discussions, #content .contained-block.feedme-discussions.search-form {
+  border-left: 8px solid #3838FC;
+}
+
+/* line 1345, ../sass/_base.scss */
 img.feedme-image {
   max-height: 64px;
 }
 
-/* line 1344, ../sass/_base.scss */
+/* line 1346, ../sass/_base.scss */
 img.feedme-image-marketplace {
   height: 64px;
   object-fit: contain;
 }
 
-/* line 1346, ../sass/_base.scss */
+/* line 1347, ../sass/_base.scss */
+img.feedme-image-discussions {
+  height: 64px;
+  object-fit: contain;
+}
+
+/* line 1349, ../sass/_base.scss */
 #frontpage_feed .feedme-marketplace .media {
   width: 72px;
   height: 72px;
 }
 
-/* line 1348, ../sass/_base.scss */
+/* line 1350, ../sass/_base.scss */
+#frontpage_feed .feedme-discussions .media {
+  width: 72px;
+  height: 72px;
+}
+
+/* line 1352, ../sass/_base.scss */
 #frontpage_wordpress_feed #feedme-placeholder {
   height: 600px;
 }
 
-/* line 1349, ../sass/_base.scss */
+/* line 1353, ../sass/_base.scss */
 #frontpage_marketplace_feed #feedme-placeholder {
   height: 400px;
 }
 
+/* line 1354, ../sass/_base.scss */
+#frontpage_discussions_feed #feedme-placeholder {
+  height: 400px;
+}
+
 /* Profile add field */
-/* line 1353, ../sass/_base.scss */
+/* line 1358, ../sass/_base.scss */
 .tm-add-field-label {
   position: relative;
   border-radius: 12px;
@@ -5564,34 +5594,34 @@ img.feedme-image-marketplace {
   font-weight: 600;
 }
 
-/* line 1366, ../sass/_base.scss */
+/* line 1371, ../sass/_base.scss */
 .tm-hide-field-label {
   color: #007eb5;
   line-height: 1;
 }
 
-/* line 1371, ../sass/_base.scss */
+/* line 1376, ../sass/_base.scss */
 .tm-add-field-label:hover, .tm-hide-field-label:hover {
   cursor: pointer;
 }
 
-/* line 1375, ../sass/_base.scss */
+/* line 1380, ../sass/_base.scss */
 .tm-add-field-add-sign {
   margin-right: 4px;
 }
 
-/* line 1379, ../sass/_base.scss */
+/* line 1384, ../sass/_base.scss */
 .tm-add-field-add-sign:before {
   content: "+";
   font-weight: bold;
 }
 
-/* line 1384, ../sass/_base.scss */
+/* line 1389, ../sass/_base.scss */
 .tm-add-field-close-sign {
   margin-right: 4px;
 }
 
-/* line 1388, ../sass/_base.scss */
+/* line 1393, ../sass/_base.scss */
 .tm-add-field-close-sign:before {
   font-family: 'tm-icons';
   content: "\e61b";
@@ -5599,7 +5629,7 @@ img.feedme-image-marketplace {
 }
 
 /* Ticket price field */
-/* line 1395, ../sass/_base.scss */
+/* line 1400, ../sass/_base.scss */
 .detail-price a {
   text-decoration: underline;
 }

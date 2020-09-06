@@ -149,6 +149,9 @@ function tm_newsfeed_discourse_render_frontpage_feed($max_topics = 5, $use_cache
 
 				// category
 				$category_name = strip_tags($parent_categories[$topic->category_id]->name);
+				if (strlen($category_name) > 38) {
+					$category_name = substr($category_name, 0, 37) . "...";
+				}
 				$category_color = $parent_categories[$topic->category_id]->color;
 				$category_text_color = $parent_categories[$topic->category_id]->text_color;
 				$category_url = '/discourse/redirect_to_forum?forum_destination=' . $parent_categories[$topic->category_id]->topic_url;

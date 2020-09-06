@@ -5535,62 +5535,82 @@ ul.tm-checklist li:before {
   border-left: 8px solid #488bf8;
 }
 
-/* line 1344, ../sass/_base.scss */
+/* line 1345, ../sass/_base.scss */
+.feedme-discussions-category {
+  display: none !important;
+  margin-top: 4px;
+  border-radius: 12px;
+  margin-right: 6px;
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  color: #ffffff;
+  background-color: #488bf8;
+}
+
+@media only screen and (min-width: 34.063rem) {
+  /* line 1359, ../sass/_base.scss */
+  .feedme-discussions-category {
+    display: inline-block !important;
+  }
+}
+/* line 1364, ../sass/_base.scss */
 .feedme-discussions-category:after {
   content: none !important;
 }
 
-/* line 1346, ../sass/_base.scss */
+/* line 1367, ../sass/_base.scss */
 img.feedme-image {
   max-height: 64px;
 }
 
-/* line 1347, ../sass/_base.scss */
+/* line 1368, ../sass/_base.scss */
 img.feedme-image-marketplace {
   height: 64px;
   object-fit: contain;
 }
 
-/* line 1348, ../sass/_base.scss */
+/* line 1369, ../sass/_base.scss */
 img.feedme-image-discussions {
   height: 64px;
   object-fit: contain;
 }
 
-/* line 1349, ../sass/_base.scss */
+/* line 1370, ../sass/_base.scss */
 img.feedme-image-discussions.feedme-image-avatar {
   border-radius: 50% !important;
 }
 
-/* line 1351, ../sass/_base.scss */
+/* line 1372, ../sass/_base.scss */
 #frontpage_feed .feedme-marketplace .media {
   width: 72px;
   height: 72px;
 }
 
-/* line 1352, ../sass/_base.scss */
+/* line 1373, ../sass/_base.scss */
 #frontpage_feed .feedme-discussions .media {
   width: 72px;
   height: 72px;
 }
 
-/* line 1354, ../sass/_base.scss */
+/* line 1375, ../sass/_base.scss */
 #frontpage_wordpress_feed #feedme-placeholder {
   height: 600px;
 }
 
-/* line 1355, ../sass/_base.scss */
+/* line 1376, ../sass/_base.scss */
 #frontpage_marketplace_feed #feedme-placeholder {
   height: 648px;
 }
 
-/* line 1356, ../sass/_base.scss */
+/* line 1377, ../sass/_base.scss */
 #frontpage_discussions_feed #feedme-placeholder {
   height: 400px;
 }
 
 /* Profile add field */
-/* line 1360, ../sass/_base.scss */
+/* line 1381, ../sass/_base.scss */
 .tm-add-field-label {
   position: relative;
   border-radius: 12px;
@@ -5604,34 +5624,34 @@ img.feedme-image-discussions.feedme-image-avatar {
   font-weight: 600;
 }
 
-/* line 1373, ../sass/_base.scss */
+/* line 1394, ../sass/_base.scss */
 .tm-hide-field-label {
   color: #007eb5;
   line-height: 1;
 }
 
-/* line 1378, ../sass/_base.scss */
+/* line 1399, ../sass/_base.scss */
 .tm-add-field-label:hover, .tm-hide-field-label:hover {
   cursor: pointer;
 }
 
-/* line 1382, ../sass/_base.scss */
+/* line 1403, ../sass/_base.scss */
 .tm-add-field-add-sign {
   margin-right: 4px;
 }
 
-/* line 1386, ../sass/_base.scss */
+/* line 1407, ../sass/_base.scss */
 .tm-add-field-add-sign:before {
   content: "+";
   font-weight: bold;
 }
 
-/* line 1391, ../sass/_base.scss */
+/* line 1412, ../sass/_base.scss */
 .tm-add-field-close-sign {
   margin-right: 4px;
 }
 
-/* line 1395, ../sass/_base.scss */
+/* line 1416, ../sass/_base.scss */
 .tm-add-field-close-sign:before {
   font-family: 'tm-icons';
   content: "\e61b";
@@ -5639,7 +5659,7 @@ img.feedme-image-discussions.feedme-image-avatar {
 }
 
 /* Ticket price field */
-/* line 1402, ../sass/_base.scss */
+/* line 1423, ../sass/_base.scss */
 .detail-price a {
   text-decoration: underline;
 }

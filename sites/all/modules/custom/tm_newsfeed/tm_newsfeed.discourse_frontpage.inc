@@ -149,10 +149,10 @@ function tm_newsfeed_discourse_render_frontpage_feed($max_topics = 5, $use_cache
 
 				// category
 				$category_name = strip_tags($parent_categories[$topic->category_id]->name);
-				$category_color = "#488bf8"; //$parent_categories[$topic->category_id]->color;
+				$category_color = $parent_categories[$topic->category_id]->color;
 				$category_text_color = $parent_categories[$topic->category_id]->text_color;
 				$category_url = '/discourse/redirect_to_forum?forum_destination=' . $parent_categories[$topic->category_id]->topic_url;
-				$category_html = '<span class="feedme-discussions-category" style="display: inline-block; margin-top: 4px; border-radius: 12px; margin-right: 6px; padding-left: 6px; padding-right: 6px; padding-top: 0px; padding-bottom: 0px; color: #' . $category_text_color . '; background-color: ' . $category_color . '">' . $category_name . '</span>'; 
+				$category_html = '<span class="feedme-discussions-category">' . $category_name . '</span>'; 
 
 				$href = '/discourse/redirect_to_forum?forum_destination=/t/' . $topic->slug . "/" . $topic->id;
 				$title = strip_tags($topic->title);

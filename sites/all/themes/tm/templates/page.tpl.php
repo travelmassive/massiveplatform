@@ -209,7 +209,7 @@ if ($tm_frontpage_wordpress_enabled and $tm_frontpage_status_updates_enabled) {
             <?php if ($tm_frontpage_discussions_enabled) { ?>
               <div class="<?php echo($tm_frontpage_discussions_classes);?>">
                 <div id="frontpage_discussions_feed">
-                  <?php print(tm_newsfeed_discourse_render_frontpage_feed($conf["tm_discourse_frontpage_limit"], false));?>
+                  <?php print(tm_newsfeed_discourse_render_frontpage_feed($conf["tm_discourse_frontpage_limit"]));?>
                 </div>
               </div>
             <?php } // end if ?>

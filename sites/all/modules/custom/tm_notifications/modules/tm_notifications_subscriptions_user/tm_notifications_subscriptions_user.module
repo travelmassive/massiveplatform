@@ -72,11 +72,6 @@ function tm_notifications_subscriptions_user_notify_chapter_leaders($account, $c
   // construct message for chapter leader
   $chapter_leader_message = $conf["tm_subscriptions_user_chapter_leader_message"];
 
-  // add commissions url
-  // note: need tm_commissions enabled
-  $view_chapter_commissions_url = '__SERVER_HTTP__://__SERVER_NAME__/' . drupal_get_path_alias("node/" . $chapter->nid) . "/commissions";
-  $chapter_leader_message = str_replace("__COMMISSIONS_REPORT_URL__", $view_chapter_commissions_url, $chapter_leader_message);
-
   // notify chapter leaders
   if (isset($chapter->field_chapter_leaders[LANGUAGE_NONE])) {
     foreach ($chapter->field_chapter_leaders[LANGUAGE_NONE] as $leader) {

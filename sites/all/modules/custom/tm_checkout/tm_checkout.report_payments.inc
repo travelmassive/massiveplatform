@@ -89,7 +89,7 @@ function tm_checkout_reports_all_payments() {
   drupal_add_css(drupal_get_path('module', 'tm_checkout') . '/css/tm_checkout_reports.css');
 
   // Help message
-  $days_links = "<a href='/checkout/reports/all-payments/30'>30 days</a>, <a href='/checkout/reports/all-payments/30'>90 days</a>, <a href='/checkout/reports/all-payments/365'>12 months</a>, <a href='/checkout/reports/all-payments/all'>All-time</a>";
+  $days_links = "<a href='/checkout/reports/all-payments/30'>30 days</a>, <a href='/checkout/reports/all-payments/90'>90 days</a>, <a href='/checkout/reports/all-payments/365'>12 months</a>, <a href='/checkout/reports/all-payments/all'>All-time</a>";
   $help_message = "Here's a report of your payments " . $days_label . " &mdash; " . $days_links;
   drupal_get_messages('help-tip');
   drupal_set_message($help_message, 'help-tip');
@@ -251,7 +251,7 @@ function tm_checkout_reports_chapter_payments() {
   drupal_add_js(array('tm_checkout_reports' => array('form_heading' => 'Chapter Payments')), array('type' => 'setting'));
 
   // Help message
-  $days_links = "<a href='/checkout/reports/all-payments/30'>30 days</a>, <a href='/checkout/reports/all-payments/30'>90 days</a>, <a href='/checkout/reports/all-payments/365'>12 months</a>, <a href='/checkout/reports/all-payments/all'>All-time</a>";
+  $days_links = "<a href='/checkout/reports/chapter-payments/" . $chapter_id . "/30'>30 days</a>, <a href='/checkout/reports/chapter-payments/" . $chapter_id . "/90'>90 days</a>, <a href='/checkout/reports/chapter-payments/" . $chapter_id . "/365'>12 months</a>, <a href='/checkout/reports/chapter-payments/" . $chapter_id . "/all'>All-time</a>";
   $help_message = "Here's a report of your earnings " . $days_label . " &mdash; " . $days_links;
   drupal_get_messages('help-tip');
   drupal_set_message($help_message, 'help-tip');

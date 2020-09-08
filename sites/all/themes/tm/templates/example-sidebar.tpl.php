@@ -165,7 +165,7 @@
 	      	<select name="tm_sidenav_moderator_options" id="tm_sidenav_moderator_options" onChange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
 	      		<option value=''>Moderation</option>
 	      		<?php if (module_exists("tm_checkout")) { ?>
-          			<option value='/checkout/reports/all-payments/'>Payments Report</option>
+          			<option value='/checkout/reports/all-payments/30'>Payments</option>
        			<?php } // end if ?>
 	      		<option value='/invite'>Invite members</option>
 		        <option value='/node/new/event'>Add event</option>

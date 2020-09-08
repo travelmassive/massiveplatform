@@ -31,7 +31,7 @@ function tm_status_updates_show_frontpage_updates($display_num_items = 5, $displ
 	$viewer_ip = tm_geoip_get_real_visitor_ip();
 
 	// render item html from results
-	$results_html = tm_status_updates_render_results_items($all_results["results"], $viewer_ip, true, true, false, $display_limit);
+	$results_html = tm_status_updates_render_results_items($all_results["results"], $viewer_ip, true, true, false, $display_limit, true);
 
 	// render newsfeed section
 	global $tm_status_updates_feed_template_frontpage_css;

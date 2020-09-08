@@ -1,0 +1,12 @@
+.tm-reports-heading-subtitle {
+	display: block;
+	font-size: 16px;
+	text-transform: uppercase;
+}
+
+td.tm-checkout-reports-item {
+	max-width: 256px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}

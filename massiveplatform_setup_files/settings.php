@@ -1050,24 +1050,6 @@ $conf["tm_repatcha_language"] = "us"; // language (default us)
 $conf["tm_recaptcha_user_message"] = "You must complete the reCAPTCHA to submit this form."; // display if user does not complete recaptcha
 $conf["tm_recaptcha_error_message"] = "Oops, a problem occured with Google reCAPTHCA."; // display if error processing
 
-/** COMMISSION REPORTINGS **/
-$conf["tm_commissions_reports_url"] = "https://localdev.massiveplatform.com/payments/report_commissions.php"; // external commission reports
-$conf["tm_commissions_summary_url"] = "https://localdev.massiveplatform.com/payments/report_commissions_summary.php"; // external commission summary
-$conf["tm_commissions_summary_days"] = 30; // number of days to report on
-$conf["tm_commissions_reports_help_message"] = "Learn how your chapter can earn commissions on sales in our community.";
-$conf["tm_commissions_confirm_terms_text"] = "Hi __first_name__,<br><br>This report is confidential and for chapter leaders only.";
-$conf["tm_commissions_footer_text"] = "<i>The above information is confidential and for chapter leaders only.<br>Commissions exclude processing and forex fees.</i>"; // display terms in footer
-$conf["tm_commissions_regional_confirm_terms_text"] = "Hi __first_name__,<br><br>This report is confidential and for regional leaders only.";
-$conf["tm_commissions_regional_footer_text"] = "<i>The above information is confidential and for regional leaders only.<br>Commissions exclude processing and forex fees.</i>"; // display terms in footer for regional reports
-$conf["tm_commissions_show_currency_symbol"] = true; // show currency symbol in commission reports
-$conf["tm_commissions_display_internal"] = array("NA" => "North America", "EU" => "Europe", "AF" => "Africa", "AS" => "Asia", "LATAM" => "Latin America", "OC" => "Oceania");
-$conf["tm_commissions_users_who_can_access_region_reports"] = array(); // users who can access additional reports
-$conf["tm_commissions_summary_extra_text"] = " or <a href=''>learn more</a>"; // add text to commission summary
-$conf["tm_commissions_role_required"] = "pro chapter leader"; // role required to access commissions
-$conf["tm_commissions_role_required_title"] = "Earn revenue from your chapter"; // title
-$conf["tm_commissions_role_required_message"] = "Hi __first_name__,<br><br>Please get in touch with our community team to apply."; // display message if chapter leader does not have role
-$conf["tm_commissions_role_required_learn_more_url"] = "#"; // learn more URL
-
 /** WHO'S VIEWED YOUR PROFILE **/
 $conf["tm_track_views_store_days"] = 90; // how many days to store profile views
 $conf["tm_track_views_display_mode"] = "all"; // options = all, approved, subscribed

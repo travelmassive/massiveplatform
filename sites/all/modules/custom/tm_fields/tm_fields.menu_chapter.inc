@@ -161,12 +161,12 @@ function _tm_more_actions_process_chapter_menu($field, $title, &$links, &$menu_i
           ))
         );
 
-        if (module_exists("tm_commissions")) {
-          // view chapter commissions
-          $link_path = $current_uri.'/commissions';
+        if (module_exists("tm_payments")) {
+          // view chapter payments
+          $link_path = '/checkout/reports/chapter-payments/' . $node->nid;
           $links['chapter'][] = array(
-            'wrapper_class' => array('chapter_commissions'),
-            'content' => '<a href="/' . $link_path . '">Commissions</a>'
+            'wrapper_class' => array('chapter_payments'),
+            'content' => '<a href="' . $link_path . '">Payments</a>'
           );
         }
         

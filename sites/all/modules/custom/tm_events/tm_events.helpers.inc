@@ -777,3 +777,16 @@ function tm_events_get_registered_attendees($event_id, $limit = 100000) {
 
 }
 
+/**
+ * Helper method to get all events for a chapter
+ */
+function tm_events_get_all_chapters_events($chapter_id) {
+
+  $event_ids = array();
+  $query = "SELECT entity_id FROM field_data_field_chapter WHERE bundle = 'event' AND field_chapter_target_id = :chapter_id AND deleted = 0";
+  $rows = db_query($query, array(':chapter_id' => $chapter_id))->fetchAll();
+  foreach ($rows as $row) {
+    $event_ids[] = $row->entity_id;
+  }
+  return $event_ids;
+}

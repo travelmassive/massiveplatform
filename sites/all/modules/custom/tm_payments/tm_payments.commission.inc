@@ -9,7 +9,7 @@ function _tm_payments_get_event_commission($event) {
 
 	// If commission set in event field, return it
 	if (isset($event->field_event_payment_commission[LANGUAGE_NONE][0]['value'])) {
-	return $event->field_event_payment_commission[LANGUAGE_NONE][0]['value'];
+		return $event->field_event_payment_commission[LANGUAGE_NONE][0]['value'];
 	}
 
 	// If event has chapter, return chapter commission

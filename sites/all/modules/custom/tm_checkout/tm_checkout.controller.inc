@@ -126,3 +126,56 @@ function tm_checkout_get_event_payments($event_id) {
 	return $results_array;
 
 }
+
+/**
+ * Get all payments
+ */ 
+function tm_checkout_get_all_payments($days = "") {
+
+
+	// default fetch all payments
+	$query = "SELECT * FROM tm_checkout_payments ORDER BY timestamp DESC";
+	if ($days != "") {
+		$days = intval($days);
+		$query = "SELECT * FROM tm_checkout_payments WHERE FROM_UNIXTIME(timestamp) > NOW() - INTERVAL " . intval($days) . " DAY ORDER BY timestamp DESC";
+	}
+
+	// fetch result
+	$results = db_query($query)->fetchAll();
+
+	$results_array = array();
+	foreach ($results as $result) {
+		$results_array[] = $result;
+	}
+
+	return $results_array;
+
+}
+
+/**
+ * Get all payments for entities
+ */ 
+function tm_checkout_get_entities_payments($entity_ids, $days = "") {
+
+	if (sizeof($entity_ids) == 0) {
+		return array();
+	}
+
+	// default fetch all payments
+	$query = "SELECT * FROM tm_checkout_payments WHERE entity_id IN (" . implode(",", $entity_ids) . ") ORDER BY timestamp DESC";
+	if ($days != "") {
+		$days = intval($days);
+		$query = "SELECT * FROM tm_checkout_payments WHERE entity_id IN (" . implode(",", $entity_ids) . ") AND FROM_UNIXTIME(timestamp) > NOW() - INTERVAL " . intval($days) . " DAY ORDER BY timestamp DESC";
+	}
+
+	// fetch result
+	$results = db_query($query)->fetchAll();
+
+	$results_array = array();
+	foreach ($results as $result) {
+		$results_array[] = $result;
+	}
+
+	return $results_array;
+
+}

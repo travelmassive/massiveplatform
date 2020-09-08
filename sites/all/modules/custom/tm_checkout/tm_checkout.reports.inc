@@ -54,13 +54,14 @@ function tm_checkout_reports_user_payments($account = null) {
     return;
   }
 
+  // Include css
+  drupal_add_css(drupal_get_path('module', 'tm_checkout') . '/css/tm_checkout_reports.css');
+
   // Add javascript to form
   drupal_add_js(drupal_get_path('module', 'tm_checkout') . '/js/tm_checkout_reports.js');
   $account_link = l(t($account->realname), drupal_get_path_alias("user/" . $account->uid));
   drupal_add_js(array('tm_checkout_reports' => array('form_subtitle' => $account_link)), array('type' => 'setting'));
   drupal_add_js(array('tm_checkout_reports' => array('form_heading' => 'Your Payments')), array('type' => 'setting'));
-
-  $form = array();
 
   // get event sales from payment processor callback
   $results = tm_checkout_get_user_payments($account->uid);
@@ -171,8 +172,9 @@ function tm_checkout_reports_user_payments($account = null) {
 
   $html .= "</div>";
 
+  // return form
+  $form = array();
   $form['event_sales'] = array('#markup' => $html);
-
   return $form;
 
 }

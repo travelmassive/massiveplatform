@@ -620,7 +620,7 @@ function tm_status_updates_render_flagged_item($result, $show_you = true, $show_
 /**
  * Helper method to render results list
  */
-function tm_status_updates_render_results_items($results, $count_viewer_ip, $hide_repeat_posters = true, $hide_own_repeats = false, $show_you = true, $display_limit = null) {
+function tm_status_updates_render_results_items($results, $count_viewer_ip, $hide_repeat_posters = true, $hide_own_repeats = false, $show_you = true, $display_limit = null, $hide_organization_updates = false) {
 
 	global $user;
 	global $conf;
@@ -656,6 +656,15 @@ function tm_status_updates_render_results_items($results, $count_viewer_ip, $hid
 
 		if ($count_items > $display_limit) {
 			break;
+		}
+
+		// hide organization updates if $hide_organization_updates true
+		if ($result->result_type == "status_update") {
+			if ($result->status_update_entity_type == "organization") {
+				if ($hide_organization_updates) {
+					continue;
+				}
+			}
 		}
 
 		// check if item is an event registration or waitlist

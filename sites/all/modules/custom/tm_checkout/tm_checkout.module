@@ -8,6 +8,8 @@ include_once 'tm_checkout.webhook.inc';
 include_once 'tm_checkout.reports.inc';
 include_once 'tm_checkout.subscription.inc';
 include_once 'tm_checkout.event.inc';
+include_once 'tm_checkout.report_payments.inc';
+
 
 /**
  * Implement hook_menu()
@@ -125,6 +127,36 @@ function tm_checkout_menu() {
 		'title' => 'Your payments',
 		'page callback' => 'tm_checkout_reports_user_payments',
 		'access arguments' => array('access content'),
+		'type' => MENU_CALLBACK,
+	);
+
+	$items['checkout/reports/all-payments'] = array(
+		'title' => 'All Payments Report',
+		'page callback' => 'tm_checkout_reports_all_payments',
+		'access callback' => array('tm_checkout_reports_all_payments_check'),
+		'type' => MENU_CALLBACK,
+	);
+
+	$items['checkout/reports/all-payments/%'] = array(
+		'title' => 'All Payments Report',
+		'page callback' => 'tm_checkout_reports_all_payments',
+		'access callback' => array('tm_checkout_reports_all_payments_check'),
+		'type' => MENU_CALLBACK,
+	);
+
+	$items['checkout/reports/chapter-payments/%'] = array(
+		'title' => 'Chapter Payments',
+		'page callback' => 'tm_checkout_reports_chapter_payments',
+		'access arguments' => array(3),
+		'access callback' => array('tm_checkout_reports_chapter_payments_check'),
+		'type' => MENU_CALLBACK,
+	);
+
+	$items['checkout/reports/chapter-payments/%/%'] = array(
+		'title' => 'Chapter Payments',
+		'page callback' => 'tm_checkout_reports_chapter_payments',
+		'access arguments' => array(3),
+		'access callback' => array('tm_checkout_reports_chapter_payments_check'),
 		'type' => MENU_CALLBACK,
 	);
 

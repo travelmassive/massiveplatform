@@ -24,13 +24,6 @@ function tm_payments_menu() {
 	global $conf;
 
 	$items = array();
-	$items['payment/event/%node/%user'] = array(
-    'title' => 'Event payment',
-    'page callback' => 'tm_payments_process_event_payment',
-    'page arguments' => array(2,3),
-    'access arguments' => array('access content'),
-    'type' => MENU_CALLBACK,
-  );
   $items['payment/reports/event-sales/%node'] = array(
     'title' => 'Event sales',
     'page callback' => 'tm_payments_reports_event_sales',
@@ -39,11 +32,6 @@ function tm_payments_menu() {
     'access arguments' => array(3),
     'type' => MENU_CALLBACK,
   );
-  $items['payments/%'] = array(
-    'title' => '',
-    'page callback' => 'tm_payments_placeholder',
-    'access arguments' => array('access content')
-	);
 
 	return $items;
 }
@@ -55,15 +43,6 @@ function tm_payments_access_sales_check($node) {
   global $user;
   return tm_events_check_permission_edit_event($user, $node);
 }
-
-/*
- * Placeholder page to reserve the url
- */
-function tm_payments_placeholder() {
-	// shouldn't get here
-	return "Payment gateway not installed.";
-}
-
 
 /**
  * Implement hook_ds_field_info()

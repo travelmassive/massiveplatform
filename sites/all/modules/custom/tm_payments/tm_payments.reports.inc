@@ -91,7 +91,7 @@ function tm_payments_reports_event_sales($event) {
   $event_commission = _tm_payments_get_event_commission($event);
   $html .= "Event commission: " . ($event_commission + 0) . "%<br>";
   foreach($payment_totals as $currency => $total) {
-    $html .= "<strong>Estimated earnings: " . round($total * ($event_commission/100)) . " " . strtoupper($currency) . "</strong><br>";
+    $html .= "<strong>Estimated earnings: " . number_format(($total * ($event_commission/100)), 2) . " " . strtoupper($currency) . "</strong><br>";
   }
   $html .= "</p>";
 

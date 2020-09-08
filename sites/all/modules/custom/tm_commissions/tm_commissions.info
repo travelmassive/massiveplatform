@@ -1,9 +1,0 @@
-name = TM Commissions
-description = Commissions reporting
-core = 7.x
-package = TM Commissions
-version = 7.x-1.0
-project = tm_commissions
-dependencies[] = tm_payments
-features[features_api][] = api:2
-features[user_role][] = pro chapter leader

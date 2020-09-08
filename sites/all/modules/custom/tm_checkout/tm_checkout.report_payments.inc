@@ -323,7 +323,7 @@ function tm_checkout_reports_chapter_payments() {
     $html .= ($payment->display_amount + 0) . " " . strtoupper($payment->stripe_currency);
     $html .= "</td>";
     $html .=  "<td>";
-    $html .= ($payment->display_amount * ($commission_amount/100)) + 0;
+    $html .= number_format($payment->display_amount * ($commission_amount/100),2);
     $html .= "</td>";
     $html .=  "<td><i>" . _tm_event_time_elapsed(time() - $payment->timestamp) . " ago</i></td>";
     $html .=  "<td class='tm-checkout-reports-item'>" . $item_label . "</td>";

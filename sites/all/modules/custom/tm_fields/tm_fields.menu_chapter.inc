@@ -163,7 +163,7 @@ function _tm_more_actions_process_chapter_menu($field, $title, &$links, &$menu_i
 
         if (module_exists("tm_payments")) {
           // view chapter payments
-          $link_path = '/checkout/reports/chapter-payments/' . $node->nid;
+          $link_path = '/checkout/reports/chapter-payments/' . $node->nid . '/365';
           $links['chapter'][] = array(
             'wrapper_class' => array('chapter_payments'),
             'content' => '<a href="' . $link_path . '">Payments</a>'

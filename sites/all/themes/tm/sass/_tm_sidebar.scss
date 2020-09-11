@@ -214,6 +214,13 @@ body.tm_sidebar {
     color: #007eb5;
 }
 
+.tm_sidenav_news_icon:before {
+    font-family: 'tm-icons';
+    content: "\e686";
+    margin-right: 5px;
+    font-size: 20px;
+}
+
 #account-menu-blk { 
 	font-size: 24px;
 	line-height: 1.5;

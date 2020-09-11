@@ -46,6 +46,7 @@
 		<li><form method="GET" action="/search"><input id="tm_sidenav_search" name="query" type="text" placeholder="Search" style="" autocomplete="off"></input></form></li>
 		<li><a href="/"><span class="tm_sidenav_home_icon tm_sidenav_icon"></span>Home</a></li>
 		<li><a href="/events"><span class="tm_sidenav_events_icon tm_sidenav_icon"></span>Events</a></li>
+		<li><a href="/newsfeed/global"><span class="tm_sidenav_news_icon tm_sidenav_icon"></span>News</a></li>
         <li><a href="/chapters">Chapters</a>
         <?php 
 		// add link to home chapter

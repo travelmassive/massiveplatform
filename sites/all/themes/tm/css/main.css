@@ -10308,7 +10308,7 @@ body.tm_sidebar {
 .tm_sidenav_home_icon:before {
   font-family: 'tm-icons';
   content: "\e65c";
-  margin-right: 8px;
+  margin-right: 5px;
 }
 
 /* line 129, ../sass/_tm_sidebar.scss */

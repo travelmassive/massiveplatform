@@ -5574,7 +5574,7 @@ img.feedme-image-marketplace {
 /* line 1369, ../sass/_base.scss */
 img.feedme-image-discussions {
   height: 64px;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 /* line 1370, ../sass/_base.scss */

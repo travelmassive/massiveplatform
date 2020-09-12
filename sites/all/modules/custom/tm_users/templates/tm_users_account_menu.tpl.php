@@ -240,7 +240,7 @@ $image = theme('image_style', array(
       </ul>
       <ul class="dropd-menu dropdown-moderator-tools" id="account_menu_moderator_actions_items" style="display: none;">
         <?php if (module_exists("tm_checkout")) { ?>
-          <li><?php print l(t('Payments Report'), 'checkout/reports/all-payments/'); ?></li>
+          <li><?php print l(t('Payments'), 'checkout/reports/all-payments/'); ?></li>
         <?php } // end if ?>
         <li><?php print l(t('Add event'), 'node/add/event'); ?></li>
         <li><?php print l(t('Add chapter'), 'node/add/chapter'); ?></li>

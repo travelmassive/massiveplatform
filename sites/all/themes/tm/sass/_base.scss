@@ -1366,7 +1366,7 @@ ul.tm-checklist li:before {
 
 img.feedme-image { max-height: 64px;}
 img.feedme-image-marketplace { height: 64px; object-fit: contain; }
-img.feedme-image-discussions { height: 64px; object-fit: contain; }
+img.feedme-image-discussions { height: 64px; object-fit: cover; }
 img.feedme-image-discussions.feedme-image-avatar { border-radius: 50% !important; }
 
 #frontpage_feed .feedme-marketplace .media  { width : 72px; height: 72px; }

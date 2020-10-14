@@ -38,6 +38,7 @@ function tm_lists_feedme_display() {
 	$list_ids = tm_lists_get_entity_lists($entity_type_int, $entity_id, $num_items);
 
 	// include any lists the member has authored
+	$author_list_ids = array();
 	if ($entity_type == 'user') {
 		$author_list_ids = tm_lists_get_lists_user_added_to($entity_id, $num_items);
 	}

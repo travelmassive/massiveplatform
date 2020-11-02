@@ -50,8 +50,10 @@ function date_popup_add() {
 function date_popup_get_wvega_path() {
   $path = FALSE;
   if (function_exists('libraries_get_path')) {
+    // Try loading the wvega timepicker library.
     $path = libraries_get_path('wvega-timepicker');
-    if (!file_exists($path)) {
+    // Check if the library actually exists.
+    if (empty($path) || !file_exists($path)) {
       $path = FALSE;
     }
   }
@@ -431,6 +433,7 @@ function date_popup_process_date_part(&$element) {
     '#parents' => $parents,
     '#name' => array_shift($parents) . '[' . implode('][', $parents) . ']',
     '#ajax' => !empty($element['#ajax']) ? $element['#ajax'] : FALSE,
+    '#required' => $element['#required'],
   );
   // Do NOT overwrite the actual input with the default value.
   // @todo Figure out exactly when this is needed, in many places it is not.
@@ -477,11 +480,17 @@ function date_popup_process_time_part(&$element) {
         'spinnerImage' => '',
         'fromTo' => isset($fromto),
       );
+
       if (strpos($element['#date_format'], 'a') !== FALSE) {
         // Then we are using lowercase am/pm.
-        $settings['ampmNames'] = array('am', 'pm');
+        $options = date_ampm_options(FALSE, FALSE);
+        $settings['ampmNames'] = array($options['am'], $options['pm']);
       }
-      if (strpos($element['#date_format'], ' A') !== FALSE || strpos($element['#date_format'], ' a') !== FALSE) {
+
+      if (strpos($element['#date_format'], 'A') !== FALSE) {
+        // Then we are using uppercase am/pm.
+        $options = date_ampm_options(FALSE, TRUE);
+        $settings['ampmNames'] = array($options['am'], $options['pm']);
         $settings['ampmPrefix'] = ' ';
       }
       break;
@@ -529,6 +538,7 @@ function date_popup_process_time_part(&$element) {
     '#parents' => $parents,
     '#name' => array_shift($parents) . '[' . implode('][', $parents) . ']',
     '#ajax' => !empty($element['#ajax']) ? $element['#ajax'] : FALSE,
+    '#required' => $element['#required'],
   );
 
   // Do NOT overwrite the actual input with the default value.
@@ -835,7 +845,6 @@ function date_popup_date_field_instance_settings_form_alter(&$form, $context) {
  * Implements hook_menu().
  */
 function date_popup_menu() {
-  $items = array();
   // @todo Fix this later.
   $items['admin/config/date/date_popup'] = array(
     'title' => 'Date Popup',

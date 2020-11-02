@@ -62,13 +62,20 @@ class date_views_filter_handler_simple extends views_handler_filter_date {
    * {@inheritdoc}
    */
   function operators() {
+    // Cache the operators that are being added.
+    static $new_operators;
+    if (!isset($new_operators)) {
+      $new_operators = array(
+        'title' => t('Contains'),
+        'method' => 'op_contains',
+        'short' => t('contains'),
+        'values' => 1,
+      );
+    }
+
+    // Add the new 'contains' operators.
     $operators = parent::operators();
-    $operators['contains'] = array(
-      'title' => t('Contains'),
-      'method' => 'op_contains',
-      'short' => t('contains'),
-      'values' => 1,
-    );
+    $operators['contains'] = $new_operators;
     return $operators;
   }
 

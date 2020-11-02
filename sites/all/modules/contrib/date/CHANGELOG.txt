@@ -1,3 +1,40 @@
+Date 7.x-2.11-rc1, 2020-10-02
+-----------------------------
+#3084897 by steinmb, Chris Matthews: Fix the LICENSE.txt.
+#2692215 by DamienMcKenna, stickgrinder, zread: Unconditioned access to
+  non-existent array key in date.theme.
+#3111299 by DamienMcKenna: Test refactoring, split out Date Popup tests, move
+  tests to appropriate submodule.
+#2457423 by Liam Morland, ckellyirish, mparker17, DamienMcKenna, bmateus,
+  sagannotcarl, katannshaw, Max1, alansaunders92, derekw, alex awg 2015,
+  truman_ru, wylbur, nicrodgers, ninabyte, Michele Wickham, iStryker, dsdeiz,
+  anpolimus, captainack, ashzade, brad.bulger, cameronprince, Chris Matthews,
+  Vali Hutchison, jenlampton, vishal.sheladiya, jshosseini, akolahi:
+  Incorrectly-initialized DateTime object(s) cause PHP warnings in
+  DateTime::format(), other DateObject functions.
+#2595957 by aurelianzaha, DamienMcKenna, hgoto, klausi, pedrogk, FireHawkX,
+  Chris Matthews: Field label not displayed when rendering as regular field and
+  only using year.
+#2359653 by iamEAP, Sweetchuck, franxo, DamienMcKenna: Validation doesn't take
+  into account translations of AM or PM.
+#3096720 by Liam Morland, ebremner: date_is_all_day() returns FALSE when
+  $granularity is not 'hour' or finer.
+#1257024 by joseph.olstad, maxocub, steinmb, iMiksu, DamienMcKenna, acbramley:
+  Required Date popup field not showing red asterisk.
+#3145639 by Ronino, joelpittet: Curly brace syntax for accessing array elements
+  and string offsets has been deprecated in PHP 7.4.
+#2930732 by NuWans, DamienMcKenna: PHP warning on file_exists fail.
+#3161408 by DamienMcKenna, Ronino: Test failure in DateMigrateTestCase.
+#3163293 by Steven Jones, joseph.olstad: date_update_7007 will fail with
+  different field storage backends.
+#2848963 by joelpittet, DamienMcKenna: date_views_filter_handler_simple
+ ::operators call t() a lot.
+#1762612 by moymilo, cafuego, tamahome14, vanshyr, plachance, steinmb: Error
+  "OLD used in query that is not in a rule" in date_api_update_7000 with pgsql.
+#3168045 by DamienMcKenna: DateFieldTestBase::dateForm extended incorrectly.
+#3168034 by DamienMcKenna: Refactor date_migrate_example to be reusable.
+
+
 Date 7.x-2.11-beta3, 2019-09-22
 -------------------------------
 #1392472 by Taran2L, jvandooren, podarok, jeff h, FluxSauce, maen, solotandem,
@@ -287,7 +324,7 @@ Date 7.x-2.8, 2014-07-29
 #998076 by coredumperror, joelcollinsdc, brenk28: Fixed Problem with timezone
   handling (caused by date_get_timezone_db returning only UTC).
 #1976014 by Harmageddon: Remove unnecessary &nbsp; in date views pager.
-#2198807 by stickywes: Refactor field tests to utilize DateFieldBasic.
+#2198807 by stickywes: Refactor field tests to utilize DateFieldTestBase.
 #2146461 by vijaycs85, Razia_b: Fixed Translated field's label is not used in
   its validation messages.
 #1874422 by bluetegu, brockfanning, rv0: Fixed Week pager may cause incorrect

@@ -1251,4 +1251,3 @@ $conf["tm_checkout_event_donate_short_text"] = "👏 Donate to this event &mdash
 $conf["tm_checkout_event_donate_title_prefix"] = "Donate &mdash; "; // prefix before the title of the event on the checkout page for donations
 $conf["tm_checkout_event_select_donation_label"] = "Select the amount you wish to donate";
 
-

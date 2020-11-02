@@ -9,7 +9,7 @@ class QueueUI {
    * @param $class
    *  The queue class name to work with.
    *
-   * @return mixte
+   * @return mixed
    *  The queue object for a given name, or FALSE if the QueueUI class does not exist for
    *  the specified queue class.
    */

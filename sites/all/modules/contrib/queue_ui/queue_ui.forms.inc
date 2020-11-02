@@ -34,10 +34,10 @@ function queue_ui_release_item_form($form, $form_state, $queue_name, $queue_item
           '#value' => array('queue_name' => $queue_name, 'itemid' => $queue_item),
         ),
       ),
-      t('Are you sure you want to release queue item %queue_item?', array('%queue_item' => $queue_item)),
+      t('Are you sure you want to remove leases from queue item %queue_item?', array('%queue_item' => $queue_item)),
       QUEUE_UI_BASE . "/inspect/$queue_name",
-      t('This action cannot be undone and will force the release of the item even if it is currently being processed.'),
-      t('Release item'),
+      t('This action cannot be undone and will force the removal of leases from the item even if it is currently being processed.'),
+      t('Remove lease'),
       t('Cancel')
     );
   }
@@ -72,7 +72,7 @@ function queue_ui_delete_item_form($form, $form_state, $queue_name, $queue_item)
       t('Are you sure you want to delete queue item %queue_item?', array('%queue_item' => $queue_item)),
       QUEUE_UI_BASE . "/inspect/$queue_name",
       t('This action cannot be undone and will force the deletion of the item even if it is currently being processed.'),
-      t('Release item'),
+      t('Delete item'),
       t('Cancel')
     );
   }

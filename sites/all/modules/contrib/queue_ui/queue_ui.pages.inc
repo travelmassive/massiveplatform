@@ -164,12 +164,17 @@ function queue_ui_overview_submit($form, &$form_state, $queues) {
       break;
     case $values['batch']:
       // Process queue(s) with batch.
-      // We can only run batch on queues using our hook_queue_info() that define batch.
+      // We can only run batch on either queues using our hook_queue_info() that
+      // define batch, or queues defined with hook_cron_queue_info().
+      // Get the queues defined with hook_queue_info().
       $defined_queues = queue_ui_defined_queues();
-      $intersect = array_intersect(array_keys($defined_queues), $queues);
-      foreach ($intersect as $name) {
-        // Only if queue_info implementation defined batch can we set it here.
-        if (isset($defined_queues[$name]['batch'])) {
+
+      // Get the cron queues.
+      $cron_queues = module_invoke_all('cron_queue_info');
+      drupal_alter('cron_queue_info', $cron_queues);
+
+      foreach ($queues as $name) {
+        if (isset($defined_queues[$name])) {
           $batch = $defined_queues[$name]['batch'];
           // Add queue as argument to operations by resetting the operations array.
           $operations = array();
@@ -181,6 +186,19 @@ function queue_ui_overview_submit($form, &$form_state, $queues) {
           $batch['operations'] = $operations;
           // Set.
           batch_set($batch);
+
+          continue;
+        }
+
+        if (isset($cron_queues[$name])) {
+          $batch = array(
+            'operations' => array(
+              array('queue_ui_cron_queue_batch_process', array($name, $cron_queues[$name])),
+            ),
+          );
+          batch_set($batch);
+
+          continue;
         }
       }
       break;

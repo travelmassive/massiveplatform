@@ -417,7 +417,11 @@ function tm_checkout_event_page($event_id, $user_id) {
 
 		// show donate if already registered
 		if ((tm_events_user_is_registered($event->nid, $account->uid)) and ($partner_code != "PREVIEW")) {
-			$title = "Donate &mdash; " . strip_tags($event->title);
+			$title_prefix = "Donate &mdash; ";
+			if (isset($conf["tm_checkout_event_donate_title_prefix"])) {
+				$title_prefix = $conf["tm_checkout_event_donate_title_prefix"];
+			}
+			$title =  $title_prefix . strip_tags($event->title);
 		}
 
 		$pricing_options = tm_checkout_event_render_pricing_options($event, $account, $currency, $partner_code);
@@ -850,6 +854,9 @@ function tm_checkout_event_render_pricing_options($event, $account, $currency, $
 	}
 	if (tm_events_user_is_registered($event->nid, $account->uid)) {
 		$pay_or_donate = "Select the amount you wish to donate";
+		if (isset($conf["tm_checkout_event_select_donation_label"])) {
+			$pay_or_donate = $conf["tm_checkout_event_select_donation_label"];
+		}
 	}
 	$html = "<div class='tm-checkout-pricing-options-container'>";
 	$html .= "<div>" . $pay_or_donate . "</div>";
@@ -1015,7 +1022,11 @@ function tm_checkout_event_render_partner_message($event, $account, $currency, $
 
 	// already registered, showing donation
 	if (tm_events_user_is_registered($event->nid, $account->uid)) {
-		return "<div class='tm-checkout-pricing-message'>👏 Donate to this event &mdash; <a style='text-decoration: underline; white-space: nowrap;' href='javascript:tm_checkout_pay_what_you_wish_message();'>learn more</a></div>";
+		$donate_short_text = "👏 Donate to this event &mdash; <a style='text-decoration: underline; white-space: nowrap;' href='javascript:tm_checkout_pay_what_you_wish_message();'>learn more</a>";
+		if (isset($conf["tm_checkout_event_donate_short_text"])) {
+			$donate_short_text = $conf["tm_checkout_event_donate_short_text"];
+		}
+		return "<div class='tm-checkout-pricing-message'>" . $donate_short_text . "</div>";
 	}
 	
 	// if lowest value is zero, and you can choose your own price, show donation

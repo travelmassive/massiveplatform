@@ -1247,4 +1247,6 @@ $conf["tm_checkout_event_select_price_label"] = "Select the price you wish to pa
 $conf["tm_checkout_event_show_currency_option"] = true; // show currency dropdown when checking out
 $conf["tm_checkout_event_title_prefix"] = "Ticket &mdash; "; // prefix before the title of the event on the checkout page
 $conf["tm_checkout_event_button_message"] = "💚 We appreciate your support."; // display this if no price is chosen yet
-
+$conf["tm_checkout_event_donate_short_text"] = "👏 Donate to this event &mdash; <a style='text-decoration: underline; white-space: nowrap;' href='javascript:tm_checkout_pay_what_you_wish_message();'>learn more</a>";
+$conf["tm_checkout_event_donate_title_prefix"] = "Donate &mdash; "; // prefix before the title of the event on the checkout page for donations
+$conf["tm_checkout_event_select_donation_label"] = "Select the amount you wish to donate";

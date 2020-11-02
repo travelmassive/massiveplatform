@@ -1227,7 +1227,6 @@ $conf["tm_chatbox_secret_key"] = "secret_key";
 // $conf['tm_users_avatar_secret_iv'] = 'randomstring123';
 
 /** STRIPE CHECKOUT */
-/*
 $conf["tm_checkout_stripe_library_path"] = "stripe-php-7.51.0"; // stripe  library path inside tm_checkout/includes/
 $conf["tm_checkout_stripe_api_version"] = "2020-08-27"; // stripe api version
 $conf["tm_checkout_stripe_publishable_key"] = "your_stripe_publishable_key"; // your stripe publishable key
@@ -1240,6 +1239,12 @@ $conf["tm_checkout_subscription_leader_message"] = "Share the <a href='/membersh
 $conf["tm_checkout_reports_help_message"] = "Here's a receipt of your payments."; // message to show user
 $conf["tm_checkout_receipt_details"] = "<strong>TAX RECEIPT</strong><br>Your company name<br>Your company address<br>Email: your@receiptemail";
 $conf["tm_checkout_partner_commission_default"] = "10"; // default commission for partner code
-$conf["tm_checkout_event_pay_what_you_wish_title"] = "Why we're asking for donationss"; // pay what you wish title
+$conf["tm_checkout_event_pay_what_you_wish_title"] = "Why we're asking for donations"; // pay what you wish title
 $conf["tm_checkout_event_pay_what_you_wish_message"] = "While this event is free, a lot of work goes into making these happen. So we're asking for donations, which helps us create more events and keep this community running."; // pay what you wish message
-*/
+$conf["tm_checkout_event_pay_what_you_wish_short_text"] = "✌️ Tickets are on a pay what you can basis &mdash; <a style='text-decoration: underline; white-space: nowrap;' href='javascript:tm_checkout_pay_what_you_wish_message();'>learn more</a>";
+$conf["tm_checkout_event_pay_what_you_wish_label"] = "Choose your own price";
+$conf["tm_checkout_event_select_price_label"] = "Select the price you wish to pay";
+$conf["tm_checkout_event_show_currency_option"] = true; // show currency dropdown when checking out
+$conf["tm_checkout_event_title_prefix"] = "Ticket &mdash; "; // prefix before the title of the event on the checkout page
+$conf["tm_checkout_event_button_message"] = "💚 We appreciate your support."; // display this if no price is chosen yet
+

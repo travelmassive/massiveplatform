@@ -294,11 +294,22 @@ function date_update_7006() {
 function date_update_7007() {
   $fields = field_read_fields(array('type' => 'datestamp'));
   foreach ($fields as $field_name => $field) {
-    foreach ($field['columns'] as $column_name => $schema) {
+    foreach (array_intersect_key($field['columns'], drupal_map_assoc(array('value', 'value2'))) as $column_name => $schema) {
       $schema['size'] = 'big';
       $column = $field_name . '_' . $column_name;
-      db_change_field('field_data_' . $field_name, $column, $column, $schema);
-      db_change_field('field_revision_' . $field_name, $column, $column, $schema);
+      if (db_table_exists('field_data_' . $field_name)) {
+        db_change_field('field_data_' . $field_name, $column, $column, $schema);
+      }
+      if (db_table_exists('field_revision_' . $field_name)) {
+        db_change_field('field_revision_' . $field_name, $column, $column, $schema);
+      }
     }
   }
+}
+
+/**
+ * The date_migrate_example module was renamed.
+ */
+function date_update_7200() {
+  db_delete('system')->condition('name', 'date_migrate_example')->execute();
 }

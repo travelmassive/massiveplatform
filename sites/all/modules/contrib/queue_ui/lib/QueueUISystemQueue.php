@@ -37,8 +37,18 @@ class QueueUISystemQueue implements QueueUIInterface {
       ->limit(25)
       ->execute();
 
+    $result = array();
+
     foreach ($query as $record) {
       $result[] = $record;
+    }
+
+    if (count($result) === 0) {
+      drupal_set_message(t(
+        'The queue @queue has no items to inspect',
+         array('@queue' => $queue_name)
+      ));
+      drupal_goto(QUEUE_UI_BASE);
     }
 
     $header = array(
@@ -150,6 +160,8 @@ class QueueUISystemQueue implements QueueUIInterface {
       ->condition('q.item_id', $item_id)
       ->range(0, 1) // item id should be unique
       ->execute();
+
+    $result = array();
 
     foreach ($query as $record) {
       $result[] = $record;

@@ -63,7 +63,7 @@ function queue_ui_menu() {
 
   // Delete item callback for Queue UI.
   $items[QUEUE_UI_BASE . '/%/delete/%queue_ui_queue_item'] = array(
-    'title' => 'Release items',
+    'title' => 'Delete items',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('queue_ui_delete_item_form', 4, 6),
     'access arguments' => array('admin queue_ui'),
@@ -107,7 +107,7 @@ function queue_ui_test() {
  *
  * @param $queue_name
  *  The name of the queue to retrieve the QueueUI class for.
- * @return mixte
+ * @return mixed
  *  The QueueUI object for the relevant queue class, or FALSE if not found.
  */
 function _queue_ui_queueclass($queue_name){
@@ -222,8 +222,9 @@ function queue_ui_cron() {
           // Pass $queue to cron callback for processing.
           $function = $definition['cron']['callback'];
           // Definitions can define arguments.
-          $args = isset($definition['cron']['callback']) ? $definition['cron']['callback'] : NULL;
-          $function($queue, $args);
+          $args = isset($definition['cron']['args']) ? $definition['cron']['args'] : array();
+          array_unshift($args, $queue);
+          call_user_func_array($function, $args);
         }
       }
     }
@@ -242,14 +243,15 @@ function queue_ui_queue_info() {
       ),
       'cron' => array(
         'callback' =>'queue_ui_test_process',
+        'args' => array(10),
       ),
     ),
   );
 }
 
-function queue_ui_test_process($queue) {
+function queue_ui_test_process($queue, $limit = 20) {
   $count = $queue->numberOfItems();
-  for ($i = 0; $i < 20 && $count > 0; $i++) {
+  for ($i = 0; $i < $limit && $count > 0; $i++) {
     $item = $queue->claimItem(20); // Lease time.
     if ($item) {
       // We would do some processing, if this were REAL.
@@ -287,4 +289,51 @@ function queue_ui_batch_finished($success, $results, $operations) {
     $message = t('An error occured @todo.');
   }
   drupal_set_message($message);
+}
+
+/**
+ * Batch operation callback for cron queues.
+ */
+function queue_ui_cron_queue_batch_process($queue_name, $cron_queue_info, &$context) {
+  $queue = DrupalQueue::get($queue_name);
+  $function = $cron_queue_info['worker callback'];
+
+  if (empty($context['sandbox'])) {
+    $context['sandbox']['progress'] = 0;
+    $context['sandbox']['max'] = $queue->numberOfItems();
+  }
+
+  $end = time() + (isset($cron_queue_info['time']) ? $cron_queue_info['time'] : 15);
+  while (time() < $end && ($item = $queue->claimItem())) {
+    try {
+      $function($item->data);
+      $queue->deleteItem($item);
+    }
+    catch (Exception $e) {
+      // In case of exception log it and leave the item in the queue
+      // to be processed again later.
+      watchdog_exception('queue_ui', $e);
+      drupal_set_message($e->getMessage(), 'error', FALSE);
+    }
+
+    $context['sandbox']['progress']++;
+  }
+
+  // If the last attempt to get an item produced an empty result, then no more
+  // claimable items remain in the queue and we can tell Batch API we are done.
+  // Otherwise, items may remain in the queue and we should tell Batch API to
+  // call us again.
+  if (empty($item)) {
+    $context['finished'] = 1;
+  }
+  else {
+    // We can't use numberOfItems() to know how many items we must process,
+    // because that does not take claims on items into account.
+    $context['finished'] = 0;
+  }
+
+  $context['message'] = t('Processed !count items in queue @name.', array(
+    '!count' => $context['sandbox']['progress'],
+    '@name' => $queue_name,
+  ));
 }

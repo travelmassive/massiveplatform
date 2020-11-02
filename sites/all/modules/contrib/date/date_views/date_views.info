@@ -15,10 +15,11 @@ files[] = includes/date_views.views.inc
 files[] = includes/date_views_plugin_pager.inc
 
 ; Test coverage.
-files[] = tests/date_views.filter.test
+files[] = tests/date_views_filter.test
+files[] = tests/date_views_pager.test
 
-; Information added by Drupal.org packaging script on 2019-09-23
-version = "7.x-2.11-beta3"
+; Information added by Drupal.org packaging script on 2020-10-02
+version = "7.x-2.11-rc1"
 core = "7.x"
 project = "date"
-datestamp = "1569201788"
+datestamp = "1601635726"

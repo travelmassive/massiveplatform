@@ -77,7 +77,6 @@ function theme_date_display_combination($variables) {
   $microdata   = $variables['microdata'];
   $add_microdata = $variables['add_microdata'];
   $precision   = date_granularity_precision($field['settings']['granularity']);
-  $show_remaining_days = $variables['show_remaining_days'];
 
   $output = '';
 
@@ -338,7 +337,7 @@ function theme_date_display_range($variables) {
   $timezone = $variables['timezone'];
   $attributes_start = $variables['attributes_start'];
   $attributes_end = $variables['attributes_end'];
-  $show_remaining_days = $variables['show_remaining_days'];
+  $show_remaining_days = isset($variables['show_remaining_days']) ? $variables['show_remaining_days'] : '';
 
   $start_date = '<span class="date-display-start"' . drupal_attributes($attributes_start) . '>' . $date1 . '</span>';
   $end_date = '<span class="date-display-end"' . drupal_attributes($attributes_end) . '>' . $date2 . $timezone . '</span>';
@@ -464,7 +463,15 @@ function theme_date_form_element($variables) {
   // Detect if there is more than one subfield.
   $count = count(explode('<label', $element['#children'])) - 1;
   if ($count == 1) {
-    $element['#title_display'] = 'none';
+    // If there is only one subfield, hide the label of the main field only if
+    // the label of the subfield is visible.
+    if (empty($variables['element']['value']['#instance'])
+      || empty($variables['element']['value']['#instance']['widget'])
+      || empty($variables['element']['value']['#instance']['widget']['settings'])
+      || empty($variables['element']['value']['#instance']['widget']['settings']['label_position'])
+      || $variables['element']['value']['#instance']['widget']['settings']['label_position'] != 'none') {
+      $element['#title_display'] = 'none';
+    }
   }
 
   // Wrap children with a div and add an extra class if element is multiline.

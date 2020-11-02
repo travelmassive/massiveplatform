@@ -332,6 +332,13 @@ function tm_checkout_event_page($event_id, $user_id) {
 	}
 	drupal_add_js(array('tm_checkout_event' => array('checkout_button_ajax_url' => $checkout_button_ajax_url)), array('type' => 'setting'));
 
+	// set checkout button message
+	$tm_checkout_button_message = "💚 We appreciate your support.";
+	if (isset($conf["tm_checkout_event_button_message"])) {
+		$tm_checkout_button_message = $conf["tm_checkout_event_button_message"];
+	}
+	drupal_add_js(array('tm_checkout_event' => array('checkout_button_message' => $tm_checkout_button_message)), array('type' => 'setting'));
+
 	// set pay what you can message for js tm_checkout_pay_what_you_wish_message()
 	$pay_what_you_wish_title = $conf["tm_checkout_event_pay_what_you_wish_title"];
 	$pay_what_you_wish_message = $conf["tm_checkout_event_pay_what_you_wish_message"];
@@ -374,6 +381,13 @@ function tm_checkout_event_page($event_id, $user_id) {
 	}
 	$currency_html .= '</select>';
 
+	// hide currency option
+	if (isset($conf["tm_checkout_event_show_currency_option"])) {
+		if (!$conf["tm_checkout_event_show_currency_option"]) {
+			$currency_html = "<div style='display: none;'>" . $currency_html . "</div>";
+		}
+	}
+
 	$button = "<div id='tm-checkout-event-button-container'></div>";
 
 	// pricing options
@@ -394,7 +408,11 @@ function tm_checkout_event_page($event_id, $user_id) {
 	if ($payment_type == "pay_what_you_wish") {
 
 		// show ticket
-		$title = "Ticket &mdash; " . strip_tags($event->title);
+		$title_prefix = "Ticket &mdash; ";
+		if (isset($conf["tm_checkout_event_title_prefix"])) {
+			$title_prefix = $conf["tm_checkout_event_title_prefix"];
+		}
+		$title =  $title_prefix . strip_tags($event->title);
 
 		// show donate if already registered
 		if ((tm_events_user_is_registered($event->nid, $account->uid)) and ($partner_code != "PREVIEW")) {
@@ -826,6 +844,9 @@ function tm_checkout_event_render_pricing_options($event, $account, $currency, $
 	// default is pay
 	// if user is already registered, show donate
 	$pay_or_donate = "Select the price you wish to pay";
+	if (isset($conf["tm_checkout_event_select_price_label"])) {
+		$pay_or_donate = $conf["tm_checkout_event_select_price_label"];
+	}
 	if (tm_events_user_is_registered($event->nid, $account->uid)) {
 		$pay_or_donate = "Select the amount you wish to donate";
 	}
@@ -923,6 +944,9 @@ function tm_checkout_event_render_pricing_options($event, $account, $currency, $
 				continue;
 			}
 			$price_label = "Choose your own price";
+			if (isset($conf["tm_checkout_event_pay_what_you_wish_label"])) {
+				$price_label = $conf["tm_checkout_event_pay_what_you_wish_label"];
+			}
 			$min_price = _tm_payments_get_lowest_price($event, $account, $currency, $partner_code);
 			$max_price = intval($conf["tm_payments_max_price_usd"] * $conf["tm_payments_currencies_fx"][$currency]);
 			$price_label .= " &mdash; " . $currency_symbol . " <input id='checkout_choose_own_price' type='number' style='width: 100px;' min='" . $min_price . "' max='" . $max_price ."'>";
@@ -999,7 +1023,14 @@ function tm_checkout_event_render_partner_message($event, $account, $currency, $
 		if (isset($event->field_event_payment_tiers[LANGUAGE_NONE][0]['value'])) {
 			if (strpos($event->field_event_payment_tiers[LANGUAGE_NONE][0]['value'], "CHOOSE") !== false) {
 				if ($subscriber_discount != 100) {
-					return "<div class='tm-checkout-pricing-message'>✌️ Tickets are on a pay what you can basis &mdash; <a style='text-decoration: underline; white-space: nowrap;' href='javascript:tm_checkout_pay_what_you_wish_message();'>learn more</a></div>";
+
+					// default pay what you want text
+					$pay_what_you_wish_short_text = "✌️ Tickets are on a pay what you can basis &mdash; <a style='text-decoration: underline; white-space: nowrap;' href='javascript:tm_checkout_pay_what_you_wish_message();'>learn more</a>";
+					if (isset($conf["tm_checkout_event_pay_what_you_wish_short_text"])) {
+						$pay_what_you_wish_short_text = $conf["tm_checkout_event_pay_what_you_wish_short_text"];
+					}
+
+					return "<div class='tm-checkout-pricing-message'>" . $pay_what_you_wish_short_text . "</div>";
 				}
 			}
 		}

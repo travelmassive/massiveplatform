@@ -2,12 +2,13 @@
 
 /**
  * @file
- * Tests date popup in Views.
+ * Tests Date Popup in the Views interface.
  */
+
 /**
- *
+ * Tests Date Popup in the Views interface.
  */
-class DateViewsPopupTestCase extends DateFieldBasic {
+class DatePopupWithViewsTestCase extends DateFieldTestBase {
   /**
    * Test info.
    */

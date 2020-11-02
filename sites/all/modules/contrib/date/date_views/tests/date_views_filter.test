@@ -5,7 +5,7 @@
  * Tests date filter handler in Views.
  */
 
-class DateViewsFilterTestCase extends DateFieldBasic {
+class DateViewsFilterTestCase extends DateFieldTestBase {
 
   /**
    * {@inheritdoc}
@@ -13,7 +13,7 @@ class DateViewsFilterTestCase extends DateFieldBasic {
   public static function getInfo() {
     return array(
       'name' => 'Date Views - Filter Test',
-      'description' => 'Tests date filter handler in Views',
+      'description' => 'Tests date filter handler in Views, including Date Popup fields.',
       'group' => 'Date Views',
     );
   }
@@ -24,6 +24,7 @@ class DateViewsFilterTestCase extends DateFieldBasic {
   public function setUp(array $modules = array()) {
     $modules[] = 'views_ui';
     $modules[] = 'date_views';
+    $modules[] = 'date_popup';
     parent::setUp($modules);
 
     // Initialize values.

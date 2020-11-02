@@ -9,21 +9,24 @@ files[] = date.migrate.inc
 
 ; Dependencies for test coverage.
 test_dependencies[] = entity:entity
+test_dependencies[] = features:features (2.x)
+test_dependencies[] = migrate:migrate
+test_dependencies[] = views:views
 
-; Test coverage.
-files[] = tests/date_api.test
-files[] = tests/date_now.test
-files[] = tests/date.test
-files[] = tests/date_field.test
-files[] = tests/date_migrate.test
-files[] = tests/date_validation.test
-files[] = tests/date_timezone.test
-files[] = tests/date_views_pager.test
-files[] = tests/date_views_popup.test
-files[] = tests/date_form.test
+; Test coverage: standalone tests.
+files[] = tests/DateFormTestCase.test
+files[] = tests/DateMigrateTestCase.test
+files[] = tests/DateNowUnitTestCase.test
 
-; Information added by Drupal.org packaging script on 2019-09-23
-version = "7.x-2.11-beta3"
+; The remaining tests depend upon this one.
+files[] = tests/DateFieldTestBase.test
+files[] = tests/DateFieldTestCase.test
+files[] = tests/DateTimezoneTestCase.test
+files[] = tests/DateUiTestCase.test
+files[] = tests/DateValidationTestCase.test
+
+; Information added by Drupal.org packaging script on 2020-10-02
+version = "7.x-2.11-rc1"
 core = "7.x"
 project = "date"
-datestamp = "1569201788"
+datestamp = "1601635726"

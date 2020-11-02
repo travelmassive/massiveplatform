@@ -5,6 +5,7 @@
 	var tm_checkout_button_ajax_url_reload = null;
 	var tm_checkout_button_timout = null;
 	var tm_checkout_button_timout_xhr = []; // keep track of xhr calls
+	var tm_checkout_button_message = Drupal.settings.tm_checkout_event.checkout_button_message;
 
 	// init
 	// choose your own price
@@ -14,7 +15,7 @@
 			if (jQuery("input[type=radio][name=checkout_payment_option]:checked").data("price") != null) {
 				tm_checkout_option_selected();
 			} else {
-				jQuery("#tm-checkout-event-button-container").html("<p>💚 We appreciate your support.</p>");
+				jQuery("#tm-checkout-event-button-container").html("<p>" + tm_checkout_button_message + "</p>");
 			}
 		}
 	} else {

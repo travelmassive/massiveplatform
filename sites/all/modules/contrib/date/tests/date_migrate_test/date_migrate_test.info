@@ -1,0 +1,15 @@
+name = Date Migration Test Helper
+description = "Helper for the Date module's Migrate API integration."
+package = Date/Time
+version = VERSION
+core = 7.x
+hidden = TRUE
+dependencies[] = date:date_test_feature
+dependencies[] = migrate:migrate
+files[] = date_test_feature.migrate.inc
+
+; Information added by Drupal.org packaging script on 2020-10-02
+version = "7.x-2.11-rc1"
+core = "7.x"
+project = "date"
+datestamp = "1601635726"

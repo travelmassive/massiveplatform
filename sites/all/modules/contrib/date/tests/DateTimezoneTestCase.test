@@ -2,12 +2,13 @@
 
 /**
  * @file
- * Timezone tests.
+ * Test timezone handling.
  */
+
 /**
- *
+ * Test timezone handling.
  */
-class DateTimezoneTestCase extends DateFieldBasic {
+class DateTimezoneTestCase extends DateFieldTestBase {
 
   /**
    * @todo.
@@ -61,11 +62,33 @@ class DateTimezoneTestCase extends DateFieldBasic {
             'granularity' => $granularity,
           );
           $this->createDateField($options);
-          $this->dateForm($field_name, $field_type, $max_granularity, $tz_handling);
+          $this->buildDateForm($field_name, $field_type, $max_granularity, $tz_handling);
           $this->deleteDateField($label);
         }
       }
     }
+  }
+
+  /**
+   * Test timezone handling validation on the field settings form.
+  */
+  public function testFieldWidgetSettings() {
+    $label = 'Test';
+    $options = array(
+      'label' => $label,
+      'field_type' => 'date',
+      'widget_type' => 'date_select',
+      'granularity' => array('year', 'month', 'day'),
+    );
+    $this->createDateField($options);
+    $this->drupalGet('admin/structure/types/manage/story/fields/field_' . strtolower($label));
+    $this->assertResponse(200);
+    $edit = array(
+      'field[settings][granularity][hour]' => FALSE,
+    );
+    $this->drupalPost('admin/structure/types/manage/story/fields/field_' . strtolower($label), $edit, t('Save settings'));
+    $this->assertText("Dates without hours granularity must not use any timezone handling.", "Dates without hours granularity required to use timezone handling of 'none.'");
+    $this->deleteDateField($label);
   }
 
   /**
@@ -174,9 +197,9 @@ class DateTimezoneTestCase extends DateFieldBasic {
   }
 
   /**
-   * @todo.
+   * Replacement for dateForm().
    */
-  public function dateForm($field_name, $field_type, $max_granularity, $tz_handling) {
+  public function buildDateForm($field_name, $field_type, $max_granularity, $tz_handling) {
     variable_set('date_format_long', 'D, m/d/Y - H:i:s');
     $edit = array();
     $edit['title'] = $this->randomName(8);

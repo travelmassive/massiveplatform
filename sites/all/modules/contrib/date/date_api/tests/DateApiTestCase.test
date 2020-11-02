@@ -8,7 +8,7 @@
 /**
  * Test Date API functions.
  */
-class DateAPITestCase extends DrupalWebTestCase {
+class DateApiTestCase extends DrupalWebTestCase {
 
   /**
    * @todo.
@@ -25,7 +25,6 @@ class DateAPITestCase extends DrupalWebTestCase {
    * {@inheritdoc}
    */
   public function setUp(array $modules = array()) {
-    // Load the date_api module.
     $modules[] = 'date_api';
     parent::setUp($modules);
 

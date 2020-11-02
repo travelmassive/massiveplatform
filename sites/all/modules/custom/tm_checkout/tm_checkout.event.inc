@@ -384,6 +384,7 @@ function tm_checkout_event_page($event_id, $user_id) {
 	// hide currency option
 	if (isset($conf["tm_checkout_event_show_currency_option"])) {
 		if (!$conf["tm_checkout_event_show_currency_option"]) {
+			drupal_add_css('.tm-checkout-currency-container { display: none; }', 'inline');
 			$currency_html = "<div style='display: none;'>" . $currency_html . "</div>";
 		}
 	}

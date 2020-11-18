@@ -311,13 +311,33 @@ function _tm_more_actions_process_event_menu($field, $title, &$links, &$menu_ite
         // Don't show for past events
         if ($reminders_enabled and $is_online_event and $event_send_reminders and !tm_events_is_past_event($node, 60)) {
           
-          // Preview 1hr30min reminder
+          // Preview 1 day reminder
           if (!tm_events_is_preview_mode($node->nid)) {
-            $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Preview " . l("1 day", "/events/send-test-reminder/" . $nid . "/24hr", array('attributes' => array('class' => array('report-flagged-link')))) . " reminder</span><br>";
-            $links['event'][] = array(
+
+            // Check that event chapter does not have 1 day reminder disabled
+            $reminder_24_hour_enabled = true;
+            if (isset($conf["tm_event_online_reminder_24hr_disable_chapters"])) {
+              $event_chapter_id = _tm_event_get_chapter_id($node);
+              if ($event_chapter_id != null) {
+                if (in_array($event_chapter_id, $conf["tm_event_online_reminder_24hr_disable_chapters"])) {
+                  $reminder_24_hour_enabled = false;
+                  $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>1 day reminder <strong>disabled</strong></span><br>";
+                  $links['event'][] = array(
+                  'wrapper_class' => array('event_last_sent'),
+                  'content' => t($last_sent_text),
+                  );
+                }
+              }
+            }
+
+            if ($reminder_24_hour_enabled) {
+              $last_sent_text = "<span style='font-size: smaller; font-style: italic; padding-left: 2em;'>Preview " . l("1 day", "/events/send-test-reminder/" . $nid . "/24hr", array('attributes' => array('class' => array('report-flagged-link')))) . " reminder</span><br>";
+              $links['event'][] = array(
               'wrapper_class' => array('event_last_sent'),
               'content' => t($last_sent_text),
-            );
+              );
+            }
+            
           }
         
           // Check not external rsvp

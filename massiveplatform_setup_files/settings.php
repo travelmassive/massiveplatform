@@ -202,6 +202,7 @@ $conf["tm_event_online_reminder_24hr_subject"] = "Join us tomorrow... __EVENT_TI
 $conf["tm_event_online_reminder_24hr_headline"] = "We can't wait to see you.";
 $conf["tm_event_online_reminder_24hr_intro"] =  "Join us tomorrow – __START_TIMEZONES__";
 $conf["tm_event_online_reminder_24hr_image"] = true;
+$conf["tm_event_online_reminder_24hr_disable_chapters"] = array(); // list of chapter ids to disable 24 hour reminders
 $conf["tm_event_online_reminder_1hr30min_subject"] = "We'll start shortly... __EVENT_TITLE__";
 $conf["tm_event_online_reminder_1hr30min_headline"] = "See you online.";
 $conf["tm_event_online_reminder_1hr30min_intro"] =  "We'll start in 1 hour and 30 minutes – __START_TIMEZONES__";
@@ -1242,11 +1243,13 @@ $conf["tm_checkout_partner_commission_default"] = "10"; // default commission fo
 $conf["tm_checkout_event_pay_what_you_wish_title"] = "Why we're asking for donations"; // pay what you wish title
 $conf["tm_checkout_event_pay_what_you_wish_message"] = "While this event is free, a lot of work goes into making these happen. So we're asking for donations, which helps us create more events and keep this community running."; // pay what you wish message
 $conf["tm_checkout_event_pay_what_you_wish_short_text"] = "✌️ Tickets are on a pay what you can basis &mdash; <a style='text-decoration: underline; white-space: nowrap;' href='javascript:tm_checkout_pay_what_you_wish_message();'>learn more</a>";
-$conf["tm_checkout_event_pay_what_you_wish_label"] = "Choose your own price";
+$conf["tm_checkout_event_pay_what_you_wish_label"] = "Choose your own price &mdash; ";
 $conf["tm_checkout_event_select_price_label"] = "Select the price you wish to pay";
 $conf["tm_checkout_event_show_currency_option"] = true; // show currency dropdown when checking out
-$conf["tm_checkout_event_title_prefix"] = "Ticket &mdash; "; // prefix before the title of the event on the checkout page
+// $conf["tm_checkout_event_title_prefix"] = "Ticket &mdash; "; // prefix before the title of the event on the checkout page
 $conf["tm_checkout_event_button_message"] = "💚 We appreciate your support."; // display this if no price is chosen yet
 $conf["tm_checkout_event_donate_short_text"] = "👏 Donate to this event &mdash; <a style='text-decoration: underline; white-space: nowrap;' href='javascript:tm_checkout_pay_what_you_wish_message();'>learn more</a>";
 $conf["tm_checkout_event_donate_title_prefix"] = "Donate &mdash; "; // prefix before the title of the event on the checkout page for donations
 $conf["tm_checkout_event_select_donation_label"] = "Select the amount you wish to donate";
+$conf["tm_checkout_event_button_label_ticket"] = "Ticket"; // label for the ticket button on event page (default: Ticket)
+$conf["tm_checkout_event_button_label_donate"] = "Donate"; // label for the donate button on event page (default: Donate)

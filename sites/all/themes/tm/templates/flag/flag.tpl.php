@@ -40,27 +40,41 @@
  */
 ?>
 <?php
+
 // set in tm_event_signup_preprocess_flag
 if (isset($do_not_display_flag)) {
   return;
 }
-?>
-<?php
- // allow $flag_upvote_class
- if (!isset($flag_upvote_class)) {
+
+// allow $flag_upvote_class
+if (!isset($flag_upvote_class)) {
   $flag_upvote_class = "";
- }
+}
+
+// default button labels
+$ticket_label = "Ticket";
+$donate_label = "Donate";
+
+global $conf;
+if (isset($conf["tm_checkout_event_button_label_ticket"])) {
+  $ticket_label = $conf["tm_checkout_event_button_label_ticket"];
+}
+
+if (isset($conf["tm_checkout_event_button_label_donate"])) {
+  $donate_label = $conf["tm_checkout_event_button_label_donate"];
+}
+
 ?>
 <?php if (isset($event_flag) && $event_flag == "show_checkout") : ?>
   
 <li class="<?php print $flag_wrapper_classes; ?>">
-  <a href='/checkout/event/<?php print($event_id);?>'><span class="follow checkout-event bttn bttn-secondary bttn-m" rel="nofollow">Tickets</span></a>
+  <a href='/checkout/event/<?php print($event_id);?>'><span class="follow checkout-event bttn bttn-secondary bttn-m" rel="nofollow"><?php print $ticket_label; ?></span></a>
 </li>
 
 <?php elseif (isset($event_flag) && $event_flag == "show_donate") : ?>
   
 <li class="<?php print $flag_wrapper_classes; ?>">
-  <a href='/checkout/event/<?php print($event_id);?>'><span class="follow donate-event bttn bttn-secondary bttn-m" rel="nofollow">Donate</span></a>
+  <a href='/checkout/event/<?php print($event_id);?>'><span class="follow donate-event bttn bttn-secondary bttn-m" rel="nofollow"><?php print $donate_label; ?></span></a>
 </li>
 
 <?php elseif (isset($event_flag) && $event_flag == "show_external_rsvp_closed") : ?>

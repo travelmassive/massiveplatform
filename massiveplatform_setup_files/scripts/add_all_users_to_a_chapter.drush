@@ -1,0 +1,80 @@
+#!/usr/bin/env drush
+
+# Simple script to add all users to a chapter
+
+drush_print("");
+
+// get join chapter
+$join_chapter_id = drush_get_option('chapter-id', 1);
+$join_chapter = node_load($join_chapter_id);
+
+// verify chapter
+if ($join_chapter == null) {
+	drush_print("Invalid chapter_id: " . $join_chapter_id . " (set with --chapter-id=123)");
+	return;
+}
+
+drush_print("Chapter id: " . $join_chapter_id . " ( " . $join_chapter->title . ") (set with --chapter-id=123)");
+
+// UID Range
+$min_uid = drush_get_option('min-uid', 1);
+$max_uid = drush_get_option('max-uid', 20000);
+drush_print("Min UID: " . $min_uid . " (set with --min-uid=1)");
+drush_print("Max UID: " . $max_uid . " (set with --max-uid=20000)");
+
+// Confirm
+$confirm = false;
+$confirm_opt = drush_get_option('confirm');
+if ($confirm_opt == null) {
+	drush_print("Running simulation (not saving). Use --confirm to save account changes.");
+} else {
+	$confirm = true;
+}
+
+// fetch all users
+$results = db_query('SELECT uid FROM {users} WHERE users.uid >= ' . $min_uid . ' AND users.uid <= ' . $max_uid . ' ORDER BY uid')->fetchAll();
+
+// load signup flag
+$signup_flag = flag_get_flag("signup"); 
+
+// get members of chapter
+$chapter_member_uids = _tm_chapters_get_chapter_member_uids($join_chapter_id);
+drush_print(sizeof($chapter_member_uids) . " current members in this chapter.");
+
+// process each user
+$count = 0;
+$count_moved = 0;
+drush_print("-------------");
+drush_print("Processing " . sizeof($results) . " users...");
+foreach ($results as $result) {
+
+	$count++;
+
+	// load account
+	$uid = $result->uid;
+	$account = user_load($uid);
+
+	// if not already in chapter, join it
+	if (!in_array($uid, $chapter_member_uids)) {
+		drush_print($count . ": uid " . $uid . " joining chapter_id " . $join_chapter_id);
+		if ($confirm) {
+			$result = $signup_flag->flag('flag', $join_chapter_id, $account, true);
+			if ($result == false) {
+				drush_print("Result: false");
+				print_r($signup_flag->errors);
+			}
+		}
+		$count_moved++;
+	} else {
+		drush_print($count . ": uid " . $uid . " already a member of chapter_id " . $join_chapter_id . "!");
+	}
+
+}
+
+// print stats
+drush_print("-------------");
+drush_print("Processed " . $counter . " members");
+drush_print($count_moved . " people added to the chapter");
+drush_print($count - $count_moved . " people were already chapter members");
+drush_print("Done");
+

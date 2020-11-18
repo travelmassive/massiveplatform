@@ -14,7 +14,7 @@ if ($join_chapter == null) {
 	return;
 }
 
-drush_print("Chapter id: " . $join_chapter_id . " ( " . $join_chapter->title . ") (set with --chapter-id=123)");
+drush_print("Chapter id: " . $join_chapter_id . " (" . $join_chapter->title . ") (set with --chapter-id=123)");
 
 // UID Range
 $min_uid = drush_get_option('min-uid', 1);
@@ -40,6 +40,13 @@ $signup_flag = flag_get_flag("signup");
 // get members of chapter
 $chapter_member_uids = _tm_chapters_get_chapter_member_uids($join_chapter_id);
 drush_print(sizeof($chapter_member_uids) . " current members in this chapter.");
+
+// confirm
+$value = drush_prompt(dt('Type Y or y to continue, any other key to exit'));
+if (trim(strtolower($value) != "y")) {
+	drush_print("");
+	return;
+}
 
 // process each user
 $count = 0;

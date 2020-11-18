@@ -400,7 +400,11 @@ function tm_checkout_event_page($event_id, $user_id) {
 
 	// render pricing options
 	if ($payment_type == "fixed_price") {
-		$title = $pricing["ticket_label"] . " &mdash; " . strip_tags($event->title);
+		$title_prefix = $pricing["ticket_label"] . " &mdash; ";
+		if (isset($conf["tm_checkout_event_title_prefix"])) {
+			$title_prefix = $conf["tm_checkout_event_title_prefix"];
+		}
+		$title = $title_prefix . strip_tags($event->title);
 		$pricing_options = "<br>Get a ticket for " . $pricing["currency_symbol"] . $pricing["display_amount"] . " — fast and secure.";
 		if ($pricing["display_amount"] == 0) {
 			$pricing_options = "<br>Hey there, rock star! 🎸";
@@ -413,7 +417,7 @@ function tm_checkout_event_page($event_id, $user_id) {
 		if (isset($conf["tm_checkout_event_title_prefix"])) {
 			$title_prefix = $conf["tm_checkout_event_title_prefix"];
 		}
-		$title =  $title_prefix . strip_tags($event->title);
+		$title = $title_prefix . strip_tags($event->title);
 
 		// show donate if already registered
 		if ((tm_events_user_is_registered($event->nid, $account->uid)) and ($partner_code != "PREVIEW")) {
@@ -867,6 +871,10 @@ function tm_checkout_event_render_pricing_options($event, $account, $currency, $
 	$displayed_free = false;
 	$displayed_chosen_price = false;
 	$show_prices = array(); // keep track of prices we've shown
+	$label_price_seperator = " &mdash; ";
+	if (isset($conf["tm_checkout_event_label_price_seperator"])) {
+		$label_price_seperator = $conf["tm_checkout_event_label_price_seperator"];
+	}
 
 	// if user already registered, don't display the free option
 	if (tm_events_user_is_registered($event->nid, $account->uid)) {
@@ -951,13 +959,13 @@ function tm_checkout_event_render_pricing_options($event, $account, $currency, $
 			if ($displayed_chosen_price) {
 				continue;
 			}
-			$price_label = "Choose your own price";
+			$price_label = "Choose your own price &mdash; ";
 			if (isset($conf["tm_checkout_event_pay_what_you_wish_label"])) {
 				$price_label = $conf["tm_checkout_event_pay_what_you_wish_label"];
 			}
 			$min_price = _tm_payments_get_lowest_price($event, $account, $currency, $partner_code);
 			$max_price = intval($conf["tm_payments_max_price_usd"] * $conf["tm_payments_currencies_fx"][$currency]);
-			$price_label .= " &mdash; " . $currency_symbol . " <input id='checkout_choose_own_price' type='number' style='width: 100px;' min='" . $min_price . "' max='" . $max_price ."'>";
+			$price_label .= $currency_symbol . " <input id='checkout_choose_own_price' type='number' style='width: 100px;' min='" . $min_price . "' max='" . $max_price ."'>";
 			$displayed_chosen_price = true;
 		}
 		

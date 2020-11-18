@@ -1242,11 +1242,13 @@ $conf["tm_checkout_partner_commission_default"] = "10"; // default commission fo
 $conf["tm_checkout_event_pay_what_you_wish_title"] = "Why we're asking for donations"; // pay what you wish title
 $conf["tm_checkout_event_pay_what_you_wish_message"] = "While this event is free, a lot of work goes into making these happen. So we're asking for donations, which helps us create more events and keep this community running."; // pay what you wish message
 $conf["tm_checkout_event_pay_what_you_wish_short_text"] = "✌️ Tickets are on a pay what you can basis &mdash; <a style='text-decoration: underline; white-space: nowrap;' href='javascript:tm_checkout_pay_what_you_wish_message();'>learn more</a>";
-$conf["tm_checkout_event_pay_what_you_wish_label"] = "Choose your own price";
+$conf["tm_checkout_event_pay_what_you_wish_label"] = "Choose your own price &mdash; ";
 $conf["tm_checkout_event_select_price_label"] = "Select the price you wish to pay";
 $conf["tm_checkout_event_show_currency_option"] = true; // show currency dropdown when checking out
-$conf["tm_checkout_event_title_prefix"] = "Ticket &mdash; "; // prefix before the title of the event on the checkout page
+// $conf["tm_checkout_event_title_prefix"] = "Ticket &mdash; "; // prefix before the title of the event on the checkout page
 $conf["tm_checkout_event_button_message"] = "💚 We appreciate your support."; // display this if no price is chosen yet
 $conf["tm_checkout_event_donate_short_text"] = "👏 Donate to this event &mdash; <a style='text-decoration: underline; white-space: nowrap;' href='javascript:tm_checkout_pay_what_you_wish_message();'>learn more</a>";
 $conf["tm_checkout_event_donate_title_prefix"] = "Donate &mdash; "; // prefix before the title of the event on the checkout page for donations
 $conf["tm_checkout_event_select_donation_label"] = "Select the amount you wish to donate";
+$conf["tm_checkout_event_button_label_ticket"] = "Ticket"; // label for the ticket button on event page (default: Ticket)
+$conf["tm_checkout_event_button_label_donate"] = "Donate"; // label for the donate button on event page (default: Donate)

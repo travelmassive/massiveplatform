@@ -202,6 +202,7 @@ $conf["tm_event_online_reminder_24hr_subject"] = "Join us tomorrow... __EVENT_TI
 $conf["tm_event_online_reminder_24hr_headline"] = "We can't wait to see you.";
 $conf["tm_event_online_reminder_24hr_intro"] =  "Join us tomorrow – __START_TIMEZONES__";
 $conf["tm_event_online_reminder_24hr_image"] = true;
+$conf["tm_event_online_reminder_24hr_disable_chapters"] = array(); // list of chapter ids to disable 24 hour reminders
 $conf["tm_event_online_reminder_1hr30min_subject"] = "We'll start shortly... __EVENT_TITLE__";
 $conf["tm_event_online_reminder_1hr30min_headline"] = "See you online.";
 $conf["tm_event_online_reminder_1hr30min_intro"] =  "We'll start in 1 hour and 30 minutes – __START_TIMEZONES__";

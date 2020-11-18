@@ -337,6 +337,16 @@ function tm_events_reminder_tasks_drush() {
 				continue;
 			}
 
+			// Check that event is not part of chapter that has 24 hr reminders disabled
+			if (isset($conf["tm_event_online_reminder_24hr_disable_chapters"])) {
+				if ($chapter != null) {
+					if (in_array($chapter->nid, $conf["tm_event_online_reminder_24hr_disable_chapters"])) {
+						drush_print("- Skipping 24hr reminder for chapter: " . $chapter->title);
+						continue;
+					}
+				}
+			}
+
 			// generate message
 			$event_title = trim(strip_tags($event->title));
 			$subject = $conf["tm_event_online_reminder_" . $reminder_type . "_subject"];

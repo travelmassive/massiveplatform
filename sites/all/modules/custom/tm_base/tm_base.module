@@ -975,3 +975,36 @@ function tm_base_pathauto_alias_alter(&$alias, array $context) {
   }
 
 }
+
+/**
+ * Filter out dashes and other characters from urls
+ * see: https://www.drupal.org/project/pathauto/issues/2319527 
+ */
+function tm_base_pathauto_punctuation_chars_alter(array &$punctuation) {
+
+  $punctuation['ndash'] = array(
+    'value' => '–',
+    'name' => t('En Dash'),
+  );
+  $punctuation['mdash'] = array(
+    'value' => '—',
+    'name' => t('Em Dash'),
+  );
+  $punctuation['single_quota_open'] = array(
+    'value' => '‘',
+    'name' => t('Quotation Open'),
+  );
+  $punctuation['single_quota_close'] = array(
+    'value' => '’',
+    'name' => t('Quotation Close'),
+  );
+  $punctuation['double_quota_open'] = array(
+    'value' => '“',
+    'name' => t('Double Quotation Open'),
+  );
+  $punctuation['double_quota_close'] = array(
+    'value' => '”',
+    'name' => t('Double Quotation Close'),
+  );
+
+}

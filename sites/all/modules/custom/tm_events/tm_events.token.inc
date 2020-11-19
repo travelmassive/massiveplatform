@@ -62,6 +62,7 @@ function tm_events_tokens($type, $tokens, array $data = array(), array $options 
           if (tm_event_livestream_check_display(null, $event, false)) {
             $replacements[$original] = "/live-" . ($event->changed % 10000);
           }
+          break;
 
       } // end switch
     } // end foreach

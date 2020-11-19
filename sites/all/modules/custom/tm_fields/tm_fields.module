@@ -602,7 +602,14 @@ function _tm_anon_flag_placeholder($field, $title = NULL) {
         // Checkout ticket
         if ($result == 'show_checkout') {
           $css_classes .= ' disabled';
-          return l(t('Tickets'), 'javascript:jq_login_signup_box();', array(
+
+          // default button labels
+          $ticket_label = "Ticket";
+          if (isset($conf["tm_checkout_event_button_label_ticket"])) {
+            $ticket_label = $conf["tm_checkout_event_button_label_ticket"];
+          }
+          
+          return l($ticket_label, 'javascript:jq_login_signup_box();', array(
             'external' => true,
             'attributes' => array(
             'title' => t('Get Ticket for :event', array(':event' => $entity->title)),

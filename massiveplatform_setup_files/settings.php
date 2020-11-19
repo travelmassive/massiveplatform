@@ -704,6 +704,7 @@ $conf["tm_branding_include_js"] = "";
 // $conf["tm_organizations_footer_max_length"] = 32; // maximum length of title
 // $conf["tm_organizations_footer_exclude_previous"] = false; // exclude previous period when calculating upvotes
 // $conf["tm_organizations_footer_order_length"] = false; // order list by title length
+// $conf["tm_lists_feedme_hide_events"] = false; // don't show lists on an event page (better performance for live events)
 
 /** STATUS UPDATES **/
 $conf["tm_status_updates_enabled"] = true; // enable status updates
@@ -1168,7 +1169,7 @@ $conf["tm_newsfeed_updates_refresh_interval"] = 20000; // 20s
 $conf["tm_newsfeed_updates_progress_bar"] = "true";
 $conf["tm_newsfeed_updates_sound"] = "true";
 $conf["tm_newsfeed_updates_sound_file"] = "/sites/all/modules/custom/tm_newsfeed_updates/includes/sounds/info/1.mp3";
-// $conf["tm_newsfeed_updates_hide_events"] = false; // hide notifications on event page
+// $conf["tm_newsfeed_updates_hide_events"] = false; // hide notifications on event page (better performance for live events)
 
 /** APPROVAL REQUEST SETTINGS **/
 $conf["tm_users_approval_on_signup"] = false; // if true, new members will be automatically approved when they signup

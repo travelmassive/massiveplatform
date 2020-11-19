@@ -17,6 +17,16 @@ if (arg(0) == 'node' and is_numeric(arg(1)) and arg(2) == FALSE) {
     $entity_id = arg(1);	
 }
 
+// check if turned off on event pages
+if (isset($conf["tm_lists_feedme_hide_events"])) {
+    if ($conf["tm_lists_feedme_hide_events"]) {
+        $current_path = current_path();
+        $path_alias = drupal_get_path_alias($current_path);
+        if (strpos($path_alias, "events") !== false) {
+            return;
+        }
+    }
+}
 ?>
 
 <script>

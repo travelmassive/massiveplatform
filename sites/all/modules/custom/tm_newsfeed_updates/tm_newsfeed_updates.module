@@ -62,6 +62,16 @@ function tm_newsfeed_updates_init() {
     return;
   }
 
+  // check if turned off on event pages
+  if (isset($conf["tm_newsfeed_updates_hide_events"])) {
+    if ($conf["tm_newsfeed_updates_hide_events"]) {
+      $path_alias = drupal_get_path_alias($current_path);
+      if (strpos($path_alias, "events") !== false) {
+        return;
+      }
+    }
+  }
+
   // css and js
   drupal_add_css(drupal_get_path('module', 'tm_newsfeed_updates') . '/css/toasty.min.css');
   drupal_add_js(drupal_get_path('module', 'tm_newsfeed_updates') . '/js/toasty.min.js');

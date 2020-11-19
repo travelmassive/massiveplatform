@@ -1168,6 +1168,7 @@ $conf["tm_newsfeed_updates_refresh_interval"] = 20000; // 20s
 $conf["tm_newsfeed_updates_progress_bar"] = "true";
 $conf["tm_newsfeed_updates_sound"] = "true";
 $conf["tm_newsfeed_updates_sound_file"] = "/sites/all/modules/custom/tm_newsfeed_updates/includes/sounds/info/1.mp3";
+// $conf["tm_newsfeed_updates_hide_events"] = false; // hide notifications on event page
 
 /** APPROVAL REQUEST SETTINGS **/
 $conf["tm_users_approval_on_signup"] = false; // if true, new members will be automatically approved when they signup

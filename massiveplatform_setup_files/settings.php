@@ -704,7 +704,6 @@ $conf["tm_branding_include_js"] = "";
 // $conf["tm_organizations_footer_max_length"] = 32; // maximum length of title
 // $conf["tm_organizations_footer_exclude_previous"] = false; // exclude previous period when calculating upvotes
 // $conf["tm_organizations_footer_order_length"] = false; // order list by title length
-// $conf["tm_lists_feedme_hide_events"] = false; // don't show lists on an event page (better performance for live events)
 
 /** STATUS UPDATES **/
 $conf["tm_status_updates_enabled"] = true; // enable status updates
@@ -1154,6 +1153,7 @@ $conf["tm_lists_newsletter_outro"] = 'Like this list? Explore <a href="">more li
 $conf["tm_lists_newsletter_facebook_icon_url"] = '';
 $conf["tm_lists_newsletter_twitter_icon_url"] = '';
 $conf["tm_lists_oembed_enabled"] = false; // embed youtube, vimeo, urls
+// $conf["tm_lists_feedme_hide_events"] = false; // don't show lists on an event page (better performance for live events)
 
 /** Newsletter Generation **/
 $conf["tm_users_download_csv_member_of_chapters"] = array("SYD"); // array of chapter shortcodes, will add to csv if user is a member of the chapter in new column

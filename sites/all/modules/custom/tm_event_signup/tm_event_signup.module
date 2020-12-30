@@ -324,7 +324,10 @@ function _tm_event_display_flag($nid, $account = null) {
   $is_past_event = _tm_event_is_past($event);
 
   // Payment type
-  $payment_type = _tm_payments_get_payment_type($event);
+  $payment_type = "no_payment";
+  if (module_exists("tm_payments")) {
+	  $payment_type = _tm_payments_get_payment_type($event);
+  }
   
   // Check if is external RSVP.
   // Is external event

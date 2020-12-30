@@ -25,8 +25,10 @@ If you are developing with Ubuntu (our preference) you can get up and running ea
 sudo apt-get update
 sudo apt-get install mysql-server
 sudo apt-get install nginx
-sudo apt-get install php7.2-fpm php7.2-mysql php7.2-gd php7.2-curl php7.2-json php7.2-readline php7.2-mbstring
-sudo apt-get install drush
+sudo apt-get install php-fpm php-mysql php-gd php-curl php-json php-readline php-mbstring php-dom
+# install composer from https://getcomposer.org/
+# install drush from composer
+composer -W global require drush/drush:8.*
 # for sending mail, your favorite MTA
 sudo apt-get install postfix
 ```
@@ -81,7 +83,7 @@ sudo cp massiveplatform_setup_files/localdev.massiveplatform.com.conf /etc/nginx
 
 ### 4. Edit your php.info
 
-Change the following variables in your php.ini as set out below (On Ubuntu: /etc/php7.2/fpm/php.ini)
+Change the following variables in your php.ini as set out below (On Ubuntu: /etc/php7.4/fpm/php.ini)
 
 ```console
 # Required by nginx php usage
@@ -97,7 +99,7 @@ upload_max_filesize = 16M
 Restart php7.2-fpm service after modifying php.ini
 
 ```console
-sudo service php7.2-fpm restart
+sudo service php7.4-fpm restart
 ```
 
 ### 5. Import Sample MySQL database

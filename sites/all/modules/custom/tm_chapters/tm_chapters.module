@@ -115,6 +115,11 @@ function tm_chapters_menu() {
     'access arguments' => array('approve users'),
     'type' => MENU_CALLBACK,
   );
+  $items['chapters/image_wall'] = array(
+    'page callback' => 'tm_chapters_profile_wall',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
   return $items;
 }
 

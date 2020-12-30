@@ -322,3 +322,59 @@ function _tm_chapter_instant_messaging($field, $title = NULL) {
   return $html;
 }
 
+/**
+ * Display an image wall of profiles
+ */
+function tm_chapters_profile_wall() {
+
+  global $conf;
+
+  $chapter_id = intval($_GET["chapter_id"]);
+  if ($chapter_id == null) {
+    print "You need to use a ?chapter_id";
+    drupal_exit();
+  }
+
+  // check cache
+  $cache = cache_get('tm-chapters-image-wall-' . $chapter_id, 'cache');
+  if (!empty($cache)) {
+   print $cache->data;
+   drupal_exit();
+  }
+
+  $flag = flag_get_flag('signup');
+  $query = "SELECT uid from flagging where fid = :fid and entity_id = :chapter_id order by rand() limit 5000";
+  $results = db_query($query, array(':fid' => $flag->fid, ':chapter_id' => $chapter_id))->fetchAllKeyed(0,0);
+
+  $html = "";
+  foreach ($results as $uid) {
+
+    // load account
+    $account = user_load($uid);
+    if ($account == null) {
+      continue;
+    }
+
+    // Set avatar
+    $avatar_url = image_style_url("avatar_grid", _tm_users_get_avatar_uri($account));
+    $img_url = str_replace("'", "%27", file_create_url($avatar_url));
+
+    // URL
+    $user_url = drupal_get_path_alias("user/" . $account->uid);
+
+    // Name
+    $user_full_name = strip_tags($account->field_user_first_name[LANGUAGE_NONE][0]['value']) . " " . strip_tags($account->field_user_last_name[LANGUAGE_NONE][0]['value']);
+    $user_full_name = str_replace("''", "", $user_full_name);
+
+    // Only members with profile pictures
+    if (strpos($avatar_url, "default_avatar") === false) {
+      $html .= "<a target='_blank' title='" . $user_full_name . "' href='/" . $user_url . "'><img class='tm-subscribers-user-avatar' src='" . $img_url . "'></a> ";
+    }
+  }
+
+  // store cache
+  cache_set('tm-chapters-image-wall-' . $chapter_id, $html, 'cache', time() + 300); // 5 mins
+
+  print $html;
+  drupal_exit();
+}

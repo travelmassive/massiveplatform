@@ -443,7 +443,7 @@ function tm_users_download_chapter_leaders_csv(){
 	$fh = fopen('php://output', 'w');
 
 	// puts a header row across the top of the csv
-	$item = array(t('First_Name'),t('Last_Name'),t('Chapter_Leader_Country_Code'),t('Chapter_Leader_Location'),t('Chapter_Leader_Chapter'),t('Chapter_Leader_Chapter_Country'),t('Email'),t('Chapter_Leader_Region_Code'));
+	$item = array(t('First_Name'),t('Last_Name'),t('Chapter_Leader_Country_Code'),t('Chapter_Leader_Location'),t('Chapter_Leader_Chapter'),t('Chapter_Leader_Chapter_Country'),t('Email'),t('Chapter_Leader_Region_Code'),t('Last_Active_Days'));
 
 	fputcsv($fh, $item);
 
@@ -465,11 +465,22 @@ function tm_users_download_chapter_leaders_csv(){
 	$query = db_query($chapter_leaders_list_sql);
 	while ($row = $query->fetchAssoc()) {
 
+		$user_id = $row["uid"];
+
 		// add region to row
 		if ($row["chapter_country"] != null) {
 			$row[] = $chapter_regions[$row["chapter_country"]];
 		} else {
 			$row[] = "";
+		}
+
+		// days since last active
+		$last_visit_timestamp = tm_geoip_get_users_last_visit_time($user_id);
+		if ($last_visit_timestamp != null) {
+			$days_since_last_visit = intval((time() - $last_visit_timestamp) / (60 * 60 * 24));
+			$row[] = $days_since_last_visit;
+		} else {
+			$row[] = -1; // never logged in
 		}
 		
 		fputcsv($fh, $row);

@@ -649,3 +649,36 @@ function tm_users_encrypt_uid($action, $uid, $secret_key="", $secret_iv="") {
   return $output;
 }
 
+/**
+ * Get count of how many events user has registered for
+ */
+function tm_users_get_num_flag_verified($uid, $flag = null) {
+
+  // allow passing flag for performance
+  if ($flag == null) {
+     $flag = flag_get_flag("approval_approved_by");
+  }
+ 
+  $query = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid = :fid AND f.uid = :uid AND f.entity_type = 'user'";
+  $result = db_query($query, array(':fid' => $flag->fid, ':uid' => $uid))->fetch();
+  return $result->total;
+}
+
+/**
+ *  Get count of approval actions
+ */
+function tm_users_get_num_flag_moderations($uid, $flag_ids = null) {
+
+  // allow passing flag for performance
+  if ($flag_ids == null) {
+	  $flag_ids = array();
+    $flag_ids[] = flag_get_flag("approval_is_company_or_brand")->fid;
+    $flag_ids[] = flag_get_flag("approval_need_more_info")->fid;
+    $flag_ids[] = flag_get_flag("moderate_non_community_profile")->fid;
+  }
+
+  $query = "SELECT COUNT(*) total FROM {flagging} f WHERE f.fid IN (" . implode(",", $flag_ids) . ") AND f.uid = :uid AND f.entity_type = 'user'";
+  $result = db_query($query, array(':uid' => $uid))->fetch();
+  return $result->total;
+}
+

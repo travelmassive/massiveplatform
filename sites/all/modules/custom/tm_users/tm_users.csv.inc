@@ -443,12 +443,12 @@ function tm_users_download_chapter_leaders_csv(){
 	$fh = fopen('php://output', 'w');
 
 	// puts a header row across the top of the csv
-	$item = array(t('First_Name'),t('Last_Name'),t('Chapter_Leader_Country_Code'),t('Chapter_Leader_Location'),t('Chapter_Leader_Chapter'),t('Chapter_Leader_Chapter_Country'),t('Email'),t('Chapter_Leader_Region_Code'),t('Last_Active_Days'));
+	$item = array(t('User_ID'), t('First_Name'),t('Last_Name'),t('Chapter_Leader_Country_Code'),t('Chapter_Leader_Location'),t('Chapter_Leader_Chapter'),t('Chapter_Leader_Chapter_Country'),t('Email'),t('Chapter_Leader_Region_Code'),t('Last_Active_Days'),t('Num_Events'),t('Num_Followers'),t('Num_Following'),t('Num_Verifications'),t('Num_Flags'));
 
 	fputcsv($fh, $item);
 
 	// fetch chapter leaders details
-	$chapter_leaders_list_sql = "select distinct field_user_first_name_value, field_user_last_name_value, field_user_country_iso2 as country, field_location_city_value as location_field, chapter.title as chapter, field_data_field_country.field_country_iso2 as chapter_country, mail 
+	$chapter_leaders_list_sql = "select distinct ud.uid, field_user_first_name_value, field_user_last_name_value, field_user_country_iso2 as country, field_location_city_value as location_field, chapter.title as chapter, field_data_field_country.field_country_iso2 as chapter_country, mail 
 	from 
 	(select field_user_first_name_value, field_user_last_name_value, mail, uid from users u, field_data_field_user_first_name fn, field_data_field_user_last_name ln where u.uid = fn.entity_id and u.uid = ln.entity_id) as ud 
 	left join field_data_field_chapter_leaders cl on cl.field_chapter_leaders_target_id = ud.uid 
@@ -460,6 +460,15 @@ function tm_users_download_chapter_leaders_csv(){
 
 	// get array of chapter and regions
 	$chapter_regions = _tm_chapters_get_all_country_regions();
+
+	// flags
+	$flag_follow_members = flag_get_flag("follow_members");
+	$flag_event_register = flag_get_flag("event_register");
+	$flag_approval_approved_by = flag_get_flag("approval_approved_by");
+	$flag_moderation_ids = array();
+	$flag_moderation_ids[] = flag_get_flag("approval_is_company_or_brand")->fid;
+	$flag_moderation_ids[] = flag_get_flag("approval_need_more_info")->fid;
+	$flag_moderation_ids[] = flag_get_flag("moderate_non_community_profile")->fid;
 
 	// perform query
 	$query = db_query($chapter_leaders_list_sql);
@@ -482,7 +491,27 @@ function tm_users_download_chapter_leaders_csv(){
 		} else {
 			$row[] = -1; // never logged in
 		}
-		
+
+		// num events
+		$num_events = tm_users_get_num_registered_events($user_id, $flag_event_register);
+		$row[] = $num_events;
+
+		// num followers
+		$num_followers = tm_users_get_num_followers($user_id, $flag_follow_members);
+		$row[] = $num_followers;
+
+		// num following
+		$num_following = tm_users_get_num_following($user_id, $flag_follow_members);
+		$row[] = $num_following;
+
+		// num verified
+		$num_verified = tm_users_get_num_flag_verified($user_id, $flag_approval_approved_by);
+		$row[] = $num_verified;
+
+		// num moderator actions
+		$num_flag_actions = tm_users_get_num_flag_moderations($user_id, $flag_moderation_ids);
+		$row[] = $num_flag_actions;
+
 		fputcsv($fh, $row);
 	}
 

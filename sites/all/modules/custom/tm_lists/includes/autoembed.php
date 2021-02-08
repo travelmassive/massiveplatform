@@ -25,12 +25,12 @@ class AutoEmbed
 	public $listId = 0; // list id for caching
 	
     public $providers = array(
-            '#http://(www\.)?youtube\.com/watch.*#i'				=> array( 'http://www.youtube.com/oembed', true ),
-            '#https://(www\.)?youtube\.com/watch.*#i'				=> array( 'http://www.youtube.com/oembed?scheme=https', true ),
-            '#http://(www\.)?youtube\.com/playlist.*#i'				=> array( 'http://www.youtube.com/oembed', true ),
-            '#https://(www\.)?youtube\.com/playlist.*#i'			=> array( 'http://www.youtube.com/oembed?scheme=https', true ),
-            '#http://youtu\.be/.*#i'								=> array( 'http://www.youtube.com/oembed', true ),
-            '#https://youtu\.be/.*#i'								=> array( 'http://www.youtube.com/oembed?scheme=https', true ),
+            '#http://(www\.)?youtube\.com/watch.*#i'				=> array( 'https://www.youtube.com/oembed', true ),
+            '#https://(www\.)?youtube\.com/watch.*#i'				=> array( 'https://www.youtube.com/oembed?scheme=https', true ),
+            '#http://(www\.)?youtube\.com/playlist.*#i'				=> array( 'https://www.youtube.com/oembed', true ),
+            '#https://(www\.)?youtube\.com/playlist.*#i'			=> array( 'https://www.youtube.com/oembed?scheme=https', true ),
+            '#http://youtu\.be/.*#i'								=> array( 'https://www.youtube.com/oembed', true ),
+            '#https://youtu\.be/.*#i'								=> array( 'https://www.youtube.com/oembed?scheme=https', true ),
             '#https?://(.+\.)?vimeo\.com/.*#i'						=> array( 'http://vimeo.com/api/oembed.{format}', true ),
             '#https?://(www\.)?soundcloud\.com/.*#i'				=> array( 'http://soundcloud.com/oembed', true ),
             '#https?://(www\.)?instagr(\.am|am\.com)/p/.*#i'        => array( 'http://api.instagram.com/oembed?hidecaption=true&url=', true ),
@@ -417,14 +417,14 @@ class AutoEmbed
     public function my_remote_get( $url, $followLocation = true)
     {
 
-		// check cache
-		$cache_key = "tm-lists-oembed-" . $this->listId . "_" . md5($url);
-		$cache = cache_get($cache_key, 'cache');
-		if ($this->useCache) {
-			if (!empty($cache)) {
-                return $cache->data;
-			}
-		}
+        // check cache
+        $cache_key = "tm-lists-oembed-" . $this->listId . "_" . md5($url);
+        $cache = cache_get($cache_key, 'cache');
+        if ($this->useCache) {
+                if (!empty($cache)) {
+                        return $cache->data;
+                }
+        }
 
         // set browser
         $browser = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.16 (KHTML, like Gecko) \Chrome/24.0.1304.0 Safari/537.16';
@@ -436,23 +436,23 @@ class AutoEmbed
 
         $handle = curl_init();
 
-        curl_setopt( $handle, CURLOPT_CONNECTTIMEOUT, 5 );
-        curl_setopt( $handle, CURLOPT_TIMEOUT, 5 );
+        curl_setopt( $handle, CURLOPT_CONNECTTIMEOUT, 10 );
+        curl_setopt( $handle, CURLOPT_TIMEOUT, 10 );
         curl_setopt( $handle, CURLOPT_URL, $url);
         curl_setopt( $handle, CURLOPT_RETURNTRANSFER, true );
         curl_setopt( $handle, CURLOPT_SSL_VERIFYHOST, false );
         curl_setopt( $handle, CURLOPT_SSL_VERIFYPEER, false );
         curl_setopt( $handle, CURLOPT_FOLLOWLOCATION, $followLocation );
         curl_setopt( $handle, CURLOPT_HEADER, false );
-        curl_setopt( $handle, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0 );
+        // curl_setopt( $handle, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0 );
         curl_setopt( $handle, CURLOPT_USERAGENT, $browser);
 
         $response = curl_exec( $handle );
 
         curl_close( $handle );
 
-		// set cache
-		cache_set($cache_key, $response, 'cache', time() + (60 * 60 * 24)); // cache for 1 day
+        // set cache
+        cache_set($cache_key, $response, 'cache', time() + (60 * 60 * 24)); // cache for 1 day
 
         return $response;
     }

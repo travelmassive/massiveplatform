@@ -436,8 +436,8 @@ class AutoEmbed
 
         $handle = curl_init();
 
-        curl_setopt( $handle, CURLOPT_CONNECTTIMEOUT, 10 );
-        curl_setopt( $handle, CURLOPT_TIMEOUT, 10 );
+        curl_setopt( $handle, CURLOPT_CONNECTTIMEOUT, 20 );
+        curl_setopt( $handle, CURLOPT_TIMEOUT, 20 );
         curl_setopt( $handle, CURLOPT_URL, $url);
         curl_setopt( $handle, CURLOPT_RETURNTRANSFER, true );
         curl_setopt( $handle, CURLOPT_SSL_VERIFYHOST, false );

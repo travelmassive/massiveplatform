@@ -683,7 +683,7 @@ function tm_lists_render_list_items_html($list_id, $items, $total_items, $sort_m
 
 		// show other links
 		// can be: 'website', 'twitter', 'facebook', 'linkedin', 'instagram', 'youtube', 'vimeo', 'snapchat', 'tiktok'
-		$link_labels = array('website' => "Website", 'twitter' => "Twitter", 'facebook' => "Facebook", 'linkedin' => "Linkedin", 'instagram' => "Instagram", 'youtube' => "YouTube", 'vimeo' => "Vimeo", 'snapchat' => "Snapchat", 'tiktok' => "TikTok");
+		$link_labels = array('website' => "Website", 'twitter' => "Twitter", 'facebook' => "Facebook", 'linkedin' => "LinkedIn", 'instagram' => "Instagram", 'youtube' => "YouTube", 'vimeo' => "Vimeo", 'snapchat' => "Snapchat", 'tiktok' => "TikTok");
 
 		foreach ($links as $field => $link) {
 

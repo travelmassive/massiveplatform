@@ -122,8 +122,9 @@ function tm_lists_field_default_field_bases() {
       'allowed_values' => array(
         'profile' => 'Profile page',
         'website' => 'Website',
-        'twitter' => 'LinkedIn',
+        'twitter' => 'Twitter',
         'facebook' => 'Facebook',
+        'linkedin' => 'LinkedIn',
         'instagram' => 'Instagram',
         'youtube' => 'YouTube',
         'vimeo' => 'Vimeo',

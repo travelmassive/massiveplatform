@@ -111,7 +111,7 @@
 		<li><a href="/user/logout">Log out</a></li>
 		<?php } ?>
 		<?php if (!user_is_logged_in()) { ?>
-		<li class="tm_sidenav_login"><span class="tm_sidenav_sign_in_icon tm_sidenav_icon"></span><a rel="nofollow" href="/user/login?destination=<?php print(drupal_get_path_alias());?>">Log in</a>/<a rel="nofollow" href="/user/register?destination=<?php print(drupal_get_path_alias());?>">Sign up</a></li>
+		<li class="tm_sidenav_login"><span class="tm_sidenav_sign_in_icon tm_sidenav_icon"></span><a rel="nofollow" href="/user/login?destination=<?php print(strip_tags(drupal_get_path_alias()));?>">Log in</a>/<a rel="nofollow" href="/user/register?destination=<?php print(strip_tags(drupal_get_path_alias()));?>">Sign up</a></li>
 		<?php } ?>
 		<li><a href="#footer-more"><span class="tm_sidenav_more_icon tm_sidenav_icon"></span>More</a></li>
 
@@ -212,7 +212,7 @@
 
 </div>
 <div id="account-menu-blk" class="tm-sidebar-login" style="display: none;">
-	<span style="font-size: larger; font-weight: bold;"><a href="/user/login?destination=<?php print(current_path());?>" style="color: #176CF6;">Log in</a> to continue...</span><br>
+	<span style="font-size: larger; font-weight: bold;"><a href="/user/login?destination=<?php print(strip_tags(current_path()));?>" style="color: #176CF6;">Log in</a> to continue...</span><br>
 	<hr style="font-weight: 200; color: #808080; border: none; border-bottom: 1px solid #808080; margin: 16px;">
-	<span><b>New to Massive Platform?</b> It only takes a few minutes to <a href="/user/register?destination=<?php print(current_path());?>" style="color: #176CF6;">sign up</a>.</span>
+	<span><b>New to Massive Platform?</b> It only takes a few minutes to <a href="/user/register?destination=<?php print(strip_tags(current_path()));?>" style="color: #176CF6;">sign up</a>.</span>
 </div>

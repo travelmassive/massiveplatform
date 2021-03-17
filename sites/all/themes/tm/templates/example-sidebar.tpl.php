@@ -28,7 +28,7 @@
         $user_score = tm_users_signup_score();
     }
 
-	$safe_current_path = str_replace('"', '', strip_tags(current_path()));
+	$safe_current_path = htmlentities(str_replace('"', '', strip_tags(drupal_get_path_alias())));
 ?>
 <div id="tm_sidenav_toggle">
     <a style="text-decoration: none;" href="#top" onClick="javascript:toggleSideBar();"><span class="tm_sidenav_toggle_icon"></span></a>

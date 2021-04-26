@@ -1,5 +1,5 @@
-name = "Image test"
-description = "Support module for image toolkit tests."
+name = "User module flood control tests"
+description = "Support module for user flood control testing."
 package = Testing
 version = VERSION
 core = 7.x

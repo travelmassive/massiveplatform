@@ -1,3 +1,18 @@
+Date 7.x-2.11, 2021-03-05
+-------------------------
+#3177831 by DamienMcKenna: Add test coverage for the All Day functionality.
+#3197985 by DamienMcKenna: Expand unit tests for date_is_all_day().
+#3197561 by DamienMcKenna: Add functional tests for All Day output.
+#3016390 by DamienMcKenna, mr.york, steinmb, joseph.olstad, lily.yan,
+  solideogloria, nagy.balint, micahw156, Kevin Morse: Change in "All day"
+  end-of-day definition broke existing data.
+#3164305 by DamienMcKenna, FranckyLFS, hughworm, preethy211, joelpittet,
+  lavamind, derekw, leendertdb: Notices in theme_date_display_combination()
+  after upgrading to PHP 7.4.
+#2123039 by DamienMcKenna, hgoto, RoSk0, joelpittet, torotil: Default timezone
+  setting mismatch in metadata wrapper integration.
+
+
 Date 7.x-2.11-rc1, 2020-10-02
 -----------------------------
 #3084897 by steinmb, Chris Matthews: Fix the LICENSE.txt.

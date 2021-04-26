@@ -116,6 +116,26 @@ function theme_date_display_combination($variables) {
     $element['#entity'] = $entity;
   }
 
+  // Verify these variables exist.
+  if (!isset($dates['value']['formatted'])) {
+    $dates['value']['formatted'] = '';
+  }
+  if (!isset($dates['value2']['formatted'])) {
+    $dates['value2']['formatted'] = '';
+  }
+  if (!isset($dates['value']['formatted_time'])) {
+    $dates['value']['formatted_time'] = '';
+  }
+  if (!isset($dates['value2']['formatted_time'])) {
+    $dates['value2']['formatted_time'] = '';
+  }
+  if (!isset($dates['value1']['formatted_timezone'])) {
+    $dates['value1']['formatted_timezone'] = '';
+  }
+  if (!isset($dates['value2']['formatted_timezone'])) {
+    $dates['value2']['formatted_timezone'] = '';
+  }
+
   switch ($options['fromto']) {
     case 'value':
       $date1 = $dates['value']['formatted'];
@@ -130,6 +150,7 @@ function theme_date_display_combination($variables) {
     default:
       $date1 = $dates['value']['formatted'];
       $date2 = $dates['value2']['formatted'];
+      break;
   }
 
   // Pull the timezone, if any, out of the formatted result and tack it back on
@@ -154,9 +175,9 @@ function theme_date_display_combination($variables) {
 
   // Check remaining days.
   $show_remaining_days = '';
-  if (!empty($variables['show_remaining_days'])) {
-    $remaining_days = floor((strtotime($variables['dates']['value']['formatted_iso'])
-    - strtotime('now')) / (24 * 3600));
+  if (!empty($variables['show_remaining_days']) && isset($variables['dates']['value']['formatted_iso'])) {
+    $remaining_days = $variables['dates']['value']['formatted_iso'];
+    $remaining_days = floor((strtotime($remaining_days) - strtotime('now')) / (24 * 3600));
 
     // Show remaining days only for future events.
     if ($remaining_days >= 0) {

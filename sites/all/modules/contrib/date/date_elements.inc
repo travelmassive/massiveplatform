@@ -597,7 +597,11 @@ function date_combo_validate($element, &$form_state) {
       // We can only pass two additional values to drupal_alter, so $element
       // needs to be included in $context.
       $context['element'] = $element;
+
+      // Trigger hook_date_combo_validate_date_start_alter().
       drupal_alter('date_combo_validate_date_start', $from_date, $form_state, $context);
+
+      // Trigger hook_date_combo_validate_date_end_alter().
       drupal_alter('date_combo_validate_date_end', $to_date, $form_state, $context);
 
       $item[$offset_field] = date_offset_get($from_date);

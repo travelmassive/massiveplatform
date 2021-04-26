@@ -662,7 +662,7 @@ function date_entity_metadata_struct_getter($item, array $options, $name, $type,
     return NULL;
   }
 
-  $timezone_db = !empty($item['timezone_db']) ? $item['timezone_db'] : 'UTC';
+  $timezone_db = date_get_timezone_db($info['field']['settings']['tz_handling']);
   $date = new DateObject($value, $timezone_db);
   return !empty($date) ? date_format_date($date, 'custom', 'U') : NULL;
 }
@@ -743,25 +743,37 @@ function date_entity_metadata_struct_setter(&$item, $name, $value, $langcode, $t
 }
 
 /**
- * Duplicate functionality of what is now date_all_day_field() in the Date All Day module.
+ * Duplicate of what is now date_all_day_field() in the Date All Day module.
  *
- * Copy left here to avoid breaking other modules that use this function.
+ * Left here to avoid breaking other modules that use this function.
  *
- * DEPRECATED!, will be removed at some time in the future.
+ * DEPRECATED! Will be removed at some time in the future.
  */
 function date_field_all_day($field, $instance, $date1, $date2 = NULL) {
   if (empty($date1) || !is_object($date1)) {
     return FALSE;
   }
   elseif (!date_has_time($field['settings']['granularity'])) {
-    return TRUE;
+    return FALSE;
   }
+  // The master setting for the 'all day' functionality.
+  elseif (empty($instance['settings']['widget']['settings']['display_all_day'])) {
+    return FALSE;
+  }
+
   if (empty($date2)) {
     $date2 = $date1;
   }
 
+  // Use central logic for determining the granularity.
   $granularity = date_granularity_precision($field['settings']['granularity']);
-  $increment = isset($instance['widget']['settings']['increment']) ? $instance['widget']['settings']['increment'] : 1;
+
+  // The increment is 1 by default, but it can be overridden.
+  $increment = 1;
+  if (isset($instance['widget']['settings']['increment'])) {
+    $increment = $instance['widget']['settings']['increment'];
+  }
+
   return date_is_all_day(date_format($date1, DATE_FORMAT_DATETIME), date_format($date2, DATE_FORMAT_DATETIME), $granularity, $increment);
 }
 

@@ -1,9 +1,9 @@
 name = Date Test Feature
 description = Examples of migrating with the Date module, primarily for use with tests.
-package = Date/Time
-version = VERSION
 core = 7.x
+package = Date/Time
 hidden = TRUE
+version = VERSION
 dependencies[] = date:date
 dependencies[] = date:date_repeat
 dependencies[] = date:date_repeat_field
@@ -27,8 +27,8 @@ features[field_instance][] = node-date_test_feature-field_datetime
 features[field_instance][] = node-date_test_feature-field_datetime_range
 features[node][] = date_test_feature
 
-; Information added by Drupal.org packaging script on 2020-10-02
-version = "7.x-2.11-rc1"
+; Information added by Drupal.org packaging script on 2021-03-05
+version = "7.x-2.11"
 core = "7.x"
 project = "date"
-datestamp = "1601635726"
+datestamp = "1614952728"

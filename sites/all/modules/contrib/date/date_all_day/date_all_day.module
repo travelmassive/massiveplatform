@@ -53,7 +53,6 @@ function date_all_day_date_formatter_dates_alter(&$dates, $context) {
   $entity = $context['entity'];
   $date1 = $dates['value']['local']['object'];
   $date2 = $dates['value2']['local']['object'];
-
   $is_all_day = date_all_day_field($field, $instance, $date1, $date2);
 
   $all_day1 = '';
@@ -171,14 +170,38 @@ function date_all_day_field(array $field, array $instance, $date1, $date2 = NULL
     return FALSE;
   }
   elseif (!date_has_time($field['settings']['granularity'])) {
-    return TRUE;
+    return FALSE;
   }
+  // The master setting for the 'all day' functionality.
+  elseif (empty($instance['widget']['settings']['display_all_day'])) {
+    return FALSE;
+  }
+
   if (empty($date2)) {
     $date2 = $date1;
   }
 
+  // Several scenarios result in the two date values being the same, e.g.
+  // date_formatter_process().
+  if ($date1 == $date2) {
+    // Clone the date object so that changes made to the object won't affect
+    // both variables.
+    $date1 = clone $date2;
+
+    // Set the time to midnight so that the two variables can be properly
+    // compared later in date_is_all_day().
+    $date1->setTime(0, 0, 0);
+  }
+
+  // Use central logic for determining the granularity.
   $granularity = date_granularity_precision($field['settings']['granularity']);
-  $increment = isset($instance['widget']['settings']['increment']) ? $instance['widget']['settings']['increment'] : 1;
+
+  // The increment is 1 by default, but it can be overridden.
+  $increment = 1;
+  if (isset($instance['widget']['settings']['increment'])) {
+    $increment = $instance['widget']['settings']['increment'];
+  }
+
   return date_is_all_day(date_format($date1, DATE_FORMAT_DATETIME), date_format($date2, DATE_FORMAT_DATETIME), $granularity, $increment);
 }
 
@@ -367,6 +390,9 @@ function date_all_day_date_combo_validate_date_end_alter(&$date, &$form_state, $
   // possible.
   if (!empty($context['element']['#date_is_all_day'])) {
     $increment = isset($context['instance']['widget']['settings']['increment']) ? $context['instance']['widget']['settings']['increment'] : 1;
+    // @todo Should this reduce by an additional 1 minute if the increment is
+    // more than 1? For example, if the increment is 15 should the upper value
+    // be 23:45:59 or 23:44:59?
     $date->setTime(23, 60 - $increment, 59);
   }
 }

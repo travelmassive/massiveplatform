@@ -14,6 +14,7 @@ test_dependencies[] = migrate:migrate
 test_dependencies[] = views:views
 
 ; Test coverage: standalone tests.
+files[] = tests/DateEmwTestCase.test
 files[] = tests/DateFormTestCase.test
 files[] = tests/DateMigrateTestCase.test
 files[] = tests/DateNowUnitTestCase.test
@@ -25,8 +26,8 @@ files[] = tests/DateTimezoneTestCase.test
 files[] = tests/DateUiTestCase.test
 files[] = tests/DateValidationTestCase.test
 
-; Information added by Drupal.org packaging script on 2020-10-02
-version = "7.x-2.11-rc1"
+; Information added by Drupal.org packaging script on 2021-03-05
+version = "7.x-2.11"
 core = "7.x"
 project = "date"
-datestamp = "1601635726"
+datestamp = "1614952728"

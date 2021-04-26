@@ -87,7 +87,7 @@ function date_test_feature_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_date',
     'label' => 'Date',
-    'required' => 0,
+    'required' => FALSE,
     'settings' => array(
       'default_value' => 'now',
       'default_value2' => 'blank',
@@ -146,7 +146,7 @@ function date_test_feature_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_date_range',
     'label' => 'Date range',
-    'required' => 0,
+    'required' => FALSE,
     'settings' => array(
       'default_format' => 'medium',
       'default_value' => 'now',
@@ -206,7 +206,7 @@ function date_test_feature_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_date_repeat',
     'label' => 'Date with repeat',
-    'required' => 0,
+    'required' => FALSE,
     'settings' => array(
       'default_format' => 'medium',
       'default_value' => 'now',
@@ -266,7 +266,7 @@ function date_test_feature_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_datestamp',
     'label' => 'Datestamp',
-    'required' => 0,
+    'required' => FALSE,
     'settings' => array(
       'default_format' => 'medium',
       'default_value' => 'now',
@@ -325,7 +325,7 @@ function date_test_feature_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_datestamp_range',
     'label' => 'Datestamp range',
-    'required' => 0,
+    'required' => FALSE,
     'settings' => array(
       'default_format' => 'medium',
       'default_value' => 'now',
@@ -384,7 +384,7 @@ function date_test_feature_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_datetime',
     'label' => 'Datetime',
-    'required' => 0,
+    'required' => FALSE,
     'settings' => array(
       'default_format' => 'medium',
       'default_value' => 'now',
@@ -443,11 +443,11 @@ function date_test_feature_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_datetime_range',
     'label' => 'Datetime range',
-    'required' => 0,
+    'required' => FALSE,
     'settings' => array(
       'default_format' => 'medium',
       'default_value' => 'now',
-      'default_value2' => 'blank',
+      'default_value2' => '+1 week',
       'default_value_code' => '',
       'default_value_code2' => '+1 year',
       'user_register_form' => FALSE,

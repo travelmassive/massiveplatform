@@ -28,7 +28,6 @@ class DateMigrateTestCase extends DrupalWebTestCase {
   public function setUp(array $modules = array()) {
     $modules[] = 'date_test_feature';
     $modules[] = 'date_migrate_test';
-    $modules[] = 'migrate';
     parent::setUp($modules);
 
     // Make sure the migration is registered.
@@ -70,6 +69,8 @@ class DateMigrateTestCase extends DrupalWebTestCase {
     $this->assertText('2011-05-12 19:43', t('Simple date field found'));
     $this->assertText('2011-06-13 18:32 to 2011-07-23 10:32', t('Date range field found'));
     $this->assertText('2011-07-22 12:13', t('Datestamp field found'));
+    // This needs to output the exact time and now "(All day)" because this
+    // field does not have the "all day" option selected.
     $this->assertText('2011-08-01 00:00 to 2011-09-01 00:00', t('Datestamp range field found'));
     $this->assertText('2011-11-18 15:00', t('Datetime field with +9 timezone found'));
     $this->assertText('2011-10-30 14:43 to 2011-12-31 17:59', t('Datetime range field with -5 timezone found'));

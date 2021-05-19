@@ -379,8 +379,10 @@ where n.value = 1 order by ud.uid asc";
 		$ip = "";
 		if (module_exists("tm_geoip")) {
 			$ip = tm_geoip_get_users_last_ip($user_id);
-			$ip_parts = explode(".", $ip);
-			$ip = $ip_parts[0] . "." . $ip_parts[1] . "." . $ip_parts[2] . ".0";
+			if ($ip != null) {
+				$ip_parts = explode(".", $ip);
+				$ip = $ip_parts[0] . "." . $ip_parts[1] . "." . $ip_parts[2] . ".0";
+			}
 		}
 		$row[] = $ip;
 

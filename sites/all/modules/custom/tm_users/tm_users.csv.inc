@@ -120,7 +120,7 @@ function tm_users_download_global_newsletter_generate($drush_progress = false) {
 	}
 
 	// puts a header row across the top of the csv
-	$item = array(t('First_Name'),t('Last_Name'), t('Email'), t('Country_Code'), t('Location'), t('Home_Chapter'), t('Home_Chapter_Country'), t('User_ID'), t('Account_Age_Days'), t('Last_Active_Days'), t('Last_Updated_Days'), t('Days_Since_Verified'), t('Event_Registrations'), t('Region_Code'), t('Joined_Chapters'), t('Member_Status'), t('Member_Subscription_Type'), t('Organization_Subscription_Type'), t('Show_Member_Subscription_CTA'), t('Show_Organization_Subscription_CTA'), t('Profile_URL'), t('First_Organization_Profile'), t('Organization_Profile_URL'), t('User_Segment_L1'), t('User_Segment_L2'), t('Organization_Segment_L1'), t('Organization_Segment_L2'), t('AB_Group'), t('IP'));
+	$item = array(t('First_Name'),t('Last_Name'), t('Email'), t('Country_Code'), t('Location'), t('Home_Chapter'), t('Home_Chapter_Country'), t('User_ID'), t('Account_Age_Days'), t('Last_Active_Days'), t('Last_Updated_Days'), t('Days_Since_Verified'), t('Event_Registrations'), t('Region_Code'), t('Joined_Chapters'), t('Member_Status'), t('Member_Subscription_Type'), t('Organization_Subscription_Type'), t('Show_Member_Subscription_CTA'), t('Show_Organization_Subscription_CTA'), t('Profile_URL'), t('First_Organization_Profile'), t('Organization_Profile_URL'), t('User_Segment_L1'), t('User_Segment_L2'), t('Organization_Segment_L1'), t('Organization_Segment_L2'), t('AB_Group'), t('IP'), t('Name'));
 
 	// Is in chapters
 	foreach ($member_of_chapters as $chapter_shortcode) {
@@ -379,8 +379,13 @@ where n.value = 1 order by ud.uid asc";
 		$ip = "";
 		if (module_exists("tm_geoip")) {
 			$ip = tm_geoip_get_users_last_ip($user_id);
+			$ip_parts = explode(".", $ip);
+			$ip = $ip_parts[0] . "." . $ip_parts[1] . "." . $ip_parts[2] . ".0";
 		}
 		$row[] = $ip;
+
+		// Name (First and Last)
+		$row[] = $row["field_user_first_name_value"] . " " . $row["field_user_last_name_value"];
 
 		// Is member of chapter
 		foreach ($member_of_chapters as $chapter_shortcode) {

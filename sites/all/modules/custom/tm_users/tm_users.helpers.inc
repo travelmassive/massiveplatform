@@ -682,3 +682,14 @@ function tm_users_get_num_flag_moderations($uid, $flag_ids = null) {
   return $result->total;
 }
 
+/** 
+ * Helper method to determine if a user is featured
+ * Note: $flag->is_flagged(uid) doesn't seem to work
+ */
+function tm_user_is_featured_member($uid) {
+  
+  $flag = flag_get_flag('featured_member');
+  $query = "select uid from flagging where fid = :fid and entity_id = :entity_id and entity_type = 'user' limit 1";
+	$result = db_query($query, array(":fid" => $flag->fid, ":entity_id" => $uid))->fetch();
+	return (isset($result->uid));
+}

@@ -166,7 +166,7 @@ function _tm_ds_user_featured($field, $title = NULL) {
   }
   
   // show custom badge if featured
-  if ($flag->is_flagged($field['entity']->uid)) {
+  if (tm_user_is_featured_member($field['entity']->uid)) {
     return t($conf["tm_featured_members_badge_text"]);
   }
 }

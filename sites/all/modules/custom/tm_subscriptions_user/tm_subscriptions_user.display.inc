@@ -314,7 +314,7 @@ function _tm_subscriptions_user_badge_ds($field, $title = NULL) {
 			}
 
 			// show support link
-			$html .= " &middot; <a class='show-cta-banner-user' target='_blank' href='" . tm_subscriptions_get_user_subscription_field($account, "support_url") . "'>Customer Support</a>";
+			$html .= " &middot; <b>Membership # " . $account->uid . "</b> &middot; <a class='show-cta-banner-user' target='_blank' href='" . tm_subscriptions_get_user_subscription_field($account, "support_url") . "'>Customer Support</a>";
 
 		} else {
 

@@ -622,6 +622,9 @@ function tm_subscriptions_user_replace_template_fields($account, $template, $dis
 	$first_name = $account->field_user_first_name[LANGUAGE_NONE][0]['value'];
 	$inner_html = str_replace("__FIRST_NAME__", $first_name, $inner_html);
 
+	// member id
+	$inner_html = str_replace("__USER_ID__", $account->uid, $inner_html);
+
 	// chapter title
 	if ($display_chapter == null) {
 		$display_chapter = tm_subscriptions_user_get_chapter($account);

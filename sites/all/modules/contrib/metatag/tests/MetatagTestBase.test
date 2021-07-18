@@ -11,16 +11,9 @@
 abstract class MetatagTestBase extends DrupalWebTestCase {
 
   /**
-   * Admin user.
-   *
-   * @var \StdClass
-   */
-  protected $adminUser;
-
-  /**
    * {@inheritdoc}
    */
-  function setUp(array $modules = array()) {
+  public function setUp(array $modules = array()) {
     // Make sure these modules are enabled so that we can use their entity
     // types later.
     $modules[] = 'node';
@@ -76,8 +69,16 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
 
   /**
    * Create a content type for the tests.
+   *
+   * @param string $machine_name
+   *   The machine name of a content type to create.
+   * @param string $label
+   *   The human-readable name of the content type.
+   *
+   * @return array
+   *   The content type definition.
    */
-  function createContentType($machine_name, $label) {
+  public function createContentType($machine_name, $label) {
     // Create a content type.
     $content_type = $this->drupalCreateContentType(array(
       'type' => $machine_name,
@@ -99,7 +100,7 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
    * @return object
    *   A user object.
    */
-  function createAdminUser($extra_permissions = array()) {
+  public function createAdminUser(array $extra_permissions = array()) {
     $permissions = array(
       // Basic permissions for the module.
       'administer meta tags',
@@ -126,7 +127,7 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
    * @return object
    *   A user object.
    */
-  function createUser($extra_permissions) {
+  public function createUser(array $extra_permissions) {
     // Basic permissions for the module.
     $permissions = array(
       'edit meta tags',
@@ -143,16 +144,16 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
   /**
    * Returns a new vocabulary with random properties.
    *
-   * @param $vocab_name
+   * @param string $vocab_name
    *   If empty a random string will be used.
-   * @param $content_type
+   * @param string $content_type
    *   Any content types listed will have a Taxonomy Term reference field added
    *   that points to the new vocabulary.
    *
    * @return object
    *   A vocabulary object.
    */
-  function createVocabulary($vocab_name = NULL, $content_type = NULL) {
+  public function createVocabulary($vocab_name = NULL, $content_type = NULL) {
     if (empty($vocab_name)) {
       $vocab_name = $this->randomName();
     }
@@ -187,7 +188,7 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
    * @return object
    *   A taxonomy term object.
    */
-  function createTerm($vocabulary, $term_name = NULL) {
+  public function createTerm($vocabulary, $term_name = NULL) {
     if (empty($term_name)) {
       $term_name = $this->randomName();
     }
@@ -212,33 +213,44 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
    * This should cover all of the default meta tags provided for a test:foo
    * entity.
    *
+   * @return array
+   *   List of meta tag default values to test.
+   *
    * @todo Expand to cover more meta tags.
    *
    * @see metatag_test_metatag_config_default()
    */
-  function getTestDefaults() {
+  public function getTestDefaults() {
     return array(
       // Basic meta tags.
       'title' => array('value' => 'Test altered title'),
       'description' => array('value' => 'Test foo description'),
       'abstract' => array('value' => 'Test foo abstract'),
+      // @code
       // 'keywords' => array('value' => ''),
+      // @endcode
       // Advanced meta tags.
+      // @code
       // 'robots' => array('value' => ''),
       // 'news_keywords' => array('value' => ''),
       // 'standout' => array('value' => ''),
       // 'robots' => array('value' => ''),
       // 'standout' => array('value' => ''),
+      // @endcode
       'generator' => array('value' => 'Drupal 7 (https://www.drupal.org)'),
+      // @code
       // 'standout' => array('value' => ''),
       // 'image_src' => array('value' => ''),
+      // @endcode
       'canonical' => array('value' => '[current-page:url:absolute]'),
       'shortlink' => array('value' => '[current-page:url:unaliased]'),
+      // @code
       // 'publisher' => array('value' => ''),
       // 'author' => array('value' => ''),
       // 'original-source' => array('value' => ''),
       // 'revisit-after' => array('value' => ''),
       // 'content-language' => array('value' => ''),'
+      // @endcode
     );
   }
 
@@ -246,6 +258,9 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
    * Add a locale to the site.
    *
    * This assumes the Locale module is enabled.
+   *
+   * @param string $langcode
+   *   The language code to add.
    */
   public function addSiteLanguage($langcode) {
     // Load the language-add page.
@@ -268,7 +283,10 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
     // Get all language definitions.
     $languages = language_list();
     $language = $languages[$langcode]->name;
-    $this->assertText(strip_tags(t('The language %language has been created and can now be used. More information is available on the <a href="@locale-help">help screen</a>.', array('%language' => t($language), '@locale-help' => url('admin/help/locale')))), 'A new language has been added.');
+    $this->assertText(strip_tags(t('The language %language has been created and can now be used. More information is available on the <a href="@locale-help">help screen</a>.', array(
+      '%language' => t($language),
+      '@locale-help' => url('admin/help/locale'),
+    ))), 'A new language has been added.');
   }
 
   /**
@@ -336,10 +354,10 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
    * @param string $textgroup
    *   This string's textgroup; defaults to 'metatag'.
    *
-   * @return integer
+   * @return int
    *   The {locales_source}.lid value for this string.
    */
-  function getTranslationLidByContext($context, $textgroup = 'metatag') {
+  public function getTranslationLidByContext($context, $textgroup = 'metatag') {
     // Extra debug output.
     $this->debugLocalesSourcesByContext($context);
 
@@ -363,10 +381,10 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
    * @param string $textgroup
    *   This string's textgroup; defaults to 'metatag'.
    *
-   * @return integer
+   * @return int
    *   The {locales_source}.lid value for this string.
    */
-  function getTranslationLidBySource($string, $textgroup = 'metatag') {
+  public function getTranslationLidBySource($string, $textgroup = 'metatag') {
     // Extra debug output.
     $this->debugLocalesSourcesByContext('', $textgroup);
 
@@ -390,10 +408,10 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
    * @param string $textgroup
    *   This string's textgroup; defaults to 'metatag'.
    *
-   * @return integer
+   * @return int
    *   The {locales_source}.lid value for this string.
    */
-  function getTranslationsByContext($context, $textgroup = 'metatag') {
+  public function getTranslationsByContext($context, $textgroup = 'metatag') {
     return db_query("SELECT lid
       FROM {locales_source}
       WHERE textgroup = :textgroup
@@ -406,14 +424,14 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
   }
 
   /**
-   * Generate a debug dump of the {locales_source} records for a specific context.
+   * Generate a dump of the {locales_source} records for a specific context.
    *
    * @param string $context
    *   The translation context to search against.
    * @param string $textgroup
    *   This string's textgroup; defaults to 'metatag'.
    */
-  function debugLocalesSourcesByContext($context, $textgroup = 'metatag') {
+  public function debugLocalesSourcesByContext($context, $textgroup = 'metatag') {
     // Get a dump of all i18n strings for Metatag.
     $records = db_query("SELECT lid, location, textgroup, source, context, version
       FROM {locales_source}
@@ -454,7 +472,7 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
    * @param string $string_target
    *   The destination string.
    */
-  function saveTranslationString($lid, $context, $langcode, $string_source, $string_target) {
+  public function saveTranslationString($lid, $context, $langcode, $string_source, $string_target) {
     // Load the translation page for the front page's title tag.
     $this->drupalGet('admin/config/regional/translate/edit/' . $lid);
     $this->assertResponse(200, 'Loaded the front page title tag string translation page.');
@@ -507,12 +525,12 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
   }
 
   /**
-   * Generate a debug dump of the {locales_target} records for a specific context.
+   * Generate a dump of the {locales_target} records for a specific context.
    *
    * @param string $context
    *   The translation context to search against.
    */
-  function debugLocalesTargetsByContext($context) {
+  public function debugLocalesTargetsByContext($context) {
     // , lt.i18n_status
     $records = db_query("SELECT lt.lid, lt.translation, lt.language, lt.plid, lt.plural
       FROM {locales_target} lt
@@ -551,7 +569,7 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
    * @return object
    *   A mapping object.
    */
-  function createTestObject($identifier, $path) {
+  public function createTestObject($identifier, $path) {
     $test_object = new stdClass();
     $test_object->name = $identifier;
     $test_object->path = $path;
@@ -566,10 +584,10 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
   /**
    * Generates meta tags by path from a test_object.
    *
-   * @return $test_object
+   * @param object $test_object
    *   Metatag mapping object.
    */
-  function generateByPathConfig($test_object) {
+  public function generateByPathConfig($test_object) {
     // Verify the "add context" page works.
     $this->drupalGet('admin/config/search/metatags/context');
     $this->assertResponse(200);
@@ -592,10 +610,10 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
   /**
    * Edits meta tags by path from a test_object.
    *
-   * @return $test_object
+   * @param object $test_object
    *   Metatag mapping object.
    */
-  function editByPathConfig($test_object) {
+  public function editByPathConfig($test_object) {
     $edit = array(
       'paths' => $test_object->path,
       'metatags[und][title][value]' => $test_object->title,
@@ -610,10 +628,10 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
   /**
    * Checks if meta tags have been added correctly from a test_object.
    *
-   * @return $test_object
+   * @param object $test_object
    *   Metatag mapping object.
    */
-  function checkByPathConfig($test_object) {
+  public function checkByPathConfig($test_object) {
     $this->drupalGet($test_object->path);
     $this->assertResponse(200);
 
@@ -634,7 +652,6 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
     }
   }
 
-
   /**
    * Check the translation page for a specific string.
    *
@@ -646,7 +663,7 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
    *   By default strings are expeted to be found. If the string is not expected
    *   to be translatable yet then pass in FALSE.
    */
-  function searchTranslationPage($string, $context, $assert_true = TRUE) {
+  public function searchTranslationPage($string, $context, $assert_true = TRUE) {
     // Load the translation page.
     $search = array(
       'string' => $string,
@@ -692,7 +709,7 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
    * @return string
    *   The URL to a public file.
    */
-  function generateImage($image_size = '200x200', $format = 'png') {
+  public function generateImage($image_size = '200x200', $format = 'png') {
     // Only proceed if the Devel Generate module is installed.
     if (module_exists('devel_generate')) {
       // Load the Devel Generate image generator logic.
@@ -712,15 +729,15 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
   /**
    * Create an image file object of a specific size & type.
    *
-   * @param string
+   * @param string $image_size
    *   The size of the requested image in 'XxY' format; defaults to '200x200'.
-   * @param string
+   * @param string $format
    *   The image format to use, defaults to 'png'.
    *
    * @return object
    *   The file object for the generated image.
    */
-  function generateImageFile($image_size = '200x200', $format = 'png') {
+  public function generateImageFile($image_size = '200x200', $format = 'png') {
     // Generate a test image.
     $image_uri = $this->generateImage();
 
@@ -744,7 +761,7 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
    * @param object $user
    *   A user object that is to be tested.
    */
-  function assertUserEntityTags($user) {
+  protected function assertUserEntityTags($user) {
     // Load the user's profile page.
     $this->drupalGet('user/' . $user->uid);
     $this->assertResponse(200);
@@ -765,7 +782,7 @@ abstract class MetatagTestBase extends DrupalWebTestCase {
    *   A string that contains lowercase letters and numbers, with a letter as
    *   the first character.
    */
-  function randomMachineName($length = 8) {
+  public function randomMachineName($length = 8) {
     return strtolower($this->randomName($length));
   }
 

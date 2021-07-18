@@ -39,6 +39,12 @@ function metatag_verification_metatag_info() {
     'weight' => ++$weight,
   ) + $defaults;
 
+  $info['tags']['facebook-domain-verification'] = array(
+    'label' => t('Facebook'),
+    'description' => t('A string provided by <a href="@facebook">Facebook</a>, full details are available from the <a href="@verify_url">Facebook online help</a>.', array('@facebook' => 'https://facebook.com/', '@verify_url' => 'https://developers.facebook.com/docs/sharing/domain-verification/verifying-your-domain/#meta-tags')),
+    'weight' => ++$weight,
+  ) + $defaults;
+
   $info['tags']['google-site-verification'] = array(
     'label' => t('Google'),
     'description' => t('A string provided by <a href="@google">Google</a>, full details are available from the <a href="@verify_url">Google online help</a>.', array('@google' => 'https://www.google.com/', '@verify_url' => 'https://support.google.com/webmasters/answer/35179?hl=en')),

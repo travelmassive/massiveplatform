@@ -45,6 +45,9 @@ The primary features include:
   [current-page:pager] into e.g. page titles, description tags, etc. The
   replacement string may be customized from the settings page.
 
+* Views integration to show meta tags for entities as fields, with options to
+  process the tokens to see the final output.
+
 * Per-path control over meta tags using the "Metatag: Context" submodule
   (requires the Context module).
 

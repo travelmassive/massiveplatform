@@ -10,7 +10,7 @@
     attach: function (context) {
       $('fieldset.metatags-form', context).drupalSetSummary(function (context) {
         var vals = [];
-        $("input[type='text'], select, textarea", context).each(function() {
+        $("input[type='text'], select, textarea", context).each(function () {
           var input_field = $(this).attr('name');
           // Verify the field exists before proceeding.
           if (input_field === undefined) {

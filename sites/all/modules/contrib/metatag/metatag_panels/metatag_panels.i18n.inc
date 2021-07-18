@@ -46,23 +46,35 @@ function metatag_panels_i18n_object_info() {
     // Callback to load all config objects.
     'list callback' => 'metatag_panels_i18n_list_panels',
     // The object load callback.
+    // @code
     // 'load callback' => 'metatag_panels_i18n_load',
+    // @endcode
     // @todo Custom i18n object overrides.
+    // @code
     // 'class' => 'metatag_panels_i18n_metatag',
+    // @endcode
     // @todo Is this needed? What does it do?
+    // @code
     // 'translation set' => TRUE,
+    // @endcode
     // The object's "key" field, this tells i18n_string to use the $panel->name
     // attribute.
     'key' => 'name',
     // Placeholders for automatic paths. This connects the 'key' to strings in
     // the paths listed below.
+    // @code
     // 'placeholders' => array(
     //   '%did' => 'did',
     // ),
+    // @endcode
     // To produce edit links automatically.
+    // @code
     // 'edit path' => 'admin/config/search/metatags/config/%instance',
+    // @endcode
     // Auto-generate a 'translate' tab.
+    // @code
     // 'translate tab' => 'admin/config/search/metatags/config/%instance/translate',
+    // @endcode
     // Properties for string translation.
     'string translation' => array(
       // The textgroup, type and (below) name will be concatenated into a single
@@ -70,11 +82,15 @@ function metatag_panels_i18n_object_info() {
       'textgroup' => 'metatag',
       'type' => 'metatag_panels',
       // Table where the object is stored, to automate string lists.
+      // @code
       // 'table' => 'page_manager_handlers',
+      // @endcode
       // Translatable properties of these objects, this will be added later.
       'properties' => $properties,
       // The path to translate individual strings.
+      // @code
       // 'translate path' => 'admin/config/search/metatags/config/%instance/translate/%i18n_language',
+      // @endcode
     ),
   );
 

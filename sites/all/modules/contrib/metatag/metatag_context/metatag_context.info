@@ -12,8 +12,8 @@ dependencies[] = context:context
 files[] = tests/MetatagContextTest.test
 files[] = tests/MetatagContextWithI18nTest.test
 
-; Information added by Drupal.org packaging script on 2020-02-10
-version = "7.x-1.27"
+; Information added by Drupal.org packaging script on 2021-07-12
+version = "7.x-1.28"
 core = "7.x"
 project = "metatag"
-datestamp = "1581369088"
+datestamp = "1626115939"

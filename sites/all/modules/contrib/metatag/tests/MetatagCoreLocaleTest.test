@@ -25,7 +25,7 @@ class MetatagCoreLocaleTest extends MetatagTestBase {
   /**
    * {@inheritdoc}
    */
-  function setUp(array $modules = array()) {
+  public function setUp(array $modules = array()) {
     // Need Locale for the multiple languages.
     $modules[] = 'locale';
 
@@ -35,7 +35,7 @@ class MetatagCoreLocaleTest extends MetatagTestBase {
   /**
    * Test that the node form meta tag fields are translated correctly.
    */
-  function testNodeFormTranslations() {
+  public function testNodeFormTranslations() {
     $content_type = 'metatag_test';
     $content_type_path = str_replace('_', '-', $content_type);
     $label = 'Test';
@@ -134,7 +134,7 @@ class MetatagCoreLocaleTest extends MetatagTestBase {
   /**
    * Verify language meta tags don't output LANGUAGE_NONE / 'und'.
    */
-  function testLanguageNone() {
+  public function testLanguageNone() {
     // Set the global node defaults to set "content-language" to the node's
     // language.
     $config = metatag_config_load('node');

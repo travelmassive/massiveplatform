@@ -23,7 +23,7 @@ function metatag_token_info() {
       $label = $metatag_info['groups'][$value['group']]['label'] . ': ' . $value['label'];
     }
     else {
-      $label = t('Basic tags') . ': ' . $value['label'];
+      $label = t('Basic tags: @label', array('@label' => $value['label']));
     }
     $info['tokens']['metatag'][$value['name']] = array(
       'name' => $label,
@@ -60,7 +60,10 @@ function metatag_token_info() {
   $page = str_replace('PAGER', 12, $pager);
   $info['tokens']['current-page']['pager'] = array(
     'name' => t('Custom pager'),
-    'description' => t('A custom pager (from the Metatag module). Currently set to "@pager" which would be output as e.g. "@page".', array('@pager' => $pager, '@page' => $page)),
+    'description' => t('A custom pager (from the Metatag module). Currently set to "@pager" which would be output as e.g. "@page".', array(
+      '@pager' => $pager,
+      '@page' => $page,
+    )),
   );
 
   // Custom summary tokens for each long text field.
@@ -77,7 +80,10 @@ function metatag_token_info() {
           if (!empty($instance['entity_type']) && !empty($instance['label'])) {
             $info['tokens'][$instance['entity_type']][$field_name . '-summary'] = array(
               'name' => t('@label (summary)', array('@label' => $instance['label'])),
-              'description' => t('A summary of the @label field, trimmed to @length characters.', array('@label' => $instance['label'], '@length' => $trim_length)),
+              'description' => t('A summary of the @label field, trimmed to @length characters.', array(
+                '@label' => $instance['label'],
+                '@length' => $trim_length,
+              )),
             );
           }
         }
@@ -233,8 +239,10 @@ function metatag_token_generate_array($entity, $entity_type, $bundle) {
 }
 
 /**
- * Loop through metatags to avoid recursion on entity tokens. It will replace
- * entity metatag token to its actual entity metatag field value.
+ * Loop through metatags to avoid recursion on entity tokens.
+ *
+ * It will replace entity metatag token to its actual entity metatag field
+ * value.
  *
  * @param array $metatags
  *   An array of entity metatag tokens.
@@ -244,7 +252,7 @@ function metatag_token_generate_array($entity, $entity_type, $bundle) {
  * @return array
  *   Return metatags array with entity metatag tokens replaced.
  */
-function _metatag_token_process_metatag($metatags, $token_type) {
+function _metatag_token_process_metatag(array $metatags, $token_type) {
   foreach ($metatags as $metatag => $data) {
     // Skip values that are not strings.
     if (!is_string($data['value'])) {
@@ -294,7 +302,7 @@ function _metatag_token_process_metatag($metatags, $token_type) {
  * @return string
  *   The replaced value of $token.
  */
-function metatag_token_entitymetatagtoken_replace($metatags, $token, $token_type, $search_tokens = array(), $replace_tokens = array()) {
+function metatag_token_entitymetatagtoken_replace(array $metatags, $token, $token_type, array $search_tokens = array(), array $replace_tokens = array()) {
   $data_tokens = token_scan($token);
   // Check field has tokens.
   if (isset($data_tokens[$token_type])) {

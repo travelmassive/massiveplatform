@@ -128,7 +128,7 @@ function metatag_importer_for_page_title() {
     $converted += db_delete('page_title')
       ->condition('type', $entity_type)
       ->condition('id', $entity_id)
-        ->execute();
+      ->execute();
   }
 
   // Log any records that were skipped.

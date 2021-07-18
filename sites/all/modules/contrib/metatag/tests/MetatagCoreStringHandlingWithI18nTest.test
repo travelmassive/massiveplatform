@@ -25,7 +25,7 @@ class MetatagCoreStringHandlingWithI18nTest extends MetatagCoreStringHandlingTes
   /**
    * {@inheritdoc}
    */
-  function setUp(array $modules = array()) {
+  public function setUp(array $modules = array()) {
     parent::setUp(array('i18n', 'i18n_string'));
   }
 

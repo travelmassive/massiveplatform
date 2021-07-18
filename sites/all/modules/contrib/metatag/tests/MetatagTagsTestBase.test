@@ -12,28 +12,36 @@ abstract class MetatagTagsTestBase extends MetatagTestBase {
 
   /**
    * All of the meta tags defined by this module which will be tested.
+   *
+   * @var array
    */
   public $tags = array();
 
   /**
    * The tag to look for when testing the output.
+   *
+   * @var string
    */
   public $test_tag = 'meta';
 
   /**
    * The attribute to look for to indicate which tag.
+   *
+   * @var string
    */
   public $test_name_attribute = 'name';
 
   /**
    * The attribute to look for when testing the output.
+   *
+   * @var string
    */
   public $test_value_attribute = 'content';
 
   /**
    * {@inheritdoc}
    */
-  function setUp(array $modules = array()) {
+  public function setUp(array $modules = array()) {
     $modules[] = 'metatag_test';
     parent::setUp($modules);
 
@@ -61,7 +69,7 @@ abstract class MetatagTagsTestBase extends MetatagTestBase {
   /**
    * Tests that this module's tags are available.
    */
-  function testTagsArePresent() {
+  public function testTagsArePresent() {
     // Load the global config.
     $this->drupalGet('admin/config/search/metatags/config/global');
     $this->assertResponse(200);
@@ -89,7 +97,7 @@ abstract class MetatagTagsTestBase extends MetatagTestBase {
    * Confirm that each tag can be saved and that the output of each tag is
    * correct.
    */
-  function testTagsInputOutput() {
+  public function testTagsInputOutput() {
     // Load the global config.
     $this->drupalGet('admin/config/search/metatags/config/global');
     $this->assertResponse(200);
@@ -154,7 +162,9 @@ abstract class MetatagTagsTestBase extends MetatagTestBase {
       // Look for a custom method named "{$tag_name}_test_output_xpath", if
       // found use that method to get the xpath definition for this meta tag,
       // otherwise it defaults to just looking for a meta tag matching:
+      // @code
       // <$test_tag $test_name_attribute=$tag_name $test_value_attribute=$value />
+      // @endcode
       $method = "{$tag_name}_test_output_xpath";
       if (method_exists($this, $method)) {
         $xpath_string = $this->$method();

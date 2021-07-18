@@ -25,7 +25,7 @@ class MetatagContextWithI18nTest extends MetatagTestBase {
   /**
    * {@inheritdoc}
    */
-  function setUp(array $modules = array()) {
+  public function setUp(array $modules = array()) {
     $modules[] = 'context';
     $modules[] = 'metatag_context';
 

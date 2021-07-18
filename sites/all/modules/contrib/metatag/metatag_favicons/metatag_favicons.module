@@ -117,7 +117,7 @@ function theme_metatag_shortcut_icon($variables) {
  * Helper function to get the theme's favicon URL.
  *
  * @return string
- *  The absolute URL to the favicon, empty string if not found.
+ *   The absolute URL to the favicon, empty string if not found.
  */
 function metatag_favicons_get_theme_favicon() {
   $favicon_url = '';
@@ -137,7 +137,7 @@ function metatag_favicons_get_theme_favicon() {
  *   The URI, or URL, of the favicon to be checked.
  *
  * @return string
- *  The MIME type on success, an empty string on failure.
+ *   The MIME type on success, an empty string on failure.
  */
 function metatag_favicons_get_mime_type($uri) {
   // URLs must have a file extension in order for this to work.

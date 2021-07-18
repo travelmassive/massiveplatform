@@ -32,21 +32,23 @@ class MetatagCoreWithSearchApiTest extends MetatagTestBase {
   protected $serverId;
 
   /**
-   * @inheritdoc
+   * Defines the test.
    */
   public static function getInfo() {
     return array(
       'name' => 'Metatag Search API tests',
       'description' => 'Tests the Metatag Search API integration.',
       'group' => 'Metatag',
-      'dependencies' => array('ctools', 'devel', 'token', 'entity', 'search_api'),
+      'dependencies' => array(
+        'ctools', 'devel', 'token', 'entity', 'search_api',
+      ),
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  function setUp(array $modules = array()) {
+  public function setUp(array $modules = array()) {
     // Needed for Search API.
     $modules[] = 'entity';
     // The module.

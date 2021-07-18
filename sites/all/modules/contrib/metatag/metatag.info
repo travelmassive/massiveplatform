@@ -24,6 +24,11 @@ files[] = metatag.migrate.inc
 ; Search API integration.
 files[] = metatag.search_api.inc
 
+; Views integration.
+files[] = views/metatag_handler_field_entity.inc
+files[] = views/metatag_handler_field_serialized.inc
+files[] = views/metatag_handler_field_serialized_list.inc
+
 
 ; Tests.
 ; Devel is a dependency for all tests as it's used to automatically trim meta
@@ -106,8 +111,8 @@ files[] = tests/MetatagCoreWithWorkbenchModerationTest.test
 ; Test dependencies used by submodules, left here to make it easier to find.
 test_dependencies[] = context:context
 
-; Information added by Drupal.org packaging script on 2020-02-10
-version = "7.x-1.27"
+; Information added by Drupal.org packaging script on 2021-07-12
+version = "7.x-1.28"
 core = "7.x"
 project = "metatag"
-datestamp = "1581369088"
+datestamp = "1626115939"

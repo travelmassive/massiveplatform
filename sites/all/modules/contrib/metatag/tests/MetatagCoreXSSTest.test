@@ -63,7 +63,7 @@ class MetatagCoreXSSTest extends MetatagTestBase {
   /**
    * {@inheritdoc}
    */
-  function setUp(array $modules = array()) {
+  public function setUp(array $modules = array()) {
     parent::setUp($modules);
 
     $content_type = 'page';
@@ -82,7 +82,9 @@ class MetatagCoreXSSTest extends MetatagTestBase {
     $this->drupalLogin($this->adminUser);
 
     // Generate the encoded version of $xssImageString.
+    // @code
     // '<link rel="image_src" href="' . $xssImageString . '" />'
+    // @endcode
     $prefix = '<link rel="image_src" href="';
     // The image tag will be automatically prefixed by the current hostname,
     // so adjust the escaped string.
@@ -99,7 +101,7 @@ class MetatagCoreXSSTest extends MetatagTestBase {
   /**
    * Verify XSS injected in global Node config is not rendered.
    */
-  function testXssMetatagConfig() {
+  public function testXssMetatagConfig() {
     // Submit the form with some example XSS values.
     $this->drupalGet('admin/config/search/metatags/config/global');
     $this->assertResponse(200);

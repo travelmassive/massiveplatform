@@ -1,3 +1,24 @@
+Metatag 7.x-1.28, 2021-07-12
+----------------------------
+#3137241 by tmin: metatag_metatags_form() breaks entire page/panel in some
+  extreme cases.
+#3113325 by VladimirAus, DamienMcKenna: Make hreflang tags available even if
+  only one language enabled.
+#3181898 by andyg5000, DamienMcKenna, geoffray, thejimbirch: Add Facebook
+  verification meta header.
+#1906578 by DamienMcKenna, andyg5000, Leo Pitt, arpas, nikita_tt, kmajzlik,
+  ericwenger, mgerbault, ciss, philsward: Expose meta tag data as a Views field.
+#3213283 by DamienMcKenna: Coding standards improvements.
+#3182561 by thejimbirch, DamienMcKenna, volkswagenchick: Provide link to
+  Facebook Open Graph debugger.
+#3165571 by Eugene Bocharov, DamienMcKenna: MetatagSearchTestSearchApiService
+  ::search() should return 'result count' to avoid Notice in php7.4.
+#3114121 by DamienMcKenna, felribeiro: Recommend "description" tag be less than
+  ~160 characters.
+#3116138 by DamienMcKenna, danharper: Facebook/OG product tag
+  product:retailer_item_id, and description updates.
+
+
 Metatag 7.x-1.27, 2020-02-10
 ----------------------------
 #3047486 by DamienMcKenna: Fixed hook_requirements message about Fast Token

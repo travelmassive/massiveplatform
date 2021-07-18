@@ -12,16 +12,16 @@
       $('.js-show').show();
 
       // Make the leaf arrow clickable.
-      $('.metatag-config-label').hover(function(){
+      $('.metatag-config-label').hover(function () {
         $(this).css({'cursor': 'pointer'});
       })
-        .click(function(){
+        .click(function () {
           $(this).find('a.toggle-details', context).trigger('click');
         });
 
       // Show or hide the summary.
-      $('table.metatag-config-overview a.toggle-details', context).click(function(event) {
-        $(this).parent('div').siblings('div.metatag-config-details').each(function() {
+      $('table.metatag-config-overview a.toggle-details', context).click(function (event) {
+        $(this).parent('div').siblings('div.metatag-config-details').each(function () {
           if ($(this).hasClass('js-hide')) {
             $(this).slideDown('slow').removeClass('js-hide');
           }

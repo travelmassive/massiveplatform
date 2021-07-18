@@ -35,7 +35,9 @@ function metatag_mobile_theme() {
  * Theme callback for an Android app link meta tag.
  *
  * The format is:
+ * @code
  * <link rel="alternate" href="android-app://com.example.Example/sitesection/sitepage/thispage" />
+ * @endcode
  */
 function theme_metatag_mobile_android_app($variables) {
   // Pass everything through to the normal 'link' tag theme.
@@ -49,7 +51,9 @@ function theme_metatag_mobile_android_app($variables) {
  * Theme callback for an iOS app link meta tag.
  *
  * The format is:
+ * @code
  * <link rel="alternate" href="ios-app://123456/example/hello-screen" />
+ * @endcode
  */
 function theme_metatag_mobile_ios_app($variables) {
   // Pass everything through to the normal 'link' tag theme.
@@ -59,12 +63,13 @@ function theme_metatag_mobile_ios_app($variables) {
   return theme('metatag_link_rel', $variables);
 }
 
-
 /**
  * Theme callback for a handheld-formatted alternative URL.
  *
  * The format is:
+ * @code
  * <link rel="alternate" media="handheld" href="https://phone.example.com/the/page" />
+ * @endcode
  */
 function theme_metatag_mobile_alt_handheld($variables) {
   $element = &$variables['element'];
@@ -78,7 +83,7 @@ function theme_metatag_mobile_alt_handheld($variables) {
   return theme('html_tag', $variables);
 }
 
-/*
+/**
  * theme-color
  * MobileOptimized
  * HandheldFriendly

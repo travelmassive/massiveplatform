@@ -11,12 +11,6 @@
 class MetatagCoreStringHandlingTest extends MetatagTestBase {
 
   /**
-   * @var $admin_user
-   *   An admin user.
-   */
-  protected $admin_user;
-
-  /**
    * {@inheritdoc}
    */
   public static function getInfo() {
@@ -31,7 +25,7 @@ class MetatagCoreStringHandlingTest extends MetatagTestBase {
   /**
    * {@inheritdoc}
    */
-  function setUp(array $modules = array()) {
+  public function setUp(array $modules = array()) {
     parent::setUp($modules);
 
     $content_type = 'page';
@@ -55,28 +49,28 @@ class MetatagCoreStringHandlingTest extends MetatagTestBase {
   /**
    * Tests that a meta tag with single quote is not double escaped.
    */
-  function testSingleQuote() {
+  public function testSingleQuote() {
     $this->_testAString("bla'bleblu");
   }
 
   /**
    * Tests that a meta tag with a double quote is not double escaped.
    */
-  function testDoubleQuote() {
+  public function testDoubleQuote() {
     $this->_testAString('bla"bleblu');
   }
 
   /**
    * Tests that a meta tag with an ampersand is not double escaped.
    */
-  function testAmpersand() {
+  public function testAmpersand() {
     $this->_testAString("blable&blu");
   }
 
   /**
    * Tests that specific strings are not double escaped.
    */
-  function _testAString($string) {
+  public function _testAString($string) {
     $this->_testConfig($string);
     $this->_testNode($string);
     $this->_testEncodedField($string);
@@ -85,7 +79,7 @@ class MetatagCoreStringHandlingTest extends MetatagTestBase {
   /**
    * Tests that a specific config string is not double encoded.
    */
-  function _testConfig($string) {
+  protected function _testConfig($string) {
     // The original strings.
     $title_original = 'Title: ' . $string;
     $desc_original = 'Description: ' . $string;
@@ -156,7 +150,7 @@ class MetatagCoreStringHandlingTest extends MetatagTestBase {
   /**
    * Tests that a specific node string is not double escaped.
    */
-  function _testNode($string) {
+  protected function _testNode($string) {
     // The original strings.
     $title_original = 'Title: ' . $string;
     $desc_original = 'Description: ' . $string;
@@ -230,7 +224,7 @@ class MetatagCoreStringHandlingTest extends MetatagTestBase {
   /**
    * Tests that fields with encoded HTML entities will not be double-encoded.
    */
-  function _testEncodedField($string) {
+  protected function _testEncodedField($string) {
     // The original strings.
     $title_original = 'Title: ' . $string;
     $desc_original = 'Description: ' . $string;
@@ -276,7 +270,7 @@ class MetatagCoreStringHandlingTest extends MetatagTestBase {
   /**
    * Test JavaScript handling.
    */
-  function testjavaScript() {
+  public function testjavaScript() {
     // Create a node with a script tag that has no line breaks.
     $node = $this->drupalCreateNode(array(
       'title' => $this->randomName() . ' ' . $this->randomName(),
@@ -325,7 +319,7 @@ class MetatagCoreStringHandlingTest extends MetatagTestBase {
   /**
    * Test CSS handling.
    */
-  function testCss() {
+  public function testCss() {
     // Create a node with a style tag that has no line breaks.
     $node = $this->drupalCreateNode(array(
       'title' => $this->randomName() . ' ' . $this->randomName(),

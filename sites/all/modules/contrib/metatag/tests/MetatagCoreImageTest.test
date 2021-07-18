@@ -25,7 +25,7 @@ class MetatagCoreImageTest extends MetatagTestBase {
   /**
    * {@inheritdoc}
    */
-  function setUp(array $modules = array()) {
+  public function setUp(array $modules = array()) {
     // Needs the OpenGraph submodule because of testNodeFieldValueMultiple().
     $modules[] = 'metatag_opengraph';
 
@@ -39,10 +39,9 @@ class MetatagCoreImageTest extends MetatagTestBase {
   }
 
   /**
-   * Confirm that an image can be added to a global configuration using the
-   * image's absolute URL.
+   * Confirm images can be added to a global config with its absolute URL.
    */
-  function testConfigAbsoluteURL() {
+  public function testConfigAbsoluteURL() {
     // Generate a test image.
     $image_uri = $this->generateImage();
     $this->verbose($image_uri);
@@ -73,10 +72,9 @@ class MetatagCoreImageTest extends MetatagTestBase {
   }
 
   /**
-   * Confirm that an image can be added to a global configuration using the
-   * image's relative URL.
+   * Confirm images can be added to a global config using its relative URL.
    */
-  function testConfigDrupalRelativeURL() {
+  public function testConfigDrupalRelativeURL() {
     // Generate a test image.
     $image_uri = $this->generateImage();
     $this->verbose($image_uri);
@@ -107,17 +105,15 @@ class MetatagCoreImageTest extends MetatagTestBase {
     $xpath = $this->xpath("//link[@rel='image_src']");
     $this->assertEqual(count($xpath), 1, 'One image_src meta tag found.');
     $this->assertEqual((string) $xpath[0]['href'], $image_url);
-    // , 'The image_src meta tag with a URL relative to the Drupal root is being output as an absolute URL.');
     // Confirm the file could be loaded.
     $this->drupalGet($xpath[0]['href']);
     $this->assertResponse(200, "The image_src meta tag's value could be loaded.");
   }
 
   /**
-   * Confirm that an image can be added to a global configuration using the
-   * image's relative URL.
+   * Confirm images can be added to a global config using its relative URL.
    */
-  function testConfigRelativeURL() {
+  public function testConfigRelativeURL() {
     // Generate a test image.
     $image_uri = $this->generateImage();
     $this->verbose($image_uri);
@@ -148,17 +144,15 @@ class MetatagCoreImageTest extends MetatagTestBase {
     $xpath = $this->xpath("//link[@rel='image_src']");
     $this->assertEqual(count($xpath), 1, 'One image_src meta tag found.');
     $this->assertEqual((string) $xpath[0]['href'], $image_url);
-    // , 'The image_src meta tag with an internal URI is being output as an absolute URL.');
     // Confirm the file could be loaded.
     $this->drupalGet($xpath[0]['href']);
     $this->assertResponse(200, "The image_src meta tag's value could be loaded.");
   }
 
   /**
-   * Confirm that an image can be added to a global configuration using the
-   * image's protocol-relative URL.
+   * Confirm images can be added to a global config w its protocol-relative URL.
    */
-  function testConfigProtocolRelativeURL() {
+  public function testConfigProtocolRelativeURL() {
     // Generate a test image.
     $image_uri = $this->generateImage();
     $this->verbose($image_uri);
@@ -189,10 +183,9 @@ class MetatagCoreImageTest extends MetatagTestBase {
   }
 
   /**
-   * Confirm that an image can be added to a global configuration using the
-   * image's internal URI.
+   * Confirm images can be added to a global config with its internal URI.
    */
-  function testConfigInternalURL() {
+  public function testConfigInternalURL() {
     // Generate a test image.
     $image_uri = $this->generateImage();
     $this->verbose($image_uri);
@@ -230,9 +223,9 @@ class MetatagCoreImageTest extends MetatagTestBase {
   }
 
   /**
-   * Confirm that an image with a space in its URL will be handled properly.
+   * Confirm images with a space in its URL will be handled properly.
    */
-  function testConfigImageWithSpaceInURL() {
+  public function testConfigImageWithSpaceInURL() {
     // Generate a test image.
     $image_uri = $this->generateImage();
     $this->verbose($image_uri);
@@ -283,7 +276,7 @@ class MetatagCoreImageTest extends MetatagTestBase {
   /**
    * Confirm that a default value on an image field will be output correctly.
    */
-  function testNodeFieldDefault() {
+  public function testNodeFieldDefault() {
     // Generate a test image file object.
     $image = $this->generateImageFile();
     $image_url = file_create_url($image->uri);
@@ -327,7 +320,7 @@ class MetatagCoreImageTest extends MetatagTestBase {
   /**
    * Confirm that a file on an image field will be output correctly.
    */
-  function testNodeFieldValue() {
+  public function testNodeFieldValue() {
     // Update the 'content' config to use the field_image field as the
     // image_src meta tag.
     $config = metatag_config_load('node');
@@ -371,10 +364,9 @@ class MetatagCoreImageTest extends MetatagTestBase {
   }
 
   /**
-   * Confirm that when using a file field that allows multiple values, only the
-   * first item will be used when outputting a single meta tag.
+   * Confirm that only a single meta tag will be output with non-multiple tags.
    */
-  function testNodeFieldValueNotMultiple() {
+  public function testNodeFieldValueNotMultiple() {
     // Update the 'content' config to use the field_image field as the
     // image_src meta tag.
     $config = metatag_config_load('node');
@@ -429,10 +421,9 @@ class MetatagCoreImageTest extends MetatagTestBase {
   }
 
   /**
-   * Confirm that when using a file field that allows multiple values, that
-   * multiple images can be used and then it will result in multiple meta tags.
+   * Confirm that multiple tags will be output with tags that allow multiples.
    */
-  function testNodeFieldValueMultiple() {
+  public function testNodeFieldValueMultiple() {
     // Update the 'content' config to use the field_image field as the
     // image_src meta tag.
     $config = metatag_config_load('node');

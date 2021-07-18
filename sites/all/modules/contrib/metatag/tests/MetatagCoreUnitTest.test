@@ -46,12 +46,35 @@ class MetatagCoreUnitTest extends MetatagTestBase {
    * Test the basic entity handling.
    */
   public function testEntitySupport() {
-    $test_cases[1] = array('type' => 'node', 'bundle' => 'article', 'expected' => TRUE);
-    $test_cases[2] = array('type' => 'node', 'bundle' => 'page', 'expected' => TRUE);
-    $test_cases[3] = array('type' => 'node', 'bundle' => 'invalid-bundle', 'expected' => FALSE);
-    $test_cases[4] = array('type' => 'user', 'expected' => TRUE);
-    $test_cases[5] = array('type' => 'taxonomy_term', 'bundle' => 'tags', 'expected' => TRUE);
-    $test_cases[6] = array('type' => 'taxonomy_term', 'bundle' => 'invalid-bundle', 'expected' => FALSE);
+    $test_cases[1] = array(
+      'type' => 'node',
+      'bundle' => 'article',
+      'expected' => TRUE,
+    );
+    $test_cases[2] = array(
+      'type' => 'node',
+      'bundle' => 'page',
+      'expected' => TRUE,
+    );
+    $test_cases[3] = array(
+      'type' => 'node',
+      'bundle' => 'invalid-bundle',
+      'expected' => FALSE,
+    );
+    $test_cases[4] = array(
+      'type' => 'user',
+      'expected' => TRUE,
+    );
+    $test_cases[5] = array(
+      'type' => 'taxonomy_term',
+      'bundle' => 'tags',
+      'expected' => TRUE,
+    );
+    $test_cases[6] = array(
+      'type' => 'taxonomy_term',
+      'bundle' => 'invalid-bundle',
+      'expected' => FALSE,
+    );
     foreach ($test_cases as $test_case) {
       $test_case += array('bundle' => NULL);
       $this->assertMetatagEntitySupportsMetatags($test_case['type'], $test_case['bundle'], $test_case['expected']);
@@ -77,13 +100,13 @@ class MetatagCoreUnitTest extends MetatagTestBase {
    *   The name of the entity type to test.
    * @param string $bundle
    *   The name of the entity bundle to test.
-   * @param array $expected
+   * @param bool $expected
    *   The expected results.
    *
    * @return object
    *   An assertion.
    */
-  function assertMetatagEntitySupportsMetatags($entity_type, $bundle, $expected) {
+  protected function assertMetatagEntitySupportsMetatags($entity_type, $bundle, $expected) {
     $entity = entity_create_stub_entity($entity_type, array(0, NULL, $bundle));
     return $this->assertEqual(
       metatag_entity_supports_metatags($entity_type, $bundle),

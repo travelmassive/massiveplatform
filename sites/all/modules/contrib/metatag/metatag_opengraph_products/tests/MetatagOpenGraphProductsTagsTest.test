@@ -42,6 +42,7 @@ class MetatagOpenGraphProductsTagsTest extends MetatagTagsTestBase {
     'product:price:currency',
     'product:product_link',
     'product:retailer',
+    'product:retailer_item_id',
     'product:retailer_part_no',
     'product:retailer_title',
     'product:shipping_cost:amount',
@@ -57,7 +58,7 @@ class MetatagOpenGraphProductsTagsTest extends MetatagTagsTestBase {
   /**
    * {@inheritdoc}
    */
-  function setUp(array $modules = array()) {
+  public function setUp(array $modules = array()) {
     $modules[] = 'metatag_opengraph_products';
     parent::setUp($modules);
   }
@@ -79,6 +80,7 @@ class MetatagOpenGraphProductsTagsTest extends MetatagTagsTestBase {
     $tag_name = str_replace('product_weight', 'product:weight', $tag_name);
     $tag_name = str_replace(':cost', '_cost', $tag_name);
     $tag_name = str_replace(':part:no', '_part_no', $tag_name);
+    $tag_name = str_replace(':item:id', '_item_id', $tag_name);
     $tag_name = str_replace(':title', '_title', $tag_name);
     $tag_name = str_replace(':link', '_link', $tag_name);
     $tag_name = str_replace(':time', '_time', $tag_name);

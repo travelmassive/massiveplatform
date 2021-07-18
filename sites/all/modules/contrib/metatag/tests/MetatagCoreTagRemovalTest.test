@@ -25,7 +25,7 @@ class MetatagCoreTagRemovalTest extends MetatagTestBase {
   /**
    * Test that the core meta tags work correctly.
    */
-  function testCoreTagRemoval() {
+  public function testCoreTagRemoval() {
     // The default generator strings from core and Metatag.
     $generator_core = 'Drupal 7 (http://drupal.org)';
     $generator_metatag = 'Drupal 7 (https://www.drupal.org)';

@@ -18,14 +18,16 @@ class MetatagCoreWithMediaTest extends MetatagTestBase {
       'name' => 'Metatag core tests with Media',
       'description' => 'Test Metatag integration with the Media module.',
       'group' => 'Metatag',
-      'dependencies' => array('ctools', 'devel', 'token', 'file_entity', 'media'),
+      'dependencies' => array(
+        'ctools', 'devel', 'token', 'file_entity', 'media',
+      ),
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  function setUp(array $modules = array()) {
+  public function setUp(array $modules = array()) {
     $modules[] = 'file_entity';
     $modules[] = 'media';
     // The filter is in the WYSIWYG submodule.
@@ -46,17 +48,17 @@ class MetatagCoreWithMediaTest extends MetatagTestBase {
         LANGUAGE_NONE => array(
           array(
             'value' => $desc . '[['
-              . json_encode(array(
-                 'fid' => 1,
-                 'view_mode' => 'default',
-                 'type' => 'media',
-                 'attributes' =>  array(
-                   'height' => '100',
-                   'width' => '100',
-                   'class' => 'media-element file-default',
-                 ),
-               ))
-              . ']]',
+            . json_encode(array(
+              'fid' => 1,
+              'view_mode' => 'default',
+              'type' => 'media',
+              'attributes' => array(
+                'height' => '100',
+                'width' => '100',
+                'class' => 'media-element file-default',
+              ),
+            ))
+            . ']]',
             'format' => filter_default_format(),
           ),
         ),
@@ -83,10 +85,24 @@ class MetatagCoreWithMediaTest extends MetatagTestBase {
         LANGUAGE_NONE => array(
           array(
             'value' => $desc . '[['
-              . json_encode(array(
-                'fid' => 1,
-                'view_mode' => 'default',
-                'fields' => array(
+            . json_encode(array(
+              'fid' => 1,
+              'view_mode' => 'default',
+              'fields' => array(
+                'alt' => 'alt text field value',
+                'style' => 'height: auto;',
+                'class' => 'media-element file-default cke_widget_element',
+                'data-delta' => 25,
+                'format' => 'default',
+                'alignment' => 'center',
+                'field_image_width[und][0][value]' => '',
+                'field_file_image_alt_text[und][0][value]' => 'alt text field value',
+                'field_caption[und][0][value]' => '',
+                'field_file_image_title_text[und][0][value]' => FALSE,
+              ),
+              'type' => 'media',
+              'field_deltas' => array(
+                25 => array(
                   'alt' => 'alt text field value',
                   'style' => 'height: auto;',
                   'class' => 'media-element file-default cke_widget_element',
@@ -98,29 +114,15 @@ class MetatagCoreWithMediaTest extends MetatagTestBase {
                   'field_caption[und][0][value]' => '',
                   'field_file_image_title_text[und][0][value]' => FALSE,
                 ),
-                'type' => 'media',
-                'field_deltas' => array(
-                  25 => array(
-                    'alt' => 'alt text field value',
-                    'style' => 'height: auto;',
-                    'class' => 'media-element file-default cke_widget_element',
-                    'data-delta' => 25,
-                    'format' => 'default',
-                    'alignment' => 'center',
-                    'field_image_width[und][0][value]' => '',
-                    'field_file_image_alt_text[und][0][value]' => 'alt text field value',
-                    'field_caption[und][0][value]' => '',
-                    'field_file_image_title_text[und][0][value]' => FALSE,
-                  ),
-                ),
-                'attributes' => array(
-                  'alt' => 'alt text field value',
-                  'style' => 'height:auto',
-                  'class' => 'file-default media-element media-wysiwyg-align-center',
-                  'data-delta' => '25',
-                ),
-              ))
-              .']]',
+              ),
+              'attributes' => array(
+                'alt' => 'alt text field value',
+                'style' => 'height:auto',
+                'class' => 'file-default media-element media-wysiwyg-align-center',
+                'data-delta' => '25',
+              ),
+            ))
+            . ']]',
             'format' => filter_default_format(),
           ),
         ),
@@ -147,17 +149,17 @@ class MetatagCoreWithMediaTest extends MetatagTestBase {
         LANGUAGE_NONE => array(
           array(
             'value' => '[['
-              . json_encode(array(
-                'fid' => '1',
-                'view_mode' => 'default',
-                'type' => 'media',
-                'attributes' => array(
-                  'height' => '100',
-                  'width' => '100',
-                  'class' => 'media-element file-default',
-                ),
-              ))
-              . ']]' . $desc,
+            . json_encode(array(
+              'fid' => '1',
+              'view_mode' => 'default',
+              'type' => 'media',
+              'attributes' => array(
+                'height' => '100',
+                'width' => '100',
+                'class' => 'media-element file-default',
+              ),
+            ))
+            . ']]' . $desc,
             'format' => filter_default_format(),
           ),
         ),
@@ -184,10 +186,24 @@ class MetatagCoreWithMediaTest extends MetatagTestBase {
         LANGUAGE_NONE => array(
           array(
             'value' => '[['
-              . json_encode(array(
-                'fid' => '1',
-                'view_mode' => 'default',
-                'fields' => array(
+            . json_encode(array(
+              'fid' => '1',
+              'view_mode' => 'default',
+              'fields' => array(
+                'alt' => 'alt text field value',
+                'style' => 'height: auto;',
+                'class' => 'media-element file-default cke_widget_element',
+                'data-delta' => 25,
+                'format' => 'default',
+                'alignment' => 'center',
+                'field_image_width[und][0][value]' => '',
+                'field_file_image_alt_text[und][0][value]' => 'alt text field value',
+                'field_caption[und][0][value]' => '',
+                'field_file_image_title_text[und][0][value]' => FALSE,
+              ),
+              'type' => 'media',
+              'field_deltas' => array(
+                25 => array(
                   'alt' => 'alt text field value',
                   'style' => 'height: auto;',
                   'class' => 'media-element file-default cke_widget_element',
@@ -199,29 +215,15 @@ class MetatagCoreWithMediaTest extends MetatagTestBase {
                   'field_caption[und][0][value]' => '',
                   'field_file_image_title_text[und][0][value]' => FALSE,
                 ),
-                'type' => 'media',
-                'field_deltas' => array(
-                  25 => array(
-                    'alt' => 'alt text field value',
-                    'style' => 'height: auto;',
-                    'class' => 'media-element file-default cke_widget_element',
-                    'data-delta' => 25,
-                    'format' => 'default',
-                    'alignment' => 'center',
-                    'field_image_width[und][0][value]' => '',
-                    'field_file_image_alt_text[und][0][value]' => 'alt text field value',
-                    'field_caption[und][0][value]' => '',
-                    'field_file_image_title_text[und][0][value]' => FALSE,
-                  ),
-                ),
-                'attributes' => array(
-                  'alt' => 'alt text field value',
-                  'style' => 'height:auto',
-                  'class' => 'file-default media-element media-wysiwyg-align-center',
-                  'data-delta' => 25,
-                ),
-              ))
-              . ']]' . $desc,
+              ),
+              'attributes' => array(
+                'alt' => 'alt text field value',
+                'style' => 'height:auto',
+                'class' => 'file-default media-element media-wysiwyg-align-center',
+                'data-delta' => 25,
+              ),
+            ))
+            . ']]' . $desc,
             'format' => filter_default_format(),
           ),
         ),

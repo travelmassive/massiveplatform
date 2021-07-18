@@ -46,7 +46,7 @@ class MetatagDcTagsTest extends MetatagTagsTestBase {
   /**
    * {@inheritdoc}
    */
-  function setUp(array $modules = array()) {
+  public function setUp(array $modules = array()) {
     $modules[] = 'metatag_dc';
     parent::setUp($modules);
   }

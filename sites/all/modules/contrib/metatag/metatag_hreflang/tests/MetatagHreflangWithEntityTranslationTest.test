@@ -25,7 +25,7 @@ class MetatagHreflangWithEntityTranslationTest extends MetatagTestBase {
   /**
    * {@inheritdoc}
    */
-  function setUp(array $modules = array()) {
+  public function setUp(array $modules = array()) {
     // Used for debugging some token values.
     $modules[] = 'devel';
 
@@ -112,7 +112,7 @@ class MetatagHreflangWithEntityTranslationTest extends MetatagTestBase {
    *   The langcode of the current form. Defaults to LANGUAGE_NONE, which is
    *   what is used on an empty node/add form.
    */
-  private function assertHreflangFields($form_langcode = LANGUAGE_NONE) {
+  protected function assertHreflangFields($form_langcode = LANGUAGE_NONE) {
     // The x-default field has a specific default.
     $this->assertFieldByName("metatags[{$form_langcode}][hreflang_xdefault][value]", "[node:url-original]", 'Found the hreflang=x-default meta tag and it has the correct default value.');
 
@@ -124,10 +124,9 @@ class MetatagHreflangWithEntityTranslationTest extends MetatagTestBase {
   }
 
   /**
-   * Confirm that each locale has a field added and shows the appropriate
-   * default value.
+   * Confirm each locale has a field and shows the appropriate default value.
    */
-  function testFormFields() {
+  public function testFormFields() {
     $this->drupalGet('node/add/page');
     $this->assertResponse(200);
 
@@ -138,7 +137,7 @@ class MetatagHreflangWithEntityTranslationTest extends MetatagTestBase {
   /**
    * Confirm that the meta tags output are correct.
    */
-  function testOutput() {
+  public function testOutput() {
     // All of the locales we're supporting in these tests. The languages have
     // been enabled already, so this gets a list of language objects.
     $languages = language_list('enabled');
@@ -230,11 +229,13 @@ class MetatagHreflangWithEntityTranslationTest extends MetatagTestBase {
           $this->assertEqual($xpath[$ctr]['hreflang'], $langcode);
           // @todo Fix this. Not sure why, but the url() call returns the URL
           // without the language prefix.
+          // @code
           // $url_options = array(
           //   'language' => $locale,
           //   'absolute' => TRUE,
           // );
           // $this->assertEqual($xpath[$ctr]['href'], url('node/' . $node->nid, $url_options));
+          // @endcode
         }
       }
 

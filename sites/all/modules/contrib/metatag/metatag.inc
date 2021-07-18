@@ -15,30 +15,62 @@ interface DrupalMetaTagInterface {
    *
    * @param array $info
    *   The information about the meta tag from metatag_get_info().
+   * @param array $data
+   *   The data to load for this meta tag, usually including the item 'value'.
    */
-  function __construct(array $info, array $data = array());
+  public function __construct(array $info, array $data = array());
 
+  /**
+   * Build the form for this meta tag.
+   *
+   * @return array
+   *   A standard FormAPI array.
+   */
   public function getForm();
 
-  //function validateForm();
-
-  //function processForm();
-
+  /**
+   * Get the string value of this meta tag.
+   *
+   * @return string
+   *   The value of this meta tag.
+   */
   public function getValue();
 
-  function getWeight();
+  /**
+   * Calculate the weight of this meta tag.
+   *
+   * @return int
+   *   Weight.
+   */
+  public function getWeight();
 
-  function getElement();
+  /**
+   * Get the HTML tag for this meta tag.
+   *
+   * @return array
+   *   A render array for this meta tag.
+   */
+  public function getElement();
 
-  function tidyValue($value);
-
-  function convertUrlToAbsolute($url);
-
-  function truncate($value);
-
-  function maxlength();
-
-  static function text_summary($text, $size);
+  /**
+   * Copied from text.module with the following changes:.
+   *
+   * Change 1: $size is required.
+   * Change 2: $format is removed.
+   * Change 3: Don't trim at the end of short sentences
+   *   (https://www.drupal.org/node/1620104).
+   * Change 4: Word boundaries (https://www.drupal.org/node/1482178).
+   * Change 5: Trim the final string.
+   *
+   * @param string $text
+   *   The string to be processed.
+   * @param int $size
+   *   The maximum length to trim the string to.
+   *
+   * @return string
+   *   The string after it is truncated.
+   */
+  public static function textSummary($text, $size);
 
 }
 
@@ -69,9 +101,9 @@ class DrupalDefaultMetaTag implements DrupalMetaTagInterface {
   protected $weight = 0;
 
   /**
-   * Constructor.
+   * {@inheritdoc}
    */
-  function __construct(array $info, array $data = NULL) {
+  public function __construct(array $info, array $data = NULL) {
     $this->info = $info;
     if (isset($data)) {
       $this->data = $data;
@@ -79,12 +111,9 @@ class DrupalDefaultMetaTag implements DrupalMetaTagInterface {
   }
 
   /**
-   * Calculate the weight of this meta tag.
-   *
-   * @return int
-   *   Weight.
+   * {@inheritdoc}
    */
-  function getWeight() {
+  public function getWeight() {
     static $counter = 0;
 
     // If no weight value is found, stack this meta tag at the end.
@@ -97,20 +126,14 @@ class DrupalDefaultMetaTag implements DrupalMetaTagInterface {
   }
 
   /**
-   * Build the form for this meta tag.
-   *
-   * @return array
-   *   A standard FormAPI array.
+   * {@inheritdoc}
    */
   public function getForm(array $options = array()) {
     return array();
   }
 
   /**
-   * Get the string value of this meta tag.
-   *
-   * @return string
-   *   The value of this meta tag.
+   * {@inheritdoc}
    */
   public function getValue(array $options = array()) {
     $value = $this->tidyValue($this->data['value']);
@@ -124,10 +147,7 @@ class DrupalDefaultMetaTag implements DrupalMetaTagInterface {
   }
 
   /**
-   * Get the HTML tag for this meta tag.
-   *
-   * @return array
-   *   A render array for this meta tag.
+   * {@inheritdoc}
    */
   public function getElement(array $options = array()) {
     $value = $this->getValue($options);
@@ -173,7 +193,10 @@ class DrupalDefaultMetaTag implements DrupalMetaTagInterface {
 
         // Add header information if desired.
         if (!empty($this->info['header'])) {
-          $element['#attached']['drupal_add_http_header'][] = array($this->info['header'], $value);
+          $element['#attached']['drupal_add_http_header'][] = array(
+            $this->info['header'],
+            $value,
+          );
         }
 
         $elements[] = array($element, $element['#id']);
@@ -196,7 +219,7 @@ class DrupalDefaultMetaTag implements DrupalMetaTagInterface {
    * @return string
    *   The meta tag value after it has been tidied up.
    */
-  public function tidyValue($value) {
+  protected function tidyValue($value) {
     // This shouldn't happen, but protect against tokens returning arrays.
     if (!is_string($value)) {
       return '';
@@ -246,7 +269,7 @@ class DrupalDefaultMetaTag implements DrupalMetaTagInterface {
    * @return string
    *   The argument converted to an absolute URL.
    */
-  function convertUrlToAbsolute($url) {
+  protected function convertUrlToAbsolute($url) {
     // Convert paths relative to the hostname, that start with a slash, to
     // ones that are relative to the Drupal root path; ignore protocol-relative
     // URLs.
@@ -266,7 +289,7 @@ class DrupalDefaultMetaTag implements DrupalMetaTagInterface {
   }
 
   /**
-   * Shorten a string to a certain length using text_summary().
+   * Shorten a string to a certain length using ::textSummary().
    *
    * @param string $value
    *   String to shorten.
@@ -274,11 +297,11 @@ class DrupalDefaultMetaTag implements DrupalMetaTagInterface {
    * @return string
    *   Shortened string.
    */
-  function truncate($value) {
+  protected function truncate($value) {
     $maxlength = $this->maxlength();
 
     if (!empty($value) && $maxlength > 0) {
-      $value = $this->text_summary($value, $maxlength);
+      $value = $this->textSummary($value, $maxlength);
     }
 
     return $value;
@@ -290,7 +313,7 @@ class DrupalDefaultMetaTag implements DrupalMetaTagInterface {
    * @return int
    *   Maxlenght.
    */
-  function maxlength() {
+  protected function maxlength() {
     if (isset($this->info['maxlength'])) {
       return intval(variable_get('metatag_maxlength_' . $this->info['name'], $this->info['maxlength']));
     }
@@ -298,26 +321,21 @@ class DrupalDefaultMetaTag implements DrupalMetaTagInterface {
   }
 
   /**
-   * Copied from text.module with the following changes:.
-   *
-   * Change 1: $size is required.
-   * Change 2: $format is removed.
-   * Change 3: Don't trim at the end of short sentences
-   *   (https://www.drupal.org/node/1620104).
-   * Change 4: Word boundaries (https://www.drupal.org/node/1482178).
-   * Change 5: Trim the final string.
+   * {@inheritdoc}
    */
-  static function text_summary($text, $size) {
+  public static function textSummary($text, $size) {
+    // What used to be called 'teaser' is now called 'summary', but
+    // the variable 'teaser_length' is preserved for backwardscompatibility.
+    // @code
     // if (!isset($size)) {
-    //   // What used to be called 'teaser' is now called 'summary', but
-    //   // the variable 'teaser_length' is preserved for backwards compatibility.
     //   $size = variable_get('teaser_length', 600);
     // }
+    // @endcode
     // Find where the delimiter is in the body.
     $delimiter = strpos($text, '<!--break-->');
 
-    // If the size is zero, and there is no delimiter,
-    // the entire body is the summary.
+    // If the size is zero, and there is no delimiter, the entire body is the
+    // summary.
     if ($size == 0 && $delimiter === FALSE) {
       return $text;
     }
@@ -330,12 +348,14 @@ class DrupalDefaultMetaTag implements DrupalMetaTagInterface {
     // We check for the presence of the PHP evaluator filter in the current
     // format. If the body contains PHP code, we do not split it up to prevent
     // parse errors.
+    // @code
     // if (isset($format)) {
     //   $filters = filter_list_format($format);
     //   if (isset($filters['php_code']) && $filters['php_code']->status && strpos($text, '<?') !== FALSE) {
     //     return $text;
     //   }
     // }
+    // @endcode
     // If we have a short body, the entire body is the summary.
     if (drupal_strlen($text) <= $size) {
       return $text;
@@ -370,12 +390,16 @@ class DrupalDefaultMetaTag implements DrupalMetaTagInterface {
     // $line_breaks = array('<br />' => 6, '<br>' => 4);
     // Newline only indicates a line break if line break converter
     // filter is present.
+    // @code
     // if (isset($filters['filter_autop'])) {
     //   $line_breaks["\n"] = 1;
     // }
     // $break_points[] = $line_breaks;
+    // @endcode
     // If the first paragraph is too long, split at the end of a sentence.
+    // @code
     // $break_points[] = array('. ' => 1, '! ' => 1, '? ' => 1, '。' => 0, '؟ ' => 1);
+    // @endcode
     // From https://www.drupal.org/node/1482178.
     // If the first sentence is too long, split at the first word break.
     $word_breaks = array(' ' => 0, "\t" => 0);
@@ -402,9 +426,11 @@ class DrupalDefaultMetaTag implements DrupalMetaTagInterface {
 
     // If the htmlcorrector filter is present, apply it to the generated
     // summary.
+    // @code
     // if (isset($filters['filter_htmlcorrector'])) {
     //   $summary = _filter_htmlcorrector($summary);
     // }
+    // @endcode
     return trim($summary);
   }
 
@@ -557,7 +583,7 @@ class DrupalTextMetaTag extends DrupalDefaultMetaTag {
         $values = array($values[0]);
       }
 
-      foreach ($values as $key => &$image_value) {
+      foreach ($values as &$image_value) {
         // Remove any unwanted whitespace around the value.
         $image_value = trim($image_value);
 
@@ -626,12 +652,16 @@ class DrupalLinkMetaTag extends DrupalTextMetaTag {
       // Also send the generator in the HTTP header.
       // @todo This does not support 'rev' or alternate link headers.
       $element['#attached']['drupal_add_http_header'][] = array(
-        'Link', '<' . $value . '>;' . drupal_http_header_attributes(array('rel' => $element['#name'])), TRUE,
+        'Link',
+        '<' . $value . '>;' . drupal_http_header_attributes(array('rel' => $element['#name'])),
+        TRUE,
       );
     }
 
     return array(
-      '#attached' => array('drupal_add_html_head' => array(array($element, $element['#id']))),
+      '#attached' => array(
+        'drupal_add_html_head' => array(array($element, $element['#id'])),
+      ),
     );
   }
 
@@ -675,7 +705,7 @@ class DrupalListMetaTag extends DrupalDefaultMetaTag {
   /**
    * {@inheritdoc}
    */
-  function __construct(array $info, array $data = NULL) {
+  public function __construct(array $info, array $data = NULL) {
     // Ensure that the $data['value] argument is an array.
     if (empty($data['value'])) {
       $data['value'] = array();

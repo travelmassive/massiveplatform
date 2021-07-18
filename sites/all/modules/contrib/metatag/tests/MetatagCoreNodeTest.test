@@ -111,11 +111,15 @@ class MetatagCoreNodeTest extends MetatagTestBase {
     );
 
     // Verify that the node saved correctly.
+    // @code
     // $xpath = $this->xpath("//h1");
+    // @endcode
     $t_args = array('@type' => 'Test', '%title' => 'Who likes magic');
     // This doesn't work for some reason, it seems the HTML is stripped off
     // during output so the %title's standard Drupal wrappers don't match.
+    // @code
     // $this->assertText(t('@type %title has been created.', $t_args));
+    // @endcode
     // .. so this has to be done instead.
     $this->assertText(strip_tags(t('@type %title has been created.', $t_args)));
 
@@ -160,7 +164,7 @@ class MetatagCoreNodeTest extends MetatagTestBase {
     // Verify the node summary is being used correctly.
     $xpath = $this->xpath("//meta[@name='description']");
     $this->assertEqual(count($xpath), 1);
-    $this->assertEqual($xpath[0]['content'], DrupalDefaultMetaTag::text_summary($body, 380));
+    $this->assertEqual($xpath[0]['content'], DrupalDefaultMetaTag::textSummary($body, 380));
 
     // Verify the maxlength functionality is working correctly.
     $maxlength = 10;
@@ -220,11 +224,15 @@ class MetatagCoreNodeTest extends MetatagTestBase {
     );
 
     // Verify that the node saved correctly.
+    // @code
     // $xpath = $this->xpath("//h1");
+    // @endcode
     $t_args = array('@type' => 'Test', '%title' => $new_title);
     // This doesn't work for some reason, it seems the HTML is stripped off
     // during output so the %title's standard Drupal wrappers don't match.
+    // @code
     // $this->assertText(t('@type %title has been updated.', $t_args));
+    // @endcode
     // .. so this has to be done instead.
     $this->assertText(strip_tags(t('@type %title has been updated.', $t_args)));
 
@@ -266,7 +274,12 @@ class MetatagCoreNodeTest extends MetatagTestBase {
     // the {metatag} records for *all* of the entity's revisions.
     $metatags = metatag_metatags_load_multiple('node', array($updated_node->nid));
     $this->verbose($metatags, 'metatag_metatags_load_multiple("node", array(' . $updated_node->nid . '))');
-    $this->assertEqual(array($updated_node->nid => array($node->vid => $expected, $updated_node->vid => $expected_updated)), $metatags);
+    $this->assertEqual(array(
+      $updated_node->nid => array(
+        $node->vid => $expected,
+        $updated_node->vid => $expected_updated,
+      ),
+    ), $metatags);
 
     // Confirm the APIs can load the data for this node revision.
     $metatags = metatag_metatags_load('node', $updated_node->nid, $updated_vid);
@@ -275,7 +288,11 @@ class MetatagCoreNodeTest extends MetatagTestBase {
     $this->assertNotEqual($expected, $metatags);
     $metatags = metatag_metatags_load_multiple('node', array($updated_node->nid), array($updated_node->vid));
     $this->verbose($metatags, 'metatag_metatags_load_multiple("node", array(' . $updated_node->nid . '), array(' . $updated_node->vid . '))');
-    $this->assertEqual(array($updated_node->nid => array($updated_node->vid => $expected_updated)), $metatags);
+    $this->assertEqual(array(
+      $updated_node->nid => array(
+        $updated_node->vid => $expected_updated,
+      ),
+    ), $metatags);
 
     // Load the current revision again.
     $this->drupalGet('node/' . $node->nid);
@@ -379,8 +396,9 @@ class MetatagCoreNodeTest extends MetatagTestBase {
   }
 
   /**
-   * Change the node preview option at the content type level, confirm meta tags
-   * still save correctly.
+   * Change the node preview option at the content type level.
+   *
+   * Confirm that meta tags still save correctly.
    *
    * @param int $option
    *   A suitable value for the 'node_preview' option for a content type, must
@@ -391,7 +409,7 @@ class MetatagCoreNodeTest extends MetatagTestBase {
    *   - if $option === 1, $preview is considered, a preview may be performed.
    *   - if $option === 2, $preview is ignored, a preview is performed.
    */
-  function checkNodePreviewOption($option, $preview = FALSE) {
+  protected function checkNodePreviewOption($option, $preview = FALSE) {
     $content_type = 'article';
     $label = 'Test';
 

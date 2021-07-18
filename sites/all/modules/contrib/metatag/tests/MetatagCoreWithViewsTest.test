@@ -25,7 +25,7 @@ class MetatagCoreWithViewsTest extends MetatagTestBase {
   /**
    * {@inheritdoc}
    */
-  function setUp(array $modules = array()) {
+  public function setUp(array $modules = array()) {
     $modules[] = 'views';
     $modules[] = 'views_ui';
 
@@ -102,7 +102,9 @@ class MetatagCoreWithViewsTest extends MetatagTestBase {
 
     // Verify the page loaded correctly.
     // @todo Update this to extract the H1 tag.
+    // @code
     // $this->assertText(strip_tags(t('Create @name', array('@name' => $vocabulary->name))));
+    // @endcode
     // Verify that it's possible to submit values to the form.
     $this->drupalPost(NULL, array(
       'metatags[und][abstract][value]' => '[term:name] ponies',

@@ -25,7 +25,7 @@ class MetatagCoreTermWithI18nTest extends MetatagTestBase {
   /**
    * {@inheritdoc}
    */
-  function setUp(array $modules = array()) {
+  public function setUp(array $modules = array()) {
     // Need the i18n and i18n_strings modules.
     $modules[] = 'i18n';
     $modules[] = 'i18n_string';

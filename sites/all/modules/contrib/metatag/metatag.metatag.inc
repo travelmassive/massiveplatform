@@ -163,7 +163,7 @@ function metatag_metatag_info() {
 
   $info['tags']['description'] = array(
     'label' => t('Description'),
-    'description' => t("A brief and concise summary of the page's content, preferably 150 characters or less. Where as the description meta tag may be used by search engines to display a snippet about the page in search results, the abstract tag is used by search engines to archive a summary about the page."),
+    'description' => t("A brief and concise summary of the page's content that is a maximum of 160 characters in length. The description meta tag may be used by search engines to display a snippet about the page in search results."),
     'maxlength' => 380,
     'class' => 'DrupalTextMetaTag',
     'group' => 'basic',

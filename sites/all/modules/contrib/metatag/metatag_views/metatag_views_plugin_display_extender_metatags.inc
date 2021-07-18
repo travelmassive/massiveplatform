@@ -13,7 +13,7 @@ class metatag_views_plugin_display_extender_metatags extends views_plugin_displa
   /**
    * {@inheritdoc}
    */
-  function options_definition() {
+  public function options_definition() {
     $options = parent::option_definition();
     $options['metatags'] = array('default' => '');
     $options['metatags_tokenize'] = array('bool' => TRUE, 'default' => FALSE);
@@ -23,7 +23,7 @@ class metatag_views_plugin_display_extender_metatags extends views_plugin_displa
   /**
    * {@inheritdoc}
    */
-  function options_definition_alter(&$options) {
+  public function options_definition_alter(&$options) {
     $options['metatags'] = array('default' => array());
     $options['metatags_tokenize'] = array('bool' => TRUE, 'default' => FALSE);
   }
@@ -31,7 +31,7 @@ class metatag_views_plugin_display_extender_metatags extends views_plugin_displa
   /**
    * {@inheritdoc}
    */
-  function options_summary(&$categories, &$options) {
+  public function options_summary(&$categories, &$options) {
     // Defines where within the Views admin UI the new settings will be visible.
     $categories['metatags'] = array(
       'title' => t('Meta tags'),
@@ -47,7 +47,7 @@ class metatag_views_plugin_display_extender_metatags extends views_plugin_displa
   /**
    * {@inheritdoc}
    */
-  function options_form(&$form, &$form_state) {
+  public function options_form(&$form, &$form_state) {
     // Defines the form.
     if ($form_state['section'] == 'metatags') {
       $form['#title'] .= t('The meta tags for this display');
@@ -84,7 +84,7 @@ class metatag_views_plugin_display_extender_metatags extends views_plugin_displa
       }
 
       if (!empty($options)) {
-        $output = '<p>' . t('The following tokens are available. If you would like to have the characters \'[\' and \']\' please use the html entity codes \'%5B\' or  \'%5D\' or they will get replaced with empty space.' . '</p>');
+        $output = '<p>' . t("The following tokens are available. If you would like to have the characters '[' and ']' please use the html entity codes '%5B' or '%5D' or they will get replaced with empty space.") . '</p>';
         foreach (array_keys($options) as $type) {
           if (!empty($options[$type])) {
             $items = array();
@@ -124,7 +124,7 @@ class metatag_views_plugin_display_extender_metatags extends views_plugin_displa
   /**
    * {@inheritdoc}
    */
-  function options_submit(&$form, &$form_state) {
+  public function options_submit(&$form, &$form_state) {
     // Save the form values.
     if ($form_state['section'] == 'metatags') {
       $metatags = $form_state['values']['metatags'];

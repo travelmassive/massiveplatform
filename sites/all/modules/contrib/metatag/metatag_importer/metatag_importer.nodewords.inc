@@ -36,15 +36,15 @@ function metatag_importer_nodewords_form($form, &$form_state) {
 
     $form['notes'] = array(
       '#markup' => '<p>' . t('Notes') . ':' . '</p>'
-        . '<ul>'
-        . '  <li>' . t('All compatible records will be imported.') . '</li>'
-        . '  <li>' . t('Records <strong>will be removed</strong> from the {nodewords} table upon completion, make sure to keep a backup of the table in case needed.') . '</li>'
-        . '  <li>' . t('The import process may take some time, please be patient.') . '</li>'
-        . '  <li>' . t('Nodewords stored each meta tag as a separate record, so there were many records for each entity or configuration.') . '</li>'
-        . '  <li>' . t('Empty values will be removed, no additional logic is added to verify them.') . '</li>'
-        . '  <li>' . t('Only node, taxonomy term, user, global, front page and error page records will be converted.') . '</li>'
-        . '  <li>' . t('Custom paths, trackers, pagers and vocabularies are not supported yet.') . '</li>'
-        . '</ul>',
+      . '<ul>'
+      . '  <li>' . t('All compatible records will be imported.') . '</li>'
+      . '  <li>' . t('Records <strong>will be removed</strong> from the {nodewords} table upon completion, make sure to keep a backup of the table in case needed.') . '</li>'
+      . '  <li>' . t('The import process may take some time, please be patient.') . '</li>'
+      . '  <li>' . t('Nodewords stored each meta tag as a separate record, so there were many records for each entity or configuration.') . '</li>'
+      . '  <li>' . t('Empty values will be removed, no additional logic is added to verify them.') . '</li>'
+      . '  <li>' . t('Only node, taxonomy term, user, global, front page and error page records will be converted.') . '</li>'
+      . '  <li>' . t('Custom paths, trackers, pagers and vocabularies are not supported yet.') . '</li>'
+      . '</ul>',
     );
 
     $form['actions']['migrate'] = array(
@@ -71,6 +71,12 @@ function metatag_importer_nodewords_form_submit($form, &$form_state) {
   _metatag_importer_import($types);
 }
 
+/**
+ * List all Nodewords data.
+ *
+ * @return array
+ *   A list of Nodewords data keyed by the type of record.
+ */
 function _metatag_importer_list_nodewords() {
   $keys = array(
     NODEWORDS_TYPE_DEFAULT => t('Default'),
@@ -123,6 +129,9 @@ function _metatag_importer_list_nodewords() {
 
 /**
  * Migrates Nodewords data to the Metatag module.
+ *
+ * @param array $types
+ *   The types of Nodewords data to convert.
  */
 function _metatag_importer_import(array $types = array()) {
   $batch = array(
@@ -152,7 +161,7 @@ function _metatag_importer_import(array $types = array()) {
 }
 
 /**
- * Migrates Nodewords data to the Metatag module.
+ * Batch API callback to convert Nodewords data to the Metatag module.
  */
 function _metatag_importer_migrate(array $types = array(), &$context = array()) {
   // Process this number of {nodewords} records at a time.
@@ -186,9 +195,11 @@ function _metatag_importer_migrate(array $types = array(), &$context = array()) 
     ->condition('nw.mtid', $context['sandbox']['current'], '>')
     ->orderBy('nw.mtid');
   // @todo Finish off / test the $types handling.
+  // @code
   // if (!empty($types)) {
   //   $query->condition('nw.type', $types, 'IN');
   // }
+  // @endcode
   $query->range(0, $limit);
   $results = $query->execute();
 
@@ -227,7 +238,10 @@ function _metatag_importer_migrate(array $types = array(), &$context = array()) 
       $entity = entity_load($type, array($record_id));
       if (empty($entity)) {
         $context['sandbox']['skipped'][$type][$record_id] = $record_id;
-        watchdog('metatag_importer', 'Unable to load @entity_type ID @id', array('@entity_type' => $type, '@id' => $record_id), WATCHDOG_WARNING);
+        watchdog('metatag_importer', 'Unable to load @entity_type ID @id', array(
+          '@entity_type' => $type,
+          '@id' => $record_id,
+        ), WATCHDOG_WARNING);
 
         // Delete this record anyway.
         $to_delete[] = $result->mtid;
@@ -257,7 +271,9 @@ function _metatag_importer_migrate(array $types = array(), &$context = array()) 
         case 'node':
         case 'taxonomy_term':
         case 'user':
+          // @code
           // watchdog('metatag_importer', 'Importing meta tags for @entity_type ID @id..', array('@entity_type' => $type, '@id' => $record_id), WATCHDOG_INFO);
+          // @endcode
           $entity = entity_load($type, array($record_id));
           $entity = reset($entity);
           $langcode = metatag_entity_get_language($type, $entity);
@@ -270,7 +286,9 @@ function _metatag_importer_migrate(array $types = array(), &$context = array()) 
           }
 
           metatag_metatags_save($type, $entity_id, $revision_id, $entity->metatags);
+          // @code
           // watchdog('metatag_importer', 'Imported meta tags for @entity_type ID @id.', array('@entity_type' => $type, '@id' => $record_id), WATCHDOG_INFO);
+          // @endcode
           break;
 
         // Other Nodewords settings are converted to {metatag_config} records
@@ -297,12 +315,14 @@ function _metatag_importer_migrate(array $types = array(), &$context = array()) 
           metatag_config_save($config);
           break;
 
-        // @todo: A 'vocabulary' setting becomes a default configuration?
+        // @todo A 'vocabulary' setting becomes a default configuration?
         case 'vocabulary':
-          //   $metatags = metatag_metatags_load($record->entity_type, $record->entity_id);
-          //   $metatags = array_merge($metatags, $record->data);
-          //   $vocabulary = taxonomy_vocabulary_load($record->entity_id);
-          //   metatag_metatags_save($record->entity_type, $record->entity_id, $vocabulary->vid, $metatags);
+          // @code
+          // $metatags = metatag_metatags_load($record->entity_type, $record->entity_id);
+          // $metatags = array_merge($metatags, $record->data);
+          // $vocabulary = taxonomy_vocabulary_load($record->entity_id);
+          // metatag_metatags_save($record->entity_type, $record->entity_id, $vocabulary->vid, $metatags);
+          // @endcode
           break;
       }
     }
@@ -382,13 +402,14 @@ function _metatag_importer_finished($success, $results, $operations) {
 /**
  * Converts the Nodewords type to a Metatag entity or Metatag config instance.
  *
- * @param $type
+ * @param string $type
  *   Nodewords type.
  *
  * @return
  *   Metatag entity type or configuration instance.
  */
 function _metatag_importer_convert_type($type) {
+  // @code
   // define('NODEWORDS_TYPE_DEFAULT',    1);
   // define('NODEWORDS_TYPE_ERRORPAGE',  2);
   // define('NODEWORDS_TYPE_FRONTPAGE',  3);
@@ -399,7 +420,8 @@ function _metatag_importer_convert_type($type) {
   // define('NODEWORDS_TYPE_TERM',       6);
   // define('NODEWORDS_TYPE_TRACKER',    7);
   // define('NODEWORDS_TYPE_USER',       8);
-  // define('NODEWORDS_TYPE_VOCABULARY', 9);
+  // define('NODEWORDS_TYPE_VOCABULARY', 9);.
+  // @endcode
   switch ($type) {
     case 1:
       return 'global';
@@ -411,9 +433,10 @@ function _metatag_importer_convert_type($type) {
       return 'global:frontpage';
 
     // @todo Not yet sure how to handle pager items?
+    // @code
     // case 4:
     //   return 'pager';
-
+    // @endcode
     case 5:
       return 'node';
 
@@ -421,9 +444,10 @@ function _metatag_importer_convert_type($type) {
       return 'taxonomy_term';
 
     // @todo Not sure what to do with tracker pages.
+    // @code
     // case 7:
     //   return 'tracker';
-
+    // @endcode
     case 8:
       return 'user';
 
@@ -432,8 +456,10 @@ function _metatag_importer_convert_type($type) {
       return 'vocabulary';
 
     // @todo Page records need to be converted to Context definitions.
+    // @code
     // case 10:
     //   return 'page';
+    // @endcode
   }
 
   return FALSE;
@@ -442,13 +468,13 @@ function _metatag_importer_convert_type($type) {
 /**
  * Converts a meta tag's name and value from Nodewords to Metatag format.
  *
- * @param $name
+ * @param string $name
  *   Meta tag name.
- * @param $value
+ * @param string $value
  *   Meta tag value in Nodewords format.
  *
- * @return
- *   The two arguments returned after being converted, in an array.
+ * @return array
+ *   The two arguments returned after being converted.
  */
 function _metatag_importer_convert_data($name, $value) {
   // Initial simplification of simple values.
@@ -501,6 +527,7 @@ function _metatag_importer_convert_data($name, $value) {
       if (isset($value['value']) && intval($value['value']) === 1) {
         $value = FALSE;
       }
+      break;
 
     // Robots needs some extra processing.
     case 'robots':
@@ -563,7 +590,6 @@ function _metatag_importer_convert_data($name, $value) {
 
   return array($name, $value);
 }
-
 
 /**
  * The following will not be converted because they refer to site-wide defaults

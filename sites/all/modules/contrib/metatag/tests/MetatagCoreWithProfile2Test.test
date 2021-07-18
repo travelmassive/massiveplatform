@@ -28,7 +28,7 @@ class MetatagCoreWithProfile2Test extends MetatagCoreUserTest {
   /**
    * {@inheritdoc}
    */
-  function setUp(array $modules = array()) {
+  public function setUp(array $modules = array()) {
     $modules[] = 'profile2';
 
     parent::setUp($modules);

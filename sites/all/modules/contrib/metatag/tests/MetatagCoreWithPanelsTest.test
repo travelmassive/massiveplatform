@@ -18,14 +18,16 @@ class MetatagCoreWithPanelsTest extends MetatagTestBase {
       'name' => 'Metatag core tests with Panels',
       'description' => 'Test Metatag integration with the Panels module.',
       'group' => 'Metatag',
-      'dependencies' => array('ctools', 'devel', 'token', 'panels', 'page_manager'),
+      'dependencies' => array(
+        'ctools', 'devel', 'token', 'panels', 'page_manager',
+      ),
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  function setUp(array $modules = array()) {
+  public function setUp(array $modules = array()) {
     // We'll be using Panels but most of the work is actually in Page Manager.
     $modules[] = 'page_manager';
     $modules[] = 'panels';
@@ -61,7 +63,6 @@ class MetatagCoreWithPanelsTest extends MetatagTestBase {
     $this->drupalLogin($this->adminUser);
 
     // Create a test node.
-
     // Load the node form.
     $this->drupalGet('node/add/' . $content_type_path);
     $this->assertResponse(200);
@@ -78,7 +79,9 @@ class MetatagCoreWithPanelsTest extends MetatagTestBase {
     $this->assertResponse(200);
 
     // Verify that the node saved correctly.
+    // @code
     // $xpath = $this->xpath("//h1");
+    // @endcode
     $t_args = array('@type' => 'Test', '%title' => 'Who likes magic');
     // This doesn't work for some reason, it seems the HTML is stripped off
     // during output so the %title's standard Drupal wrappers don't match.
@@ -133,7 +136,7 @@ class MetatagCoreWithPanelsTest extends MetatagTestBase {
 
     // Confirm the process completed successfully.
     $this->assertEqual($this->getUrl(), url('admin/structure/pages/edit/node_view', array('absolute' => TRUE)));
-    $this->assertText(t('Panel') . ': Test');
+    $this->assertText('Panel: Test');
 
     // Clear all caches, so we can start off properly.
     drupal_flush_all_caches();
@@ -148,7 +151,7 @@ class MetatagCoreWithPanelsTest extends MetatagTestBase {
    * @param string $path
    *   Optional path to load, if not present the current path will be used.
    */
-  function confirmNodeTags($path = NULL) {
+  public function confirmNodeTags($path = NULL) {
     if (!empty($path)) {
       $this->drupalGet($path);
       $this->assertResponse(200);
@@ -165,19 +168,23 @@ class MetatagCoreWithPanelsTest extends MetatagTestBase {
    *
    * @todo Write this.
    */
+  // @code
   // public function testPanelsTermView() {
   //   // Enable the Page Manager display for terms.
   //   variable_set('page_manager_term_view_disabled', FALSE);
   // }
+  // @endcode
 
   /**
    * Test out a user_view Panels display with Metatag.
    *
    * @todo Write this.
    */
+  // @code
   // public function testPanelsUserView() {
   //   // Enable the Page Manager display for users.
   //   variable_set('page_manager_user_view_disabled', FALSE);
   // }
+  // @endcode
 
 }

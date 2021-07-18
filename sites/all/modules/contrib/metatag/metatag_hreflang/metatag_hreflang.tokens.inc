@@ -26,8 +26,8 @@ function metatag_hreflang_token_info() {
 
   $languages = language_list('enabled');
 
-  // Verify there are multiple languages enabled.
-  if (!empty($languages[1]) && is_array($languages[1]) && count($languages[1]) > 1) {
+  // Verify there at least one language is available.
+  if (!empty($languages[1]) && is_array($languages[1]) && count($languages[1])) {
     if (module_exists('node')) {
       foreach ($languages[1] as $langcode => $language) {
         $info['tokens']['node']['url-' . $langcode] = array(

@@ -25,7 +25,7 @@ class MetatagImporterTest extends MetatagTestBase {
   /**
    * {@inheritdoc}
    */
-  function setUp(array $modules = array()) {
+  public function setUp(array $modules = array()) {
     $modules[] = 'metatag_importer';
 
     parent::setUp($modules);

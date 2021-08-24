@@ -341,6 +341,7 @@ $conf['tm_frontpage_title_anon'] = 'Be Part Of Massive.';
 $conf['tm_frontpage_title_members'] = 'Welcome back, [current-user:name].';
 $conf['tm_frontpage_description_anon'] = 'Massive connects thousands of people to meet, learn and collaborate at free events all around the world. We are a global community of industry insiders, leaders, and innovators.';
 $conf['tm_frontpage_description_members'] = 'Welcome to the Massive Community. We are the community of industry insiders, leaders, and innovators. Join your local chapter, connect with other members, or apply to start a chapter in your city.';
+// $conf['tm_frontpage_description_verified'] = ''; // optional: message for verified members
 $conf['tm_frontpage_meta_og_title'] = "Massive";
 $conf['tm_frontpage_meta_og_image'] = ""; // url for social sharing image of front page
 $conf['tm_frontpage_meta_description'] = "Massive connects thousands of members to meet, learn and collaborate at free events all around the world. We are a global community of industry insiders, leaders, and innovators.";

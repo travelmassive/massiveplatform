@@ -397,7 +397,7 @@ where n.value = 1 order by ud.uid asc";
 		if ($is_chapter_leader) {
 			$tags[] = "is_event_host";
 		}
-		$row[] = explode(",", $tags);
+		$row[] = implode(",", $tags);
 
 		// Is member of chapter
 		foreach ($member_of_chapters as $chapter_shortcode) {

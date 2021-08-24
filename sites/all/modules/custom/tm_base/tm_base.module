@@ -306,8 +306,8 @@ function _tm_base_frontpage() {
     $homepage_title = $conf['tm_frontpage_title_members'];
     $homepage_description = $conf['tm_frontpage_description_members'];
     $is_verified = in_array("approved user", $user->roles);
-    if ($is_verified and isset($conf['tm_frontpage_description_verified'])) {
-      $homepage_description = $conf['tm_frontpage_description_verified'];
+    if ($is_verified and isset($conf['tm_frontpage_description_approved'])) {
+      $homepage_description = $conf['tm_frontpage_description_approved'];
     }
   }
   else {

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Populate Time zone field from Geofield.
+ * Populate a time zone field from Geofield.
  */
 
 /**
@@ -81,5 +81,8 @@ function _tzfield_geofield_get_timezone($lat, $lon) {
   if (!isset($json->errorMessage)) {
     return $json->timeZoneId;
   }
-  watchdog('tzfield_geofield', 'Google time zone API error %status %error_message', array('%status' => $json->status, '%error_message' => $json->errorMessage), WATCHDOG_ERROR);
+  watchdog('tzfield_geofield', 'Google time zone API error %status %error_message', array(
+    '%status' => $json->status,
+    '%error_message' => $json->errorMessage,
+  ), WATCHDOG_ERROR);
 }

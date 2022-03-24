@@ -1,12 +1,12 @@
-name = Time zone field populate from Geofield
-description = Populate Time zone field from Geofield
+name = Time Zone Field Geofield
+description = Populate a time zone field from Geofield.
 core = 7.x
 dependencies[] = tzfield
 dependencies[] = geofield
 files[] = tzfield_geofield.test
 
-; Information added by Drupal.org packaging script on 2018-11-10
-version = "7.x-1.2"
+; Information added by Drupal.org packaging script on 2021-10-23
+version = "7.x-1.3"
 core = "7.x"
 project = "tzfield"
-datestamp = "1541808484"
+datestamp = "1634950329"

@@ -138,7 +138,10 @@ function tzfield_field_widget_options_select_form_alter(&$element, &$form_state,
     'map_id' => $element['#map_id'],
     'map_src' => file_create_url(drupal_get_path('module', 'timezone_picker') . '/images/map.png'),
   ));
-  $element['#attached']['library'][] = array('timezone_picker', 'jquery.timezone-picker');
+  $element['#attached']['library'][] = array(
+    'timezone_picker',
+    'jquery.timezone-picker',
+  );
   $element['#attached']['css'][] = drupal_get_path('module', 'timezone_picker') . '/timezone-picker.css';
   $element['#attached']['js'][] = drupal_get_path('module', 'timezone_picker') . '/timezone-picker.js';
   $element['#after_build'][] = 'tzfield_timezone_picker_after_build';
@@ -226,7 +229,7 @@ function tzfield_field_formatter_settings_form($field, $instance, $view_mode) {
       '#type' => 'textfield',
       '#size' => 20,
       '#default_value' => $instance['display'][$view_mode]['settings']['format'],
-      '#description' => t('Enter a <a href="http://www.php.net/manual/en/function.date.php">PHP date format string</a>, e.g. <em>T</em> to display the current time zone abbreviation.'),
+      '#description' => t('Enter a <a rel="noreferrer" href="https://www.php.net/manual/en/datetime.format.php#refsect1-datetime.format-parameters">PHP date format string</a>, e.g. <em>T</em> to display the current time zone abbreviation.'),
     );
   }
   return $form;

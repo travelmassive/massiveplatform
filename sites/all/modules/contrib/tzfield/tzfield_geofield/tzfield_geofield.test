@@ -2,11 +2,11 @@
 
 /**
  * @file
- * Functional tests for time zone field geofield module.
+ * Functional tests for Time Zone Field Geofield module.
  */
 
 /**
- * Functional tests for time zone field geofield module.
+ * Functional tests for Time Zone Field Geofield module.
  */
 class TzFieldGeofieldTest extends DrupalWebTestCase {
 
@@ -15,8 +15,8 @@ class TzFieldGeofieldTest extends DrupalWebTestCase {
    */
   public static function getInfo() {
     return array(
-      'name' => 'Time zone field geofield',
-      'description' => 'Tests for time zone field geofield module.',
+      'name' => 'Time Zone Field Geofield',
+      'description' => 'Tests for Time Zone Field Geofield module.',
       'group' => 'tzfield',
     );
   }
@@ -29,7 +29,7 @@ class TzFieldGeofieldTest extends DrupalWebTestCase {
   }
 
   /**
-   * Tests time zone field geofield module.
+   * Tests Time Zone Field Geofield module.
    */
   public function testTimeZoneFieldGeofield() {
   }

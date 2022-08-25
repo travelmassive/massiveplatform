@@ -9,7 +9,7 @@ permalink: /
 # Massive Platform
 {: .fs-9 }
 
-IMPORTANT ANNOUNCEMENT (25 August 2022): Massive Platform is no longer being maintained. We started the project in 2014 and built some amazing communities with it, creating hundreds of thousands of real-world, in-person connections at events all over the world. In 2021 we decided to re-build [Travel Massive](https://travelmassive.com) with a new, modern web framework and chose [Phoenix Liveview](https://www.phoenixframework.org/). Our new platform is not open-source. Thanks to everyone who supported Massive Platform over the years. ~ Ian (founder, Travel Massive & Massive Platform).
+IMPORTANT ANNOUNCEMENT (25 August 2022): Massive Platform is no longer being maintained. We started the project in 2014 and built some amazing communities with it, creating hundreds of thousands of real-world, in-person connections at events all over the world. In 2021 we rebuilt [Travel Massive](https://travelmassive.com) with a new, modern web framework and chose [Phoenix Liveview](https://www.phoenixframework.org/). Thanks to everyone who supported Massive Platform over the years. ~ Ian (founder, Travel Massive & Massive Platform).
 
 Massive Platform is a community platform to build and grow event-driven, chapter-based communities.
 {: .fs-6 .fw-300 }

@@ -9,7 +9,9 @@ permalink: /
 # Massive Platform
 {: .fs-9 }
 
-Massive Platform is a kick-ass, continually developed community platform to build and grow event-driven, chapter-based communities.
+IMPORTANT ANNOUNCEMENT (25 August 2022): Massive Platform is no longer being maintained. We started the project in 2014 and built some amazing communities with it, creating hundreds of thousands of real-world, in-person connections at events all over the world. In 2021 we decided to re-build [Travel Massive](https://travelmassive.com) with a new, modern web framework and chose [Phoenix Liveview](https://www.phoenixframework.org/). Our new platform is not open-source. Thanks to everyone who supported Massive Platform over the years. ~ Ian (founder, Travel Massive & Massive Platform).
+
+Massive Platform is a community platform to build and grow event-driven, chapter-based communities.
 {: .fs-6 .fw-300 }
 
 [Learn more](#frequently-asked-questions){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [View it on GitHub](https://github.com/travelmassive/massiveplatform){: .btn .fs-5 .mb-4 .mb-md-0 }
@@ -56,7 +58,6 @@ A big thanks to everyone who has contributed their feedback, ideas, and testing!
 
 - [Travel Massive Chapter Leaders](https://travelmassive.com/leaders) - feedback and testing with Travel Massive
 - [Sarah Knapp](https://mappyhour.org/sarah) - feedback and testing with Mappy Hour 
-- [Erica Virvo](https://thenomadicnetwork.com/erica-virvo) - feedback and testing with The Nomadic Network
 - Berkeley Sourcing Group - feedback and testing with Hardware Massive
 - Flipside - initial project design, HTML theme and prototype created in Lisbon.
 - [Robyn Stanley](https://github.com/rumpledelf) and [Ryan Cross](https://github.com/rcross) for pre-release support.

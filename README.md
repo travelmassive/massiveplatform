@@ -24,9 +24,7 @@ Massive Platform is a community platform to build and grow event-driven, chapter
 
 ### What communities use Massive Platform?
 
-Massive Platform powers [Travel Massive](https://travelmassive.com), [Mappy Hour](https://mappyhour.org), and [The Nomadic Network](https://thenomadicnetwork.com/) — connecting more than 100,000 members both online and offline in places across the world.
-
-Massive Platform has powered more than 2,500 events in 80 countries.
+Massive Platform powered [Travel Massive](https://travelmassive.com), [Mappy Hour](https://mappyhour.org), Hardware Massive, and The Nomadic Network — connecting more than 100,000 members both online and offline in places across the world. Massive Platform powered more than 4,000 events in 80 countries.
 
 ### Who created Massive Platform?
 
